@@ -1,0 +1,118 @@
+###############################################################################
+# Dependency directories
+###############################################################################
+**/node_modules/
+
+###############################################################################
+# Build / cache artifacts
+###############################################################################
+dist/
+build/
+out/
+out-tsc/
+bundle-size-dist/
+temp/
+temp-app/
+tmp/
+.sst/
+.build/
+.turbo/
+**/.turbo/**
+.turbo-cache/*
+!.turbo-cache/.gitkeep
+.nx/cache/
+.nx/workspace-data/
+_cdk.context.json
+.cdk.context.json
+packages/**/stats.yml
+packages/**/meta.json
+packages/**/build-metafile.json
+packages/docs/*/public/*.js
+.wireit
+
+###############################################################################
+# Framework-specific outputs
+###############################################################################
+# Angular
+.angular/
+**/*.angular/cache
+**/.ng-doc/**
+**/ng-doc/**
+ng-doc/
+
+# SvelteKit
+**/*.svelte-kit/output
+
+###############################################################################
+# Documentation & static-site tooling
+###############################################################################
+packages/**/build
+packages/**/generated/**
+!packages/**/generated/.gitkeep
+packages/**/src/doc-props.json
+packages/**/angular*/src/assets/doc-props/doc-properties.json
+packages/docs/react-docs/src/page-data.json
+packages/docs/react-table-docs/src/page-data.json
+packages/docs/react-mdx-docs/src/routes/changelogs*
+packages/docs/react-docs/src/routes/changelogs*
+packages/docs/react-table-docs/src/routes/changelogs*
+packages/docs/react-vscode-docs/src/routes/changelogs*
+.typedoc
+
+###############################################################################
+# Environment / secrets
+###############################################################################
+.env*
+web/.env
+certs/*.pem
+**/*/certs/**/*.pem
+!certs/artifactory.pem
+
+###############################################################################
+# Logs & debug info
+###############################################################################
+*.log
+.log*
+yarn-error.log
+.pnpm-debug.log
+.pnpm-debug.log_
+vite*.config.ts.timestamp*
+.eslintcache
+.nyc_output/
+.aiignore
+.aider*
+!.aiderignore
+
+###############################################################################
+# TypeScript incremental build info
+###############################################################################
+tsconfig.tsbuildinfo
+tsconfig.*.tsbuildinfo
+
+###############################################################################
+# Test artifacts & screenshots
+###############################################################################
+**screenshots**
+.react-router/
+**/*\wsl.*
+**/coverage
+
+###############################################################################
+# OS / editor / IDE files
+###############################################################################
+.DS_Store
+.fleet/
+.idea/
+.webstorm/backup
+
+###############################################################################
+# Keep-tracked placeholder
+###############################################################################
+!generated/.gitkeep
+!.idea/bookmarks.json
+!.aider.conf.yml
+
+.angular
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
