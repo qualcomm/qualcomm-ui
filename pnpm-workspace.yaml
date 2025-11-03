@@ -35,6 +35,7 @@ catalog:
   '@typescript-eslint/eslint-plugin': ^8.40.0
   '@typescript-eslint/parser': ^8.40.0
   '@typescript-eslint/utils': ^8.40.0
+  '@eslint/js': ^9.37.0
   eslint: ^9.37.0
   react: 19.2.0
   react-dom: 19.2.0
@@ -44,36 +45,6 @@ catalog:
   typescript: 5.8.3
 
 minimumReleaseAge: 4320
-
-minimumReleaseAgeExclude:
-  - '@angular/build'
-  - '@angular-devkit/architect'
-  - '@angular-devkit/build-angular'
-  - '@angular-devkit/build-webpack'
-  - '@angular-devkit/core'
-  - '@angular-devkit/schematics'
-  - '@angular/animations'
-  - '@angular/cdk'
-  - '@angular/cdk-experimental'
-  - '@angular/cli'
-  - '@angular/common'
-  - '@angular/compiler'
-  - '@angular/compiler-cli'
-  - '@angular/core'
-  - '@angular/forms'
-  - '@angular/language-service'
-  - '@angular/platform-browser'
-  - '@angular/platform-browser-dynamic'
-  - '@angular/platform-server'
-  - '@angular/router'
-  - '@angular/ssr'
-  - '@qui/esbuild'
-  - '@ngtools/webpack'
-  - '@schematics/angular'
-  - '@types/react'
-  - '@types/react-dom'
-  - react
-  - react-dom
 
 onlyBuiltDependencies:
   - '@bundled-es-modules/glob'

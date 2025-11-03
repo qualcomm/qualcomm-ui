@@ -3,7 +3,7 @@ export default {
   endOfLine: "auto",
   htmlWhitespaceSensitivity: "ignore",
   jsxSingleQuote: false,
-  plugins: [],
+  plugins: ["prettier-plugin-tailwindcss"],
   printWidth: 80,
   semi: false,
   singleQuote: false,

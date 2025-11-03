@@ -20,7 +20,7 @@ async function createStub(filePath) {
     await writeFile(
       cliPath,
       `#!/usr/bin/env node
-console.error('Run pnpm build in @qui/codemod first');
+console.error('Run pnpm build in @qualcomm-ui/codemod first');
 process.exit(1);
 `,
       "utf-8",
