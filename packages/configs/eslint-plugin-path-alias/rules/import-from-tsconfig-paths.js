@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {ESLintUtils} from "@typescript-eslint/utils"
 import {existsSync, readFileSync} from "node:fs"
 import {dirname, join, parse, posix, resolve as resolvePath} from "node:path"

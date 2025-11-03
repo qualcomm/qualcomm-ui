@@ -1,4 +1,3 @@
-import {execaCommand} from "execa"
 import {access, mkdir, writeFile} from "node:fs/promises"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
@@ -48,8 +47,7 @@ Promise.all(
   if (results.some((distExists) => !distExists)) {
     // TODO: enable once packages are migrated
     // execaCommand(
-    //   `pnpm turbo run build ${packages.map((pkg) => `--filter ./packages/${pkg}`).join(" ")}`,
-    //   {cwd: resolve(__dirname, "../")},
-    // )
+    // `pnpm turbo run build ${packages.map((pkg) => `--filter
+    // ./packages/${pkg}`).join(" ")}`, {cwd: resolve(__dirname, "../")}, )
   }
 })
