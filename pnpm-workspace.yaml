@@ -46,6 +46,8 @@ catalog:
 
 minimumReleaseAge: 4320
 
+autoInstallPeers: true
+
 onlyBuiltDependencies:
   - '@bundled-es-modules/glob'
   - '@parcel/watcher'

@@ -32,7 +32,6 @@
     "commander": "^13.1.0",
     "dayjs": "^1.11.12",
     "esbuild": "catalog:",
-    "vite": "^6.3.1",
     "vitest": "^3.2.4"
   }
 }

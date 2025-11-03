@@ -1,0 +1,19 @@
+name: 'Setup Node and pnpm'
+description: 'Setup Node.js and enable corepack for pnpm'
+runs:
+  using: 'composite'
+  steps:
+  - name: clone
+    id: install
+    uses: actions/checkout@v4
+    with:
+      ref: ${{ github.head_ref }}
+
+  - uses: actions/setup-node@v4
+    with:
+      node-version: '22'
+
+  - run: corepack enable
+    shell: bash
+
+  - run: pnpm i --frozen-lockfile

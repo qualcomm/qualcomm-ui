@@ -39,7 +39,6 @@
     "@qualcomm-ui/cli": "workspace:^1.0.1",
     "@qualcomm-ui/esbuild": "workspace:^1.0.0",
     "@qualcomm-ui/tsconfig": "workspace:^1",
-    "@types/fs-extra": "^11.0.4",
     "autoprefixer": "^10.4.21",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
@@ -50,14 +49,10 @@
     "ora": "^8.1.1",
     "postcss": "^8.4.35",
     "postcss-import": "^16.1.0",
-    "postcss-lightningcss": "^1.0.0",
-    "postcss-loader": "^7.0.2",
     "postcss-minify-selectors": "^6.0.2",
-    "postcss-modules": "^6.0.0",
     "postcss-nested": "^6.0.1",
     "postcss-scss": "^4.0.9",
     "pretty-ms": "^9.2.0",
-    "vite": "^6.3.1",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
