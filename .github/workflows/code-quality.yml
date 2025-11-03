@@ -1,4 +1,4 @@
-name: "PR Checks"
+name: "Code Quality Checks"
 on:
   pull_request:
     # Run every time a PR to origin/main is created or updated
@@ -10,7 +10,7 @@ jobs:
   lint:
     env:
       IS_CI: true
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         shardIndex: [ 1, 2, 3 ]
@@ -28,7 +28,7 @@ jobs:
   build:
     env:
       IS_CI: true
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     concurrency:
       group: PR Build - ${{github.head_ref}}
       cancel-in-progress: true
