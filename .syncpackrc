@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/syncpack/schema.json",
+  "versionGroups": [
+    {
+      "label": "Ignore workspace dependencies",
+      "isIgnored": true,
+      "dependencies": ["$LOCAL"],
+      "dependencyTypes": ["prod", "dev"]
+    },
+    {
+      "label": "Ignore peerDependencies",
+      "dependencyTypes": ["peer"],
+      "isIgnored": true
+    },
+    {
+      "label": "No wildcards",
+      "preferVersion": "highestSemver",
+      "dependencyTypes": ["dev", "prod"]
+    }
+  ]
+}

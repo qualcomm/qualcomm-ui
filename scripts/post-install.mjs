@@ -47,7 +47,6 @@ Promise.all(
 ).then((results) => {
   if (results.some((distExists) => !distExists)) {
     // TODO: enable once packages are migrated
-    console.warn(packages, " need to be built")
     // execaCommand(
     //   `pnpm turbo run build ${packages.map((pkg) => `--filter ./packages/${pkg}`).join(" ")}`,
     //   {cwd: resolve(__dirname, "../")},

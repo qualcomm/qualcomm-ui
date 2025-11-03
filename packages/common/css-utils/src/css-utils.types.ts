@@ -1,4 +1,4 @@
-import type {ChokidarOptions} from "chokidar/esm"
+import type {ChokidarOptions} from "chokidar"
 
 export interface CssFileGroup {
   /**

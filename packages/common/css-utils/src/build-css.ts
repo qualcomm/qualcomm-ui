@@ -2,17 +2,32 @@ import autoprefixer from "autoprefixer"
 import chalk from "chalk"
 import cssnano from "cssnano"
 import litePreset from "cssnano-preset-lite"
-import {ensureDir, ensureFile} from "fs-extra"
 import {sync} from "glob"
 import {createHash} from "node:crypto"
-import {readFile, stat, writeFile} from "node:fs/promises"
-import {join, sep} from "node:path"
+import {mkdir, readFile, stat, writeFile} from "node:fs/promises"
+import {dirname, join, sep} from "node:path"
 import {cwd} from "node:process"
 import postcss from "postcss"
 import minifySelectorsPlugin from "postcss-minify-selectors"
 import postcssNested from "postcss-nested"
 import {parse} from "postcss-scss"
 import prettyMilliseconds from "pretty-ms"
+
+async function ensureDir(path: string): Promise<void> {
+  await mkdir(path, {recursive: true})
+}
+
+async function ensureFile(path: string): Promise<void> {
+  try {
+    const stats = await stat(path)
+    if (stats.isFile()) {
+      return
+    }
+  } catch {}
+
+  await mkdir(dirname(path), {recursive: true})
+  await writeFile(path, "")
+}
 
 import type {
   CssBuilderConfig,

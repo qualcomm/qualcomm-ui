@@ -32,17 +32,17 @@ catalog:
   '@react-router/serve': 7.9.4
   '@types/react': 19.2.2
   '@types/react-dom': 19.2.1
-  '@typescript-eslint/eslint-plugin': ^8.40.0
-  '@typescript-eslint/parser': ^8.40.0
-  '@typescript-eslint/utils': ^8.40.0
-  '@eslint/js': ^9.37.0
-  eslint: ^9.37.0
+  '@typescript-eslint/eslint-plugin': 8.46.2
+  '@typescript-eslint/parser': 8.46.2
+  '@typescript-eslint/utils': 8.46.2
+  '@eslint/js': 9.37.0
+  esbuild: 0.25.11
+  eslint: 9.37.0
   react: 19.2.0
   react-dom: 19.2.0
   react-router: 7.9.4
   tsx: 4.20.6
-  typescript-eslint: ^8.40.0
-  typescript: 5.8.3
+  typescript-eslint: 8.40.0
 
 minimumReleaseAge: 4320
 
