@@ -20,7 +20,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - uses: .github/actions/clone-and-install.yml
+    - uses: ./.github/actions/clone-and-install
 
     - name: lint
       run: pnpm tsx scripts/lint-shard.ts --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
@@ -34,7 +34,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - uses: .github/actions/clone-and-install.yml
+    - uses: ./.github/actions/clone-and-install
 
     - name: build
       run: pnpm run build
