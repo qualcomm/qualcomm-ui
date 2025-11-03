@@ -18,19 +18,19 @@ async function exists(path, mode) {
 
 // set up typedoc files if not yet initialized
 await Promise.all(
-  ["react-docs", "react-mdx-docs", "react-table-docs", "angular-docs"].map(
-    async (pkg) => {
-      const pkgPath = resolve(cwd, "packages/docs", pkg)
-      const typedocPath = resolve(pkgPath, ".typedoc")
-      const docPropsPath = resolve(pkgPath, ".typedoc/doc-props.json")
+  // TODO: add back once docs sites are moved over
+  // ["react-docs", "react-mdx-docs", "react-table-docs", "angular-docs"].map(
+  [].map(async (pkg) => {
+    const pkgPath = resolve(cwd, "packages/docs", pkg)
+    const typedocPath = resolve(pkgPath, ".typedoc")
+    const docPropsPath = resolve(pkgPath, ".typedoc/doc-props.json")
 
-      await mkdir(typedocPath, {recursive: true})
+    await mkdir(typedocPath, {recursive: true})
 
-      if (!(await exists(docPropsPath))) {
-        await writeFile(docPropsPath, JSON.stringify({props: {}}), "utf-8")
-      }
-    },
-  ),
+    if (!(await exists(docPropsPath))) {
+      await writeFile(docPropsPath, JSON.stringify({props: {}}), "utf-8")
+    }
+  }),
 )
 
 const packages = [
