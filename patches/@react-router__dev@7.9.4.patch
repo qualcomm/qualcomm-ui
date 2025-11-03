@@ -1,0 +1,38 @@
+diff --git a/dist/cli/index.js b/dist/cli/index.js
+index ee3f232db33184169461df291fc35974622a0101..70cdd7a53db8afa9121e9eab5e956c8bbfaa3033 100644
+--- a/dist/cli/index.js
++++ b/dist/cli/index.js
+@@ -1815,7 +1815,8 @@ var init_plugin = __esm({
+       "handle",
+       "meta",
+       "links",
+-      "shouldRevalidate"
++      "shouldRevalidate",
++      "frontmatter"
+     ];
+     CLIENT_ROUTE_EXPORTS = [
+       ...CLIENT_NON_COMPONENT_EXPORTS,
+diff --git a/dist/vite.js b/dist/vite.js
+index 2dec83771a9413822c254a61fbb493c30cdb36f8..5a7afa8ba132d4ef02cb998796859797ed58805f 100644
+--- a/dist/vite.js
++++ b/dist/vite.js
+@@ -2447,7 +2447,8 @@ var CLIENT_NON_COMPONENT_EXPORTS = [
+   "handle",
+   "meta",
+   "links",
+-  "shouldRevalidate"
++  "shouldRevalidate",
++  "frontmatter"
+ ];
+ var CLIENT_ROUTE_EXPORTS = [
+   ...CLIENT_NON_COMPONENT_EXPORTS,
+@@ -5005,7 +5006,8 @@ var CLIENT_NON_COMPONENT_EXPORTS2 = [
+   "handle",
+   "meta",
+   "links",
+-  "shouldRevalidate"
++  "shouldRevalidate",
++  "frontmatter"
+ ];
+ var CLIENT_NON_COMPONENT_EXPORTS_SET = new Set(CLIENT_NON_COMPONENT_EXPORTS2);
+ function isClientNonComponentExport(name) {

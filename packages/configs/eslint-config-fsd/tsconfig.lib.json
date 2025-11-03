@@ -1,0 +1,9 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.esnext.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "noEmit": true,
+    "strictPropertyInitialization": false,
+  },
+  "include": ["./src"],
+}

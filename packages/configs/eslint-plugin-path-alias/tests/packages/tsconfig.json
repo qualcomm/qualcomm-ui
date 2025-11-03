@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@mock/*": ["./mock/src/*.ts", "./mock/src/*/index.ts"],
+      "@qualcomm-ui/nested/*": ["./nested/src/*/index.ts"],
+      "@qualcomm-ui/angular": ["./angular/index.ts"],
+      "@qualcomm-ui/angular/*": ["./angular/*/index.ts"],
+    }
+  }
+}

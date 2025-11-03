@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.strict.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler"
+  }
+}

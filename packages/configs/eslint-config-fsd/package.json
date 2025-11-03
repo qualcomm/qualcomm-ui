@@ -1,0 +1,51 @@
+{
+  "name": "@qualcomm-ui/eslint-config-fsd",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "description": "QUI ESLint config for feature-sliced design",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "types": "index.d.ts",
+  "keywords": [
+    "eslint",
+    "config",
+    "fsd"
+  ],
+  "author": "Ryan Bower",
+  "files": [
+    "*.js",
+    "index.d.ts"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "vitest -c vitest.config.ts --run",
+    "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads",
+    "test:watch": "vitest -c vitest.config.ts",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:*",
+    "@typescript-eslint/rule-tester": "^8.31.1",
+    "cross-env": "^7.0.3",
+    "eslint-plugin-boundaries": "^5.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.37.0",
+    "eslint-plugin-boundaries": ">=5.0.1 <6",
+    "eslint-plugin-import": ">=2.29.1",
+    "typescript": ">=5.0.0",
+    "typescript-eslint": ">=8.31.1"
+  }
+}

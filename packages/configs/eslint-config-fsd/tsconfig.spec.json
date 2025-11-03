@@ -1,0 +1,36 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "composite": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "bundler",
+    "paths": {
+      "~data/*": [
+        "./tests/src/data/*"
+      ],
+      "~entities/*": [
+        "./tests/src/entities/*"
+      ],
+      "~features/*": [
+        "./tests/src/features/*"
+      ],
+      "~pages/*": [
+        "./tests/src/pages/*"
+      ],
+      "~shared/*": [
+        "./tests/src/shared/*"
+      ],
+      "~widgets/*": [
+        "./tests/src/widgets/*"
+      ]
+    }
+  },
+  "include": ["./tests"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

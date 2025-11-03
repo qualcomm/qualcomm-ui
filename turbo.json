@@ -1,0 +1,111 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    ".eslintrc.cjs"
+  ],
+  "cacheDir": ".turbo-cache",
+  "concurrency": "30",
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "reset": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": ["dist"],
+      "outputLogs": "new-only"
+    },
+    "build:typedoc": {
+      "outputs": ["./.typedoc/*.json", "./src/assets/doc-props/doc-properties.json"],
+      "outputLogs": "new-only"
+    },
+    "test": {
+      "inputs": [
+        "*.{html,cjs,css,js,json,md,mdx,mjs,scss,ts,tsx,yaml}",
+        "components/**/*",
+        "lib/**/*",
+        "pages/**/*",
+        "public/**/*",
+        "src/**/*",
+        "styles/**/*"
+      ]
+    },
+    "test:ci": {
+      "outputLogs": "new-only"
+    },
+    "test:unit:ci": {
+      "outputLogs": "new-only"
+    },
+    "test:angular:ci": {
+      "outputLogs": "new-only"
+    },
+    "test:react:ci": {
+      "outputLogs": "new-only"
+    },
+    "test:react-core:ci": {
+      "outputLogs": "new-only"
+    },
+    "build:angular:ci": {
+      "inputs": [
+        "*.{json,ts,mts,js,cjs,mjs}",
+        "src/**",
+        "scripts/**",
+        "!src/environments/environment.ts",
+        "!src/environments/environment.ci.ts"
+      ],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only"
+    },
+    "build:angular:prod": {
+      "inputs": [
+        "*.{json,ts,mts,js,cjs,mjs}",
+        "src/**",
+        "scripts/**",
+        "!src/environments/environment.ts",
+        "!src/environments/environment.ci.ts"
+      ],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only"
+    },
+    "deploy:angular:ci": {
+      "env": [
+        "AWS_CERT_ARN",
+        "AWS_HOSTED_ZONE_ID",
+        "AWS_PROFILE",
+        "AWS_REGION",
+        "AWS_SITE_DOMAIN_NAME",
+        "AWS_TAG_ADMIN_CONTACT",
+        "AWS_TAG_NAME",
+        "AWS_TAG_SERVICE_DATA",
+        "AWS_TAG_SERVICE_ID",
+        "GITHUB_ENVIRONMENT",
+        "SST_SITE_NAME",
+        "SST_STAGE"
+      ],
+      "inputs": [
+        "*.{json,ts,mts,js,cjs,mjs}",
+        "src/**",
+        "scripts/**",
+        "!src/environments/environment.ts",
+        "!src/environments/environment.ci.ts"
+      ],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only"
+    },
+    "lint": {
+      "inputs": [
+        "**/*.{html,cjs,js,md,mdx,mjs,ts,tsx,mts}",
+        "!node_modules/**",
+        "!dist/**",
+        "!ng-doc/**"
+      ],
+      "outputLogs": "new-only"
+    }
+  }
+}
