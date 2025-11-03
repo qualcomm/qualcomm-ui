@@ -25,12 +25,12 @@ async function main() {
 
   const folders = await readdir(baseDir)
 
-  // "@qui/<package-folder-name>"
+  // "@qualcomm-ui/<package-folder-name>"
   const packages = (
     await Promise.all(
       folders.map(async (pkgFolder) =>
         (await readdir(resolve(baseDir, pkgFolder))).map(
-          (folder) => `@qui/${folder}`,
+          (folder) => `@qualcomm-ui/${folder}`,
         ),
       ),
     )
