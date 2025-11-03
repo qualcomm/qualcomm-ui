@@ -20,6 +20,12 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
+    - name: clone
+      id: install
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+
     - uses: ./.github/actions/clone-and-install
 
     - name: lint
@@ -34,6 +40,12 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
+    - name: clone
+      id: install
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+
     - uses: ./.github/actions/clone-and-install
 
     - name: build
