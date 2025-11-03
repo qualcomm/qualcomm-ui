@@ -438,6 +438,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
+  packages/docs/angular-docs: {}
+
 packages:
 
   '@angular-devkit/architect@0.2003.8':

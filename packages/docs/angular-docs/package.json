@@ -1,0 +1,7 @@
+{
+  "name": "@qualcomm-ui/angular-docs",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "echo \"No linting configured for angular-docs\""
+  }
+}
