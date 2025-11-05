@@ -1,0 +1,13 @@
+import {defineConfig} from "vitest/config"
+
+export default defineConfig({
+  test: {
+    include: ["tests/*.spec.ts"],
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      },
+    },
+    testTimeout: 10000,
+  },
+})

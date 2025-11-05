@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2022",
+      "dom"
+    ],
+    "module": "es2022",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "target": "es2022"
+  },
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": false,
+    "compilationMode": "partial",
+    "enableI18nLegacyMessageIdFormat": false,
+    "preserveWhitespaces": false,
+    "skipTemplateCodegen": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictMetadataEmit": true,
+    "strictNullChecks": true
+  },
+}

@@ -1,0 +1,52 @@
+{
+  "name": "@qualcomm-ui/eslint-config-typescript",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "description": "QUI ESLint config for consistent TypeScript code",
+  "type": "module",
+  "keywords": [
+    "eslint",
+    "config"
+  ],
+  "author": "Ryan Bower",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "base.js",
+    "jsdoc.js",
+    "performance.js",
+    "sort-keys.js",
+    "style-guide.js",
+    "naming-conventions.js",
+    "type-checks.js",
+    "strict-exports.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "5.2.0",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "eslint-plugin-comment-length": "^2.2.1",
+    "typescript-eslint": "catalog:"
+  },
+  "peerDependencies": {
+    "@eslint/js": ">=9.37.0",
+    "@stylistic/eslint-plugin": ">=5.2.0",
+    "@typescript-eslint/eslint-plugin": ">=8.31.1",
+    "@typescript-eslint/parser": ">=8.31.1",
+    "eslint": ">=9.37.0",
+    "eslint-config-prettier": ">=10.1.2",
+    "eslint-import-resolver-typescript": ">=4.3.4",
+    "eslint-plugin-comment-length": ">=2.2.1",
+    "eslint-plugin-import": ">=2.31.0",
+    "eslint-plugin-jsdoc": ">=50.6.11",
+    "eslint-plugin-prettier": ">=5.2.6",
+    "eslint-plugin-perfectionist": ">=4.12.3",
+    "eslint-plugin-unused-imports": ">=4.1.4",
+    "prettier": ">=3.5.3",
+    "typescript": ">=5.7.3",
+    "typescript-eslint": ">=8.31.1"
+  }
+}

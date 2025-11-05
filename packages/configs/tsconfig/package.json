@@ -1,0 +1,18 @@
+{
+  "name": "@qualcomm-ui/tsconfig",
+  "version": "1.0.0",
+  "files": [
+    "tsconfig.*.json"
+  ],
+  "scripts": {
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.7.3"
+  }
+}

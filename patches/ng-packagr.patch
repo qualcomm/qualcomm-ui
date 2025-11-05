@@ -1,0 +1,29 @@
+diff --git a/src/lib/file-system/file-watcher.js b/src/lib/file-system/file-watcher.js
+index f98211f1533e4a784157f2de98f2ea3fb7efd69e..a18931159f38f3d77e7b8a243b21d412d00a1a6f 100644
+--- a/src/lib/file-system/file-watcher.js
++++ b/src/lib/file-system/file-watcher.js
+@@ -125,6 +125,7 @@ function invalidateEntryPointsAndCacheOnFileChange(graph, files, sourcesFileCach
+         }
+     }
+     const entryPoints = graph.filter(nodes_1.isEntryPoint);
++    const dirtyEntryPoints = new Set();
+     for (const entryPoint of entryPoints) {
+         let isDirty = false;
+         if (potentialStylesResources.size > 0) {
+@@ -140,6 +141,16 @@ function invalidateEntryPointsAndCacheOnFileChange(graph, files, sourcesFileCach
+         if (isDirty) {
+             entryPoint.state = node_1.STATE_PENDING;
+             invalidatedEntryPoint = true;
++            dirtyEntryPoints.add(entryPoint);
++        }
++    }
++    for (const dirtyEntryPoint of dirtyEntryPoints) {
++        for (const dependeeNode of dirtyEntryPoint.dependees) {
++            if ((0, nodes_1.isEntryPoint)(dependeeNode) && dependeeNode.state !== node_1.STATE_PENDING) {
++                dependeeNode.state = node_1.STATE_PENDING;
++                invalidatedEntryPoint = true;
++                dirtyEntryPoints.add(dependeeNode);
++            }
+         }
+     }
+     return invalidatedEntryPoint;

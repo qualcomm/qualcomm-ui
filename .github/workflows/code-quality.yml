@@ -1,0 +1,52 @@
+name: "Code Quality Checks"
+on:
+  pull_request:
+    # Run every time a PR to origin/main is created or updated
+    types: [ "opened", "synchronize" ]
+    branches: [ "main", "dev" ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    env:
+      IS_CI: true
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shardIndex: [ 1, 2, 3 ]
+        shardTotal: [ 3 ]
+    concurrency:
+      group: PR Lint - ${{matrix.shardIndex}} - ${{github.head_ref}}
+      cancel-in-progress: true
+    timeout-minutes: 10
+    steps:
+    - name: clone
+      id: install
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/clone-and-install
+
+    - name: lint
+      run: pnpm tsx scripts/lint-shard.ts --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
+
+  build:
+    env:
+      IS_CI: true
+    runs-on: ubuntu-latest
+    concurrency:
+      group: PR Build - ${{github.head_ref}}
+      cancel-in-progress: true
+    timeout-minutes: 10
+    steps:
+    - name: clone
+      id: install
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/clone-and-install
+
+    - name: build
+      run: pnpm run build

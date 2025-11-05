@@ -1,0 +1,49 @@
+{
+  "name": "@qualcomm-ui/esbuild",
+  "version": "1.0.0",
+  "description": "esbuild utilities and plugins",
+  "author": "Ryan Bower",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "qui-esbuild-cli": "./lib/cli.cjs"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "scripts": {
+    "build": "run-s clean build:js build:types",
+    "clean": "shx rm -rf dist && shx rm -f tsconfig.lib.tsbuildinfo",
+    "build:js": "tsx build.ts",
+    "build:types": "tsc -p tsconfig.lib.json",
+    "dev": "run-p watch:js watch:types",
+    "watch:js": "tsx build.ts --mode development --watch",
+    "watch:types": "tsc -b tsconfig.lib.json -w --preserveWatchOutput --force",
+    "lint": "eslint --quiet .",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@commander-js/extra-typings": "^13.1.0",
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "chalk": "^5.6.2",
+    "chokidar": "^4.0.3",
+    "esbuild": "catalog:",
+    "glob": "^11.0.3",
+    "npm-run-all2": "^8.0.4",
+    "pretty-ms": "^9.2.0",
+    "shx": "^0.4.0"
+  }
+}

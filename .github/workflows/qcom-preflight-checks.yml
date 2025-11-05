@@ -22,3 +22,6 @@ jobs:
         dependency-review: true            # default: true
     secrets:
       SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+    concurrency:
+      group: qcom-preflight-checks - ${{github.head_ref}}
+      cancel-in-progress: true

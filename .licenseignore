@@ -1,0 +1,33 @@
+# binaries
+**/bin/*
+**/node_modules/**
+**/dist/**
+**/build/**
+**/out/**
+
+# configuration files
+**/*.config.js
+**/*.config.ts
+
+# dev scripts
+scripts/*
+
+# test files
+**/test/**
+**/tests/**
+**/__tests__/**
+**/__mocks__/**
+**/__spec__/**
+**/*.spec.*
+
+# package scripts and configs
+packages/*/*/*.js
+packages/*/*/*.ts
+packages/*/*/scripts/*
+
+# barrel files
+**/index.ts
+**/index.js
+
+# typescript typedefs
+**/*.d.ts

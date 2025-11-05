@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.angular-lib.json",
+  "compilerOptions": {
+    // see: https://github.com/typescript-eslint/typescript-eslint/issues/4268#issuecomment-987530004
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true
+  }
+}

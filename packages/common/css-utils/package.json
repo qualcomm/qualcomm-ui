@@ -1,0 +1,62 @@
+{
+  "name": "@qualcomm-ui/css-utils",
+  "version": "1.0.0",
+  "description": "QUI utils for bundling CSS",
+  "author": "Ryan Bower",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "qui-css-utils": "./lib/cli.cjs"
+  },
+  "scripts": {
+    "build": "run-s clean build:js build:types",
+    "clean": "shx rm -rf dist",
+    "build:js": "tsx build.ts",
+    "build:types": "tsc -b tsconfig.lib.json --force",
+    "dev": "run-p watch:js watch:types",
+    "watch:js": "tsx build.ts --mode development --watch",
+    "watch:types": "tsc -b tsconfig.lib.json -w --preserveWatchOutput --force",
+    "lint": "eslint --quiet .",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@commander-js/extra-typings": "^13.1.0",
+    "@qualcomm-ui/cli": "workspace:^1.0.1",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.0",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "autoprefixer": "^10.4.21",
+    "chalk": "^5.6.2",
+    "chokidar": "^4.0.3",
+    "cssnano": "^6.1.2",
+    "cssnano-preset-lite": "^3.1.0",
+    "esbuild": "catalog:",
+    "glob": "^11.0.3",
+    "ora": "^8.1.1",
+    "postcss": "^8.4.35",
+    "postcss-import": "^16.1.0",
+    "postcss-minify-selectors": "^6.0.2",
+    "postcss-nested": "^6.0.1",
+    "postcss-scss": "^4.0.9",
+    "pretty-ms": "^9.2.0",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "@commander-js/extra-typings": ">=13.1.0",
+    "cosmiconfig": ">=9.0.0"
+  }
+}

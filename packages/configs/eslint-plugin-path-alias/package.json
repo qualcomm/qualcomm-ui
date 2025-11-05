@@ -1,0 +1,33 @@
+{
+  "name": "@qualcomm-ui/eslint-plugin-path-alias",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "private": true,
+  "description": "ESLint config for restricting import boundaries to tsconfig paths",
+  "type": "module",
+  "keywords": [
+    "eslint",
+    "config"
+  ],
+  "author": "Ryan Bower",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "plugin.js",
+    "rules/"
+  ],
+  "scripts": {
+    "test": "vitest -c vitest.config.ts --run",
+    "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads --no-file-parallelism",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:*",
+    "@typescript-eslint/utils": "catalog:",
+    "@typescript-eslint/rule-tester": "^8.31.1",
+    "typescript-eslint": "catalog:",
+    "vitest": "^3.2.4"
+  }
+}
