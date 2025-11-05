@@ -1,0 +1,22 @@
+# JS configuration files
+eslint.config.js
+prettier.config.js
+
+# dev scripts
+scripts/*
+
+# test files
+**/test/**
+**/tests/**
+**/__tests__/**
+**/__mocks__/**
+**/__spec__/**
+**/*.spec.*
+
+# package scripts and configs
+packages/*/*/*.js
+packages/*/*/*.ts
+packages/*/*/scripts/*
+
+# barrel files
+**/index.ts
