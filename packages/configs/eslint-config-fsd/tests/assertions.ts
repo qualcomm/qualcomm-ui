@@ -1,7 +1,7 @@
 import {ESLint} from "eslint"
 import {expect} from "vitest"
 
-import LintResult = ESLint.LintResult
+type LintResult = ESLint.LintResult
 
 /**
  * Asserts that a `boundaries/element-types` error was generated.

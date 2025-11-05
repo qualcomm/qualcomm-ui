@@ -1,6 +1,13 @@
-# JS configuration files
-eslint.config.js
-prettier.config.js
+# binaries
+**/bin/*
+**/node_modules/**
+**/dist/**
+**/build/**
+**/out/**
+
+# configuration files
+**/*.config.js
+**/*.config.ts
 
 # dev scripts
 scripts/*
@@ -20,3 +27,7 @@ packages/*/*/scripts/*
 
 # barrel files
 **/index.ts
+**/index.js
+
+# typescript typedefs
+**/*.d.ts

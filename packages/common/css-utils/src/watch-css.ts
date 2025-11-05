@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import chalk from "chalk"
 import chokidar, {type FSWatcher} from "chokidar"
 import {glob} from "glob"

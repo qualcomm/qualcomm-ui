@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {defineConfig} from "eslint/config"
 
 import {importFromTsconfigPaths} from "./rules/import-from-tsconfig-paths.js"
