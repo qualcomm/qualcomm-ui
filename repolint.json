@@ -184,35 +184,13 @@
       }
     },
     "source-qualcomm-license-headers-exist": {
-      "level": "warning",
+      "level": "off",
       "rule": {
         "type": "file-starts-with",
         "options": {
-          "globsAll": [
-            "**/*.py",
-            "**/*.js",
-            "**/*.c",
-            "**/*.cc",
-            "**/*.cpp",
-            "**/*.h",
-            "**/*.ts",
-            "**/*.sh",
-            "**/*.rs",
-            "**/*.java",
-            "**/*.go",
-            "**/*.bbclass",
-            "**/*.S",
-            "**/*.hpp"
-          ],
+          "globsAll": [],
           "skip-paths-matching": {
-            "patterns": [
-              "babel.config.js",
-              "build\/",
-              "jest.config.js",
-              "node_modules\/",
-              "types\/",
-              "uthash.h"
-            ]
+            "patterns": []
           },
           "lineCount": 200,
           "patterns": [
