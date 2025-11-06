@@ -138,40 +138,9 @@
       "rule": {
         "type": "file-starts-with",
         "options": {
-          "globsAll": [
-            "**/*.py",
-            "**/*.js",
-            "**/*.c",
-            "**/*.cc",
-            "**/*.cpp",
-            "**/*.h",
-            "**/*.ts",
-            "**/*.rs",
-            "**/*.java",
-            "**/*.go",
-            "**/*.bbclass",
-            "**/*.S",
-            "**/*.hpp"
-          ],
+          "globsAll": [],
           "skip-paths-matching": {
-            "patterns": [
-              "build\/",
-              "node_modules\/",
-              "types\/",
-              "dist\/",
-              "build\/",
-              "test\/",
-              "react-test-utils\/",
-              "__test__\/",
-              "__tests__\/",
-              "demos\/",
-              "coverage\/",
-              ".*.turbo\/",
-              ".*.nx\/",
-              ".*.d.ts",
-              ".*.config.ts",
-              ".*.config.js"
-            ]
+            "patterns": []
           },
           "lineCount": 200,
           "patterns": [
