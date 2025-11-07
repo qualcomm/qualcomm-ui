@@ -167,8 +167,6 @@
               "__mocks__\/",
               "__spec__\/",
               ".*.spec\\.",
-              "packages\/[^/]+\/[^/]+\/.*\\.(js|ts)",
-              "packages\/[^/]+\/[^/]+\/scripts\/",
               "index\\.(ts|js)",
               ".*.d\\.ts"
             ]
@@ -217,8 +215,6 @@
               "__mocks__\/",
               "__spec__\/",
               ".*.spec\\.",
-              "packages\/[^/]+\/[^/]+\/.*\\.(js|ts)",
-              "packages\/[^/]+\/[^/]+\/scripts\/",
               "index\\.(ts|js)",
               ".*.d\\.ts"
             ]
