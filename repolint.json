@@ -155,7 +155,7 @@
           ],
           "skip-paths-matching": {
             "patterns": [
-              "**/bin/*",
+              "**/bin/**",
               "**/node_modules/**",
               "**/dist/**",
               "**/build/**",
@@ -209,7 +209,7 @@
           ],
           "skip-paths-matching": {
             "patterns": [
-              "**/bin/*",
+              "**/bin/**",
               "**/node_modules/**",
               "**/dist/**",
               "**/build/**",
