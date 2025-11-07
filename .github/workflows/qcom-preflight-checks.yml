@@ -4,6 +4,10 @@ on:
     branches: [ main ]
   push:
     branches: [ main ]
+  pull_request:
+    # Run every time a PR to origin/main is created or updated
+    types: [ "opened", "synchronize" ]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
