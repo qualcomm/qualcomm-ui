@@ -138,9 +138,44 @@
       "rule": {
         "type": "file-starts-with",
         "options": {
-          "globsAll": [],
+          "globsAll": [
+            "**/*.py",
+            "**/*.js",
+            "**/*.c",
+            "**/*.cc",
+            "**/*.cpp",
+            "**/*.h",
+            "**/*.ts",
+            "**/*.rs",
+            "**/*.java",
+            "**/*.go",
+            "**/*.bbclass",
+            "**/*.S",
+            "**/*.hpp"
+          ],
           "skip-paths-matching": {
-            "patterns": []
+            "patterns": [
+              "**/bin/*",
+              "**/node_modules/**",
+              "**/dist/**",
+              "**/build/**",
+              "**/out/**",
+              "**/*.config.js",
+              "**/*.config.ts",
+              "scripts/*",
+              "**/test/**",
+              "**/tests/**",
+              "**/__tests__/**",
+              "**/__mocks__/**",
+              "**/__spec__/**",
+              "**/*.spec.*",
+              "packages/*/*/*.js",
+              "packages/*/*/*.ts",
+              "packages/*/*/scripts/*",
+              "**/index.ts",
+              "**/index.js",
+              "**/*.d.ts"
+            ]
           },
           "lineCount": 200,
           "patterns": [
@@ -148,18 +183,53 @@
             "SPDX-License-Identifier|Redistribution and use in source and binary forms, with or without"
           ],
           "flags": "i",
-          "succeed-on-non-existent": true
+          "succeed-on-non-existent": false
         }
       }
     },
     "source-qualcomm-license-headers-exist": {
-      "level": "off",
+      "level": "error",
       "rule": {
         "type": "file-starts-with",
         "options": {
-          "globsAll": [],
+          "globsAll": [
+            "**/*.py",
+            "**/*.js",
+            "**/*.c",
+            "**/*.cc",
+            "**/*.cpp",
+            "**/*.h",
+            "**/*.ts",
+            "**/*.rs",
+            "**/*.java",
+            "**/*.go",
+            "**/*.bbclass",
+            "**/*.S",
+            "**/*.hpp"
+          ],
           "skip-paths-matching": {
-            "patterns": []
+            "patterns": [
+              "**/bin/*",
+              "**/node_modules/**",
+              "**/dist/**",
+              "**/build/**",
+              "**/out/**",
+              "**/*.config.js",
+              "**/*.config.ts",
+              "scripts/*",
+              "**/test/**",
+              "**/tests/**",
+              "**/__tests__/**",
+              "**/__mocks__/**",
+              "**/__spec__/**",
+              "**/*.spec.*",
+              "packages/*/*/*.js",
+              "packages/*/*/*.ts",
+              "packages/*/*/scripts/*",
+              "**/index.ts",
+              "**/index.js",
+              "**/*.d.ts"
+            ]
           },
           "lineCount": 200,
           "patterns": [

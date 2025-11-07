@@ -17,7 +17,7 @@ jobs:
         # ✅ Preflight Checkers
         repolinter: true                   # default: true
         semgrep: true                      # default: true
-        copyright-license-detector: true   # default: true
+        copyright-license-detector: false  # default: true
         pr-check-emails: true              # default: true
         dependency-review: true            # default: true
     secrets:
@@ -25,3 +25,28 @@ jobs:
     concurrency:
       group: qcom-preflight-checks - ${{github.head_ref}}
       cancel-in-progress: true
+
+  # also run repolinter using the PR's changes
+  repolinter-pr:
+    if: ${{ inputs.repolinter }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+    - name: Verify repolinter config file is present
+      id: check_files
+      uses: andstor/file-existence-action@v3
+      with:
+        files: "repolint.json"
+    - name: Run Repolinter with local repolint.json
+      if: steps.check_files.outputs.files_exists == 'true'
+      uses: todogroup/repolinter-action@v1
+      with:
+        config_file: "repolint.json"
+    - name: Run Repolinter with default ruleset
+      if: steps.check_files.outputs.files_exists == 'false'
+      uses: todogroup/repolinter-action@v1
+      with:
+        config_url: "https://raw.githubusercontent.com/qualcomm/.github/main/repolint.json"
