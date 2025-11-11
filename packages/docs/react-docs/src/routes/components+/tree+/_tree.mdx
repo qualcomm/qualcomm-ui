@@ -1,0 +1,271 @@
+---
+title: Tree
+group: Disclosure
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Tree} from "@qualcomm-ui/react/tree"
+```
+
+## Overview
+
+- The tree relies on the `TreeCollection` class to manage its items. Refer to the [API](./#tree-collection) below for details.
+- Trees are composed of nodes, which are objects that describe the tree data. There are two types of nodes:
+  - A `branch` node is a node that has children.
+  - A `leaf` node is a node that does not have any children.
+- Each node has a `value` (unique identifier used for selection/expansion) and a `text` (display text).
+
+**Default object shape:**
+
+- `value` (required): unique identifier for expansion/selection
+- `text` (required): display text
+- `nodes` (optional): child nodes for branches
+- `disabled` (optional): prevents interaction when `true`
+
+These defaults can be overridden in the `TreeCollection` [constructor](./#constructor).
+
+## Examples
+
+### Node Shorthand
+
+We expose the `<Tree.Nodes>` shorthand for rendering Branch and Leaf nodes. Use its [renderBranch](./#renderBranch) and [renderLeaf](./#renderLeaf) render props to customize the content of each tree item.
+
+Note that `<Tree.Nodes>` automatically renders child nodes for branches, so you only have to customize the content of the node itself.
+
+<QdsDemo name="TreeNodeShorthandDemo" />
+
+### Nodes
+
+You can bring your own `TreeNodes` to create your own abstraction for the tree.
+
+> [!note]
+> This approach is recommended only for advanced use cases. Most users should use the shorthand `<Tree.Nodes>` instead.
+
+<QdsDemo name="TreeNodesDemo" />
+
+### Default Expanded
+
+Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedChange](./#onExpandedChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="TreeDefaultExpandedDemo" />
+
+### Checkbox Trees
+
+Use the `Tree.CheckboxNode` to create a checkbox tree. The checked state of the tree can be controlled using the [checkedValue](./#checkedValue), [onCheckedChange](./#onCheckedChange), and [defaultCheckedValue](./#defaultCheckedValue) props, which follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="TreeCheckboxDemo" />
+
+#### Checkbox selection state
+
+The Tree handles nested checkbox selection automatically:
+
+- If all of a node's children are checked, the node will also be checked.
+- If only some of a node's children are checked, the node will appear indeterminate to indicate partial selection.
+
+When you supply the [checkedValue](./#checkedValue) or [defaultCheckedValue](./#defaultCheckedValue) props, you must account for the above logic.
+
+::: spoiler Example
+
+Consider the following tree:
+
+```tsx
+const collection = createTreeCollection<Node>({
+  rootNode: {
+    id: "ROOT",
+    name: "",
+    nodes: [
+      {
+        id: "qualcomm",
+        name: "Qualcomm",
+        nodes: [
+          {
+            id: "sdx",
+            name: "Snapdragon X",
+            nodes: [
+              {id: "elite", name: "Snapdragon X Elite"},
+              {id: "plus", name: "Snapdragon X Plus"},
+            ],
+          },
+        ],
+      },
+    ],
+  },
+})
+```
+
+Let's say that we want to select the `sdx` node and its children by default.
+
+```tsx
+function Component() {
+  return (
+    // won't work, we need to supply the child nodes instead
+    <Tree.Root defaultCheckedValue={["sdx"]} collection={collection}>
+      ...
+    </Tree.Root>
+  )
+}
+```
+
+```tsx
+function Component() {
+  return (
+    // works as expected
+    <Tree.Root defaultCheckedValue={["elite", "plus"]} collection={collection}>
+      ...
+    </Tree.Root>
+  )
+}
+```
+
+:::
+
+### Disabled Nodes
+
+You can disable nodes by setting the `disabled` property on the node object.
+
+<QdsDemo name="TreeDisabledNodeDemo" />
+
+### Filtering
+
+Here's an example that filters the nodes using `matchSorter`.
+
+<QdsDemo name="TreeFilteringDemo" />
+
+### Links
+
+Tree nodes can be links using [polymorphic composition](/polymorphic-components). Use the `render` prop on the `<Tree.BranchNode>` or `<Tree.LeafNode>` to specify the element type.
+
+<QdsDemo name="TreeLinksDemo" />
+
+### Sizes
+
+Tree item sizes are controlled using the [size](./#size) prop on the root of the tree.
+
+<QdsDemo name="TreeSizeDemo" />
+
+### Add / Remove nodes
+
+The `TreeCollection` class exposes methods to handle the addition and removal of nodes. Here's an example of how to use them.
+
+<QdsDemo name="TreeAddRemoveDemo" />
+
+## API
+
+### \<Tree.Root\>
+
+<TypeDocProps name="TreeRootProps" />
+
+<TypeDocAttributes name={["TreeRootBindings", "QdsTreeRootBindings"]} />
+
+### \<Tree.Nodes\>
+
+<TypeDocProps name="TreeNodesProps" />
+
+### TreeCollection
+
+Note that the TreeCollection accepts a single generic type parameter, `T`, which is the object type of the node used in the collection.
+
+#### Constructor
+
+The constructor of the TreeCollection class accepts the following options:
+
+<TypeDocProps name="TreeCollectionOptions" partial />
+
+<TypeDocProps hideDefaultColumn name="TreeCollection" partial />
+
+## Element API
+
+### \<Tree.Label\>
+
+<TypeDocProps name="TreeLabelProps" />
+
+<TypeDocAttributes name={["TreeLabelBindings", "QdsTreeLabelBindings"]} />
+
+### \<Tree.Branch\>
+
+<TypeDocProps name="TreeBranchProps" />
+
+<TypeDocAttributes name={["TreeBranchBindings", "QdsTreeBranchBindings"]} />
+
+### \<Tree.BranchNode\>
+
+<TypeDocProps name="TreeBranchNodeProps" />
+
+<TypeDocAttributes
+  name={["TreeBranchNodeBindings", "QdsTreeBranchNodeBindings"]}
+/>
+
+### \<Tree.BranchTrigger\>
+
+<TypeDocProps name="TreeBranchTriggerProps" />
+
+<TypeDocAttributes
+  name={["TreeBranchTriggerBindings", "QdsTreeBranchTriggerBindings"]}
+/>
+
+### \<Tree.BranchContent\>
+
+<TypeDocProps name="TreeBranchContentProps" />
+
+<TypeDocAttributes
+  name={["TreeBranchContentBindings", "QdsTreeBranchContentBindings"]}
+/>
+
+### \<Tree.BranchIndentGuide\>
+
+<TypeDocProps name="TreeBranchIndentGuideProps" />
+
+<TypeDocAttributes name={["TreeBranchIndentGuideBindings"]} />
+
+### \<Tree.LeafNode\>
+
+<TypeDocProps name="TreeLeafNodeProps" />
+
+<TypeDocAttributes name={["TreeLeafNodeBindings", "QdsTreeLeafNodeBindings"]} />
+
+### \<Tree.NodeCheckbox\>
+
+<TypeDocProps name="TreeNodeCheckboxProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeCheckboxBindings", "QdsCheckmarkRootBindings"]}
+/>
+
+### \<Tree.NodeAction\>
+
+<TypeDocProps name="TreeNodeActionProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeActionBindings", "QdsTreeNodeActionBindings"]}
+/>
+
+### \<Tree.NodeIndicator\>
+
+<TypeDocProps name="TreeNodeIndicatorProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeIndicatorBindings", "QdsTreeNodeIndicatorBindings"]}
+/>
+
+### \<Tree.NodeIcon\>
+
+<TypeDocProps name="TreeNodeIconProps" />
+
+<TypeDocAttributes name={["TreeNodeIconBindings", "QdsTreeNodeIconBindings"]} />
+
+### \<Tree.NodeProvider\>
+
+<TypeDocProps name="TreeNodeProviderProps" />
+
+### \<Tree.NodeText\>
+
+<TypeDocProps name="TreeNodeTextProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeText Bindings", "QdsTreeNodeTextBindings"]}
+/>

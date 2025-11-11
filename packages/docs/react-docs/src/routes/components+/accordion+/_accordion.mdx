@@ -1,0 +1,179 @@
+---
+title: Accordion
+group: Disclosure
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+The accordion component enables users to collapse and expand multiple content sections within a limited space. This helps group and hide content effectively, maintaining a clean interface and reducing clutter.
+
+```typescript
+import {Accordion} from "@qualcomm-ui/react/accordion"
+```
+
+## Usage
+
+- The accordion requires each of its items to have a unique `value` input.
+- The accordion is keyboard-navigable once focused. Arrow keys can be used to move to the next or previous item. Home and End keys can be used to jump to the first or last item, respectively.
+
+## Examples
+
+### Simple
+
+Here's a typical usage example that uses the shorthand syntax for the item.
+
+<QdsDemo name="AccordionSimpleDemo" />
+
+### Composite
+
+The following example is equivalent to the previous example, but uses the composite approach.
+
+<QdsDemo name="AccordionCompositeDemo" />
+
+### Composite Layout
+
+Use the composite form only when the simple approach can't achieve your desired layout or behavior. The following example demonstrates how to display the expand/collapse indicator at the start of the trigger by changing its DOM position.
+
+<QdsDemo name="AccordionCompositeLayoutDemo" />
+
+### Multiple
+
+By default, only a single accordion section can be open at a time. Setting [multiple](./#multiple-1) allows multiple sections to be open or closed simultaneously.
+
+<QdsDemo name="AccordionMultipleDemo" />
+
+### Collapsible
+
+When [multiple](./#multiple-1) is not set, enabling [collapsible](./#collapsible-1) lets the user close an open accordion item by clicking it again.
+
+<QdsDemo name="AccordionCollapsibleDemo" />
+
+### Default Value
+
+The [defaultValue](./#defaultValue) prop allows you to set the initial state for the accordion by specifying which accordion item or items (if [multiple](./#multiple-1) is set) should be open by default.
+It expects an array of values that should match those passed to each `Accordion.Item`.
+
+<QdsDemo name="AccordionDefaultValueDemo" />
+
+### Disabled
+
+You can disable accordion items by setting their [disabled](./#disabled-2) prop. This prevents the item from being interacted with.
+You can disable the entire accordion by setting the [disabled](./#disabled-1) prop on `Accordion.Root`.
+
+<QdsDemo name="AccordionDisabledDemo" />
+
+### Uncontained
+
+Set the [uncontained](./#uncontained-1) prop when the accordion is not placed inside a container and needs to align flush with adjacent layout elements—such as when positioned directly below a paragraph of text.
+This prop removes the default horizontal padding from accordion items, allowing them to sit seamlessly within the surrounding content.
+
+<QdsDemo name="AccordionUncontainedDemo" />
+
+### Size
+
+Use the [size](./#size-1) prop to control the size of the accordion items. The available sizes are `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="AccordionSizeDemo" />
+
+### Secondary Text
+
+Use the `Accordion.ItemSecondaryText` component to display additional text opposite the trigger title.
+
+<QdsDemo name="AccordionSecondaryTextDemo" />
+
+### Icon
+
+Pass an icon to the [icon](./#icon-1) prop on the `Accordion.ItemTrigger` element to display it next to the trigger title.
+
+<QdsDemo name="AccordionIconDemo" />
+
+> [!warning/UX considerations]
+> In order to prevent visual confusion, only one icon can appear next to the trigger title. If you place the indicator at the start, the [icon prop](#icon) will be ignored.
+
+### Controlled State
+
+The Accordion follows our [controlled state](/patterns/controlled-state) pattern with these three props:
+
+- [value](./#value) - the controlled value that determines which accordion items are open.
+- [onValueChange](./#onValueChange) - callback fired when the value changes: `(value: string[]) => void`
+- [defaultValue](./#defaultValue) - initial state for uncontrolled mode
+
+<QdsDemo name="AccordionControlledStateDemo" />
+
+### Focus Callback
+
+The [onFocusChange](./#onFocusChange) prop allows you to listen for focus events on the accordion's items.
+
+<QdsDemo name="AccordionFocusCallbackDemo" />
+
+## Shortcuts
+
+### Item Content
+
+The `Accordion.ItemContent` component is a shortcut for the following:
+
+```tsx
+<AccordionItemContentAnimator>
+  <AccordionItemContentBody>{children}</AccordionItemContentBody>
+</AccordionItemContentAnimator>
+```
+
+### Item Shorthand
+
+The `Accordion.Item` component is a shortcut for the following:
+
+```tsx
+<Accordion.ItemRoot>
+  <Accordion.ItemTrigger>
+    <Accordion.ItemText>{props.text}</Accordion.ItemText>
+    {props.secondaryText ? (
+      <Accordion.ItemSecondaryText>
+        {props.secondaryText}
+      </Accordion.ItemSecondaryText>
+    ) : null}
+    <Accordion.ItemIndicator />
+  </Accordion.ItemTrigger>
+  <Accordion.ItemContent>{props.children}</Accordion.ItemContent>
+</Accordion.ItemRoot>
+```
+
+## API
+
+### \<Accordion.Root\>
+
+<TypeDocProps name="AccordionRootProps" />
+
+### \<Accordion.Item\>
+
+<TypeDocProps name="AccordionItemProps" />
+
+### \<Accordion.ItemTrigger\>
+
+<TypeDocProps name="AccordionItemTriggerProps" />
+
+### \<Accordion.ItemText\>
+
+<TypeDocProps name="AccordionItemTextProps" />
+
+### \<Accordion.ItemSecondaryText\>
+
+<TypeDocProps name="AccordionItemSecondaryTextProps" />
+
+### \<Accordion.ItemIndicator\>
+
+<TypeDocProps name="AccordionItemIndicatorProps" />
+
+### \<Accordion.ItemContent\>
+
+<TypeDocProps name="AccordionItemContentProps" />
+
+### \<Accordion.ItemContentAnimator\>
+
+<TypeDocProps name="AccordionItemContentAnimatorProps" />
+
+### \<Accordion.ItemContentBody\>
+
+<TypeDocProps name="AccordionItemContentBodyProps" />

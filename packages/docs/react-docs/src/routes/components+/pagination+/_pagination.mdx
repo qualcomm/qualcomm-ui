@@ -1,0 +1,155 @@
+---
+title: Pagination
+group: Disclosure
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+Enables the user to select a specific page from a range of pages.
+
+```tsx
+import {Pagination} from "@qualcomm-ui/react/pagination"
+```
+
+## Examples
+
+### Showcase
+
+The component renders the number of pages based on the `count` and `pageSize` props.
+
+<QdsDemo name="PaginationShowcaseDemo" />
+
+### Sizes
+
+Customize the size of the component and its elements using the [size](./#size) prop.
+
+<QdsDemo expanded name="PaginationSizesDemo" />
+
+### Page Size
+
+Render a dropdown via `<Pagination.PageSize>` to adjust the number of data items per page.
+
+<QdsDemo name="PaginationPageSizeDemo" />
+
+### Page Metadata
+
+Show metadata about the current and total pages with `<Pagination.PageMetadata>`
+
+To customize the text, supply children as a render prop.
+
+<QdsDemo name="PaginationMetadataDemo" />
+
+### Ranges
+
+<QdsDemo expanded name="PaginationRangesDemo" />
+
+### Controlled State
+
+The Pagination component follows our [controlled state](/patterns/controlled-state) pattern for its [page](./#page) and [pageSize](./#pageSize) props.
+
+By default, the component is uncontrolled and manages these values internally. You may optionally control the current page or page size by supplying the properties and their corresponding onChange functions:
+
+<QdsDemo expanded name="PaginationControlledStateDemo" />
+
+## Shortcuts
+
+Shortcuts enable quick implementations for common use cases.
+
+### PageItems
+
+Rendering `<Pagination.PageItems />` is shorthand for this:
+
+```tsx
+<PaginationContext>
+  {(context) => (
+    <>
+      {context.pageItems.map((item, index) => {
+        const itemProps = context.getPageItemProps(item)
+        return <Pagination.PageItem key={index} {...itemProps} />
+      })}
+      {children}
+    </>
+  )}
+</PaginationContext>
+```
+
+### PageSize
+
+The `<Pagination.PageSize />` shortcut is a convenient dropdown for selecting the number of items per page. It's shorthand for this:
+
+```tsx
+<PolymorphicElement as="div" {...mergedProps}>
+  {children}
+  <Menu.Root
+    onSelect={(value) => {
+      setPageSize(parseInt(value))
+    }}
+    size={qdsContext.size}
+  >
+    <Menu.Trigger>
+      <Menu.Button
+        aria-labelledby={pageSizeLabelId}
+        emphasis="neutral"
+        size={qdsContext.size}
+        variant="outline"
+      >
+        {pageSize}
+      </Menu.Button>
+    </Menu.Trigger>
+    <Portal>
+      <Menu.Positioner>
+        <Menu.Content>
+          {options.map((opt) => (
+            <Menu.Item key={opt} value={`${opt}`}>
+              {opt}
+            </Menu.Item>
+          ))}
+        </Menu.Content>
+      </Menu.Positioner>
+    </Portal>
+  </Menu.Root>
+</PolymorphicElement>
+```
+
+### PageButtons
+
+The `<Pagination.PageButtons>` shortcut renders the prev, next, and individual page buttons:
+
+```tsx
+<ActionGroup {...props}>
+  <Pagination.PrevTrigger />
+  <Pagination.PageItems />
+  <Pagination.NextTrigger />
+</ActionGroup>
+```
+
+## API
+
+### PageMetadata
+
+Metadata about the current page is available as a render prop from the `<Pagination.PageMetadata>` element:
+
+```tsx
+<Pagination.PageMetadata>
+  {({count, page, pageCount, pageEnd, pageStart}) => {
+    // ...
+  }}
+</Pagination.PageMetadata>
+```
+
+<TypeDocProps name="PageMetadata" partial />
+
+### \<Pagination.Root\>
+
+<TypeDocProps name="PaginationRootProps" />
+
+### \<Pagination.PageSize\>
+
+<TypeDocProps name="PaginationPageSizeProps" />
+
+### \<Pagination.PageItems\>
+
+<TypeDocProps name="PaginationPageItemsProps" />

@@ -54,7 +54,7 @@ interface LintResult {
   file: string
   hasCopyright: boolean
   hasLicense: boolean
-  nonPermissiveLicense: boolean
+  hasNonPermissiveLicense: boolean
   passed: boolean
 }
 
@@ -174,6 +174,11 @@ class LicenseHeaderManager {
       return false
     }
 
+    if (this.hasNonPermissiveLicense(content)) {
+      console.error("Can't modify non-permissive license.")
+      return false
+    }
+
     const strippedContent = this.stripExistingHeader(content)
 
     const header =
@@ -238,7 +243,7 @@ class LicenseHeaderManager {
     return count
   }
 
-  private checkForNonPermissiveLicenses(fileContents: string) {
+  private hasNonPermissiveLicense(fileContents: string) {
     return nonPermissiveLicenses.some((license) =>
       fileContents.includes(license),
     )
@@ -279,11 +284,11 @@ class LicenseHeaderManager {
         file,
         hasCopyright: this.hasCopyright(content),
         hasLicense: this.hasLicense(content),
-        nonPermissiveLicense: this.checkForNonPermissiveLicenses(content),
+        hasNonPermissiveLicense: this.hasNonPermissiveLicense(content),
         passed: false,
       }
 
-      if (result.nonPermissiveLicense) {
+      if (result.hasNonPermissiveLicense) {
         metrics.nonPermissiveLicenseCount++
       }
       if (result.hasLicense) {
@@ -298,7 +303,9 @@ class LicenseHeaderManager {
       }
 
       result.passed =
-        !result.nonPermissiveLicense && result.hasLicense && result.hasCopyright
+        !result.hasNonPermissiveLicense &&
+        result.hasLicense &&
+        result.hasCopyright
       results.push(result)
     }
     return {
@@ -436,7 +443,7 @@ program
   .action(async (directory) => {
     const manager = await LicenseHeaderManager.create(cwd())
     const now = performance.mark("Checking headers")
-    const {metrics} = await manager.lintFiles(directory)
+    const {metrics, results} = await manager.lintFiles(directory)
     const headerCheckTime = performance.measure(
       "Checking headers",
       now,
@@ -451,12 +458,10 @@ program
       )
       process.exit(0)
     } else {
-      const invalidFiles = await manager.getFilesWithoutHeaders(directory)
-      console.error(
-        `✗ ${invalidFiles.length} file(s) without correct headers:\n`,
-      )
-      invalidFiles.forEach((file) =>
-        console.error(`  ./${relative(directory, file)}`),
+      const invalidFiles = results.filter((res) => !res.passed)
+      console.error(`✗ ${invalidFiles.length} file(s):\n`)
+      invalidFiles.forEach((result) =>
+        console.error(`  ./${relative(directory, result.file)}`),
       )
       process.exit(1)
     }

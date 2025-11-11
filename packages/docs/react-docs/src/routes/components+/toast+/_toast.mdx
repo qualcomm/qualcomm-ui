@@ -1,0 +1,154 @@
+---
+title: Toast Notification
+group: Feedback
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Toast, Toaster, createToaster} from "@qualcomm-ui/react/toast"
+```
+
+## Usage Guidelines
+
+### Global Toaster
+
+1. Create a single toaster instance in a shared file and export it for use throughout your app.
+
+```tsx
+import {createToaster} from "@qualcomm-ui/react/toast"
+
+export const globalToaster = createToaster({
+  overlap: true,
+  position: "bottom-end",
+})
+```
+
+2. Import and render the simple `Toaster` component near the root of your application.
+
+```tsx
+// shared/toaster.ts
+import {Toaster} from "@qualcomm-ui/react/toast"
+
+import {globalToaster} from "./shared"
+
+function AppRoot() {
+  return (
+    <>
+      <Toaster toaster={globalToaster} />
+      {/* ...the rest of your app */}
+    </>
+  )
+}
+```
+
+Alternatively, you can provide children to the `Toaster` component to customize the rendering of the toasts. If children are omitted, the default toast rendering is used.
+
+```tsx
+// <Toaster /> is ultimately a shortcut for this:
+<Toaster toaster={toaster}>
+  {(toast) => {
+    return (
+      <Toast.Root key={toast.id}>
+        <Toast.Heading>{toast.title}</Toast.Heading>
+        <Toast.Description>{toast.description}</Toast.Description>
+        <Toast.CloseButton />
+      </Toast.Root>
+    )
+  }}
+</Toaster>
+```
+
+## Examples
+
+> [!tip/Demos]
+> Each demo uses its own `<Toaster />` instance for demonstration. Note that multiple toaster instances may obscure other toasts in practice, so it's recommended to use a single toaster instance for your entire app.
+
+### With Action
+
+Use the [action](./#action) property to add an action button to the toast.
+
+<QdsDemo name="ToastActionDemo" />
+
+### Toast Emphasis
+
+Here's an example of each toast type.
+
+<QdsDemo name="ToastEmphasisDemo" />
+
+### Overlapping Toasts
+
+By default, toasts are stacked on top of each other. To conserve space when rendering many toasts, set the [overlap](./#overlap) property to true in the `toaster.create` function.
+
+<QdsDemo name="ToastOverlapDemo" />
+
+### Toast Duration
+
+Use the [duration](./#duration) property to set the duration of the toast.
+
+<QdsDemo name="ToastDurationDemo" />
+
+### Persistent Toast
+
+Set the [type](./#type) property to `loading` to make the toast stay on screen until dismissed.
+
+<QdsDemo name="ToastPersistentDemo" />
+
+### Pause and Resume
+
+Use the [pause](./#pause) and [resume](./#resume) methods on the toaster instance to pause and play the toast.
+
+Pausing a toast prevents it from timing out, while resuming it will continue the timeout from the remaining duration.
+
+<QdsDemo name="ToastPauseDemo" />
+
+### Max Visible
+
+Set the [max](./#max) prop on the `createToaster` function to define the maximum number of toasts that can be rendered at a time. Extra toasts will be queued and rendered when the number of visible toasts drops below the max.
+
+<QdsDemo name="ToastMaxVisibleDemo" />
+
+### Screen Placement
+
+Toasts can be displayed on all four corners of a page. We recommend picking a single placement for your app, as this creates a consistent experience for your users.
+
+<QdsDemo name="ToastPlacementDemo" />
+
+## API
+
+In the following sections, the toaster instance is referred to as `toaster`.
+
+### ToastCreateOptions
+
+These are the options passed to the `toaster.createToast` function.
+
+<TypeDocProps name="ToastCreateOptions" />
+
+### ToasterCreateOptions
+
+Options passed to the `createToaster` function.
+
+<TypeDocProps name="ToasterCreateOptions" />
+
+### ToasterInstance
+
+This is the instance returned from the `createToaster` function.
+
+<TypeDocProps name="ToasterInstance" hideDefaultColumn partial />
+
+### \<Toaster\>
+
+<TypeDocProps name="ToasterProps" />
+
+### ToastPromiseOptions
+
+These are the options passed to the `toaster.promise` function.
+
+<TypeDocProps name="ToastPromiseOptions" hideDefaultColumn />
+
+### ToastStatusChangeDetails
+
+<TypeDocProps name="ToastStatusChangeDetails" partial hideDefaultColumn />

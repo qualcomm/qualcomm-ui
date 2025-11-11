@@ -1,0 +1,162 @@
+---
+title: Progress Ring
+group: Feedback
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+A small visual indicator that communicates ongoing task execution.
+
+# {frontmatter.title}
+
+```tsx
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
+```
+
+## Overview
+
+The progress ring can be in one of two states:
+
+- indeterminate: the default state.
+- determinate: assumed when the [value](./#value) prop is passed.
+
+Indeterminate progress rings keep users informed that work is happening when timeframes are unknown.
+
+## Examples
+
+### Simple
+
+For most use cases, you can use the simple `ProgressRing` component.
+
+<QdsDemo name="ProgressRingSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="ProgressRingCompositeDemo" />
+
+### Value
+
+When the [value](./#value-1) prop is set, the filled portion of the circle will represent the total percent relative to [max](./#max) and [min](./#min). This is referred to as the "determinate" state.
+
+<QdsDemo name="ProgressRingValueDemo" />
+
+### Value Text
+
+Display the value text by passing a value to the [valueText](./#valuetext) prop. The value text only shows when the size is `lg` or `xl`.
+
+<QdsDemo name="ProgressRingValueTextDemo" />
+
+### Sizes
+
+Use the [size](./#size) prop to change the size of the circle.
+
+<QdsDemo name="ProgressRingSizesDemo" />
+
+### Thickness
+
+Use the [thickness](./#thickness) prop to change the pixel width of the track and bar.
+
+<QdsDemo name="ProgressRingThicknessDemo" />
+
+## Shortcuts
+
+The `ProgressRing.Circle` component automatically renders the track and bar components when child. The following two examples are
+
+```tsx
+<ProgressRing.Circle />
+```
+
+## Accessibility
+
+- When the value is supplied, the component automatically provides the corresponding `aria-value*` attributes to the element.
+- The progress element is automatically marked with `role="progressbar"`.
+- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the `aria-label` of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+
+## API
+
+### \<ProgressRing\>
+
+The `ProgressRing` component extends the [ProgressRing.Root](./#progress-ring-root) with the following props:
+
+<TypeDocProps name="ProgressRingProps" omitFrom="ProgressRingRootProps" />
+
+### ProgressApi
+
+This API is accessible in JSX via the `<ProgressRing.Context>` component:
+
+```tsx
+<ProgressRing.Context>
+  {(api: ProgressApi) => {
+    return <>{/*...*/}</>
+  }}
+</ProgressRing.Context>
+```
+
+<TypeDocProps name="ProgressApi" partial />
+
+## Composite API
+
+### \<ProgressRing.Root\>
+
+<TypeDocProps name="ProgressRingRootProps" />
+
+<TypeDocAttributes
+  name={["ProgressRingRootBindings", "QdsProgressRingRootBindings"]}
+/>
+
+### \<ProgressRing.Label\>
+
+<TypeDocProps name="ProgressRingLabelProps" />
+
+<TypeDocAttributes
+  name={["ProgressLabelBindings", "QdsProgressRingLabelBindings"]}
+/>
+
+### \<ProgressRing.ValueText\>
+
+<TypeDocProps name="ProgressRingValueTextProps" />
+
+<TypeDocAttributes
+  name={["ProgressValueTextBindings", "QdsProgressRingValueTextBindings"]}
+/>
+
+### \<ProgressRing.ErrorText\>
+
+<TypeDocProps name="ProgressRingErrorTextProps" />
+
+<TypeDocAttributes
+  name={["ProgressErrorTextBindings", "QdsProgressRingErrorTextBindings"]}
+/>
+
+### \<ProgressRing.CircleContainer\>
+
+<TypeDocProps name="ProgressRingCircleContainerProps" />
+
+<TypeDocAttributes name="QdsProgressRingCircleContainerBindings" />
+
+### \<ProgressRing.Circle\>
+
+<TypeDocProps name="ProgressRingCircleProps" />
+
+<TypeDocAttributes
+  name={["ProgressRingCircleBindings", "QdsProgressRingCircleBindings"]}
+/>
+
+### \<ProgressRing.Track\>
+
+<TypeDocProps name="ProgressRingTrackProps" />
+
+<TypeDocAttributes
+  name={["ProgressRingTrackBindings", "QdsProgressRingTrackBindings"]}
+/>
+
+### \<ProgressRing.Bar\>
+
+<TypeDocProps name="ProgressRingBarProps" />
+
+<TypeDocAttributes
+  name={["ProgressRingBarBindings", "QdsProgressRingBarBindings"]}
+/>

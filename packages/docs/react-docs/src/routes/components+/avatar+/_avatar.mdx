@@ -1,0 +1,94 @@
+---
+title: Avatar
+group: Data Display
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+Avatars are used to represent a user or an entity in the UI. They can be used in various contexts, such as user profiles, comments, or lists.
+
+```typescript
+import {Avatar} from "@qualcomm-ui/react/avatar"
+```
+
+## Usage
+
+Avatars can display a user or entity image, initials, or custom content when an image is unavailable. They can also indicate the status of the user or entity.
+
+## Overview
+
+The anatomy of the avatar component is as follows:
+
+- `Avatar.Root`: The main component.
+- `Avatar.Image`: (optional) Displays an image as the avatar.
+- `Avatar.Content`: (optional) Displays alternate content, such as initials or an icon, and acts as a fallback if the image fails to load..
+- `Avatar.Status`: (optional) Shows a status indicator dot.
+
+## Examples
+
+### Showcase
+
+Here's a typical usage example:
+
+<QdsDemo name="AvatarShowcaseDemo" />
+
+### Content
+
+The `Avatar.Content` component displays alternative content within the avatar. Use it by itself to show initials or an icon, or together with `Avatar.Image` to provide fallback content if the image cannot be loaded.
+
+<QdsDemo name="AvatarContentDemo" />
+
+### Sizes
+
+Use the [size](./#size) prop to set the size of the avatar. The available sizes are `xs`, `sm`, `md` (default), `lg`, and `xl`.
+
+<QdsDemo name="AvatarSizeDemo" />
+
+### Variants
+
+When displaying initials or an icon, use the [variant](./#variant) prop on `Avatar.Content` to set the avatar's style. Available variants are `neutral` (default), `contrast`, and `brand`.
+
+<QdsDemo name="AvatarVariantDemo" />
+
+### Status
+
+To indicate the status of the user or entity, use the `Avatar.Status` component and set its [status](./#status-1) prop to one of: `active`, `offline` (default), `away`, or `busy`.
+
+<QdsDemo name="AvatarStatusDemo" />
+
+### State Callback
+
+You can listen for changes to the avatar's state by using the [onStateChange](./#onStateChange) prop.
+
+<QdsDemo expanded name="AvatarStateCallbackDemo" />
+
+## API
+
+### \<Avatar.Root\>
+
+<TypeDocProps name="AvatarRootProps" />
+
+<TypeDocAttributes name={["AvatarRootBindings", "QdsAvatarRootBindings"]} />
+
+### \<Avatar.Image\>
+
+<TypeDocProps name="AvatarImageProps" />
+
+<TypeDocAttributes name="AvatarImageBindings" />
+
+### \<Avatar.Content\>
+
+<TypeDocProps name="AvatarContentProps" />
+
+<TypeDocAttributes
+  name={["AvatarContentBindings", "QdsAvatarContentBindings"]}
+/>
+
+### \<Avatar.Status\>
+
+<TypeDocProps name="AvatarStatusProps" />
+
+<TypeDocAttributes name={["AvatarStatusBindings", "QdsAvatarStatusBindings"]} />

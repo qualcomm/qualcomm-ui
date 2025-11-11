@@ -1,0 +1,58 @@
+---
+title: Button Group
+group: Buttons
+---
+
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+```tsx
+import {ButtonGroup} from "@qualcomm-ui/react/button"
+```
+
+## Usage
+
+Use the `ButtonGroup` component to group related buttons together. This helps to visually associate buttons that perform similar actions.
+
+## Examples
+
+### Shared Props
+
+When you set certain props on the `ButtonGroup`, they are automatically applied to all child buttons. Some of these props can be overridden at the button level, while others cannot:
+
+**Non-overridable:**
+
+- [density](./#density), [disabled](./#disabled), and [size](./#size): if set on the group, all buttons will have the same corresponding property. The same prop on individual buttons will be ignored.
+
+**Overridable:**
+
+- [emphasis](./#emphasis) and [variant](./#variant): If set on the group, these will be the default for all buttons, but individual buttons can override them as needed.
+
+<QdsDemo name="ButtonGroupSharedPropsDemo" />
+
+### Layout
+
+Use the [layout](./#layout-1) prop to control how the button group is sized and aligned within its container. Options include:
+
+- `hug`: Content-sized; width matches the buttons only (default).
+- `start`: Full width; buttons are aligned to the start edge.
+- `end`: Full width; buttons are aligned to the end edge.
+- `fill`: Full width; buttons share space evenly.
+
+Borders have been added to the example below to better illustrate these layout options.
+
+<QdsDemo name="ButtonGroupLayoutDemo" />
+
+## Accessibility
+
+You should provide a meaningful label for the button group using either the `aria-label` or `aria-labelledby` prop.
+
+## API
+
+### \<ButtonGroup\>
+
+<TypeDocProps name="ButtonGroupProps" />
+
+<TypeDocAttributes name={["QdsButtonGroupBindings"]} />

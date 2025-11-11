@@ -1,0 +1,134 @@
+---
+title: Avoid The Pyramid of Doom
+---
+
+# {frontmatter.title}
+
+The "Pyramid of Doom" refers to a code pattern where multiple levels of nested conditional statements or callbacks create a triangular-shaped indentation pattern that resembles a pyramid. This pattern makes code difficult to read, understand, and maintain.
+
+## What causes the Pyramid of Doom?
+
+In TypeScript (and JavaScript), the Pyramid of Doom typically occurs in several scenarios:
+
+1. **Nested callbacks**: When asynchronous operations are chained using callbacks
+2. **Deeply nested conditionals**: Multiple levels of if/else statements
+3. **Exception handling**: Nested try/catch blocks
+
+## Nested Conditionals
+
+Nested conditional statements (if/else blocks) are one of the most common sources of the Pyramid of Doom in TypeScript. They can make code difficult to follow and maintain as the nesting levels increase.
+
+```ts
+type UserRole = "admin" | "editor" | "viewer"
+
+interface User {
+  id: string
+  name: string
+  roles: UserRole[]
+  isActive: boolean
+}
+
+// Before: All in one function
+function processUserPermission(user: User): string {
+  if (user) {
+    if (user.roles) {
+      if (user.roles.includes("admin")) {
+        if (user.isActive) {
+          return "Full access granted"
+        } else {
+          return "Account inactive"
+        }
+      } else if (user.roles.includes("editor")) {
+        if (user.isActive) {
+          return "Edit access granted"
+        } else {
+          return "Account inactive"
+        }
+      } else {
+        return "Insufficient permissions"
+      }
+    } else {
+      return "No roles assigned"
+    }
+  } else {
+    return "User not found"
+  }
+}
+```
+
+This code is difficult to read and maintain due to the deep nesting. Each condition adds another level of indentation, creating the pyramid shape.
+
+### Solutions and Alternatives
+
+#### 1. Early Returns (Guard Clauses)
+
+```ts
+function processUserPermission(user: User | null): string {
+  if (!user) {
+    return "User not found"
+  }
+
+  if (!user.roles) {
+    return "No roles assigned"
+  }
+
+  if (!user.isActive) {
+    return "Account inactive"
+  }
+
+  if (user.roles.includes("admin")) {
+    return "Full access granted"
+  }
+
+  if (user.roles.includes("editor")) {
+    return "Edit access granted"
+  }
+
+  return "Insufficient permissions"
+}
+```
+
+The guard clause approach reduces nesting by handling each condition separately and makes the logic flow easier to follow as a result.
+
+#### 2. Function Composition
+
+```ts
+function processUserPermission(user: User | null): string {
+  if (!user) {
+    return "User not found"
+  }
+
+  if (!user.roles) {
+    return "No roles assigned"
+  }
+
+  if (!user.isActive) {
+    return "Account inactive"
+  }
+
+  return getPermissionMessage(user.roles)
+}
+
+function getPermissionMessage(roles: UserRole[]): string {
+  if (roles.includes("admin")) {
+    return "Full access granted"
+  }
+
+  if (roles.includes("editor")) {
+    return "Edit access granted"
+  }
+
+  return "Insufficient permissions"
+}
+```
+
+The function composition approach:
+
+- Breaks complex logic into focused functions
+- Creates a clear sequence of checks
+- Makes code more modular and testable
+
+Each function has a distinct role:
+
+- processUserPermission: Handles validation flow
+- getPermissionMessage: Manages permission rules

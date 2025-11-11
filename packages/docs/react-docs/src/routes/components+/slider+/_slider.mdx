@@ -1,0 +1,362 @@
+---
+title: Slider
+group: Form Controls
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+The slider component lets users select a single value or a range of values by moving one or two thumbs along a track. Sliders are ideal for adjusting settings such as volume, brightness, or selecting a numeric range.
+
+```typescript
+import {Slider} from "@qualcomm-ui/react/slider"
+```
+
+## Usage
+
+Sliders allow users to select a value or range from a continuous or discrete set by moving an indicator (thumb) along a track. They are best used for settings that reflect a range of values rather than precise input.
+
+## Examples
+
+### Simple
+
+Use the simple API to create a slider using minimal markup.
+
+<QdsDemo name="SliderSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="SliderCompositeDemo" />
+
+### Min/Max/Step
+
+The [min](./#min), [max](./#max), and [step](./#step) props control the slider's value range and increments:
+
+- `min`: The minimum value of the slider (default is 0).
+- `max`: The maximum value of the slider (default is 100).
+- `step`: The increment/decrement step value (default is 1).
+
+<QdsDemo name="SliderMinMaxStepDemo" />
+
+### Origin
+
+Use [origin](./#origin) to control where the track is filled from for single-value sliders:
+
+- `start`: Fills from the start of the track to the thumb. Useful when the value represents an absolute value (default).
+- `center`: Fills from the center of the track to the thumb. Useful when the value represents an offset or relative value.
+- `end`: Fills from the end of the track to the thumb. Useful when the value represents an offset from the end.
+
+<QdsDemo name="SliderOriginDemo" />
+
+### Tooltip
+
+Use the [tooltip](./#tooltip-1) prop to display the slider's value in a tooltip rather than above the component.
+
+<QdsDemo name="SliderTooltipDemo" />
+
+### Markers
+
+#### Track Markers
+
+By default, the component generates 11 marks based on the slider's [min](./#min) and [max](./#max) values.
+provide your own set of marks by passing them in an array to the [marks](./#marks) prop.
+
+<QdsDemo name="SliderMarkersDemo" />
+
+#### Side Markers
+
+For more compact designs, you can display the `min` and `max` markers at the ends of the track using the [sideMarkers](./#sideMarkers) prop.
+
+<QdsDemo name="SliderSideMarkersDemo" />
+
+### Range
+
+Set the [value](./#value) or [defaultValue](./#defaultValue) prop with two values to create a range slider.
+
+<QdsDemo name="SliderRangeDemo" />
+
+#### Minimum Steps Between Thumbs
+
+To prevent overlapping thumbs, you can use the [minStepsBetweenThumbs](./#minStepsBetweenThumbs) prop to set a minimum distance between them.
+
+<QdsDemo name="SliderMinStepsDemo" />
+
+#### Display
+
+By default, range values are displayed separated by a dash (-). You can customize this by passing a separator string or a function to the [display](./#display-1) prop.
+
+<QdsDemo name="SliderDisplayDemo" />
+
+### Size
+
+Set the [size](./#size-1) prop to adjust the size of the thumbs. Available sizes are `sm` (small) and `md` (medium, default).
+
+<QdsDemo name="SliderSizeDemo" />
+
+### Variant
+
+Set the [variant](./#variant-1) prop to adjust the visual style of the slider. Available variants are `neutral` and `primary` (default).
+
+<QdsDemo name="SliderVariantDemo" />
+
+### Hint
+
+Use the [hint](./#hint-1) prop to add additional guidance or context to the user below the slider.
+
+<QdsDemo name="SliderHintDemo" />
+
+### Disabled
+
+Use the [disabled](./#disabled-1) prop to prevent user interaction.
+
+<QdsDemo name="SliderDisabledDemo" />
+
+### Focus Callback
+
+The [onFocusChange](./#onFocusChange) prop allows you to listen for focus events on the slider's thumbs.
+
+<QdsDemo name="SliderFocusCallbackDemo" />
+
+### Controlled State
+
+Use [value](./#value) and [onValueChange](./#onValueChange) or [onValueChangeEnd](./#onValueChangeEnd) to control the value of the slider. This allows for more complex interactions and integration with form libraries.
+
+<QdsDemo name="SliderValueCallbackDemo" />
+
+## Forms
+
+Choose the form library that fits your needs—we've built examples with React Hook Form and Tanstack Form to get you started.
+
+### React Hook Form
+
+Use [React Hook Form](https://react-hook-form.com/) to handle the slider state and validation. [ArkType](https://arktype.io/) works great for schema validation if you need it.
+
+<QdsDemo expanded name="SliderReactHookFormDemo" />
+
+### Tanstack Form
+
+[Tanstack Form](https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts) handles slider validation with its built-in validators.
+
+<QdsDemo expanded name="SliderTanstackFormDemo" />
+
+Tanstack form also supports [ArkType](https://tanstack.com/form/latest/docs/framework/react/guides/validation#validation-through-schema-libraries).
+
+## Composite API and Shortcuts
+
+The Slider component provides a composite API should you need more control over the slider's behavior and appearance.
+
+### Anatomy
+
+The composite API is based on the following components:
+
+- `Slider.Root`: The main component that wraps the slider subcomponents.
+- `Slider.Label`: The slider main label.
+- `Slider.ValueText`: The slider current value as text.
+- `Slider.Control`: The container for the thumb(s) and its track and range.
+- `Slider.Track`: The track along which the thumb(s) move.
+- `Slider.Range`: The filled portion of the track.
+- `Slider.Thumbs` or `Slider.Thumb + Slider.HiddenInput`: The draggable handle(s).
+- `Slider.Hint`: The hint text below the slider.
+- `Slider.ErrorText`: The error message below the slider.
+- `Slider.Markers` or `Slider.MarkerGroup + Slider.Marker`: The markers along the track.
+
+### Thumbs
+
+If you need more control over the thumbs, you can use the `Slider.Thumb` component instead of the `Slider.Thumbs` shortcut.
+Also note that `Slider.Thumbs` will automatically create a range slider when the slider's `value` or `defaultValue` is set accordingly.
+
+```tsx
+import {Slider} from "@qualcomm-ui/react/slider"
+
+function RangeSlider() {
+  return (
+    <Slider.Root defaultValue={[25, 50]}>
+      <Slider.ValueText />
+      <Slider.Control>
+        <Slider.Track>
+          <Slider.Range />
+        </Slider.Track>
+        <Slider.Thumb index={0} name="min">
+          <Slider.HiddenInput />
+        </Slider.Thumb>
+        <Slider.Thumb index={1} name="max">
+          <Slider.HiddenInput />
+        </Slider.Thumb>
+      </Slider.Control>
+    </Slider.Root>
+  )
+}
+```
+
+### Thumbs with tooltips
+
+Setting the [tooltip](#./tooltip) prop on the `Slider.Thumbs` component is the equivalent of the following composition using the `Tooltip` component:
+
+```tsx
+import {Slider} from "@qualcomm-ui/react/slider"
+import {Tooltip} from "@qualcomm-ui/react/tooltip"
+import {useSliderContext} from "@qualcomm-ui/react-core/slider"
+
+export default function SliderWithTooltip() {
+  function ThumbValue({index}: {index: number}) {
+    const context = useSliderContext()
+    return context.getThumbValue(index)
+  }
+  return (
+    <Slider.Root defaultValue={[25, 50]}>
+      <Slider.Label>Label</Slider.Label>
+      <Slider.ValueText />
+      <Slider.Control>
+        <Slider.Track>
+          <Slider.Range />
+        </Slider.Track>
+        <Tooltip
+          closeOnClick={false}
+          positioning={{flip: false}}
+          trigger={
+            <Slider.Thumb index={0} name="min">
+              <Slider.HiddenInput />
+            </Slider.Thumb>
+          }
+        >
+          <ThumbValue index={0} />
+        </Tooltip>
+        <Tooltip
+          closeOnClick={false}
+          positioning={{flip: false}}
+          trigger={
+            <Slider.Thumb index={1} name="max">
+              <Slider.HiddenInput />
+            </Slider.Thumb>
+          }
+        >
+          <ThumbValue index={1} />
+        </Tooltip>
+      </Slider.Control>
+    </Slider.Root>
+  )
+}
+```
+
+### Markers
+
+The `Markers` component is a convenient shortcut to display custom track markers. But you can also create your own markers using the `Slider.MarkerGroup` and `Slider.Marker` components.
+
+```tsx
+import {Slider} from "@qualcomm-ui/react/slider"
+
+function SliderWithCustomMarkers() {
+  return (
+    <Slider.Root defaultValue={[25, 50]}>
+      <Slider.Label>Label</Slider.Label>
+      <Slider.ValueText />
+      <Slider.Control>
+        <Slider.Track>
+          <Slider.Range />
+        </Slider.Track>
+        <Slider.MarkerGroup>
+          <Slider.Marker value={0}>0</Slider.Marker>
+          <Slider.Marker value={25}>25</Slider.Marker>
+          <Slider.Marker value={50}>50</Slider.Marker>
+          <Slider.Marker value={75}>75</Slider.Marker>
+          <Slider.Marker value={100}>100</Slider.Marker>
+        </Slider.MarkerGroup>
+      </Slider.Control>
+    </Slider.Root>
+  )
+}
+```
+
+## API
+
+### \<Slider\>
+
+The `Slider` extends the [Slider.Root](./#slider-root) with the following props:
+
+<TypeDocProps name="SliderProps" omitFrom="SliderRootProps" />
+
+## Composite API
+
+### \<Slider.Root\>
+
+<TypeDocProps name="SliderRootProps" />
+
+<TypeDocAttributes name={["QdsSliderProps", "SliderRootBindings"]} />
+
+### \<Slider.Label\>
+
+<TypeDocProps name="SliderLabelProps" />
+
+<TypeDocAttributes name={"SliderLabelBindings"} />
+
+### \<Slider.ValueText\>
+
+<TypeDocProps name="SliderValueTextProps" />
+
+<TypeDocAttributes name={"SliderValueTextBindings"} />
+
+### \<Slider.Control\>
+
+<TypeDocProps name="SliderControlProps" />
+
+<TypeDocAttributes name={"SliderControlBindings"} />
+
+### \<Slider.Track\>
+
+<TypeDocProps name="SliderTrackProps" />
+
+<TypeDocAttributes name={"SliderTrackBindings"} />
+
+### \<Slider.Range\>
+
+<TypeDocProps name="SliderRangeProps" />
+
+<TypeDocAttributes name={"SliderRangeBindings"} />
+
+### \<Slider.Thumbs\> shortcut
+
+<TypeDocProps name="SliderThumbsProps" />
+
+### \<Slider.Thumb\>
+
+<TypeDocProps name="SliderThumbProps" />
+
+<TypeDocAttributes name={"SliderThumbBindings"} />
+
+### \<Slider.HiddenInput\>
+
+<TypeDocProps name="SliderHiddenInputProps" />
+
+<TypeDocAttributes name={"SliderHiddenInputBindings"} />
+
+### \<Slider.Markers\> shortcut
+
+<TypeDocProps name="SliderMarkersProps" />
+
+### \<Slider.MarkerGroup\>
+
+<TypeDocProps name="SliderMarkerGroupProps" />
+
+<TypeDocAttributes name={"SliderMarkerGroupBindings"} />
+
+### \<Slider.Marker\>
+
+<TypeDocProps name="SliderMarkerProps" />
+
+<TypeDocAttributes name={"SliderMarkerBindings"} />
+
+### \<Slider.Hint\>
+
+<TypeDocProps name="SliderHintProps" />
+
+<TypeDocAttributes name={"SliderHintBindings"} />
+
+### \<Slider.ErrorText\>
+
+<TypeDocProps name="SliderErrorTextProps" />
+
+<TypeDocAttributes name={"SliderErrorTextBindings"} />

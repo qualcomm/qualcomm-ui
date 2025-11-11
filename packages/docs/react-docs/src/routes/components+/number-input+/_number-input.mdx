@@ -1,0 +1,82 @@
+---
+title: Number Input
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {NumberInput} from "@qualcomm-ui/react/number-input"
+```
+
+## Examples
+
+### Simple
+
+The simple API bundles all subcomponents together into a single component.
+
+<QdsDemo name="NumberInputSimpleDemo" />
+
+### Composite
+
+The composite pattern provides full control over the component's elements by composing individual subcomponents.
+
+<QdsDemo name="NumberInputCompositeDemo" />
+
+### Min and Max values
+
+Pass the [min](./#min) and [max](./#max) props to the root component to set the minimum and maximum values of the number input.
+
+If the value entered is less than min or greater than max, it will be clamped to the nearest boundary on blur or enter.
+
+<QdsDemo name="NumberInputMinMaxDemo" />
+
+### Step interval
+
+Pass the [step](./#step) prop to the root component to set the increment or decrement step interval.
+
+<QdsDemo name="NumberInputStepDemo" />
+
+### States
+
+The following shows how the TextInput component appears in each interactive state.
+
+<QdsDemo name="NumberInputStatesDemo" />
+
+### Controlled Value
+
+Use the [value](./#value), [onValueChange](./#onValueChange) and [defaultValue](./#defaultValue) props to control the value of the input field. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="NumberInputControlledDemo" />
+
+### Sizes
+
+Customize size using the [size](./#size) prop. The default size is `md`.
+
+<QdsDemo name="NumberInputSizesDemo" />
+
+### Error Text and Indicator
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `NumberInput.ErrorText` component when using the composite API)
+
+The error text and indicator will only render when [invalid](./#invalid) is true.
+
+<QdsDemo name="NumberInputErrorTextDemo" />
+
+## API
+
+### \<NumberInput.Root\>
+
+<TypeDocProps name="NumberInputRootProps" />
+
+### \<NumberInput\>
+
+The `NumberInput` component supports all props from [NumberInput.Root](./#numberinputroot), plus the additional props listed below.
+
+<TypeDocProps name="NumberInputProps" omitFrom="NumberInputRootProps" />

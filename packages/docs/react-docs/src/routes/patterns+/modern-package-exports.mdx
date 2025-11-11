@@ -1,0 +1,142 @@
+---
+title: Modern package.json exports
+---
+
+# {frontmatter.title}
+
+## Exports Strategy Overview
+
+Most packages in this repository use the modern `exports` field with wildcard patterns to enable granular imports:
+
+```json
+{
+  "name": "@qualcomm-ui/react",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    }
+  }
+}
+```
+
+This pattern allows consumers to import individual modules to support optimal code splitting:
+
+```typescript
+import {Button} from "@qualcomm-ui/react/button"
+import {Dialog} from "@qualcomm-ui/react/dialog"
+```
+
+## Benefits vs. Legacy Approach
+
+- Each subpath becomes a separate module dependency that can be split into different chunks
+- Routes can load only the components they need
+- Support for different formats (ESM, CJS) and environments (Node.js, Browser)
+- Aligned with official Node.js module resolution standards
+
+## Legacy Approach Limitations
+
+The traditional approach using top-level fields:
+
+```json
+{
+  "name": "@qualcomm-ui/react",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts"
+}
+```
+
+### Code Splitting Issues
+
+Consider the following scenario which uses lazy loading to load different routes. The idea with lazy loading is to only load the code for the route that is currently being viewed. Assume that each of the following route files is lazy-loaded:
+
+```typescript
+// RouteA.tsx
+import {Button} from "@qualcomm-ui/react"
+
+// RouteB.tsx
+import {Dialog} from "@qualcomm-ui/react"
+
+// RouteC.tsx
+import {Input} from "@qualcomm-ui/react"
+```
+
+The problem with this is that modern bundlers see that multiple lazy routes import from the same module (`@qualcomm-ui/react`) and cannot split that module across different chunks. Whichever route loads first will include Button, Dialog, AND Input, even though that route only uses one of them.
+
+#### Solution with Modern Exports
+
+```typescript
+// RouteA.tsx
+import {Button} from "@qualcomm-ui/react/button" // only loads button module
+
+// RouteB.tsx
+import {Dialog} from "@qualcomm-ui/react/dialog" // only loads dialog module
+
+// RouteC.tsx
+import {Input} from "@qualcomm-ui/react/input" // only loads input module
+```
+
+Result: Each route gets its own optimally sized chunk containing only the components it actually uses.
+
+### Limited Control
+
+If you have a package that supports both Node.js and Browser environments, you cannot specify different outputs for different entry points with the legacy approach. Your only option is a single `main` or `module` field:
+
+```json
+{
+  "main": "./dist/index.js"
+}
+```
+
+#### Solution with Modern Exports
+
+Using modern exports, you can specify different outputs for different entry points:
+
+```json
+{
+  "name": "@qualcomm-ui/example",
+  "exports": {
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "default": "./dist/client/index.js"
+    },
+    "./node": {
+      "types": "./dist/node/index.d.ts",
+      "default": "./dist/node/index.js"
+    }
+  }
+}
+```
+
+In this scenario, the `client` and `node` entry points are treated as separate packages. The `client` entry point is used for the browser and the `node` entry point is used for Node.js.
+
+```typescript
+// server-code.ts
+import {someServerOnlyModule} from "@qualcomm-ui/example/node"
+```
+
+```tsx
+// client-code.tsx
+import {someClientOnlyModule} from "@qualcomm-ui/example/client"
+```
+
+- Client version can use window/document, localStorage, etc.
+- Node version can use node:fs, node:crypto, etc.
+- No runtime checks or polyfills needed
+
+## Repository Structure Alignment
+
+The exports strategy aligns with the repository's modular structure:
+
+```txt
+packages/
+├── frameworks/
+│   ├── react/              # Uses modern exports with ./* pattern
+│   ├── angular/            # Uses modern exports with ng-packagr secondary entrypoints
+└── common/
+    ├── core/               # Uses modern exports with ./* pattern
+    ├── utils/              # Uses modern exports with ./* pattern
+    └── qds-core/           # Uses modern exports with ./* pattern
+```

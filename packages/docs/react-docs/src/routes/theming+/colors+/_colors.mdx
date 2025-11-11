@@ -1,0 +1,40 @@
+---
+title: Colors
+---
+
+import {themeColors} from "@qualcomm-ui/docs-base"
+import {ColorTable} from "~components/theme-docs"
+
+# {frontmatter.title}
+
+If you're using [Tailwind CSS](https://tailwindcss.com/), you can install the [@qualcomm-ui/tailwind-plugin](/integrations/tailwind) package to make each of these variables available as Tailwind classes.
+
+### Semantic
+
+Semantic colors are commonly used to convey a specific status to the user.
+
+<ColorTable data={themeColors.semantic} />
+
+### Text
+
+Black text inverts to white when switched to dark mode. Text link and error tokens change to a lighter shade to ensure that small text has a contrast ratio of 4.5:1 or greater when used on a dark background.
+
+<ColorTable data={themeColors.text} />
+
+### Background
+
+Backgrounds are commonly used as colors for your app's surfaces, such as cards, pages, and menus.
+
+<ColorTable data={themeColors.background} />
+
+### Foreground
+
+Similar to text color tokens, foreground token colors invert when switched to dark mode. Foreground colors are mainly used for black & white icons but can be used for illustrations or any graphical elements that should invert when toggled between modes.
+
+<ColorTable data={themeColors.foreground} />
+
+### Borders
+
+Borders are lines that bring clarity to a layout by grouping and dividing content. They are used to divide text or components such as table rows, action button groups, and components within a panel.
+
+<ColorTable data={themeColors.border} />

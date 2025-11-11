@@ -1,0 +1,141 @@
+---
+title: Progress
+group: Feedback
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+A visual indicator showing completion progress of tasks and loading states.
+
+```tsx
+import {Progress} from "@qualcomm-ui/react/progress"
+```
+
+## Overview
+
+The progress ring can be in one of two states:
+
+- indeterminate: the default state.
+- determinate: assumed when the [value](./#value) prop is passed.
+
+Indeterminate progress bars keep users informed that work is happening when timeframes are unknown.
+
+## Examples
+
+### Simple
+
+The simple API provides a standalone component with built-in layout.
+
+<QdsDemo name="ProgressSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="ProgressCompositeDemo" />
+
+### Label Orientation
+
+Use the [labelOrientation](./#labelOrientation) property to change the positioning of the label and value text relative to the progress bar.
+
+<QdsDemo name="ProgressLabelOrientationDemo" />
+
+### Sizes
+
+<QdsDemo name="ProgressSizeDemo" />
+
+### Emphasis (Color)
+
+<QdsDemo name="ProgressEmphasisDemo" />
+
+### Error Text
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `Progress.ErrorText` component when using the composite API)
+
+The error text will only render when `invalid` is true.
+
+<QdsDemo name="ProgressErrorTextDemo" />
+
+## Shortcuts
+
+### Track and Bar
+
+The `Progress.Track` automatically renders a `Progress.Bar` when no children as passed to it.
+
+```tsx
+<Progress.Track />
+```
+
+is equivalent to
+
+```tsx
+<Progress.Track>
+  <Progress.Bar />
+</Progress.Track>
+```
+
+## Accessibility
+
+- When the value is supplied, the component automatically provides the corresponding `aria-value*` attributes to the element.
+- The progress element is automatically marked with `role="progressbar"`.
+- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the `aria-label` of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+
+## API
+
+### \<Progress\>
+
+The `Progress` component supports all props from [Progress.Root](./#progressroot), plus the additional props listed below.
+
+<TypeDocProps name="ProgressProps" omitFrom="ProgressRootProps" />
+
+### ProgressApi
+
+This API is accessible in JSX via the `<Progress.Context>` component:
+
+```tsx
+<Progress.Context>
+  {(api: ProgressApi) => {
+    return <>{/*...*/}</>
+  }}
+</Progress.Context>
+```
+
+Learn more about this pattern: [Render Props](/render-props)
+
+<TypeDocProps name="ProgressApi" partial />
+
+## Composite API
+
+### \<Progress.Root\>
+
+<TypeDocProps name="ProgressRootProps" />
+
+### \<Progress.Label\>
+
+<TypeDocProps name="ProgressLabelProps" />
+
+### \<Progress.ErrorText\>
+
+<TypeDocProps name="ProgressErrorTextProps" />
+
+### \<Progress.Hint\>
+
+<TypeDocProps name="ProgressHintProps" />
+
+### \<Progress.ValueText\>
+
+<TypeDocProps name="ProgressValueTextProps" />
+
+### \<Progress.Track\>
+
+<TypeDocProps name="ProgressTrackProps" />
+
+### \<Progress.Bar\>
+
+<TypeDocProps name="ProgressBarProps" />

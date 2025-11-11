@@ -1,0 +1,137 @@
+---
+title: Dialog
+group: Overlays
+---
+
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+A Dialog is a component that focuses the user's attention exclusively on information via a window that is overlaid on primary content. It is also known as a modal or modal dialog.
+
+```typescript
+import {Dialog} from "@qualcomm-ui/react/dialog"
+```
+
+## Examples
+
+### Sizes
+
+The dialog component has two sizes: `sm` and `md`. Size governs the width of the dialog, as well as the content's spacing, font size, and padding.
+
+<QdsDemo name="DialogSizesDemo" />
+
+### Indicator Emphasis
+
+Use the [emphasis](./#emphasis) prop to change the intent of the dialog's indicator icon.
+
+<QdsDemo name="DialogEmphasisDemo" />
+
+### Placement
+
+Use the [placement](./#placement) prop to change the placement of the dialog.
+
+<QdsDemo name="DialogPlacementDemo" />
+
+### Controlled State
+
+Dialog visibility can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="DialogControlledStateDemo" />
+
+### Outside Scroll
+
+The default [scrollBehavior](./#scrollBehavior) is `outside`, which makes the entire page scrollable when modal content exceeds viewport height. The modal and backdrop move with the page scroll instead of creating an internal scroll area within the modal.
+
+<QdsDemo name="DialogOutsideScrollDemo" />
+
+### Inside Scroll
+
+Set the [scrollBehavior](./#scrollBehavior) prop to `inside` to create an internal scroll area within the modal.
+
+<QdsDemo name="DialogInsideScrollDemo" />
+
+### Alert Dialog
+
+Set the [role](./#role) prop to `alertdialog` to change the dialog component to an [alert dialog](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role). This is recommended for situations where the dialog is used to notify users of urgent information that demands their immediate attention.
+
+<QdsDemo name="DialogAlertDialogDemo" />
+
+## Shortcuts
+
+### \<Dialog.FloatingPortal\>
+
+A helper component that combines the portal, positioner, and content
+components. This shortcut is equivalent to:
+
+```tsx
+<Portal {...props}>
+  <Dialog.Backdrop {...backdropProps} />
+  <Dialog.Positioner {...positionerProps}>
+    <Dialog.Content {...contentProps}>{children}</Dialog.Content>
+  </Dialog.Positioner>
+</Portal>
+```
+
+## API
+
+### \<Dialog.Root\>
+
+<TypeDocProps name="DialogRootProps" />
+
+### \<Dialog.Backdrop\>
+
+<TypeDocProps name="DialogBackdropProps" />
+
+<TypeDocAttributes
+  name={["QdsDialogBackdropBindings", "DialogBackdropBindings"]}
+/>
+
+### \<Dialog.Positioner\>
+
+<TypeDocProps name="DialogPositionerProps" />
+
+<TypeDocAttributes name="QdsDialogPositionerBindings" />
+
+### \<Dialog.Content\>
+
+<TypeDocProps name="DialogContentProps" />
+
+<TypeDocAttributes
+  name={["QdsDialogContentBindings", "DialogContentBindings"]}
+/>
+
+### \<Dialog.Body\>
+
+<TypeDocProps name="DialogBodyProps" />
+
+<TypeDocAttributes name={["QdsDialogBodyBindings", "DialogBodyBindings"]} />
+
+### \<Dialog.Heading\>
+
+<TypeDocProps name="DialogHeadingProps" />
+
+<TypeDocAttributes
+  name={["QdsDialogHeadingBindings", "DialogHeadingBindings"]}
+/>
+
+### \<Dialog.Footer\>
+
+<TypeDocProps name="DialogFooterProps" />
+
+<TypeDocAttributes name={["QdsDialogFooterBindings", "DialogFooterBindings"]} />
+
+### \<Dialog.IndicatorIcon\>
+
+<TypeDocProps name="DialogIndicatorIconProps" />
+
+<TypeDocAttributes name={["QdsDialogIndicatorIconBindings"]} />
+
+### \<Dialog.CloseButton\>
+
+<TypeDocProps name="DialogCloseButtonProps" />
+
+<TypeDocAttributes
+  name={["QdsDialogCloseButtonBindings", "DialogCloseTriggerBindings"]}
+/>

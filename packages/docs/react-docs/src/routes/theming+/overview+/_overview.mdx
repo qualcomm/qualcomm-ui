@@ -1,0 +1,27 @@
+---
+title: Overview
+---
+
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+##### 1. Component Styles and CSS Variables
+
+- Most of our components rely on [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for their styling.
+- These variables serve as placeholders for common properties like `color`, `background-color`, and `border-color`.
+- Instead of hardcoding specific values for these properties, we reference the CSS variables.
+
+##### 2. Dynamic Theme Switching
+
+- The `@qualcomm-ui/styles` package includes both light and dark theme styles. This allows our websites to seamlessly switch between these themes without requiring a complete rebuild.
+- When the user selects a theme (light or dark), we dynamically update the values of the CSS variables.
+  - For example, if the active theme is dark, we adjust the variables to match the dark color scheme.
+
+This approach allows us to define the component's CSS rules once, and the theme-specific adjustments happen automatically based on the active theme.
+
+## Theme Switching
+
+Theme switching is accomplished by applying either the `data-theme="dark"` or `data-theme="light"` attribute to an element in your DOM tree. The active theme for a subtree of elements is based on the presence of the attribute on the closest parent element. We recommend the root element that wraps your entire application, like `<html>`.
+
+<QdsDemo name="OverviewTheme" />

@@ -1,0 +1,157 @@
+---
+title: Render Props
+category: Composition
+---
+
+# {frontmatter.title}
+
+A render prop is when you pass a function as a prop to a component, and that function returns what should be rendered.
+
+Instead of a component showing you a fixed piece of content, it calls a function you provide and says "here's some data I have. You decide what to show."
+
+This documentation covers two render prop patterns:
+
+1. [RenderProp](./#render-prop) for simple content rendering without prop manipulation.
+2. [BindingRenderProp](./#binding-render-prop) for intelligent prop merging with the element that you provide.
+
+## RenderProp
+
+```tsx
+type RenderProp<Props = HTMLAttributes<HTMLElement>, ElementType = ReactNode> =
+  | ElementType
+  | ((props: Props) => ElementType)
+```
+
+The `RenderProp` type accepts either:
+
+- `ReactNode`: Regular JSX elements, strings, numbers, etc.
+- `Function`: A render function that receives typed props and returns `ReactNode`
+
+### Usage
+
+#### Render Prop Function
+
+Pass a function to access the computed props directly in JSX:
+
+```tsx
+<SomeContext>
+  {(contextValue) => (
+    <div>Dynamic content based on: {contextValue.someProperty}</div>
+  )}
+</SomeContext>
+```
+
+#### Standard Children (ReactNode)
+
+Pass regular JSX as children and they render as normal:
+
+```tsx
+<SomeContext>
+  <div>Static content</div>
+</SomeContext>
+```
+
+#### Implementation Example
+
+```tsx
+import {RenderProp} from "@qualcomm-ui/react-core/system"
+
+interface User {
+  name: string
+}
+
+interface UserContextProps {
+  children: RenderProp<User>
+}
+
+function UserContext({children}: UserContextProps): ReactNode {
+  const user: User = {name: "John"}
+  return renderProp(children, user)
+}
+
+function UserPanel() {
+  return (
+    <UserContext>
+      {(user: User) => <div>Welcome, {user.name}!</div>}
+    </UserContext>
+  )
+}
+```
+
+## BindingRenderProp
+
+```tsx
+type BindingRenderProp<
+  Props = HTMLAttributes<HTMLElement>,
+  Element = ReactElement,
+> = Element | ((props: Props) => Element)
+```
+
+The `BindingRenderProp` type accepts either:
+
+- `ReactElement`: An existing JSX element whose props are intelligently merged with computed props
+- `Function`: A render function that receives typed props and returns `ReactElement`
+
+### Usage
+
+#### Existing Elements (ReactElement)
+
+When you pass a JSX element, its props are intelligently merged with the computed props from the render function:
+
+```tsx
+<PopoverTrigger>
+  <button onClick={userHandler}>Click me</button>
+</PopoverTrigger>
+```
+
+#### Render Prop Function
+
+Pass a function to build elements with the computed props:
+
+```tsx
+<PopoverTrigger>
+  {(bindings) => <button {...bindings}>Custom button</button>}
+</PopoverTrigger>
+```
+
+#### Implementation Example
+
+Use `bindingRenderProp` to handle both patterns in your components:
+
+```tsx
+import {BindingRenderProp} from "@qualcomm-ui/react-core/system"
+
+interface PopoverBindings {
+  onClick: () => void
+  "aria-expanded": boolean
+}
+
+interface PopoverTriggerProps {
+  children: BindingRenderProp<PopoverBindings>
+}
+
+function PopoverTrigger({children}: PopoverTriggerProps): ReactElement {
+  const bindings: PopoverBindings = {
+    onClick: () => console.log("toggle"),
+    "aria-expanded": false,
+  }
+  return bindingRenderProp(children, bindings)
+}
+
+function PopoverButton() {
+  return (
+    <PopoverTrigger>
+      <button onClick={() => console.log("user click")}>Toggle Popover</button>
+    </PopoverTrigger>
+  )
+}
+```
+
+### Prop Merging Behavior
+
+When passing existing elements, props are intelligently merged:
+
+- Event handlers: Both user and computed handlers execute
+- CSS classes: Merged using `clsx`
+- Styles: Combined
+- Other props: User props override computed props

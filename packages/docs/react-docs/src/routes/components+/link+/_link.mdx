@@ -1,0 +1,65 @@
+---
+title: Link
+group: Data Display
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Link} from "@qualcomm-ui/react/link"
+```
+
+## Examples
+
+### Emphasis (color)
+
+Links support different emphasis (colors) to match your design needs. Customize these with the [emphasis](./#emphasis) property.
+
+<QdsDemo name="LinkColorsDemo" />
+
+### Icons
+
+Links can include icons to provide additional visual context. QUI links support [lucide-react](https://lucide.dev) icons.
+
+<QdsDemo name="LinkIconsDemo" />
+
+### Sizes
+
+Adjust the font and icon size of the link using the [size](./#size) prop. The default size is `sm`.
+
+<QdsDemo name="LinkSizesDemo" />
+
+### Disabled
+
+When [disabled](./#disabled) is true, the link becomes non-interactive and is rendered with reduced opacity to indicate its unavailable state.
+
+<QdsDemo name="LinkDisabledDemo" />
+
+### Render Prop
+
+Use the [render](./#render) prop to render the link component as a different element, such as a React Router Link for client-side navigation. Refer to our [Polymorphic Components](/polymorphic-components) guide to learn more.
+
+<QdsDemo name="LinkRenderPropDemo" />
+
+## API
+
+### \<Link\>
+
+<TypeDocProps name="LinkProps" />
+
+<TypeDocAttributes name="QdsLinkRootBindings" />
+
+### Start Icon
+
+Provided via the [startIcon](./#startIcon) prop.
+
+<TypeDocAttributes name="QdsLinkStartIconBindings" />
+
+### End Icon
+
+Provided via the [endIcon](./#endIcon) prop.
+
+<TypeDocAttributes name="QdsLinkEndIconBindings" />

@@ -1,0 +1,69 @@
+---
+title: Tag
+group: Data Display
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Tag} from "@qualcomm-ui/react/tag"
+```
+
+## Examples
+
+### Icons
+
+Icons are supplied using the [startIcon](./#startIcon) and [endIcon](./#endIcon) props.
+
+<QdsDemo name="TagIconsDemo" />
+
+### Variants
+
+Choose from three [variants](./#variant): `link`, `selectable` and `dismissable`.
+
+<QdsDemo name="TagVariantsDemo" />
+
+### Colors
+
+Control the visual emphasis with different colors via the [emphasis](./#emphasis) prop.
+
+<QdsDemo name="TagEmphasisDemo" />
+
+### Sizes
+
+Choose from three [sizes](./#size): `sm`, `md` and `lg`. The default size is `md`.
+
+<QdsDemo name="TagSizesDemo" />
+
+### States
+
+Disable the tag by setting the [disabled](./#disabled) prop.
+
+<QdsDemo name="TagStatesDemo" />
+
+### Radius
+
+Control the border radius of the tag with the [radius](./#radius-1) prop. The default radius is `square`.
+
+<QdsDemo name="TagRadiusDemo" />
+
+## API
+
+### \<Tag\>
+
+<TypeDocProps name="TagProps" />
+
+<TypeDocAttributes name="QdsTagRootBindings" />
+
+### StartIcon
+
+<TypeDocAttributes name="QdsTagStartIconBindings" />
+
+### EndIcon
+
+Note that the endIcon prop is ignored when [variant](./#variant) is `dismissible`.
+
+<TypeDocAttributes name="QdsTagEndIconBindings" />

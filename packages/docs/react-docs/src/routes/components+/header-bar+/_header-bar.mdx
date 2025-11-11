@@ -1,0 +1,94 @@
+---
+title: Header Bar
+group: Data Display
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+A header bar provides a consistent navigation and branding area at the top of an application. It contains the application logo, title, navigation links, and action controls.
+
+```tsx
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+```
+
+## Examples
+
+> [!tip/Responsive Design]
+> These examples use Tailwind [container queries](https://tailwindcss.com/docs/responsive-design#container-queries) for mobile-first responsiveness. Tailwind is installed on our documentation sites only, and is not required to use any of our components.
+
+### Basic Usage
+
+A typical header bar includes a logo, application title, nav items, and an action bar.
+
+<QdsDemo name="HeaderBarShowcaseDemo" />
+
+### Sizes
+
+The header bar has two sizes: `sm` (default) and `lg`. The [size](./#size) prop governs padding, element spacing, and height.
+
+<QdsDemo name="HeaderBarSizesDemo" />
+
+### Surfaces
+
+Use the [surface](./#surface) prop to set the background color. Available options are `primary` (default) and `secondary`.
+
+<QdsDemo name="HeaderBarSurfacesDemo" />
+
+### Menu Items
+
+Render a menu nav item with the [HeaderBar.MenuItem](#header-bar-menu-item) component. This component must be wrapped in a Menu.
+
+<QdsDemo name="HeaderBarMenuItemDemo" />
+
+## API
+
+### \<HeaderBar.Root\>
+
+<TypeDocProps name="HeaderBarRootProps" />
+
+<TypeDocAttributes name="QdsHeaderBarRootBindings" />
+
+### \<HeaderBar.Logo\>
+
+<TypeDocProps name="HeaderBarLogoProps" />
+
+<TypeDocAttributes name="QdsHeaderBarLogoBindings" />
+
+### \<HeaderBar.AppTitle\>
+
+<TypeDocProps name="HeaderBarAppTitleProps" />
+
+<TypeDocAttributes name="QdsHeaderBarAppTitleBindings" />
+
+### \<HeaderBar.Nav\>
+
+<TypeDocProps name="HeaderBarNavProps" />
+
+<TypeDocAttributes name="QdsHeaderBarNavBindings" />
+
+### \<HeaderBar.NavItem\>
+
+<TypeDocProps name="HeaderBarNavItemProps" />
+
+<TypeDocAttributes name="QdsHeaderBarNavItemBindings" />
+
+### \<HeaderBar.Divider\>
+
+<TypeDocProps name="HeaderBarDividerProps" />
+
+<TypeDocAttributes name="QdsHeaderBarDividerBindings" />
+
+### \<HeaderBar.ActionBar\>
+
+<TypeDocProps name="HeaderBarActionBarProps" />
+
+<TypeDocAttributes name="QdsHeaderBarActionBarBindings" />
+
+### \<HeaderBar.WindowControls\>
+
+<TypeDocProps name="HeaderBarWindowControlsProps" />
+
+<TypeDocAttributes name="QdsHeaderBarWindowControlsBindings" />

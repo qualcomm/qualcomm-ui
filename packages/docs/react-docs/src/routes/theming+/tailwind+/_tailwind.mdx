@@ -1,0 +1,37 @@
+---
+title: Tailwind CSS
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/mdx-docs/npm-install-tabs"
+import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
+import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
+import {Versions} from "./demos/versions"
+
+# {frontmatter.title}
+
+We provide a [Tailwind CSS](https://tailwindcss.com/) plugin which enhances your tailwind theme with QUI colors, fonts, and more.
+
+### Current Version
+
+<Versions />
+
+### Install
+
+<NpmInstallTabs packages={["@qualcomm-ui/tailwind-plugin"]} />
+
+Once installed, add the plugin to your Tailwind config file:
+
+```js
+/** @type {import("tailwindcss").Config} */
+module.exports = {
+  content: [
+    // ...
+  ],
+  plugins: [require("@qualcomm-ui/tailwind-plugin")],
+  prefix: "",
+}
+```
+
+## Theme
+
+Refer to the [Theme](/theme/colors) section for documentation on the classes that this plugin provides.

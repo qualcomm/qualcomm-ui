@@ -1,0 +1,49 @@
+---
+title: Collapsible
+group: Disclosure
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Collapsible} from "@qualcomm-ui/react/collapsible"
+```
+
+## Examples
+
+### Showcase
+
+Basic collapsible component with a trigger button that expands and collapses content. The trigger uses the [render](./#render) prop to render as another component like our [Button](/components/button).
+
+<QdsDemo name="CollapsibleShowcaseDemo" />
+
+### Controlled State
+
+Control the collapsible's open/closed state using the [open](./#open) and [onOpenChange](./#onopenchange) props. This example demonstrates programmatic control with a close button inside the content.
+
+<QdsDemo name="CollapsibleControlledStateDemo" />
+
+## API
+
+### \<Collapsible.Root\>
+
+<TypeDocProps name="CollapsibleRootProps" />
+
+<TypeDocAttributes name="CollapsibleRootBindings" />
+
+### \<Collapsible.Trigger\>
+
+<TypeDocProps name="CollapsibleTriggerProps" />
+
+<TypeDocAttributes name="CollapsibleTriggerBindings" />
+
+### \<Collapsible.Content\>
+
+<TypeDocProps name="CollapsibleContentProps" />
+
+<TypeDocAttributes
+  name={["CollapsibleContentBindings", "QdsCollapsibleContentBindings"]}
+/>

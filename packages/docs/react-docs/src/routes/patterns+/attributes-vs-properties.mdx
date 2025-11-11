@@ -1,0 +1,29 @@
+---
+hideBreadcrumbs: true
+hideFromSearch: true
+title: Attributes vs. Properties
+---
+
+# HTML attributes vs. DOM properties
+
+HTML attributes are defined by HTML itself, while DOM (Document Object Model) properties are defined by the DOM.
+
+- There are some HTML attributes that directly map to properties, such as `id`.
+
+- However, there are HTML attributes that do not have equivalent properties, like `colspan`.
+
+- Similarly, there are DOM properties that do not have corresponding attributes, like `textContent`.
+
+Many HTML attributes seem to map to properties, but it's not as straightforward as it appears. Understanding this can be tricky until you comprehend this fundamental principle:
+
+- Attributes are used to initialize DOM properties and that's their only job. While property values can be altered, attribute values remain constant.
+
+- For instance, when the browser renders `<input type="text" value="Bob">`, it generates a corresponding DOM node with a value property that is initialized to "Bob".
+
+- When the user types "Jim" into the input field, the value property of the DOM element changes to "Jim". However, the HTML value attribute stays the same, as you would find out if you query the input element about that attribute: input.getAttribute('value') returns "Bob".
+
+- The HTML attribute value sets the initial value, while the DOM value property represents the current value.
+
+## React
+
+In React, when an element is re-rendered with a different attribute, the new attribute value will replace the old one. React's reconciliation process updates the DOM to match the React elements. So, if the same element is re-rendered with a different attribute, the original attribute does not apply anymore, and the DOM will reflect the new attribute value. This is part of React's efficient diffing algorithm for updating the UI based on state and prop changes.
