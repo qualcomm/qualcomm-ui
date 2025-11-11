@@ -27,7 +27,7 @@ jobs:
     - name: fetch base ref
       run: git fetch origin ${{ github.event.pull_request.base.sha }}
 
-    - uses: ./.github/actions/setup-node-and-install
+    - uses: ./.github/actions/init-node-and-install
 
     - name: lint changed files
       run: pnpm tsx scripts/lint-changed.ts ${{ github.event.pull_request.base.sha }}
@@ -44,9 +44,9 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - uses: ./.github/actions/setup-node-and-install
+    - uses: ./.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/setup-remote-cache
+    - uses: ./.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -67,7 +67,7 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - uses: ./.github/actions/setup-node-and-install
+    - uses: ./.github/actions/init-node-and-install
 
     - name: unit tests
       run: pnpm run test:unit:ci
@@ -84,11 +84,11 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - uses: ./.github/actions/setup-node-and-install
+    - uses: ./.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/setup-playwright
+    - uses: ./.github/actions/init-playwright
 
-    - uses: ./.github/actions/setup-remote-cache
+    - uses: ./.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -103,8 +103,6 @@ jobs:
         VITEST_MAX_THREADS: 1
 
   react-tests:
-    env:
-      IS_CI: true
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -120,11 +118,11 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - uses: ./.github/actions/setup-node-and-install
+    - uses: ./.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/setup-playwright
+    - uses: ./.github/actions/init-playwright
 
-    - uses: ./.github/actions/setup-remote-cache
+    - uses: ./.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -138,6 +136,37 @@ jobs:
       run: pnpm turbo run test:react:ci -- --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
       env:
         VITEST_MAX_THREADS: 1
+
+  angular-core-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shardIndex: [ 1 ]
+        shardTotal: [ 1 ]
+    concurrency:
+      group: PR Angular Core Tests - ${{matrix.shardIndex}} - ${{github.head_ref}}
+      cancel-in-progress: true
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/init-node-and-install
+
+    - uses: ./.github/actions/init-playwright
+
+    - uses: ./.github/actions/init-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
+    - name: build angular dependencies
+      run: pnpm turbo run build --filter '@qui/angular-core'
+
+    - name: test angular components
+      run: pnpm turbo run test:angular-core:ci -- --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
 
 
   # also run repolinter on PRs
