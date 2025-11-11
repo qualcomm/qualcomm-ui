@@ -1,0 +1,16 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "esnext",
+  },
+  "files": ["types.d.ts"],
+  "include": [
+    "./src"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-docs.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "moduleResolution": "bundler",
+    "composite": true,
+    "paths": {
+      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
+      "@qualcomm-ui/docs-base": ["../../common/docs-base/src"],
+    }
+  },
+  "include": [
+    "./src/routes/**/demos/*.ts",
+  ],
+  "references": [
+    {
+      "path": "../../frameworks/angular/tsconfig.angular-lib.json"
+    },
+    {
+      "path": "../../frameworks/angular-core/tsconfig.angular-lib.json"
+    },
+    {
+      "path": "../../frameworks/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+---
+title: Introduction
+---
+
+# {frontmatter.title}
+
+QUI Docs is a collection of libraries that integrate with React solutions based on Vite. The site you're viewing is built using the same libraries documented here.
+
+## Quick Start
+
+We recommend you get started with our preconfigured template:
+
+- [React Router (Framework Mode)](https://github.qualcomm.com/ProdTools/qui-react-docs-template)
+
+## Library Overview
+
+The documentation tools are organized into two separate packages:
+
+- `@qualcomm-ui/mdx-docs`: UI components like syntax highlighters, markdown elements, and layout components.
+- `@qualcomm-ui/mdx-vite`: Vite plugin that indexes your site and produces data structures for the side navigation, breadcrumbs, table of contents, and search index.
+
+If you only want the site data, you have that option, but you'll need to bring your own layout. Similarly, if you want to use one or more of the UI components but don't need the search data, you can do that as well. The built libraries are [tree-shakable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), so you'll only import what you use.

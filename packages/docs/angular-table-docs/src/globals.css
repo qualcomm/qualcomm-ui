@@ -1,0 +1,76 @@
+@import "tailwindcss";
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/snapdragon-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/dragonwing-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css" layer(components);
+@import "@qualcomm-ui/mdx-docs/styles.css" layer(components);
+
+:root {
+  color: var(--color-text-neutral-primary);
+  color-scheme: light dark;
+
+  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  --q-font-mono: "Roboto Mono", monospace;
+  --qui-header-height: 48px;
+  --q-font-family: "Roboto Flex", sans-serif;
+}
+
+[data-theme="dark"] .shiki.mdx {
+  --shiki-dark-bg: #0f1013 !important;
+}
+
+.font-mono {
+  font-family: "Roboto Mono", monospace;
+}
+
+.q-header--content {
+  padding: 6px 12px;
+}
+
+body {
+  background: var(--color-background-neutral-00);
+  display: flex;
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+svg.fsd {
+  > * tspan {
+    fill: var(--color-icon-neutral-primary);
+    font: var(--q-font-metadata-xl-mono);
+  }
+}
+
+angular-demo:not([data-demo-rendered]) {
+  * {
+    animation: none !important;
+    animation-duration: 0ms !important;
+    --animation-duration-slowest: 0ms !important;
+    --animation-duration-fastest: 0ms !important;
+    --animation-duration-slower: 0ms !important;
+    --animation-duration-moderate: 0ms !important;
+    --animation-duration-slow: 0ms !important;
+    --animation-duration-fast: 0ms !important;
+    --animation-duration-faster: 0ms !important;
+  }
+}
+
+.qds-demo-runner__ssr-placeholder {
+  * {
+    .qui-progress-ring__bar {
+      stroke: transparent !important;
+    }
+    .qui-progress__bar {
+      &:before {
+        background: transparent !important;
+      }
+    }
+    animation: none !important;
+  }
+}

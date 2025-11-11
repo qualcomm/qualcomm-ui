@@ -1,0 +1,24 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "composite": true,
+    "moduleResolution": "bundler",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "module": "esnext",
+    "target": "esnext"
+  },
+  "include": [
+    "./src",
+    "types.d.ts"
+  ],
+  "exclude": ["./src/routes/**/demos/*.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "../../common/mdx-vite/tsconfig.lib.json"
+    }
+  ]
+}

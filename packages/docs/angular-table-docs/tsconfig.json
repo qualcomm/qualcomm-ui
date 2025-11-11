@@ -1,0 +1,23 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "module": "esnext",
+    "target": "esnext",
+  },
+  "include": ["./src", "types.d.ts"],
+  "exclude": ["./src/routes/**/demos/*.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.ng-demos.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

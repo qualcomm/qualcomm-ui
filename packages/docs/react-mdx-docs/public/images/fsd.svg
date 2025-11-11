@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" class="fsd" data-name="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 927.35 383.87">
+  <text transform="translate(85.15 29.91)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">app</tspan>
+  </text>
+  <text transform="translate(75.31 77.94)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">pages</tspan>
+  </text>
+  <text transform="translate(67.6 126.97)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">widgets</tspan>
+  </text>
+  <text transform="translate(60.93 175.73)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">features</tspan>
+  </text>
+  <polyline
+      points="197.5 340.5 197.5 1 1 1 1 340.5 197.5 340.5 197.5 292 1 292 1 243.5 197.5 243.5 197.5 195 1 195 1 146.5 197.5 146.5 197.5 98 1 98 1 49.5 197.5 49.5"
+      style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <text transform="translate(62.12 224.58)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">entities</tspan>
+  </text>
+  <text transform="translate(79.9 272.23)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">data</tspan>
+  </text>
+  <text transform="translate(70.51 321.16)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">shared</tspan>
+  </text>
+  <text transform="translate(444.02 223.64)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">user</tspan>
+  </text>
+  <text transform="translate(443.1 272.48)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">post</tspan>
+  </text>
+  <text transform="translate(429.43 320.79)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">comment</tspan>
+  </text>
+  <polyline points="561.14 340.25 561.14 194.75 364.64 194.75 364.64 340.25 561.14 340.25 561.14 291.75 364.64 291.75 364.64 243.25 561.14 243.25"
+            style="fill: none; stroke: #231f20; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <path d="M271.94,267.5l75,.25-75-.25Z" style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <polyline points="197.5 219.25 272.5 219.25 272.5 267.5" style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <polyline points="356.15 348 347.5 348 347.5 187 356.15 187" style="fill: none; stroke: #231f20; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <path d="M637.43,268.73l75,.25-75-.25Z" style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <polyline points="721.64 349.23 712.99 349.23 712.99 188.23 721.64 188.23" style="fill: none; stroke: #231f20; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <path d="M562.48,268.48l75,.25-75-.25Z" style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <text transform="translate(818.6 225.57)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">ui</tspan>
+  </text>
+  <text transform="translate(801.23 274.15)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">model</tspan>
+  </text>
+  <text transform="translate(813.55 320.79)" style="font-family: Roboto Mono; font-size: 16px;">
+    <tspan x="0" y="0">api</tspan>
+  </text>
+  <polyline points="926.35 341.61 926.35 196.11 729.85 196.11 729.85 341.61 926.35 341.61 926.35 293.11 729.85 293.11 729.85 244.61 926.35 244.61"
+            style="fill: none; stroke: #231f20; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <text transform="translate(65.81 378.04)" style="font-family: Roboto Mono; font-size: 20px;">
+    <tspan x="0" y="0">Layers</tspan>
+  </text>
+  <text transform="translate(428.79 378.5)" style="font-family: Roboto Mono; font-size: 20px;">
+    <tspan x="0" y="0" style="letter-spacing: .02em;">S</tspan>
+    <tspan x="11.64" y="0" style="letter-spacing: -.02em;">l</tspan>
+    <tspan x="22.5" y="0">ices</tspan>
+  </text>
+  <text transform="translate(783.25 378.2)" style="font-family: Roboto Mono; font-size: 20px;">
+    <tspan x="0" y="0">Segments</tspan>
+  </text>
+</svg>
