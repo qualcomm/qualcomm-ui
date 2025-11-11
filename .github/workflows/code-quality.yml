@@ -163,7 +163,7 @@ jobs:
         turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
 
     - name: build angular dependencies
-      run: pnpm turbo run build --filter '@qui/angular-core'
+      run: pnpm turbo run build --filter '@qualcomm-ui/angular-core'
 
     - name: test angular components
       run: pnpm turbo run test:angular-core:ci -- --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
