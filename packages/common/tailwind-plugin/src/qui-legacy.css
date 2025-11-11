@@ -1,0 +1,494 @@
+@import "tailwindcss";
+
+@theme {
+  /* Border radius */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 5px;
+  --radius-2xl: 6px;
+
+  /* Font families */
+  --font-brand: var(--q-font-family-brand);
+  --font-mono: var(--q-font-mono);
+  --font-sans: var(--q-font-family);
+
+  /* Line heights */
+  --leading-xxs: var(--q-line-height-body-xxs);
+  --leading-xs: var(--q-line-height-body-xs);
+  --leading-sm: var(--q-line-height-body-s);
+  --leading-md: var(--q-line-height-body-m);
+  --leading-lg: var(--q-line-height-body-l);
+  --leading-xl: var(--q-line-height-body-xl);
+  --leading-2xl: var(--q-line-height-body-xxl);
+  --leading-h-xxs: var(--q-line-height-heading-xxs);
+  --leading-h-xs: var(--q-line-height-heading-xs);
+  --leading-h-sm: var(--q-line-height-heading-s);
+  --leading-h-md: var(--q-line-height-heading-m);
+  --leading-h-lg: var(--q-line-height-heading-l);
+  --leading-h-xl: var(--q-line-height-heading-xl);
+  --leading-h-2xl: var(--q-line-height-heading-xxl);
+  --leading-h-3xl: var(--q-line-height-heading-xxxl);
+  --leading-m-xl: var(--q-line-height-metadata-xl);
+  --leading-m-lg: var(--q-line-height-metadata-l);
+  --leading-m-md: var(--q-line-height-metadata-m);
+  --leading-m-sm: var(--q-line-height-metadata-s);
+
+  /* Font sizes */
+  --text-xxs: var(--q-font-size-body-xxs) / var(--q-line-height-body-xxs);
+  --text-xs: var(--q-font-size-body-xs) / var(--q-line-height-body-xs);
+  --text-sm: var(--q-font-size-body-s) / var(--q-line-height-body-s);
+  --text-md: var(--q-font-size-body-m) / var(--q-line-height-body-m);
+  --text-lg: var(--q-font-size-body-l) / var(--q-line-height-body-l);
+  --text-xl: var(--q-font-size-body-xl) / var(--q-line-height-body-xl);
+  --text-2xl: var(--q-font-size-body-xxl) / var(--q-line-height-body-xxl);
+  --text-h-xxs: var(--q-font-size-heading-xxs) /
+    var(--q-line-height-heading-xxs);
+  --text-h-xs: var(--q-font-size-heading-xs) / var(--q-line-height-heading-xs);
+  --text-h-sm: var(--q-font-size-heading-s) / var(--q-line-height-heading-s);
+  --text-h-md: var(--q-font-size-heading-m) / var(--q-line-height-heading-m);
+  --text-h-lg: var(--q-font-size-heading-l) / var(--q-line-height-heading-l);
+  --text-h-xl: var(--q-font-size-heading-xl) / var(--q-line-height-heading-xl);
+  --text-h-2xl: var(--q-font-size-heading-xxl) /
+    var(--q-line-height-heading-xxl);
+  --text-h-3xl: var(--q-font-size-heading-xxxl) /
+    var(--q-line-height-heading-xxxl);
+  --text-m-xl: var(--q-font-size-metadata-xl) / var(--q-line-height-metadata-xl);
+  --text-m-lg: var(--q-font-size-metadata-l) / var(--q-line-height-metadata-l);
+  --text-m-md: var(--q-font-size-metadata-m) / var(--q-line-height-metadata-m);
+  --text-m-sm: var(--q-font-size-metadata-s) / var(--q-line-height-metadata-s);
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 560;
+  --font-weight-bold: 660;
+  --font-weight-extrabold: 680;
+}
+
+/* Box shadow utilities */
+@utility shadow-1 {
+  box-shadow: var(--q-elevation-1);
+}
+@utility shadow-2 {
+  box-shadow: var(--q-elevation-2);
+}
+@utility shadow-3 {
+  box-shadow: var(--q-elevation-3);
+}
+@utility shadow-4 {
+  box-shadow: var(--q-elevation-4);
+}
+@utility shadow-5 {
+  box-shadow: var(--q-elevation-5);
+}
+
+/* Border radius utilities */
+@utility rounded-xs {
+  border-radius: 1px;
+}
+@utility rounded-sm {
+  border-radius: 2px;
+}
+@utility rounded-md {
+  border-radius: 3px;
+}
+@utility rounded {
+  border-radius: 3px;
+}
+@utility rounded-lg {
+  border-radius: 4px;
+}
+@utility rounded-xl {
+  border-radius: 5px;
+}
+@utility rounded-2xl {
+  border-radius: 6px;
+}
+
+/* Text color utilities */
+@utility text-primary {
+  color: var(--q-text-1-primary);
+}
+@utility text-secondary {
+  color: var(--q-text-1-secondary);
+}
+@utility text-disabled {
+  color: var(--q-text-1-disabled);
+}
+@utility text-contrast-primary {
+  color: var(--q-text-2-primary);
+}
+@utility text-contrast-secondary {
+  color: var(--q-text-2-secondary);
+}
+@utility text-contrast-disabled {
+  color: var(--q-text-2-disabled);
+}
+@utility text-error {
+  color: var(--q-text-error);
+}
+@utility text-link {
+  color: var(--q-text-link);
+}
+@utility text-semantic-informative {
+  color: var(--q-semantic-informative);
+}
+@utility text-semantic-negative {
+  color: var(--q-semantic-negative);
+}
+@utility text-semantic-positive {
+  color: var(--q-semantic-positive);
+}
+@utility text-semantic-primary {
+  color: var(--q-semantic-primary);
+}
+@utility text-semantic-secondary {
+  color: var(--q-semantic-secondary);
+}
+@utility text-semantic-warning {
+  color: var(--q-semantic-warning);
+}
+@utility text-foreground-primary {
+  color: var(--q-foreground-1-primary);
+}
+@utility text-foreground-secondary {
+  color: var(--q-foreground-1-secondary);
+}
+@utility text-foreground-disabled {
+  color: var(--q-foreground-1-disabled);
+}
+@utility text-foreground-contrast-primary {
+  color: var(--q-foreground-2-primary);
+}
+@utility text-foreground-contrast-secondary {
+  color: var(--q-foreground-2-secondary);
+}
+@utility text-foreground-contrast-disabled {
+  color: var(--q-foreground-2-disabled);
+}
+
+/* Border color utilities */
+@utility border-default {
+  border-color: var(--q-border-1-default);
+}
+@utility border-subtle {
+  border-color: var(--q-border-1-subtle);
+}
+@utility border-strong {
+  border-color: var(--q-border-1-strong);
+}
+@utility border-contrast-default {
+  border-color: var(--q-border-2-default);
+}
+@utility border-contrast-subtle {
+  border-color: var(--q-border-2-subtle);
+}
+@utility border-contrast-strong {
+  border-color: var(--q-border-2-strong);
+}
+@utility border-focus {
+  border-color: var(--q-border-focus);
+}
+
+@utility font-stretch-normal {
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility font-stretch-wide {
+  font-stretch: var(--q-font-stretch-wide);
+}
+
+@utility q-font-metadata-xl {
+  font: var(--q-font-metadata-xl);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-xl);
+}
+
+@utility q-font-metadata-xl-mono {
+  font: var(--q-font-metadata-xl-mono);
+  font-stretch: var(--q-font-stretch-metadata);
+}
+
+@utility q-font-metadata-xl-strong {
+  font: var(--q-font-metadata-xl-strong);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-xl);
+}
+
+@utility q-font-metadata-lg {
+  font: var(--q-font-metadata-lg);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-l);
+}
+
+@utility q-font-metadata-lg-mono {
+  font: var(--q-font-metadata-lg-mono);
+  font-stretch: var(--q-font-stretch-metadata);
+}
+
+@utility q-font-metadata-lg-strong {
+  font: var(--q-font-metadata-lg-strong);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-l);
+}
+
+@utility q-font-metadata-md {
+  font: var(--q-font-metadata-md);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-m);
+}
+
+@utility q-font-metadata-md-mono {
+  font: var(--q-font-metadata-md-mono);
+  font-stretch: var(--q-font-stretch-metadata);
+}
+
+@utility q-font-metadata-md-strong {
+  font: var(--q-font-metadata-md-strong);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-m);
+}
+
+@utility q-font-metadata-sm {
+  font: var(--q-font-metadata-sm);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-s);
+}
+
+@utility q-font-metadata-sm-mono {
+  font: var(--q-font-metadata-sm-mono);
+  font-stretch: var(--q-font-stretch-metadata);
+}
+
+@utility q-font-metadata-sm-strong {
+  font: var(--q-font-metadata-sm-strong);
+  font-stretch: var(--q-font-stretch-metadata);
+  letter-spacing: var(--q-letter-spacing-metadata-s);
+}
+
+@utility q-font-heading-xxxl {
+  font: var(--q-font-heading-xxxl);
+  letter-spacing: var(--q-letter-spacing-heading);
+}
+
+@utility q-font-heading-xxxl-subtle {
+  font: var(--q-font-heading-xxxl-subtle);
+  letter-spacing: var(--q-letter-spacing-heading);
+}
+
+@utility q-font-heading-xxl {
+  font: var(--q-font-heading-xxl);
+  letter-spacing: var(--q-letter-spacing-heading);
+}
+
+@utility q-font-heading-xxl-subtle {
+  font: var(--q-font-heading-xxl-subtle);
+  letter-spacing: var(--q-letter-spacing-heading);
+}
+
+@utility q-font-heading-xl {
+  font: var(--q-font-heading-xl);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-xl-subtle {
+  font: var(--q-font-heading-xl-subtle);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-lg {
+  font: var(--q-font-heading-lg);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-lg-subtle {
+  font: var(--q-font-heading-lg-subtle);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-md {
+  font: var(--q-font-heading-md);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-md-subtle {
+  font: var(--q-font-heading-md-subtle);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-sm {
+  font: var(--q-font-heading-sm);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-sm-subtle {
+  font: var(--q-font-heading-sm-subtle);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-xs {
+  font: var(--q-font-heading-xs);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-xs-subtle {
+  font: var(--q-font-heading-xs-subtle);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-xxs {
+  font: var(--q-font-heading-xxs);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-heading-xxs-subtle {
+  font: var(--q-font-heading-xxs-subtle);
+  font-stretch: var(--q-font-stretch-heading);
+}
+
+@utility q-font-code-xl {
+  font: var(--q-font-code-xl);
+}
+
+@utility q-font-code-xl-strong {
+  font: var(--q-font-code-xl-strong);
+}
+
+@utility q-font-code-lg {
+  font: var(--q-font-code-lg);
+}
+
+@utility q-font-code-lg-strong {
+  font: var(--q-font-code-lg-strong);
+}
+
+@utility q-font-code-md {
+  font: var(--q-font-code-md);
+}
+
+@utility q-font-code-md-strong {
+  font: var(--q-font-code-md-strong);
+}
+
+@utility q-font-code-sm {
+  font: var(--q-font-code-sm);
+}
+
+@utility q-font-code-sm-strong {
+  font: var(--q-font-code-sm-strong);
+}
+
+@utility q-font-code-xs {
+  font: var(--q-font-code-xs);
+}
+
+@utility q-font-body-xxl {
+  font: var(--q-font-body-xxl);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-xxl-strong {
+  font: var(--q-font-body-xxl-strong);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-xl {
+  font: var(--q-font-body-xl);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-xl-strong {
+  font: var(--q-font-body-xl-strong);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-lg {
+  font: var(--q-font-body-lg);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-lg-strong {
+  font: var(--q-font-body-lg-strong);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-md {
+  font: var(--q-font-body-md);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-md-strong {
+  font: var(--q-font-body-md-strong);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-sm {
+  font: var(--q-font-body-sm);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-sm-strong {
+  font: var(--q-font-body-sm-strong);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-xs {
+  font: var(--q-font-body-xs);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-xs-strong {
+  font: var(--q-font-body-xs-strong);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-xxs {
+  font: var(--q-font-body-xxs);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility q-font-body-xxs-strong {
+  font: var(--q-font-body-xxs-strong);
+  font-stretch: var(--q-font-stretch-normal);
+}
+
+@utility bg-1 {
+  background-color: var(--q-background-1);
+}
+@utility bg-2 {
+  background-color: var(--q-background-2);
+}
+@utility bg-3 {
+  background-color: var(--q-background-3);
+}
+@utility bg-4 {
+  background-color: var(--q-background-4);
+}
+@utility bg-contrast-1 {
+  background-color: var(--q-background-1-contrast);
+}
+@utility bg-contrast-2 {
+  background-color: var(--q-background-2-contrast);
+}
+@utility bg-contrast-3 {
+  background-color: var(--q-background-3-contrast);
+}
+@utility bg-contrast-4 {
+  background-color: var(--q-background-4-contrast);
+}
+
+/* For z-index, these need to be custom properties since v4 doesn't have --z-* namespace */
+:root {
+  --z-modal-backdrop: var(--q-zindex-modal-backdrop);
+  --z-dropdown: var(--q-zindex-dropdown);
+  --z-dropdown-arrow: var(--q-zindex-dropdown-arrow);
+  --z-sticky: var(--q-zindex-sticky);
+  --z-modal: var(--q-zindex-modal);
+  --z-popover: var(--q-zindex-popover);
+  --z-tooltip: var(--q-zindex-tooltip);
+  --z-toast: var(--q-zindex-toast);
+  --z-alert-banner: var(--q-zindex-alert-banner);
+}

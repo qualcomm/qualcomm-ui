@@ -395,6 +395,36 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
+  packages/common/tailwind-plugin:
+    devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../cli
+      '@qualcomm-ui/css-utils':
+        specifier: workspace:^1
+        version: link:../css-utils
+      '@qualcomm-ui/esbuild':
+        specifier: workspace:^1
+        version: link:../esbuild
+      '@qualcomm-ui/tsconfig':
+        specifier: workspace:^1
+        version: link:../../configs/tsconfig
+      esbuild:
+        specifier: ^0.25.8
+        version: 0.25.11
+      shx:
+        specifier: ^0.4.0
+        version: 0.4.0
+      tailwindcss:
+        specifier: ^4.1.12
+        version: 4.1.17
+      tsx:
+        specifier: ^4.20.6
+        version: 4.20.6
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+
   packages/common/typedoc-common:
     devDependencies:
       '@qualcomm-ui/cli':
@@ -4445,6 +4475,9 @@ packages:
   table@6.9.0:
     resolution: {integrity: sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==}
     engines: {node: '>=10.0.0'}
+
+  tailwindcss@4.1.17:
+    resolution: {integrity: sha512-j9Ee2YjuQqYT9bbRTfTZht9W/ytp5H+jJpZKiYdP/bpnXARAuELt9ofP0lPnmHjbga7SNQIxdTAXCmtKVYjN+Q==}
 
   terser@5.44.0:
     resolution: {integrity: sha512-nIVck8DK+GM/0Frwd+nIhZ84pR/BX7rmXMfYwyg+Sri5oGVE99/E3KvXqpC2xHFxyqXyGHTKBSioxxplrO4I4w==}
@@ -9344,6 +9377,8 @@ snapshots:
       slice-ansi: 4.0.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
+
+  tailwindcss@4.1.17: {}
 
   terser@5.44.0:
     dependencies:
