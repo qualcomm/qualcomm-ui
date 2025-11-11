@@ -9,8 +9,8 @@ import {
 } from "@qualcomm-ui/esbuild"
 
 async function collectEntryPoints() {
-  return glob(["./src/*.ts", "./src/*/index.ts"], {
-    ignore: ["**/*.spec.ts", "./src/index.ts"],
+  return glob(["./src/*/index.ts"], {
+    ignore: ["**/*.spec.ts"],
   })
 }
 

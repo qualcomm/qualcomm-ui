@@ -253,6 +253,9 @@ importers:
       esbuild:
         specifier: ^0.25.8
         version: 0.25.11
+      glob:
+        specifier: ^11.0.3
+        version: 11.0.3
       pretty-ms:
         specifier: ^9.2.0
         version: 9.3.0
