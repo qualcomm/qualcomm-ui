@@ -17,17 +17,17 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: clone
-      id: install
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.head_ref }}
+        fetch-depth: 0
+
+    - name: fetch base ref
+      run: git fetch origin ${{ github.event.pull_request.base.sha }}
 
     - uses: ./.github/actions/setup-node-and-install
 
-    - name: lint-changed
-      env:
-        GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-      run: pnpm tsx scripts/lint-changed.ts
+    - name: lint changed files
+      run: pnpm tsx scripts/lint-changed.ts ${{ github.event.pull_request.base.sha }}
 
   build:
     env:
