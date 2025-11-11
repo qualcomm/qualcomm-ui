@@ -7,7 +7,10 @@ import {
 
 import {useFilter} from "@qualcomm-ui/angular-core/locale"
 import {accessSignal} from "@qualcomm-ui/angular-core/signals"
-import {ListCollection, type ListCollectionOptions} from "@qualcomm-ui/utils/collection"
+import {
+  ListCollection,
+  type ListCollectionOptions,
+} from "@qualcomm-ui/utils/collection"
 import type {FilterReturn} from "@qualcomm-ui/utils/i18n"
 
 export interface UseListCollectionProps<T>

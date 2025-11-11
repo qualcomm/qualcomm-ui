@@ -2,7 +2,10 @@ import {booleanAttribute, Component, computed, input} from "@angular/core"
 
 import {numberAttributeOrUndefined} from "@qualcomm-ui/angular-core/attributes"
 import type {Booleanish, NumberInput} from "@qualcomm-ui/utils/coercion"
-import {loremIpsum, type LoremIpsumOptions} from "@qualcomm-ui/utils/lorem-ipsum"
+import {
+  loremIpsum,
+  type LoremIpsumOptions,
+} from "@qualcomm-ui/utils/lorem-ipsum"
 
 @Component({
   selector: "[q-lorem-ipsum]",

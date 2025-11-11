@@ -1,7 +1,11 @@
 import {computed, effect, signal} from "@angular/core"
 
 import {isFunction} from "@qualcomm-ui/utils/guard"
-import type {Bindable, BindableParams, EventDetails} from "@qualcomm-ui/utils/machine"
+import type {
+  Bindable,
+  BindableParams,
+  EventDetails,
+} from "@qualcomm-ui/utils/machine"
 
 export function bindable<T, ChangeEvent extends EventDetails | void | null>(
   props: () => BindableParams<T, ChangeEvent>,

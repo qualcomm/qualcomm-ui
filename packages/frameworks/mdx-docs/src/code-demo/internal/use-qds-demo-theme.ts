@@ -1,6 +1,9 @@
 import {useCallback, useMemo} from "react"
 
-import type {SelectApiProps, SelectValueChangeDetails} from "@qualcomm-ui/core/select"
+import type {
+  SelectApiProps,
+  SelectValueChangeDetails,
+} from "@qualcomm-ui/core/select"
 import type {QdsBrand} from "@qualcomm-ui/react/qds-theme"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
 

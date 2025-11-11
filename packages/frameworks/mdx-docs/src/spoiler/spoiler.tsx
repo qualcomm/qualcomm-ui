@@ -2,7 +2,10 @@ import type {ReactElement, ReactNode} from "react"
 
 import {ChevronRight} from "lucide-react"
 
-import {Collapsible, type CollapsibleRootProps} from "@qualcomm-ui/react/collapsible"
+import {
+  Collapsible,
+  type CollapsibleRootProps,
+} from "@qualcomm-ui/react/collapsible"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

@@ -29,7 +29,10 @@ import {
 
 import {numberAttributeOrUndefined} from "@qualcomm-ui/angular-core/attributes"
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
-import {allEventsSignal, type FormEventData} from "@qualcomm-ui/angular-core/forms"
+import {
+  allEventsSignal,
+  type FormEventData,
+} from "@qualcomm-ui/angular-core/forms"
 import type {Booleanish, NumberInput} from "@qualcomm-ui/utils/coercion"
 import {defined, isDefined} from "@qualcomm-ui/utils/guard"
 

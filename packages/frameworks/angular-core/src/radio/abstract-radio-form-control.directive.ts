@@ -29,7 +29,10 @@ import {
 } from "@angular/forms"
 
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
-import {allEventsSignal, type FormEventData} from "@qualcomm-ui/angular-core/forms"
+import {
+  allEventsSignal,
+  type FormEventData,
+} from "@qualcomm-ui/angular-core/forms"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 @Directive()

@@ -1,7 +1,10 @@
 import {Fragment, type ReactNode} from "react"
 
 import {useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
-import type {QuiCommentDisplayPart, QuiCommentTag} from "@qualcomm-ui/mdx-docs-common"
+import type {
+  QuiCommentDisplayPart,
+  QuiCommentTag,
+} from "@qualcomm-ui/mdx-docs-common"
 import {Link} from "@qualcomm-ui/react/link"
 
 import {PropDescriptionSummary} from "./prop-description-summary"

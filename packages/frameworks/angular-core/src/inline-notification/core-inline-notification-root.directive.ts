@@ -9,7 +9,11 @@ import {
   output,
 } from "@angular/core"
 
-import {useId, useIsMounted, useOnDestroy} from "@qualcomm-ui/angular-core/common"
+import {
+  useId,
+  useIsMounted,
+  useOnDestroy,
+} from "@qualcomm-ui/angular-core/common"
 import {
   normalizeProps,
   useMachine,

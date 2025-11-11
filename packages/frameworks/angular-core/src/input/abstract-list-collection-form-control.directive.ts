@@ -28,7 +28,10 @@ import {
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {allEventsSignal} from "@qualcomm-ui/angular-core/forms"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
-import {type CollectionItem, ListCollection} from "@qualcomm-ui/utils/collection"
+import {
+  type CollectionItem,
+  ListCollection,
+} from "@qualcomm-ui/utils/collection"
 import {defined, isDefined} from "@qualcomm-ui/utils/guard"
 
 import {initInputFormControl} from "./input-form-control-provider"

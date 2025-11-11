@@ -16,7 +16,10 @@ import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
-import {booleanDataAttr, type WithDataAttributes} from "@qualcomm-ui/utils/attributes"
+import {
+  booleanDataAttr,
+  type WithDataAttributes,
+} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {QdsDemoThemeSelector} from "./internal"

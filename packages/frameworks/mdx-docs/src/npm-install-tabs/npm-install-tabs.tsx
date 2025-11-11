@@ -1,7 +1,10 @@
 import type {ReactElement} from "react"
 
 import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
-import {type PackageManager, useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
+import {
+  type PackageManager,
+  useMdxDocsContext,
+} from "@qualcomm-ui/mdx-docs/context"
 import {Tab, Tabs, type TabsRootProps} from "@qualcomm-ui/react/tabs"
 import {ensureArray} from "@qualcomm-ui/utils/array"
 

@@ -13,7 +13,10 @@ import {ChevronsLeftRight} from "lucide-react"
 import {useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
 import {CopyToClipboardButton} from "@qualcomm-ui/mdx-docs/copy-to-clipboard"
 import {useRunner, type UseRunnerProps} from "@qualcomm-ui/mdx-docs/runner"
-import type {ReactDemoWithScope, SourceCodeData} from "@qualcomm-ui/mdx-docs-common"
+import type {
+  ReactDemoWithScope,
+  SourceCodeData,
+} from "@qualcomm-ui/mdx-docs-common"
 import {Button} from "@qualcomm-ui/react/button"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"

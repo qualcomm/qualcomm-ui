@@ -5,7 +5,10 @@ import {
   BaseApiContextService,
   createApiContext,
 } from "@qualcomm-ui/angular-core/machine"
-import type {ComboboxApi, ComboboxValueChangeDetails} from "@qualcomm-ui/core/combobox"
+import type {
+  ComboboxApi,
+  ComboboxValueChangeDetails,
+} from "@qualcomm-ui/core/combobox"
 
 export interface ComboboxValueChangeEvent<T>
   extends ComboboxValueChangeDetails<T> {
