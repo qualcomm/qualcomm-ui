@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import type {SerializedParameters} from "@qualcomm-ui/mdx-docs-common"
+import type {SerializedParameters} from "@qualcomm-ui/typedoc-common"
 
 import {PropDescriptionSummary} from "../prop-description"
 import {SimpleType} from "../prop-types"

@@ -5,7 +5,7 @@ import type {ReactElement} from "react"
 
 import {compiler} from "markdown-to-jsx"
 
-import type {QuiComment, QuiPropDeclaration} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiComment, QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
 export interface PropDefaultProps {
   prop: QuiPropDeclaration

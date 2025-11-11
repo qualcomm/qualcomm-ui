@@ -1,0 +1,3 @@
+/* loads the QUI plugin for intellisense throughout the project */
+@import "tailwindcss";
+@import "@qui/tailwind-plugin/qui-strict.css";

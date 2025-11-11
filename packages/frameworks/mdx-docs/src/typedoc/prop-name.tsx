@@ -6,7 +6,7 @@ import {type ReactNode, useMemo} from "react"
 import {Info} from "lucide-react"
 
 import {useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
-import type {QuiPropDeclaration} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Link} from "@qualcomm-ui/react/link"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"

@@ -7,7 +7,7 @@ import type {
   QuiComment,
   QuiPropDeclaration,
   SerializedParameters,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/typedoc-common"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {PropDescriptionFunctionArgs} from "./prop-description-function-args"

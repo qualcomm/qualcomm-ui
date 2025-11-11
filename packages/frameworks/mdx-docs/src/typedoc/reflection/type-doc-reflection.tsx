@@ -4,7 +4,7 @@
 import type {ReactNode} from "react"
 
 import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
-import type {QuiComment, SerializedType} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiComment, SerializedType} from "@qualcomm-ui/typedoc-common"
 
 import {usePropsLayoutContext} from "../use-props-layout-context"
 

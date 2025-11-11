@@ -3,7 +3,7 @@
 
 import type {ReactNode} from "react"
 
-import type {QuiCommentTag} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiCommentTag} from "@qualcomm-ui/typedoc-common"
 
 import {PropDescriptionSummary} from "./prop-description-summary"
 
