@@ -13,7 +13,7 @@ runs:
   using: 'composite'
   steps:
   - name: Start Turborepo Cache Server
-    uses: brunojppb/turbo-cache-server@2.0.2
+    uses: ./.github/actions/turborepo-remote-cache
     env:
       PORT: "8585"
       S3_BUCKET_NAME: ${{ inputs.turborepo-remote-cache-bucket-name }}
