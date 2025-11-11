@@ -15,7 +15,10 @@ import {
 
 import {useMergedRef} from "@qualcomm-ui/react-core/refs"
 import type {As} from "@qualcomm-ui/react-core/system"
-import {booleanDataAttr, type BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import {
+  booleanDataAttr,
+  type BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 
 import {useEventListeners} from "./use-event-listeners"
 

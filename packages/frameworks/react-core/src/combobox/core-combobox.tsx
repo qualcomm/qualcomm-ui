@@ -12,7 +12,10 @@ import {
   createComboboxApi,
   splitComboboxProps,
 } from "@qualcomm-ui/core/combobox"
-import {type PresenceApiProps, splitPresenceProps} from "@qualcomm-ui/core/presence"
+import {
+  type PresenceApiProps,
+  splitPresenceProps,
+} from "@qualcomm-ui/core/presence"
 import {useOnDestroy, useOnDestroyWhen} from "@qualcomm-ui/react-core/effects"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {

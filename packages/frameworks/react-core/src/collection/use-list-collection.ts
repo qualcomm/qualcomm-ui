@@ -4,7 +4,10 @@
 import {useCallback, useMemo, useRef, useState} from "react"
 
 import {useEvent} from "@qualcomm-ui/react-core/events"
-import {ListCollection, type ListCollectionOptions} from "@qualcomm-ui/utils/collection"
+import {
+  ListCollection,
+  type ListCollectionOptions,
+} from "@qualcomm-ui/utils/collection"
 
 export interface UseListCollectionProps<T>
   extends Omit<ListCollectionOptions<T>, "items"> {

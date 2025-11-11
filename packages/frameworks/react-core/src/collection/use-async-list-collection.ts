@@ -3,7 +3,10 @@
 
 import {useCallback, useMemo, useRef} from "react"
 
-import {ListCollection, type ListCollectionOptions} from "@qualcomm-ui/utils/collection"
+import {
+  ListCollection,
+  type ListCollectionOptions,
+} from "@qualcomm-ui/utils/collection"
 
 export interface UseAsyncListCollectionProps<T>
   extends Omit<ListCollectionOptions<T>, "items"> {

@@ -3,7 +3,10 @@
 
 import type {ComponentPropsWithRef, ReactElement} from "react"
 
-import {type PresenceApiProps, splitPresenceProps} from "@qualcomm-ui/core/presence"
+import {
+  type PresenceApiProps,
+  splitPresenceProps,
+} from "@qualcomm-ui/core/presence"
 import {
   createSelectApi,
   type ItemProps,

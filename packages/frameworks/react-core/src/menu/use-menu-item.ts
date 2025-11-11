@@ -19,7 +19,10 @@ import type {
   RadioItemGroupContext,
 } from "@qualcomm-ui/core/menu"
 import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
-import {useControlledId, useControlledState} from "@qualcomm-ui/react-core/state"
+import {
+  useControlledId,
+  useControlledState,
+} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 import type {Optional} from "@qualcomm-ui/utils/guard"
 

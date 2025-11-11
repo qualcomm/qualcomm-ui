@@ -4,7 +4,10 @@
 import type {ElementType, ReactNode} from "react"
 
 import {PolymorphicAsElement} from "@qualcomm-ui/react-core/system"
-import {loremIpsum, type LoremIpsumOptions} from "@qualcomm-ui/utils/lorem-ipsum"
+import {
+  loremIpsum,
+  type LoremIpsumOptions,
+} from "@qualcomm-ui/utils/lorem-ipsum"
 
 export interface LoremIpsumProps extends LoremIpsumOptions {
   /**

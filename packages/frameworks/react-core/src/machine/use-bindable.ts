@@ -8,7 +8,11 @@ import {flushSync} from "react-dom"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {identity} from "@qualcomm-ui/utils/functions"
 import {isFunction} from "@qualcomm-ui/utils/guard"
-import type {Bindable, BindableParams, EventDetails} from "@qualcomm-ui/utils/machine"
+import type {
+  Bindable,
+  BindableParams,
+  EventDetails,
+} from "@qualcomm-ui/utils/machine"
 
 export function useBindable<T, ChangeEvent extends EventDetails | void | null>(
   props: () => BindableParams<T, ChangeEvent>,
