@@ -13,6 +13,7 @@ import ignore from "ignore"
 import {access, readdir, readFile, writeFile} from "node:fs/promises"
 import {extname, join, relative, resolve} from "node:path"
 import {cwd} from "node:process"
+import prettyMilliseconds from "pretty-ms"
 
 interface AddHeadersConfig {
   directory: string
@@ -177,7 +178,9 @@ class LicenseHeaderManager {
     return count
   }
 
-  async checkHeaders(directory: string): Promise<string[]> {
+  async checkHeaders(
+    directory: string,
+  ): Promise<{fileCount: number; missingHeaders: string[]}> {
     const files = await this.scanDirectory(directory)
     const missingHeaders: string[] = []
 
@@ -189,7 +192,7 @@ class LicenseHeaderManager {
       }
     }
 
-    return missingHeaders
+    return {fileCount: files.length, missingHeaders}
   }
 }
 
@@ -339,10 +342,18 @@ program
   .argument("<directory>", "Directory to scan")
   .action(async (directory) => {
     const manager = await LicenseHeaderManager.create(cwd())
-    const missingHeaders = await manager.checkHeaders(directory)
+    console.time("Checking headers")
+    const now = performance.mark("Checking headers")
+    const {fileCount, missingHeaders} = await manager.checkHeaders(directory)
+    const headerCheckTime = performance.measure(
+      "Checking headers",
+      now,
+    ).duration
 
     if (missingHeaders.length === 0) {
-      console.log("✓ All files have copyright headers")
+      console.log(
+        `✓ Validated ${fileCount} files in ${prettyMilliseconds(headerCheckTime)}`,
+      )
       process.exit(0)
     } else {
       console.error(
