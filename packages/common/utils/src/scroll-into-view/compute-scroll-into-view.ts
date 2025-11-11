@@ -1,3 +1,9 @@
+// Modified from https://github.com/scroll-into-view/scroll-into-view-if-needed
+// MIT License
+// Changes from Qualcomm Technologies, Inc. are provided under the following license:
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 // Compute what scrolling needs to be done on required scrolling boxes for target to
 // be in view
 

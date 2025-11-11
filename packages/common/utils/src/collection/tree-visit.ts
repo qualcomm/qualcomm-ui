@@ -4,9 +4,6 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-// Modified from https://github.com/dabbott/tree-visit
-// MIT License
-
 import type {FlatTreeNode, IndexPath, TreeSkipOptions} from "./types"
 
 // Accessors

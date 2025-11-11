@@ -14,7 +14,7 @@ import {access, readdir, readFile, writeFile} from "node:fs/promises"
 import {extname, join, relative, resolve} from "node:path"
 import {cwd} from "node:process"
 
-interface AddHeaderConfig {
+interface AddHeadersConfig {
   directory: string
   sourceLicense?: string
   sourceUrl?: string
@@ -78,7 +78,7 @@ class LicenseHeaderManager {
 
   private async addHeaderToFile(
     filePath: string,
-    config: AddHeaderConfig,
+    config: AddHeadersConfig,
   ): Promise<boolean> {
     if (!this.isSupportedFile(filePath)) {
       return false
@@ -145,7 +145,7 @@ class LicenseHeaderManager {
     return filesWithoutHeaders
   }
 
-  async addHeaders(config: AddHeaderConfig): Promise<number> {
+  async addHeaders(config: AddHeadersConfig): Promise<number> {
     const files = await this.scanDirectory(config.directory)
     let count = 0
 
@@ -162,7 +162,7 @@ class LicenseHeaderManager {
 
   async addHeadersToFiles(
     files: string[],
-    config: AddHeaderConfig,
+    config: AddHeadersConfig,
   ): Promise<number> {
     let count = 0
 
@@ -235,30 +235,59 @@ program
         process.exit(0)
       }
 
-      const isModified = await confirm({
-        initialValue: options.modified !== undefined,
-        message: "Is this modified from another source?",
-      })
+      let isModified: boolean | symbol = !!options.modified
 
-      if (isCancel(isModified)) {
-        cancel("Operation cancelled")
-        process.exit(0)
+      if (!isModified) {
+        isModified = await confirm({
+          initialValue: options.modified !== undefined,
+          message: "Is this modified from another source?",
+        })
+        if (isCancel(isModified)) {
+          cancel("Operation cancelled")
+          process.exit(0)
+        }
       }
 
-      const config: AddHeaderConfig = {directory, type: "original"}
+      const config: AddHeadersConfig = {directory, type: "original"}
 
       if (isModified) {
         const sourceUrl = await text({
           initialValue: options.modified,
           message: "Source URL:",
           placeholder: "https://github.com/example/repo",
-          validate: (value) =>
-            value.length === 0 ? "Source URL is required" : undefined,
+          validate: (value) => {
+            if (value.length === 0) {
+              return "Source URL is required"
+            }
+            try {
+              new URL(value)
+              return undefined
+            } catch {
+              return "Invalid URL format"
+            }
+          },
         })
-
         if (isCancel(sourceUrl)) {
           cancel("Operation cancelled")
           process.exit(0)
+        }
+
+        const urlSpinner = spinner()
+        urlSpinner.start("Verifying source URL")
+        try {
+          const response = await fetch(sourceUrl, {
+            method: "HEAD",
+            signal: AbortSignal.timeout(5000),
+          })
+          if (!response.ok) {
+            urlSpinner.stop(`Warning: Source URL returned ${response.status}`)
+          } else {
+            urlSpinner.stop("Source URL verified")
+          }
+        } catch (error) {
+          urlSpinner.stop(
+            `Warning: Could not verify source URL (${error instanceof Error ? error.message : "unknown error"})`,
+          )
         }
 
         const license = await text({
@@ -287,7 +316,7 @@ program
       clackSpinner.stop("Done")
       outro(`Modified ${count} file(s)`)
     } else {
-      const config: AddHeaderConfig = {directory, type: "original"}
+      const config: AddHeadersConfig = {directory, type: "original"}
 
       if (options.modified) {
         if (!options.license) {

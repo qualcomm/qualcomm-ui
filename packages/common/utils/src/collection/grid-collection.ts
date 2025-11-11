@@ -4,9 +4,6 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-// Modified from https://github.com/chakra-ui/zag/tree/main/packages/utilities/collection
-// MIT License
-
 import {chunk, nextIndex, prevIndex} from "@qualcomm-ui/utils/array"
 
 import {ListCollection} from "./list-collection"

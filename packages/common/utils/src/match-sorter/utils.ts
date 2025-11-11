@@ -1,3 +1,9 @@
+// Modified from https://github.com/kentcdodds/match-sorter
+// MIT License
+// Changes from Qualcomm Technologies, Inc. are provided under the following license:
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {removeAccents} from "./remove-accents"
 
 export const Rankings = {
@@ -179,4 +185,8 @@ function getAcronym(string: string): string {
 export const defaultKeyAttributes = {
   maxRanking: Infinity as Rankings,
   minRanking: -Infinity as Rankings,
+}
+
+export function isFalsy<T>(parameter: T): boolean {
+  return typeof parameter === "undefined" || parameter === null
 }

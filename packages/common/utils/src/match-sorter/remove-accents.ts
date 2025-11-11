@@ -1,3 +1,9 @@
+// Modified from https://github.com/kentcdodds/match-sorter
+// MIT License
+// Changes from Qualcomm Technologies, Inc. are provided under the following license:
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 const characterMap: Record<string, string> = {
   Á: "A",
   á: "a",

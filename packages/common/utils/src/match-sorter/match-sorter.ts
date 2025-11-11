@@ -3,8 +3,8 @@
 // Changes from Qualcomm Technologies, Inc. are provided under the following license:
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
-import {isFalsy} from "./is-falsy"
-import {defaultKeyAttributes, getMatchRanking, Rankings} from "./utils"
+
+import {defaultKeyAttributes, getMatchRanking, isFalsy, Rankings} from "./utils"
 
 type KeyAttributes = {
   maxRanking: Rankings

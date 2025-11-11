@@ -4,9 +4,6 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-// Modified from https://github.com/chakra-ui/zag/tree/main/packages/utilities/collection
-// MIT License
-
 import {isEqual} from "@qualcomm-ui/utils/equal"
 import {hasProp, isObject} from "@qualcomm-ui/utils/guard"
 
