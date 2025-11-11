@@ -1,0 +1,28 @@
+.qui-icon__root {
+  fill: none;
+  /* the icon-height and icon-width variables are supplied from JS */
+  height: var(--icon-height, var(--icon-size));
+  min-height: var(--icon-height, var(--icon-size));
+  min-width: var(--icon-width, var(--icon-size));
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: var(--stroke-width, 2);
+  width: var(--icon-width, var(--icon-size));
+
+  &[data-size="xs"] {
+    --icon-size: 12px;
+  }
+  &[data-size="sm"] {
+    --icon-size: 14px;
+  }
+  &[data-size="md"] {
+    --icon-size: 16px;
+  }
+  &[data-size="lg"] {
+    --icon-size: 20px;
+  }
+  &[data-size="xl"] {
+    --icon-size: 22px;
+  }
+}

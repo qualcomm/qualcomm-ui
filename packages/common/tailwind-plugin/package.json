@@ -1,0 +1,57 @@
+{
+  "name": "@qualcomm-ui/tailwind-plugin",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "description": "Qualcomm UI Tailwind Plugin",
+  "author": "Ryan Bower",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    },
+    "./qui.css": {
+      "style": "./dist/qui.css"
+    },
+    "./qui-strict.css": {
+      "style": "./dist/qui-strict.css"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run-s clean generate-css build:js build:ts build:css",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
+    "generate-css": "tsx scripts/generate-nextgen-plugin.ts",
+    "build:js": "tsx build.ts",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "build:css": "qui-css-utils build",
+    "dev": "run-p watch:js watch:ts watch:css",
+    "watch:js": "tsx build.ts --watch",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "watch:css": "qui-css-utils watch",
+    "lint": "eslint --quiet",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish",
+    "generate-tailwind-knowledge": "pnpm tsx scripts/variables-to-text.ts src/qui.css ./generated/tailwind-qui-next-gen.txt"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/css-utils": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "esbuild": "^0.25.8",
+    "shx": "^0.4.0",
+    "tailwindcss": "^4.1.12",
+    "tsx": "^4.20.6",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=4"
+  }
+}

@@ -1,0 +1,99 @@
+.qui-checkbox__root {
+  align-items: center;
+  -webkit-box-align: center;
+  column-gap: var(--spacing-70);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  position: relative;
+  vertical-align: top;
+  width: fit-content;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &[data-disabled] {
+    cursor: unset;
+    user-select: none;
+  }
+
+  &:has([data-part="error-text"][data-invalid]) {
+    row-gap: var(--spacing-70);
+  }
+}
+
+.qui-checkbox__control {
+  align-items: center;
+  background: var(--color-background-neutral-00);
+  border: var(--border-width-sm, 1px) solid
+    var(--color-interactive-border-neutral-idle);
+  border-radius: var(--border-radius-xs, 2px);
+  color: var(--color-utility-persistent-white);
+  display: inline-flex;
+  justify-content: center;
+  max-height: var(--control-size);
+  max-width: var(--control-size);
+  min-height: var(--control-size);
+  min-width: var(--control-size);
+  --control-size: var(--sizing-70);
+
+  &[data-size="md"] {
+    --control-size: var(--sizing-80);
+  }
+  &[data-size="lg"] {
+    --control-size: var(--sizing-90);
+  }
+
+  &[data-focus-visible] {
+    border-color: var(--color-interactive-border-neutral-hover);
+    outline: solid 2px var(--color-utility-focus-border);
+    outline-offset: 1px;
+  }
+
+  &[data-state="checked"],
+  &[data-state="indeterminate"] {
+    background: var(--color-interactive-background-primary-idle);
+    border-color: var(--color-interactive-background-primary-idle);
+
+    &[data-hover] {
+      background: var(--color-interactive-background-primary-hover);
+      border-color: var(--color-interactive-background-primary-hover);
+    }
+
+    &[data-disabled] {
+      background: var(--color-utility-disabled-background);
+      border-color: var(--color-utility-disabled-border);
+      color: var(--color-utility-disabled-text);
+    }
+  }
+
+  &[data-invalid][data-state="unchecked"] {
+    border-color: var(--color-interactive-border-danger-idle);
+
+    &[data-hover] {
+      border-color: var(--color-interactive-border-danger-hover);
+    }
+  }
+
+  &[data-disabled] {
+    border-color: var(--color-utility-disabled-border);
+  }
+}
+
+.qui-checkbox__label {
+  color: var(--color-text-neutral-primary);
+  flex: 1;
+  font: var(--font-static-body-xs-default);
+
+  &[data-size="md"] {
+    font: var(--font-static-body-sm-default);
+  }
+  &[data-size="lg"] {
+    font: var(--font-static-body-lg-default);
+  }
+
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+  }
+}

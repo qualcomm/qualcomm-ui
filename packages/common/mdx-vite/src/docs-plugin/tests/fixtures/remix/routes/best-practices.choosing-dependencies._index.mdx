@@ -1,0 +1,31 @@
+---
+title: Choosing Dependencies
+---
+
+# {frontmatter.title}
+
+Sometimes, you may need to add a feature to your app that you don’t have the code for. You might be tempted to search the web for an external dependency. Read these tips to learn how to filter out poor quality packages and choose the best one.
+
+### Check the Popularity
+
+Examine the number of downloads, stars, forks, and issues on NPM and GitHub. This can give you an idea of how widely used and maintained the packages are:
+
+- In general, packages with more adoption see more maintenance because the community is larger.
+- More downloads indicate more popularity and usage of a package, which may in turn motivate the developers to maintain and update it more frequently and consistently. Another way to look at it is that more downloads reflect more demand and expectations from the users, which may increase the pressure and responsibility for the developers to maintain and improve the package. While this is not always the case, downloads are generally a good metric to keep in mind.
+
+### Check the Open GitHub Issues
+
+Check for the most recent issues that describe potential shortcomings or problems. This can also give you an idea of how active the maintainers are. If there is a bug, can you trust the package creators to solve it dependably? The GitHub issues will usually give you a good clue.
+
+### Evaluate the Code Quality
+
+Ensure that the packages you include meet a minimum standard of code quality. I like to think of it like this:
+
+- Ask yourself if you would be content with including the package’s code as-is in your codebase. If the answer is no, then you might want to reconsider including the package at all.
+- Consider the worst-case scenario: if this package is no longer maintained in the future, but your project still depends on it, would you be able to fork the code and update it yourself?
+
+### Consider Alternatives
+
+Check for similar packages and see if they offer better or similar solutions to your problem.
+
+If the package is small enough (< 200 lines of code), consider adding the source code directly to your project (assuming that it is properly licensed and approval by legal). Visit to learn more.

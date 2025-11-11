@@ -1,0 +1,21 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "*.json",
+        "*.ts",
+        "src/**"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "test:unit:ci": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.json",
+        "*.ts",
+        "src/**"
+      ]
+    }
+  }
+}

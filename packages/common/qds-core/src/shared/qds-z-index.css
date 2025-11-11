@@ -1,0 +1,9 @@
+:root {
+  --z-index-dropdown: 1000;
+  --z-index-banner: 1200;
+  --z-index-overlay: 1300;
+  --z-index-dialog: 1400;
+  --z-index-popover: 1500;
+  --z-index-toast: 1700;
+  --z-index-tooltip: 1800;
+}

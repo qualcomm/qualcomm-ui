@@ -1,0 +1,42 @@
+.qui-divider__root {
+  margin: 8px 0;
+  outline: none;
+  position: relative;
+  width: 100%;
+
+  --divider-border-color: var(--color-border-neutral-02);
+
+  &[data-variant="subtle"] {
+    --divider-border-color: var(--color-border-neutral-01);
+  }
+
+  &[data-variant="strong"] {
+    --divider-border-color: var(--color-border-neutral-03);
+  }
+
+  &:not([aria-orientation="vertical"]) {
+    border-top: solid 1px var(--divider-border-color);
+    min-width: 4px;
+  }
+
+  &[aria-orientation="vertical"] {
+    border-left: solid 1px var(--divider-border-color);
+    height: 100%;
+    margin: 0 8px;
+    min-height: 4px;
+    width: unset;
+  }
+
+  &[tabindex="-1"] {
+    &:focus-visible {
+      color: var(--color-utility-focus-border);
+    }
+  }
+
+  &[tabindex="0"] {
+    &:hover,
+    &:focus-visible {
+      border-color: var(--color-utility-focus-border);
+    }
+  }
+}

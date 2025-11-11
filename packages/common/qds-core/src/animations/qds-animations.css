@@ -1,0 +1,271 @@
+:root {
+  --animation-duration-slowest: 500ms;
+  --animation-duration-fastest: 50ms;
+  --animation-duration-slower: 400ms;
+  --animation-duration-moderate: 200ms;
+  --animation-duration-slow: 300ms;
+  --animation-duration-fast: 150ms;
+  --animation-duration-faster: 130ms;
+}
+
+.qui-preload * {
+  --animation-duration-slowest: 0ms !important;
+  --animation-duration-fastest: 0ms !important;
+  --animation-duration-slower: 0ms !important;
+  --animation-duration-moderate: 0ms !important;
+  --animation-duration-slow: 0ms !important;
+  --animation-duration-fast: 0ms !important;
+  --animation-duration-faster: 0ms !important;
+}
+
+@keyframes expand-height {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--height);
+  }
+}
+
+@keyframes collapse-height {
+  from {
+    height: var(--height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes expand-width {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--width);
+  }
+}
+
+@keyframes collapse-width {
+  from {
+    width: var(--width);
+  }
+  to {
+    width: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-from-left-full {
+  from {
+    transform: translate(-100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-from-right-full {
+  from {
+    transform: translate(100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-from-top-full {
+  from {
+    transform: translate(0, -100%);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-from-bottom-full {
+  from {
+    transform: translate(0, 100%);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-to-left-full {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-100%, 0);
+  }
+}
+
+@keyframes slide-to-right-full {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100%, 0);
+  }
+}
+
+@keyframes slide-to-top-full {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, -100%);
+  }
+}
+
+@keyframes slide-to-bottom-full {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, 100%);
+  }
+}
+
+@keyframes slide-from-top {
+  0% {
+    transform: translate(0, -0.2rem);
+  }
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes slide-from-bottom {
+  0% {
+    transform: translate(0, 0.2rem);
+  }
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes slide-from-left {
+  0% {
+    transform: translate(-0.2rem, 0);
+  }
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes slide-from-right {
+  0% {
+    transform: translate(0.2rem, 0);
+  }
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes slide-to-top {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(0, -0.2rem);
+  }
+}
+
+@keyframes slide-to-bottom {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(0, 0.2rem);
+  }
+}
+
+@keyframes slide-to-left {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(-0.2rem, 0);
+  }
+}
+
+@keyframes slide-to-right {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(0.2rem, 0);
+  }
+}
+
+@keyframes slide-from-left-full {
+  from {
+    transform: translate(-100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-from-right-full {
+  from {
+    transform: translate(100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-to-left-full {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-100%, 0);
+  }
+}
+
+@keyframes slide-to-right-full {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100%, 0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-out {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.95);
+  }
+}

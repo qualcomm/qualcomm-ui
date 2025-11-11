@@ -46,13 +46,13 @@
     "cssnano-preset-lite": "^3.1.0",
     "esbuild": "^0.25.8",
     "glob": "^11.0.3",
-    "ora": "^8.1.1",
-    "postcss": "^8.4.35",
+    "ora": "^9.0.0",
+    "postcss": "^8.5.6",
     "postcss-import": "^16.1.0",
     "postcss-minify-selectors": "^6.0.2",
-    "postcss-nested": "^6.0.1",
+    "postcss-nested": "^7.0.2",
     "postcss-scss": "^4.0.9",
-    "pretty-ms": "^9.2.0",
+    "pretty-ms": "^9.3.0",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {

@@ -1,0 +1,87 @@
+{
+  "name": "@qualcomm-ui/qds-core",
+  "version": "1.0.0",
+  "description": "qds core components",
+  "author": "Ryan Bower",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.cjs",
+      "default": "./dist/*/index.js"
+    },
+    "./themes/*-dark-full.css": {
+      "style": "./dist/*-dark-full.min.css"
+    },
+    "./themes/*-light-full.css": {
+      "style": "./dist/*-light-full.min.css"
+    },
+    "./themes/*-dark.css": {
+      "style": "./dist/*-dark.min.css"
+    },
+    "./themes/*-light.css": {
+      "style": "./dist/*-light.min.css"
+    },
+    "./themes/*-typography.css": {
+      "style": "./dist/*-typography.min.css"
+    },
+    "./styles/components.css": {
+      "style": "./dist/components.min.css"
+    }
+  },
+  "sideEffects": false,
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "run-s clean build:js build:css build:ts",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map dist/**/*.css",
+    "build:js": "tsx build.ts",
+    "build:css": "qui-css-utils build",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:js watch:css watch:ts",
+    "watch:js": "tsx build.ts --watch",
+    "watch:css": "qui-css-utils watch",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "lint": "eslint --quiet",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish",
+    "extract-design-tokens": "tsx scripts/token-builder.ts"
+  },
+  "devDependencies": {
+    "@figma/rest-api-spec": "^0.31.0",
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/css-utils": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@types/culori": "^4.0.0",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "~24.9.2",
+    "change-case": "^5.4.4",
+    "culori": "^4.0.1",
+    "esbuild": "^0.25.8",
+    "figma-api": "^2.0.2-beta",
+    "json5": "^2.2.3",
+    "lodash-es": "^4.17.21",
+    "postcss": "^8.5.6",
+    "postcss-nested": "^7.0.2",
+    "postcss-selector-parser": "^7.1.0",
+    "shx": "^0.4.0",
+    "style-dictionary": "^5.1.1",
+    "style-dictionary-utils": "~4.1.1",
+    "tsx": "^4.20.6",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1"
+  }
+}

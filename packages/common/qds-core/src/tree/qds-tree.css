@@ -1,0 +1,110 @@
+/* the --depth variable in this file is set from JavaScript. It denotes the
+ * depth of the node in the tree. */
+
+.qui-tree__root {
+  --indent-spacing: 22px;
+}
+
+.qui-tree__node-root {
+  --branch-trigger-width: 0px;
+
+  align-items: center;
+  background: var(--color-interactive-background-ghost-idle);
+  border: solid 1px transparent;
+  display: flex;
+  font: var(--font-static-body-sm-default);
+  gap: var(--spacing-50);
+  height: 40px;
+  min-height: 40px;
+  outline: none;
+  padding-left: calc(
+    var(--depth, 1) * var(--indent-spacing) - var(--branch-trigger-width) +
+      var(--spacing-100)
+  );
+  padding-right: var(--spacing-100);
+  position: relative;
+
+  &:hover {
+    background: var(--color-interactive-background-ghost-hover);
+  }
+
+  &:active {
+    background: var(--color-interactive-background-ghost-pressed);
+  }
+
+  &:focus-visible {
+    border-color: var(--color-utility-focus-border);
+    outline: solid 1px var(--color-utility-focus-border);
+  }
+
+  &:has([data-part="branch-trigger"]) {
+    --branch-trigger-width: calc(16px + var(--spacing-50));
+  }
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-default);
+    height: 32px;
+    min-height: 32px;
+  }
+
+  &[data-disabled] {
+    background: transparent;
+    color: var(--color-utility-disabled-text);
+    pointer-events: none;
+  }
+}
+
+.qui-tree__branch-trigger {
+  transition: transform var(--animation-duration-faster) ease;
+  &[data-state="open"] {
+    transform: rotate(90deg);
+  }
+}
+
+.qui-tree__branch-indent-guide {
+  background: var(--color-border-neutral-01);
+  height: 100%;
+  left: calc(1px + var(--indent-spacing) * var(--depth));
+  position: absolute;
+  width: 1px;
+}
+
+.qui-tree__branch-content {
+  /* 
+   * Each tree item uses outline for the focus border.
+   * The animated collapse/expand prevents nested item outline due to overflow: hidden.
+   * This padding gives the outline enough space to render.
+   */
+  padding: 1px;
+  position: relative;
+}
+
+.qui-tree__node-action:first-of-type {
+  margin-left: auto;
+}
+
+.qui-tree__node-indicator {
+  background: var(--color-border-brand-primary);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  width: 4px;
+}
+
+.qui-tree__label {
+  font: var(--font-static-body-md-default);
+  margin-bottom: var(--spacing-40);
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-sm-default);
+  }
+}
+
+.qui-icon__root.qui-tree__node-icon {
+  &[data-size="sm"] {
+    --icon-size: var(--sizing-70);
+  }
+  &[data-size="md"] {
+    --icon-size: var(--sizing-80);
+  }
+}

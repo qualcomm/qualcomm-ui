@@ -1,0 +1,5 @@
+.qui-action-group__root {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

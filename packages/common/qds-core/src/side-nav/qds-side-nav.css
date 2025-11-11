@@ -1,0 +1,215 @@
+/* the --depth variable in this file is set from JavaScript. It denotes the
+ * depth of the node in the tree. */
+
+.qui-side-nav__root {
+  --indent-spacing: 16px;
+  background: var(--color-surface-primary);
+  display: flex;
+  flex-direction: column;
+  min-width: 240px;
+  padding: var(--spacing-70) 0;
+
+  &[data-surface="secondary"] {
+    background: var(--color-surface-secondary);
+  }
+
+  &[data-state="closed"] {
+    max-width: 56px;
+    min-width: 56px;
+    .qui-collapsible__content.qui-side-nav__branch-content {
+      display: none;
+    }
+
+    .qui-side-nav__node-root {
+      justify-content: center;
+      &:not(:has(.qui-side-nav__node-icon)) {
+        display: none;
+      }
+      > :not(.qui-side-nav__node-icon):not(.qui-side-nav__node-indicator) {
+        display: none;
+      }
+    }
+
+    .qui-side-nav__group-label {
+      display: none;
+    }
+
+    .qui-side-nav__filter-input {
+      display: none;
+    }
+    .qui-side-nav__header {
+      padding: 0 var(--spacing-70);
+    }
+  }
+}
+
+.qui-side-nav__filter-input {
+  margin-top: 16px;
+  padding: 0 var(--spacing-90);
+  /* higher than the next element so the focus outline is visible */
+  z-index: 2;
+}
+
+.qui-side-nav__header {
+  align-items: center;
+  color: var(--color-text-neutral-secondary);
+  display: flex;
+  font: var(--font-static-body-xs-default);
+  gap: var(--spacing-50);
+  margin-bottom: var(--spacing-70);
+  min-height: var(--sizing-140);
+  padding: 0 var(--spacing-90);
+}
+
+.qui-side-nav__divider.qui-divider__root {
+  align-self: center;
+  margin: 0;
+  width: calc(100% - var(--spacing-90) * 2);
+  --divider-border-color: var(--color-border-neutral-01);
+}
+
+.qui-side-nav__group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  > .qui-side-nav__divider {
+    margin-bottom: 16px;
+  }
+
+  + .qui-side-nav__group {
+    margin-top: 16px;
+  }
+}
+
+.qui-side-nav__group-label {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+  padding: 0 var(--spacing-100) var(--spacing-90);
+
+  & + {
+    .qui-side-nav__node-root {
+    }
+  }
+}
+
+.qui-side-nav__node-root {
+  align-items: center;
+  background: var(--color-interactive-background-ghost-idle);
+  border: solid 1px transparent;
+  border-radius: var(--border-radius-xs);
+  cursor: pointer;
+  display: flex;
+  font: var(--font-static-body-sm-bold);
+  gap: var(--spacing-50);
+  height: 40px;
+  line-height: normal;
+  margin-left: calc(
+    (calc(var(--depth, 1) - 1) * var(--indent-spacing)) + var(--spacing-70)
+  );
+  margin-right: var(--spacing-70);
+  min-height: 40px;
+  outline: none;
+  padding-left: var(--spacing-70);
+  padding-right: var(--spacing-70);
+  position: relative;
+
+  &:hover {
+    background: var(--color-interactive-background-ghost-hover);
+  }
+
+  &:active {
+    background: var(--color-interactive-background-ghost-pressed);
+  }
+
+  &:focus-visible {
+    border-color: var(--color-utility-focus-border);
+    outline: solid 1px var(--color-utility-focus-border);
+  }
+
+  &:has([data-part="branch-trigger"]) {
+    --branch-trigger-width: calc(16px + var(--spacing-50));
+  }
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-default);
+    height: 32px;
+    min-height: 32px;
+  }
+
+  &[data-selected][data-part="leaf-node"] {
+    background: var(--color-interactive-background-ghost-hover);
+  }
+
+  &[data-disabled] {
+    background: transparent;
+    color: var(--color-utility-disabled-text);
+    pointer-events: none;
+  }
+
+  &[data-part="branch-node"] {
+    .qui-side-nav__node-indicator {
+      display: none;
+    }
+  }
+}
+
+.qui-side-nav__branch-trigger {
+  margin-left: auto;
+  transition: transform var(--animation-duration-faster) ease;
+  &[data-state="open"] {
+    transform: rotate(180deg);
+  }
+}
+
+/* indicate that a branch has an active leaf node */
+.qui-side-nav__branch-root {
+  &:has(.qui-side-nav__node-root[data-part="leaf-node"][data-selected]) {
+    > .qui-side-nav__node-root[data-part="branch-node"]:first-child {
+      color: var(--color-text-brand-primary);
+      --icon-color: var(--color-icon-brand-primary);
+    }
+  }
+}
+
+.qui-side-nav__branch-indent-guide {
+  background: var(--color-border-neutral-01);
+  height: 100%;
+  left: calc(1px + var(--indent-spacing) * var(--depth));
+  position: absolute;
+  width: 1px;
+}
+
+.qui-side-nav__branch-content {
+  /*
+   * Each side-nav item uses outline for the focus border.
+   * The animated collapse/expand prevents nested item outline due to overflow: hidden.
+   * This padding gives the outline enough space to render.
+   */
+  padding: 1px;
+  position: relative;
+}
+
+.qui-side-nav__node-action:first-of-type {
+  margin-left: auto;
+}
+
+.qui-side-nav__node-indicator {
+  background: var(--color-border-brand-primary);
+  border-bottom-left-radius: var(--border-radius-xs);
+  border-top-left-radius: var(--border-radius-xs);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  width: 3px;
+}
+
+.qui-icon__root.qui-side-nav__node-icon {
+  --icon-size: var(--sizing-70);
+}
+
+.qui-side-nav__collapse-trigger {
+  &:last-child {
+    margin-left: auto;
+  }
+}

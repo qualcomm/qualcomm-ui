@@ -1,0 +1,105 @@
+.qui-inline-icon-button__root {
+  --button-size: var(--sizing-80);
+  align-items: center;
+  /* note: the background color is wrong */
+  background: var(--color-interactive-background-ghost-idle);
+  border: var(--border-width-sm) solid transparent;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-interactive-icon-neutral-idle);
+  display: inline-flex;
+  height: var(--button-size);
+  justify-content: center;
+  min-height: var(--button-size);
+  min-width: var(--button-size);
+  outline: none;
+  transition:
+    background-color var(--animation-duration-faster) ease-out,
+    color var(--animation-duration-faster) ease-out;
+  width: var(--button-size);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &:focus-visible {
+    border-color: var(--color-utility-focus-border);
+    outline: 1px solid var(--color-utility-focus-border);
+  }
+
+  &[data-size="sm"] {
+    --button-size: var(--sizing-80);
+  }
+
+  &[data-size="lg"] {
+    --button-size: var(--sizing-100);
+  }
+
+  &[data-variant="scale"] {
+    /* override the default size */
+    &[data-size] {
+      --button-size: var(--sizing-80);
+    }
+  }
+
+  .qui-icon__root.qui-inline-icon-button__icon {
+    --icon-size: 12px;
+  }
+
+  .qui-icon__root.qui-inline-icon-button__icon {
+    &[data-variant="scale"] {
+      /* override the default size */
+      &[data-size] {
+        --icon-size: 16px;
+      }
+    }
+  }
+
+  &:hover {
+    background: var(--color-interactive-background-ghost-hover);
+    color: var(--color-interactive-icon-neutral-hover);
+  }
+
+  &:active {
+    background: var(--color-interactive-background-ghost-pressed);
+    color: var(--color-interactive-icon-neutral-pressed);
+  }
+
+  &[data-emphasis="persistent-black"] {
+    background: var(--color-interactive-background-persistent-black-ghost-idle);
+    color: var(--color-utility-persistent-black);
+
+    &:hover {
+      background: var(
+        --color-interactive-background-persistent-black-ghost-hover
+      );
+    }
+
+    &:active {
+      background: var(
+        --color-interactive-background-persistent-black-ghost-pressed
+      );
+    }
+  }
+
+  &[data-emphasis="persistent-white"] {
+    background: var(--color-interactive-background-persistent-white-ghost-idle);
+    color: var(--color-utility-persistent-white);
+
+    &:hover {
+      background: var(
+        --color-interactive-background-persistent-white-ghost-hover
+      );
+    }
+
+    &:active {
+      background: var(
+        --color-interactive-background-persistent-white-ghost-pressed
+      );
+    }
+  }
+
+  &:disabled {
+    background: var(--color-utility-disabled-background);
+    color: var(--color-utility-disabled-icon);
+  }
+}
