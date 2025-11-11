@@ -30,7 +30,7 @@
     "dev": "run-p watch:js watch:types",
     "watch:js": "tsx build.ts --mode development --watch",
     "watch:types": "tsc -b tsconfig.lib.json -w --preserveWatchOutput --force",
-    "lint": "eslint --quiet .",
+    "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },

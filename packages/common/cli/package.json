@@ -23,7 +23,7 @@
     "dev": "run-p watch:cli watch:types",
     "watch:cli": "tsx build.ts --mode development --watch",
     "watch:types": "tsc -b tsconfig.lib.json -w --preserveWatchOutput --force",
-    "lint": "eslint --quiet ."
+    "lint": "eslint --quiet"
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",
