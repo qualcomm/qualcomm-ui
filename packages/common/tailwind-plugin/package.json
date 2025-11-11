@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/tailwind-plugin",
-  "version": "1.7.1",
+  "version": "1.0.0",
   "sideEffects": false,
   "description": "Qualcomm UI Tailwind Plugin",
   "author": "Ryan Bower",
