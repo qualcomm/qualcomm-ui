@@ -110,7 +110,7 @@ jobs:
     - uses: ./.github/actions/setup-playwright
 
     - name: build react dependencies
-      run: pnpm turbo run build --filter '@qui/react'
+      run: pnpm turbo run build --filter '@qualcomm-ui/react'
 
     - name: test react
       timeout-minutes: 2
