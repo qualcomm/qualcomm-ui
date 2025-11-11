@@ -5,7 +5,7 @@
     "../frameworks/mdx-docs/dist",
     "../common/typedoc/dist",
     "../common/typedoc-common/dist",
-    "../common/mdx-docs-common/dist",
+    "../common/mdx-common/dist",
     "../common/mdx-vite/dist"
   ]
 }

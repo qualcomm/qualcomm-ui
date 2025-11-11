@@ -10,7 +10,7 @@
         "tsconfig.typedoc.json",
         "./src/typedoc-example.ts",
         "../../common/typedoc/src/**/*.ts",
-        "../../common/mdx-docs-common/dist/**/*.d.ts",
+        "../../common/mdx-common/dist/**/*.d.ts",
         "../../common/mdx-vite/dist/**/*.d.ts",
         "../../frameworks/mdx-docs/src/**/*.ts",
         "../../frameworks/react/src/**/*.ts",

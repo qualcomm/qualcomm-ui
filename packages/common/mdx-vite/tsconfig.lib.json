@@ -12,7 +12,7 @@
   "exclude": ["./src/tests"],
   "references": [
     {
-      "path": "../mdx-docs-common/tsconfig.lib.json"
+      "path": "../mdx-common/tsconfig.lib.json"
     }
   ]
 }

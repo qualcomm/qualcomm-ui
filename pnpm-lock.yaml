@@ -563,7 +563,7 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
 
-  packages/common/mdx-docs-common:
+  packages/common/mdx-common:
     devDependencies:
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1
@@ -694,7 +694,7 @@ importers:
         version: link:../esbuild
       '@qualcomm-ui/mdx-common':
         specifier: workspace:^1
-        version: link:../mdx-docs-common
+        version: link:../mdx-common
       '@qualcomm-ui/tsconfig':
         specifier: workspace:^1
         version: link:../../configs/tsconfig
@@ -1290,7 +1290,7 @@ importers:
         version: link:../../common/dom
       '@qualcomm-ui/mdx-common':
         specifier: workspace:*
-        version: link:../../common/mdx-docs-common
+        version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
         specifier: workspace:*
         version: link:../../common/qds-core
@@ -1624,7 +1624,7 @@ importers:
         version: link:../../common/dom
       '@qualcomm-ui/mdx-common':
         specifier: workspace:*
-        version: link:../../common/mdx-docs-common
+        version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
         specifier: workspace:*
         version: link:../../common/qds-core
@@ -1916,7 +1916,7 @@ importers:
         version: link:../../common/dom
       '@qualcomm-ui/mdx-common':
         specifier: workspace:*
-        version: link:../../common/mdx-docs-common
+        version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
         specifier: workspace:*
         version: link:../../common/qds-core
@@ -2136,7 +2136,7 @@ importers:
         version: link:../../common/dom
       '@qualcomm-ui/mdx-common':
         specifier: workspace:*
-        version: link:../../common/mdx-docs-common
+        version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
         specifier: workspace:*
         version: link:../../common/qds-core
@@ -2353,7 +2353,7 @@ importers:
         version: link:../../common/dom
       '@qualcomm-ui/mdx-common':
         specifier: workspace:*
-        version: link:../../common/mdx-docs-common
+        version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
         specifier: workspace:*
         version: link:../../common/qds-core
@@ -2615,7 +2615,7 @@ importers:
         version: link:../../common/dom
       '@qualcomm-ui/mdx-common':
         specifier: workspace:*
-        version: link:../../common/mdx-docs-common
+        version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
         specifier: workspace:*
         version: link:../../common/qds-core
@@ -3439,7 +3439,7 @@ importers:
         version: link:../../common/esbuild
       '@qualcomm-ui/mdx-common':
         specifier: workspace:^1
-        version: link:../../common/mdx-docs-common
+        version: link:../../common/mdx-common
       '@qualcomm-ui/react':
         specifier: workspace:^1.0.0
         version: link:../react
@@ -21178,7 +21178,7 @@ snapshots:
       tinyrainbow: 2.0.0
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.9.2)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1)
     optionalDependencies:
-      '@vitest/browser': 3.2.4(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(playwright@1.53.2)(vite@7.1.11(@types/node@24.9.2)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vitest@3.2.4)
     transitivePeerDependencies:
       - supports-color
 
