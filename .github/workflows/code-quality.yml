@@ -172,8 +172,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        shardIndex: [ 1 ]
-        shardTotal: [ 1 ]
+        shardIndex: [ 1, 2, 3 ]
+        shardTotal: [ 3 ]
     concurrency:
       group: PR Angular Tests - ${{matrix.shardIndex}} - ${{matrix.shardTotal}} - ${{github.head_ref}}
       cancel-in-progress: true
