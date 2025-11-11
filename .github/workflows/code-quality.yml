@@ -90,7 +90,7 @@ jobs:
   react-tests:
     env:
       IS_CI: true
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         shardIndex: [ 1, 2 ]
