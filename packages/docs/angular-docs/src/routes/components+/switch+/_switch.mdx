@@ -1,0 +1,138 @@
+---
+title: Switch
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+A switch is a simple, two-option control that can be toggled between two states — on and off. It's commonly used in settings or preferences menus where users can enable or disable features.
+
+```ts
+import {SwitchModule} from "@qualcomm-ui/angular/switch"
+```
+
+## Examples
+
+### Simple
+
+The simple API bundles all subcomponents together into a single directive.
+
+<QdsDemo name="SwitchSimpleDemo" />
+
+### Child Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="SwitchChildDirectivesDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="SwitchCompositeDemo" />
+
+### States
+
+Based on the inputs, the switch will render as checked or unchecked.
+
+<QdsDemo name="SwitchStatesDemo" />
+
+### Disabled
+
+When [disabled](./#disabled) is true, the switch becomes non-interactive and is typically rendered with reduced opacity to indicate its unavailable state.
+
+<QdsDemo name="SwitchDisabledDemo" />
+
+## Forms
+
+### Template Forms
+
+- When using template-driven forms, add the [required](./#required) attribute to enable validation
+- The [errorText](./#errorText) input (or `q-switch-error-text` directive) displays automatically when the field is invalid and the user has interacted with it
+
+<QdsDemo name="SwitchTemplateFormsDemo" />
+
+### Reactive Forms
+
+Use Reactive Forms for better control over form state and validation.
+
+<QdsDemo name="SwitchReactiveFormsDemo" />
+
+### Multi-Field Validation
+
+Reactive forms let you validate across multiple fields simultaneously, perfect for complex business rules like date ranges or dependent field relationships.
+
+<QdsDemo name="SwitchAdvancedValidationDemo" />
+
+## Composite Guidelines
+
+Only bind form controls to the `q-switch` or `q-switch-root` directives.
+
+```angular2html
+<!-- Won't work ❌ -->
+<div q-switch-root>
+  <input q-switch-hidden-input [(ngModel)]="value" />
+  <div q-switch-control></div>
+</div>
+
+<!-- Works as expected ✅ -->
+<div q-switch-root [(ngModel)]="value">
+  <input q-switch-hidden-input />
+  <div q-switch-control></div>
+</div>
+```
+
+The composite elements are only intended to be used as direct descendants of the `q-switch` or `q-switch-root` directives.
+
+```angular-html
+<!-- Won't work alone ❌ -->
+<input q-switch-hidden-input />
+<div q-switch-control></div>
+
+<!-- Works as expected ✅ -->
+<div q-switch-root>
+  <input q-switch-hidden-input />
+  <div q-switch-control></div>
+</div>
+```
+
+## Accessibility
+
+- The root directive should always be attached to a `<label>` element for accessibility:
+  - it makes the entire component clickable, not just the input/control.
+  - it provides implicit association between the text and input element, which is ideal for screen readers.
+- Always use the associated [label](./#label) or [q-switch-label](./#q-switch-label) directive when authoring the text label. This is automatically associated with the input element.
+- If you omit the label, you must provide an [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby) attribute on the `q-switch-hidden-input` element.
+
+## API
+
+### q-switch
+
+The [q-switch](./#q-switch) directive extends the [q-switch-root](./#q-switch-root) directive with the following properties:
+
+<TypeDocProps name="SwitchComponent" omitFrom="SwitchRootDirective" />
+
+## Composite API
+
+### q-switch-root
+
+<TypeDocProps name="SwitchRootDirective" />
+
+### q-switch-label
+
+<TypeDocProps name="SwitchLabelDirective" />
+
+### q-switch-hidden-input
+
+<TypeDocProps name="SwitchHiddenInputDirective" />
+
+### q-switch-control
+
+<TypeDocProps name="SwitchControlComponent" />
+
+### q-switch-error-text
+
+<TypeDocProps name="SwitchErrorTextComponent" />

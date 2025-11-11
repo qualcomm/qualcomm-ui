@@ -1,0 +1,364 @@
+---
+title: Combobox
+group: Form Controls
+---
+
+import {TypeDocProps, TypeDocAngularAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+```tsx
+import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
+```
+
+## Overview
+
+- Each combobox uses the `comboboxCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](#list-collection).
+
+## Examples
+
+### Simple
+
+The simple API provides a standalone component with built-in layout.
+
+<QdsDemo name="ComboboxSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="ComboboxCompositeDemo" />
+
+### Open on Click
+
+Use the [openOnClick](./#openOnClick) prop to open the combobox when the user clicks on the input.
+
+<QdsDemo name="ComboboxOpenOnClickDemo" />
+
+### Input Behavior
+
+Adjust the auto-completion behavior of the combobox with the [inputBehavior](./#inputBehavior) prop.
+
+<QdsDemo name="ComboboxInputBehaviorDemo" />
+
+### Multiple Selection
+
+Use the [multiple](./#multiple) prop to enable multiple selection. When this is set, the combobox will always clear the input value when the user selects an option.
+
+<QdsDemo name="ComboboxMultipleDemo" />
+
+### Highlight Matching Text
+
+Use the [highlightMatchingText](./#highlightMatchingText) prop to highlight the portion of each option that matches the user's input. This provides visual feedback during filtering.
+
+<QdsDemo name="ComboboxHighlightDemo" />
+
+### ARIA Label
+
+The Combobox's label is automatically associated with the input element for accessibility. If you omit the label, you should provide the [ariaLabel](./#ariaLabel) prop to give your combobox an accessible name.
+
+<QdsDemo name="ComboboxAriaLabelDemo" />
+
+> [!note]
+> If you're using the composite API, provide the `aria-label` attribute to the `q-combobox-input` element instead.
+
+### Content Width
+
+The [positioning.sameWidth](./#sameWidth) property controls whether the width of the combobox content matches the width of the input element. The default is `true`.
+
+<QdsDemo name="ComboboxSameWidthDemo" />
+
+### Input Icon
+
+Use the [icon](./#icon) prop to add an icon to the start of the input element. View our [Icon](/components/icon) documentation to learn more about using icons in QUI.
+
+<QdsDemo name="ComboboxIconDemo" />
+
+### Icon Customization
+
+Provide a custom element using the `q-combobox-icon` directive to override the default icon. This example features a loading indicator:
+
+<QdsDemo name="ComboboxIconCustomizationDemo" />
+
+### Items as Objects
+
+The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [comboboxCollection](./#ListCollection) to specify the label and value of each item.
+
+<QdsDemo name="ComboboxItemsDemo" />
+
+### Item Customization
+
+When using the simple API, provide the `q-combobox-content` directive as a child of the `<q-combobox>` component to override the default item renderer. The following example demonstrates how to add a custom icon to each item:
+
+<QdsDemo name="ComboboxItemCustomizationDemo" />
+
+> [!tip]
+> When you override the default item renderer, certain props like `highlightMatchingText` and `emptyText` won't have any effect. Refer to the source code to learn more about the built-in item renderer.
+
+### Async Loading
+
+This example shows how to load items asynchronously and display a loading indicator.
+
+<QdsDemo name="ComboboxAsyncDemo" />
+
+### Virtualized
+
+For large lists, use the [virtual](./#virtual) prop to improve performance. This virtualizes the visible list items for performant scrolling and searching.
+
+<QdsDemo name="ComboboxVirtualDemo" />
+
+### Virtual Item Customization
+
+Use the `q-combobox-virtual-content` and `q-combobox-virtual-item` directives to customize virtual item rendering.
+
+<QdsDemo name="ComboboxVirtualItemCustomizationDemo" />
+
+### Sizes
+
+This component supports three [size](./#size) options to accommodate different layout densities and design requirements.
+
+The available sizes are `sm`, `md`, and `lg`. The default size is `md`.
+
+<QdsDemo name="ComboboxSizesDemo" />
+
+### Content Height
+
+Change the height of the item container by adjusting the style of the Content element.
+
+<QdsDemo name="ComboboxMaxHeightDemo" />
+
+### Controlled State
+
+Set the initial value using the [defaultValue](./#defaultValue) prop, or use [value](./#value) and [valueChanged](./#valueChanged) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="ComboboxControlledStateDemo" />
+
+### States
+
+The following shows how the Combobox component appears in each interactive state.
+
+<QdsDemo name="ComboboxStatesDemo" />
+
+### Error Text and Indicator
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `q-combobox-error-text` component when using the composite API)
+
+The error text and indicator will only render when [invalid](./#invalid) is true.
+
+<QdsDemo name="ComboboxErrorDemo" />
+
+### Hint Text
+
+Use the [hintText](./#hintText) prop to provide additional context or instructions below the combobox.
+
+<QdsDemo name="ComboboxHintDemo" />
+
+### Within Dialog
+
+To use the Combobox within a Dialog, you need to avoid portalling the item dropdown. To do this using the simple API, set [disablePortal](./#disablePortal) property to `true`:
+
+<QdsDemo name="ComboboxWithinDialogDemo" />
+
+### Within Popover
+
+Like with the Dialog, you need to avoid portalling the `q-combobox-positioner`:
+
+<QdsDemo name="ComboboxWithinPopoverDemo" />
+
+## Forms
+
+- All form control values are arrays to support multiple selections.
+- The value of the form control is an array of type `T`, where `T` is the type of the items in your combobox collection.
+
+### Template Forms
+
+#### Strings
+
+<QdsDemo name="ComboboxStringsTemplateFormsDemo" />
+
+#### Objects
+
+<QdsDemo name="ComboboxObjectTemplateFormsDemo" />
+
+#### States
+
+When using template forms, the [disabled](./#disabled), [readOnly](./#readOnly), and [invalid](./#invalid) properties govern the interactive state of the control.
+
+<QdsDemo name="ComboboxTemplateFormStateDemo" />
+
+#### Required
+
+When using template forms, pass the [required](./#required) property to the form control. This applies the [RequiredValidator](https://angular.dev/api/forms/RequiredValidator) and [MinLengthValidator](https://angular.dev/api/forms/MinLengthValidator) to the form control.
+
+<QdsDemo name="ComboboxRequiredTemplateFormsDemo" />
+
+### Reactive Forms
+
+#### Strings
+
+<QdsDemo name="ComboboxStringsReactiveFormsDemo" />
+
+#### Objects
+
+<QdsDemo name="ComboboxObjectReactiveFormsDemo" />
+
+#### State Guidelines
+
+The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+
+<QdsDemo name="ComboboxReactiveFormStatesDemo" />
+
+## API
+
+### \<q-combobox\>
+
+The simple combobox extends the [q-combobox-root](./#q-combobox-root) directive with the following properties:
+
+<TypeDocProps name="ComboboxComponent" omitFrom="ComboboxRootDirective" />
+
+## Composite API
+
+### q-combobox-root
+
+<TypeDocProps name="ComboboxRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsComboboxRootBindings", "ComboboxRootBindings"]}
+/>
+
+### q-combobox-label
+
+<TypeDocProps name="ComboboxLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectLabelBindings", "ComboboxLabelBindings"]}
+/>
+
+### q-combobox-control
+
+<TypeDocProps name="ComboboxControlDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectControlBindings", "ComboboxControlBindings"]}
+/>
+
+### q-combobox-input
+
+<TypeDocProps name="ComboboxInputDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsInputInputBindings", "ComboboxInputBindings"]}
+/>
+
+### q-combobox-trigger
+
+<TypeDocProps name="ComboboxTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectIndicatorBindings", "ComboboxTriggerBindings"]}
+/>
+
+### q-combobox-clear-trigger
+
+<TypeDocProps name="ComboboxClearTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectClearTriggerBindings", "ComboboxClearTriggerBindings"]}
+/>
+
+### q-combobox-positioner
+
+<TypeDocProps name="ComboboxPositionerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectPositionerBindings", "ComboboxPositionerBindings"]}
+/>
+
+### q-combobox-content
+
+<TypeDocProps name="ComboboxContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectContentBindings", "ComboboxContentBindings"]}
+/>
+
+### q-combobox-item
+
+<TypeDocProps name="ComboboxItemDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectItemBindings", "ComboboxItemBindings"]}
+/>
+
+### q-combobox-item-indicator
+
+<TypeDocProps name="ComboboxItemIndicatorDirective" />
+
+<TypeDocAngularAttributes name="ComboboxItemIndicatorBindings" />
+
+### q-combobox-item-text
+
+<TypeDocProps name="ComboboxItemTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectItemTextBindings", "ComboboxItemTextBindings"]}
+/>
+
+### q-combobox-hint
+
+<TypeDocProps name="ComboboxHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsInputHintBindings", "ComboboxHintBindings"]}
+/>
+
+### q-combobox-error-text
+
+<TypeDocProps name="ComboboxErrorTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsInputErrorTextBindings", "ComboboxErrorTextBindings"]}
+/>
+
+### q-combobox-error-indicator
+
+<TypeDocProps name="ComboboxErrorIndicatorDirective" />
+
+<TypeDocAngularAttributes name="ComboboxErrorIndicatorBindings" />
+
+## Data Structures
+
+### ListCollection
+
+The following describes the member variables and methods of the `ListCollection` class. The Combobox component uses an instance of this class as input:
+
+```angular-ts
+@Component({
+  template: `
+    <q-combobox [collection]="collection" />
+  `,
+})
+export class MyComponent {
+  collection = comboboxCollection({
+    items: [
+      // ...
+    ],
+  })
+}
+```
+
+Note that the ListCollection accepts a single generic type parameter, `T`, which is the type of each list item used in the collection. This can be a string or an object.
+
+#### Constructor
+
+<TypeDocProps name="ListCollectionOptions" partial />
+
+<TypeDocProps name="ListCollection" partial showComponentJsdoc={false} />
+
+### ComboboxPositioningOptions
+
+<TypeDocProps name="ComboboxPositioningOptions" partial />

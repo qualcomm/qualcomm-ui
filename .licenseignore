@@ -33,3 +33,6 @@ packages/*/*/scripts/*
 
 # typescript typedefs
 **/*.d.ts
+
+# documentation sites
+packages/docs/**/*

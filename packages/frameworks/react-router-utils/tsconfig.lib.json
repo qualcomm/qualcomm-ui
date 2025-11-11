@@ -1,0 +1,12 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "incremental": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "dist/tsbuildinfo"
+  },
+  "include": ["./src/node", "./src/client"],
+}

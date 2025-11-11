@@ -1,0 +1,35 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
+      "@qualcomm-ui/core/*": ["../../common/core/dist/*/index.d.ts"]
+    }
+  },
+  "files": ["angular-demo-module/main.ts"],
+  "include": ["./src/routes/**/demos/**/*.ts"],
+  "exclude": ["./src/**/*.mdx"],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

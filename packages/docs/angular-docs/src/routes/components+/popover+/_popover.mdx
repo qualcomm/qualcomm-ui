@@ -1,0 +1,55 @@
+---
+title: Popover
+group: Overlays
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+Popovers are containers used to display transient content such as options and actions.
+
+```typescript
+import {PopoverModule} from "@qualcomm-ui/angular/popover"
+```
+
+## Examples
+
+### Simple
+
+Basic popover using the simple API with a label and child content. The anchor and trigger are supplied using directives, while the content is the default slot.
+
+<QdsDemo name="PopoverSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="PopoverCompositeDemo" />
+
+## API
+
+### q-popover
+
+The `q-popover` directive extends the [q-popover-root](./#q-popover-root) directive with the following props:
+
+<TypeDocProps name="PopoverDirective" omitFrom="PopoverRootDirective" />
+
+## Composite API
+
+### q-popover-root
+
+<TypeDocProps name="PopoverRootDirective" />
+
+This section describes the elements of the Popover's composite API.
+
+### q-popover-label
+
+<TypeDocProps name="PopoverLabelDirective" />
+
+## Data Structures
+
+### PopoverPositioningOptions
+
+<TypeDocProps name="PopoverPositioningOptions" />

@@ -1,0 +1,32 @@
+---
+title: Forms
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+This page contains recommendations for working with Angular forms, as well as common pitfalls you might encounter.
+
+This guide is a work in progress.
+
+## Avoiding Pitfalls
+
+### Disabled Attribute
+
+When using Reactive Forms, the `disabled` HTML attribute works differently than it does with template-driven forms.
+
+In short, the FormControl handles its own disabled state internally and will **override the disabled attribute supplied to the HTML attribute**. Consider the following example:
+
+<QdsDemo name="FormDisabledDemo" expanded />
+
+Even though we're setting the input element's `disabled` attribute to `true`, the input is still enabled. This is because the Reactive Form control is the single source of truth for the form's state.
+
+Let's look at another example. Here, we're disabling the control using the FormControl, but we're also setting `[disabled]="false"` in the template.
+
+<QdsDemo name="FormEnabledDemo" expanded />
+
+You'll notice that the input field is disabled, and this is expected. The FormControl is the single source of truth for the form's state, so it overrides the HTML disabled attribute.
+
+> **Note** If you try to do this in your code, Angular will emit a warning message to your browser's dev console. Keep an eye on your console during development for helpful indicators like this one.

@@ -1,0 +1,146 @@
+---
+title: Checkbox
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAngularAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```ts
+import {CheckboxModule} from "@qualcomm-ui/angular/checkbox"
+```
+
+## Examples
+
+### Simple
+
+The simple API bundles the subcomponents together into a single directive.
+
+<QdsDemo name="CheckboxSimpleDemo" />
+
+### Child Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="CheckboxChildDirectivesDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="CheckboxCompositeDemo" />
+
+### States
+
+Based on the inputs, the checkbox will render as checked, indeterminate, or unchecked (default). The controlled value, if supplied as true, takes precedence over the indeterminate input.
+
+<QdsDemo name="CheckboxStatesDemo" />
+
+### Disabled State
+
+When [disabled](./#disabled) is true, the checkbox becomes non-interactive and is typically rendered with reduced opacity to indicate its unavailable state.
+
+<QdsDemo name="CheckboxDisabledDemo" />
+
+### Sizes
+
+The checkbox supports three [sizes](./#size): `sm`, `md` (default), and `lg`.
+
+<QdsDemo expanded name="CheckboxSizesDemo" />
+
+## Forms
+
+### Template Forms
+
+- When using template forms, add the [required](./#required) attribute to enable validation
+- The [errorText](./#errorText) input (or `q-checkbox-error-text` directive) displays automatically when the field is invalid and the user has interacted with it
+
+<QdsDemo name="CheckboxTemplateFormsDemo" />
+
+### Reactive Forms
+
+Use Reactive Forms instead of Template-driven Forms for better control over form state and validation.
+
+<QdsDemo name="CheckboxReactiveFormsDemo" />
+
+### Multi-Field Validation
+
+Reactive forms let you validate across multiple fields simultaneously, perfect for complex business rules like date ranges or dependent field relationships.
+
+<QdsDemo name="CheckboxAdvancedValidationDemo" />
+
+## Composition
+
+The composite elements are only intended to be used as direct descendants of the `q-checkbox` directive.
+
+```angular-html
+<!-- Won't work alone ❌ -->
+<input q-checkbox-hidden-input />
+<div q-checkbox-control></div>
+
+<!-- Works as expected ✅ -->
+<div q-checkbox-root>
+  <input q-checkbox-hidden-input />
+  <div q-checkbox-control></div>
+</div>
+```
+
+## Accessibility
+
+- The root directive should always be attached to a `<label>` element for accessibility:
+  - it makes the entire component clickable, not just the input/control.
+  - it provides implicit association between the text and input element, which is ideal for screen readers.
+- Always use the associated [label](./#label) or [q-checkbox-label](./#q-checkbox-label) directive when authoring the text label. This is automatically associated with the input element.
+- If you omit the label, you must provide an [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby) attribute on the `q-checkbox-hidden-input` element.
+
+## API
+
+### q-checkbox
+
+The `q-checkbox` directive extends the [q-checkbox-root](./#q-checkbox-root) directive with the following properties:
+
+<TypeDocProps name="CheckboxComponent" omitFrom="CheckboxDirective" />
+
+## Composite API
+
+### q-checkbox-root
+
+<TypeDocProps name="CheckboxRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsCheckboxRootBindings", "CheckboxRootBindings"]}
+/>
+
+### q-checkbox-label
+
+<TypeDocProps name="CheckboxLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["CheckboxLabelBindings", "QdsCheckboxLabelBindings"]}
+/>
+
+### q-checkbox-control
+
+<TypeDocProps name="CheckboxControlComponent" />
+
+<TypeDocAngularAttributes
+  name={["CheckboxControlBindings", "QdsCheckboxControlBindings"]}
+/>
+
+### q-checkbox-hidden-input
+
+<TypeDocProps name="CheckboxHiddenInputDirective" />
+
+<TypeDocAngularAttributes
+  name={["CheckboxHiddenInputBindings", "QdsCheckboxHiddenInputBindings"]}
+/>
+
+### q-checkbox-indicator
+
+<TypeDocProps name="CheckboxIndicatorComponent" />
+
+<TypeDocAngularAttributes
+  name={["CheckboxIndicatorBindings", "QdsCheckboxIndicatorBindings"]}
+/>

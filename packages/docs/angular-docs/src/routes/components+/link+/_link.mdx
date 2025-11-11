@@ -1,0 +1,59 @@
+---
+title: Link
+group: Data Display
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAngularAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```ts
+import {LinkModule} from "@qualcomm-ui/angular/link"
+```
+
+## Examples
+
+### Emphasis (color)
+
+Links support different emphasis (colors) to match your design needs. Customize these with the [emphasis](./#emphasis) property.
+
+<QdsDemo name="LinkColorsDemo" />
+
+### Icons
+
+Links can include icons to provide additional visual context. QUI links support [lucide-angular](https://lucide.dev) icons.
+
+<QdsDemo name="LinkIconsDemo" />
+
+### Sizes
+
+Adjust the font and icon size of the link using the [size](./#size) property. The default size is `sm`.
+
+<QdsDemo name="LinkSizesDemo" />
+
+### Disabled
+
+When [disabled](./#disabled) is true, the link becomes non-interactive and is rendered with reduced opacity to indicate its unavailable state.
+
+<QdsDemo name="LinkDisabledDemo" />
+
+## API
+
+### q-link
+
+<TypeDocProps name="LinkDirective" />
+
+<TypeDocAngularAttributes name="QdsLinkRootBindings" />
+
+### q-start-icon
+
+Provided via the [startIcon](./#startIcon) property or the `q-start-icon` directive.
+
+<TypeDocAngularAttributes name="QdsLinkStartIconBindings" />
+
+### q-end-icon
+
+Provided via the [endIcon](./#endIcon) property or the `q-end-icon` directive.
+
+<TypeDocAngularAttributes name="QdsLinkEndIconBindings" />

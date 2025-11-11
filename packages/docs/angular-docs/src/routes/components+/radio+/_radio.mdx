@@ -1,0 +1,135 @@
+---
+title: Radio
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+A control element that allows the user to choose only one of a predefined set of mutually exclusive options. The singular property of a radio button makes it distinct from checkboxes, where the user can select and unselect any number of items.
+
+```tsx
+import {RadioModule} from "@qualcomm-ui/angular/radio"
+```
+
+## Examples
+
+### Simple
+
+The simple API bundles all Radio Item subcomponents together into a single `q-radio` directive.
+
+<QdsDemo name="RadioSimpleDemo" />
+
+### Child Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="RadioChildDirectivesDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="RadioCompositeDemo" />
+
+### Layout
+
+Use the composite API when you need to modify the layout of the radio buttons.
+
+<QdsDemo name="RadioCompositeLayoutDemo" />
+
+### Disabled
+
+When [disabled](./#disabled) is true, the radio group becomes non-interactive and is rendered with reduced opacity to indicate its unavailable state.
+
+<QdsDemo name="RadioDisabledDemo" />
+
+### Orientation
+
+Controls the layout direction of radio buttons within the group.
+
+<QdsDemo name="RadioOrientationDemo" />
+
+### Sizes
+
+The radio supports three [sizes](./#size): `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="RadioSizesDemo" />
+
+## Forms
+
+### Template Forms
+
+When using template-driven forms with `ngModel`, enable validation by adding the [required](./#required) attribute directly to the template:
+
+Guidelines:
+
+- When using template forms, add the [required](./#required) attribute to trigger validation
+- The component automatically handles validation state checking
+- The `q-radio-group-error-text` directive displays automatically when the field is invalid and the user has interacted with it
+
+Full example:
+
+<QdsDemo name="RadioTemplateFormsDemo" />
+
+### Reactive Forms
+
+Use Reactive Forms instead of Template-driven Forms for better control over form state and validation.
+
+<QdsDemo name="RadioReactiveFormsDemo" />
+
+## Composition
+
+### RadioGroup
+
+The Radio is only intended to be used as direct descendants of the `q-radio-group` directive.
+
+```angular-html
+<!-- Won't work alone ❌ -->
+<label q-radio label="Label" value="value"></label>
+
+<!-- Works as expected ✅ -->
+<fieldset q-radio-group>
+  <label q-radio label="Label" value="value"></label>
+</fieldset>
+```
+
+Radio buttons are designed for groups. For single toggle controls, use the [Checkbox](/components/checkbox) component instead.
+
+### Composite Components
+
+The Radio's composite components are only intended to be used as direct descendants of the `q-radio-root` directive.
+
+```angular-html
+<!-- Won't work alone ❌ -->
+<input q-radio-hidden-input />
+<span q-radio-control></span>
+<span q-radio-label>Label</span>
+
+<!-- Works as expected ✅ -->
+<label q-radio-root value="value">
+  <input q-radio-hidden-input />
+  <span q-radio-control></span>
+  <span q-radio-label>Label</span>
+</label>
+```
+
+## API
+
+### q-radio-group
+
+<TypeDocProps name="RadioGroupDirective" />
+
+### q-radio
+
+The `q-radio` directive supports all props from [q-radio-root](./#q-radio-root) directive, plus the props listed below.
+
+<TypeDocProps name="RadioComponent" omitFrom="RadioRootDirective" />
+
+## Composite API
+
+### q-radio-root
+
+<TypeDocProps name="RadioRootDirective" />

@@ -1,0 +1,193 @@
+---
+title: Text Input
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAngularAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {TextInputModule} from "@qualcomm-ui/angular/text-input"
+```
+
+## Examples
+
+### Simple
+
+The simple API bundles all subcomponents together into a single component.
+
+<QdsDemo name="TextInputSimpleDemo" />
+
+### Icons
+
+Add icons using icon props at the root.
+
+<QdsDemo name="TextInputSimpleIconsDemo" />
+
+### Child Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="TextInputChildDirectivesDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="TextInputCompositeDemo" />
+
+### Icons (Composite)
+
+The `q-text-input-input-group` directive provides icon properties for the composite API.
+
+<QdsDemo name="TextInputCompositeIconsDemo" />
+
+### Composite Layout
+
+The composite API is useful for alternative layouts and styles.
+
+<QdsDemo name="TextInputCompositeLayoutDemo" />
+
+### Clear Trigger
+
+- When using the simple API, the clear button renders automatically. Change this by setting the [clearable](./#clearable) prop to false.
+- When using the composite API, you render the `q-text-input-clear-trigger` declaratively within the input group.
+- The clear button only shows when the input field has text.
+
+<QdsDemo name="TextInputClearTriggerDemo" />
+
+### Sizes
+
+Customize size using the [size](./#size) prop. The default size is `md`.
+
+<QdsDemo name="TextInputSizesDemo" />
+
+### Error Text and Indicator
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `q-text-input-error-text` directive when using the composite API)
+
+The error text and indicator will only render when [invalid](./#invalid) is true.
+
+<QdsDemo name="TextInputErrorTextDemo" />
+
+## Forms
+
+Control and validate the input value using Angular form control bindings.
+
+### Template Forms
+
+When using template-driven forms with `ngModel`, perform validation manually in your component and pass the result to the [invalid](./#invalid) property.
+
+> [!tip]
+> Form validation timing is controlled by the [updateOn](https://angular.dev/api/forms/FormControl#updateOn) property on the form control.
+
+<QdsDemo name="TextInputTemplateFormsInvalidDemo" />
+
+#### States
+
+When using template forms, the [disabled](./#disabled), [readOnly](./#readOnly), and [invalid](./#invalid) properties govern the interactive state of the control.
+
+<QdsDemo name="TextInputStatesDemo" />
+
+#### Required
+
+When using template forms, pass the [required](./#required) property to apply the [RequiredValidator](https://angular.dev/api/forms/RequiredValidator) to the form control.
+
+<QdsDemo name="TextInputRequiredTemplateFormsDemo" />
+
+### Reactive Forms
+
+Use Reactive Forms for better control of form state and validation.
+
+<QdsDemo name="TextInputReactiveFormsDemo" />
+
+#### State Guidelines
+
+The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+
+<QdsDemo name="TextInputReactiveFormStatesDemo" />
+
+### Composite API & Forms
+
+When using the composite API with Angular Forms, always apply form control bindings to the `q-text-input-root` directive.
+
+<QdsDemo name="TextInputCompositeFormsDemo" />
+
+## API
+
+### \<q-text-input\>
+
+The `<q-text-input>` component extends the [q-text-input-root](./#q-text-input-root) directive with the following properties:
+
+<TypeDocProps name="TextInputComponent" omitFrom="TextInputRootDirective" />
+
+## Composite API
+
+### q-text-input-root
+
+<TypeDocProps name="TextInputRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputRootBindings", "QdsInputRootBindings"]}
+/>
+
+### q-text-input-input-group
+
+<TypeDocProps name="TextInputInputGroupDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputInputGroupBindings", "QdsInputGroupBindings"]}
+/>
+
+### q-text-input-label
+
+<TypeDocProps name="TextInputLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputLabelBindings", "QdsInputLabelBindings"]}
+/>
+
+### q-text-input-hint
+
+<TypeDocProps name="TextInputHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputHintBindings", "QdsInputHintBindings"]}
+/>
+
+### q-text-input-clear-trigger
+
+<TypeDocProps name="TextInputClearTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputClearTriggerBindings", "QdsInputClearTriggerBindings"]}
+/>
+
+### q-text-input-input
+
+<TypeDocProps name="TextInputInputDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputInputBindings", "QdsInputInputBindings"]}
+/>
+
+### q-text-input-error-text
+
+<TypeDocProps name="TextInputErrorTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputErrorTextBindings", "QdsInputErrorTextBindings"]}
+/>
+
+### q-text-input-error-indicator
+
+<TypeDocProps name="TextInputErrorIndicatorDirective" />
+
+<TypeDocAngularAttributes
+  name={["TextInputErrorIndicatorBindings", "QdsInputErrorIndicatorBindings"]}
+/>

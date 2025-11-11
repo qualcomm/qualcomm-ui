@@ -1,0 +1,137 @@
+---
+title: Menu
+group: Overlays
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Menu} from "@qualcomm-ui/react/menu"
+```
+
+## Examples
+
+### Item Customization
+
+Compose the menu to include icons and commands.
+
+<QdsDemo name="MenuItemCustomizationDemo" />
+
+### Context Menu
+
+Demonstrates how to trigger a menu on right-click or other context events.
+
+<QdsDemo name="MenuContextMenuDemo" />
+
+### Nested Menus
+
+Compose nested menus by nesting `<Menu.Root>` components inside each other.
+
+<QdsDemo name="MenuNestedDemo" />
+
+### Links
+
+Menu items can be links.
+
+<QdsDemo name="MenuLinksDemo" />
+
+### Groups
+
+Use the `q-menu-item-group` component to group menu items.
+
+### Item Types
+
+There are three item types, each corresponding to one of the three types of aria menu item roles:
+
+- `q-menu-item` — `menuitem`
+- `q-menu-radio-item` — `menuitemradio`
+- `q-menu-checkbox-item` — `menuitemcheckbox`
+
+#### Checkbox Items
+
+Use checkbox items when you need options that are individually selectable.
+
+<QdsDemo name="MenuCheckboxItemsDemo" />
+
+#### Checkbox Group State
+
+Checkbox item state is controlled individually on each item. Use the `useCheckboxGroup` hook to manage the state of a group of checkbox items.
+
+<QdsDemo name="MenuCheckboxStateDemo" />
+
+#### Radio Group
+
+Radio items are grouped such that only one can be selected at a time.
+
+<QdsDemo name="MenuRadioGroupDemo" />
+
+#### Radio Group State
+
+Radio item state can be controlled via the [value](./#value) property on the parent `menu-radio-item-group` element.
+
+<QdsDemo name="MenuRadioGroupStateDemo" />
+
+### Controlled State
+
+The menu's visibility can be controlled via the [open](./#open), [openChange](./#openChange), and [defaultOpen](./#defaultOpen) properties.
+
+- Use `open` to explicitly set whether the menu is open (controlled mode).
+- Use `openChanged` to be notified when the menu requests to open or close.
+- Use `defaultOpen` to set the initial open state when you don't need to control it yourself (uncontrolled mode).
+
+In controlled mode, the `open` prop should be updated in response to `openChanged` events to reflect the desired visibility.
+
+<QdsDemo name="MenuControlledStateDemo" />
+
+### Placement
+
+Configure the menu's placement using the [positioning.placement](./#positioning) prop.
+
+<QdsDemo name="MenuPlacementDemo" />
+
+### Anchor Point
+
+Use the [positioning.anchorPoint](./#positioning) prop to control the anchor point of the menu.
+
+<QdsDemo name="MenuAnchorPointDemo" />
+
+### Avatar
+
+Here's an example that composes the `Menu` with the [Avatar](/components/avatar) component to display a user account menu.
+
+<QdsDemo name="MenuAvatarDemo" />
+
+### Within Dialog
+
+When using the `Menu` inside a `Dialog`, don't render the `q-menu-positioner` within a `<q-portal>` element.
+
+<QdsDemo name="MenuWithinDialogDemo" />
+
+### Hide When Detached
+
+Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu when it's detached from the trigger.
+
+<QdsDemo name="MenuHideWhenDetachedDemo" />
+
+## API
+
+### \<q-menu\>
+
+<TypeDocProps name="MenuComponent" />
+
+### q-menu-item
+
+<TypeDocProps name="MenuItemDirective" />
+
+### q-menu-checkbox-item
+
+<TypeDocProps name="MenuCheckboxItemDirective" />
+
+### PositioningOptions
+
+The [positioning](./#positioning) prop accepts an object with the following shape:
+
+<TypeDocProps name="PositioningOptions" />

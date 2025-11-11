@@ -1,0 +1,142 @@
+---
+title: Accordion
+group: Disclosure
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+The accordion component enables users to collapse and expand multiple content sections within a limited space. This helps group and hide content effectively, maintaining a clean interface and reducing clutter.
+
+```typescript
+import {AccordionModule} from "@qualcomm-ui/angular/accordion"
+```
+
+## Usage
+
+- The accordion requires each of its items to have a unique `value` input.
+- The accordion is keyboard-navigable once focused. Arrow keys can be used to move to the next or previous item. Home and End keys can be used to jump to the first or last item, respectively.
+
+## Examples
+
+### Simple
+
+The simple API bundles the accordion item's subcomponents together into a single directive.
+
+<QdsDemo name="AccordionSimpleDemo" />
+
+### Simple & Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="AccordionSimpleDirectivesDemo" />
+
+### Composite
+
+Use the `q-accordion-item-root` directive for full control over each part of the item. This is useful when you need custom styling or layout, but requires you to provide each subcomponent.
+
+<QdsDemo name="AccordionCompositeDemo" />
+
+### Starting Indicator
+
+To display the expand/collapse indicator at the start of the trigger, make it the first child of the `q-accordion-item-trigger` element.
+
+The padding of the item's content will automatically adjust.
+
+<QdsDemo name="AccordionCompositeLayoutDemo" />
+
+### Multiple
+
+By default, only a single accordion section can be open at a time. Setting [multiple](./#multiple-1) allows multiple sections to be open or closed simultaneously.
+
+<QdsDemo name="AccordionMultipleDemo" />
+
+### Collapsible
+
+When [multiple](./#multiple-1) is not set, enabling [collapsible](./#collapsible-1) lets the user close an open accordion item by clicking it again.
+
+<QdsDemo name="AccordionCollapsibleDemo" />
+
+### Default Value
+
+The [defaultValue](./#defaultValue) input allows you to set the initial state for the accordion by specifying which accordion item or items (if [multiple](./#multiple-1) is set) should be open by default.
+It expects an array of values that should match those passed to each accordion item.
+
+<QdsDemo name="AccordionDefaultValueDemo" />
+
+### Disabled
+
+You can disable accordion items by setting their [disabled](./#disabled-2) input. This prevents the item from being interacted with.
+You can disable the entire accordion by setting the [disabled](./#disabled-1) input on the accordion root element.
+
+<QdsDemo name="AccordionDisabledDemo" />
+
+### Uncontained
+
+Set the [uncontained](./#uncontained-1) input when the accordion is not placed inside a container and needs to align flush with adjacent layout elements—such as when positioned directly below a paragraph of text.
+This input removes the default horizontal padding from accordion items, allowing them to sit seamlessly within the surrounding content.
+
+<QdsDemo name="AccordionUncontainedDemo" />
+
+### Size
+
+Use the [size](./#size-1) input to control the size of the accordion items. The available sizes are `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="AccordionSizeDemo" />
+
+### Secondary Text
+
+Use the `q-accordion-item-trigger-secondary` directive to display additional text opposite the trigger title.
+
+<QdsDemo name="AccordionSecondaryTextDemo" />
+
+### Icon
+
+Pass an icon to the [icon](./#icon-1) input on the `q-accordion-item-trigger` element to display it next to the trigger title.
+
+<QdsDemo name="AccordionIconDemo" />
+
+> [!warning/UX considerations]
+> In order to prevent visual confusion, only one icon can appear next to the trigger title. If you place the indicator at the start, the [icon input](#icon) will be ignored.
+
+### Change Callback
+
+The [valueChanged](./#valueChanged) output allows you to listen for changes in the accordion's value.
+
+<QdsDemo name="AccordionControlledStateDemo" />
+
+### Focus Callback
+
+The [focusChanged](./#focusChanged) output allows you to listen for focus events on the accordion's items.
+
+<QdsDemo name="AccordionFocusCallbackDemo" />
+
+## Shortcuts
+
+### Item Content
+
+The `q-accordion-item-content` directive is a shortcut for the following:
+
+```angular-html
+<div q-accordion-item-content-animator>
+  <div q-accordion-item-content-body>
+    <ng-content />
+  </div>
+</div>
+```
+
+## API
+
+### q-accordion
+
+<TypeDocProps name="AccordionComponent" />
+
+### q-accordion-item
+
+<TypeDocProps name="AccordionItemComponent" />
+
+### q-accordion-item-trigger
+
+<TypeDocProps name="AccordionItemTriggerComponent" />

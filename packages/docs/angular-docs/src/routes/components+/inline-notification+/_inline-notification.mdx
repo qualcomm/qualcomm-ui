@@ -1,0 +1,124 @@
+---
+title: Inline Notification
+group: Feedback
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAttributes,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```ts
+import {InlineNotificationModule} from "@qualcomm-ui/angular/inline-notification"
+```
+
+## Examples
+
+### Simple
+
+The simple API bundles all subcomponents together into a single directive.
+
+<QdsDemo name="InlineNotificationSimpleDemo" />
+
+### Child Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="InlineNotificationChildDirectivesDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure.
+
+<QdsDemo name="InlineNotificationCompositeDemo" />
+
+### Emphasis (color)
+
+Control the visual emphasis with different colors: info, success, warning, danger, and neutral. Customize these with the [emphasis](./#emphasis) prop.
+
+<QdsDemo name="InlineNotificationEmphasisDemo" />
+
+### Dismissable
+
+Add dismiss functionality to the simple notification using the [dismissable](./#dismissable) prop. Use the `q-inline-notification-close-button` directive when using the composite API.
+
+<QdsDemo name="InlineNotificationDismissableDemo" />
+
+### Action
+
+Include a link or action in notifications using the `q-inline-notification-action` directive.
+
+<QdsDemo name="InlineNotificationActionDemo" />
+
+### Layout
+
+Choose between inline and stacked layouts using the [layout](./#layout) property. Stacked layout places the description and action below the content.
+
+<QdsDemo name="InlineNotificationLayoutDemo" />
+
+## API
+
+### q-inline-notification
+
+The `q-inline-notification` directive extends the [q-inline-notification-root](./#q-inline-notification-root) directive with the following properties:
+
+<TypeDocProps
+  name="InlineNotificationDirective"
+  omitFrom="InlineNotificationRootDirective"
+/>
+
+## Composite API
+
+### q-inline-notification-root
+
+<TypeDocProps name="InlineNotificationRootDirective" />
+
+### q-inline-notification-icon
+
+<TypeDocProps name="InlineNotificationIconComponent" />
+
+<TypeDocAngularAttributes
+  name={["InlineNotificationIconBindings", "QdsNotificationIconBindings"]}
+/>
+
+### q-inline-notification-label
+
+<TypeDocProps name="InlineNotificationLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["InlineNotificationLabelBindings", "QdsNotificationLabelBindings"]}
+/>
+
+### q-inline-notification-description
+
+<TypeDocProps name="InlineNotificationDescriptionDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "InlineNotificationDescriptionBindings",
+    "QdsNotificationDescriptionBindings",
+  ]}
+/>
+
+### q-inline-notification-close-button
+
+<TypeDocProps name="InlineNotificationCloseButtonComponent" />
+
+<TypeDocAngularAttributes
+  name={[
+    "InlineNotificationCloseTriggerBindings",
+    "QdsNotificationCloseButtonBindings",
+  ]}
+/>
+
+### q-inline-notification-action
+
+<TypeDocProps name="InlineNotificationActionDirective" />
+
+<TypeDocAngularAttributes
+  name={["InlineNotificationActionBindings", "QdsNotificationActionBindings"]}
+/>
