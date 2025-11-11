@@ -10,23 +10,20 @@ export interface CssFileGroup {
   cssFiles: string[]
 
   /**
+   * Set to true to emit individual CSS files for each file in the group.
+   */
+  emitIndividualCssFiles?: boolean
+
+  /**
    * Optional ignored files in the {@link cssFiles} glob.
    */
   ignore?: string | string[]
 
   /**
-   * The output file name of the aggregated CSS from this group.
+   * The output file name of the aggregated CSS from this group. Omit this to
+   * disable emitting an aggregated CSS file.
    */
-  outFileName: string
-
-  /**
-   * @option 'all': Outputs every CSS file encountered including the single aggregated file with the collected CSS.
-   * @option 'aggregated-only': Only outputs the single aggregated file with all the CSS collected from each individual file.
-   * @option 'individual-only': Identical to 'all', but omits the aggregated file.
-   *
-   * @default 'aggregated-only'
-   */
-  outputMode?: "all" | "aggregated-only" | "individual-only"
+  outFileName?: string
 }
 
 /**
@@ -72,14 +69,12 @@ export interface CssBuilderConfig {
   fileGroups: CssFileGroup[]
 
   /**
-   * @option 'all': Log the name and minified size of every processed file.
-   * @option 'aggregated-only': Only logs the name and minified size of the aggregated output files.
-   * @option 'changed-only': Logs the name and minified size of the files that changed and their associated output files. Note that initially this will log every changed file.
+   * @option 'info': Logs the name and minified size of the files that changed and their associated output files.
    * @option 'silent': Disables logging.
    *
-   * @default 'aggregated-only'
+   * @default 'info'
    */
-  logMode?: "all" | "aggregate-only" | "changed-only" | "silent"
+  logLevel?: "info" | "silent"
 
   /**
    * The package name, used for logging. Defaults to the nearest package.json name.
