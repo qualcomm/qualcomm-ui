@@ -1,3 +1,4 @@
+// add for lint test
 export type * from "./demo-plugin.types"
 export type * from "./docs-plugin.types"
 export * from "./exports"
