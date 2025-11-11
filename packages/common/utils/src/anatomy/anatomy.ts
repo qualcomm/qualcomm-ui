@@ -1,4 +1,4 @@
-import {kebabCase} from "@qui/utils/change-case"
+import {kebabCase} from "@qualcomm-ui/utils/change-case"
 
 export interface AnatomyPart {
   attrs: Record<"data-scope" | "data-part", string>

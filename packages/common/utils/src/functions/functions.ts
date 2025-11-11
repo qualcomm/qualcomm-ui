@@ -1,4 +1,4 @@
-import {isFunction} from "@qui/utils/guard"
+import {isFunction} from "@qualcomm-ui/utils/guard"
 
 export type MaybeFunction<T> = T | (() => T)
 

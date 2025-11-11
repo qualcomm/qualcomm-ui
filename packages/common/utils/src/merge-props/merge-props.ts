@@ -1,5 +1,5 @@
-import {clsx} from "@qui/utils/clsx"
-import {callAll} from "@qui/utils/functions"
+import {clsx} from "@qualcomm-ui/utils/clsx"
+import {callAll} from "@qualcomm-ui/utils/functions"
 
 interface Props {
   [key: string]: any

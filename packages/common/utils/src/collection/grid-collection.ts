@@ -1,7 +1,7 @@
 // Modified from https://github.com/chakra-ui/zag/tree/main/packages/utilities/collection
 // MIT License
 
-import {chunk, nextIndex, prevIndex} from "@qui/utils/array"
+import {chunk, nextIndex, prevIndex} from "@qualcomm-ui/utils/array"
 
 import {ListCollection} from "./list-collection"
 import type {CollectionItem, ListCollectionOptions} from "./types"

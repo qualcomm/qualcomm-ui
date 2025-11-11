@@ -1,7 +1,7 @@
 // Modified from https://github.com/chakra-ui/zag/tree/main/packages/utilities/collection
 // MIT License
 
-import {isEqual} from "@qui/utils/equal"
+import {isEqual} from "@qualcomm-ui/utils/equal"
 
 import type {ListCollection} from "./list-collection"
 

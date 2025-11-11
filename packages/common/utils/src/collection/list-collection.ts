@@ -1,8 +1,8 @@
 // Modified from https://github.com/chakra-ui/zag/tree/main/packages/utilities/collection
 // MIT License
 
-import {isEqual} from "@qui/utils/equal"
-import {hasProp, isObject} from "@qui/utils/guard"
+import {isEqual} from "@qualcomm-ui/utils/equal"
+import {hasProp, isObject} from "@qualcomm-ui/utils/guard"
 
 import type {
   CollectionItem,

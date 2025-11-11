@@ -1,4 +1,4 @@
-import {coerceNumberProperty} from "@qui/utils/coercion"
+import {coerceNumberProperty} from "@qualcomm-ui/utils/coercion"
 
 /**
  * The CSS transition-timing-function of the enter and exit animations.

@@ -1,4 +1,4 @@
-import {isEqual} from "@qui/utils/equal"
+import {isEqual} from "@qualcomm-ui/utils/equal"
 
 /**
  * Utility type to ensure an array is treated as a fixed-length tuple
