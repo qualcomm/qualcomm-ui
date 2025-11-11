@@ -3,7 +3,10 @@ import {type ReactNode, useEffect, useState} from "react"
 import {useLocation} from "react-router"
 import {getDemo} from "virtual:qui-demo-scope/auto"
 
-import {QdsDemoRunner, type QdsDemoRunnerProps} from "@qualcomm-ui/mdx-docs/code-demo"
+import {
+  QdsDemoRunner,
+  type QdsDemoRunnerProps,
+} from "@qualcomm-ui/mdx-docs/code-demo"
 import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-docs-common"
 import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
