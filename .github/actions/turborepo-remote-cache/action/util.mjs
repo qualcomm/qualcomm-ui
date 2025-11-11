@@ -1,8 +1,8 @@
-import * as fs from 'node:fs'
-import * as os from 'node:os'
-import * as path from 'node:path'
+import * as fs from "node:fs"
+import * as os from "node:os"
+import * as path from "node:path"
 
-const supportedArches = ['arm64', 'x64']
+const supportedArches = ["arm64", "x64"]
 
 /**
  * Get the binary name from the current OS Arch.
@@ -36,8 +36,8 @@ export function getState(key) {
 export function saveState(key, value) {
   const state = `${key}=${value}`
   const stateFilePath = process.env.GITHUB_STATE
-  if (typeof stateFilePath !== 'string') {
-    throw new Error('GITHUB_STATE file not available')
+  if (typeof stateFilePath !== "string") {
+    throw new Error("GITHUB_STATE file not available")
   }
   fs.appendFileSync(stateFilePath, state)
 }
@@ -55,7 +55,7 @@ export function isProcessRunning(pid) {
     // See: https://man7.org/linux/man-pages/man2/kill.2.html
     return process.kill(pid, 0)
   } catch (error) {
-    return error.code === 'EPERM'
+    return error.code === "EPERM"
   }
 }
 
@@ -64,8 +64,8 @@ export function isProcessRunning(pid) {
  * @param {number} timeInMills
  */
 export function sleep(timeInMills) {
-  return new Promise(resolve => setTimeout(resolve, timeInMills))
+  return new Promise((resolve) => setTimeout(resolve, timeInMills))
 }
 
-export const LOGS_DIR = path.resolve(os.tmpdir(), 'decay_logs')
-export const DECAY_PID_KEY = 'DECAY_SERVER_PID'
+export const LOGS_DIR = path.resolve(os.tmpdir(), "decay_logs")
+export const DECAY_PID_KEY = "DECAY_SERVER_PID"

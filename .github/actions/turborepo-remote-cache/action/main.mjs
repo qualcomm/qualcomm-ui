@@ -1,8 +1,9 @@
-import { spawn } from 'node:child_process'
-import { resolve } from 'node:path'
-import { LOGS_DIR, DECAY_PID_KEY, saveState, getBinaryName } from './util.mjs'
+import {spawn} from "node:child_process"
+import {resolve} from "node:path"
 
-const __dirname = new URL('.', import.meta.url).pathname
+import {DECAY_PID_KEY, getBinaryName, LOGS_DIR, saveState} from "./util.mjs"
+
+const __dirname = new URL(".", import.meta.url).pathname
 
 const binaryName = getBinaryName()
 console.log(`Starting server with binary '${binaryName}'`)
@@ -11,11 +12,11 @@ const serverBinary = resolve(__dirname, `./${binaryName}`)
 
 const decayProcess = spawn(serverBinary, [], {
   detached: true,
-  stdio: 'ignore',
   env: {
     ...process.env,
     LOGS_DIRECTORY: LOGS_DIR,
   },
+  stdio: "ignore",
 })
 
 decayProcess.unref()
