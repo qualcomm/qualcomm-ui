@@ -1,0 +1,51 @@
+{
+  "name": "@qualcomm-ui/utils",
+  "version": "1.0.0",
+  "description": "A comprehensive utility library providing essential functions for array manipulation, DOM operations and attributes, class name management, type coercion, equality checks, functional programming helpers, type guards, numeric operations, object manipulation, timing utilities, and more.",
+  "author": "Ryan Bower",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "require": "./dist/*/index.cjs",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run-s clean build:js build:ts",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
+    "build:js": "tsx build.ts",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:js watch:ts",
+    "watch:js": "tsx build.ts --watch",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "lint": "eslint --quiet",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish",
+    "test": "vitest --run -c vitest.config.ts",
+    "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@types/node": "~24.9.2",
+    "chalk": "^5.6.2",
+    "chokidar": "^4.0.3",
+    "esbuild": "^0.25.8",
+    "pretty-ms": "^9.2.0",
+    "shx": "^0.4.0",
+    "tsx": "^4.20.6",
+    "typescript": "5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

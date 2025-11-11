@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
     "angular-eslint": "^20.3.0",
-    "eslint": "catalog:",
+    "eslint": "9.37.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.4.0",
     "typescript-eslint": "catalog:"
