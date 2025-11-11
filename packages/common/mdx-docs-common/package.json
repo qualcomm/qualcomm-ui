@@ -31,11 +31,12 @@
     "postpublish": "qui-cli post-publish"
   },
   "dependencies": {
-    "@qualcomm-ui/typedoc-common": "workspace:*"
+
   },
   "devDependencies": {
     "@qualcomm-ui/esbuild": "workspace:^1",
     "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/typedoc-common": "workspace:^1",
     "esbuild": "^0.25.8",
     "fuzzysort": "^3.0.1",
     "shx": "^0.4.0",
@@ -43,6 +44,7 @@
     "vite": "npm:rolldown-vite@7.1.19"
   },
   "peerDependencies": {
+    "@qualcomm-ui/typedoc-common": "workspace:^1",
     "fuzzysort": ">=3"
   }
 }
