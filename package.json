@@ -45,8 +45,8 @@
     "@nx/js": "^21.6.8",
     "@nx/workspace": "^21.6.8",
     "@qualcomm-ui/eslint-config-angular": "workspace:*",
-    "@qualcomm-ui/eslint-config-react": "workspace:*",
     "@qualcomm-ui/eslint-config-mdx": "workspace:*",
+    "@qualcomm-ui/eslint-config-react": "workspace:*",
     "@qualcomm-ui/eslint-config-typescript": "workspace:*",
     "@qualcomm-ui/eslint-plugin-path-alias": "workspace:*",
     "@types/node": "~24.9.2",
@@ -68,7 +68,7 @@
     "stylelint-prettier": "^5.0.3",
     "syncpack": "14.0.0-alpha.19",
     "tsx": "^4.20.6",
-    "turbo": "2.5.8",
+    "turbo": "2.6.0",
     "typescript": "5.8.3",
     "typescript-eslint": "catalog:"
   },
