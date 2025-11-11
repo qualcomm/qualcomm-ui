@@ -3,6 +3,8 @@
 
 import chalk from "chalk"
 import type {Plugin as EsbuildPlugin, Metafile} from "esbuild"
+import {readFileSync} from "node:fs"
+import {gzipSync} from "node:zlib"
 
 export interface BundleSizeLoggerPluginOptions {
   /**
@@ -16,12 +18,13 @@ export interface BundleSizeLoggerPluginOptions {
    * @option individual: Logs the size of every entrypoint as defined in the package.json
    * `exports` field.
    * @option aggregate: only logs aggregated data summaries (total package size).
-   * @option both: logs both aggregate and individual metrics.
+   * @option all: logs all metrics (individual and aggregate).
+   * @option both: deprecated, migrate to `all`.
    * @option none: disables package size logging.
    *
    * @default aggregate
    */
-  logMode?: "individual" | "aggregate" | "both" | "none"
+  logMode?: "individual" | "aggregate" | "both" | "all" | "none"
 }
 
 /**
@@ -65,6 +68,12 @@ export function formatHumanFileSize(
   return `${parseFloat(value.toFixed(decimals))} ${sizes[i]}`
 }
 
+function getGzipSize(path: string): number {
+  const content = readFileSync(path)
+  const compressed = gzipSync(content)
+  return compressed.length
+}
+
 /**
  * Creates an esbuild plugin that prints the file size of every file defined
  * in the package's exports field.
@@ -99,6 +108,8 @@ export function bundleSizeLoggerPlugin(
 interface ArtifactSizeData {
   filePath: string
 
+  gzipSize?: number
+
   /**
    * The size from the previous compilation. Only relevant in watch mode.
    */
@@ -113,15 +124,21 @@ interface ArtifactSizeData {
 
 export interface GetBundleSizeResult {
   entrypointSizes: ArtifactSizeData[]
+  totalGzipSize: number
   totalSize: number
 }
 
 export function logOutputSizes(entrypointSizes: ArtifactSizeData[]): void {
-  entrypointSizes.forEach(({filePath, size, unchanged}) => {
+  entrypointSizes.forEach(({filePath, gzipSize, size, unchanged}) => {
     if (!unchanged) {
-      console.log(
-        `${chalk.dim(filePath.replace(`${process.cwd()}/`, "")).padEnd(30)} ${formatHumanFileSize(size).padStart(10)}`,
-      )
+      const output = [
+        `${filePath.replace(`${process.cwd()}/`, "").padEnd(30)}`,
+        `${formatHumanFileSize(size).padStart(10)}`,
+      ]
+      if (gzipSize) {
+        output.push(`| gzip: ${formatHumanFileSize(gzipSize)}`)
+      }
+      console.log(chalk.dim(output.join(" ")))
     }
   })
 }
@@ -134,7 +151,7 @@ export function logBundleSize(
     logTotalSize(totalSize)
   } else if (logMode === "individual") {
     logOutputSizes(entrypointSizes)
-  } else if (logMode === "both") {
+  } else if (logMode === "all" || logMode === "both") {
     logOutputSizes(entrypointSizes)
     logTotalSize(totalSize)
   }
@@ -159,6 +176,7 @@ export function getBundleSize(
   }
 
   let totalSize = 0
+  let totalGzipSize = 0
 
   const entrypointSizes = Object.keys(metafile.outputs).reduce(
     (acc: ArtifactSizeData[], current) => {
@@ -168,8 +186,11 @@ export function getBundleSize(
       const entry = metafile.outputs[current]
       const prevEntry = prevMetafile?.outputs[current]
       totalSize += entry.bytes
+      const gzipSize = getGzipSize(current)
+      totalGzipSize += gzipSize
       acc.push({
         filePath: current,
+        gzipSize,
         prevSize: prevEntry?.bytes,
         size: entry.bytes,
         unchanged: !!(
@@ -193,6 +214,7 @@ export function getBundleSize(
     entrypointSizes: entrypointSizes.sort((a, b) =>
       a.filePath.localeCompare(b.filePath),
     ),
+    totalGzipSize,
     totalSize,
   }
 }
