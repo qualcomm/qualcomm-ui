@@ -8,11 +8,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 export default {
   fileGroups: [
     {
-      cssFiles: ["files/*.css"],
-      outFileName: "all-test.css",
-      outputMode: "all",
+      cssFiles: ["files/dialog.css"],
+      outFileName: "dialog.min.css",
+    },
+    {
+      cssFiles: ["files/button*.css"],
+      emitIndividualCssFiles: true,
+      outFileName: "button.min.css",
     },
   ],
-  logMode: "all",
+  name: "@qui/qds-core",
   outDir: resolve(__dirname, "dist"),
 } satisfies CssBuilderConfig

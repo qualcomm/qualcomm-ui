@@ -10,11 +10,16 @@ import {createHash} from "node:crypto"
 import {mkdir, readFile, stat, writeFile} from "node:fs/promises"
 import {dirname, join, sep} from "node:path"
 import {cwd} from "node:process"
+import {promisify} from "node:util"
+import {gzip} from "node:zlib"
 import postcss from "postcss"
 import minifySelectorsPlugin from "postcss-minify-selectors"
 import postcssNested from "postcss-nested"
 import {parse} from "postcss-scss"
 import prettyMilliseconds from "pretty-ms"
+
+const gzipAsync = promisify(gzip)
+import {formatHumanFileSize} from "@qualcomm-ui/esbuild"
 
 async function ensureDir(path: string): Promise<void> {
   await mkdir(path, {recursive: true})
@@ -37,17 +42,8 @@ import type {
   CssBuilderWatchOptions,
   CssFileGroup,
 } from "./css-utils.types"
-import {findNearestPackageJson} from "./internal"
 
 const stripCommentsPreset = litePreset({})
-
-function humanFileSize(size: number) {
-  const i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024))
-  // @ts-expect-error
-  return `${(size / Math.pow(1024, i)).toFixed(2) * 1} ${
-    ["B", "kB", "MB", "GB", "TB"][i]
-  }`
-}
 
 export function getDefaultWatchOptions(
   opts: CssBuilderConfig,
@@ -60,39 +56,31 @@ export function getDefaultWatchOptions(
 }
 
 interface BuildArtifact {
+  gzipSize: number
   name: string
   size: number
 }
 
-export class CssBuilder {
-  private cachedFileCount = 0
-  private fileCount: number = 0
+interface BuildResult {
+  aggregateFile: BuildArtifact | null
+  hasChanges: boolean
+  individualFiles: BuildArtifact[]
+}
+
+class CssFileGroupBuilder {
   private cache: Record<string, {css: string; md5: string}> = {}
-  private readonly opts: Omit<CssBuilderConfig, "name" | "workingDir"> & {
-    name: string
-    workingDir: string
-  }
-
   private isFirstBuild = true
+  private cachedFileCount = 0
+  private fileCount = 0
 
-  constructor({
-    logMode = "aggregate-only",
-    ...opts
-  }: CssBuilderConfig & {isWatch?: boolean}) {
-    const name = opts.name || findNearestPackageJson(cwd())?.name
-
-    this.opts = {
-      logMode,
-      ...opts,
-      name,
-      watchOptions: opts.isWatch ? getDefaultWatchOptions(opts) : {},
-      workingDir: opts.workingDir || cwd(),
-    }
-  }
-
-  private get cacheEnabled() {
-    return this.opts.watchOptions?.cache
-  }
+  constructor(
+    private group: CssFileGroup,
+    private opts: {
+      cacheEnabled: boolean
+      outDir: string
+      workingDir: string
+    },
+  ) {}
 
   private reset() {
     this.cachedFileCount = 0
@@ -104,34 +92,27 @@ export class CssBuilder {
   }
 
   private sortArtifacts(artifacts: BuildArtifact[]) {
-    return artifacts.sort((a, b) => {
-      return a.name.localeCompare(b.name)
-    })
+    return artifacts.sort((a, b) => a.name.localeCompare(b.name))
   }
 
-  private async buildCss({
-    cssFiles,
-    ignore,
-    outFileName,
-    outputMode,
-  }: CssFileGroup): Promise<BuildArtifact[]> {
+  async build(): Promise<BuildResult> {
+    this.reset()
+    const {cssFiles, emitIndividualCssFiles, ignore, outFileName} = this.group
+
     const allCss: string[] = []
-
     const files = sync(cssFiles, {ignore})
-    this.fileCount += files.length
-    const changedFiles: BuildArtifact[] = []
+    this.fileCount = files.length
 
-    const minifiedCss: {name: string; size: number}[] = await Promise.all(
+    const changedFiles: BuildArtifact[] = []
+    const minifiedCss: BuildArtifact[] = await Promise.all(
       files.map(async (file) => {
         const normalizedFileName = file.replace(`src${sep}`, "")
         const outFile = `${this.opts.outDir}/${normalizedFileName}`
-        await ensureFile(outFile)
         const fileData = await readFile(file, "utf-8")
-
         let css = ""
-
         let fromCache = false
-        if (this.cacheEnabled) {
+
+        if (this.opts.cacheEnabled) {
           const fileMd5 = this.hash(fileData)
           const cachedFile = this.cache[outFile]
           if (cachedFile?.md5 === fileMd5) {
@@ -155,34 +136,32 @@ export class CssBuilder {
               parser: parse as any,
               to: outFile,
             })
-            .then((res) => {
-              return res.css
-            })
+            .then((res) => res.css)
         }
 
-        if (this.cacheEnabled && !fromCache) {
+        if (this.opts.cacheEnabled && !fromCache) {
           this.cache[outFile] = {
             css,
             md5: this.hash(fileData),
           }
         }
 
-        if (outputMode !== "individual-only") {
+        if (outFileName) {
           allCss.push(css)
         }
-        if (outputMode !== "aggregated-only") {
+
+        if (emitIndividualCssFiles) {
+          await ensureFile(outFile)
           await writeFile(outFile, css)
         }
 
-        const fileSize =
-          outputMode !== "aggregated-only" ? (await stat(outFile)).size : 0
-
         const buildArtifact: BuildArtifact = {
+          gzipSize: await getGzipSizeFromString(css),
           name: normalizedFileName,
-          size: fileSize,
+          size: Buffer.byteLength(css, "utf-8"),
         }
 
-        if (!fromCache && this.cacheEnabled && !this.isFirstBuild) {
+        if (!fromCache && this.opts.cacheEnabled && !this.isFirstBuild) {
           changedFiles.push(buildArtifact)
         }
 
@@ -192,85 +171,157 @@ export class CssBuilder {
       throw new Error(err.message)
     })
 
-    const allMinCssPath = join(this.opts.outDir, outFileName)
-
+    const allMinCssPath = outFileName ? join(this.opts.outDir, outFileName) : ""
     const outDirOnly = this.opts.outDir
       .replace(this.opts.workingDir, "")
       .replace(`${sep}`, "")
 
-    if (outputMode !== "individual-only") {
+    if (outFileName) {
       await writeFile(allMinCssPath, allCss.join(""), "utf-8")
     }
 
-    let artifacts: BuildArtifact[]
-
-    if (this.opts.logMode === "aggregate-only") {
-      artifacts = [
-        {
-          name: `${outDirOnly}/${outFileName}`,
-          size: (await stat(allMinCssPath)).size,
-        },
-      ]
-    } else if (this.opts.logMode === "changed-only") {
-      if (changedFiles.length === 0) {
-        artifacts = []
-      } else {
-        artifacts = [
-          ...this.sortArtifacts(changedFiles),
-          {
-            name: `${outDirOnly}/${outFileName}`,
-            size: (await stat(allMinCssPath)).size,
-          },
-        ]
+    async function getAggregateFile(): Promise<BuildArtifact | null> {
+      if (!outFileName) {
+        return null
       }
-    } else {
-      artifacts = [
-        ...this.sortArtifacts(minifiedCss),
-        // sort "minified output file" to the end
-        {
-          name: `${outDirOnly}/${outFileName}`,
-          size: (await stat(allMinCssPath)).size,
-        },
-      ]
+      return {
+        gzipSize: await getGzipSize(allMinCssPath),
+        name: `${outDirOnly}/${outFileName}`,
+        size: (await stat(allMinCssPath)).size,
+      }
     }
 
-    return artifacts
-  }
-
-  /**
-   * Collects all CSS from a file glob, merges it into a single file, and writes that
-   * file to the supplied output folder.
-   */
-  async build() {
-    this.reset()
-    const startTime = new Date().getTime()
-
-    await ensureDir(this.opts.outDir)
-
-    const buildArtifacts: BuildArtifact[] = (
-      await Promise.all(
-        this.opts.fileGroups.map((group) => this.buildCss(group)),
-      )
-    ).flat()
+    const hasChanges = this.fileCount > this.cachedFileCount
+    const individualFiles = this.isFirstBuild ? minifiedCss : changedFiles
 
     this.isFirstBuild = false
 
+    return {
+      aggregateFile: await getAggregateFile(),
+      hasChanges,
+      individualFiles: this.sortArtifacts(individualFiles),
+    }
+  }
+
+  getStats() {
+    return {
+      cachedFileCount: this.cachedFileCount,
+      fileCount: this.fileCount,
+    }
+  }
+}
+
+export class CssBuilder {
+  private readonly opts: Omit<CssBuilderConfig, "name" | "workingDir"> & {
+    name?: string
+    workingDir: string
+  }
+  private builders: CssFileGroupBuilder[]
+
+  constructor({...opts}: CssBuilderConfig & {isWatch?: boolean}) {
+    const name = opts.name
+    this.opts = {
+      ...opts,
+      name,
+      watchOptions: opts.isWatch ? getDefaultWatchOptions(opts) : {},
+      workingDir: opts.workingDir || cwd(),
+    }
+
+    const cacheEnabled = Boolean(this.opts.watchOptions?.cache)
+    this.builders = this.opts.fileGroups.map(
+      (group) =>
+        new CssFileGroupBuilder(group, {
+          cacheEnabled,
+          outDir: this.opts.outDir,
+          workingDir: this.opts.workingDir,
+        }),
+    )
+  }
+
+  async build() {
+    const startTime = new Date().getTime()
+    await ensureDir(this.opts.outDir)
+
+    const buildResults: BuildResult[] = await Promise.all(
+      this.builders.map((builder) => builder.build()),
+    )
+
+    if (this.opts.logLevel === "silent") {
+      return
+    }
+
     const endTime = new Date().getTime()
 
-    if (this.opts.logMode !== "silent") {
-      for (const {name, size} of buildArtifacts) {
-        console.debug(
-          `${chalk.blueBright.bold(
-            name.replace(this.opts.workingDir, "").padEnd(22),
-          )} ${chalk.magenta.bold(humanFileSize(size).padEnd(12))}`,
+    let totalCachedFileCount = 0
+    let totalFileCount = 0
+    let hasAnyChanges = false
+
+    for (let i = 0; i < buildResults.length; i++) {
+      const result = buildResults[i]
+      const stats = this.builders[i].getStats()
+
+      totalCachedFileCount += stats.cachedFileCount
+      totalFileCount += stats.fileCount
+
+      if (result.hasChanges) {
+        hasAnyChanges = true
+
+        for (const artifact of result.individualFiles) {
+          console.debug(
+            chalk.dim(artifact.name.padEnd(22)),
+            this.formatSize(artifact),
+          )
+        }
+
+        if (result.aggregateFile) {
+          console.debug(this.formatBuildArtifact(result.aggregateFile))
+        }
+      }
+    }
+
+    if (hasAnyChanges) {
+      const parts: string[] = []
+
+      parts.push(
+        `Built${this.opts.name ? ` ${this.formatName(this.opts.name, 0)}` : " "}in ${chalk.magenta.bold(prettyMilliseconds(endTime - startTime))}`,
+      )
+
+      if (totalCachedFileCount > 0) {
+        parts.push(
+          chalk.greenBright.bold(
+            `(${totalCachedFileCount}/${totalFileCount} files cached)`,
+          ),
         )
       }
 
-      console.debug(
-        chalk.green.bold(
-          `Built ${chalk.blueBright.bold(this.opts.name)} css in ${chalk.magenta.bold(prettyMilliseconds(endTime - startTime))}${this.cachedFileCount ? chalk.greenBright.bold(` (${this.cachedFileCount}/${this.fileCount} files cached)`) : ""}`,
-        ),
-      )
+      console.debug(parts.join(" "))
     }
   }
+
+  private formatBuildArtifact(buildArtifact: BuildArtifact): string {
+    return `${this.formatName(buildArtifact.name)}${this.formatSize(buildArtifact)}`
+  }
+
+  private formatName(name: string, padEnd = 22) {
+    return `${chalk.blueBright.bold(name.padEnd(padEnd))} `
+  }
+
+  private formatSize(buildArtifact: BuildArtifact) {
+    const {gzipSize, size} = buildArtifact
+    const fileSize = formatHumanFileSize(size)
+    const gzipSizeStr = formatHumanFileSize(gzipSize)
+    return `${chalk.dim.bold(`${fileSize} | gzip: ${gzipSizeStr}`)}`
+  }
+}
+
+async function getGzipSize(path: string): Promise<number> {
+  const content = await readFile(path)
+  const compressed = await gzipAsync(content)
+  return compressed.length
+}
+
+async function getGzipSizeFromString(content: string): Promise<number> {
+  const buffer = Buffer.from(content, "utf-8")
+  const compressed = await gzipAsync(buffer)
+  return compressed.length
 }

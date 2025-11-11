@@ -1,0 +1,53 @@
+.qui-button__icon {
+  height: var(--icon-height, var(--icon-size));
+  min-height: var(--icon-height, var(--icon-size));
+  min-width: var(--icon-width, var(--icon-size));
+  width: var(--icon-width, var(--icon-size));
+
+  &[data-size="sm"] {
+    /* same size for default and compact densities */
+    --icon-size: 12px;
+  }
+  &[data-size="md"] {
+    --icon-size: 16px;
+    &[data-density="compact"] {
+      --icon-size: 12px;
+    }
+  }
+  &[data-size="lg"] {
+    --icon-size: 20px;
+    &[data-density="compact"] {
+      --icon-size: 16px;
+    }
+  }
+}
+
+.qui-button-group {
+  display: inline-flex;
+
+  gap: var(--button-group-gap, var(--spacing-90));
+
+  &[data-layout="fill"],
+  &[data-layout="start"],
+  &[data-layout="end"] {
+    width: 100%;
+  }
+  &[data-layout="hug"] {
+    width: fit-content;
+  }
+  &[data-layout="end"] {
+    justify-content: flex-end;
+  }
+  &[data-layout="fill"] {
+    & > .qui-button__root {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+  &[data-size="sm"] {
+    --button-group-gap: var(--spacing-80);
+  }
+  &[data-size="lg"] {
+    --button-group-gap: var(--spacing-100);
+  }
+}
