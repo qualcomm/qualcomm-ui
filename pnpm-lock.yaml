@@ -18,12 +18,6 @@ catalogs:
     '@typescript-eslint/utils':
       specifier: 8.46.2
       version: 8.46.2
-    esbuild:
-      specifier: 0.25.11
-      version: 0.25.11
-    eslint:
-      specifier: 9.37.0
-      version: 9.37.0
     typescript-eslint:
       specifier: 8.40.0
       version: 8.40.0
@@ -36,9 +30,12 @@ importers:
 
   .:
     devDependencies:
+      '@clack/prompts':
+        specifier: ^0.11.0
+        version: 0.11.0
       '@commander-js/extra-typings':
         specifier: ^14.0.0
-        version: 14.0.0(commander@13.1.0)
+        version: 14.0.0(commander@14.0.2)
       '@eslint/js':
         specifier: 'catalog:'
         version: 9.37.0
@@ -60,12 +57,21 @@ importers:
       '@types/node':
         specifier: ~24.9.2
         version: 24.9.2
+      commander:
+        specifier: ^14.0.2
+        version: 14.0.2
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
       eslint:
-        specifier: 'catalog:'
+        specifier: 9.37.0
         version: 9.37.0(jiti@1.21.7)
       execa:
         specifier: ^9.6.0
         version: 9.6.0
+      ignore:
+        specifier: ^7.0.5
+        version: 7.0.5
       npm-run-all2:
         specifier: ^8.0.4
         version: 8.0.4
@@ -109,8 +115,8 @@ importers:
   packages/common/cli:
     devDependencies:
       '@commander-js/extra-typings':
-        specifier: ^13.1.0
-        version: 13.1.0(commander@13.1.0)
+        specifier: ^14.0.0
+        version: 14.0.0(commander@14.0.2)
       chalk:
         specifier: ^5.6.2
         version: 5.6.2
@@ -118,13 +124,13 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       commander:
-        specifier: ^13.1.0
-        version: 13.1.0
+        specifier: ^14.0.2
+        version: 14.0.2
       dayjs:
         specifier: ^1.11.12
         version: 1.11.19
       esbuild:
-        specifier: 'catalog:'
+        specifier: ^0.25.8
         version: 0.25.11
       vitest:
         specifier: ^3.2.4
@@ -137,8 +143,8 @@ importers:
         version: 9.0.0(typescript@5.8.3)
     devDependencies:
       '@commander-js/extra-typings':
-        specifier: ^13.1.0
-        version: 13.1.0(commander@13.1.0)
+        specifier: ^14.0.0
+        version: 14.0.0(commander@14.0.2)
       '@qualcomm-ui/cli':
         specifier: workspace:^1.0.1
         version: link:../cli
@@ -164,7 +170,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(postcss@8.5.6)
       esbuild:
-        specifier: 'catalog:'
+        specifier: ^0.25.8
         version: 0.25.11
       glob:
         specifier: ^11.0.3
@@ -197,8 +203,8 @@ importers:
   packages/common/esbuild:
     devDependencies:
       '@commander-js/extra-typings':
-        specifier: ^13.1.0
-        version: 13.1.0(commander@13.1.0)
+        specifier: ^14.0.0
+        version: 14.0.0(commander@14.0.2)
       '@qualcomm-ui/cli':
         specifier: workspace:^1
         version: link:../cli
@@ -212,7 +218,7 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       esbuild:
-        specifier: 'catalog:'
+        specifier: ^0.25.8
         version: 0.25.11
       glob:
         specifier: ^11.0.3
@@ -226,6 +232,48 @@ importers:
       shx:
         specifier: ^0.4.0
         version: 0.4.0
+
+  packages/common/utils:
+    devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../cli
+      '@qualcomm-ui/esbuild':
+        specifier: workspace:^1
+        version: link:../esbuild
+      '@qualcomm-ui/tsconfig':
+        specifier: workspace:^1
+        version: link:../../configs/tsconfig
+      '@types/node':
+        specifier: ~24.9.2
+        version: 24.9.2
+      chalk:
+        specifier: ^5.6.2
+        version: 5.6.2
+      chokidar:
+        specifier: ^4.0.3
+        version: 4.0.3
+      esbuild:
+        specifier: ^0.25.8
+        version: 0.25.11
+      glob:
+        specifier: ^11.0.3
+        version: 11.0.3
+      pretty-ms:
+        specifier: ^9.2.0
+        version: 9.3.0
+      shx:
+        specifier: ^0.4.0
+        version: 0.4.0
+      tsx:
+        specifier: ^4.20.6
+        version: 4.20.6
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.9.2)(jiti@1.21.7)(lightningcss@1.30.2)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1)
 
   packages/configs/eslint-config-angular:
     dependencies:
@@ -249,7 +297,7 @@ importers:
         specifier: ^20.3.0
         version: 20.5.0(chokidar@4.0.3)(eslint@9.37.0(jiti@1.21.7))(typescript-eslint@8.40.0(eslint@9.37.0(jiti@1.21.7))(typescript@5.8.3))(typescript@5.8.3)
       eslint:
-        specifier: 'catalog:'
+        specifier: 9.37.0
         version: 9.37.0(jiti@1.21.7)
       eslint-config-prettier:
         specifier: ^10.1.2
@@ -332,7 +380,7 @@ importers:
         specifier: 'catalog:'
         version: 8.46.2(eslint@9.37.0(jiti@1.21.7))(typescript@5.8.3)
       eslint:
-        specifier: 'catalog:'
+        specifier: 9.37.0
         version: 9.37.0(jiti@1.21.7)
       eslint-plugin-import:
         specifier: ^2.31.0
@@ -576,10 +624,11 @@ packages:
   '@cacheable/utils@2.1.0':
     resolution: {integrity: sha512-ZdxfOiaarMqMj+H7qwlt5EBKWaeGihSYVHdQv5lUsbn8MJJOTW82OIwirQ39U5tMZkNvy3bQE+ryzC+xTAb9/g==}
 
-  '@commander-js/extra-typings@13.1.0':
-    resolution: {integrity: sha512-q5P52BYb1hwVWE6dtID7VvuJWrlfbCv4klj7BjUUOqMz4jbSZD4C9fJ9lRjL2jnBGTg+gDDlaXN51rkWcLk4fg==}
-    peerDependencies:
-      commander: ~13.1.0
+  '@clack/core@0.5.0':
+    resolution: {integrity: sha512-p3y0FIOwaYRUPRcMO7+dlmLh8PSRcrjuTndsiA0WAFbWES0mLZlrjVoBRZ9DzkPFJZG6KGkJmoEAY0ZcVWTkow==}
+
+  '@clack/prompts@0.11.0':
+    resolution: {integrity: sha512-pMN5FcrEw9hUkZA4f+zLlzivQSeQf5dRGJjSUbvVYDLvpKCdQx5OaknvKzgbtXOizhP+SJJJjqEbOe55uKKfAw==}
 
   '@commander-js/extra-typings@14.0.0':
     resolution: {integrity: sha512-hIn0ncNaJRLkZrxBIp5AsW/eXEHNKYQBh0aPdoUqNgD+Io3NIykQqpKFyKcuasZhicGaEZJX/JBSIkZ4e5x8Dg==}
@@ -620,6 +669,9 @@ packages:
 
   '@emnapi/wasi-threads@1.1.0':
     resolution: {integrity: sha512-WI0DdZ8xFSbgMjR1sFsKABJ/C5OnRrjT06JXbZKexJGrDuPTzZdDYfFlsgcCXCyf+suG5QU2e/y1Wo2V/OapLQ==}
+
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
 
   '@es-joy/jsdoccomment@0.76.0':
     resolution: {integrity: sha512-g+RihtzFgGTx2WYCuTHbdOXJeAlGnROws0TeALx9ow/ZmOROOZkVg5wp/B44n0WJgI4SQFP1eWM2iRPlU2Y14w==}
@@ -1637,9 +1689,9 @@ packages:
   colord@2.9.3:
     resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
 
-  commander@13.1.0:
-    resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
-    engines: {node: '>=18'}
+  commander@14.0.2:
+    resolution: {integrity: sha512-TywoWNNRbhoD0BXs1P3ZEScW8W5iKrnbithIl0YH+uCmBd0QpPOA8yc82DS3BIE5Ma6FnBVUsJ7wVUDz4dvOWQ==}
+    engines: {node: '>=20'}
 
   commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
@@ -1670,6 +1722,11 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  cross-env@10.1.0:
+    resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   cross-env@7.0.3:
     resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
@@ -3686,6 +3743,9 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
+  sisteransi@1.0.5:
+    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -4500,13 +4560,20 @@ snapshots:
     dependencies:
       keyv: 5.5.3
 
-  '@commander-js/extra-typings@13.1.0(commander@13.1.0)':
+  '@clack/core@0.5.0':
     dependencies:
-      commander: 13.1.0
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
 
-  '@commander-js/extra-typings@14.0.0(commander@13.1.0)':
+  '@clack/prompts@0.11.0':
     dependencies:
-      commander: 13.1.0
+      '@clack/core': 0.5.0
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
+
+  '@commander-js/extra-typings@14.0.0(commander@14.0.2)':
+    dependencies:
+      commander: 14.0.2
 
   '@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4)':
     dependencies:
@@ -4540,6 +4607,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
     optional: true
+
+  '@epic-web/invariant@1.0.0': {}
 
   '@es-joy/jsdoccomment@0.76.0':
     dependencies:
@@ -4918,7 +4987,7 @@ snapshots:
 
   '@types/concat-stream@2.0.3':
     dependencies:
-      '@types/node': 22.18.13
+      '@types/node': 24.9.2
 
   '@types/debug@4.1.12':
     dependencies:
@@ -5643,7 +5712,7 @@ snapshots:
 
   colord@2.9.3: {}
 
-  commander@13.1.0: {}
+  commander@14.0.2: {}
 
   commander@2.20.3:
     optional: true
@@ -5671,6 +5740,11 @@ snapshots:
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 5.8.3
+
+  cross-env@10.1.0:
+    dependencies:
+      '@epic-web/invariant': 1.0.0
+      cross-spawn: 7.0.6
 
   cross-env@7.0.3:
     dependencies:
@@ -8151,6 +8225,8 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
+
+  sisteransi@1.0.5: {}
 
   slash@3.0.0: {}
 

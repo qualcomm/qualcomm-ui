@@ -11,25 +11,23 @@ jobs:
     env:
       IS_CI: true
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        shardIndex: [ 1, 2, 3 ]
-        shardTotal: [ 3 ]
     concurrency:
-      group: PR Lint - ${{matrix.shardIndex}} - ${{github.head_ref}}
+      group: PR Lint Changed - ${{github.head_ref}}
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
     - name: clone
-      id: install
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.head_ref }}
+        fetch-depth: 0
 
-    - uses: ./.github/actions/clone-and-install
+    - name: fetch base ref
+      run: git fetch origin ${{ github.event.pull_request.base.sha }}
 
-    - name: lint
-      run: pnpm tsx scripts/lint-shard.ts --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
+    - uses: ./.github/actions/setup-node-and-install
+
+    - name: lint changed files
+      run: pnpm tsx scripts/lint-changed.ts ${{ github.event.pull_request.base.sha }}
 
   build:
     env:
@@ -46,10 +44,30 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - uses: ./.github/actions/clone-and-install
+    - uses: ./.github/actions/setup-node-and-install
 
     - name: build
       run: pnpm run build
+
+  unit-test:
+    env:
+      IS_CI: true
+    runs-on: ubuntu-latest
+    concurrency:
+      group: PR Unit Test v2 - ${{github.head_ref}}
+      cancel-in-progress: true
+    timeout-minutes: 10
+    steps:
+    - name: clone and install
+      id: install
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/setup-node-and-install
+
+    - name: unit tests
+      run: pnpm run test:unit:ci
 
   # also run repolinter on PRs
   # TODO: run using qcom-preflight-checks once it's updated to incorporate the batching PR

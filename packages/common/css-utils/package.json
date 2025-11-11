@@ -35,7 +35,7 @@
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
-    "@commander-js/extra-typings": "^13.1.0",
+    "@commander-js/extra-typings": "^14.0.0",
     "@qualcomm-ui/cli": "workspace:^1.0.1",
     "@qualcomm-ui/esbuild": "workspace:^1.0.0",
     "@qualcomm-ui/tsconfig": "workspace:^1",
@@ -44,7 +44,7 @@
     "chokidar": "^4.0.3",
     "cssnano": "^6.1.2",
     "cssnano-preset-lite": "^3.1.0",
-    "esbuild": "catalog:",
+    "esbuild": "^0.25.8",
     "glob": "^11.0.3",
     "ora": "^8.1.1",
     "postcss": "^8.4.35",
@@ -56,7 +56,7 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@commander-js/extra-typings": ">=13.1.0",
+    "@commander-js/extra-typings": ">=14.0.0",
     "cosmiconfig": ">=9.0.0"
   }
 }
