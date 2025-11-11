@@ -51,9 +51,7 @@ packages/**/generated/**
 !packages/**/generated/.gitkeep
 packages/**/src/doc-props.json
 packages/**/angular*/src/assets/doc-props/doc-properties.json
-packages/docs/react-docs/src/page-data.json
-packages/docs/react-table-docs/src/page-data.json
-packages/docs/react-mdx-docs/src/routes/changelogs*
+packages/docs/qui-docs/src/routes/changelogs*
 packages/docs/react-docs/src/routes/changelogs*
 packages/docs/react-table-docs/src/routes/changelogs*
 packages/docs/react-vscode-docs/src/routes/changelogs*
