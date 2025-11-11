@@ -1,0 +1,33 @@
+---
+title: Data
+---
+
+# {frontmatter.title}
+
+## Reactivity
+
+Table state and data are reactive. Provide your data as a signal, and the table will automatically update when the signal changes.
+
+```ts
+interface User {
+  id: number
+  name: string
+}
+
+@Component({
+  // ...
+})
+export class ExampleComponent {
+  protected data = signal<User[]>([])
+
+  protected table: AngularTable<User> = createAngularTable(() => ({
+    columns: userColumns,
+    data: this.data(),
+    getCoreRowModel: getCoreRowModel(),
+  }))
+
+  updateData() {
+    this.data.set([{id: 1, name: "John"}])
+  }
+}
+```
