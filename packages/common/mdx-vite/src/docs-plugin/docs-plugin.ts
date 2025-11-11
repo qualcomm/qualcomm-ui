@@ -9,7 +9,7 @@ import {resolve} from "node:path"
 import prettyMilliseconds from "pretty-ms"
 import type {PluginOption, ViteDevServer} from "vite"
 
-import type {QuiPropTypes} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import {
   ConfigLoader,

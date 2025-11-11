@@ -12,10 +12,12 @@ import {
   type PageDocProps,
   type PageHeading,
   type PagePropType,
-  type QuiPropDeclaration,
-  type QuiPropTypes,
   UniqueIdService,
 } from "@qualcomm-ui/mdx-docs-common"
+import type {
+  QuiPropDeclaration,
+  QuiPropTypes,
+} from "@qualcomm-ui/typedoc-common"
 
 import type {IndexedSection} from "../markdown"
 

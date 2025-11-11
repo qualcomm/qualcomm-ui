@@ -25,7 +25,7 @@ jobs:
       id: install
       uses: actions/checkout@v4
 
-    - uses: ./.github/actions/setup-node-and-install
+    - uses: ./.github/actions/init-node-and-install
 
     - name: lint
       run: pnpm tsx scripts/lint-shard.ts --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}

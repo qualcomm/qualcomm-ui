@@ -1,0 +1,49 @@
+---
+title: Number Properties
+---
+
+# {frontmatter.title}
+
+## Overview
+
+HTML attributes are strings. When you write `<input maxlength="10">`, that `10` is a string. Angular component inputs need numbers as numbers, not strings.
+
+```angular-ts
+import {Component, input, numberAttribute} from "@angular/core"
+import type {Numberish} from "@qualcomm-ui/utils/coercion"
+
+@Component(/*...*/)
+export class AppSlider {
+  readonly max = input<number, Numberish>(100, {
+    transform: numberAttribute,
+  })
+}
+```
+
+The `numberAttribute` transform converts string attributes to numbers. It uses `parseFloat` internally, so `"10"` becomes `10` and `"10.5"` becomes `10.5`. Invalid input becomes `NaN`.
+
+## Examples
+
+```angular2html
+<!-- all of these become numbers -->
+<app-slider max="100" />
+<app-slider [max]="100" />
+<app-slider max="50.5" />
+```
+
+```angular2html
+<!-- invalid input becomes NaN -->
+<app-slider max="not-a-number" />
+```
+
+## Default Values
+
+If parsing fails, the default value is used instead. This is `NaN` by default.
+
+You can also provide a default value as a second argument:
+
+```angular-ts
+readonly max = input<number, Numberish>(100, {
+  transform: (value) => numberAttribute(value, 100),
+})
+```

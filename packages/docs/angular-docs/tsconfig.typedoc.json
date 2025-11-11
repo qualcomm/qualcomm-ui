@@ -1,0 +1,23 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "compilerOptions": {
+    "paths": {
+      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"]
+    }
+  },
+  "include": [
+    "../../common/core/src",
+    "../../common/dom/dist",
+    "../../common/qds-core/src",
+    "../../common/utils/src",
+    "../../frameworks/angular-core/src",
+    "../../frameworks/angular/src"
+  ],
+  "exclude": [
+    "../../frameworks/angular/src/**/*.spec.ts",
+    "../../frameworks/angular-core/src/**/*.spec.ts",
+    "../../common/core/src/table",
+    "../../**/*internal*/**"
+  ]
+}

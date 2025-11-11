@@ -6,7 +6,7 @@ import type {ReactNode} from "react"
 import type {
   QuiCommentDisplayPart,
   SerializedParameters,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/typedoc-common"
 
 import {PropDescriptionSummary} from "./prop-description-summary"
 

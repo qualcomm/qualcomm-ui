@@ -6,7 +6,7 @@ import {Fragment, type ReactNode} from "react"
 import {compiler} from "markdown-to-jsx"
 
 import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
-import type {QuiCommentDisplayPart} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiCommentDisplayPart} from "@qualcomm-ui/typedoc-common"
 
 import {PropDescriptionInlineTag} from "./prop-description-inline-tag"
 

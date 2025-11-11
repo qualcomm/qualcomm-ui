@@ -22,7 +22,7 @@ import {unified} from "unified"
 import type {
   QuiComment,
   QuiCommentDisplayPart,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/typedoc-common"
 
 import {remarkSelfLinkHeadings} from "../docs-plugin"
 import {

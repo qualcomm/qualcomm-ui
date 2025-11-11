@@ -1,0 +1,200 @@
+---
+title: Controlled State
+---
+
+# {frontmatter.title}
+
+## Overview
+
+Our controllable components follow a consistent naming convention for controlled state:
+
+| Prop Pattern        | Description                                 | Examples                                        |
+| ------------------- | ------------------------------------------- | ----------------------------------------------- |
+| `[property]Change`  | Output event emitted when the value changes | `valueChanged`, `openChanged`, `visibleChanged` |
+| `[property]`        | The controlled value property               | `value`, `open`, `visible`                      |
+| `default[Property]` | Initial value when uncontrolled             | `defaultValue`, `defaultOpen`, `defaultVisible` |
+
+**Uncontrolled mode** (default): When the value property is undefined, the component manages its own state starting with the `default[Property]` input.
+
+**Controlled mode**: When the value property is provided, the parent component controls the state. All state changes must come through the value prop: the component will emit its `[property]Changed` output event but won't update its internal state until the parent updates the `[property]` property.
+
+> [!note]
+> This pattern does not apply to form controls.
+
+Keep reading to learn more.
+
+## Implementation
+
+### Required Properties
+
+Every component supporting this pattern must implement three key properties. We'll use an example with a property named `value`:
+
+```angular-ts
+@Component(/*...*/)
+export class ToggleComponent {
+  readonly defaultValue = input<boolean>(false)
+  readonly value = input<boolean>()
+  readonly valueChanged = output<boolean>()
+}
+```
+
+### State Determination Logic
+
+The component's mode is determined by a simple rule:
+
+- **Uncontrolled Mode**: When `value` is `undefined`
+- **Controlled Mode**: When `value` is defined (typically this also includes `null`, `false`, `0`, etc.)
+
+### Implementation Example
+
+```angular-ts
+@Component({
+  selector: "qui-toggle",
+  template: `
+    <button (click)="handleToggle()">
+      {{ currentValue() ? "On" : "Off" }}
+    </button>
+  `,
+})
+export class ToggleComponent {
+  readonly defaultValue = input<boolean>(false)
+  readonly value = input<boolean>()
+  readonly valueChanged = output<boolean>()
+
+  protected readonly isControlled = computed(() => this.value() !== undefined)
+  protected readonly internalValue = signal<boolean>(this.defaultValue())
+
+  protected readonly currentValue = computed(() => {
+    const value = this.internalValue()
+    const valueFromInput = this.value()
+    return this.isControlled() ? valueFromInput : value
+  })
+
+  handleToggle() {
+    const nextValue = !this.currentValue()
+
+    // Always call valueChanged
+    this.valueChanged.emit(nextValue)
+
+    // Only update internal state if uncontrolled
+    if (!this.isControlled()) {
+      this.internalValue.set(nextValue)
+    }
+  }
+}
+```
+
+## Usage Patterns
+
+### Uncontrolled Usage (Default Behavior)
+
+The component manages its own state internally:
+
+```angular2html
+<!-- Component starts with defaultChecked value and manages state internally -->
+<qui-toggle
+  [defaultChecked]="true"
+  (valueChanged)="handleChange($event)"
+/>
+```
+
+This is ideal for simple use cases where the parent component doesn't need to control the state, but still might want to respond to state changes.
+
+### Controlled Usage
+
+The parent component manages the state:
+
+```angular-ts
+@Component({
+  imports: [ToggleComponent],
+  template: `
+    <qui-toggle [value]="on()" (valueChanged)="handleValueChange($event)" />
+  `,
+})
+export class ParentComponent {
+  readonly on = signal<boolean>(true)
+
+  handleValueChange(value: boolean) {
+    // ... do something when the value changes
+    this.on.set(value)
+  }
+}
+```
+
+This gives you complete control over the state of the component, which enables complex validation and business logic.
+
+## Benefits of This Pattern
+
+- Swapping between modes is trivial: either pass the `value` prop or let the component handle it. Your tests still work, your API stays the same.
+
+- State ownership is obvious: if you pass a `value`, you're controlling it. If you don't, the component handles it. No weird edge cases where both the parent and component think they own the state.
+
+## What about two-way binding?
+
+This pattern is an alternative to two-way binding, and promotes a one-way flow of data. Consider the following pitfalls of two-way binding:
+
+- Unpredictable data flow: the creator of the state has no idea if and how the child will mutate it.
+- Limits refactoring and validation
+
+Two-way binding creates a closed loop:
+
+- Data flows down: Parent → Child
+- Updates flow up: Child → Parent
+- Updated data flows back down: Parent → Child
+
+This works until you need to intercept the update, like for validation.
+
+```angular-ts
+value = signal('');
+// You can't validate the value before it changes.
+// The best you can do is trigger another update after the fact,
+// or break out of two-way binding entirely.
+template: `<input [(ngModel)]="value" />`
+```
+
+Frameworks that don't allow interception within the binding mechanism (aka Angular) often force you to abandon it entirely when you need to validate the data.
+
+## Common Pitfalls and Solutions
+
+**Problem**: Switching from controlled to uncontrolled (or vice versa) during component lifecycle.
+
+**Solution**: Always choose the appropriate mode at the beginning of the component's lifecycle.
+
+---
+
+**Problem**: Providing `value` but not `valueChanged`, making the component read-only.
+
+**Solution**: Always provide `valueChanged` in controlled mode.
+
+## Use this pattern in your own components
+
+### useControlledState
+
+TODO: link to file in github
+
+```ts
+import {
+  useControlledState,
+  type ControlledState,
+} from "@qualcomm-ui/angular-core/state"
+
+@Component(/*...*/)
+export class ToggleComponent {
+  readonly defaultValue = input<boolean>(false)
+  readonly value = input<boolean>()
+  readonly valueChanged = output<boolean>()
+
+  protected readonly checkedState: ControlledState<boolean> =
+    useControlledState<boolean>({
+      defaultValue: this.defaultValue,
+      onChange: (value) => this.valueChanged.emit(value),
+      value: this.value,
+    })
+}
+
+// useControlledState return type:
+interface ControlledState<T> {
+  setValue: (newValue: T, ...rest: any[]) => void
+  value: Signal<T | undefined>
+}
+```

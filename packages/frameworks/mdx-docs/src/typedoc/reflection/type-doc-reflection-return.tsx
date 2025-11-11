@@ -4,7 +4,7 @@
 import type {ReactElement} from "react"
 
 import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
-import type {SerializedType} from "@qualcomm-ui/mdx-docs-common"
+import type {SerializedType} from "@qualcomm-ui/typedoc-common"
 
 export interface TypeDocReflectionReturnProps {
   resolvedType: SerializedType

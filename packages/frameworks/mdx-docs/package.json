@@ -58,6 +58,7 @@
     "@qualcomm-ui/react-core": "workspace:^1.0.0",
     "@qualcomm-ui/react-test-utils": "workspace:^1.0.0",
     "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/typedoc-common": "workspace:^1",
     "@qualcomm-ui/utils": "workspace:^1",
     "@shikijs/langs": "^3.13.0",
     "@shikijs/themes": "^3.13.0",

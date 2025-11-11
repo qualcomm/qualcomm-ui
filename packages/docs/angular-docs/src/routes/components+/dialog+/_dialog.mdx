@@ -1,0 +1,154 @@
+---
+title: Dialog
+group: Overlays
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {DialogModule} from "@qualcomm-ui/angular/dialog"
+```
+
+## Examples
+
+### Sizes
+
+The dialog component has two sizes: `sm` and `md`. Size governs the width of the dialog, as well as the content's spacing, font size, and padding.
+
+<QdsDemo name="DialogSizesDemo" />
+
+### Indicator Emphasis
+
+Use the [emphasis](./#emphasis) prop to change the intent and color of the dialog's indicator icon.
+
+<QdsDemo name="DialogEmphasisDemo" />
+
+### Custom Indicator
+
+Set a custom indicator icon by providing the `q-dialog-indicator-icon` directive within the `q-dialog-body` directive. Or hide it entirely using the [hideIndicatorIcon](./#hideIndicatorIcon) property on the `q-dialog-body` directive.
+
+<QdsDemo name="DialogIndicatorIconDemo" />
+
+### Placement
+
+Use the [placement](./#placement) prop to change the placement of the dialog.
+
+<QdsDemo name="DialogPlacementDemo" />
+
+### Controlled State
+
+Dialog visibility can be controlled using the [open](./#open), [openChanged](./#onOpenChange) and [defaultOpen](./#defaultOpen) properties. These properties follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="DialogControlledStateDemo" />
+
+### Outside Scroll
+
+The default [scrollBehavior](./#scrollBehavior) is `outside`, which makes the entire page scrollable when modal content exceeds viewport height. The modal and backdrop move with the page scroll instead of creating an internal scroll area within the modal.
+
+<QdsDemo name="DialogOutsideScrollDemo" />
+
+### Inside Scroll
+
+Set the [scrollBehavior](./#scrollBehavior) prop to `inside` to create an internal scroll area within the modal.
+
+<QdsDemo name="DialogInsideScrollDemo" />
+
+### Alert Dialog
+
+Set the [role](./#role) prop to `alertdialog` to change the dialog component to an [alert dialog](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role). This is recommended for situations where the dialog is used to notify users of urgent information that demands their immediate attention.
+
+<QdsDemo name="DialogAlertDialogDemo" />
+
+## Shortcuts
+
+### \<q-dialog-floating-portal\>
+
+A helper component that combines the portal, positioner, and content
+components. This shortcut is equivalent to:
+
+```angular2html
+<q-portal>
+  <div q-dialog-backdrop></div>
+  <div q-dialog-positioner>
+    <section q-dialog-content><ng-content /></section>
+  </div>
+</q-portal>
+```
+
+## API
+
+### \<q-dialog-root\>
+
+<TypeDocProps name="DialogRootDirective" />
+
+### \<q-dialog-floating-portal\>
+
+<TypeDocProps name="DialogFloatingPortalComponent" />
+
+### q-dialog-backdrop
+
+<TypeDocProps name="DialogBackdropComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogBackdropBindings", "DialogBackdropBindings"]}
+/>
+
+### q-dialog-positioner
+
+<TypeDocProps name="DialogPositionerComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogPositionerBindings", "DialogPositionerBindings"]}
+/>
+
+### q-dialog-content
+
+<TypeDocProps name="DialogContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogContentBindings", "DialogContentBindings"]}
+/>
+
+### q-dialog-body
+
+<TypeDocProps name="DialogBodyComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogBodyBindings", "DialogBodyBindings"]}
+/>
+
+### q-dialog-heading
+
+<TypeDocProps name="DialogHeadingDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogHeadingBindings", "DialogHeadingBindings"]}
+/>
+
+### q-dialog-footer
+
+<TypeDocProps name="DialogFooterDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogFooterBindings", "DialogFooterBindings"]}
+/>
+
+### q-dialog-indicator-icon
+
+<TypeDocProps name="DialogIndicatorIconDirective" />
+
+<TypeDocAngularAttributes name={["QdsDialogIndicatorIconBindings"]} />
+
+### q-dialog-close-button
+
+<TypeDocProps name="DialogCloseButtonComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogCloseButtonBindings", "DialogCloseTriggerBindings"]}
+/>

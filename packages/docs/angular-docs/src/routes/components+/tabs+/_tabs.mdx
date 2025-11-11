@@ -1,0 +1,175 @@
+---
+title: Tabs
+group: Disclosure
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {TabsModule} from "@qualcomm-ui/angular/tabs"
+```
+
+## Examples
+
+### Horizontal
+
+The default [orientation](./#orientation) is horizontal. The left and right arrow keys can be used to navigate between tabs.
+
+<QdsDemo name="TabsHorizontalDemo" />
+
+### Vertical
+
+In vertical [orientation](./#orientation), the up and down arrow keys are used instead.
+
+<QdsDemo name="TabsVerticalDemo" />
+
+### Icons and variants
+
+Tabs support start and end icons. Customize the variant with the [iconVariant](./#iconVariant) prop. Use the [variant](./#variant) prop to change the appearance of the tab.
+
+<QdsDemo wrapperProps={{className: "bg-neutral-02"}} name="TabsIconsDemo" />
+
+### Controlled Value
+
+The tab's active value can be controlled via the [value](./#value), [onValueChange](./#onValueChange), and [defaultValue](./#defaultValue) properties. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="TabsControlledValueDemo" />
+
+### Sizes
+
+#### Line
+
+The line [variant](./#variant) supports four [sizes](./#size): `sm`, `md`, `lg`, and `xl`
+
+<QdsDemo name="TabsLineSizesDemo" />
+
+#### Contained
+
+The contained [variant](./#variant) supports only two sizes: `sm` and `md`
+
+<QdsDemo
+  wrapperProps={{className: "bg-neutral-02"}}
+  name="TabsContainedSizesDemo"
+/>
+
+### Disabled
+
+Disable specific tabs with the [disabled](./#disabled-1) prop on the `<Tab.Root>` component.
+
+<QdsDemo wrapperProps={{className: "bg-neutral-02"}} name="TabsDisabledDemo" />
+
+### URL Search Parameters
+
+The following example demonstrates how to render tabs that sync with the Angular router's query parameters.
+
+<QdsDemo name="TabsLinksDemo" />
+
+### Context
+
+Use the `tabsContext` structural directive to access the tabs API from the template.
+
+<QdsDemo name="TabsContextDemo" />
+
+### Add and Remove Tabs
+
+<QdsDemo name="TabsAddRemoveDemo" />
+
+## API
+
+### Tabs
+
+#### q-tabs-root
+
+<TypeDocProps name="TabsRootDirective" />
+
+<TypeDocAngularAttributes name={["QdsTabsRootBindings", "TabsRootBindings"]} />
+
+#### q-tabs-list
+
+<TypeDocProps name="TabsListDirective" />
+
+<TypeDocAngularAttributes name={["QdsTabsListBindings", "TabsListBindings"]} />
+
+#### q-tabs-indicator
+
+This directive is automatically rendered by the `q-tabs-list` directive. It can be customized like so:
+
+```angular2html
+<div q-tabs-list>
+  <!-- customize the element here -->
+  <div q-tabs-indicator></div>
+  <!-- ... -->
+</div>
+```
+
+<TypeDocProps name="TabsIndicatorDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsTabsIndicatorBindings", "TabsIndicatorBindings"]}
+/>
+
+#### q-tabs-panel
+
+<TypeDocProps name="TabsPanelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsTabsPanelBindings", "TabsPanelBindings"]}
+/>
+
+### Tab
+
+#### q-tab-root
+
+<TypeDocProps name="TabRootDirective" />
+
+<TypeDocAngularAttributes name={["QdsTabsTabBindings", "TabsTabBindings"]} />
+
+#### q-tab-button
+
+<TypeDocProps name="TabButtonDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsTabsTabButtonBindings", "TabsTabButtonBindings"]}
+/>
+
+#### q-tab-dismiss-button
+
+<TypeDocProps name="TabDismissButtonDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsTabsTabDismissButtonBindings", "TabsTabDismissButtonBindings"]}
+/>
+
+#### tabsContext
+
+Used to access the tabs API from the template.
+
+```angular2html
+<div q-tabs-root>
+  <!-- type-aware context for the tabs API -->
+  <ng-container *tabsContext="let tabsApi">
+    <button (click)="tabsApi.setValue('...')"></button>
+  </ng-container>
+</div>
+```
+
+<TypeDocProps
+  name="TabsApi"
+  omit={[
+    "getIndicatorBindings",
+    "getListBindings",
+    "getPanelBindings",
+    "getRootBindings",
+    "getTabBindings",
+    "getTabButtonBindings",
+    "getTabDismissButtonBindings",
+    "getTabIconBindings",
+  ]}
+  partial
+/>

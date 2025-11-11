@@ -1,0 +1,138 @@
+---
+title: Drawer
+group: Overlays
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {DrawerModule} from "@qualcomm-ui/angular/drawer"
+```
+
+## Overview
+
+The drawer's API is similar to the [Dialog](/components/dialog) component.
+
+## Examples
+
+### Placement End
+
+The drawer's default [placement](./#placement) is `end`, which maps to the right side of the screen in LTR languages and the left side in RTL languages.
+
+<QdsDemo name="DrawerPlacementDemo" />
+
+### Placement Start
+
+Use [placement](./#placement) `start` to change the placement to the left side of the screen.
+
+<QdsDemo name="DrawerPlacementStartDemo" />
+
+### Controlled State
+
+Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use [open](./#open) and [openChanged](./#openChanged) to control the visibility manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="DrawerControlledStateDemo" />
+
+### Custom Container
+
+Use the `container` prop of the `<q-portal>` component to render the drawer in a custom container. You'll need to override the positioner's default styles to position the drawer correctly.
+
+Consider setting [closeOnInteractOutside](./#closeOnInteractOutside) to `false` to prevent the drawer from closing when interacting outside the drawer.
+
+<QdsDemo name="DrawerCustomContainerDemo" expanded />
+
+## Shortcuts
+
+### \<q-drawer-floating-portal\>
+
+A helper component that combines the portal, positioner, and content
+components. This shortcut is equivalent to:
+
+```angular2html
+<q-portal>
+  <div q-drawer-backdrop></div>
+  <div q-drawer-positioner>
+    <section q-drawer-content><ng-content /></section>
+  </div>
+</q-portal>
+```
+
+## API
+
+The Drawer shares many of its props and data attributes with the [Dialog](/components/dialog) component.
+
+### \<q-drawer-root\>
+
+<TypeDocProps name="DrawerRootDirective" />
+
+### \<q-drawer-floating-portal\>
+
+<TypeDocProps name="DrawerFloatingPortalComponent" />
+
+### q-drawer-backdrop
+
+<TypeDocProps name="DrawerBackdropDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogBackdropBindings", "DialogBackdropBindings"]}
+/>
+
+### q-drawer-positioner
+
+<TypeDocProps name="DrawerPositionerComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsDrawerPositionerBindings", "DialogPositionerBindings"]}
+/>
+
+### q-drawer-content
+
+<TypeDocProps name="DrawerContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDrawerContentBindings", "DialogContentBindings"]}
+/>
+
+### q-drawer-body
+
+<TypeDocProps name="DrawerBodyComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogBodyBindings", "DialogBodyBindings"]}
+/>
+
+### q-drawer-heading
+
+<TypeDocProps name="DrawerHeadingDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogHeadingBindings", "DialogHeadingBindings"]}
+/>
+
+### q-drawer-footer
+
+<TypeDocProps name="DrawerFooterDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogFooterBindings", "DialogFooterBindings"]}
+/>
+
+### q-drawer-indicator-icon
+
+<TypeDocProps name="DrawerIndicatorIconDirective" />
+
+<TypeDocAngularAttributes name={["QdsDialogIndicatorIconBindings"]} />
+
+### q-drawer-close-button
+
+<TypeDocProps name="DrawerCloseButtonComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsDialogCloseButtonBindings", "DialogCloseTriggerBindings"]}
+/>

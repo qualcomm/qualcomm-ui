@@ -1,0 +1,43 @@
+---
+title: Boolean Properties
+---
+
+# {frontmatter.title}
+
+## Overview
+
+Angular component inputs aren't ideal with booleans. In HTML, `<button disabled>` disables the button. So does `<button disabled="true">`. Angular inputs don't work like this by default, but they can be coerced:
+
+```angular-ts
+import {Component, input, booleanAttribute} from "@angular/core"
+import type {Booleanish} from "@qualcomm-ui/utils/coercion"
+
+@Component(/*...*/)
+export class AppToggle {
+  readonly open = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+}
+```
+
+The `booleanAttribute` transform makes the input property behave like HTML, and the `Booleanish` type ensures type safety in the template.
+
+```ts
+type Booleanish = boolean | "true" | "false" | "" | undefined
+```
+
+## Examples
+
+```angular2html
+<!-- with the above coercion, the following evaluate to true -->
+<app-toggle open />
+<app-toggle open="" />
+<app-toggle open="true" />
+<app-toggle [open]="true" />
+```
+
+```angular2html
+<!-- with the above coercion, the following evaluate to false -->
+<app-toggle open="false" />
+<app-toggle [open]="false" />
+```

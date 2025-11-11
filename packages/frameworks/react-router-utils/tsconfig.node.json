@@ -1,0 +1,12 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": [
+    "./scripts",
+    "build.ts",
+    "css.d.ts",
+    "vite.config.ts"
+  ]
+}

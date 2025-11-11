@@ -9,11 +9,9 @@ import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
 import {useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
 import {useMdxDocsLayoutContext} from "@qualcomm-ui/mdx-docs/docs-layout"
 import {dummyTypePrefix} from "@qualcomm-ui/mdx-docs/shiki"
-import type {
-  PagePropTypes,
-  QuiPropDeclaration,
-} from "@qualcomm-ui/mdx-docs-common"
+import type {PagePropTypes} from "@qualcomm-ui/mdx-docs-common"
 import {Link} from "@qualcomm-ui/react/link"
+import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
 import {DocsExternalLink} from "../docs-external-link"
 import {usePropsContext} from "../use-props-context"

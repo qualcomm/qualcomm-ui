@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import type {QuiComment} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiComment} from "@qualcomm-ui/typedoc-common"
 
 import {
   PropDescriptionBlockTags,

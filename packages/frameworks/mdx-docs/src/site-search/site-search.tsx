@@ -20,8 +20,8 @@ import {getSelectorsByUserAgent, OsTypes} from "react-device-detect"
 
 import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
-import {IconButton} from "@qualcomm-ui/react/button"
 import {Dialog} from "@qualcomm-ui/react/dialog"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {TextInput} from "@qualcomm-ui/react/text-input"
 import {useDebounce} from "@qualcomm-ui/react-core/effects"
 import {Portal} from "@qualcomm-ui/react-core/portal"
@@ -154,12 +154,7 @@ export function SiteSearch({
           className="qui-site-search__mobile-icon"
           role="searchbox"
         >
-          <IconButton
-            aria-label="Search"
-            icon={SearchIcon}
-            size="sm"
-            variant="ghost"
-          />
+          <HeaderBar.ActionIconButton aria-label="Search" icon={SearchIcon} />
         </div>
       </Dialog.Trigger>
 

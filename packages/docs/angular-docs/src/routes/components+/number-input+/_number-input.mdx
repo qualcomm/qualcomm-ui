@@ -1,0 +1,209 @@
+---
+title: Number Input
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
+```
+
+## Overview
+
+- This component implements the ARIA [Spinbutton](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/) pattern. The `Home` and `End` keys work differently than a text input:
+  - `Home`: If the spinbutton has a minimum value, sets the value to its minimum.
+  - `End`: If the spinbutton has a maximum value, sets the value to its maximum.
+- Template-driven and Reactive form values are supplied as numbers. When the field is cleared, the value is set to `NaN`. You must account for this in your application logic.
+
+## Examples
+
+### Simple
+
+The simple API bundles all subcomponents together into a single directive.
+
+<QdsDemo name="NumberInputSimpleDemo" />
+
+### Child Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="NumberInputChildDirectivesDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="NumberInputCompositeDemo" />
+
+### Min and Max values
+
+Pass the [min](./#min) and [max](./#max) props to the root component to set the minimum and maximum values of the number input.
+
+If the value entered is less than min or greater than max, it will be clamped to the nearest boundary on blur or enter.
+
+<QdsDemo name="NumberInputMinMaxDemo" />
+
+### Step interval
+
+Pass the [step](./#step) prop to the root component to set the increment or decrement step interval.
+
+<QdsDemo name="NumberInputStepDemo" />
+
+### States
+
+The following shows how the component appears in each interactive state.
+
+<QdsDemo name="NumberInputStatesDemo" />
+
+### Sizes
+
+Customize size using the [size](./#size) prop. The default size is `md`.
+
+<QdsDemo name="NumberInputSizesDemo" />
+
+### Error Text and Indicator
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `q-number-input-error-text` directive when using the composite API)
+
+The error text and indicator will only render when [invalid](./#invalid) is true.
+
+<QdsDemo name="NumberInputErrorTextDemo" />
+
+## Forms
+
+### Template Forms
+
+When using template-driven forms with `ngModel`, perform validation manually in your component and pass the result to the [invalid](./#invalid) property.
+
+> [!tip]
+> Form validation timing is controlled by the [updateOn](https://angular.dev/api/forms/FormControl#updateOn) property on the form control.
+
+<QdsDemo name="NumberInputTemplateFormsDemo" />
+
+#### Required
+
+When using template forms, pass the [required](./#required) property to apply a validator to the form control.
+
+<QdsDemo name="NumberInputRequiredTemplateFormsDemo" />
+
+### Reactive Forms
+
+Use Reactive forms for better control of form state and validation.
+
+<QdsDemo name="NumberInputReactiveFormsDemo" />
+
+#### State Guidelines
+
+The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+
+<QdsDemo name="NumberInputReactiveFormStatesDemo" />
+
+### Composite API & Forms
+
+When using the composite API with Reactive Forms, always apply form control bindings to the `q-number-input-root` directive.
+
+<QdsDemo name="NumberInputCompositeFormsDemo" />
+
+## API
+
+### \<q-number-input\>
+
+The `<q-number-input>` component extends the [q-number-input-root](./#q-number-input-root) directive with the following properties:
+
+<TypeDocProps name="NumberInputComponent" omitFrom="NumberInputRootDirective" />
+
+## Composite API
+
+### q-number-input-root
+
+<TypeDocProps name="NumberInputRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["NumberInputRootBindings", "QdsInputRootBindings"]}
+/>
+
+### q-number-input-input-group
+
+<TypeDocProps name="NumberInputInputGroupComponent" />
+
+<TypeDocAngularAttributes
+  name={["NumberInputInputGroupBindings", "QdsInputGroupBindings"]}
+/>
+
+### q-number-input-label
+
+<TypeDocProps name="NumberInputLabelComponent" />
+
+<TypeDocAngularAttributes
+  name={["NumberInputLabelBindings", "QdsInputLabelBindings"]}
+/>
+
+### q-number-input-hint
+
+<TypeDocProps name="NumberInputHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["NumberInputHintBindings", "QdsInputHintBindings"]}
+/>
+
+### q-number-input-control
+
+<TypeDocAngularAttributes
+  name={["NumberInputControlBindings", "QdsNumberInputControlBindings"]}
+/>
+
+### q-number-input-decrement-trigger
+
+<TypeDocProps name="NumberInputDecrementTriggerComponent" />
+
+<TypeDocAngularAttributes
+  name={[
+    "NumberInputDecrementTriggerBindings",
+    "QdsNumberInputDecrementTriggerBindings",
+  ]}
+/>
+
+### q-number-input-increment-trigger
+
+<TypeDocProps name="NumberInputIncrementTriggerComponent" />
+
+<TypeDocAngularAttributes
+  name={[
+    "NumberInputIncrementTriggerBindings",
+    "QdsNumberInputIncrementTriggerBindings",
+  ]}
+/>
+
+### q-number-input-input
+
+<TypeDocProps name="NumberInputInputDirective" />
+
+<TypeDocAngularAttributes
+  name={["NumberInputInputBindings", "QdsInputInputBindings"]}
+/>
+
+### q-number-input-error-text
+
+<TypeDocProps name="NumberInputErrorTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["NumberInputErrorTextBindings", "QdsInputErrorTextBindings"]}
+/>
+
+### q-number-input-error-indicator
+
+<TypeDocProps name="NumberInputErrorIndicatorComponent" />
+
+<TypeDocAngularAttributes
+  name={["NumberInputErrorIndicatorBindings", "QdsInputErrorIndicatorBindings"]}
+/>

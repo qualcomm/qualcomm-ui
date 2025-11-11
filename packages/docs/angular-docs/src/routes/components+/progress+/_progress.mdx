@@ -1,0 +1,168 @@
+---
+title: Progress
+group: Feedback
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+A visual indicator showing completion progress of tasks and loading states.
+
+```typescript
+import {ProgressModule} from "@qualcomm-ui/angular/progress"
+```
+
+## Overview
+
+The progress bar can be in one of two states:
+
+- indeterminate: the default state.
+- determinate: assumed when the [value](./#value) prop is passed.
+
+Indeterminate progress bar keep users informed that work is happening when timeframes are unknown.
+
+## Examples
+
+### Simple
+
+The simple API bundles all subcomponents together into a single directive.
+
+<QdsDemo name="ProgressSimpleDemo" />
+
+### Child Directives
+
+Provide child directives to customize specific elements while keeping the simple API's default structure.
+
+<QdsDemo name="ProgressChildDirectivesDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure.
+
+<QdsDemo name="ProgressCompositeDemo" />
+
+### Label Orientation
+
+Use the [labelOrientation](./#labelOrientation) property to change the positioning of the label and value text relative to the progress bar.
+
+<QdsDemo name="ProgressLabelOrientationDemo" />
+
+### Sizes
+
+<QdsDemo name="ProgressSizeDemo" />
+
+### Emphasis (Color)
+
+<QdsDemo name="ProgressEmphasisDemo" />
+
+### Error Text
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `Progress.ErrorText` component when using the composite API)
+
+The error text will only render when `invalid` is true.
+
+<QdsDemo name="ProgressErrorTextDemo" />
+
+## Shortcuts
+
+### Track and Bar
+
+The `q-progress-track` automatically renders a `q-progress-bar` when no children as passed to it. This makes `<div q-progress-track></div>` equivalent to:
+
+```angular2html
+<div q-progress-track>
+  <div q-progress-bar></div>
+</div>
+```
+
+## Accessibility
+
+- When the value is supplied, the component automatically provides the corresponding `aria-value*` attributes to the element.
+- The progress element is automatically marked with `role="progressbar"`.
+- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the `aria-label` of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+
+## API
+
+### q-progress
+
+The `q-progress` directive extends the [q-progress-root](./#q-progress-root) directive with the following properties:
+
+<TypeDocProps name="ProgressDirective" omitFrom="ProgressRootDirective" />
+
+### ProgressApi
+
+The `ProgressApi` is accessible from the template via the `progressContext` structural directive:
+
+```angular2html
+<ng-container *progressContext="let context">
+  {{ context.valuePercent }}%
+</ng-container>
+```
+
+<TypeDocProps name="ProgressApi" partial />
+
+## Composite API
+
+### q-progress-root
+
+<TypeDocProps name="ProgressRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["ProgressRootBindings", "QdsProgressRootBindings"]}
+/>
+
+### q-progress-label
+
+<TypeDocProps name="ProgressLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["ProgressLabelBindings", "QdsProgressLabelBindings"]}
+/>
+
+### q-progress-error-text
+
+<TypeDocProps name="ProgressErrorTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["ProgressErrorTextBindings", "QdsProgressErrorTextBindings"]}
+/>
+
+### q-progress-hint
+
+<TypeDocProps name="ProgressHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["ProgressHintBindings", "QdsProgressHintBindings"]}
+/>
+
+### q-progress-value-text
+
+<TypeDocProps name="ProgressValueTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["ProgressValueTextBindings", "QdsProgressValueTextBindings"]}
+/>
+
+### q-progress-track
+
+<TypeDocProps name="ProgressTrackDirective" />
+
+<TypeDocAngularAttributes
+  name={["ProgressTrackBindings", "QdsProgressTrackBindings"]}
+/>
+
+### q-progress-bar
+
+<TypeDocProps name="ProgressBarDirective" />
+
+<TypeDocAngularAttributes
+  name={["ProgressBarBindings", "QdsProgressBarBindings"]}
+/>

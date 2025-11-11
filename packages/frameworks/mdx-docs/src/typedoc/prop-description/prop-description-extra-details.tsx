@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import type {QuiPropDeclaration} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
 import {PropDescriptionBlockTags} from "./prop-description-block-tags"
 

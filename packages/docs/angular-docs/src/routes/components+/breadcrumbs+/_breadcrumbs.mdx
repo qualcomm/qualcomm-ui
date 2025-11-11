@@ -1,0 +1,84 @@
+---
+title: Breadcrumbs
+group: Disclosure
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {BreadcrumbsModule} from "@qualcomm-ui/angular/breadcrumbs"
+```
+
+## Overview
+
+- The root element should be labeled with `aria-label="Breadcrumbs"` to indicate that it's a breadcrumb navigation.
+- The first breadcrumb item is always the root item, and is typically reserved for the home page or base route of your application.
+- The last breadcrumb item is always the active item.
+- The last breadcrumb item should always be annotated with the `aria-current="page"` attribute.
+
+## Examples
+
+### Emphasis (color)
+
+Use the [emphasis](./#emphasis) prop to change the color of the breadcrumbs.
+
+<QdsDemo name="BreadcrumbsEmphasisDemo" />
+
+### Sizes
+
+Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. The default size is `md`.
+
+<QdsDemo name="BreadcrumbsSizesDemo" />
+
+### Links
+
+Apply the `routerLink` directive to a breadcrumb item's trigger to make it a link.
+
+<QdsDemo name="BreadcrumbsLinksDemo" />
+
+### Disabled Item
+
+Use the [disabled](./#disabled) prop to disable a breadcrumb item.
+
+<QdsDemo name="BreadcrumbsDisabledDemo" />
+
+## API
+
+### q-breadcrumbs-root
+
+<TypeDocProps name="BreadcrumbsRootDirective" />
+
+<TypeDocAttributes name="QdsBreadcrumbsRootBindings" />
+
+### q-breadcrumbs-list
+
+<TypeDocProps name="BreadcrumbsListDirective" />
+
+<TypeDocAttributes name="QdsBreadcrumbsListBindings" />
+
+### q-breadcrumb-item
+
+<TypeDocProps name="BreadcrumbItemDirective" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemBindings" />
+
+### q-breadcrumb-item-icon
+
+<TypeDocProps name="BreadcrumbItemIconDirective" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemIconBindings" />
+
+### q-breadcrumb-item-trigger
+
+<TypeDocProps name="BreadcrumbItemTriggerDirective" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemTriggerBindings" />
+
+### q-breadcrumb-item-separator
+
+<TypeDocProps name="BreadcrumbItemSeparatorDirective" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemSeparatorBindings" />

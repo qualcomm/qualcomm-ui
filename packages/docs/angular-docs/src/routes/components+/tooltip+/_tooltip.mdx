@@ -1,0 +1,146 @@
+---
+title: Tooltip
+group: Overlays
+---
+
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+Tooltips display a brief message when the user focuses or hovers on a UI element. It is used to provide extra contextual information on interactive UI elements such as buttons.
+
+```typescript
+import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
+```
+
+## Overview
+
+The tooltip should be used to provide additional non-essential information. It is linked to an interactive element (the trigger) and will be shown when this element is focused or hovered.
+Because the tooltip itself can't be focused or tabbed to, it should not contain interactive elements.
+Only one tooltip can be open at a time.
+
+In general, tooltips should be used sparingly and only contain succinct information. Here are guidelines to help you decide when to use one:
+
+- When using controls that lack visual labels, like icon buttons.
+- When defining a term or inline item.
+- When additional information may help a user make decisions.
+- When providing more context to an element.
+
+## Examples
+
+### Simple
+
+The simple API provides a standalone component with built-in layout. The trigger is supplied as a child directive, and the content of the tooltip is the children.
+
+<QdsDemo name="TooltipSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="TooltipCompositeDemo" />
+
+### Placement
+
+The tooltip's position, relative to the trigger element, can be set using the `placement` option of the [positioning](./#positioning) prop. Its default value is `top`.
+Change the values in the example below and hover over the select to see the tooltip position change.
+
+<QdsDemo name="TooltipPlacementDemo" />
+
+### Close On Click / Escape
+
+By default, the tooltip will close when the `Escape` key is pressed or a click is detected. You can customize this behavior using the [closeOnClick](./#closeOnClick) and [closeOnEscape](./#closeOnEscape) props.
+
+<QdsDemo name="TooltipCloseEventsDemo" />
+
+### Controlled Visibility
+
+Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use [open](./#open) and [openChanged](./#openChanged) to control the visibility manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo expanded name="TooltipControlledStateDemo" />
+
+### Disabled
+
+You can disable the tooltip by using the `disabled` prop.
+
+<QdsDemo name="TooltipDisabledDemo" />
+
+## Shortcuts
+
+### \<q-tooltip-floating-portal\>
+
+A helper component that combines the portal, positioner, content, and arrow
+components. This shortcut is equivalent to:
+
+```angular2html
+<q-portal>
+  <div q-tooltip-positioner>
+    <div q-tooltip-content>
+      <div q-tooltip-arrow>
+        <div q-tooltip-arrow-tip></div>
+      </div>
+      <ng-content />
+    </div>
+  </div>
+</q-portal>
+```
+
+## API
+
+### q-tooltip
+
+The simple tooltip extends the [q-tooltip-root](./#tooltip-root) directive with the following props:
+
+<TypeDocProps name="TooltipDirective" omitFrom="TooltipRootDirective" />
+
+## Composite API
+
+### q-tooltip-root
+
+<TypeDocProps name="TooltipRootDirective" />
+
+### q-tooltip-trigger
+
+<TypeDocProps name="TooltipTriggerDirective" />
+
+<TypeDocAngularAttributes name={["TooltipTriggerBindings"]} />
+
+### q-tooltip-positioner
+
+<TypeDocProps name="TooltipPositionerDirective" />
+
+<TypeDocAngularAttributes
+  name={["TooltipPositionerBindings", "QdsTooltipPositionerBindings"]}
+/>
+
+### q-tooltip-content
+
+<TypeDocProps name="TooltipContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["TooltipContentBindings", "QdsTooltipContentBindings"]}
+/>
+
+### q-tooltip-arrow
+
+<TypeDocProps name="TooltipArrowDirective" />
+
+<TypeDocAngularAttributes
+  name={["TooltipArrowBindings", "QdsTooltipArrowBindings"]}
+/>
+
+### q-tooltip-arrow-tip
+
+<TypeDocProps name="TooltipArrowTipDirective" />
+
+<TypeDocAngularAttributes
+  name={["TooltipArrowTipBindings", "QdsTooltipArrowTipBindings"]}
+/>
+
+## TooltipPositioningOptions
+
+<TypeDocProps name="TooltipPositioningOptions" />

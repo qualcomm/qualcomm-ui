@@ -1,0 +1,308 @@
+---
+title: Select
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Select} from "@qualcomm-ui/react/select"
+```
+
+## Overview
+
+- Each select uses the `selectCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](#list-collection).
+
+## Examples
+
+### Simple
+
+The simple API provides a standalone component with built-in layout.
+
+<QdsDemo name="SelectSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="SelectCompositeDemo" />
+
+### ARIA Label
+
+The Select's label is automatically associated with the input element for accessibility. If you omit the label, you should provide the [aria-label](./#aria-label) prop to give your select an accessible name.
+
+<QdsDemo name="SelectAriaLabelDemo" />
+
+> [!note]
+> If you're using the composite API, provide the `aria-label` attribute to the `q-select-trigger` element instead.
+
+### Content Width
+
+The [positioning.sameWidth](./#sameWidth) property controls whether the width of the select content matches the width of the trigger element. The default is `true`.
+
+<QdsDemo name="SelectSameWidthDemo" />
+
+### Trigger Icon
+
+Use the [icon](./#icon) prop to add an icon to the start of the trigger element. View our [Icon](/components/icon) documentation to learn more about using icons in QUI.
+
+<QdsDemo name="SelectIconDemo" />
+
+### Items as Objects
+
+The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [selectCollection](./#ListCollection) to specify the label and value of each item.
+
+<QdsDemo name="SelectItemsDemo" />
+
+### Sizes
+
+This component supports three [size](./#size) options to accommodate different layout densities and design requirements.
+
+The available sizes are `sm`, `md`, and `lg`. The default size is `md`.
+
+<QdsDemo name="SelectSizesDemo" />
+
+### Content Height
+
+Change the height of the item container by adjusting the style of the Content element.
+
+<QdsDemo name="SelectMaxHeightDemo" />
+
+### Multiple Selection
+
+Use the [multiple](./#multiple) prop to allow multiple selections.
+
+<QdsDemo name="SelectMultipleDemo" />
+
+### Controlled Dropdown Visibility
+
+Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use [open](./#open) and [openChanged](./#openChanged) to control the dropdown visibility manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="SelectControlledOpenDemo" />
+
+### Error Text and Indicator
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `q-select-error-text` component when using the composite API)
+
+The error text and indicator will only render when [invalid](./#invalid) is true.
+
+<QdsDemo name="SelectErrorDemo" />
+
+### Item Customization
+
+When using the simple API, provide the `q-select-content` directive as a child of the `<q-select>` component to override the default item renderer. The following example demonstrates how to add a custom icon to each item:
+
+<QdsDemo name="SelectItemCustomizationDemo" />
+
+### Within Dialog
+
+To use the Select within a Dialog, you need to avoid portalling the item dropdown. To do this using the simple API, set [disablePortal](./#disablePortal) property to `true`:
+
+<QdsDemo name="SelectWithinDialogDemo" />
+
+### Within Popover
+
+Like with the Dialog, you need to avoid portalling the `q-select-positioner`:
+
+<QdsDemo name="SelectWithinPopoverDemo" />
+
+## Forms
+
+- All form control values are arrays to support multiple selections.
+- The value of the form control is an array of type `T`, where `T` is the type of the items in your select collection.
+
+### Template Forms
+
+#### Strings
+
+<QdsDemo name="SelectStringsTemplateFormsDemo" />
+
+#### Objects
+
+<QdsDemo name="SelectObjectTemplateFormsDemo" />
+
+#### States
+
+When using template forms, the [disabled](./#disabled), [readOnly](./#readOnly), and [invalid](./#invalid) properties govern the interactive state of the control.
+
+<QdsDemo name="SelectTemplateFormStateDemo" />
+
+#### Required
+
+When using template forms, pass the [required](./#required) property to the form control. This applies the [RequiredValidator](https://angular.dev/api/forms/RequiredValidator) and [MinLengthValidator](https://angular.dev/api/forms/MinLengthValidator) to the form control.
+
+<QdsDemo name="SelectRequiredTemplateFormsDemo" />
+
+### Reactive Forms
+
+#### Strings
+
+<QdsDemo name="SelectStringsReactiveFormsDemo" />
+
+#### Objects
+
+<QdsDemo name="SelectObjectReactiveFormsDemo" />
+
+#### State Guidelines
+
+The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+
+<QdsDemo name="SelectReactiveFormStatesDemo" />
+
+## API
+
+### \<q-select\>
+
+The simple select extends the [q-select-root](./#q-select-root) directive with the following properties:
+
+<TypeDocProps name="SelectComponent" omitFrom="SelectRootDirective" />
+
+## Composite API
+
+### q-select-root
+
+<TypeDocProps name="SelectRootDirective" />
+
+### q-select-label
+
+<TypeDocProps name="SelectLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectLabelBindings", "SelectLabelBindings"]}
+/>
+
+### q-select-trigger
+
+<TypeDocProps name="SelectTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectTriggerBindings", "SelectTriggerBindings"]}
+/>
+
+### q-select-indicator
+
+<TypeDocProps name="SelectIndicatorDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectIndicatorBindings", "SelectIndicatorBindings"]}
+/>
+
+### q-select-value-text
+
+<TypeDocProps name="SelectValueTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectValueTextBindings", "SelectValueTextBindings"]}
+/>
+
+### q-select-clear-trigger
+
+<TypeDocProps name="SelectClearTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectClearTriggerBindings", "SelectClearTriggerBindings"]}
+/>
+
+### q-select-positioner
+
+<TypeDocProps name="SelectPositionerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectPositionerBindings", "SelectPositionerBindings"]}
+/>
+
+### q-select-content
+
+<TypeDocProps name="SelectContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectContentBindings", "SelectContentBindings"]}
+/>
+
+### q-select-item
+
+<TypeDocProps name="SelectItemDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectItemBindings", "SelectItemBindings"]}
+/>
+
+### q-select-item-indicator
+
+<TypeDocProps name="SelectItemIndicatorDirective" />
+
+<TypeDocAngularAttributes name="SelectItemIndicatorBindings" />
+
+### q-select-item-text
+
+<TypeDocProps name="SelectItemTextDirective" />
+
+<TypeDocAngularAttributes name="SelectItemTextBindings" />
+
+### q-select-hidden-select
+
+<TypeDocProps name="SelectHiddenSelectDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectHiddenSelectBindings", "SelectHiddenSelectBindings"]}
+/>
+
+### q-select-hint
+
+<TypeDocProps name="SelectHintDirective" />
+
+<TypeDocAngularAttributes name="SelectHintBindings" />
+
+### q-select-error-text
+
+<TypeDocProps name="SelectErrorTextDirective" />
+
+<TypeDocAngularAttributes name="SelectErrorTextBindings" />
+
+### q-select-error-indicator
+
+<TypeDocProps name="SelectErrorIndicatorDirective" />
+
+<TypeDocAngularAttributes name="SelectErrorIndicatorBindings" />
+
+## Data Structures
+
+### ListCollection
+
+The following describes the member variables and methods of the `ListCollection` class. The Select component uses an instance of this class as input:
+
+```angular-ts
+@Component({
+  template: `
+    <q-select [collection]="collection" />
+  `,
+})
+export class MyComponent {
+  collection = selectCollection({
+    items: [
+      // ...
+    ],
+  })
+}
+```
+
+Note that the ListCollection accepts a single generic type parameter, `T`, which is the type of each list item used in the collection. This can be a string or an object.
+
+#### Constructor
+
+<TypeDocProps name="ListCollectionOptions" partial />
+
+<TypeDocProps name="ListCollection" partial showComponentJsdoc={false} />
+
+### SelectPositioningOptions
+
+<TypeDocProps name="SelectPositioningOptions" partial />

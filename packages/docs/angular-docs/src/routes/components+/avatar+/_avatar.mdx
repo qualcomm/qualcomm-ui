@@ -1,0 +1,84 @@
+---
+title: Avatar
+group: Data Display
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+Avatars are used to represent a user or an entity in the UI. They can be used in various contexts, such as user profiles, comments, or lists.
+
+```typescript
+import {AvatarModule} from "@qualcomm-ui/angular/avatar"
+```
+
+## Usage
+
+Avatars can display a user or entity image, initials, or custom content when an image is unavailable. They can also indicate the status of the user or entity.
+
+## Overview
+
+The anatomy of the avatar component is as follows:
+
+- `q-avatar-root`: The main component.
+- `q-avatar-image`: (optional) Displays an image as the avatar.
+- `q-avatar-content`: (optional) Displays alternative content, such as initials or an icon, and acts as a fallback if the image fails to load.
+- `q-avatar-status`: (optional) Shows a status indicator dot.
+
+## Examples
+
+### Showcase
+
+Here's a typical usage example:
+
+<QdsDemo name="AvatarShowcaseDemo" />
+
+### Content
+
+The `q-avatar-content` directive displays alternative content within the avatar. Use it by itself to show initials or an icon, or together with `q-avatar-image` to provide fallback content if the image cannot be loaded.
+
+<QdsDemo name="AvatarContentDemo" className="bg-neutral-03" />
+
+### Sizes
+
+Use the [size](./#size) input to set the size of the avatar. The available sizes are `xs`, `sm`, `md` (default), `lg`, and `xl`.
+
+<QdsDemo name="AvatarSizeDemo" />
+
+### Variants
+
+When displaying initials or an icon, use the [variant](./#variant) input on `q-avatar-content` to set the avatar's style. Available variants are `neutral` (default), `contrast`, and `brand`.
+
+<QdsDemo name="AvatarVariantDemo" className="bg-neutral-03" />
+
+### Status
+
+To indicate the status of the user or entity, use the `q-avatar-status` directive and set its [status](./#status-1) input to one of: `active`, `offline` (default), `away`, or `busy`.
+
+<QdsDemo name="AvatarStatusDemo" />
+
+### State Callback
+
+You can listen for changes to the avatar's state by using the [stateChanged](./#stateChanged) output.
+
+<QdsDemo name="AvatarStateCallbackDemo" />
+
+## API
+
+### q-avatar
+
+<TypeDocProps name="AvatarDirective" />
+
+### q-avatar-image
+
+<TypeDocProps name="AvatarImageDirective" />
+
+### q-avatar-content
+
+<TypeDocProps name="AvatarContentDirective" />
+
+### q-avatar-status
+
+<TypeDocProps name="AvatarStatusDirective" />

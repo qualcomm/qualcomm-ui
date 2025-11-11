@@ -1,0 +1,205 @@
+---
+title: Pagination
+group: Disclosure
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+The Pagination component enables the user to select a specific page from a range of pages.
+
+```typescript
+import {PaginationModule} from "@qualcomm-ui/angular/pagination"
+```
+
+## Overview
+
+- TODO: add
+
+### Composition
+
+Apart from the root element (`q-pagination`), each directive is optional. This flexibility allows you to easily choose which elements to render by opting in declaratively.
+
+```angular-html
+<div q-pagination count="100">
+  <span *paginationContext="let context" q-pagination-page-metadata>
+    @let meta = context.pageMetadata;
+    {{ '{{meta.page}}' | safe }} of {{ '{{meta.pageCount}}' | safe }}
+  </span>
+
+  <div q-action-group>
+    <button q-pagination-prev-trigger></button>
+    <q-pagination-page-items />
+    <button q-pagination-next-trigger></button>
+  </div>
+
+  <div q-pagination-page-size [options]="[10, 20, 50, 100]">
+    <span q-pagination-page-size-label>Page size</span>
+  </div>
+</div>
+```
+
+## Examples
+
+### Showcase
+
+The component renders the number of pages based on the [count](./#count) and [pageSize](./#pageSize) props.
+
+<QdsDemo name="PaginationShowcaseDemo" />
+
+### Page Size
+
+Render a dropdown via the `q-pagination-page-size` directive to adjust the number of data items per page.
+
+<QdsDemo name="PaginationPageSizeDemo" />
+
+### Page Metadata
+
+Show metadata about the current and total pages with the `q-pagination-page-metadata` directive.
+
+Refer to the [PageMetadata](./#pagemetadata) api below for information about each available property.
+
+<QdsDemo name="PaginationPageMetadataDemo" />
+
+### Ranges
+
+You can specify how many links to display on either side of the current page with the [siblingCount](/components/pagination/directive#siblingCount) property. Use the [boundaryCount](./#boundaryCount) property to adjust the number of pages that are always visible at the start and end.
+
+<QdsDemo name="PaginationRangesDemo" />
+
+## Shortcuts
+
+### Page Items
+
+This element:
+
+```angular-html
+<q-pagination-page-items />
+```
+
+is shorthand for this component:
+
+```angular-ts
+import {Component} from "@angular/core"
+
+import {PaginationPageItemComponent} from "@qualcomm-ui/angular/pagination"
+import {CorePaginationPageItemsDirective} from "@qualcomm-ui/angular-core/pagination"
+
+@Component({
+  imports: [PaginationPageItemComponent],
+  selector: "q-pagination-page-items",
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
+  template: `
+    @for (
+      item of paginationContext.api.pageItems;
+      track trackPageItem(item, idx);
+      let idx = $index
+    ) {
+      <button q-pagination-page-item [item]="item"></button>
+    }
+    <ng-content></ng-content>
+  `,
+})
+export class PaginationPageItemsComponent extends CorePaginationPageItemsDirective {}
+```
+
+### Page Size
+
+This element:
+
+```angular-html
+<div q-pagination-page-size></div>
+```
+
+is shorthand for this component:
+
+```angular-ts
+import {Component, computed, input} from "@angular/core"
+import {FormsModule} from "@angular/forms"
+
+import {QComboboxComponent} from "@qualcomm-ui/angular"
+import {CorePaginationPageSizeDirective} from "@qualcomm-ui/angular-core/pagination"
+import {paginationClasses} from "@qualcomm-ui/core/pagination"
+import {clsx} from "@qualcomm-ui/utils/clsx"
+
+@Component({
+  host: {
+    "[attr.class]": "hostClass()",
+  },
+  imports: [QComboboxComponent, FormsModule],
+  selector: "[q-pagination-page-size]",
+  template: `
+    <ng-content />
+    <q-combobox
+      clearable="false"
+      disableOptionToggle
+      inputMinWidth="15"
+      minWidth="50"
+      optionLabel="label"
+      optionValue="value"
+      size="s"
+      [ariaLabel]="inputAriaLabel()"
+      [ariaLabelledby]="inputAriaLabelledBy()"
+      [ngModel]="inputValue()"
+      [options]="inputOptions()"
+      (ngModelChange)="inputOptionChanged($event)"
+    ></q-combobox>
+  `,
+})
+export class PaginationPageSizeComponent extends CorePaginationPageSizeDirective {
+  readonly class = input<string>()
+
+  protected readonly hostClass = computed(() =>
+    clsx(paginationClasses.pageSize, this.class()),
+  )
+}
+```
+
+## Element Breakdown
+
+- `q-pagination`: (required) root directive that provides context and state for all child directives.
+- `q-pagination-page-metadata`: a customizable label with information about the current page, page count, and page size.
+  - use with the `paginationContext` structural directive for a type-safe reference to the component instance's data model in the template.
+- `<q-pagination-page-links>`: the numbered page navigation buttons.
+- `q-pagination-prev-trigger`: a button that navigates to the previous page when activated.
+- `q-pagination-next-trigger`: a button that navigates to the next page when activated.
+- `q-pagination-page-size`: a select that adjusts the number of rows per page.
+  - `q-pagination-page-size-label`: the select's label.
+
+## API
+
+### PageMetadata
+
+Metadata about the current page is available on the `paginationContext` structural directive in the template:
+
+```html
+<ng-container *paginationContext="let context">
+  {{ '{{ context.pageMetadata.* }}' | safe }}
+</ng-container>
+```
+
+<TypeDocProps name="PageMetadata" />
+
+### \[q-pagination\]
+
+<TypeDocProps name="PaginationDirective" />
+
+### \<q-pagination-page-size\>
+
+<TypeDocProps name="PaginationPageSizeDirective" />
+
+### \[q-pagination-prev-trigger\]
+
+<TypeDocProps name="PaginationPrevTriggerDirective" />
+
+### \[q-pagination-next-trigger\]
+
+<TypeDocProps name="PaginationNextTriggerComponent" />

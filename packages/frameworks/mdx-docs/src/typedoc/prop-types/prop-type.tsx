@@ -5,7 +5,7 @@ import type {ReactNode} from "react"
 
 import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
 import {useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
-import type {QuiPropDeclaration} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
 import {useTypeDocContext} from "../use-typedoc-context"
 

@@ -3,7 +3,7 @@
 
 import type {ReactNode} from "react"
 
-import type {QuiPropDeclaration} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
 import {PropDefault} from "./prop-default"
 import {

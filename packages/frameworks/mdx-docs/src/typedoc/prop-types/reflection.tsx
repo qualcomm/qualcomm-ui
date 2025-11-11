@@ -10,7 +10,7 @@ import {
 import {useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
 import {useMdxDocsLayoutContext} from "@qualcomm-ui/mdx-docs/docs-layout"
 import {dummyTypePrefix} from "@qualcomm-ui/mdx-docs/shiki"
-import type {QuiPropDeclaration} from "@qualcomm-ui/mdx-docs-common"
+import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
 import {usePropsContext} from "../use-props-context"
 

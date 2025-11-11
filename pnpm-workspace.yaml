@@ -65,6 +65,6 @@ onlyBuiltDependencies:
   - tree-sitter-json
   - unrs-resolver
 
-#patchedDependencies:
-#  '@react-router/dev@7.9.4': patches/@react-router__dev@7.9.4.patch
-#  ng-packagr: patches/ng-packagr.patch
+patchedDependencies:
+  '@react-router/dev@7.9.4': patches/@react-router__dev@7.9.4.patch
+  ng-packagr: patches/ng-packagr.patch

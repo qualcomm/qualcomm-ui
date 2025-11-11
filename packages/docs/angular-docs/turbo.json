@@ -1,0 +1,17 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build:typedoc": {
+      "inputs": [
+        "qui-typedoc.config.ts",
+        "tsconfig.typedoc.json",
+        "../../common/typedoc/src/**/*.ts",
+        "../../common/core/dist/**/*.d.ts",
+        "../../common/qds-core/dist/**/*.d.ts",
+        "../../common/utils/dist/**/*.d.ts",
+        "../../frameworks/angular/src/**/*.ts",
+        "../../frameworks/angular-core/src/**/*.ts"
+      ]
+    }
+  }
+}
