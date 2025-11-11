@@ -1,0 +1,22 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-lib-strict.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"]
+    }
+  },
+  "include": ["./src"],
+  "exclude": ["./src/**/*.spec.ts"],
+  "references": [
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    }
+  ],
+  "angularCompilerOptions": {
+    "flatModuleId": "qui-angular-core",
+    "flatModuleOutFile": "qui-angular-core.js"
+  }
+}

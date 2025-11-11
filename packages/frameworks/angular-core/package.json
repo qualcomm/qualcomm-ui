@@ -1,0 +1,124 @@
+{
+  "name": "@qualcomm-ui/angular-core",
+  "version": "1.0.0",
+  "author": "Ryan Bower",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": [
+        "./dist/*/index.d.ts"
+      ],
+      "esm2022": [
+        "./dist/esm2022/*/index.mjs"
+      ],
+      "esm": [
+        "./dist/esm2022/*/index.mjs"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "ng": "ng",
+    "build": "nx build --output-style=stream",
+    "dev": "nx dev --output-style=dynamic-legacy",
+    "lint": "eslint --quiet",
+    "test": "vitest --run",
+    "test:watch": "vitest -c vitest-watch.config.ts",
+    "test:coverage": "vitest --run --coverage --coverage.enabled=true",
+    "test:angular-core:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --poolOptions.forks.maxForks=1 --no-file-parallelism",
+    "test:ui": "vitest --ui",
+    "build:bundle-size": "ng build test-bundle-size-app",
+    "analyze-bundle": "source-map-explorer bundle-size-dist/main.js",
+    "explore-bundle": "run-s build:bundle-size analyze-bundle",
+    "publish:package": "tsx apply-package && qui-cli publish-angular qui-angular-core"
+  },
+  "devDependencies": {
+    "@analogjs/platform": "catalog:",
+    "@analogjs/vite-plugin-angular": "catalog:",
+    "@analogjs/vitest-angular": "catalog:",
+    "@angular-devkit/architect": "catalog:",
+    "@angular-devkit/build-angular": "catalog:",
+    "@angular-devkit/core": "catalog:",
+    "@angular/animations": "catalog:",
+    "@angular/cdk": "catalog:",
+    "@angular/cdk-experimental": "catalog:",
+    "@angular/cli": "catalog:",
+    "@angular/common": "catalog:",
+    "@angular/compiler": "catalog:",
+    "@angular/compiler-cli": "catalog:",
+    "@angular/core": "catalog:",
+    "@angular/forms": "catalog:",
+    "@angular/platform-browser": "catalog:",
+    "@angular/platform-browser-dynamic": "catalog:",
+    "@angular/platform-server": "catalog:",
+    "@angular/router": "catalog:",
+    "@angular/ssr": "catalog:",
+    "@faker-js/faker": "~9.6.0",
+    "@floating-ui/dom": "^1.7.0",
+    "@jsdevtools/coverage-istanbul-loader": "~3.0.5",
+    "@module-federation/enhanced": "0.18.4",
+    "@nx/vite": "21.5.3",
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/dom": "workspace:^1",
+    "@qualcomm-ui/tailwind-plugin": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@tailwindcss/vite": "^4.1.11",
+    "@tanstack/virtual-core": "^3.13.12",
+    "@testing-library/angular": "^17.3.7",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/mocha": "^10.0.10",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "execa": "^9.6.0",
+    "lucide-angular": "0.525.0",
+    "ng-packagr": "20.1.0",
+    "playwright": "1.53.2",
+    "resize-observer-polyfill": "^1.5.1",
+    "rxjs": "~7.5.7",
+    "shx": "^0.4.0",
+    "tailwindcss": "^4.1.17",
+    "ts-node": "^10.9.2",
+    "tslib": "~2.5.3",
+    "tsx": "^4.20.6",
+    "typescript": "5.8.3",
+    "vite": "npm:rolldown-vite@7.1.19",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "@angular/animations": ">=18.2.12 <21",
+    "@angular/cdk": ">=18.2.14 <21",
+    "@angular/common": ">=18.2.12 <21",
+    "@angular/compiler": ">=18.2.12 <21",
+    "@angular/core": ">=18.2.12 <21",
+    "@angular/forms": ">=18.2.12 <21",
+    "@angular/platform-browser": ">=18.2.12 <21",
+    "@angular/platform-browser-dynamic": ">=18.2.12 <21",
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/dom": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@tanstack/virtual-core": ">=3.13.12",
+    "lucide-angular": ">=0.487.0 <1",
+    "typescript": ">=5.2.0 <6"
+  },
+  "nyc": {
+    "reporter": [
+      "cobertura",
+      "html"
+    ],
+    "extension": [
+      ".js",
+      ".cjs",
+      ".mjs",
+      ".ts"
+    ]
+  }
+}

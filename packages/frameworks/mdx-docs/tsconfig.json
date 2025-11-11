@@ -1,0 +1,23 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@qualcomm-ui/mdx-docs/*": ["./src/*/index.ts"]
+    }
+  },
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

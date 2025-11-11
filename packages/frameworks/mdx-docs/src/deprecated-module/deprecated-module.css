@@ -1,0 +1,15 @@
+.qui-deprecated-module__root {
+  display: flex;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.qui-deprecated-module__notification {
+  width: 100%;
+}
+
+.qui-deprecated-message {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}

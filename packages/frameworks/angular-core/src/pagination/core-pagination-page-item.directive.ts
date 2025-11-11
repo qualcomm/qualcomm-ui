@@ -1,0 +1,26 @@
+import {computed, Directive, input, type OnInit} from "@angular/core"
+
+import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import type {PageItem} from "@qualcomm-ui/core/pagination"
+
+import {usePaginationContext} from "./pagination-context.service"
+
+@Directive()
+export class CorePaginationPageItemDirective implements OnInit {
+  readonly paginationContext = usePaginationContext()
+
+  /**
+   * The computed page item from context.
+   */
+  readonly item = input.required<PageItem>()
+
+  readonly itemProps = computed(() =>
+    this.paginationContext().getPageItemBindings(this.item()),
+  )
+
+  private trackBindings = useTrackBindings(() => this.itemProps())
+
+  ngOnInit() {
+    this.trackBindings()
+  }
+}

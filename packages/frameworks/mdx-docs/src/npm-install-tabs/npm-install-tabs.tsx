@@ -1,0 +1,88 @@
+import type {ReactElement} from "react"
+
+import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
+import {type PackageManager, useMdxDocsContext} from "@qualcomm-ui/mdx-docs/context"
+import {Tab, Tabs, type TabsRootProps} from "@qualcomm-ui/react/tabs"
+import {ensureArray} from "@qualcomm-ui/utils/array"
+
+/**
+ * A simple component that provides an npm install command for each
+ * available package manager. The selected package manager is saved to the docs
+ * context.
+ */
+export interface NpmCommandTabsProps extends Omit<TabsRootProps, "children"> {
+  /**
+   * If true, the corresponding `dev` tag will be added to each install command.
+   */
+  dev?: boolean
+
+  /**
+   * The command
+   */
+  packages: string | string[]
+}
+
+export function NpmInstallTabs({
+  dev,
+  packages: packagesProp,
+  ...props
+}: NpmCommandTabsProps): ReactElement {
+  const packages = ensureArray(packagesProp).join(" ")
+
+  const {packageManager = "npm", setPackageManager} = useMdxDocsContext()
+
+  return (
+    <Tabs.Root
+      onValueChange={(value) => {
+        setPackageManager?.(value as PackageManager)
+      }}
+      size="lg"
+      value={packageManager}
+      {...props}
+    >
+      <Tabs.List>
+        <Tabs.Indicator />
+        <Tab.Root value="npm">
+          <Tab.Button>npm</Tab.Button>
+        </Tab.Root>
+        <Tab.Root value="pnpm">
+          <Tab.Button>pnpm</Tab.Button>
+        </Tab.Root>
+        <Tab.Root value="yarn">
+          <Tab.Button>yarn</Tab.Button>
+        </Tab.Root>
+      </Tabs.List>
+
+      <Tabs.Panel className="p-0" value="npm">
+        <CodeHighlight
+          className="mdx"
+          code={`npm i${dev ? " --save-dev" : ""} ${packages}`}
+          language="bash"
+          preProps={{
+            style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
+          }}
+        />
+      </Tabs.Panel>
+      <Tabs.Panel className="p-0" value="pnpm">
+        <CodeHighlight
+          className="mdx"
+          code={`pnpm add${dev ? " -D" : ""} ${packages}`}
+          language="bash"
+          preProps={{
+            style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
+          }}
+        />
+      </Tabs.Panel>
+      <Tabs.Panel className="p-0" value="yarn">
+        <CodeHighlight
+          className="mdx"
+          code={`yarn add${dev ? " -D" : ""} ${packages}`}
+          language="bash"
+          preProps={{
+            style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
+          }}
+        />
+      </Tabs.Panel>
+    </Tabs.Root>
+  )
+}

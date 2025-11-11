@@ -1,0 +1,26 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-lib-strict.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "moduleResolution": "bundler",
+    "paths": {
+      // fixes WebStorm usage detection, not used otherwise
+      "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"],
+    }
+  },
+  "include": ["./src"],
+  "exclude": ["./src/**/*.spec.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.angular-lib.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

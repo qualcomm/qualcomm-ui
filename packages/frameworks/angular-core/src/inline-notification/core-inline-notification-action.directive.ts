@@ -1,0 +1,18 @@
+import {Directive, type OnInit} from "@angular/core"
+
+import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+
+import {useInlineNotificationContext} from "./inline-notification-context.service"
+
+@Directive()
+export class CoreInlineNotificationActionDirective implements OnInit {
+  protected readonly inlineNotificationContext = useInlineNotificationContext()
+
+  protected readonly trackBindings = useTrackBindings(() => {
+    return this.inlineNotificationContext().getActionBindings()
+  })
+
+  ngOnInit() {
+    this.trackBindings()
+  }
+}

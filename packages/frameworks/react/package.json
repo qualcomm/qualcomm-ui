@@ -1,7 +1,7 @@
 {
   "name": "@qualcomm-ui/react",
   "sideEffects": false,
-  "version": "2.6.1",
+  "version": "1.0.0",
   "description": "@qui React components",
   "author": "Ryan Bower",
   "type": "module",

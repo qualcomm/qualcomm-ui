@@ -1,0 +1,31 @@
+import {Directive, type OnInit} from "@angular/core"
+
+import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+
+import {useMenuContext} from "./menu-context.service"
+import {useMenuItemContext} from "./menu-item-context.service"
+import {useMenuOptionItemContext} from "./menu-option-item-context.service"
+
+@Directive()
+export class CoreMenuItemLabelDirective implements OnInit {
+  protected readonly menuContext = useMenuContext()
+  protected readonly menuItemContext = useMenuItemContext({optional: true})
+  protected readonly menuOptionItemContext = useMenuOptionItemContext({
+    optional: true,
+  })
+
+  protected readonly trackBindings = useTrackBindings(() => {
+    const context = this.menuOptionItemContext?.() || this.menuItemContext?.()
+    if (!context) {
+      console.error(
+        "Missing context. This directive can only be used as a child of the menu item or menu option item directives.",
+      )
+      return {}
+    }
+    return this.menuContext().getItemLabelBindings(context)
+  })
+
+  ngOnInit() {
+    this.trackBindings()
+  }
+}

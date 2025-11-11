@@ -1,0 +1,123 @@
+.qui-docs-highlighter__root {
+  border-radius: 6px;
+  position: relative;
+
+  &.not-allowed {
+    pre.shiki-code {
+      background: var(--color-background-support-warning-subtle) !important;
+      border: 1px solid var(--color-border-support-warning) !important;
+    }
+  }
+
+  pre {
+    border-radius: 3px;
+    font-family: var(--q-font-code-demo, var(--q-font-mono)), monospace;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 16px;
+    &.disable-padding {
+      padding: 0;
+    }
+    &.has-title {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
+
+.qui-code-copy-button {
+  border-radius: 4px;
+  position: absolute;
+  right: 8px;
+  top: 7px;
+  z-index: 2;
+
+  &[data-centered] {
+    top: calc(50% - 16px);
+  }
+
+  &.has-title {
+    top: 44px;
+  }
+}
+
+.qui-demo-runner__collapse-icon {
+  transition: transform 161ms ease;
+  &.showing-panel {
+    transform: rotate(180deg);
+  }
+}
+
+.qui-demo-runner__title {
+  align-items: center;
+  border-radius: 6px;
+  display: flex;
+  min-height: 32px;
+  padding: 0 16px;
+  transition: border-radius 161ms ease;
+  width: 100%;
+
+  &.showing-panel {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.qui-popover__content {
+  pre.shiki-code {
+    background: var(--color-surface-overlay);
+  }
+}
+
+pre.shiki-code {
+  .qui-link__root {
+    font: var(--font-static-code-sm-bold);
+  }
+}
+
+pre.qui-docs-code.font-code-demo {
+  .qui-link__root {
+    font: var(--font-static-code-sm-bold);
+  }
+}
+
+.qui-demo-runner__highlighted {
+  background: var(--color-background-support-danger);
+}
+
+pre.shiki .indent {
+  display: inline-block;
+  left: var(--indent-offset);
+  position: relative;
+}
+
+pre.shiki .indent:empty {
+  height: 21px;
+  vertical-align: bottom;
+}
+
+pre.shiki .indent::before {
+  background-color: var(--color-border-neutral-01);
+  content: "";
+  height: 21px;
+  position: absolute;
+  width: 1px;
+}
+
+[data-theme="dark"] {
+  .shiki.mdx,
+  .shiki-code {
+    span {
+      font-weight: var(--shiki-dark-font-weight, 400);
+    }
+  }
+}
+
+[data-theme="light"] {
+  .shiki.mdx,
+  .shiki-code {
+    span {
+      font-weight: var(--shiki-light-font-weight, 400);
+    }
+  }
+}

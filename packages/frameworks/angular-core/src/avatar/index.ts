@@ -1,0 +1,5 @@
+export * from "./avatar-context.service"
+export * from "./core-avatar-content.directive"
+export * from "./core-avatar-image.directive"
+export * from "./core-avatar-root.directive"
+export * from "./core-avatar-status.directive"

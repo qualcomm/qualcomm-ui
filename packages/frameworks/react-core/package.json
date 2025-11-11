@@ -2,7 +2,7 @@
   "name": "@qualcomm-ui/react-core",
   "sideEffects": false,
   "version": "1.0.0",
-  "description": "This library contains design-agnostic React building blocks and utilities.",
+  "description": "Design-agnostic React building blocks and utilities.",
   "author": "Ryan Bower",
   "type": "module",
   "exports": {

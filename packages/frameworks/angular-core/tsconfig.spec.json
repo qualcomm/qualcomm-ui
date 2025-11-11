@@ -1,0 +1,29 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.esnext.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "emitDeclarationOnly": false,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "Bundler",
+    "types": [
+      "vitest/globals",
+      "node",
+      "@vitest/browser/matchers",
+      "@testing-library/angular"
+    ],
+    "target": "es2020",
+    "paths": {
+      "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"]
+    }
+  },
+  "files": ["./test/test-setup.ts"],
+  "include": [
+    "src/**/*.spec.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.angular-lib.json"
+    }
+  ]
+}
