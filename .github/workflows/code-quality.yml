@@ -54,7 +54,7 @@ jobs:
       IS_CI: true
     runs-on: self-hosted
     concurrency:
-      group: PR Unit Test - ${{github.head_ref}}
+      group: PR Unit Test v2 - ${{github.head_ref}}
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
