@@ -1,0 +1,130 @@
+// Modified from https://github.com/tanstack/table
+// MIT License
+// Changes from Qualcomm Technologies, Inc. are provided under the following license:
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import type {SortingFn} from "../features/sorting"
+import type {Row, RowData, RowModel, TableInstance} from "../types"
+import {memo} from "../utils"
+
+export function getSortedRowModel<TData extends RowData>(): (
+  table: TableInstance<TData>,
+) => () => RowModel<TData> {
+  return (table) =>
+    memo(
+      () => [table.getState().sorting, table.getPreSortedRowModel()],
+      (sorting, rowModel) => {
+        if (!rowModel.rows.length || !sorting?.length) {
+          return rowModel
+        }
+
+        const sortingState = table.getState().sorting
+
+        const sortedFlatRows: Row<TData>[] = []
+
+        // Filter out sortings that correspond to non existing columns
+        const availableSorting = sortingState.filter((sort) =>
+          table.getColumn(sort.id)?.getCanSort(),
+        )
+
+        const columnInfoById: Record<
+          string,
+          {
+            invertSorting?: boolean
+            sortingFn: SortingFn<TData>
+            sortUndefined?: false | -1 | 1
+          }
+        > = {}
+
+        availableSorting.forEach((sortEntry) => {
+          const column = table.getColumn(sortEntry.id)
+          if (!column) {
+            return
+          }
+
+          columnInfoById[sortEntry.id] = {
+            invertSorting: column.columnDef.invertSorting,
+            sortingFn: column.getSortingFn(),
+            sortUndefined: column.columnDef.sortUndefined,
+          }
+        })
+
+        const sortData = (rows: Row<TData>[]) => {
+          // This will also perform a stable sorting using the row index
+          // if needed.
+          const sortedData = rows.map((row) => ({...row}))
+
+          sortedData.sort((rowA, rowB) => {
+            for (let i = 0; i < availableSorting.length; i += 1) {
+              const sortEntry = availableSorting[i]
+              const columnInfo = columnInfoById[sortEntry.id]
+              const isDesc = sortEntry?.desc ?? false
+
+              let sortInt = 0
+
+              // All sorting ints should always return in ascending order
+              if (columnInfo.sortUndefined) {
+                const aValue = rowA.getValue(sortEntry.id)
+                const bValue = rowB.getValue(sortEntry.id)
+
+                const aUndefined = aValue === undefined
+                const bUndefined = bValue === undefined
+
+                if (aUndefined || bUndefined) {
+                  sortInt =
+                    aUndefined && bUndefined
+                      ? 0
+                      : aUndefined
+                        ? columnInfo.sortUndefined
+                        : -columnInfo.sortUndefined
+                }
+              }
+
+              if (sortInt === 0) {
+                sortInt = columnInfo.sortingFn(rowA, rowB, sortEntry.id)
+              }
+
+              // If sorting is non-zero, take care of desc and inversion
+              if (sortInt !== 0) {
+                if (isDesc) {
+                  sortInt *= -1
+                }
+
+                if (columnInfo.invertSorting) {
+                  sortInt *= -1
+                }
+
+                return sortInt
+              }
+            }
+
+            return rowA.index - rowB.index
+          })
+
+          // If there are sub-rows, sort them
+          sortedData.forEach((row) => {
+            sortedFlatRows.push(row)
+            if (row.subRows?.length) {
+              row.subRows = sortData(row.subRows)
+            }
+          })
+
+          return sortedData
+        }
+
+        return {
+          flatRows: sortedFlatRows,
+          rows: sortData(rowModel.rows),
+          rowsById: rowModel.rowsById,
+        }
+      },
+      {
+        debug: () => table.options.debugAll ?? table.options.debugTable,
+        key: "",
+        onChange: () => {
+          table._autoResetPageIndex()
+        },
+      },
+    )
+}

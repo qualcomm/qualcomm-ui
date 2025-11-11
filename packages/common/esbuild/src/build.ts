@@ -1,6 +1,3 @@
-// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-// SPDX-License-Identifier: BSD-3-Clause-Clear
-
 import chalk from "chalk"
 import esbuild, {
   type BuildOptions,
@@ -83,11 +80,22 @@ export function logPlugin(opts: LogPluginOptions = {}): EsbuildPlugin {
 
         const logMode = bundleSizePluginOpts.logMode
 
-        if (logMode === "aggregate" || logMode === "both") {
-          message += ` ${chalk.green("→")} ${chalk.yellow(formatHumanFileSize(results.totalSize))}`
+        if (
+          logMode === "aggregate" ||
+          logMode === "both" ||
+          logMode === "all"
+        ) {
+          message += ` ${chalk.green("→")} ${chalk.dim(formatHumanFileSize(results.totalSize))}`
+          message += chalk.dim(
+            ` | gzip: ${formatHumanFileSize(results.totalGzipSize)}`,
+          )
         }
 
-        if (logMode === "individual" || logMode === "both") {
+        if (
+          logMode === "individual" ||
+          logMode === "both" ||
+          logMode === "all"
+        ) {
           logOutputSizes(results.entrypointSizes)
         }
 

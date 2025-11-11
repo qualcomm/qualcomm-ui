@@ -1,6 +1,3 @@
-// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-// SPDX-License-Identifier: BSD-3-Clause-Clear
-
 import type {Plugin} from "esbuild"
 import {readFile} from "node:fs/promises"
 import {dirname, join} from "node:path"
