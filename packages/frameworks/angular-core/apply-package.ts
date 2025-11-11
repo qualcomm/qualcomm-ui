@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 /**
  * We use a workaround to trick the Angular packager (ng-packagr) to treat all
  * directories in `src` as package entrypoints. This requires us to use a dummy
