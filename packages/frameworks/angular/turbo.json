@@ -1,0 +1,22 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "dev": {
+      "persistent": false
+    },
+    "build": {
+      "inputs": [
+        "*.json",
+        "src/**"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "test:angular:ci": {
+      "inputs": [
+        "*.json",
+        "src/**",
+        "vitest.config.ts"
+      ]
+    }
+  }
+}

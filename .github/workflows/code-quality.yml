@@ -172,7 +172,6 @@ jobs:
   # also run repolinter on PRs
   # TODO: run using qcom-preflight-checks once it's updated to incorporate the batching PR
   copyright-license-check:
-    if: ${{ ( contains('pull_request_target', github.event_name) && github.event.action != 'closed' ) }}
     runs-on: ubuntu-latest
     concurrency:
       group: PR copyright-license-check - ${{github.head_ref}}
@@ -181,22 +180,7 @@ jobs:
     - name: Checkout PR head
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # Full history so we can diff properly
-        ref: ${{ github.event.pull_request.head.ref }}
-        repository: ${{ github.event.pull_request.head.repo.full_name }}
+        ref: ${{ github.head_ref }}
 
-    - name: Add PR base repo as remote and fetch it
-      run: |
-        git remote add upstream https://github.com/${{ github.event.pull_request.base.repo.full_name }}.git
-        git fetch upstream
-
-    - name: Generate final patch between base and head
-      run: |
-        git diff upstream/${{ github.event.pull_request.base.ref }} > pr.patch
-        head -n 100 pr.patch
-
-    - name: Run copyright/license detector
-      uses: qualcomm/copyright-license-checker-action@v1.0.1-beta
-      with:
-        patch_file: pr.patch
-        repo_name: ${{ github.repository }}
+    - name: Run copyright/license checker
+      run: pnpm tsx scripts/license-checker lint .

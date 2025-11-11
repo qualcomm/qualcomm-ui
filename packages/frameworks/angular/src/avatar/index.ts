@@ -1,0 +1,5 @@
+export * from "./avatar.module"
+export * from "./avatar.directive"
+export * from "./avatar-content.directive"
+export * from "./avatar-image.directive"
+export * from "./avatar-status.directive"

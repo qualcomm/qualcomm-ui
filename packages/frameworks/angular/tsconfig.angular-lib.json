@@ -1,0 +1,33 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-lib-strict.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "dist/tsbuildinfo",
+    "composite": true,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "moduleResolution": "bundler",
+    "paths": {
+      // this is only for dev intellisense.
+      "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": ["../angular-core/src/*/index.ts"]
+    }
+  },
+  "references": [
+    {
+      "path": "../angular-core/tsconfig.angular-lib.json"
+    },
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    }
+  ],
+  "include": ["./src"],
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "flatModuleId": "qui-angular",
+    "flatModuleOutFile": "qui-angular.js"
+  }
+}

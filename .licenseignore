@@ -20,6 +20,7 @@ scripts/*
 **/__spec__/**
 **/*.spec.*
 **/coverage/**
+.github/**
 
 # package scripts and configs
 packages/*/*/*.js

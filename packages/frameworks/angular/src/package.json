@@ -1,0 +1,8 @@
+{
+  "name": "@qualcomm-ui/angular",
+  "description": "An empty package.json used to trick ng-packagr",
+  "version": "0.0.0",
+  "author": "Ryan Bower",
+  "sideEffects": false,
+  "type": "module"
+}
