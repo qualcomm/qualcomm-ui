@@ -12,3 +12,21 @@ runs:
 
   - run: pnpm i --frozen-lockfile
     shell: bash
+
+  - name: Start Turborepo Cache Server
+    # ALWAYS use a pinned version of the action
+    # As we don't ship the latest versions of the binary on the main branch
+    # PLEASE see the latest versions here:
+    # https://github.com/brunojppb/turbo-cache-server/releases
+    uses: brunojppb/turbo-cache-server@2.0.2
+    env:
+      PORT: "8585"
+      S3_BUCKET_NAME: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+      S3_REGION: "us-west-2"
+      S3_ACCESS_KEY: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+      S3_SECRET_KEY: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+      S3_USE_PATH_STYLE: false
+      # Max payload size for each cache object sent by Turborepo
+      # Defaults to 100 MB
+      # Requests larger than that, will get "HTTP 413: Entity Too Large" errors
+      MAX_PAYLOAD_SIZE_IN_MB: "100"

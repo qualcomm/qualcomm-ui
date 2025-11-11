@@ -1,6 +1,9 @@
 name: "Code Quality Checks"
 env:
   IS_CI: true
+  TURBO_API: "http://127.0.0.1:8585"
+  TURBO_TEAM: "qualcomm-ui"
+  TURBO_TOKEN: "turbo-cache-token"
 on:
   pull_request:
     # Run every time a PR to origin/main is created or updated
