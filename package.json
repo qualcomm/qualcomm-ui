@@ -35,6 +35,7 @@
     "doc-gen": "turbo run build:typedoc"
   },
   "devDependencies": {
+    "@clack/prompts": "^0.11.0",
     "@commander-js/extra-typings": "^14.0.0",
     "@eslint/js": "catalog:",
     "@qualcomm-ui/eslint-config-angular": "workspace:*",

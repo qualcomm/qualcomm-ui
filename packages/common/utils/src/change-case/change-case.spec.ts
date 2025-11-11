@@ -13,6 +13,7 @@ import {
   sentenceCase,
   snakeCase,
   split,
+  splitSeparateNumbers,
   trainCase,
 } from "./change-case"
 
@@ -205,7 +206,7 @@ const tests: [string, Result, Options?][] = [
       trainCase: "Test-V-2",
     },
     {
-      separateNumbers: true,
+      split: splitSeparateNumbers,
     },
   ],
   [
@@ -225,7 +226,7 @@ const tests: [string, Result, Options?][] = [
       trainCase: "𝒳-123",
     },
     {
-      separateNumbers: true,
+      split: splitSeparateNumbers,
     },
   ],
   [
@@ -244,7 +245,9 @@ const tests: [string, Result, Options?][] = [
       snakeCase: "1_test",
       trainCase: "1-Test",
     },
-    {separateNumbers: true},
+    {
+      split: splitSeparateNumbers,
+    },
   ],
   [
     "Foo12019Bar",
@@ -262,7 +265,9 @@ const tests: [string, Result, Options?][] = [
       snakeCase: "foo_12019_bar",
       trainCase: "Foo-12019-Bar",
     },
-    {separateNumbers: true},
+    {
+      split: splitSeparateNumbers,
+    },
   ],
   [
     "aNumber2in",
@@ -280,7 +285,9 @@ const tests: [string, Result, Options?][] = [
       snakeCase: "a_number_2_in",
       trainCase: "A-Number-2-In",
     },
-    {separateNumbers: true},
+    {
+      split: splitSeparateNumbers,
+    },
   ],
   [
     "V1Test",
@@ -315,7 +322,9 @@ const tests: [string, Result, Options?][] = [
       snakeCase: "v_1_test_with_separate_numbers",
       trainCase: "V-1-Test-With-Separate-Numbers",
     },
-    {separateNumbers: true},
+    {
+      split: splitSeparateNumbers,
+    },
   ],
   [
     "__typename",

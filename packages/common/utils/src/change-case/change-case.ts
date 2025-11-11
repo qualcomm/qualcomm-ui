@@ -1,3 +1,9 @@
+// Modified from https://github.com/blakeembrey/change-case
+// MIT License
+// Changes from Qualcomm Technologies, Inc. are provided under the following license:
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 // Regexps involved with splitting words in various case formats.
 const SPLIT_LOWER_UPPER_RE = /([\p{Ll}\d])(\p{Lu})/gu
 const SPLIT_UPPER_UPPER_RE = /(\p{Lu})([\p{Lu}][\p{Ll}])/gu
@@ -34,8 +40,6 @@ export interface Options {
   delimiter?: string
   locale?: Locale
   prefixCharacters?: string
-  /** @deprecated Pass `split: splitSeparateNumbers` instead. */
-  separateNumbers?: boolean
   split?: (value: string) => string[]
   suffixCharacters?: string
 }
@@ -261,8 +265,7 @@ function splitPrefixSuffix(
   input: string,
   options: Options = {},
 ): [string, string[], string] {
-  const splitFn =
-    options.split ?? (options.separateNumbers ? splitSeparateNumbers : split)
+  const splitFn = options.split ?? split
   const prefixCharacters =
     options.prefixCharacters ?? DEFAULT_PREFIX_SUFFIX_CHARACTERS
   const suffixCharacters =

@@ -1,7 +1,7 @@
 import {Command} from "@commander-js/extra-typings"
 import ignore from "ignore"
 import {access, readdir, readFile, writeFile} from "node:fs/promises"
-import {extname, join, relative} from "node:path"
+import {extname, join, relative, resolve} from "node:path"
 import {cwd} from "node:process"
 
 interface AddHeaderConfig {
@@ -103,10 +103,12 @@ class LicenseHeaderManager {
 
   private async scanDirectory(dirPath: string): Promise<string[]> {
     const files: string[] = []
-    const entries = await readdir(dirPath, {withFileTypes: true})
+    const entries = await readdir(resolve(this.rootPath, dirPath), {
+      withFileTypes: true,
+    })
 
     for (const entry of entries) {
-      const fullPath = join(dirPath, entry.name)
+      const fullPath = resolve(this.rootPath, dirPath, entry.name)
 
       if (this.isIgnored(fullPath)) {
         continue
