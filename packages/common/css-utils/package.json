@@ -46,7 +46,7 @@
     "cssnano-preset-lite": "^3.1.0",
     "esbuild": "^0.25.8",
     "glob": "^11.0.3",
-    "ora": "^8.1.1",
+    "ora": "^9.0.0",
     "postcss": "^8.5.6",
     "postcss-import": "^16.1.0",
     "postcss-minify-selectors": "^6.0.2",
