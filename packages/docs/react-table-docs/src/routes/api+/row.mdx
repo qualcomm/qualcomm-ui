@@ -1,0 +1,53 @@
+---
+title: Row
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+Row objects are instances that represent individual data rows in the table. The Row types are organized by feature. All feature types are ultimately joined in the single `Row` type definition. See the [Rows](/guides/rows) guide for implementation details.
+
+## API
+
+### CoreRow
+
+Basic row properties available on all rows regardless of features enabled. Includes row identification (id, index), hierarchy information (depth, parent), data access, and references to associated cells and sub-rows.
+
+<TypeDocProps partial name="CoreRow" />
+
+### ColumnPinningRow
+
+Properties for accessing pinned row cells. Provides methods to retrieve cells for left-pinned, right-pinned, and center (unpinned) columns. See the [Column Pinning](/feature-guides/column-pinning) guide for implementation details.
+
+<TypeDocProps partial name="ColumnPinningRow" />
+
+### FiltersRow
+
+Properties and methods related to row filtering state. Includes visibility state based on applied filters and filter values for the current row. See the [Column Filtering](/feature-guides/column-filtering) guide for implementation details.
+
+<TypeDocProps partial name="FiltersRow" />
+
+### GroupingRow
+
+Properties and methods for grouped rows and aggregation. Provides access to grouped row state, leaf rows, aggregated values, and methods to expand or collapse grouped rows. See the [Grouping](/feature-guides/grouping) guide for implementation details.
+
+<TypeDocProps partial name="GroupingRow" />
+
+### RowSelectionRow
+
+Properties and methods for row selection state management. Includes selection status (selected, partially selected), methods to select or deselect rows, and methods to toggle selection. See the [Row Selection](/feature-guides/row-selection) guide for implementation details.
+
+<TypeDocProps partial name="RowSelectionRow" />
+
+### ExpandedRow
+
+Properties and methods for expandable rows. Provides expansion state, methods to expand or collapse rows, and access to parent/child relationships in hierarchical data. See the [Expanding](/feature-guides/expanding) guide for implementation details.
+
+<TypeDocProps partial name="ExpandedRow" />
+
+### VisibilityRow
+
+Properties for row visibility based on column visibility state. Determines which cells in the row are visible based on the visibility state of their associated columns. See the [Column Visibility](/feature-guides/column-visibility) guide for implementation details.
+
+<TypeDocProps partial name="VisibilityRow" />

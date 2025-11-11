@@ -1,0 +1,105 @@
+---
+title: Troubleshooting
+---
+
+# {frontmatter.title}
+
+## Certificate Issues
+
+Depending on your setup, you may run into issues with SSL certificates while installing `@qui` packages.
+
+These issues stem from sourcing npm dependencies from Qualcomm's internal, private artifactory which uses self-signed certificates. The gist is this: In order for Netskope to be able to perform SSL interception and traffic inspection, client/browser software must trust Netskope/Qualcomm certificates that are presented for sites that have their traffic redirected.
+
+## Resolution
+
+### Create Certificate Bundle
+
+In order to ensure that clients/browsers trust both sites that have their traffic redirected and ones that don't have their traffic redirected, a combined certificate bundle is required with the contents of both the standard certificate bundle and the Netskope certificate bundle.
+
+A combined certificate bundle can be created from the operating system certificate store (which already contains both standard certificates and Netskope certificates) with the following commands:
+
+#### Windows
+
+```shell
+((Get-ChildItem Cert: -Recurse | Where-Object { $_.RawData -ne $null } `
+ | Sort-Object -Property Thumbprint -Unique `
+ |% { "-----BEGIN CERTIFICATE-----", [System.Convert]::ToBase64String($_.RawData, "InsertLineBreaks"), "-----END CERTIFICATE-----", "" }) `
+ -replace "`r","") -join "`n" `
+ | Out-File -Encoding ascii "$env:ProgramData\\Netskope\\STAgent\\download\\nscacert_combined.pem" -NoNewline
+```
+
+#### Mac
+
+```shell
+security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain \
+ /Library/Keychains/System.keychain > /tmp/nscacert_combined.pem && \
+ sudo cp /tmp/nscacert_combined.pem /Library/Application\ Support/Netskope/STAgent/download/
+```
+
+The location of the generated certificate bundle file is as follows:
+
+<div className="docs-table">
+
+| OS      | Location                                                                       |
+| :------ | :----------------------------------------------------------------------------- |
+| Windows | `C:\ProgramData\Netskope\STAgent\download\nscacert_combined.pem`               |
+| Mac     | `/Library/Application Support/Netskope/STAgent/download/nscacert_combined.pem` |
+
+</div>
+
+### Trust Certificate Bundle
+
+Below are instructions for trusting Netskope certificates with npm, yarn, and pnpm:
+
+#### Windows
+
+- Copy the generated certificate file from `C:\ProgramData\Netskope\STAgent\download\nscacert_combined.pem` to `C:\certs\nscacert_combined.pem`.
+- Add the following environment variable:
+
+<div className="docs-table pl-5">
+
+| Name                | Value                            |
+| :------------------ | :------------------------------- |
+| NODE_EXTRA_CA_CERTS | `C:\certs\nscacert_combined.pem` |
+
+</div>
+
+- Ensure that this variable exists as expected:
+  - Bash
+    - `echo $NODE_EXTRA_CA_CERTS`
+  - cmd or Powershell
+    - `echo %NODE_EXTRA_CA_CERTS%`
+
+#### Mac
+
+- Copy the generated certificate file from `/Library/Application Support/Netskope/STAgent/download/nscacert_combined.pem` to `~/certs/nscacert_combined.pem`.
+- Add the following environment variable:
+
+<div className="docs-table pl-5">
+
+| Name                | Value                           |
+| :------------------ | :------------------------------ |
+| NODE_EXTRA_CA_CERTS | `~/certs/nscacert_combined.pem` |
+
+</div>
+
+- Ensure that this variable exists as expected:
+- `echo $NODE_EXTRA_CA_CERTS`
+
+### WSL2
+
+Follow the steps outlined in the [Windows](#windows) approach to generate the combined certificate bundle. Then add the following line to your .bashrc:
+
+```shell
+export NODE_EXTRA_CA_CERTS=/mnt/c/certs/nscacert_combined.pem
+```
+
+### Cleanup
+
+We previously recommended that you set your npm configuration's `cafile` variable. This approach worked at one point, but no longer does. Please remove this variable from your npm config:
+
+```shell
+npm config delete cafile --global
+```
+
+With these changes, your `npm/yarn/pnpm install` should work as expected.

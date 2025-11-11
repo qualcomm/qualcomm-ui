@@ -1,0 +1,64 @@
+---
+title: Headers
+---
+
+# {frontmatter.title}
+
+## API
+
+- [Header](/api/header)
+
+## Overview
+
+Headers are equivalent to cells but are meant for the table header section.
+
+## Header Rendering
+
+Headers are stored in the `headerGroup.headers` array. Typically, you will map over this array to render your headers.
+
+```tsx
+<Table.Header>
+  {
+    // map over the table's header groups
+    table.getHeaderGroups().map((headerGroup) => {
+      return (
+        <Table.Row key={headerGroup.id}>
+          {headerGroup.headers.map(
+            (
+              header, // map over the headerGroup headers array
+            ) => (
+              <Table.HeaderCell key={header.id} colSpan={header.colSpan}>
+                {/* */}
+              </Table.HeaderCell>
+            ),
+          )}
+        </Table.Row>
+      )
+    })
+  }
+</Table.Header>
+```
+
+## Header Objects
+
+Header objects are similar to Cell objects. Each header object can be associated with a header cell element in your UI. There are properties and methods on header objects to interact with the table state and extract cell values based on the table's state.
+
+```tsx
+<Table.Header>
+  {table.getHeaderGroups().map((headerGroup) => (
+    <Table.Row key={headerGroup.id}>
+      {headerGroup.headers.map((header) => (
+        <Table.HeaderCell key={header.id} align="left">
+          {header.isPlaceholder
+            ? null
+            : flexRender(header.column.columnDef.header, header.getContext())}
+        </Table.HeaderCell>
+      ))}
+    </Table.Row>
+  ))}
+</Table.Header>
+```
+
+### Header Parent Objects
+
+Every header stores a reference to its parent [column](/guides/columns) object and its parent [header group](/guides/header-groups) object. Use `header.column` to access the column and `header.headerGroup` to access the header group.

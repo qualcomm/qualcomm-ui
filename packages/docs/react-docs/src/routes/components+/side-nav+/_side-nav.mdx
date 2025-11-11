@@ -1,0 +1,230 @@
+---
+title: Side Nav
+group: Disclosure
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {SideNav} from "@qualcomm-ui/react/side-nav"
+```
+
+## Overview
+
+The side nav is an extension of our [tree](/components/tree) component.
+
+- The Side Navigation relies on the `TreeCollection` class to manage its items. Refer to the [API](./#tree-collection) below for details.
+- Like with the tree, Side Navigations are composed of nodes, which are objects that describe the navigation SideNav. There are two types of nodes:
+- A `branch` node has children.
+- A `leaf` node does not have any children.
+- Each node has a `value` (unique identifier used for expansion) and a `text` (display text).
+
+**Default object shape:**
+
+- `value` (required): unique identifier for expansion/selection
+- `text` (required): display text
+- `nodes` (optional): child nodes for branches
+- `disabled` (optional): prevents interaction when `true`
+
+These keys can be customized via the `TreeCollection` [constructor](./#constructor).
+
+## Examples
+
+### Node Shorthand
+
+We expose the `<SideNav.Nodes>` shorthand for rendering nodes. Use its [renderBranch](./#renderBranch) and [renderLeaf](./#renderLeaf) render props to customize the content of each tree node.
+
+Note that `<SideNav.Nodes>` automatically renders child nodes for branches, so you only have to customize the content of the node itself.
+
+<QdsDemo name="SideNavNodeShorthandDemo" />
+
+### Grouping
+
+Group nodes using the collection's [groupChildren](./#groupChildren) method. This should be called on the top-level node of your SideNav. Nested groups are not supported.
+
+<QdsDemo name="SideNavGroupsDemo" />
+
+### Default Expanded
+
+Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedChange](./#onExpandedChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="SideNavDefaultExpandedDemo" />
+
+### Disabled Nodes
+
+You can disable nodes by setting the `disabled` property on the node object.
+
+<QdsDemo name="SideNavDisabledNodeDemo" />
+
+### Filtering
+
+Here's an example that filters the items using `matchSorter`.
+
+<QdsDemo name="SideNavFilteringDemo" />
+
+### Links
+
+Side Nav nodes can be links using [polymorphic composition](/polymorphic-components). Use the `render` prop on the `<SideNav.LeafNode>` to specify the element type.
+
+<QdsDemo name="SideNavLinksDemo" />
+
+### Collapsed
+
+Side Nav can be collapsed to render only the top-level icons.
+
+The open state of the panel can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="SideNavCollapsedDemo" />
+
+## API
+
+### \<SideNav.Root\>
+
+<TypeDocProps name="SideNavRootProps" />
+
+<TypeDocAttributes name={["TreeRootBindings", "QdsSideNavRootBindings"]} />
+
+### \<SideNav.Nodes\>
+
+<TypeDocProps name="TreeNodesProps" />
+
+### TreeCollection
+
+Note that the TreeCollection accepts a single generic type parameter, `T`, which is the object type of the node used in the collection.
+
+#### Constructor
+
+The constructor of the TreeCollection class accepts the following options:
+
+<TypeDocProps name="TreeCollectionOptions" partial />
+
+<TypeDocProps hideDefaultColumn name="TreeCollection" partial />
+
+## Element API
+
+### \<SideNav.Group\>
+
+<TypeDocProps name="SideNavGroupProps" />
+
+<TypeDocAttributes name={["QdsSideNavGroupBindings"]} />
+
+### \<SideNav.GroupLabel\>
+
+<TypeDocProps name="SideNavGroupLabelProps" />
+
+<TypeDocAttributes name={["QdsSideNavGroupLabelBindings"]} />
+
+### \<SideNav.Divider\>
+
+<TypeDocProps name="SideNavDividerProps" />
+
+<TypeDocAttributes name={["QdsSideNavDividerBindings"]} />
+
+### \<SideNav.Header\>
+
+<TypeDocProps name="SideNavHeaderProps" />
+
+<TypeDocAttributes name={["QdsSideNavHeaderBindings"]} />
+
+### \<SideNav.HeaderLogo\>
+
+<TypeDocProps name="SideNavHeaderLogoProps" />
+
+<TypeDocAttributes name={["QdsSideNavHeaderLogoBindings"]} />
+
+### \<SideNav.HeaderTitle\>
+
+<TypeDocProps name="SideNavHeaderTitleProps" />
+
+<TypeDocAttributes name={["QdsSideNavHeaderTitleBindings"]} />
+
+### \<SideNav.HeaderAction\>
+
+<TypeDocProps name="SideNavHeaderActionProps" />
+
+<TypeDocAttributes name={["QdsSideNavHeaderActionBindings"]} />
+
+### \<SideNav.Branch\>
+
+<TypeDocProps name="SideNavBranchProps" />
+
+<TypeDocAttributes name={["TreeBranchBindings", "QdsSideNavBranchBindings"]} />
+
+### \<SideNav.BranchNode\>
+
+<TypeDocProps name="SideNavBranchNodeProps" />
+
+<TypeDocAttributes
+  name={["TreeBranchNodeBindings", "QdsSideNavBranchNodeBindings"]}
+/>
+
+### \<SideNav.BranchTrigger\>
+
+<TypeDocProps name="SideNavBranchTriggerProps" />
+
+<TypeDocAttributes
+  name={["TreeBranchTriggerBindings", "QdsSideNavBranchTriggerBindings"]}
+/>
+
+### \<SideNav.BranchContent\>
+
+<TypeDocProps name="SideNavBranchContentProps" />
+
+<TypeDocAttributes
+  name={["TreeBranchContentBindings", "QdsSideNavBranchContentBindings"]}
+/>
+
+### \<SideNav.BranchIndentGuide\>
+
+<TypeDocProps name="SideNavBranchIndentGuideProps" />
+
+<TypeDocAttributes
+  name={["TreeBranchIndentGuideBindings", "QdsTreeBranchIndentGuideBindings"]}
+/>
+
+### \<SideNav.LeafNode\>
+
+<TypeDocProps name="SideNavLeafNodeProps" />
+
+<TypeDocAttributes
+  name={["TreeLeafNodeBindings", "QdsSideNavLeafNodeBindings"]}
+/>
+
+### \<SideNav.NodeAction\>
+
+<TypeDocProps name="SideNavNodeActionProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeActionBindings", "QdsSideNavNodeActionBindings"]}
+/>
+
+### \<SideNav.NodeIndicator\>
+
+<TypeDocProps name="SideNavNodeIndicatorProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeIndicatorBindings", "QdsSideNavNodeIndicatorBindings"]}
+/>
+
+### \<SideNav.NodeIcon\>
+
+<TypeDocProps name="SideNavNodeIconProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeIconBindings", "QdsSideNavNodeIconBindings"]}
+/>
+
+### \<SideNav.NodeProvider\>
+
+<TypeDocProps name="SideNavNodeProviderProps" />
+
+### \<SideNav.NodeText\>
+
+<TypeDocProps name="SideNavNodeTextProps" />
+
+<TypeDocAttributes
+  name={["TreeNodeText Bindings", "QdsSideNavNodeTextBindings"]}
+/>

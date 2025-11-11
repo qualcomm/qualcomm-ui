@@ -1,0 +1,75 @@
+---
+title: Overview
+---
+
+# {frontmatter.title}
+
+## Introduction
+
+`@qualcomm-ui/react/table` is a utility for building tables and data grids in React applications. It provides hooks and functions to manage table state, sorting, filtering, and more, while giving you complete control over the rendering of your table components.
+
+## Separation of Concerns
+
+Our table comprises two modules:
+
+- `@qualcomm-ui/core/table`: Headless utilities that contain the table logic (sorting, filtering, pagination, etc.)
+- `@qualcomm-ui/react/table`: Prebuilt Table components featuring the QDS theme that integrate with the core module.
+
+Benefits:
+
+- Complete control over table appearance through custom styles or design frameworks.
+- Separate logic and UI updates for independent maintenance.
+
+### Prebuilt Components
+
+`@qualcomm-ui/react/table` offers simple UI components. These components provide accessible, QDS-consistent table markup.
+
+Breakdown:
+
+```tsx
+import {Table} from "@qualcomm-ui/react/table"
+```
+
+- `<Table.Root>` – `<div>` element.
+- `<Table.ScrollContainer>` – `<div>` element.
+- `<Table.Table>` – `<table>` element.
+- `<Table.Header>` – `<thead>` element.
+- `<Table.Body>` – `<tbody>` element.
+- `<Table.Footer>` – `<tfoot>` element.
+- `<Table.Row>` – `<tr>` element.
+- `<Table.HeaderCell>` – `<th>` element.
+- `<Table.Cell>` – `<td>` element.
+
+```tsx
+import {Table} from "@qualcomm-ui/react/table"
+
+function SimpleTable() {
+  return (
+    <Table.Root>
+      <Table.ScrollContainer>
+        <Table.Table>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>John</Table.Cell>
+              <Table.Cell>john@example.com</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table.Table>
+      </Table.ScrollContainer>
+    </Table.Root>
+  )
+}
+```
+
+## Next Steps
+
+- [Data Guide](/guides/data)
+- [Column Definitions Guide](/guides/column-definitions)
+- [Row Models Guide](/guides/row-models)
+- [Basic Example](/features/basic)

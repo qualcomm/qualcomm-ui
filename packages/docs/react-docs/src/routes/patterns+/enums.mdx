@@ -1,0 +1,186 @@
+---
+title: Enums
+---
+
+# {frontmatter.title}
+
+## Overview
+
+TL;DR Enums present with tricky functionality under the hood, and don't bring the same value that they do in other languages (C#, C++, Java, etc.). Here I don't mean the concept of enums in general, but the specific TypeScript implementation using the `enum` keyword.
+
+You are almost always better off with constant objects:
+
+```ts
+export const Status = {
+  Active: "ACTIVE",
+  Inactive: "INACTIVE",
+  Pending: "PENDING",
+} as const
+
+export type Status = (typeof Status)[keyof typeof Status]
+```
+
+This approach replicates enum functionality without the TypeScript-specific nuances and pitfalls.
+
+## The Long Answer
+
+Enums represent both values and types in TS.
+
+- Type Side: Enums introduce a new type. For example, `enum Color { Red, Green, Blue }` creates a type Color that can be used to type variables.
+- Value Side: Enums generate an object at runtime, which contains the enum members as properties. This means enums have both compile-time type information and runtime representations.
+
+They contain unique characteristics that cannot easily be compiled down to plain JavaScript. They must first be transformed, which makes them incompatible with Node's experimental TypeScript support.
+
+To delve deeper, let's consider the two type systems available in TS.
+
+## Structural Typing
+
+Structural typing bases type compatibility on the shape or structure of the types. If two types have the same structure, they are considered compatible, regardless of their explicit declarations or origins.
+
+**Analogy**: If it walks like a duck and quacks like a duck, it's a duck.
+
+Examples:
+
+- Interfaces and Type Aliases: Types defined by their properties.
+- Functions and Objects: Compatibility based on parameter and return types.
+
+## Nominal Typing
+
+Type compatibility is based on explicit declarations and names. Two types are compatible only if they share the same name or explicitly declare a relationship (like inheritance).
+
+**Analogy**: If it's named a duck, it's a duck.
+
+Examples:
+
+- Classes with private fields. The private/protected fields are compared by identity (which class declared them), not structure. This creates nominal typing.
+
+## TypeScript's Structural Type System
+
+TypeScript predominantly employs structural typing, emphasizing type compatibility based on shared structures rather than explicit declarations. I find this aspect of the language convenient compared to other strongly typed languages. The main advantage is that developers can use objects and functions interchangeably as long as their structures align.
+
+example:
+
+```ts
+interface Point {
+  x: number
+  y: number
+}
+
+function logPoint(p: Point) {
+  console.log(`Point at (${p.x}, ${p.y})`)
+}
+
+const point = {x: 10, y: 20, z: 30}
+
+logPoint(point) // Valid: 'point' has at least 'x' and 'y'
+```
+
+In the above example, even though point has an extra property z, it's compatible with the Point interface because it includes the required properties.
+
+## How Enums Interact with Structural Typing
+
+While TypeScript is structurally typed, enums introduce aspects of nominal typing. This can clash with the predominantly structural type system.
+
+### Dual Nature of Enums
+
+- Type Side: Enums define a distinct type, e.g., Direction or Status.
+- Value Side: They generate JavaScript objects with their members.
+
+### Numeric Enums
+
+Numeric enums exhibit a mix of structural and nominal typing characteristics:
+
+```ts
+enum Status {
+  Active = 1,
+  Inactive = 2,
+}
+
+const s1: Status = 1 // valid, but this mimics structural typing
+
+const x: number = 3
+
+const s2: Status = x // valid, but shouldn't be
+```
+
+Since Status is a numeric enums (backed by numbers), TypeScript considers it compatible with other numbers because they're structurally similar (both are numbers). This behavior leans towards structural typing.
+
+**Potential Issues**:
+
+In the above example, the valid values for the `Status` enum are 1 and 2, but the `s2` variable can be assigned any number. This is because numeric enums allow any number, reducing type safety and emphasizing structural compatibility over strict nominal typing.
+
+### String Enums
+
+String enums are not compatible even if the string values match because the enum types are distinct. This behavior emulates nominal typing.
+
+```ts
+enum Status {
+  Active = "ACTIVE",
+  Inactive = "INACTIVE",
+}
+
+let currentStatus: Status = "ACTIVE" // Compile-time error
+currentStatus = Status.Active // Valid
+```
+
+Here, assigning a raw string to a string enum type results in a compile-time error, reinforcing nominal boundaries.
+
+## Implications and Best Practices
+
+Developers should consider alternative patterns that align more consistently with structural typing:
+
+```ts
+type Status = "ACTIVE" | "INACTIVE" | "PENDING"
+
+let currentStatus: Status = "ACTIVE" // Valid
+currentStatus = "INACTIVE" // Valid
+currentStatus = "UNKNOWN" // Compile-time error
+```
+
+### `as const` with objects
+
+```ts
+const Status = {
+  Active: "ACTIVE",
+  Inactive: "INACTIVE",
+  Pending: "PENDING",
+} as const
+
+type Status = (typeof Status)[keyof typeof Status]
+
+let currentStatus: Status = Status.Active // Valid
+currentStatus = "INACTIVE" // Valid
+currentStatus = "UNKNOWN" // Compile-time error
+```
+
+#### Advantages
+
+- Using `as const` ensures the object properties are read-only.
+- Automatically infers literal types for properties.
+- Unlike enums, this pattern doesn't generate additional runtime code (unless used explicitly).
+
+## Summary
+
+- Type Systems:
+  - **Structural Typing**: Focuses on the shape of types.
+  - **Nominal Typing**: Focuses on explicit declarations and names.
+  - **TypeScript**: Primarily uses structural typing but incorporates nominal aspects through constructs like enums.
+
+- Enums:
+  - **Numeric Enums**: More aligned with structural typing but can compromise type safety.
+  - **String Enums**: Introduce nominal characteristics, enhancing type safety, but clash with TypeScript's predominantly structural type system.
+  - **Dual Nature**: Serve both as types and runtime values, bridging compile-time and runtime.
+
+### Recommendation
+
+Prefer union types or `as const` objects instead of enums.
+
+```ts
+export const Status = {
+  Active: "ACTIVE",
+  Inactive: "INACTIVE",
+  Pending: "PENDING",
+} as const
+
+export type Status = (typeof Status)[keyof typeof Status]
+```

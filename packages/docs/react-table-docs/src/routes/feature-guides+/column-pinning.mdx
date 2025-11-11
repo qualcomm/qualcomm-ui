@@ -1,0 +1,70 @@
+---
+title: Column Pinning
+---
+
+# {frontmatter.title}
+
+## Examples & API
+
+- [Column Pinning Example](../../framework/react/examples/column-pinning)
+- [Sticky Column Pinning Example](../../framework/react/examples/column-pinning-sticky)
+- [Column Pinning API](../../api/features/column-pinning)
+
+## Guide
+
+Column pinning can be implemented using two approaches: splitting pinned columns into separate tables, or keeping all columns in a single table while using pinning state for column ordering and sticky CSS for visual positioning.
+
+### Column Order Priority
+
+Three table features can reorder columns, applied in the following order:
+
+1. **Column Pinning** – Columns are split into left, center (unpinned), and right pinned columns.
+2. [Column Ordering](/feature-guides/column-ordering)
+3. [Grouping](/feature-guides/grouping)
+
+The `columnPinning.left` and `columnPinning.right` state controls the order of pinned columns. The `columnOrder` state only affects unpinned ("center") columns.
+
+### Manage Column Pinning State
+
+The table manages `columnPinning` state internally by default. Manage state manually for features like persistence or external state synchronization:
+
+```tsx
+const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
+  left: [],
+  right: [],
+})
+
+const table = useReactTable({
+  // ...
+  state: {
+    columnPinning,
+  },
+  onColumnPinningChange: setColumnPinning,
+})
+```
+
+### Pin Columns by Default
+
+Initialize the `columnPinning` state or use the `initialState` table option to set default pinned columns:
+
+```tsx
+const table = useReactTable({
+  // ...
+  initialState: {
+    columnPinning: {
+      left: ["expand-column"],
+      right: ["actions-column"],
+    },
+  },
+})
+```
+
+### Column Pinning APIs
+
+- [`column.getCanPin`](/api/features/column-pinning#getCanPin): Determines if a column can be pinned.
+- [`column.pin`](/api/features/column-pinning#pin): Pins a column to the left or right, or unpins a column.
+- [`column.getIsPinned`](/api/features/column-pinning#getIsPinned): Returns the pinning position of a column.
+- [`column.getStart`](/api/features/column-pinning#getStart): Returns the `left` CSS value for a pinned column.
+- [`column.getAfter`](/api/features/column-pinning#getAfter): Returns the `right` CSS value for a pinned column.
+- [`column.getIsLastColumn`](/api/features/column-pinning#getIsLastColumn): Determines if a column is the last in its pinned group (useful for box-shadow styling).
+- [`column.getIsFirstColumn`](/api/features/column-pinning#getIsFirstColumn): Determines if a column is the first in its pinned group (useful for box-shadow styling).

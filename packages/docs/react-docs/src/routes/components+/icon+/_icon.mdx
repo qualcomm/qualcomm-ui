@@ -1,0 +1,43 @@
+---
+title: Icon
+group: Data Display
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+An icon is a small visual element, like a symbol, that represents certain functions, features, or types of content within a user interface.
+
+```typescript
+import {Icon} from "@qualcomm-ui/react/icon"
+```
+
+## Overview
+
+QUI components use icons from [Lucide](https://lucide.dev/), an open-source fork of Feather Icons.
+
+Many components like the [Button](/components/button) and [Icon Button](/components/icon-button) have built-in support for Lucide Icons.
+
+## Examples
+
+### Showcase
+
+<QdsDemo name="IconShowcaseDemo" />
+
+### Sizes
+
+Size can be customized using the [size](./#size) input. There are five available values: `xs`, `sm`, `md`, `lg`, `xl`. Should you need more control over the rendered size, supply a number instead which will be converted to pixels.
+
+<QdsDemo name="IconSizesDemo" />
+
+## API
+
+### \<Icon\>
+
+The properties of the `<svg>` element also apply.
+
+<TypeDocProps name="IconProps" />
+
+<TypeDocAttributes name={["QdsIconBindings"]} />

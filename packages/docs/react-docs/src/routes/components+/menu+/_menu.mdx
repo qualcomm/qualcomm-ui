@@ -1,0 +1,220 @@
+---
+title: Menu
+group: Overlays
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Menu} from "@qualcomm-ui/react/menu"
+```
+
+## Examples
+
+### Item Customization
+
+Compose the menu to include icons and commands.
+
+<QdsDemo name="MenuItemCustomizationDemo" />
+
+### Context Menu
+
+Demonstrates how to trigger a menu on right-click or other context events.
+
+<QdsDemo name="MenuContextMenuDemo" />
+
+### Nested Menus
+
+Compose nested menus by nesting `<Menu.Root>` components inside each other.
+
+<QdsDemo name="MenuNestedDemo" />
+
+### Links
+
+Menu items can be links using [polymorphic composition](/polymorphic-components). Use the [render](./#render) prop on the `<Menu.Item>` to specify the element type.
+
+<QdsDemo name="MenuLinksDemo" />
+
+### Groups
+
+Use the `<Menu.ItemGroup>` component to group menu items.
+
+### Item Types
+
+There are three item types, each corresponding to one of the three types of aria menu item roles:
+
+- `<Menu.Item>` — `menuitem`
+- `<Menu.RadioItem>` — `menuitemradio`
+- `<Menu.CheckboxItem>` — `menuitemcheckbox`
+
+#### Checkbox Items
+
+There are two appearance options:
+
+- For a checkbox appearance, render the `<Menu.CheckboxItemControl>` element as a child of the item.
+- Render the `<Menu.ItemIndicator />` element for a simple selection indicator.
+
+<QdsDemo name="MenuCheckboxItemsDemo" />
+
+#### Checkbox Selection State
+
+Illustrates how to manage and reflect the checked state of checkbox menu items.
+
+<QdsDemo name="MenuCheckboxSelectionStateDemo" />
+
+#### Radio Group
+
+Demonstrates how to group radio menu items so only one can be selected at a time.
+
+<QdsDemo name="MenuRadioGroupDemo" />
+
+### Controlled State
+
+The menu's visibility can be controlled via the `open`, `onOpenChange`, and `defaultOpen` props.
+
+- Use `open` to explicitly set whether the menu is open (controlled mode).
+- Use `onOpenChange` to be notified when the menu requests to open or close.
+- Use `defaultOpen` to set the initial open state when you don't need to control it yourself (uncontrolled mode).
+
+In controlled mode, the `open` prop should be updated in response to `onOpenChange` events to reflect the desired visibility.
+
+<QdsDemo name="MenuControlledStateDemo" />
+
+### Placement
+
+Configure the menu's placement using the [positioning.placement](./#positioning) prop.
+
+<QdsDemo name="MenuPlacementDemo" />
+
+### Sizes
+
+Use the [size](./#size) prop to control the size of the menu. The default size is `md`. The demo features the small (`sm`) size.
+
+<QdsDemo name="MenuSizesDemo" />
+
+### Anchor Point
+
+Use the [positioning.anchorPoint](./#positioning) prop to control the anchor point of the menu.
+
+<QdsDemo name="MenuAnchorPointDemo" />
+
+### Avatar
+
+Here's an example that composes the `Menu` with the [Avatar](/components/avatar) component to display a user account menu.
+
+<QdsDemo name="MenuAvatarDemo" />
+
+### Within Dialog
+
+When using the `Menu` inside a `Dialog`, don't render the `<Menu.Positioner>` within a `<Portal>` element.
+
+<QdsDemo name="MenuWithinDialogDemo" />
+
+### Hide When Detached
+
+Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu when it's detached from the trigger.
+
+<QdsDemo name="MenuHideWhenDetachedDemo" />
+
+## API
+
+### \<Menu.Root\>
+
+<TypeDocProps name="MenuRootProps" />
+
+### PositioningOptions
+
+The [positioning](./#positioning) prop accepts an object with the following shape:
+
+<TypeDocProps name="PositioningOptions" />
+
+## Element API
+
+The following describes the individual subcomponents of the `Menu` component.
+
+### \<Menu.Button\>
+
+<TypeDocProps name="MenuButtonProps" />
+
+### \<Menu.IconButton\>
+
+<TypeDocProps name="MenuIconButtonProps" />
+
+### \<Menu.Content\>
+
+<TypeDocProps name="MenuContentProps" />
+
+### \<Menu.Trigger\>
+
+<TypeDocProps name="MenuTriggerProps" />
+
+### \<Menu.Item\>
+
+<TypeDocProps name="MenuItemProps" />
+
+### \<Menu.ItemAccessory\>
+
+<TypeDocProps name="MenuItemAccessoryProps" />
+
+### \<Menu.ItemCommand\>
+
+<TypeDocProps name="MenuItemCommandProps" />
+
+### \<Menu.ItemLabel\>
+
+<TypeDocProps name="MenuItemLabelProps" />
+
+### \<Menu.ItemDescription\>
+
+<TypeDocProps name="MenuItemDescriptionProps" />
+
+### \<Menu.ItemControl\>
+
+<TypeDocProps name="MenuItemControlProps" />
+
+### \<Menu.ItemGroup\>
+
+<TypeDocProps name="MenuItemGroupProps" />
+
+### \<Menu.ItemGroupLabel\>
+
+<TypeDocProps name="MenuItemGroupLabelProps" />
+
+### \<Menu.ItemStartIcon\>
+
+<TypeDocProps name="MenuItemStartIconProps" />
+
+### \<Menu.ItemIndicator\>
+
+<TypeDocProps name="MenuItemIndicatorProps" />
+
+### \<Menu.CheckboxItem\>
+
+<TypeDocProps name="MenuCheckboxItemProps" />
+
+### \<Menu.CheckboxItemControl\>
+
+<TypeDocProps name="MenuCheckboxItemControlProps" />
+
+### \<Menu.RadioItem\>
+
+<TypeDocProps name="MenuRadioItemProps" />
+
+### \<Menu.RadioItemControl\>
+
+<TypeDocProps name="MenuRadioItemControlProps" />
+
+### \<Menu.RadioItemGroup\>
+
+<TypeDocProps name="MenuRadioItemGroupProps" />
+
+### \<Menu.Separator\>
+
+<TypeDocProps name="MenuSeparatorProps" />
+
+### \<Menu.TriggerItem\>
+
+<TypeDocProps name="MenuTriggerItemProps" />

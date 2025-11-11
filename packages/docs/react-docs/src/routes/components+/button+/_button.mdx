@@ -1,0 +1,67 @@
+---
+title: Button
+group: Buttons
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+```tsx
+import {Button} from "@qualcomm-ui/react/button"
+```
+
+## Examples
+
+### Variants
+
+Buttons come in three variants: `fill`, `outline`, and `ghost`. Customize these with the [variant](./#variant) property.
+
+<QdsDemo name="ButtonShowcaseDemo" />
+
+### Emphasis
+
+Control the visual [emphasis](./#emphasis) with different colors: `neutral`, `primary`, and `danger`.
+
+<QdsDemo name="ButtonEmphasisDemo" />
+
+### Sizes and Icons
+
+Control dimensions with the [size](./#size) prop. Icons are supplied using the [startIcon](./#startIcon) and [endIcon](./#endIcon) props.
+
+<QdsDemo name="ButtonSizesDemo" />
+
+### Compact Density
+
+Use the [density](./#density) prop to reduce the padding and height of the button. The options are `default` and `compact`.
+
+<QdsDemo name="ButtonDensityDemo" />
+
+### Variant Combinations
+
+<QdsDemo name="ButtonVariantsDemo" />
+
+### Contrast Colors
+
+<QdsDemo name="ButtonContrastDemo" />
+
+## API
+
+### \<Button\>
+
+<TypeDocProps name="ButtonProps" />
+
+<TypeDocAttributes name={["QdsButtonRootBindings"]} />
+
+### Start Icon
+
+Provided via the [startIcon](./#startIcon) prop.
+
+<TypeDocAttributes name="QdsButtonStartIconBindings" />
+
+### End Icon
+
+Provided via the [endIcon](./#endIcon) prop.
+
+<TypeDocAttributes name="QdsButtonEndIconBindings" />

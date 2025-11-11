@@ -1,0 +1,23 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "outputs": ["build"]
+    },
+    "build:typedoc": {
+      "inputs": [
+        "qui-typedoc.config.ts",
+        "tsconfig.typedoc.json",
+        "../../common/base/dist/**/*.d.ts",
+        "../../common/core/dist/**/*.d.ts",
+        "../../common/mdx-docs-common/dist/**/*.d.ts",
+        "../../common/qds-core/dist/**/*.d.ts",
+        "../../common/table-core/dist/**/*.d.ts",
+        "../../common/typedoc/src/**/*.ts",
+        "../../frameworks/mdx-docs/src/**/*.ts",
+        "../../frameworks/react/src/**/*.ts",
+        "../../frameworks/react-core/src/**/*.ts",
+      ]
+    }
+  }
+}

@@ -1,0 +1,51 @@
+---
+title: Column Definitions
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+This page documents the types for column definition objects. Each column definition type provides properties for specific table features. For a comprehensive guide on creating and configuring columns, see [Column Definitions](/guides/column-definitions).
+
+## API
+
+### AccessorColumnDef
+
+Defines columns that access data from your table's data source. This is the primary column definition type used to configure how data is extracted and displayed.
+
+<TypeDocProps name="AccessorKeyColumnDef" partial />
+
+## Feature-Specific Properties
+
+The following column definition types extend the base column definition with feature-specific properties.
+
+### SortingColumnDef
+
+Configures sorting behavior for columns. Properties control whether sorting is enabled, the default sort direction, and custom sorting functions. See [Sorting](/feature-guides/sorting).
+
+<TypeDocProps name="SortingColumnDef" partial />
+
+### FiltersColumnDef
+
+Configures filtering behavior for columns. Properties control whether filtering is enabled, the filter function to use, and filter metadata. See [Column Filtering](/feature-guides/column-filtering).
+
+<TypeDocProps name="FiltersColumnDef" partial />
+
+### ColumnSizingColumnDef
+
+Configures column sizing behavior. Properties control minimum and maximum widths, default size, and whether the column can be resized. See [Column Sizing](/feature-guides/column-sizing).
+
+<TypeDocProps name="ColumnSizingColumnDef" partial />
+
+### GroupingColumnDef
+
+Configures grouping behavior for columns. Properties control whether the column can be grouped, aggregation functions, and how grouped cells display. See [Column Grouping](/feature-guides/column-grouping).
+
+<TypeDocProps name="GroupingColumnDef" partial />
+
+### VisibilityColumnDef
+
+Configures column visibility behavior. Properties control whether columns can be hidden by users and whether they are visible by default. See [Column Visibility](/feature-guides/column-visibility).
+
+<TypeDocProps name="VisibilityColumnDef" partial />

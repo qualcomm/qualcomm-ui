@@ -1,0 +1,162 @@
+---
+title: Text Input
+group: Form Controls
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+A styled, accessible text input component that captures user-entered text data.
+
+```tsx
+import {TextInput} from "@qualcomm-ui/react/text-input"
+```
+
+## Examples
+
+### Simple
+
+The simple `<TextInput>` bundles all subcomponents together into a single component.
+
+<QdsDemo name="TextInputSimpleDemo" />
+
+### Icons
+
+Add icons using props at the root.
+
+<QdsDemo name="TextInputSimpleIconsDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="TextInputCompositeDemo" />
+
+### Composite Layout
+
+The composite API is useful for alternative layouts and styles.
+
+<QdsDemo name="TextInputCompositeLayoutDemo" />
+
+### Clear Trigger
+
+- When using the simple API, the clear button renders automatically. Change this by setting the [clearable](./#clearable) prop to false.
+- When using the composite API, you render the `InputClearButton` declaratively within the `InputGroup`.
+- The clear button only shows when the input field has text.
+
+<QdsDemo name="TextInputClearTriggerDemo" />
+
+### Sizes
+
+Customize size using the [size](./#size) prop. The default size is `md`.
+
+<QdsDemo name="TextInputSizesDemo" />
+
+### States
+
+The following shows how the TextInput component appears in each interactive state.
+
+<QdsDemo name="TextInputStatesDemo" />
+
+### Controlled State
+
+Set the initial value using the [defaultValue](./#defaultValue) prop, or use [value](./#value) and [onValueChange](./#onValueChange) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo expanded name="TextInputControlledStateDemo" />
+
+### Error Text and Indicator
+
+Error messages are displayed using two props:
+
+- [invalid](./#invalid)
+- [errorText](./#errorText) (or the `TextInput.ErrorText` component when using the composite API)
+
+The error text and indicator will only render when [invalid](./#invalid) is true.
+
+<QdsDemo name="TextInputErrorTextDemo" />
+
+## Forms
+
+Choose the form library that fits your needs—we've built examples with React Hook Form and Tanstack Form to get you started.
+
+### React Hook Form
+
+Use [React Hook Form](https://react-hook-form.com/) to handle the input state and validation. [ArkType](https://arktype.io/) works great for schema validation if you need it.
+
+<QdsDemo expanded name="TextInputReactHookFormDemo" />
+
+### Tanstack Form
+
+[Tanstack Form](https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts) handles validation with its built-in validators.
+
+<QdsDemo expanded name="TextInputTanstackFormDemo" />
+
+Tanstack form also supports [ArkType](https://tanstack.com/form/latest/docs/framework/react/guides/validation#validation-through-schema-libraries).
+
+## API
+
+### \<TextInput /\>
+
+The `TextInput` extends the [TextInput.Root](./#text-input-root) with the following props:
+
+<TypeDocProps name="TextInputProps" omitFrom="TextInputRootProps" />
+
+## Composite API
+
+### \<TextInput.Root\>
+
+<TypeDocProps name="TextInputRootProps" />
+
+<TypeDocAttributes name={["TextInputRootBindings", "QdsInputRootBindings"]} />
+
+### \<TextInput.InputGroup\>
+
+<TypeDocProps name="TextInputInputGroupProps" />
+
+<TypeDocAttributes
+  name={["TextInputInputGroupBindings", "QdsInputGroupBindings"]}
+/>
+
+### \<TextInput.Label\>
+
+<TypeDocProps name="TextInputLabelProps" />
+
+<TypeDocAttributes name={["TextInputLabelBindings", "QdsInputLabelBindings"]} />
+
+### \<TextInput.Hint\>
+
+<TypeDocProps name="TextInputHintProps" />
+
+<TypeDocAttributes name={["TextInputHintBindings", "QdsInputHintBindings"]} />
+
+### \<TextInput.ClearTrigger\>
+
+<TypeDocProps name="TextInputClearTriggerProps" />
+
+<TypeDocAttributes
+  name={["TextInputClearTriggerBindings", "QdsInputClearTriggerBindings"]}
+/>
+
+### \<TextInput.Input\>
+
+<TypeDocProps name="TextInputInputProps" />
+
+<TypeDocAttributes name={["TextInputInputBindings", "QdsInputInputBindings"]} />
+
+### \<TextInput.ErrorText\>
+
+<TypeDocProps name="TextInputErrorTextProps" />
+
+<TypeDocAttributes
+  name={["TextInputErrorTextBindings", "QdsInputErrorTextBindings"]}
+/>
+
+### \<TextInput.ErrorIndicator\>
+
+<TypeDocProps name="TextInputErrorIndicatorProps" />
+
+<TypeDocAttributes
+  name={["TextInputErrorIndicatorBindings", "QdsInputErrorIndicatorBindings"]}
+/>

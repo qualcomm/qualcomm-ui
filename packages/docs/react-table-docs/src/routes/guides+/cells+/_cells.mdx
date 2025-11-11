@@ -1,0 +1,60 @@
+---
+title: Cells
+---
+
+# {frontmatter.title}
+
+## API
+
+- [Cell](/api/cell)
+
+## Overview
+
+Access cells through row instance APIs like `row.getAllCells()` or `row.getVisibleCells()`.
+
+```tsx highlight="4"
+<Table.Body>
+  {table.getRowModel().rows.map((row) => (
+    <Table.Row key={row.id}>
+      {row.getVisibleCells().map((cell) => (
+        <Table.Cell key={cell.id}>
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </Table.Cell>
+      ))}
+    </Table.Row>
+  ))}
+</Table.Body>
+```
+
+- Each cell object corresponds to a `td` element. Cell objects provide properties and methods for interacting with table state and accessing cell values.
+- Every cell has a unique `id` property. Each `cell.id` is a combination of its parent row and column IDs, separated by an underscore.
+
+## Cell Rendering
+
+Access data values from a cell using `cell.getValue` or `cell.renderValue` APIs. Both cache the results of accessor functions for efficient rendering.
+
+> **Note:** `cell.getValue()` returns the raw value or `undefined`. `cell.renderValue()` returns the value or the configured `renderFallbackValue` when undefined.
+
+```tsx
+import {flexRender} from "@qualcomm-ui/react/table"
+
+const columns = [
+  {
+    accessorKey: "firstName",
+    cell: ({cell, row}) => {
+      return <div>{cell.getValue()}</div>
+    },
+  },
+]
+// ...
+```
+
+```tsx
+<Table.Row key={row.id}>
+  {row.getVisibleCells().map((cell) => (
+    <Table.Cell key={cell.id}>
+      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+    </Table.Cell>
+  ))}
+</Table.Row>
+```

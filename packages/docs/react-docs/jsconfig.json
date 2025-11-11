@@ -1,0 +1,15 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/jsconfig.mdx.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "~assets/*": ["./src/assets/*"],
+      "~components/*": ["./src/components/*"],
+      "~utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": [
+    "types.d.ts",
+    "./src/**/*.mdx"
+  ]
+}

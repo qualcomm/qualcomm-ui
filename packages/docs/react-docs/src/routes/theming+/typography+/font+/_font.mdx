@@ -1,0 +1,43 @@
+---
+title: Font
+---
+
+import {themeFonts} from "@qualcomm-ui/docs-base"
+import {FontTable} from "~components/theme-docs"
+
+# {frontmatter.title}
+
+Due to limitations with the [font](https://developer.mozilla.org/en-US/docs/Web/CSS/font#syntax) shorthand, typeface styles are constructed from multiple CSS variables.
+
+Each typeface uses variables for the following properties:
+
+- `font`
+- `font-stretch`
+
+> [!tip]
+> The font classes below were added in `@qualcomm-ui/styles v2.7.0`. Please update if
+> you're on an older version.
+
+### Body
+
+<FontTable data={themeFonts.body} />
+
+### Body Strong
+
+<FontTable data={themeFonts.bodyStrong} />
+
+### Heading
+
+<FontTable data={themeFonts.heading} />
+
+### Heading Subtle
+
+<FontTable data={themeFonts.headingSubtle} />
+
+### Metadata
+
+<FontTable data={themeFonts.metadata} />
+
+### Metadata Strong
+
+<FontTable data={themeFonts.metadataStrong} />

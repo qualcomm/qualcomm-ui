@@ -168,6 +168,37 @@ jobs:
     - name: test angular components
       run: pnpm turbo run test:angular-core:ci -- --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
 
+  angular-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shardIndex: [ 1, 2, 3 ]
+        shardTotal: [ 3 ]
+    concurrency:
+      group: PR Angular Tests - ${{matrix.shardIndex}} - ${{matrix.shardTotal}} - ${{github.head_ref}}
+      cancel-in-progress: true
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/init-node-and-install
+
+    - uses: ./.github/actions/init-playwright
+
+    - uses: ./.github/actions/init-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
+    - name: build angular dependencies
+      run: pnpm turbo run build --filter '@qualcomm-ui/angular'
+
+    - name: test angular components
+      run: pnpm turbo run test:angular:ci -- --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
+
   copyright-license-check:
     runs-on: ubuntu-latest
     concurrency:

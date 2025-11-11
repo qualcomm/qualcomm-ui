@@ -1,0 +1,808 @@
+---
+title: TypeScript Style Guide
+---
+
+# TypeScript Style Guide
+
+This documentation page aims to provide a comprehensive guide to JavaScript / TypeScript conventions. It covers best practices and guidelines for writing clean, maintainable, and scalable code. The page is divided into several sections, each covering a specific aspect of JavaScript / TypeScript conventions.
+
+Many of these rules were adapted from Google's [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html).
+
+## Naming
+
+### Identifiers
+
+Identifiers must use only ASCII letters, digits, underscores (for constants and structured test method names), and the `$` sign.
+
+| Style            | Symbol                                                                                    |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| PascalCase       | class / interface / type / enum / decorator / type parameters / React function components |
+| camelCase        | variable / parameter / function / method / property                                       |
+| UPPER_SNAKE_CASE | global constant values, enum values                                                       |
+| kebab-case       | files and folders                                                                         |
+
+#### Naming Style
+
+TypeScript expresses information in types, so names _should not_ be decorated with information that is included in the type. (See also [Testing Blog](https://testing.googleblog.com/2017/10/code-health-identifiernamingpostforworl.html) for more about what not to include).
+
+Some concrete examples of this rule:
+
+- Do not use the `opt_` prefix for optional parameters.
+- Do not mark interfaces specifically (~~`FooInterface`~~) unless it's idiomatic in its environment.
+  - An example of an idiomatic interface in the React ecosystem is the `Props` interface. This interface is commonly used to define the props that are passed to a React component.
+
+#### Interface Prefix
+
+Do not prefix interfaces with `I`, e.g. `IFoo` or `IBar`.
+
+##### Reasoning
+
+- By not using the `I` prefix, you emphasize the role and behavior of the interface rather than its type. This aligns with the principle of programming to an interface, not an implementation.
+- Modern languages like TypeScript and C# have moved away from this convention, promoting a more consistent and streamlined naming approach.
+- Modern IDEs and tools provide excellent support for distinguishing between interfaces and classes without relying on naming conventions. Features like syntax highlighting, code completion, and tooltips make the `I` prefix unnecessary.
+- In the same vein, you would not prefix classes with `C` or functions with `f`. Interfaces and types should not be treated any differently.
+
+#### Acronyms
+
+Treat abbreviations like acronyms in names as whole words, i.e. `loadHttpUrl`, not ~~`loadHTTPURL`~~, unless required by a platform name (e.g. `XMLHttpRequest`).
+
+## Language Features
+
+#### Prefer ES6 import syntax
+
+In modern TypeScript, `import` statements are used to refer to dependencies between modules, whereas `require` is used in CommonJS modules. The following is a table of noteworthy differences between the two symbols:
+
+| `require`                           | `import`                                               |
+| ----------------------------------- | ------------------------------------------------------ |
+| Used in the CommonJS module system. | Used in the ES6+ (EcmaScript version 6) module system. |
+| Slower, uses synchronous loading.   | Faster, uses asynchronous loading.                     |
+| The entire module is imported.      | Only the specified symbols are imported.               |
+| Supported in NodeJS by default.     | Requires esm support.                                  |
+
+Prefer the `import` statement where possible.
+
+#### Avoid default exports
+
+```ts
+export default function foo(a: number, b: number) {
+  return a + b
+}
+```
+
+- When using default exports, the programmer using the exported symbol has to come up with a name for it, which can lead to inconsistency in a codebase. In contrast, with a named export, the programmer doesn't have to think about what to call it unless there’s a conflict with another identifier in their module.
+- Since default exports can be named anything in the codebase other than what it’s actually called, it can be difficult to refactor or ensure consistency.
+
+Prefer named exports instead:
+
+```ts
+export function foo(a: number, b: number) {
+  return a + b
+}
+```
+
+#### Use `const` and `let`
+
+Always use `const` or `let` to declare variables. Use `const` by default, unless a variable needs to be reassigned. Never use var.
+
+```ts
+const foo = otherValue // Use if "foo" never changes.
+let bar = someValue // Use if "bar" is ever assigned into later on.
+```
+
+- `const` and `let` are block scoped, like variables in most other languages.
+- `var` in JavaScript is function scoped, which can cause difficult to understand bugs. Don't use it.
+
+```ts
+// Don't use - var scoping is complex and causes bugs.
+var foo = someValue
+```
+
+#### Prefer type imports
+
+You should use `import type {...}` when you use the imported symbol only as a type. Use regular imports for values:
+
+```ts
+import type {Foo} from "./foo"
+import {Bar} from "./foo"
+
+import {type Foo, Bar} from "./foo"
+```
+
+- The TypeScript compiler automatically handles the distinction and does not insert runtime loads for type references, which can improve compilation time.
+
+#### Avoid namespace imports
+
+- Named imports allow you to selectively import only the parts of a module that you need, whereas namespace imports include the entire module. This can lead to unnecessary bloat in your code and can make it harder to reason about which parts of the module are being used.
+- Named imports make it easier to identify where a particular function or variable is coming from. With namespace imports, you have to use the namespace prefix to access the functions and variables, which can make your code harder to read and understand.
+
+```ts
+// avoid this
+import * as Foo from "./foo"
+```
+
+Prefer named imports:
+
+```ts
+import {foo} from "./foo"
+```
+
+#### Do not use the `Array` constructor
+
+It has confusing and contradictory usage:
+
+```ts
+const a = new Array(2) // [undefined, undefined]
+const b = new Array(2, 3) // [2, 3]
+```
+
+Instead, always use bracket notation to initialize arrays, or `from` to initialize an Array with a certain size:
+
+```ts
+const a = [2]
+const b = [2, 3]
+
+const c = []
+
+// [0, 0, 0, 0, 0]
+Array.from<number>({length: 5}).fill(0)
+```
+
+#### Array spread syntax
+
+Using spread syntax `[...foo]` is a convenient shorthand for shallow-copying or concatenating iterables.
+
+```ts
+const foo = [1]
+
+const foo2 = [...foo, 6, 7]
+
+const foo3 = [5, ...foo]
+
+foo2[1] === 6
+foo3[1] === 1
+```
+
+When using spread syntax, the value being spread must match what is being created. When creating an array, only spread iterables. Primitives (including null and undefined) must not be spread.
+
+```ts
+const foo = [7]
+const bar = [5, ...(shouldUseFoo && foo)] // might be undefined
+
+// Creates {0: 'a', 1: 'b', 2: 'c'} but has no length
+const fooStrings = ["a", "b", "c"]
+const ids = {...fooStrings}
+```
+
+```ts
+const foo = shouldUseFoo ? [7] : []
+const bar = [5, ...foo]
+const fooStrings = ["a", "b", "c"]
+const ids = [...fooStrings, "d", "e"]
+```
+
+#### Array destructuring
+
+Array literals may be used on the left-hand side of an assignment to perform destructuring (such as when unpacking multiple values from a single array or iterable). A final rest element may be included (with no space between the ... and the variable name). Elements should be omitted if they are unused.
+
+#### Do not use the `Object` constructor
+
+The Object constructor is disallowed. Use an object literal instead.
+
+```ts
+const foo = {a: 0, b: 1, c: 2}
+```
+
+#### Object spread syntax
+
+Using spread syntax `{...foo}` is a convenient shorthand for creating a shallow copy of an object. When using spread syntax in object initialization, later values replace earlier values at the same key.
+
+```ts
+const foo = {
+  num: 1,
+}
+
+const foo2 = {
+  ...foo,
+  num: 5,
+}
+
+const foo3 = {
+  num: 5,
+  ...foo,
+}
+
+foo2.num === 5
+foo3.num === 1
+```
+
+#### Object destructuring
+
+- Object destructuring patterns may be used on the left-hand side of an assignment to perform destructuring and unpack multiple values from a single object.
+- Destructured objects may also be used as function parameters, but should be kept as simple as possible: a single level of unquoted shorthand properties. Deeper levels of nesting and computed properties should not be used in parameter destructuring.
+- Specify any default values in the left-hand-side of the destructured parameter (`{str = 'some default'} = {}`, rather than `{str} = {str: 'some default'}`).
+- If a destructured object is itself optional, it must default to `{}`.
+
+```ts
+interface Options {
+  /** The number of times to do something. */
+  num?: number
+
+  /** A string to do stuff to. */
+  str?: string
+}
+
+function destructured({num, str = "default"}: Options = {}) {}
+```
+
+Not allowed:
+
+```ts
+function nestedTooDeeply({x: {num, str}}: {x: Options}) {}
+function nontrivialDefault({num, str}: Options = {num: 42, str: "default"}) {}
+```
+
+#### Prefer object shorthand
+
+ES6 provides a concise form for defining object literal methods and properties. This syntax can make defining complex object literals much cleaner.
+
+```ts
+const foo = {
+  // avoid
+  x: x,
+  y: y,
+  z: z,
+}
+```
+
+Preferred:
+
+```ts
+const foo = {
+  x,
+  y,
+  z,
+}
+```
+
+### Classes
+
+#### Method declarations
+
+Class methods must be named using the `camelCase` style.
+
+```ts
+class Foo {
+  bar() {}
+}
+```
+
+#### Private fields
+
+Do not use the `#` private identifier:
+
+```ts
+class Foo {
+  #bar = 1
+}
+```
+
+Instead, use TypeScript's visibility annotations:
+
+```ts
+class Foo {
+  private bar = 1
+}
+```
+
+- Private identifiers cause substantial emit size and performance regressions when down-leveled by TypeScript, and are unsupported before ES2015. They can only be downleveled to ES2015, not lower. At the same time, they do not offer substantial benefits when static type checking is used to enforce visibility.
+
+#### Public fields
+
+TypeScript symbols are public by default. Never use the `public` modifier except when declaring public parameter properties (in constructors).
+
+```ts
+class Foo {
+  public bar = new Bar() // BAD: public modifier not needed
+}
+```
+
+```ts
+class Foo {
+  bar = new Bar() // GOOD: public modifier not needed
+
+  constructor(public baz: Baz) {} // public modifier allowed
+}
+```
+
+#### Use `readonly`
+
+Mark properties that are never reassigned outside the constructor with the readonly modifier (these need not be deeply immutable).
+
+#### Parameter properties
+
+#### Field initializers
+
+If a class member is not a parameter, initialize it where it's declared, which sometimes lets you drop the constructor entirely.
+
+```ts
+class Foo {
+  private userList: string[]
+
+  constructor() {
+    this.userList = []
+  }
+}
+```
+
+```ts
+class Foo {
+  private userList: string[] = []
+}
+```
+
+#### Arrow functions as properties
+
+Classes usually should not contain properties initialized to arrow functions. Arrow functions are not bound to the class instance. This means that the `this` keyword inside the arrow function will not refer to the class instance, but to the context in which the arrow function was defined. This can lead to unexpected behavior and bugs in your code. Instead, you should use regular functions to initialize class properties.
+
+```ts
+// Arrow functions usually should not be properties.
+class DelayHandler {
+  waitedPatiently: boolean
+
+  constructor() {
+    setTimeout(this.patienceTracker, 5000)
+  }
+
+  private patienceTracker = () => {
+    this.waitedPatiently = true
+  }
+}
+```
+
+```ts
+// Explicitly manage `this` at call time.
+class DelayHandler {
+  waitedPatiently: boolean
+
+  constructor() {
+    // Use anonymous functions if possible.
+    setTimeout(() => {
+      this.patienceTracker()
+    }, 5000)
+  }
+
+  private patienceTracker() {
+    this.waitedPatiently = true
+  }
+}
+```
+
+#### When to use classes instead of interfaces
+
+Unlike classes, an `interface` is a virtual structure that only exists within the context of TypeScript. The TypeScript compiler uses interfaces solely for type-checking purposes. JavaScript isn't typed ([yet](https://github.com/tc39/proposal-type-annotations)), so there's no use for them there.
+
+An `interface` is simply a structural contract that defines what the properties of an object should have as a name and as a type.
+
+```ts
+interface Pizza {
+  name: string
+  toppings: string[]
+}
+
+const pizza: Pizza = {
+  name: "cheese",
+  toppings: ["Mozzarella"],
+}
+```
+
+##### When to use classes
+
+- You want to instantiate new objects with certain initialization logic.
+- You want to encapsulate properties and functions.
+- It is required by convention (e.g. for an Angular component).
+
+##### When to use interfaces
+
+- You need to define the properties and functions an object or class should have.
+- Interfaces are especially useful if you know there could be more than one object or class which needs to have these properties.
+
+> [!tip]
+> Always start with an interface. If you need more functionality out of the data structure, then evaluate whether a class is necessary.
+
+#### Prefer local variables
+
+In general, you should avoid polluting the global namespace with a variable that is only used in one place. This rule also applies to classes.
+
+Consider the following scenario:
+
+```ts
+class Foo {
+  // bar is only ever used in one place, so it does not need to be scoped at the
+  // class level.
+  bar: string
+
+  async doSomething() {
+    this.bar = await fetch("https://do-something.com").then((res) => res.text())
+    if (this.bar) {
+      // do something with bar
+    }
+  }
+}
+```
+
+Instead, use a local variable:
+
+```ts
+class Foo {
+  async doSomething() {
+    const bar: string = await fetch("https://do-something.com").then((res) =>
+      res.text(),
+    )
+    if (bar) {
+      // do something with bar
+    }
+  }
+}
+```
+
+### Functions
+
+#### Terminology
+
+There are many different types of functions, with subtle distinctions between them. This guide uses the following terminology, which aligns with MDN:
+
+- **function declaration**: a declaration (i.e. not an expression) using the function keyword
+
+```ts
+function mult(a: number, b: number) {
+  return a * b
+}
+```
+
+- **function expression**: an expression, typically used in an assignment or passed as a parameter, using the function keyword
+
+```ts
+const mult = function (a: number, b: number) {
+  return a * b
+}
+```
+
+- **arrow function**: an expression using the `=>` syntax
+
+```ts
+const mult = (a: number, b: number) => {
+  return a * b
+}
+```
+
+- **block body**: right hand side of an arrow function with braces
+
+```ts
+const mult = (a: number, b: number) => {
+  // this section in braces is the block body
+  return a * b
+}
+```
+
+- **concise body**: right hand side of an arrow function without braces
+
+```ts
+// the value is returned concisely.
+const foo = (a: number, b: number) => a * b
+```
+
+#### Prefer function declarations for named functions
+
+Prefer function declarations over arrow functions or function expressions when defining named functions.
+
+```ts
+function foo() {
+  return "bar"
+}
+```
+
+This approach is beneficial for several reasons:
+
+There are several reasons why one might prefer the `function` keyword over arrow functions in JavaScript. Here are some of them:
+
+- **Readability**: Regular functions are easier to read because they explicitly use the `function` keyword, which identifies that the code in question is a function.
+- **Statements**: With arrow functions, curly braces are optional. This makes code more difficult to refactor in the event that the right-hand side of the function needs to be converted to a block body.
+
+#### Do not use function expressions
+
+```ts
+bar(function () {
+  return "baz"
+})
+```
+
+Use arrow functions instead:
+
+```ts
+bar(() => {
+  return "baz"
+})
+```
+
+#### Do not use `this` in functions
+
+Using `this` in functions makes your code more error-prone. If you're not careful, it's easy to accidentally reference the wrong object or cause unexpected behavior.
+
+```ts
+function foo() {
+  this.bar = "baz"
+}
+```
+
+Use local variables instead:
+
+```ts
+function foo() {
+  const bar = "baz"
+}
+```
+
+#### Prefer rest and spread when appropriate
+
+Use a _rest_ parameter instead of accessing arguments. Never name a local variable or parameter arguments, which confusingly shadows the built-in name.
+
+```ts
+function variadic(array: string[], ...numbers: number[]) {}
+```
+
+Do not use `Function.prototype.apply`:
+
+```ts
+function myFunction(x: number, y: number) {
+  return x + y
+}
+
+const args = [1, 2]
+myFunction.apply(null, args) // Returns 3
+```
+
+Instead, prefer spread syntax:
+
+```ts
+function myFunction(x: number, y: number) {
+  return x + y
+}
+
+const args = [1, 2]
+myFunction(...args) // Returns 3
+```
+
+#### Avoid `return await`
+
+It is not recommended to use `return await` in most cases.
+
+```ts
+async function foo(): Promise<string> {
+  // not ideal
+  return await rpc.getSomeValue().transform()
+}
+```
+
+The `await` keyword is used to wait for a promise to resolve before continuing execution. When you use `return await`, you are waiting for the promise to resolve and then returning the resolved value. This is redundant because you can simply return the promise itself and let the caller handle the resolution.
+
+```ts
+async function foo(): Promise<string> {
+  // ideal
+  return rpc.getSomeValue().transform()
+}
+```
+
+### Primitive Literals
+
+#### Prefer template literals
+
+Prefer template literals over string concatenation.
+
+```ts
+const foo = "foo"
+const bar = "bar"
+// bad
+const baz = foo + " " + bar
+```
+
+```ts
+const foo = "foo"
+const bar = "bar"
+// good
+const baz = `${foo} ${bar}`
+```
+
+#### Type coercion
+
+The `String` and `Boolean` functions may be used to coerce types.
+
+The following are all valid:
+
+```ts
+const bool = Boolean(false)
+const aNumber = 5
+const str = String(aNumber)
+const bool2 = !!str
+const str2 = `result: ${bool2}`
+```
+
+_Do not_ use the `new` operator with these wrapper classes. Wrapper classes have surprising behavior, such as `new Boolean(false)` evaluating to `true`.
+
+#### Implicit coercion
+
+In JavaScript, implicit coercion is the automatic conversion of values from one data type to another when different types of operators are applied to the values.
+
+When JavaScript encounters a value in a boolean context (such as an if statement or logical operator), it automatically performs implicit coercion to convert the value into its corresponding boolean representation.
+
+```ts
+const foo = {bar: "hello"}
+// evaluates to true
+if (foo) {
+  // ...
+}
+```
+
+The following values evaluate to false:
+
+- `false`
+- `null`
+- `undefined`
+- `NaN`
+- `0`
+- `""` (empty string)
+
+All other values will be coerced to `true`.
+
+##### Using implicit coercion
+
+Prefer this coercion where possible, as it can simplify your conditional logic.
+
+```ts
+// avoid this
+if (foo != null && bar != null && baz != null) {
+  // do the thing
+}
+```
+
+Instead, you can use implicit coercion to perform the same check in a more concise way:
+
+```ts
+if (foo && bar && baz) {
+  // do the thing
+}
+```
+
+However, you should be wary of this approach when comparing numbers or empty strings.
+
+```ts
+const foo = 0
+const bar = ""
+// evaluates to false
+if (foo) {
+}
+
+// also evaluates to false
+if (bar) {
+}
+```
+
+If a 0 or an empty string is correct for your use case, perform a more detailed check:
+
+```ts
+const foo = 0
+// evaluates to true
+if (foo || foo === 0) {
+}
+
+// evaluates to true
+if (bar || bar === "") {
+}
+```
+
+#### Double Negation
+
+Do not use explicit boolean coercions in conditional clauses that have implicit boolean coercion. Those are the conditions in an `if`, `for`, and `while` statements.
+
+```ts
+function someFn(foo: Foo | null) {
+  if (!!foo) {
+  }
+  while (!!foo) {}
+}
+```
+
+```ts
+function someFn(foo: Foo | null) {
+  if (foo) {
+  }
+  while (foo) {}
+}
+```
+
+> [!note]
+> In some cases, double-negation may be required to satisfy strict type checking.
+
+```ts
+function foo(enabled: boolean) {}
+
+const bar: Bar | null = null
+
+// double negation is required here because enabled is strictly a boolean.
+foo(!!bar)
+```
+
+### Control Structures
+
+#### Avoid assignments in control statements
+
+You should avoid assignment of variables inside control statements. This can be easily mistaken for equality checks.
+
+```ts
+if ((x = getSomeValue())) {
+  // Assignment easily mistaken with equality check
+  // ...
+}
+```
+
+```ts
+x = getSomeValue()
+// ideal
+if (x) {
+  // ...
+}
+```
+
+#### Instantiate errors using new
+
+Always use `new Error()` when instantiating exceptions, instead of just calling `Error()`. Both forms create a new `Error` instance, but using `new` is more consistent with how other objects are instantiated.
+
+#### Only throw errors
+
+JavaScript (and thus TypeScript) allow throwing or rejecting a Promise with arbitrary values. However, if the thrown or rejected value is not an Error, it does not populate stack trace information, making debugging hard. This treatment extends to Promise rejection values as Promise.reject(obj) is equivalent to throw obj; in async functions.
+
+```ts
+// bad: does not get a stack trace.
+throw "oh noes!"
+
+// For promises
+new Promise((resolve, reject) => reject("oh noes!"))
+
+Promise.reject()
+
+Promise.reject("oh noes!")
+```
+
+Instead, only throw (subclasses of) Error:
+
+```ts
+// Throw only Errors
+throw new Error("oh noes!")
+
+// ... or subtypes of Error.
+class MyError extends Error {}
+
+throw new MyError("my oh noes!")
+
+// For promises
+new Promise((resolve) => resolve()) // No reject is OK.
+
+new Promise((resolve, reject) => reject(new Error("oh noes!")))
+
+Promise.reject(new Error("oh noes!"))
+```
+
+#### Prefer strict equality checks
+
+Use strict equality checks (`===` and `!==`) instead of loose equality checks (`==` and `!=`) wherever possible.
+
+The double equality operators cause error-prone type coercions that are harder to understand.
+
+- Strict equality checks ensure that both the value and type of the operands are compared, which aligns with TypeScript’s type safety goals.
+- Using strict equality checks can help prevent bugs and make your code more reliable.
+- Strict equality checks can help you avoid the need to remember type conversion rules while checking for equality, which can make your code more readable and less error-prone.
+
+### Clean Code
+
+#### Remove commented-out code
+
+This section has moved to [Clean Code](/patterns/clean-code#comments)

@@ -1,0 +1,70 @@
+---
+title: Column
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+> [!tip]
+> This page refers to the table's column objects that are generated within the
+> table instance. Refer to [this link](/api/column-definitions) for the column
+> definitions API.
+
+The Column types are organized by feature. All feature types are ultimately joined in the single `Column` type definition.
+
+## API
+
+### CoreColumn
+
+Basic column properties available on all columns regardless of features enabled. Includes column identification (id), hierarchy information (depth, parent), and references to associated rows and column definitions.
+
+<TypeDocProps partial name="CoreColumn" />
+
+### FiltersColumn
+
+Properties and methods for filtering column data. Provides access to filter functions, filter values, and methods to apply or clear filters. See the [Column Filtering](/feature-guides/column-filtering) guide for implementation details.
+
+<TypeDocProps partial name="FiltersColumn" />
+
+### SortingColumn
+
+Properties and methods for controlling column sort behavior. Includes sort direction state, sort functions, and methods to toggle or clear sorting. See the [Sorting](/feature-guides/sorting) guide for implementation details.
+
+<TypeDocProps partial name="SortingColumn" />
+
+### GroupingColumn
+
+Properties and methods for grouping rows by column values and aggregating grouped data. Provides access to aggregation functions, grouped row state, and methods to toggle grouping. See the [Grouping](/feature-guides/grouping) guide for implementation details.
+
+#### AggregationFn
+
+The `AggregationFn` interface is used on several of the `GroupingColumn` properties.
+
+```typescript
+export type AggregationFn<TData extends RowData> = (
+  columnId: string,
+  leafRows: Row<TData>[],
+  childRows: Row<TData>[],
+) => any
+```
+
+<TypeDocProps partial name="GroupingColumn" />
+
+### VisibilityColumn
+
+Properties and methods for controlling column visibility state. Provides methods to show, hide, or toggle column visibility. See the [Column Visibility](/feature-guides/column-visibility) guide for implementation details.
+
+<TypeDocProps partial name="VisibilityColumn" />
+
+### ColumnPinningColumn
+
+Properties and methods for pinning columns to the left or right side of the table. Includes pinning state and methods to pin or unpin columns. See the [Column Pinning](/feature-guides/column-pinning) guide for implementation details.
+
+<TypeDocProps partial name="ColumnPinningColumn" />
+
+### ColumnSizingColumn
+
+Properties and methods for managing column width and resizing behavior. Includes current size, min/max constraints, and methods to set or reset column dimensions. See the [Column Sizing](/feature-guides/column-sizing) guide for implementation details.
+
+<TypeDocProps partial name="ColumnSizingColumn" />

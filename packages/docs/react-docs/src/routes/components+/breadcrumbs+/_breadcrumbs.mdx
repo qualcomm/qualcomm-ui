@@ -1,0 +1,104 @@
+---
+title: Breadcrumbs
+group: Disclosure
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
+```
+
+## Overview
+
+- The root component should be labeled with `aria-label="Breadcrumbs"` to indicate that it's a breadcrumb navigation.
+- The first breadcrumb item is always the root item, and is typically reserved for the home page or base route of your application.
+- The last breadcrumb item is always the active item.
+- The last breadcrumb item should always be annotated with the `aria-current="page"` attribute.
+
+## Examples
+
+### Emphasis (color)
+
+Use the [emphasis](./#emphasis) prop to change the color of the breadcrumbs.
+
+<QdsDemo name="BreadcrumbsEmphasisDemo" />
+
+### Sizes
+
+Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. The default size is `md`.
+
+<QdsDemo name="BreadcrumbsSizesDemo" />
+
+### Links
+
+Use the [render](./#render-1) prop on the `<Breadcrumbs.Item>` component to change the root element to your framework's link component. The following example uses React Router:
+
+<QdsDemo name="BreadcrumbsLinksDemo" />
+
+### Disabled Item
+
+Use the [disabled](./#disabled) prop to disable a breadcrumb item.
+
+<QdsDemo name="BreadcrumbsDisabledDemo" />
+
+## Shortcuts
+
+### Item
+
+The `Breadcrumbs.Item` component is a convenient shorthand for rendering each part of the breadcrumb item. It's equivalent to the following:
+
+```tsx
+<Breadcrumbs.ItemRoot {...props}>
+  <Breadcrumbs.ItemTrigger
+    aria-current={ariaCurrent}
+    render={render}
+    {...itemTriggerProps}
+  >
+    {icon ? <Breadcrumbs.ItemIcon icon={icon} {...itemIconProps} /> : null}
+    {children}
+  </Breadcrumbs.ItemTrigger>
+  <Breadcrumbs.ItemSeparator icon={separator} {...separatorProps} />
+</Breadcrumbs.ItemRoot>
+```
+
+## API
+
+### \<Breadcrumbs.Root\>
+
+<TypeDocProps name="BreadcrumbsRootProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsRootBindings" />
+
+### \<Breadcrumbs.List\>
+
+<TypeDocProps name="BreadcrumbsListProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsListBindings" />
+
+### \<Breadcrumbs.Item\>
+
+<TypeDocProps name="BreadcrumbsItemProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemBindings" />
+
+### \<Breadcrumbs.ItemIcon\>
+
+<TypeDocProps name="BreadcrumbsItemIconProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemIconBindings" />
+
+### \<Breadcrumbs.ItemTrigger\>
+
+<TypeDocProps name="BreadcrumbsItemTriggerProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemTriggerBindings" />
+
+### \<Breadcrumbs.ItemSeparator\>
+
+<TypeDocProps name="BreadcrumbsItemSeparatorProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsItemSeparatorBindings" />

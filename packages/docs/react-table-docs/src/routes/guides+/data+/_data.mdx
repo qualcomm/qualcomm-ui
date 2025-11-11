@@ -1,0 +1,99 @@
+---
+title: Data
+---
+
+# {frontmatter.title}
+
+## Defining Data Types
+
+Table Data is an array of objects transformed into table rows. Each object represents one row by default. In TypeScript, define a type for the data shape. This type is used as a generic throughout table, column, row, and cell instances.
+
+For example, if we have a table that displays a list of users in an array like this:
+
+```tsx
+const users = [
+  {
+    firstName: "Tanner",
+    lastName: "Linsley",
+    age: 33,
+    visits: 100,
+    progress: 50,
+    status: "Married",
+  },
+  {
+    firstName: "Kevin",
+    lastName: "Vandy",
+    age: 27,
+    visits: 200,
+    progress: 100,
+    status: "Single",
+  },
+]
+```
+
+Then you'd define a User type like this:
+
+```ts
+interface User {
+  firstName: string
+  lastName: string
+  age: number
+  visits: number
+  progress: number
+  status: string
+}
+```
+
+The library infers this type throughout the table instance for columns, rows, headers, and cells. Whatever you pass to the data table option becomes the data type for the entire table. For strict mapping, pass the type into the generic parameter of the `useReactTable` hook:
+
+```tsx
+import {useReactTable} from "@qualcomm-ui/react/table"
+
+const table = useReactTable<User>({
+  data: users,
+})
+```
+
+## Give Data a Stable Reference
+
+> [!warning/Memoize your data]
+> The data array that you pass to the table instance MUST have a stable reference to prevent bugs that cause infinite re-renders.
+
+```tsx
+import {useEffect, useMemo, useState} from "react"
+import {useReactTable} from "@qualcomm-ui/react/table"
+
+const fallbackData = []
+
+export function MyTable() {
+  // ✅ GOOD: This will not cause an infinite loop of re-renders because `columns`
+  // is a stable reference
+  const columns = useMemo(
+    () => [
+      // ...
+    ],
+    [],
+  )
+
+  // ✅ GOOD: This will not cause an infinite loop of re-renders because `data`
+  // is a stable reference
+  const [data, setData] = useState(() => [
+    // ...
+  ])
+
+  // Columns and data are defined in a stable reference, will not cause an infinite loop!
+  const table = useReactTable({
+    columns,
+    // also good to use a fallback array that is defined
+    // outside the component (stable reference)
+    data: data ?? fallbackData,
+  })
+
+  return <Table>...</Table>
+}
+```
+
+## Related Guides
+
+- [Column Definitions](/guides/column-definitions)
+- [Row Models](/guides/row-models)

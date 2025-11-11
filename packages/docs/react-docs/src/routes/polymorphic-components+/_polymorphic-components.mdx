@@ -1,0 +1,72 @@
+---
+title: Polymorphic Components
+category: Composition
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+Polymorphic components are a React component pattern that enables us to create components with a dynamic root element.
+
+## Composing custom React components
+
+Most QUI components support the `render` prop, which lets you customize the rendered element.
+
+For example, most buttons render a `<button>` element by default, but you can override this by passing a `render` prop.
+
+<QdsDemo hideDemoBrandSwitcher name="PolymorphicLinkDemo" />
+
+The element that you pass to the `render` prop must forward its ref (automatic for all function components from React 19 onward) and spread all the receiving props on its underlying DOM node.
+
+You can also pass a function that returns a React element.
+
+```tsx
+<Button
+  emphasis="primary"
+  render={(props) => <a href="https://google.com" target="_blank" {...props} />}
+>
+  Link
+</Button>
+```
+
+## Build your own
+
+Here's an example of a custom component that renders a `button` by default, but accepts the `render` prop to override the default rendered element.
+
+<QdsDemo expanded name="PolymorphicExampleDemo" />
+
+### Breakdown
+
+AlertButton is a wrapper around PolymorphicElement that defaults to rendering a `<button>` with an alert handler. It uses our `mergeProps` utility to merge that handler with incoming props.
+
+When used without the `render` prop, you get a plain button with the alert behavior. When you pass `render={<Button .../>}`, the `PolymorphicElement` component clones the Button component and merges the alert handler into it. So you get QUI's styled Button component with the same `onClick` behavior as your custom component.
+
+The pattern lets consumers change what element renders while preserving the component's logic and props.
+
+## PolymorphicElement
+
+The `PolymorphicElement` component lets you build custom components that provide a `render` prop to override the default rendered element. It supports two props:
+
+```ts
+import type {ComponentPropsWithRef, ElementType, ReactElement} from "react"
+
+type PolymorphicElementProps<
+  DefaultTagName extends ElementType = "div",
+  Props extends object,
+> = ComponentPropsWithRef<DefaultTagName> & {
+  /**
+   * The fallback element to render if no render prop is provided.
+   *
+   * @default "div"
+   */
+  as?: DefaultTagName
+
+  /**
+   * Allows you to replace the component's HTML element with a different tag, or
+   * compose it with another component.
+   */
+  render?: ReactElement | ((props: Props) => ReactElement)
+}
+```

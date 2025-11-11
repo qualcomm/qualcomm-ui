@@ -1,0 +1,182 @@
+---
+title: Column Sizing Guide
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+The column sizing feature allows you to specify the width of each column, including min and max widths. It also enables dynamic column width changes through user interaction, such as dragging column headers.
+
+## Examples & API
+
+- [Column Sizing Examples](/features/column-sizing)
+- [Column Sizing API](/api/features/column-sizing)
+
+## Guide
+
+### Column Widths
+
+Column measurements default to the following values:
+
+```tsx
+export const defaultColumnSizing = {
+  size: 150,
+  minSize: 20,
+  maxSize: Number.MAX_SAFE_INTEGER,
+}
+```
+
+These defaults can be overridden by `tableOptions.defaultColumn` and individual column defs.
+
+```tsx
+const columns = [
+  {
+    accessorKey: "col1",
+    size: 270, // set column size for this column
+  },
+  // ...
+]
+
+const table = useReactTable({
+  // override default column sizing
+  defaultColumn: {
+    size: 200, // starting column size
+    minSize: 50, // enforced during column resizing
+    maxSize: 500, // enforced during column resizing
+  },
+})
+```
+
+The column sizes are stored in the table state as numbers. You'll need to account for this state in your UI:
+
+```tsx
+<Table.Row key={headerGroup.id}>
+  {headerGroup.headers.map((header) => (
+    <Table.HeaderCell
+      key={header.id}
+      colSpan={header.colSpan}
+      style={{width: header.getSize()}}
+    >
+      {/* ... */}
+    </Table.HeaderCell>
+  ))}
+</Table.Row>
+```
+
+### Column Resizing
+
+This library provides built-in column resizing state and APIs for implementing column resizing.
+
+#### Enable Column Resizing
+
+By default, `column.getCanResize()` returns `true` for all columns. Column resizing can be disabled globally with the `enableColumnResizing` table option, or per-column with the `enableResizing` column option.
+
+```tsx
+const columns = [
+  {
+    accessorKey: "id",
+    enableResizing: false, // disable resizing for just this column
+    size: 200, // starting column size
+  },
+  // ...
+]
+```
+
+#### Column Resize Mode
+
+The default column resize mode is `"onEnd"`, meaning `column.getSize()` returns the new size only after resizing completes. A UI indicator typically displays during the resize operation.
+
+The `"onEnd"` mode helps avoid rendering performance issues in complex tables, particularly with React. For tables that can handle 60 fps renders, switch to `"onChange"` mode for immediate updates using the `columnResizeMode` table option.
+
+```tsx
+const table = useReactTable({
+  // ...
+  columnResizeMode: "onChange", // change column resize mode to "onChange"
+})
+```
+
+#### Column Resize Direction
+
+This library assumes left-to-right layout by default. For right-to-left layouts, set the column resize direction to `"rtl"`.
+
+```tsx
+const table = useReactTable({
+  // ...
+  columnResizeDirection: "rtl", // change column resize direction to "rtl" for certain locales
+})
+```
+
+#### Column Size APIs
+
+Apply column sizes to header cells, data cells, or footer cells using these APIs:
+
+```ts
+header.getSize()
+column.getSize()
+cell.column.getSize()
+```
+
+Column sizes are commonly applied using CSS variables or inline styles.
+
+```tsx
+<th
+  key={header.id}
+  colSpan={header.colSpan}
+  style={{ width: `${header.getSize()}px` }}
+>
+```
+
+For performance optimization with complex tables, consider using CSS variables instead of inline styles.
+
+#### Column Resize APIs
+
+QUI Table provides pre-built event handlers for drag interactions. These convenience functions update column sizing state and trigger re-renders. Use `header.getResizeHandler()` for both mouse and touch events.
+
+```tsx
+<ColumnResizeHandle
+  onMouseDown={header.getResizeHandler()} // for desktop
+  onTouchStart={header.getResizeHandler()} // for mobile
+/>
+```
+
+#### Column Resize Indicator with `ColumnSizingInfoState`
+
+QUI Table maintains a `columnSizingInfo` state object for rendering column resize indicator UI.
+
+```jsx
+<ColumnResizeIndicator
+  style={{
+    transform: header.column.getIsResizing()
+      ? `translateX(${table.getState().columnSizingInfo.deltaOffset}px)`
+      : "",
+  }}
+/>
+```
+
+#### Advanced Column Resizing Performance
+
+Large or complex tables in React may experience degraded performance during column resizing without proper memoization in the render logic.
+
+Following these steps should provide significant performance improvements during column resizing:
+
+1. Don't use `column.getSize()` on every header and every data cell. Instead, calculate all column widths once upfront.
+2. Memoize your Table Body while resizing is in progress.
+3. Use CSS variables to communicate column widths to your table cells.
+
+## API
+
+### ColumnSizingState
+
+Available on the table instance via `table.getState().columnSizing`
+
+```tsx
+// dict of column id to numeric pixel width
+type ColumnSizingState = Record<string, number>
+```
+
+### ColumnSizingInfoState
+
+Available on the table instance via `table.getState().columnSizingInfo`
+
+<TypeDocProps name="ColumnSizingInfoState" partial />

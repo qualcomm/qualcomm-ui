@@ -1,0 +1,66 @@
+---
+title: Popover
+group: Overlays
+---
+
+import {TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+Popovers are containers used to display transient content such as options and actions.
+
+```typescript
+import {Popover} from "@qualcomm-ui/react/popover"
+```
+
+## Examples
+
+### Simple
+
+Basic popover using the simple API with a label and child content.
+
+<QdsDemo name="PopoverSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="PopoverCompositeDemo" />
+
+## Accessibility
+
+- The anchor element is automatically associated with the popover:
+- When the popover is visible, the anchor element receives the `aria-controls` and `aria-expanded` attributes.
+- The anchor element's `aria-haspopup` is always set to `'true'`.
+- When the `Popover.Label` component is supplied, the overlay panel's `aria-labelledby` attribute is set to the id of the label.
+- When the `Popover.Description` component is supplied, the overlay panel's `aria-describedby` attribute is set to the id of the label.
+
+> [!note]
+> Don't worry about supplying id's to the label, description or popover. If these aren't provided, they'll be generated automatically.
+
+## API
+
+### \<Popover\>
+
+The `Popover` extends the [Popover.Root](./#popover-root) with the following props:
+
+<TypeDocProps name="PopoverProps" omitFrom="PopoverRootProps" />
+
+## Composite API
+
+### \<Popover.Root\>
+
+<TypeDocProps name="PopoverRootProps" />
+
+This section describes the elements of the Popover's composite API.
+
+### \<Popover.Label\>
+
+<TypeDocProps name="PopoverLabelProps" />
+
+## Data Structures
+
+### PopoverPositioningOptions
+
+<TypeDocProps name="PopoverPositioningOptions" />

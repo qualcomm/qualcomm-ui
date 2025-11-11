@@ -1,0 +1,114 @@
+---
+title: Inline Notification
+group: Feedback
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/mdx-docs/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
+```
+
+## Examples
+
+### Simple
+
+Basic inline notification using the simple API with heading and description.
+
+<QdsDemo name="InlineNotificationSimpleDemo" />
+
+### Composite
+
+Use the composite API with individual components for more granular control.
+
+<QdsDemo name="InlineNotificationCompositeDemo" />
+
+### Emphasis (color)
+
+Control the visual emphasis with different colors: info, success, warning, danger, and neutral. Customize these with the [emphasis](./#emphasis) prop.
+
+<QdsDemo name="InlineNotificationEmphasisDemo" />
+
+### Dismissable
+
+Add dismiss functionality to the simple notification using the [dismissable](./#dismissable) prop. Use the `<InlineNotification.CloseButton />` component when using the composite API.
+
+<QdsDemo name="InlineNotificationDismissableDemo" />
+
+### Action
+
+Include action links in notifications using the [action](./#action) property or the `<InlineNotification.Action>` component via the composite API.
+
+<QdsDemo name="InlineNotificationActionDemo" />
+
+### Layout
+
+Choose between inline and stacked layouts using the [layout](./#layout) property. Stacked layout places the description and action below the content.
+
+<QdsDemo name="InlineNotificationLayoutDemo" />
+
+## API
+
+### \<InlineNotificaton\>
+
+The `InlineNotification` component supports every property from the [InlineNotification.Root](./#inline-notification-root) component, plus the props listed below.
+
+<TypeDocProps
+  name="InlineNotificationProps"
+  omitFrom="InlineNotificationRootProps"
+/>
+
+## Composite API
+
+### \<InlineNotification.Root\>
+
+<TypeDocProps name="InlineNotificationRootProps" />
+
+### \<InlineNotification.Icon\>
+
+<TypeDocProps name="InlineNotificationIconProps" />
+
+<TypeDocAttributes
+  name={["InlineNotificationIconBindings", "QdsNotificationIconBindings"]}
+/>
+
+### \<InlineNotification.Label\>
+
+<TypeDocProps name="InlineNotificationLabelProps" />
+
+<TypeDocAttributes
+  name={["InlineNotificationLabelBindings", "QdsNotificationLabelBindings"]}
+/>
+
+### \<InlineNotification.Description\>
+
+<TypeDocProps name="InlineNotificationDescriptionProps" />
+
+<TypeDocAttributes
+  name={[
+    "InlineNotificationDescriptionBindings",
+    "QdsNotificationDescriptionBindings",
+  ]}
+/>
+
+### \<InlineNotification.CloseButton\>
+
+<TypeDocProps name="InlineNotificationCloseButtonProps" />
+
+<TypeDocAttributes
+  name={[
+    "InlineNotificationCloseTriggerBindings",
+    "QdsNotificationCloseButtonBindings",
+  ]}
+/>
+
+### \<InlineNotification.ActionContainer\>
+
+<TypeDocProps name="InlineNotificationActionContainerProps" />
+
+<TypeDocAttributes
+  name={["InlineNotificationActionBindings", "QdsNotificationActionBindings"]}
+/>
