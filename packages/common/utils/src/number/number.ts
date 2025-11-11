@@ -1,9 +1,3 @@
-// Modified from https://github.com/chakra-ui/zag
-// MIT License
-// Changes from Qualcomm Technologies, Inc. are provided under the following license:
-// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-// SPDX-License-Identifier: BSD-3-Clause-Clear
-
 const {abs, floor, max, min, pow, round, sign} = Math
 
 export function isNaN(v: number): boolean {

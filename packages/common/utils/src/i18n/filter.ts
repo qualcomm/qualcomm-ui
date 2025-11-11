@@ -1,4 +1,4 @@
-import {levenshteinDistance} from "@qualcomm-ui/utils/search"
+import {levenshteinDistance} from "@qui/utils/search"
 
 import {i18nCache} from "./cache"
 

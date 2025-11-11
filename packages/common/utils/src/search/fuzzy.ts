@@ -1,9 +1,3 @@
-// Modified from https://github.com/chakra-ui/zag
-// MIT License
-// Changes from Qualcomm Technologies, Inc. are provided under the following license:
-// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-// SPDX-License-Identifier: BSD-3-Clause-Clear
-
 /**
  * Computes the Levenshtein distance between two strings. The Levenshtein distance
  * is a measure of the difference between two sequences, defined as the minimum

@@ -1,11 +1,5 @@
-// Modified from https://github.com/chakra-ui/zag
-// MIT License
-// Changes from Qualcomm Technologies, Inc. are provided under the following license:
-// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-// SPDX-License-Identifier: BSD-3-Clause-Clear
-
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import {callAll} from "@qualcomm-ui/utils/functions"
+import {clsx} from "@qui/utils/clsx"
+import {callAll} from "@qui/utils/functions"
 
 interface Props {
   [key: string]: any

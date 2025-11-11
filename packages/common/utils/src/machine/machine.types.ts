@@ -1,4 +1,4 @@
-import type {IdParam} from "@qualcomm-ui/utils/attributes"
+import type {IdParam} from "@qui/utils/attributes"
 
 import type {JSX} from "./jsx"
 import type {ElementCleanup} from "./prop-normalizer"
