@@ -113,14 +113,17 @@ export class FocusTrap {
     this.setupMutationObserver()
   }
 
-  private findContainerIndex(element: HTMLElement, event?: Event): number {
+  private findContainerIndex(
+    element: HTMLElement | EventTarget,
+    event?: Event,
+  ): number {
     const composedPath =
       typeof event?.composedPath === "function"
         ? event.composedPath()
         : undefined
     return this.state.containerGroups.findIndex(
       ({container, tabbableNodes}) =>
-        container.contains(element) ||
+        container.contains(element as HTMLElement) ||
         composedPath?.includes(container) ||
         tabbableNodes.find((node) => node === element),
     )
@@ -255,12 +258,14 @@ export class FocusTrap {
 
   private handleFocus = (event: FocusEvent) => {
     const target = getEventTarget(event)
-    const targetContained = this.findContainerIndex(target, event) >= 0
+    const targetContained = target
+      ? this.findContainerIndex(target, event) >= 0
+      : false
 
     // In Firefox when you Tab out of an iframe the Document is briefly focused.
     if (targetContained || isDocument(target)) {
       if (targetContained) {
-        this.state.mostRecentlyFocusedNode = target
+        this.state.mostRecentlyFocusedNode = target as HTMLElement
       }
     } else {
       // escaped! pull it back in to where it just left
@@ -294,7 +299,10 @@ export class FocusTrap {
             )
 
             if (mruTabIdx >= 0) {
-              if (this.config.isKeyForward(this.state.recentNavEvent)) {
+              if (
+                this.state.recentNavEvent &&
+                this.config.isKeyForward?.(this.state.recentNavEvent)
+              ) {
                 if (mruTabIdx + 1 < tabbableNodes.length) {
                   nextNode = tabbableNodes[mruTabIdx + 1]
                   navAcrossContainers = false
@@ -345,7 +353,9 @@ export class FocusTrap {
 
       if (navAcrossContainers) {
         nextNode = this.findNextNavNode({
-          isBackward: this.config.isKeyBackward(this.state.recentNavEvent),
+          isBackward:
+            this.state.recentNavEvent &&
+            this.config.isKeyBackward?.(this.state.recentNavEvent),
           // move FROM the MRU node, not event-related node (which will be the node
           // that is outside the trap causing the focus escape we're trying to fix)
           target: this.state.mostRecentlyFocusedNode,
@@ -367,7 +377,7 @@ export class FocusTrap {
   private handlePointerDown = (event: MouseEvent | TouchEvent) => {
     const target = getEventTarget(event)
 
-    if (this.findContainerIndex(target, event) >= 0) {
+    if (this.findContainerIndex(target as HTMLElement, event) >= 0) {
       return
     }
 
@@ -386,7 +396,7 @@ export class FocusTrap {
   private handleClick = (event: MouseEvent) => {
     const target = getEventTarget(event)
 
-    if (this.findContainerIndex(target, event) >= 0) {
+    if (this.findContainerIndex(target as HTMLElement, event) >= 0) {
       return
     }
 
@@ -403,9 +413,12 @@ export class FocusTrap {
   }
 
   private handleTabKey = (event: KeyboardEvent) => {
-    if (this.config.isKeyForward(event) || this.config.isKeyBackward(event)) {
+    if (
+      this.config.isKeyForward?.(event) ||
+      this.config.isKeyBackward?.(event)
+    ) {
       this.state.recentNavEvent = event
-      const isBackward = this.config.isKeyBackward(event)
+      const isBackward = this.config.isKeyBackward?.(event)
 
       const destinationNode = this.findNextNavNode({event, isBackward})
       if (!destinationNode) {
@@ -758,7 +771,9 @@ export class FocusTrap {
       // make sure the target is actually contained in a group
       // NOTE: the target may also be the container itself if it's focusable
       //  with tabIndex='-1' and was given initial focus
-      const containerIndex = this.findContainerIndex(target, event)
+      const containerIndex = target
+        ? this.findContainerIndex(target, event)
+        : -1
       const containerGroup =
         containerIndex >= 0
           ? this.state.containerGroups[containerIndex]
@@ -787,9 +802,13 @@ export class FocusTrap {
         if (
           startOfGroupIndex < 0 &&
           (containerGroup?.container === target ||
-            (isFocusable(target) &&
-              !isTabbable(target) &&
-              !containerGroup?.nextTabbableNode(target, false)))
+            (target &&
+              isFocusable(target as unknown as HTMLElement) &&
+              !isTabbable(target as unknown as HTMLElement) &&
+              !containerGroup?.nextTabbableNode(
+                target as unknown as HTMLElement,
+                false,
+              )))
         ) {
           // an exception case where the target is either the container itself, or
           //  a non-tabbable node that was given focus (i.e. tabindex is negative
@@ -813,7 +832,7 @@ export class FocusTrap {
             this.state.tabbableGroups[destinationGroupIndex]
 
           destinationNode =
-            getTabIndex(target) >= 0
+            getTabIndex(target as unknown as HTMLElement) >= 0
               ? destinationGroup.lastTabbableNode
               : destinationGroup.lastDomTabbableNode
           // @ts-expect-error
@@ -821,7 +840,10 @@ export class FocusTrap {
           // user must have customized the nav keys so we have to move focus
           // manually _within_ the active group: do this based on the order
           // determined by tabbable()
-          destinationNode = containerGroup?.nextTabbableNode(target, false)
+          destinationNode = containerGroup?.nextTabbableNode(
+            target as unknown as HTMLElement,
+            false,
+          )
         }
       } else {
         // FORWARD
@@ -834,9 +856,11 @@ export class FocusTrap {
         if (
           lastOfGroupIndex < 0 &&
           (containerGroup?.container === target ||
-            (isFocusable(target) &&
-              !isTabbable(target) &&
-              !containerGroup?.nextTabbableNode(target)))
+            (isFocusable(target as unknown as HTMLElement) &&
+              !isTabbable(target as unknown as HTMLElement) &&
+              !containerGroup?.nextTabbableNode(
+                target as unknown as HTMLElement,
+              )))
         ) {
           // an exception case where the target is the container itself, or
           //  a non-tabbable node that was given focus (i.e. tabindex is negative
@@ -861,7 +885,7 @@ export class FocusTrap {
             this.state.tabbableGroups[destinationGroupIndex]
 
           destinationNode =
-            getTabIndex(target) >= 0
+            getTabIndex(target as unknown as HTMLElement) >= 0
               ? destinationGroup.firstTabbableNode
               : destinationGroup.firstDomTabbableNode
           // @ts-expect-error
@@ -869,7 +893,9 @@ export class FocusTrap {
           // user must have customized the nav keys so we have to move focus
           // manually _within_ the active group: do this based on the order
           // determined by tabbable()
-          destinationNode = containerGroup?.nextTabbableNode(target)
+          destinationNode = containerGroup?.nextTabbableNode(
+            target as unknown as HTMLElement,
+          )
         }
       }
     } else {

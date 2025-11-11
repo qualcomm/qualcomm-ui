@@ -78,7 +78,7 @@ export function walkTreeOutside(
   const elementsToKeep = new Set<Node>()
   const elementsToStop = new Set<Node>(targets)
 
-  const keep = (el: Node | undefined) => {
+  const keep = (el: Node | undefined | null) => {
     if (!el || elementsToKeep.has(el)) {
       return
     }
@@ -144,8 +144,8 @@ export function walkTreeOutside(
 
   return () => {
     hiddenNodes.forEach((node) => {
-      const counterValue = counterMap.get(node) - 1
-      const markerValue = markerCounter.get(node) - 1
+      const counterValue = (counterMap.get(node) ?? 0) - 1
+      const markerValue = (markerCounter.get(node) ?? 0) - 1
 
       counterMap.set(node, counterValue)
       markerCounter.set(node, markerValue)

@@ -242,7 +242,7 @@ const tearDownWindowFocusTracking = (
     return
   }
 
-  win.HTMLElement.prototype.focus = listenerMap.get(win).focus
+  win.HTMLElement.prototype.focus = listenerMap.get(win)?.focus ?? (() => {})
 
   doc.removeEventListener("keydown", handleKeyboardEvent, true)
   doc.removeEventListener("keyup", handleKeyboardEvent, true)

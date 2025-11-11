@@ -128,7 +128,7 @@ function trackDismissableElementImpl(
   function onPointerDownOutside(event: PointerDownOutsideEvent) {
     const target = getEventTarget(event.detail.originalEvent)
     if (
-      layerStack.isBelowPointerBlockingLayer(node) ||
+      layerStack.isBelowPointerBlockingLayer(node!) ||
       layerStack.isInBranch(target)
     ) {
       return

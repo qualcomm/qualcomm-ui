@@ -120,7 +120,7 @@ export function ariaHidden(
       if (elements.length === 0) {
         return
       }
-      cleanups.push(hideOthers(elements))
+      cleanups.push(hideOthers(elements as Element[]))
     }),
   )
   return () => {

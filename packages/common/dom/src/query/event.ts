@@ -16,9 +16,9 @@ export function getBeforeInputValue(
   const {selectionEnd, selectionStart, value} =
     event.currentTarget as HTMLInputElement
   return (
-    value.slice(0, selectionStart) +
+    value.slice(0, selectionStart ?? -1) +
     (event as any).data +
-    value.slice(selectionEnd)
+    value.slice(selectionEnd ?? -1)
   )
 }
 

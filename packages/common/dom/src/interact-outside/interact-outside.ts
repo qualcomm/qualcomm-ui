@@ -177,6 +177,10 @@ function trackInteractOutsideImpl(
       return false
     }
 
+    if (!node) {
+      return false
+    }
+
     // Ex: page content that is scrollable
     const triggerEl = doc.querySelector(`[aria-controls="${node.id}"]`)
     if (triggerEl) {
