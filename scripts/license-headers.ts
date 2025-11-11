@@ -1,3 +1,13 @@
+import {
+  cancel,
+  confirm,
+  intro,
+  isCancel,
+  multiselect,
+  outro,
+  spinner,
+  text,
+} from "@clack/prompts"
 import {Command} from "@commander-js/extra-typings"
 import ignore from "ignore"
 import {access, readdir, readFile, writeFile} from "node:fs/promises"
@@ -28,7 +38,6 @@ class LicenseHeaderManager {
     ig.add(["node_modules", ".git"])
 
     const ignoreFilePath = join(rootPath, ".licenseignore")
-
     try {
       await access(ignoreFilePath)
       const content = await readFile(ignoreFilePath, "utf-8")
@@ -76,7 +85,6 @@ class LicenseHeaderManager {
     }
 
     const content = await readFile(filePath, "utf-8")
-
     if (this.hasHeader(content)) {
       return false
     }
@@ -88,7 +96,6 @@ class LicenseHeaderManager {
 
     const newContent = `${header}\n\n${content}`
     await writeFile(filePath, newContent, "utf-8")
-
     return true
   }
 
@@ -124,8 +131,39 @@ class LicenseHeaderManager {
     return files
   }
 
+  async getFilesWithoutHeaders(directory: string): Promise<string[]> {
+    const files = await this.scanDirectory(directory)
+    const filesWithoutHeaders: string[] = []
+
+    for (const file of files) {
+      const hasValidHeader = await this.checkHeaderInFile(file)
+      if (!hasValidHeader) {
+        filesWithoutHeaders.push(file)
+      }
+    }
+
+    return filesWithoutHeaders
+  }
+
   async addHeaders(config: AddHeaderConfig): Promise<number> {
     const files = await this.scanDirectory(config.directory)
+    let count = 0
+
+    for (const file of files) {
+      const modified = await this.addHeaderToFile(file, config)
+      if (modified) {
+        console.log(`Added header to: ${file}`)
+        count++
+      }
+    }
+
+    return count
+  }
+
+  async addHeadersToFiles(
+    files: string[],
+    config: AddHeaderConfig,
+  ): Promise<number> {
     let count = 0
 
     for (const file of files) {
@@ -168,22 +206,102 @@ program
     "--license <license>",
     'License of source for modified files (e.g., "MIT License")',
   )
+  .option("--interactive", "Interactively select files")
   .action(async (directory, options) => {
-    const config: AddHeaderConfig = {directory, type: "original"}
-
-    if (options.modified) {
-      if (!options.license) {
-        console.error("--license is required when using --modified")
-        process.exit(1)
-      }
-      config.type = "modified"
-      config.sourceUrl = options.modified
-      config.sourceLicense = options.license
-    }
-
     const manager = await LicenseHeaderManager.create(cwd())
-    const count = await manager.addHeaders(config)
-    console.log(`\nTotal files modified: ${count}`)
+
+    if (options.interactive) {
+      intro("License Header Manager")
+
+      const filesWithoutHeaders =
+        await manager.getFilesWithoutHeaders(directory)
+
+      if (filesWithoutHeaders.length === 0) {
+        outro("All files already have headers")
+        return
+      }
+
+      const selected = await multiselect({
+        message: "Select files to add headers:",
+        options: filesWithoutHeaders.map((file) => ({
+          label: relative(directory, file),
+          value: file,
+        })),
+        required: false,
+      })
+
+      if (isCancel(selected) || selected.length === 0) {
+        cancel("Operation cancelled")
+        process.exit(0)
+      }
+
+      const isModified = await confirm({
+        initialValue: options.modified !== undefined,
+        message: "Is this modified from another source?",
+      })
+
+      if (isCancel(isModified)) {
+        cancel("Operation cancelled")
+        process.exit(0)
+      }
+
+      const config: AddHeaderConfig = {directory, type: "original"}
+
+      if (isModified) {
+        const sourceUrl = await text({
+          initialValue: options.modified,
+          message: "Source URL:",
+          placeholder: "https://github.com/example/repo",
+          validate: (value) =>
+            value.length === 0 ? "Source URL is required" : undefined,
+        })
+
+        if (isCancel(sourceUrl)) {
+          cancel("Operation cancelled")
+          process.exit(0)
+        }
+
+        const license = await text({
+          initialValue: options.license,
+          message: "Source license:",
+          placeholder: "MIT License",
+          validate: (value) =>
+            value.length === 0 ? "License is required" : undefined,
+        })
+
+        if (isCancel(license)) {
+          cancel("Operation cancelled")
+          process.exit(0)
+        }
+
+        config.type = "modified"
+        config.sourceUrl = sourceUrl
+        config.sourceLicense = license
+      }
+
+      const clackSpinner = spinner()
+      clackSpinner.start("Adding headers")
+
+      const count = await manager.addHeadersToFiles(selected, config)
+
+      clackSpinner.stop("Done")
+      outro(`Modified ${count} file(s)`)
+    } else {
+      const config: AddHeaderConfig = {directory, type: "original"}
+
+      if (options.modified) {
+        if (!options.license) {
+          console.error("--license is required when using --modified")
+          process.exit(1)
+        }
+        config.type = "modified"
+        config.sourceUrl = options.modified
+        config.sourceLicense = options.license
+      }
+
+      const count = await manager.addHeaders(config)
+      console.log(`\nTotal files modified: ${count}`)
+    }
   })
 
 program
