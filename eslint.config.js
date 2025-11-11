@@ -33,8 +33,6 @@ export default defineConfig(
       "./packages/docs/**/src/routes/changelogs.*",
       "./packages/docs/angular*/public/*.js",
       "./packages/common/codemod/src/**/__tests__/mocks/**/*.tsx",
-      // CI issue with strict exports
-      "./packages/common/mdx-docs-common/src/index.ts",
     ],
   },
   {
@@ -136,7 +134,7 @@ export default defineConfig(
       quiEslintReact.configs.recommended,
     ],
     files: [
-      "packages/*/{qui-site,react-docs,react-mdx-docs,react-vscode-docs}/**/*.{ts,tsx}",
+      "packages/*/{qui-site,react-docs,qui-docs,react-vscode-docs}/**/*.{ts,tsx}",
     ],
     languageOptions,
   },
@@ -161,7 +159,7 @@ export default defineConfig(
       quiEslintTs.configs.strictExports,
     ],
     files: [
-      "packages/*/{dom,qds-core,mdx-docs-common,utils,react-test-utils}/**/*.ts",
+      "packages/*/{dom,qds-core,mdx-common,utils,react-test-utils}/**/*.ts",
     ],
     languageOptions,
   },
@@ -175,7 +173,7 @@ export default defineConfig(
       quiEslintReact.configs.recommended,
     ],
     files: [
-      "packages/*/{mdx-docs,react,react-core,react-docs,react-internal,react-table-docs,react-router-utils,react-vscode}/**/*.{ts,tsx}",
+      "packages/*/{react-mdx,react,react-core,react-docs,react-internal,react-table-docs,react-router-utils,react-vscode}/**/*.{ts,tsx}",
       "packages/docs/angular-docs/src/**/*.tsx",
     ],
     languageOptions,
@@ -184,7 +182,7 @@ export default defineConfig(
   // react compiler
   {
     extends: [quiEslintReact.configs.strict],
-    files: ["packages/*/{react,react-core,mdx-docs}/**/*.{ts,tsx}"],
+    files: ["packages/*/{react,react-core,react-mdx}/**/*.{ts,tsx}"],
     ignores: [
       "packages/frameworks/react-core/src/components/**/*.{ts,tsx}",
       "packages/frameworks/react-core/src/dom/use-clickable.ts",
@@ -197,7 +195,7 @@ export default defineConfig(
   {
     extends: [quiPathAlias.configs.recommended],
     files: [
-      "packages/*/{angular-core,angular,core,dom,mdx-docs,qds-core,react-core,utils}/**/*.{ts,tsx}",
+      "packages/*/{angular-core,angular,core,dom,react-mdx,qds-core,react-core,utils}/**/*.{ts,tsx}",
     ],
     languageOptions,
   },

@@ -12,13 +12,13 @@ import {
 
 import {ChevronsLeftRight} from "lucide-react"
 
-import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import type {SourceCodeData} from "@qualcomm-ui/mdx-common"
 import {Button} from "@qualcomm-ui/react/button"
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
+import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {
   booleanDataAttr,
   type WithDataAttributes,

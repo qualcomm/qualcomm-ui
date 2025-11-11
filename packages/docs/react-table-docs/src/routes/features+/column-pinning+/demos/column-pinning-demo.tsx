@@ -7,11 +7,11 @@ import {
   getCoreRowModel,
   type VisibilityState,
 } from "@qualcomm-ui/core/table"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Button} from "@qualcomm-ui/react/button"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {flexRender, Table, useReactTable} from "@qualcomm-ui/react/table"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
 import {PinnableHeader} from "./pinnable-header"

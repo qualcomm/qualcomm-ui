@@ -3,13 +3,13 @@
 
 import {type ReactNode, useRef} from "react"
 
-import {PropsContextProvider} from "@qualcomm-ui/react-mdx/typedoc"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {useMergedRef} from "@qualcomm-ui/react-core/refs"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {PropsContextProvider} from "@qualcomm-ui/react-mdx/typedoc"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
 import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"

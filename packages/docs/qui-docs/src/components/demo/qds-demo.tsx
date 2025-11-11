@@ -2,12 +2,12 @@ import {type ReactNode, useEffect, useState} from "react"
 
 import {getDemo} from "virtual:qui-demo-scope/auto"
 
+import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
+import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {
   QdsDemoRunner,
   type QdsDemoRunnerProps,
 } from "@qualcomm-ui/react-mdx/code-demo"
-import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
-import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 import {useGlobalConfigContext} from "../layout"

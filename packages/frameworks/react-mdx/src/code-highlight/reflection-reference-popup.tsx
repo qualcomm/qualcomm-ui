@@ -3,8 +3,8 @@
 
 import {type ReactElement, type ReactNode, useState} from "react"
 
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Popover} from "@qualcomm-ui/react/popover"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 interface Props {
   children: ReactElement

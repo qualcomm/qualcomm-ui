@@ -9,8 +9,8 @@ import {
   useContext,
 } from "react"
 
-import type {PropsContextValue} from "@qualcomm-ui/react-mdx/typedoc"
 import type {NavItem, PageHeading, PageMap} from "@qualcomm-ui/mdx-common"
+import type {PropsContextValue} from "@qualcomm-ui/react-mdx/typedoc"
 
 export interface MdxDocsLayoutContextState {
   hidePageLinks: boolean

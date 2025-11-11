@@ -4,13 +4,13 @@ import {useLocation} from "react-router"
 import {getDemo} from "virtual:qui-demo-scope/auto"
 import {getReactDemoConfig} from "virtual:qui-demo-scope/config"
 
+import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
+import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
+import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {
   QdsDemoRunner,
   type QdsDemoRunnerProps,
 } from "@qualcomm-ui/react-mdx/code-demo"
-import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
-import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
-import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 import {requestSavedScrollPosition, useGlobalConfigContext} from "../layout"

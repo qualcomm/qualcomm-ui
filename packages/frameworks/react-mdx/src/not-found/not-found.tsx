@@ -5,8 +5,8 @@ import type {HTMLAttributes, ReactNode} from "react"
 
 import {ChevronLeftIcon} from "lucide-react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {Link} from "@qualcomm-ui/react/link"
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
 export interface NotFoundProps

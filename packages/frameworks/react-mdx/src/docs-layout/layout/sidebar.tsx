@@ -13,11 +13,11 @@ import {
 } from "react"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import type {NavItem} from "@qualcomm-ui/mdx-common"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {isDefined} from "@qualcomm-ui/utils/guard"

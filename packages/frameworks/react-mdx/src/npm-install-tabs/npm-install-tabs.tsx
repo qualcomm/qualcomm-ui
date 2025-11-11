@@ -3,12 +3,12 @@
 
 import type {ReactElement} from "react"
 
+import {Tab, Tabs, type TabsRootProps} from "@qualcomm-ui/react/tabs"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {
   type PackageManager,
   useMdxDocsContext,
 } from "@qualcomm-ui/react-mdx/context"
-import {Tab, Tabs, type TabsRootProps} from "@qualcomm-ui/react/tabs"
 import {ensureArray} from "@qualcomm-ui/utils/array"
 
 /**

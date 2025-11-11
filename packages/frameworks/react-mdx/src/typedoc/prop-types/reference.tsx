@@ -5,12 +5,12 @@ import type {ReactNode} from "react"
 
 import {pascalCase} from "change-case"
 
+import type {PagePropTypes} from "@qualcomm-ui/mdx-common"
+import {Link} from "@qualcomm-ui/react/link"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {useMdxDocsLayoutContext} from "@qualcomm-ui/react-mdx/docs-layout"
 import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
-import type {PagePropTypes} from "@qualcomm-ui/mdx-common"
-import {Link} from "@qualcomm-ui/react/link"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
 import {DocsExternalLink} from "../docs-external-link"

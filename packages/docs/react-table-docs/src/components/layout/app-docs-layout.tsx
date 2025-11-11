@@ -6,6 +6,8 @@ import {
   useSearchParams,
 } from "react-router"
 
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+import {Link} from "@qualcomm-ui/react/link"
 import {
   DocsFooter,
   DocsLayout,
@@ -13,8 +15,6 @@ import {
   MobileSidebar,
 } from "@qualcomm-ui/react-mdx/docs-layout"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
-import {HeaderBar} from "@qualcomm-ui/react/header-bar"
-import {Link} from "@qualcomm-ui/react/link"
 import {updateSiteState} from "@qualcomm-ui/react-router-utils/client"
 
 import {DocLink} from "./doc-link"

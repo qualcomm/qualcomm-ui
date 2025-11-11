@@ -3,13 +3,13 @@
 
 import {type ReactNode, useMemo, useRef, useState} from "react"
 
+import {Popover} from "@qualcomm-ui/react/popover"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {
   CopyToClipboardContextProvider,
   type CopyToClipboardContextValue,
   useCopyToClipboard,
 } from "@qualcomm-ui/react-mdx/copy-to-clipboard"
-import {Popover} from "@qualcomm-ui/react/popover"
 
 import {TsIcon} from "./ts-icon"
 

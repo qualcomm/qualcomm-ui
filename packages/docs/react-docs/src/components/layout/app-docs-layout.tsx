@@ -7,6 +7,9 @@ import {
   useSearchParams,
 } from "react-router"
 
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+import {Link} from "@qualcomm-ui/react/link"
+import {PortalContextProvider} from "@qualcomm-ui/react-core/portal"
 import {
   DocsFooter,
   DocsLayout,
@@ -14,9 +17,6 @@ import {
   MobileSidebar,
 } from "@qualcomm-ui/react-mdx/docs-layout"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
-import {HeaderBar} from "@qualcomm-ui/react/header-bar"
-import {Link} from "@qualcomm-ui/react/link"
-import {PortalContextProvider} from "@qualcomm-ui/react-core/portal"
 
 import {DocLink} from "./doc-link"
 import {GlobalConfig} from "./global-config"

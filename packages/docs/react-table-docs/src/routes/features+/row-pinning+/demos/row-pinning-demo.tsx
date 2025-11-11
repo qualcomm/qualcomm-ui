@@ -15,7 +15,6 @@ import {
   type RowPinningState,
   type TableInstance,
 } from "@qualcomm-ui/core/table"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Button} from "@qualcomm-ui/react/button"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 import {NumberInput} from "@qualcomm-ui/react/number-input"
@@ -28,6 +27,7 @@ import {
   useTablePagination,
 } from "@qualcomm-ui/react/table"
 import {TextInput} from "@qualcomm-ui/react/text-input"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {type User, useUserData} from "./use-data"
 

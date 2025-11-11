@@ -11,7 +11,6 @@ import {
   getPaginationRowModel,
   type GroupingState,
 } from "@qualcomm-ui/core/table"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Button} from "@qualcomm-ui/react/button"
 import {Pagination} from "@qualcomm-ui/react/pagination"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
@@ -21,6 +20,7 @@ import {
   useReactTable,
   useTablePagination,
 } from "@qualcomm-ui/react/table"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {type User, useUserData} from "./use-data"
 

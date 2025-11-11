@@ -2,10 +2,10 @@ import type {ReactElement} from "react"
 
 import {BookCopy} from "lucide-react"
 
-import {quiEcosystem} from "@qualcomm-ui/react-mdx/qui-ecosystem"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Menu, type MenuRootProps} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {quiEcosystem} from "@qualcomm-ui/react-mdx/qui-ecosystem"
 
 const {angular, angularTable, react, reactTable} = quiEcosystem
 

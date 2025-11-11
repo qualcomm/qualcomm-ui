@@ -3,8 +3,8 @@
 
 import {Fragment, type ReactNode} from "react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {Link} from "@qualcomm-ui/react/link"
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import type {
   QuiCommentDisplayPart,
   QuiCommentTag,

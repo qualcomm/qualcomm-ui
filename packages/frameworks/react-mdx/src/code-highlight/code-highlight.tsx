@@ -13,12 +13,6 @@ import {
 import {ChevronDownIcon} from "lucide-react"
 import type {DecorationItem} from "shiki/types"
 
-import {
-  CopyToClipboardIconButton,
-  type CopyToClipboardProps,
-} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
-import type {RenderLink} from "@qualcomm-ui/react-mdx/docs-layout"
-import {ShikiHighlighter} from "@qualcomm-ui/react-mdx/shiki"
 import {Button} from "@qualcomm-ui/react/button"
 import {Collapsible} from "@qualcomm-ui/react/collapsible"
 import {Icon} from "@qualcomm-ui/react/icon"
@@ -26,6 +20,12 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {
+  CopyToClipboardIconButton,
+  type CopyToClipboardProps,
+} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
+import type {RenderLink} from "@qualcomm-ui/react-mdx/docs-layout"
+import {ShikiHighlighter} from "@qualcomm-ui/react-mdx/shiki"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 

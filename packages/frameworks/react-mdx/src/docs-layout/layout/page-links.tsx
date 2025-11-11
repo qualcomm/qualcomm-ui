@@ -5,10 +5,6 @@ import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {ChevronLeft, ChevronRight} from "lucide-react"
 
-import {
-  type MdxDocsContextValue,
-  useMdxDocsContext,
-} from "@qualcomm-ui/react-mdx/context"
 import type {NavItem} from "@qualcomm-ui/mdx-common"
 import {Link} from "@qualcomm-ui/react/link"
 import {
@@ -16,6 +12,10 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {
+  type MdxDocsContextValue,
+  useMdxDocsContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {TreeCollection} from "@qualcomm-ui/utils/collection"
 

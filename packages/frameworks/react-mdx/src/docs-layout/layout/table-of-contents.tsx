@@ -13,8 +13,8 @@ import {
 
 import {uniq} from "lodash-es"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import type {TocHeading} from "@qualcomm-ui/mdx-common"
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import {TocLink} from "../internal"

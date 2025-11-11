@@ -15,6 +15,9 @@ import {
   useLocation,
 } from "react-router"
 
+import {SiteData} from "@qualcomm-ui/mdx-common"
+import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
+import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {
   PackageManager,
   SiteContextProvider,
@@ -24,9 +27,6 @@ import {
   PropsLayoutProvider,
   PropsLayoutState,
 } from "@qualcomm-ui/react-mdx/typedoc"
-import {SiteData} from "@qualcomm-ui/mdx-common"
-import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {
   isTheme,
   PreventFlashOnWrongTheme,

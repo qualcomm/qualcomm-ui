@@ -4,18 +4,18 @@
 import {type ReactElement, useMemo, useState} from "react"
 
 import {
+  bindingRenderProp,
+  type BindingRenderProp,
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {
   type MdxDocsContextValue,
   MdxDocsProvider,
   type PackageManager,
   type RouteDemoState,
   useSiteContext,
 } from "@qualcomm-ui/react-mdx/context"
-import {
-  bindingRenderProp,
-  type BindingRenderProp,
-  type ElementRenderProp,
-  PolymorphicElement,
-} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {MdxProvider} from "../mdx-provider"

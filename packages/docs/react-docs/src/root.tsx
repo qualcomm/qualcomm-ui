@@ -17,16 +17,6 @@ import {
   useRouteError,
 } from "react-router"
 
-import {
-  type PackageManager,
-  type RouteDemoState,
-  SiteContextProvider,
-} from "@qualcomm-ui/react-mdx/context"
-import {
-  type DocPropsLayout,
-  PropsLayoutProvider,
-  type PropsLayoutState,
-} from "@qualcomm-ui/react-mdx/typedoc"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
@@ -37,6 +27,16 @@ import {
   useQdsThemeContext,
 } from "@qualcomm-ui/react/qds-theme"
 import {QuiRoot} from "@qualcomm-ui/react/qui-root"
+import {
+  type PackageManager,
+  type RouteDemoState,
+  SiteContextProvider,
+} from "@qualcomm-ui/react-mdx/context"
+import {
+  type DocPropsLayout,
+  PropsLayoutProvider,
+  type PropsLayoutState,
+} from "@qualcomm-ui/react-mdx/typedoc"
 import {
   isTheme,
   PreventFlashOnWrongTheme,

@@ -3,7 +3,6 @@ import {useMemo, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 
 import {getCoreRowModel, type PaginationState} from "@qualcomm-ui/core/table"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Pagination} from "@qualcomm-ui/react/pagination"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {
@@ -12,6 +11,7 @@ import {
   useReactTable,
   useTablePagination,
 } from "@qualcomm-ui/react/table"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {fetchData, userColumns} from "./use-data"
 

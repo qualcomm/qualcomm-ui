@@ -3,8 +3,8 @@
 
 import {useMemo} from "react"
 
-import {useSiteContext} from "@qualcomm-ui/react-mdx/context"
 import type {SearchResult} from "@qualcomm-ui/mdx-common"
+import {useSiteContext} from "@qualcomm-ui/react-mdx/context"
 
 import {useSiteSearch} from "./use-site-search"
 

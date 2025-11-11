@@ -3,7 +3,6 @@
 
 import {type ReactNode, useMemo} from "react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {
   Breadcrumbs,
   type BreadcrumbsItemProps,
@@ -12,6 +11,7 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
 import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"

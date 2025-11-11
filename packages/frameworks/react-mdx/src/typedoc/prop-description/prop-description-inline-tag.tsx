@@ -5,8 +5,8 @@ import type {ReactNode} from "react"
 
 import {ExternalLink} from "lucide-react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {Link} from "@qualcomm-ui/react/link"
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import type {QuiInlineTagDisplayPart} from "@qualcomm-ui/typedoc-common"
 
 interface Props {

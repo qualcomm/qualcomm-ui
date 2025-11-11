@@ -5,8 +5,8 @@ import type {ReactElement} from "react"
 
 import {Check, Copy} from "lucide-react"
 
-import {useCopyToClipboard} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {Button} from "@qualcomm-ui/react/button"
+import {useCopyToClipboard} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 
 export interface CopyButtonProps {
   code: string | (() => string)

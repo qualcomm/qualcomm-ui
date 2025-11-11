@@ -5,12 +5,12 @@ import type {HTMLAttributes, ReactNode} from "react"
 
 import type {useMDXComponents} from "@mdx-js/react"
 
+import type {BreadcrumbsItemProps} from "@qualcomm-ui/react/breadcrumbs"
 import type {
   MdxDocsContextValue,
   PackageManager,
   RouteDemoState,
 } from "@qualcomm-ui/react-mdx/context"
-import type {BreadcrumbsItemProps} from "@qualcomm-ui/react/breadcrumbs"
 
 export type TocHighlightStrategy = "nearest" | "viewport"
 
