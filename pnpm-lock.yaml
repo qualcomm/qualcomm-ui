@@ -1301,6 +1301,9 @@ importers:
       '@qualcomm-ui/qds-core':
         specifier: workspace:^1
         version: link:../../common/qds-core
+      '@qualcomm-ui/tailwind-plugin':
+        specifier: workspace:^1
+        version: link:../../common/tailwind-plugin
       '@qualcomm-ui/tsconfig':
         specifier: workspace:^1
         version: link:../../configs/tsconfig
