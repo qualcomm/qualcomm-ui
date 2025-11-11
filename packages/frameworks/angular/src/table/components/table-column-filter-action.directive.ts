@@ -2,7 +2,10 @@ import {Component, computed, input, type OnInit} from "@angular/core"
 import {Filter} from "lucide-angular"
 
 import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
-import {type LucideIconOrString, provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {
+  type LucideIconOrString,
+  provideIcons,
+} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import type {Header} from "@qualcomm-ui/core/table"

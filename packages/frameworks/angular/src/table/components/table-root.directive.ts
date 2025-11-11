@@ -2,7 +2,10 @@ import {booleanAttribute, Directive, input, type OnInit} from "@angular/core"
 
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {type QdsTableApiProps, type QdsTableSize} from "@qualcomm-ui/qds-core/table"
+import {
+  type QdsTableApiProps,
+  type QdsTableSize,
+} from "@qualcomm-ui/qds-core/table"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 import {qdsTableApi} from "./qds-table-api"

@@ -3,7 +3,10 @@ import {Directive, ElementRef, inject, input, type OnInit} from "@angular/core"
 import {type LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {type QdsIconApiProps, type QdsIconSize} from "@qualcomm-ui/qds-core/icon"
+import {
+  type QdsIconApiProps,
+  type QdsIconSize,
+} from "@qualcomm-ui/qds-core/icon"
 
 import {useLucideIcon} from "./use-lucide-icon"
 

@@ -1,6 +1,9 @@
 import {computed, Directive} from "@angular/core"
 
-import {CoreTabRootDirective, provideTabContext} from "@qualcomm-ui/angular-core/tabs"
+import {
+  CoreTabRootDirective,
+  provideTabContext,
+} from "@qualcomm-ui/angular-core/tabs"
 
 import {useQdsTabsContext} from "./qds-tabs-context.service"
 

@@ -1,7 +1,10 @@
 import {Component, computed, inject} from "@angular/core"
 import {ChevronDown} from "lucide-angular"
 
-import {BaseButtonDirective, provideQdsButtonContext} from "@qualcomm-ui/angular/button"
+import {
+  BaseButtonDirective,
+  provideQdsButtonContext,
+} from "@qualcomm-ui/angular/button"
 import {
   END_ICON_CONTEXT_TOKEN,
   type IconTokenContext,

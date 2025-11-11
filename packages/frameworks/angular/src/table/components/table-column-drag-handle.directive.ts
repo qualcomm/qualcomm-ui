@@ -2,7 +2,10 @@ import {Component, input, type OnInit} from "@angular/core"
 import {GripVertical} from "lucide-angular"
 
 import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
-import {type LucideIconOrString, provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {
+  type LucideIconOrString,
+  provideIcons,
+} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

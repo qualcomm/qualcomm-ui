@@ -8,7 +8,10 @@ import {
 } from "@angular/core"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
-import {normalizeProps, useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {
+  normalizeProps,
+  useTrackBindings,
+} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   createQdsButtonApi,

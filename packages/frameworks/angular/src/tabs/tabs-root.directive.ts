@@ -9,7 +9,10 @@ import {
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {provideRenderStrategyContext} from "@qualcomm-ui/angular-core/presence"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {CoreTabsRootDirective, provideTabsContext} from "@qualcomm-ui/angular-core/tabs"
+import {
+  CoreTabsRootDirective,
+  provideTabsContext,
+} from "@qualcomm-ui/angular-core/tabs"
 import {
   createQdsTabsApi,
   type QdsTabsApiProps,

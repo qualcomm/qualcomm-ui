@@ -17,7 +17,10 @@ import {
   START_ICON_CONTEXT_TOKEN,
   StartIconDirective,
 } from "@qualcomm-ui/angular/icon"
-import {type LucideIconOrString, provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {
+  type LucideIconOrString,
+  provideIcons,
+} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
   QBindDirective,

@@ -1,6 +1,10 @@
 import type {InputSignal} from "@angular/core"
 
-import type {CellContext, ColumnMeta, HeaderContext} from "@qualcomm-ui/core/table"
+import type {
+  CellContext,
+  ColumnMeta,
+  HeaderContext,
+} from "@qualcomm-ui/core/table"
 
 export interface CellComponentContext<
   TData extends object,

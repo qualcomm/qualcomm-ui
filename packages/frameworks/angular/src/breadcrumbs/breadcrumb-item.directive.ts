@@ -1,7 +1,10 @@
 import {booleanAttribute, Component, input, type OnInit} from "@angular/core"
 import {ChevronRight} from "lucide-angular"
 
-import {type LucideIconOrString, provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {
+  type LucideIconOrString,
+  provideIcons,
+} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 

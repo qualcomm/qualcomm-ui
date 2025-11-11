@@ -3,7 +3,10 @@ import {X} from "lucide-angular"
 
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
-import {QBindDirective, useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {
+  QBindDirective,
+  useTrackBindings,
+} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   type QdsInlineIconButtonApiProps,

@@ -8,7 +8,10 @@ import {
 } from "@angular/core"
 
 import {normalizeProps, useMachine} from "@qualcomm-ui/angular-core/machine"
-import {provideToastContext, ToastContextService} from "@qualcomm-ui/angular-core/toast"
+import {
+  provideToastContext,
+  ToastContextService,
+} from "@qualcomm-ui/angular-core/toast"
 import {
   createToastApi,
   type ToastApiProps,
