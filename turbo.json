@@ -45,6 +45,9 @@
     "test:angular:ci": {
       "outputLogs": "new-only"
     },
+    "test:angular-core:ci": {
+      "outputLogs": "new-only"
+    },
     "test:react:ci": {
       "outputLogs": "new-only"
     },
@@ -63,31 +66,6 @@
       "outputLogs": "new-only"
     },
     "build:angular:prod": {
-      "inputs": [
-        "*.{json,ts,mts,js,cjs,mjs}",
-        "src/**",
-        "scripts/**",
-        "!src/environments/environment.ts",
-        "!src/environments/environment.ci.ts"
-      ],
-      "outputs": ["dist/**"],
-      "outputLogs": "new-only"
-    },
-    "deploy:angular:ci": {
-      "env": [
-        "AWS_CERT_ARN",
-        "AWS_HOSTED_ZONE_ID",
-        "AWS_PROFILE",
-        "AWS_REGION",
-        "AWS_SITE_DOMAIN_NAME",
-        "AWS_TAG_ADMIN_CONTACT",
-        "AWS_TAG_NAME",
-        "AWS_TAG_SERVICE_DATA",
-        "AWS_TAG_SERVICE_ID",
-        "GITHUB_ENVIRONMENT",
-        "SST_SITE_NAME",
-        "SST_STAGE"
-      ],
       "inputs": [
         "*.{json,ts,mts,js,cjs,mjs}",
         "src/**",

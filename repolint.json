@@ -157,6 +157,7 @@
             "patterns": [
               "bin\/",
               "node_modules\/",
+              "coverage\/",
               "dist\/",
               "build\/",
               "out\/",
@@ -206,6 +207,7 @@
             "patterns": [
               "bin\/",
               "node_modules\/",
+              "coverage\/",
               "dist\/",
               "build\/",
               "out\/",

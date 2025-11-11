@@ -1,0 +1,2 @@
+- Update TypeDocProp Prop changelog URL strategy for @since tags to match v2 structure.
+- Virtually render large markdown pages (changelog, etc.)

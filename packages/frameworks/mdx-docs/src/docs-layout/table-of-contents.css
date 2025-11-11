@@ -1,0 +1,50 @@
+.qui-toc {
+  display: none;
+  @media screen and (min-width: 1280px) {
+    display: block;
+    min-width: 240px;
+  }
+}
+
+.qui-toc__container {
+  margin-left: 24px;
+  max-height: calc(100vh - var(--qui-header-height) - 42px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-top: 16px;
+  position: sticky;
+  top: 49px;
+}
+
+.qui-toc__links {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  position: relative;
+}
+
+.qui-toc__link {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-sm-bold);
+  font-size: 13px;
+  padding: 4px 0;
+  position: relative;
+
+  &:hover,
+  &.q-active {
+    color: var(--color-text-neutral-primary);
+  }
+}
+
+.qui-toc__link-indent-guide {
+  background: var(--color-border-neutral-01);
+  height: 100%;
+  left: 12px;
+  position: absolute;
+  top: 0;
+  width: 1px;
+
+  &[data-active] {
+    background: var(--color-border-neutral-03);
+  }
+}

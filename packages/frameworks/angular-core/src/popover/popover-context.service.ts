@@ -1,0 +1,16 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import {Injectable} from "@angular/core"
+
+import {
+  BaseApiContextService,
+  createApiContext,
+} from "@qualcomm-ui/angular-core/machine"
+import type {PopoverApi} from "@qualcomm-ui/core/popover"
+
+@Injectable()
+export class PopoverContextService extends BaseApiContextService<PopoverApi> {}
+
+export const [POPOVER_CONTEXT, usePopoverContext, providePopoverContext] =
+  createApiContext<PopoverApi>("PopoverContext", PopoverContextService)

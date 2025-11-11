@@ -1,0 +1,115 @@
+{
+  "name": "@qualcomm-ui/mdx-docs",
+  "version": "1.0.0",
+  "description": "React components and utilities for MDX documentation sites based on QUI Docs",
+  "author": "Ryan Bower",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    },
+    "./styles.css": {
+      "style": "./dist/all.min.css"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "run-s clean build:js build:css build:ts",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map dist/**/*.css",
+    "build:js": "tsx build.ts",
+    "build:css": "qui-css-utils build",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:js watch:css watch:ts",
+    "watch:js": "tsx build.ts --watch --mode development",
+    "watch:css": "qui-css-utils watch",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "lint": "eslint --quiet",
+    "test": "vitest -c vitest.config.ts --run",
+    "test:coverage": "vitest -c vitest.config.ts --run --coverage",
+    "test:mdx-docs:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --poolOptions.forks.maxForks=1 --no-file-parallelism",
+    "test:watch": "cross-env vitest -c vitest.config.ts --ui --coverage --coverage.enabled=true",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "dependencies": {
+    "markdown-to-jsx": "^7.4.7",
+    "quick-lru": "^7.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@mdx-js/react": "^3.1.0",
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/css-utils": "workspace:^1",
+    "@qualcomm-ui/dom": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1",
+    "@qualcomm-ui/mdx-docs-common": "workspace:^1",
+    "@qualcomm-ui/react": "workspace:^1.0.0",
+    "@qualcomm-ui/react-core": "workspace:^1.0.0",
+    "@qualcomm-ui/react-test-utils": "workspace:^1.0.0",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@shikijs/langs": "^3.13.0",
+    "@shikijs/themes": "^3.13.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/lodash-es": "^4.17.12",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.0",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "change-case": "^5.4.4",
+    "esbuild": "^0.25.8",
+    "fuzzysort": "^3.0.1",
+    "lodash-es": "^4.17.21",
+    "lucide-react": "0.525.0",
+    "playwright": "1.53.2",
+    "quick-lru": "^7.2.0",
+    "react": "catalog:",
+    "react-device-detect": "^2.2.3",
+    "react-compiler-runtime": "^1.0.0",
+    "react-dom": "catalog:",
+    "react-shiki": "^0.8.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "shiki": "^3.13.0",
+    "shx": "^0.4.0",
+    "tsx": "^4.20.6",
+    "typescript": "5.8.3",
+    "vite": "npm:rolldown-vite@7.1.19",
+    "vitest": "^3.2.4",
+    "vitest-browser-react": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@floating-ui/react": ">=0.26.9 <1",
+    "@mdx-js/react": ">=3.0.1 <4",
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/mdx-docs-common": "workspace:^1",
+    "@qualcomm-ui/react": "workspace:^1",
+    "@qualcomm-ui/react-core": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@shikijs/langs": ">=3.13.0",
+    "@shikijs/themes": ">=3.13.0",
+    "fuzzysort": ">=3 <4",
+    "lodash-es": ">=4.17.21 <5",
+    "lucide-react": ">=0.379.0 <1",
+    "react": ">=19.0.0",
+    "react-device-detect": ">=2.2.3 <3",
+    "react-dom": ">=19.0.0",
+    "react-simple-code-editor": ">=0.14.1",
+    "react-shiki": ">=0.8.0",
+    "shiki": ">=3.13.0",
+    "sucrase": ">=3.35.0"
+  }
+}

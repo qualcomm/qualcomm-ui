@@ -1,0 +1,14 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "composite": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "types",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "qui-css-utils.config.ts",
+    "build.ts"
+  ]
+}

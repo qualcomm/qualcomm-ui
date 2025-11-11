@@ -1,0 +1,20 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "types": [
+      "vitest",
+      "@vitest/browser/providers/playwright"
+    ],
+    "paths": {
+      "~test/*": ["./src/test/*"]
+    }
+  },
+  "include": ["./src/**/*.spec.tsx", "./test"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

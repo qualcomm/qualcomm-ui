@@ -19,6 +19,7 @@ scripts/*
 **/__mocks__/**
 **/__spec__/**
 **/*.spec.*
+**/coverage/**
 
 # package scripts and configs
 packages/*/*/*.js
