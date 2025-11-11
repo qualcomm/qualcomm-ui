@@ -5,7 +5,10 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
-import type {BooleanAriaAttr, BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {

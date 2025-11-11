@@ -5,7 +5,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {isFocusVisible} from "@qualcomm-ui/dom/focus-visible"
-import {isLeftClick, isSafari, visuallyHiddenStyle} from "@qualcomm-ui/dom/query"
+import {
+  isLeftClick,
+  isSafari,
+  visuallyHiddenStyle,
+} from "@qualcomm-ui/dom/query"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 

@@ -5,7 +5,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {add, partition, remove, uniq} from "@qualcomm-ui/utils/array"
-import type {TreeCollection, TreeNode, TreeSkipFn} from "@qualcomm-ui/utils/collection"
+import type {
+  TreeCollection,
+  TreeNode,
+  TreeSkipFn,
+} from "@qualcomm-ui/utils/collection"
 import {ensure} from "@qualcomm-ui/utils/guard"
 import type {Params} from "@qualcomm-ui/utils/machine"
 
@@ -87,7 +91,8 @@ export function expandBranches(
   const loadChildren = prop("loadChildren")
   ensure(
     loadChildren,
-    () => "[@qualcomm-ui/core/tree] `loadChildren` is required for async expansion",
+    () =>
+      "[@qualcomm-ui/core/tree] `loadChildren` is required for async expansion",
   )
 
   const proms = nodesToLoad.map(({id, indexPath, node, valuePath}) => {

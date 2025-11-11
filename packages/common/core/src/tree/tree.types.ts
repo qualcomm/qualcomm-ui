@@ -5,7 +5,10 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {TypeaheadState} from "@qualcomm-ui/dom/query"
-import type {BooleanAriaAttr, BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 import type {
   IndexPath,
   TreeCollection,

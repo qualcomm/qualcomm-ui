@@ -12,7 +12,10 @@ import type {
   InputLabelBindings,
   InputRootBindings,
 } from "@qualcomm-ui/core/input"
-import type {BooleanAriaAttr, BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {

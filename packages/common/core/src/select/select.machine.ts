@@ -16,7 +16,10 @@ import {
   trackFormControl,
 } from "@qualcomm-ui/dom/query"
 import {addOrRemove} from "@qualcomm-ui/utils/array"
-import type {CollectionItem, ListCollection} from "@qualcomm-ui/utils/collection"
+import type {
+  CollectionItem,
+  ListCollection,
+} from "@qualcomm-ui/utils/collection"
 import {isEqual} from "@qualcomm-ui/utils/equal"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {

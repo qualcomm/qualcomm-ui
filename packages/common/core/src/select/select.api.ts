@@ -4,7 +4,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getPlacementStyles, type PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
+import {
+  getPlacementStyles,
+  type PositioningOptions,
+} from "@qualcomm-ui/dom/floating-ui"
 import {isFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {
   getByTypeahead,
@@ -72,7 +75,8 @@ export function createSelectApi(
     const value = collection.getItemValue(props.item)
     ensure(
       value,
-      () => `[@qualcomm-ui/core] No value found for item ${JSON.stringify(props.item)}`,
+      () =>
+        `[@qualcomm-ui/core] No value found for item ${JSON.stringify(props.item)}`,
     )
     return {
       disabled: Boolean(disabled || _disabled),

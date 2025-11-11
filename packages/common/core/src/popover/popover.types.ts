@@ -9,7 +9,10 @@ import type {
   PersistentElementOptions,
 } from "@qualcomm-ui/dom/dismissable"
 import type {Placement, PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
-import type {BooleanAriaAttr, BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {

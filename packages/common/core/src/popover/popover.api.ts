@@ -6,7 +6,11 @@
 
 import {getPlacementStyles} from "@qualcomm-ui/dom/floating-ui"
 import {isSafari} from "@qualcomm-ui/dom/query"
-import {ariaAttr, booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import {
+  ariaAttr,
+  booleanAriaAttr,
+  booleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 

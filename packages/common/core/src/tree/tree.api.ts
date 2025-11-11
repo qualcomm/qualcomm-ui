@@ -18,7 +18,11 @@ import {add, uniq} from "@qualcomm-ui/utils/array"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {TreeNode} from "@qualcomm-ui/utils/collection"
 import {cast} from "@qualcomm-ui/utils/functions"
-import type {EventKeyMap, Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
+import type {
+  EventKeyMap,
+  Machine,
+  PropNormalizer,
+} from "@qualcomm-ui/utils/machine"
 
 import {
   domIds,
@@ -497,7 +501,10 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
           const nodeId = node.dataset.value
 
           if (nodeId == null) {
-            console.warn(`[@qualcomm-ui/core/tree] Node id not found for node`, node)
+            console.warn(
+              `[@qualcomm-ui/core/tree] Node id not found for node`,
+              node,
+            )
             return
           }
 

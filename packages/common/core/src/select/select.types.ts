@@ -12,8 +12,14 @@ import type {
 import type {Placement, PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {InteractOutsideHandlers} from "@qualcomm-ui/dom/interact-outside"
 import type {TypeaheadState} from "@qualcomm-ui/dom/query"
-import type {BooleanAriaAttr, BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import type {CollectionItem, ListCollection} from "@qualcomm-ui/utils/collection"
+import type {
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
+import type {
+  CollectionItem,
+  ListCollection,
+} from "@qualcomm-ui/utils/collection"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {

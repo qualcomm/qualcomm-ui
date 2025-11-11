@@ -5,7 +5,10 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
-import {dispatchInputCheckedEvent, trackFormControl} from "@qualcomm-ui/dom/query"
+import {
+  dispatchInputCheckedEvent,
+  trackFormControl,
+} from "@qualcomm-ui/dom/query"
 import {
   createGuards,
   createMachine,

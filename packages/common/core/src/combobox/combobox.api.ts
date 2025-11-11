@@ -86,7 +86,8 @@ export function createComboboxApi(
     const value = collection.getItemValue(props.item)
     ensure(
       value,
-      () => `[@qualcomm-ui/core] No value found for item ${JSON.stringify(props.item)}`,
+      () =>
+        `[@qualcomm-ui/core] No value found for item ${JSON.stringify(props.item)}`,
     )
     return {
       ...props,

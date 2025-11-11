@@ -5,7 +5,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {JSX, Params} from "@qualcomm-ui/utils/machine"
-import {getValuePercent, getValueTransformer, toPx} from "@qualcomm-ui/utils/number"
+import {
+  getValuePercent,
+  getValueTransformer,
+  toPx,
+} from "@qualcomm-ui/utils/number"
 
 import type {SliderSchema} from "./slider.types"
 
