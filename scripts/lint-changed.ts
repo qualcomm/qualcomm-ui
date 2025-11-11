@@ -1,13 +1,17 @@
 import {execSync} from "node:child_process"
 
-const baseSha = process.env.GITHUB_BASE_SHA
+const baseSha = process.argv[2]
 if (!baseSha) {
-  console.error("GITHUB_BASE_SHA not set")
+  console.error("Usage: tsx scripts/lint-changed.ts <base-sha>")
   process.exit(1)
 }
 
+const mergeBase = execSync(`git merge-base HEAD ${baseSha}`, {
+  encoding: "utf-8",
+}).trim()
+
 const changedFiles = execSync(
-  `git diff --name-only --diff-filter=ACMRT ${baseSha} HEAD`,
+  `git diff --name-only --diff-filter=ACMRT ${mergeBase}`,
   {encoding: "utf-8"},
 )
   .split("\n")
