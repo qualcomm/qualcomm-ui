@@ -233,7 +233,7 @@ importers:
         specifier: ^8.1.1
         version: 8.2.0
       postcss:
-        specifier: ^8.4.35
+        specifier: ^8.5.6
         version: 8.5.6
       postcss-import:
         specifier: ^16.1.0
@@ -242,8 +242,8 @@ importers:
         specifier: ^6.0.2
         version: 6.0.4(postcss@8.5.6)
       postcss-nested:
-        specifier: ^6.0.1
-        version: 6.2.0(postcss@8.5.6)
+        specifier: ^7.0.2
+        version: 7.0.2(postcss@8.5.6)
       postcss-scss:
         specifier: ^4.0.9
         version: 4.0.9(postcss@8.5.6)
@@ -350,8 +350,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^22.17.2
-        version: 22.18.13
+        specifier: ~24.9.2
+        version: 24.9.2
       change-case:
         specifier: ^5.4.4
         version: 5.4.4
@@ -389,11 +389,38 @@ importers:
         specifier: ~4.1.1
         version: 4.1.1(style-dictionary@5.1.1)
       tsx:
-        specifier: ^4.20.4
+        specifier: ^4.20.6
         version: 4.20.6
       typescript:
         specifier: 5.8.3
         version: 5.8.3
+
+  packages/common/typedoc-common:
+    devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../cli
+      '@qualcomm-ui/esbuild':
+        specifier: workspace:^1
+        version: link:../esbuild
+      '@qualcomm-ui/tsconfig':
+        specifier: workspace:^1
+        version: link:../../configs/tsconfig
+      chalk:
+        specifier: ^5.6.2
+        version: 5.6.2
+      chokidar:
+        specifier: ^4.0.3
+        version: 4.0.3
+      esbuild:
+        specifier: ^0.25.8
+        version: 0.25.11
+      shx:
+        specifier: ^0.4.0
+        version: 0.4.0
+      tsx:
+        specifier: ^4.20.6
+        version: 4.20.6
 
   packages/common/utils:
     devDependencies:
@@ -3733,12 +3760,6 @@ packages:
     engines: {node: ^14 || ^16 || >=18.0}
     peerDependencies:
       postcss: ^8.4.31
-
-  postcss-nested@6.2.0:
-    resolution: {integrity: sha512-HQbt28KulC5AJzG+cZtj9kvKB93CFCdLvog1WFLf1D+xmMvPGlBstkpTEZfK5+AN9hfJocyBFCNiqyS48bpgzQ==}
-    engines: {node: '>=12.0'}
-    peerDependencies:
-      postcss: ^8.2.14
 
   postcss-nested@7.0.2:
     resolution: {integrity: sha512-5osppouFc0VR9/VYzYxO03VaDa3e8F23Kfd6/9qcZTUI8P58GIYlArOET2Wq0ywSl2o2PjELhYOFI4W7l5QHKw==}
@@ -8587,11 +8608,6 @@ snapshots:
       postcss-value-parser: 4.2.0
 
   postcss-minify-selectors@6.0.4(postcss@8.5.6):
-    dependencies:
-      postcss: 8.5.6
-      postcss-selector-parser: 6.1.2
-
-  postcss-nested@6.2.0(postcss@8.5.6):
     dependencies:
       postcss: 8.5.6
       postcss-selector-parser: 6.1.2
