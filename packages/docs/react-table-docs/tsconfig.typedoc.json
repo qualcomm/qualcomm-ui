@@ -1,0 +1,17 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "include": [
+    "../../common/core/src",
+    "../../common/dom/dist",
+    "../../common/qds-core/src",
+    "../../common/utils/src",
+    "../../frameworks/react/src",
+    "../../frameworks/react-core/src"
+  ],
+  "exclude": [
+    "../../frameworks/react/src/legacy",
+    "../../frameworks/react-core/src/components",
+    "../../**/*.spec.ts",
+    "../../**/*.spec.tsx"
+  ]
+}

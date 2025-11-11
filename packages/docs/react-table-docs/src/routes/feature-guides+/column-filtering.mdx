@@ -1,0 +1,331 @@
+---
+title: Column Filtering Guide
+---
+
+# {frontmatter.title}
+
+## Examples & API
+
+- [Column Filtering](/features/filters)
+- [Column Filtering API](/api/features/filters)
+
+## Guide
+
+Filtering comes in 2 flavors: Column Filtering and Global Filtering.
+
+Column filtering applies a filter to a single column's accessor value. Global filtering applies the same filter to every column's accessor value. This guide covers column filtering.
+
+The library supports both client-side and manual server-side filtering. This guide covers implementation and customization for both approaches.
+
+### Client-Side vs. Server-Side Filtering
+
+Server-side filtering is necessary for large datasets that cannot be loaded into the client's browser. This approach requires implementing server-side filtering, sorting, and pagination.
+
+Client-side filtering handles approximately 100,000 rows. Performance depends on table complexity, column count, and data size.
+
+Consider these constraints:
+
+- Server query time and cost
+- Fetch payload size
+- Client memory consumption
+
+### Manual Server-Side Filtering
+
+Manual server-side filtering does not require the `getFilteredRowModel` table option. Pass pre-filtered data to the table. Set `manualFiltering: true` to skip client-side filtering logic.
+
+```tsx
+import {useReactTable} from "@qualcomm-ui/react/table"
+
+const table = useReactTable({
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  // getFilteredRowModel: getFilteredRowModel(), // not needed for manual server-side filtering
+  manualFiltering: true,
+})
+```
+
+> [!note]
+> Setting `manualFiltering: true` disables client-side filtering logic. The table uses the provided data without applying filter options. But individual columns may still configure whether they support filtering, which is used to render the filter controls in the table.
+
+### Client-Side Filtering
+
+Client-side filtering requires passing a `getFilteredRowModel` function to the table options. Import the default function or provide a custom implementation.
+
+```tsx
+import {useReactTable} from "@qualcomm-ui/react/table"
+import {getFilteredRowModel} from "@qualcomm-ui/core/table"
+
+const table = useReactTable({
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(), // needed for client-side filtering
+})
+```
+
+### Column Filter State
+
+Both client-side and server-side filtering can use the built-in column filter state management. Multiple table and column APIs are available to interact with the filter state.
+
+The column filter state is an array of objects:
+
+```ts
+interface ColumnFilter {
+  id: string
+  value: unknown
+}
+type ColumnFiltersState = ColumnFilter[]
+```
+
+Since the column filter state is an array of objects, you can have multiple column filters applied at once.
+
+#### Accessing Column Filter State
+
+Access the column filter state from the table instance using the `table.getState()` API.
+
+```jsx
+const table = useReactTable({
+  columns,
+  data,
+  // ...
+})
+
+console.log(table.getState().columnFilters)
+```
+
+To access the column filter state before the table is initialized, control the state externally.
+
+### Controlled Column Filter State
+
+Control the column filter state with the `state.columnFilters` and `onColumnFiltersChange` table options.
+
+```tsx
+const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]) // can set initial column filter state here
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  // ...
+  state: {
+    columnFilters,
+  },
+  onColumnFiltersChange: setColumnFilters,
+})
+```
+
+#### Initial Column Filter State
+
+Set an initial column filter state without controlling it using the `initialState` table option.
+
+```jsx
+const table = useReactTable({
+  columns,
+  data,
+  // ...
+  initialState: {
+    columnFilters: [
+      {
+        id: "name",
+        value: "John", // filter the name column by 'John' by default
+      },
+    ],
+  },
+})
+```
+
+> **Note:** Do not use `initialState.columnFilters` and `state.columnFilters` together. The `state.columnFilters` value overrides `initialState.columnFilters`.
+
+### FilterFns
+
+Each column has its own filtering logic. Use built-in filter functions or define custom ones.
+
+10 built-in filter functions are available:
+
+- `includesString` - Case-insensitive string inclusion
+- `includesStringSensitive` - Case-sensitive string inclusion
+- `equalsString` - Case-insensitive string equality
+- `equalsStringSensitive` - Case-sensitive string equality
+- `arrIncludes` - Item inclusion within an array
+- `arrIncludesAll` - All items included in an array
+- `arrIncludesSome` - Some items included in an array
+- `equals` - Object/referential equality `Object.is`/`===`
+- `weakEquals` - Weak object/referential equality `==`
+- `inNumberRange` - Number range inclusion
+
+Define custom filter functions using the `filterFn` column option or the `filterFns` table option.
+
+#### Custom Filter Functions
+
+> **Note:** These filter functions only run during client-side filtering.
+
+When defining a custom filter function in either the `filterFn` column option or the `filterFns` table option, it should have the following signature:
+
+```ts
+const myCustomFilterFn: FilterFn = (
+  row: Row,
+  columnId: string,
+  filterValue: any,
+  addMeta: (meta: any) => void,
+) => boolean
+```
+
+Every filter function receives:
+
+- The row to filter
+- The columnId to use to retrieve the row's value
+- The filter value
+
+and should return `true` if the row should be included in the filtered rows, and `false` if it should be removed.
+
+```jsx
+const columns = [
+  {
+    header: () => "Name",
+    accessorKey: "name",
+    filterFn: "includesString", // use built-in filter function
+  },
+  {
+    header: () => "Age",
+    accessorKey: "age",
+    filterFn: "inNumberRange",
+  },
+  {
+    header: () => "Birthday",
+    accessorKey: "birthday",
+    filterFn: "myCustomFilterFn", // use custom global filter function
+  },
+  {
+    header: () => "Profile",
+    accessorKey: "profile",
+    // use custom filter function directly
+    filterFn: (row, columnId, filterValue) => {
+      return // true or false based on your custom logic
+    },
+  },
+]
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  filterFns: {
+    myCustomFilterFn: (row, columnId, filterValue) => {
+      return // true or false based on your custom logic
+    },
+    startsWith: startsWithFilterFn,
+  },
+})
+```
+
+##### Customize Filter Function Behavior
+
+Attach these properties to filter functions:
+
+- `filterFn.resolveFilterValue` - Transforms the filter value before passing it to the filter function.
+
+- `filterFn.autoRemove` - Returns `true` if the filter value should be removed from the filter state. Boolean-style filters can remove the filter when set to `false`.
+
+```tsx
+const startsWithFilterFn = <TData extends MRT_RowData>(
+  row: Row<TData>,
+  columnId: string,
+  filterValue: number | string, // resolveFilterValue will transform this to a string
+) =>
+  row
+    .getValue<number | string>(columnId)
+    .toString()
+    .toLowerCase()
+    .trim()
+    .startsWith(filterValue) // toString, toLowerCase, and trim the filter value in `resolveFilterValue`
+
+// remove the filter value from filter state if it is falsy (empty string in this case)
+startsWithFilterFn.autoRemove = (val: any) => !val
+
+// transform/sanitize/format the filter value before it is passed to the filter function
+startsWithFilterFn.resolveFilterValue = (val: any) =>
+  val.toString().toLowerCase().trim()
+```
+
+### Customize Column Filtering
+
+Multiple table and column options control filtering behavior.
+
+#### Disable Column Filtering
+
+Column filtering is enabled for all columns by default. Disable it for all columns using `enableColumnFilters: false` or for specific columns using `enableColumnFilter: false`. Set `enableFilters: false` to disable both column and global filtering.
+
+Disabling column filtering causes `column.getCanFilter` to return `false`.
+
+```jsx
+const columns = [
+  {
+    header: () => "Id",
+    accessorKey: "id",
+    enableColumnFilter: false, // disable column filtering for this column
+  },
+  // ...
+]
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  enableColumnFilters: false, // disable column filtering for all columns
+})
+```
+
+#### Filtering Sub-Rows (Expanding)
+
+Additional table options customize filtering behavior for expanding, grouping, and aggregation.
+
+##### Filter From Leaf Rows
+
+By default, filtering applies from parent rows down. Filtered-out parent rows exclude all child sub-rows. This is the most performant option.
+
+Set `filterFromLeafRows: true` to filter from leaf rows up. Parent rows are included when any child or grandchild row passes the filter.
+
+```jsx
+const table = useReactTable({
+  columns,
+  data,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  getExpandedRowModel: getExpandedRowModel(),
+  filterFromLeafRows: true, // filter and search through sub-rows
+})
+```
+
+##### Max Leaf Row Filter Depth
+
+By default, filtering applies to all rows in a tree. Set `maxLeafRowFilterDepth: 0` to apply filtering only to root level parent rows, leaving sub-rows unfiltered. Set to `1` to filter child leaf rows 1 level deep.
+
+Use `maxLeafRowFilterDepth: 0` to preserve a parent row's sub-rows when the parent row passes the filter.
+
+```jsx
+const table = useReactTable({
+  columns,
+  data,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  getExpandedRowModel: getExpandedRowModel(),
+  maxLeafRowFilterDepth: 0, // only filter root level parent rows out
+})
+```
+
+### Column Filter APIs
+
+Multiple Column and Table APIs interact with column filter state:
+
+- `table.setColumnFilters` - Overwrites the entire column filter state
+- `table.resetColumnFilters` - Resets all filters
+
+- **`column.getFilterValue`** - Gets the current filter value for an input
+- **`column.setFilterValue`** - Connects filter inputs to `onChange` or `onBlur` handlers
+
+- `column.getCanFilter` - Returns whether filtering is enabled for the column
+- `column.getIsFiltered` - Returns whether the column is currently filtered
+- `column.getFilterIndex` - Returns the order in which the filter is applied
+
+- `column.getAutoFilterFn` - Returns the automatically determined filter function
+- `column.getFilterFn` - Returns the currently used filter function

@@ -1,0 +1,154 @@
+---
+title: Grouping Guide
+---
+
+# {frontmatter.title}
+
+## Examples & API
+
+Want to skip to the implementation? Check out these examples:
+
+- [Grouping](/features/grouping)
+- [Grouping API](/api/features/grouping)
+
+## Guide
+
+There are 3 table features that can reorder columns, which happen in the following order:
+
+1. [Column Pinning](/feature-guides/column-pinning) - If pinning, columns are split into left, center (unpinned), and right pinned columns.
+2. Manual [Column Ordering](/feature-guides/column-ordering) - A manually specified column order is applied.
+3. **Grouping** - If grouping is enabled, a grouping state is active, and `tableOptions.groupedColumnMode` is set to `'reorder' | 'remove'`, then the grouped columns are reordered to the start of the column flow.
+
+This library provides grouping functionality that applies to columns, allowing you to categorize and organize table rows based on specific column values. Grouping organizes data by common criteria for improved data analysis.
+
+### Setting Up Grouping
+
+To implement grouping, provide the grouped row model to the table. The grouped row model handles row organization based on the grouping state.
+
+```tsx
+import {getGroupedRowModel} from "@qualcomm-ui/core/table"
+
+const table = useReactTable({
+  // other options...
+  getGroupedRowModel: getGroupedRowModel(),
+})
+```
+
+When grouping state is active, the table adds matching rows as subRows to the grouped row. The grouped row appears in the table at the same index as the first matching row, and the matching rows are removed from the top-level table rows.
+
+To enable expand and collapse functionality for grouped rows, add the expanding feature:
+
+```tsx
+import {getGroupedRowModel, getExpandedRowModel} from "@qualcomm-ui/core/table"
+
+const table = useReactTable({
+  // other options...
+  getGroupedRowModel: getGroupedRowModel(),
+  getExpandedRowModel: getExpandedRowModel(),
+})
+```
+
+### Grouping State
+
+The grouping state is an array of column ID strings that determines grouping order. The array order determines the grouping hierarchy. For example, `['column1', 'column2']` groups first by column1, then by column2 within each column1 group.
+
+Control the grouping state using the setGrouping function:
+
+```tsx
+table.setGrouping(["column1", "column2"])
+```
+
+Reset the grouping state to its initial state using the resetGrouping function:
+
+```tsx
+table.resetGrouping()
+```
+
+By default, grouped columns move to the start of the table. Control this behavior using the `groupedColumnMode` option:
+
+- `'reorder'` - Grouped columns move to the start of the table
+- `'remove'` - Grouped columns are removed from the table
+- `false` - Grouped columns remain in their original position
+
+```tsx
+const table = useReactTable({
+  // other options...
+  groupedColumnMode: "reorder",
+})
+```
+
+### Aggregations
+
+When rows are grouped, aggregate data in grouped rows by columns using the `aggregationFn` option. Specify the aggregation function ID as a string.
+
+```tsx
+const column = columnHelper.accessor("key", {
+  aggregationFn: "sum",
+})
+```
+
+In the above example, the sum aggregation function aggregates data in the grouped rows. By default, numeric columns use the sum aggregation function, and non-numeric columns use the count aggregation function. Override this behavior by specifying the `aggregationFn` option in the column definition.
+
+Built-in aggregation functions:
+
+- `sum` - Sums the values in the grouped rows
+- `count` - Counts the number of rows in the grouped rows
+- `min` - Finds the minimum value in the grouped rows
+- `max` - Finds the maximum value in the grouped rows
+- `extent` - Finds the extent (min and max) of the values in the grouped rows
+- `mean` - Finds the mean of the values in the grouped rows
+- `median` - Finds the median of the values in the grouped rows
+- `unique` - Returns an array of unique values in the grouped rows
+- `uniqueCount` - Counts the number of unique values in the grouped rows
+
+#### Custom Aggregations
+
+Define custom aggregation functions using the `aggregationFns` table option. This option accepts a record where keys are aggregation function IDs and values are the aggregation functions. Reference these functions in a column's `aggregationFn` option.
+
+```tsx
+const table = useReactTable({
+  // other options...
+  aggregationFns: {
+    myCustomAggregation: (columnId, leafRows, childRows) => {
+      // return the aggregated value
+    },
+  },
+})
+```
+
+In the above example, `myCustomAggregation` is a custom aggregation function that receives the column ID, leaf rows, and child rows, returning the aggregated value. Use this aggregation function in a column's `aggregationFn` option:
+
+```tsx
+const column = columnHelper.accessor("key", {
+  aggregationFn: "myCustomAggregation",
+})
+```
+
+### Manual Grouping
+
+For server-side grouping and aggregation, enable manual grouping using the `manualGrouping` option. When set to true, the table will not automatically group rows using `getGroupedRowModel()` and expects manually grouped rows before passing them to the table.
+
+```tsx
+const table = useReactTable({
+  // other options...
+  manualGrouping: true,
+})
+```
+
+> **Note:** Server-side grouping requires custom cell rendering. There are limited established patterns for this implementation.
+
+### Grouping Change Handler
+
+To manage the grouping state externally, use the `onGroupingChange` option. This function is called when the grouping state changes. Pass the managed state back to the table via the `tableOptions.state.grouping` option.
+
+```tsx
+const [grouping, setGrouping] = useState<string[]>([])
+
+const table = useReactTable({
+  // other options...
+  state: {
+    grouping: grouping,
+  },
+  onGroupingChange: setGrouping,
+})
+```

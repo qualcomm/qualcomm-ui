@@ -1,0 +1,160 @@
+---
+title: Column Definitions
+---
+
+# {frontmatter.title}
+
+A column definition is a configuration object that defines how the data should be accessed, displayed, and interacted with. They are responsible for:
+
+- Building the underlying data model that will be used for everything including sorting, filtering, grouping, etc.
+- Formatting the data model into what will be displayed in the table.
+- Creating header groups, headers, and footers.
+
+## Column Definition Categories
+
+Column definitions are organized into three categories that describe and categorize different kinds of column definitions:
+
+- `Accessor Columns`
+  - Accessor columns have an underlying data model which means they can be sorted, filtered, grouped, etc. This is the most common type of column.
+- `Display Columns`
+  - Display columns do not have a data model which means they cannot be sorted, filtered, etc., but they can be used to display arbitrary content in the table like a row action button, checkbox, or expander.
+- `Grouping Columns`
+  - Group columns are used to group other columns together. Since they don't have a data model, they can't be sorted or filtered. It's common to define a header or footer for a column group.
+
+## Column Helpers
+
+Column definitions are objects. They can be created manually, but it's easier to use the `createColumnHelper` function.
+
+`createColumnHelper` provides type-safe column definition creation. When data types are configured correctly, the table infers the data shape and validates column definitions match your data structure. This simplifies column configuration and catches type errors in TypeScript:
+
+```tsx
+import {createColumnHelper, type ColumnDef} from "@qualcomm-ui/core/table"
+
+interface Person {
+  name: string
+  age: number
+  address: string
+}
+
+const columnHelper = createColumnHelper<Partial<Person>>()
+
+const columns: ColumnDef<Partial<Person>, any>[] = [
+  columnHelper.accessor("name", {
+    header: "Name",
+    cell: (info) => <span>{info.getValue()}</span>,
+  }),
+  columnHelper.accessor("age", {
+    header: "Age",
+    cell: (info) => <span>{info.getValue()}</span>,
+    enableSorting: true,
+  }),
+  columnHelper.accessor("address", {
+    header: "Address",
+    cell: (info) => <span>{info.getValue()}</span>,
+  }),
+]
+```
+
+## Creating Accessor Columns
+
+Data columns extract primitive values from each item in your `data` array. Three configuration methods:
+
+1. Object key: corresponds to the value in object items
+2. Array index: corresponds to the value in nested array items
+3. Accessor function: returns the extracted value
+
+### Object Keys
+
+If each of your items is an object with the following shape:
+
+```tsx
+interface Person {
+  firstName: string
+  lastName: string
+  age: number
+  visits: number
+  status: string
+  progress: number
+}
+```
+
+You could extract the firstName value like so:
+
+```tsx
+columnHelper.accessor("firstName")
+
+// OR
+
+const column = {
+  accessorKey: "firstName",
+}
+```
+
+### Deep Keys
+
+If each of your items is an object with the following shape:
+
+```tsx
+interface Person {
+  name: {
+    first: string
+    last: string
+  }
+  info: {
+    age: number
+    visits: number
+  }
+}
+```
+
+You could extract the `first` value like so:
+
+```tsx
+columnHelper.accessor("name.first", {
+  id: "firstName",
+})
+
+// OR
+
+const column = {
+  accessorKey: "name.first",
+  id: "firstName",
+}
+```
+
+### Accessor Functions
+
+If each of your items is an object with the following shape:
+
+```tsx
+interface Person {
+  firstName: string
+  lastName: string
+  age: number
+  visits: number
+  status: string
+  progress: number
+}
+```
+
+You could extract a computed full-name value like so:
+
+```tsx
+columnHelper.accessor((row) => `${row.firstName} ${row.lastName}`, {
+  id: "fullName",
+})
+
+// OR
+
+const column = {
+  id: "fullName",
+  accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+}
+```
+
+> [!tip]
+> Remember, the accessed value is crucial for sorting, filtering, and other
+> operations. Ensure your accessor function returns a primitive value that can
+> be effectively manipulated. If you return a non-primitive value, such as an
+> object or array, you'll need the appropriate filter, sort, or grouping functions
+> to handle it.

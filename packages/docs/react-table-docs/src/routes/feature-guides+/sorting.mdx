@@ -1,0 +1,426 @@
+---
+title: Sorting Guide
+---
+
+# {frontmatter.title}
+
+## Examples & API
+
+- [Sorting Example](/features/sorting)
+- [Sorting API](/api/features/sorting)
+
+## Guide
+
+This guide covers client-side sorting customization and manual server-side sorting implementation.
+
+### Sorting State
+
+The sorting state is defined as an array of objects with the following shape:
+
+```tsx
+type ColumnSort = {
+  id: string
+  desc: boolean
+}
+type SortingState = ColumnSort[]
+```
+
+Since the sorting state is an array, multiple columns can be sorted at once. See [multi-sorting](#multi-sorting) for more details.
+
+#### Accessing Sorting State
+
+You can access the sorting state directly from the table instance just like any other state using the `table.getState()` API.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  // ...
+})
+
+console.log(table.getState().sorting) // access sorting state from table instance
+```
+
+To access the sorting state before the table is initialized, use controlled state.
+
+#### Controlled Sorting State
+
+Control the sorting state externally using the `state.sorting` and `onSortingChange` table options.
+
+```tsx
+const [sorting, setSorting] = useState<SortingState>([]) // can set initial sorting state here
+// ...
+// use sorting state to fetch data from your backend
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  // ...
+  state: {
+    sorting,
+  },
+  onSortingChange: setSorting,
+})
+```
+
+#### Initial Sorting State
+
+Use `initialState` to set default sorting without managing state externally.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  // ...
+  initialState: {
+    sorting: [
+      {
+        id: "name",
+        desc: true, // sort by name in descending order by default
+      },
+    ],
+  },
+})
+```
+
+> **Note**: Do not provide `sorting` to both `initialState` and `state`. The `state` option overrides `initialState`.
+
+### Client-Side vs Server-Side Sorting
+
+Use client-side or server-side sorting consistently with your pagination and filtering strategy. Mixing client-side sorting with server-side pagination or filtering will only sort the currently loaded data, not the entire dataset.
+
+### Manual Server-Side Sorting
+
+For server-side sorting, the `data` passed to the table should already be sorted. No sorted row model is needed. Set `manualSorting: true` to disable client-side sorting if you have provided a sorting row model.
+
+```tsx
+const [sorting, setSorting] = useState < SortingState > []
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  getCoreRowModel: getCoreRowModel(),
+  // getSortedRowModel: getSortedRowModel(), // not needed for manual sorting
+  manualSorting: true, // use pre-sorted row model instead of sorted row model
+  state: {
+    sorting,
+  },
+  onSortingChange: setSorting,
+})
+```
+
+> **Note**: When `manualSorting` is set to `true`, the table assumes the `data` is already sorted and will not apply any sorting logic.
+
+### Client-Side Sorting
+
+Client-side sorting requires passing a sorting row model to the table. Import and use `getSortedRowModel` to transform rows into sorted rows.
+
+```tsx
+import {useReactTable} from "@tanstack/react-table"
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel(), // provide a sorting row model
+})
+```
+
+### Sorting Functions
+
+The default sorting function is inferred from the column's data type. Define a specific sorting function per column using the `sortingFn` column option, particularly for nullable data or non-standard data types.
+
+By default, there are 6 built-in sorting functions to choose from:
+
+- `alphanumeric` - Sorts by mixed alphanumeric values without case-sensitivity. Slower, but more accurate if your strings contain numbers that need to be naturally sorted.
+- `alphanumericCaseSensitive` - Sorts by mixed alphanumeric values with case-sensitivity. Slower, but more accurate if your strings contain numbers that need to be naturally sorted.
+- `text` - Sorts by text/string values without case-sensitivity. Faster, but less accurate if your strings contain numbers that need to be naturally sorted.
+- `textCaseSensitive` - Sorts by text/string values with case-sensitivity. Faster, but less accurate if your strings contain numbers that need to be naturally sorted.
+- `datetime` - Sorts by time, use this if your values are `Date` objects.
+- `basic` - Sorts using a basic/standard `a > b ? 1 : a < b ? -1 : 0` comparison. This is the fastest sorting function, but may not be the most accurate.
+
+Custom sorting functions can be defined as the `sortingFn` column option or as a global sorting function using the `sortingFns` table option.
+
+#### Custom Sorting Functions
+
+Custom sorting functions should have the following signature:
+
+```tsx
+// optionally use the SortingFn to infer the parameter types
+const myCustomSortingFn: SortingFn<TData> = (
+  rowA: Row<TData>,
+  rowB: Row<TData>,
+  columnId: string,
+) => {
+  return // -1, 0, or 1 - access any row data using rowA.original and rowB.original
+}
+```
+
+> **Note**: The comparison function does not need to account for ascending or descending order. The row models handle that logic. Sorting functions only need to provide a consistent comparison.
+
+Every sorting function receives 2 rows and a column ID and should return `-1`, `0`, or `1` in ascending order:
+
+| Return | Ascending Order |
+| ------ | --------------- |
+| `-1`   | `a < b`         |
+| `0`    | `a === b`       |
+| `1`    | `a > b`         |
+
+```tsx
+const columns = [
+  {
+    header: () => "Name",
+    accessorKey: "name",
+    sortingFn: "alphanumeric", // use built-in sorting function by name
+  },
+  {
+    header: () => "Age",
+    accessorKey: "age",
+    sortingFn: "myCustomSortingFn", // use custom global sorting function
+  },
+  {
+    header: () => "Birthday",
+    accessorKey: "birthday",
+    sortingFn: "datetime", // recommended for date columns
+  },
+  {
+    header: () => "Profile",
+    accessorKey: "profile",
+    // use custom sorting function directly
+    sortingFn: (rowA, rowB, columnId) => {
+      return rowA.original.someProperty - rowB.original.someProperty
+    },
+  },
+]
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+  sortingFns: {
+    // add a custom sorting function
+    myCustomSortingFn: (rowA, rowB, columnId) => {
+      return rowA.original[columnId] > rowB.original[columnId]
+        ? 1
+        : rowA.original[columnId] < rowB.original[columnId]
+          ? -1
+          : 0
+    },
+  },
+})
+```
+
+### Customize Sorting
+
+Several table and column options customize sorting behavior.
+
+#### Disable Sorting
+
+Disable sorting for specific columns or the entire table using the `enableSorting` column option or table option.
+
+```tsx
+const columns = [
+  {
+    header: () => "ID",
+    accessorKey: "id",
+    enableSorting: false, // disable sorting for this column
+  },
+  {
+    header: () => "Name",
+    accessorKey: "name",
+  },
+  // ...
+]
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  enableSorting: false, // disable sorting for the entire table
+})
+```
+
+#### Sorting Direction
+
+By default, the first sorting direction is ascending for string columns and descending for number columns. Change this behavior with the `sortDescFirst` column option or table option.
+
+```tsx
+const columns = [
+  {
+    header: () => "Name",
+    accessorKey: "name",
+    sortDescFirst: true, // sort by name in descending order first (default is ascending for string columns)
+  },
+  {
+    header: () => "Age",
+    accessorKey: "age",
+    sortDescFirst: false, // sort by age in ascending order first (default is descending for number columns)
+  },
+  // ...
+]
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  sortDescFirst: true, // sort by all columns in descending order first (default is ascending for string columns and descending for number columns)
+})
+```
+
+> **Note**: Explicitly set the `sortDescFirst` column option on columns with nullable values. The table may not be able to determine if a column is a number or string when it contains nullable values.
+
+#### Invert Sorting
+
+Inverting sorting differs from changing the default sorting direction. When `invertSorting` is `true`, the "desc/asc" states cycle normally, but the actual row sorting is inverted. This is useful for inverted scales where lower numbers are better (rankings, golf scores).
+
+```tsx
+const columns = [
+  {
+    header: () => "Rank",
+    accessorKey: "rank",
+    invertSorting: true, // invert the sorting for this column. 1st -> 2nd -> 3rd -> ... even if "desc" sorting is applied
+  },
+  // ...
+]
+```
+
+#### Sort Undefined Values
+
+Undefined values are sorted to the beginning or end of the list based on the `sortUndefined` column option or table option.
+
+If not specified, the default value for `sortUndefined` is `1`, and undefined values are sorted with lower priority. In ascending order, undefined values appear at the end of the list.
+
+- `'first'` - Undefined values pushed to the beginning of the list
+- `'last'` - Undefined values pushed to the end of the list
+- `false` - Undefined values considered tied and sorted by the next column filter or original index
+- `-1` - Undefined values sorted with higher priority (ascending) - appear at the beginning in ascending order
+- `1` - Undefined values sorted with lower priority (descending) - appear at the end in ascending order
+
+> **Note**: `'first'` and `'last'` options added in v8.16.0
+
+```tsx
+const columns = [
+  {
+    header: () => "Rank",
+    accessorKey: "rank",
+    sortUndefined: -1, // 'first' | 'last' | 1 | -1 | false
+  },
+]
+```
+
+#### Sorting Removal
+
+By default, sorting can be removed while cycling through sorting states. Disable this behavior using the `enableSortingRemoval` table option to ensure at least one column is always sorted.
+
+The default behavior cycles through sorting states like this:
+
+`'none' -> 'desc' -> 'asc' -> 'none' -> 'desc' -> 'asc' -> ...`
+
+With sorting removal disabled:
+
+`'none' -> 'desc' -> 'asc' -> 'desc' -> 'asc' -> ...`
+
+Once a column is sorted with `enableSortingRemoval` set to `false`, toggling that column will never remove the sorting. However, sorting by another column (not a multi-sort event) will remove the previous column's sorting.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  enableSortingRemoval: false, // disable the ability to remove sorting on columns (always none -> asc -> desc -> asc)
+})
+```
+
+#### Multi-Sorting
+
+Multi-column sorting is enabled by default when using the `column.getToggleSortingHandler` API. Holding `Shift` while clicking a column header adds that column to the existing sort. When using the `column.toggleSorting` API, manually pass whether to use multi-sorting: `column.toggleSorting(desc, multi)`.
+
+##### Disable Multi-Sorting
+
+Disable multi-sorting for specific columns or the entire table using the `enableMultiSort` column option or table option. Disabling multi-sorting for a column replaces all existing sorting with that column's sorting.
+
+```tsx
+const columns = [
+  {
+    header: () => "Created At",
+    accessorKey: "createdAt",
+    enableMultiSort: false, // always sort by just this column if sorting by this column
+  },
+  // ...
+]
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  enableMultiSort: false, // disable multi-sorting for the entire table
+})
+```
+
+##### Customize Multi-Sorting Trigger
+
+By default, the `Shift` key triggers multi-sorting. Change this behavior with the `isMultiSortEvent` table option. Return `true` from the custom function to make all sorting events trigger multi-sorting.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  isMultiSortEvent: (e) => true, // normal click triggers multi-sorting
+  // or
+  isMultiSortEvent: (e) => e.ctrlKey || e.shiftKey, // also use the `Ctrl` key to trigger multi-sorting
+})
+```
+
+##### Multi-Sorting Limit
+
+By default, there is no limit to the number of columns that can be sorted at once. Set a limit using the `maxMultiSortColCount` table option.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  maxMultiSortColCount: 3, // only allow 3 columns to be sorted at once
+})
+```
+
+##### Multi-Sorting Removal
+
+By default, multi-sorts can be removed. Disable this behavior using the `enableMultiRemove` table option.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  enableMultiRemove: false, // disable the ability to remove multi-sorts
+})
+```
+
+### Sorting APIs
+
+Several sorting-related APIs connect to UI or logic:
+
+**Table APIs:**
+
+- `table.setSorting` - Set the sorting state directly
+- `table.resetSorting` - Reset sorting state to initial state or clear it
+
+**Column Sorting State:**
+
+- `column.getCanSort` - Enable/disable sorting UI for a column
+- `column.getIsSorted` - Show visual sorting indicator
+
+**Column Sorting Actions:**
+
+- `column.getToggleSortingHandler` - Handler for sorting UI (add to icon buttons, menu items, or column headers)
+- `column.toggleSorting` - Toggle sorting manually (must pass multi-sorting parameter: `column.toggleSorting(desc, multi)`)
+- `column.clearSorting` - Clear sorting for a specific column
+
+**Column Sorting Information:**
+
+- `column.getNextSortingOrder` - Get next sort direction (for tooltips, menu items, aria-labels)
+- `column.getFirstSortDir` - Get first sort direction (for tooltips, menu items, aria-labels)
+- `column.getAutoSortDir` - Determine if first sorting direction will be ascending or descending
+- `column.getAutoSortingFn` - Get default sorting function (used internally)
+- `column.getSortingFn` - Get exact sorting function being used
+
+**Multi-Sorting:**
+
+- `column.getCanMultiSort` - Enable/disable multi-sorting UI for a column
+- `column.getSortIndex` - Get column's sort order position in multi-sort scenario (first, second, third, etc.)

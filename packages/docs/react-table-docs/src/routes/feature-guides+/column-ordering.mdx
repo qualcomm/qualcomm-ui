@@ -1,0 +1,71 @@
+---
+title: Column Ordering Guide
+---
+
+# {frontmatter.title}
+
+## Examples & API
+
+- [Column Ordering](/features/column-dnd)
+- [Column Ordering API](/api/features/column-order)
+
+## Guide
+
+By default, columns are ordered in the order they are defined in the `columns` array. You can manually specify the column order using the `columnOrder` state. Other features like column pinning and grouping can also affect the column order.
+
+### What Affects Column Order
+
+There are 3 table features that can reorder columns, which happen in the following order:
+
+1. [Column Pinning](/feature-guides/column-pinning) – If pinning, columns are split into left, center (unpinned), and right pinned columns.
+2. Manual **Column Ordering—**A manually specified column order is applied.
+3. [Grouping](/feature-guides/column-grouping) – If grouping is enabled, a grouping state is active, and `tableOptions.groupedColumnMode` is set to `'reorder' | 'remove'`, then the grouped columns are reordered to the start of the column flow.
+
+> **Note:** `columnOrder` state will only affect unpinned columns if used in conjunction with column pinning.
+
+### Column Order State
+
+If you don't provide a `columnOrder` state, QUI Table will just use the order of the columns in the `columns` array. However, you can provide an array of string column ids to the `columnOrder` state to specify the order of the columns.
+
+#### Default Column Order
+
+If all you need to do is specify the initial column order, you can just specify the `columnOrder` state in the `initialState` table option.
+
+```tsx
+const table = useReactTable({
+  initialState: {
+    columnOrder: ["columnId1", "columnId2", "columnId3"],
+  },
+  // ...
+})
+```
+
+> **Note:** If you are using the `state` table option to also specify the `columnOrder` state, the `initialState` will have no effect. Only specify particular states in either `initialState` or `state`, not both.
+
+#### Managing Column Order State
+
+If you need to change the column order, or set the column order after the table has been initialized, you can manage the `columnOrder` state:
+
+```tsx
+const [columnOrder, setColumnOrder] = useState<string[]>([
+  "columnId1",
+  "columnId2",
+  "columnId3",
+])
+
+const table = useReactTable({
+  state: {
+    columnOrder,
+  },
+  onColumnOrderChange: setColumnOrder,
+  // ...
+})
+```
+
+#### Drag and Drop Column Reordering Suggestions
+
+There are several ways to implement drag and drop features with QUI Table. Here are recommendations to guide your implementation:
+
+1. Avoid using [`react-dnd`](https://react-dnd.github.io/react-dnd/docs/overview). This is no longer maintained.
+
+2. Use [`@atlaskit/pragmatic-drag-and-drop`](https://github.com/atlassian/pragmatic-drag-and-drop). It's a lightweight, performant, and accessible drag and drop library.

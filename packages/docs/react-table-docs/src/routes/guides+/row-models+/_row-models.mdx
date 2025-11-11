@@ -1,0 +1,148 @@
+---
+title: Row Models
+---
+
+# {frontmatter.title}
+
+If you take a look at the most basic example of `@qualcomm-ui/react/table`, you'll see a code snippet like this:
+
+```tsx
+import {getCoreRowModel} from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
+
+function Component() {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(), // row model
+  })
+}
+```
+
+The `getCoreRowModel` function is part of the table's modular design. Not all code for every feature is included by default in the `createTable` functions/hooks. You only need to import and include the code necessary to generate rows based on the features you want to use.
+
+## What are Row Models?
+
+Row models transform your original data for features such as filtering, sorting, grouping, expanding, and pagination. The rows displayed on screen are not always a direct 1:1 mapping of the original data; they may be sorted, filtered, paginated, etc.
+
+### Import Row Models
+
+You should only import the row models that you need. Here are the available row models:
+
+```tsx
+// only import the row models you need
+import {
+  getCoreRowModel,
+  getExpandedRowModel,
+  getFacetedMinMaxValues,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
+  getGroupedRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+} from "@qualcomm-ui/core/table"
+
+// ...
+
+const table = useReactTable({
+  columns,
+  data,
+  getCoreRowModel: getCoreRowModel(),
+  getExpandedRowModel: getExpandedRowModel(),
+  getFacetedMinMaxValues: getFacetedMinMaxValues(),
+  getFacetedRowModel: getFacetedRowModel(),
+  getFacetedUniqueValues: getFacetedUniqueValues(),
+  getFilteredRowModel: getFilteredRowModel(),
+  getGroupedRowModel: getGroupedRowModel(),
+  getPaginationRowModel: getPaginationRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+})
+```
+
+### Using Row Models
+
+Access row models from the table instance. For rendering, use `table.getRowModel()`. This method automatically applies other row models based on enabled features. Additional row models are available for inspecting data transformations.
+
+### Available Row Models
+
+**`getRowModel`** - Use this for rendering. Applies all other row models based on enabled features.
+
+**Core:**
+
+- `getCoreRowModel` - 1:1 mapping of original data
+- `getPreSelectedRowModel` - Before selection applied (returns `getCoreRowModel`)
+
+**Filtering:**
+
+- `getFilteredRowModel` - After column and global filtering
+- `getPreFilteredRowModel` - Before filtering
+
+**Grouping:**
+
+- `getGroupedRowModel` - After grouping and aggregation, creates sub-rows
+- `getPreGroupedRowModel` - Before grouping
+
+**Sorting:**
+
+- `getSortedRowModel` - After sorting
+- `getPreSortedRowModel` - Before sorting (original order)
+
+**Expanding:**
+
+- `getExpandedRowModel` - After expanded/hidden sub-rows applied
+- `getPreExpandedRowModel` - Root rows only, no expanded sub-rows
+
+**Pagination:**
+
+- `getPaginationRowModel` - Current page only
+- `getPrePaginationRowModel` - All rows, no pagination
+
+**Selection:**
+
+- `getSelectedRowModel` - Selected rows from original data (after `getCoreRowModel`)
+- `getFilteredSelectedRowModel` - Selected rows after filtering (after `getFilteredRowModel`)
+- `getGroupedSelectedRowModel` - Selected rows after grouping (after `getSortedRowModel` → `getGroupedRowModel` → `getFilteredRowModel`)
+
+### Row Model Execution Order
+
+Row models are applied in this order when features are enabled:
+
+1. `getCoreRowModel`
+2. `getFilteredRowModel`
+3. `getGroupedRowModel`
+4. `getSortedRowModel`
+5. `getExpandedRowModel`
+6. `getPaginationRowModel`
+7. `getRowModel`
+
+When a feature is disabled or `manual*` option is set, the corresponding `getPre*RowModel` is used at that step.
+
+Processing sequence: filter → group → sort → expand → paginate
+
+### Row Formats
+
+Each row model provides rows in three formats:
+
+1. `rows` - An array of rows.
+2. `flatRows` - An array of rows, but all sub-rows are flattened into the top level.
+3. `rowsById` - An object of rows, where each row is keyed by its ID.
+
+```ts
+// array of rows
+console.log(table.getRowModel().rows)
+
+// array of rows, but all sub-rows are flattened into the top level
+console.log(table.getRowModel().flatRows)
+
+// object of rows, where each row is keyed by its `id`
+console.log(table.getRowModel().rowsById["row-id"])
+```
+
+## Related Guides
+
+- [Filtering](/feature-guides/column-filtering)
+- [Sorting](/feature-guides/sorting)
+- [Pagination](/feature-guides/pagination)
+- [Row Expansion](/feature-guides/row-expansion)
+- [Grouping](/feature-guides/column-grouping)

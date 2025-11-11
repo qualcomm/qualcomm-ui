@@ -1,0 +1,215 @@
+---
+title: Table State
+---
+
+# {frontmatter.title}
+
+`@qualcomm-ui/react/table` provides a state management system for storing and managing table state. It allows you to extract specific state elements to integrate with your own state management system. This guide explains the various methods for interacting with and managing table state.
+
+## Accessing Table State
+
+No special setup is required for the table state to function. If you do not provide any parameters for `state`, `initialState`, or any of the `on[State]Change` table options, the table will automatically manage its state internally. You can access any part of this internal state through the `table.getState()` API.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  // ...
+})
+
+console.log(table.getState()) // access the entire internal state
+console.log(table.getState().rowSelection) // access just the row selection state
+```
+
+## Initial State
+
+If you only need to customize the initial values for certain states, you don't need to manage the state yourself. Simply set the desired values in the `initialState` option of the table instance.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  initialState: {
+    columnOrder: ["age", "firstName", "lastName"], // customize the initial column order
+    columnVisibility: {
+      id: false, // hide the id column by default
+    },
+    expanded: true, // expand all rows by default
+    sorting: [
+      {
+        id: "age",
+        desc: true, // sort by age in descending order by default
+      },
+    ],
+  },
+  // ...
+})
+```
+
+> [!note]
+> Specify each particular state in either initialState or state, but not both. If you provide a state value to both initialState and state, the value in state will overwrite the corresponding value in initialState.
+
+## Controlled State
+
+`@qualcomm-ui/react/table` allows you to control and manage any or all of the table state within your own state management system. You can achieve this by passing your own state and state management functions to the `state` and `on[State]Change` table options.
+
+### Individual Controlled State
+
+You can control only the state you need easy access to; you do not have to manage the entire table state if it's unnecessary. It's recommended to control state selectively, based on your specific needs.
+
+To control a particular state, you need to pass both the corresponding state value and the `on[State]Change` function to the table instance.
+
+For example, in a "manual" server-side data fetching scenario, you can manage the filtering, sorting, and pagination state within your own state management system. You can ignore other states, like column order or column visibility, if they are not relevant to your API.
+
+```tsx
+import {
+  ColumnFiltersState,
+  SortingState,
+  PaginationState,
+} from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
+
+function Component() {
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]) // no default filters
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: "age",
+      desc: true, // sort by age in descending order by default
+    },
+  ])
+  const [pagination, setPagination] = useState({pageIndex: 0, pageSize: 15})
+
+  // Use our controlled state values to fetch data
+  const tableQuery = useQuery({
+    queryKey: ["users", columnFilters, sorting, pagination],
+    queryFn: () => fetchUsers(columnFilters, sorting, pagination),
+    // ...
+  })
+
+  const table = useReactTable({
+    columns,
+    data: tableQuery.data,
+    // Override internal state with controlled state
+    state: {
+      columnFilters,
+      sorting,
+      pagination,
+    },
+    // Use custom state management for column filters
+    onColumnFiltersChange: setColumnFilters,
+    // Use custom state management for sorting
+    onSortingChange: setSorting,
+    // Use custom state management for pagination
+    onPaginationChange: setPagination,
+    // ...
+  })
+}
+```
+
+### Fully Controlled State
+
+Alternatively, you can control the entire table state using the `onStateChange` table option. This will hoist the entire table state into your own state management system. However, be cautious with this approach, as raising frequently changing state values, such as `columnSizingInfo`, up a component tree might cause performance issues.
+
+A couple of additional steps may be needed to make this work. When using the onStateChange table option, the initial values of the state must include all relevant state values for the features you want to use. You can either manually input all the initial state values or use a constructor in a special way, as demonstrated below.
+
+```tsx
+import {TableState} from "@qualcomm-ui/core/table"
+
+// create a table instance with default state values
+const table = useReactTable<TableState>({
+  columns,
+  data,
+  // Note: `state` values are NOT passed in yet
+})
+
+const [state, setState] = useState<TableState>({
+  // populate the initial state with all the default state values from the table instance
+  ...table.initialState,
+  pagination: {
+    pageIndex: 0,
+    pageSize: 15, // optionally customize the initial pagination state.
+  },
+})
+
+// Use the table.setOptions API to merge our fully controlled state onto the table instance
+table.setOptions((prev) => ({
+  ...prev, // preserve any other options that we have set up above
+  state, // our fully controlled state overrides the internal state
+  onStateChange: setState, // any state changes will be pushed up to our own state management
+}))
+```
+
+## On State Change Callbacks
+
+So far, we have seen that the `on[State]Change` and `onStateChange` table options can "hoist" table state changes into our own state management. However, there are a few important considerations to keep in mind when using these options.
+
+### Callback Parameters
+
+State Change Callbacks MUST have their corresponding state value in the `state` option.
+
+Specifying an `on[State]Change` callback indicates that the state will be controlled. If you do not provide the corresponding state value, that state will remain "frozen" at its initial value.
+
+```tsx
+import {SortingState} from "@qualcomm-ui/core/table"
+
+const [sorting, setSorting] = useState<SortingState>([])
+// ...
+const table = useReactTable({
+  columns,
+  data,
+  state: {
+    sorting, // required because we are using `onSortingChange`
+  },
+  onSortingChange: setSorting, // makes the `state.sorting` controlled
+  // ...
+})
+```
+
+### Updaters
+
+Updaters can either be raw values or callback functions (like the `useState` [setter function](https://react.dev/reference/react/useState#setstate)).
+
+The `on[State]Change` and `onStateChange` callbacks function exactly like the `setState` function. The updater values can either be a new state value or a callback function that takes the previous state value and returns the new state value.
+
+This means that if you want to add some extra logic to any of the `on[State]Change` callbacks, you can do so, but you need to check whether the new incoming updater value is a function or a value.
+
+```tsx
+import {PaginationState, SortingState} from "@qualcomm-ui/core/table"
+
+const [sorting, setSorting] = useState<SortingState>([])
+const [pagination, setPagination] = useState<PaginationState>({
+  pageIndex: 0,
+  pageSize: 10,
+})
+
+const table = useReactTable({
+  columns,
+  data,
+  state: {
+    pagination,
+    sorting,
+  },
+  // syntax 1
+  onPaginationChange: (updater) => {
+    setPagination((old) => {
+      const newPaginationValue =
+        updater instanceof Function ? updater(old) : updater
+      // do something with the new pagination value
+      // ...
+      return newPaginationValue
+    })
+  },
+  // syntax 2
+  onSortingChange: (updater) => {
+    const newSortingValue =
+      updater instanceof Function ? updater(sorting) : updater
+    // do something with the new sorting value
+    // ...
+    setSorting(updater) // normal state update
+  },
+})
+```
+
+## State Types
+
+All complex states have their own TypeScript types that you can import and use. This is useful for ensuring that you are using the correct data structures and properties for the state values you are controlling.

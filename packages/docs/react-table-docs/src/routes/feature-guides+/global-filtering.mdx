@@ -1,0 +1,187 @@
+---
+title: Global Filtering Guide
+---
+
+# {frontmatter.title}
+
+## Examples & API
+
+- [Global Filters](/features/filters)
+- [Global Filtering API](/api/features/filters)
+
+## Guide
+
+Filtering comes in 2 flavors: Column Filtering and Global Filtering.
+
+This guide focuses on global filtering, which applies a filter across all columns.
+
+### Client-Side vs. Server-Side Filtering
+
+Server-side filtering becomes necessary when datasets are too large to load into the client browser efficiently.
+
+Client-side filtering handles approximately 100,000 rows with acceptable performance for filtering, sorting, pagination, and grouping. See [Pagination Guide](/feature-guides/pagination#when-to-use-client-side-pagination) for detailed performance considerations.
+
+> **Note:** Client-side operations can handle thousands of rows. Test your specific use case before implementing server-side filtering.
+
+Performance depends on table complexity, column count, and data size. Consider these constraints:
+
+1. Server query time and cost
+2. Fetch payload size
+3. Client memory consumption
+
+Client-side filtering is sufficient for most tables. Switch to server-side filtering when performance degrades.
+
+### Manual Server-Side Global Filtering
+
+Pass pre-filtered `data` to the table. The `getFilteredRowModel` option is not needed. Set `manualFiltering: true` to disable client-side filtering.
+
+```tsx
+const table = useReactTable({
+  data,
+  columns,
+  manualFiltering: true,
+})
+```
+
+> **Note:** `manualFiltering: true` disables client-side filtering logic. The table uses the provided `data` as-is. Options described in this guide do not apply when manual filtering is enabled.
+
+### Client-Side Global Filtering
+
+Pass `getFilteredRowModel` to the table options:
+
+```tsx
+import {useReactTable, getFilteredRowModel} from "@tanstack/react-table"
+
+const table = useReactTable({
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+})
+```
+
+### Global Filter Function
+
+The `globalFilterFn` option specifies the filter function for global filtering. Pass a built-in filter function name, a custom filter function name from `tableOptions.filterFns`, or a custom filter function.
+
+```tsx
+const table = useReactTable({
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  globalFilterFn: "text",
+})
+```
+
+10 built-in filter functions:
+
+- `includesString` - Case-insensitive string inclusion
+- `includesStringSensitive` - Case-sensitive string inclusion
+- `equalsString` - Case-insensitive string equality
+- `equalsStringSensitive` - Case-sensitive string equality
+- `arrIncludes` - Item inclusion within an array
+- `arrIncludesAll` - All items included in an array
+- `arrIncludesSome` - Some items included in an array
+- `equals` - Object/referential equality (Object.is/===)
+- `weakEquals` - Weak object/referential equality (==)
+- `inNumberRange` - Number range inclusion
+
+Pass custom filter functions directly to `globalFilterFn`.
+
+### Global Filter State
+
+Access the global filter state via `table.getState().globalFilter`. Manage state externally using the `state.globalFilter` and `onGlobalFilterChange` options.
+
+```tsx
+const [globalFilter, setGlobalFilter] = useState<any>("")
+
+const table = useReactTable({
+  state: {
+    globalFilter,
+  },
+  onGlobalFilterChange: setGlobalFilter,
+})
+```
+
+Global filter state type:
+
+```tsx
+interface GlobalFilter {
+  globalFilter: any
+}
+```
+
+### Adding Global Filter Input to UI
+
+The table does not render a global filter input. Add an input element to your UI:
+
+```tsx
+const [globalFilter, setGlobalFilter] = useState("")
+
+return (
+  <div>
+    <input
+      value={globalFilter ?? ""}
+      onChange={(e) => setGlobalFilter(String(e.target.value))}
+      placeholder="Search..."
+    />
+  </div>
+)
+```
+
+### Custom Global Filter Function
+
+Pass a custom filter function to the `globalFilterFn` option.
+
+> **Note:** Fuzzy filtering is a common global filter implementation. See [Fuzzy Filtering Guide](../fuzzy-filtering.md).
+
+```jsx
+const customFilterFn = (rows, columnId, filterValue) => {
+  return rows.filter((row) => {
+    // custom filter logic
+  })
+}
+
+const table = useReactTable({
+  globalFilterFn: customFilterFn,
+})
+```
+
+### Initial Global Filter State
+
+Set initial state using `initialState.globalFilter` or by initializing the state variable:
+
+```jsx
+const [globalFilter, setGlobalFilter] = useState("search term")
+
+const table = useReactTable({
+  initialState: {
+    globalFilter: "search term",
+  },
+  state: {
+    globalFilter,
+  },
+})
+```
+
+> **Note:** Do not set `globalFilter` in both `initialState` and `state`. The `state` option overrides `initialState`.
+
+### Disable Global Filtering
+
+Global filtering is enabled by default. Disable it per-column or for all columns using `enableGlobalFilter`. Set `enableFilters: false` to disable both column and global filtering.
+
+When disabled, `column.getCanGlobalFilter()` returns `false`.
+
+```jsx
+const columns = [
+  {
+    header: () => "Id",
+    accessorKey: "id",
+    enableGlobalFilter: false,
+  },
+]
+
+const table = useReactTable({
+  columns,
+  enableGlobalFilter: false,
+})
+```

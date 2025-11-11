@@ -1,0 +1,29 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "composite": true,
+    "noEmit": false,
+    "outDir": "./dist",
+    "paths": {
+      "~assets/*": ["./src/assets/*"],
+      "~components/*": ["./src/components/*"],
+      "~utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": [
+    "./src/**/*.mdx",
+    "./src/routes/feature-guides+/expanding.mdx"
+  ],
+  "references": [
+    {
+      "path": "../../frameworks/react/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    }
+  ]
+}

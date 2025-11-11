@@ -1,0 +1,90 @@
+---
+title: Rows
+---
+
+# {frontmatter.title}
+
+## API
+
+- [Row](/api/row)
+
+## Row Models
+
+The table instance stores row objects in Row Models (arrays). See [Row Models Guide](/guides/row-models) for details.
+
+Common access patterns:
+
+```tsx
+<Table.Body>
+  {table.getRowModel().rows.map((row) => (
+    <Table.Row key={row.id}>{/* ... */}</Table.Row>
+  ))}
+</Table.Body>
+```
+
+## Row Objects
+
+Row objects contain data and APIs for interacting with table state and extracting cell values.
+
+Each row has an `id` property. By default, `row.id` equals `row.index` from the row model. Use the `getRowId` table option to override this with a unique identifier from your data.
+
+```tsx
+const table = useReactTable({
+  columns,
+  data,
+  // override the row.id with the uuid from the original row's data
+  getRowId: (originalRow) => originalRow.uuid,
+})
+```
+
+> Note: In some features like grouping and expanding, the row.id will have additional string appended to it.
+
+### Access Original Row Data
+
+Access original data via `row.original`. This data is unmodified by column accessors. Accessor transformations are not reflected in `row.original`.
+
+```tsx
+// Access any data from the original row
+const firstName = row.original.firstName // { firstName: 'John', lastName: 'Doe' }
+```
+
+### Sub Rows
+
+If you use grouping or expanding features, your rows may contain sub-rows or parent row references. Detailed information is available in the [Expanding Guide](/feature-guides/expanding).
+
+Properties and methods for working with sub-rows:
+
+- `row.subRows`: Array of sub-rows for the row.
+- `row.depth`: Depth of the row (if nested or grouped) relative to the root row array.
+  - 0 for root level rows
+  - 1 for child rows
+  - 2 for grandchild rows, etc.
+- `row.parentId`: Unique ID of the parent row (the row that contains this row in its subRows array).
+- `row.getParentRow()`: Returns the parent row if it exists.
+
+Example with nested data:
+
+```tsx
+const data = [
+  {
+    id: "1",
+    name: "Parent Row",
+    subRows: [
+      {id: "1.1", name: "Child Row", subRows: []},
+      {id: "1.2", name: "Another Child", subRows: []},
+    ],
+  },
+]
+
+// In your render:
+<Table.Body>
+  {table.getRowModel().rows.map((row) => (
+    <Table.Row
+      key={row.id}
+      style={{paddingLeft: `${row.depth * 20}px`}} // Indent by depth
+    >
+      {/* row.depth = 0 for parent, 1 for children */}
+    </Table.Row>
+  ))}
+</Table.Body>
+```
