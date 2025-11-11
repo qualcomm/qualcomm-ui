@@ -1,0 +1,51 @@
+{
+  "name": "@qualcomm-ui/dom",
+  "version": "1.0.0",
+  "description": "DOM utilities and helpers.",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "require": "./dist/*/index.cjs",
+      "default": "./dist/*/index.js"
+    }
+  },
+  "sideEffects": false,
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "run-s clean build:js build:ts",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
+    "build:js": "tsx build.ts",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:js watch:ts",
+    "watch:js": "tsx build.ts --watch",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "lint": "eslint --quiet",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@floating-ui/dom": "^1.7.0",
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@types/node": "~24.9.2",
+    "esbuild": "^0.25.8",
+    "shx": "^0.4.0",
+    "tsx": "^4.20.6",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "@floating-ui/dom": ">=1.7.0",
+    "@qualcomm-ui/utils": "workspace:^1"
+  }
+}

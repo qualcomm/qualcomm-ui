@@ -17,6 +17,6 @@ export default {
       outFileName: "button.min.css",
     },
   ],
-  name: "@qui/qds-core",
+  name: "@qualcomm-ui/qds-core",
   outDir: resolve(__dirname, "dist"),
 } satisfies CssBuilderConfig

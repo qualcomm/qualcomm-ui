@@ -36,7 +36,7 @@
     "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/tsconfig": "workspace:*",
     "@typescript-eslint/rule-tester": "^8.31.1",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "eslint-plugin-boundaries": "^5.0.1",
     "eslint-plugin-import": "^2.31.0",
     "vitest": "^3.2.4"
