@@ -30,9 +30,7 @@
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
     "@qualcomm-ui/esbuild": "workspace:^1",
     "@qualcomm-ui/tsconfig": "workspace:^1",
