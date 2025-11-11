@@ -33,6 +33,8 @@ export default defineConfig(
       "./packages/docs/**/src/routes/changelogs.*",
       "./packages/docs/angular*/public/*.js",
       "./packages/common/codemod/src/**/__tests__/mocks/**/*.tsx",
+      // CI issue with strict exports
+      "./packages/common/mdx-docs-common/src/index.ts",
     ],
   },
   {
