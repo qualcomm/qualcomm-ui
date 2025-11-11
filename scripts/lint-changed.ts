@@ -1,8 +1,13 @@
 import {execSync} from "node:child_process"
 
-const base = process.env.GITHUB_BASE_REF || "main"
+const baseRef = process.env.GITHUB_EVENT_BEFORE || process.env.GITHUB_BASE_REF
+if (!baseRef) {
+  console.error("No base ref found")
+  process.exit(1)
+}
+
 const changedFiles = execSync(
-  `git diff --name-only --diff-filter=ACMRT origin/${base}...HEAD`,
+  `git diff --name-only --diff-filter=ACMRT ${baseRef} HEAD`,
   {encoding: "utf-8"},
 )
   .split("\n")
