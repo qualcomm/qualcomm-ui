@@ -1,0 +1,1833 @@
+[
+  {
+    "accordion": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/accordion+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/accordion+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/accordion"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/accordion"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/accordion"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/accordion"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/accordion"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/accordion"
+      }
+    ]
+  },
+  {
+    "action-bar": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/action-bar+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/action-bar+",
+        "line": "-1"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/action-bar",
+        "line": "-1"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/action-bar",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/action-bar",
+        "line": "-1"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/action-bar",
+        "line": "-1"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/action-bar",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/action-bar",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "alert-banner": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/alert-banner+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/alert-banner+",
+        "line": "-1"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/alert-banner",
+        "line": "-1"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/alert-banner",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/alert-banner",
+        "line": "-1"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/alert-banner",
+        "line": "-1"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/alert-banner",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/alert-banner",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "action-group": [
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/action-group"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/action-group"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/action-group"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/action-group"
+      }
+    ]
+  },
+  {
+    "badge": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/badge+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/badge+",
+        "line": "-1"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/badge",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/badge",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/badge",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "breadcrumbs": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/breadcrumbs+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/breadcrumbs+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/breadcrumbs"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/breadcrumbs"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/breadcrumbs"
+      }
+    ]
+  },
+  {
+    "button": [
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/button+"
+      },
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/button+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/button"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/button"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/button"
+      }
+    ]
+  },
+  {
+    "button-group": [
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/button-group+"
+      },
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/button-group+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/button"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/button"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/button"
+      }
+    ]
+  },
+  {
+    "checkbox": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/checkbox+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/checkbox+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/checkbox"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/checkbox"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/checkbox"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/checkbox"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/checkbox"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/checkbox"
+      }
+    ]
+  },
+  {
+    "checkmark": [
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/checkmark"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/checkmark"
+      }
+    ]
+  },
+  {
+    "collapsible": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/collapsible+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/collapsible+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/collapsible"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/collapsible"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/collapsible"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/collapsible"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/collapsible"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/collapsible"
+      }
+    ]
+  },
+  {
+    "combobox": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/combobox+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/combobox+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/combobox"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/combobox"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/combobox"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/combobox"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/combobox"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/combobox",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "dialog": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/dialog+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/dialog+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/dialog"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/dialog"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/dialog"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/dialog"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/dialog"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/dialog"
+      }
+    ]
+  },
+  {
+    "divider": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/divider+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/divider+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/divider"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/divider"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/divider"
+      }
+    ]
+  },
+  {
+    "drawer": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/drawer+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/drawer+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/drawer"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/drawer",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/drawer"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/drawer",
+        "line": "-1"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/drawer",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/drawer"
+      }
+    ]
+  },
+  {
+    "file-uploader": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/file-uploader+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/file-uploader+",
+        "line": "-1"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/file-uploader",
+        "line": "-1"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/file-uploader",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/file-uploader",
+        "line": "-1"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/file-uploader",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/file-uploader",
+        "line": "-1"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/file-uploader",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "header-bar": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/header-bar+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/header-bar+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/header-bar"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/header-bar"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/header-bar"
+      }
+    ]
+  },
+  {
+    "icon": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/icon+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/icon+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/icon"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/lucide"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/icon"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/lucide"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/icon"
+      }
+    ]
+  },
+  {
+    "icon-button": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/icon-button+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/icon-button+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/button"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/button"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/button"
+      }
+    ]
+  },
+  {
+    "inline-icon-button": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/inline-icon-button+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/inline-icon-button+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/inline-icon-button"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/inline-icon-button"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/inline-icon-button"
+      }
+    ]
+  },
+  {
+    "inline-notification": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/inline-notification+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/inline-notification+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/inline-notification"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/inline-notification"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/inline-notification"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/inline-notification"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/inline-notification"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/inline-notification"
+      }
+    ]
+  },
+  {
+    "link": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/link+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/link+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/link"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/link"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/link"
+      }
+    ]
+  },
+  {
+    "input": [
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/input"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/input"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/input"
+      }
+    ]
+  },
+  {
+    "menu": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/menu+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/menu+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/menu"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/menu"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/menu"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/menu"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/menu"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/menu"
+      }
+    ]
+  },
+  {
+    "notification": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/notification+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/notification+",
+        "line": "-1"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/notification",
+        "line": "-1"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/notification",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/notification",
+        "line": "-1"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/notification",
+        "line": "-1"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/notification",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/notification",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "number-input": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/number-input+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/number-input+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/number-input"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/number-input"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/number-input"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/number-input"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/number-input"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/number-input"
+      }
+    ]
+  },
+  {
+    "pagination": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/pagination+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/pagination+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/pagination"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/pagination"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/pagination"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/pagination"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/pagination"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/pagination"
+      }
+    ]
+  },
+  {
+    "password-input": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/password-input+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/password-input+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/password-input"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/password-input"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/password-input"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/password-input"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/password-input"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/password-input"
+      }
+    ]
+  },
+  {
+    "popover": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/popover+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/popover+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/popover"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/popover"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/popover"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/popover"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/popover"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/popover"
+      }
+    ]
+  },
+  {
+    "progress": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/progress+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/progress+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/progress"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/progress"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/progress"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/progress"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/progress"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/progress"
+      }
+    ]
+  },
+  {
+    "progress-ring": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/progress-ring+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/progress-ring+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/progress-ring"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/progress-ring"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/progress-ring"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/progress-ring"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/progress-ring"
+      }
+    ]
+  },
+  {
+    "radio": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/radio+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/radio+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/radio"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/radio"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/radio"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/radio"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/radio"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/radio"
+      }
+    ]
+  },
+  {
+    "segmented-control": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/segmented-control+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/segmented-control+"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/segmented-control"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/segmented-control",
+        "line": "-1"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/segmented-control"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/segmented-control"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/segmented-control"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/segmented-control"
+      }
+    ]
+  },
+  {
+    "select": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/select+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/select+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/select"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/select"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/select"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/select"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/select"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/select"
+      }
+    ]
+  },
+  {
+    "side-nav": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/side-nav+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/side-nav+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/side-nav"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/side-nav",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/side-nav"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/side-nav"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/side-nav"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/side-nav"
+      }
+    ]
+  },
+  {
+    "slider": [
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/slider+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/slider",
+        "line": "-1"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/slider",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/slider"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/slider"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/slider"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/slider"
+      },
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/slider+",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "split-button": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/split-button+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/split-button+",
+        "line": "-1"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/split-button",
+        "line": "-1"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/split-button",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/split-button",
+        "line": "-1"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/split-button",
+        "line": "-1"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/split-button",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/split-button",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "switch": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/switch+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/switch+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/switch"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/switch"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/switch"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/switch"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/switch"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/switch"
+      }
+    ]
+  },
+  {
+    "table": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-table-docs/src/routes"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-table-docs/src/routes"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/table"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/table"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/table"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/table"
+      }
+    ]
+  },
+  {
+    "tabs": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/tabs+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/tabs+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/tabs"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/tabs"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/tabs"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/tabs"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/tabs"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/tabs"
+      }
+    ]
+  },
+  {
+    "tag": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/tag+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/tag+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/tag"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/tag"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/tag"
+      }
+    ]
+  },
+  {
+    "text-area": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/text-area+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/text-area+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/text-area"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/text-area"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/text-area"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/text-area"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/text-area"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/text-area"
+      }
+    ]
+  },
+  {
+    "text-input": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/text-input+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/text-input+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/text-input"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/text-input"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/text-input"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/text-input"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/text-input"
+      }
+    ]
+  },
+  {
+    "toast": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/toast+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/toast+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/toast"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/toast"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/toast"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/toast"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/toast"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/toast"
+      }
+    ]
+  },
+  {
+    "tooltip": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/tooltip+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/tooltip+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/tooltip"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/tooltip"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/tooltip"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/tooltip"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/tooltip"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/tooltip"
+      }
+    ]
+  },
+  {
+    "tree": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/tree+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/tree+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/tree"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/tree",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/tree"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/tree"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/tree"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/tree"
+      }
+    ]
+  }
+]

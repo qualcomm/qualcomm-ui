@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "angular.ng-template",
+    "dbaeumer.vscode-eslint",
+    "unifiedjs.vscode-mdx",
+    "christian-kohler.npm-intellisense",
+    "rvest.vs-code-prettier-eslint",
+    "stylelint.vscode-stylelint",
+    "bradlc.vscode-tailwindcss",
+    "meganrogge.template-string-converter",
+    "esbenp.prettier-vscode"
+  ]
+}

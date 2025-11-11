@@ -23,13 +23,13 @@
     "qui-css-utils": "./lib/cli.cjs"
   },
   "scripts": {
-    "build": "run-s clean build:js build:types",
+    "build": "run-s clean build:js build:ts",
     "clean": "shx rm -rf dist",
     "build:js": "tsx build.ts",
-    "build:types": "tsc -b tsconfig.lib.json --force",
-    "dev": "run-p watch:js watch:types",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:js watch:ts",
     "watch:js": "tsx build.ts --mode development --watch",
-    "watch:types": "tsc -b tsconfig.lib.json -w --preserveWatchOutput --force",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"

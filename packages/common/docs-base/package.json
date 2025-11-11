@@ -13,13 +13,13 @@
     "package.json"
   ],
   "scripts": {
-    "build": "run-s clean build:components build:types",
+    "build": "run-s clean build:components build:ts",
     "clean": "shx rm -rf dist",
     "build:components": "vite build -c vite.config.ts",
-    "build:types": "tsc -p tsconfig.build.json",
-    "dev": "run-p watch:components watch:types",
+    "build:ts": "tsc -b tsconfig.lib.json --force",
+    "dev": "run-p watch:components watch:ts",
     "watch:components": "vite build -c vite.config.ts -w --emptyOutDir=false",
-    "watch:types": "tsc -p tsconfig.build.json -w --preserveWatchOutput",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "lint": "eslint --quiet"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
+#!/usr/bin/env node
+
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
-
-#!/usr/bin/env node
 
 import {readdirSync, readFileSync, statSync} from "node:fs"
 import {join, relative, sep} from "node:path"

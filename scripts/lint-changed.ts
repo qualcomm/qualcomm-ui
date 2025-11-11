@@ -23,4 +23,4 @@ if (changedFiles.length === 0) {
   process.exit(0)
 }
 
-execSync(`pnpm eslint ${changedFiles.join(" ")}`, {stdio: "inherit"})
+execSync(`pnpm eslint --quiet ${changedFiles.join(" ")}`, {stdio: "inherit"})

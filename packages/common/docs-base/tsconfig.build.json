@@ -1,8 +1,0 @@
-{
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.build-types.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist"
-  },
-  "include": ["./src"],
-}

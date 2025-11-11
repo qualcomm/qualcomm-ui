@@ -26,7 +26,7 @@
     "build:ts": "tsc -b tsconfig.lib.json",
     "dev": "run-p watch:js watch:ts",
     "watch:js": "tsx build.ts --watch",
-    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "watch:ts": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
     "lint": "eslint --quiet",
     "test": "vitest -c vitest.config.ts --run",
     "test:ui": "vitest -c vitest.config.ts --ui --coverage.enabled=true",
