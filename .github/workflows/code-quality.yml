@@ -54,6 +54,9 @@ jobs:
   # also run repolinter on PRs
   repolinter-pr:
     runs-on: ubuntu-latest
+    concurrency:
+      group: PR Repolint - ${{github.head_ref}}
+      cancel-in-progress: true
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
