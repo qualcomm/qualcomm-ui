@@ -1,0 +1,195 @@
+.qui-progress__root {
+  --bar-column-end: -1;
+  --bar-grid-row: 1;
+  --bar-start-column: 1;
+  --hint-grid-row: calc(var(--bar-grid-row) + 1);
+  --progress-height: var(--sizing-50);
+  display: grid;
+  grid-column-gap: var(--spacing-70);
+  grid-row-gap: var(--spacing-40);
+  grid-template-columns: 1fr;
+  position: relative;
+  width: 100%;
+
+  &:has(.qui-progress__error-text:not([hidden])) {
+    --hint-grid-row: calc(var(--bar-grid-row) + 2);
+  }
+
+  &:has(.qui-progress__value-text) {
+    --bar-grid-row: 2;
+  }
+
+  &[data-label-orientation="side"] {
+    --bar-grid-row: 1;
+    &:has(.qui-progress__value-text) {
+      --bar-column-end: -2;
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  &:has(.qui-progress__label) {
+    &[data-label-orientation="top"] {
+      --bar-grid-row: 2;
+    }
+    &[data-label-orientation="side"] {
+      grid-template-columns: auto 1fr;
+      --bar-grid-row: 1;
+      --bar-start-column: 2;
+      &:has(.qui-progress__value-text) {
+        grid-template-columns: auto 1fr auto;
+      }
+    }
+  }
+
+  &[data-size="sm"] {
+    --progress-height: var(--sizing-40);
+  }
+  &[data-size="lg"] {
+    --progress-height: var(--sizing-60);
+  }
+}
+
+.qui-progress__label {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+}
+
+.qui-progress__value-text {
+  color: var(--color-text-neutral-primary);
+  display: flex;
+  font: var(--font-static-body-xs-default);
+  /* always in the last column */
+  grid-column: -2 / -1;
+  grid-row: 1;
+  justify-self: end;
+
+  &[data-invalid] {
+    color: var(--color-text-support-danger);
+  }
+}
+
+.qui-progress__error-text {
+  align-items: flex-start;
+  color: var(--color-text-support-danger);
+  display: inline-flex;
+  flex-wrap: nowrap;
+  font: var(--font-static-body-xs-default);
+  gap: var(--spacing-40);
+  grid-column: 1 / -1;
+  grid-row: calc(var(--bar-grid-row) + 1);
+  /* Figma shows an extra pixel of space between the error icon and progress bar */
+  margin-top: 1px;
+}
+
+.qui-progress__hint {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+  grid-column: var(--bar-start-column) / -1;
+  grid-row: var(--hint-grid-row);
+}
+
+.qui-progress__track {
+  align-items: baseline;
+  align-self: center;
+  background: var(--color-background-neutral-04);
+  border-radius: 360px;
+  display: flex;
+  grid-column: var(--bar-start-column) / var(--bar-column-end);
+  grid-row: var(--bar-grid-row);
+  height: var(--progress-height);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.qui-progress__bar {
+  background: var(--progress-color);
+  border-radius: var(--border-radius-rounded);
+  height: var(--progress-height);
+  max-height: var(--progress-height);
+  transition: width 200ms ease;
+
+  &[data-emphasis="primary"] {
+    --progress-color: var(--color-background-brand-primary);
+  }
+  &[data-emphasis="neutral"] {
+    --progress-color: var(--color-background-support-neutral);
+  }
+
+  &[data-invalid] {
+    --progress-color: var(--color-text-support-danger);
+  }
+
+  &[data-state="loading"],
+  &[data-state="complete"] {
+    width: var(--percent);
+  }
+
+  &[data-state="indeterminate"] {
+    &:before {
+      animation: qui-progress__indeterminate-animation-1 2.2s
+        cubic-bezier(0.65, 0.815, 0.735, 0.395) 0s infinite normal none running;
+      background: var(--progress-color);
+      border-radius: var(--border-radius-rounded);
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      top: 0;
+      transform-origin: left center;
+      transition: transform 0.2s linear 0s;
+      width: auto;
+    }
+    &:after {
+      animation: qui-progress__indeterminate-animation-2 2.2s
+        cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite normal none running;
+      background: var(--progress-color);
+      border-radius: var(--border-radius-rounded);
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      top: 0;
+      transform-origin: left center;
+      transition: transform 0.2s linear 0s;
+      width: auto;
+    }
+  }
+}
+
+@keyframes qui-progress__indeterminate-animation-1 {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes qui-progress__indeterminate-animation-2 {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}

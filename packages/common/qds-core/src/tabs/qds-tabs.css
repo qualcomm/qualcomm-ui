@@ -1,0 +1,267 @@
+.qui-tabs__root {
+  display: flex;
+  flex-direction: column;
+  --indicator-size: 2px;
+
+  &[data-size="lg"] {
+    --indicator-size: 3px;
+  }
+  &[data-size="xl"] {
+    --indicator-size: 4px;
+  }
+
+  &[data-orientation="vertical"] {
+    flex-direction: row;
+  }
+}
+
+.qui-tabs__list {
+  display: inline-flex;
+  isolation: isolate;
+  position: relative;
+
+  &[data-orientation="horizontal"] {
+    &[data-variant="contained"] {
+      border-bottom: 1px solid var(--color-border-neutral-02);
+
+      &[data-disabled] {
+        border-color: var(--color-utility-disabled-border);
+      }
+    }
+  }
+
+  &[data-orientation="vertical"] {
+    flex-direction: column;
+    &::before {
+      background: var(--color-border-neutral-01);
+      content: "";
+      height: 100%;
+      left: 0;
+      position: absolute;
+      width: var(--indicator-size);
+    }
+  }
+}
+
+.qui-tab__root {
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  --dismiss-spacing-offset: 0px;
+
+  &[data-variant="contained"] {
+    &:not(:last-child) {
+      border-right: 1px solid var(--color-border-neutral-02);
+    }
+  }
+
+  &:has(.qui-tab__dismiss-button) {
+    --dismiss-spacing-offset: calc(var(--sizing-80) + var(--spacing-50));
+  }
+
+  &[data-size="sm"] {
+    --tab-initial-spacing-x: var(--spacing-50);
+    --tab-spacing-y: var(--spacing-50);
+  }
+
+  &[data-size="md"] {
+    --tab-initial-spacing-x: var(--spacing-70);
+    --tab-spacing-y: var(--spacing-70);
+  }
+
+  &[data-size="lg"] {
+    font: var(--font-static-body-sm-bold);
+    --tab-initial-spacing-x: var(--spacing-80);
+    --tab-spacing-y: var(--spacing-80);
+  }
+
+  &[data-size="xl"] {
+    font: var(--font-static-body-sm-bold);
+    --tab-initial-spacing-x: var(--spacing-90);
+    --tab-spacing-y: var(--spacing-90);
+  }
+}
+
+.qui-tab__dismiss-button {
+  position: absolute;
+  right: var(--tab-initial-spacing-x);
+}
+
+.qui-tab__button {
+  /* The tab button takes up the entire width of the available space, and we absolutely
+   * position the remaining elements on top of it. This is for accessibility since we can't
+   * nest interactive elements. */
+  --tab-spacing-end: calc(
+    var(--tab-initial-spacing-x) + var(--dismiss-spacing-offset)
+  );
+  align-items: center;
+  color: var(--color-interactive-text-neutral-idle);
+  display: inline-flex;
+  font: var(--font-static-body-xs-bold);
+  gap: var(--spacing-50);
+  outline: none;
+  padding-bottom: var(--tab-spacing-y);
+  padding-inline-end: var(--tab-spacing-end);
+  padding-inline-start: var(--tab-initial-spacing-x);
+  padding-top: var(--tab-spacing-y);
+
+  /* indicator customization */
+  &[data-selected][data-variant="line"]:not([data-indicator-rendered]) {
+    /* We render the indicator like this during SSR because the indicator from the machine
+     * is only rendered after the browser paints and the element is measured */
+    &[data-orientation="horizontal"] {
+      &::before {
+        bottom: 0;
+        height: var(--indicator-size);
+        width: 100%;
+      }
+    }
+    &[data-orientation="vertical"] {
+      &::before {
+        height: 100%;
+        left: 0;
+        top: 0;
+        width: var(--indicator-size);
+      }
+    }
+    &::before {
+      background: var(--color-border-brand-primary);
+      content: "";
+      left: 0;
+      position: absolute;
+    }
+  }
+
+  &:hover {
+    background: var(--color-interactive-background-ghost-hover);
+    color: var(--color-interactive-text-neutral-hover);
+  }
+
+  &:active {
+    background: var(--color-interactive-background-ghost-pressed);
+    color: var(--color-interactive-text-neutral-pressed);
+  }
+
+  &[data-disabled] {
+    background: var(--color-interactive-background-ghost-idle);
+    color: var(--color-utility-disabled-text);
+    pointer-events: none;
+  }
+
+  &[data-variant="line"] {
+    &[data-focus][data-focus-visible] {
+      outline: solid 2px var(--color-border-brand-primary);
+      outline-offset: -1px;
+    }
+  }
+
+  &[data-variant="contained"] {
+    &:hover {
+      background: var(--color-background-neutral-01);
+    }
+
+    &[data-selected] {
+      background: var(--color-background-neutral-01);
+    }
+
+    &[data-focus][data-focus-visible] {
+      outline: solid 2px var(--color-border-brand-primary);
+      outline-offset: -1px;
+    }
+
+    &[data-size="sm"] {
+      --tab-initial-spacing-x: var(--spacing-90);
+      --tab-spacing-y: var(--spacing-60);
+    }
+
+    &[data-size="md"] {
+      --tab-initial-spacing-x: var(--spacing-90);
+      --tab-spacing-y: var(--spacing-80);
+    }
+  }
+
+  &[data-orientation="vertical"] {
+    &[data-size="sm"] {
+      --tab-initial-spacing-x: var(--spacing-80);
+      --tab-spacing-y: var(--spacing-50);
+    }
+
+    &[data-size="md"] {
+      --tab-initial-spacing-x: var(--spacing-90);
+      --tab-spacing-y: var(--spacing-70);
+    }
+
+    &[data-size="lg"] {
+      font: var(--font-static-body-sm-bold);
+      --tab-initial-spacing-x: var(--spacing-100);
+      --tab-spacing-y: var(--spacing-80);
+    }
+
+    &[data-size="xl"] {
+      font: var(--font-static-body-sm-bold);
+      --tab-initial-spacing-x: var(--spacing-100);
+      --tab-spacing-y: var(--spacing-90);
+    }
+  }
+}
+
+.qui-tabs__indicator {
+  &[data-empty] {
+    display: none;
+  }
+  &[data-focus][data-focus-visible] {
+    --transition-duration: 0ms;
+  }
+  &:not([data-animate]) {
+    --transition-duration: 0ms;
+  }
+
+  background: var(--color-border-brand-primary);
+
+  &[data-orientation="horizontal"] {
+    bottom: 0;
+    height: var(--indicator-size);
+    /* Set from JS */
+    width: var(--width);
+  }
+
+  &[data-orientation="vertical"] {
+    /* Set from JS */
+    height: var(--height);
+    top: var(--top);
+    width: var(--indicator-size);
+  }
+}
+
+.qui-tabs__panel {
+  color: var(--color-text-neutral-primary);
+  &[data-orientation="horizontal"] {
+    padding-top: var(--spacing-90);
+  }
+  &[data-orientation="vertical"] {
+    padding-left: var(--spacing-90);
+  }
+}
+
+.qui-tab__icon {
+  /* override the default size */
+  &[data-size] {
+    --icon-size: var(--sizing-70);
+  }
+  &[data-size="sm"] {
+    --icon-size: var(--sizing-60);
+  }
+
+  &[data-icon-variant="filled"] {
+    background: var(--color-background-support-neutral);
+    border-radius: var(--border-radius-xs);
+    color: var(--color-utility-persistent-white);
+    padding: var(--spacing-30);
+    &[data-size="sm"] {
+      padding: var(--spacing-20);
+    }
+    .qui-icon__root {
+      --icon-size: var(--sizing-60);
+    }
+  }
+}

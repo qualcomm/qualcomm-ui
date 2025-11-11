@@ -1,0 +1,227 @@
+.qui-input__root {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-30);
+  position: relative;
+  width: 100%;
+  --input-group-gap: var(--spacing-40);
+
+  &[data-size="lg"] {
+    --input-group-gap: var(--spacing-50);
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.qui-input__input-group {
+  gap: var(--input-group-gap);
+  height: var(--sizing-140);
+  min-width: var(--sizing-160);
+  outline: 0;
+  padding: 0 var(--spacing-90);
+
+  &[data-focus] {
+    outline: solid 1px var(--color-utility-focus-border);
+  }
+
+  &[data-size="sm"] {
+    height: var(--sizing-120);
+    min-width: var(--sizing-120);
+    padding: 0 var(--spacing-70);
+  }
+  &[data-size="lg"] {
+    height: var(--sizing-160);
+    min-width: var(--sizing-160);
+    padding: 0 var(--spacing-100);
+  }
+
+  /* password input — no endIcon, only visibility trigger */
+  &:has(.qui-password-input__visibility-trigger) {
+    [data-part="end-icon"] {
+      display: none;
+    }
+  }
+
+  .qui-password-input__visibility-trigger {
+    z-index: 2;
+  }
+
+  /* data-size is always set, we use it here to increase specificity */
+  [data-part="input"][data-size] {
+    border: 0;
+    height: 100%;
+    outline: 0;
+  }
+
+  &:has([data-part="input"][data-empty]) {
+    .qui-input__clear-trigger {
+      display: none;
+    }
+  }
+}
+
+/* The number input group is used independently from the input group,
+ * but some properties remain the same between the two. */
+.qui-input__input-group,
+.qui-number-input__input-group {
+  align-items: center;
+  background: var(--color-background-neutral-00);
+  border: solid 1px var(--color-interactive-border-neutral-idle);
+  border-radius: var(--border-radius-md);
+  display: inline-flex;
+  justify-content: flex-start;
+  position: relative;
+  width: 100%;
+
+  --icon-color: var(--color-utility-placeholder-icon);
+
+  &:hover {
+    border-color: var(--color-interactive-border-neutral-hover);
+  }
+
+  &:has([data-part="input"]:not([data-empty])) {
+    --icon-color: var(--color-icon-neutral-primary);
+  }
+
+  &[data-invalid] {
+    border-color: var(--color-interactive-border-danger-idle);
+  }
+
+  &[data-readonly] {
+    --icon-color: var(--color-utility-disabled-icon);
+    background: var(--color-background-neutral-02);
+    border-color: var(--color-utility-disabled-border);
+  }
+
+  &[data-focus] {
+    border-color: var(--color-utility-focus-border);
+  }
+
+  &[data-disabled] {
+    --icon-color: var(--color-utility-disabled-icon);
+    background: var(--color-utility-disabled-background);
+    border-color: var(--color-utility-disabled-border);
+    color: var(--color-utility-disabled-text);
+
+    &::placeholder {
+      color: var(--color-utility-disabled-text);
+    }
+  }
+}
+
+.qui-input__input {
+  --icon-color: var(--color-utility-placeholder-text);
+  --input-size: var(--sizing-140);
+
+  appearance: none;
+  border: 0;
+
+  border-radius: var(--border-radius-md);
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-body-sm-default);
+  height: var(--input-size);
+  min-width: var(--input-size);
+  outline: 0;
+  position: relative;
+  text-align: start;
+  text-overflow: ellipsis;
+  width: 100%;
+
+  &[data-size="sm"] {
+    --input-size: var(--sizing-120);
+    font: var(--font-static-body-xs-default);
+  }
+  &[data-size="lg"] {
+    --input-size: var(--sizing-160);
+    font: var(--font-static-body-md-default);
+  }
+
+  &:disabled {
+    color: var(--color-utility-disabled-text);
+  }
+
+  &::placeholder {
+    color: var(--color-utility-placeholder-text);
+  }
+}
+
+.qui-input__icon {
+  align-items: center;
+  color: var(--icon-color);
+  display: inline-block;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+
+  --icon-height: var(--sizing-70);
+  --icon-width: var(--sizing-70);
+
+  &[data-size="sm"] {
+    margin-right: calc(var(--spacing-50) - var(--input-group-gap));
+  }
+  &[data-size="md"] {
+    margin-right: calc(var(--spacing-70) - var(--input-group-gap));
+  }
+  &[data-size="lg"] {
+    --icon-height: var(--sizing-80);
+    --icon-width: var(--sizing-80);
+    margin-right: calc(var(--spacing-80) - var(--input-group-gap));
+  }
+}
+
+.qui-input__clear-button {
+  cursor: pointer;
+  grid-row: 1;
+  z-index: 3;
+}
+
+.qui-input__label {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+  }
+}
+
+.qui-input__hint {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+  }
+}
+
+.qui-input__required-indicator {
+  display: inline;
+  vertical-align: top;
+}
+
+.qui-input__error-text {
+  align-items: flex-start;
+  color: var(--color-text-support-danger);
+  display: inline-flex;
+  flex-wrap: nowrap;
+  font: var(--font-static-body-xs-default);
+  gap: var(--spacing-40);
+}
+
+.qui-input__error-indicator {
+  color: var(--color-text-support-danger);
+  --icon-height: var(--sizing-70);
+  --icon-width: var(--sizing-70);
+
+  &[data-size="lg"] {
+    --icon-height: var(--sizing-80);
+    --icon-width: var(--sizing-80);
+  }
+}
+
+.qui-password-input__visibility-trigger[data-part="visibility-trigger"] {
+  color: var(--icon-color);
+}

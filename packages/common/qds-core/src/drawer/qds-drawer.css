@@ -1,0 +1,66 @@
+.qui-drawer__positioner {
+  display: flex;
+  height: 100vh;
+  inset: 0;
+  justify-content: flex-start;
+  position: fixed;
+  width: 100vw;
+  z-index: var(--z-index-dialog);
+
+  &[data-placement="end"] {
+    justify-content: flex-end;
+  }
+
+  --indicator-icon-size: var(--sizing-90);
+  .qui-dialog__indicator-icon {
+    --icon-size: var(--indicator-icon-size);
+  }
+
+  &[data-size="md"] {
+    --indicator-icon-size: var(--sizing-120);
+  }
+}
+
+/* the drawer reuses the other dialog classes */
+.qui-drawer__content {
+  background-color: var(--color-surface-overlay);
+  box-shadow: var(--shadow-high);
+  color: var(--color-text-neutral-primary);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+  overflow-y: auto;
+  place-items: start;
+  position: relative;
+  width: 355px;
+
+  &[data-size="md"] {
+    width: 580px;
+  }
+
+  &[data-placement="end"] {
+    border-bottom-left-radius: var(--border-radius-md);
+    border-top-left-radius: var(--border-radius-md);
+
+    &[data-state="open"] {
+      animation: slide-from-right-full 0.2s ease;
+    }
+
+    &[data-state="closed"] {
+      animation: slide-to-right-full 0.25s ease;
+    }
+  }
+
+  &[data-placement="start"] {
+    border-bottom-right-radius: var(--border-radius-md);
+    border-top-right-radius: var(--border-radius-md);
+
+    &[data-state="open"] {
+      animation: slide-from-left-full 0.2s ease;
+    }
+
+    &[data-state="closed"] {
+      animation: slide-to-left-full 0.25s ease;
+    }
+  }
+}

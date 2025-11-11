@@ -1,0 +1,15 @@
+.qui-collapsible__content {
+  animation-duration: var(--animation-duration-moderate);
+  overflow: hidden;
+
+  &[data-ssr] {
+    animation-duration: 0ms;
+  }
+
+  &[data-state="closed"] {
+    animation-name: collapse-height, fade-out;
+  }
+  &[data-state="open"] {
+    animation-name: expand-height, fade-in;
+  }
+}

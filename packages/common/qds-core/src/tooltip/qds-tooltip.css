@@ -1,0 +1,25 @@
+.qui-tooltip__content {
+  background-color: var(--color-background-neutral-10);
+  border-radius: 2px;
+  box-shadow: var(--shadow-high);
+  color: var(--color-text-neutral-inverse);
+  font: var(--font-static-body-xs-default);
+  padding-block: 4px;
+  padding-inline: 8px;
+  pointer-events: none;
+  transition:
+    opacity 130ms ease-in-out,
+    display 130ms ease-in-out allow-discrete;
+  --arrow-background: var(--color-background-neutral-10);
+  --arrow-size: 10px;
+  --arrow-height: 8px;
+  --z-index: calc(var(--z-index-tooltip) + var(--layer-index, 0));
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  &:not([data-state="open"]) {
+    opacity: 0;
+  }
+}

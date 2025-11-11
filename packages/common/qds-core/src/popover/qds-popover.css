@@ -1,0 +1,49 @@
+.qui-popover__content {
+  --arrow-background: var(--color-surface-overlay);
+  --arrow-size: 10px;
+  background: var(--color-surface-overlay);
+  border-radius: 4px;
+  box-shadow: var(--shadow-high);
+  display: flex;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  flex-direction: column;
+  font: var(--font-static-body-xs-default);
+  gap: var(--spacing-70);
+  padding: var(--spacing-110);
+  position: relative;
+  transform-origin: var(--transform-origin);
+  width: 260px;
+  z-index: calc(var(--z-index-popover) + var(--layer-index));
+}
+
+.qui-popover__label {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-heading-xxs-bold);
+}
+
+.qui-popover__description {
+  align-items: flex-start;
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-body-xs-default);
+  position: relative;
+}
+
+.qui-popover__close-trigger {
+  position: absolute;
+  right: 0;
+  top: -20px;
+}
+
+.qui-popover__arrow {
+  --arrow-background: var(--color-surface-overlay);
+  --arrow-shadow-color: #ebebeb;
+}
+
+.qui-popover__indicator {
+  display: inline-flex;
+  margin-inline-start: 4px;
+}
+
+.qui-popover__indicator[data-state="open"] {
+  rotate: 90deg;
+}

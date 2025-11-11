@@ -1,0 +1,24 @@
+.qui-checkmark__root[data-scope="tree"] {
+  background: var(--color-interactive-background-ghost-idle);
+  cursor: pointer;
+
+  &[data-state="checked"],
+  &[data-state="indeterminate"] {
+    background: var(--color-interactive-background-primary-idle);
+    border-color: var(--color-interactive-background-primary-idle);
+
+    &[data-hover] {
+      background: var(--color-interactive-background-primary-hover);
+      border-color: var(--color-interactive-background-primary-hover);
+    }
+
+    &[data-disabled] {
+      background: var(--color-utility-disabled-background);
+    }
+  }
+
+  &[data-disabled] {
+    border-color: var(--color-utility-disabled-border);
+    color: var(--color-utility-disabled-text);
+  }
+}
