@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 /*
  * Form + Signals interop.
  * https://www.angularspace.com/brewing-bootleg-reactive-forms-signals-from-rxjs/

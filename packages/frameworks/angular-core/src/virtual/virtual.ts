@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 /**
  * Forked from @tanstack/angular-virtual. TODO: create PR and fix the library.
  * Potential issue: the library intends to support older versions of Angular which

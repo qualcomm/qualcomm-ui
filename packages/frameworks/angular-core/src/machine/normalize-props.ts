@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {normalizeAriaAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {isObject, isString} from "@qualcomm-ui/utils/guard"

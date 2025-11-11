@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {callAll} from "@qualcomm-ui/utils/functions"
 

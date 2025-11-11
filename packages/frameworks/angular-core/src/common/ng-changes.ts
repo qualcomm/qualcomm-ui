@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 // A utility type for typing the SimpleChanges property from Angular.
 // The only drawback is that we'll also get autocompletion for other public
 

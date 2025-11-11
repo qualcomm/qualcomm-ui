@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {createElement, isValidElement, type ReactElement} from "react"
 // eslint-disable-next-line no-restricted-imports
 import * as React from "react"

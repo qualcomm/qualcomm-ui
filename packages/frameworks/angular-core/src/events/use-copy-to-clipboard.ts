@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {DestroyRef, effect, inject, signal} from "@angular/core"
 
 import {NAVIGATOR} from "@qualcomm-ui/angular-core/dom"

@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {type ReactNode, useMemo} from "react"
 
 import {MDXProvider, type useMDXComponents} from "@mdx-js/react"

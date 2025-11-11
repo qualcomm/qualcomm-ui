@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {DOCUMENT} from "@angular/common"
 import {ElementRef, inject, Injectable, Renderer2} from "@angular/core"
 

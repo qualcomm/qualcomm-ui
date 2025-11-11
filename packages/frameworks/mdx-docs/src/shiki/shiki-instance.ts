@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import angularHtml from "@shikijs/langs/angular-html"
 import angularTs from "@shikijs/langs/angular-ts"
 import json from "@shikijs/langs/json"

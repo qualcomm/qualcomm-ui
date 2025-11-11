@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {inject, InjectionToken, type StaticProvider} from "@angular/core"
 
 import type {LucideIcon} from "./lucide.types"
