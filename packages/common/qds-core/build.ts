@@ -22,7 +22,11 @@ async function build(argv: string[]) {
 
   const buildOpts: BuildOptions = {
     bundle: true,
-    external: ["@qualcomm-ui/utils/*", "@qualcomm-ui/dom/*", "@qualcomm-ui/qds-core/*"],
+    external: [
+      "@qualcomm-ui/utils/*",
+      "@qualcomm-ui/dom/*",
+      "@qualcomm-ui/qds-core/*",
+    ],
     metafile: true,
     minify: true,
     outdir: "dist",

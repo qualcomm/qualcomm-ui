@@ -1,7 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {checkboxClasses, QdsCheckboxSize} from "@qualcomm-ui/qds-core/checkbox"
+import type {
+  checkboxClasses,
+  QdsCheckboxSize,
+} from "@qualcomm-ui/qds-core/checkbox"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import type {checkmarkClasses} from "./checkmark.classes"

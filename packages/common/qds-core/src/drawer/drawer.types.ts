@@ -1,7 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {QdsDialogApiProps, QdsDialogSize} from "@qualcomm-ui/qds-core/dialog"
+import type {
+  QdsDialogApiProps,
+  QdsDialogSize,
+} from "@qualcomm-ui/qds-core/dialog"
 
 import type {drawerClasses} from "./drawer.classes"
 

@@ -19,7 +19,10 @@ import remarkParseFrontmatter from "remark-parse-frontmatter"
 import remarkStringify from "remark-stringify"
 import {unified} from "unified"
 
-import type {QuiComment, QuiCommentDisplayPart} from "@qualcomm-ui/mdx-docs-common"
+import type {
+  QuiComment,
+  QuiCommentDisplayPart,
+} from "@qualcomm-ui/mdx-docs-common"
 
 import {remarkSelfLinkHeadings} from "../docs-plugin"
 import {

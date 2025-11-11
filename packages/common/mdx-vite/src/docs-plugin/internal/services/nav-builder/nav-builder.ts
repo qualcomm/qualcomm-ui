@@ -5,7 +5,11 @@ import {capitalCase} from "change-case"
 import {sortBy} from "lodash-es"
 import {v4 as uuidv4} from "uuid"
 
-import type {NavItem, PageFrontmatter, PageSection} from "@qualcomm-ui/mdx-docs-common"
+import type {
+  NavItem,
+  PageFrontmatter,
+  PageSection,
+} from "@qualcomm-ui/mdx-docs-common"
 
 import type {
   NavMeta,
