@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
 import type {TextInputElementIds, TextInputScope} from "../text-input.types"

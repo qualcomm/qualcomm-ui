@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {trackFormControl} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
