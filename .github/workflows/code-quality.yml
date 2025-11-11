@@ -25,6 +25,8 @@ jobs:
     - uses: ./.github/actions/setup-node-and-install
 
     - name: lint-changed
+      env:
+        GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
       run: pnpm tsx scripts/lint-changed.ts
 
   build:
