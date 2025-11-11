@@ -17,7 +17,10 @@ import {
   useRouteError,
 } from "react-router"
 
-import {type PackageManager, SiteContextProvider} from "@qualcomm-ui/mdx-docs/context"
+import {
+  type PackageManager,
+  SiteContextProvider,
+} from "@qualcomm-ui/mdx-docs/context"
 import {
   type DocPropsLayout,
   PropsLayoutProvider,

@@ -1,7 +1,11 @@
 import {Component, inject} from "@angular/core"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
-import {provideToaster, ToasterService, ToastModule} from "@qualcomm-ui/angular/toast"
+import {
+  provideToaster,
+  ToasterService,
+  ToastModule,
+} from "@qualcomm-ui/angular/toast"
 
 @Component({
   imports: [ToastModule, ButtonModule],

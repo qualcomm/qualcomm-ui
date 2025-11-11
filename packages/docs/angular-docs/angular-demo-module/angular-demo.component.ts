@@ -11,7 +11,10 @@ import {
 } from "@angular/core"
 
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
-import {PORTAL_CONTAINER, PortalContextService} from "@qualcomm-ui/angular-core/portal"
+import {
+  PORTAL_CONTAINER,
+  PortalContextService,
+} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
   encapsulation: ViewEncapsulation.None,

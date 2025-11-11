@@ -1,7 +1,10 @@
 import {Component, type OnInit, signal, viewChild} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 
-import {type TextInputComponent, TextInputModule} from "@qualcomm-ui/angular/text-input"
+import {
+  type TextInputComponent,
+  TextInputModule,
+} from "@qualcomm-ui/angular/text-input"
 
 @Component({
   imports: [TextInputModule, FormsModule],
