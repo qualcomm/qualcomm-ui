@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/mdx-docs-common",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "MDX common types and utilities",
   "author": "Ryan Bower",
   "type": "module",

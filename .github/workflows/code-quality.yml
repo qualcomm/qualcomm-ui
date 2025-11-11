@@ -1,4 +1,6 @@
 name: "Code Quality Checks"
+env:
+  IS_CI: true
 on:
   pull_request:
     # Run every time a PR to origin/main is created or updated
@@ -8,15 +10,13 @@ on:
 
 jobs:
   lint:
-    env:
-      IS_CI: true
     runs-on: ubuntu-latest
     concurrency:
       group: PR Lint Changed - ${{github.head_ref}}
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: clone
+    - name: checkout
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -30,16 +30,13 @@ jobs:
       run: pnpm tsx scripts/lint-changed.ts ${{ github.event.pull_request.base.sha }}
 
   build:
-    env:
-      IS_CI: true
     runs-on: ubuntu-latest
     concurrency:
       group: PR Build - ${{github.head_ref}}
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: clone
-      id: install
+    - name: checkout
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
@@ -50,16 +47,13 @@ jobs:
       run: pnpm run build
 
   unit-test:
-    env:
-      IS_CI: true
     runs-on: ubuntu-latest
     concurrency:
       group: PR Unit Test v2 - ${{github.head_ref}}
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: clone and install
-      id: install
+    - name: checkout
       uses: actions/checkout@v3
       with:
         ref: ${{ github.head_ref }}
@@ -68,6 +62,31 @@ jobs:
 
     - name: unit tests
       run: pnpm run test:unit:ci
+
+  react-core-tests:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: PR React Core Tests - ${{github.head_ref}}
+      cancel-in-progress: true
+    timeout-minutes: 10
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/setup-node-and-install
+
+    - uses: ./.github/actions/setup-playwright
+
+    - name: build dependencies
+      run: pnpm turbo run build --filter '@qualcomm-ui/react-core'
+
+    - name: test react-core
+      run: pnpm turbo run test:react-core:ci
+      env:
+        VITEST_MAX_THREADS: 1
+
 
   # also run repolinter on PRs
   # TODO: run using qcom-preflight-checks once it's updated to incorporate the batching PR

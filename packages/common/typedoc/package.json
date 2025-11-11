@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/typedoc",
-  "version": "2.4.1",
+  "version": "1.0.0",
   "description": "Documentation generation utilities",
   "type": "module",
   "author": "Ryan Bower",

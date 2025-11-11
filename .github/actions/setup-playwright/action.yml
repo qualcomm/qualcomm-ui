@@ -1,0 +1,6 @@
+name: 'Setup Playwright'
+runs:
+  using: 'composite'
+  steps:
+  - run: node node_modules/playwright/cli.js install chromium --with-deps --only-shell
+    shell: bash

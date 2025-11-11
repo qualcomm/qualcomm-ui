@@ -31,7 +31,7 @@ catalog:
   '@react-router/remix-routes-option-adapter': 7.9.4
   '@react-router/serve': 7.9.4
   '@types/react': 19.2.2
-  '@types/react-dom': 19.2.1
+  '@types/react-dom': 19.2.2
   '@typescript-eslint/eslint-plugin': 8.46.2
   '@typescript-eslint/parser': 8.46.2
   '@typescript-eslint/utils': 8.46.2

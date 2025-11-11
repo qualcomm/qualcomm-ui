@@ -1,0 +1,20 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "*.json",
+        "*.ts",
+        "src/**"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "test:react-core:ci": {
+      "inputs": [
+        "*.json",
+        "*.ts",
+        "src/**"
+      ]
+    }
+  }
+}

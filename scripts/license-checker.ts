@@ -201,7 +201,7 @@ const program = new Command()
   .description("Manage copyright headers in source files")
 
 program
-  .command("add")
+  .command("fix")
   .description("Add copyright headers to source files")
   .argument("<directory>", "Directory to scan")
   .option("--modified <source-url>", "Source URL for modified files")
@@ -337,7 +337,7 @@ program
   })
 
 program
-  .command("check")
+  .command("lint")
   .description("Check for missing copyright headers")
   .argument("<directory>", "Directory to scan")
   .action(async (directory) => {

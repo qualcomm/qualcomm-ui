@@ -1,0 +1,104 @@
+{
+  "name": "@qualcomm-ui/react-core",
+  "sideEffects": false,
+  "version": "1.0.0",
+  "description": "This library contains design-agnostic React building blocks and utilities.",
+  "author": "Ryan Bower",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run-s clean build:js build:ts",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
+    "build:js": "tsx build.ts",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:js watch:ts",
+    "watch:js": "tsx build.ts --watch --mode development",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "lint": "eslint --quiet",
+    "test": "vitest -c vitest.config.ts --run",
+    "test:coverage": "vitest -c vitest.config.ts --run --coverage",
+    "test:react-core:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --poolOptions.forks.maxForks=1 --no-file-parallelism",
+    "test:watch": "cross-env vitest -c vitest.config.ts",
+    "test:ui": "cross-env vitest -c vitest.config.ts --browser.headless=false",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "dependencies": {
+    "react-remove-scroll": "2.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "esbuild": "^0.25.8",
+    "@floating-ui/react": "^0.27.3",
+    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/dom": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1",
+    "@qualcomm-ui/react-test-utils": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@tailwindcss/vite": "^4.1.11",
+    "@tanstack/react-virtual": "^3.13.12",
+    "@types/babel__core": "^7.20.5",
+    "@types/mocha": "^10.0.10",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.0",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "lucide-react": "0.525.0",
+    "playwright": "1.53.2",
+    "quick-lru": "^7.2.0",
+    "react": "catalog:",
+    "react-compiler-runtime": "^1.0.0",
+    "react-dom": "catalog:",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "shx": "^0.4.0",
+    "tailwindcss": "^4.1.12",
+    "tsx": "^4.20.6",
+    "typescript-plugin-css-modules": "^5.0.1",
+    "vite": "npm:rolldown-vite@7.1.19",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4",
+    "vitest-browser-react": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@qualcomm-ui/core": "workspace:^1",
+    "@qualcomm-ui/dom": "workspace:^1",
+    "@qualcomm-ui/utils": "workspace:^1",
+    "@floating-ui/react": ">=0.26.9 <1",
+    "@tanstack/react-virtual": ">=3.13.9",
+    "lucide-react": ">=0.379.0 <1",
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "react-transition-group": ">=4.4.5",
+    "typescript": ">=5.0.0"
+  },
+  "nyc": {
+    "reporter": [
+      "cobertura",
+      "html"
+    ],
+    "extension": [
+      ".js",
+      ".cjs",
+      ".mjs",
+      ".ts",
+      ".tsx"
+    ]
+  }
+}
