@@ -46,6 +46,12 @@ jobs:
 
     - uses: ./.github/actions/setup-node-and-install
 
+    - uses: ./.github/actions/setup-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
     - name: build
       run: pnpm run build
 
@@ -82,6 +88,12 @@ jobs:
 
     - uses: ./.github/actions/setup-playwright
 
+    - uses: ./.github/actions/setup-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
     - name: build dependencies
       run: pnpm turbo run build --filter '@qualcomm-ui/react-core'
 
@@ -111,6 +123,12 @@ jobs:
     - uses: ./.github/actions/setup-node-and-install
 
     - uses: ./.github/actions/setup-playwright
+
+    - uses: ./.github/actions/setup-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
 
     - name: build react dependencies
       run: pnpm turbo run build --filter '@qualcomm-ui/react'
