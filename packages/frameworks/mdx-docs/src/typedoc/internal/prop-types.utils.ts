@@ -1,14 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {
+  PageDocProps,
+  PagePropType,
+  PagePropTypes,
+} from "@qualcomm-ui/mdx-docs-common"
 import {
-  type PageDocProps,
-  type PagePropType,
-  type PagePropTypes,
   type QuiComment,
   type QuiPropTypes,
   sortTypeDocProps,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/typedoc-common"
 import {ensureArray} from "@qualcomm-ui/utils/array"
 
 export interface TypeDocAngularPropConfig {

@@ -2,8 +2,7 @@ import type {ReactElement} from "react"
 
 import {RotateCcw} from "lucide-react"
 
-import {IconButton} from "@qualcomm-ui/react/button"
-import {Icon} from "@qualcomm-ui/react/icon"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 
 export function ResetDemoDimensionsButton(): ReactElement | null {
@@ -19,13 +18,10 @@ export function ResetDemoDimensionsButton(): ReactElement | null {
   return import.meta.env.DEV ? (
     <Tooltip
       trigger={
-        <IconButton
+        <HeaderBar.ActionIconButton
           aria-label="Reset Demo Height State"
-          emphasis="neutral"
-          icon={<Icon icon={RotateCcw} size={14} />}
+          icon={RotateCcw}
           onClick={onClick}
-          size="sm"
-          variant="ghost"
         />
       }
     >

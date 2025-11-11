@@ -22,6 +22,7 @@ import {DocLink} from "./doc-link"
 import {GlobalConfig} from "./global-config"
 import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
 import {QuiLogo} from "./qui-logo"
+import {ResetDemoDimensionsButton} from "./reset-demo-dimensions-button"
 import {ThemeToggle} from "./theme-toggle"
 import {useAngularDemoReloader} from "./use-angular-demo-reloader"
 import {useRouterLinkInterceptor} from "./use-router-link-interceptor"
@@ -130,6 +131,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
 
             <HeaderBar.ActionBar>
               <SiteSearch />
+              <ResetDemoDimensionsButton />
               <GlobalConfig />
               <ThemeToggle />
             </HeaderBar.ActionBar>

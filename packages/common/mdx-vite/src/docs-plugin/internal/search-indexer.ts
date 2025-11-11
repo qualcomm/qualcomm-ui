@@ -8,8 +8,8 @@ import type {
   PageFrontmatter,
   PageMap,
   PageSection,
-  QuiPropTypes,
 } from "@qualcomm-ui/mdx-docs-common"
+import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import type {
   RouteMetaInternal,

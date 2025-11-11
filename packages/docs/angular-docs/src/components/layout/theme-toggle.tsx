@@ -2,8 +2,7 @@ import {type ReactNode, useCallback, useEffect, useRef} from "react"
 
 import {MoonIcon, SunIcon} from "lucide-react"
 
-import {IconButton} from "@qualcomm-ui/react/button"
-import {Icon} from "@qualcomm-ui/react/icon"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 export function ThemeToggle(): ReactNode {
@@ -41,14 +40,10 @@ export function ThemeToggle(): ReactNode {
   }, [setTheme, toggle])
 
   return (
-    <IconButton
+    <HeaderBar.ActionIconButton
       aria-label="Toggle Theme"
-      icon={
-        <Icon icon={theme === Theme.LIGHT ? SunIcon : MoonIcon} size={14} />
-      }
+      icon={theme === Theme.LIGHT ? SunIcon : MoonIcon}
       onClick={toggle}
-      size="sm"
-      variant="ghost"
     />
   )
 }

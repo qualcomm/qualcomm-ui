@@ -698,6 +698,9 @@ importers:
       '@qualcomm-ui/tsconfig':
         specifier: workspace:^1
         version: link:../../configs/tsconfig
+      '@qualcomm-ui/typedoc-common':
+        specifier: workspace:^1
+        version: link:../typedoc-common
       '@qualcomm-ui/utils':
         specifier: workspace:^1
         version: link:../utils
@@ -1309,6 +1312,9 @@ importers:
       '@qualcomm-ui/typedoc':
         specifier: workspace:*
         version: link:../../common/typedoc
+      '@qualcomm-ui/typedoc-common':
+        specifier: workspace:*
+        version: link:../../common/typedoc-common
       '@qualcomm-ui/utils':
         specifier: workspace:*
         version: link:../../common/utils
@@ -1951,6 +1957,9 @@ importers:
       '@qualcomm-ui/tsconfig':
         specifier: workspace:^1
         version: link:../../configs/tsconfig
+      '@qualcomm-ui/typedoc-common':
+        specifier: workspace:^1
+        version: link:../../common/typedoc-common
       '@qualcomm-ui/utils':
         specifier: workspace:^1
         version: link:../../common/utils
