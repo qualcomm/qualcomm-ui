@@ -1,0 +1,1 @@
+- bump peer deps and restrict the typedoc dependency. They do not follow semver and introduced breaking changes in a few minor releases.

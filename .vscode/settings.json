@@ -1,0 +1,201 @@
+{
+  "angular.forceStrictTemplates": true,
+  "stylelint.config": {
+    "at-rule-name-case": "lower",
+    "at-rule-name-space-after": "always-single-line",
+    "at-rule-semicolon-newline-after": "always",
+    "customSyntax": "postcss-scss",
+    "extends": [
+      "stylelint-prettier/recommended"
+    ]
+  },
+  "stylelint.snippet": [
+    "css",
+    "less",
+    "postcss",
+    "scss"
+  ],
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "scss"
+  ],
+  "stylelint.enable": true,
+  "[css]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "css.format.enable": false,
+  "scss.format.enable": false,
+  "less.format.enable": false,
+  "stylelint.packageManager": "pnpm",
+  "eslint.validate": [
+    "markdown",
+    "md",
+    "mdx",
+    "html",
+    "javascript",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.format.enable": true,
+  "vs-code-prettier-eslint.prettierLast": true,
+  "squarl.groups": [
+    {
+      "id": "changelogs",
+      "name": "CHANGELOGS"
+    }
+  ],
+  "squarl.bookmarks": [
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/angular/CHANGELOG.md",
+      "description": "angular",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/angular-charts/CHANGELOG.md",
+      "description": "angular-charts",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/angular-saga/CHANGELOG.md",
+      "description": "angular-saga",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/angular-table/CHANGELOG.md",
+      "description": "angular-table",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/auth/CHANGELOG.md",
+      "description": "auth",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/base/CHANGELOG.md",
+      "description": "base",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/css-utils/CHANGELOG.md",
+      "description": "css-utils",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/eslint-config-angular/CHANGELOG.md",
+      "description": "eslint-config-angular",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/eslint-config-mdx/CHANGELOG.md",
+      "description": "eslint-config-mdx",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/eslint-config-react/CHANGELOG.md",
+      "description": "eslint-config-react",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/eslint-config-typescript/CHANGELOG.md",
+      "description": "eslint-config-typescript",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/mdx-docs/CHANGELOG.md",
+      "description": "mdx-docs",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/mdx-docs-common/CHANGELOG.md",
+      "description": "mdx-docs-common",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/mdx-vite/CHANGELOG.md",
+      "description": "mdx-vite",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/react/CHANGELOG.md",
+      "description": "react",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/react-table/CHANGELOG.md",
+      "description": "react-table",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/saga-base/CHANGELOG.md",
+      "description": "saga-base",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/styles/CHANGELOG.md",
+      "description": "styles",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/swagger/CHANGELOG.md",
+      "description": "swagger",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/table-core/CHANGELOG.md",
+      "description": "table-core",
+      "type": "file",
+      "groupId": "changelogs"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "packages/tailwind-plugin/CHANGELOG.md",
+      "description": "tailwind-plugin",
+      "type": "file",
+      "groupId": "changelogs"
+    }
+  ]
+}

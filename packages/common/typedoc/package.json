@@ -1,0 +1,73 @@
+{
+  "name": "@qualcomm-ui/typedoc",
+  "version": "2.4.1",
+  "description": "Documentation generation utilities",
+  "type": "module",
+  "author": "Ryan Bower",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "qui-typedoc": "./dist/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "/dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "run-s clean build:js build:ts",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
+    "build:js": "tsx build.ts",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:js watch:ts",
+    "watch:js": "tsx build.ts --watch",
+    "watch:ts": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
+    "lint": "eslint --quiet",
+    "test": "vitest -c vitest.config.ts --run",
+    "test:ui": "vitest -c vitest.config.ts --ui --coverage.enabled=true",
+    "test:coverage": "pnpm test -- --coverage",
+    "test:watch": "vitest -c vitest.config.ts",
+    "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads",
+    "build:cli": "run-s clean compile",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@angular/core": "catalog:",
+    "@commander-js/extra-typings": "^14.0.0",
+    "@clack/prompts": "1.0.0-alpha.6",
+    "@qualcomm-ui/esbuild": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/typedoc-common": "workspace:^1",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "@types/lodash-es": "^4.17.12",
+    "chalk": "^5.6.2",
+    "chokidar": "^4.0.3",
+    "cosmiconfig": "^9.0.0",
+    "esbuild": "^0.25.8",
+    "inquirer": "^12.1.0",
+    "lodash-es": "^4.17.21",
+    "npm-run-all2": "^8.0.4",
+    "shx": "^0.4.0",
+    "terminate": "^2.6.1",
+    "tsx": "^4.20.6",
+    "typedoc": "~0.28.13",
+    "vite": "npm:rolldown-vite@7.1.19",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "@commander-js/extra-typings": ">=13.1.0",
+    "@qualcomm-ui/typedoc-common": ">=workspace:^1",
+    "prettier": ">=3 <4",
+    "typedoc": ">=0.28.4",
+    "typescript": ">=5.3.3",
+    "cosmiconfig": ">=9.0.0"
+  }
+}

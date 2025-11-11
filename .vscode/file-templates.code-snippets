@@ -1,0 +1,45 @@
+{
+  "ftReactPolymorphicComponentQui": {
+    "prefix": [
+      "ftReactPolymorphicComponentQui"
+    ],
+    "body": [
+      "import {forwardRef, ReactNode} from \"react\"",
+      "",
+      "import {",
+      "  As,",
+      "  PolymorphicComponentPropsWithRef,",
+      "  PolymorphicRef,",
+      "} from \"../../system\"",
+      "",
+      "type DefaultAs = \"$div\"",
+      "",
+      "export type ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}BaseProps<C extends As = DefaultAs> = {",
+      "  /**",
+      "   * The component used for the root node. It can be a React component or a",
+      "   * supported HTML element.",
+      "   * @default \"$div\"",
+      "   */",
+      "  as?: C",
+      "}",
+      "",
+      "export type ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}Props<C extends As = DefaultAs> =",
+      "  PolymorphicComponentPropsWithRef<C, ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}BaseProps<C>>",
+      "",
+      "type ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}Internal = <C extends As = DefaultAs>(",
+      "  props: ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}Props<C>,",
+      ") => ReactNode",
+      "",
+      "export const ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}: ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}Internal = forwardRef(",
+      "  <C extends As = DefaultAs>(",
+      "    {as, ...props}: ${TM_FILENAME/(.*)\\..+$/${1:/pascalcase}/}Props<C>,",
+      "    ref: PolymorphicRef<C>,",
+      "  ) => {",
+      "    const Element = as || \"$div\"",
+      "    return <Element ref={ref} {...props}></Element>",
+      "  },",
+      ")",
+      ""
+    ]
+  }
+}
