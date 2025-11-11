@@ -1,6 +1,9 @@
 name: "Code Quality Checks"
 env:
   IS_CI: true
+  TURBO_API: "http://127.0.0.1:8585"
+  TURBO_TEAM: "qualcomm-ui"
+  TURBO_TOKEN: "turbo-cache-token"
 on:
   pull_request:
     # Run every time a PR to origin/main is created or updated
@@ -43,6 +46,12 @@ jobs:
 
     - uses: ./.github/actions/setup-node-and-install
 
+    - uses: ./.github/actions/setup-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
     - name: build
       run: pnpm run build
 
@@ -79,11 +88,54 @@ jobs:
 
     - uses: ./.github/actions/setup-playwright
 
+    - uses: ./.github/actions/setup-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
     - name: build dependencies
       run: pnpm turbo run build --filter '@qualcomm-ui/react-core'
 
     - name: test react-core
       run: pnpm turbo run test:react-core:ci
+      env:
+        VITEST_MAX_THREADS: 1
+
+  react-tests:
+    env:
+      IS_CI: true
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shardIndex: [ 1, 2 ]
+        shardTotal: [ 2 ]
+    concurrency:
+      group: PR React Tests - ${{matrix.shardIndex}} - ${{github.head_ref}}
+      cancel-in-progress: true
+    timeout-minutes: 10
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/setup-node-and-install
+
+    - uses: ./.github/actions/setup-playwright
+
+    - uses: ./.github/actions/setup-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
+    - name: build react dependencies
+      run: pnpm turbo run build --filter '@qualcomm-ui/react'
+
+    - name: test react
+      timeout-minutes: 2
+      run: pnpm turbo run test:react:ci -- --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
       env:
         VITEST_MAX_THREADS: 1
 

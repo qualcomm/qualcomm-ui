@@ -63,7 +63,11 @@ export default defineConfig(
       quiEslintTs.configs.sortKeys,
       quiEslintTs.configs.styleGuide,
     ],
-    files: ["{packages,scripts}/**/*.{jsx,js,mjs,cjs}", "*.{jsx,js,mjs.cjs}"],
+    files: [
+      "{packages,scripts}/**/*.{jsx,js,mjs,cjs}",
+      "*.{jsx,js,mjs.cjs}",
+      ".github/actions/turborepo-remote-cache/action/*.{js,mjs,ts}",
+    ],
   },
 
   // angular

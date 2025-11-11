@@ -1,0 +1,7 @@
+name: "Turbo Cache Server"
+description: "Turborepo remote cache server background process as Action"
+
+runs:
+  using: "node20"
+  main: "action/main.mjs"
+  post: "action/post.mjs"
