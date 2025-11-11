@@ -13,7 +13,7 @@ import {
   type PageHeading,
   type PagePropType,
   UniqueIdService,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/mdx-common"
 import type {
   QuiPropDeclaration,
   QuiPropTypes,
@@ -272,7 +272,7 @@ export class DocPropsIndexer {
     return this.docPropsEntries.reduce((acc: PageDocProps, entry) => {
       const propTypes = this.pageDocProps[entry.name]
       // TODO: convert code comments to HTML using rehype. Remove markdown-to-jsx
-      //  in @qualcomm-ui/mdx-docs library.
+      //  in @qualcomm-ui/react-mdx library.
       if (propTypes) {
         acc[entry.name] = propTypes
       }

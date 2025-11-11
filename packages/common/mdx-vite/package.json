@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@qualcomm-ui/esbuild": "workspace:^1",
-    "@qualcomm-ui/mdx-docs-common": "workspace:^1",
+    "@qualcomm-ui/mdx-common": "workspace:^1",
     "@qualcomm-ui/utils": "workspace:^1",
     "@qualcomm-ui/tsconfig": "workspace:^1",
     "@qualcomm-ui/typedoc-common": "workspace:^1",
@@ -119,7 +119,7 @@
     "zod": "^3.23.8"
   },
   "peerDependencies": {
-    "@qualcomm-ui/mdx-docs-common": "workspace:^1",
+    "@qualcomm-ui/mdx-common": "workspace:^1",
     "@qualcomm-ui/typedoc-common": "workspace:^1",
     "@qualcomm-ui/utils": "workspace:^1",
     "lodash-es": ">=4.17.21 <5",

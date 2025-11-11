@@ -10,7 +10,7 @@
         "tsconfig.typedoc.json",
         "../../common/base/dist/**/*.d.ts",
         "../../common/core/dist/**/*.d.ts",
-        "../../common/mdx-docs-common/dist/**/*.d.ts",
+        "../../common/mdx-common/dist/**/*.d.ts",
         "../../common/qds-core/dist/**/*.d.ts",
         "../../common/typedoc/src/**/*.ts",
         "../../common/utils/dist/**/*.d.ts",

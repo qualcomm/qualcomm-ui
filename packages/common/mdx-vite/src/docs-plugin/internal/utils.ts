@@ -3,7 +3,7 @@
 
 import {z, type ZodObject} from "zod"
 
-import type {PageFrontmatter} from "@qualcomm-ui/mdx-docs-common"
+import type {PageFrontmatter} from "@qualcomm-ui/mdx-common"
 
 import {implement} from "./zod"
 

@@ -1,0 +1,17 @@
+# This is a comment.
+# Each line is a file pattern followed by one or more owners.
+
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @global-owner1 and @global-owner2 will be requested for
+# review when someone opens a pull request.
+#*       @global-owner1 @global-owner2
+
+
+# IMPORTANT: Rule definition syntax is tricky. e.g. /Qdc/* does not match everything under /Qdc directory.
+# Instead, it only matches files in the /Qdc folder, but not further nested files. To match all files in
+# /Qdc and all of /Qdc sub-directories, define rule as "/Qdc/" instead of "/Qdc/*" (omit the asterisk).
+# More info here: https://help.github.com/enterprise/2.13/user/articles/about-codeowners/
+
+# All
+* @r-bower

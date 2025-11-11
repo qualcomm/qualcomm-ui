@@ -5,10 +5,10 @@ import {
   type ColumnResizeMode,
   getCoreRowModel,
 } from "@qualcomm-ui/core/table"
-import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
 import {Button} from "@qualcomm-ui/react/button"
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 import {flexRender, Table, useReactTable} from "@qualcomm-ui/react/table"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {columns, useUserData} from "./use-data"
 

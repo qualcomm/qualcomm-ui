@@ -117,7 +117,7 @@ class Uploader {
     )
 
     if (knowledgeFile) {
-      console.debug("Found existing file: ", knowledgeFile?.meta.name, "")
+      console.debug("Found existing file:", knowledgeFile?.meta.name)
 
       const data = await this.api.downloadFile(knowledgeFile.id)
 

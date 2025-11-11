@@ -4,7 +4,7 @@
 import rehypeShiki, {type RehypeShikiOptions} from "@shikijs/rehype"
 import type {PluggableList} from "unified"
 
-import {quiCustomDarkTheme} from "@qualcomm-ui/mdx-docs-common"
+import {quiCustomDarkTheme} from "@qualcomm-ui/mdx-common"
 
 import {
   rehypeMdxCodeProps,

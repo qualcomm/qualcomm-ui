@@ -1,1 +1,0 @@
-# @qualcomm-ui/mdx-docs

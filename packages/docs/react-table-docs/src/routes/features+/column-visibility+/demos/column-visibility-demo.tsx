@@ -1,9 +1,9 @@
 import {useMemo, useState} from "react"
 
 import {getCoreRowModel} from "@qualcomm-ui/core/table"
-import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 import {flexRender, Table, useReactTable} from "@qualcomm-ui/react/table"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {userColumns, useUserData} from "./use-data"
 

@@ -1,0 +1,20 @@
+{
+  "customSyntax": "postcss-scss",
+  "ignoreFiles": [
+    "packages/*/coverage/**",
+    "packages/utilities/qds-core/src/styles/*.css",
+    "**/dist/**",
+    "node_modules/**"
+  ],
+  "extends": ["stylelint-prettier/recommended"],
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "order/properties-alphabetical-order": true,
+    "prettier/prettier": [
+      true, {
+        "singleQuote": false,
+        "tabWidth": 2
+      }
+    ]
+  }
+}

@@ -7,16 +7,16 @@ import {
   useSearchParams,
 } from "react-router"
 
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+import {Icon} from "@qualcomm-ui/react/icon"
+import {Link} from "@qualcomm-ui/react/link"
 import {
   DocsFooter,
   DocsLayout,
   DocsLayoutSettings,
   MobileSidebar,
-} from "@qualcomm-ui/mdx-docs/docs-layout"
-import {SiteSearch} from "@qualcomm-ui/mdx-docs/site-search"
-import {HeaderBar} from "@qualcomm-ui/react/header-bar"
-import {Icon} from "@qualcomm-ui/react/icon"
-import {Link} from "@qualcomm-ui/react/link"
+} from "@qualcomm-ui/react-mdx/docs-layout"
+import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 
 import {DocLink} from "./doc-link"
 import {QuiEcosystemMenu} from "./qui-ecosystem-menu"

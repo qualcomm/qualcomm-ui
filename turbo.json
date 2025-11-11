@@ -10,10 +10,6 @@
       "cache": false,
       "persistent": true
     },
-    "reset": {
-      "cache": false,
-      "persistent": true
-    },
     "build": {
       "dependsOn": [
         "^build"

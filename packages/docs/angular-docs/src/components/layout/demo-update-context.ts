@@ -1,4 +1,4 @@
-import type {AngularDemoInfo} from "@qualcomm-ui/mdx-docs-common"
+import type {AngularDemoInfo} from "@qualcomm-ui/mdx-common"
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 
 export interface DemoUpdateContextValue {

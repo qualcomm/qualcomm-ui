@@ -9,7 +9,7 @@ import type {
   NavItem,
   PageFrontmatter,
   PageSection,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/mdx-common"
 
 import type {
   NavMeta,

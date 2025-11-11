@@ -72,25 +72,23 @@ For each framework (currently only react and angular), the code is organized int
   - the markdown documentation with explanations is located at `packages/docs/<framework>/src/routes/components+/<component>+/_<component>.mdx`
   - Examples:
     - the `button` component's documentation lives at `packages/docs/<framework>/src/routes/components+/button+/_button.mdx`.
-    - some components, like the text input, are grouped. Search for `_text-input.mdx` to find the folder and its demos.
+    - the `button` component's demos live at `packages/docs/<framework>/src/routes/components+/button+/demos/*.tsx`.
 
-When suggesting implementation details
+When translating examples from one framework to another, examine the component code to determine the appropriate interfaces. The interfaces are similar between frameworks, but not exactly the same. For example, Angular controlled state often uses Angular Forms.
 
 ## Documentation Strategy
 
 When writing documentation, follow these guidelines:
 
-- Do not speak like an AI. Avoid emojis, EM-dashes
+- Do not speak like an AI. Avoid emojis, EM-dashes, and fake enthusiasm.
 - Speak like a human
 - Analyze the existing tone and speech style of the documentation, then replicate it
+- Always use the docs subagent
 
 ## Testing Strategy
 
-- Write tests that verify behavior, not implementation details
-- Use descriptive test names that explain the scenario being tested
-- Mock external dependencies appropriately
-- If a component has both a composite and simple API, test both using the `MultiComponentTestCase`. Refer to existing tests for examples of this
-- Never offer to run tests for the user. Assume that the user will handle running tests
+- Use the react-tester subagent to write React tests.
+- Use the angular-tester subagent to write Angular tests.
 
 ## Code Formatting
 

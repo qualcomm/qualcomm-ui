@@ -1,8 +1,8 @@
 import {ReactNode} from "react"
 
-import {AngularLogo} from "@qualcomm-ui/mdx-docs/angular-logo"
-import {ReactLogo} from "@qualcomm-ui/mdx-docs/react-logo"
 import {Button} from "@qualcomm-ui/react/button"
+import {AngularLogo} from "@qualcomm-ui/react-mdx/angular-logo"
+import {ReactLogo} from "@qualcomm-ui/react-mdx/react-logo"
 
 export default function HomePage(): ReactNode {
   return (
