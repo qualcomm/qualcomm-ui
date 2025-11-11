@@ -52,7 +52,7 @@ jobs:
   unit-test:
     env:
       IS_CI: true
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     concurrency:
       group: PR Unit Test v2 - ${{github.head_ref}}
       cancel-in-progress: true
