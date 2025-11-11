@@ -1,0 +1,13 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.esnext.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+  },
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "./tsconfig.scripts.json"
+    }
+  ]
+}
