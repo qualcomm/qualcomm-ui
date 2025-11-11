@@ -1,0 +1,33 @@
+// analog vitest does not seem to work with composite: true.
+// we provide this file as an alternative for its loader.
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.esnext.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "emitDeclarationOnly": false,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "Bundler",
+    "types": [
+      "vitest",
+      "@vitest/browser/matchers",
+      "@testing-library/angular"
+    ],
+    "target": "ES2023",
+    "paths": {
+      "~test-utils": ["./test/index.ts"],
+      // this is only for dev intellisense and test compilation
+      "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
+      "@qualcomm-ui/angular-core": ["../angular-core/src"],
+      "@qualcomm-ui/angular-core/*": ["../angular-core/src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.spec.ts",
+    "./test"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.angular-lib.json"
+    }
+  ]
+}

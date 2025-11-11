@@ -61,7 +61,7 @@
     "@floating-ui/dom": "^1.7.0",
     "@jsdevtools/coverage-istanbul-loader": "~3.0.5",
     "@module-federation/enhanced": "0.18.4",
-    "@nx/vite": "21.5.3",
+    "@nx/vite": "21.6.8",
     "@qualcomm-ui/core": "workspace:^1",
     "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/dom": "workspace:^1",

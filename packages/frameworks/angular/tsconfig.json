@@ -1,0 +1,39 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-lib-strict.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "moduleResolution": "bundler",
+    "paths": {
+      // this is only for dev intellisense.
+      "~test-utils": ["./test/index.ts"],
+      // fixes WebStorm usage detection, not used otherwise
+      "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": ["../angular-core/src/*/index.ts"],
+      "@qualcomm-ui/core/*": ["../../common/core/src/*/index.ts"],
+      "@qualcomm-ui/dom/*": ["../../common/core/src/*/index.ts"],
+      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/src/*/index.ts"],
+      "@qualcomm-ui/utils/*": ["../../common/utils/src/*/index.ts"]
+    }
+  },
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "../angular-core/tsconfig.angular-lib.json"
+    },
+    {
+      "path": "./tsconfig.angular-lib.json"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

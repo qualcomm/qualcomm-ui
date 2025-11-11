@@ -1,0 +1,21 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-lib-strict.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "moduleResolution": "bundler",
+    "module": "es2022",
+    "paths": {
+      "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
+      // tricks the type system into resolving properly.
+      // Angular does not fit well with modern monorepos.
+      "@qualcomm-ui/angular-core/*": ["../angular-core/dist/*"]
+    }
+  },
+  "include": ["./src"],
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "flatModuleId": "qui-angular",
+    "flatModuleOutFile": "qui-angular.js"
+  }
+}

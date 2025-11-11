@@ -22,8 +22,12 @@ interface AddHeadersConfig {
   type: "original" | "modified"
 }
 
-const QUALCOMM_HEADER = `// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-// SPDX-License-Identifier: BSD-3-Clause-Clear`
+const QUALCOMM_COPYRIGHT =
+  "Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries."
+const REPO_LICENSE = "SPDX-License-Identifier: BSD-3-Clause-Clear"
+
+const QUALCOMM_HEADER = `// ${QUALCOMM_COPYRIGHT}
+// ${REPO_LICENSE}`
 
 class LicenseHeaderManager {
   private ig: ReturnType<typeof ignore>
@@ -58,12 +62,16 @@ class LicenseHeaderManager {
     return `// Modified from ${sourceUrl}
 // ${sourceLicense}
 // Changes from Qualcomm Technologies, Inc. are provided under the following license:
-// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-// SPDX-License-Identifier: BSD-3-Clause-Clear`
+// ${QUALCOMM_COPYRIGHT}
+// ${REPO_LICENSE}`
   }
 
-  private hasHeader(content: string): boolean {
-    return content.includes("Copyright (c) Qualcomm Technologies, Inc.")
+  private hasCopyright(content: string): boolean {
+    return content.includes(QUALCOMM_COPYRIGHT)
+  }
+
+  private hasLicense(content: string): boolean {
+    return content.includes(REPO_LICENSE)
   }
 
   private isSupportedFile(filePath: string): boolean {
@@ -86,7 +94,7 @@ class LicenseHeaderManager {
     }
 
     const content = await readFile(filePath, "utf-8")
-    if (this.hasHeader(content)) {
+    if (this.hasCopyright(content)) {
       return false
     }
 
@@ -100,13 +108,13 @@ class LicenseHeaderManager {
     return true
   }
 
-  private async checkHeaderInFile(filePath: string): Promise<boolean> {
+  private async checkFile(filePath: string): Promise<boolean> {
     if (!this.isSupportedFile(filePath)) {
       return true
     }
 
     const content = await readFile(filePath, "utf-8")
-    return this.hasHeader(content)
+    return this.hasCopyright(content) && this.hasLicense(content)
   }
 
   private async scanDirectory(dirPath: string): Promise<string[]> {
@@ -137,7 +145,7 @@ class LicenseHeaderManager {
     const filesWithoutHeaders: string[] = []
 
     for (const file of files) {
-      const hasValidHeader = await this.checkHeaderInFile(file)
+      const hasValidHeader = await this.checkFile(file)
       if (!hasValidHeader) {
         filesWithoutHeaders.push(file)
       }
@@ -178,14 +186,14 @@ class LicenseHeaderManager {
     return count
   }
 
-  async checkHeaders(
+  async lintFiles(
     directory: string,
   ): Promise<{fileCount: number; missingHeaders: string[]}> {
     const files = await this.scanDirectory(directory)
     const missingHeaders: string[] = []
 
     for (const file of files) {
-      const hasValidHeader = await this.checkHeaderInFile(file)
+      const hasValidHeader = await this.checkFile(file)
       if (!hasValidHeader) {
         const relativePath = relative(directory, file)
         missingHeaders.push(relativePath)
@@ -344,7 +352,7 @@ program
     const manager = await LicenseHeaderManager.create(cwd())
     console.time("Checking headers")
     const now = performance.mark("Checking headers")
-    const {fileCount, missingHeaders} = await manager.checkHeaders(directory)
+    const {fileCount, missingHeaders} = await manager.lintFiles(directory)
     const headerCheckTime = performance.measure(
       "Checking headers",
       now,
