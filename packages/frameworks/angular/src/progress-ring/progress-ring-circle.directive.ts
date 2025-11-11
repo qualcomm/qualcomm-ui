@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {Component, computed} from "@angular/core"
 
 import {CoreProgressRingCircleDirective} from "@qualcomm-ui/angular-core/progress-ring"

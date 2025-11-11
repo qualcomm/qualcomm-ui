@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {Component} from "@angular/core"
 
 import {CorePopoverArrowDirective} from "@qualcomm-ui/angular-core/popover"

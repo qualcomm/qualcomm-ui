@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {computed, isSignal, type Signal} from "@angular/core"
 
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"

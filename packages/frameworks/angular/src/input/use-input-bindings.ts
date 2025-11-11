@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {computed, type Signal} from "@angular/core"
 
 import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
