@@ -66,9 +66,9 @@ jobs:
   react-core-tests:
     runs-on: ubuntu-latest
     concurrency:
-      group: PR React Core Tests - ${{matrix.shardIndex}} - ${{github.head_ref}}
+      group: PR React Core Tests - ${{github.head_ref}}
       cancel-in-progress: true
-    timeout-minutes: 7
+    timeout-minutes: 10
     steps:
     - name: checkout
       uses: actions/checkout@v3

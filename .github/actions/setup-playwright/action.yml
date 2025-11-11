@@ -2,5 +2,5 @@ name: 'Setup Playwright'
 runs:
   using: 'composite'
   steps:
-  - run: pnpx playwright@1.53.2 install chromium --with-deps --only-shell
+  - run: node node_modules/playwright/cli.js install chromium --with-deps --only-shell
     shell: bash
