@@ -1,0 +1,21 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.esnext.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "moduleResolution": "bundler",
+    "types": [
+      "vitest",
+      "@vitest/browser/providers/playwright"
+    ],
+    "paths": {
+      "~test/*": ["./src/test/*"]
+    }
+  },
+  "include": ["./src/**/*.spec.tsx", "./test"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}
