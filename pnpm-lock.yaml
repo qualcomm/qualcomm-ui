@@ -200,6 +200,39 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@24.9.2)(jiti@1.21.7)(lightningcss@1.30.2)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1)
 
+  packages/common/dom:
+    devDependencies:
+      '@floating-ui/dom':
+        specifier: ^1.7.0
+        version: 1.7.4
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../cli
+      '@qualcomm-ui/esbuild':
+        specifier: workspace:^1
+        version: link:../esbuild
+      '@qualcomm-ui/tsconfig':
+        specifier: workspace:^1
+        version: link:../../configs/tsconfig
+      '@qualcomm-ui/utils':
+        specifier: workspace:^1
+        version: link:../utils
+      '@types/node':
+        specifier: ~24.9.2
+        version: 24.9.2
+      esbuild:
+        specifier: ^0.25.8
+        version: 0.25.11
+      shx:
+        specifier: ^0.4.0
+        version: 0.4.0
+      tsx:
+        specifier: ^4.20.6
+        version: 4.20.6
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+
   packages/common/esbuild:
     devDependencies:
       '@commander-js/extra-typings':
@@ -331,8 +364,8 @@ importers:
         specifier: ^8.31.1
         version: 8.46.2(eslint@9.38.0(jiti@1.21.7))(typescript@5.8.3)
       cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
+        specifier: ^10.1.0
+        version: 10.1.0
       eslint-plugin-boundaries:
         specifier: ^5.0.1
         version: 5.1.0(@typescript-eslint/parser@8.46.2(eslint@9.38.0(jiti@1.21.7))(typescript@5.8.3))(eslint@9.38.0(jiti@1.21.7))
@@ -882,6 +915,15 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@floating-ui/core@1.7.3':
+    resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
+
+  '@floating-ui/dom@1.7.4':
+    resolution: {integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==}
+
+  '@floating-ui/utils@0.2.10':
+    resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1726,11 +1768,6 @@ packages:
   cross-env@10.1.0:
     resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
     engines: {node: '>=20'}
-    hasBin: true
-
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
 
   cross-spawn@6.0.6:
@@ -4755,6 +4792,17 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
+  '@floating-ui/core@1.7.3':
+    dependencies:
+      '@floating-ui/utils': 0.2.10
+
+  '@floating-ui/dom@1.7.4':
+    dependencies:
+      '@floating-ui/core': 1.7.3
+      '@floating-ui/utils': 0.2.10
+
+  '@floating-ui/utils@0.2.10': {}
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.7':
@@ -5744,10 +5792,6 @@ snapshots:
   cross-env@10.1.0:
     dependencies:
       '@epic-web/invariant': 1.0.0
-      cross-spawn: 7.0.6
-
-  cross-env@7.0.3:
-    dependencies:
       cross-spawn: 7.0.6
 
   cross-spawn@6.0.6:
