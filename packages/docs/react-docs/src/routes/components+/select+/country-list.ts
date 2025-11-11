@@ -13,7 +13,6 @@ export const countryList = [
   {code: "AT", name: "Austria"},
   {code: "AU", name: "Australia"},
   {code: "AW", name: "Aruba"},
-  {code: "AX", name: "Åland Islands"},
   {code: "AZ", name: "Azerbaijan"},
   {code: "BA", name: "Bosnia and Herzegovina"},
   {code: "BB", name: "Barbados"},

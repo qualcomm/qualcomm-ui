@@ -24,9 +24,13 @@
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "build-demo-html": "tsx scripts/build-demo-html.ts",
-    "update-knowledge": "run-s generate-knowledge upload-knowledge",
-    "generate-knowledge": "qui-mdx-vite generate-llms-txt --clean --output-mode per-page --base-url 'https://angular-next.qui.qualcomm.com' --exclude 'setup*' 'theme*' 'legacy*' 'changelogs*' 'troubleshooting*' 'integrations*' 'installation*' --env .env.prod",
-    "upload-knowledge": "qui-mdx-vite upload-knowledge --env .env.prod"
+    "update-knowledge": "run-s generate-knowledge-saga generate-knowledge-qui upload-knowledge",
+    "generate-knowledge": "qui-mdx-vite generate-llms-txt --clean --output-mode per-page --exclude 'setup*' 'theme*' 'legacy*' 'changelogs*' 'troubleshooting*' 'integrations*' 'installation*'",
+    "upload-knowledge": "run-p upload-knowledge-saga upload-knowledge-qui",
+    "generate-knowledge-saga": "pnpm generate-knowledge --env .env.saga-ai",
+    "upload-knowledge-saga": "qui-mdx-vite upload-knowledge --env .env.saga-ai",
+    "generate-knowledge-qui": "pnpm generate-knowledge --env .env.qui-ai",
+    "upload-knowledge-qui": "qui-mdx-vite upload-knowledge --env .env.qui-ai"
   },
   "dependencies": {
     "@angular/cli": "catalog:",
