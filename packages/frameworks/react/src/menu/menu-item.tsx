@@ -4,7 +4,10 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {type ItemProps, splitMenuItemProps} from "@qualcomm-ui/core/menu"
-import {MenuItemContextProvider, useMenuItem} from "@qualcomm-ui/react-core/menu"
+import {
+  MenuItemContextProvider,
+  useMenuItem,
+} from "@qualcomm-ui/react-core/menu"
 import {
   type ElementRenderProp,
   PolymorphicElement,

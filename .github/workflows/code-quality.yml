@@ -87,6 +87,37 @@ jobs:
       env:
         VITEST_MAX_THREADS: 1
 
+  react-tests:
+    env:
+      IS_CI: true
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        shardIndex: [ 1, 2 ]
+        shardTotal: [ 2 ]
+    concurrency:
+      group: PR React Tests - ${{matrix.shardIndex}} - ${{github.head_ref}}
+      cancel-in-progress: true
+    timeout-minutes: 10
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/setup-node-and-install
+
+    - uses: ./.github/actions/setup-playwright
+
+    - name: build react dependencies
+      run: pnpm turbo run build --filter '@qui/react'
+
+    - name: test react
+      timeout-minutes: 2
+      run: pnpm turbo run test:react:ci -- --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
+      env:
+        VITEST_MAX_THREADS: 1
+
 
   # also run repolinter on PRs
   # TODO: run using qcom-preflight-checks once it's updated to incorporate the batching PR

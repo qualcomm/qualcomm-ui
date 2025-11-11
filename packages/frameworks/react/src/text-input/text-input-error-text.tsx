@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {InputErrorText, type InputErrorTextProps} from "@qualcomm-ui/react/input"
+import {
+  InputErrorText,
+  type InputErrorTextProps,
+} from "@qualcomm-ui/react/input"
 import {useTextInputErrorText} from "@qualcomm-ui/react-core/text-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

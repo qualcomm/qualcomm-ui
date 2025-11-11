@@ -3,7 +3,10 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import type {PopoverElementIds, PopoverTriggerBindings} from "@qualcomm-ui/core/popover"
+import type {
+  PopoverElementIds,
+  PopoverTriggerBindings,
+} from "@qualcomm-ui/core/popover"
 import {Portal, type PortalProps} from "@qualcomm-ui/react-core/portal"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {BindingRenderProp} from "@qualcomm-ui/react-core/system"

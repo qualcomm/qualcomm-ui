@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreTree, type CoreTreeNodeIndicatorProps} from "@qualcomm-ui/react-core/tree"
+import {
+  CoreTree,
+  type CoreTreeNodeIndicatorProps,
+} from "@qualcomm-ui/react-core/tree"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsTreeContext} from "./qds-tree-context"

@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreDialog, type CoreDialogHeadingProps} from "@qualcomm-ui/react-core/dialog"
+import {
+  CoreDialog,
+  type CoreDialogHeadingProps,
+} from "@qualcomm-ui/react-core/dialog"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsDialogContext} from "./qds-dialog-context"

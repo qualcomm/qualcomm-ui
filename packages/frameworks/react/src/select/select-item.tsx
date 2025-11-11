@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreSelect, type CoreSelectItemProps} from "@qualcomm-ui/react-core/select"
+import {
+  CoreSelect,
+  type CoreSelectItemProps,
+} from "@qualcomm-ui/react-core/select"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context"

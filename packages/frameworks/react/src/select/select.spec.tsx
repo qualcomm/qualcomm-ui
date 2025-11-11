@@ -8,7 +8,10 @@ import {render} from "vitest-browser-react"
 import {selectCollection} from "@qualcomm-ui/core/select"
 import {Select, type SelectRootProps} from "@qualcomm-ui/react/select"
 import {Portal} from "@qualcomm-ui/react-core/portal"
-import {type MultiComponentTestCase, runTests} from "@qualcomm-ui/react-test-utils"
+import {
+  type MultiComponentTestCase,
+  runTests,
+} from "@qualcomm-ui/react-test-utils"
 import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
 
 const stringCollection = selectCollection({

@@ -3,7 +3,10 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {createQdsLinkApi, type QdsLinkApiProps} from "@qualcomm-ui/qds-core/link"
+import {
+  createQdsLinkApi,
+  type QdsLinkApiProps,
+} from "@qualcomm-ui/qds-core/link"
 import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"

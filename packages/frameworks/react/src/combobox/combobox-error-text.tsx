@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {InputErrorText, type InputErrorTextProps} from "@qualcomm-ui/react/input"
+import {
+  InputErrorText,
+  type InputErrorTextProps,
+} from "@qualcomm-ui/react/input"
 import {
   CoreCombobox,
   type CoreComboboxErrorTextProps,

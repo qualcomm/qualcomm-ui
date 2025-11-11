@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {Pagination, type PaginationRootProps} from "@qualcomm-ui/react/pagination"
+import {
+  Pagination,
+  type PaginationRootProps,
+} from "@qualcomm-ui/react/pagination"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context"

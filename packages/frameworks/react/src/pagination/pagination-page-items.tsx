@@ -4,7 +4,10 @@
 import {Fragment, type ReactElement, type ReactNode} from "react"
 
 import type {PaginationPageItemBindings} from "@qualcomm-ui/core/pagination"
-import {type BindingRenderProp, renderProp} from "@qualcomm-ui/react-core/system"
+import {
+  type BindingRenderProp,
+  renderProp,
+} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {PaginationContext} from "./pagination-context"

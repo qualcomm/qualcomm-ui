@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreProgress, type CoreProgressBarProps} from "@qualcomm-ui/react-core/progress"
+import {
+  CoreProgress,
+  type CoreProgressBarProps,
+} from "@qualcomm-ui/react-core/progress"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsProgressContext} from "./qds-progress-context"

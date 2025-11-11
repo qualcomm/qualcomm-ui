@@ -3,7 +3,10 @@
 
 import {type ReactElement, useMemo} from "react"
 
-import {createQdsTreeApi, type QdsTreeApiProps} from "@qualcomm-ui/qds-core/tree"
+import {
+  createQdsTreeApi,
+  type QdsTreeApiProps,
+} from "@qualcomm-ui/qds-core/tree"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {CoreTree, type CoreTreeRootProps} from "@qualcomm-ui/react-core/tree"
 import type {TreeNode} from "@qualcomm-ui/utils/collection"

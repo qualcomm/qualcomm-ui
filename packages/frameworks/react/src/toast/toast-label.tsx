@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreToast, type CoreToastLabelProps} from "@qualcomm-ui/react-core/toast"
+import {
+  CoreToast,
+  type CoreToastLabelProps,
+} from "@qualcomm-ui/react-core/toast"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsToastContext} from "./qds-toast-context"

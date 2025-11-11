@@ -4,7 +4,10 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {type SliderApiProps, splitSliderProps} from "@qualcomm-ui/core/slider"
-import {createQdsSliderApi, type QdsSliderApiProps} from "@qualcomm-ui/qds-core/slider"
+import {
+  createQdsSliderApi,
+  type QdsSliderApiProps,
+} from "@qualcomm-ui/qds-core/slider"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {SliderContextProvider, useSlider} from "@qualcomm-ui/react-core/slider"
 import {useControlledId} from "@qualcomm-ui/react-core/state"

@@ -5,7 +5,10 @@ import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
 
 import {Progress} from "@qualcomm-ui/react/progress"
-import {type MultiComponentTestCase, runTests} from "@qualcomm-ui/react-test-utils"
+import {
+  type MultiComponentTestCase,
+  runTests,
+} from "@qualcomm-ui/react-test-utils"
 
 const testLabel = "Test Progress"
 const errorMessage = "Error occurred"

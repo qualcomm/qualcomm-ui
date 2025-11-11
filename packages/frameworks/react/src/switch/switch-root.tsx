@@ -4,7 +4,10 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {splitSwitchProps, type SwitchApiProps} from "@qualcomm-ui/core/switch"
-import {createQdsSwitchApi, type QdsSwitchApiProps} from "@qualcomm-ui/qds-core/switch"
+import {
+  createQdsSwitchApi,
+  type QdsSwitchApiProps,
+} from "@qualcomm-ui/qds-core/switch"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {SwitchContextProvider, useSwitch} from "@qualcomm-ui/react-core/switch"

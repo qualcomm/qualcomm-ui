@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreTree, type CoreTreeNodeTextProps} from "@qualcomm-ui/react-core/tree"
+import {
+  CoreTree,
+  type CoreTreeNodeTextProps,
+} from "@qualcomm-ui/react-core/tree"
 
 export interface SideNavNodeTextProps extends CoreTreeNodeTextProps {}
 

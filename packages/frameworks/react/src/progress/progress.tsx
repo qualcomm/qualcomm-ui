@@ -6,7 +6,10 @@ import type {ReactElement, ReactNode} from "react"
 import type {ProgressApi} from "@qualcomm-ui/core/progress"
 import {useOptionalContentId} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
-import {type BindingRenderProp, renderProp} from "@qualcomm-ui/react-core/system"
+import {
+  type BindingRenderProp,
+  renderProp,
+} from "@qualcomm-ui/react-core/system"
 
 import {ProgressBar, type ProgressBarProps} from "./progress-bar"
 import {ProgressContext} from "./progress-context"

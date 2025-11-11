@@ -6,7 +6,10 @@ import type {ReactElement} from "react"
 import {type LucideIcon, X} from "lucide-react"
 
 import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
-import {CoreToast, type CoreToastCloseTriggerProps} from "@qualcomm-ui/react-core/toast"
+import {
+  CoreToast,
+  type CoreToastCloseTriggerProps,
+} from "@qualcomm-ui/react-core/toast"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsToastContext} from "./qds-toast-context"

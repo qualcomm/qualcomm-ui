@@ -3,12 +3,18 @@
 
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
-import {type CheckboxApiProps, splitCheckboxProps} from "@qualcomm-ui/core/checkbox"
+import {
+  type CheckboxApiProps,
+  splitCheckboxProps,
+} from "@qualcomm-ui/core/checkbox"
 import {
   createQdsCheckboxApi,
   type QdsCheckboxApiProps,
 } from "@qualcomm-ui/qds-core/checkbox"
-import {CheckboxContextProvider, useCheckbox} from "@qualcomm-ui/react-core/checkbox"
+import {
+  CheckboxContextProvider,
+  useCheckbox,
+} from "@qualcomm-ui/react-core/checkbox"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {

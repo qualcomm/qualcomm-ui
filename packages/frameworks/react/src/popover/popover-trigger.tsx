@@ -6,7 +6,10 @@ import type {ReactElement} from "react"
 import type {PopoverTriggerBindings} from "@qualcomm-ui/core/popover"
 import {popoverClasses} from "@qualcomm-ui/qds-core/popover"
 import {usePopoverTrigger} from "@qualcomm-ui/react-core/popover"
-import {type BindingRenderProp, bindingRenderProp} from "@qualcomm-ui/react-core/system"
+import {
+  type BindingRenderProp,
+  bindingRenderProp,
+} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PopoverTriggerProps {

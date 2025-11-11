@@ -3,7 +3,10 @@
 
 import {type ReactElement, useMemo} from "react"
 
-import {createQdsTabsApi, type QdsTabsApiProps} from "@qualcomm-ui/qds-core/tabs"
+import {
+  createQdsTabsApi,
+  type QdsTabsApiProps,
+} from "@qualcomm-ui/qds-core/tabs"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {CoreTabs, type CoreTabsRootProps} from "@qualcomm-ui/react-core/tabs"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"

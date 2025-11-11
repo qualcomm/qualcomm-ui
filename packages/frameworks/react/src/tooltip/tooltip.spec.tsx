@@ -5,7 +5,10 @@ import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
 
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import {type MultiComponentTestCase, runTests} from "@qualcomm-ui/react-test-utils"
+import {
+  type MultiComponentTestCase,
+  runTests,
+} from "@qualcomm-ui/react-test-utils"
 
 const triggerText = "Hover me"
 const tooltipContent = "Tooltip content"

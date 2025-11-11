@@ -7,7 +7,10 @@ import {render} from "vitest-browser-react"
 
 import {InputStartIcon} from "@qualcomm-ui/react/input"
 import {PasswordInput} from "@qualcomm-ui/react/password-input"
-import {type MultiComponentTestCase, runTests} from "@qualcomm-ui/react-test-utils"
+import {
+  type MultiComponentTestCase,
+  runTests,
+} from "@qualcomm-ui/react-test-utils"
 
 const demoLabel = "Demo Label"
 const demoPlaceholder = "Enter password"

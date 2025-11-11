@@ -4,7 +4,10 @@
 import type {ReactElement} from "react"
 
 import {useQdsInputContext} from "@qualcomm-ui/react/input"
-import {CoreSelect, type CoreSelectControlProps} from "@qualcomm-ui/react-core/select"
+import {
+  CoreSelect,
+  type CoreSelectControlProps,
+} from "@qualcomm-ui/react-core/select"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context"

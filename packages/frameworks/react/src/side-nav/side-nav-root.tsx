@@ -4,7 +4,10 @@
 import type {ReactElement} from "react"
 
 import type {QdsSideNavRootProps} from "@qualcomm-ui/qds-core/side-nav"
-import {CoreSideNav, type CoreSideNavRootProps} from "@qualcomm-ui/react-core/side-nav"
+import {
+  CoreSideNav,
+  type CoreSideNavRootProps,
+} from "@qualcomm-ui/react-core/side-nav"
 import type {TreeNode} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

@@ -4,8 +4,14 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import type {MenuApiProps} from "@qualcomm-ui/core/menu"
-import {type PresenceApiProps, splitPresenceProps} from "@qualcomm-ui/core/presence"
-import {createQdsMenuApi, type QdsMenuApiProps} from "@qualcomm-ui/qds-core/menu"
+import {
+  type PresenceApiProps,
+  splitPresenceProps,
+} from "@qualcomm-ui/core/presence"
+import {
+  createQdsMenuApi,
+  type QdsMenuApiProps,
+} from "@qualcomm-ui/qds-core/menu"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   MenuContextProvider,
@@ -13,7 +19,10 @@ import {
   MenuTriggerContextProvider,
   useMenu,
 } from "@qualcomm-ui/react-core/menu"
-import {PresenceContextProvider, usePresence} from "@qualcomm-ui/react-core/presence"
+import {
+  PresenceContextProvider,
+  usePresence,
+} from "@qualcomm-ui/react-core/presence"
 import type {Optional} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

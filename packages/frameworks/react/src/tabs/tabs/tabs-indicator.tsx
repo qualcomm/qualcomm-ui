@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreTabs, type CoreTabsIndicatorProps} from "@qualcomm-ui/react-core/tabs"
+import {
+  CoreTabs,
+  type CoreTabsIndicatorProps,
+} from "@qualcomm-ui/react-core/tabs"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsTabsContext} from "../qds-tabs-context"

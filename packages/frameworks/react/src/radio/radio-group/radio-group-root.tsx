@@ -4,7 +4,10 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {type RadioApiProps, splitRadioProps} from "@qualcomm-ui/core/radio"
-import {createQdsRadioApi, type QdsRadioApiProps} from "@qualcomm-ui/qds-core/radio"
+import {
+  createQdsRadioApi,
+  type QdsRadioApiProps,
+} from "@qualcomm-ui/qds-core/radio"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {RadioContextProvider, useRadio} from "@qualcomm-ui/react-core/radio"
 import {useControlledId} from "@qualcomm-ui/react-core/state"

@@ -3,7 +3,10 @@ import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
 
 import {Popover} from "@qualcomm-ui/react/popover"
-import {type MultiComponentTestCase, runTests} from "@qualcomm-ui/react-test-utils"
+import {
+  type MultiComponentTestCase,
+  runTests,
+} from "@qualcomm-ui/react-test-utils"
 
 const triggerText = "Click me"
 const popoverLabel = "Popover Label"

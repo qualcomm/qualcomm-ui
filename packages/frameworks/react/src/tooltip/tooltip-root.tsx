@@ -4,7 +4,10 @@
 import type {ReactNode} from "react"
 
 import type {TooltipApiProps} from "@qualcomm-ui/core/tooltip"
-import {TooltipContextProvider, useTooltip} from "@qualcomm-ui/react-core/tooltip"
+import {
+  TooltipContextProvider,
+  useTooltip,
+} from "@qualcomm-ui/react-core/tooltip"
 
 export interface TooltipRootProps extends TooltipApiProps {
   /**

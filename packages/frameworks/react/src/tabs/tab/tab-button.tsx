@@ -5,7 +5,10 @@ import {isValidElement, type ReactElement} from "react"
 
 import {Icon, IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
-import {CoreTabs, type CoreTabsTabButtonProps} from "@qualcomm-ui/react-core/tabs"
+import {
+  CoreTabs,
+  type CoreTabsTabButtonProps,
+} from "@qualcomm-ui/react-core/tabs"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsTabsContext} from "../qds-tabs-context"

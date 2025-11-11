@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {ActionGroup, type ActionGroupProps} from "@qualcomm-ui/react/action-group"
+import {
+  ActionGroup,
+  type ActionGroupProps,
+} from "@qualcomm-ui/react/action-group"
 
 import {Pagination} from "./index"
 

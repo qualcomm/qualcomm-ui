@@ -6,7 +6,10 @@ import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
-import {type MultiComponentTestCase, runTests} from "@qualcomm-ui/react-test-utils"
+import {
+  type MultiComponentTestCase,
+  runTests,
+} from "@qualcomm-ui/react-test-utils"
 
 const demoLabel = "Demo Label"
 const demoPlaceholder = "Enter text here"

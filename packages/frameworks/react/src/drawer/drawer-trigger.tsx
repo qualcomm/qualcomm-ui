@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreDialog, type CoreDialogTriggerProps} from "@qualcomm-ui/react-core/dialog"
+import {
+  CoreDialog,
+  type CoreDialogTriggerProps,
+} from "@qualcomm-ui/react-core/dialog"
 
 export interface DrawerTriggerProps extends CoreDialogTriggerProps {}
 

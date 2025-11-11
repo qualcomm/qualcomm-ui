@@ -3,8 +3,14 @@
 
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
-import {createQdsDialogApi, type QdsDialogApiProps} from "@qualcomm-ui/qds-core/dialog"
-import {CoreDialog, type CoreDialogRootProps} from "@qualcomm-ui/react-core/dialog"
+import {
+  createQdsDialogApi,
+  type QdsDialogApiProps,
+} from "@qualcomm-ui/qds-core/dialog"
+import {
+  CoreDialog,
+  type CoreDialogRootProps,
+} from "@qualcomm-ui/react-core/dialog"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 
 import {QdsDialogContextProvider} from "./qds-dialog-context"

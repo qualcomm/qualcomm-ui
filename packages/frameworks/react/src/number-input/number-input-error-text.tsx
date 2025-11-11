@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {type InputErrorTextProps, useQdsInputContext} from "@qualcomm-ui/react/input"
+import {
+  type InputErrorTextProps,
+  useQdsInputContext,
+} from "@qualcomm-ui/react/input"
 import {CoreNumberInput} from "@qualcomm-ui/react-core/number-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

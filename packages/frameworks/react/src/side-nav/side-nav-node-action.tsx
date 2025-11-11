@@ -7,7 +7,10 @@ import {
   InlineIconButton,
   type InlineIconButtonProps,
 } from "@qualcomm-ui/react/inline-icon-button"
-import {CoreTree, type CoreTreeNodeActionProps} from "@qualcomm-ui/react-core/tree"
+import {
+  CoreTree,
+  type CoreTreeNodeActionProps,
+} from "@qualcomm-ui/react-core/tree"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsSideNavApi} from "./qds-side-nav-context"

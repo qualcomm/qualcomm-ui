@@ -4,9 +4,15 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {createQdsDialogApi} from "@qualcomm-ui/qds-core/dialog"
-import {createQdsDrawerApi, type QdsDrawerApiProps} from "@qualcomm-ui/qds-core/drawer"
+import {
+  createQdsDrawerApi,
+  type QdsDrawerApiProps,
+} from "@qualcomm-ui/qds-core/drawer"
 import {QdsDialogContextProvider} from "@qualcomm-ui/react/dialog"
-import {CoreDialog, type CoreDialogRootProps} from "@qualcomm-ui/react-core/dialog"
+import {
+  CoreDialog,
+  type CoreDialogRootProps,
+} from "@qualcomm-ui/react-core/dialog"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 
 import {QdsDrawerContextProvider} from "./qds-drawer-context"

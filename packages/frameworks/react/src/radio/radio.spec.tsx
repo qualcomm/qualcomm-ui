@@ -5,7 +5,10 @@ import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
 
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
-import {type MultiComponentTestCase, runTests} from "@qualcomm-ui/react-test-utils"
+import {
+  type MultiComponentTestCase,
+  runTests,
+} from "@qualcomm-ui/react-test-utils"
 
 const demoGroupLabel = "Radio Group Label"
 const demoLabel = "Demo Label"

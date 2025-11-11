@@ -4,7 +4,10 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {type AvatarApiProps, splitAvatarProps} from "@qualcomm-ui/core/avatar"
-import {createQdsAvatarApi, type QdsAvatarApiProps} from "@qualcomm-ui/qds-core/avatar"
+import {
+  createQdsAvatarApi,
+  type QdsAvatarApiProps,
+} from "@qualcomm-ui/qds-core/avatar"
 import {AvatarContextProvider, useAvatar} from "@qualcomm-ui/react-core/avatar"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"

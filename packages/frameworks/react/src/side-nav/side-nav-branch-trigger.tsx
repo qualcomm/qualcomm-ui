@@ -7,7 +7,10 @@ import {ChevronDown} from "lucide-react"
 
 import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
-import {CoreTree, type CoreTreeBranchTriggerProps} from "@qualcomm-ui/react-core/tree"
+import {
+  CoreTree,
+  type CoreTreeBranchTriggerProps,
+} from "@qualcomm-ui/react-core/tree"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsSideNavApi} from "./qds-side-nav-context"

@@ -3,7 +3,10 @@
 
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
-import {splitTextInputProps, type TextInputApiProps} from "@qualcomm-ui/core/text-input"
+import {
+  splitTextInputProps,
+  type TextInputApiProps,
+} from "@qualcomm-ui/core/text-input"
 import {createQdsInputApi} from "@qualcomm-ui/qds-core/input"
 import {
   QdsInputContextProvider,

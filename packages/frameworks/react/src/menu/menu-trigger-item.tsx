@@ -8,7 +8,10 @@ import {ChevronRight} from "lucide-react"
 import {type ItemProps, splitMenuItemProps} from "@qualcomm-ui/core/menu"
 import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
-import {MenuItemContextProvider, useMenuTriggerItem} from "@qualcomm-ui/react-core/menu"
+import {
+  MenuItemContextProvider,
+  useMenuTriggerItem,
+} from "@qualcomm-ui/react-core/menu"
 import {
   type ElementRenderProp,
   PolymorphicElement,

@@ -4,8 +4,14 @@
 import {type ReactElement, useMemo} from "react"
 
 import {createQdsInputApi} from "@qualcomm-ui/qds-core/input"
-import {createQdsSelectApi, type QdsSelectApiProps} from "@qualcomm-ui/qds-core/select"
-import {QdsInputContextProvider, type QdsReactInputApi} from "@qualcomm-ui/react/input"
+import {
+  createQdsSelectApi,
+  type QdsSelectApiProps,
+} from "@qualcomm-ui/qds-core/select"
+import {
+  QdsInputContextProvider,
+  type QdsReactInputApi,
+} from "@qualcomm-ui/react/input"
 import {
   CoreCombobox,
   type CoreComboboxRootProps,

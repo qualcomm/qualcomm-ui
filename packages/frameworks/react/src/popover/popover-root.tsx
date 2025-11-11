@@ -4,9 +4,18 @@
 import type {ReactElement, ReactNode} from "react"
 
 import type {PopoverApiProps} from "@qualcomm-ui/core/popover"
-import {type PresenceApiProps, splitPresenceProps} from "@qualcomm-ui/core/presence"
-import {PopoverContextProvider, usePopover} from "@qualcomm-ui/react-core/popover"
-import {PresenceContextProvider, usePresence} from "@qualcomm-ui/react-core/presence"
+import {
+  type PresenceApiProps,
+  splitPresenceProps,
+} from "@qualcomm-ui/core/presence"
+import {
+  PopoverContextProvider,
+  usePopover,
+} from "@qualcomm-ui/react-core/popover"
+import {
+  PresenceContextProvider,
+  usePresence,
+} from "@qualcomm-ui/react-core/presence"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PopoverRootProps extends PopoverApiProps, PresenceApiProps {

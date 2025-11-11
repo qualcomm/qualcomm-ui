@@ -3,12 +3,18 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {type AccordionApiProps, splitAccordionProps} from "@qualcomm-ui/core/accordion"
+import {
+  type AccordionApiProps,
+  splitAccordionProps,
+} from "@qualcomm-ui/core/accordion"
 import {
   getQdsAccordionBindings,
   type QdsAccordionApiProps,
 } from "@qualcomm-ui/qds-core/accordion"
-import {AccordionContextProvider, useAccordion} from "@qualcomm-ui/react-core/accordion"
+import {
+  AccordionContextProvider,
+  useAccordion,
+} from "@qualcomm-ui/react-core/accordion"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {

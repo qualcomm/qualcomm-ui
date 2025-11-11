@@ -5,7 +5,10 @@ import type {ReactElement} from "react"
 
 import type {PopoverCloseTriggerBindings} from "@qualcomm-ui/core/popover"
 import {usePopoverCloseTrigger} from "@qualcomm-ui/react-core/popover"
-import {type BindingRenderProp, bindingRenderProp} from "@qualcomm-ui/react-core/system"
+import {
+  type BindingRenderProp,
+  bindingRenderProp,
+} from "@qualcomm-ui/react-core/system"
 
 export interface PopoverCloseTriggerProps {
   /**

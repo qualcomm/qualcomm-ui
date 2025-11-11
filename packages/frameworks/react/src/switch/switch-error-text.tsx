@@ -5,7 +5,10 @@ import type {ReactElement, ReactNode} from "react"
 
 import {AlertCircle} from "lucide-react"
 
-import {InputErrorText, type InputErrorTextProps} from "@qualcomm-ui/react/input"
+import {
+  InputErrorText,
+  type InputErrorTextProps,
+} from "@qualcomm-ui/react/input"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {useSwitchErrorText} from "@qualcomm-ui/react-core/switch"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
