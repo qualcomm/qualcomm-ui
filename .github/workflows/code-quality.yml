@@ -175,7 +175,7 @@ jobs:
         shardIndex: [ 1 ]
         shardTotal: [ 1 ]
     concurrency:
-      group: PR Angular Core Tests - ${{matrix.shardIndex}} - ${{github.head_ref}}
+      group: PR Angular Tests - ${{matrix.shardIndex}} - ${{matrix.shardTotal}} - ${{github.head_ref}}
       cancel-in-progress: true
     steps:
     - name: checkout
