@@ -4,7 +4,7 @@
 import type {
   PageHeading,
   PageSectionContent,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/mdx-common"
 
 export interface IndexedSection {
   content: PageSectionContent[]

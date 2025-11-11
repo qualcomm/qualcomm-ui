@@ -8,7 +8,7 @@ import type {
   PageFrontmatter,
   PageMap,
   PageSection,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/mdx-common"
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import type {

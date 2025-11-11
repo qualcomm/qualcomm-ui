@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {PageFrontmatter, TocHeading} from "@qualcomm-ui/mdx-docs-common"
+import type {PageFrontmatter, TocHeading} from "@qualcomm-ui/mdx-common"
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 export type RoutingStrategy =

@@ -4,7 +4,7 @@ import {
   useRouteError,
 } from "react-router"
 
-import {NotFound} from "@qualcomm-ui/mdx-docs/not-found"
+import {NotFound} from "@qualcomm-ui/react-mdx/not-found"
 
 export const loader: LoaderFunction = () => {
   throw new Response("Not Found", {status: 404}) as any

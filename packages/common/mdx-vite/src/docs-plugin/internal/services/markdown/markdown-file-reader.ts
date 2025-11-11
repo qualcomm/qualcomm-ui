@@ -10,7 +10,7 @@ import remarkParseFrontmatter from "remark-parse-frontmatter"
 import remarkStringify from "remark-stringify"
 import {unified} from "unified"
 
-import type {PageFrontmatter} from "@qualcomm-ui/mdx-docs-common"
+import type {PageFrontmatter} from "@qualcomm-ui/mdx-common"
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import {frontmatterSchema} from "../../utils"

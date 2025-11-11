@@ -11,8 +11,8 @@ import {
   DocsLayout,
   type DocsLayoutSettings,
   MobileSidebar,
-} from "@qualcomm-ui/mdx-docs/docs-layout"
-import {SiteSearch} from "@qualcomm-ui/mdx-docs/site-search"
+} from "@qualcomm-ui/react-mdx/docs-layout"
+import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Link} from "@qualcomm-ui/react/link"
 

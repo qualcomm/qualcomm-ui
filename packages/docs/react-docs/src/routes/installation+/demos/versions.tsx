@@ -1,6 +1,6 @@
 import type {ReactNode} from "react"
 
-import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {dedent} from "@qualcomm-ui/utils/dedent"
 
 import quiReactPkg from "../../../../../../frameworks/react/package.json"

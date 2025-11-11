@@ -15,19 +15,19 @@ declare module "*.mdx" {
 }
 
 declare module "@qualcomm-ui/mdx-vite-plugin" {
-  import type {SiteData} from "@qualcomm-ui/mdx-docs-common"
+  import type {SiteData} from "@qualcomm-ui/mdx-common"
 
   export const siteData: SiteData
 }
 
 declare module "virtual:qui-demo-scope/auto" {
-  import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-docs-common"
+  import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
 
   export function getDemo(demoName: string): ReactDemoWithScope
 }
 
 declare module "virtual:angular-demo-registry" {
-  import type {AngularDemoInfo} from "@qualcomm-ui/mdx-docs-common"
+  import type {AngularDemoInfo} from "@qualcomm-ui/mdx-common"
 
   export function getAngularDemoInfo(demoId: string): AngularDemoInfo | null
 }

@@ -68,7 +68,7 @@ function generateLazyDemoLoader(demoPages: DemoPage[]): string {
 
     // This file is generated automatically. Don't edit it directly.
 
-    import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-docs-common"
+    import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
 
     export const lazyDemos: Record<
       string,

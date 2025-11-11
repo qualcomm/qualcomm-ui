@@ -6,8 +6,8 @@ import {getDemo} from "virtual:qui-demo-scope/auto"
 import {
   QdsDemoRunner,
   type QdsDemoRunnerProps,
-} from "@qualcomm-ui/mdx-docs/code-demo"
-import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/react-mdx/code-demo"
+import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
 import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"

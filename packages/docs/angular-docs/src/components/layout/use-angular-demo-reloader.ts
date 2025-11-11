@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import {useEffect, useRef, useState} from "react"
 
-import type {AngularDemoInfo} from "@qualcomm-ui/mdx-docs-common"
+import type {AngularDemoInfo} from "@qualcomm-ui/mdx-common"
 
 import type {DemoUpdateContextValue} from "./demo-update-context"
 

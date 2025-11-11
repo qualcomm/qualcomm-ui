@@ -1,1 +1,1 @@
-# @qualcomm-ui/mdx-docs-common
+# @qualcomm-ui/mdx-common

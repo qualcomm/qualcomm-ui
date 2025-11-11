@@ -20,13 +20,13 @@ import {
 import {
   type PackageManager,
   SiteContextProvider,
-} from "@qualcomm-ui/mdx-docs/context"
+} from "@qualcomm-ui/react-mdx/context"
 import {
   type DocPropsLayout,
   PropsLayoutProvider,
   type PropsLayoutState,
-} from "@qualcomm-ui/mdx-docs/typedoc"
-import type {SiteData} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/react-mdx/typedoc"
+import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
   isQdsTheme,

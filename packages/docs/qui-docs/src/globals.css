@@ -1,0 +1,72 @@
+@import "tailwindcss";
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/snapdragon-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/dragonwing-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css" layer(components);
+@import "@qualcomm-ui/react-mdx/styles.css" layer(components);
+
+@font-face {
+  font-display: fallback;
+  font-family: "Qualcomm Next";
+  font-style: normal;
+  font-weight: 100;
+  src: url(./assets/fonts/qc-next/QualcommNext-Thin.woff) format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: "Qualcomm Next";
+  font-style: normal;
+  font-weight: 400;
+  src: url(./assets/fonts/qc-next/QualcommNext-Regular.woff) format("woff");
+}
+@font-face {
+  font-display: fallback;
+  font-family: "Qualcomm Next";
+  font-style: normal;
+  font-weight: 500;
+  src: url(./assets/fonts/qc-next/QualcommNext-Medium.woff) format("woff");
+}
+
+:root {
+  color: var(--color-text-neutral-primary);
+  color-scheme: light dark;
+
+  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  --q-font-mono: "Roboto Mono", monospace;
+  --qui-header-height: 48px;
+  --q-font-family: "Roboto Flex", sans-serif;
+}
+
+.font-mono {
+  font-family: "Source Code Pro", "Roboto Mono", monospace;
+}
+
+.q-header--content {
+  padding: 6px 12px;
+}
+
+body {
+  background: var(--color-background-neutral-00);
+  display: flex;
+  margin: 0;
+}
+
+.dark .feature-card-1 {
+  background: url("./assets/images/dark-bg-1.png") center center;
+  background-size: cover;
+}
+
+.light .feature-card-1 {
+  background: var(--q-background-3);
+}
+
+.dark .feature-card-2 {
+  background: url("./assets/images/dark-bg-2.png") center center;
+  background-size: cover;
+}

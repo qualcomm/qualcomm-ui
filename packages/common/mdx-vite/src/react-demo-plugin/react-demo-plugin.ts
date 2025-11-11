@@ -14,7 +14,7 @@ import type {Plugin} from "vite"
 import {
   quiCustomDarkTheme,
   type ReactDemoData,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/mdx-common"
 import {dedent} from "@qualcomm-ui/utils/dedent"
 import {debounce} from "@qualcomm-ui/utils/functions"
 

@@ -13,7 +13,7 @@ import remarkParse from "remark-parse"
 import remarkRehype from "remark-rehype"
 import {unified} from "unified"
 
-import type {PageFrontmatter, PageHeading} from "@qualcomm-ui/mdx-docs-common"
+import type {PageFrontmatter, PageHeading} from "@qualcomm-ui/mdx-common"
 
 import {rehypeSlug} from "../../../rehype/rehype-slug"
 import {remarkAlerts} from "../../../remark/remark-alerts"

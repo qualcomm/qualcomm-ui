@@ -8,7 +8,7 @@
 @import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/dragonwing-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css" layer(components);
-@import "@qualcomm-ui/mdx-docs/styles.css" layer(components);
+@import "@qualcomm-ui/react-mdx/styles.css" layer(components);
 
 @font-face {
   font-display: fallback;

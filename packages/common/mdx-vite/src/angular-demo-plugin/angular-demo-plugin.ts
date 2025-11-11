@@ -24,7 +24,7 @@ import {
   type PreviewContext,
   quiCustomDarkTheme,
   type SourceCodeData,
-} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/mdx-common"
 
 export interface AngularDemoPluginOptions {
   demoPattern?: string | string[]

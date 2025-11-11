@@ -18,13 +18,13 @@ import {
 import {
   PackageManager,
   SiteContextProvider,
-} from "@qualcomm-ui/mdx-docs/context"
+} from "@qualcomm-ui/react-mdx/context"
 import {
   DocPropsLayout,
   PropsLayoutProvider,
   PropsLayoutState,
-} from "@qualcomm-ui/mdx-docs/typedoc"
-import {SiteData} from "@qualcomm-ui/mdx-docs-common"
+} from "@qualcomm-ui/react-mdx/typedoc"
+import {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {

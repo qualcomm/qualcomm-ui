@@ -8,7 +8,7 @@ import {
   getPaginationRowModel,
   type TableInstance,
 } from "@qualcomm-ui/core/table"
-import {CodeHighlight} from "@qualcomm-ui/mdx-docs/code-highlight"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {ActionGroup} from "@qualcomm-ui/react/action-group"
 import {Button} from "@qualcomm-ui/react/button"
 import {NumberInput} from "@qualcomm-ui/react/number-input"

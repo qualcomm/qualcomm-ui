@@ -24,7 +24,7 @@
     "angular-docs": "pnpm -C packages/docs/angular-docs",
     "angular-table-docs": "pnpm -C packages/docs/angular-table-docs",
     "react-docs": "pnpm -C packages/docs/react-docs",
-    "react-mdx-docs": "pnpm -C packages/docs/react-mdx-docs",
+    "qui-docs": "pnpm -C packages/docs/qui-docs",
     "react-table-docs": "pnpm -C packages/docs/react-table-docs",
     "core": "pnpm -C packages/common/core",
     "dom": "pnpm -C packages/common/dom",
