@@ -276,7 +276,6 @@ export const numberInputMachine: MachineConfig<NumberInputSchema> =
         label: bindableId<string>(ids?.label),
       }
     },
-    initialEffects: ["trackFormControl"],
     initialState() {
       return "idle"
     },
@@ -293,6 +292,9 @@ export const numberInputMachine: MachineConfig<NumberInputSchema> =
       "VALUE.SET": {
         actions: ["setRawValue"],
       },
+    },
+    onInit: {
+      effects: ["trackFormControl"],
     },
 
     props({props}) {

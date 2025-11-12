@@ -638,18 +638,6 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
       }
     },
 
-    initialActions: [
-      createChoose<ComboboxSchema>([
-        {
-          actions: ["setInitialFocus"],
-          guard: "autoFocus",
-        },
-      ]) as any,
-      "syncInputFocus",
-    ],
-
-    initialEffects: ["trackFocusVisible"],
-
     initialState({prop}) {
       const open = prop("open") || prop("defaultOpen")
       return open ? "suggesting" : "idle"
@@ -680,6 +668,19 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
       "VALUE.SET": {
         actions: ["setValue"],
       },
+    },
+
+    onInit: {
+      actions: [
+        createChoose<ComboboxSchema>([
+          {
+            actions: ["setInitialFocus"],
+            guard: "autoFocus",
+          },
+        ]) as any,
+        "syncInputFocus",
+      ],
+      effects: ["trackFocusVisible"],
     },
 
     props({props}) {

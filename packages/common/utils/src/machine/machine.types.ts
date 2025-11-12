@@ -469,12 +469,6 @@ export type MachineConfig<T extends Dict> = ActionsProperty<T> &
   IdsProperty<T> &
   PropsProperty<T> &
   RefsProperty<T> & {
-    /**
-     * Actions to fire when the machine is exiting.
-     * This maps to Zag's `exit` field in their config.
-     */
-    exitActions?: ActionsOrFn<T>
-
     initialState: (params: {prop: PropFn<T>}) => T["state"]
 
     on?: {
@@ -484,7 +478,8 @@ export type MachineConfig<T extends Dict> = ActionsProperty<T> &
     }
 
     /**
-     * actions to fire when the machine is exiting.
+     * Actions to fire when the machine is exiting. This maps to Zag's `exit` field
+     * in their config.
      */
     onDestroy?: {
       actions?: ActionsOrFn<T>

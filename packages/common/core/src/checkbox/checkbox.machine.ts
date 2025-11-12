@@ -141,12 +141,6 @@ export const checkboxMachine: MachineConfig<CheckboxSchema> =
       }
     },
 
-    initialEffects: [
-      "trackFormControlState",
-      "trackPressEvent",
-      "trackFocusVisible",
-    ],
-
     initialState: () => "idle",
 
     on: {
@@ -171,6 +165,14 @@ export const checkboxMachine: MachineConfig<CheckboxSchema> =
       "CONTEXT.SET": {
         actions: ["setContext"],
       },
+    },
+
+    onInit: {
+      effects: [
+        "trackFormControlState",
+        "trackPressEvent",
+        "trackFocusVisible",
+      ],
     },
 
     props({props}) {

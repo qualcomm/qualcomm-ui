@@ -139,8 +139,6 @@ export const presenceMachine: MachineConfig<PresenceSchema> =
       },
     },
 
-    exitActions: ["clearInitial", "cleanupNode"],
-
     initialState({prop}) {
       return prop("present") ? "mounted" : "unmounted"
     },
@@ -149,6 +147,10 @@ export const presenceMachine: MachineConfig<PresenceSchema> =
       "NODE.SET": {
         actions: ["setNode", "setStyles"],
       },
+    },
+
+    onDestroy: {
+      actions: ["clearInitial", "cleanupNode"],
     },
 
     props({props}) {

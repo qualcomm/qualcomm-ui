@@ -582,8 +582,6 @@ export const selectMachine: MachineConfig<SelectSchema> =
       }
     },
 
-    initialEffects: ["trackFormControlState", "trackFocusVisible"],
-
     initialState({prop}) {
       const open = prop("open") || prop("defaultOpen")
       return open ? "open" : "idle"
@@ -608,6 +606,10 @@ export const selectMachine: MachineConfig<SelectSchema> =
       "VALUE.SET": {
         actions: ["setSelectedItems"],
       },
+    },
+
+    onInit: {
+      effects: ["trackFormControlState", "trackFocusVisible"],
     },
 
     props({props}) {

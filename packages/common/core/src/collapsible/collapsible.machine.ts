@@ -182,7 +182,6 @@ export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
         }
       },
     },
-    exitActions: ["clearInitial", "cleanupNode"],
     guards: {
       isOpenControlled: ({prop}) => isDefined(prop("open")),
     },
@@ -192,10 +191,15 @@ export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
         trigger: bindableId(),
       }
     },
-    initialActions: ["syncSsr"],
     initialState({prop}) {
       const open = prop("open") || prop("defaultOpen")
       return open ? "open" : "closed"
+    },
+    onDestroy: {
+      actions: ["clearInitial", "cleanupNode"],
+    },
+    onInit: {
+      actions: ["syncSsr"],
     },
     props({props}) {
       return {dir: "ltr", ...props}

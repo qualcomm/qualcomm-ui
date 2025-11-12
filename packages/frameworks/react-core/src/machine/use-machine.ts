@@ -293,8 +293,8 @@ export function useMachine<T extends MachineSchema>(
 
       // root entry actions
       if (prevState === "__init__") {
-        action(config.initialActions || [])
-        const cleanup = effect(config.initialEffects || [])
+        action(config.onInit?.actions || [])
+        const cleanup = effect(config.onInit?.effects || [])
         if (cleanup) {
           effects.current.set("__init__", cleanup)
         }
@@ -389,7 +389,7 @@ export function useMachine<T extends MachineSchema>(
       effects.current = new Map()
       transitionRef.current = null
       queueMicrotask(() => {
-        action(config.exitActions)
+        action(config.onDestroy?.actions)
       })
     }
   }, [])

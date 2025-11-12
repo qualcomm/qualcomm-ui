@@ -282,8 +282,8 @@ export function useMachine<T extends MachineSchema>(
 
       // root entry actions
       if (prevState === "__init__") {
-        action(config.initialActions)
-        const cleanup = effect(config.initialEffects ?? [])
+        action(config.onInit?.actions)
+        const cleanup = effect(config.onInit?.effects ?? [])
         if (cleanup) {
           effectsRef.set("__init__", cleanup)
         }
@@ -383,7 +383,7 @@ export function useMachine<T extends MachineSchema>(
         effectsRef = new Map()
         transitionRef = null
 
-        action(config.exitActions)
+        action(config.onDestroy?.actions)
       })
     })
   })

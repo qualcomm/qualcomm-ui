@@ -86,8 +86,10 @@ export const passwordInputMachine: MachineConfig<PasswordInputSchema> =
         visibilityTrigger: bindableId<string>(ids?.visibilityTrigger),
       }
     },
-    initialEffects: ["syncSsr"],
     initialState: () => "idle",
+    onInit: {
+      effects: ["syncSsr"],
+    },
     props({props}) {
       return {
         autoComplete: "current-password",
