@@ -7,6 +7,10 @@ env:
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,9 +26,6 @@ jobs:
 
     - uses: ./.github/actions/init-node-and-install
 
-    - name: authenticate
-      run: npm login
-
     - uses: ./.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
@@ -36,4 +37,3 @@ jobs:
 
     - name: publish
       run: pnpm publish:all
-
