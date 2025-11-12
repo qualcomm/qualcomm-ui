@@ -6,6 +6,7 @@ runs:
   - uses: ./.github/actions/pnpm-action-setup
     with:
       version: 10
+      standalone: 'true'
 
   - uses: actions/setup-node@v4
     with:
