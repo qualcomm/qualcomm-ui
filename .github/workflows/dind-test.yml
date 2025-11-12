@@ -1,0 +1,35 @@
+name: Test Docker on GitHub Actions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  push_container:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged
+        ports:
+        - 2375:2375
+    container:
+      image: ubuntu:latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Docker
+      run: |
+        apt-get update
+        apt-get install -y docker.io
+
+    - name: Test connection
+      run: |
+        apt-get update
+        apt-get install -y iputils-ping
+        ping -c 3 docker
+
+    - name: Test Docker
+      run: |
+        docker version
+        docker info
