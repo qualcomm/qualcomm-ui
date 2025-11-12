@@ -7,7 +7,7 @@ COPY . .
 # certificates
 RUN set -ex; \
    apt-get update; \
-   apt-get install -y --no-install-recommends ca-certificates python3 make g++ git; \
+   apt-get install -y --no-install-recommends ca-certificates python3 make g++ git lsof curl; \
    mkdir -p /usr/local/share/ca-certificates/qualcomm.com; \
    rm -rf /var/lib/apt/lists/*
 COPY certs/*.crt /usr/local/share/ca-certificates/qualcomm.com
