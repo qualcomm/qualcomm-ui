@@ -17,19 +17,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Install Docker
       run: |
         apt-get update
         apt-get install -y docker.io
 
-    - name: Test connection
-      run: |
-        apt-get update
-        apt-get install -y iputils-ping
-        ping -c 3 docker
-
-    - name: Test Docker
-      run: |
-        docker version
-        docker info
+    - name: build react docs
+      run: docker build -f dockerfiles/dockerfile-react-docs .

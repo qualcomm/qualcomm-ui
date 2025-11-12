@@ -63,7 +63,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
@@ -80,7 +80,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
@@ -114,7 +114,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
@@ -148,7 +148,7 @@ jobs:
       cancel-in-progress: true
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
@@ -179,7 +179,7 @@ jobs:
       cancel-in-progress: true
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
@@ -206,7 +206,7 @@ jobs:
       cancel-in-progress: true
     steps:
     - name: Checkout PR head
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
