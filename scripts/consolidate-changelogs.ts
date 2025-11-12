@@ -7,8 +7,6 @@ function getChangedChangelogs(): string[] {
       encoding: "utf-8",
     }).trim()
 
-    console.debug(output)
-
     const changedFiles = output.split("\n").filter(Boolean)
     return changedFiles.filter((file) => file.endsWith("CHANGELOG.md"))
   } catch {
@@ -22,7 +20,6 @@ function getChangedChangelogs(): string[] {
 }
 
 async function consolidateChangelog(changelogPath: string): Promise<void> {
-  console.debug(changelogPath)
   const changelog = await readFile(changelogPath, "utf-8")
   const lines = changelog.split("\n")
 
@@ -38,7 +35,14 @@ async function consolidateChangelog(changelogPath: string): Promise<void> {
   const endIndex = secondReleaseIndex === -1 ? lines.length : secondReleaseIndex
 
   const before = lines.slice(0, firstReleaseIndex)
-  const releaseLines = lines.slice(firstReleaseIndex, endIndex)
+  const releaseLines = lines
+    .slice(firstReleaseIndex, endIndex)
+    .filter(
+      (line) =>
+        !line.startsWith("### Patch Changes") &&
+        !line.startsWith("### Minor Changes") &&
+        !line.startsWith("### Major Changes"),
+    )
   const after = lines.slice(endIndex)
 
   const consolidated: string[] = []
