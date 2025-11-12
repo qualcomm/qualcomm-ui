@@ -45,6 +45,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@floating-ui/react": "^0.27.3",
+    "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/core": "workspace:^1",
     "@qualcomm-ui/esbuild": "workspace:^1",
     "@qualcomm-ui/qds-core": "workspace:^1",

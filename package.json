@@ -39,7 +39,10 @@
     "doc-gen": "turbo run build:typedoc",
     "publish:all": "run-s changeset-publish publish-angular",
     "publish-angular": "pnpm -r run publish-angular-package",
-    "changeset-publish": "pnpm changeset publish"
+    "changeset-publish": "pnpm changeset publish",
+    "changeset-generate": "pnpm changeset-conventional",
+    "bump": "pnpm changeset version",
+    "consolidate-changelogs": "tsx scripts/consolidate-changelogs.ts"
   },
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.1",

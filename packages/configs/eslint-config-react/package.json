@@ -27,6 +27,7 @@
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
     "eslint": "9.37.0",

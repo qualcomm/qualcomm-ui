@@ -26,6 +26,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1",
     "@stylistic/eslint-plugin": "5.2.0",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",

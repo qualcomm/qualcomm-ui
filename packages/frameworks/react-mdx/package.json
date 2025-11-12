@@ -50,6 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@mdx-js/react": "^3.1.0",
+    "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/core": "workspace:^1",
     "@qualcomm-ui/css-utils": "workspace:^1",
     "@qualcomm-ui/dom": "workspace:^1",

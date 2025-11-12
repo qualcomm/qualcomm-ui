@@ -4,19 +4,15 @@ import {readFile, writeFile} from "node:fs/promises"
 
 function getChangedChangelogs(): string[] {
   try {
-    const output = execSync("git diff --name-only --cached", {
-      encoding: "utf-8",
-    }).trim()
-
-    const changedFiles = output.split("\n").filter(Boolean)
-    return changedFiles.filter((file) => file.endsWith("CHANGELOG.md"))
-  } catch {
     const output = execSync("git diff --name-only HEAD", {
       encoding: "utf-8",
     }).trim()
 
     const changedFiles = output.split("\n").filter(Boolean)
     return changedFiles.filter((file) => file.endsWith("CHANGELOG.md"))
+  } catch {
+    console.error("Failed to get changed files from git diff")
+    process.exit(1)
   }
 }
 
