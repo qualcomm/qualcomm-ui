@@ -3213,6 +3213,9 @@ importers:
       '@floating-ui/react':
         specifier: ^0.27.3
         version: 0.27.16(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../../common/cli
       '@qualcomm-ui/core':
         specifier: workspace:^1
         version: link:../../common/core
@@ -3464,6 +3467,9 @@ importers:
       '@mdx-js/react':
         specifier: ^3.1.0
         version: 3.1.1(@types/react@19.2.2)(react@19.2.0)
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../../common/cli
       '@qualcomm-ui/core':
         specifier: workspace:^1
         version: link:../../common/core
@@ -3594,6 +3600,9 @@ importers:
         specifier: ^5.1.0
         version: 5.1.6
     devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../../common/cli
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1
         version: link:../../common/esbuild
@@ -3636,6 +3645,9 @@ importers:
       '@clack/prompts':
         specifier: 1.0.0-alpha.6
         version: 1.0.0-alpha.6
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../../common/cli
       '@qualcomm-ui/core':
         specifier: workspace:*
         version: link:../../common/core
@@ -22782,7 +22794,7 @@ snapshots:
       tinyrainbow: 2.0.0
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.9.2)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1)
     optionalDependencies:
-      '@vitest/browser': 3.2.4(playwright@1.53.2)(vite@7.1.11(@types/node@24.9.2)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vitest@3.2.4)
     transitivePeerDependencies:
       - supports-color
 
