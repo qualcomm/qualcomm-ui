@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  push_container:
+  build-and-deploy:
     runs-on: ubuntu-latest
     services:
       docker:
@@ -26,7 +26,7 @@ jobs:
         apt-get install -y docker.io
 
     - name: build angular docs
-      run: docker buildx build -f dockerfiles/dockerfile-angular-docs .
+      run: docker buildx build --file dockerfiles/dockerfile-angular-docs .
 
     - name: push angular docs
       run: echo NOT IMPLEMENTED
