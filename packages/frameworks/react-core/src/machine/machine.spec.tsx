@@ -109,8 +109,8 @@ describe("basic", () => {
         fooEntry,
         rootEntry,
       },
-      initialActions: ["rootEntry"],
       initialState: () => "foo",
+      onInit: {actions: ["rootEntry"]},
       states: {
         foo: {
           entry: ["fooEntry"],

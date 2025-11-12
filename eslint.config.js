@@ -33,6 +33,7 @@ export default defineConfig(
       "./packages/docs/**/src/routes/changelogs.*",
       "./packages/docs/angular*/public/*.js",
       "./packages/common/codemod/src/**/__tests__/mocks/**/*.tsx",
+      "**/temp/",
     ],
   },
   {
