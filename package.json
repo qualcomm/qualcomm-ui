@@ -42,6 +42,7 @@
     "changeset-publish": "pnpm changeset publish"
   },
   "devDependencies": {
+    "@changesets/changelog-git": "^0.2.1",
     "@changesets/cli": "^2.29.7",
     "@changesets/types": "^6.1.0",
     "@clack/prompts": "1.0.0-alpha.6",
