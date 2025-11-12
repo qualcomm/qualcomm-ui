@@ -20,7 +20,6 @@
     "watch:angular": "run-p dev:angular dev:demo-chunks",
     "watch:app": "run-p dev:app typecheck",
     "copy-build": "tsx scripts/copy-angular-demo-chunks.ts",
-    "copy-changelogs": "tsx scripts/copy-markdown.ts",
     "typecheck": "react-router typegen && tsc -w --preserveWatchOutput -p tsconfig.lib.json",
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
