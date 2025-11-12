@@ -1,5 +1,3 @@
-import {getInfo, getInfoFromPullRequest} from "@changesets/get-github-info"
-
 const changelogFunctions = {
   getDependencyReleaseLine: async (
     changesets,
@@ -26,26 +24,14 @@ const changelogFunctions = {
       )
     }
 
-    let prFromSummary
-    let commitFromSummary
-
     const cleanedSummary = changeset.summary
       .split("\n")
       .filter((line) => !line.trim().toLowerCase().startsWith("signed-off-by:"))
       .join("\n")
-      .replace(/^\s*(?:pr|pull|pull\s+request):\s*#?(\d+)/im, (_, pr) => {
-        const num = Number(pr)
-        if (!isNaN(num)) {
-          prFromSummary = num
-        }
-        return ""
-      })
-      .replace(/^\s*commit:\s*([^\s]+)/im, (_, commit) => {
-        commitFromSummary = commit
-        return ""
-      })
-      .replace(/^\s*(?:author|user):\s*@?([^\s]+)/gim, () => "")
       .trim()
+
+    const prMatch = cleanedSummary.match(/\(#(\d+)\)/)
+    const prNumber = prMatch?.[1]
 
     const typeMatch = cleanedSummary.match(
       /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)(\(.+?\))?!?:\s*/i,
@@ -60,30 +46,8 @@ const changelogFunctions = {
         /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)(\(.+?\))?!?:\s*/i,
         "",
       )
+      .replace(/\s*\(#\d+\)\s*$/, "")
       .trim()
-
-    const links = await (async () => {
-      if (prFromSummary !== undefined) {
-        const {links} = await getInfoFromPullRequest({
-          pull: prFromSummary,
-          repo: options.repo,
-        })
-        if (commitFromSummary) {
-          const shortCommitId = commitFromSummary.slice(0, 7)
-          links.commit = `[\`${shortCommitId}\`](https://github.com/${options.repo}/commit/${commitFromSummary})`
-        }
-        return links
-      }
-      const commitToFetchFrom = commitFromSummary || changeset.commit
-      if (commitToFetchFrom) {
-        const {links} = await getInfo({
-          commit: commitToFetchFrom,
-          repo: options.repo,
-        })
-        return links
-      }
-      return {commit: null, pull: null, user: null}
-    })()
 
     const typeMap = {
       build: "Build System",
@@ -104,16 +68,17 @@ const changelogFunctions = {
 
     let line = `### ${section}\n* ${summary}`
 
-    if (links.pull) {
-      line += ` (${links.pull})`
+    if (prNumber) {
+      line += ` ([#${prNumber}](https://github.com/${options.repo}/issues/${prNumber}))`
     }
 
-    if (links.commit) {
-      line += ` (${links.commit})`
+    if (changeset.commit) {
+      const shortCommit = changeset.commit.slice(0, 7)
+      line += ` ([${shortCommit}](https://github.com/${options.repo}/commit/${changeset.commit}))`
     }
 
     return line
   },
 }
 
-export default changelogFunctions
+module.exports = changelogFunctions
