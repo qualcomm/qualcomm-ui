@@ -1,10 +1,15 @@
 async function getReleaseLine(changeset, type, options) {
-  const repo = options?.repo || "qualcomm/qualcomm-ui"
+  const repo = options?.repo || "vitejs/rolldown-vite"
 
   const prMatch = changeset.summary.match(/\(#(\d+)\)/)
   const prNumber = prMatch?.[1]
 
-  const summary = changeset.summary.replace(/\s*\(#\d+\)\s*$/, "").trim()
+  const summary = changeset.summary
+    .split("\n")
+    .filter((line) => !line.trim().toLowerCase().startsWith("signed-off-by:"))
+    .join("\n")
+    .replace(/\s*\(#\d+\)\s*$/, "")
+    .trim()
 
   let line = `* ${summary}`
 
