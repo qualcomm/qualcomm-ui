@@ -30,7 +30,7 @@ export default function SliderTanstackFormDemo(): ReactElement {
 
   return (
     <form
-      className="flex flex-col gap-10 sm:w-[340px]"
+      className="flex flex-col gap-10 sm:w-80"
       onSubmit={(event) => {
         event.preventDefault()
         event.stopPropagation()

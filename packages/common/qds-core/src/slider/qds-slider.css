@@ -273,3 +273,12 @@
   grid-row: error;
   margin-block-start: var(--row-gap);
 }
+
+/* Angular extra markup */
+
+q-slider-markers,
+q-slider-thumbs,
+:is(q-slider-thumbs, [q-slider-control])
+  > [q-tooltip][data-scope="tooltip"][data-part="root"] {
+  display: contents;
+}
