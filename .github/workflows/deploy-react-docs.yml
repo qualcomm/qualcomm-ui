@@ -4,26 +4,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  push_container:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: docker:dind
-        options: --privileged
-        ports:
-        - 2375:2375
-    container:
-      image: ubuntu:latest
     steps:
     - name: checkout
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-
-    - name: install docker
-      run: |
-        apt-get update
-        apt-get install -y docker.io
 
     - name: build react docs
       run: docker buildx build -f dockerfiles/dockerfile-react-docs .
