@@ -1,4 +1,4 @@
-name: Test Docker on GitHub Actions
+name: Deploy Angular Docs
 
 on:
   workflow_dispatch:
@@ -15,15 +15,18 @@ jobs:
     container:
       image: ubuntu:latest
     steps:
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
 
-    - name: Install Docker
+    - name: install docker
       run: |
         apt-get update
         apt-get install -y docker.io
 
-    - name: build react docs
-      run: docker build -f dockerfiles/dockerfile-react-docs .
+    - name: build angular docs
+      run: docker buildx build -f dockerfiles/dockerfile-angular-docs .
+
+    - name: push angular docs
+      run: echo NOT IMPLEMENTED
