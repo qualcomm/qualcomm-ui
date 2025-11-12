@@ -1,0 +1,29 @@
+FROM public.ecr.aws/docker/library/node:22-slim
+
+WORKDIR /app
+
+COPY . .
+
+# certificates
+RUN set -ex; \
+   apt-get update; \
+   apt-get install -y --no-install-recommends ca-certificates python3 make g++ git; \
+   mkdir -p /usr/local/share/ca-certificates/qualcomm.com; \
+   rm -rf /var/lib/apt/lists/*
+COPY certs/*.crt /usr/local/share/ca-certificates/qualcomm.com
+COPY certs/*.cer /usr/local/share/ca-certificates/netskope.crt
+RUN update-ca-certificates
+
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+# install and build
+RUN corepack enable
+RUN pnpm install
+RUN pnpm run build:react
+RUN pnpm react-docs build
+ENV NODE_ENV=production
+
+EXPOSE 3000
+
+CMD ["pnpm", "run", "-C", "packages/docs/react-table-docs", "start"]

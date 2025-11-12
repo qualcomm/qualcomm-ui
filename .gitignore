@@ -64,7 +64,8 @@ packages/docs/react-vscode-docs/src/routes/changelogs*
 web/.env
 certs/*.pem
 **/*/certs/**/*.pem
-!certs/artifactory.pem
+certs/*
+!certs/.gitkeep
 
 ###############################################################################
 # Logs & debug info

@@ -11,6 +11,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "node scripts/post-install.mjs",
     "build": "turbo run build --filter=!./packages/configs/* --filter=!./packages/docs/*",
+    "build:react": "turbo run build --filter=!./packages/configs/* --filter=!./packages/docs/* --filter=!./packages/frameworks/angular*",
     "build:docs": "turbo run build --filter=./packages/docs/*",
     "dev": "turbo run dev --filter=!./packages/docs/*",
     "dev:react": "turbo run dev --filter=@qualcomm-ui/react-docs --filter=@qualcomm-ui/core --filter=@qualcomm-ui/qds-core --filter=@qualcomm-ui/react-core --filter=@qualcomm-ui/react",
