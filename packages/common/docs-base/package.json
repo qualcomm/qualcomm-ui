@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "QUI shared dev styles and utilities for documentation, used by both React and Angular documentation projects.",
   "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",

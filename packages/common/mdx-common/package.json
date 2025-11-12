@@ -2,6 +2,7 @@
   "name": "@qualcomm-ui/mdx-common",
   "version": "1.0.0",
   "description": "MDX common types and utilities",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
   "type": "module",
   "exports": {

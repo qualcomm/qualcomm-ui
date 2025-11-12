@@ -6,7 +6,11 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: "/"
+    directories:
+    - packages/common/*
+    - packages/configs/*
+    - packages/docs/*
+    - packages/frameworks/*
     schedule:
       interval: "daily"
     versioning-strategy: increase

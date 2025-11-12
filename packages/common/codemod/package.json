@@ -4,6 +4,7 @@
   "description": "Codemod for version updates",
   "author": "Ryan Bower",
   "type": "module",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "bin": {
     "qui-codemod": "./lib/cli.cjs"
   },

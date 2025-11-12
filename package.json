@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "@qui monorepo",
   "private": true,
-  "repository": "https://github.qualcomm.com/ProdTools/qui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "scripts": {
     "clean-tsbuildinfo": "shx rm -rf packages/*/*/dist/tsbuildinfo",
@@ -36,9 +36,17 @@
     "lint": "turbo run lint --continue",
     "lint:ci": "turbo run lint --concurrency 6",
     "test:unit:ci": "turbo run test:unit:ci --concurrency 2",
-    "doc-gen": "turbo run build:typedoc"
+    "doc-gen": "turbo run build:typedoc",
+    "publish:all": "run-s changeset-publish publish-angular",
+    "publish-angular": "pnpm -r run publish-angular-package",
+    "changeset-publish": "pnpm changeset publish"
   },
   "devDependencies": {
+    "@changesets/changelog-git": "^0.2.1",
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.7",
+    "@changesets/get-github-info": "^0.6.0",
+    "@changesets/types": "^6.1.0",
     "@clack/prompts": "1.0.0-alpha.6",
     "@commander-js/extra-typings": "^14.0.0",
     "@eslint/js": "catalog:",
@@ -51,8 +59,10 @@
     "@qualcomm-ui/eslint-config-typescript": "workspace:*",
     "@qualcomm-ui/eslint-plugin-path-alias": "workspace:*",
     "@types/node": "~24.9.2",
+    "changeset-conventional-commits": "^0.2.5",
     "commander": "^14.0.2",
     "cross-env": "^10.1.0",
+    "dayjs": "^1.11.19",
     "eslint": "9.37.0",
     "execa": "^9.6.0",
     "ignore": "^7.0.5",

@@ -1,8 +1,10 @@
 {
   "name": "@qualcomm-ui/eslint-config-react",
   "version": "1.0.0",
-  "sideEffects": false,
   "description": "QUI ESLint config for consistent React code",
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "sideEffects": false,
   "type": "module",
   "keywords": [
     "eslint",
@@ -12,7 +14,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "Ryan Bower",
   "main": "index.js",
   "module": "index.js",
   "files": [

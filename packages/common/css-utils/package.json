@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",
-    "@qualcomm-ui/cli": "workspace:^1.0.1",
+    "@qualcomm-ui/cli": "workspace:^1.0.0",
     "@qualcomm-ui/esbuild": "workspace:^1.0.0",
     "@qualcomm-ui/tsconfig": "workspace:^1",
     "autoprefixer": "^10.4.21",

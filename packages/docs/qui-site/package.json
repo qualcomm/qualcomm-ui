@@ -1,5 +1,7 @@
 {
   "name": "@qualcomm-ui/qui-site",
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "private": true,
   "type": "module",
   "version": "0.0.0",
