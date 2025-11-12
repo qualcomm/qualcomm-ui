@@ -56,6 +56,7 @@
     "@qualcomm-ui/eslint-config-typescript": "workspace:*",
     "@qualcomm-ui/eslint-plugin-path-alias": "workspace:*",
     "@types/node": "~24.9.2",
+    "changeset-conventional-commits": "^0.2.5",
     "commander": "^14.0.2",
     "cross-env": "^10.1.0",
     "eslint": "9.37.0",
