@@ -281,7 +281,6 @@ export const tabsMachine: MachineConfig<TabsSchema> = createMachine<TabsSchema>(
         refs.set("listObserverCleanup", listCleanup)
       },
     },
-    exitActions: ["cleanupObserver", "cleanupListObserver"],
     guards: {
       isIndicatorRendered: ({context}) => context.get("indicatorRendered"),
       selectOnFocus: ({prop}) => prop("activationMode") === "automatic",
@@ -295,8 +294,6 @@ export const tabsMachine: MachineConfig<TabsSchema> = createMachine<TabsSchema>(
         tabButton: bindableIdCollection(),
       }
     },
-    initialActions: ["syncIndicatorRect", "syncTabIndex"],
-    initialEffects: ["trackTabListElement"],
     initialState() {
       return "idle"
     },
@@ -317,6 +314,13 @@ export const tabsMachine: MachineConfig<TabsSchema> = createMachine<TabsSchema>(
         actions: ["renderIndicator", "syncIndicatorRect"],
         guard: not("isIndicatorRendered"),
       },
+    },
+    onDestroy: {
+      actions: ["cleanupObserver", "cleanupListObserver"],
+    },
+    onInit: {
+      actions: ["syncIndicatorRect", "syncTabIndex"],
+      effects: ["trackTabListElement"],
     },
     props({props}) {
       return {

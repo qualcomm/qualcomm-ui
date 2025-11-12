@@ -164,7 +164,7 @@ export const sliderMachine: MachineConfig<SliderSchema> =
         return context
           .get("value")
           .map(
-            (value) => 100 * getValuePercent(value, prop("min")!, prop("max")!),
+            (value) => 100 * getValuePercent(value, prop("min"), prop("max")),
           )
       },
     },
@@ -271,8 +271,6 @@ export const sliderMachine: MachineConfig<SliderSchema> =
       }
     },
 
-    initialEffects: ["trackFormControlState", "trackThumbSize"],
-
     initialState: () => "idle",
 
     on: {
@@ -291,6 +289,10 @@ export const sliderMachine: MachineConfig<SliderSchema> =
           actions: ["setValue"],
         },
       ],
+    },
+
+    onInit: {
+      effects: ["trackFormControlState", "trackThumbSize"],
     },
 
     props({props}) {

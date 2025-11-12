@@ -118,7 +118,6 @@ export const radioMachine: MachineConfig<RadioSchema> =
         root: bindableId(),
       }
     },
-    initialEffects: ["trackFormControlState", "trackFocusVisible"],
     initialState: () => "idle",
     on: {
       FOCUS_INPUT: {
@@ -142,6 +141,9 @@ export const radioMachine: MachineConfig<RadioSchema> =
           actions: ["setValue"],
         },
       ],
+    },
+    onInit: {
+      effects: ["trackFormControlState", "trackFocusVisible"],
     },
     props({props}) {
       return {dir: "ltr", orientation: "vertical", ...props}

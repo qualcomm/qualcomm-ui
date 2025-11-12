@@ -16,7 +16,7 @@
     "dev": "turbo run dev --filter=!./packages/docs/*",
     "dev:react": "turbo run dev --filter=@qualcomm-ui/react-docs --filter=@qualcomm-ui/core --filter=@qualcomm-ui/qds-core --filter=@qualcomm-ui/react-core --filter=@qualcomm-ui/react",
     "dev:angular": "turbo run dev --filter=@qualcomm-ui/angular-core --filter=@qualcomm-ui/angular",
-    "dev:react-deps": "turbo run dev --filter '@qualcomm-ui/mdx-*...'",
+    "dev:react-deps": "turbo run dev --filter '@qualcomm-ui/react-mdx*...'",
     "build:typedoc:ci": "turbo run build:typedoc --filter=$PACKAGE_NAME",
     "angular": "pnpm -C packages/frameworks/angular",
     "angular-core": "pnpm -C packages/frameworks/angular-core",

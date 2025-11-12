@@ -85,7 +85,6 @@ export const segmentedControlMachine: MachineConfig<SegmentedControlSchema> =
         root: bindableId(),
       }
     },
-    initialEffects: ["trackFormControlState"],
     initialState: () => "idle",
     on: {
       "CONTEXT.SET": {
@@ -94,6 +93,9 @@ export const segmentedControlMachine: MachineConfig<SegmentedControlSchema> =
       SELECT: {
         actions: ["selectItem"],
       },
+    },
+    onInit: {
+      effects: ["trackFormControlState"],
     },
     props({props}) {
       return {dir: "ltr", orientation: "horizontal", ...props}

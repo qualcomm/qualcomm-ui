@@ -424,8 +424,6 @@ export const treeMachine: MachineConfig<TreeSchema> = createMachine<TreeSchema>(
       }
     },
 
-    exitActions: ["clearPendingAborts"],
-
     guards: {
       expandOnClick: ({prop}) => !!prop("expandOnClick"),
       hasSelectedItems: ({context}) => context.get("selectedValue").length > 0,
@@ -495,6 +493,10 @@ export const treeMachine: MachineConfig<TreeSchema> = createMachine<TreeSchema>(
       "SELECTED.SET": {
         actions: ["setSelected"],
       },
+    },
+
+    onDestroy: {
+      actions: ["clearPendingAborts"],
     },
 
     props({props}) {

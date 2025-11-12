@@ -193,10 +193,6 @@ export const toastMachine: MachineConfig<ToastSchema<any>> =
       shouldPersist: ({computed}) => computed("shouldPersist"),
     },
 
-    initialActions: ["setMounted", "measureHeight", "invokeOnVisible"],
-
-    initialEffects: ["trackHeight"],
-
     initialState({prop}) {
       const persist =
         prop("type") === "loading" || prop("duration") === Infinity
@@ -218,6 +214,11 @@ export const toastMachine: MachineConfig<ToastSchema<any>> =
           target: "visible:updating",
         },
       ],
+    },
+
+    onInit: {
+      actions: ["setMounted", "measureHeight", "invokeOnVisible"],
+      effects: ["trackHeight"],
     },
 
     props({props}) {
