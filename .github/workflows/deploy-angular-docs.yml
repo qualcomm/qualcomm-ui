@@ -12,8 +12,8 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - name: build react docs
+    - name: build angular docs
       run: docker buildx build -f dockerfiles/dockerfile-angular-docs .
 
-    - name: push react docs
+    - name: push angular docs
       run: echo NOT IMPLEMENTED
