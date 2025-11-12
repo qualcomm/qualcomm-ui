@@ -35,5 +35,11 @@ jobs:
     - name: build
       run: pnpm run build
 
+    - name: update npm
+      run: |
+        npm --version
+        npm install -g npm@latest
+        npm --version
+
     - name: publish
       run: pnpm publish:all
