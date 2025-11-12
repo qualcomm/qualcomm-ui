@@ -5,7 +5,7 @@ import {Slider} from "@qualcomm-ui/react/slider"
 export default function SliderCompositeDemo(): ReactElement {
   return (
     // preview
-    <Slider.Root className="sm:w-[340px]" defaultValue={[25]}>
+    <Slider.Root className="sm:w-80" defaultValue={[25]}>
       <Slider.Label>Choose a value</Slider.Label>
       <Slider.ValueText />
       <Slider.Control>

@@ -39,7 +39,7 @@ export default function SliderReactHookFormDemo(): ReactElement {
 
   return (
     <form
-      className="flex flex-col gap-10 sm:w-[340px]"
+      className="flex flex-col gap-10 sm:w-80"
       onSubmit={(e) => {
         void handleSubmit((data) => console.log(data))(e)
       }}
