@@ -25,6 +25,8 @@
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.1.0",
+    "@aws-sdk/client-apprunner": "3.927.0",
+    "@aws-sdk/client-route-53": "3.927.0",
     "@faker-js/faker": "~9.6.0",
     "@floating-ui/react": "^0.27.3",
     "@qualcomm-ui/core": "workspace:*",

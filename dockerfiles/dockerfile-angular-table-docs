@@ -1,0 +1,37 @@
+FROM public.ecr.aws/docker/library/node:22-slim
+
+WORKDIR /app
+
+COPY . .
+
+# certificates
+RUN set -ex; \
+   apt-get update; \
+   apt-get install -y --no-install-recommends ca-certificates python3 make g++ git lsof curl wget; \
+   mkdir -p /usr/local/share/ca-certificates/qualcomm.com; \
+   rm -rf /var/lib/apt/lists/*
+
+RUN wget -P /usr/local/share/ca-certificates/qualcomm.com \
+   https://pki.qualcomm.com/qc_root_g2_cert.crt \
+   https://pki.qualcomm.com/ssl_v4_cert.crt
+
+ADD https://github.qualcomm.com/raw/netskope-ssl/download/main/nscacert.cer /usr/local/share/ca-certificates/netskope.crt
+
+RUN update-ca-certificates
+
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+# install and build
+RUN corepack enable
+RUN pnpm install
+
+RUN pnpx playwright@1.53.2 install chromium --with-deps --only-shell
+
+RUN pnpm run build
+RUN pnpm angular-table-docs build:prod
+ENV NODE_ENV=production
+
+EXPOSE 3000
+
+CMD ["pnpm", "run", "-C", "packages/docs/angular-table-docs", "start"]

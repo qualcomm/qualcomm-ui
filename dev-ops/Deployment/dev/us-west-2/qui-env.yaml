@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qui
+  namespace: qui
+spec:
+  selector:
+    matchLabels:
+      app: qui

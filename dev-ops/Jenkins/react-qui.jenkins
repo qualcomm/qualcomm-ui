@@ -1,0 +1,46 @@
+@Library('sagaGroovyLibraries') _
+def customlabel=sagaGroovyLibraries.getlabels("linux-standard-tools-64bit")
+pipeline {
+    agent {label "${customlabel}"}
+    stages {
+        stage('Build'){
+            steps{
+                 script{
+                    sh '/bin/chmod -R 755 .'
+                    dockerImage=docker.build("${repository}/${repo_name}","-f ${Dockerfilename} --no-cache .")
+                  }
+            }
+        }
+        stage('push image'){
+            steps{
+                 script{
+                   withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: Registry_Credentials]]){
+                        sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${repository} '  
+                        sh 'docker push ${repository}/${repo_name}:latest '
+                    }
+               }
+             }
+        }
+        stage('Rollout restart the deployment'){
+            steps{
+                kubeconfig(credentialsId: "${Kube_Credential}", serverUrl: "${ClusterEndpoint}", caCertificate: ''){
+                       sh "kubectl apply -f dev-ops/Deployment/dev/us-west-2/${deploymentfilename}"
+                       sh "kubectl rollout restart deployment ${deployment_name} -n ${namespace}"
+                 }
+             }
+          }
+  }
+  post {
+        always {
+          cleanWs notFailBuild: true
+          script{
+             sh(script:"docker rmi -f \$(docker images -q ${repository}/${repo_name})",returnStdout:true)
+          }
+        }
+        failure{
+            script{
+             step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'saga.devops.team@qti.qualcomm.com', sendToIndividuals: true])
+            }
+        }
+  }
+}

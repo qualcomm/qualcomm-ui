@@ -1,0 +1,27 @@
+# deployment yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-next-docs
+  labels:
+    app: react-next-docs
+  namespace: qui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-next-docs
+  template:
+    metadata:
+      labels:
+        app: react-next-docs
+    spec:
+      containers:
+      - name: react-next-docs
+        imagePullPolicy: Always
+        image: 391229415789.dkr.ecr.us-west-2.amazonaws.com/react-next-docs
+        ports:
+          - containerPort: 80
+            protocol: TCP
+      nodeSelector:
+        kubernetes.io/os: linux

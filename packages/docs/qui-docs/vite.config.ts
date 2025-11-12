@@ -11,8 +11,6 @@ import {
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
 
-import {copyMarkdown} from "./scripts/markdown-utils"
-
 export default defineConfig({
   plugins: [
     tailwindcss(),
@@ -21,12 +19,6 @@ export default defineConfig({
       rehypePlugins: [...getRehypePlugins()],
       remarkPlugins: [...getRemarkPlugins()],
     }),
-    {
-      buildStart: async () => {
-        copyMarkdown()
-      },
-      name: "qui-copy-files",
-    },
     reactRouter(),
     tsconfigPaths(),
     quiDocsPlugin(),

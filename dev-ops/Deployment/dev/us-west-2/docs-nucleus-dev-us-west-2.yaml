@@ -1,0 +1,28 @@
+# deployment yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-docs
+  labels:
+    app: react-docs
+  namespace: qui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-docs
+  template:
+    metadata:
+      labels:
+        app: react-docs
+    spec:
+      containers:
+      - name: react-docs
+        #args: ["--environment", "dev"]
+        imagePullPolicy: Always
+        image: 391229415789.dkr.ecr.us-west-2.amazonaws.com/react-docs
+        ports:
+          - containerPort: 80
+            protocol: TCP
+      nodeSelector:
+        kubernetes.io/os: linux

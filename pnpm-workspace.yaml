@@ -67,4 +67,3 @@ onlyBuiltDependencies:
 
 patchedDependencies:
   '@react-router/dev@7.9.4': patches/@react-router__dev@7.9.4.patch
-  ng-packagr: patches/ng-packagr.patch

@@ -23,7 +23,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "build": "nx build --output-style=stream",
+    "build": "nx build --output-style=stream --verbose",
     "dev": "nx dev --output-style=dynamic-legacy",
     "lint": "eslint --quiet",
     "test": "vitest --run",
@@ -79,7 +79,7 @@
     "@vitest/ui": "^3.2.4",
     "execa": "^9.6.0",
     "lucide-angular": "0.525.0",
-    "ng-packagr": "20.1.0",
+    "ng-packagr": "~20.3.0",
     "playwright": "1.53.2",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~7.5.7",
