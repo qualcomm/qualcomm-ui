@@ -8,13 +8,14 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "qui-typedoc": "./dist/cli.js"
+    "qui-typedoc": "./lib/cli.js"
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "/dist"
+    "dist",
+    "lib"
   ],
   "engines": {
     "node": ">=20"
