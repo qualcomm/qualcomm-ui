@@ -6,7 +6,7 @@ export default function SliderMinMaxStepDemo(): ReactElement {
   return (
     // preview
     <Slider
-      className="sm:w-[340px]"
+      className="sm:w-80"
       defaultValue={[50]}
       max={70}
       min={20}

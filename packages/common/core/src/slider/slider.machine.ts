@@ -229,22 +229,29 @@ export const sliderMachine: MachineConfig<SliderSchema> =
           return
         }
 
-        return trackElementRect(getThumbEls(scope), {
-          box: "border-box",
-          measure(el) {
-            return getOffsetRect(el)
-          },
-          onEntry({rects}) {
-            if (rects.length === 0) {
-              return
-            }
-            const size = pick(rects[0], ["width", "height"])
-            if (isEqualSize(context.get("thumbSize"), size)) {
-              return
-            }
-            context.set("thumbSize", size)
-          },
+        let cleanup: VoidFunction | undefined
+        const rafId = requestAnimationFrame(() => {
+          cleanup = trackElementRect(getThumbEls(scope), {
+            box: "border-box",
+            measure(el) {
+              return getOffsetRect(el)
+            },
+            onEntry({rects}) {
+              if (rects.length === 0) {
+                return
+              }
+              const size = pick(rects[0], ["width", "height"])
+              if (isEqualSize(context.get("thumbSize"), size)) {
+                return
+              }
+              context.set("thumbSize", size)
+            },
+          })
         })
+        return () => {
+          cancelAnimationFrame(rafId)
+          cleanup?.()
+        }
       },
     },
 

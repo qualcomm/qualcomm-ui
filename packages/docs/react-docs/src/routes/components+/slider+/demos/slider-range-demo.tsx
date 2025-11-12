@@ -5,7 +5,7 @@ import {Slider} from "@qualcomm-ui/react/slider"
 export default function SliderRangeDemo(): ReactElement {
   return (
     // preview
-    <Slider className="sm:w-[340px]" defaultValue={[20, 50]} />
+    <Slider className="sm:w-80" defaultValue={[20, 50]} />
     // preview
   )
 }

@@ -5,7 +5,7 @@ import {Slider} from "@qualcomm-ui/react/slider"
 export default function SliderFocusCallbackDemo(): ReactElement {
   const [currentOutput, setCurrentOutput] = useState<string>("none")
   return (
-    <div className="sm:w-[340px]">
+    <div className="sm:w-80">
       {/* preview */}
       <Slider
         defaultValue={[25, 75]}
