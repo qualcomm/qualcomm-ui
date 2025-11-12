@@ -6,7 +6,7 @@
   "scripts": {
     "build:prod": "./scripts/build-prod.sh",
     "build": "run-s build:typedoc build:web",
-    "build:web": "run-s build:angular copy-build copy-changelogs build:site",
+    "build:web": "run-s build:angular copy-build build:site",
     "build:angular": "ng build",
     "build:site": "react-router build",
     "build:typedoc": "qui-typedoc build",
