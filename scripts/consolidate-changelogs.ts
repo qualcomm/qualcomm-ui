@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import {execSync} from "node:child_process"
 import {readFile, writeFile} from "node:fs/promises"
 
@@ -35,70 +36,59 @@ async function consolidateChangelog(changelogPath: string): Promise<void> {
   const endIndex = secondReleaseIndex === -1 ? lines.length : secondReleaseIndex
 
   const before = lines.slice(0, firstReleaseIndex)
-  const releaseLines = lines
-    .slice(firstReleaseIndex, endIndex)
-    .filter(
-      (line) =>
-        !line.startsWith("### Patch Changes") &&
-        !line.startsWith("### Minor Changes") &&
-        !line.startsWith("### Major Changes"),
-    )
+  const releaseLines = lines.slice(firstReleaseIndex, endIndex)
   const after = lines.slice(endIndex)
 
-  const consolidated: string[] = []
-  const seenSections = new Set<string>()
-  let currentSection: string | null = null
-  let sectionLines: string[] = []
+  const sections = new Map<string, string[]>()
+  let versionLine = ""
+  let currentSection = ""
 
   for (const line of releaseLines) {
+    if (line.startsWith("## ")) {
+      versionLine = line
+      if (!line.match(/\(\d{4}\/\d{2}\/\d{2}\)/)) {
+        const date = dayjs().format("YYYY/MM/DD")
+        versionLine = `${line} (${date})`
+      }
+      continue
+    }
+
+    if (
+      line.startsWith("### Patch Changes") ||
+      line.startsWith("### Minor Changes") ||
+      line.startsWith("### Major Changes")
+    ) {
+      continue
+    }
+
     if (line.startsWith("### ")) {
-      if (currentSection && !seenSections.has(currentSection)) {
-        seenSections.add(currentSection)
-        consolidated.push(currentSection)
-        consolidated.push(...sectionLines)
-        consolidated.push("")
-      } else if (currentSection && seenSections.has(currentSection)) {
-        const existingIndex = consolidated.findIndex(
-          (l) => l === currentSection,
-        )
-        const insertIndex = consolidated.findIndex(
-          (l, i) =>
-            i > existingIndex && (l.startsWith("### ") || l.startsWith("## ")),
-        )
-        if (insertIndex === -1) {
-          consolidated.push(...sectionLines)
-        } else {
-          consolidated.splice(insertIndex, 0, ...sectionLines)
-        }
-      }
       currentSection = line
-      sectionLines = []
-    } else if (currentSection) {
-      sectionLines.push(line)
-    } else {
-      consolidated.push(line)
-    }
-  }
-
-  if (currentSection) {
-    if (!seenSections.has(currentSection)) {
-      consolidated.push(currentSection)
-      consolidated.push(...sectionLines)
-    } else {
-      const existingIndex = consolidated.findIndex((l) => l === currentSection)
-      const insertIndex = consolidated.findIndex(
-        (l, i) =>
-          i > existingIndex && (l.startsWith("### ") || l.startsWith("## ")),
-      )
-      if (insertIndex === -1) {
-        consolidated.push(...sectionLines)
-      } else {
-        consolidated.splice(insertIndex, 0, ...sectionLines)
+      if (!sections.has(currentSection)) {
+        sections.set(currentSection, [])
       }
+      continue
+    }
+
+    if (currentSection && line.trim()) {
+      sections.get(currentSection).push(line)
     }
   }
 
-  const result = [...before, ...consolidated, ...after].join("\n")
+  const output: string[] = []
+  output.push(versionLine)
+  output.push("")
+
+  for (const [section, items] of sections) {
+    if (items.length === 0) {
+      continue
+    }
+    output.push(section)
+    output.push("")
+    output.push(...items)
+    output.push("")
+  }
+
+  const result = [...before, ...output, ...after].join("\n")
   await writeFile(changelogPath, result)
 }
 
