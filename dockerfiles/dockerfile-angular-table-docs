@@ -4,23 +4,12 @@ WORKDIR /app
 
 COPY . .
 
-# certificates
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
 RUN set -ex; \
    apt-get update; \
-   apt-get install -y --no-install-recommends ca-certificates python3 make g++ git lsof curl wget; \
-   mkdir -p /usr/local/share/ca-certificates/qualcomm.com; \
+   apt-get install -y --no-install-recommends lsof curl wget; \
    rm -rf /var/lib/apt/lists/*
-
-RUN wget -P /usr/local/share/ca-certificates/qualcomm.com \
-   https://pki.qualcomm.com/qc_root_g2_cert.crt \
-   https://pki.qualcomm.com/ssl_v4_cert.crt
-
-ADD https://github.qualcomm.com/raw/netskope-ssl/download/main/nscacert.cer /usr/local/share/ca-certificates/netskope.crt
-
-RUN update-ca-certificates
-
-ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 # install and build
 RUN corepack enable
