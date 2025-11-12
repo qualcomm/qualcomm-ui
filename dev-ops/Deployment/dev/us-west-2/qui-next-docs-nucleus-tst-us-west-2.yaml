@@ -1,0 +1,27 @@
+# deployment yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docs-next
+  labels:
+    app: docs-next
+  namespace: qui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docs-next
+  template:
+    metadata:
+      labels:
+        app: docs-next
+    spec:
+      containers:
+      - name: docs-next
+        imagePullPolicy: Always
+        image: 767397742844.dkr.ecr.us-west-2.amazonaws.com/docs-next
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      nodeSelector:
+        kubernetes.io/os: linux
