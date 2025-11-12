@@ -475,26 +475,31 @@ export type MachineConfig<T extends Dict> = ActionsProperty<T> &
      */
     exitActions?: ActionsOrFn<T>
 
-    /**
-     * actions to fire when the machine is first initialized.
-     * this maps to Zag's `entry` field in their config.
-     */
-    initialActions?: ActionsOrFn<T>
-
-    /**
-     * effects to fire when the machine is first initialized.
-     * Our `effects` field lives at the root of each config, whereas Zag's lives in
-     * `implementations`. Zag has a root `effects` field which fires effects when
-     * the machine is first initialized. This is the equivalent for that field.
-     */
-    initialEffects?: (keyof T["effects"])[]
-
     initialState: (params: {prop: PropFn<T>}) => T["state"]
 
     on?: {
       [E in T["events"]["type"]]?:
         | TransitionForEvent<T>
         | Array<TransitionForEvent<T>>
+    }
+
+    /**
+     * actions to fire when the machine is exiting.
+     */
+    onDestroy?: {
+      actions?: ActionsOrFn<T>
+    }
+
+    /**
+     * effects and actions to fire when the machine is first initialized.
+     * Our `effects` field lives at the root of each config, whereas Zag's lives in
+     * `implementations`. Zag has root `effects` and `entry` fields which execute
+     * when the machine is first initialized. This is the equivalent for those
+     * fields.
+     */
+    onInit?: {
+      actions?: (keyof T["actions"])[]
+      effects?: (keyof T["effects"])[]
     }
 
     states: {

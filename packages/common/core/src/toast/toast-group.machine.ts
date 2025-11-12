@@ -155,13 +155,9 @@ export const toastGroupMachine: MachineConfig<ToastGroupSchema> =
       },
     },
 
-    exitActions: ["clearDismissableBranch", "clearLastFocusedEl"],
-
     guards: {
       isOverlapping: ({computed}) => computed("overlap"),
     },
-
-    initialEffects: ["subscribeToStore", "trackDocumentVisibility"],
 
     initialState({prop}) {
       return prop("store").attrs.overlap ? "overlap" : "stack"
@@ -185,6 +181,14 @@ export const toastGroupMachine: MachineConfig<ToastGroupSchema> =
       "TOAST.REMOVE": {
         actions: ["removeToast", "removeHeight"],
       },
+    },
+
+    onDestroy: {
+      actions: ["clearDismissableBranch", "clearLastFocusedEl"],
+    },
+
+    onInit: {
+      effects: ["subscribeToStore", "trackDocumentVisibility"],
     },
 
     props({props}) {

@@ -137,12 +137,6 @@ export const switchMachine: MachineConfig<SwitchSchema> =
       }
     },
 
-    initialEffects: [
-      "trackFormControlState",
-      "trackPressEvent",
-      "trackFocusVisible",
-    ],
-
     initialState: () => "idle",
 
     on: {
@@ -167,6 +161,14 @@ export const switchMachine: MachineConfig<SwitchSchema> =
       "CONTEXT.SET": {
         actions: ["setContext"],
       },
+    },
+
+    onInit: {
+      effects: [
+        "trackFormControlState",
+        "trackPressEvent",
+        "trackFocusVisible",
+      ],
     },
 
     props({props}) {
