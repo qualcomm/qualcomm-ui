@@ -44,6 +44,7 @@
     "@angular/core": "catalog:",
     "@commander-js/extra-typings": "^14.0.0",
     "@clack/prompts": "1.0.0-alpha.6",
+    "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/esbuild": "workspace:^1",
     "@qualcomm-ui/tsconfig": "workspace:^1",
     "@qualcomm-ui/typedoc-common": "workspace:^1",

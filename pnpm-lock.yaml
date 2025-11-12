@@ -583,6 +583,9 @@ importers:
 
   packages/common/mdx-common:
     devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../cli
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1
         version: link:../esbuild
@@ -707,6 +710,9 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
     devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../cli
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1
         version: link:../esbuild
@@ -915,6 +921,9 @@ importers:
       '@commander-js/extra-typings':
         specifier: ^14.0.0
         version: 14.0.0(commander@14.0.2)
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../cli
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1
         version: link:../esbuild
@@ -1140,6 +1149,9 @@ importers:
 
   packages/configs/eslint-config-react:
     devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../../common/cli
       '@typescript-eslint/eslint-plugin':
         specifier: 'catalog:'
         version: 8.46.2(@typescript-eslint/parser@8.46.2(eslint@9.37.0(jiti@2.6.1))(typescript@5.8.3))(eslint@9.37.0(jiti@2.6.1))(typescript@5.8.3)
@@ -1207,6 +1219,9 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
     devDependencies:
+      '@qualcomm-ui/cli':
+        specifier: workspace:^1
+        version: link:../../common/cli
       '@stylistic/eslint-plugin':
         specifier: 5.2.0
         version: 5.2.0(eslint@9.38.0(jiti@2.6.1))
@@ -22767,7 +22782,7 @@ snapshots:
       tinyrainbow: 2.0.0
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.9.2)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1)
     optionalDependencies:
-      '@vitest/browser': 3.2.4(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(playwright@1.53.2)(vite@7.1.11(@types/node@24.9.2)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vitest@3.2.4)
     transitivePeerDependencies:
       - supports-color
 
