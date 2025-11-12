@@ -1,43 +1,119 @@
-async function getReleaseLine(changeset, type, options) {
-  const repo = options?.repo || "vitejs/rolldown-vite"
+import {getInfo, getInfoFromPullRequest} from "@changesets/get-github-info"
 
-  const prMatch = changeset.summary.match(/\(#(\d+)\)/)
-  const prNumber = prMatch?.[1]
+const changelogFunctions = {
+  getDependencyReleaseLine: async (
+    changesets,
+    dependenciesUpdated,
+    options,
+  ) => {
+    if (!options.repo) {
+      throw new Error(
+        'Please provide a repo to this changelog generator like this:\n"changelog": ["./changelog.js", { "repo": "org/repo" }]',
+      )
+    }
+    if (dependenciesUpdated.length === 0) {
+      return ""
+    }
 
-  const summary = changeset.summary
-    .split("\n")
-    .filter((line) => !line.trim().toLowerCase().startsWith("signed-off-by:"))
-    .join("\n")
-    .replace(/\s*\(#\d+\)\s*$/, "")
-    .trim()
+    const deps = dependenciesUpdated.map((d) => d.name).join(", ")
+    return `### Miscellaneous Chores\n* **deps:** update dependencies [${deps}]`
+  },
 
-  let line = `* ${summary}`
+  getReleaseLine: async (changeset, type, options) => {
+    if (!options?.repo) {
+      throw new Error(
+        'Please provide a repo to this changelog generator like this:\n"changelog": ["./changelog.js", { "repo": "org/repo" }]',
+      )
+    }
 
-  if (prNumber) {
-    line += ` ([#${prNumber}](https://github.com/${repo}/issues/${prNumber}))`
-  }
+    let prFromSummary
+    let commitFromSummary
 
-  if (changeset.commit) {
-    line += ` ([${changeset.commit.slice(0, 7)}](https://github.com/${repo}/commit/${changeset.commit}))`
-  }
+    const cleanedSummary = changeset.summary
+      .split("\n")
+      .filter((line) => !line.trim().toLowerCase().startsWith("signed-off-by:"))
+      .join("\n")
+      .replace(/^\s*(?:pr|pull|pull\s+request):\s*#?(\d+)/im, (_, pr) => {
+        const num = Number(pr)
+        if (!isNaN(num)) {
+          prFromSummary = num
+        }
+        return ""
+      })
+      .replace(/^\s*commit:\s*([^\s]+)/im, (_, commit) => {
+        commitFromSummary = commit
+        return ""
+      })
+      .replace(/^\s*(?:author|user):\s*@?([^\s]+)/gim, () => "")
+      .trim()
 
-  return line
+    const typeMatch = cleanedSummary.match(
+      /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)(\(.+?\))?!?:\s*/i,
+    )
+    const conventionalType = typeMatch?.[1]?.toLowerCase()
+    const isBreaking =
+      cleanedSummary.includes("!:") ||
+      cleanedSummary.toLowerCase().includes("breaking")
+
+    const summary = cleanedSummary
+      .replace(
+        /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)(\(.+?\))?!?:\s*/i,
+        "",
+      )
+      .trim()
+
+    const links = await (async () => {
+      if (prFromSummary !== undefined) {
+        const {links} = await getInfoFromPullRequest({
+          pull: prFromSummary,
+          repo: options.repo,
+        })
+        if (commitFromSummary) {
+          const shortCommitId = commitFromSummary.slice(0, 7)
+          links.commit = `[\`${shortCommitId}\`](https://github.com/${options.repo}/commit/${commitFromSummary})`
+        }
+        return links
+      }
+      const commitToFetchFrom = commitFromSummary || changeset.commit
+      if (commitToFetchFrom) {
+        const {links} = await getInfo({
+          commit: commitToFetchFrom,
+          repo: options.repo,
+        })
+        return links
+      }
+      return {commit: null, pull: null, user: null}
+    })()
+
+    const typeMap = {
+      build: "Build System",
+      chore: "Miscellaneous Chores",
+      ci: "Continuous Integration",
+      docs: "Documentation",
+      feat: "Features",
+      fix: "Bug Fixes",
+      perf: "Performance Improvements",
+      refactor: "Code Refactoring",
+      style: "Styles",
+      test: "Tests",
+    }
+
+    const section = isBreaking
+      ? "⚠ BREAKING CHANGES"
+      : typeMap[conventionalType] || "Miscellaneous"
+
+    let line = `### ${section}\n* ${summary}`
+
+    if (links.pull) {
+      line += ` (${links.pull})`
+    }
+
+    if (links.commit) {
+      line += ` (${links.commit})`
+    }
+
+    return line
+  },
 }
 
-async function getDependencyReleaseLine(
-  changesets,
-  dependenciesUpdated,
-  options,
-) {
-  if (dependenciesUpdated.length === 0) {
-    return ""
-  }
-
-  const deps = dependenciesUpdated.map((d) => d.name).join(", ")
-  return `* Updated dependencies [${deps}]`
-}
-
-module.exports = {
-  getDependencyReleaseLine,
-  getReleaseLine,
-}
+export default changelogFunctions
