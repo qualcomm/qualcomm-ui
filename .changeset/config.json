@@ -1,12 +1,13 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": false,
+  "changelog": true,
   "commit": false,
   "fixed": [],
   "linked": [],
   "changedFilePatterns": [
     "**",
     "!dist",
+    "!build",
     "!CHANGELOG.md",
     "!node_modules",
     "!.turbo",
@@ -21,13 +22,13 @@
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
   "ignore": [
-    "@qui/angular-docs",
-    "@qui/angular-table-docs",
-    "@qui/codemod",
-    "@qui/docs-base",
-    "@qui/react-docs",
-    "@qui/qui-docs",
-    "@qui/react-table-docs",
-    "@qui/qui-site"
+    "@qualcomm-ui/angular-docs",
+    "@qualcomm-ui/angular-table-docs",
+    "@qualcomm-ui/codemod",
+    "@qualcomm-ui/docs-base",
+    "@qualcomm-ui/react-docs",
+    "@qualcomm-ui/qui-docs",
+    "@qualcomm-ui/react-table-docs",
+    "@qualcomm-ui/qui-site"
   ]
 }
