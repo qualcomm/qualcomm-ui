@@ -1,0 +1,27 @@
+# deployment yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-table-next
+  labels:
+    app: angular-table-next
+  namespace: qui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angular-table-next
+  template:
+    metadata:
+      labels:
+        app: angular-table-next
+    spec:
+      containers:
+      - name: angular-table-next
+        imagePullPolicy: Always
+        image: 767397742844.dkr.ecr.us-west-2.amazonaws.com/angular-table-next
+        ports:
+          - containerPort: 80
+            protocol: TCP
+      nodeSelector:
+        kubernetes.io/os: linux
