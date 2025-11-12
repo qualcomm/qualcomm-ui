@@ -1,8 +1,10 @@
 {
   "name": "@qualcomm-ui/eslint-config-mdx",
   "version": "1.0.0",
-  "sideEffects": false,
   "description": "QUI ESLint config for consistent MDX code",
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "sideEffects": false,
   "type": "module",
   "main": "index.js",
   "keywords": [
@@ -10,7 +12,6 @@
     "config",
     "react"
   ],
-  "author": "Ryan Bower",
   "files": [
     "index.js",
     "package.json",

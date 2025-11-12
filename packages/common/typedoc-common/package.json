@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Common types for the QUI typedoc package",
   "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "exports": {
     ".": {

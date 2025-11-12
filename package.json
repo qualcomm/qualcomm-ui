@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "@qui monorepo",
   "private": true,
-  "repository": "https://github.qualcomm.com/ProdTools/qui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "scripts": {
     "clean-tsbuildinfo": "shx rm -rf packages/*/*/dist/tsbuildinfo",
@@ -36,9 +36,14 @@
     "lint": "turbo run lint --continue",
     "lint:ci": "turbo run lint --concurrency 6",
     "test:unit:ci": "turbo run test:unit:ci --concurrency 2",
-    "doc-gen": "turbo run build:typedoc"
+    "doc-gen": "turbo run build:typedoc",
+    "publish:all": "run-s changeset-publish publish-angular",
+    "publish-angular": "pnpm -r run publish-angular-package",
+    "changeset-publish": "pnpm changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.7",
+    "@changesets/types": "^6.1.0",
     "@clack/prompts": "1.0.0-alpha.6",
     "@commander-js/extra-typings": "^14.0.0",
     "@eslint/js": "catalog:",

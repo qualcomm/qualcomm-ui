@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A comprehensive utility library providing essential functions for array manipulation, DOM operations and attributes, class name management, type coercion, equality checks, functional programming helpers, type guards, numeric operations, object manipulation, timing utilities, and more.",
   "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "private": true,
   "exports": {

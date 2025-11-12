@@ -1,8 +1,10 @@
 {
   "name": "@qualcomm-ui/eslint-config-fsd",
   "version": "1.0.0",
-  "sideEffects": false,
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "description": "QUI ESLint config for feature-sliced design",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
@@ -17,7 +19,6 @@
     "config",
     "fsd"
   ],
-  "author": "Ryan Bower",
   "files": [
     "*.js",
     "index.d.ts"

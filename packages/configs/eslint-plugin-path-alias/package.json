@@ -1,15 +1,18 @@
 {
   "name": "@qualcomm-ui/eslint-plugin-path-alias",
   "version": "1.0.0",
-  "sideEffects": false,
-  "private": true,
   "description": "ESLint config for restricting import boundaries to tsconfig paths",
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "sideEffects": false,
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "eslint",
     "config"
   ],
-  "author": "Ryan Bower",
   "main": "index.js",
   "files": [
     "index.js",

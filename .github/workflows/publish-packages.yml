@@ -23,7 +23,7 @@ jobs:
     - uses: ./.github/actions/init-node-and-install
 
     - name: authenticate
-      run:
+      run: npm login
 
     - uses: ./.github/actions/init-remote-cache
       with:
@@ -33,3 +33,7 @@ jobs:
 
     - name: build
       run: pnpm run build
+
+    - name: publish
+      run: pnpm publish:all
+

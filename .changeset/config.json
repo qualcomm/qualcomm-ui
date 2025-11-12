@@ -1,0 +1,33 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": false,
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "changedFilePatterns": [
+    "**",
+    "!dist",
+    "!CHANGELOG.md",
+    "!node_modules",
+    "!.turbo",
+    "!scripts",
+    "!vite.config.ts",
+    "!vitest.config.ts"
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  },
+  "ignore": [
+    "@qui/angular-docs",
+    "@qui/angular-table-docs",
+    "@qui/codemod",
+    "@qui/docs-base",
+    "@qui/react-docs",
+    "@qui/qui-docs",
+    "@qui/react-table-docs",
+    "@qui/qui-site"
+  ]
+}

@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Design-agnostic React building blocks and utilities.",
   "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "exports": {
     "./*": {

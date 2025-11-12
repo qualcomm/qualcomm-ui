@@ -1,0 +1,1 @@
+# @qualcomm-ui/angular-core

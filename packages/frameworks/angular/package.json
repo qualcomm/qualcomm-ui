@@ -2,6 +2,7 @@
   "name": "@qualcomm-ui/angular",
   "version": "1.0.0",
   "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "private": true,
   "type": "module",
   "publishConfig": {
@@ -27,7 +28,7 @@
     "build:bundle-size": "ng build test-bundle-size-app",
     "analyze-bundle": "source-map-explorer bundle-size-dist/main.js",
     "explore-bundle": "run-s build:bundle-size analyze-bundle",
-    "publish:package": "tsx apply-package && qui-cli publish-angular qui-angular"
+    "publish-angular-package": "tsx apply-package && qui-cli publish-angular qui-angular"
   },
   "devDependencies": {
     "@analogjs/platform": "catalog:",
