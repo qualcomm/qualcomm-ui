@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": true,
+  "changelog": [
+    "./changelog-formatter.js",
+    { "repo": "qualcomm/qualcomm-ui" }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],

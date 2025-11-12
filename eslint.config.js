@@ -66,6 +66,7 @@ export default defineConfig(
       "{packages,scripts}/**/*.{jsx,js,mjs,cjs}",
       "*.{jsx,js,mjs.cjs}",
       ".github/actions/turborepo-remote-cache/action/*.{js,mjs,ts}",
+      ".changeset/*.js",
     ],
   },
 
