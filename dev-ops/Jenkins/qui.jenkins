@@ -1,0 +1,126 @@
+@Library('sagaGroovyLibraries') _
+
+def environments = [
+    DEV: [ 
+        environment: 'dev',
+        uienv: 'dev',
+        region: 'us-west-2',
+        repository: '391229415789.dkr.ecr.us-west-2.amazonaws.com', 
+        Registry_Credential: 'ecr:us-west-2:Nucleus-Dev',
+        Kube_Credential: 'eks-nucleus-qc-cluster-jenkins',
+        AWS_Credentials: 'Nucleus-Dev',
+        app: 'qui',
+        ClusterEndpoint: 'https://F149655B0B64052C6C4CF0A37F4C1566.gr7.us-west-2.eks.amazonaws.com',
+        bastion_host: '',
+        cluster_name: '',
+        pem_key: '',
+        namespace: 'qui'
+    ]
+]
+def environment = ''
+def region = 'us-west-2'
+def Registry_Credential = ''
+def Kube_Credential = ''
+def ClusterEndpoint = ''
+def repository = ''
+def AWS_Credentials = ''
+def bastion_host = ''
+def pem_key = ''
+def cluster_name = ''
+def uienv = ''
+def app = ''
+def namespace =''
+
+def customlabel=sagaGroovyLibraries.getlabels("linux-standard-tools-64bit")
+pipeline {
+    agent {label "${customlabel}"}
+        parameters {
+        choice(name: 'environment', choices: "${environments.keySet().join('\n')}")
+        listGitBranches(
+            branchFilter: '',
+            defaultValue: 'main',
+            name: 'Branch',
+            type: 'BRANCH',
+            remoteURL: 'https://github.qualcomm.com/ProdTools/qui.git',
+            credentialsId: 'grecinto',
+            quickFilterEnabled: true
+      )
+    }
+    stages {
+        stage('Checkout Git') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "${Branch}"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [[$class: 'CleanBeforeCheckout']],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        credentialsId: 'a7c7370e-af9f-4136-bf9d-266619ba6261', 
+                        url: 'https://github.qualcomm.com/ProdTools/qui.git'
+                    ]]
+                ])
+            }
+        }
+        stage('Set Environment Variables') {
+            steps {
+                script {
+                    aws_env = environments[params.environment]['environment']
+                    region = environments[params.environment]['region']
+                    Registry_Credential = environments[params.environment]['Registry_Credential']
+                    Kube_Credential = environments[params.environment]['Kube_Credential']
+                    ClusterEndpoint = environments[params.environment]['ClusterEndpoint']
+                    repository = environments[params.environment]['repository']
+                    AWS_Credentials = environments[params.environment]['AWS_Credentials']
+                    app = environments[params.environment]['app']
+                    uienv = environments[params.environment]['uienv']
+                    namespace = environments[params.environment]['namespace']
+                    environment = environments[params.environment]['environment']
+                }
+            }
+        }
+        stage('Build'){
+            steps{
+                script{
+                    sh '/bin/chmod -R 755 .'
+                    dockerImage=docker.build("${repository}/${app}","--build-arg config=$uienv --no-cache .")
+                }
+                
+            }
+        }
+        stage('push image'){
+            steps{
+                 script{
+                    withDockerRegistry(credentialsId: "${Registry_Credential}", url: "https://${repository}" ) {
+                        dockerImage.push()
+                   }
+               }
+             }
+        }
+         
+        stage('Deploy'){
+            steps{
+              script{
+                kubeconfig(credentialsId: "${Kube_Credential}", serverUrl: "${ClusterEndpoint}", caCertificate: ''){
+                    sh "kubectl apply -k dev-ops/Deployment/${environment}/${region}"
+                    sh "kubectl rollout restart deployment ${app} -n ${namespace}"
+                 }
+                }
+             }
+          }
+  }
+  post {
+        always {
+          cleanWs notFailBuild: true
+          script{
+             sh(script:"docker rmi -f \$(docker images -q ${repository}/${app})",returnStdout:true)
+          }
+        }
+        /*failure{
+            script{
+             step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'saga.devops.team@qti.qualcomm.com', sendToIndividuals: true])
+            }
+        }*/
+  }
+}
+

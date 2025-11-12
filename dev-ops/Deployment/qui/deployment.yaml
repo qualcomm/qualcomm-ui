@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qui
+  labels:
+    app: qui
+  namespace: qui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qui
+  template:
+    metadata:
+      labels:
+        app: qui
+    spec:
+      containers:
+      - name: qui
+        imagePullPolicy: Always
+        image: qui
+        ports:
+          - containerPort: 80
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 100m 
+            memory: 500Mi 
+          requests:
+            cpu: 10m
+            memory: 250Mi
+      nodeSelector:
+        kubernetes.io/os: linux

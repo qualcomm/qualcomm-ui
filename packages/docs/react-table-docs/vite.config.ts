@@ -11,10 +11,6 @@ import {
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
 
-import {copyMarkdown} from "./scripts/markdown-utils"
-
-copyMarkdown()
-
 export default defineConfig({
   optimizeDeps: {
     include: [

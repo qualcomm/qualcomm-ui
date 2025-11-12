@@ -1,0 +1,28 @@
+# deployment yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-table-docs
+  labels:
+    app: react-table-docs
+  namespace: qui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-table-docs
+  template:
+    metadata:
+      labels:
+        app: react-table-docs
+    spec:
+      containers:
+      - name: react-table-docs
+        #args: ["--environment", "dev"]
+        imagePullPolicy: Always
+        image: 391229415789.dkr.ecr.us-west-2.amazonaws.com/react-table-docs
+        ports:
+          - containerPort: 80
+            protocol: TCP
+      nodeSelector:
+        kubernetes.io/os: linux

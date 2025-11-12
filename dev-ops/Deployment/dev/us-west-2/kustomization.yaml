@@ -1,0 +1,19 @@
+resources:
+  - ../../qui
+  - ./hpa
+
+images:
+- name: qui
+  newName: 391229415789.dkr.ecr.us-west-2.amazonaws.com/qui #temporarily private dev
+  newTag: latest
+
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+patches:
+  - path: qui-env.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: qui
