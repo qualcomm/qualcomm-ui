@@ -1,5 +1,17 @@
 # @qualcomm-ui/qds-core
 
+## 1.0.3 (2025/11/13)
+
+### Bug Fixes
+
+- add reset styles for elements
+- button styles, overlay styles
+- toast and link styles
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.0.2 (2025/11/12)
 
 ### Bug Fixes
