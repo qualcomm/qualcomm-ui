@@ -1,6 +1,7 @@
 {
   "name": "@qualcomm-ui/react-table-docs",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "private": true,
   "type": "module",
@@ -72,7 +73,7 @@
     "@mdx-js/rollup": "^3.1.0",
     "@mdx-js/typescript-plugin": "^0.1.3",
     "@qualcomm-ui/mdx-vite": "workspace:*",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.1",
     "@qualcomm-ui/typedoc": "workspace:*",
     "@react-router/dev": "catalog:",
     "@tailwindcss/vite": "^4.1.11",

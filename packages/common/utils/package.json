@@ -1,8 +1,9 @@
 {
   "name": "@qualcomm-ui/utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A comprehensive utility library providing essential functions for array manipulation, DOM operations and attributes, class name management, type coercion, equality checks, functional programming helpers, type guards, numeric operations, object manipulation, timing utilities, and more.",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "exports": {
@@ -35,9 +36,9 @@
     "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads"
   },
   "devDependencies": {
-    "@qualcomm-ui/cli": "workspace:^1",
-    "@qualcomm-ui/esbuild": "workspace:^1",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/cli": "workspace:^1.0.2",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.1",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.1",
     "@types/node": "~24.9.2",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",

@@ -3,6 +3,7 @@
   "description": "An empty package.json used to trick ng-packagr",
   "version": "1.0.0",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "sideEffects": false,
   "type": "module"
 }

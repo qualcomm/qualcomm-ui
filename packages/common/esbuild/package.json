@@ -1,8 +1,9 @@
 {
   "name": "@qualcomm-ui/esbuild",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "esbuild utilities and plugins",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "publishConfig": {
@@ -37,8 +38,8 @@
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",
-    "@qualcomm-ui/cli": "workspace:^1",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/cli": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.1",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
     "esbuild": "^0.25.8",
