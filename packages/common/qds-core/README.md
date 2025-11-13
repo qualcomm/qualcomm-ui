@@ -1,5 +1,12 @@
 # @qualcomm-ui/qds-core
 
+Qualcomm Design System (QDS) core components and design tokens.
+
+For documentation and usage guides:
+
+- [React documentation](https://react-next.qui.aws.qualcomm.com/)
+- [Angular documentation](https://angular-next.qui.qualcomm.com/)
+
 ## Design Tokens
 
 This library features a [utility script](./scripts/variable-parser.ts) that extracts design tokens from the [QDS Foundations Library](https://www.figma.com/design/jTaqbtJFlwmu8Ab8etvYeg) Figma file and assembles them into 6 separate CSS files:
