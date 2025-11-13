@@ -10,6 +10,8 @@ import {
 } from "@qualcomm-ui/react-core/combobox"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
+import {useQdsComboboxContext} from "./qds-combobox-context"
+
 export interface ComboboxControlProps extends CoreComboboxControlProps {}
 
 /**
@@ -20,13 +22,14 @@ export function ComboboxControl({
   children,
   ...props
 }: ComboboxControlProps): ReactElement {
-  const qdsContext = useQdsInputContext()
-  const mergedProps = mergeProps(qdsContext.getGroupBindings(), props)
+  const qdsContext = useQdsComboboxContext()
+  const qdsInputContext = useQdsInputContext()
+  const mergedProps = mergeProps(qdsContext.getControlBindings(), props)
 
   return (
     <CoreCombobox.Control {...mergedProps}>
-      {qdsContext.startIcon ? (
-        <InputStartIcon icon={qdsContext.startIcon} />
+      {qdsInputContext.startIcon ? (
+        <InputStartIcon icon={qdsInputContext.startIcon} />
       ) : null}
       {children}
     </CoreCombobox.Control>

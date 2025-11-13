@@ -1,12 +1,17 @@
 .qui-link__root {
   align-items: center;
+  background: transparent;
   border: solid 1px transparent;
+  box-sizing: border-box;
   color: var(--color-interactive-text-link-default-idle);
   cursor: pointer;
   display: inline-flex;
   font: var(--font-static-body-sm-bold);
   gap: var(--spacing-40);
+  margin: 0;
   outline: none;
+  padding: 0;
+  text-decoration: none;
   transition-duration: var(--animation-duration-faster);
   transition-property: color;
   transition-timing-function: ease-out;

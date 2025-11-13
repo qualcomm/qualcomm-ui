@@ -1,0 +1,44 @@
+{
+  "name": "@qualcomm-ui/angular-ssr",
+  "version": "0.0.2",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:angular-ssr": "node dist/angular-ssr/server/server.mjs"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/cdk": "catalog:",
+    "@angular/common": "catalog:",
+    "@angular/compiler": "catalog:",
+    "@angular/core": "catalog:",
+    "@angular/forms": "catalog:",
+    "@angular/platform-browser": "catalog:",
+    "@angular/platform-server": "catalog:",
+    "@angular/router": "catalog:",
+    "@angular/ssr": "catalog:",
+    "@qualcomm-ui/angular": "workspace:*",
+    "@qualcomm-ui/angular-core": "workspace:*",
+    "@qualcomm-ui/core": "workspace:*",
+    "@qualcomm-ui/dom": "workspace:*",
+    "@qualcomm-ui/qds-core": "workspace:*",
+    "@qualcomm-ui/utils": "workspace:*",
+    "@tanstack/virtual-core": "^3.13.12",
+    "express": "^5.1.0",
+    "lucide-angular": "0.525.0",
+    "rxjs": "~7.8.0",
+    "tslib": "~2.5.3"
+  },
+  "devDependencies": {
+    "@angular/build": "catalog:",
+    "@angular/cli": "catalog:",
+    "@angular/compiler-cli": "catalog:",
+    "@types/express": "^5.0.1",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "~24.9.2",
+    "typescript": "5.8.3"
+  }
+}

@@ -31,7 +31,7 @@ export const dialogMachine: MachineConfig<DialogSchema> =
             return
           }
 
-          const styles = getComputedStyle(contentEl)
+          const styles = getComputedStyle?.(contentEl)
           const elems = [domEls.positioner(scope), domEls.backdrop(scope)]
           elems.forEach((node) => {
             node?.style.setProperty("--z-index", styles.zIndex)

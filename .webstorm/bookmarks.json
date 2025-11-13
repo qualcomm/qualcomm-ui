@@ -1241,6 +1241,11 @@
         "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/segmented-control+"
       },
       {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/segmented-control"
+      },
+      {
         "description": "angular-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
         "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/segmented-control"
@@ -1248,7 +1253,7 @@
       {
         "description": "react",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/segmented-control",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/segmented-control",
         "line": "-1"
       },
       {
@@ -1265,11 +1270,6 @@
         "description": "qds-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
         "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/segmented-control"
-      },
-      {
-        "description": "angular",
-        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/segmented-control"
       }
     ]
   },
@@ -1614,46 +1614,46 @@
     ]
   },
   {
-    "text-area": [
+    "textarea": [
       {
         "description": "angular-docs",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/text-area+"
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/textarea+"
       },
       {
         "description": "react-docs",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/text-area+"
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/textarea+"
       },
       {
         "description": "angular",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/text-area"
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/textarea"
       },
       {
         "description": "angular-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/text-area"
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/textarea"
       },
       {
         "description": "core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/common/core/src/text-area"
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/textarea"
       },
       {
         "description": "qds-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/text-area"
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/textarea"
       },
       {
         "description": "react",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/text-area"
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/textarea"
       },
       {
         "description": "react-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/text-area"
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/textarea"
       }
     ]
   },

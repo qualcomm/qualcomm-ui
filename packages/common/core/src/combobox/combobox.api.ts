@@ -554,6 +554,11 @@ export function createComboboxApi(
         "data-part": "root",
         "data-readonly": booleanDataAttr(readOnly),
         id: props.id,
+        onClick: (event) => {
+          if (event.target === domEls.control(scope)) {
+            domEls.input(scope)?.focus({preventScroll: true})
+          }
+        },
       })
     },
 

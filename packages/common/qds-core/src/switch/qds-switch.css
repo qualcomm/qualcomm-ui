@@ -30,6 +30,7 @@
   background: var(--color-background-neutral-00);
   border: var(--border-width-sm, 1px) solid var(--color-border-neutral-03);
   border-radius: var(--border-radius-rounded);
+  box-sizing: border-box;
   display: inline-flex;
   height: var(--sizing-90);
   justify-content: center;

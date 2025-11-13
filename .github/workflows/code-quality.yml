@@ -14,23 +14,30 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shardIndex: [ 1, 2, 3, 4 ]
+        shardTotal: [ 4 ]
     concurrency:
-      group: PR Lint Changed - ${{github.head_ref}}
+      group: PR Lint - ${{matrix.shardIndex}} - ${{github.head_ref}}
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: checkout
+    - name: clone
+      id: install
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: fetch base ref
-      run: git fetch origin ${{ github.event.pull_request.base.sha }}
 
     - uses: ./.github/actions/init-node-and-install
 
-    - name: lint changed files
-      run: pnpm tsx scripts/lint-changed.ts ${{ github.event.pull_request.base.sha }}
+    - uses: ./.github/actions/init-remote-cache
+      with:
+        turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+        turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+        turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+
+    - name: lint
+      run: pnpm tsx scripts/lint-shard.ts --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
+
 
   build:
     runs-on: ubuntu-latest

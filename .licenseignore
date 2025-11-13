@@ -34,5 +34,6 @@ packages/*/*/scripts/*
 # typescript typedefs
 **/*.d.ts
 
-# documentation sites
+# documentation and debug sites
 packages/docs/**/*
+packages/debug-apps/**/*

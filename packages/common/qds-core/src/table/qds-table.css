@@ -54,10 +54,12 @@
 .qui-table__table {
   background: var(--color-background-neutral-00);
   border-collapse: separate;
+  border-color: inherit;
   border-radius: var(--table-border-top-radius) var(--table-border-top-radius)
     var(--table-border-bottom-radius) var(--table-border-bottom-radius);
   border-spacing: 0;
   min-width: 100%;
+  text-indent: 0;
   width: max-content;
 }
 

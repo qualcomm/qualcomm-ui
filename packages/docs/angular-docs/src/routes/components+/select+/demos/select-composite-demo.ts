@@ -20,7 +20,7 @@ import {selectCollection} from "@qualcomm-ui/core/select"
       <div q-select-control>
         <span q-select-value-text></span>
         <button q-select-clear-trigger></button>
-        <div q-select-indicator></div>
+        <button q-select-indicator></button>
         <div q-select-error-indicator></div>
       </div>
 
