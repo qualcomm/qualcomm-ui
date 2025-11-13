@@ -81,6 +81,7 @@ export default defineConfig(
       "packages/*/{angular,angular-*}/**/*.ts",
       "packages/docs/angular-docs/angular-demo-module/**/*.ts",
       "packages/docs/angular-docs/**/demos/**/*.ts",
+      "packages/debug-apps/angular*/src/**/*.ts",
     ],
     rules: {
       "@angular-eslint/prefer-standalone": "off",
@@ -96,6 +97,7 @@ export default defineConfig(
     files: ["packages/*/{angular,angular-*}/**/*.ts"],
     ignores: [
       "packages/*/{angular,angular-*}/**/*.{component,directive,service,pipe,controller,spec}.ts",
+      "packages/debug-apps/angular*/src/**/*.ts",
     ],
     languageOptions,
     rules: {
@@ -112,6 +114,7 @@ export default defineConfig(
     files: [
       "packages/*/{angular,angular-*}/**/*.html",
       "packages/docs/angular-docs/**/demos/**/*.html",
+      "packages/debug-apps/angular*/src/**/*.html",
     ],
   },
   {
