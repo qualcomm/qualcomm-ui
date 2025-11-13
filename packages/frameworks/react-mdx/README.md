@@ -6,7 +6,7 @@ This package provides pre-built React components and utilities for creating docu
 
 For documentation and usage guides:
 
-- [React documentation](https://react-next.qui.aws.qualcomm.com/)
+- [React documentation](https://react-next.qui.qualcomm.com/)
 
 ## License
 

@@ -5,7 +5,7 @@ QUI ESLint configuration for consistent React code.
 This package provides ESLint configurations for React projects with multiple presets: base, recommended, and strict.
 
 For documentation and usage guides:
-- [React documentation](https://react-next.qui.aws.qualcomm.com/)
+- [React documentation](https://react-next.qui.qualcomm.com/)
 
 ## License
 
