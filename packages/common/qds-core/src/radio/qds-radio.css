@@ -1,10 +1,15 @@
 .qui-radio-group__root {
+  border: 0 solid;
+  box-sizing: border-box;
   display: inline-flex;
   flex-direction: column;
   gap: var(--spacing-70);
+  margin: 0;
+  padding: 0;
 }
 
 .qui-radio-group__label {
+  color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-xs-default);
 
   &[data-size="md"] {

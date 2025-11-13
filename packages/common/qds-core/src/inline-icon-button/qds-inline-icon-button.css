@@ -1,5 +1,5 @@
 .qui-inline-icon-button__root {
-  --button-size: var(--sizing-80);
+  --button-size: var(--sizing-90);
   align-items: center;
   /* note: the background color is wrong */
   background: var(--color-interactive-background-ghost-idle);
@@ -32,13 +32,6 @@
 
   &[data-size="lg"] {
     --button-size: var(--sizing-100);
-  }
-
-  &[data-variant="scale"] {
-    /* override the default size */
-    &[data-size] {
-      --button-size: var(--sizing-80);
-    }
   }
 
   .qui-icon__root.qui-inline-icon-button__icon {

@@ -13,6 +13,11 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
       padding: 2rem;
     }
 
+    .app-title {
+      font: var(--font-static-heading-lg-default);
+      color: var(--color-text-neutral-primary);
+    }
+
     .intro {
       font-size: 1.125rem;
       color: var(--color-text-neutral-secondary);
@@ -27,7 +32,7 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
   `,
   template: `
     <div class="container">
-      <h1>QUI Angular Components</h1>
+      <h1 class="app-title">QUI Angular Components</h1>
       <p class="intro">
         Browse all available components in the Qualcomm UI Angular library,
         organized by category.

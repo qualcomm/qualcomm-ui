@@ -65,6 +65,7 @@
 .qui-accordion__item-trigger {
   align-items: center;
   background-color: var(--color-interactive-background-ghost-idle);
+  box-sizing: border-box;
   color: var(--color-interactive-text-neutral-idle);
   column-gap: var(--accordion-trigger-gap);
   cursor: pointer;

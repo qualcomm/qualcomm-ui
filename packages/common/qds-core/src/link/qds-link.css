@@ -7,6 +7,7 @@
   font: var(--font-static-body-sm-bold);
   gap: var(--spacing-40);
   outline: none;
+  text-decoration: none;
   transition-duration: var(--animation-duration-faster);
   transition-property: color;
   transition-timing-function: ease-out;

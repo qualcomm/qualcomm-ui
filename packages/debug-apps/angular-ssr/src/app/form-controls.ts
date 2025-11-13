@@ -9,7 +9,6 @@ import {SelectModule} from "@qualcomm-ui/angular/select"
 import {SwitchModule} from "@qualcomm-ui/angular/switch"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
 import {useListCollection} from "@qualcomm-ui/angular-core/collection"
-import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 import {selectCollection} from "@qualcomm-ui/core/select"
 
@@ -86,8 +85,8 @@ const countries = [
         <h2 class="section-title">Combobox</h2>
         <div class="demo-container">
           <q-combobox
-            style="width: 14rem;"
             placeholder="Select a country"
+            style="width: 14rem;"
             [collection]="listCollection.collection()"
             (inputValueChanged)="onInputChange($event)"
           />
@@ -97,32 +96,17 @@ const countries = [
       <div class="section">
         <h2 class="section-title">Number Input</h2>
         <div class="demo-container">
-          <div style="width: 18rem;" q-number-input-root>
-            <label q-number-input-label>Label</label>
-            <div q-number-input-input-group>
-              <input placeholder="Enter a number" q-number-input-input />
-              <div q-number-input-control></div>
-              <span q-number-input-error-indicator></span>
-            </div>
-            <div q-number-input-error-text>Error</div>
-          </div>
+          <q-number-input placeholder="Enter a number" style="width: 18rem;" />
         </div>
       </div>
 
       <div class="section">
         <h2 class="section-title">Password Input</h2>
         <div class="demo-container">
-          <div style="width: 18rem;" q-password-input-root>
-            <label q-password-input-label>Label</label>
-            <div q-password-input-input-group>
-              <input placeholder="Placeholder text" q-password-input-input />
-              <button q-password-input-clear-trigger></button>
-              <button q-password-input-visibility-trigger></button>
-              <span q-password-input-error-indicator></span>
-            </div>
-            <div q-password-input-error-text>Error text</div>
-            <div q-password-input-hint>Optional hint</div>
-          </div>
+          <q-password-input
+            placeholder="Enter your password"
+            style="width: 18rem;"
+          />
         </div>
       </div>
 
@@ -179,7 +163,7 @@ const countries = [
       <div class="section">
         <h2 class="section-title">Text Input</h2>
         <div class="demo-container">
-          <div style="width: 18rem;" q-text-input-root>
+          <div q-text-input-root style="width: 18rem;">
             <label q-text-input-label>Label</label>
             <div q-text-input-input-group>
               <input placeholder="Placeholder text" q-text-input-input />

@@ -56,14 +56,14 @@ import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-c
         <h2 class="section-title">Avatar</h2>
         <div class="demo-container">
           <div style="display: flex; align-items: center; gap: 1rem;">
-            <div q-avatar>
-              <div q-avatar-content variant="neutral">OK</div>
+            <div q-avatar variant="neutral">
+              <div q-avatar-content>OK</div>
             </div>
-            <div q-avatar>
-              <div q-avatar-content variant="contrast">OK</div>
+            <div q-avatar variant="contrast">
+              <div q-avatar-content>OK</div>
             </div>
-            <div q-avatar>
-              <div q-avatar-content variant="brand">OK</div>
+            <div q-avatar variant="brand">
+              <div q-avatar-content>OK</div>
             </div>
           </div>
         </div>
@@ -72,16 +72,27 @@ import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-c
       <div class="section">
         <h2 class="section-title">Divider</h2>
         <div class="demo-container">
-          <div style="display: flex; flex-direction: column; gap: 1rem; padding-left: 2rem; padding-right: 2rem;">
-            <span class="text-neutral-primary" style="font: var(--font-body-md);">
+          <div
+            style="display: flex; flex-direction: column; gap: 1rem; padding-left: 2rem; padding-right: 2rem;"
+          >
+            <span
+              class="text-neutral-primary"
+              style="font: var(--font-static-body-md-default);"
+            >
               subtle: Low contrast, less visually prominent
             </span>
             <div q-divider variant="subtle"></div>
-            <span class="text-neutral-primary" style="font: var(--font-body-md);">
+            <span
+              class="text-neutral-primary"
+              style="font: var(--font-static-body-md-default);"
+            >
               normal (default): Standard appearance with balanced visibility
             </span>
             <div q-divider></div>
-            <span class="text-neutral-primary" style="font: var(--font-body-md);">
+            <span
+              class="text-neutral-primary"
+              style="font: var(--font-static-body-md-default);"
+            >
               strong: High contrast, maximum visual separation
             </span>
             <div q-divider variant="strong"></div>
@@ -92,8 +103,13 @@ import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-c
       <div class="section">
         <h2 class="section-title">Icon</h2>
         <div class="demo-container">
-          <div class="text-icon-neutral-primary" style="display: grid; justify-content: center; gap: 1rem;">
-            <div style="display: flex; align-items: flex-end; justify-content: center; gap: 1rem;">
+          <div
+            class="text-icon-neutral-primary"
+            style="display: grid; justify-content: center; gap: 1rem;"
+          >
+            <div
+              style="display: flex; align-items: flex-end; justify-content: center; gap: 1rem;"
+            >
               <svg qIcon="ExternalLink" size="xs"></svg>
               <svg qIcon="ExternalLink" size="sm"></svg>
               <svg qIcon="ExternalLink" size="md"></svg>
@@ -115,7 +131,9 @@ import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-c
       <div class="section">
         <h2 class="section-title">Segmented Control</h2>
         <div class="demo-container">
-          <div style="display: flex; width: 100%; flex-direction: column; align-items: center; gap: 1rem;">
+          <div
+            style="display: flex; width: 100%; flex-direction: column; align-items: center; gap: 1rem;"
+          >
             @for (variant of variants; track variant) {
               <fieldset
                 q-segmented-control
@@ -142,7 +160,9 @@ import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-c
       <div class="section">
         <h2 class="section-title">Tag</h2>
         <div class="demo-container">
-          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+          <div
+            style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;"
+          >
             <button endIcon="Link2" q-tag variant="link">link</button>
             <button q-tag variant="selectable">selectable</button>
             <button q-tag variant="dismissable">dismissable</button>

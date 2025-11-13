@@ -72,6 +72,7 @@
   background: var(--color-background-neutral-00);
   border: solid 1px var(--color-interactive-border-neutral-idle);
   border-radius: var(--border-radius-md);
+  box-sizing: border-box;
   display: inline-flex;
   justify-content: flex-start;
   position: relative;
@@ -116,15 +117,18 @@
 .qui-input__input {
   --icon-color: var(--color-utility-placeholder-text);
   --input-size: var(--sizing-140);
-
   appearance: none;
+  background-color: transparent;
   border: 0;
-
   border-radius: var(--border-radius-md);
+  box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   font: var(--font-static-body-sm-default);
-  height: var(--input-size);
+  height: 100%;
+  letter-spacing: inherit;
+  min-height: calc(var(--input-size) - 2px);
   min-width: var(--input-size);
+  opacity: 1; /* Ensure consistent opacity for disabled states in all browsers. */
   outline: 0;
   position: relative;
   text-align: start;
@@ -146,6 +150,7 @@
 
   &::placeholder {
     color: var(--color-utility-placeholder-text);
+    opacity: 1;
   }
 }
 

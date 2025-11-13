@@ -99,10 +99,20 @@
 
 .qui-number-input__input {
   appearance: none;
+  background-color: transparent;
+  border: 0;
   border-radius: var(--border-radius-md);
+  box-sizing: border-box;
+  color: var(--color-text-neutral-primary);
   font: var(--font-static-body-sm-default);
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
   height: 100%;
+  letter-spacing: inherit;
+  margin: 0;
+  opacity: 1;
   outline: 0;
+  padding: 0;
   text-align: start;
   text-overflow: ellipsis;
   width: 100%;

@@ -33,12 +33,12 @@ import type {QdsButtonGroupLayout} from "@qualcomm-ui/qds-core/button"
       class="container"
       style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
     >
-      <h1 class="page-title">Buttons</h1>
-
       <div class="section">
         <h2 class="section-title">Button</h2>
         <div class="demo-container">
-          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); column-gap: 2rem; row-gap: 1.25rem;">
+          <div
+            style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); column-gap: 2rem; row-gap: 1.25rem;"
+          >
             <button emphasis="primary" q-button variant="fill">Action</button>
             <button emphasis="primary" q-button variant="outline">
               Action
@@ -68,11 +68,13 @@ import type {QdsButtonGroupLayout} from "@qualcomm-ui/qds-core/button"
       <div class="section">
         <h2 class="section-title">Button Group</h2>
         <div class="demo-container">
-          <div style="display: flex; width: 100%; flex-direction: column; gap: 1rem;">
+          <div
+            style="display: flex; width: 100%; flex-direction: column; gap: 1rem;"
+          >
             @for (layout of layouts; track layout) {
               <div
-                style="border: 1px dashed var(--color-border-brand-primary-subtle); padding: 0.375rem;"
                 q-button-group
+                style="border: 1px dashed var(--color-border-brand-primary-subtle); padding: 0.375rem;"
                 [layout]="layout"
               >
                 <button q-button startIcon="AArrowDown" variant="ghost">
@@ -98,7 +100,9 @@ import type {QdsButtonGroupLayout} from "@qualcomm-ui/qds-core/button"
       <div class="section">
         <h2 class="section-title">Icon Button</h2>
         <div class="demo-container">
-          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); column-gap: 2rem; row-gap: 0.25rem;">
+          <div
+            style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); column-gap: 2rem; row-gap: 0.25rem;"
+          >
             <button icon="ExternalLink" q-icon-button variant="fill"></button>
             <button
               icon="ExternalLink"

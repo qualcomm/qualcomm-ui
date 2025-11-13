@@ -42,7 +42,8 @@
     "changeset-publish": "pnpm changeset publish",
     "changeset-generate": "pnpm changeset-conventional",
     "bump": "pnpm changeset version",
-    "consolidate-changelogs": "tsx scripts/consolidate-changelogs.ts"
+    "consolidate-changelogs": "tsx scripts/consolidate-changelogs.ts",
+    "prep-release": "run-s changeset-generate bump consolidate-changelogs"
   },
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.1",
