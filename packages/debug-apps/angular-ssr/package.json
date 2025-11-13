@@ -1,5 +1,5 @@
 {
-  "name": "angular-ssr",
+  "name": "@qualcomm-ui/angular-ssr",
   "version": "0.0.2",
   "scripts": {
     "ng": "ng",
