@@ -13,7 +13,6 @@
     }
   },
   "sideEffects": false,
-  "private": true,
   "publishConfig": {
     "access": "public"
   },
