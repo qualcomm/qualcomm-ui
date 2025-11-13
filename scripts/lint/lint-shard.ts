@@ -1,7 +1,9 @@
 import {Command} from "@commander-js/extra-typings"
+import {getPackages} from "@manypkg/get-packages"
 import {execaCommand} from "execa"
-import {readdir, readFile} from "node:fs/promises"
+import {readFile} from "node:fs/promises"
 import {dirname, resolve} from "node:path"
+import {cwd} from "node:process"
 import {fileURLToPath} from "node:url"
 
 import type {PackageTiming} from "./types"
@@ -43,18 +45,7 @@ async function main() {
 
   console.log(`Running lint shard ${shardNumber} of ${totalShards}`)
 
-  const baseDir = resolve(__dirname, "../packages")
-  const folders = await readdir(baseDir)
-
-  const packages = (
-    await Promise.all(
-      folders.map(async (pkgFolder) =>
-        (await readdir(resolve(baseDir, pkgFolder))).map(
-          (folder) => `@qualcomm-ui/${folder}`,
-        ),
-      ),
-    )
-  ).flat()
+  const packages = await getPackages(cwd())
 
   let shardPackages: string[]
 
@@ -62,6 +53,17 @@ async function main() {
     const timingsPath = resolve(__dirname, "../.lint-cache/timings.json")
     const timingsData = await readFile(timingsPath, "utf-8")
     const timings: PackageTiming[] = JSON.parse(timingsData)
+
+    if (
+      timings.length !== packages.packages.length ||
+      packages.packages.some(
+        (pkg) => !timings.find((time) => time.package === pkg.packageJson.name),
+      )
+    ) {
+      throw new Error(
+        "Missing timing data for some packages. Run profile-lint first.",
+      )
+    }
 
     const shards = distributePackages(timings, totalShards)
     const shard = shards[shardNumber - 1]
@@ -72,11 +74,13 @@ async function main() {
       `Shard contains ${shardPackages.length} packages (~${Math.round(totalTime)}ms)`,
     )
   } catch {
-    console.log("No timing data found, using even distribution")
-    const shardSize = Math.ceil(packages.length / totalShards)
+    console.log("Falling back to even distribution")
+    const shardSize = Math.ceil(packages.packages.length / totalShards)
     const shardStart = (shardNumber - 1) * shardSize
-    const shardEnd = Math.min(shardStart + shardSize, packages.length)
-    shardPackages = packages.slice(shardStart, shardEnd)
+    const shardEnd = Math.min(shardStart + shardSize, packages.packages.length)
+    shardPackages = packages.packages
+      .slice(shardStart, shardEnd)
+      .map((p) => p.packageJson.name)
   }
 
   const command = `pnpm lint:ci ${shardPackages.map((pkg) => `--filter ${pkg}`).join(" ")}`
