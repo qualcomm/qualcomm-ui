@@ -48,7 +48,11 @@ export const presenceMachine: MachineConfig<PresenceSchema> =
       },
 
       setStyles: ({event, refs}) => {
-        if ("node" in event && event.node) {
+        if (
+          "node" in event &&
+          event.node &&
+          typeof getComputedStyle !== "undefined"
+        ) {
           refs.set("styles", getComputedStyle(event.node))
         }
       },

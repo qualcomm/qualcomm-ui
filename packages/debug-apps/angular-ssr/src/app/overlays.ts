@@ -6,7 +6,7 @@ import {DrawerModule} from "@qualcomm-ui/angular/drawer"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {PopoverModule} from "@qualcomm-ui/angular/popover"
 import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
-import {PortalComponent, PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
 
 @Component({
@@ -16,7 +16,6 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
     DrawerModule,
     MenuModule,
     PopoverModule,
-    PortalComponent,
     PortalDirective,
     TooltipModule,
   ],
@@ -44,16 +43,16 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
       class="container"
       style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
     >
-      <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">
-        Overlays
-      </h1>
-
       <div class="section">
         <h2 class="section-title">Dialog</h2>
         <div class="demo-container">
           <div style="display: flex; flex-direction: column; gap: 1rem;">
             @for (color of emphasis; track color) {
-              <div style="display: flex; justify-content: center;" q-dialog-root [emphasis]="color">
+              <div
+                q-dialog-root
+                style="display: flex; justify-content: center;"
+                [emphasis]="color"
+              >
                 <button q-button q-dialog-trigger size="sm" variant="outline">
                   {{ color }}
                 </button>
@@ -95,7 +94,12 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
               </div>
 
               <div q-drawer-footer>
-                <button q-button q-drawer-close-trigger size="sm" variant="fill">
+                <button
+                  q-button
+                  q-drawer-close-trigger
+                  size="sm"
+                  variant="fill"
+                >
                   Close
                 </button>
               </div>
@@ -111,7 +115,7 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
             <button emphasis="primary" q-menu-button variant="fill">
               Show Menu
             </button>
-            <q-portal>
+            <ng-template qPortal>
               <div q-menu-positioner>
                 <div q-menu-content>
                   <button q-menu-item value="new-text-file">
@@ -123,7 +127,7 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
                       Open Recents
                     </button>
 
-                    <q-portal>
+                    <ng-template qPortal>
                       <div q-menu-positioner>
                         <div q-menu-content>
                           <button q-menu-item value="file-1">File 1</button>
@@ -131,11 +135,11 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
                           <button q-menu-item value="file-3">File 3</button>
                         </div>
                       </div>
-                    </q-portal>
+                    </ng-template>
                   </q-menu>
                 </div>
               </div>
-            </q-portal>
+            </ng-template>
           </q-menu>
         </div>
       </div>
@@ -167,10 +171,15 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
         <h2 class="section-title">Tooltip</h2>
         <div class="demo-container">
           <div q-tooltip-root>
-            <button emphasis="primary" q-button q-tooltip-trigger variant="fill">
+            <button
+              emphasis="primary"
+              q-button
+              q-tooltip-trigger
+              variant="fill"
+            >
               Hover me
             </button>
-            <q-portal>
+            <ng-template qPortal>
               <div q-tooltip-positioner>
                 <div q-tooltip-content>
                   <div q-tooltip-arrow>
@@ -179,7 +188,7 @@ import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
                   Hello World!
                 </div>
               </div>
-            </q-portal>
+            </ng-template>
           </div>
         </div>
       </div>

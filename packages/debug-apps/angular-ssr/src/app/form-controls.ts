@@ -63,6 +63,8 @@ const countries = [
       border: 1px solid var(--color-border-neutral-01);
       border-radius: 8px;
       background-color: var(--color-background-neutral-01);
+      display: flex;
+      justify-content: center;
     }
   `,
   template: `

@@ -51,14 +51,10 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       class="container"
       style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
     >
-      <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">
-        Disclosure
-      </h1>
-
       <div class="section">
         <h2 class="section-title">Accordion</h2>
         <div class="demo-container">
-          <div style="width: 24rem;" q-accordion>
+          <div q-accordion style="width: 24rem;">
             <div q-accordion-item-root value="a">
               <button q-accordion-item-trigger>
                 <span q-accordion-item-text>Accordion Text 1</span>
@@ -95,9 +91,7 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
                   Home
                 </a>
               </li>
-              <li disabled q-breadcrumb-item>
-                <a routerLink="/components">Components</a>
-              </li>
+              <li disabled q-breadcrumb-item>Components</li>
               <li q-breadcrumb-item>
                 <a
                   aria-current="page"
@@ -115,12 +109,15 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <div class="section">
         <h2 class="section-title">Collapsible</h2>
         <div class="demo-container">
-          <div style="display: flex; flex-direction: column; align-items: center;" q-collapsible-root>
+          <div
+            q-collapsible-root
+            style="display: flex; flex-direction: column; align-items: center;"
+          >
             <button
-              style="margin-top: 0.75rem; margin-bottom: 0.75rem;"
               emphasis="primary"
               q-button
               q-collapsible-trigger
+              style="margin-top: 0.75rem; margin-bottom: 0.75rem;"
               variant="fill"
             >
               Toggle

@@ -108,12 +108,12 @@ export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
 
         const rafCleanup = raf(() => {
           const contentEl = domEls.content(scope)
-          if (!contentEl) {
+          if (!contentEl || typeof getComputedStyle === "undefined") {
             return
           }
 
           // if there's no animation, send ANIMATION.END immediately
-          const animationName = getComputedStyle(contentEl).animationName
+          const animationName = getComputedStyle?.(contentEl).animationName
           const hasNoAnimation = !animationName || animationName === "none"
 
           if (hasNoAnimation) {
@@ -151,7 +151,7 @@ export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
           }
 
           // if there's no animation, send ANIMATION.END immediately
-          const animationName = getComputedStyle(contentEl).animationName
+          const animationName = getComputedStyle?.(contentEl).animationName
           const hasNoAnimation = !animationName || animationName === "none"
 
           if (hasNoAnimation) {
