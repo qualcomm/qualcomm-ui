@@ -4,6 +4,7 @@
   "description": "DOM utilities and helpers.",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "type": "module",
   "exports": {
     "./*": {
@@ -14,7 +15,6 @@
     }
   },
   "sideEffects": false,
-  "private": true,
   "publishConfig": {
     "access": "public"
   },

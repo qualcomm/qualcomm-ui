@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Codemod for version updates",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "type": "module",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "bin": {

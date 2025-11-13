@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "QUI ESLint config for consistent TypeScript code",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "sideEffects": false,
   "type": "module",

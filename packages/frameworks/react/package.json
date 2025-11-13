@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "QUI React components",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "exports": {

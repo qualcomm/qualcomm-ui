@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "QUI utils for bundling CSS",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "type": "module",
   "publishConfig": {
     "access": "public"

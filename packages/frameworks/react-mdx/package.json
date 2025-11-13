@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "React components and utilities for MDX documentation sites based on QUI Docs",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "exports": {
