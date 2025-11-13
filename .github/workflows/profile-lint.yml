@@ -1,0 +1,23 @@
+name: 'Close stale issues and pull requests with no recent activity'
+on:
+  schedule:
+  - cron: "30 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  profile-lint:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: ./.github/actions/init-node-and-install
+
+    - name: Profile lint times
+      run: pnpm tsx scripts/lint/profile-lint.ts
+
+    - name: Cache timing data
+      uses: actions/cache/save@v3
+      with:
+        path: .lint-cache
+        key: lint-timings-${{ hashFiles('packages/**/*.ts', 'packages/**/*.tsx') }}

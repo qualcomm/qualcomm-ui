@@ -36,7 +36,7 @@ jobs:
         turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
 
     - name: lint
-      run: pnpm tsx scripts/lint-shard.ts --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
+      run: pnpm tsx scripts/lint/lint-shard.ts --shard=${{matrix.shardIndex}}/${{matrix.shardTotal}}
 
 
   build:

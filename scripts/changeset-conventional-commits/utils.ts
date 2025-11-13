@@ -3,10 +3,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Changeset} from "@changesets/types"
+import type {Changeset, PackageJSON} from "@changesets/types"
 import {execSync} from "child_process"
 
-import type {ManyPkgPackage} from "./types"
+interface ManyPkgPackage {
+  dir: string
+  packageJson: PackageJSON
+}
 
 interface Commit {
   commitHash: string
