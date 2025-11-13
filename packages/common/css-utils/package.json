@@ -20,6 +20,7 @@
       "default": "./dist/index.js"
     }
   },
+  "types": "dist/index.d.ts",
   "bin": {
     "qui-css-utils": "./lib/cli.cjs"
   },

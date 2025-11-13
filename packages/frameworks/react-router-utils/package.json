@@ -16,6 +16,7 @@
       "default": "./dist/node/index.js"
     }
   },
+  "types": "./dist/stub.d.ts",
   "publishConfig": {
     "access": "public"
   },

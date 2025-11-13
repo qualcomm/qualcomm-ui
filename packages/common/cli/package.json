@@ -12,6 +12,7 @@
   "bin": {
     "qui-cli": "./lib/cli.cjs"
   },
+  "types": "./dist/modules/index.d.ts",
   "files": [
     "dist",
     "lib"

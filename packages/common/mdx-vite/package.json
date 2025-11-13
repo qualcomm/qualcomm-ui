@@ -25,6 +25,7 @@
       "types": "./dist/react-demo-plugin/virtual.d.ts"
     }
   },
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "lib"

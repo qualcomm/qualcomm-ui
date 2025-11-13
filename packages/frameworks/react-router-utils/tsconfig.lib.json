@@ -8,5 +8,5 @@
     "rootDir": "./src",
     "tsBuildInfoFile": "dist/tsbuildinfo"
   },
-  "include": ["./src/node", "./src/client"],
+  "include": ["./src/node", "./src/client", "./src/stub.ts"],
 }

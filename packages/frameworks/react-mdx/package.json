@@ -16,6 +16,7 @@
       "style": "./dist/all.min.css"
     }
   },
+  "types": "./dist/stub.d.ts",
   "files": [
     "dist",
     "package.json"

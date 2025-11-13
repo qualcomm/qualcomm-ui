@@ -13,7 +13,7 @@
       "default": "./dist/*/index.js"
     }
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/stub.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"

@@ -32,6 +32,7 @@
       "style": "./dist/components.min.css"
     }
   },
+  "types": "./dist/stub.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
