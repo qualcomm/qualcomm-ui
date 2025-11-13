@@ -5,6 +5,9 @@ env:
   TURBO_TEAM: "qualcomm-ui"
   TURBO_TOKEN: "turbo-cache-token"
 on:
+  push:
+    tags:
+    - 'release/*'
   workflow_dispatch:
 
 permissions:
@@ -12,7 +15,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     concurrency:
       group: PR Build - ${{github.head_ref}}
