@@ -37,7 +37,7 @@ import {SelectRootDirective} from "./select-root.directive"
           <span q-select-value-text></span>
         </ng-content>
         <ng-content select="[q-select-clear-trigger]">
-          @if (clearable()) { 
+          @if (clearable()) {
             <button q-select-clear-trigger></button>
           }
         </ng-content>
