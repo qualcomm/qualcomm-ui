@@ -100,10 +100,12 @@ export async function publishAngular({
     } else if (res.stderr) {
       console.debug(`${chalk.red("✖")} Failed to publish ${pkgJson.name}.`)
       console.debug(res.stderr)
+      process.exit(1)
     }
   } catch (e) {
     console.debug(`${chalk.red("✖")} Failed to publish ${pkgJson.name}.`)
     console.debug(e)
+    process.exit(1)
   }
   console.groupEnd()
 }
