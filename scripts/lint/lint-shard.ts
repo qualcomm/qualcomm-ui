@@ -50,7 +50,7 @@ async function main() {
   let shardPackages: string[]
 
   try {
-    const timingsPath = resolve(__dirname, "../.lint-cache/timings.json")
+    const timingsPath = resolve(cwd(), ".lint-cache/timings.json")
     const timingsData = await readFile(timingsPath, "utf-8")
     const timings: PackageTiming[] = JSON.parse(timingsData)
 

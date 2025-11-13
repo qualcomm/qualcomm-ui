@@ -20,4 +20,4 @@ jobs:
       uses: actions/cache/save@v3
       with:
         path: .lint-cache
-        key: lint-timings-${{ hashFiles('packages/**/*.ts', 'packages/**/*.tsx') }}
+        key: lint-timings-v1

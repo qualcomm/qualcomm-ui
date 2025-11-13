@@ -1,13 +1,10 @@
 import {getPackages} from "@manypkg/get-packages"
 import {execaCommand} from "execa"
 import {mkdir, writeFile} from "node:fs/promises"
-import {dirname, resolve} from "node:path"
+import {resolve} from "node:path"
 import {cwd} from "node:process"
-import {fileURLToPath} from "node:url"
 
 import type {PackageTiming} from "./types"
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 async function main() {
   const packages = await getPackages(cwd())
@@ -18,7 +15,7 @@ async function main() {
     const start = performance.now()
     try {
       await execaCommand(`pnpm lint:ci --filter ${packageJson.name} --force`, {
-        cwd: resolve(__dirname, "../"),
+        cwd: cwd(),
         stdio: "ignore",
       })
     } catch {
@@ -29,7 +26,7 @@ async function main() {
     console.log(`${packageJson.name}: ${Math.round(duration)}ms`)
   }
 
-  const cacheDir = resolve(__dirname, "../.lint-cache")
+  const cacheDir = resolve(cwd(), ".lint-cache")
   await mkdir(cacheDir, {recursive: true})
   await writeFile(
     resolve(cacheDir, "timings.json"),

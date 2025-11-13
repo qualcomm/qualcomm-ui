@@ -29,7 +29,7 @@ packages/**/meta.json
 packages/**/build-metafile.json
 packages/docs/*/public/*.js
 .wireit
-scripts/.lint-cache
+.lint-cache
 
 ###############################################################################
 # Framework-specific outputs
