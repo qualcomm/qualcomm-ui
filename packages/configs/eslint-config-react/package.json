@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "QUI ESLint config for consistent React code",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -28,7 +28,7 @@
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
-    "@qualcomm-ui/cli": "workspace:^1.0.2",
+    "@qualcomm-ui/cli": "workspace:^1.0.3",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
     "eslint": "9.37.0",
