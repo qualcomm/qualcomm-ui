@@ -43,7 +43,7 @@ export class AvatarDirective
   readonly status = input<QdsAvatarStatus | undefined>()
 
   /**
-   * The style variant of the avatar. Test
+   * The style variant of the avatar.
    */
   readonly variant = input<QdsAvatarVariant | undefined>()
 
