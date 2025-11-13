@@ -5,7 +5,6 @@
   "license": "BSD-3-Clause-Clear",
   "description": "QUI Angular Components",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "private": true,
   "type": "module",
   "publishConfig": {
     "access": "public"
