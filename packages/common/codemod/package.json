@@ -37,8 +37,8 @@
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",
-    "@qualcomm-ui/esbuild": "workspace:^1",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.1",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.1",
     "@types/mdast": "^4.0.4",
     "@types/node": "~24.9.2",
     "@vitest/coverage-v8": "^3.2.4",
@@ -66,6 +66,6 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@qualcomm-ui/utils": "workspace:^1"
+    "@qualcomm-ui/utils": "workspace:^1.0.1"
   }
 }

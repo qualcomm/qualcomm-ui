@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-typescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "QUI ESLint config for consistent TypeScript code",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -27,7 +27,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@qualcomm-ui/cli": "workspace:^1",
+    "@qualcomm-ui/cli": "workspace:^1.0.2",
     "@stylistic/eslint-plugin": "5.2.0",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",

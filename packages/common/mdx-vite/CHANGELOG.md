@@ -1,1 +1,9 @@
 # @qualcomm-ui/mdx-vite
+
+## 1.0.1 (2025/11/12)
+
+### Miscellaneous Chores
+
+- add missing package licenses
+- add per-package readmes
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/typedoc-common, @qualcomm-ui/utils]

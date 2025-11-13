@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dev utils and scripts in a convenient CLI",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",

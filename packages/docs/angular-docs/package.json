@@ -110,7 +110,7 @@
     "@mdx-js/react": "^3.1.0",
     "@mdx-js/rollup": "^3.1.0",
     "@qualcomm-ui/mdx-vite": "workspace:*",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.1",
     "@react-router/dev": "catalog:",
     "@shikijs/rehype": "^3.13.0",
     "@tailwindcss/vite": "^4.1.11",
