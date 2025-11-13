@@ -74,7 +74,9 @@ async function main() {
       `Shard contains ${shardPackages.length} packages (~${Math.round(totalTime)}ms)`,
     )
   } catch {
-    console.log("Falling back to even distribution")
+    console.log(
+      "Timing data missing or invalid. Falling back to even distribution",
+    )
     const shardSize = Math.ceil(packages.packages.length / totalShards)
     const shardStart = (shardNumber - 1) * shardSize
     const shardEnd = Math.min(shardStart + shardSize, packages.packages.length)
