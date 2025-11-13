@@ -1,5 +1,11 @@
 # @qualcomm-ui/core
 
+## 1.0.4 (2025/11/13)
+
+### Miscellaneous Chores
+
+- provide empty default type for npm typescript badge
+
 ## 1.0.3 (2025/11/13)
 
 ### Bug Fixes
