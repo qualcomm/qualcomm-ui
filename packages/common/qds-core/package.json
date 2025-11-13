@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/qds-core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "qds core components",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
@@ -32,6 +32,7 @@
       "style": "./dist/components.min.css"
     }
   },
+  "types": "./dist/stub.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -57,12 +58,12 @@
   },
   "devDependencies": {
     "@figma/rest-api-spec": "^0.31.0",
-    "@qualcomm-ui/cli": "workspace:^1.0.3",
-    "@qualcomm-ui/core": "workspace:^1.0.3",
-    "@qualcomm-ui/css-utils": "workspace:^1.0.2",
-    "@qualcomm-ui/esbuild": "workspace:^1.0.2",
+    "@qualcomm-ui/cli": "workspace:^1.0.5",
+    "@qualcomm-ui/core": "workspace:^1.0.5",
+    "@qualcomm-ui/css-utils": "workspace:^1.0.3",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
-    "@qualcomm-ui/utils": "workspace:^1.0.2",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@types/culori": "^4.0.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "~24.9.2",
@@ -82,7 +83,7 @@
     "typescript": "5.8.3"
   },
   "peerDependencies": {
-    "@qualcomm-ui/core": "workspace:^1.0.3",
-    "@qualcomm-ui/utils": "workspace:^1.0.2"
+    "@qualcomm-ui/core": "workspace:^1.0.5",
+    "@qualcomm-ui/utils": "workspace:^1.0.3"
   }
 }

@@ -1,5 +1,11 @@
 # @qualcomm-ui/cli
 
+## 1.0.5 (2025/11/13)
+
+### Bug Fixes
+
+- add stub ts files for npm ts badge
+
 ## 1.0.4 (2025/11/13)
 
 ### Bug Fixes

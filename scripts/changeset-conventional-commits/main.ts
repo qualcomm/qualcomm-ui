@@ -21,9 +21,7 @@ import {
 
 const CHANGESET_CONFIG_LOCATION = join(".changeset", "config.json")
 
-const conventionalCommitChangeset = async (
-  cwd: string = process.cwd(),
-) => {
+async function conventionalCommitChangeset(cwd: string = process.cwd()) {
   const changesetConfig = JSON.parse(
     readFileSync(join(cwd, CHANGESET_CONFIG_LOCATION)).toString(),
   )

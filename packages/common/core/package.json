@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/core",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "core components",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -13,7 +13,7 @@
       "default": "./dist/*/index.js"
     }
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/stub.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -41,12 +41,12 @@
   "devDependencies": {
     "@faker-js/faker": "~9.6.0",
     "@internationalized/number": "^3.6.4",
-    "@qualcomm-ui/cli": "workspace:^1.0.4",
-    "@qualcomm-ui/css-utils": "workspace:^1.0.2",
-    "@qualcomm-ui/dom": "workspace:^1.0.2",
-    "@qualcomm-ui/esbuild": "workspace:^1.0.2",
+    "@qualcomm-ui/cli": "workspace:^1.0.5",
+    "@qualcomm-ui/css-utils": "workspace:^1.0.3",
+    "@qualcomm-ui/dom": "workspace:^1.0.3",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
-    "@qualcomm-ui/utils": "workspace:^1.0.2",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@types/node": "~24.9.2",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
@@ -58,7 +58,7 @@
   },
   "peerDependencies": {
     "@internationalized/number": ">=3.6.4",
-    "@qualcomm-ui/dom": "workspace:^1.0.2",
-    "@qualcomm-ui/utils": "workspace:^1.0.2"
+    "@qualcomm-ui/dom": "workspace:^1.0.3",
+    "@qualcomm-ui/utils": "workspace:^1.0.3"
   }
 }
