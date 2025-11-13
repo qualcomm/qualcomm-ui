@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "description": "QUI Angular Components",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "private": true,
   "type": "module",
@@ -38,7 +39,6 @@
     "@angular-devkit/architect": "catalog:",
     "@angular-devkit/build-angular": "catalog:",
     "@angular-devkit/core": "catalog:",
-    "@angular/animations": "catalog:",
     "@angular/cdk": "catalog:",
     "@angular/cdk-experimental": "catalog:",
     "@angular/cli": "catalog:",
@@ -90,7 +90,6 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@angular/animations": ">=20.1.0 <21",
     "@angular/cdk": ">=20.1.0 <21",
     "@angular/common": ">=20.1.0 <21",
     "@angular/compiler": ">=20.1.0 <21",

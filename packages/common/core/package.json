@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "core components",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -13,14 +13,13 @@
       "default": "./dist/*/index.js"
     }
   },
+  "types": "./dist/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "dist",
-    "dist/core.min.css",
-    "package.json"
+    "dist"
   ],
   "scripts": {
     "build": "run-s clean build:js build:ts",
@@ -42,7 +41,7 @@
   "devDependencies": {
     "@faker-js/faker": "~9.6.0",
     "@internationalized/number": "^3.6.4",
-    "@qualcomm-ui/cli": "workspace:^1.0.3",
+    "@qualcomm-ui/cli": "workspace:^1.0.4",
     "@qualcomm-ui/css-utils": "workspace:^1.0.2",
     "@qualcomm-ui/dom": "workspace:^1.0.2",
     "@qualcomm-ui/esbuild": "workspace:^1.0.2",

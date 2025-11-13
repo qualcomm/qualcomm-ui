@@ -12,7 +12,6 @@ catalog:
   '@angular-devkit/architect': 0.2001.0
   '@angular-devkit/build-angular': ~20.3.5
   '@angular-devkit/core': ~20.3.5
-  '@angular/animations': ~20.3.4
   '@angular/build': ~20.3.5
   '@angular/cdk': ~20.2.8
   '@angular/cdk-experimental': ~20.2.8

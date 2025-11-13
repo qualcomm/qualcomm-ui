@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@clack/prompts": "1.0.0-alpha.6",
-    "@qualcomm-ui/cli": "workspace:^1.0.3",
+    "@qualcomm-ui/cli": "workspace:^1.0.4",
     "@qualcomm-ui/core": "workspace:*",
     "@qualcomm-ui/esbuild": "workspace:*",
     "@qualcomm-ui/qds-core": "workspace:*",
