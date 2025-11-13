@@ -12,6 +12,8 @@ export const lazyDemos: Record<
     import("virtual:qui-demo-scope/page:components+/accordion+"),
   "/components/avatar": () =>
     import("virtual:qui-demo-scope/page:components+/avatar+"),
+  "/components/badge": () =>
+    import("virtual:qui-demo-scope/page:components+/badge+"),
   "/components/breadcrumbs": () =>
     import("virtual:qui-demo-scope/page:components+/breadcrumbs+"),
   "/components/button": () =>
