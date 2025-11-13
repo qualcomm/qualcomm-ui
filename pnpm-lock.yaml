@@ -273,17 +273,17 @@ importers:
   packages/common/codemod:
     dependencies:
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../utils
     devDependencies:
       '@commander-js/extra-typings':
         specifier: ^14.0.0
         version: 14.0.0(commander@14.0.2)
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@types/mdast':
         specifier: ^4.0.4
@@ -370,22 +370,22 @@ importers:
         specifier: ^3.6.4
         version: 3.6.5
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/css-utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../css-utils
       '@qualcomm-ui/dom':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../dom
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../utils
       '@types/node':
         specifier: ~24.9.2
@@ -422,13 +422,13 @@ importers:
         specifier: ^14.0.0
         version: 14.0.0(commander@14.0.2)
       '@qualcomm-ui/cli':
-        specifier: workspace:^1.0.0
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1.0.0
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       autoprefixer:
         specifier: ^10.4.21
@@ -479,7 +479,7 @@ importers:
   packages/common/docs-base:
     devDependencies:
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@types/stringify-object':
         specifier: ^4.0.5
@@ -521,16 +521,16 @@ importers:
         specifier: ^1.7.0
         version: 1.7.4
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../utils
       '@types/node':
         specifier: ~24.9.2
@@ -554,10 +554,10 @@ importers:
         specifier: ^14.0.0
         version: 14.0.0(commander@14.0.2)
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       chalk:
         specifier: ^5.6.2
@@ -584,16 +584,16 @@ importers:
   packages/common/mdx-common:
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../typedoc-common
       esbuild:
         specifier: ^0.25.8
@@ -711,22 +711,22 @@ importers:
         version: 10.0.0
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/mdx-common':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../mdx-common
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../typedoc-common
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../utils
       '@types/hast':
         specifier: ^3.0.4
@@ -804,22 +804,22 @@ importers:
         specifier: ^0.31.0
         version: 0.31.0
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/core':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../core
       '@qualcomm-ui/css-utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../css-utils
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../utils
       '@types/culori':
         specifier: ^4.0.0
@@ -876,16 +876,16 @@ importers:
   packages/common/tailwind-plugin:
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/css-utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../css-utils
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       esbuild:
         specifier: ^0.25.8
@@ -922,16 +922,16 @@ importers:
         specifier: ^14.0.0
         version: 14.0.0(commander@14.0.2)
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../typedoc-common
       '@types/lodash-es':
         specifier: ^4.17.12
@@ -985,13 +985,13 @@ importers:
   packages/common/typedoc-common:
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       chalk:
         specifier: ^5.6.2
@@ -1012,13 +1012,13 @@ importers:
   packages/common/utils:
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@types/node':
         specifier: ~24.9.2
@@ -1061,7 +1061,7 @@ importers:
         version: 5.8.3
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@typescript-eslint/eslint-plugin':
         specifier: 'catalog:'
@@ -1098,7 +1098,7 @@ importers:
         version: 8.46.2(eslint@9.38.0(jiti@2.6.1))(typescript@5.8.3)
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@qualcomm-ui/tsconfig':
         specifier: workspace:*
@@ -1132,7 +1132,7 @@ importers:
         version: 8.46.2(eslint@9.38.0(jiti@2.6.1))(typescript@5.8.3)
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       eslint-mdx:
         specifier: ^3.4.1
@@ -1150,7 +1150,7 @@ importers:
   packages/configs/eslint-config-react:
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@typescript-eslint/eslint-plugin':
         specifier: 'catalog:'
@@ -1220,7 +1220,7 @@ importers:
         version: 5.8.3
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@stylistic/eslint-plugin':
         specifier: 5.2.0
@@ -1241,7 +1241,7 @@ importers:
   packages/configs/eslint-plugin-path-alias:
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@qualcomm-ui/tsconfig':
         specifier: workspace:*
@@ -1262,7 +1262,7 @@ importers:
   packages/configs/tsconfig:
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       typescript:
         specifier: 5.8.3
@@ -1488,7 +1488,7 @@ importers:
         specifier: workspace:*
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@react-router/dev':
         specifier: 'catalog:'
@@ -1822,7 +1822,7 @@ importers:
         specifier: workspace:*
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@react-router/dev':
         specifier: 'catalog:'
@@ -2060,7 +2060,7 @@ importers:
         specifier: workspace:*
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@react-router/dev':
         specifier: 'catalog:'
@@ -2277,7 +2277,7 @@ importers:
         specifier: workspace:*
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@react-router/dev':
         specifier: 'catalog:'
@@ -2530,7 +2530,7 @@ importers:
         specifier: workspace:*
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@react-router/dev':
         specifier: 'catalog:'
@@ -2762,7 +2762,7 @@ importers:
         specifier: workspace:*
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@react-router/dev':
         specifier: 'catalog:'
@@ -3214,28 +3214,28 @@ importers:
         specifier: ^0.27.3
         version: 0.27.16(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@qualcomm-ui/core':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/core
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/esbuild
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/qds-core
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.0.0
+        specifier: workspace:^1.0.1
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.0
         version: link:../react-test-utils
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/utils
       '@tailwindcss/vite':
         specifier: ^4.1.11
@@ -3341,25 +3341,25 @@ importers:
         specifier: ^0.27.3
         version: 0.27.16(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@qualcomm-ui/core':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/dom
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/esbuild
       '@qualcomm-ui/react-test-utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.0
         version: link:../react-test-utils
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/utils
       '@tailwindcss/vite':
         specifier: ^4.1.11
@@ -3468,40 +3468,40 @@ importers:
         specifier: ^3.1.0
         version: 3.1.1(@types/react@19.2.2)(react@19.2.0)
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@qualcomm-ui/core':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/core
       '@qualcomm-ui/css-utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/css-utils
       '@qualcomm-ui/dom':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/dom
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/esbuild
       '@qualcomm-ui/mdx-common':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/mdx-common
       '@qualcomm-ui/react':
-        specifier: workspace:^1.0.0
+        specifier: workspace:^1.0.1
         version: link:../react
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.0.0
+        specifier: workspace:^1.0.1
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.0
         version: link:../react-test-utils
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/typedoc-common
       '@qualcomm-ui/utils':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/utils
       '@shikijs/langs':
         specifier: ^3.13.0
@@ -3601,13 +3601,13 @@ importers:
         version: 5.1.6
     devDependencies:
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@qualcomm-ui/esbuild':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../common/esbuild
       '@qualcomm-ui/tsconfig':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.1
         version: link:../../configs/tsconfig
       '@types/minimatch':
         specifier: ^5.1.2
@@ -3646,7 +3646,7 @@ importers:
         specifier: 1.0.0-alpha.6
         version: 1.0.0-alpha.6
       '@qualcomm-ui/cli':
-        specifier: workspace:^1
+        specifier: workspace:^1.0.2
         version: link:../../common/cli
       '@qualcomm-ui/core':
         specifier: workspace:*
