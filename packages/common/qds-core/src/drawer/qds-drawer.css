@@ -25,14 +25,21 @@
 .qui-drawer__content {
   background-color: var(--color-surface-overlay);
   box-shadow: var(--shadow-high);
+  box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   display: grid;
   grid-template-rows: 1fr auto;
   height: 100%;
+  margin: 0;
   overflow-y: auto;
+  padding: 0;
   place-items: start;
   position: relative;
   width: 355px;
+
+  &[hidden] {
+    display: none !important;
+  }
 
   &[data-size="md"] {
     width: 580px;
