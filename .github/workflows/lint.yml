@@ -1,4 +1,9 @@
 name: Lint
+env:
+  IS_CI: true
+  TURBO_API: "http://127.0.0.1:8585"
+  TURBO_TEAM: "qualcomm-ui"
+  TURBO_TOKEN: "turbo-cache-token"
 on:
   push:
     branches: [ main ]
@@ -9,8 +14,6 @@ permissions:
 
 jobs:
   lint:
-    env:
-      IS_CI: true
     runs-on: ubuntu-latest
     strategy:
       matrix:
