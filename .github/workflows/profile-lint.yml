@@ -1,4 +1,4 @@
-name: 'Close stale issues and pull requests with no recent activity'
+name: 'Profile Lint Timing'
 on:
   schedule:
   - cron: "30 1 * * *"
