@@ -712,6 +712,7 @@ export interface ComboboxRootBindings extends CommonBindings {
   "data-part": "root"
   "data-readonly": BooleanDataAttr
   id: string
+  onClick: JSX.MouseEventHandler
 }
 
 export interface ComboboxClearTriggerBindings extends CommonBindings {
