@@ -1,6 +1,7 @@
 .qui-toast__root {
   align-items: flex-start;
   box-shadow: var(--shadow-high);
+  box-sizing: border-box;
   height: var(--height);
   min-width: 284px;
   opacity: var(--opacity);
