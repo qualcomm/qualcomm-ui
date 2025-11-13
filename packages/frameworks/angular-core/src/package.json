@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/angular-core",
-  "description": "An empty package.json used to trick ng-packagr",
+  "description": "QUI Angular Core",
   "version": "0.0.0",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
