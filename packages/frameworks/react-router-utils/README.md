@@ -6,7 +6,7 @@ This package provides utilities and helpers for working with React Router, inclu
 
 For documentation and usage guides:
 
-- [React documentation](https://react-next.qui.aws.qualcomm.com/)
+- [React documentation](https://react-next.qui.qualcomm.com/)
 
 ## License
 

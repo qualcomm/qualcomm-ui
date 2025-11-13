@@ -2,7 +2,7 @@
 
 Design-agnostic React building blocks and utilities.
 
-This package provides low-level React primitives that power the QUI component library. For comprehensive documentation and usage guides, visit the [React documentation](https://react-next.qui.aws.qualcomm.com/).
+This package provides low-level React primitives that power the QUI component library. For comprehensive documentation and usage guides, visit the [React documentation](https://react-next.qui.qualcomm.com/).
 
 ## License
 

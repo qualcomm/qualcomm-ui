@@ -6,7 +6,7 @@ This package provides ESLint configurations for MDX documentation projects.
 
 For documentation and usage guides:
 
-- [React documentation](https://react-next.qui.aws.qualcomm.com/)
+- [React documentation](https://react-next.qui.qualcomm.com/)
 - [Angular documentation](https://angular-next.qui.qualcomm.com/)
 
 ## License
