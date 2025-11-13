@@ -5,7 +5,6 @@
   "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
-  "private": true,
   "exports": {
     "./*": {
       "types": "./dist/*/index.d.ts",
