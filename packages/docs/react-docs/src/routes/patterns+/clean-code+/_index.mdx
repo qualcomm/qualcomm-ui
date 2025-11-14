@@ -16,7 +16,7 @@ Distinguish names in such a way that the reader knows what the differences are.
 
 **Not Ideal:**
 
-```ts banned
+```ts
 function between<T>(a1: T, a2: T, a3: T): boolean {
   return a2 <= a1 && a1 <= a3
 }
@@ -36,7 +36,7 @@ Clarity is king.
 
 **Not Ideal:**
 
-```ts banned
+```ts
 const u = getUser()
 const s = getSubscription()
 const t = charge(u, s)
@@ -56,7 +56,7 @@ If your class/type/object name describes something, don't repeat it in your vari
 
 **Not Ideal:**
 
-```ts banned
+```ts
 interface Car {
   carMake: string
   carModel: string
@@ -80,7 +80,7 @@ interface Car {
 
 **Not Ideal:**
 
-```ts banned
+```ts
 function addToDate(date: Date, month: number) {
   // ...
 }
@@ -235,7 +235,7 @@ Favor this style of programming when you can.
 
 **Not Ideal:**
 
-```ts banned
+```ts
 const contributions = [
   {
     name: "Uncle Bobby",
@@ -288,7 +288,7 @@ When you have more than one level of abstraction, your function is usually doing
 
 **Not Ideal:**
 
-```ts banned
+```ts
 function parseCode(code: string) {
   const REGEXES = [
     /* ... */
@@ -360,7 +360,7 @@ In TypeScript, when you have an object that primarily serves as a data structure
 
 **Not Ideal:**
 
-```ts banned
+```ts
 class User {
   email: string
   id: string
@@ -402,7 +402,7 @@ Refer to the corresponding [TypeScript documentation](https://www.typescriptlang
 
 **Not Ideal:**
 
-```ts banned
+```ts
 type Shape = {
   // ...
 }
@@ -443,7 +443,7 @@ The class' size is measured by its responsibility. Following the [Single Respons
 
 **Not Ideal:**
 
-```ts banned
+```ts
 class Dashboard {
   getLanguage(): string {
     /* ... */
@@ -594,7 +594,7 @@ Inversion of Control (IoC) is a principle in software engineering that transfers
 
 **Not Ideal:**
 
-```ts banned
+```ts
 class NotificationService {
   sendEmail() {
     // Send email
