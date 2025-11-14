@@ -39,7 +39,8 @@
     "node": ">=20"
   },
   "dependencies": {
-    "minimatch": "^5.1.0"
+    "minimatch": "^5.1.0",
+    "my-ua-parser": "^2.0.4"
   },
   "devDependencies": {
     "@qualcomm-ui/cli": "workspace:^1.0.5",
