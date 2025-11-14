@@ -8,6 +8,7 @@ async function main(argv: string[]) {
   const buildOpts: BuildOptions = {
     bundle: true,
     external: [
+      ...Object.keys(pkg.dependencies),
       ...Object.keys(pkg.devDependencies),
       ...Object.keys(pkg.peerDependencies),
     ],
