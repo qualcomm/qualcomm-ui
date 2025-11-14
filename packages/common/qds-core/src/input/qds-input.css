@@ -1,5 +1,6 @@
 .qui-input__root {
   align-items: flex-start;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-30);
@@ -18,6 +19,7 @@
 }
 
 .qui-input__input-group {
+  box-sizing: border-box;
   gap: var(--input-group-gap);
   height: var(--sizing-140);
   min-width: var(--sizing-160);
@@ -119,17 +121,19 @@
   --input-size: var(--sizing-140);
   appearance: none;
   background-color: transparent;
-  border: 0;
+  border: 0 solid;
   border-radius: var(--border-radius-md);
   box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   font: var(--font-static-body-sm-default);
   height: 100%;
   letter-spacing: inherit;
+  margin: 0;
   min-height: calc(var(--input-size) - 2px);
   min-width: var(--input-size);
   opacity: 1; /* Ensure consistent opacity for disabled states in all browsers. */
   outline: 0;
+  padding: 0;
   position: relative;
   text-align: start;
   text-overflow: ellipsis;

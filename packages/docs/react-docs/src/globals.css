@@ -1,4 +1,7 @@
-@import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
 @import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
@@ -43,10 +46,11 @@ svg.fsd {
 }
 
 .qui-component-grid {
+  box-sizing: border-box;
   display: grid;
   gap: var(--spacing-80);
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  margin-top: 24px;
+  margin: 24px 0 0 0;
 }
 
 .qui-component-grid-item {
@@ -54,18 +58,34 @@ svg.fsd {
   background: var(--color-background-neutral-03);
   border: solid 1px var(--color-border-neutral-03);
   border-radius: var(--border-radius-md);
+  box-sizing: border-box;
+  color: inherit;
   cursor: pointer;
   display: inline-flex;
   flex-direction: column;
   height: auto;
   justify-self: center;
+  margin: 0;
+  text-decoration: inherit;
   width: 100%;
+
+  h3 {
+    margin: 0;
+  }
+
+  img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+  }
 }
 
 .qui-component-grid-item-description {
   background: var(--color-background-neutral-02);
   border-bottom-left-radius: var(--border-radius-md);
   border-bottom-right-radius: var(--border-radius-md);
+  box-sizing: border-box;
   display: flex;
   height: 100%;
   padding: 12px;

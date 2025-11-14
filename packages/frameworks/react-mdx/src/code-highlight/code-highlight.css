@@ -70,6 +70,7 @@
 }
 
 pre.shiki-code {
+  margin: 0;
   .qui-link__root {
     font: var(--font-static-code-sm-bold);
   }
