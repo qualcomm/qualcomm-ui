@@ -7,11 +7,12 @@
 
 .qui-tree__node-root {
   --branch-trigger-width: 0px;
-
   align-items: center;
   background: var(--color-interactive-background-ghost-idle);
   border: solid 1px transparent;
   box-sizing: border-box;
+  color: inherit;
+  cursor: pointer;
   display: flex;
   font: var(--font-static-body-sm-default);
   gap: var(--spacing-50);
@@ -24,6 +25,7 @@
   );
   padding-right: var(--spacing-100);
   position: relative;
+  text-decoration: inherit;
 
   &:hover {
     background: var(--color-interactive-background-ghost-hover);
