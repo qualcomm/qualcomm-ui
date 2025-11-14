@@ -1,7 +1,7 @@
 {
   "name": "@qualcomm-ui/react-core",
   "sideEffects": false,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Design-agnostic React building blocks and utilities.",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -14,6 +14,7 @@
       "default": "./dist/*/index.js"
     }
   },
+  "types": "./dist/stub.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -44,13 +45,13 @@
     "@babel/core": "^7.28.4",
     "esbuild": "^0.25.8",
     "@floating-ui/react": "^0.27.3",
-    "@qualcomm-ui/cli": "workspace:^1.0.3",
-    "@qualcomm-ui/core": "workspace:^1.0.2",
-    "@qualcomm-ui/dom": "workspace:^1.0.2",
-    "@qualcomm-ui/esbuild": "workspace:^1.0.2",
+    "@qualcomm-ui/cli": "workspace:^1.0.5",
+    "@qualcomm-ui/core": "workspace:1.0.5",
+    "@qualcomm-ui/dom": "workspace:1.0.3",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/react-test-utils": "workspace:^1.0.0",
     "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
-    "@qualcomm-ui/utils": "workspace:^1.0.2",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-virtual": "^3.13.12",
     "@types/babel__core": "^7.20.5",
@@ -79,9 +80,9 @@
     "vitest-browser-react": "^1.0.0"
   },
   "peerDependencies": {
-    "@qualcomm-ui/core": "workspace:^1.0.2",
-    "@qualcomm-ui/dom": "workspace:^1.0.2",
-    "@qualcomm-ui/utils": "workspace:^1.0.2",
+    "@qualcomm-ui/core": "workspace:1.0.5",
+    "@qualcomm-ui/dom": "workspace:1.0.3",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@floating-ui/react": ">=0.26.9 <1",
     "@tanstack/react-virtual": ">=3.13.9",
     "lucide-react": ">=0.379.0 <1",

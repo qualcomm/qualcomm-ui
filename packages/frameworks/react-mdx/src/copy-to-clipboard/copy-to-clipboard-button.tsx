@@ -7,6 +7,7 @@ import {Check, Copy} from "lucide-react"
 
 import {Button} from "@qualcomm-ui/react/button"
 import {useCopyToClipboard} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
+import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 export interface CopyButtonProps {
   code: string | (() => string)
@@ -19,6 +20,7 @@ export function CopyToClipboardButton({code}: CopyButtonProps): ReactElement {
 
   return (
     <Button
+      data-copied={booleanDataAttr(isCopied)}
       emphasis="primary"
       endIcon={isCopied ? Check : Copy}
       onClick={(event) => {

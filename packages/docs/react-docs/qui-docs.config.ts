@@ -17,7 +17,7 @@ export default {
     {separator: true},
     {sectionTitle: "Theming & Patterns"},
     {
-      children: [{id: "tailwind"}],
+      children: [{id: "overview"}, {id: "tailwind"}],
       id: "theming",
     },
     {

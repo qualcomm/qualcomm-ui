@@ -4,13 +4,11 @@
 import type {BasicThemeData} from "./theme.types"
 
 export const themeZIndex: BasicThemeData[] = [
-  {tailwind: "z-modal-backdrop", variable: "--q-zindex-modal-backdrop"},
-  {tailwind: "z-dropdown", variable: "--q-zindex-dropdown"},
-  {tailwind: "z-dropdown-arrow", variable: "--q-zindex-dropdown-arrow"},
-  {tailwind: "z-sticky", variable: "--q-zindex-sticky"},
-  {tailwind: "z-modal", variable: "--q-zindex-modal"},
-  {tailwind: "z-popover", variable: "--q-zindex-popover"},
-  {tailwind: "z-tooltip", variable: "--q-zindex-tooltip"},
-  {tailwind: "z-toast", variable: "--q-zindex-toast"},
-  {tailwind: "z-alert-banner", variable: "--q-zindex-alert-banner"},
+  {variable: "--z-index-dropdown"},
+  {variable: "--z-index-banner"},
+  {variable: "--z-index-overlay"},
+  {variable: "--z-index-dialog"},
+  {variable: "--z-index-popover"},
+  {variable: "--z-index-toast"},
+  {variable: "--z-index-tooltip"},
 ]

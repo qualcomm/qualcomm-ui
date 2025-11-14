@@ -8,17 +8,17 @@ interface ColorProps {
 }
 
 export function ColorTable({data = []}: ColorProps) {
-  // we need to force a re-render when the theme changes to update the property
-  // value.
+  // we need to force a re-render after mount and on theme change to reflect the
+  // computed property values.
   const [theme] = useTheme()
 
-  const [, rerender] = useState([])
+  const [key, setKey] = useState<number>(0)
 
   useEffect(() => {
-    setTimeout(() => {
-      rerender([])
+    requestAnimationFrame(() => {
+      setKey((prevState) => prevState + 1)
     })
-  }, [rerender, theme])
+  }, [theme])
 
   const getPropertyValue = (variable: string) => {
     if (typeof window === "undefined") {
@@ -28,7 +28,7 @@ export function ColorTable({data = []}: ColorProps) {
   }
 
   return (
-    <div className="w-full">
+    <div key={key} className="w-full">
       <div className="doc-props-list__root bottom-border block sm:hidden">
         {data.map(({tailwind, variable}) => {
           return (

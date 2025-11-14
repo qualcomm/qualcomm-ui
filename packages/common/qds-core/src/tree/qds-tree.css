@@ -11,6 +11,7 @@
   align-items: center;
   background: var(--color-interactive-background-ghost-idle);
   border: solid 1px transparent;
+  box-sizing: border-box;
   display: flex;
   font: var(--font-static-body-sm-default);
   gap: var(--spacing-50);

@@ -1,4 +1,5 @@
 .qui-menu__button {
+  background: transparent;
   .qui-button__icon {
     &[data-placement="end"] {
       transition: transform var(--animation-duration-faster) ease-out;

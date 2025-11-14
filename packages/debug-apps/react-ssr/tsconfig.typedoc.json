@@ -1,0 +1,11 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "include": [
+    "./src/typedoc-example.ts",
+    "../frameworks/mdx-docs/dist",
+    "../common/typedoc/dist",
+    "../common/typedoc-common/dist",
+    "../common/mdx-common/dist",
+    "../common/mdx-vite/dist"
+  ]
+}

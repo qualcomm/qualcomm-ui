@@ -21,6 +21,10 @@
   user-select: none;
   vertical-align: middle;
 
+  &[hidden] {
+    display: none;
+  }
+
   &::after,
   &::before {
     border: 0 solid;

@@ -12,6 +12,10 @@
   vertical-align: middle;
   width: var(--icon-width, var(--icon-size));
 
+  &[hidden] {
+    display: none;
+  }
+
   &[data-size="xs"] {
     --icon-size: 12px;
   }

@@ -1,17 +1,17 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ComponentProps, ReactElement} from "react"
+import type {ReactElement} from "react"
 
 import {Check, Copy} from "lucide-react"
 
-import {IconButton} from "@qualcomm-ui/react/button"
+import {IconButton, type IconButtonProps} from "@qualcomm-ui/react/button"
+import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useCopyToClipboard} from "./use-copy-to-clipboard"
 
-export interface CopyToClipboardProps
-  extends Omit<ComponentProps<"button">, "color" | "ref"> {
+export interface CopyToClipboardProps extends Omit<IconButtonProps, "icon"> {
   valueOrFn: string | (() => string)
 }
 
@@ -23,13 +23,18 @@ export function CopyToClipboardIconButton({
     valueOrFn,
   })
 
-  const mergedProps = mergeProps({onClick: copyToClipboard}, props)
+  const mergedProps = mergeProps(
+    {"data-copied": booleanDataAttr(isCopied), onClick: copyToClipboard},
+    props,
+  )
 
   return (
     <IconButton
+      className="qui-code-copy-button"
+      density="compact"
       emphasis="primary"
       icon={isCopied ? Check : Copy}
-      size="sm"
+      size="md"
       tabIndex={0}
       title="Copy code"
       variant="ghost"

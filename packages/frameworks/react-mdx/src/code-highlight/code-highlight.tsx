@@ -5,7 +5,6 @@ import {
   type ComponentPropsWithRef,
   type ReactElement,
   type ReactNode,
-  useCallback,
   useMemo,
   useState,
 } from "react"
@@ -67,6 +66,8 @@ export interface CodeHighlightProps extends ElementRenderProp<"div"> {
 
   /**
    * Hides the copy button until the user hovers over the code block.
+   *
+   * @deprecated this is the default behavior and cannot be changed.
    */
   hideCopyUntilHover?: boolean
 
@@ -109,7 +110,7 @@ export function CodeHighlight({
   defaultCollapsed,
   disableCopy,
   forceShowCopyButton = false,
-  hideCopyUntilHover,
+  hideCopyUntilHover: _hideCopyUntilHover,
   highlight: linesProp,
   highlightedReferences: _highlightedReferences,
   label,
@@ -120,10 +121,6 @@ export function CodeHighlight({
   ...props
 }: CodeHighlightProps): ReactElement {
   const formattedCode = code.trim()
-
-  const [showCopyButton, setShowCopyButton] = useState<boolean>(
-    !hideCopyUntilHover || forceShowCopyButton,
-  )
   const [showingPanel, setShowingPanel] = useState(!defaultCollapsed)
 
   const highlight: DecorationItem[] = useMemo(() => {
@@ -146,28 +143,11 @@ export function CodeHighlight({
     return highlightProp as DecorationItem[]
   }, [linesProp])
 
-  const mouseEnter = useCallback(() => {
-    setShowCopyButton(true)
-  }, [])
-
-  const mouseLeave = useCallback(() => {
-    setShowCopyButton(forceShowCopyButton || false)
-  }, [forceShowCopyButton])
-
-  const shouldCenterCopyButton = useMemo(
-    () =>
-      showCopyButton &&
-      code.split("\n").filter((line) => line.trim()).length === 1,
-    [code, showCopyButton],
-  )
-
   return (
     <PolymorphicElement
       ref={ref}
       as="div"
       className={clsx("qui-docs-highlighter__root", className)}
-      onMouseEnter={mouseEnter}
-      onMouseLeave={mouseLeave}
       {...props}
     >
       {label ? (
@@ -197,7 +177,7 @@ export function CodeHighlight({
 
       <Collapsible.Root open={showingPanel}>
         <Collapsible.Content>
-          {disableCopy || !showingPanel || !showCopyButton ? null : (
+          {disableCopy || !showingPanel ? null : (
             <CopyToClipboardIconButton
               {...copyButtonProps}
               className={clsx(
@@ -205,7 +185,7 @@ export function CodeHighlight({
                 {"has-title": label, showing: showingPanel},
                 copyButtonProps?.className,
               )}
-              data-centered={booleanDataAttr(shouldCenterCopyButton)}
+              data-force-show={booleanDataAttr(forceShowCopyButton)}
               valueOrFn={formattedCode}
             />
           )}

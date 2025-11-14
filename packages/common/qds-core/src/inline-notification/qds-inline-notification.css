@@ -19,6 +19,7 @@
   border-top-left-radius: var(--border-radius-md);
   border-width: var(--border-width-sm) var(--border-width-sm)
     var(--border-width-sm) var(--sizing-40);
+  box-sizing: border-box;
 
   &[data-emphasis="success"] {
     --border-color: var(--color-border-support-success);

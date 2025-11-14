@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/dom",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "DOM utilities and helpers.",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
@@ -14,6 +14,7 @@
       "default": "./dist/*/index.js"
     }
   },
+  "types": "./dist/stub.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -36,10 +37,10 @@
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.7.0",
-    "@qualcomm-ui/cli": "workspace:^1.0.3",
-    "@qualcomm-ui/esbuild": "workspace:^1.0.2",
+    "@qualcomm-ui/cli": "workspace:^1.0.5",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
-    "@qualcomm-ui/utils": "workspace:^1.0.2",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@types/node": "~24.9.2",
     "esbuild": "^0.25.8",
     "shx": "^0.4.0",
@@ -48,6 +49,6 @@
   },
   "peerDependencies": {
     "@floating-ui/dom": ">=1.7.0",
-    "@qualcomm-ui/utils": "workspace:^1.0.2"
+    "@qualcomm-ui/utils": "workspace:^1.0.3"
   }
 }

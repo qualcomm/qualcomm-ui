@@ -259,7 +259,7 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     jsx = (
       <>
-        <h1 className="q-text-1-primary q-font-body-lg-strong">
+        <h1 className="text-neutral-primary font-static-body-lg-bold">
           {error.status} {error.statusText}
         </h1>
         <p>{error.data}</p>
@@ -268,7 +268,7 @@ export function ErrorBoundary() {
   } else if (error instanceof Error) {
     jsx = (
       <>
-        <h1 className="q-text-1-primary q-font-body-lg-strong">Error</h1>
+        <h1 className="text-neutral-primary font-static-body-lg-bold">Error</h1>
         <p>{error.message}</p>
         <p>The stack trace is:</p>
         <pre>{error.stack}</pre>
@@ -276,7 +276,9 @@ export function ErrorBoundary() {
     )
   } else {
     jsx = (
-      <h1 className="q-text-1-primary q-font-body-lg-strong">Unknown Error</h1>
+      <h1 className="text-neutral-primary font-static-body-lg-bold">
+        Unknown Error
+      </h1>
     )
   }
 

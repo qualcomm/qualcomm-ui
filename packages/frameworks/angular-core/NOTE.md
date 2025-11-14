@@ -20,3 +20,7 @@ This module uses ng-packagr to bundle the Angular dependencies into a library th
   - A tsconfig path alias is used to make each secondary entrypoints available to other secondary entrypoints.
     - When importing other secondary entrypoints, use the alias. DO NOT use relative paths, otherwise it will create a separate bundle for the imported entrypoint.
     - the ng-packagr build process will fail if circular dependencies are detected.
+
+### Consuming @qualcomm-ui/core
+
+- Angular scope registry works slightly differently (delayed). Until this is fixed, make sure functions that depend on dom elements from the scope accessors are passed as callback functions, where applicable.

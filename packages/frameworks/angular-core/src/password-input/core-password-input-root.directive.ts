@@ -94,7 +94,7 @@ export class CorePasswordInputRootDirective
    */
   readonly visibleChanged = output<boolean>()
 
-  protected document = inject(DOCUMENT)
+  protected readonly document = inject(DOCUMENT)
 
   protected readonly isMounted = useIsMounted()
 
@@ -117,7 +117,7 @@ export class CorePasswordInputRootDirective
         disabled: this.isDisabled(),
         // angular handles this automatically with ngModel and Reactive Forms
         form: undefined,
-        getRootNode: this.getRootNode(),
+        getRootNode: this.getRootNode() ?? (() => this.document),
         ids: undefined,
         invalid: this.isInvalid(),
         name: this.name(),

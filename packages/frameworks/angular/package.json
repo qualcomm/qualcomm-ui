@@ -1,11 +1,12 @@
 {
   "name": "@qualcomm-ui/angular",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "description": "QUI Angular Components",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "private": true,
   "type": "module",
+  "private": true,
   "publishConfig": {
     "access": "public"
   },
@@ -38,7 +39,6 @@
     "@angular-devkit/architect": "catalog:",
     "@angular-devkit/build-angular": "catalog:",
     "@angular-devkit/core": "catalog:",
-    "@angular/animations": "catalog:",
     "@angular/cdk": "catalog:",
     "@angular/cdk-experimental": "catalog:",
     "@angular/cli": "catalog:",
@@ -57,10 +57,10 @@
     "@jsdevtools/coverage-istanbul-loader": "~3.0.5",
     "@module-federation/enhanced": "0.18.4",
     "@nx/vite": "21.6.8",
-    "@qualcomm-ui/angular-core": "workspace:^1.0.1",
+    "@qualcomm-ui/angular-core": "workspace:^1.0.2",
     "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/core": "workspace:^1.0.3",
-    "@qualcomm-ui/qds-core": "workspace:^1.0.3",
+    "@qualcomm-ui/qds-core": "workspace:^1.0.5",
     "@qualcomm-ui/tailwind-plugin": "workspace:^1",
     "@qualcomm-ui/tsconfig": "workspace:^1",
     "@qualcomm-ui/utils": "workspace:^1.0.2",
@@ -90,7 +90,6 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@angular/animations": ">=20.1.0 <21",
     "@angular/cdk": ">=20.1.0 <21",
     "@angular/common": ">=20.1.0 <21",
     "@angular/compiler": ">=20.1.0 <21",
@@ -98,10 +97,10 @@
     "@angular/forms": ">=20.1.0 <21",
     "@angular/platform-browser": ">=20.1.0 <21",
     "@angular/platform-browser-dynamic": ">=20.1.0 <21",
-    "@qualcomm-ui/angular-core": "workspace:^1.0.1",
-    "@qualcomm-ui/core": "workspace:^1.0.3",
-    "@qualcomm-ui/qds-core": "workspace:^1.0.3",
-    "@qualcomm-ui/utils": "workspace:^1",
+    "@qualcomm-ui/angular-core": "workspace:1.0.2",
+    "@qualcomm-ui/core": "workspace:1.0.3",
+    "@qualcomm-ui/qds-core": "workspace:1.0.5",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@tanstack/virtual-core": ">=3.13.12",
     "lucide-angular": ">=0.487.0 <1",
     "typescript": ">=5.2.0 <6"

@@ -1,5 +1,22 @@
 # @qualcomm-ui/qds-core
 
+## 1.0.5 (2025/11/14)
+
+### Bug Fixes
+
+- input required indicator styles
+- element preflight styles
+
+## 1.0.4 (2025/11/13)
+
+### Bug Fixes
+
+- add stub ts files for npm ts badge
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils]
+
 ## 1.0.3 (2025/11/13)
 
 ### Bug Fixes

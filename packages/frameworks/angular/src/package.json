@@ -1,9 +1,10 @@
 {
   "name": "@qualcomm-ui/angular",
-  "description": "An empty package.json used to trick ng-packagr",
+  "description": "QUI Angular Components",
   "version": "0.0.0",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "sideEffects": false,
   "type": "module"
 }

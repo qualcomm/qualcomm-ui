@@ -16,6 +16,11 @@
   overflow-x: auto;
   position: relative;
 
+  table {
+    border-collapse: collapse;
+    border-color: inherit;
+  }
+
   * {
     pre {
       > code {
@@ -94,6 +99,10 @@
       }
     }
   }
+}
+
+pre.qui-docs-code {
+  margin: 0;
 }
 
 .typedoc-props__table-wrapper {
@@ -193,6 +202,9 @@
 }
 
 .doc-props-table__name-cell {
+  border: 0 solid;
+  box-sizing: border-box;
+  line-height: 1.5;
   position: relative;
 }
 
@@ -331,6 +343,11 @@
   }
 }
 
+.mdx-spoiler__trigger {
+  border: 0;
+  font: var(--font-static-body-sm-bold);
+}
+
 .doc-props-description__remarks-tag {
   font: var(--font-static-body-sm-default);
   pre.shiki-code {
@@ -433,9 +450,13 @@
   }
 }
 
-.doc-props-type-info-popup-trigger {
+.doc-props__type-info-popup-trigger {
+  background: transparent;
+  border: 0;
   height: 22px;
+  margin: 0;
   outline: none;
+  padding: 0;
   position: absolute;
   right: -11px;
   top: -11px;

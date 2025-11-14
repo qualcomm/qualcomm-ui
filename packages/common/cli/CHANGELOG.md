@@ -1,5 +1,17 @@
 # @qualcomm-ui/cli
 
+## 1.0.5 (2025/11/13)
+
+### Bug Fixes
+
+- add stub ts files for npm ts badge
+
+## 1.0.4 (2025/11/13)
+
+### Bug Fixes
+
+- fail when angular publishing does not succeed
+
 ## 1.0.3 (2025/11/12)
 
 ### Bug Fixes

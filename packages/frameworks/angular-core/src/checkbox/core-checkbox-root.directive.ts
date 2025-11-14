@@ -75,7 +75,7 @@ export class CoreCheckboxRootDirective
   readonly value = input<string | undefined>()
 
   protected readonly checkboxContextService = inject(CheckboxContextService)
-  protected document = inject(DOCUMENT)
+  protected readonly document = inject(DOCUMENT)
 
   protected readonly hostId = computed(() => useId(this, this.id()))
   protected readonly trackBindings = useTrackBindings(() =>
