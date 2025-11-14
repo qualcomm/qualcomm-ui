@@ -162,7 +162,7 @@ export class CorePopoverRootDirective
   protected readonly portalChild = contentChild(PortalDirective, {
     descendants: true,
   })
-  protected document = inject(DOCUMENT)
+  protected readonly document = inject(DOCUMENT)
   protected readonly injector = inject(Injector)
   protected readonly isMounted = useIsMounted()
   protected readonly popoverContext = inject(PopoverContextService)

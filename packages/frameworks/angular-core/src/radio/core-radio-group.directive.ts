@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {DOCUMENT} from "@angular/common"
 import {computed, Directive, inject, input, type OnInit} from "@angular/core"
 
 import {useId, useIsDestroyed} from "@qualcomm-ui/angular-core/common"
@@ -61,6 +62,8 @@ export class CoreRadioGroupDirective
 
   protected readonly radioContextService = inject(RadioContextService)
 
+  protected readonly document = inject(DOCUMENT)
+
   protected readonly trackBindings = useTrackBindings(() =>
     this.radioContextService.context().getGroupBindings({
       id: this.hostId(),
@@ -94,7 +97,7 @@ export class CoreRadioGroupDirective
         dir: this.dir(),
         disabled: this.isDisabled(),
         form: "",
-        getRootNode: this.getRootNode(),
+        getRootNode: this.getRootNode() ?? (() => this.document),
         invalid: this.invalid(),
         name: this.name() || controlName,
         onValueChange: (value) => {
