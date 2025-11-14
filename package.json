@@ -32,6 +32,8 @@
     "mdx-docs": "pnpm -C packages/frameworks/mdx-docs",
     "mdx-vite": "pnpm -C packages/common/mdx-vite",
     "utils": "pnpm -C packages/common/utils",
+    "angular-ssr": "pnpm -C packages/debug-apps/angular-ssr",
+    "react-ssr": "pnpm -C packages/debug-apps/react-ssr",
     "test": "turbo run test",
     "lint": "turbo run lint --continue",
     "lint:ci": "turbo run lint --concurrency 6",

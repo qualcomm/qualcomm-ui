@@ -1,9 +1,10 @@
 {
   "name": "@qualcomm-ui/angular-ssr",
   "version": "0.0.2",
+  "type": "module",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "dev": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -26,10 +27,12 @@
     "@qualcomm-ui/dom": "workspace:*",
     "@qualcomm-ui/qds-core": "workspace:*",
     "@qualcomm-ui/utils": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.17",
     "@tanstack/angular-query-experimental": "^5.90.7",
     "@tanstack/virtual-core": "^3.13.12",
     "express": "^5.1.0",
     "lucide-angular": "0.525.0",
+    "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.1.17",
     "tslib": "~2.5.3"

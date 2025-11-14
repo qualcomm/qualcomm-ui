@@ -1,42 +1,44 @@
 import {Routes} from "@angular/router"
 
-import {AccordionPage} from "./accordion"
-import {AvatarPage} from "./avatar"
-import {BreadcrumbsPage} from "./breadcrumbs"
-import {ButtonPage} from "./button"
-import {ButtonGroupPage} from "./button-group"
-import {CheckboxPage} from "./checkbox"
-import {CollapsiblePage} from "./collapsible"
-import {ComboboxPage} from "./combobox"
-import {DialogPage} from "./dialog"
-import {DividerPage} from "./divider"
-import {DrawerPage} from "./drawer"
-import {HeaderBarPage} from "./header-bar"
+import {
+  AccordionPage,
+  AvatarPage,
+  BreadcrumbsPage,
+  ButtonGroupPage,
+  ButtonPage,
+  CheckboxPage,
+  CollapsiblePage,
+  ComboboxPage,
+  DialogPage,
+  DividerPage,
+  DrawerPage,
+  HeaderBarPage,
+  IconButtonPage,
+  IconPage,
+  InlineIconButtonPage,
+  InlineNotificationPage,
+  LinkPage,
+  MenuPage,
+  NumberInputPage,
+  PaginationPage,
+  PasswordInputPage,
+  PopoverPage,
+  ProgressPage,
+  ProgressRingPage,
+  RadioPage,
+  SegmentedControlPage,
+  SelectPage,
+  SideNavPage,
+  SliderPage,
+  SwitchPage,
+  TabsPage,
+  TagPage,
+  TextInputPage,
+  ToastPage,
+  TooltipPage,
+  TreePage,
+} from "./components"
 import {Home} from "./home"
-import {IconPage} from "./icon"
-import {IconButtonPage} from "./icon-button"
-import {InlineIconButtonPage} from "./inline-icon-button"
-import {InlineNotificationPage} from "./inline-notification"
-import {LinkPage} from "./link"
-import {MenuPage} from "./menu"
-import {NumberInputPage} from "./number-input"
-import {PaginationPage} from "./pagination"
-import {PasswordInputPage} from "./password-input"
-import {PopoverPage} from "./popover"
-import {ProgressPage} from "./progress"
-import {ProgressRingPage} from "./progress-ring"
-import {RadioPage} from "./radio"
-import {SegmentedControlPage} from "./segmented-control"
-import {SelectPage} from "./select"
-import {SideNavPage} from "./side-nav"
-import {SliderPage} from "./slider"
-import {SwitchPage} from "./switch"
-import {TabsPage} from "./tabs"
-import {TagPage} from "./tag"
-import {TextInputPage} from "./text-input"
-import {ToastPage} from "./toast"
-import {TooltipPage} from "./tooltip"
-import {TreePage} from "./tree"
 
 export const routes: Routes = [
   {component: Home, path: ""},
