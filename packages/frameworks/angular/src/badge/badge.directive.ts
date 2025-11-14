@@ -6,7 +6,6 @@ import {
   booleanAttribute,
   Component,
   computed,
-  inject,
   input,
   numberAttribute,
   type OnInit,
@@ -39,11 +38,9 @@ import {
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
-import {QdsBadgeContextService} from "./qds-badge-context.service"
-
 @Component({
   imports: [IconDirective, QBindDirective, NgTemplateOutlet],
-  providers: [QdsBadgeContextService, provideIcons({})],
+  providers: [provideIcons({})],
   selector: "[q-badge]",
   template: `
     <ng-template #content>
@@ -52,10 +49,7 @@ import {QdsBadgeContextService} from "./qds-badge-context.service"
           {{ displayCount() }}
         }
         @if (type() === "icon" && icon()) {
-          <svg
-            [q-bind]="qdsBadgeApi.context().getIconBindings()"
-            [qIcon]="icon()!"
-          ></svg>
+          <svg [q-bind]="api().getIconBindings()" [qIcon]="icon()!"></svg>
         }
       </ng-content>
     </ng-template>
@@ -65,7 +59,7 @@ import {QdsBadgeContextService} from "./qds-badge-context.service"
         <!-- Status variant has no content -->
       }
       @case ("icon") {
-        <span [q-bind]="qdsBadgeApi.context().getIconBindings()">
+        <span [q-bind]="api().getIconBindings()">
           <ng-container *ngTemplateOutlet="content" />
         </span>
       }
@@ -131,65 +125,59 @@ export class BadgeDirective implements OnInit {
    */
   readonly icon = input<LucideIconOrString>()
 
-  protected readonly displayCount = computed(() =>
-    this.qdsBadgeApi.context().getDisplayCount(),
-  )
+  protected readonly api = computed(() => {
+    const type = this.type() || "text"
+
+    let apiProps: QdsBadgeApiProps
+
+    if (type === "count") {
+      apiProps = {
+        count: this.count(),
+        disabled: this.disabled(),
+        max: this.max(),
+        size: this.size() as QdsBadgeBasicSize | undefined,
+        type: "count",
+        variant: this.variant() as QdsBadgeCountVariant | undefined,
+      }
+    } else if (type === "status") {
+      apiProps = {
+        disabled: this.disabled(),
+        emphasis: this.emphasis() as QdsBadgeStatusEmphasis | undefined,
+        size: this.size() as QdsBadgeExtendedSize | undefined,
+        type: "status",
+        variant: this.variant() as QdsBadgeStatusVariant | undefined,
+      }
+    } else if (type === "icon") {
+      apiProps = {
+        disabled: this.disabled(),
+        emphasis: this.emphasis() as QdsBadgeIconTextEmphasis | undefined,
+        size: this.size() as QdsBadgeIconSize | undefined,
+        type: "icon",
+        variant: this.variant() as QdsBadgeIconTextVariant | undefined,
+      }
+    } else {
+      apiProps = {
+        disabled: this.disabled(),
+        emphasis: this.emphasis() as QdsBadgeIconTextEmphasis | undefined,
+        size: this.size() as QdsBadgeBasicSize | undefined,
+        type: "text",
+        variant: this.variant() as QdsBadgeIconTextVariant | undefined,
+      }
+    }
+
+    return createQdsBadgeApi(
+      apiProps as Explicit<QdsBadgeApiProps>,
+      normalizeProps,
+    )
+  })
+
+  protected readonly displayCount = computed(() => this.api().getDisplayCount())
 
   protected readonly trackBindings = useTrackBindings(() =>
-    this.qdsBadgeApi.context().getRootBindings(),
+    this.api().getRootBindings(),
   )
 
-  protected readonly qdsBadgeApi = inject(QdsBadgeContextService)
-
   ngOnInit() {
-    this.qdsBadgeApi.init(
-      computed(() => {
-        const type = this.type() || "text"
-
-        let apiProps: QdsBadgeApiProps
-
-        if (type === "count") {
-          apiProps = {
-            count: this.count(),
-            disabled: this.disabled(),
-            max: this.max(),
-            size: this.size() as QdsBadgeBasicSize | undefined,
-            type: "count",
-            variant: this.variant() as QdsBadgeCountVariant | undefined,
-          }
-        } else if (type === "status") {
-          apiProps = {
-            disabled: this.disabled(),
-            emphasis: this.emphasis() as QdsBadgeStatusEmphasis | undefined,
-            size: this.size() as QdsBadgeExtendedSize | undefined,
-            type: "status",
-            variant: this.variant() as QdsBadgeStatusVariant | undefined,
-          }
-        } else if (type === "icon") {
-          apiProps = {
-            disabled: this.disabled(),
-            emphasis: this.emphasis() as QdsBadgeIconTextEmphasis | undefined,
-            size: this.size() as QdsBadgeIconSize | undefined,
-            type: "icon",
-            variant: this.variant() as QdsBadgeIconTextVariant | undefined,
-          }
-        } else {
-          apiProps = {
-            disabled: this.disabled(),
-            emphasis: this.emphasis() as QdsBadgeIconTextEmphasis | undefined,
-            size: this.size() as QdsBadgeBasicSize | undefined,
-            type: "text",
-            variant: this.variant() as QdsBadgeIconTextVariant | undefined,
-          }
-        }
-
-        return createQdsBadgeApi(
-          apiProps as Explicit<QdsBadgeApiProps>,
-          normalizeProps,
-        )
-      }),
-    )
-
     this.trackBindings()
   }
 }
