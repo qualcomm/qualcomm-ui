@@ -3275,7 +3275,7 @@ importers:
         specifier: 21.6.8
         version: 21.6.8(@babel/traverse@7.28.5)(nx@21.6.8)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.11)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.93.3)(stylus@0.62.0)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(typescript@5.8.3)(vitest@3.2.4)
       '@qualcomm-ui/angular-core':
-        specifier: workspace:^1.0.1
+        specifier: workspace:^1.0.2
         version: link:../angular-core
       '@qualcomm-ui/cli':
         specifier: workspace:^1
@@ -3284,7 +3284,7 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/core
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.0.3
+        specifier: workspace:^1.0.5
         version: link:../../common/qds-core
       '@qualcomm-ui/tailwind-plugin':
         specifier: workspace:^1
@@ -3449,7 +3449,7 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.0.2
+        specifier: workspace:^1.0.4
         version: link:../../common/dom
       '@qualcomm-ui/tailwind-plugin':
         specifier: workspace:^1
@@ -3567,7 +3567,7 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/esbuild
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.0.4
+        specifier: workspace:^1.0.5
         version: link:../../common/qds-core
       '@qualcomm-ui/react-core':
         specifier: workspace:^1.0.3
@@ -3821,7 +3821,7 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/css-utils
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.0.3
+        specifier: workspace:^1.0.4
         version: link:../../common/dom
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1.0.3
@@ -3830,7 +3830,7 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/mdx-common
       '@qualcomm-ui/react':
-        specifier: workspace:^1.0.4
+        specifier: workspace:^1.0.5
         version: link:../react
       '@qualcomm-ui/react-core':
         specifier: workspace:^1.0.3

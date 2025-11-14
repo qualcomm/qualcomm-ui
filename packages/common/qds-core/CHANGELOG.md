@@ -1,5 +1,12 @@
 # @qualcomm-ui/qds-core
 
+## 1.0.5 (2025/11/14)
+
+### Bug Fixes
+
+- input required indicator styles
+- element preflight styles
+
 ## 1.0.4 (2025/11/13)
 
 ### Bug Fixes

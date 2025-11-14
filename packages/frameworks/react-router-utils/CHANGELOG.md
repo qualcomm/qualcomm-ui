@@ -1,5 +1,20 @@
 # @qualcomm-ui/react-router-utils
 
+## 1.0.4 (2025/11/14)
+
+### Performance Improvements
+
+- use simple css transition on mobile
+
+### Bug Fixes
+
+- exclude dependencies from bundle
+- shiki inner html padding
+
+### Miscellaneous Chores
+
+- add my-ua-parser dependency
+
 ## 1.0.3 (2025/11/13)
 
 ### Bug Fixes

@@ -1,5 +1,11 @@
 # @qualcomm-ui/dom
 
+## 1.0.4 (2025/11/14)
+
+### Bug Fixes
+
+- ssr guard on raf call
+
 ## 1.0.3 (2025/11/13)
 
 ### Bug Fixes
