@@ -16,11 +16,11 @@ import {
   useListNavigation,
 } from "@floating-ui/react"
 import {SearchIcon} from "lucide-react"
-import {getSelectorsByUserAgent, OsTypes} from "react-device-detect"
 
 import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {Dialog} from "@qualcomm-ui/react/dialog"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+import {Kbd} from "@qualcomm-ui/react/kbd"
 import {TextInput} from "@qualcomm-ui/react/text-input"
 import {useDebounce} from "@qualcomm-ui/react-core/effects"
 import {Portal} from "@qualcomm-ui/react-core/portal"
@@ -44,11 +44,11 @@ export function SiteSearch({
 }: SiteSearchMobileProps): ReactNode {
   const [showDialog, setShowDialog] = useState(false)
   const [inputValue, setInputValue] = useState("")
-  const inputRef = useRef<HTMLInputElement>(null)
   const dialogInputRef = useRef<HTMLInputElement>(null)
   const dialogInputContainerRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<Array<HTMLElement | null>>([])
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [isMac, setIsMac] = useState<boolean>(false)
 
   const {renderLink: Link} = useMdxDocsContext()
 
@@ -81,26 +81,44 @@ export function SiteSearch({
   }, [])
 
   useEffect(() => {
-    const {osName} = getSelectorsByUserAgent(window.navigator.userAgent)
+    let cleanup: (() => void) | undefined
 
-    const isMac = osName === OsTypes.MAC_OS
+    async function setup() {
+      let isMac = false
 
-    function listener(event: KeyboardEvent) {
-      if (
-        event.key === "k" &&
-        ((isMac && event.metaKey) || (!isMac && event.ctrlKey))
-      ) {
-        inputRef.current?.focus()
-        event.preventDefault()
+      try {
+        const UaParser = await import("my-ua-parser").then((m) => m.UAParser)
+        const userAgent = new UaParser(window.navigator.userAgent)
+        const osName = userAgent.getOS().name
+        isMac = osName === "Mac OS"
+      } catch {
+        isMac = /Mac/i.test(window.navigator.userAgent)
+      }
+
+      setIsMac(isMac)
+
+      function listener(event: KeyboardEvent) {
+        if (
+          event.key === "k" &&
+          ((isMac && event.metaKey) || (!isMac && event.ctrlKey))
+        ) {
+          setShowDialog(true)
+          event.preventDefault()
+        }
+      }
+
+      window.addEventListener("keydown", listener)
+      cleanup = () => {
+        window.removeEventListener("keydown", listener)
       }
     }
 
-    window.addEventListener("keydown", listener)
+    void setup()
 
     return () => {
-      window.removeEventListener("keydown", listener)
+      cleanup?.()
     }
-  }, [showDialog])
+  }, [])
 
   const onListItemKeyDown = useCallback((event: ReactKeyboardEvent) => {
     switch (event.key) {
@@ -151,10 +169,32 @@ export function SiteSearch({
       <Dialog.Trigger>
         <div
           aria-label="Search the documentation"
-          className="qui-site-search__mobile-icon"
+          className="qui-site-search__trigger"
           role="searchbox"
         >
-          <HeaderBar.ActionIconButton aria-label="Search" icon={SearchIcon} />
+          <HeaderBar.ActionIconButton
+            aria-label="Search"
+            className="qui-site-search__mobile-icon-button"
+            icon={SearchIcon}
+          />
+          <TextInput
+            className="qui-site-search__text-input"
+            endIcon={
+              <Kbd>
+                <div>{isMac ? "⌘" : "CTRL"}</div>
+                <div>+</div>
+                <div>K</div>
+              </Kbd>
+            }
+            inputProps={{
+              "aria-label": "Search the docs",
+            }}
+            placeholder="Search the docs"
+            size="sm"
+            startIcon={SearchIcon}
+            // this field is purely visual
+            value=""
+          />
         </div>
       </Dialog.Trigger>
 

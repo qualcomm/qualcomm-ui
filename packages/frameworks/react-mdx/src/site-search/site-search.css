@@ -17,8 +17,27 @@
   width: var(--qui-docs-search-width);
 }
 
-.qui-site-search__mobile-icon {
+.qui-site-search__trigger {
   width: 100%;
+}
+
+.qui-site-search__mobile-icon-button {
+  @container (min-width: 850px) {
+    display: none;
+  }
+}
+
+.qui-site-search__text-input {
+  display: none;
+  margin-right: 4px;
+  width: 185px;
+  @container (min-width: 850px) {
+    display: flex;
+  }
+
+  .qds-kbd {
+    font-size: 11px;
+  }
 }
 
 .qui-site-search__mobile-dialog-backdrop.qui-dialog__backdrop {
@@ -87,6 +106,7 @@
   gap: 8px;
   outline: none;
   padding: 8px 10px 6px 10px;
+  text-decoration: inherit;
 
   &[data-child] {
     padding: 6px 10px 4px 16px;
