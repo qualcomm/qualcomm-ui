@@ -1333,6 +1333,9 @@ importers:
       rxjs:
         specifier: ~7.8.0
         version: 7.8.2
+      tailwindcss:
+        specifier: ^4.1.17
+        version: 4.1.17
       tslib:
         specifier: ~2.5.3
         version: 2.5.3

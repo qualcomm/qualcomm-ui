@@ -1,10 +1,15 @@
 import "./globals.css"
 
+import {useState} from "react"
+
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
 import {Links, Meta, Outlet, Scripts, ScrollRestoration} from "react-router"
 
 import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 
 export default function App() {
+  const [queryClient] = useState(new QueryClient())
+
   return (
     <html
       lang="en"
@@ -31,9 +36,11 @@ export default function App() {
         />
       </head>
       <body>
-        <QuiRoot>
-          <Outlet />
-        </QuiRoot>
+        <QueryClientProvider client={queryClient}>
+          <QuiRoot>
+            <Outlet />
+          </QuiRoot>
+        </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

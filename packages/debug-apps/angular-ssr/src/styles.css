@@ -1,4 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
 @import "@qualcomm-ui/qds-core/styles/components.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
@@ -8,7 +11,7 @@ html {
 }
 
 body {
-  height: 100%;
   background-color: var(--color-background-neutral-01);
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  height: 100%;
 }
