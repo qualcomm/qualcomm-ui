@@ -66,6 +66,7 @@
     "@qualcomm-ui/eslint-config-react": "workspace:*",
     "@qualcomm-ui/eslint-config-typescript": "workspace:*",
     "@qualcomm-ui/eslint-plugin-path-alias": "workspace:*",
+    "@qualcomm-ui/tailwind-plugin": "workspace:*",
     "@types/node": "~24.9.2",
     "commander": "^14.0.2",
     "cross-env": "^10.1.0",
@@ -87,6 +88,7 @@
     "syncpack": "14.0.0-alpha.19",
     "tsx": "^4.20.6",
     "turbo": "2.6.0",
+    "tailwindcss": "^4.1.17",
     "typescript": "5.8.3",
     "typescript-eslint": "catalog:"
   },

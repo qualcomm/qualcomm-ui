@@ -89,6 +89,10 @@ h6 {
   }
 }
 
+p.mdx {
+  margin: 0;
+}
+
 img.mdx,
 video.mdx {
   display: block;
@@ -368,6 +372,10 @@ hr.mdx {
     margin-top: var(--qui-mdx-margin-default);
     .qui-notification__description {
       font: var(--font-static-body-md-default);
+    }
+
+    p {
+      margin: 0;
     }
   }
 }
