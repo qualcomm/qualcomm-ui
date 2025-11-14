@@ -1,7 +1,5 @@
 import {isRouteErrorResponse, LoaderFunction, useRouteError} from "react-router"
 
-import {NotFound} from "@qualcomm-ui/react-mdx/not-found"
-
 export const loader: LoaderFunction = () => {
   throw new Response("Not Found", {status: 404}) as any
 }
@@ -11,7 +9,7 @@ export function ErrorBoundary() {
   return (
     <h1>
       {isRouteErrorResponse(error) ? (
-        <NotFound />
+        <div>not found</div>
       ) : error instanceof Error ? (
         error.message
       ) : (

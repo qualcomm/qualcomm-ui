@@ -32,11 +32,7 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
   `,
   template: `
     <div class="container">
-      <h1 class="app-title">QUI Angular Components</h1>
-      <p class="intro">
-        Browse all available components in the Qualcomm UI Angular library,
-        organized by category.
-      </p>
+      <h1 class="app-title">Component Demos</h1>
 
       <div class="components-grid">
         @for (group of groups; track group.path) {
@@ -50,11 +46,37 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
 })
 export class Home {
   groups = [
-    {name: "Buttons", path: "/buttons"},
-    {name: "Data Display", path: "/data-display"},
-    {name: "Disclosure", path: "/disclosure"},
-    {name: "Feedback", path: "/feedback"},
-    {name: "Form Controls", path: "/form-controls"},
-    {name: "Overlays", path: "/overlays"},
+    {name: "Accordion", path: "/accordion"},
+    {name: "Avatar", path: "/avatar"},
+    {name: "Breadcrumbs", path: "/breadcrumbs"},
+    {name: "Button", path: "/button"},
+    {name: "Button Group", path: "/button-group"},
+    {name: "Checkbox", path: "/checkbox"},
+    {name: "Collapsible", path: "/collapsible"},
+    {name: "Combobox", path: "/combobox"},
+    {name: "Dialog", path: "/dialog"},
+    {name: "Divider", path: "/divider"},
+    {name: "Drawer", path: "/drawer"},
+    {name: "Icon", path: "/icon"},
+    {name: "Icon Button", path: "/icon-button"},
+    {name: "Inline Icon Button", path: "/inline-icon-button"},
+    {name: "Inline Notification", path: "/inline-notification"},
+    {name: "Link", path: "/link"},
+    {name: "Menu", path: "/menu"},
+    {name: "Number Input", path: "/number-input"},
+    {name: "Pagination", path: "/pagination"},
+    {name: "Password Input", path: "/password-input"},
+    {name: "Popover", path: "/popover"},
+    {name: "Progress", path: "/progress"},
+    {name: "Progress Ring", path: "/progress-ring"},
+    {name: "Radio", path: "/radio"},
+    {name: "Select", path: "/select"},
+    {name: "Segmented Control", path: "/segmented-control"},
+    {name: "Switch", path: "/switch"},
+    {name: "Tabs", path: "/tabs"},
+    {name: "Tag", path: "/tag"},
+    {name: "Text Input", path: "/text-input"},
+    {name: "Toast", path: "/toast"},
+    {name: "Tooltip", path: "/tooltip"},
   ]
 }

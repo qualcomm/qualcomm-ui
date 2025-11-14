@@ -1,19 +1,79 @@
 import {Routes} from "@angular/router"
 
-import {ButtonsDemo} from "./buttons"
-import {DataDisplayDemo} from "./data-display"
-import {DisclosureDemo} from "./disclosure"
-import {FeedbackDemo} from "./feedback"
-import {FormControlsDemo} from "./form-controls"
+import {AccordionPage} from "./accordion"
+import {AvatarPage} from "./avatar"
+import {BreadcrumbsPage} from "./breadcrumbs"
+import {ButtonPage} from "./button"
+import {ButtonGroupPage} from "./button-group"
+import {CheckboxPage} from "./checkbox"
+import {CollapsiblePage} from "./collapsible"
+import {ComboboxPage} from "./combobox"
+import {DialogPage} from "./dialog"
+import {DividerPage} from "./divider"
+import {DrawerPage} from "./drawer"
+import {HeaderBarPage} from "./header-bar"
 import {Home} from "./home"
-import {OverlaysDemo} from "./overlays"
+import {IconPage} from "./icon"
+import {IconButtonPage} from "./icon-button"
+import {InlineIconButtonPage} from "./inline-icon-button"
+import {InlineNotificationPage} from "./inline-notification"
+import {LinkPage} from "./link"
+import {MenuPage} from "./menu"
+import {NumberInputPage} from "./number-input"
+import {PaginationPage} from "./pagination"
+import {PasswordInputPage} from "./password-input"
+import {PopoverPage} from "./popover"
+import {ProgressPage} from "./progress"
+import {ProgressRingPage} from "./progress-ring"
+import {RadioPage} from "./radio"
+import {SegmentedControlPage} from "./segmented-control"
+import {SelectPage} from "./select"
+import {SideNavPage} from "./side-nav"
+import {SliderPage} from "./slider"
+import {SwitchPage} from "./switch"
+import {TabsPage} from "./tabs"
+import {TagPage} from "./tag"
+import {TextInputPage} from "./text-input"
+import {ToastPage} from "./toast"
+import {TooltipPage} from "./tooltip"
+import {TreePage} from "./tree"
 
 export const routes: Routes = [
   {path: "", component: Home},
-  {path: "buttons", component: ButtonsDemo},
-  {path: "form-controls", component: FormControlsDemo},
-  {path: "data-display", component: DataDisplayDemo},
-  {path: "disclosure", component: DisclosureDemo},
-  {path: "feedback", component: FeedbackDemo},
-  {path: "overlays", component: OverlaysDemo},
+  {path: "accordion", component: AccordionPage},
+  {path: "avatar", component: AvatarPage},
+  {path: "breadcrumbs", component: BreadcrumbsPage},
+  {path: "button", component: ButtonPage},
+  {path: "button-group", component: ButtonGroupPage},
+  {path: "checkbox", component: CheckboxPage},
+  {path: "collapsible", component: CollapsiblePage},
+  {path: "combobox", component: ComboboxPage},
+  {path: "dialog", component: DialogPage},
+  {path: "divider", component: DividerPage},
+  {path: "drawer", component: DrawerPage},
+  {path: "header-bar", component: HeaderBarPage},
+  {path: "icon", component: IconPage},
+  {path: "icon-button", component: IconButtonPage},
+  {path: "inline-icon-button", component: InlineIconButtonPage},
+  {path: "inline-notification", component: InlineNotificationPage},
+  {path: "link", component: LinkPage},
+  {path: "menu", component: MenuPage},
+  {path: "number-input", component: NumberInputPage},
+  {path: "pagination", component: PaginationPage},
+  {path: "password-input", component: PasswordInputPage},
+  {path: "popover", component: PopoverPage},
+  {path: "progress", component: ProgressPage},
+  {path: "progress-ring", component: ProgressRingPage},
+  {path: "radio", component: RadioPage},
+  {path: "segmented-control", component: SegmentedControlPage},
+  {path: "select", component: SelectPage},
+  {path: "side-nav", component: SideNavPage},
+  {path: "slider", component: SliderPage},
+  {path: "switch", component: SwitchPage},
+  {path: "tabs", component: TabsPage},
+  {path: "tag", component: TagPage},
+  {path: "text-input", component: TextInputPage},
+  {path: "toast", component: ToastPage},
+  {path: "tooltip", component: TooltipPage},
+  {path: "tree", component: TreePage},
 ]
