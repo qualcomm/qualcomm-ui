@@ -202,7 +202,7 @@
   }
 }
 
-.qui-input__required-indicator {
+.qui-input__required-indicator.qui-icon__root {
   display: inline;
   vertical-align: top;
 }
