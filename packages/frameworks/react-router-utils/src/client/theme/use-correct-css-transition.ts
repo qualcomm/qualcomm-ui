@@ -49,33 +49,31 @@ export function useCorrectCssTransition({
         })
       } else {
         if (event) {
-          if (typeof window !== "undefined") {
-            const userAgent = new UAParser(window.navigator.userAgent)
-            const os = userAgent.getOS()
-            // Only enable view transitions on desktop browsers.
-            if (os.name && !["Android", "iOS"].includes(os.name)) {
-              const x = event.clientX
-              const y = event.clientY
-              const endRadius = Math.hypot(
-                Math.max(x, innerWidth - x),
-                Math.max(y, innerHeight - y),
-              )
+          const userAgent = new UAParser(window.navigator.userAgent)
+          const os = userAgent.getOS()
+          // Only enable view transitions on desktop browsers.
+          if (os.name && !["Android", "iOS"].includes(os.name)) {
+            const x = event.clientX
+            const y = event.clientY
+            const endRadius = Math.hypot(
+              Math.max(x, innerWidth - x),
+              Math.max(y, innerHeight - y),
+            )
 
-              document.documentElement.style.setProperty(
-                "--view-transition-x",
-                `${x}px`,
-              )
-              document.documentElement.style.setProperty(
-                "--view-transition-y",
-                `${y}px`,
-              )
-              document.documentElement.style.setProperty(
-                "--view-transition-r",
-                `${endRadius}px`,
-              )
-              document.documentElement.style.viewTransitionName =
-                "theme-transition"
-            }
+            document.documentElement.style.setProperty(
+              "--view-transition-x",
+              `${x}px`,
+            )
+            document.documentElement.style.setProperty(
+              "--view-transition-y",
+              `${y}px`,
+            )
+            document.documentElement.style.setProperty(
+              "--view-transition-r",
+              `${endRadius}px`,
+            )
+            document.documentElement.style.viewTransitionName =
+              "theme-transition"
           }
         }
 
