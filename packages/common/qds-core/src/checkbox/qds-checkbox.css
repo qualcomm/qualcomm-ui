@@ -98,3 +98,15 @@
     color: var(--color-utility-disabled-text);
   }
 }
+
+.qui-checkbox__indicator {
+  align-items: center;
+  display: inline-flex;
+  &[hidden] {
+    display: none;
+  }
+
+  [data-part="indicator-icon"] {
+    vertical-align: middle;
+  }
+}
