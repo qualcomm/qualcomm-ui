@@ -58,7 +58,7 @@
     "@qualcomm-ui/dom": "workspace:1.0.4",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/mdx-common": "workspace:^1.0.3",
-    "@qualcomm-ui/react": "workspace:^1.0.5",
+    "@qualcomm-ui/react": "workspace:1.0.5",
     "@qualcomm-ui/react-core": "workspace:1.0.3",
     "@qualcomm-ui/react-test-utils": "workspace:^1.0.0",
     "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
@@ -83,7 +83,6 @@
     "playwright": "1.53.2",
     "quick-lru": "^7.2.0",
     "react": "catalog:",
-    "react-device-detect": "^2.2.3",
     "react-compiler-runtime": "^1.0.0",
     "react-dom": "catalog:",
     "react-shiki": "^0.8.0",
@@ -110,11 +109,13 @@
     "lodash-es": ">=4.17.21 <5",
     "lucide-react": ">=0.379.0 <1",
     "react": ">=19.0.0",
-    "react-device-detect": ">=2.2.3 <3",
     "react-dom": ">=19.0.0",
     "react-simple-code-editor": ">=0.14.1",
     "react-shiki": ">=0.8.0",
     "shiki": ">=3.13.0",
     "sucrase": ">=3.35.0"
+  },
+  "optionalDependencies": {
+    "my-ua-parser": "^2.0.4"
   }
 }
