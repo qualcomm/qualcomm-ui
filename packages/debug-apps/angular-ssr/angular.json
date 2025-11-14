@@ -7,6 +7,11 @@
       "projectType": "application",
       "schematics": {},
       "root": "",
+      "cli": {
+        "cache": {
+          "enabled": false
+        }
+      },
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {

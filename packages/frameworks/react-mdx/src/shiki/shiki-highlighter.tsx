@@ -91,8 +91,6 @@ export function ShikiHighlighter({
   const mergedProps = mergeProps({className: "shiki-code"}, props)
 
   return (
-    <pre {...mergedProps}>
-      <div dangerouslySetInnerHTML={{__html: highlighted}}></div>
-    </pre>
+    <pre {...mergedProps} dangerouslySetInnerHTML={{__html: highlighted}}></pre>
   )
 }

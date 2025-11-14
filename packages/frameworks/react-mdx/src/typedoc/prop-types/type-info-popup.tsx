@@ -47,7 +47,7 @@ export function TypeInfoPopup({importStatement}: Props): ReactNode {
           <Popover.Trigger>
             <button
               aria-label="Show full type import"
-              className="doc-props-type-info-popup-trigger"
+              className="doc-props__type-info-popup-trigger"
               onClick={(event) => {
                 event.stopPropagation()
                 event.preventDefault()

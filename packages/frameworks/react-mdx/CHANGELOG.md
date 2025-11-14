@@ -1,5 +1,16 @@
 # @qualcomm-ui/react-mdx
 
+## 1.0.4 (2025/11/14)
+
+### Bug Fixes
+
+- element preflight styles
+- shiki inner html padding
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react]
+
 ## 1.0.3 (2025/11/13)
 
 ### Bug Fixes

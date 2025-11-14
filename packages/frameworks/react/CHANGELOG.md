@@ -1,5 +1,22 @@
 # @qualcomm-ui/react
 
+## 1.0.5 (2025/11/14)
+
+### Performance Improvements
+
+- use simple css transition on mobile
+
+### Bug Fixes
+
+- exclude dependencies from bundle
+- element preflight styles
+- shiki inner html padding
+
+### Miscellaneous Chores
+
+- add my-ua-parser dependency
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
 ## 1.0.4 (2025/11/13)
 
 ### Bug Fixes

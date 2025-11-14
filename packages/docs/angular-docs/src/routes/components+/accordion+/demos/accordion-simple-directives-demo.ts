@@ -5,7 +5,7 @@ import {LoremIpsumDirective} from "@qualcomm-ui/angular-core/lorem-ipsum"
 
 @Component({
   imports: [AccordionModule, LoremIpsumDirective],
-  selector: "accordion-simple-demo",
+  selector: "accordion-simple-directives-demo",
   template: `
     <div class="w-96" q-accordion [defaultValue]="['a']">
       <!-- preview -->

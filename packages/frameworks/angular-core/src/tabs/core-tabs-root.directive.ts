@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {DOCUMENT} from "@angular/common"
 import {
   booleanAttribute,
   computed,
@@ -144,11 +145,13 @@ export class CoreTabsRootDirective
    */
   readonly valueChanged = output<string>()
 
+  protected readonly document = inject(DOCUMENT)
   protected readonly injector = inject(Injector)
   protected readonly onDestroy = useOnDestroy()
-  protected readonly isMounted = useIsMounted()
 
+  protected readonly isMounted = useIsMounted()
   protected readonly renderStrategyApi = inject(RenderStrategyContextService)
+
   protected readonly tabsApi = inject(TabsContextService)
 
   protected readonly trackBindings = useTrackBindings(() => {
@@ -164,7 +167,7 @@ export class CoreTabsRootDirective
         defaultValue: this.defaultValue(),
         deselectable: this.deselectable(),
         dir: this.dir(),
-        getRootNode: this.getRootNode(),
+        getRootNode: this.getRootNode() ?? (() => this.document),
         loopFocus: this.loopFocus(),
         onFocusChange: (value) => {
           if (this.isMounted()) {

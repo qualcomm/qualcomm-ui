@@ -58,7 +58,7 @@ export class CoreTextInputRootDirective
   readonly valueChanged = output<string>()
 
   protected readonly textInputService = inject(TextInputContextService)
-  protected document = inject(DOCUMENT)
+  protected readonly document = inject(DOCUMENT)
 
   protected readonly trackBindings = useTrackBindings(() =>
     this.textInputService.context().getRootBindings(),
@@ -77,7 +77,7 @@ export class CoreTextInputRootDirective
         disabled: this.isDisabled(),
         // angular handles this automatically with ngModel and Reactive Forms
         form: undefined,
-        getRootNode: this.getRootNode(),
+        getRootNode: this.getRootNode() ?? (() => this.document),
         ids: undefined,
         invalid: this.isInvalid(),
         name: this.name(),

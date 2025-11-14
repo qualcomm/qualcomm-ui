@@ -1,0 +1,7 @@
+.npm-install-tabs__panel.qui-tabs__panel {
+  padding: 0;
+
+  pre.shiki-code {
+    overflow-x: auto;
+  }
+}

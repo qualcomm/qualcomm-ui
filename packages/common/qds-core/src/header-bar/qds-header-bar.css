@@ -33,6 +33,11 @@
   & + .qui-header-bar__divider {
     margin: 0 var(--spacing-110) 0 var(--spacing-70);
   }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 .qui-header-bar__nav {
@@ -53,6 +58,7 @@
   gap: var(--spacing-40);
   outline: none;
   padding: 0 var(--spacing-20);
+  text-decoration: inherit;
   transition:
     background-color var(--animation-duration-faster) ease-out,
     color var(--animation-duration-faster) ease-out;

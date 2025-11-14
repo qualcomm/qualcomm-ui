@@ -1,4 +1,5 @@
 export * from "./copy-to-clipboard-button"
 export * from "./copy-to-clipboard-context"
 export * from "./copy-to-clipboard-icon-button"
+export * from "./copy-to-clipboard-inline-icon-button"
 export * from "./use-copy-to-clipboard"

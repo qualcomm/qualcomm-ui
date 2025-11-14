@@ -4,6 +4,7 @@
 .qui-side-nav__root {
   --indent-spacing: 16px;
   background: var(--color-surface-primary);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   min-width: 240px;
@@ -98,6 +99,8 @@
   background: var(--color-interactive-background-ghost-idle);
   border: solid 1px transparent;
   border-radius: var(--border-radius-xs);
+  box-sizing: border-box;
+  color: inherit;
   cursor: pointer;
   display: flex;
   font: var(--font-static-body-sm-bold);
@@ -113,6 +116,7 @@
   padding-left: var(--spacing-70);
   padding-right: var(--spacing-70);
   position: relative;
+  text-decoration: inherit;
 
   &:hover {
     background: var(--color-interactive-background-ghost-hover);
