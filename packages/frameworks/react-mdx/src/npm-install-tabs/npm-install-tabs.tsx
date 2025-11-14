@@ -69,7 +69,6 @@ export function NpmInstallTabs({
         <CodeHighlight
           className="mdx"
           code={copyCommands.pnpm}
-          disableCopy
           language="bash"
           preProps={{
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
@@ -81,7 +80,6 @@ export function NpmInstallTabs({
         <CodeHighlight
           className="mdx"
           code={copyCommands.npm}
-          disableCopy
           language="bash"
           preProps={{
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
@@ -93,7 +91,6 @@ export function NpmInstallTabs({
         <CodeHighlight
           className="mdx"
           code={copyCommands.yarn}
-          disableCopy
           language="bash"
           preProps={{
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},

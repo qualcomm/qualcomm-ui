@@ -121,6 +121,12 @@
 .shiki-wrapper.mdx {
   margin-top: 16px;
   position: relative;
+
+  &:hover {
+    .qui-code-copy-button {
+      display: inline-flex;
+    }
+  }
 }
 
 pre.shiki {

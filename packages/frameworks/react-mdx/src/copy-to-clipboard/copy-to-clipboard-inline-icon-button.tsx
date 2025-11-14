@@ -5,20 +5,24 @@ import type {ReactElement} from "react"
 
 import {Check, Copy} from "lucide-react"
 
-import {IconButton, type IconButtonProps} from "@qualcomm-ui/react/button"
+import {
+  InlineIconButton,
+  type InlineIconButtonProps,
+} from "@qualcomm-ui/react/inline-icon-button"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useCopyToClipboard} from "./use-copy-to-clipboard"
 
-export interface CopyToClipboardProps extends Omit<IconButtonProps, "icon"> {
+export interface CopyToClipboardInlineIconButtonProps
+  extends Omit<InlineIconButtonProps, "icon"> {
   valueOrFn: string | (() => string)
 }
 
-export function CopyToClipboardIconButton({
+export function CopyToClipboardInlineIconButton({
   valueOrFn,
   ...props
-}: CopyToClipboardProps): ReactElement {
+}: CopyToClipboardInlineIconButtonProps): ReactElement {
   const {copyToClipboard, isCopied} = useCopyToClipboard({
     valueOrFn,
   })
@@ -29,15 +33,12 @@ export function CopyToClipboardIconButton({
   )
 
   return (
-    <IconButton
-      className="qui-code-copy-button"
-      density="compact"
-      emphasis="primary"
+    <InlineIconButton
       icon={isCopied ? Check : Copy}
       size="md"
       tabIndex={0}
       title="Copy code"
-      variant="ghost"
+      variant="fixed"
       {...mergedProps}
     />
   )
