@@ -1,21 +1,21 @@
 import {useEffect, useState} from "react"
 
 import type {FontData} from "@qualcomm-ui/docs-base"
-import {useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 interface FontTableProps {
   data: FontData[]
 }
 
 export function FontTable({data = []}: FontTableProps) {
-  const [theme] = useTheme()
-  const [, rerender] = useState([])
+  // we need to force a re-render after mount to reflect the computed property
+  // values.
+  const [key, setKey] = useState<number>(0)
 
   useEffect(() => {
-    setTimeout(() => {
-      rerender([])
+    requestAnimationFrame(() => {
+      setKey((prevState) => prevState + 1)
     })
-  }, [rerender, theme])
+  }, [])
 
   const getPropertyValue = (variable: string) => {
     if (typeof window === "undefined") {
@@ -25,7 +25,7 @@ export function FontTable({data = []}: FontTableProps) {
   }
 
   return (
-    <div className="w-full">
+    <div key={key} className="w-full">
       <div className="doc-props-list__root bottom-border block md:hidden">
         {data.map(({tailwind, variable}) => {
           return (
@@ -57,7 +57,7 @@ export function FontTable({data = []}: FontTableProps) {
                 </div>
                 <div className="doc-props__content">
                   <div className="doc-props__title">Example</div>
-                  <div className={tailwind}>Aa</div>
+                  <div style={{font: `var(${variable})`}}>Aa</div>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@ export function FontTable({data = []}: FontTableProps) {
                       </span>
                     </code>
                   </td>
-                  <td className={tailwind}>Aa</td>
+                  <td style={{font: `var(${variable})`}}>Aa</td>
                 </tr>
               )
             })}

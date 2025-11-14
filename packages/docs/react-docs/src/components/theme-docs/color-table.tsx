@@ -8,8 +8,8 @@ interface ColorProps {
 }
 
 export function ColorTable({data = []}: ColorProps) {
-  // we need to force a re-render when the theme changes to update the property
-  // value.
+  // we need to force a re-render after mount and on theme change to reflect the
+  // computed property values.
   const [theme] = useTheme()
 
   const [key, setKey] = useState<number>(0)

@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react"
 
 import type {BasicThemeData} from "@qualcomm-ui/docs-base"
-import {useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 interface ColorProps {
   cssProperty: string
@@ -9,17 +8,15 @@ interface ColorProps {
 }
 
 export function ThemePropertyTable({cssProperty, data = []}: ColorProps) {
-  // we need to force a re-render when the theme changes to update the property
-  // value.
-  const [theme] = useTheme()
-
-  const [, rerender] = useState([])
+  // we need to force a re-render after mount to reflect the computed property
+  // values.
+  const [key, setKey] = useState<number>(0)
 
   useEffect(() => {
-    setTimeout(() => {
-      rerender([])
+    requestAnimationFrame(() => {
+      setKey((prevState) => prevState + 1)
     })
-  }, [rerender, theme])
+  }, [])
 
   const getPropertyValue = (variable: string) => {
     if (typeof window === "undefined") {
@@ -28,20 +25,24 @@ export function ThemePropertyTable({cssProperty, data = []}: ColorProps) {
     return getComputedStyle(document.documentElement).getPropertyValue(variable)
   }
 
+  const showTailwindColumn = data.some(({tailwind}) => tailwind)
+
   return (
-    <div>
+    <div key={key} className="w-full">
       <div className="doc-props-list__root bottom-border block sm:hidden">
         {data.map(({tailwind, variable}) => {
           return (
             <div key={variable} className="doc-props-list-item__root">
               <div className="doc-props-list-item__name-wrapper"></div>
               <div className="doc-props-columns">
-                <div className="doc-props__content">
-                  <div className="doc-props__title">Tailwind Class</div>
-                  <code className="fit !bg-transparent font-mono">
-                    {tailwind}
-                  </code>
-                </div>
+                {tailwind ? (
+                  <div className="doc-props__content">
+                    <div className="doc-props__title">Tailwind Class</div>
+                    <code className="fit !bg-transparent font-mono">
+                      {tailwind}
+                    </code>
+                  </div>
+                ) : null}
                 <div className="doc-props__content">
                   <div className="doc-props__title">CSS Variable</div>
                   <code className="fit !bg-transparent font-mono">
@@ -71,7 +72,7 @@ export function ThemePropertyTable({cssProperty, data = []}: ColorProps) {
         <table>
           <thead>
             <tr>
-              <th>Tailwind Class</th>
+              {showTailwindColumn ? <th>Tailwind Class</th> : null}
               <th>CSS Variable</th>
               <th>Equivalent CSS</th>
             </tr>
@@ -79,12 +80,14 @@ export function ThemePropertyTable({cssProperty, data = []}: ColorProps) {
           <tbody>
             {data.map(({tailwind, variable}) => {
               return (
-                <tr key={tailwind}>
-                  <td>
-                    <code className="fit !bg-transparent font-mono">
-                      {tailwind}
-                    </code>
-                  </td>
+                <tr key={variable}>
+                  {showTailwindColumn ? (
+                    <td>
+                      <code className="fit !bg-transparent font-mono">
+                        {tailwind}
+                      </code>
+                    </td>
+                  ) : null}
                   <td>
                     <code className="fit !bg-transparent font-mono">
                       {variable}
