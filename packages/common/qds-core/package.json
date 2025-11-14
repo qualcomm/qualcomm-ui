@@ -54,7 +54,7 @@
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish",
-    "extract-design-tokens": "tsx scripts/token-builder.ts"
+    "update-design-tokens": "tsx scripts/token-builder.ts"
   },
   "devDependencies": {
     "@figma/rest-api-spec": "^0.31.0",
