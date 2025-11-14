@@ -1,0 +1,10 @@
+name: 'Save Turborepo Cache'
+
+runs:
+  using: 'composite'
+  steps:
+  - name: Save cache
+    uses: actions/cache/save@v3
+    with:
+      path: .turbo-cache
+      key: turbo-remote-cache-v1
