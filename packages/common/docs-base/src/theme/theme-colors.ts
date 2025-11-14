@@ -6,118 +6,232 @@ export interface ColorData {
   variable: string
 }
 
-const semantic: ColorData[] = [
-  {
-    tailwind: "*-semantic-primary",
-    variable: "--q-semantic-primary",
-  },
-  {
-    tailwind: "*-semantic-secondary",
-    variable: "--q-semantic-secondary",
-  },
-  {
-    tailwind: "*-semantic-negative",
-    variable: "--q-semantic-negative",
-  },
-  {
-    tailwind: "*-semantic-warning",
-    variable: "--q-semantic-warning",
-  },
-  {
-    tailwind: "*-semantic-positive",
-    variable: "--q-semantic-positive",
-  },
-  {
-    tailwind: "*-semantic-neutral",
-    variable: "--q-semantic-neutral",
-  },
-]
-
 const text: ColorData[] = [
-  {tailwind: "text-primary", variable: "--q-text-1-primary"},
-  {tailwind: "text-secondary", variable: "--q-text-1-secondary"},
-  {tailwind: "text-disabled", variable: "--q-text-1-disabled"},
-  {tailwind: "text-contrast-primary", variable: "--q-text-2-primary"},
-  {tailwind: "text-contrast-secondary", variable: "--q-text-2-secondary"},
-  {tailwind: "text-contrast-disabled", variable: "--q-text-2-disabled"},
-  {tailwind: "text-link", variable: "--q-text-link"},
-  {tailwind: "text-error", variable: "--q-text-error"},
+  {tailwind: "text-brand-accent-01", variable: "--color-text-brand-accent-01"},
+  {tailwind: "text-brand-accent-02", variable: "--color-text-brand-accent-02"},
+  {tailwind: "text-brand-primary", variable: "--color-text-brand-primary"},
+  {
+    tailwind: "text-neutral-inverse",
+    variable: "--color-text-neutral-inverse",
+  },
+  {
+    tailwind: "text-neutral-primary",
+    variable: "--color-text-neutral-primary",
+  },
+  {
+    tailwind: "text-neutral-secondary",
+    variable: "--color-text-neutral-secondary",
+  },
+  {tailwind: "text-support-danger", variable: "--color-text-support-danger"},
 ]
 
-const foreground: ColorData[] = [
-  {tailwind: "foreground-primary", variable: "--q-foreground-1-primary"},
-  {tailwind: "foreground-secondary", variable: "--q-foreground-1-secondary"},
-  {tailwind: "foreground-disabled", variable: "--q-foreground-1-disabled"},
+const icon: ColorData[] = [
   {
-    tailwind: "foreground-contrast-primary",
-    variable: "--q-foreground-2-primary",
+    tailwind: "text-icon-brand-accent-01",
+    variable: "--color-icon-brand-accent-01",
   },
   {
-    tailwind: "foreground-contrast-secondary",
-    variable: "--q-foreground-2-secondary",
+    tailwind: "text-icon-brand-accent-02",
+    variable: "--color-icon-brand-accent-02",
   },
   {
-    tailwind: "foreground-contrast-disabled",
-    variable: "--q-foreground-2-disabled",
+    tailwind: "text-icon-brand-primary",
+    variable: "--color-icon-brand-primary",
+  },
+  {
+    tailwind: "text-icon-neutral-inverse",
+    variable: "--color-icon-neutral-inverse",
+  },
+  {
+    tailwind: "text-icon-neutral-primary",
+    variable: "--color-icon-neutral-primary",
+  },
+  {
+    tailwind: "text-icon-neutral-secondary",
+    variable: "--color-icon-neutral-secondary",
+  },
+  {
+    tailwind: "text-icon-support-danger",
+    variable: "--color-icon-support-danger",
+  },
+  {tailwind: "text-icon-support-info", variable: "--color-icon-support-info"},
+  {
+    tailwind: "text-icon-support-neutral",
+    variable: "--color-icon-support-neutral",
+  },
+  {
+    tailwind: "text-icon-support-success",
+    variable: "--color-icon-support-success",
+  },
+  {
+    tailwind: "text-icon-support-warning",
+    variable: "--color-icon-support-warning",
   },
 ]
 
 const background: ColorData[] = [
-  {tailwind: "bg-1", variable: "--q-background-1"},
-  {tailwind: "bg-2", variable: "--q-background-2"},
-  {tailwind: "bg-3", variable: "--q-background-3"},
-  {tailwind: "bg-4", variable: "--q-background-4"},
-  {tailwind: "bg-contrast-1", variable: "--q-background-1-contrast"},
-  {tailwind: "bg-contrast-2", variable: "--q-background-2-contrast"},
-  {tailwind: "bg-contrast-3", variable: "--q-background-3-contrast"},
-  {tailwind: "bg-contrast-4", variable: "--q-background-4-contrast"},
+  {
+    tailwind: "bg-brand-accent-01",
+    variable: "--color-background-brand-accent-01",
+  },
+  {
+    tailwind: "bg-brand-accent-02",
+    variable: "--color-background-brand-accent-02",
+  },
+  {
+    tailwind: "bg-brand-primary-strong",
+    variable: "--color-background-brand-primary-strong",
+  },
+  {
+    tailwind: "bg-brand-primary-subtle",
+    variable: "--color-background-brand-primary-subtle",
+  },
+  {
+    tailwind: "bg-brand-primary",
+    variable: "--color-background-brand-primary",
+  },
+  {tailwind: "bg-neutral-00", variable: "--color-background-neutral-00"},
+  {tailwind: "bg-neutral-01", variable: "--color-background-neutral-01"},
+  {tailwind: "bg-neutral-02", variable: "--color-background-neutral-02"},
+  {tailwind: "bg-neutral-03", variable: "--color-background-neutral-03"},
+  {tailwind: "bg-neutral-04", variable: "--color-background-neutral-04"},
+  {tailwind: "bg-neutral-05", variable: "--color-background-neutral-05"},
+  {tailwind: "bg-neutral-06", variable: "--color-background-neutral-06"},
+  {tailwind: "bg-neutral-07", variable: "--color-background-neutral-07"},
+  {tailwind: "bg-neutral-08", variable: "--color-background-neutral-08"},
+  {tailwind: "bg-neutral-09", variable: "--color-background-neutral-09"},
+  {tailwind: "bg-neutral-10", variable: "--color-background-neutral-10"},
+  {
+    tailwind: "bg-support-danger-medium",
+    variable: "--color-background-support-danger-medium",
+  },
+  {
+    tailwind: "bg-support-danger-subtle",
+    variable: "--color-background-support-danger-subtle",
+  },
+  {
+    tailwind: "bg-support-danger",
+    variable: "--color-background-support-danger",
+  },
+  {
+    tailwind: "bg-support-info-medium",
+    variable: "--color-background-support-info-medium",
+  },
+  {
+    tailwind: "bg-support-info-subtle",
+    variable: "--color-background-support-info-subtle",
+  },
+  {tailwind: "bg-support-info", variable: "--color-background-support-info"},
+  {
+    tailwind: "bg-support-neutral-medium",
+    variable: "--color-background-support-neutral-medium",
+  },
+  {
+    tailwind: "bg-support-neutral-subtle",
+    variable: "--color-background-support-neutral-subtle",
+  },
+  {
+    tailwind: "bg-support-neutral",
+    variable: "--color-background-support-neutral",
+  },
+  {
+    tailwind: "bg-support-success-medium",
+    variable: "--color-background-support-success-medium",
+  },
+  {
+    tailwind: "bg-support-success-subtle",
+    variable: "--color-background-support-success-subtle",
+  },
+  {
+    tailwind: "bg-support-success",
+    variable: "--color-background-support-success",
+  },
+  {
+    tailwind: "bg-support-warning-medium",
+    variable: "--color-background-support-warning-medium",
+  },
+  {
+    tailwind: "bg-support-warning-subtle",
+    variable: "--color-background-support-warning-subtle",
+  },
+  {
+    tailwind: "bg-support-warning",
+    variable: "--color-background-support-warning",
+  },
+]
+
+const surface: ColorData[] = [
+  {tailwind: "bg-overlay", variable: "--color-surface-overlay"},
+  {tailwind: "bg-primary", variable: "--color-surface-primary"},
+  {tailwind: "bg-raised", variable: "--color-surface-raised"},
+  {tailwind: "bg-secondary", variable: "--color-surface-secondary"},
 ]
 
 const border: ColorData[] = [
-  {tailwind: "border-default", variable: "--q-border-1-default"},
-  {tailwind: "border-subtle", variable: "--q-border-1-subtle"},
-  {tailwind: "border-strong", variable: "--q-border-1-strong"},
-  {tailwind: "border-contrast-default", variable: "--q-border-2-default"},
-  {tailwind: "border-contrast-subtle", variable: "--q-border-2-subtle"},
-  {tailwind: "border-contrast-strong", variable: "--q-border-2-strong"},
-  {tailwind: "border-focus", variable: "--q-border-focus"},
+  {
+    tailwind: "border-brand-accent-01",
+    variable: "--color-border-brand-accent-01",
+  },
+  {
+    tailwind: "border-brand-accent-02",
+    variable: "--color-border-brand-accent-02",
+  },
+  {
+    tailwind: "border-brand-primary-subtle",
+    variable: "--color-border-brand-primary-subtle",
+  },
+  {
+    tailwind: "border-brand-primary",
+    variable: "--color-border-brand-primary",
+  },
+  {tailwind: "border-neutral-00", variable: "--color-border-neutral-00"},
+  {tailwind: "border-neutral-01", variable: "--color-border-neutral-01"},
+  {tailwind: "border-neutral-02", variable: "--color-border-neutral-02"},
+  {tailwind: "border-neutral-03", variable: "--color-border-neutral-03"},
+  {tailwind: "border-neutral-10", variable: "--color-border-neutral-10"},
+  {
+    tailwind: "border-support-danger",
+    variable: "--color-border-support-danger",
+  },
+  {tailwind: "border-support-info", variable: "--color-border-support-info"},
+  {
+    tailwind: "border-support-neutral",
+    variable: "--color-border-support-neutral",
+  },
+  {
+    tailwind: "border-support-success",
+    variable: "--color-border-support-success",
+  },
+  {
+    tailwind: "border-support-warning",
+    variable: "--color-border-support-warning",
+  },
+  {
+    tailwind: "border-focus-border",
+    variable: "--color-utility-focus-border",
+  },
 ]
 
-const neutralScale: number[] = [
-  50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800,
-  850, 900, 950, 1000,
-]
-
-const paletteScale: number[] = [
-  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
-]
-
-function makePaletteColors(name: string, scale: number[]): ColorData[] {
-  return scale.map((entry) => ({
-    tailwind: `*-${name}-${entry}`,
-    variable: `--q-${name}-${entry}`,
-  }))
-}
+const category: ColorData[] = Array.from({length: 10}, (_, i) => [
+  {
+    tailwind: `*-category-${i + 1}-medium`,
+    variable: `--color-category-${i + 1}-medium`,
+  },
+  {
+    tailwind: `*-category-${i + 1}-strong`,
+    variable: `--color-category-${i + 1}-strong`,
+  },
+  {
+    tailwind: `*-category-${i + 1}-subtle`,
+    variable: `--color-category-${i + 1}-subtle`,
+  },
+]).flat()
 
 export const themeColors = {
   background,
   border,
-  foreground,
-  semantic,
+  category,
+  icon,
+  surface,
   text,
-}
-
-export const paletteColors = {
-  blue: makePaletteColors("blue", paletteScale),
-  brand: makePaletteColors("brand", paletteScale),
-  fuchsia: makePaletteColors("fuchsia", paletteScale),
-  green: makePaletteColors("green", paletteScale),
-  kiwi: makePaletteColors("kiwi", paletteScale),
-  magenta: makePaletteColors("magenta", paletteScale),
-  neutral: makePaletteColors("neutral", neutralScale),
-  orange: makePaletteColors("orange", paletteScale),
-  purple: makePaletteColors("purple", paletteScale),
-  red: makePaletteColors("red", paletteScale),
-  teal: makePaletteColors("teal", paletteScale),
-  yellow: makePaletteColors("yellow", paletteScale),
 }
