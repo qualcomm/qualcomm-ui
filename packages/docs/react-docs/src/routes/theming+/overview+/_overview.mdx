@@ -6,22 +6,59 @@ import {QdsDemo} from "~components/demo"
 
 # {frontmatter.title}
 
-##### 1. Component Styles and CSS Variables
+## Styling with CSS Variables
 
-- Most of our components rely on [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for their styling.
-- These variables serve as placeholders for common properties like `color`, `background-color`, and `border-color`.
-- Instead of hardcoding specific values for these properties, we reference the CSS variables.
+QUI Components use [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for properties like `color`, `background-color`, and `border-color`. Instead of hardcoded values, components reference variables that change based on the active theme.
 
-##### 2. Dynamic Theme Switching
+## Available Brands and Themes
 
-- The `@qualcomm-ui/styles` package includes both light and dark theme styles. This allows our websites to seamlessly switch between these themes without requiring a complete rebuild.
-- When the user selects a theme (light or dark), we dynamically update the values of the CSS variables.
-  - For example, if the active theme is dark, we adjust the variables to match the dark color scheme.
+Three brands are available: `qualcomm`, `snapdragon`, and `dragonwing`.
 
-This approach allows us to define the component's CSS rules once, and the theme-specific adjustments happen automatically based on the active theme.
+Each brand supports both a `light` and `dark` theme.
 
 ## Theme Switching
 
-Theme switching is accomplished by applying either the `data-theme="dark"` or `data-theme="light"` attribute to an element in your DOM tree. The active theme for a subtree of elements is based on the presence of the attribute on the closest parent element. We recommend the root element that wraps your entire application, like `<html>`.
+We've built the CSS to enable dynamic switching without rebuilding.
+
+### Import CSS
+
+First import the theme CSS for your chosen brand. We'll demo with `qualcomm`:
+
+```css
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+```
+
+If you're using Tailwind, you should import the theme CSS at the `components` layer instead:
+
+```css
+@import "tailwindcss";
+
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+```
+
+### Apply Data Attributes
+
+- Pick a DOM element. This is typically `html` or `body`.
+- Apply the brand to the element using the brand data attribute: `data-brand="qualcomm"` (or snapdragon / dragonwing).
+- Apply `data-theme="dark"` or `data-theme="light"` to the element.
+
+Example:
+
+```html
+<html data-brand="qualcomm" data-theme="dark">
+  <!-- the rest of your app -->
+</html>
+```
+
+All descendants of this subtree inherit that theme unless overridden by a closer parent.
+
+> [!warning/Both attributes are required]
+> You must apply both the `data-brand` and `data-theme` attributes to the element in order for the theme to take effect.
+
+### Enforce a Specific Theme
+
+The following example shows how to enforce a specific theme on a subtree.
 
 <QdsDemo name="OverviewTheme" />

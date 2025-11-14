@@ -259,11 +259,11 @@ code.mdx:not(pre > code.mdx):not(.q-link--text > code.mdx) {
   background: var(--qui-docs-code-background);
   border: solid 1px var(--color-border-neutral-01);
   border-radius: 4px;
+  box-sizing: border-box;
   color: var(--qui-docs-code-color);
   display: inline-block;
   font: var(--font-static-code-sm-default);
-  line-height: normal;
-  padding: 2px;
+  padding: 0 2px;
 
   &.fit {
     width: fit-content;

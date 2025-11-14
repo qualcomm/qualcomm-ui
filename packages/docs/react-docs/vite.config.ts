@@ -61,8 +61,8 @@ export default defineConfig({
         "./src/routes/polymorphic-components+/demos/**/*.tsx",
         "./src/routes/patterns+/**/demos/**/*.ts",
         "./src/routes/patterns+/**/demos/**/*.tsx",
-        "./src/routes/theme+/**/demos/**/*.ts",
-        "./src/routes/theme+/**/demos/**/*.tsx",
+        "./src/routes/theming+/**/demos/**/*.ts",
+        "./src/routes/theming+/**/demos/**/*.tsx",
       ],
       transformLine: (line) => {
         if (

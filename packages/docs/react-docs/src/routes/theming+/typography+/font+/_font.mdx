@@ -7,37 +7,66 @@ import {FontTable} from "~components/theme-docs"
 
 # {frontmatter.title}
 
-Due to limitations with the [font](https://developer.mozilla.org/en-US/docs/Web/CSS/font#syntax) shorthand, typeface styles are constructed from multiple CSS variables.
+The design system provides typography utilities through the Tailwind plugin. These font utilities use the CSS font shorthand property to apply complete typographic styles in a single class.
 
-Each typeface uses variables for the following properties:
+## Static Fonts
 
-- `font`
-- `font-stretch`
+Static fonts maintain consistent sizing across all screen sizes.
 
-> [!tip]
-> The font classes below were added in `@qualcomm-ui/styles v2.7.0`. Please update if
-> you're on an older version.
+### Display
 
-### Body
+Display fonts are used for large, prominent headings and hero text.
 
-<FontTable data={themeFonts.body} />
-
-### Body Strong
-
-<FontTable data={themeFonts.bodyStrong} />
+<FontTable data={themeFonts.display} />
 
 ### Heading
 
+Heading fonts provide a complete hierarchy for content structure.
+
 <FontTable data={themeFonts.heading} />
 
-### Heading Subtle
+### Heading Bold
 
-<FontTable data={themeFonts.headingSubtle} />
+Bold variants of heading fonts for emphasis.
 
-### Metadata
+<FontTable data={themeFonts.headingBold} />
 
-<FontTable data={themeFonts.metadata} />
+### Body
 
-### Metadata Strong
+Body fonts are used for standard text content.
 
-<FontTable data={themeFonts.metadataStrong} />
+<FontTable data={themeFonts.body} />
+
+### Body Bold
+
+Bold variants of body fonts for emphasis within content.
+
+<FontTable data={themeFonts.bodyBold} />
+
+### Code
+
+Monospace fonts for code snippets and technical content.
+
+<FontTable data={themeFonts.code} />
+
+### Code Bold
+
+Bold monospace fonts for emphasized code.
+
+<FontTable data={themeFonts.codeBold} />
+
+## Dynamic Fonts
+
+Dynamic fonts scale responsively based on viewport size, providing fluid typography that adapts to different screen dimensions.
+
+### Dynamic Display
+
+<FontTable data={themeFonts.dynamicDisplay} />
+
+### Dynamic Heading
+
+<FontTable data={themeFonts.dynamicHeading} />
+
+### Dynamic Heading Bold
+
+<FontTable data={themeFonts.dynamicHeadingBold} />

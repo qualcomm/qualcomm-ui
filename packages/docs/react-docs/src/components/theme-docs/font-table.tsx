@@ -3,15 +3,12 @@ import {useEffect, useState} from "react"
 import type {FontData} from "@qualcomm-ui/docs-base"
 import {useTheme} from "@qualcomm-ui/react-router-utils/client"
 
-interface ColorProps {
+interface FontTableProps {
   data: FontData[]
 }
 
-export function FontTable({data = []}: ColorProps) {
-  // we need to force a re-render when the theme changes to update the property
-  // value.
+export function FontTable({data = []}: FontTableProps) {
   const [theme] = useTheme()
-
   const [, rerender] = useState([])
 
   useEffect(() => {
@@ -30,67 +27,37 @@ export function FontTable({data = []}: ColorProps) {
   return (
     <div className="w-full">
       <div className="doc-props-list__root bottom-border block md:hidden">
-        {data.map(({cssClass, variables}) => {
+        {data.map(({tailwind, variable}) => {
           return (
-            <div key={cssClass} className="doc-props-list-item__root">
+            <div key={variable} className="doc-props-list-item__root">
               <div className="doc-props-list-item__name-wrapper"></div>
               <div className="doc-props-columns">
                 <div className="doc-props__content">
-                  <div className="doc-props__title">CSS Class</div>
+                  <div className="doc-props__title">Tailwind Class</div>
                   <code className="fit !bg-transparent font-mono text-sm">
-                    {cssClass}
+                    {tailwind}
                   </code>
                 </div>
                 <div className="doc-props__content">
-                  <div className="doc-props__title">CSS Variables</div>
-                  <code className="fit flex flex-col gap-1 !bg-transparent font-mono text-sm">
-                    <div>font: {variables.font}</div>
-                    <div>font-stretch: {variables.fontStretch}</div>
+                  <div className="doc-props__title">CSS Variable</div>
+                  <code className="fit !bg-transparent font-mono text-sm">
+                    {variable}
                   </code>
                 </div>
                 <div className="doc-props__content">
-                  <div className="doc-props__title">Equivalent CSS</div>
+                  <div className="doc-props__title">Computed Value</div>
                   <code
                     className="flex flex-col gap-1 !bg-transparent font-mono text-sm"
                     suppressHydrationWarning
                   >
-                    <div>
-                      font-size:{" "}
-                      <span suppressHydrationWarning>
-                        {getPropertyValue(variables.fontSize)}
-                      </span>
-                    </div>
-                    <div>
-                      line-height:{" "}
-                      <span suppressHydrationWarning>
-                        {getPropertyValue(variables.lineHeight)}
-                      </span>
-                    </div>
-                    <div>
-                      font-weight:{" "}
-                      <span suppressHydrationWarning>
-                        {getPropertyValue(variables.fontWeight)}
-                      </span>
-                    </div>
-                    <div>
-                      font-stretch:{" "}
-                      <span suppressHydrationWarning>
-                        {getPropertyValue(variables.fontStretch)}
-                      </span>
-                    </div>
-                    {variables.letterSpacing ? (
-                      <div>
-                        letter-spacing:{" "}
-                        <span suppressHydrationWarning>
-                          {getPropertyValue(variables.letterSpacing)}
-                        </span>
-                      </div>
-                    ) : null}
+                    <span suppressHydrationWarning>
+                      {getPropertyValue(variable)}
+                    </span>
                   </code>
                 </div>
                 <div className="doc-props__content">
                   <div className="doc-props__title">Example</div>
-                  <div className={cssClass}>Aa</div>
+                  <div className={tailwind}>Aa</div>
                 </div>
               </div>
             </div>
@@ -101,28 +68,24 @@ export function FontTable({data = []}: ColorProps) {
         <table>
           <thead>
             <tr>
-              <th>CSS Class</th>
-              <th>CSS Variables</th>
-              <th>Equivalent CSS</th>
+              <th>Tailwind Class</th>
+              <th>CSS Variable</th>
+              <th>Computed Value</th>
               <th>Example</th>
             </tr>
           </thead>
           <tbody>
-            {data.map(({cssClass, variables}) => {
+            {data.map(({tailwind, variable}) => {
               return (
-                <tr key={cssClass}>
+                <tr key={variable}>
                   <td>
                     <code className="fit !bg-transparent font-mono">
-                      {cssClass}
+                      {tailwind}
                     </code>
                   </td>
                   <td>
-                    <code className="fit flex flex-col gap-1 !bg-transparent font-mono">
-                      <div>font: {variables.font}</div>
-                      <div>font-stretch: {variables.fontStretch}</div>
-                      {variables.letterSpacing ? (
-                        <div>letter-spacing: {variables.letterSpacing}</div>
-                      ) : null}
+                    <code className="fit !bg-transparent font-mono">
+                      {variable}
                     </code>
                   </td>
                   <td>
@@ -130,41 +93,12 @@ export function FontTable({data = []}: ColorProps) {
                       className="flex flex-col gap-1 !bg-transparent font-mono"
                       suppressHydrationWarning
                     >
-                      <div>
-                        font-size:{" "}
-                        <span suppressHydrationWarning>
-                          {getPropertyValue(variables.fontSize)}
-                        </span>
-                      </div>
-                      <div>
-                        line-height:{" "}
-                        <span suppressHydrationWarning>
-                          {getPropertyValue(variables.lineHeight)}
-                        </span>
-                      </div>
-                      <div>
-                        font-weight:{" "}
-                        <span suppressHydrationWarning>
-                          {getPropertyValue(variables.fontWeight)}
-                        </span>
-                      </div>
-                      <div>
-                        font-stretch:{" "}
-                        <span suppressHydrationWarning>
-                          {getPropertyValue(variables.fontStretch)}
-                        </span>
-                      </div>
-                      {variables.letterSpacing ? (
-                        <div>
-                          letter-spacing:{" "}
-                          <span suppressHydrationWarning>
-                            {getPropertyValue(variables.letterSpacing)}
-                          </span>
-                        </div>
-                      ) : null}
+                      <span suppressHydrationWarning>
+                        {getPropertyValue(variable)}
+                      </span>
                     </code>
                   </td>
-                  <td className={cssClass}>Aa</td>
+                  <td className={tailwind}>Aa</td>
                 </tr>
               )
             })}

@@ -12,13 +12,13 @@ export function ColorTable({data = []}: ColorProps) {
   // value.
   const [theme] = useTheme()
 
-  const [, rerender] = useState([])
+  const [key, setKey] = useState<number>(0)
 
   useEffect(() => {
-    setTimeout(() => {
-      rerender([])
+    requestAnimationFrame(() => {
+      setKey((prevState) => prevState + 1)
     })
-  }, [rerender, theme])
+  }, [theme])
 
   const getPropertyValue = (variable: string) => {
     if (typeof window === "undefined") {
@@ -28,7 +28,7 @@ export function ColorTable({data = []}: ColorProps) {
   }
 
   return (
-    <div className="w-full">
+    <div key={key} className="w-full">
       <div className="doc-props-list__root bottom-border block sm:hidden">
         {data.map(({tailwind, variable}) => {
           return (
