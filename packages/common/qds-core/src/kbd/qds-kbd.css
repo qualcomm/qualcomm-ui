@@ -1,0 +1,8 @@
+.qds-kbd {
+  align-items: center;
+  color: var(--color-text-neutral-secondary);
+  display: inline-flex;
+  font: var(--font-static-body-xs-default);
+  gap: var(--spacing-10, 1px);
+  padding: 0;
+}
