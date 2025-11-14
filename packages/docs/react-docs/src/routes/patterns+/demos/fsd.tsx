@@ -3,7 +3,7 @@ import type {ReactNode, SVGAttributes} from "react"
 export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
   return (
     <svg
-      className="fsd mt-6"
+      className="fsd mt-6 box-border block p-0 align-middle"
       data-name="Layer_1"
       viewBox="0 0 927.35 383.87"
       xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="M197.5 340.5V1H1v339.5h196.5V292H1v-48.5h196.5V195H1v-48.5h196.5V98H1V49.5h196.5"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}
@@ -72,7 +72,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="M561.14 340.25v-145.5h-196.5v145.5h196.5v-48.5h-196.5v-48.5h196.5"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}
@@ -81,7 +81,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="m271.94 267.5 75 .25-75-.25ZM197.5 219.25h75v48.25"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}
@@ -90,7 +90,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="M356.15 348h-8.65V187h8.65"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}
@@ -99,7 +99,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="m637.43 268.73 75 .25-75-.25Z"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}
@@ -108,7 +108,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="M721.64 349.23h-8.65v-161h8.65"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}
@@ -117,7 +117,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="m562.48 268.48 75 .25-75-.25Z"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}
@@ -141,7 +141,7 @@ export function Fsd(props: SVGAttributes<SVGSVGElement>): ReactNode {
         d="M926.35 341.61v-145.5h-196.5v145.5h196.5v-48.5h-196.5v-48.5h196.5"
         style={{
           fill: "none",
-          stroke: "var(--q-border-1-strong)",
+          stroke: "var(--color-border-neutral-03)",
           strokeMiterlimit: 10,
           strokeWidth: 2,
         }}

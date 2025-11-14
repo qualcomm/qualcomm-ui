@@ -23,6 +23,9 @@ export default {
     {
       children: [
         {
+          id: "overview",
+        },
+        {
           id: "introduction-to-javascript",
         },
       ],
