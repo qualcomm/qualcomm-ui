@@ -1,18 +1,29 @@
 import {Component} from "@angular/core"
 
-import {TabsAddRemoveDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-add-remove-demo"
-import {TabsContainedSizesDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-contained-sizes-demo"
-import {TabsContextDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-context-demo"
-import {TabsControlledValueDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-controlled-value-demo"
-import {TabsDisabledDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-disabled-demo"
-import {TabsHorizontalDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-horizontal-demo"
-import {TabsIconsDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-icons-demo"
-import {TabsLineSizesDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-line-sizes-demo"
-import {TabsLinksDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-links-demo"
-import {TabsVerticalDemo} from "@qualcomm-ui/angular-docs/components/tabs/demos/tabs-vertical-demo"
+import {TabsAddRemoveDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-add-remove-demo"
+import {TabsContainedSizesDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-contained-sizes-demo"
+import {TabsContextDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-context-demo"
+import {TabsControlledValueDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-controlled-value-demo"
+import {TabsDisabledDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-disabled-demo"
+import {TabsHorizontalDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-horizontal-demo"
+import {TabsIconsDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-icons-demo"
+import {TabsLineSizesDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-line-sizes-demo"
+import {TabsLinksDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-links-demo"
+import {TabsVerticalDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demos/tabs-vertical-demo"
 
 @Component({
-  imports: [TabsAddRemoveDemo, TabsContainedSizesDemo, TabsContextDemo, TabsControlledValueDemo, TabsDisabledDemo, TabsHorizontalDemo, TabsIconsDemo, TabsLineSizesDemo, TabsLinksDemo, TabsVerticalDemo],
+  imports: [
+    TabsAddRemoveDemo,
+    TabsContainedSizesDemo,
+    TabsContextDemo,
+    TabsControlledValueDemo,
+    TabsDisabledDemo,
+    TabsHorizontalDemo,
+    TabsIconsDemo,
+    TabsLineSizesDemo,
+    TabsLinksDemo,
+    TabsVerticalDemo,
+  ],
   selector: "app-tabs",
   styles: `
     .section {

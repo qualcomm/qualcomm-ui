@@ -1,11 +1,11 @@
-import CompositeLayoutDemo from "./demos/switch-composite-layout-demo"
-import ControlledDemo from "./demos/switch-controlled-demo"
-import DisabledDemo from "./demos/switch-disabled-demo"
-import ReactHookFormDemo from "./demos/switch-react-hook-form-demo"
-import SimpleDemo from "./demos/switch-simple-demo"
-import SizesDemo from "./demos/switch-sizes-demo"
-import StatesDemo from "./demos/switch-states-demo"
-import TanstackFormDemo from "./demos/switch-tanstack-form-demo"
+import CompositeLayoutDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-composite-layout-demo"
+import ControlledDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-controlled-demo"
+import DisabledDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-disabled-demo"
+import ReactHookFormDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-react-hook-form-demo"
+import SimpleDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-simple-demo"
+import SizesDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-sizes-demo"
+import StatesDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-states-demo"
+import TanstackFormDemo from "@qualcomm-ui/react-docs/components+/switch+/demos/switch-tanstack-form-demo"
 
 const demos = [
   {component: CompositeLayoutDemo, title: "Composite Layout"},

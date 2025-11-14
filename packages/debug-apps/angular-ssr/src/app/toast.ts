@@ -1,16 +1,25 @@
 import {Component} from "@angular/core"
 
-import {ToastActionDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-action-demo"
-import {ToastDurationDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-duration-demo"
-import {ToastEmphasisDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-emphasis-demo"
-import {ToastMaxVisibleDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-max-visible-demo"
-import {ToastOverlapDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-overlap-demo"
-import {ToastPauseDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-pause-demo"
-import {ToastPersistentDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-persistent-demo"
-import {ToastPlacementDemo} from "@qualcomm-ui/angular-docs/components/toast/demos/toast-placement-demo"
+import {ToastActionDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-action-demo"
+import {ToastDurationDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-duration-demo"
+import {ToastEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-emphasis-demo"
+import {ToastMaxVisibleDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-max-visible-demo"
+import {ToastOverlapDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-overlap-demo"
+import {ToastPauseDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-pause-demo"
+import {ToastPersistentDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-persistent-demo"
+import {ToastPlacementDemo} from "@qualcomm-ui/angular-docs/components+/toast+/demos/toast-placement-demo"
 
 @Component({
-  imports: [ToastActionDemo, ToastDurationDemo, ToastEmphasisDemo, ToastMaxVisibleDemo, ToastOverlapDemo, ToastPauseDemo, ToastPersistentDemo, ToastPlacementDemo],
+  imports: [
+    ToastActionDemo,
+    ToastDurationDemo,
+    ToastEmphasisDemo,
+    ToastMaxVisibleDemo,
+    ToastOverlapDemo,
+    ToastPauseDemo,
+    ToastPersistentDemo,
+    ToastPlacementDemo,
+  ],
   selector: "app-toast",
   styles: `
     .section {

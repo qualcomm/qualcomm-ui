@@ -1,5 +1,5 @@
-import ShowcaseDemo from "./demos/inline-icon-button-showcase-demo"
-import VariantsDemo from "./demos/inline-icon-button-variants-demo"
+import ShowcaseDemo from "@qualcomm-ui/react-docs/components+/inline-icon-button+/demos/inline-icon-button-showcase-demo"
+import VariantsDemo from "@qualcomm-ui/react-docs/components+/inline-icon-button+/demos/inline-icon-button-variants-demo"
 
 const demos = [
   {component: ShowcaseDemo, title: "Showcase"},

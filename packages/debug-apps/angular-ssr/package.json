@@ -26,6 +26,7 @@
     "@qualcomm-ui/dom": "workspace:*",
     "@qualcomm-ui/qds-core": "workspace:*",
     "@qualcomm-ui/utils": "workspace:*",
+    "@tanstack/angular-query-experimental": "^5.90.7",
     "@tanstack/virtual-core": "^3.13.12",
     "express": "^5.1.0",
     "lucide-angular": "0.525.0",

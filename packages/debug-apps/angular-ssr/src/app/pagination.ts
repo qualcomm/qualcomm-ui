@@ -1,12 +1,17 @@
 import {Component} from "@angular/core"
 
-import {PaginationPageMetadataDemo} from "@qualcomm-ui/angular-docs/components/pagination/demos/pagination-page-metadata-demo"
-import {PaginationPageSizeDemo} from "@qualcomm-ui/angular-docs/components/pagination/demos/pagination-page-size-demo"
-import {PaginationRangesDemo} from "@qualcomm-ui/angular-docs/components/pagination/demos/pagination-ranges-demo"
-import {PaginationShowcaseDemo} from "@qualcomm-ui/angular-docs/components/pagination/demos/pagination-showcase-demo"
+import {PaginationPageMetadataDemo} from "@qualcomm-ui/angular-docs/components+/pagination+/demos/pagination-page-metadata-demo"
+import {PaginationPageSizeDemo} from "@qualcomm-ui/angular-docs/components+/pagination+/demos/pagination-page-size-demo"
+import {PaginationRangesDemo} from "@qualcomm-ui/angular-docs/components+/pagination+/demos/pagination-ranges-demo"
+import {PaginationShowcaseDemo} from "@qualcomm-ui/angular-docs/components+/pagination+/demos/pagination-showcase-demo"
 
 @Component({
-  imports: [PaginationPageMetadataDemo, PaginationPageSizeDemo, PaginationRangesDemo, PaginationShowcaseDemo],
+  imports: [
+    PaginationPageMetadataDemo,
+    PaginationPageSizeDemo,
+    PaginationRangesDemo,
+    PaginationShowcaseDemo,
+  ],
   selector: "app-pagination",
   styles: `
     .section {
@@ -46,13 +51,13 @@ import {PaginationShowcaseDemo} from "@qualcomm-ui/angular-docs/components/pagin
       <div class="section">
         <h2 class="section-title">Ranges</h2>
         <div class="demo-container">
-          <pagination-ranges-demo />
+          <pagination-directive-ranges-demo />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Showcase</h2>
         <div class="demo-container">
-          <pagination-showcase-demo />
+          <pagination-directive-showcase-demo />
         </div>
       </div>
     </div>

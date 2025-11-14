@@ -1,16 +1,25 @@
 import {Component} from "@angular/core"
 
-import {CheckboxAdvancedValidationDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-advanced-validation-demo"
-import {CheckboxCompositeDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-composite-demo"
-import {CheckboxDisabledDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-disabled-demo"
-import {CheckboxReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-reactive-forms-demo"
-import {CheckboxSimpleDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-simple-demo"
-import {CheckboxSizesDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-sizes-demo"
-import {CheckboxStatesDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-states-demo"
-import {CheckboxTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/checkbox/demos/checkbox-template-forms-demo"
+import {CheckboxAdvancedValidationDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-advanced-validation-demo"
+import {CheckboxCompositeDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-composite-demo"
+import {CheckboxDisabledDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-disabled-demo"
+import {CheckboxReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-reactive-forms-demo"
+import {CheckboxSimpleDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-simple-demo"
+import {CheckboxSizesDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-sizes-demo"
+import {CheckboxStatesDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-states-demo"
+import {CheckboxTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/checkbox+/demos/checkbox-template-forms-demo"
 
 @Component({
-  imports: [CheckboxAdvancedValidationDemo, CheckboxCompositeDemo, CheckboxDisabledDemo, CheckboxReactiveFormsDemo, CheckboxSimpleDemo, CheckboxSizesDemo, CheckboxStatesDemo, CheckboxTemplateFormsDemo],
+  imports: [
+    CheckboxAdvancedValidationDemo,
+    CheckboxCompositeDemo,
+    CheckboxDisabledDemo,
+    CheckboxReactiveFormsDemo,
+    CheckboxSimpleDemo,
+    CheckboxSizesDemo,
+    CheckboxStatesDemo,
+    CheckboxTemplateFormsDemo,
+  ],
   selector: "app-checkbox",
   styles: `
     .section {
@@ -38,31 +47,31 @@ import {CheckboxTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/ch
       <div class="section">
         <h2 class="section-title">Advanced Validation</h2>
         <div class="demo-container">
-          <checkbox-advanced-validation-demo />
+          <checkbox-reactive-forms />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Composite</h2>
         <div class="demo-container">
-          <checkbox-composite-demo />
+          <checkbox-showcase />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Disabled</h2>
         <div class="demo-container">
-          <checkbox-disabled-demo />
+          <checkbox-disabled />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Reactive Forms</h2>
         <div class="demo-container">
-          <checkbox-reactive-forms-demo />
+          <checkbox-reactive-forms />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Simple</h2>
         <div class="demo-container">
-          <checkbox-simple-demo />
+          <simple-checkbox-demo />
         </div>
       </div>
       <div class="section">
@@ -74,13 +83,13 @@ import {CheckboxTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/ch
       <div class="section">
         <h2 class="section-title">States</h2>
         <div class="demo-container">
-          <checkbox-states-demo />
+          <checkbox-states />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Template Forms</h2>
         <div class="demo-container">
-          <checkbox-template-forms-demo />
+          <checkbox-template-forms />
         </div>
       </div>
     </div>

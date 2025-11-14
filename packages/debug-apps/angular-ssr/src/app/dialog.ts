@@ -1,16 +1,25 @@
 import {Component} from "@angular/core"
 
-import {DialogAlertDialogDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-alert-dialog-demo"
-import {DialogControlledStateDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-controlled-state-demo"
-import {DialogEmphasisDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-emphasis-demo"
-import {DialogIndicatorIconDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-indicator-icon-demo"
-import {DialogInsideScrollDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-inside-scroll-demo"
-import {DialogOutsideScrollDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-outside-scroll-demo"
-import {DialogPlacementDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-placement-demo"
-import {DialogSizesDemo} from "@qualcomm-ui/angular-docs/components/dialog/demos/dialog-sizes-demo"
+import {DialogAlertDialogDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-alert-dialog-demo"
+import {DialogControlledStateDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-controlled-state-demo"
+import {DialogEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-emphasis-demo"
+import {DialogIndicatorIconDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-indicator-icon-demo"
+import {DialogInsideScrollDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-inside-scroll-demo"
+import {DialogOutsideScrollDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-outside-scroll-demo"
+import {DialogPlacementDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-placement-demo"
+import {DialogSizesDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/demos/dialog-sizes-demo"
 
 @Component({
-  imports: [DialogAlertDialogDemo, DialogControlledStateDemo, DialogEmphasisDemo, DialogIndicatorIconDemo, DialogInsideScrollDemo, DialogOutsideScrollDemo, DialogPlacementDemo, DialogSizesDemo],
+  imports: [
+    DialogAlertDialogDemo,
+    DialogControlledStateDemo,
+    DialogEmphasisDemo,
+    DialogIndicatorIconDemo,
+    DialogInsideScrollDemo,
+    DialogOutsideScrollDemo,
+    DialogPlacementDemo,
+    DialogSizesDemo,
+  ],
   selector: "app-dialog",
   styles: `
     .section {

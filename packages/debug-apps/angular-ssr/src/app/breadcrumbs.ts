@@ -1,12 +1,17 @@
 import {Component} from "@angular/core"
 
-import {BreadcrumbsDisabledDemo} from "@qualcomm-ui/angular-docs/components/breadcrumbs/demos/breadcrumbs-disabled-demo"
-import {BreadcrumbsEmphasisDemo} from "@qualcomm-ui/angular-docs/components/breadcrumbs/demos/breadcrumbs-emphasis-demo"
-import {BreadcrumbsLinksDemo} from "@qualcomm-ui/angular-docs/components/breadcrumbs/demos/breadcrumbs-links-demo"
-import {BreadcrumbsSizesDemo} from "@qualcomm-ui/angular-docs/components/breadcrumbs/demos/breadcrumbs-sizes-demo"
+import {BreadcrumbsDisabledDemo} from "@qualcomm-ui/angular-docs/components+/breadcrumbs+/demos/breadcrumbs-disabled-demo"
+import {BreadcrumbsEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/breadcrumbs+/demos/breadcrumbs-emphasis-demo"
+import {BreadcrumbsLinksDemo} from "@qualcomm-ui/angular-docs/components+/breadcrumbs+/demos/breadcrumbs-links-demo"
+import {BreadcrumbsSizesDemo} from "@qualcomm-ui/angular-docs/components+/breadcrumbs+/demos/breadcrumbs-sizes-demo"
 
 @Component({
-  imports: [BreadcrumbsDisabledDemo, BreadcrumbsEmphasisDemo, BreadcrumbsLinksDemo, BreadcrumbsSizesDemo],
+  imports: [
+    BreadcrumbsDisabledDemo,
+    BreadcrumbsEmphasisDemo,
+    BreadcrumbsLinksDemo,
+    BreadcrumbsSizesDemo,
+  ],
   selector: "app-breadcrumbs",
   styles: `
     .section {

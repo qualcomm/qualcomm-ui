@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {InlineIconButtonShowcaseDemo} from "@qualcomm-ui/angular-docs/components/inline-icon-button/demos/inline-icon-button-showcase-demo"
-import {InlineIconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components/inline-icon-button/demos/inline-icon-button-variants-demo"
+import {InlineIconButtonShowcaseDemo} from "@qualcomm-ui/angular-docs/components+/inline-icon-button+/demos/inline-icon-button-showcase-demo"
+import {InlineIconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/inline-icon-button+/demos/inline-icon-button-variants-demo"
 
 @Component({
   imports: [InlineIconButtonShowcaseDemo, InlineIconButtonVariantsDemo],
@@ -38,7 +38,7 @@ import {InlineIconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components
       <div class="section">
         <h2 class="section-title">Variants</h2>
         <div class="demo-container">
-          <inline-icon-button-variants-demo />
+          <inline-icon-button-contrast-demo />
         </div>
       </div>
     </div>

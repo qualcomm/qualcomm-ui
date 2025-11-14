@@ -1,9 +1,9 @@
-import CloseEventsDemo from "./demos/tooltip-close-events-demo"
-import CompositeDemo from "./demos/tooltip-composite-demo"
-import ControlledStateDemo from "./demos/tooltip-controlled-state-demo"
-import DisabledDemo from "./demos/tooltip-disabled-demo"
-import PlacementDemo from "./demos/tooltip-placement-demo"
-import SimpleDemo from "./demos/tooltip-simple-demo"
+import CloseEventsDemo from "@qualcomm-ui/react-docs/components+/tooltip+/demos/tooltip-close-events-demo"
+import CompositeDemo from "@qualcomm-ui/react-docs/components+/tooltip+/demos/tooltip-composite-demo"
+import ControlledStateDemo from "@qualcomm-ui/react-docs/components+/tooltip+/demos/tooltip-controlled-state-demo"
+import DisabledDemo from "@qualcomm-ui/react-docs/components+/tooltip+/demos/tooltip-disabled-demo"
+import PlacementDemo from "@qualcomm-ui/react-docs/components+/tooltip+/demos/tooltip-placement-demo"
+import SimpleDemo from "@qualcomm-ui/react-docs/components+/tooltip+/demos/tooltip-simple-demo"
 
 const demos = [
   {component: CloseEventsDemo, title: "Close Events"},

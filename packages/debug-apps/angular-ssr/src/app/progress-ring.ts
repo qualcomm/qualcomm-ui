@@ -1,15 +1,23 @@
 import {Component} from "@angular/core"
 
-import {ProgressRingChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components/progress-ring/demos/progress-ring-child-directives-demo"
-import {ProgressRingCompositeDemo} from "@qualcomm-ui/angular-docs/components/progress-ring/demos/progress-ring-composite-demo"
-import {ProgressRingSimpleDemo} from "@qualcomm-ui/angular-docs/components/progress-ring/demos/progress-ring-simple-demo"
-import {ProgressRingSizesDemo} from "@qualcomm-ui/angular-docs/components/progress-ring/demos/progress-ring-sizes-demo"
-import {ProgressRingThicknessDemo} from "@qualcomm-ui/angular-docs/components/progress-ring/demos/progress-ring-thickness-demo"
-import {ProgressRingValueDemo} from "@qualcomm-ui/angular-docs/components/progress-ring/demos/progress-ring-value-demo"
-import {ProgressRingValueTextDemo} from "@qualcomm-ui/angular-docs/components/progress-ring/demos/progress-ring-value-text-demo"
+import {ProgressRingChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components+/progress-ring+/demos/progress-ring-child-directives-demo"
+import {ProgressRingCompositeDemo} from "@qualcomm-ui/angular-docs/components+/progress-ring+/demos/progress-ring-composite-demo"
+import {ProgressRingSimpleDemo} from "@qualcomm-ui/angular-docs/components+/progress-ring+/demos/progress-ring-simple-demo"
+import {ProgressRingSizesDemo} from "@qualcomm-ui/angular-docs/components+/progress-ring+/demos/progress-ring-sizes-demo"
+import {ProgressRingThicknessDemo} from "@qualcomm-ui/angular-docs/components+/progress-ring+/demos/progress-ring-thickness-demo"
+import {ProgressRingValueDemo} from "@qualcomm-ui/angular-docs/components+/progress-ring+/demos/progress-ring-value-demo"
+import {ProgressRingValueTextDemo} from "@qualcomm-ui/angular-docs/components+/progress-ring+/demos/progress-ring-value-text-demo"
 
 @Component({
-  imports: [ProgressRingChildDirectivesDemo, ProgressRingCompositeDemo, ProgressRingSimpleDemo, ProgressRingSizesDemo, ProgressRingThicknessDemo, ProgressRingValueDemo, ProgressRingValueTextDemo],
+  imports: [
+    ProgressRingChildDirectivesDemo,
+    ProgressRingCompositeDemo,
+    ProgressRingSimpleDemo,
+    ProgressRingSizesDemo,
+    ProgressRingThicknessDemo,
+    ProgressRingValueDemo,
+    ProgressRingValueTextDemo,
+  ],
   selector: "app-progress-ring",
   styles: `
     .section {

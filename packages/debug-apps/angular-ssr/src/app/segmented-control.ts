@@ -1,19 +1,31 @@
 import {Component} from "@angular/core"
 
-import {SegmentedControlCompositeDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-composite-demo"
-import {SegmentedControlControlledDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-controlled-demo"
-import {SegmentedControlDisabledDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-disabled-demo"
-import {SegmentedControlIconDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-icon-demo"
-import {SegmentedControlIconOnlyDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-icon-only-demo"
-import {SegmentedControlLayoutDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-layout-demo"
-import {SegmentedControlMultipleDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-multiple-demo"
-import {SegmentedControlOrientationDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-orientation-demo"
-import {SegmentedControlSimpleDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-simple-demo"
-import {SegmentedControlSizeDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-size-demo"
-import {SegmentedControlVariantDemo} from "@qualcomm-ui/angular-docs/components/segmented-control/demos/segmented-control-variant-demo"
+import {SegmentedControlCompositeDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-composite-demo"
+import {SegmentedControlControlledDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-controlled-demo"
+import {SegmentedControlDisabledDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-disabled-demo"
+import {SegmentedControlIconDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-icon-demo"
+import {SegmentedControlIconOnlyDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-icon-only-demo"
+import {SegmentedControlLayoutDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-layout-demo"
+import {SegmentedControlMultipleDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-multiple-demo"
+import {SegmentedControlOrientationDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-orientation-demo"
+import {SegmentedControlSimpleDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-simple-demo"
+import {SegmentedControlSizeDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-size-demo"
+import {SegmentedControlVariantDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-variant-demo"
 
 @Component({
-  imports: [SegmentedControlCompositeDemo, SegmentedControlControlledDemo, SegmentedControlDisabledDemo, SegmentedControlIconDemo, SegmentedControlIconOnlyDemo, SegmentedControlLayoutDemo, SegmentedControlMultipleDemo, SegmentedControlOrientationDemo, SegmentedControlSimpleDemo, SegmentedControlSizeDemo, SegmentedControlVariantDemo],
+  imports: [
+    SegmentedControlCompositeDemo,
+    SegmentedControlControlledDemo,
+    SegmentedControlDisabledDemo,
+    SegmentedControlIconDemo,
+    SegmentedControlIconOnlyDemo,
+    SegmentedControlLayoutDemo,
+    SegmentedControlMultipleDemo,
+    SegmentedControlOrientationDemo,
+    SegmentedControlSimpleDemo,
+    SegmentedControlSizeDemo,
+    SegmentedControlVariantDemo,
+  ],
   selector: "app-segmented-control",
   styles: `
     .section {

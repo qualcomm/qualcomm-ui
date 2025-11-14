@@ -1,5 +1,5 @@
-import ControlledStateDemo from "./demos/collapsible-controlled-state-demo"
-import ShowcaseDemo from "./demos/collapsible-showcase-demo"
+import ControlledStateDemo from "@qualcomm-ui/react-docs/components+/collapsible+/demos/collapsible-controlled-state-demo"
+import ShowcaseDemo from "@qualcomm-ui/react-docs/components+/collapsible+/demos/collapsible-showcase-demo"
 
 const demos = [
   {component: ControlledStateDemo, title: "Controlled State"},

@@ -1,15 +1,23 @@
 import {Component} from "@angular/core"
 
-import {ProgressChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components/progress/demos/progress-child-directives-demo"
-import {ProgressCompositeDemo} from "@qualcomm-ui/angular-docs/components/progress/demos/progress-composite-demo"
-import {ProgressEmphasisDemo} from "@qualcomm-ui/angular-docs/components/progress/demos/progress-emphasis-demo"
-import {ProgressErrorTextDemo} from "@qualcomm-ui/angular-docs/components/progress/demos/progress-error-text-demo"
-import {ProgressLabelOrientationDemo} from "@qualcomm-ui/angular-docs/components/progress/demos/progress-label-orientation-demo"
-import {ProgressSimpleDemo} from "@qualcomm-ui/angular-docs/components/progress/demos/progress-simple-demo"
-import {ProgressSizeDemo} from "@qualcomm-ui/angular-docs/components/progress/demos/progress-size-demo"
+import {ProgressChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components+/progress+/demos/progress-child-directives-demo"
+import {ProgressCompositeDemo} from "@qualcomm-ui/angular-docs/components+/progress+/demos/progress-composite-demo"
+import {ProgressEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/progress+/demos/progress-emphasis-demo"
+import {ProgressErrorTextDemo} from "@qualcomm-ui/angular-docs/components+/progress+/demos/progress-error-text-demo"
+import {ProgressLabelOrientationDemo} from "@qualcomm-ui/angular-docs/components+/progress+/demos/progress-label-orientation-demo"
+import {ProgressSimpleDemo} from "@qualcomm-ui/angular-docs/components+/progress+/demos/progress-simple-demo"
+import {ProgressSizeDemo} from "@qualcomm-ui/angular-docs/components+/progress+/demos/progress-size-demo"
 
 @Component({
-  imports: [ProgressChildDirectivesDemo, ProgressCompositeDemo, ProgressEmphasisDemo, ProgressErrorTextDemo, ProgressLabelOrientationDemo, ProgressSimpleDemo, ProgressSizeDemo],
+  imports: [
+    ProgressChildDirectivesDemo,
+    ProgressCompositeDemo,
+    ProgressEmphasisDemo,
+    ProgressErrorTextDemo,
+    ProgressLabelOrientationDemo,
+    ProgressSimpleDemo,
+    ProgressSizeDemo,
+  ],
   selector: "app-progress",
   styles: `
     .section {

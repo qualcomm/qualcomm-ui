@@ -1,11 +1,11 @@
-import CompositeLayoutDemo from "./demos/checkbox-composite-layout-demo"
-import ControlledDemo from "./demos/checkbox-controlled-demo"
-import DisabledDemo from "./demos/checkbox-disabled-demo"
-import ReactHookFormDemo from "./demos/checkbox-react-hook-form-demo"
-import SimpleDemo from "./demos/checkbox-simple-demo"
-import SizesDemo from "./demos/checkbox-sizes-demo"
-import StatesDemo from "./demos/checkbox-states-demo"
-import TanstackFormDemo from "./demos/checkbox-tanstack-form-demo"
+import CompositeLayoutDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-composite-layout-demo"
+import ControlledDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-controlled-demo"
+import DisabledDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-disabled-demo"
+import ReactHookFormDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-react-hook-form-demo"
+import SimpleDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-simple-demo"
+import SizesDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-sizes-demo"
+import StatesDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-states-demo"
+import TanstackFormDemo from "@qualcomm-ui/react-docs/components+/checkbox+/demos/checkbox-tanstack-form-demo"
 
 const demos = [
   {component: CompositeLayoutDemo, title: "Composite Layout"},

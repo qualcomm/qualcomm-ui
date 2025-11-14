@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {ButtonGroupLayoutDemo} from "@qualcomm-ui/angular-docs/components/button-group/demos/button-group-layout-demo"
-import {ButtonGroupSharedPropsDemo} from "@qualcomm-ui/angular-docs/components/button-group/demos/button-group-shared-props-demo"
+import {ButtonGroupLayoutDemo} from "@qualcomm-ui/angular-docs/components+/button-group+/demos/button-group-layout-demo"
+import {ButtonGroupSharedPropsDemo} from "@qualcomm-ui/angular-docs/components+/button-group+/demos/button-group-shared-props-demo"
 
 @Component({
   imports: [ButtonGroupLayoutDemo, ButtonGroupSharedPropsDemo],

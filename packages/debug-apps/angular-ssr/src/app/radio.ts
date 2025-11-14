@@ -1,17 +1,27 @@
 import {Component} from "@angular/core"
 
-import {RadioChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-child-directives-demo"
-import {RadioCompositeDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-composite-demo"
-import {RadioCompositeLayoutDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-composite-layout-demo"
-import {RadioDisabledDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-disabled-demo"
-import {RadioOrientationDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-orientation-demo"
-import {RadioReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-reactive-forms-demo"
-import {RadioSimpleDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-simple-demo"
-import {RadioSizesDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-sizes-demo"
-import {RadioTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/radio/demos/radio-template-forms-demo"
+import {RadioChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-child-directives-demo"
+import {RadioCompositeDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-composite-demo"
+import {RadioCompositeLayoutDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-composite-layout-demo"
+import {RadioDisabledDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-disabled-demo"
+import {RadioOrientationDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-orientation-demo"
+import {RadioReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-reactive-forms-demo"
+import {RadioSimpleDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-simple-demo"
+import {RadioSizesDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-sizes-demo"
+import {RadioTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/radio+/demos/radio-template-forms-demo"
 
 @Component({
-  imports: [RadioChildDirectivesDemo, RadioCompositeDemo, RadioCompositeLayoutDemo, RadioDisabledDemo, RadioOrientationDemo, RadioReactiveFormsDemo, RadioSimpleDemo, RadioSizesDemo, RadioTemplateFormsDemo],
+  imports: [
+    RadioChildDirectivesDemo,
+    RadioCompositeDemo,
+    RadioCompositeLayoutDemo,
+    RadioDisabledDemo,
+    RadioOrientationDemo,
+    RadioReactiveFormsDemo,
+    RadioSimpleDemo,
+    RadioSizesDemo,
+    RadioTemplateFormsDemo,
+  ],
   selector: "app-radio",
   styles: `
     .section {
@@ -87,7 +97,7 @@ import {RadioTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/radio
       <div class="section">
         <h2 class="section-title">Template Forms</h2>
         <div class="demo-container">
-          <radio-template-forms-demo />
+          <checkbox-template-forms />
         </div>
       </div>
     </div>

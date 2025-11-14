@@ -1,29 +1,51 @@
 import {Component} from "@angular/core"
 
-import {SelectAriaLabelDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-aria-label-demo"
-import {SelectCompositeDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-composite-demo"
-import {SelectControlledOpenDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-controlled-open-demo"
-import {SelectErrorDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-error-demo"
-import {SelectIconDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-icon-demo"
-import {SelectItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-item-customization-demo"
-import {SelectItemsDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-items-demo"
-import {SelectMaxHeightDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-max-height-demo"
-import {SelectMultipleDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-multiple-demo"
-import {SelectObjectReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-object-reactive-forms-demo"
-import {SelectObjectTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-object-template-forms-demo"
-import {SelectReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-reactive-form-states-demo"
-import {SelectRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-required-template-forms-demo"
-import {SelectSameWidthDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-same-width-demo"
-import {SelectSimpleDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-simple-demo"
-import {SelectSizesDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-sizes-demo"
-import {SelectStringsReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-strings-reactive-forms-demo"
-import {SelectStringsTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-strings-template-forms-demo"
-import {SelectTemplateFormStateDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-template-form-state-demo"
-import {SelectWithinDialogDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-within-dialog-demo"
-import {SelectWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components/select/demos/select-within-popover-demo"
+import {SelectAriaLabelDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-aria-label-demo"
+import {SelectCompositeDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-composite-demo"
+import {SelectControlledOpenDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-controlled-open-demo"
+import {SelectErrorDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-error-demo"
+import {SelectIconDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-icon-demo"
+import {SelectItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-item-customization-demo"
+import {SelectItemsDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-items-demo"
+import {SelectMaxHeightDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-max-height-demo"
+import {SelectMultipleDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-multiple-demo"
+import {SelectObjectReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-object-reactive-forms-demo"
+import {SelectObjectTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-object-template-forms-demo"
+import {SelectReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-reactive-form-states-demo"
+import {SelectRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-required-template-forms-demo"
+import {SelectSameWidthDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-same-width-demo"
+import {SelectSimpleDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-simple-demo"
+import {SelectSizesDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-sizes-demo"
+import {SelectStringsReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-strings-reactive-forms-demo"
+import {SelectStringsTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-strings-template-forms-demo"
+import {SelectTemplateFormStateDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-template-form-state-demo"
+import {SelectWithinDialogDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-within-dialog-demo"
+import {SelectWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-within-popover-demo"
 
 @Component({
-  imports: [SelectAriaLabelDemo, SelectCompositeDemo, SelectControlledOpenDemo, SelectErrorDemo, SelectIconDemo, SelectItemCustomizationDemo, SelectItemsDemo, SelectMaxHeightDemo, SelectMultipleDemo, SelectObjectReactiveFormsDemo, SelectObjectTemplateFormsDemo, SelectReactiveFormStatesDemo, SelectRequiredTemplateFormsDemo, SelectSameWidthDemo, SelectSimpleDemo, SelectSizesDemo, SelectStringsReactiveFormsDemo, SelectStringsTemplateFormsDemo, SelectTemplateFormStateDemo, SelectWithinDialogDemo, SelectWithinPopoverDemo],
+  imports: [
+    SelectAriaLabelDemo,
+    SelectCompositeDemo,
+    SelectControlledOpenDemo,
+    SelectErrorDemo,
+    SelectIconDemo,
+    SelectItemCustomizationDemo,
+    SelectItemsDemo,
+    SelectMaxHeightDemo,
+    SelectMultipleDemo,
+    SelectObjectReactiveFormsDemo,
+    SelectObjectTemplateFormsDemo,
+    SelectReactiveFormStatesDemo,
+    SelectRequiredTemplateFormsDemo,
+    SelectSameWidthDemo,
+    SelectSimpleDemo,
+    SelectSizesDemo,
+    SelectStringsReactiveFormsDemo,
+    SelectStringsTemplateFormsDemo,
+    SelectTemplateFormStateDemo,
+    SelectWithinDialogDemo,
+    SelectWithinPopoverDemo,
+  ],
   selector: "app-select",
   styles: `
     .section {

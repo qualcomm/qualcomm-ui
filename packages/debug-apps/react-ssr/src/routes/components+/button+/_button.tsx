@@ -1,9 +1,9 @@
-import ContrastDemo from "./demos/button-contrast-demo"
-import DensityDemo from "./demos/button-density-demo"
-import EmphasisDemo from "./demos/button-emphasis-demo"
-import ShowcaseDemo from "./demos/button-showcase-demo"
-import SizesDemo from "./demos/button-sizes-demo"
-import VariantsDemo from "./demos/button-variants-demo"
+import ContrastDemo from "@qualcomm-ui/react-docs/components+/button+/demos/button-contrast-demo"
+import DensityDemo from "@qualcomm-ui/react-docs/components+/button+/demos/button-density-demo"
+import EmphasisDemo from "@qualcomm-ui/react-docs/components+/button+/demos/button-emphasis-demo"
+import ShowcaseDemo from "@qualcomm-ui/react-docs/components+/button+/demos/button-showcase-demo"
+import SizesDemo from "@qualcomm-ui/react-docs/components+/button+/demos/button-sizes-demo"
+import VariantsDemo from "@qualcomm-ui/react-docs/components+/button+/demos/button-variants-demo"
 
 const demos = [
   {component: ContrastDemo, title: "Contrast"},

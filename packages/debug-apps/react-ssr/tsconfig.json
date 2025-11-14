@@ -1,7 +1,10 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
   "compilerOptions": {
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@qualcomm-ui/react-docs/*": ["../../docs/react-docs/src/routes/*"]
+    }
   },
   "include": [
     "types.d.ts",

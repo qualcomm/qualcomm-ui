@@ -1,12 +1,12 @@
-import AddRemoveDemo from "./demos/tree-add-remove-demo"
-import CheckboxDemo from "./demos/tree-checkbox-demo"
-import DefaultExpandedDemo from "./demos/tree-default-expanded-demo"
-import DisabledNodeDemo from "./demos/tree-disabled-node-demo"
-import FilteringDemo from "./demos/tree-filtering-demo"
-import LinksDemo from "./demos/tree-links-demo"
-import NodeShorthandDemo from "./demos/tree-node-shorthand-demo"
-import NodesDemo from "./demos/tree-nodes-demo"
-import SizeDemo from "./demos/tree-size-demo"
+import AddRemoveDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-add-remove-demo"
+import CheckboxDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-checkbox-demo"
+import DefaultExpandedDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-default-expanded-demo"
+import DisabledNodeDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-disabled-node-demo"
+import FilteringDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-filtering-demo"
+import LinksDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-links-demo"
+import NodeShorthandDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-node-shorthand-demo"
+import NodesDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-nodes-demo"
+import SizeDemo from "@qualcomm-ui/react-docs/components+/tree+/demos/tree-size-demo"
 
 const demos = [
   {component: AddRemoveDemo, title: "Add Remove"},

@@ -1,9 +1,9 @@
-import EmphasisDemo from "./demos/tag-emphasis-demo"
-import IconsDemo from "./demos/tag-icons-demo"
-import RadiusDemo from "./demos/tag-radius-demo"
-import SizesDemo from "./demos/tag-sizes-demo"
-import StatesDemo from "./demos/tag-states-demo"
-import VariantsDemo from "./demos/tag-variants-demo"
+import EmphasisDemo from "@qualcomm-ui/react-docs/components+/tag+/demos/tag-emphasis-demo"
+import IconsDemo from "@qualcomm-ui/react-docs/components+/tag+/demos/tag-icons-demo"
+import RadiusDemo from "@qualcomm-ui/react-docs/components+/tag+/demos/tag-radius-demo"
+import SizesDemo from "@qualcomm-ui/react-docs/components+/tag+/demos/tag-sizes-demo"
+import StatesDemo from "@qualcomm-ui/react-docs/components+/tag+/demos/tag-states-demo"
+import VariantsDemo from "@qualcomm-ui/react-docs/components+/tag+/demos/tag-variants-demo"
 
 const demos = [
   {component: EmphasisDemo, title: "Emphasis"},

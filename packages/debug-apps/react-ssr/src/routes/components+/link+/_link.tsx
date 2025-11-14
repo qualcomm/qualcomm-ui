@@ -1,8 +1,8 @@
-import ColorsDemo from "./demos/link-colors-demo"
-import DisabledDemo from "./demos/link-disabled-demo"
-import IconsDemo from "./demos/link-icons-demo"
-import RenderPropDemo from "./demos/link-render-prop-demo"
-import SizesDemo from "./demos/link-sizes-demo"
+import ColorsDemo from "@qualcomm-ui/react-docs/components+/link+/demos/link-colors-demo"
+import DisabledDemo from "@qualcomm-ui/react-docs/components+/link+/demos/link-disabled-demo"
+import IconsDemo from "@qualcomm-ui/react-docs/components+/link+/demos/link-icons-demo"
+import RenderPropDemo from "@qualcomm-ui/react-docs/components+/link+/demos/link-render-prop-demo"
+import SizesDemo from "@qualcomm-ui/react-docs/components+/link+/demos/link-sizes-demo"
 
 const demos = [
   {component: ColorsDemo, title: "Colors"},

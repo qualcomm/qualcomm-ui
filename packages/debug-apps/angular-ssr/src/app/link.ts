@@ -1,9 +1,9 @@
 import {Component} from "@angular/core"
 
-import {LinkColorsDemo} from "@qualcomm-ui/angular-docs/components/link/demos/link-colors-demo"
-import {LinkDisabledDemo} from "@qualcomm-ui/angular-docs/components/link/demos/link-disabled-demo"
-import {LinkIconsDemo} from "@qualcomm-ui/angular-docs/components/link/demos/link-icons-demo"
-import {LinkSizesDemo} from "@qualcomm-ui/angular-docs/components/link/demos/link-sizes-demo"
+import {LinkColorsDemo} from "@qualcomm-ui/angular-docs/components+/link+/demos/link-colors-demo"
+import {LinkDisabledDemo} from "@qualcomm-ui/angular-docs/components+/link+/demos/link-disabled-demo"
+import {LinkIconsDemo} from "@qualcomm-ui/angular-docs/components+/link+/demos/link-icons-demo"
+import {LinkSizesDemo} from "@qualcomm-ui/angular-docs/components+/link+/demos/link-sizes-demo"
 
 @Component({
   imports: [LinkColorsDemo, LinkDisabledDemo, LinkIconsDemo, LinkSizesDemo],

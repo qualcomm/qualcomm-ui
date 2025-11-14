@@ -1,12 +1,17 @@
 import {Component} from "@angular/core"
 
-import {DrawerControlledStateDemo} from "@qualcomm-ui/angular-docs/components/drawer/demos/drawer-controlled-state-demo"
-import {DrawerCustomContainerDemo} from "@qualcomm-ui/angular-docs/components/drawer/demos/drawer-custom-container-demo"
-import {DrawerPlacementDemo} from "@qualcomm-ui/angular-docs/components/drawer/demos/drawer-placement-demo"
-import {DrawerPlacementStartDemo} from "@qualcomm-ui/angular-docs/components/drawer/demos/drawer-placement-start-demo"
+import {DrawerControlledStateDemo} from "@qualcomm-ui/angular-docs/components+/drawer+/demos/drawer-controlled-state-demo"
+import {DrawerCustomContainerDemo} from "@qualcomm-ui/angular-docs/components+/drawer+/demos/drawer-custom-container-demo"
+import {DrawerPlacementDemo} from "@qualcomm-ui/angular-docs/components+/drawer+/demos/drawer-placement-demo"
+import {DrawerPlacementStartDemo} from "@qualcomm-ui/angular-docs/components+/drawer+/demos/drawer-placement-start-demo"
 
 @Component({
-  imports: [DrawerControlledStateDemo, DrawerCustomContainerDemo, DrawerPlacementDemo, DrawerPlacementStartDemo],
+  imports: [
+    DrawerControlledStateDemo,
+    DrawerCustomContainerDemo,
+    DrawerPlacementDemo,
+    DrawerPlacementStartDemo,
+  ],
   selector: "app-drawer",
   styles: `
     .section {

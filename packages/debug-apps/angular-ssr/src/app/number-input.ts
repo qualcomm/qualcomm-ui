@@ -1,21 +1,35 @@
 import {Component} from "@angular/core"
 
-import {NumberInputChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-child-directives-demo"
-import {NumberInputCompositeDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-composite-demo"
-import {NumberInputCompositeFormsDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-composite-forms-demo"
-import {NumberInputErrorTextDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-error-text-demo"
-import {NumberInputMinMaxDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-min-max-demo"
-import {NumberInputReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-reactive-form-states-demo"
-import {NumberInputReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-reactive-forms-demo"
-import {NumberInputRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-required-template-forms-demo"
-import {NumberInputSimpleDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-simple-demo"
-import {NumberInputSizesDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-sizes-demo"
-import {NumberInputStatesDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-states-demo"
-import {NumberInputStepDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-step-demo"
-import {NumberInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/number-input/demos/number-input-template-forms-demo"
+import {NumberInputChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-child-directives-demo"
+import {NumberInputCompositeDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-composite-demo"
+import {NumberInputCompositeFormsDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-composite-forms-demo"
+import {NumberInputErrorTextDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-error-text-demo"
+import {NumberInputMinMaxDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-min-max-demo"
+import {NumberInputReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-reactive-form-states-demo"
+import {NumberInputReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-reactive-forms-demo"
+import {NumberInputRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-required-template-forms-demo"
+import {NumberInputSimpleDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-simple-demo"
+import {NumberInputSizesDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-sizes-demo"
+import {NumberInputStatesDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-states-demo"
+import {NumberInputStepDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-step-demo"
+import {NumberInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/number-input+/demos/number-input-template-forms-demo"
 
 @Component({
-  imports: [NumberInputChildDirectivesDemo, NumberInputCompositeDemo, NumberInputCompositeFormsDemo, NumberInputErrorTextDemo, NumberInputMinMaxDemo, NumberInputReactiveFormStatesDemo, NumberInputReactiveFormsDemo, NumberInputRequiredTemplateFormsDemo, NumberInputSimpleDemo, NumberInputSizesDemo, NumberInputStatesDemo, NumberInputStepDemo, NumberInputTemplateFormsDemo],
+  imports: [
+    NumberInputChildDirectivesDemo,
+    NumberInputCompositeDemo,
+    NumberInputCompositeFormsDemo,
+    NumberInputErrorTextDemo,
+    NumberInputMinMaxDemo,
+    NumberInputReactiveFormStatesDemo,
+    NumberInputReactiveFormsDemo,
+    NumberInputRequiredTemplateFormsDemo,
+    NumberInputSimpleDemo,
+    NumberInputSizesDemo,
+    NumberInputStatesDemo,
+    NumberInputStepDemo,
+    NumberInputTemplateFormsDemo,
+  ],
   selector: "app-number-input",
   styles: `
     .section {

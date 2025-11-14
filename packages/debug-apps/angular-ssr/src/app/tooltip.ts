@@ -1,14 +1,21 @@
 import {Component} from "@angular/core"
 
-import {TooltipCloseEventsDemo} from "@qualcomm-ui/angular-docs/components/tooltip/demos/tooltip-close-events-demo"
-import {TooltipCompositeDemo} from "@qualcomm-ui/angular-docs/components/tooltip/demos/tooltip-composite-demo"
-import {TooltipControlledStateDemo} from "@qualcomm-ui/angular-docs/components/tooltip/demos/tooltip-controlled-state-demo"
-import {TooltipDisabledDemo} from "@qualcomm-ui/angular-docs/components/tooltip/demos/tooltip-disabled-demo"
-import {TooltipPlacementDemo} from "@qualcomm-ui/angular-docs/components/tooltip/demos/tooltip-placement-demo"
-import {TooltipSimpleDemo} from "@qualcomm-ui/angular-docs/components/tooltip/demos/tooltip-simple-demo"
+import {TooltipCloseEventsDemo} from "@qualcomm-ui/angular-docs/components+/tooltip+/demos/tooltip-close-events-demo"
+import {TooltipCompositeDemo} from "@qualcomm-ui/angular-docs/components+/tooltip+/demos/tooltip-composite-demo"
+import {TooltipControlledStateDemo} from "@qualcomm-ui/angular-docs/components+/tooltip+/demos/tooltip-controlled-state-demo"
+import {TooltipDisabledDemo} from "@qualcomm-ui/angular-docs/components+/tooltip+/demos/tooltip-disabled-demo"
+import {TooltipPlacementDemo} from "@qualcomm-ui/angular-docs/components+/tooltip+/demos/tooltip-placement-demo"
+import {TooltipSimpleDemo} from "@qualcomm-ui/angular-docs/components+/tooltip+/demos/tooltip-simple-demo"
 
 @Component({
-  imports: [TooltipCloseEventsDemo, TooltipCompositeDemo, TooltipControlledStateDemo, TooltipDisabledDemo, TooltipPlacementDemo, TooltipSimpleDemo],
+  imports: [
+    TooltipCloseEventsDemo,
+    TooltipCompositeDemo,
+    TooltipControlledStateDemo,
+    TooltipDisabledDemo,
+    TooltipPlacementDemo,
+    TooltipSimpleDemo,
+  ],
   selector: "app-tooltip",
   styles: `
     .section {
@@ -60,7 +67,7 @@ import {TooltipSimpleDemo} from "@qualcomm-ui/angular-docs/components/tooltip/de
       <div class="section">
         <h2 class="section-title">Placement</h2>
         <div class="demo-container">
-          <tooltip-placement-demo />
+          <tooltip-placement />
         </div>
       </div>
       <div class="section">

@@ -1,9 +1,9 @@
-import CompositeDemo from "./demos/progress-ring-composite-demo"
-import SimpleDemo from "./demos/progress-ring-simple-demo"
-import SizesDemo from "./demos/progress-ring-sizes-demo"
-import ThicknessDemo from "./demos/progress-ring-thickness-demo"
-import ValueDemo from "./demos/progress-ring-value-demo"
-import ValueTextDemo from "./demos/progress-ring-value-text-demo"
+import CompositeDemo from "@qualcomm-ui/react-docs/components+/progress-ring+/demos/progress-ring-composite-demo"
+import SimpleDemo from "@qualcomm-ui/react-docs/components+/progress-ring+/demos/progress-ring-simple-demo"
+import SizesDemo from "@qualcomm-ui/react-docs/components+/progress-ring+/demos/progress-ring-sizes-demo"
+import ThicknessDemo from "@qualcomm-ui/react-docs/components+/progress-ring+/demos/progress-ring-thickness-demo"
+import ValueDemo from "@qualcomm-ui/react-docs/components+/progress-ring+/demos/progress-ring-value-demo"
+import ValueTextDemo from "@qualcomm-ui/react-docs/components+/progress-ring+/demos/progress-ring-value-text-demo"
 
 const demos = [
   {component: CompositeDemo, title: "Composite"},

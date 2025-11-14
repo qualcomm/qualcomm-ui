@@ -1,12 +1,17 @@
 import {Component} from "@angular/core"
 
-import {ButtonEmphasisDemo} from "@qualcomm-ui/angular-docs/components/button/demos/button-emphasis-demo"
-import {ButtonSizesDemo} from "@qualcomm-ui/angular-docs/components/button/demos/button-sizes-demo"
-import {ButtonStylesDemo} from "@qualcomm-ui/angular-docs/components/button/demos/button-styles-demo"
-import {ButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components/button/demos/button-variants-demo"
+import {ButtonEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-emphasis-demo"
+import {ButtonSizesDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-sizes-demo"
+import {ButtonStylesDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-styles-demo"
+import {ButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-variants-demo"
 
 @Component({
-  imports: [ButtonEmphasisDemo, ButtonSizesDemo, ButtonStylesDemo, ButtonVariantsDemo],
+  imports: [
+    ButtonEmphasisDemo,
+    ButtonSizesDemo,
+    ButtonStylesDemo,
+    ButtonVariantsDemo,
+  ],
   selector: "app-button",
   styles: `
     .section {

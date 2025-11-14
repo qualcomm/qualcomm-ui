@@ -1,14 +1,21 @@
 import {Component} from "@angular/core"
 
-import {TagEmphasisDemo} from "@qualcomm-ui/angular-docs/components/tag/demos/tag-emphasis-demo"
-import {TagIconsDemo} from "@qualcomm-ui/angular-docs/components/tag/demos/tag-icons-demo"
-import {TagRadiusDemo} from "@qualcomm-ui/angular-docs/components/tag/demos/tag-radius-demo"
-import {TagSizesDemo} from "@qualcomm-ui/angular-docs/components/tag/demos/tag-sizes-demo"
-import {TagStatesDemo} from "@qualcomm-ui/angular-docs/components/tag/demos/tag-states-demo"
-import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components/tag/demos/tag-variants-demo"
+import {TagEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-emphasis-demo"
+import {TagIconsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-icons-demo"
+import {TagRadiusDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-radius-demo"
+import {TagSizesDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-sizes-demo"
+import {TagStatesDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-states-demo"
+import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-variants-demo"
 
 @Component({
-  imports: [TagEmphasisDemo, TagIconsDemo, TagRadiusDemo, TagSizesDemo, TagStatesDemo, TagVariantsDemo],
+  imports: [
+    TagEmphasisDemo,
+    TagIconsDemo,
+    TagRadiusDemo,
+    TagSizesDemo,
+    TagStatesDemo,
+    TagVariantsDemo,
+  ],
   selector: "app-tag",
   styles: `
     .section {

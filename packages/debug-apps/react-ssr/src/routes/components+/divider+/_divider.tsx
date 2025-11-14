@@ -1,8 +1,8 @@
-import FocusableDemo from "./demos/divider-focusable-demo"
-import OrientationDemo from "./demos/divider-orientation-demo"
-import ShowcaseDemo from "./demos/divider-showcase-demo"
-import ValueTextDemo from "./demos/divider-value-text-demo"
-import VariantsDemo from "./demos/divider-variants-demo"
+import FocusableDemo from "@qualcomm-ui/react-docs/components+/divider+/demos/divider-focusable-demo"
+import OrientationDemo from "@qualcomm-ui/react-docs/components+/divider+/demos/divider-orientation-demo"
+import ShowcaseDemo from "@qualcomm-ui/react-docs/components+/divider+/demos/divider-showcase-demo"
+import ValueTextDemo from "@qualcomm-ui/react-docs/components+/divider+/demos/divider-value-text-demo"
+import VariantsDemo from "@qualcomm-ui/react-docs/components+/divider+/demos/divider-variants-demo"
 
 const demos = [
   {component: FocusableDemo, title: "Focusable"},

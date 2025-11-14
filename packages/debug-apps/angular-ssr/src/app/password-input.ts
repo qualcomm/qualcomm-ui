@@ -1,18 +1,29 @@
 import {Component} from "@angular/core"
 
-import {PasswordInputChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-child-directives-demo"
-import {PasswordInputCompositeDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-composite-demo"
-import {PasswordInputControlledVisibilityDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-controlled-visibility-demo"
-import {PasswordInputErrorTextDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-error-text-demo"
-import {PasswordInputReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-reactive-form-states-demo"
-import {PasswordInputReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-reactive-forms-demo"
-import {PasswordInputRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-required-template-forms-demo"
-import {PasswordInputSimpleDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-simple-demo"
-import {PasswordInputSimpleIconsDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-simple-icons-demo"
-import {PasswordInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/password-input/demos/password-input-template-forms-demo"
+import {PasswordInputChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-child-directives-demo"
+import {PasswordInputCompositeDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-composite-demo"
+import {PasswordInputControlledVisibilityDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-controlled-visibility-demo"
+import {PasswordInputErrorTextDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-error-text-demo"
+import {PasswordInputReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-reactive-form-states-demo"
+import {PasswordInputReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-reactive-forms-demo"
+import {PasswordInputRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-required-template-forms-demo"
+import {PasswordInputSimpleDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-simple-demo"
+import {PasswordInputSimpleIconsDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-simple-icons-demo"
+import {PasswordInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-template-forms-demo"
 
 @Component({
-  imports: [PasswordInputChildDirectivesDemo, PasswordInputCompositeDemo, PasswordInputControlledVisibilityDemo, PasswordInputErrorTextDemo, PasswordInputReactiveFormStatesDemo, PasswordInputReactiveFormsDemo, PasswordInputRequiredTemplateFormsDemo, PasswordInputSimpleDemo, PasswordInputSimpleIconsDemo, PasswordInputTemplateFormsDemo],
+  imports: [
+    PasswordInputChildDirectivesDemo,
+    PasswordInputCompositeDemo,
+    PasswordInputControlledVisibilityDemo,
+    PasswordInputErrorTextDemo,
+    PasswordInputReactiveFormStatesDemo,
+    PasswordInputReactiveFormsDemo,
+    PasswordInputRequiredTemplateFormsDemo,
+    PasswordInputSimpleDemo,
+    PasswordInputSimpleIconsDemo,
+    PasswordInputTemplateFormsDemo,
+  ],
   selector: "app-password-input",
   styles: `
     .section {

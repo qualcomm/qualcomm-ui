@@ -1,38 +1,69 @@
 import {Component} from "@angular/core"
 
-import {ComboboxAriaLabelDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-aria-label-demo"
-import {ComboboxAsyncDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-async-demo"
-import {ComboboxCompositeDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-composite-demo"
-import {ComboboxControlledStateDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-controlled-state-demo"
-import {ComboboxErrorDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-error-demo"
-import {ComboboxHighlightDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-highlight-demo"
-import {ComboboxHintDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-hint-demo"
-import {ComboboxIconCustomizationDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-icon-customization-demo"
-import {ComboboxIconDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-icon-demo"
-import {ComboboxInputBehaviorDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-input-behavior-demo"
-import {ComboboxItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-item-customization-demo"
-import {ComboboxItemsDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-items-demo"
-import {ComboboxMaxHeightDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-max-height-demo"
-import {ComboboxMultipleDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-multiple-demo"
-import {ComboboxObjectReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-object-reactive-forms-demo"
-import {ComboboxObjectTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-object-template-forms-demo"
-import {ComboboxOpenOnClickDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-open-on-click-demo"
-import {ComboboxReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-reactive-form-states-demo"
-import {ComboboxRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-required-template-forms-demo"
-import {ComboboxSameWidthDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-same-width-demo"
-import {ComboboxSimpleDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-simple-demo"
-import {ComboboxSizesDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-sizes-demo"
-import {ComboboxStatesDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-states-demo"
-import {ComboboxStringsReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-strings-reactive-forms-demo"
-import {ComboboxStringsTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-strings-template-forms-demo"
-import {ComboboxTemplateFormStateDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-template-form-state-demo"
-import {ComboboxVirtualDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-virtual-demo"
-import {ComboboxVirtualItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-virtual-item-customization-demo"
-import {ComboboxWithinDialogDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-within-dialog-demo"
-import {ComboboxWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components/combobox/demos/combobox-within-popover-demo"
+import {ComboboxAriaLabelDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-aria-label-demo"
+import {ComboboxAsyncDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-async-demo"
+import {ComboboxCompositeDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-composite-demo"
+import {ComboboxControlledStateDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-controlled-state-demo"
+import {ComboboxErrorDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-error-demo"
+import {ComboboxHighlightDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-highlight-demo"
+import {ComboboxHintDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-hint-demo"
+import {ComboboxIconCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-icon-customization-demo"
+import {ComboboxIconDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-icon-demo"
+import {ComboboxInputBehaviorDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-input-behavior-demo"
+import {ComboboxItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-item-customization-demo"
+import {ComboboxItemsDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-items-demo"
+import {ComboboxMaxHeightDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-max-height-demo"
+import {ComboboxMultipleDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-multiple-demo"
+import {ComboboxObjectReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-object-reactive-forms-demo"
+import {ComboboxObjectTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-object-template-forms-demo"
+import {ComboboxOpenOnClickDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-open-on-click-demo"
+import {ComboboxReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-reactive-form-states-demo"
+import {ComboboxRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-required-template-forms-demo"
+import {ComboboxSameWidthDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-same-width-demo"
+import {ComboboxSimpleDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-simple-demo"
+import {ComboboxSizesDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-sizes-demo"
+import {ComboboxStatesDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-states-demo"
+import {ComboboxStringsReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-strings-reactive-forms-demo"
+import {ComboboxStringsTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-strings-template-forms-demo"
+import {ComboboxTemplateFormStateDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-template-form-state-demo"
+import {ComboboxVirtualDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-virtual-demo"
+import {ComboboxVirtualItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-virtual-item-customization-demo"
+import {ComboboxWithinDialogDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-within-dialog-demo"
+import {ComboboxWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-within-popover-demo"
 
 @Component({
-  imports: [ComboboxAriaLabelDemo, ComboboxAsyncDemo, ComboboxCompositeDemo, ComboboxControlledStateDemo, ComboboxErrorDemo, ComboboxHighlightDemo, ComboboxHintDemo, ComboboxIconCustomizationDemo, ComboboxIconDemo, ComboboxInputBehaviorDemo, ComboboxItemCustomizationDemo, ComboboxItemsDemo, ComboboxMaxHeightDemo, ComboboxMultipleDemo, ComboboxObjectReactiveFormsDemo, ComboboxObjectTemplateFormsDemo, ComboboxOpenOnClickDemo, ComboboxReactiveFormStatesDemo, ComboboxRequiredTemplateFormsDemo, ComboboxSameWidthDemo, ComboboxSimpleDemo, ComboboxSizesDemo, ComboboxStatesDemo, ComboboxStringsReactiveFormsDemo, ComboboxStringsTemplateFormsDemo, ComboboxTemplateFormStateDemo, ComboboxVirtualDemo, ComboboxVirtualItemCustomizationDemo, ComboboxWithinDialogDemo, ComboboxWithinPopoverDemo],
+  imports: [
+    ComboboxAriaLabelDemo,
+    ComboboxAsyncDemo,
+    ComboboxCompositeDemo,
+    ComboboxControlledStateDemo,
+    ComboboxErrorDemo,
+    ComboboxHighlightDemo,
+    ComboboxHintDemo,
+    ComboboxIconCustomizationDemo,
+    ComboboxIconDemo,
+    ComboboxInputBehaviorDemo,
+    ComboboxItemCustomizationDemo,
+    ComboboxItemsDemo,
+    ComboboxMaxHeightDemo,
+    ComboboxMultipleDemo,
+    ComboboxObjectReactiveFormsDemo,
+    ComboboxObjectTemplateFormsDemo,
+    ComboboxOpenOnClickDemo,
+    ComboboxReactiveFormStatesDemo,
+    ComboboxRequiredTemplateFormsDemo,
+    ComboboxSameWidthDemo,
+    ComboboxSimpleDemo,
+    ComboboxSizesDemo,
+    ComboboxStatesDemo,
+    ComboboxStringsReactiveFormsDemo,
+    ComboboxStringsTemplateFormsDemo,
+    ComboboxTemplateFormStateDemo,
+    ComboboxVirtualDemo,
+    ComboboxVirtualItemCustomizationDemo,
+    ComboboxWithinDialogDemo,
+    ComboboxWithinPopoverDemo,
+  ],
   selector: "app-combobox",
   styles: `
     .section {

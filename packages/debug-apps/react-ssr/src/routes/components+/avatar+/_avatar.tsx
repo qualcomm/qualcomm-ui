@@ -1,9 +1,9 @@
-import ContentDemo from "./demos/avatar-content-demo"
-import ShowcaseDemo from "./demos/avatar-showcase-demo"
-import SizeDemo from "./demos/avatar-size-demo"
-import StateCallbackDemo from "./demos/avatar-state-callback-demo"
-import StatusDemo from "./demos/avatar-status-demo"
-import VariantDemo from "./demos/avatar-variant-demo"
+import ContentDemo from "@qualcomm-ui/react-docs/components+/avatar+/demos/avatar-content-demo"
+import ShowcaseDemo from "@qualcomm-ui/react-docs/components+/avatar+/demos/avatar-showcase-demo"
+import SizeDemo from "@qualcomm-ui/react-docs/components+/avatar+/demos/avatar-size-demo"
+import StateCallbackDemo from "@qualcomm-ui/react-docs/components+/avatar+/demos/avatar-state-callback-demo"
+import StatusDemo from "@qualcomm-ui/react-docs/components+/avatar+/demos/avatar-status-demo"
+import VariantDemo from "@qualcomm-ui/react-docs/components+/avatar+/demos/avatar-variant-demo"
 
 const demos = [
   {component: ContentDemo, title: "Content"},

@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {PopoverCompositeDemo} from "@qualcomm-ui/angular-docs/components/popover/demos/popover-composite-demo"
-import {PopoverSimpleDemo} from "@qualcomm-ui/angular-docs/components/popover/demos/popover-simple-demo"
+import {PopoverCompositeDemo} from "@qualcomm-ui/angular-docs/components+/popover+/demos/popover-composite-demo"
+import {PopoverSimpleDemo} from "@qualcomm-ui/angular-docs/components+/popover+/demos/popover-simple-demo"
 
 @Component({
   imports: [PopoverCompositeDemo, PopoverSimpleDemo],

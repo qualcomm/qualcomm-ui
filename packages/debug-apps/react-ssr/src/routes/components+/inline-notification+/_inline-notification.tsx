@@ -1,9 +1,9 @@
-import ActionDemo from "./demos/inline-notification-action-demo"
-import CompositeDemo from "./demos/inline-notification-composite-demo"
-import DismissableDemo from "./demos/inline-notification-dismissable-demo"
-import EmphasisDemo from "./demos/inline-notification-emphasis-demo"
-import LayoutDemo from "./demos/inline-notification-layout-demo"
-import SimpleDemo from "./demos/inline-notification-simple-demo"
+import ActionDemo from "@qualcomm-ui/react-docs/components+/inline-notification+/demos/inline-notification-action-demo"
+import CompositeDemo from "@qualcomm-ui/react-docs/components+/inline-notification+/demos/inline-notification-composite-demo"
+import DismissableDemo from "@qualcomm-ui/react-docs/components+/inline-notification+/demos/inline-notification-dismissable-demo"
+import EmphasisDemo from "@qualcomm-ui/react-docs/components+/inline-notification+/demos/inline-notification-emphasis-demo"
+import LayoutDemo from "@qualcomm-ui/react-docs/components+/inline-notification+/demos/inline-notification-layout-demo"
+import SimpleDemo from "@qualcomm-ui/react-docs/components+/inline-notification+/demos/inline-notification-simple-demo"
 
 const demos = [
   {component: ActionDemo, title: "Action"},

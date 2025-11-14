@@ -1,24 +1,41 @@
 import {Component} from "@angular/core"
 
-import {TextInputChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-child-directives-demo"
-import {TextInputClearTriggerDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-clear-trigger-demo"
-import {TextInputCompositeDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-composite-demo"
-import {TextInputCompositeFormsDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-composite-forms-demo"
-import {TextInputCompositeIconsDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-composite-icons-demo"
-import {TextInputCompositeLayoutDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-composite-layout-demo"
-import {TextInputControlledStateDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-controlled-state-demo"
-import {TextInputErrorTextDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-error-text-demo"
-import {TextInputReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-reactive-form-states-demo"
-import {TextInputReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-reactive-forms-demo"
-import {TextInputRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-required-template-forms-demo"
-import {TextInputSimpleDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-simple-demo"
-import {TextInputSimpleIconsDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-simple-icons-demo"
-import {TextInputSizesDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-sizes-demo"
-import {TextInputStatesDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-states-demo"
-import {TextInputTemplateFormsInvalidDemo} from "@qualcomm-ui/angular-docs/components/text-input/demos/text-input-template-forms-invalid-demo"
+import {TextInputChildDirectivesDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-child-directives-demo"
+import {TextInputClearTriggerDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-clear-trigger-demo"
+import {TextInputCompositeDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-composite-demo"
+import {TextInputCompositeFormsDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-composite-forms-demo"
+import {TextInputCompositeIconsDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-composite-icons-demo"
+import {TextInputCompositeLayoutDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-composite-layout-demo"
+import {TextInputControlledStateDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-controlled-state-demo"
+import {TextInputErrorTextDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-error-text-demo"
+import {TextInputReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-reactive-form-states-demo"
+import {TextInputReactiveFormsDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-reactive-forms-demo"
+import {TextInputRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-required-template-forms-demo"
+import {TextInputSimpleDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-simple-demo"
+import {TextInputSimpleIconsDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-simple-icons-demo"
+import {TextInputSizesDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-sizes-demo"
+import {TextInputStatesDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-states-demo"
+import {TextInputTemplateFormsInvalidDemo} from "@qualcomm-ui/angular-docs/components+/text-input+/demos/text-input-template-forms-invalid-demo"
 
 @Component({
-  imports: [TextInputChildDirectivesDemo, TextInputClearTriggerDemo, TextInputCompositeDemo, TextInputCompositeFormsDemo, TextInputCompositeIconsDemo, TextInputCompositeLayoutDemo, TextInputControlledStateDemo, TextInputErrorTextDemo, TextInputReactiveFormStatesDemo, TextInputReactiveFormsDemo, TextInputRequiredTemplateFormsDemo, TextInputSimpleDemo, TextInputSimpleIconsDemo, TextInputSizesDemo, TextInputStatesDemo, TextInputTemplateFormsInvalidDemo],
+  imports: [
+    TextInputChildDirectivesDemo,
+    TextInputClearTriggerDemo,
+    TextInputCompositeDemo,
+    TextInputCompositeFormsDemo,
+    TextInputCompositeIconsDemo,
+    TextInputCompositeLayoutDemo,
+    TextInputControlledStateDemo,
+    TextInputErrorTextDemo,
+    TextInputReactiveFormStatesDemo,
+    TextInputReactiveFormsDemo,
+    TextInputRequiredTemplateFormsDemo,
+    TextInputSimpleDemo,
+    TextInputSimpleIconsDemo,
+    TextInputSizesDemo,
+    TextInputStatesDemo,
+    TextInputTemplateFormsInvalidDemo,
+  ],
   selector: "app-text-input",
   styles: `
     .section {
@@ -70,7 +87,7 @@ import {TextInputTemplateFormsInvalidDemo} from "@qualcomm-ui/angular-docs/compo
       <div class="section">
         <h2 class="section-title">Composite Icons</h2>
         <div class="demo-container">
-          <text-input-composite-icons-demo />
+          <text-input-icons-demo />
         </div>
       </div>
       <div class="section">
@@ -136,7 +153,7 @@ import {TextInputTemplateFormsInvalidDemo} from "@qualcomm-ui/angular-docs/compo
       <div class="section">
         <h2 class="section-title">Template Forms Invalid</h2>
         <div class="demo-container">
-          <text-input-template-forms-invalid-demo />
+          <text-input-template-form-invalid-demo />
         </div>
       </div>
     </div>

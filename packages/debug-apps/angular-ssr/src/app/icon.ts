@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {IconProviderDemo} from "@qualcomm-ui/angular-docs/components/icon/demos/icon-provider-demo"
-import {IconSizesDemo} from "@qualcomm-ui/angular-docs/components/icon/demos/icon-sizes-demo"
+import {IconProviderDemo} from "@qualcomm-ui/angular-docs/components+/icon+/demos/icon-provider-demo"
+import {IconSizesDemo} from "@qualcomm-ui/angular-docs/components+/icon+/demos/icon-sizes-demo"
 
 @Component({
   imports: [IconProviderDemo, IconSizesDemo],

@@ -1,14 +1,21 @@
 import {Component} from "@angular/core"
 
-import {AvatarContentDemo} from "@qualcomm-ui/angular-docs/components/avatar/demos/avatar-content-demo"
-import {AvatarShowcaseDemo} from "@qualcomm-ui/angular-docs/components/avatar/demos/avatar-showcase-demo"
-import {AvatarSizeDemo} from "@qualcomm-ui/angular-docs/components/avatar/demos/avatar-size-demo"
-import {AvatarStateCallbackDemo} from "@qualcomm-ui/angular-docs/components/avatar/demos/avatar-state-callback-demo"
-import {AvatarStatusDemo} from "@qualcomm-ui/angular-docs/components/avatar/demos/avatar-status-demo"
-import {AvatarVariantDemo} from "@qualcomm-ui/angular-docs/components/avatar/demos/avatar-variant-demo"
+import {AvatarContentDemo} from "@qualcomm-ui/angular-docs/components+/avatar+/demos/avatar-content-demo"
+import {AvatarShowcaseDemo} from "@qualcomm-ui/angular-docs/components+/avatar+/demos/avatar-showcase-demo"
+import {AvatarSizeDemo} from "@qualcomm-ui/angular-docs/components+/avatar+/demos/avatar-size-demo"
+import {AvatarStateCallbackDemo} from "@qualcomm-ui/angular-docs/components+/avatar+/demos/avatar-state-callback-demo"
+import {AvatarStatusDemo} from "@qualcomm-ui/angular-docs/components+/avatar+/demos/avatar-status-demo"
+import {AvatarVariantDemo} from "@qualcomm-ui/angular-docs/components+/avatar+/demos/avatar-variant-demo"
 
 @Component({
-  imports: [AvatarContentDemo, AvatarShowcaseDemo, AvatarSizeDemo, AvatarStateCallbackDemo, AvatarStatusDemo, AvatarVariantDemo],
+  imports: [
+    AvatarContentDemo,
+    AvatarShowcaseDemo,
+    AvatarSizeDemo,
+    AvatarStateCallbackDemo,
+    AvatarStatusDemo,
+    AvatarVariantDemo,
+  ],
   selector: "app-avatar",
   styles: `
     .section {
@@ -36,37 +43,37 @@ import {AvatarVariantDemo} from "@qualcomm-ui/angular-docs/components/avatar/dem
       <div class="section">
         <h2 class="section-title">Content</h2>
         <div class="demo-container">
-          <avatar-content-demo />
+          <avatar-content />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Showcase</h2>
         <div class="demo-container">
-          <avatar-showcase-demo />
+          <avatar-showcase />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Size</h2>
         <div class="demo-container">
-          <avatar-size-demo />
+          <avatar-size />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">State Callback</h2>
         <div class="demo-container">
-          <avatar-state-callback-demo />
+          <avatar-state-callback />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Status</h2>
         <div class="demo-container">
-          <avatar-status-demo />
+          <avatar-status />
         </div>
       </div>
       <div class="section">
         <h2 class="section-title">Variant</h2>
         <div class="demo-container">
-          <avatar-variant-demo />
+          <avatar-variant />
         </div>
       </div>
     </div>

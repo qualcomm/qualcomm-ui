@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {CollapsibleControlledDemo} from "@qualcomm-ui/angular-docs/components/collapsible/demos/collapsible-controlled-demo"
-import {CollapsibleShowcaseDemo} from "@qualcomm-ui/angular-docs/components/collapsible/demos/collapsible-showcase-demo"
+import {CollapsibleControlledDemo} from "@qualcomm-ui/angular-docs/components+/collapsible+/demos/collapsible-controlled-demo"
+import {CollapsibleShowcaseDemo} from "@qualcomm-ui/angular-docs/components+/collapsible+/demos/collapsible-showcase-demo"
 
 @Component({
   imports: [CollapsibleControlledDemo, CollapsibleShowcaseDemo],

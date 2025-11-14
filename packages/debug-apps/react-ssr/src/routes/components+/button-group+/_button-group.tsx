@@ -1,5 +1,5 @@
-import LayoutDemo from "./demos/button-group-layout-demo"
-import SharedPropsDemo from "./demos/button-group-shared-props-demo"
+import LayoutDemo from "@qualcomm-ui/react-docs/components+/button-group+/demos/button-group-layout-demo"
+import SharedPropsDemo from "@qualcomm-ui/react-docs/components+/button-group+/demos/button-group-shared-props-demo"
 
 const demos = [
   {component: LayoutDemo, title: "Layout"},

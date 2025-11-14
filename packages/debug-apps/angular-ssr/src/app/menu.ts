@@ -1,22 +1,37 @@
 import {Component} from "@angular/core"
 
-import {MenuAnchorPointDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-anchor-point-demo"
-import {MenuAvatarDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-avatar-demo"
-import {MenuCheckboxItemsDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-checkbox-items-demo"
-import {MenuCheckboxStateDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-checkbox-state-demo"
-import {MenuContextMenuDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-context-menu-demo"
-import {MenuControlledStateDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-controlled-state-demo"
-import {MenuHideWhenDetachedDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-hide-when-detached-demo"
-import {MenuItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-item-customization-demo"
-import {MenuLinksDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-links-demo"
-import {MenuNestedDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-nested-demo"
-import {MenuPlacementDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-placement-demo"
-import {MenuRadioGroupDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-radio-group-demo"
-import {MenuRadioGroupStateDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-radio-group-state-demo"
-import {MenuWithinDialogDemo} from "@qualcomm-ui/angular-docs/components/menu/demos/menu-within-dialog-demo"
+import {MenuAnchorPointDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-anchor-point-demo"
+import {MenuAvatarDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-avatar-demo"
+import {MenuCheckboxItemsDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-checkbox-items-demo"
+import {MenuCheckboxStateDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-checkbox-state-demo"
+import {MenuContextMenuDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-context-menu-demo"
+import {MenuControlledStateDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-controlled-state-demo"
+import {MenuHideWhenDetachedDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-hide-when-detached-demo"
+import {MenuItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-item-customization-demo"
+import {MenuLinksDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-links-demo"
+import {MenuNestedDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-nested-demo"
+import {MenuPlacementDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-placement-demo"
+import {MenuRadioGroupDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-radio-group-demo"
+import {MenuRadioGroupStateDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-radio-group-state-demo"
+import {MenuWithinDialogDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-within-dialog-demo"
 
 @Component({
-  imports: [MenuAnchorPointDemo, MenuAvatarDemo, MenuCheckboxItemsDemo, MenuCheckboxStateDemo, MenuContextMenuDemo, MenuControlledStateDemo, MenuHideWhenDetachedDemo, MenuItemCustomizationDemo, MenuLinksDemo, MenuNestedDemo, MenuPlacementDemo, MenuRadioGroupDemo, MenuRadioGroupStateDemo, MenuWithinDialogDemo],
+  imports: [
+    MenuAnchorPointDemo,
+    MenuAvatarDemo,
+    MenuCheckboxItemsDemo,
+    MenuCheckboxStateDemo,
+    MenuContextMenuDemo,
+    MenuControlledStateDemo,
+    MenuHideWhenDetachedDemo,
+    MenuItemCustomizationDemo,
+    MenuLinksDemo,
+    MenuNestedDemo,
+    MenuPlacementDemo,
+    MenuRadioGroupDemo,
+    MenuRadioGroupStateDemo,
+    MenuWithinDialogDemo,
+  ],
   selector: "app-menu",
   styles: `
     .section {

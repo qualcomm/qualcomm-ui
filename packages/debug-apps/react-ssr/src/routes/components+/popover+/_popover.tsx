@@ -1,5 +1,5 @@
-import CompositeDemo from "./demos/popover-composite-demo"
-import SimpleDemo from "./demos/popover-simple-demo"
+import CompositeDemo from "@qualcomm-ui/react-docs/components+/popover+/demos/popover-composite-demo"
+import SimpleDemo from "@qualcomm-ui/react-docs/components+/popover+/demos/popover-simple-demo"
 
 const demos = [
   {component: CompositeDemo, title: "Composite"},
