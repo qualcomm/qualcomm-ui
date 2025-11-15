@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {Changeset, PackageJSON} from "@changesets/types"
-import {execSync} from "child_process"
+import {execSync} from "node:child_process"
 
 interface ManyPkgPackage {
   dir: string
@@ -72,7 +72,6 @@ export const associateCommitsToConventionalCommitMessages = (
         },
       ]
     }
-
     if (isConventionalCommit(curr.commitMessage)) {
       if (isConventionalCommit(acc[acc.length - 1].changelogMessage)) {
         return [
@@ -120,6 +119,24 @@ export const getRepoRoot = () => {
     .replace(/\n|\r/g, "")
 }
 
+const getCommitMessage = (commitHash: string): string => {
+  return execSync(`git log -1 --pretty=%B ${commitHash}`).toString().trim()
+}
+
+const extractConventionalCommits = (commitMessage: string): string[] => {
+  const lines = commitMessage.split("\n")
+  const conventionalCommits: string[] = []
+
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (trimmed && isConventionalCommit(trimmed)) {
+      conventionalCommits.push(trimmed)
+    }
+  }
+
+  return conventionalCommits
+}
+
 export const conventionalMessagesWithCommitsToChangesets = (
   conventionalMessagesToCommits: ConventionalMessagesToCommits[],
   options: {ignoredFiles?: (string | RegExp)[]; packages: ManyPkgPackage[]},
@@ -143,19 +160,30 @@ export const conventionalMessagesWithCommitsToChangesets = (
       if (packagesChanged.length === 0) {
         return null
       }
+
+      const allConventionalCommits = entry.commitHashes
+        .flatMap((hash) => {
+          const fullMessage = getCommitMessage(hash)
+          return extractConventionalCommits(fullMessage)
+        })
+        .filter((msg, index, self) => self.indexOf(msg) === index)
+
+      const hasBreaking = allConventionalCommits.some(isBreakingChange)
+      const hasFeat = allConventionalCommits.some((msg) =>
+        msg.startsWith("feat"),
+      )
+
+      const changeType = hasBreaking ? "major" : hasFeat ? "minor" : "patch"
+
       return {
         packagesChanged,
         releases: packagesChanged.map((pkg) => {
           return {
             name: pkg.packageJson.name,
-            type: isBreakingChange(entry.changelogMessage)
-              ? "major"
-              : entry.changelogMessage.startsWith("feat")
-                ? "minor"
-                : "patch",
+            type: changeType,
           }
         }),
-        summary: entry.changelogMessage,
+        summary: allConventionalCommits.join("\n"),
       }
     })
     .filter(Boolean) as Changeset[]
@@ -187,9 +215,7 @@ export const getCommitsSinceRef = (branch: string) => {
       sinceRef = execSync("git rev-list --max-parents=0 HEAD").toString()
     }
   }
-
   sinceRef = sinceRef.trim()
-
   return execSync(`git rev-list --ancestry-path ${sinceRef}...HEAD`)
     .toString()
     .split("\n")

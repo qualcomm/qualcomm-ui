@@ -36,12 +36,15 @@ async function conventionalCommitChangeset(cwd: string = process.cwd()) {
 
   const commitsSinceBase = getCommitsSinceRef(baseBranch)
 
-  const commitsWithMessages = commitsSinceBase.map((commitHash) => ({
-    commitHash,
-    commitMessage: execSync(
+  const commitsWithMessages = commitsSinceBase.map((commitHash) => {
+    const commitMessage = execSync(
       `git log -n 1 --pretty=format:%B ${commitHash}`,
-    ).toString(),
-  }))
+    ).toString()
+    return {
+      commitHash,
+      commitMessage,
+    }
+  })
 
   const changelogMessagesWithAssociatedCommits =
     associateCommitsToConventionalCommitMessages(commitsWithMessages)

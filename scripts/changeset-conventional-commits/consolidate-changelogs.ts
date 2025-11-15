@@ -66,7 +66,9 @@ async function consolidateChangelog(changelogPath: string): Promise<void> {
     }
 
     if (currentSection && line.trim()) {
-      sections.get(currentSection).push(line)
+      sections
+        .get(currentSection)
+        .push(line.trim().startsWith("- ") ? line : `- ${line.trim()}`)
     }
   }
 
