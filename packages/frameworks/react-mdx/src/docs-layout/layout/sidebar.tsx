@@ -94,7 +94,6 @@ export function Sidebar({
     // next route loads (slight delay)
     const node = collection.findNodeBy((node) => node.id === value[0])
     if (node?.pathname) {
-      console.debug(node)
       setSelectedValue(value)
     }
   }

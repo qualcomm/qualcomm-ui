@@ -1,5 +1,7 @@
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
+import {playwright} from "@vitest/browser-playwright"
+import viteTsconfigPaths from "vite-tsconfig-paths"
 import {defineConfig} from "vitest/config"
 
 const specMatchEnv = (process.env.SPEC_MATCH ?? "src/**/*.spec.tsx").split(",")
@@ -10,22 +12,7 @@ const specMatch = testComponent
   : specMatchEnv
 
 export default defineConfig({
-  optimizeDeps: {
-    include: [
-      "@qualcomm-ui/utils/array",
-      "lucide-react",
-      "react-remove-scroll",
-      "react-transition-group",
-    ],
-  },
-  plugins: [
-    tailwindcss(),
-    react({
-      babel: {
-        plugins: ["babel-plugin-react-compiler"],
-      },
-    }) as any,
-  ],
+  plugins: [tailwindcss(), viteTsconfigPaths(), react({}) as any],
   test: {
     browser: {
       enabled: true,
@@ -38,7 +25,7 @@ export default defineConfig({
       locators: {
         testIdAttribute: "data-test-id",
       },
-      provider: "playwright",
+      provider: playwright(),
       testerHtmlPath: "../react-test-utils/src/react-test-setup.html",
       viewport: {
         height: 500,
@@ -47,23 +34,10 @@ export default defineConfig({
     },
     coverage: {
       allowExternal: true,
-      enabled: true,
-      exclude: [
-        "*.ts",
-        "src/legacy/**/*.ts",
-        "src/legacy/**/*.tsx",
-        "src/index.ts",
-        "../react-test-utils/src/index.ts",
-        "dist",
-      ],
-      excludeAfterRemap: true,
-      experimentalAstAwareRemapping: true,
       provider: "v8",
-      reporter: ["html", "json"],
       reportOnFailure: true,
     },
     css: true,
-    exclude: ["src/**/q-*.spec.tsx"],
     expect: {
       poll: {
         timeout: 2500,

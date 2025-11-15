@@ -1,7 +1,7 @@
 import {Component, input, output} from "@angular/core"
 import {render} from "@testing-library/angular"
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {TooltipModule} from "@qualcomm-ui/angular/tooltip"

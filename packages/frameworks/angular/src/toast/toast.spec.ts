@@ -1,7 +1,7 @@
 import {Component, signal} from "@angular/core"
 import {render} from "@testing-library/angular"
-import {page} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page} from "vitest/browser"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 

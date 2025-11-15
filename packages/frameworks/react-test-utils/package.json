@@ -32,9 +32,10 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "^5.1.0",
-    "@vitest/browser": "^3.2.4",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/browser": "^4.0.8",
+    "@vitest/browser-playwright": "^4.0.8",
+    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/ui": "^4.0.8",
     "tailwindcss": "^4.1.17",
     "esbuild": "^0.25.8",
     "lodash-es": "^4.17.21",
@@ -44,7 +45,7 @@
     "shx": "^0.4.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vite": "npm:rolldown-vite@7.1.19",
-    "vitest": "^3.2.4",
-    "vitest-browser-react": "^1.0.0"
+    "vitest": "^4.0.8",
+    "vitest-browser-react": "^2.0.2"
   }
 }

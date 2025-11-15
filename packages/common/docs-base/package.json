@@ -34,8 +34,8 @@
     "ts-key-enum": "^2.0.12",
     "tsx": "^4.20.6",
     "typedoc": "~0.28.13",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vite": "npm:rolldown-vite@7.1.19",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   }
 }

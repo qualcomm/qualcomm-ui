@@ -1,11 +1,12 @@
 import {type HTMLAttributes, type InputHTMLAttributes, useState} from "react"
 
-import {page} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Switch} from "@qualcomm-ui/react/switch"
-import {type MultiComponentTest, runTests} from "@qualcomm-ui/react-test-utils"
+
+import {type MultiComponentTest, runTests} from "~test-utils/runner"
 
 const demoLabel = "Demo Label"
 
@@ -34,7 +35,7 @@ const tests: MultiComponentTest[] = [
     },
     testCase: (getComponent) => {
       test("checked/unchecked state", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByLabelText(demoLabel)).not.toBeChecked()
         await page.getByText(demoLabel).click()
         await expect.element(page.getByLabelText(demoLabel)).toBeChecked()
@@ -58,7 +59,7 @@ const tests: MultiComponentTest[] = [
     },
     testCase: (getComponent) => {
       test("disabled", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await expect.element(page.getByLabelText(demoLabel)).toBeDisabled()
         await expect.element(page.getByLabelText(demoLabel)).not.toBeChecked()
@@ -107,7 +108,7 @@ const tests: MultiComponentTest[] = [
     },
     testCase: (getComponent) => {
       test("parts", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await expect.element(page.getByTestId(testIds.root)).toBeVisible()
         await expect.element(page.getByTestId(testIds.label)).toBeVisible()
@@ -148,7 +149,7 @@ const tests: MultiComponentTest[] = [
     },
     testCase: (getComponent) => {
       test("controlled state - initially checked", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByLabelText(demoLabel)).toBeChecked()
         await page.getByText(demoLabel).click()
         await expect.element(page.getByLabelText(demoLabel)).not.toBeChecked()
@@ -186,7 +187,7 @@ const tests: MultiComponentTest[] = [
     },
     testCase: (getComponent) => {
       test("controlled state - initially unchecked", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByLabelText(demoLabel)).not.toBeChecked()
         await page.getByText(demoLabel).click()
         await expect.element(page.getByLabelText(demoLabel)).toBeChecked()
@@ -210,7 +211,7 @@ const tests: MultiComponentTest[] = [
     },
     testCase: (getComponent) => {
       test("default checked state", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByLabelText(demoLabel)).toBeChecked()
         await page.getByText(demoLabel).click()
         await expect.element(page.getByLabelText(demoLabel)).not.toBeChecked()

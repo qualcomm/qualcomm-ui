@@ -9,7 +9,7 @@
     "moduleResolution": "bundler",
     "paths": {
       // this is only for dev intellisense.
-      "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"]
+      "@qualcomm-ui/angular-core/*": ["./src/*"]
     }
   },
   "include": ["./src"],

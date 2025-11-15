@@ -1,14 +1,12 @@
 import {type ComponentPropsWithoutRef, useState} from "react"
 
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import {
-  type MultiComponentTestCase,
-  runTests,
-} from "@qualcomm-ui/react-test-utils"
+
+import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
 const triggerText = "Hover me"
 const tooltipContent = "Tooltip content"
@@ -41,7 +39,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("not visible by default", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByText(triggerText)).toBeVisible()
         await expect.element(page.getByRole("tooltip")).not.toBeInTheDocument()
       })
@@ -74,7 +72,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("visible when trigger hovered over", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
       })
@@ -107,7 +105,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("visible when trigger focused", async () => {
-        render(getComponent())
+        await render(getComponent())
         await userEvent.tab()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
       })
@@ -140,7 +138,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("closes when trigger not hovered over", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
         await page.getByText(triggerText).unhover()
@@ -175,7 +173,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("closes when trigger loses focus", async () => {
-        render(getComponent())
+        await render(getComponent())
         await userEvent.tab()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
         await userEvent.tab()
@@ -210,7 +208,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("closes on click by default", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
         await page.getByText(triggerText).click()
@@ -245,7 +243,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("closes on Esc by default", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
         await userEvent.keyboard("{Escape}")
@@ -283,7 +281,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("visible when using `open` prop", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByRole("tooltip")).toBeVisible()
       })
     },
@@ -318,7 +316,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("doesn't open when `disabled` is true", async () => {
-        render(getComponent())
+        await render(getComponent())
         await userEvent.tab()
         await expect.element(page.getByRole("tooltip")).not.toBeInTheDocument()
         await page.getByText(triggerText).hover()
@@ -356,7 +354,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("doesn't close on click when `closeOnClick` is false", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
         await page.getByText(triggerText).click()
@@ -394,7 +392,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("doesn't close on Escape when `closeOnEscape` is false", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
         await userEvent.keyboard("{Escape}")
@@ -432,7 +430,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("custom placement", async () => {
-        render(getComponent())
+        await render(getComponent())
         const trigger = page.getByText(triggerText)
         await trigger.hover()
         const tooltip = page.getByRole("tooltip")
@@ -501,7 +499,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("controlled tooltip state", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByRole("tooltip")).not.toBeInTheDocument()
         await page.getByText("Toggle Tooltip").click()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
@@ -551,7 +549,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("all tooltip parts are rendered", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByTestId("positioner")).toBeVisible()
         await expect.element(page.getByTestId("content")).toBeVisible()
@@ -585,7 +583,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("tooltip without arrow", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).hover()
         await expect.element(page.getByRole("tooltip")).toBeVisible()
         await expect.element(page.getByText(tooltipContent)).toBeVisible()
@@ -619,7 +617,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("trigger has aria-describedby when open", async () => {
-        render(getComponent())
+        await render(getComponent())
         const trigger = page.getByText(triggerText)
         await expect.element(trigger).not.toHaveAttribute("aria-describedby")
         await trigger.hover()

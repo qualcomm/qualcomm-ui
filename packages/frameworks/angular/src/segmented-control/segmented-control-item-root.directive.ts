@@ -6,7 +6,7 @@ import {computed, Directive} from "@angular/core"
 import {provideCheckboxContext} from "@qualcomm-ui/angular-core/checkbox"
 import {CoreSegmentedControlItemDirective} from "@qualcomm-ui/angular-core/segmented-control"
 
-import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service.js"
+import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service"
 
 @Directive({
   providers: [provideCheckboxContext()],

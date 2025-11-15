@@ -32,7 +32,7 @@
     "lint": "eslint --quiet",
     "test": "vitest -c vitest.config.ts --run",
     "test:coverage": "vitest -c vitest.config.ts --run --coverage",
-    "test:react:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --poolOptions.forks.maxForks=1 --no-file-parallelism",
+    "test:react:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --no-file-parallelism",
     "test:watch": "cross-env vitest -c vitest.config.ts",
     "test:file": "pnpm qui-test-utils",
     "prepublishOnly": "qui-cli pre-publish",
@@ -56,9 +56,10 @@
     "@types/react-dom": "catalog:",
     "@types/react-transition-group": "^4.4.6",
     "@vitejs/plugin-react": "^5.1.0",
-    "@vitest/browser": "^3.2.4",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/browser": "^4.0.8",
+    "@vitest/browser-playwright": "^4.0.8",
+    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/ui": "^4.0.8",
     "babel-plugin-react-compiler": "^1.0.0",
     "esbuild": "^0.25.8",
     "lucide-react": "0.525.0",
@@ -74,8 +75,8 @@
     "typescript-plugin-css-modules": "^5.0.1",
     "vite": "npm:rolldown-vite@7.1.19",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4",
-    "vitest-browser-react": "^1.0.0"
+    "vitest": "^4.0.8",
+    "vitest-browser-react": "^2.0.2"
   },
   "peerDependencies": {
     "@tanstack/react-virtual": ">=3.13.9",

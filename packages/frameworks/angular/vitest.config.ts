@@ -1,7 +1,6 @@
-/// <reference types="@vitest/browser/providers/playwright" />
-
 import angular from "@analogjs/vite-plugin-angular"
 import tailwindcss from "@tailwindcss/vite"
+import {playwright} from "@vitest/browser-playwright"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import {defineConfig} from "vite"
@@ -38,12 +37,11 @@ export default defineConfig(({mode}) => ({
           locators: {
             testIdAttribute: "data-test-id",
           },
-          providerOptions: {
-            context: {actionTimeout: 3000},
-          },
         },
       ],
-      provider: "playwright",
+      provider: playwright({
+        actionTimeout: 3000,
+      }),
       testerHtmlPath: "./test/test-setup.html",
       viewport: {
         height: 500,
@@ -51,18 +49,9 @@ export default defineConfig(({mode}) => ({
       },
     },
     coverage: {
-      exclude: [
-        "src/**/*index.ts",
-        "src/**/*.spec.ts",
-        "src/types/**",
-        // the following components are deprecated
-        "src/components/dialog/**",
-        "src/components/select/**",
-        "src/components/wrap-balancer/**",
-      ],
-      include: ["src/**/*"],
+      allowExternal: true,
       provider: "v8",
-      reporter: ["html"],
+      reportOnFailure: true,
     },
     css: true,
     expect: {

@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 import {render} from "@testing-library/angular"
-import {page} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page} from "vitest/browser"
 
 import {DividerDirective} from "@qualcomm-ui/angular/divider"
 

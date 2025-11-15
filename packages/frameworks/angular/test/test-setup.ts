@@ -1,6 +1,6 @@
-/// <reference types="@vitest/browser/matchers" />
 import "@angular/compiler"
 import "@analogjs/vitest-angular/setup-snapshots"
+
 import {NgModule, provideZonelessChangeDetection} from "@angular/core"
 import {getTestBed} from "@angular/core/testing"
 import {
@@ -35,8 +35,4 @@ export class ZonelessTestModule {}
 getTestBed().initTestEnvironment(
   [BrowserTestingModule, ZonelessTestModule],
   platformBrowserTesting(),
-  {
-    // keep the test rendered in the UI to help with debugging.
-    teardown: {destroyAfterEach: false},
-  },
 )

@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.1.1",
     "prettier": "^3.6.2",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "typescript-eslint": "catalog:"
   },
   "peerDependencies": {

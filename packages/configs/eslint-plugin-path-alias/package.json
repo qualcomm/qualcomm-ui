@@ -32,6 +32,6 @@
     "@typescript-eslint/utils": "catalog:",
     "@typescript-eslint/rule-tester": "^8.31.1",
     "typescript-eslint": "catalog:",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   }
 }

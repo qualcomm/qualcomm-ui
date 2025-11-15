@@ -142,7 +142,7 @@
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "unified": "^11.0.5",
     "vite": "npm:rolldown-vite@7.1.19",
     "vite-tsconfig-paths": "^5.1.4"

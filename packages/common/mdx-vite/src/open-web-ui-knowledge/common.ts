@@ -131,7 +131,7 @@ export class KnowledgeApi {
     name: string,
   ): Promise<{filename?: string; id?: string}> {
     const formData = new FormData()
-    formData.append("file", new Blob([fileBuffer]), name)
+    formData.append("file", new Blob([fileBuffer as BlobPart]), name)
     formData.append("knowledge_id", this.config.knowledgeId)
 
     return fetch(`${this.config.webUiUrl}/api/v1/files/`, {

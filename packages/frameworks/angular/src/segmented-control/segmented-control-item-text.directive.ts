@@ -5,7 +5,7 @@ import {computed, Directive} from "@angular/core"
 
 import {CoreSegmentedControlItemTextDirective} from "@qualcomm-ui/angular-core/segmented-control"
 
-import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service.js"
+import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service"
 
 /**
  * The text of the segmented control item.
