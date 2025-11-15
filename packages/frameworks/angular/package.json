@@ -13,8 +13,8 @@
   "exports": {
     "./*": {
       "types": "./dist/*/index.d.ts",
-      "import": "./dist/fesm2022/*.mjs",
-      "default": "./dist/fesm2022/*.mjs"
+      "import": "./dist/fesm2022/qualcomm-ui-angular-*.mjs",
+      "default": "./dist/fesm2022/qualcomm-ui-angular-*.mjs"
     }
   },
   "scripts": {
