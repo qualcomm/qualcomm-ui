@@ -1,5 +1,15 @@
 # @qualcomm-ui/angular
 
+## 1.1.1 (2025/11/15)
+
+### Build System
+
+- use fesm format
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/angular-core]
+
 ## 1.1.0 (2025/11/14)
 
 ### Features
