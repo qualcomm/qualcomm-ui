@@ -52,7 +52,7 @@
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
     "tailwindcss": ">=4"

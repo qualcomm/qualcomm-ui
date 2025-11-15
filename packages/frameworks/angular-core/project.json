@@ -6,7 +6,6 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "cache": true,
       "dependsOn": [
         {
           "projects": ["@qualcomm-ui/angular-core"],

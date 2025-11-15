@@ -2,6 +2,6 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "@qualcomm-ui/angular-core": "packages/angular-core"
+    "@qualcomm-ui/angular-core": "packages/frameworks/angular-core"
   }
 }
