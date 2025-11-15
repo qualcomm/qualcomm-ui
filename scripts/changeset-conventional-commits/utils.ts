@@ -109,7 +109,7 @@ export const conventionalMessagesWithCommitsToChangesets = (
 ) => {
   const {ignoredFiles = [], packages} = options
   return conventionalMessagesToCommits
-    .map((entry) => {
+    .flatMap((entry) => {
       const filesChanged = getFilesChangedSince({
         from: entry.commitHashes[0],
         to: entry.commitHashes[entry.commitHashes.length - 1],
@@ -119,12 +119,11 @@ export const conventionalMessagesWithCommitsToChangesets = (
         )
       })
       const packagesChanged = packages.filter((pkg) => {
-        return filesChanged.some((file) =>
-          file.match(pkg.dir.replace(`${getRepoRoot()}/`, "")),
-        )
+        const pkgPath = pkg.dir.replace(`${getRepoRoot()}/`, "")
+        return filesChanged.some((file) => file.startsWith(`${pkgPath}/`))
       })
       if (packagesChanged.length === 0) {
-        return null
+        return []
       }
 
       const allConventionalCommits = entry.commitHashes
@@ -134,25 +133,24 @@ export const conventionalMessagesWithCommitsToChangesets = (
         })
         .filter((msg, index, self) => self.indexOf(msg) === index)
 
-      const hasBreaking = allConventionalCommits.some(isBreakingChange)
-      const hasFeat = allConventionalCommits.some((msg) =>
-        msg.startsWith("feat"),
-      )
+      return allConventionalCommits.map((conventionalCommit) => {
+        const changeType = isBreakingChange(conventionalCommit)
+          ? "major"
+          : conventionalCommit.startsWith("feat")
+            ? "minor"
+            : "patch"
 
-      const changeType = hasBreaking ? "major" : hasFeat ? "minor" : "patch"
-
-      return {
-        packagesChanged,
-        releases: packagesChanged.map((pkg) => {
-          return {
+        return {
+          packagesChanged,
+          releases: packagesChanged.map((pkg) => ({
             name: pkg.packageJson.name,
             type: changeType,
-          }
-        }),
-        summary: allConventionalCommits.join("\n"),
-      }
+          })),
+          summary: conventionalCommit,
+        } as Changeset
+      })
     })
-    .filter(Boolean) as Changeset[]
+    .filter(Boolean)
 }
 
 export const gitFetch = (branch: string) => {

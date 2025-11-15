@@ -68,7 +68,7 @@
   },
   "peerDependencies": {
     "@commander-js/extra-typings": ">=13.1.0",
-    "@qualcomm-ui/typedoc-common": ">=workspace:^1",
+    "@qualcomm-ui/typedoc-common": "workspace:^1",
     "prettier": ">=3 <4",
     "typedoc": ">=0.28.4",
     "typescript": ">=5.3.3",
