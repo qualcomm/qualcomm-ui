@@ -49,8 +49,8 @@
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/ui": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
@@ -64,7 +64,7 @@
     "tsx": "^4.20.6",
     "typedoc": "~0.28.13",
     "vite": "npm:rolldown-vite@7.1.19",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   },
   "peerDependencies": {
     "@commander-js/extra-typings": ">=13.1.0",
