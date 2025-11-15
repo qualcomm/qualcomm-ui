@@ -1,5 +1,6 @@
 import {getPackages} from "@manypkg/get-packages"
 import {Octokit} from "@octokit/rest"
+import chalk from "chalk"
 import {readFile} from "node:fs/promises"
 import {resolve} from "node:path"
 import {cwd} from "node:process"
@@ -66,13 +67,7 @@ async function getPublishablePackages() {
   })
 }
 
-let i = 0
-
 for (const pkg of await getPublishablePackages()) {
-  if (i === 1) {
-    continue
-  }
-  i++
   const changelogPath = `${pkg.dir}/CHANGELOG.md`
   const changelog = await parseChangelog(changelogPath).catch(() => null)
 
@@ -90,12 +85,33 @@ for (const pkg of await getPublishablePackages()) {
 
   const tag = `${pkg.packageJson.name}@${changelog.version}`
 
-  console.log(`Creating release: ${tag}`)
-  await octokit.repos.createRelease({
-    body: changelog.body,
-    name: tag,
+  const repoOpts: {
+    owner: string
+    repo: string
+  } = {
     owner: "qualcomm",
     repo: "qualcomm-ui",
+  }
+
+  const release = await octokit.repos
+    .getReleaseByTag({
+      ...repoOpts,
+      tag,
+    })
+    .catch(() => null)
+
+  if (release) {
+    console.log(
+      `Release ${chalk.yellowBright(release.data.name)} already exists, skipping`,
+    )
+    continue
+  }
+
+  console.log(`Creating release: ${chalk.cyanBright(tag)}`)
+  await octokit.repos.createRelease({
+    ...repoOpts,
+    body: changelog.body,
+    name: tag,
     tag_name: tag,
   })
 }
