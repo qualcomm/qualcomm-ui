@@ -37,7 +37,6 @@
     "@qualcomm-ui/react-table-docs",
     "@qualcomm-ui/qui-site",
     "@qualcomm-ui/angular-ssr",
-    "react-ssr",
-    "codemod"
+    "react-ssr"
   ]
 }
