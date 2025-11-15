@@ -27,6 +27,7 @@
     "qui-docs": "pnpm -C packages/docs/qui-docs",
     "react-docs": "pnpm -C packages/docs/react-docs",
     "react-table-docs": "pnpm -C packages/docs/react-table-docs",
+    "react-test-utils": "pnpm -C packages/frameworks/react-test-utils",
     "core": "pnpm -C packages/common/core",
     "dom": "pnpm -C packages/common/dom",
     "mdx-docs": "pnpm -C packages/frameworks/mdx-docs",

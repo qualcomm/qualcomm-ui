@@ -1,14 +1,12 @@
 import {type HTMLAttributes, useState} from "react"
 
-import {page} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Progress} from "@qualcomm-ui/react/progress"
-import {
-  type MultiComponentTestCase,
-  runTests,
-} from "@qualcomm-ui/react-test-utils"
+
+import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
 const testLabel = "Test Progress"
 const errorMessage = "Error occurred"
@@ -39,7 +37,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Basic accessibility", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByLabelText(testLabel)).toBeVisible()
         await expect
           .element(page.getByLabelText(testLabel))
@@ -63,7 +61,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Progress with value", async () => {
-        render(getComponent())
+        await render(getComponent())
         const progressbar = page.getByRole("progressbar")
         await expect.element(progressbar).toHaveAttribute("aria-valuenow", "50")
         await expect.element(progressbar).toHaveAttribute("aria-valuemin", "0")
@@ -92,7 +90,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Complete progress", async () => {
-        render(getComponent())
+        await render(getComponent())
         const progressbar = page.getByRole("progressbar")
         await expect
           .element(progressbar)
@@ -119,7 +117,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Indeterminate progress", async () => {
-        render(getComponent())
+        await render(getComponent())
         const progressbar = page.getByRole("progressbar")
         await expect.element(progressbar).not.toHaveAttribute("aria-valuenow")
         await expect
@@ -144,7 +142,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Custom min/max values", async () => {
-        render(getComponent())
+        await render(getComponent())
         const progressbar = page.getByRole("progressbar")
         await expect.element(progressbar).toHaveAttribute("aria-valuenow", "50")
         await expect.element(progressbar).toHaveAttribute("aria-valuemin", "10")
@@ -171,7 +169,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Invalid progress with error text", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByText(errorMessage)).toBeVisible()
       })
     },
@@ -203,7 +201,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Progress with value text", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByText("75/100")).toBeVisible()
       })
     },
@@ -248,7 +246,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Controlled progress value", async () => {
-        render(getComponent())
+        await render(getComponent())
         const progressbar = page.getByRole("progressbar")
         await expect.element(progressbar).toHaveAttribute("aria-valuenow", "25")
         await page.getByText("Update Progress").click()
@@ -272,7 +270,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Default value", async () => {
-        render(getComponent())
+        await render(getComponent())
         const progressbar = page.getByRole("progressbar")
         await expect.element(progressbar).toHaveAttribute("aria-valuenow", "30")
       })
@@ -336,7 +334,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("All progress parts", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByTestId(testIds.root)).toBeVisible()
         await expect.element(page.getByTestId(testIds.label)).toBeVisible()
         await expect.element(page.getByTestId(testIds.valueText)).toBeVisible()

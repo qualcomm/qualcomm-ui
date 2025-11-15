@@ -1,12 +1,12 @@
-import {page} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Divider} from "@qualcomm-ui/react/divider"
 
 describe("Divider", () => {
   test("should take up the full width of its parent container when horizontal", async () => {
-    render(
+    await render(
       <div style={{height: 100, width: 100}}>
         <Divider />
       </div>,
@@ -17,7 +17,7 @@ describe("Divider", () => {
   })
 
   test("should take up the full height of its parent container when vertical", async () => {
-    render(
+    await render(
       <div style={{height: 100, maxHeight: 100}}>
         <Divider aria-orientation="vertical" />
       </div>,

@@ -38,9 +38,6 @@
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },
-  "dependencies": {
-    "react-remove-scroll": "2.6.3"
-  },
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "esbuild": "^0.25.8",
@@ -78,7 +75,7 @@
     "vite": "npm:rolldown-vite@7.1.19",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.8",
-    "vitest-browser-react": "^1.0.0"
+    "vitest-browser-react": "^2.0.2"
   },
   "peerDependencies": {
     "@qualcomm-ui/core": "workspace:^1.0.5",

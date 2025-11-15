@@ -49,18 +49,9 @@ export default defineConfig(({mode}) => ({
       },
     },
     coverage: {
-      exclude: [
-        "src/**/*index.ts",
-        "src/**/*.spec.ts",
-        "src/types/**",
-        // the following components are deprecated
-        "src/components/dialog/**",
-        "src/components/select/**",
-        "src/components/wrap-balancer/**",
-      ],
-      include: ["src/**/*"],
+      allowExternal: true,
       provider: "v8",
-      reporter: ["html"],
+      reportOnFailure: true,
     },
     css: true,
     expect: {
