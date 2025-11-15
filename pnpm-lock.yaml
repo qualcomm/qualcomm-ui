@@ -3446,10 +3446,10 @@ importers:
         specifier: workspace:^1
         version: link:../../common/cli
       '@qualcomm-ui/core':
-        specifier: workspace:1.0.3
+        specifier: workspace:^1.0.3
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:1.0.4
+        specifier: workspace:^1.0.4
         version: link:../../common/dom
       '@qualcomm-ui/tailwind-plugin':
         specifier: workspace:^1
@@ -3549,16 +3549,16 @@ importers:
         specifier: workspace:^1.0.5
         version: link:../../common/cli
       '@qualcomm-ui/core':
-        specifier: workspace:1.0.5
+        specifier: workspace:^1.0.5
         version: link:../../common/core
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1.0.3
         version: link:../../common/esbuild
       '@qualcomm-ui/qds-core':
-        specifier: workspace:1.0.5
+        specifier: workspace:^1.0.5
         version: link:../../common/qds-core
       '@qualcomm-ui/react-core':
-        specifier: workspace:1.0.3
+        specifier: workspace:^1.0.3
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.0
@@ -3673,10 +3673,10 @@ importers:
         specifier: workspace:^1.0.5
         version: link:../../common/cli
       '@qualcomm-ui/core':
-        specifier: workspace:1.0.5
+        specifier: workspace:^1.0.5
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:1.0.3
+        specifier: workspace:^1.0.3
         version: link:../../common/dom
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1.0.3
@@ -3800,13 +3800,13 @@ importers:
         specifier: workspace:^1.0.5
         version: link:../../common/cli
       '@qualcomm-ui/core':
-        specifier: workspace:1.0.5
+        specifier: workspace:^1.0.5
         version: link:../../common/core
       '@qualcomm-ui/css-utils':
         specifier: workspace:^1.0.3
         version: link:../../common/css-utils
       '@qualcomm-ui/dom':
-        specifier: workspace:1.0.4
+        specifier: workspace:^1.0.4
         version: link:../../common/dom
       '@qualcomm-ui/esbuild':
         specifier: workspace:^1.0.3
@@ -3815,10 +3815,10 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/mdx-common
       '@qualcomm-ui/react':
-        specifier: workspace:1.0.5
+        specifier: workspace:^1.0.5
         version: link:../react
       '@qualcomm-ui/react-core':
-        specifier: workspace:1.0.3
+        specifier: workspace:^1.0.3
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.0
