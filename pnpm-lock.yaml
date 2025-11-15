@@ -200,6 +200,9 @@ importers:
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
       eslint:
         specifier: 9.37.0
         version: 9.37.0(jiti@2.6.1)
@@ -771,7 +774,7 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
       dotenv:
-        specifier: ^17.2.1
+        specifier: ^17.2.3
         version: 17.2.3
       esbuild:
         specifier: ^0.25.8

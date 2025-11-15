@@ -1,11 +1,14 @@
 import {getPackages} from "@manypkg/get-packages"
 import {Octokit} from "@octokit/rest"
 import chalk from "chalk"
+import {config} from "dotenv"
 import {readFile} from "node:fs/promises"
 import {resolve} from "node:path"
 import {cwd} from "node:process"
 
-const octokit = new Octokit({auth: process.env.GITHUB_TOKEN})
+config()
+
+const octokit = new Octokit({auth: process.env.TOKEN})
 
 async function parseChangelog(path: string) {
   const content = await readFile(path, "utf-8")
