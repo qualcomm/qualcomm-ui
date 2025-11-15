@@ -34,16 +34,16 @@ const changelogFunctions = {
     const prNumber = prMatch?.[1]
 
     const typeMatch = cleanedSummary.match(
-      /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)(\(.+?\))?!?:\s*/i,
+      /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)\s*(\(.+?\))?!?:\s*/i,
     )
     const conventionalType = typeMatch?.[1]?.toLowerCase()
+    const scope = typeMatch?.[2]?.replace("(", "").replace(")", "") // Capture scope like "(avatar)"
     const isBreaking =
       cleanedSummary.includes("!:") ||
       cleanedSummary.toLowerCase().includes("breaking")
-
     const summary = cleanedSummary
       .replace(
-        /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)(\(.+?\))?!?:\s*/i,
+        /^(feat|fix|refactor|chore|perf|test|docs|style|ci|build)\s*(\(.+?\))?!?:\s*/i,
         "",
       )
       .replace(/\s*\(#\d+\)\s*$/, "")
@@ -66,7 +66,7 @@ const changelogFunctions = {
       ? "⚠ BREAKING CHANGES"
       : typeMap[conventionalType] || "Miscellaneous"
 
-    let line = `### ${section}\n* ${summary}`
+    let line = `### ${section}\n* ${scope ? `[${scope}]: ` : ""}${summary}`
 
     if (prNumber) {
       line += ` ([#${prNumber}](https://github.com/${options.repo}/issues/${prNumber}))`

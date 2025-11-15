@@ -830,6 +830,37 @@
     ]
   },
   {
+    "kbd": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/kbd+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/kbd+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/kbd",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/kbd"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/kbd"
+      }
+    ]
+  },
+  {
     "menu": [
       {
         "description": "angular-docs",
@@ -1366,6 +1397,12 @@
   {
     "slider": [
       {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/slider+",
+        "line": "-1"
+      },
+      {
         "description": "react-docs",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
         "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/slider+"
@@ -1401,12 +1438,6 @@
         "description": "qds-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
         "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/slider"
-      },
-      {
-        "description": "angular-docs",
-        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/slider+",
-        "line": "-1"
       }
     ]
   },

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/qds-core",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "qds core components",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
@@ -54,7 +54,7 @@
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish",
-    "extract-design-tokens": "tsx scripts/token-builder.ts"
+    "update-design-tokens": "tsx scripts/token-builder.ts"
   },
   "devDependencies": {
     "@figma/rest-api-spec": "^0.31.0",
@@ -62,7 +62,7 @@
     "@qualcomm-ui/core": "workspace:^1.0.5",
     "@qualcomm-ui/css-utils": "workspace:^1.0.3",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@types/culori": "^4.0.0",
     "@types/lodash-es": "^4.17.12",

@@ -94,7 +94,7 @@
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/mdx-common": "workspace:^1.0.3",
     "@qualcomm-ui/utils": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "^4.17.12",

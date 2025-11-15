@@ -285,6 +285,10 @@ div.mdx.table-wrapper {
   margin-top: var(--qui-mdx-margin-default);
   overflow-x: auto;
   width: 100%;
+
+  .qui-table__root {
+    min-width: fit-content;
+  }
 }
 
 td.mdx {

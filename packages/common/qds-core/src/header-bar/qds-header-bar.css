@@ -49,6 +49,7 @@
 
 .qui-header-bar__nav-item {
   align-items: center;
+  background: transparent;
   border: solid 1px transparent;
   border-radius: var(--border-radius-xs);
   box-sizing: border-box;

@@ -1,5 +1,24 @@
 # @qualcomm-ui/qds-core
 
+## 1.1.0 (2025/11/14)
+
+### Features
+
+- add kbd shortcut component
+
+### Bug Fixes
+
+- [tree]: show pointer cursor for clickable node
+- [tree]: remove default browser style for link nodes
+- checkmark vertical alignment
+- header nav item background color
+- [progress-ring]: fix circle vertical alignment
+- [avatar]: apply hidden style when hidden attribute is present
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils]
+
 ## 1.0.5 (2025/11/14)
 
 ### Bug Fixes

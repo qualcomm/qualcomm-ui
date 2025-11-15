@@ -1,6 +1,9 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+@source "../../../docs/react-docs/src/routes//components+";
 
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
@@ -36,10 +39,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3rem;
-}
-
-.section {
-  margin-bottom: 3rem;
 }
 
 .section-title {

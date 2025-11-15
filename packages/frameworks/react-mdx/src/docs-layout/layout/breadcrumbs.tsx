@@ -54,7 +54,7 @@ export function DocsBreadcrumbs({
 
         acc.push({
           children: pageTitle,
-          id: pageTitle,
+          id: route?.pathname ?? route?.id ?? pageTitle,
           render: route?.pathname ? (
             <Link href={route.pathname} />
           ) : (

@@ -23,7 +23,15 @@ export default {
     {
       children: [
         {
+          id: "overview",
+        },
+        {
           id: "introduction-to-javascript",
+        },
+        {
+          children: [{id: "clean-code"}],
+          id: "clean-code",
+          ignoreRouteMetaOrder: true,
         },
       ],
       id: "patterns",
