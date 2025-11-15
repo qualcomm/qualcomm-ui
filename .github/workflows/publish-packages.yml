@@ -1,13 +1,10 @@
-name: "Publish Packages"
+name: "Publish Packages and Create Releases"
 env:
   IS_CI: true
   TURBO_API: "http://127.0.0.1:8585"
   TURBO_TEAM: "qualcomm-ui"
   TURBO_TOKEN: "turbo-cache-token"
 on:
-  push:
-    tags:
-    - 'release/*'
   workflow_dispatch:
 
 permissions:
@@ -15,7 +12,7 @@ permissions:
   contents: read
 
 jobs:
-  build-and-publish:
+  publish-and-create-releases:
     runs-on: ubuntu-latest
     concurrency:
       group: PR Build - ${{github.head_ref}}
@@ -46,3 +43,6 @@ jobs:
 
     - name: publish
       run: pnpm publish:all
+
+    - name: create releases
+      run: pnpm tsx scripts/release/create-github-releases.ts
