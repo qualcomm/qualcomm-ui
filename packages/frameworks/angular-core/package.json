@@ -10,15 +10,9 @@
   "type": "module",
   "exports": {
     "./*": {
-      "types": [
-        "./dist/*/index.d.ts"
-      ],
-      "esm2022": [
-        "./dist/esm2022/*/index.mjs"
-      ],
-      "esm": [
-        "./dist/esm2022/*/index.mjs"
-      ]
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/fesm2022/qualcomm-ui-angular-core-*.mjs",
+      "default": "./dist/fesm2022/qualcomm-ui-angular-core-*.mjs"
     }
   },
   "publishConfig": {
@@ -26,8 +20,8 @@
   },
   "scripts": {
     "ng": "ng",
-    "build": "ng-packagr -p src/ng-package.json",
-    "dev": "ng-packagr -p src/ng-package.json --watch",
+    "build": "ng-packagr -p src/ng-package.json -c tsconfig.lib.json",
+    "dev": "ng-packagr -p src/ng-package.json --watch -c tsconfig.lib.json",
     "lint": "eslint --quiet",
     "test": "vitest --run --pool=forks",
     "test:coverage": "vitest --run --coverage --coverage.enabled=true",
@@ -63,7 +57,6 @@
     "@floating-ui/dom": "^1.7.0",
     "@jsdevtools/coverage-istanbul-loader": "~3.0.5",
     "@module-federation/enhanced": "0.21.2",
-    "@nx/vite": "22.0.3",
     "@qualcomm-ui/core": "workspace:^1.0.5",
     "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/dom": "workspace:^1.0.4",

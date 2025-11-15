@@ -48,6 +48,7 @@ export class ToastProviderDirective implements OnInit {
       this.injector,
     )
 
+    // @ts-ignore - strange issue with @qualcomm-ui/angular not building properly
     this.toastApi.init(computed(() => createToastApi(machine, normalizeProps)))
   }
 }

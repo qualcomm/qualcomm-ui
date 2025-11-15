@@ -5,14 +5,16 @@ packages:
   - packages/docs/*
   - packages/frameworks/*
 
+autoInstallPeers: true
+
 catalog:
   '@analogjs/platform': 2.0.4
   '@analogjs/vite-plugin-angular': 2.0.4
   '@analogjs/vitest-angular': 2.0.4
-  '@angular/build': ~20.3.10
   '@angular-devkit/architect': 0.2003.10
   '@angular-devkit/build-angular': ~20.3.10
   '@angular-devkit/core': ~20.3.10
+  '@angular/build': ~20.3.10
   '@angular/cdk': ~20.2.13
   '@angular/cdk-experimental': ~20.2.13
   '@angular/cli': ~20.3.10
@@ -26,6 +28,7 @@ catalog:
   '@angular/platform-server': ~20.3.12
   '@angular/router': ~20.3.12
   '@angular/ssr': ~20.3.10
+  '@eslint/js': 9.37.0
   '@react-router/dev': 7.9.4
   '@react-router/express': 7.9.4
   '@react-router/node': 7.9.4
@@ -36,16 +39,12 @@ catalog:
   '@typescript-eslint/eslint-plugin': 8.46.2
   '@typescript-eslint/parser': 8.46.2
   '@typescript-eslint/utils': 8.46.2
-  '@eslint/js': 9.37.0
   esbuild: 0.25.11
   react: 19.2.0
   react-dom: 19.2.0
   react-router: 7.9.4
   tsx: 4.20.6
   typescript-eslint: 8.40.0
-
-
-autoInstallPeers: true
 
 onlyBuiltDependencies:
   - '@bundled-es-modules/glob'

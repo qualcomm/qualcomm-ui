@@ -13,14 +13,14 @@
   "exports": {
     "./*": {
       "types": "./dist/*/index.d.ts",
-      "import": "./dist/esm2022/*/index.js",
-      "default": "./dist/esm2022/*/index.js"
+      "import": "./dist/fesm2022/*.mjs",
+      "default": "./dist/fesm2022/*.mjs"
     }
   },
   "scripts": {
     "ng": "ng",
-    "build": "ng-packagr -p src/ng-package.json",
-    "dev": "ng-packagr -p src/ng-package.json --watch",
+    "build": "ng-packagr -p src/ng-package.json -c tsconfig.lib.json",
+    "dev": "tsx dev.ts",
     "lint": "eslint --quiet",
     "test": "vitest --run --pool=forks",
     "test:coverage": "vitest --run --coverage --coverage.enabled=true",
@@ -56,7 +56,6 @@
     "@floating-ui/dom": "^1.7.0",
     "@jsdevtools/coverage-istanbul-loader": "~3.0.5",
     "@module-federation/enhanced": "0.21.2",
-    "@nx/vite": "22.0.3",
     "@qualcomm-ui/angular-core": "workspace:^1.0.2",
     "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/core": "workspace:^1.0.5",
@@ -74,6 +73,7 @@
     "@vitest/browser-playwright": "^4.0.8",
     "@vitest/coverage-v8": "^4.0.8",
     "@vitest/ui": "^4.0.8",
+    "chokidar": "^4.0.3",
     "execa": "^9.6.0",
     "lucide-angular": "0.525.0",
     "ng-packagr": "~20.3.2",
