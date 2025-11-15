@@ -13,10 +13,10 @@ import {readFileSync} from "node:fs"
 import {join} from "node:path"
 
 import {
-  translateCommitsToConventionalCommitMessages,
   conventionalMessagesWithCommitsToChangesets,
   difference,
   getCommitsSinceRef,
+  translateCommitsToConventionalCommitMessages,
 } from "./utils"
 
 const CHANGESET_CONFIG_LOCATION = join(".changeset", "config.json")
