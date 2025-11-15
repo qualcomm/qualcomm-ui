@@ -58,51 +58,17 @@ export const isConventionalCommit = (commit: string) => {
 }
 
 /**
- * Attempts to associate non-conventional commits to the nearest conventional commit
+ * Filters commits to only conventional commits
  */
-export const associateCommitsToConventionalCommitMessages = (
+export const translateCommitsToConventionalCommitMessages = (
   commits: Commit[],
 ): ConventionalMessagesToCommits[] => {
-  return commits.reduce((acc, curr) => {
-    if (!acc.length) {
-      return [
-        {
-          changelogMessage: curr.commitMessage,
-          commitHashes: [curr.commitHash],
-        },
-      ]
-    }
-    if (isConventionalCommit(curr.commitMessage)) {
-      if (isConventionalCommit(acc[acc.length - 1].changelogMessage)) {
-        return [
-          ...acc,
-          {
-            changelogMessage: curr.commitMessage,
-            commitHashes: [curr.commitHash],
-          },
-        ]
-      } else {
-        return [
-          ...acc.slice(0, acc.length - 1),
-          {
-            changelogMessage: curr.commitMessage,
-            commitHashes: [
-              ...acc[acc.length - 1].commitHashes,
-              curr.commitHash,
-            ],
-          },
-        ]
-      }
-    } else {
-      return [
-        ...acc.slice(0, acc.length - 1),
-        {
-          ...acc[acc.length - 1],
-          commitHashes: [...acc[acc.length - 1].commitHashes, curr.commitHash],
-        },
-      ]
-    }
-  }, [] as ConventionalMessagesToCommits[])
+  return commits
+    .filter((commit) => isConventionalCommit(commit.commitMessage))
+    .map((commit) => ({
+      changelogMessage: commit.commitMessage,
+      commitHashes: [commit.commitHash],
+    }))
 }
 
 export const getFilesChangedSince = (opts: {from: string; to: string}) => {

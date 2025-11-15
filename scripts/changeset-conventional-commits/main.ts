@@ -13,7 +13,7 @@ import {readFileSync} from "node:fs"
 import {join} from "node:path"
 
 import {
-  associateCommitsToConventionalCommitMessages,
+  translateCommitsToConventionalCommitMessages,
   conventionalMessagesWithCommitsToChangesets,
   difference,
   getCommitsSinceRef,
@@ -47,7 +47,7 @@ async function conventionalCommitChangeset(cwd: string = process.cwd()) {
   })
 
   const changelogMessagesWithAssociatedCommits =
-    associateCommitsToConventionalCommitMessages(commitsWithMessages)
+    translateCommitsToConventionalCommitMessages(commitsWithMessages)
 
   const changesets = conventionalMessagesWithCommitsToChangesets(
     changelogMessagesWithAssociatedCommits,
