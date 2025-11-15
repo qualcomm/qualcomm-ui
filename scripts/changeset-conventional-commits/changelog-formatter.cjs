@@ -66,7 +66,7 @@ const changelogFunctions = {
       ? "⚠ BREAKING CHANGES"
       : typeMap[conventionalType] || "Miscellaneous"
 
-    let line = `### ${section}\n* ${scope ? `**${scope}:** ` : ""}${summary}`
+    let line = `### ${section}\n* ${scope ? `[${scope}]: ` : ""}${summary}`
 
     if (prNumber) {
       line += ` ([#${prNumber}](https://github.com/${options.repo}/issues/${prNumber}))`
