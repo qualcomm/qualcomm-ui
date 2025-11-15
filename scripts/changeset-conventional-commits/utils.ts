@@ -42,27 +42,27 @@ const defaultCommitTypes = [
   {section: "Continuous Integration", type: "ci"},
 ]
 
-export const isBreakingChange = (commit: string) => {
-  return (
-    commit.includes("BREAKING CHANGE:") ||
-    defaultCommitTypes.some((commitType) =>
-      commit.match(new RegExp(`^${commitType.type}(?:\(.*\))?!:`)),
-    )
+export function isConventionalCommit(commit: string) {
+  return defaultCommitTypes.some((commitType) =>
+    commit.match(new RegExp(`^${commitType.type}\\s*(?:\(.*\))?!?:`)),
   )
 }
 
-export const isConventionalCommit = (commit: string) => {
-  return defaultCommitTypes.some((commitType) =>
-    commit.match(new RegExp(`^${commitType.type}(?:\(.*\))?!?:`)),
+export function isBreakingChange(commit: string) {
+  return (
+    commit.includes("BREAKING CHANGE:") ||
+    defaultCommitTypes.some((commitType) =>
+      commit.match(new RegExp(`^${commitType.type}\\s*(?:\(.*\))?!:`)),
+    )
   )
 }
 
 /**
  * Filters commits to only conventional commits
  */
-export const translateCommitsToConventionalCommitMessages = (
+export function translateCommitsToConventionalCommitMessages(
   commits: Commit[],
-): ConventionalMessagesToCommits[] => {
+): ConventionalMessagesToCommits[] {
   return commits
     .filter((commit) => isConventionalCommit(commit.commitMessage))
     .map((commit) => ({
@@ -71,25 +71,25 @@ export const translateCommitsToConventionalCommitMessages = (
     }))
 }
 
-export const getFilesChangedSince = (opts: {from: string; to: string}) => {
+export function getFilesChangedSince(opts: {from: string; to: string}) {
   return execSync(`git diff --name-only ${opts.from}~1...${opts.to}`)
     .toString()
     .trim()
     .split("\n")
 }
 
-export const getRepoRoot = () => {
+export function getRepoRoot() {
   return execSync("git rev-parse --show-toplevel")
     .toString()
     .trim()
     .replace(/\n|\r/g, "")
 }
 
-const getCommitMessage = (commitHash: string): string => {
+function getCommitMessage(commitHash: string): string {
   return execSync(`git log -1 --pretty=%B ${commitHash}`).toString().trim()
 }
 
-const extractConventionalCommits = (commitMessage: string): string[] => {
+function extractConventionalCommits(commitMessage: string): string[] {
   const lines = commitMessage.split("\n")
   const conventionalCommits: string[] = []
 
@@ -103,10 +103,10 @@ const extractConventionalCommits = (commitMessage: string): string[] => {
   return conventionalCommits
 }
 
-export const conventionalMessagesWithCommitsToChangesets = (
+export function conventionalMessagesWithCommitsToChangesets(
   conventionalMessagesToCommits: ConventionalMessagesToCommits[],
   options: {ignoredFiles?: (string | RegExp)[]; packages: ManyPkgPackage[]},
-) => {
+) {
   const {ignoredFiles = [], packages} = options
   return conventionalMessagesToCommits
     .flatMap((entry) => {
@@ -153,11 +153,11 @@ export const conventionalMessagesWithCommitsToChangesets = (
     .filter(Boolean)
 }
 
-export const gitFetch = (branch: string) => {
+export function gitFetch(branch: string) {
   execSync(`git fetch origin ${branch}`)
 }
 
-export const getCurrentBranch = () => {
+export function getCurrentBranch() {
   return execSync("git rev-parse --abbrev-ref HEAD").toString().trim()
 }
 
@@ -165,7 +165,7 @@ export const getCurrentBranch = () => {
 // main branch. If this is running on the main branch, we want to get all commits
 // since the last release. If this is running on a branch that was created from the
 // main branch, we want to get all commits since the branch was created.
-export const getCommitsSinceRef = (branch: string) => {
+export function getCommitsSinceRef(branch: string) {
   gitFetch(branch)
   const currentBranch = getCurrentBranch()
   let sinceRef = `origin/${branch}`
@@ -187,14 +187,14 @@ export const getCommitsSinceRef = (branch: string) => {
     .reverse()
 }
 
-const compareChangeSet = (a: Changeset, b: Changeset): boolean => {
+function compareChangeSet(a: Changeset, b: Changeset): boolean {
   return (
     a.summary.replace(/\n$/, "") === b.summary &&
     JSON.stringify(a.releases) === JSON.stringify(b.releases)
   )
 }
 
-export const difference = (a: Changeset[], b: Changeset[]): Changeset[] => {
+export function difference(a: Changeset[], b: Changeset[]): Changeset[] {
   return a.filter(
     (changeA) => !b.some((changeB) => compareChangeSet(changeA, changeB)),
   )
