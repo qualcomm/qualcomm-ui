@@ -1,5 +1,16 @@
 # @qualcomm-ui/react
 
+## 1.1.0 (2025/11/14)
+
+### Features
+
+- add kbd shortcut component
+
+### Miscellaneous Chores
+
+- remove unused dependencies
+- **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/utils]
+
 ## 1.0.5 (2025/11/14)
 
 ### Performance Improvements

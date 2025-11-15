@@ -38,7 +38,7 @@
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@types/mdast": "^4.0.4",
     "@types/node": "~24.9.2",
     "@vitest/coverage-v8": "^3.2.4",

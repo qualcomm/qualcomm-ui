@@ -25,7 +25,7 @@
     "lint": "eslint --quiet"
   },
   "devDependencies": {
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@types/stringify-object": "^4.0.5",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
