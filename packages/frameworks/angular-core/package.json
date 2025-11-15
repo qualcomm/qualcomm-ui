@@ -25,7 +25,7 @@
     "lint": "eslint --quiet",
     "test": "vitest --run --pool=forks",
     "test:coverage": "vitest --run --coverage --coverage.enabled=true",
-    "test:angular-core:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --poolOptions.forks.maxForks=1 --no-file-parallelism",
+    "test:angular-core:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --no-file-parallelism",
     "test:ui": "vitest --ui",
     "build:bundle-size": "ng build test-bundle-size-app",
     "analyze-bundle": "source-map-explorer bundle-size-dist/main.js",

@@ -40,7 +40,7 @@
     "lint": "eslint --quiet",
     "test": "vitest -c vitest.config.ts --run",
     "test:coverage": "vitest -c vitest.config.ts --run --coverage",
-    "test:mdx-docs:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --poolOptions.forks.maxForks=1 --no-file-parallelism",
+    "test:mdx-docs:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --no-file-parallelism",
     "test:watch": "cross-env vitest -c vitest.config.ts --ui --coverage --coverage.enabled=true",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
