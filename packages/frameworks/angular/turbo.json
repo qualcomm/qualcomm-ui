@@ -1,9 +1,6 @@
 {
   "extends": ["//"],
   "tasks": {
-    "dev": {
-      "persistent": false
-    },
     "build": {
       "inputs": [
         "*.json",

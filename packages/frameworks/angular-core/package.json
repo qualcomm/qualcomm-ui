@@ -21,7 +21,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng-packagr -p src/ng-package.json -c tsconfig.lib.json",
-    "dev": "ng-packagr -p src/ng-package.json --watch -c tsconfig.lib.json",
+    "dev": "pnpm build --watch",
     "lint": "eslint --quiet",
     "test": "vitest --run --pool=forks",
     "test:coverage": "vitest --run --coverage --coverage.enabled=true",
