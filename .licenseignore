@@ -15,6 +15,7 @@ scripts/*
 # test files
 **/test/**
 **/tests/**
+**/test-utils/**
 **/__tests__/**
 **/__mocks__/**
 **/__spec__/**
@@ -34,5 +35,6 @@ packages/*/*/scripts/*
 # typescript typedefs
 **/*.d.ts
 
-# documentation sites
+# documentation and debug sites
 packages/docs/**/*
+packages/debug-apps/**/*

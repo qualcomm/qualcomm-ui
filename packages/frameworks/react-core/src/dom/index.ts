@@ -1,6 +1,5 @@
 export * from "./get-valid-children"
 export * from "./is-action-element"
-export * from "./use-clickable"
 export * from "./use-event-listeners"
 export * from "./use-grouped-children"
 export * from "./use-intersection-observer"

@@ -1,8 +1,10 @@
 {
   "name": "@qualcomm-ui/cli",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Dev utils and scripts in a convenient CLI",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -10,6 +12,7 @@
   "bin": {
     "qui-cli": "./lib/cli.cjs"
   },
+  "types": "./dist/modules/index.d.ts",
   "files": [
     "dist",
     "lib"
@@ -23,15 +26,17 @@
     "dev": "run-p watch:cli watch:types",
     "watch:cli": "tsx build.ts --mode development --watch",
     "watch:types": "tsc -b tsconfig.lib.json -w --preserveWatchOutput --force",
-    "lint": "eslint --quiet"
+    "lint": "eslint --quiet",
+    "prepublishOnly": "node lib/cli.cjs pre-publish",
+    "postpublish": "node lib/cli.cjs post-publish"
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
     "commander": "^14.0.2",
-    "dayjs": "^1.11.13",
+    "dayjs": "^1.11.19",
     "esbuild": "^0.25.8",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   }
 }

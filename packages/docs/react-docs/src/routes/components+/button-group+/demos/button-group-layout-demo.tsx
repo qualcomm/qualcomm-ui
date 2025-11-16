@@ -13,7 +13,7 @@ export default function ButtonGroupLayoutDemo(): ReactElement {
         (layout) => (
           <ButtonGroup
             key={layout}
-            className="border-brand-primary-subtle border-1 border-dashed p-1.5"
+            className="border-brand-primary border-1 border-dashed p-1.5"
             layout={layout}
           >
             <Button startIcon={AArrowDown} variant="ghost">

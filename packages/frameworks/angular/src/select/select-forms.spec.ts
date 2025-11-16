@@ -6,8 +6,8 @@ import {
   Validators,
 } from "@angular/forms"
 import {render} from "@testing-library/angular"
-import {page} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page} from "vitest/browser"
 
 import {SelectModule} from "@qualcomm-ui/angular/select"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
@@ -45,7 +45,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -118,7 +118,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -194,7 +194,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -283,7 +283,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -353,7 +353,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -426,7 +426,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -508,7 +508,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -593,7 +593,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>
@@ -675,7 +675,7 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-select-control>
               <span q-select-value-text></span>
-              <div q-select-indicator></div>
+              <button q-select-indicator></button>
             </div>
 
             <select q-select-hidden-select></select>

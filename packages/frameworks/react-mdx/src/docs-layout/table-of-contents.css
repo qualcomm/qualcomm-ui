@@ -30,6 +30,11 @@
   padding: 4px 0;
   position: relative;
 
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
   &:hover,
   &.q-active {
     color: var(--color-text-neutral-primary);

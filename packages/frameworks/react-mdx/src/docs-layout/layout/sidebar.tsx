@@ -243,7 +243,12 @@ export function Sidebar({
             indexPath={[index]}
             node={item}
             renderBranch={({node}) => (
-              <SideNav.BranchNode>
+              <SideNav.BranchNode
+                // TODO: deprecate route navigation from branch nodes (anti-pattern)
+                render={
+                  node.pathname ? <RenderLink href={node.pathname} /> : <div />
+                }
+              >
                 <SideNav.NodeText>{node.title}</SideNav.NodeText>
                 <SideNav.BranchTrigger />
               </SideNav.BranchNode>

@@ -65,12 +65,15 @@
 .qui-accordion__item-trigger {
   align-items: center;
   background-color: var(--color-interactive-background-ghost-idle);
+  border: 0 solid;
+  box-sizing: border-box;
   color: var(--color-interactive-text-neutral-idle);
   column-gap: var(--accordion-trigger-gap);
   cursor: pointer;
   display: flex;
   font: var(--accordion-trigger-font);
   justify-items: start;
+  margin: 0;
   padding-block: var(--accordion-trigger-padding-block);
   padding-inline: var(--accordion-trigger-padding-inline);
   position: relative;

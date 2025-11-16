@@ -1,5 +1,5 @@
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {items, TestAccordion, testIds} from "./test-accordion"
@@ -13,7 +13,7 @@ describe("Accordion", () => {
   const contentC = page.getByTestId(testIds.accordionContent + items[2].value)
 
   test("renders all items closed by default", async () => {
-    render(<TestAccordion />)
+    await render(<TestAccordion />)
     for (let i = 0; i < items.length; i++) {
       await expect
         .element(page.getByTestId(testIds.accordionItem + items[i].value))
@@ -26,7 +26,7 @@ describe("Accordion", () => {
   })
 
   test("single mode (default) should allow only open one item at a time", async () => {
-    render(<TestAccordion />)
+    await render(<TestAccordion />)
     await triggerA.click()
     await expect.element(contentA).toBeVisible()
     await triggerB.click()
@@ -35,7 +35,7 @@ describe("Accordion", () => {
   })
 
   test("single mode (default) should not allow closing an open item", async () => {
-    render(<TestAccordion />)
+    await render(<TestAccordion />)
     await expect.element(contentA).not.toBeVisible()
     await triggerA.click()
     await expect.element(contentA).toBeVisible()
@@ -44,7 +44,7 @@ describe("Accordion", () => {
   })
 
   test("`collapsible` should allow closing an open item in single mode", async () => {
-    render(<TestAccordion collapsible />)
+    await render(<TestAccordion collapsible />)
     await expect.element(contentA).not.toBeVisible()
     await triggerA.click()
     await expect.element(contentA).toBeVisible()
@@ -53,7 +53,7 @@ describe("Accordion", () => {
   })
 
   test("`multiple` should allow multiple items to be open", async () => {
-    render(<TestAccordion multiple />)
+    await render(<TestAccordion multiple />)
     await triggerA.click()
     await triggerB.click()
     await expect.element(contentA).toBeVisible()
@@ -61,12 +61,12 @@ describe("Accordion", () => {
   })
 
   test("`defaultValue` should open the correct items", async () => {
-    render(<TestAccordion defaultValue={[items[1].value]} />)
+    await render(<TestAccordion defaultValue={[items[1].value]} />)
     await expect.element(contentB).toBeVisible()
   })
 
   test("`disabled` should prevent opening any item", async () => {
-    render(<TestAccordion disabled />)
+    await render(<TestAccordion disabled />)
     await expect.element(triggerA).toBeDisabled()
     await expect.element(triggerA).toHaveAttribute("aria-disabled", "true")
     await expect.element(contentA).not.toBeVisible()
@@ -79,7 +79,7 @@ describe("Accordion", () => {
   })
 
   test("items should have the proper aria attributes", async () => {
-    render(<TestAccordion />)
+    await render(<TestAccordion />)
     const ids = {
       contentA: contentA.element().getAttribute("id"),
       triggerA: triggerA.element().getAttribute("id"),
@@ -97,7 +97,7 @@ describe("Accordion", () => {
 
   test("`onValueChange` should be called when value changes (single mode)", async () => {
     const onValueChange = vi.fn()
-    render(<TestAccordion onValueChange={onValueChange} />)
+    await render(<TestAccordion onValueChange={onValueChange} />)
     await triggerA.click()
     expect(onValueChange).toHaveBeenCalledWith([items[0].value])
     await triggerC.click()
@@ -106,7 +106,7 @@ describe("Accordion", () => {
 
   test("`onValueChange` should be called when value changes (multiple mode)", async () => {
     const onValueChange = vi.fn()
-    render(<TestAccordion multiple onValueChange={onValueChange} />)
+    await render(<TestAccordion multiple onValueChange={onValueChange} />)
     await triggerA.click()
     expect(onValueChange).toHaveBeenCalledWith([items[0].value])
     await triggerC.click()
@@ -115,7 +115,7 @@ describe("Accordion", () => {
 
   test("`onFocusChange` should be called when focus changes", async () => {
     const onFocusChange = vi.fn()
-    render(<TestAccordion onFocusChange={onFocusChange} />)
+    await render(<TestAccordion onFocusChange={onFocusChange} />)
     await userEvent.tab()
     expect(onFocusChange).toHaveBeenCalledWith(items[0].value)
     await triggerC.click()
@@ -123,7 +123,7 @@ describe("Accordion", () => {
   })
 
   test("keyboard navigation", async () => {
-    render(<TestAccordion />)
+    await render(<TestAccordion />)
     await userEvent.tab()
     expect(triggerA).toHaveFocus()
     // next

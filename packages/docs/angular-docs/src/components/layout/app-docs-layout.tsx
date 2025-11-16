@@ -15,6 +15,7 @@ import {
   type DocsLayoutSettings,
   MobileSidebar,
 } from "@qualcomm-ui/react-mdx/docs-layout"
+import {Github} from "@qualcomm-ui/react-mdx/icons"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 
 import {DemoUpdateContextProvider} from "./demo-update-context"
@@ -64,7 +65,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
           <span>
             This site is built with{" "}
             <Link
-              href="https://docs.qui.qualcomm.com/"
+              href="https://docs-next.qui.qualcomm.com/"
               size="md"
               target="_blank"
             >
@@ -84,7 +85,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
       }
       header={
         <div className="qui-docs__header">
-          <HeaderBar.Root className="@container" surface="secondary">
+          <HeaderBar.Root surface="secondary">
             <HeaderBar.Logo>
               <MobileSidebar>
                 <QuiLogo width={20} />
@@ -132,6 +133,17 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
             <HeaderBar.ActionBar>
               <SiteSearch />
               <ResetDemoDimensionsButton />
+              <HeaderBar.ActionIconButton
+                aria-label="Navigate to the Github repository"
+                icon={Github}
+                render={
+                  <a
+                    href="https://github.com/qualcomm/qualcomm-ui"
+                    rel="noreferrer"
+                    target="_blank"
+                  />
+                }
+              />
               <GlobalConfig />
               <ThemeToggle />
             </HeaderBar.ActionBar>

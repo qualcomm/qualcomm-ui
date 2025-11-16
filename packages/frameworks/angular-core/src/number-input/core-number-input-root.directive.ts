@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {DOCUMENT} from "@angular/common"
 import {
   booleanAttribute,
   computed,
@@ -174,6 +175,8 @@ export class CoreNumberInputRootDirective
    */
   readonly valueInvalid = output<NumberInputValueInvalidDetails>()
 
+  protected readonly document = inject(DOCUMENT)
+
   protected readonly isMounted = useIsMounted()
 
   protected readonly numberInputContext = inject(NumberInputContextService)
@@ -201,7 +204,7 @@ export class CoreNumberInputRootDirective
           // angular handles this automatically with ngModel and Reactive Forms
           form: undefined,
           formatOptions: this.formatOptions(),
-          getRootNode: this.getRootNode(),
+          getRootNode: this.getRootNode() ?? (() => this.document),
           ids: undefined,
           inputMode: this.inputMode(),
           invalid: this.isInvalid(),

@@ -1,5 +1,6 @@
 import angular from "@analogjs/vite-plugin-angular"
 import tailwindcss from "@tailwindcss/vite"
+import {playwright} from "@vitest/browser-playwright"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import {defineConfig} from "vite"
@@ -30,12 +31,9 @@ export default defineConfig(({mode}) => ({
       instances: [
         {
           browser: "chromium",
-          providerOptions: {
-            context: {actionTimeout: 10000},
-          },
         },
       ],
-      provider: "playwright",
+      provider: playwright({}),
       testerHtmlPath: "./test/test-setup.html",
       viewport: {
         height: 500,

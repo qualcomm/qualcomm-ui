@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {playwright} from "@vitest/browser-playwright"
 import {merge} from "lodash-es"
 import type {InlineConfig} from "vitest/node"
 
@@ -20,7 +21,7 @@ export function getReactTestConfig(
         locators: {
           testIdAttribute: "data-test-id",
         },
-        provider: "playwright",
+        provider: playwright(),
         testerHtmlPath: "../react-test-utils/src/react-test-setup.html",
         viewport: {
           height: 500,
@@ -28,7 +29,6 @@ export function getReactTestConfig(
         },
       },
       css: true,
-      exclude: ["src/**/*.vr.spec.tsx"],
       expect: {
         poll: {
           timeout: 2500,

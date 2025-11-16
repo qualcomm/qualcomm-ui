@@ -9,6 +9,10 @@
   top: 0;
   width: 100vw;
   z-index: var(--z-index-dialog);
+
+  &[hidden] {
+    display: none !important;
+  }
 }
 
 .qui-dialog__positioner {
@@ -64,6 +68,10 @@
   position: relative;
   width: 375px;
 
+  &[hidden] {
+    display: none !important;
+  }
+
   &[data-size="md"] {
     width: 600px;
   }
@@ -83,11 +91,13 @@
 }
 
 .qui-dialog__body {
+  box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   display: flex;
   flex-direction: column;
   font: var(--font-static-body-xs-default);
   gap: var(--spacing-90);
+  margin: 0;
   padding: var(--spacing-110);
   width: 100%;
 
@@ -101,6 +111,7 @@
 .qui-dialog__heading {
   color: var(--color-text-neutral-primary);
   font: var(--font-static-heading-xs-default);
+  margin: 0;
 
   &[data-size="md"] {
     font: var(--font-static-heading-sm-default);
@@ -109,6 +120,7 @@
 
 .qui-dialog__footer {
   border-top: solid 1px var(--color-border-neutral-01);
+  box-sizing: border-box;
   display: flex;
   gap: var(--spacing-80);
   justify-content: flex-end;
@@ -124,6 +136,7 @@
 }
 
 .qui-dialog__indicator-icon {
+  --icon-size: 20px;
   &[data-emphasis="neutral"] {
     color: var(--color-icon-support-neutral);
   }

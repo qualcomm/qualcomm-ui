@@ -95,14 +95,18 @@
     var(--tab-initial-spacing-x) + var(--dismiss-spacing-offset)
   );
   align-items: center;
+  background: transparent;
+  border: 0 solid;
   color: var(--color-interactive-text-neutral-idle);
   display: inline-flex;
   font: var(--font-static-body-xs-bold);
   gap: var(--spacing-50);
+  margin: 0;
+  opacity: 1;
   outline: none;
-  padding-bottom: var(--tab-spacing-y);
   padding-inline-end: var(--tab-spacing-end);
   padding-inline-start: var(--tab-initial-spacing-x);
+  padding-bottom: var(--tab-spacing-y);
   padding-top: var(--tab-spacing-y);
 
   /* indicator customization */

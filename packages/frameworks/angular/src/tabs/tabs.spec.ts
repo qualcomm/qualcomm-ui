@@ -1,8 +1,8 @@
 import {Component, output, signal} from "@angular/core"
 import {render} from "@testing-library/angular"
-import {page, userEvent} from "@vitest/browser/context"
 import {Code, FileText} from "lucide-angular"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 
 import {TabsModule} from "@qualcomm-ui/angular/tabs"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"

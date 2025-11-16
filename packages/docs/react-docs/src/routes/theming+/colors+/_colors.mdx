@@ -9,32 +9,38 @@ import {ColorTable} from "~components/theme-docs"
 
 If you're using [Tailwind CSS](https://tailwindcss.com/), you can install the [@qualcomm-ui/tailwind-plugin](/integrations/tailwind) package to make each of these variables available as Tailwind classes.
 
-### Semantic
-
-Semantic colors are commonly used to convey a specific status to the user.
-
-<ColorTable data={themeColors.semantic} />
-
 ### Text
 
-Black text inverts to white when switched to dark mode. Text link and error tokens change to a lighter shade to ensure that small text has a contrast ratio of 4.5:1 or greater when used on a dark background.
+Text colors are used for typography throughout your application. They automatically adapt when switching between light and dark modes to maintain proper contrast ratios.
 
 <ColorTable data={themeColors.text} />
 
+### Icon
+
+Icon colors ensure proper visual hierarchy and accessibility for icons. Like text colors, they automatically adjust for light and dark modes.
+
+<ColorTable data={themeColors.icon} />
+
 ### Background
 
-Backgrounds are commonly used as colors for your app's surfaces, such as cards, pages, and menus.
+Background colors include brand, neutral, and support colors. They are commonly used as colors for your app's surfaces, cards, and UI elements.
 
 <ColorTable data={themeColors.background} />
 
-### Foreground
+### Surface
 
-Similar to text color tokens, foreground token colors invert when switched to dark mode. Foreground colors are mainly used for black & white icons but can be used for illustrations or any graphical elements that should invert when toggled between modes.
+Surface colors are used for primary application surfaces like pages, modals, and overlays.
 
-<ColorTable data={themeColors.foreground} />
+<ColorTable data={themeColors.surface} />
 
-### Borders
+### Border
 
-Borders are lines that bring clarity to a layout by grouping and dividing content. They are used to divide text or components such as table rows, action button groups, and components within a panel.
+Border colors bring clarity to layouts by grouping and dividing content. They are used to divide text or components such as table rows, action button groups, and components within a panel.
 
 <ColorTable data={themeColors.border} />
+
+### Category
+
+Category colors provide a palette for data visualization and content categorization. Each category has three variants: subtle, medium, and strong.
+
+<ColorTable data={themeColors.category} />

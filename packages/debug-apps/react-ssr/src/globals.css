@@ -1,0 +1,58 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+@source "../../../docs/react-docs/src/routes//components+";
+
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+
+:root {
+  color: var(--color-text-neutral-primary);
+  color-scheme: light dark;
+
+  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  --q-font-mono: "Roboto Mono", monospace;
+  --qui-header-height: 48px;
+  --q-font-family: "Roboto Flex", sans-serif;
+}
+
+.font-mono {
+  font-family: "Source Code Pro", "Roboto Mono", monospace;
+}
+
+.q-header--content {
+  padding: 6px 12px;
+}
+
+body {
+  background: var(--color-background-neutral-00);
+  display: flex;
+  margin: 0;
+  padding: 32px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.section-title {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-heading-md-default);
+  margin-bottom: 1rem;
+}
+
+.demo-container {
+  background-color: var(--color-background-neutral-01);
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  min-width: 600px;
+  padding: 2rem;
+}

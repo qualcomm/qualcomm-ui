@@ -1,1 +1,0 @@
-- Angular scope registry works slightly differently (delayed). Until this is fixed, make sure functions that depend on dom elements from the scope accessors are passed as callback functions, where applicable.

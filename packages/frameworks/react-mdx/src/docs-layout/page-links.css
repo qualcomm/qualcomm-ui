@@ -9,11 +9,13 @@
 .qui-page-link__root {
   border: solid 1px var(--color-border-neutral-01);
   border-radius: 3px;
+  color: inherit;
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-top: 64px;
   padding: 16px;
+  text-decoration: inherit;
   width: 100%;
 
   &.q-next {

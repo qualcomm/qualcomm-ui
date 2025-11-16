@@ -1,8 +1,11 @@
 {
   "name": "@qualcomm-ui/eslint-config-react",
-  "version": "1.0.0",
-  "sideEffects": false,
+  "version": "1.0.2",
   "description": "QUI ESLint config for consistent React code",
+  "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "sideEffects": false,
   "type": "module",
   "keywords": [
     "eslint",
@@ -12,7 +15,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "Ryan Bower",
   "main": "index.js",
   "module": "index.js",
   "files": [
@@ -26,6 +28,7 @@
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1.0.3",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
     "eslint": "9.37.0",
@@ -34,7 +37,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.1.1",
     "prettier": "^3.6.2",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "typescript-eslint": "catalog:"
   },
   "peerDependencies": {

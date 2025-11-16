@@ -3,8 +3,6 @@ title: Tailwind CSS
 ---
 
 import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
-import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Versions} from "./demos/versions"
 
 # {frontmatter.title}
@@ -17,19 +15,17 @@ We provide a [Tailwind CSS](https://tailwindcss.com/) plugin which enhances your
 
 ### Install
 
+Follow the [Tailwind installation instructions](https://tailwindcss.com/docs/installation/using-vite) for your application.
+
+Then install the QUI plugin:
+
 <NpmInstallTabs packages={["@qualcomm-ui/tailwind-plugin"]} />
 
-Once installed, add the plugin to your Tailwind config file:
+Once installed, import the plugin wherever you are configuring your tailwind theme:
 
-```js
-/** @type {import("tailwindcss").Config} */
-module.exports = {
-  content: [
-    // ...
-  ],
-  plugins: [require("@qualcomm-ui/tailwind-plugin")],
-  prefix: "",
-}
+```css
+@import "tailwindcss";
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 ```
 
 ## Theme

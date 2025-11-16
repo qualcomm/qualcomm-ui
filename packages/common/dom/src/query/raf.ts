@@ -18,11 +18,11 @@ export function nextTick(fn: VoidFunction): VoidFunction {
 
 export function raf(fn: VoidFunction | (() => VoidFunction)): VoidFunction {
   let cleanup: VoidFunction | undefined | void
-  const id = globalThis.requestAnimationFrame(() => {
+  const id = globalThis.requestAnimationFrame?.(() => {
     cleanup = fn()
   })
   return () => {
-    globalThis.cancelAnimationFrame(id)
+    globalThis.cancelAnimationFrame?.(id)
     cleanup?.()
   }
 }

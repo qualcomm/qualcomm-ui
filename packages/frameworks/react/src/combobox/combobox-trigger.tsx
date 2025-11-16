@@ -5,7 +5,7 @@ import type {ReactElement, ReactNode} from "react"
 
 import {ChevronDown, type LucideIcon} from "lucide-react"
 
-import {IconOrNode} from "@qualcomm-ui/react/icon"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {
   CoreCombobox,
   type CoreComboboxTriggerProps,
@@ -38,7 +38,14 @@ export function ComboboxTrigger({
 
   return (
     <CoreCombobox.Trigger
-      render={<IconOrNode icon={icon} render={render} />}
+      render={
+        <InlineIconButton
+          icon={icon}
+          render={render}
+          size={qdsContext.size === "sm" ? "sm" : "md"}
+          variant="scale"
+        />
+      }
       {...mergedProps}
     />
   )

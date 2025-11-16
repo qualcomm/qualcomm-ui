@@ -1,18 +1,16 @@
 import {useState} from "react"
 
-import {page, userEvent} from "@vitest/browser/context"
 import {Star} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {selectCollection} from "@qualcomm-ui/core/select"
 import {Select, type SelectRootProps} from "@qualcomm-ui/react/select"
 import {Portal} from "@qualcomm-ui/react-core/portal"
-import {
-  type MultiComponentTestCase,
-  runTests,
-} from "@qualcomm-ui/react-test-utils"
 import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
+
+import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
 const stringCollection = selectCollection({
   items: ["Option 1", "Option 2", "Option 3"],
@@ -77,7 +75,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("opens and closes dropdown", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
         await expect.element(trigger).toBeVisible()
@@ -116,7 +114,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("single selection", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
         await trigger.click()
@@ -154,7 +152,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("multiple selection", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
         await trigger.click()
@@ -199,7 +197,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("default value", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await expect
           .element(page.getByRole("combobox", {name: /select option/i}))
@@ -251,7 +249,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("controlled state", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
 
@@ -293,7 +291,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("disabled state", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
         await expect.element(trigger).toHaveAttribute("data-disabled")
@@ -330,7 +328,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("readonly state", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
         await expect.element(trigger).toHaveAttribute("data-readonly")
@@ -374,7 +372,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("invalid state with error text", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
         await expect.element(trigger).toHaveAttribute("data-invalid")
@@ -416,7 +414,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("with hint text", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await expect.element(page.getByText("This is a hint")).toBeVisible()
       })
@@ -447,7 +445,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("with label", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await expect.element(page.getByText("Select option")).toBeVisible()
         await expect
@@ -487,10 +485,10 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("with trigger icon", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await expect
-          .element(
+          .poll(() =>
             page
               .getByRole("combobox")
               .element()
@@ -533,7 +531,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("clear combobox functionality", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         const trigger = page.getByRole("combobox", {name: /select option/i})
         await expect.element(trigger).toHaveTextContent("Option 2")
@@ -571,7 +569,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("keyboard navigation", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await page.getByRole("combobox", {name: /select option/i}).click()
 
@@ -683,7 +681,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("parts", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await expect.element(page.getByTestId(testIds.root)).toBeVisible()
         await expect.element(page.getByTestId(testIds.label)).toBeVisible()
@@ -730,7 +728,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("object collection selection", async () => {
-        render(getComponent())
+        await render(getComponent())
 
         await page.getByRole("combobox", {name: /select option/i}).click()
         await page.getByRole("option", {name: "Item 2"}).click()
@@ -775,7 +773,7 @@ const tests: MultiComponentTestCase[] = [
       test("onValueChange callback", async () => {
         const onValueChange = vi.fn()
 
-        render(getComponent({onValueChange}))
+        await render(getComponent({onValueChange}))
 
         await page.getByRole("combobox", {name: /select option/i}).click()
         await page.getByRole("option", {name: "Option 1"}).click()

@@ -1,5 +1,7 @@
 .qui-avatar__root {
   align-items: center;
+  background: transparent;
+  border: 0 solid;
   border-radius: var(--avatar-radius);
   display: inline-flex;
   flex-shrink: 0;
@@ -56,11 +58,17 @@
 }
 
 .qui-avatar__image {
-  border-radius: var(--avatar-radius, 9999px);
+  border-radius: var(--avatar-radius);
+  display: block;
   height: 100%;
+  min-width: 100%;
   object-fit: cover;
   overflow: clip;
   width: 100%;
+
+  &[hidden] {
+    display: none;
+  }
 }
 
 .qui-avatar__content {
@@ -81,7 +89,6 @@
   background-color: var(--avatar-background-color);
   border-radius: var(--avatar-radius);
   color: var(--avatar-foreground-color);
-
   display: flex;
   font: var(--avatar-content-font);
   height: 100%;
@@ -90,6 +97,10 @@
   overflow: clip;
   text-transform: uppercase;
   width: 100%;
+
+  &[hidden] {
+    display: none;
+  }
 }
 
 .qui-avatar__status {
@@ -97,6 +108,7 @@
     var(--color-border-neutral-00);
   border-radius: 50%;
   bottom: 0;
+  box-sizing: border-box;
   height: var(--avatar-status-size);
   position: absolute;
   right: 0;

@@ -42,7 +42,7 @@ import {SelectRootDirective} from "./select-root.directive"
           }
         </ng-content>
         <ng-content select="[q-select-indicator]">
-          <div q-select-indicator></div>
+          <button q-select-indicator></button>
         </ng-content>
         <ng-content select="[q-select-error-indicator]">
           <div q-select-error-indicator></div>

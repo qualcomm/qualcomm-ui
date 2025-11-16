@@ -13,11 +13,7 @@ import {
   selector: "[q-toaster]",
   standalone: false,
   template: `
-    @for (
-      toast of toastGroupService.context().getToasts();
-      track toast.id;
-      let idx = $index
-    ) {
+    @for (toast of toasts(); track toast.id; let idx = $index) {
       <ng-container
         #providerRef="toastProvider"
         toastProvider

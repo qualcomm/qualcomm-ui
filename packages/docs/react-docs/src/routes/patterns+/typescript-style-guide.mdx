@@ -8,6 +8,9 @@ This documentation page aims to provide a comprehensive guide to JavaScript / Ty
 
 Many of these rules were adapted from Google's [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html).
 
+> [!tip/Disclaimer]
+> These recommendations were developed for internal Qualcomm use and are now available for general reference. They reflect our experience and may not be applicable to every situation.
+
 ## Naming
 
 ### Identifiers
@@ -572,25 +575,11 @@ const args = [1, 2]
 myFunction(...args) // Returns 3
 ```
 
-#### Avoid `return await`
+#### ~~Avoid return await~~
 
-It is not recommended to use `return await` in most cases.
+This is no longer an issue.
 
-```ts
-async function foo(): Promise<string> {
-  // not ideal
-  return await rpc.getSomeValue().transform()
-}
-```
-
-The `await` keyword is used to wait for a promise to resolve before continuing execution. When you use `return await`, you are waiting for the promise to resolve and then returning the resolved value. This is redundant because you can simply return the promise itself and let the caller handle the resolution.
-
-```ts
-async function foo(): Promise<string> {
-  // ideal
-  return rpc.getSomeValue().transform()
-}
-```
+Historical context: When promises were first introduced, calling return await introduced an additional microtask, one for the await and one for the return value of the async function. Each extra microtask delays the computation of a result and so this rule was added to help avoid this performance trap. Later, ECMA-262 changed the way return await worked so it would create a single microtask, which means this rule is no longer necessary.
 
 ### Primitive Literals
 

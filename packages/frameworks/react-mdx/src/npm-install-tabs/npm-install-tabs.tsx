@@ -37,6 +37,12 @@ export function NpmInstallTabs({
 
   const {packageManager = "npm", setPackageManager} = useMdxDocsContext()
 
+  const copyCommands = {
+    npm: `npm i${dev ? " --save-dev" : ""} ${packages}`,
+    pnpm: `pnpm add${dev ? " -D" : ""} ${packages}`,
+    yarn: `yarn add${dev ? " -D" : ""} ${packages}`,
+  }
+
   return (
     <Tabs.Root
       onValueChange={(value) => {
@@ -48,41 +54,43 @@ export function NpmInstallTabs({
     >
       <Tabs.List>
         <Tabs.Indicator />
-        <Tab.Root value="npm">
-          <Tab.Button>npm</Tab.Button>
-        </Tab.Root>
         <Tab.Root value="pnpm">
           <Tab.Button>pnpm</Tab.Button>
+        </Tab.Root>
+        <Tab.Root value="npm">
+          <Tab.Button>npm</Tab.Button>
         </Tab.Root>
         <Tab.Root value="yarn">
           <Tab.Button>yarn</Tab.Button>
         </Tab.Root>
       </Tabs.List>
 
-      <Tabs.Panel className="p-0" value="npm">
+      <Tabs.Panel className="npm-install-tabs__panel" value="pnpm">
         <CodeHighlight
           className="mdx"
-          code={`npm i${dev ? " --save-dev" : ""} ${packages}`}
+          code={copyCommands.pnpm}
           language="bash"
           preProps={{
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
           }}
         />
       </Tabs.Panel>
-      <Tabs.Panel className="p-0" value="pnpm">
+
+      <Tabs.Panel className="npm-install-tabs__panel" value="npm">
         <CodeHighlight
           className="mdx"
-          code={`pnpm add${dev ? " -D" : ""} ${packages}`}
+          code={copyCommands.npm}
           language="bash"
           preProps={{
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
           }}
         />
       </Tabs.Panel>
-      <Tabs.Panel className="p-0" value="yarn">
+
+      <Tabs.Panel className="npm-install-tabs__panel" value="yarn">
         <CodeHighlight
           className="mdx"
-          code={`yarn add${dev ? " -D" : ""} ${packages}`}
+          code={copyCommands.yarn}
           language="bash"
           preProps={{
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},

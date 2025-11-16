@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "description": "QUI shared dev styles and utilities for documentation, used by both React and Angular documentation projects.",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -23,7 +25,7 @@
     "lint": "eslint --quiet"
   },
   "devDependencies": {
-    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@types/stringify-object": "^4.0.5",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
@@ -32,8 +34,8 @@
     "ts-key-enum": "^2.0.12",
     "tsx": "^4.20.6",
     "typedoc": "~0.28.13",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vite": "npm:rolldown-vite@7.1.19",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   }
 }

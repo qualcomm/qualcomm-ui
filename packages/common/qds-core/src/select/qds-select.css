@@ -27,6 +27,7 @@
   background: var(--color-background-neutral-00);
   border: 1px solid var(--color-interactive-border-neutral-idle);
   border-radius: var(--border-radius-sm);
+  box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   cursor: pointer;
   display: inline-flex;
@@ -34,6 +35,7 @@
   gap: var(--select-trigger-gap);
   justify-content: space-between;
   line-height: normal;
+  margin: 0;
   min-height: var(--sizing-140, 40px);
   outline: none;
   overflow-x: hidden;
@@ -102,7 +104,13 @@
   }
 
   .qui-select__indicator {
+    background-color: transparent;
+    border: 0 solid;
+    box-sizing: border-box;
     color: var(--color-icon-neutral-primary);
+    margin: 0;
+    opacity: 1;
+    padding: 0;
     transition: transform var(--animation-duration-faster) ease;
 
     /* override the default size */
@@ -153,8 +161,10 @@
   border: solid 1px var(--color-border-neutral-02);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-medium);
+  box-sizing: border-box;
   display: inline-flex;
   flex-direction: column;
+  margin: 0;
   max-height: min(var(--available-height), 320px);
   outline: none;
   overflow-y: auto;
@@ -183,6 +193,17 @@
       border-color: var(--color-utility-focus-border);
     }
   }
+}
+
+.qui-select__hidden-select {
+  background-color: transparent; /* 3 */
+  border-radius: 0; /* 2 */
+  color: inherit; /* 1 */
+  font: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  letter-spacing: inherit; /* 1 */
+  opacity: 1; /* 4 */
 }
 
 .qui-select__item {

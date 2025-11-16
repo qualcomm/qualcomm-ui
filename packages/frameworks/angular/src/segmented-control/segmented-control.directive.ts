@@ -20,7 +20,7 @@ import {
 import {
   provideQdsSegmentedControlContext,
   QdsSegmentedControlContextService,
-} from "./qds-segmented-control-context.service.js"
+} from "./qds-segmented-control-context.service"
 
 @Directive({
   providers: [

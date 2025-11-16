@@ -23,4 +23,8 @@ if (changedFiles.length === 0) {
   process.exit(0)
 }
 
-execSync(`pnpm eslint --quiet ${changedFiles.join(" ")}`, {stdio: "inherit"})
+const BATCH_SIZE = 35
+for (let i = 0; i < changedFiles.length; i += BATCH_SIZE) {
+  const batch = changedFiles.slice(i, i + BATCH_SIZE)
+  execSync(`pnpm eslint --quiet ${batch.join(" ")}`, {stdio: "inherit"})
+}

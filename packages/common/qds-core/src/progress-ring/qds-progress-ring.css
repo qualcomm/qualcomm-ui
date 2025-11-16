@@ -19,8 +19,10 @@
 .qui-progress-ring__circle {
   /* Set from JS */
   --size: var(--size-override, var(--circle-size));
+  display: block;
   height: var(--size);
   transform: rotate(-90deg);
+  vertical-align: middle;
   width: var(--size);
   --thickness: 7px;
   --stroke-width: var(--thickness-override, var(--thickness));

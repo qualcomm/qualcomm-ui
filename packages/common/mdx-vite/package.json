@@ -1,8 +1,10 @@
 {
   "name": "@qualcomm-ui/mdx-vite",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Vite documentation plugin for applications that use MDX",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "type": "module",
   "bin": {
     "qui-mdx-vite": "./lib/cli.js"
@@ -23,6 +25,7 @@
       "types": "./dist/react-demo-plugin/virtual.d.ts"
     }
   },
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "lib"
@@ -87,20 +90,21 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@qualcomm-ui/esbuild": "workspace:^1",
-    "@qualcomm-ui/mdx-common": "workspace:^1",
-    "@qualcomm-ui/utils": "workspace:^1",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
-    "@qualcomm-ui/typedoc-common": "workspace:^1",
+    "@qualcomm-ui/cli": "workspace:^1.0.5",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.3",
+    "@qualcomm-ui/mdx-common": "workspace:^1.0.3",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "^4.17.12",
     "@types/mdast": "^4.0.4",
     "@types/uuid": "^10.0.0",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/ui": "^4.0.8",
     "change-case": "^5.4.4",
     "cross-env": "^10.1.0",
-    "dotenv": "^17.2.1",
+    "dotenv": "^17.2.3",
     "esbuild": "^0.25.8",
     "hastscript": "^9.0.0",
     "lodash-es": "^4.17.21",
@@ -113,15 +117,15 @@
     "shx": "^0.4.0",
     "test": "^3.3.0",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vite": "npm:rolldown-vite@7.1.19",
-    "vitest": "^3.2.4",
+    "vitest": "^4.0.8",
     "zod": "^3.23.8"
   },
   "peerDependencies": {
-    "@qualcomm-ui/mdx-common": "workspace:^1",
-    "@qualcomm-ui/typedoc-common": "workspace:^1",
-    "@qualcomm-ui/utils": "workspace:^1",
+    "@qualcomm-ui/mdx-common": "workspace:^1.0.3",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "lodash-es": ">=4.17.21 <5",
     "rehype-mdx-code-props": ">=3 <4",
     "remark-frontmatter": ">=5 <6",

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Codemod for version updates",
   "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
   "type": "module",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "bin": {
     "qui-codemod": "./lib/cli.cjs"
   },
@@ -35,16 +37,16 @@
   },
   "devDependencies": {
     "@commander-js/extra-typings": "^14.0.0",
-    "@qualcomm-ui/esbuild": "workspace:^1",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
+    "@qualcomm-ui/esbuild": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@types/mdast": "^4.0.4",
     "@types/node": "~24.9.2",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/ui": "^4.0.8",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
     "commander": "^14.0.2",
-    "dayjs": "^1.11.13",
+    "dayjs": "^1.11.19",
     "esbuild": "^0.25.8",
     "glob": "^11.0.3",
     "npm-run-all2": "^8.0.4",
@@ -58,12 +60,12 @@
     "shx": "^0.4.0",
     "ts-morph": "^25.0.1",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "unified": "^11.0.5",
     "vite": "npm:rolldown-vite@7.1.19",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   },
   "peerDependencies": {
-    "@qualcomm-ui/utils": "workspace:^1"
+    "@qualcomm-ui/utils": "workspace:^1.0.3"
   }
 }

@@ -1,7 +1,7 @@
 import {Component, computed, inject, Injector, type OnInit} from "@angular/core"
 import {render, waitFor} from "@testing-library/angular"
-import {page} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page} from "vitest/browser"
 
 import {
   type ActionSchema,

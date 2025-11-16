@@ -90,8 +90,10 @@ export class QBindDirective implements OnDestroy {
 
   private addClass(names: string): void {
     const el = this.elementRef.nativeElement
-    for (const name of names.split(",")) {
-      this.renderer.addClass(el, name)
+    for (const className of names.split(" ")) {
+      for (const name of className.split(",")) {
+        this.renderer.addClass(el, name)
+      }
     }
   }
 

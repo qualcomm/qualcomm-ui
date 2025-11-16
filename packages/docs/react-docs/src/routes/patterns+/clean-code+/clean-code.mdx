@@ -1,0 +1,716 @@
+---
+title: Clean Code
+---
+
+# {frontmatter.title}
+
+This page is a guide to producing readable, reusable, and refactorable software in TypeScript.
+
+Inspired by [Clean Code TypeScript](https://github.com/labs42io/clean-code-typescript?tab=readme-ov-file) and [Clean Code JavaScript](https://github.com/ryanmcdermott/clean-code-javascript).
+
+## Variables
+
+### Use meaningful variable names
+
+Distinguish names in such a way that the reader knows what the differences are.
+
+**Not Ideal:**
+
+```ts
+function between<T>(a1: T, a2: T, a3: T): boolean {
+  return a2 <= a1 && a1 <= a3
+}
+```
+
+**Better:**
+
+```ts
+function between<T>(value: T, left: T, right: T): boolean {
+  return left <= value && value <= right
+}
+```
+
+### Avoid mental mapping
+
+Clarity is king.
+
+**Not Ideal:**
+
+```ts
+const u = getUser()
+const s = getSubscription()
+const t = charge(u, s)
+```
+
+**Better:**
+
+```ts
+const user = getUser()
+const subscription = getSubscription()
+const transaction = charge(user, subscription)
+```
+
+### Avoid unnecessary context
+
+If your class/type/object name describes something, don't repeat it in your variable name.
+
+**Not Ideal:**
+
+```ts
+interface Car {
+  carMake: string
+  carModel: string
+  carColor: string
+}
+```
+
+**Better:**
+
+```ts
+interface Car {
+  make: string
+  model: string
+  color: string
+}
+```
+
+## Functions
+
+### Function names should indicate what they do
+
+**Not Ideal:**
+
+```ts
+function addToDate(date: Date, month: number) {
+  // ...
+}
+
+const date = new Date()
+
+// It's hard to tell from the function name what is added
+addToDate(date, 1)
+```
+
+**Better:**
+
+```ts
+function addMonthToDate(month: number, date: Date) {
+  // ...
+}
+
+const date = new Date()
+addMonthToDate(1, date)
+```
+
+### Limit function arguments
+
+If you have more than two arguments, then your function may be doing too much. In cases where it's not, most of the time a higher-level object will suffice as an argument.
+
+Consider using object literals if you are finding yourself needing a lot of arguments. This has a few advantages:
+
+- **Readability:** Functions with fewer arguments are generally easier to read and understand. When you see a function call with too many arguments, it can be difficult to remember the order and the purpose of each one, especially if they are of the same type (e.g., multiple boolean flags or numbers).
+- **Ease of use:** When a function has fewer arguments, it is easier to use correctly without constantly referring to the documentation. This is particularly true when arguments are consolidated into an object with named properties, making the function calls self-documenting.
+- **Avoiding errors:** The more arguments there are, the higher the chance of passing them in the wrong order or misinterpreting an argument's purpose. By consolidating arguments into an object, you mitigate the risk of such errors because each value is clearly labeled by its key in the object.
+- **Flexibility:** Using an options object allows you to add new parameters in the future without changing the function signature or affecting existing calls. This is because you can add new properties to the options object without impacting the existing API.
+- **Destructuring:** In languages like JavaScript, using an object allows for easy destructuring within the function body, which can lead to cleaner code. For example:
+
+```ts
+function doSomething({param1, param2 = "default", param3}) {
+  // function body
+}
+```
+
+### Functions should do one thing
+
+Each function should have one, and only one, reason to change, which translates to the function performing one well-defined task. Consider the following:
+
+- **Clarity**: When functions are designed to do one thing, it's easier to understand what they do. The function's name can clearly describe its purpose, and other developers can comprehend the function's behavior without having to dig through a complex implementation.
+- **Maintainability**: Functions with a single purpose are easier to modify and maintain.
+- **Testability**: It is easier to write tests for functions that do one thing. The test cases will be more focused, and it will be simpler to cover all possible scenarios for the function's behavior.
+- **Reusability**: Single-purpose functions are more likely to be reusable because they perform a specific task that can be leveraged in different contexts. Functions that are tangled with multiple responsibilities are harder to reuse without also dragging in unwanted side effects or dependencies.
+
+### Remove duplicate code
+
+Do your best to avoid duplicate code. Duplicate code is bad because it means that there's more than one place to alter something if you need to change some logic.
+
+You should strive to follow the [DRY principle](https://www.geeksforgeeks.org/dont-repeat-yourselfdry-in-software-development/): don't repeat yourself.
+
+**Not Ideal:**
+
+```ts
+function showDeveloperList(developers: Developer[]) {
+  developers.forEach((developer) => {
+    const expectedSalary = developer.calculateExpectedSalary()
+    const experience = developer.getExperience()
+    const githubLink = developer.getGithubLink()
+
+    const data = {
+      expectedSalary,
+      experience,
+      githubLink,
+    }
+
+    render(data)
+  })
+}
+
+function showManagerList(managers: Manager[]) {
+  managers.forEach((manager) => {
+    const expectedSalary = manager.calculateExpectedSalary()
+    const experience = manager.getExperience()
+    const portfolio = manager.getMBAProjects()
+
+    const data = {
+      expectedSalary,
+      experience,
+      portfolio,
+    }
+
+    render(data)
+  })
+}
+```
+
+**Better:**
+
+```ts
+class Developer {
+  // ...
+  getExtraDetails() {
+    return {
+      githubLink: this.githubLink,
+    }
+  }
+}
+
+class Manager {
+  // ...
+  getExtraDetails() {
+    return {
+      portfolio: this.portfolio,
+    }
+  }
+}
+
+function showEmployeeList(employee: (Developer | Manager)[]) {
+  employee.forEach((employee) => {
+    const expectedSalary = employee.calculateExpectedSalary()
+    const experience = employee.getExperience()
+    const extra = employee.getExtraDetails()
+
+    const data = {
+      expectedSalary,
+      experience,
+      extra,
+    }
+
+    render(data)
+  })
+}
+```
+
+You may also consider adding a union type, or common parent class if it suits your abstraction.
+
+```ts
+class Developer {
+  // ...
+}
+
+class Manager {
+  // ...
+}
+
+type Employee = Developer | Manager
+
+function showEmployeeList(employee: Employee[]) {
+  // ...
+}
+```
+
+You should be critical about code duplication. Sometimes there is a tradeoff between duplicated code and increased complexity by introducing unnecessary abstraction. When two implementations from two different modules look similar but live in different domains, duplication might be acceptable and preferred over extracting the common code. The extracted common code, in this case, introduces an indirect dependency between the two modules. As always, use your best judgment.
+
+### Favor functional programming over imperative programming
+
+Favor this style of programming when you can.
+
+**Not Ideal:**
+
+```ts
+const contributions = [
+  {
+    name: "Uncle Bobby",
+    linesOfCode: 500,
+  },
+  {
+    name: "Suzie Q",
+    linesOfCode: 1500,
+  },
+  {
+    name: "Jimmy Gosling",
+    linesOfCode: 150,
+  },
+]
+
+let totalOutput = 0
+
+for (let i = 0; i < contributions.length; i++) {
+  totalOutput += contributions[i].linesOfCode
+}
+```
+
+**Better:**
+
+```ts
+const contributions = [
+  {
+    name: "Uncle Bobby",
+    linesOfCode: 500,
+  },
+  {
+    name: "Suzie Q",
+    linesOfCode: 1500,
+  },
+  {
+    name: "Jimmy Gosling",
+    linesOfCode: 150,
+  },
+]
+
+const totalOutput = contributions.reduce(
+  (totalLines, output) => totalLines + output.linesOfCode,
+  0,
+)
+```
+
+### Functions should only be one level of abstraction
+
+When you have more than one level of abstraction, your function is usually doing too much. Splitting up functions leads to better reusability and easier testing.
+
+**Not Ideal:**
+
+```ts
+function parseCode(code: string) {
+  const REGEXES = [
+    /* ... */
+  ]
+  const statements = code.split(" ")
+  const tokens = []
+
+  REGEXES.forEach((regex) => {
+    statements.forEach((statement) => {
+      // ...
+    })
+  })
+
+  const ast = []
+  tokens.forEach((token) => {
+    // lex...
+  })
+
+  ast.forEach((node) => {
+    // parse...
+  })
+}
+```
+
+**Better:**
+
+```ts
+const REGEXES = [
+  /* ... */
+]
+
+function parseCode(code: string) {
+  const tokens = tokenize(code)
+  const syntaxTree = parse(tokens)
+
+  syntaxTree.forEach((node) => {
+    // parse...
+  })
+}
+
+function tokenize(code: string): Token[] {
+  const statements = code.split(" ")
+  const tokens: Token[] = []
+
+  REGEXES.forEach((regex) => {
+    statements.forEach((statement) => {
+      tokens.push(/* ... */)
+    })
+  })
+
+  return tokens
+}
+
+function parse(tokens: Token[]): SyntaxTree {
+  const syntaxTree: SyntaxTree[] = []
+  tokens.forEach((token) => {
+    syntaxTree.push(/* ... */)
+  })
+
+  return syntaxTree
+}
+```
+
+## Objects and Data Structures
+
+### Prefer objects to classes for data structures
+
+In TypeScript, when you have an object that primarily serves as a data structure without encapsulating behavior (i.e., methods), using a plain object or an interface is often simpler and more appropriate.
+
+**Not Ideal:**
+
+```ts
+class User {
+  email: string
+  id: string
+  name: string
+}
+
+const user = new User()
+user.email = "joe@website.com"
+user.id = "123"
+user.name = "Joe"
+```
+
+**Better:**
+
+```ts
+interface User {
+  email: string
+  id: string
+  name: string
+}
+
+const user: User = {
+  email: "joe@website.com",
+  id: "123",
+  name: "Joe",
+}
+```
+
+- The object/interface approach is idomatic to TypeScript, whereas the class approach is not typically how data structures are used.
+  - This is because objects provide a clear intent that these constructs are meant for data structure purposes and not meant to encapsulate behavior.
+  - Additionally, classes have features that plain objects and interfaces do not, such as constructors, private/protected members, and methods, which are usually unnecessary if you're only dealing with data.
+- Plain objects and interfaces have less runtime overhead compared to classes. There's no need to instantiate them with `new`, and they don't have constructors, methods, or other additional features that classes provide.
+
+### type vs. interface
+
+The general rule of thumb is to use `interface` until you need `type`.
+
+Refer to the corresponding [TypeScript documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces) to learn more.
+
+**Not Ideal:**
+
+```ts
+type Shape = {
+  // ...
+}
+
+type Circle = Shape & {
+  // ...
+}
+
+type Square = Shape & {
+  // ...
+}
+```
+
+**Better:**
+
+```ts
+interface Shape {
+  // ...
+}
+
+interface Circle extends Shape {
+  // ...
+}
+
+interface Square extends Shape {
+  // ...
+}
+
+// unions are a valid use case for `type`
+type CircleOrSquare = Circle | Square
+```
+
+## Classes
+
+### Classes should be small
+
+The class' size is measured by its responsibility. Following the [Single Responsibility Principle](https://en.wikipedia.org/wiki/Single-responsibility_principle), a class should be small.
+
+**Not Ideal:**
+
+```ts
+class Dashboard {
+  getLanguage(): string {
+    /* ... */
+  }
+  setLanguage(language: string): void {
+    /* ... */
+  }
+  showProgress(): void {
+    /* ... */
+  }
+  hideProgress(): void {
+    /* ... */
+  }
+  isDirty(): boolean {
+    /* ... */
+  }
+  disable(): void {
+    /* ... */
+  }
+  enable(): void {
+    /* ... */
+  }
+  addSubscription(subscription: Subscription): void {
+    /* ... */
+  }
+  removeSubscription(subscription: Subscription): void {
+    /* ... */
+  }
+  addUser(user: User): void {
+    /* ... */
+  }
+  removeUser(user: User): void {
+    /* ... */
+  }
+  goToHomePage(): void {
+    /* ... */
+  }
+  updateProfile(details: UserDetails): void {
+    /* ... */
+  }
+  getVersion(): string {
+    /* ... */
+  }
+  // ...
+}
+```
+
+**Better:**
+
+```ts
+class Dashboard {
+  disable(): void {
+    /* ... */
+  }
+  enable(): void {
+    /* ... */
+  }
+  getVersion(): string {
+    /* ... */
+  }
+}
+
+// split the responsibilities by moving the remaining methods to other classes
+// ...
+```
+
+### Prefer composition to inheritance
+
+Before you jump into using inheritance, it's worth considering if composition could be a better fit for your problem. Both strategies have their places, but the main takeaway is to give composition a thought because it often provides a more flexible design. This is one of the key themes in [Design Patterns](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four.
+
+Here are times when you might still lean towards inheritance:
+
+1. When there's a natural "is-a" relationship (like Human "is an" Animal) rather than a "has-a" relationship (like User "has" UserDetails).
+
+2. When you can avoid duplicating code by using common functionality from base classes (like all Animals moving).
+
+3. When changing a base class would be beneficial for all the classes that inherit from it (like altering the calorie burn for all Animals when they move).
+
+**Not Ideal:**
+
+```typescript
+class Employee {
+  constructor(
+    private readonly name: string,
+    private readonly email: string,
+  ) {
+    // ...
+  }
+
+  // ...
+}
+
+// This isn't ideal because an Employee "has" tax data; it isn't a type of tax data.
+class EmployeeTaxData extends Employee {
+  constructor(
+    name: string,
+    email: string,
+    private readonly ssn: string,
+    private readonly salary: number,
+  ) {
+    super(name, email)
+    // ...
+  }
+
+  // ...
+}
+```
+
+**Better:**
+
+```typescript
+class Employee {
+  private taxData?: EmployeeTaxData
+
+  constructor(
+    private readonly name: string,
+    private readonly email: string,
+  ) {
+    // ...
+  }
+
+  // Using composition to include tax data with an employee
+  setTaxData(ssn: string, salary: number): Employee {
+    this.taxData = new EmployeeTaxData(ssn, salary)
+    return this
+  }
+
+  // ...
+}
+
+class EmployeeTaxData {
+  constructor(
+    public readonly ssn: string,
+    public readonly salary: number,
+  ) {
+    // ...
+  }
+
+  // ...
+}
+```
+
+In this better approach, we've decoupled tax data from the `Employee` class, using composition instead of inheritance. This makes our code more adaptable and easier to maintain.
+
+### Invert control to your consumers
+
+Inversion of Control (IoC) is a principle in software engineering that transfers control of parts of a program to a framework or container, thereby inverting the flow of control. For a detailed overview of IoC, check out this [writeup](https://www.martinfowler.com/articles/injection.html) by Martin Fowler.
+
+**Not Ideal:**
+
+```ts
+class NotificationService {
+  sendEmail() {
+    // Send email
+  }
+
+  sendSms() {
+    // Send SMS
+  }
+
+  sendPush() {
+    // Send push notification
+  }
+}
+```
+
+**Better:**
+
+```ts
+// Notification interface
+interface Notification {
+  send(): void
+}
+
+// Email notification
+class EmailNotification implements Notification {
+  send() {
+    // Send email
+  }
+}
+
+// SMS notification
+class SmsNotification implements Notification {
+  send() {
+    // Send SMS
+  }
+}
+
+// Push notification
+class PushNotification implements Notification {
+  send() {
+    // Send push notification
+  }
+}
+
+// Notification service with DI
+class NotificationService {
+  constructor(public notifications: Notification[]) {}
+
+  sendAll() {
+    this.notifications.forEach((notification) => notification.send())
+  }
+}
+```
+
+Here's how Inversion of Control is applied in the above code:
+
+1. **Interface Definition and Implementation**: The `Notification` interface defines a contract with a single method `send()`. Any class that implements this interface must provide an implementation of the `send()` method. The `EmailNotification`, `SmsNotification`, and `PushNotification` classes are concrete implementations of the `Notification` interface. Each class provides its own specific behavior for the `send()` method, which could be sending an email, an SMS, or a push notification, respectively.
+2. **NotificationService with Dependency Injection**: The `NotificationService` class is designed to send notifications, but it does not directly instantiate or depend on the concrete notification classes. Instead, it accepts an array of objects that implement the `Notification` interface. This is where Dependency Injection takes place. The `NotificationService` is designed to be provided with its dependencies. It is injected with the dependencies (`notifications`) rather than creating them itself.
+3. **Control Inversion**: By receiving the dependencies from the outside (in this case, an array of `Notification` objects), the `NotificationService` has its control inverted: it does not control which notification types to send, nor does it control the instantiation of the notification objects. Instead, an external entity (the caller, framework, or container) is responsible for creating the specific notification instances and providing them to the `NotificationService`.
+4. **sendAll Method**: The `sendAll()` method in `NotificationService` iterates over the injected notifications and calls the `send()` method on each one. The service doesn't need to know the details of how the notifications are sent. It only knows that it can call `send()` on the provided objects.
+
+This last part is important: **the service doesn't need to know the details of how the notifications are sent**. Let's focus on why:
+
+- Because NotificationService only depends on the Notification interface, it is decoupled from the implementation details of how notifications are actually sent. The service is not tied to any particular notification mechanism. This separation of concerns makes the code more **maintainable and flexible**.
+- New types of notifications can be added without changing the NotificationService code. As long as the new types implement the Notification interface, they can be used by NotificationService. This makes the system **extensible** and **easier to test**.
+- The NotificationService code is simplified because it doesn't contain the logic for sending different types of notifications. That logic is encapsulated within each Notification implementation. This makes the NotificationService code easier to read and understand.
+
+## Comments
+
+### Remove commented-out code
+
+Version control exists for a reason. Leave old code in your history.
+
+- Code should be stored in source control.
+- Comments should be reserved to explain difficult to understand code or the reason for doing something out of the ordinary.
+
+**Not Ideal:**
+
+```ts
+interface User {
+  email: string
+  name: string
+  // age: number;
+  // jobPosition: string;
+}
+```
+
+**Better:**
+
+```ts
+interface User {
+  email: string
+  name: string
+}
+```
+
+### TODO comments
+
+When you find that you need to mark code for improvements later, use `// TODO` comments. Most IDE have special support for those kinds of comments so that you can quickly review the entire list of todos.
+
+Keep in mind that a _TODO_ comment is not an excuse for bad code.
+
+**Not Ideal:**
+
+```ts
+function getActiveSubscriptions(): Promise<Subscription[]> {
+  // ensure `dueDate` is indexed.
+  return db.subscriptions.find({dueDate: {lte: new Date()}})
+}
+```
+
+**Better:**
+
+```ts
+function getActiveSubscriptions(): Promise<Subscription[]> {
+  // TODO: ensure `dueDate` is indexed.
+  return db.subscriptions.find({dueDate: {lte: new Date()}})
+}
+```

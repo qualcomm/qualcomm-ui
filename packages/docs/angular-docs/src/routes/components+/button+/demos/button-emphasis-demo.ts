@@ -7,7 +7,7 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 @Component({
   imports: [ButtonModule],
   providers: [provideIcons({ExternalLink})],
-  selector: "button-styles-demo",
+  selector: "button-emphasis-demo",
   template: `
     <div class="grid grid-cols-3 grid-rows-2 gap-x-8 gap-y-1">
       <div class="text-neutral-primary font-heading-xs">Neutral</div>

@@ -64,6 +64,7 @@ export async function publishAngular({
 
   console.group(`Starting pre-publish for ${pkgJson.name}`)
   pkgJson.private = false
+  pkgJson.publishConfig = {access: "public"}
   pkgJson.types = "./index.d.ts"
   pkgJson.main = `./esm2022/${flatModuleId}.mjs`
   const peerDeps = {...pkgJson.peerDependencies}
@@ -99,9 +100,12 @@ export async function publishAngular({
     } else if (res.stderr) {
       console.debug(`${chalk.red("✖")} Failed to publish ${pkgJson.name}.`)
       console.debug(res.stderr)
+      process.exit(1)
     }
   } catch (e) {
     console.debug(`${chalk.red("✖")} Failed to publish ${pkgJson.name}.`)
+    console.debug(e)
+    process.exit(1)
   }
   console.groupEnd()
 }

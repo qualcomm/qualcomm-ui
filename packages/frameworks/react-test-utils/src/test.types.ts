@@ -12,16 +12,3 @@ export interface MultiComponentTestCase<P = any> {
 export type MultiComponentTest<P = any> =
   | MultiComponentTestCase<P>
   | (() => MultiComponentTestCase<P>)
-
-export function runTests<P = any>(tests: MultiComponentTest<P>[]) {
-  for (const test of tests) {
-    const {composite, simple, testCase} =
-      test instanceof Function ? test() : test
-    if (composite) {
-      testCase(composite)
-    }
-    if (simple) {
-      testCase(simple)
-    }
-  }
-}

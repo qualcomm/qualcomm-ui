@@ -1,0 +1,42 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": [
+    "../scripts/changeset-conventional-commits/changelog-formatter.cjs",
+    { "repo": "qualcomm/qualcomm-ui" }
+  ],
+  "commit": false,
+  "fixed": [],
+  "linked": [
+
+  ],
+  "changedFilePatterns": [
+    "**",
+    "!dist",
+    "!build",
+    "!CHANGELOG.md",
+    "!node_modules",
+    "!.turbo",
+    "!scripts",
+    "!vite.config.ts",
+    "!vitest.config.ts"
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "updateInternalDependents": "always",
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  },
+  "ignore": [
+    "@qualcomm-ui/angular-docs",
+    "@qualcomm-ui/angular-table-docs",
+    "@qualcomm-ui/codemod",
+    "@qualcomm-ui/docs-base",
+    "@qualcomm-ui/react-docs",
+    "@qualcomm-ui/qui-docs",
+    "@qualcomm-ui/react-table-docs",
+    "@qualcomm-ui/qui-site",
+    "@qualcomm-ui/angular-ssr",
+    "react-ssr"
+  ]
+}

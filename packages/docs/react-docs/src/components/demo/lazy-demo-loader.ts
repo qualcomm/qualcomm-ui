@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // This file is generated automatically. Don't edit it directly.
 
 import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
@@ -84,4 +82,6 @@ export const lazyDemos: Record<
     import("virtual:qui-demo-scope/page:polymorphic-components+"),
   "/theming/overview": () =>
     import("virtual:qui-demo-scope/page:theming+/overview+"),
+  "/theming/typography": () =>
+    import("virtual:qui-demo-scope/page:theming+/typography+"),
 }

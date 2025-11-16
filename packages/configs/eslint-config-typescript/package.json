@@ -1,14 +1,16 @@
 {
   "name": "@qualcomm-ui/eslint-config-typescript",
-  "version": "1.0.0",
-  "sideEffects": false,
+  "version": "1.0.1",
   "description": "QUI ESLint config for consistent TypeScript code",
+  "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "sideEffects": false,
   "type": "module",
   "keywords": [
     "eslint",
     "config"
   ],
-  "author": "Ryan Bower",
   "main": "index.js",
   "files": [
     "index.js",
@@ -25,6 +27,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@qualcomm-ui/cli": "workspace:^1.0.2",
     "@stylistic/eslint-plugin": "5.2.0",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",

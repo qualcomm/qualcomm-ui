@@ -1,5 +1,5 @@
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import type {MultiComponentTestCase} from "@qualcomm-ui/react-test-utils"
@@ -20,7 +20,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleComponent />,
     testCase(component) {
       test(`Should default to single selection — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         expect(item1).toHaveAttribute("data-state", "unchecked")
         expect(item2).toHaveAttribute("data-state", "unchecked")
@@ -43,7 +43,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleComponent multiple />,
     testCase(component) {
       test(`'multiple' should allow multiple selections — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         expect(item1).toHaveAttribute("data-state", "unchecked")
         expect(item2).toHaveAttribute("data-state", "unchecked")
@@ -66,7 +66,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleComponent />,
     testCase(component) {
       test(`Keyboard navigation — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         expect(item1).not.toHaveAttribute("data-focus")
         await userEvent.tab()
@@ -88,7 +88,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleComponent multiple />,
     testCase(component) {
       test(`Keyboard selection — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await userEvent.tab()
         await userEvent.keyboard("{Enter}")
@@ -107,7 +107,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleComponent multiple={false} />,
     testCase(component) {
       test(`Can't unselect in single selection mode — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await item2.click()
         expect(item2).toHaveAttribute("data-state", "checked")
@@ -127,7 +127,7 @@ const tests: MultiComponentTestCase[] = [
     testCase(component) {
       test(`'onValueChange' should be called when value changes (single mode) — ${component.name}`, async () => {
         const onValueChange = vi.fn()
-        render(component({onValueChange}))
+        await render(component({onValueChange}))
 
         await item2.click()
         expect(onValueChange).toHaveBeenCalledWith([globalItems[1]])
@@ -147,7 +147,7 @@ const tests: MultiComponentTestCase[] = [
     testCase(component) {
       test(`'onValueChange' should be called when value changes (multiple mode) — ${component.name}`, async () => {
         const onValueChange = vi.fn()
-        render(component({onValueChange}))
+        await render(component({onValueChange}))
 
         await item2.click()
         expect(onValueChange).toHaveBeenCalledWith([globalItems[1]])

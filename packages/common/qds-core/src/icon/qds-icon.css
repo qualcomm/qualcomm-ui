@@ -1,4 +1,5 @@
 .qui-icon__root {
+  display: block;
   fill: none;
   /* the icon-height and icon-width variables are supplied from JS */
   height: var(--icon-height, var(--icon-size));
@@ -8,7 +9,12 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: var(--stroke-width, 2);
+  vertical-align: middle;
   width: var(--icon-width, var(--icon-size));
+
+  &[hidden] {
+    display: none;
+  }
 
   &[data-size="xs"] {
     --icon-size: 12px;

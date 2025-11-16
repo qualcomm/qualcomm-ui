@@ -1,47 +1,35 @@
 # @qualcomm-ui/react-router-utils
 
-## 1.2.0
+## 1.0.4 (2025/11/14)
 
-December 23rd, 2024
+### Performance Improvements
 
-- feat (SiteState): added a cookie action creator for updating site state for the initial render.
+- use simple css transition on mobile
 
-## 1.1.0
+### Bug Fixes
 
-December 16th, 2024
+- exclude dependencies from bundle
+- shiki inner html padding
 
-- feat (hybridRoutes): added the routing logic from the `remix-flat-routes` package and removed the `@remix-run/react` dependency.
+### Miscellaneous Chores
 
-## 2.0.0
+- add my-ua-parser dependency
 
-December 10th, 2024
+## 1.0.3 (2025/11/13)
 
-- breaking (React): the minimum required version is now 19.
+### Bug Fixes
 
-## 1.0.3
+- add stub ts files for npm ts badge
 
-July 10th, 2024
+## 1.0.2 (2025/11/12)
 
-- Loosened the peer dependencies for `@qui` packages.
+### Bug Fixes
 
-## 1.0.2
+- react readme url
 
-June 23rd, 2024
+## 1.0.1 (2025/11/12)
 
-- dev: updated tsconfigs.
+### Miscellaneous Chores
 
-## 1.0.1
-
-May 22nd, 2024
-
-- dev: scripts update.
-
-## 1.0.0
-
-May 22nd, 2024
-
-## 1.0.0
-
-April 22nd, 2024
-
-- Added theme cookie action creator.
+- add missing package licenses
+- add per-package readmes

@@ -29,6 +29,7 @@
   border: var(--border-width-sm, 1px) solid
     var(--color-interactive-border-neutral-idle);
   border-radius: var(--border-radius-xs, 2px);
+  box-sizing: border-box;
   color: var(--color-utility-persistent-white);
   display: inline-flex;
   justify-content: center;
@@ -95,5 +96,17 @@
 
   &[data-disabled] {
     color: var(--color-utility-disabled-text);
+  }
+}
+
+.qui-checkbox__indicator {
+  align-items: center;
+  display: inline-flex;
+  &[hidden] {
+    display: none;
+  }
+
+  [data-part="indicator-icon"] {
+    vertical-align: middle;
   }
 }

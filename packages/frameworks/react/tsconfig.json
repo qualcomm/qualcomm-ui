@@ -6,6 +6,7 @@
     "paths": {
       // fixes WebStorm usage detection, not used otherwise
       "@qualcomm-ui/react/*": ["./src/*/index.ts"],
+      "~test-utils/runner": ["./test-utils/runner.ts"]
     }
   },
   "include": ["./src"],

@@ -1,7 +1,7 @@
 import {type ComponentProps, useState} from "react"
 
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Button} from "@qualcomm-ui/react/button"
@@ -154,7 +154,7 @@ async function selectTab(label: string) {
 
 describe("Tabs", () => {
   test("renders all tabs and shows first panel by default", async () => {
-    render(<BasicTabs />)
+    await render(<BasicTabs />)
 
     for (const label of tabLabels) {
       await expect.element(getTabButton(label)).toBeVisible()
@@ -170,7 +170,7 @@ describe("Tabs", () => {
   })
 
   test("switches panels when tabs are clicked", async () => {
-    render(<BasicTabs />)
+    await render(<BasicTabs />)
 
     await assertTabSelected(tabLabels[0])
     await assertPanelVisible(panelContents[0])
@@ -187,7 +187,7 @@ describe("Tabs", () => {
   })
 
   test("respects defaultValue prop", async () => {
-    render(<BasicTabs defaultValue={tabValues[2]} />)
+    await render(<BasicTabs defaultValue={tabValues[2]} />)
 
     await assertTabSelected(tabLabels[2])
     await assertPanelVisible(panelContents[2])
@@ -195,7 +195,7 @@ describe("Tabs", () => {
   })
 
   test("horizontal orientation keyboard navigation", async () => {
-    render(<BasicTabs />)
+    await render(<BasicTabs />)
 
     await userEvent.tab()
     await assertTabSelected(tabLabels[0])
@@ -223,7 +223,7 @@ describe("Tabs", () => {
   })
 
   test("vertical orientation keyboard navigation", async () => {
-    render(<BasicTabs orientation="vertical" />)
+    await render(<BasicTabs orientation="vertical" />)
 
     await userEvent.tab()
     await assertTabSelected(tabLabels[0])
@@ -251,7 +251,7 @@ describe("Tabs", () => {
   })
 
   test("disabled tabs cannot be selected", async () => {
-    render(<DisabledTabs />)
+    await render(<DisabledTabs />)
 
     await expect
       .element(getTabButton(tabLabels[1]))
@@ -266,7 +266,7 @@ describe("Tabs", () => {
   })
 
   test("controlled tabs work correctly", async () => {
-    render(<ControlledTabs />)
+    await render(<ControlledTabs />)
 
     await assertTabSelected(tabLabels[0])
     await assertPanelVisible(panelContents[0])
@@ -282,7 +282,7 @@ describe("Tabs", () => {
 
   test("onValueChange callback is called", async () => {
     const onValueChange = vi.fn()
-    render(<BasicTabs onValueChange={onValueChange} />)
+    await render(<BasicTabs onValueChange={onValueChange} />)
 
     await selectTab(tabLabels[1])
     await expect.poll(() => onValueChange).toHaveBeenCalledWith(tabValues[1])
@@ -292,7 +292,7 @@ describe("Tabs", () => {
   })
 
   test("lazy mounting - panels not in DOM initially", async () => {
-    render(<LazyMountedTabs />)
+    await render(<LazyMountedTabs />)
 
     await assertPanelVisible(panelContents[0])
 
@@ -306,7 +306,7 @@ describe("Tabs", () => {
   })
 
   test("manual activation mode", async () => {
-    render(<BasicTabs activationMode="manual" />)
+    await render(<BasicTabs activationMode="manual" />)
 
     await userEvent.tab()
     await assertTabSelected(tabLabels[0])
@@ -326,7 +326,7 @@ describe("Tabs", () => {
   })
 
   test("tab focus management", async () => {
-    render(
+    await render(
       <div>
         <Button>Before Tabs</Button>
         <BasicTabs />
@@ -379,7 +379,7 @@ describe("Tabs", () => {
       )
     }
 
-    render(<ContextTabs />)
+    await render(<ContextTabs />)
 
     await expect
       .element(page.getByTestId("current-value"))

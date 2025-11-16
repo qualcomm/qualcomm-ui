@@ -9,13 +9,19 @@
       "@vitest/browser/providers/playwright"
     ],
     "paths": {
-      "~test/*": ["./src/test/*"]
+      "~test-utils/runner": ["./test-utils/runner.ts"]
     }
   },
-  "include": ["./src/**/*.spec.tsx", "./test"],
+  "include": ["./src/**/*.spec.tsx", "./test-utils"],
   "references": [
     {
       "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "../react-test-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/core/tsconfig.lib.json"
     }
   ]
 }

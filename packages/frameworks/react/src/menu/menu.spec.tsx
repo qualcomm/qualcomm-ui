@@ -1,7 +1,7 @@
 import {useState} from "react"
 
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Menu} from "@qualcomm-ui/react/menu"
@@ -17,7 +17,7 @@ const testIds = {
 
 describe("Menu", () => {
   test("Opens and closes", async () => {
-    render(
+    await render(
       <Menu.Root>
         <Menu.Trigger>
           <Menu.Button>Menu</Menu.Button>
@@ -62,7 +62,7 @@ describe("Menu", () => {
       )
     }
 
-    render(<ControlledMenu />)
+    await render(<ControlledMenu />)
 
     await expect.element(page.getByRole("menu")).not.toBeInTheDocument()
     await page.getByText("Controlled Menu").click()
@@ -72,7 +72,7 @@ describe("Menu", () => {
   })
 
   test("Checkbox items", async () => {
-    render(
+    await render(
       <Menu.Root>
         <Menu.Trigger>
           <Menu.Button>Checkbox Menu</Menu.Button>
@@ -112,7 +112,7 @@ describe("Menu", () => {
   })
 
   test("Radio group", async () => {
-    render(
+    await render(
       <Menu.Root>
         <Menu.Trigger>
           <Menu.Button>Radio Menu</Menu.Button>
@@ -147,7 +147,7 @@ describe("Menu", () => {
   })
 
   test("Nested menu", async () => {
-    render(
+    await render(
       <Menu.Root>
         <Menu.Trigger>
           <Menu.Button>Parent Menu</Menu.Button>
@@ -209,7 +209,7 @@ describe("Menu", () => {
       )
     }
 
-    render(<SelectableMenu />)
+    await render(<SelectableMenu />)
 
     await page.getByText("Selectable Menu").click()
     await page.getByText("Action 1").click()
@@ -220,7 +220,7 @@ describe("Menu", () => {
   })
 
   test("Keyboard navigation", async () => {
-    render(
+    await render(
       <Menu.Root>
         <Menu.Trigger>
           <Menu.Button>Keyboard Menu</Menu.Button>
@@ -255,7 +255,7 @@ describe("Menu", () => {
   })
 
   test("Menu with separators", async () => {
-    render(
+    await render(
       <Menu.Root>
         <Menu.Trigger>
           <Menu.Button>Menu with Separators</Menu.Button>

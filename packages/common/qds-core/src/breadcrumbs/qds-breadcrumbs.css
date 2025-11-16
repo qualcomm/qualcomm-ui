@@ -3,6 +3,8 @@
   display: flex;
   gap: var(--spacing-40);
   justify-content: flex-start;
+  margin: 0;
+  padding: 0;
 }
 
 .qui-breadcrumbs__item {
@@ -39,9 +41,16 @@
 
 .qui-breadcrumbs__item-trigger {
   align-items: center;
+  background-color: transparent;
+  border: 0 solid;
   border-radius: var(--border-radius-sm);
+  box-sizing: border-box;
   display: inline-flex;
   gap: var(--spacing-40);
+  margin: 0;
+  opacity: 1;
+  padding: 0;
+  text-decoration: none;
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);

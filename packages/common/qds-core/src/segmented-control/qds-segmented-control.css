@@ -1,9 +1,11 @@
 .qui-segmented-control__root {
-  display: inline-flex;
+  border: 0 solid;
+  border-radius: var(--border-radius-md);
   box-shadow: inset 0 0 0 1px var(--color-border-neutral-02);
   box-sizing: border-box;
-
-  border-radius: var(--border-radius-md);
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
 
   &[data-orientation="vertical"] {
     flex-direction: column;
@@ -42,22 +44,22 @@
 }
 
 .qui-segmented-control__item {
-  display: inline-flex;
-  cursor: pointer;
-  user-select: none;
   align-items: center;
-  justify-content: center;
+  background-color: var(--bg-idle);
 
   color: var(--text-idle);
-  background-color: var(--bg-idle);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
   transition:
     color var(--animation-duration-faster) ease,
     background-color var(--animation-duration-faster) ease;
+  user-select: none;
   --border-radius: var(--border-radius-md);
 
   [data-size="sm"] & {
-    font: var(--font-static-body-xs-bold);
     block-size: var(--sizing-120);
+    font: var(--font-static-body-xs-bold);
     gap: var(--spacing-50);
     padding-inline: var(--spacing-80);
     &:has([data-part="item-label"]) {
@@ -69,8 +71,8 @@
     }
   }
   [data-size="md"] & {
-    font: var(--font-static-body-sm-bold);
     block-size: var(--sizing-140);
+    font: var(--font-static-body-sm-bold);
     gap: var(--spacing-70);
     padding-inline: var(--spacing-90);
     &:has([data-part="item-label"]) {
@@ -82,8 +84,8 @@
     }
   }
   [data-size="lg"] & {
-    font: var(--font-static-body-lg-bold);
     block-size: var(--sizing-160);
+    font: var(--font-static-body-lg-bold);
     gap: var(--spacing-90);
     padding-inline: 14px; /* no CSS variable for this one */
     &:has([data-part="item-label"]) {
@@ -97,48 +99,48 @@
 
   &:first-of-type {
     [data-orientation="horizontal"] & {
-      border-start-start-radius: var(--border-radius);
       border-end-start-radius: var(--border-radius);
+      border-start-start-radius: var(--border-radius);
     }
     [data-orientation="vertical"] & {
-      border-start-start-radius: var(--border-radius);
       border-start-end-radius: var(--border-radius);
+      border-start-start-radius: var(--border-radius);
     }
   }
   &:last-of-type {
     [data-orientation="horizontal"] & {
-      border-start-end-radius: var(--border-radius);
       border-end-end-radius: var(--border-radius);
+      border-start-end-radius: var(--border-radius);
     }
     [data-orientation="vertical"] & {
-      border-end-start-radius: var(--border-radius);
       border-end-end-radius: var(--border-radius);
+      border-end-start-radius: var(--border-radius);
     }
   }
 
   &[data-state="unchecked"]:not([data-disabled]) {
     background-color: unset;
     &:hover {
-      color: var(--text-hover);
       background-color: var(--bg-hover);
+      color: var(--text-hover);
     }
     &:active {
-      color: var(--text-active);
       background-color: var(--bg-active);
+      color: var(--text-active);
     }
   }
   &[data-state="checked"] {
-    color: var(--text-checked);
     background-color: var(--bg-checked);
+    color: var(--text-checked);
   }
   &[data-disabled] {
-    color: var(--text-disabled);
     background-color: var(--bg-disabled);
+    color: var(--text-disabled);
     cursor: default;
   }
   &[data-focus-visible] {
-    outline: none;
     box-shadow: 0px 0 0 2px var(--color-utility-focus-border);
+    outline: none;
     &[data-state="checked"] {
       box-shadow:
         inset 0px 0 0 1px var(--color-background-neutral-00),
@@ -156,43 +158,43 @@
 .qui-segmented-control__item:not(:first-of-type) {
   position: relative;
   &::before {
+    background-color: var(--color-border-neutral-01);
     content: "";
     position: absolute;
-    background-color: var(--color-border-neutral-01);
     transition: background-color var(--animation-duration-faster) ease;
   }
 }
 
 [data-orientation="horizontal"] .qui-segmented-control__item {
   &:not(:first-of-type)::before {
+    height: var(--divider-height);
     inset-inline-start: -1px;
     top: calc(50% - var(--divider-height) / 2);
-    height: var(--divider-height);
     width: 1px;
   }
   &[data-state="checked"] {
     &:not(:first-of-type)::before,
     & + .qui-segmented-control__item::before {
-      top: 0;
-      height: 100%;
       background-color: var(--bg-checked);
+      height: 100%;
+      top: 0;
     }
   }
   &[data-disabled] {
     &:not(:first-of-type)::before,
     & + .qui-segmented-control__item::before {
-      top: 0;
-      height: 100%;
       background-color: var(--bg-disabled);
+      height: 100%;
+      top: 0;
     }
   }
 }
 
 [data-orientation="vertical"] .qui-segmented-control__item {
   &:not(:first-of-type)::before {
+    height: 1px;
     inset-block-start: -1px;
     width: 100%;
-    height: 1px;
   }
   &[data-state="checked"] {
     &:not(:first-of-type)::before,

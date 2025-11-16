@@ -89,9 +89,9 @@ export function QdsDemo({
   useEffect(() => {
     if (import.meta.hot && getReactDemoConfig().lazyLoadDevModules) {
       // force reload when dependent modules change. This happens when a demo
-      // imports an entity from a workspace-linked package.
+      // imports an entity from a workspace-linked package, and that entity changes.
       import.meta.hot.accept(() => {
-        // window.location.reload()
+        window.location.reload()
       })
     }
   }, [])
