@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {DOCUMENT} from "@angular/common"
 import {
   computed,
   Directive,
@@ -49,11 +50,21 @@ export class CoreSliderRootDirective
    * The document's text/writing direction.
    */
   readonly dir = input<Direction | undefined>()
+
+  /**
+   * A root node to correctly resolve the Document in custom environments. i.e.,
+   * Iframes, Electron.
+   */
+  readonly getRootNode = input<
+    (() => ShadowRoot | Document | Node) | undefined
+  >()
+
   /**
    * HTML {@link https://www.w3schools.com/html/html_id.asp id attribute}. If
    * omitted, a unique identifier will be generated for accessibility.)
    */
   readonly id = input<string>()
+
   /**
    * The aria-label of each slider thumb. Useful for providing an accessible name to
    * the slider
@@ -61,6 +72,7 @@ export class CoreSliderRootDirective
   readonly ariaLabel = input<string[] | string | undefined>(undefined, {
     alias: "aria-label",
   })
+
   /**
    * The `id` of the elements that labels each slider thumb. Useful for providing an
    * accessible name to the slider
@@ -68,20 +80,24 @@ export class CoreSliderRootDirective
   readonly ariaLabelledby = input<string[] | string | undefined>(undefined, {
     alias: "aria-labelledby",
   })
+
   /**
    * Function that returns a human readable value for the slider thumb
    */
   readonly getAriaValueText = input<(details: ValueTextDetails) => string>()
+
   /**
    * The maximum value of the slider
    * @default 100
    */
   readonly max = input<number | undefined>()
+
   /**
    * The minimum value of the slider
    * @default 0
    */
   readonly min = input<number | undefined>()
+
   /**
    * The minimum permitted steps between multiple thumbs.
    *
@@ -93,11 +109,13 @@ export class CoreSliderRootDirective
    * @default 0
    */
   readonly minStepsBetweenThumbs = input<number | undefined>()
+
   /**
    * The orientation of the slider
    * @default "horizontal"
    */
   readonly orientation = input<"vertical" | "horizontal" | undefined>()
+
   /**
    * The origin of the slider range. The track is filled from the origin
    * to the thumb for single values.
@@ -108,11 +126,13 @@ export class CoreSliderRootDirective
    * @default "start"
    */
   readonly origin = input<"start" | "center" | "end" | undefined>()
+
   /**
    * The step value of the slider
    * @default 1
    */
   readonly step = input<number | undefined>()
+
   /**
    * The alignment of the slider thumb relative to the track
    * - `center`: the thumb will extend beyond the bounds of the slider track.
@@ -121,22 +141,28 @@ export class CoreSliderRootDirective
    * @default "contain"
    */
   readonly thumbAlignment = input<"contain" | "center" | undefined>()
+
   /**
    * The slider thumbs dimensions
    */
   readonly thumbSize = input<{height: number; width: number} | undefined>()
+
   /**
    * Value change callback.
    */
   readonly valueChanged = output<ValueChangeDetails>()
+
   /**
    * Function invoked when the slider value change is done
    */
   readonly valueChangedEnd = output<ValueChangeDetails>()
+
   /**
    * Function invoked when the slider focus changes
    */
   readonly focusChanged = output<FocusChangeDetails>()
+
+  protected readonly document = inject(DOCUMENT)
 
   protected readonly sliderContextService = inject(SliderContextService)
 
@@ -162,6 +188,7 @@ export class CoreSliderRootDirective
         // angular handles this automatically with ngModel and Reactive Forms
         form: undefined,
         getAriaValueText: this.getAriaValueText(),
+        getRootNode: this.getRootNode() ?? (() => this.document),
         ids: undefined,
         invalid: this.isInvalid(),
         max: this.max(),

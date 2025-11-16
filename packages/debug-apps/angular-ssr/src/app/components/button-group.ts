@@ -5,6 +5,7 @@ import {ButtonGroupSharedPropsDemo} from "@qualcomm-ui/angular-docs/components+/
 
 @Component({
   imports: [ButtonGroupLayoutDemo, ButtonGroupSharedPropsDemo],
+  selector: "app-button-group",
   template: `
     <div
       class="container"

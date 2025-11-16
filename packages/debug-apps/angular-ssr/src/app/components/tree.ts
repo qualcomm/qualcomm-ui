@@ -1,6 +1,7 @@
 import {Component} from "@angular/core"
 
 @Component({
+  selector: "app-tree",
   styles: `
     .container {
       max-width: 1200px;

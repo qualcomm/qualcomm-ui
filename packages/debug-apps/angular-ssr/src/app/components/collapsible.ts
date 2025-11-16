@@ -5,6 +5,7 @@ import {CollapsibleShowcaseDemo} from "@qualcomm-ui/angular-docs/components+/col
 
 @Component({
   imports: [CollapsibleControlledDemo, CollapsibleShowcaseDemo],
+  selector: "app-collapsible",
   template: `
     <div
       class="container"

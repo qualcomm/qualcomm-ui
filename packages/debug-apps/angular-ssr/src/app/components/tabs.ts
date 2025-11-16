@@ -24,6 +24,7 @@ import {TabsVerticalDemo} from "@qualcomm-ui/angular-docs/components+/tabs+/demo
     TabsLinksDemo,
     TabsVerticalDemo,
   ],
+  selector: "app-tabs",
   template: `
     <div
       class="container"

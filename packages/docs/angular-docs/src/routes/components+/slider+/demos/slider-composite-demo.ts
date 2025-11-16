@@ -4,7 +4,7 @@ import {SliderModule} from "@qualcomm-ui/angular/slider"
 
 @Component({
   imports: [SliderModule],
-  selector: "slider-composite",
+  selector: "slider-composite-demo",
   template: `
     <!-- preview -->
     <div class="sm:w-80" q-slider-root [defaultValue]="[25]">

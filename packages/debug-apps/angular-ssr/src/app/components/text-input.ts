@@ -36,6 +36,7 @@ import {TextInputTemplateFormsInvalidDemo} from "@qualcomm-ui/angular-docs/compo
     TextInputStatesDemo,
     TextInputTemplateFormsInvalidDemo,
   ],
+  selector: "app-text-input",
   template: `
     <div
       class="container"

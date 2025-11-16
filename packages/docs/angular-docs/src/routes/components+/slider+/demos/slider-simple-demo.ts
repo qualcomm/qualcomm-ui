@@ -4,7 +4,7 @@ import {SliderModule} from "@qualcomm-ui/angular/slider"
 
 @Component({
   imports: [SliderModule],
-  selector: "slider-simple",
+  selector: "slider-simple-demo",
   template: `
     <!-- preview -->
     <q-slider

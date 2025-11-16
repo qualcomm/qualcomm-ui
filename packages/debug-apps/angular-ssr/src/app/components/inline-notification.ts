@@ -18,6 +18,7 @@ import {InlineNotificationSimpleDemo} from "@qualcomm-ui/angular-docs/components
     InlineNotificationLayoutDemo,
     InlineNotificationSimpleDemo,
   ],
+  selector: "app-inline-notification",
   template: `
     <div
       class="container"

@@ -16,6 +16,7 @@ import {AvatarVariantDemo} from "@qualcomm-ui/angular-docs/components+/avatar+/d
     AvatarStatusDemo,
     AvatarVariantDemo,
   ],
+  selector: "app-avatar",
   template: `
     <div
       class="container"

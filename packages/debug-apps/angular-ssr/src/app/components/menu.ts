@@ -32,6 +32,7 @@ import {MenuWithinDialogDemo} from "@qualcomm-ui/angular-docs/components+/menu+/
     MenuRadioGroupStateDemo,
     MenuWithinDialogDemo,
   ],
+  selector: "app-menu",
   template: `
     <div
       class="container"

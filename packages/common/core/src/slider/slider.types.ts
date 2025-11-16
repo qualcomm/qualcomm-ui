@@ -13,6 +13,7 @@ import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
+  CommonProperties,
   EffectSchema,
   GuardSchema,
   IdRegistrationProps,
@@ -50,7 +51,7 @@ export interface ValueTextDetails {
   value: number
 }
 
-export interface SliderApiProps extends DirectionProperty {
+export interface SliderApiProps extends DirectionProperty, CommonProperties {
   /**
    * The aria-label of each slider thumb. Useful for providing an accessible name to
    * the slider
@@ -391,6 +392,7 @@ export interface SliderRootBindings extends CommonBindings {
 }
 
 export interface SliderThumbBindings extends CommonBindings {
+  "aria-describedby": string | undefined
   "aria-disabled": BooleanAriaAttr
   "aria-label": string | undefined
   "aria-labelledby": string | undefined

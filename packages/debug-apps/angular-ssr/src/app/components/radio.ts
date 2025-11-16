@@ -22,6 +22,7 @@ import {RadioTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/radi
     RadioSizesDemo,
     RadioTemplateFormsDemo,
   ],
+  selector: "app-radio",
   template: `
     <div
       class="container"

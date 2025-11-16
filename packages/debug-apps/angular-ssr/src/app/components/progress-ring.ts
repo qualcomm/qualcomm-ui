@@ -18,6 +18,7 @@ import {ProgressRingValueTextDemo} from "@qualcomm-ui/angular-docs/components+/p
     ProgressRingValueDemo,
     ProgressRingValueTextDemo,
   ],
+  selector: "app-progress-ring",
   template: `
     <div
       class="container"

@@ -30,6 +30,7 @@ import {NumberInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components
     NumberInputStepDemo,
     NumberInputTemplateFormsDemo,
   ],
+  selector: "app-number-input",
   template: `
     <div
       class="container"
