@@ -9,8 +9,8 @@ import {
 } from "@qualcomm-ui/angular-core/slider"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
-import {provideQdsSliderContext} from "./qds-slider-context.service.js"
-import {SliderRootDirective} from "./slider-root.directive.js"
+import {provideQdsSliderContext} from "./qds-slider-context.service"
+import {SliderRootDirective} from "./slider-root.directive"
 
 @Component({
   providers: [provideSliderContext(), provideQdsSliderContext()],

@@ -6,7 +6,7 @@ import {computed, Directive, input, type OnInit} from "@angular/core"
 import {useId, useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 
-import {useSliderContext} from "./slider-context.service.js"
+import {useSliderContext} from "./slider-context.service"
 
 @Directive()
 export class CoreSliderValueTextDirective implements OnInit {

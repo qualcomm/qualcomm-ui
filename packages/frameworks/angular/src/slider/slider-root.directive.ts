@@ -17,7 +17,7 @@ import {
 import {
   provideQdsSliderContext,
   QdsSliderContextService,
-} from "./qds-slider-context.service.js"
+} from "./qds-slider-context.service"
 
 @Directive({
   providers: [provideSliderContext(), provideQdsSliderContext()],

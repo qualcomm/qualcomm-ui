@@ -8,7 +8,7 @@ import {
   provideSliderThumbContext,
 } from "@qualcomm-ui/angular-core/slider"
 
-import {useQdsSliderContext} from "./qds-slider-context.service.js"
+import {useQdsSliderContext} from "./qds-slider-context.service"
 
 @Directive({
   providers: [provideSliderThumbContext()],

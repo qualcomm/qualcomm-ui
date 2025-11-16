@@ -8,8 +8,8 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import type {ThumbProps} from "@qualcomm-ui/core/slider"
 
-import {useSliderContext} from "./slider-context.service.js"
-import {SliderThumbContextService} from "./slider-thumb-context.service.js"
+import {useSliderContext} from "./slider-context.service"
+import {SliderThumbContextService} from "./slider-thumb-context.service"
 
 @Directive()
 export class CoreSliderThumbDirective

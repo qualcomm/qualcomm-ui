@@ -5,7 +5,7 @@ import {Component, computed} from "@angular/core"
 
 import {CoreSliderMinDirective} from "@qualcomm-ui/angular-core/slider"
 
-import {useQdsSliderContext} from "./qds-slider-context.service.js"
+import {useQdsSliderContext} from "./qds-slider-context.service"
 
 @Component({
   selector: "[q-slider-min]",
