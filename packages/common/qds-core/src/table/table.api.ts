@@ -188,7 +188,10 @@ export function createQdsTableApi(normalize: PropNormalizer): QdsTableApi {
       props: QdsTableRowExpandButtonProps,
     ): QdsTableRowExpandButtonBindings {
       return normalize.button({
-        "aria-label": props.row.getIsExpanded() ? "Collapse row" : "Expand row",
+        "aria-label":
+          (props.isExpanded ?? props.row.getIsExpanded())
+            ? "Collapse row"
+            : "Expand row",
         className: tableClasses.rowExpandButton,
         "data-expanded": booleanDataAttr(props.row.getIsExpanded()),
         disabled: !props.row.getCanExpand(),
