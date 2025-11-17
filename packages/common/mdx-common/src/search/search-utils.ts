@@ -12,6 +12,23 @@ import type {
   SearchResultType,
 } from "./search.types"
 
+function findWordBoundary(
+  text: string,
+  index: number,
+  direction: "left" | "right",
+): number {
+  if (direction === "left") {
+    while (index > 0 && !/\s/.test(text[index])) {
+      index--
+    }
+    return Math.max(0, index)
+  }
+  while (index < text.length && !/\s/.test(text[index])) {
+    index++
+  }
+  return Math.min(text.length, index)
+}
+
 /**
  * This function uses a Sliding Window technique to keep the matched search text in
  * view as the user types.
@@ -19,21 +36,18 @@ import type {
 export function formatSectionContent(
   text: string,
   indices: readonly number[],
-  characterLimit = 95,
+  characterLimit = 150,
 ): FormattedContent[] {
   const startIndex = indices[0]
   const endIndex = indices[indices.length - 1]
   const matchedIndices = new Set(indices)
   const matched: FormattedContent[] = []
 
-  // Calculate the optimal window size
   const halfLimit = Math.floor(characterLimit / 2)
 
-  // Determine the start and end points of the window
   let windowStart = Math.max(startIndex - halfLimit, 0)
   let windowEnd = Math.min(endIndex + halfLimit, text.length)
 
-  // Adjust the window to fit within the character limit
   if (windowEnd - windowStart > characterLimit) {
     if (windowStart === 0) {
       windowEnd = characterLimit
@@ -42,12 +56,14 @@ export function formatSectionContent(
     }
   }
 
+  windowStart = findWordBoundary(text, windowStart, "left")
+  windowEnd = findWordBoundary(text, windowEnd, "right")
+
   for (let i = windowStart; i < windowEnd; i++) {
     const char = text.charAt(i)
     matched.push({content: char, highlight: matchedIndices.has(i)})
   }
 
-  // Group characters by their highlight status
   const content: FormattedContent[] = []
   let chars: string[] = [matched[0].content]
   for (let i = 1; i < matched.length; i++) {
@@ -60,6 +76,7 @@ export function formatSectionContent(
       chars = [current.content]
     }
   }
+
   if (chars.length) {
     content.push({
       content: chars.join(""),
@@ -71,8 +88,6 @@ export function formatSectionContent(
     return acc + content.content.length
   }, 0)
 
-  // If this section is truncated, we prepend ellipses. The text-overflow CSS
-  // handles truncating at the end.
   if (text.length !== totalContentLength && windowStart > 0) {
     return [{content: "...", highlight: false}, ...content]
   }
@@ -117,15 +132,14 @@ function getFields(obj: PageSection): SearchResultFields {
  */
 export function formatSearchResults(
   results: Fuzzysort.KeysResults<PageSection>,
+  characterLimit: number = 150,
 ): SearchResult[] {
   return results.map((res) => {
     const heading = formatKeyResult(res[1], "heading")
     const content = formatKeyResult(res[2], "content")
     const obj: PageSection = res.obj
-
     const resultType: SearchResultType =
       content.score > 0.2 ? "content" : heading.score ? "heading" : "title"
-
     const result = {
       ...getFields(obj),
       index: -1,
@@ -135,7 +149,11 @@ export function formatSearchResults(
     if (resultType === "content" && obj.content) {
       return {
         ...result,
-        content: formatSectionContent(obj.content, content.indexes),
+        content: formatSectionContent(
+          obj.content,
+          content.indexes,
+          characterLimit,
+        ),
       }
     }
     return result
