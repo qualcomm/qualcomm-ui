@@ -161,7 +161,7 @@
 .qui-input__icon {
   align-items: center;
   color: var(--icon-color);
-  display: inline-block;
+  display: inline-flex;
   justify-content: center;
   pointer-events: none;
   z-index: 2;
