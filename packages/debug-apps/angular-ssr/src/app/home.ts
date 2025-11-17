@@ -17,30 +17,20 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
       font: var(--font-static-heading-lg-default);
       color: var(--color-text-neutral-primary);
     }
-
-    .intro {
-      font-size: 1.125rem;
-      color: var(--color-text-neutral-secondary);
-      margin-bottom: 2rem;
-    }
-
-    .components-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1rem;
-    }
   `,
   template: `
     <div class="container">
       <h1 class="app-title">Component Demos</h1>
 
-      <div class="components-grid">
+      <ul class="space-y-2">
         @for (group of groups; track group.path) {
-          <a q-link [routerLink]="group.path">
-            {{ group.name }}
-          </a>
+          <li>
+            <a q-link [routerLink]="group.path">
+              {{ group.name }}
+            </a>
+          </li>
         }
-      </div>
+      </ul>
     </div>
   `,
 })
@@ -72,6 +62,7 @@ export class Home {
     {name: "Radio", path: "/radio"},
     {name: "Select", path: "/select"},
     {name: "Segmented Control", path: "/segmented-control"},
+    {name: "Slider", path: "/slider"},
     {name: "Switch", path: "/switch"},
     {name: "Tabs", path: "/tabs"},
     {name: "Tag", path: "/tag"},

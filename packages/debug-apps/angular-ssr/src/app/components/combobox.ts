@@ -64,6 +64,7 @@ import {ComboboxWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/c
     ComboboxWithinDialogDemo,
     ComboboxWithinPopoverDemo,
   ],
+  selector: "app-combobox",
   template: `
     <div
       class="container"

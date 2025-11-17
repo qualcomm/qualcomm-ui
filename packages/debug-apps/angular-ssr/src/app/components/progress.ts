@@ -18,6 +18,7 @@ import {ProgressSizeDemo} from "@qualcomm-ui/angular-docs/components+/progress+/
     ProgressSimpleDemo,
     ProgressSizeDemo,
   ],
+  selector: "app-progress",
   template: `
     <div
       class="container"

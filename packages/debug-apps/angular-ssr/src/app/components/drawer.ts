@@ -12,6 +12,7 @@ import {DrawerPlacementStartDemo} from "@qualcomm-ui/angular-docs/components+/dr
     DrawerPlacementDemo,
     DrawerPlacementStartDemo,
   ],
+  selector: "app-drawer",
   template: `
     <div
       class="container"

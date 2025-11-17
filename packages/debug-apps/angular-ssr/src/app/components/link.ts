@@ -7,6 +7,7 @@ import {LinkSizesDemo} from "@qualcomm-ui/angular-docs/components+/link+/demos/l
 
 @Component({
   imports: [LinkColorsDemo, LinkDisabledDemo, LinkIconsDemo, LinkSizesDemo],
+  selector: "app-link",
   template: `
     <div
       class="container"

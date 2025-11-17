@@ -5,6 +5,7 @@ import {PopoverSimpleDemo} from "@qualcomm-ui/angular-docs/components+/popover+/
 
 @Component({
   imports: [PopoverCompositeDemo, PopoverSimpleDemo],
+  selector: "app-popover",
   template: `
     <div
       class="container"

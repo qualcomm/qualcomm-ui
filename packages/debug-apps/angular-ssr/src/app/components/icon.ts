@@ -5,6 +5,7 @@ import {IconSizesDemo} from "@qualcomm-ui/angular-docs/components+/icon+/demos/i
 
 @Component({
   imports: [IconProviderDemo, IconSizesDemo],
+  selector: "app-icon",
   template: `
     <div
       class="container"

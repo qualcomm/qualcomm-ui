@@ -32,6 +32,7 @@ import {AccordionUncontainedDemo} from "@qualcomm-ui/angular-docs/components+/ac
     AccordionSizeDemo,
     AccordionUncontainedDemo,
   ],
+  selector: "app-accordion",
   template: `
     <div
       class="container"
