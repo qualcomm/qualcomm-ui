@@ -33,7 +33,7 @@ function atLeastOneSelectedValidator(): ValidatorFn {
     ButtonModule,
     ErrorTextComponent,
   ],
-  selector: "switch-reactive-forms",
+  selector: "switch-advanced-validation-demo",
   template: `
     <form
       class="flex w-72 flex-col gap-2"
