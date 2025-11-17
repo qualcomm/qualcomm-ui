@@ -3,13 +3,11 @@
 
 import {computed, Directive} from "@angular/core"
 
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {CoreInlineNotificationActionDirective} from "@qualcomm-ui/angular-core/inline-notification"
 
 import {useQdsInlineNotificationContext} from "./qds-inline-notification-context.service"
 
 @Directive({
-  hostDirectives: [QuiPreloadDirective],
   selector: "[q-inline-notification-action]",
   standalone: false,
 })
