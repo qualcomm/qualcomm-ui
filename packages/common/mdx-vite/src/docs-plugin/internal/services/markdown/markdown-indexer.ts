@@ -13,7 +13,11 @@ import remarkParse from "remark-parse"
 import remarkRehype from "remark-rehype"
 import {unified} from "unified"
 
-import type {PageFrontmatter, PageHeading} from "@qualcomm-ui/mdx-common"
+import type {
+  PageFrontmatter,
+  PageHeading,
+  RichContentNode,
+} from "@qualcomm-ui/mdx-common"
 
 import {rehypeSlug} from "../../../rehype/rehype-slug"
 import {remarkAlerts} from "../../../remark/remark-alerts"
@@ -40,6 +44,7 @@ export class MarkdownIndexer {
     this.currentSection = {
       content: [],
       heading: null,
+      richContent: [],
     }
   }
 
@@ -104,6 +109,8 @@ export class MarkdownIndexer {
       this.currentSection.heading = heading
       return
     }
+
+    this.currentSection.richContent.push(element as RichContentNode)
 
     const text = toText(element, {whitespace: "pre-wrap"})
       .replaceAll("\n", "\t")
