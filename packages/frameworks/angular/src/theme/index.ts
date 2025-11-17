@@ -1,3 +1,5 @@
+export * from "./qds-theme-provider.component"
 export * from "./qds-theme-providers"
 export * from "./qds-theme.service"
 export type * from "./qds-theme.types"
+export * from "./theme-cookie.service"

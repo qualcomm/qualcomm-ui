@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {DOCUMENT} from "@angular/common"
 import {inject, Injectable, REQUEST} from "@angular/core"
 
@@ -24,9 +27,7 @@ export class ThemeCookieService {
   }
 
   /**
-   * Get cookie by name
-   *
-   * @param name Cookie name
+   * Get cookie by name, handles both browser and server-side rendering
    */
   get(name: string): string | null {
     name = encodeURIComponent(name)
@@ -47,7 +48,7 @@ export class ThemeCookieService {
   }
 
   /**
-   * Helper method to safely get cookies from request object
+   * Helper method to safely get cookies from the request object.
    * Handles both Angular's REQUEST interface and Express's req interface
    */
   private getRequestCookies(): string | null {
@@ -55,7 +56,6 @@ export class ThemeCookieService {
       return null
     }
 
-    // Handle Angular REQUEST object (has headers.get method)
     if (
       this.request.headers &&
       typeof this.request.headers.get === "function"
@@ -63,13 +63,11 @@ export class ThemeCookieService {
       return this.request.headers.get("cookie")
     }
 
-    // Handle Express request object (has headers object and get method)
     const reqAny = this.request as any
     if (typeof reqAny.get === "function") {
       return reqAny.get("cookie") || reqAny.get("Cookie")
     }
 
-    // Handle direct headers object access
     const headers = this.request.headers
     if (headers && typeof headers === "object") {
       return headers.get("cookie") || headers.get("Cookie")

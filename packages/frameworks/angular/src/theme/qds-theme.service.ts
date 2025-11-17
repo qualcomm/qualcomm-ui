@@ -1,16 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {DOCUMENT, isPlatformBrowser, isPlatformServer} from "@angular/common"
+import {DOCUMENT} from "@angular/common"
 import {
   effect,
   inject,
   Injectable,
-  PLATFORM_ID,
-  REQUEST,
   signal,
   type WritableSignal,
 } from "@angular/core"
+
+import {useCsrCheck} from "@qualcomm-ui/angular-core/common"
 
 import {
   BRAND_COOKIE,
@@ -27,10 +27,9 @@ export class QdsThemeService {
   readonly theme: WritableSignal<Theme> = signal(inject(THEME_COOKIE))
   readonly brand: WritableSignal<Brand> = signal(inject(BRAND_COOKIE))
 
-  private readonly platformId = inject(PLATFORM_ID)
   private readonly response = inject(Response, {optional: true})
   private readonly document = inject(DOCUMENT)
-  private readonly request = inject(REQUEST, {optional: true})
+  protected readonly isCsr = useCsrCheck()
 
   private readonly themeOpts: Partial<QdsThemeProviderOptions | null> = inject(
     QDS_THEME_OPTIONS,
@@ -45,7 +44,7 @@ export class QdsThemeService {
     const opts = this.themeOpts || {}
     let rootElement = opts.rootElement
     if (!rootElement) {
-      if (isPlatformServer(this.platformId)) {
+      if (!this.isCsr()) {
         rootElement = globalThis.document?.documentElement
       } else {
         rootElement = this.document.documentElement
@@ -83,11 +82,16 @@ export class QdsThemeService {
   }
 
   constructor() {
-    effect(() => this.syncSideEffects(this.theme(), this.brand()))
+    effect(() => {
+      const theme = this.theme()
+      const brand = this.brand()
+      this.syncAttributes(theme, brand)
+      this.syncCookie(theme, brand)
+    })
     const theme = this.themeCookieService.get(THEME_COOKIE_NAME)
     if (theme === "dark" || theme === "light") {
       this.theme.set(theme)
-      this.syncSideEffects(theme, this.brand())
+      this.syncAttributes(theme, this.brand())
     }
   }
 
@@ -95,15 +99,17 @@ export class QdsThemeService {
     this.theme.update((theme) => (theme === "dark" ? "light" : "dark"))
   }
 
-  private syncSideEffects(theme: Theme, brand: Brand): void {
+  private syncAttributes(theme: Theme, brand: Brand): void {
     if (!this.skipBrandAttribute) {
       this.updateHtmlAttribute("data-brand", brand)
     }
     if (!this.skipThemeAttribute) {
       this.updateHtmlAttribute("data-theme", theme)
     }
+  }
 
-    if (isPlatformBrowser(this.platformId)) {
+  private syncCookie(theme: Theme, brand: Brand): void {
+    if (this.isCsr()) {
       const maxAge = 60 * 60 * 24 * 365 // 1 year
 
       this.document.cookie = `${THEME_COOKIE_NAME}=${theme}; Path=/; Max-Age=${maxAge}; SameSite=Lax`
