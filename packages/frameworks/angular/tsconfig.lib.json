@@ -7,11 +7,21 @@
     "module": "es2022",
     "paths": {
       "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
-      // tricks the type system into resolving properly.
-      // Angular does not fit well with modern monorepos.
-      "@qualcomm-ui/angular-core/*": ["../angular-core/dist/*"]
+      // disgusting, but it works
+      "@qualcomm-ui/angular-core/*": ["../angular-core/dist/*/index.d.ts"]
     }
   },
+  "references": [
+    {
+      "path": "../angular-core/tsconfig.angular-lib.json"
+    },
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    }
+  ],
   "include": ["./src"],
   "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {

@@ -47,12 +47,12 @@
     "@qualcomm-ui/cli": "workspace:^1.0.5",
     "@qualcomm-ui/css-utils": "workspace:^1.0.3",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "esbuild": "^0.25.8",
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
     "tailwindcss": ">=4"

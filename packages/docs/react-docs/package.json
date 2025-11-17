@@ -82,7 +82,7 @@
     "@mdx-js/react": "^3.1.0",
     "@mdx-js/rollup": "^3.1.0",
     "@qualcomm-ui/mdx-vite": "workspace:*",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@react-router/dev": "catalog:",
     "@tailwindcss/vite": "^4.1.11",
     "@types/fs-extra": "^11.0.4",
@@ -109,7 +109,7 @@
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "unified": "^11.0.5",
     "vite": "npm:rolldown-vite@7.1.19",
     "vite-tsconfig-paths": "^5.1.4"

@@ -62,6 +62,8 @@ export class CoreToasterDirective
 
   protected readonly toastGroupService = inject(ToastGroupContextService)
 
+  readonly toasts = computed(() => this.toastGroupService.context().getToasts())
+
   protected readonly trackBindings = useTrackBindings(() => {
     return this.toastGroupService.context().getGroupBindings()
   })

@@ -1,7 +1,7 @@
 import {type ComponentPropsWithRef, useRef, useState} from "react"
 
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Button} from "@qualcomm-ui/react/button"
@@ -84,7 +84,7 @@ describe("Dialog", () => {
       }
       return <SimpleDialog onOpenChange={handleOpenChange} open={open} />
     }
-    render(<ControlledState />)
+    await render(<ControlledState />)
 
     await assertVisible()
     await userEvent.click(page.getByLabelText(labels.closeButton))
@@ -93,7 +93,7 @@ describe("Dialog", () => {
   })
 
   test("restoreFocus", async () => {
-    render(<SimpleDialog restoreFocus />)
+    await render(<SimpleDialog restoreFocus />)
 
     await page.getByText(labels.openButton).click()
     await assertVisible()
@@ -103,7 +103,7 @@ describe("Dialog", () => {
   })
 
   test("restoreFocus: false", async () => {
-    render(<SimpleDialog restoreFocus={false} />)
+    await render(<SimpleDialog restoreFocus={false} />)
 
     await page.getByText(labels.openButton).click()
     await assertVisible()
@@ -125,7 +125,7 @@ describe("Dialog", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.openButton).click()
     await assertVisible()
@@ -137,7 +137,7 @@ describe("Dialog", () => {
   })
 
   test("closeOnEscape", async () => {
-    render(<SimpleDialog closeOnEscape />)
+    await render(<SimpleDialog closeOnEscape />)
 
     await page.getByText(labels.openButton).click()
     await assertVisible()
@@ -146,7 +146,7 @@ describe("Dialog", () => {
   })
 
   test("closeOnEscape: false", async () => {
-    render(<SimpleDialog closeOnEscape={false} />)
+    await render(<SimpleDialog closeOnEscape={false} />)
 
     await page.getByText(labels.openButton).click()
     await assertVisible()

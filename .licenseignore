@@ -15,6 +15,7 @@ scripts/*
 # test files
 **/test/**
 **/tests/**
+**/test-utils/**
 **/__tests__/**
 **/__mocks__/**
 **/__spec__/**

@@ -1,8 +1,8 @@
 import {type HTMLAttributes, useState} from "react"
 
-import {page, userEvent} from "@vitest/browser/context"
 import {FileText, FolderIcon} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
@@ -63,7 +63,7 @@ describe("Tree", () => {
   test("renders all tree nodes correctly", async () => {
     const collection = createTestCollection()
 
-    render(
+    await render(
       <Tree.Root collection={collection}>
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes
@@ -100,7 +100,7 @@ describe("Tree", () => {
   test("expands and collapses branch nodes", async () => {
     const collection = createTestCollection()
 
-    render(
+    await render(
       <Tree.Root collection={collection}>
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes
@@ -137,7 +137,7 @@ describe("Tree", () => {
   test("default expanded nodes", async () => {
     const collection = createTestCollection()
 
-    render(
+    await render(
       <Tree.Root collection={collection} defaultExpandedValue={["documents"]}>
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes
@@ -209,7 +209,7 @@ describe("Tree", () => {
       )
     }
 
-    render(<ControlledTree />)
+    await render(<ControlledTree />)
 
     await expect.element(page.getByText("Document 1.pdf")).not.toBeVisible()
 
@@ -220,7 +220,7 @@ describe("Tree", () => {
   test("checkbox tree functionality", async () => {
     const collection = createTestCollection()
 
-    render(
+    await render(
       <Tree.Root
         collection={collection}
         defaultExpandedValue={["documents", "images"]}
@@ -265,7 +265,7 @@ describe("Tree", () => {
   test("disabled nodes", async () => {
     const collection = createTestCollection()
 
-    render(
+    await render(
       <Tree.Root collection={collection}>
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes
@@ -299,7 +299,7 @@ describe("Tree", () => {
     const collection = createTestCollection()
     const onSelectionChange = vi.fn()
 
-    render(
+    await render(
       <Tree.Root
         collection={collection}
         onSelectedValueChange={onSelectionChange}
@@ -334,7 +334,7 @@ describe("Tree", () => {
   test("keyboard navigation", async () => {
     const collection = createTestCollection()
 
-    render(
+    await render(
       <Tree.Root collection={collection}>
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes
@@ -376,7 +376,7 @@ describe("Tree", () => {
   test("indent guide visibility", async () => {
     const collection = createTestCollection()
 
-    render(
+    await render(
       <Tree.Root collection={collection} defaultExpandedValue={["documents"]}>
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes
@@ -413,7 +413,7 @@ describe("Tree", () => {
     const collection = createTestCollection()
     const onFocusChange = vi.fn()
 
-    render(
+    await render(
       <Tree.Root collection={collection} onFocusChange={onFocusChange}>
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes

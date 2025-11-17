@@ -1,13 +1,7 @@
-import {
-  act,
-  createContext,
-  type ReactElement,
-  useContext,
-  useState,
-} from "react"
+import {createContext, type ReactElement, useContext, useState} from "react"
 
-import {page} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page} from "vitest/browser"
 import {render, renderHook} from "vitest-browser-react"
 
 import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
@@ -26,36 +20,14 @@ import {
 
 import {useMachine} from "./use-machine"
 
-function getGlobalThis(): any {
-  if (typeof globalThis !== "undefined") {
-    return globalThis
-  }
-  if (typeof self !== "undefined") {
-    return self
-  }
-  if (typeof window !== "undefined") {
-    return window
-  }
-  if (typeof global !== "undefined") {
-    return global
-  }
-  throw new Error("unable to locate global object")
-}
-
 async function renderMachine<T extends MachineSchema>(
   machine: MachineConfig<T>,
 ) {
-  const render = renderHook(() => useMachine<T>(machine))
+  const {act, result} = await renderHook(() => useMachine<T>(machine))
 
-  getGlobalThis().IS_REACT_ACT_ENVIRONMENT = true
-
-  // Use the new AsyncSendFn type for the wrapper function
   const send = async (event: EventType<NonNullable<any>>): Promise<void> => {
-    // Implementation remains async
     await act(async () => {
-      // Call the machine's original send function (which returns void)
-      // Type assertion needed for spreading args into the overloaded function
-      render.result.current.send(event)
+      result.current.send(event)
     })
   }
 
@@ -64,7 +36,7 @@ async function renderMachine<T extends MachineSchema>(
       vi.advanceTimersByTime(ms)
     })
   }
-  return {...render, advanceTime, send: send as unknown as AsyncSendFn<T>}
+  return {advanceTime, result, send: send as unknown as AsyncSendFn<T>}
 }
 
 describe("basic", () => {
@@ -118,7 +90,7 @@ describe("basic", () => {
       },
     })
 
-    renderMachine(machine)
+    await renderMachine(machine)
     await Promise.resolve()
 
     expect(fooEntry).toHaveBeenCalledOnce()
@@ -697,7 +669,7 @@ describe("basic", () => {
       )
     }
 
-    render(<TestComponent />)
+    await render(<TestComponent />)
 
     await expect.element(page.getByText(text.label)).toHaveAttribute("id", "2")
     await expect

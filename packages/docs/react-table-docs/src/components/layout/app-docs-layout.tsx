@@ -14,6 +14,7 @@ import {
   type DocsLayoutSettings,
   MobileSidebar,
 } from "@qualcomm-ui/react-mdx/docs-layout"
+import {Github} from "@qualcomm-ui/react-mdx/icons"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 import {updateSiteState} from "@qualcomm-ui/react-router-utils/client"
 
@@ -146,7 +147,7 @@ export function AppDocsLayout({
         }
         header={
           <div className="qui-docs__header">
-            <HeaderBar.Root className="@container" surface="secondary">
+            <HeaderBar.Root surface="secondary">
               <HeaderBar.Logo>
                 <MobileSidebar>
                   <QuiLogo width={20} />
@@ -181,6 +182,17 @@ export function AppDocsLayout({
 
               <HeaderBar.ActionBar>
                 <SiteSearch />
+                <HeaderBar.ActionIconButton
+                  aria-label="Navigate to the Github repository"
+                  icon={Github}
+                  render={
+                    <a
+                      href="https://github.com/qualcomm/qualcomm-ui"
+                      rel="noreferrer"
+                      target="_blank"
+                    />
+                  }
+                />
                 <GlobalConfig />
                 <ThemeToggle />
               </HeaderBar.ActionBar>

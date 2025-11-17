@@ -5,7 +5,7 @@ import {computed, Directive} from "@angular/core"
 
 import {CoreSegmentedControlHiddenInputDirective} from "@qualcomm-ui/angular-core/segmented-control"
 
-import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service.js"
+import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service"
 
 /**
  * The segmented control item hidden input.

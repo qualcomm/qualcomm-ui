@@ -1,7 +1,7 @@
 {
   "name": "@qualcomm-ui/angular-core",
   "description": "Design-agnostic Angular building blocks and utilities.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
@@ -10,15 +10,9 @@
   "type": "module",
   "exports": {
     "./*": {
-      "types": [
-        "./dist/*/index.d.ts"
-      ],
-      "esm2022": [
-        "./dist/esm2022/*/index.mjs"
-      ],
-      "esm": [
-        "./dist/esm2022/*/index.mjs"
-      ]
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/fesm2022/qualcomm-ui-angular-core-*.mjs",
+      "default": "./dist/fesm2022/qualcomm-ui-angular-core-*.mjs"
     }
   },
   "publishConfig": {
@@ -26,13 +20,12 @@
   },
   "scripts": {
     "ng": "ng",
-    "build": "nx build --output-style=stream --verbose",
-    "dev": "nx dev --output-style=dynamic-legacy",
+    "build": "ng-packagr -p src/ng-package.json -c tsconfig.lib.json",
+    "dev": "pnpm build --watch",
     "lint": "eslint --quiet",
-    "test": "vitest --run",
-    "test:watch": "vitest -c vitest-watch.config.ts",
+    "test": "vitest --run --pool=forks",
     "test:coverage": "vitest --run --coverage --coverage.enabled=true",
-    "test:angular-core:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --poolOptions.forks.maxForks=1 --no-file-parallelism",
+    "test:angular-core:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --no-file-parallelism",
     "test:ui": "vitest --ui",
     "build:bundle-size": "ng build test-bundle-size-app",
     "analyze-bundle": "source-map-explorer bundle-size-dist/main.js",
@@ -43,6 +36,7 @@
     "@analogjs/platform": "catalog:",
     "@analogjs/vite-plugin-angular": "catalog:",
     "@analogjs/vitest-angular": "catalog:",
+    "@angular/build": "catalog:",
     "@angular-devkit/architect": "catalog:",
     "@angular-devkit/build-angular": "catalog:",
     "@angular-devkit/core": "catalog:",
@@ -62,26 +56,26 @@
     "@faker-js/faker": "~9.6.0",
     "@floating-ui/dom": "^1.7.0",
     "@jsdevtools/coverage-istanbul-loader": "~3.0.5",
-    "@module-federation/enhanced": "0.18.4",
-    "@nx/vite": "21.6.8",
-    "@qualcomm-ui/core": "workspace:1.0.3",
+    "@module-federation/enhanced": "0.21.2",
+    "@qualcomm-ui/core": "workspace:^1.0.5",
     "@qualcomm-ui/cli": "workspace:^1",
-    "@qualcomm-ui/dom": "workspace:1.0.4",
-    "@qualcomm-ui/tailwind-plugin": "workspace:^1",
-    "@qualcomm-ui/tsconfig": "workspace:^1",
-    "@qualcomm-ui/utils": "workspace:^1.0.2",
+    "@qualcomm-ui/dom": "workspace:^1.0.4",
+    "@qualcomm-ui/tailwind-plugin": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/virtual-core": "^3.13.12",
     "@testing-library/angular": "^17.3.7",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/user-event": "^14.6.1",
     "@types/mocha": "^10.0.10",
-    "@vitest/browser": "^3.2.4",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/browser": "^4.0.8",
+    "@vitest/browser-playwright": "^4.0.8",
+    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/ui": "^4.0.8",
     "execa": "^9.6.0",
     "lucide-angular": "0.525.0",
-    "ng-packagr": "~20.3.0",
+    "ng-packagr": "~20.3.2",
     "playwright": "1.53.2",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~7.8.0",
@@ -90,10 +84,10 @@
     "ts-node": "^10.9.2",
     "tslib": "~2.5.3",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vite": "npm:rolldown-vite@7.1.19",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   },
   "peerDependencies": {
     "@angular/cdk": ">=20 <22",
@@ -103,9 +97,9 @@
     "@angular/forms": ">=20 <22",
     "@angular/platform-browser": ">=20 <22",
     "@angular/platform-browser-dynamic": ">=20 <22",
-    "@qualcomm-ui/core": "workspace:1.0.3",
-    "@qualcomm-ui/dom": "workspace:1.0.4",
-    "@qualcomm-ui/utils": "workspace:^1.0.2",
+    "@qualcomm-ui/core": "workspace:^1.0.5",
+    "@qualcomm-ui/dom": "workspace:^1.0.4",
+    "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@tanstack/virtual-core": ">=3.13.12",
     "lucide-angular": ">=0.487.0 <1",
     "typescript": ">=5.2.0 <6"

@@ -1,7 +1,7 @@
 import {useState} from "react"
 
-import {page} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Button} from "@qualcomm-ui/react/button"
@@ -49,7 +49,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
     await expect.element(page.getByText(labels.title)).toBeVisible()
@@ -84,7 +84,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
     await expect.element(page.getByText(labels.title)).toBeVisible()
@@ -145,7 +145,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
     await expect.element(page.getByText(labels.title)).toBeVisible()
@@ -195,7 +195,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
 
@@ -233,7 +233,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
 
@@ -274,7 +274,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
 
@@ -311,7 +311,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
 
@@ -367,7 +367,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
 
@@ -400,7 +400,7 @@ describe("Toast", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
     await expect.element(page.getByText(labels.title)).toBeVisible()
@@ -438,7 +438,7 @@ describe("Toast - Toaster Configuration", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
     await expect.element(page.getByText(labels.title)).toBeVisible()
@@ -468,7 +468,7 @@ describe("Toast - Toaster Configuration", () => {
       )
     }
 
-    render(<Component />)
+    await render(<Component />)
 
     await page.getByText(labels.showToast).click()
     await expect.element(page.getByText(labels.title)).toBeVisible()

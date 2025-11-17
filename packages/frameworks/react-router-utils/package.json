@@ -5,6 +5,7 @@
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     "./client": {
@@ -45,7 +46,7 @@
   "devDependencies": {
     "@qualcomm-ui/cli": "workspace:^1.0.5",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.2",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@types/minimatch": "^5.1.2",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -55,7 +56,7 @@
     "react-router": "catalog:",
     "shx": "^0.4.0",
     "tsx": "^4.20.6",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
     "minimatch": ">=10.0.3",

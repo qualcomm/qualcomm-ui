@@ -1,7 +1,7 @@
 import {useRef} from "react"
 
-import {page} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Portal} from "./portal"
@@ -9,7 +9,7 @@ import {PortalContextProvider} from "./portal-context"
 
 describe("Portal", () => {
   test("renders children to document.body by default", async () => {
-    render(
+    await render(
       <Portal>
         <div data-test-id="portal-content">Portal Content</div>
       </Portal>,
@@ -34,7 +34,7 @@ describe("Portal", () => {
       )
     }
 
-    render(<TestComponent />)
+    await render(<TestComponent />)
 
     const content = page.getByTestId("portal-content")
     await expect.element(content).toBeVisible()
@@ -54,14 +54,14 @@ describe("Portal", () => {
       )
     }
 
-    render(<TestComponent />)
+    await render(<TestComponent />)
 
     const content = page.getByTestId("portal-content")
     await expect.element(content).toBeVisible()
   })
 
   test("renders children inline when disabled", async () => {
-    render(
+    await render(
       <div data-test-id="wrapper">
         <Portal disabled>
           <div data-test-id="portal-content">Portal Content</div>
@@ -90,7 +90,7 @@ describe("Portal", () => {
       )
     }
 
-    render(<TestComponent />)
+    await render(<TestComponent />)
 
     const content = page.getByTestId("portal-content")
     await expect.element(content).toBeVisible()
@@ -107,7 +107,7 @@ describe("Portal", () => {
       )
     }
 
-    render(<TestComponent />)
+    await render(<TestComponent />)
 
     await expect
       .element(page.getByTestId("portal-content"))

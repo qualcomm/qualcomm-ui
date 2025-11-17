@@ -1,15 +1,13 @@
 import {type HTMLAttributes, useState} from "react"
 
-import {page} from "@vitest/browser/context"
 import {Calendar, Search} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
+import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
-import {
-  type MultiComponentTestCase,
-  runTests,
-} from "@qualcomm-ui/react-test-utils"
+
+import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
 const demoLabel = "Demo Label"
 const demoPlaceholder = "Enter text here"
@@ -31,7 +29,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Label association and focus", async () => {
-        render(getComponent())
+        await render(getComponent())
         // Verify label is present
         await expect.element(page.getByText(demoLabel)).toBeVisible()
         // Click label should focus input
@@ -39,7 +37,7 @@ const tests: MultiComponentTestCase[] = [
         await expect.element(page.getByLabelText(demoLabel)).toHaveFocus()
       })
       test("Input placeholder", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toBeVisible()
         await expect
@@ -69,7 +67,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Hint text display", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByText(demoHint)).toBeVisible()
       })
     },
@@ -96,7 +94,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Error state and error text", async () => {
-        render(getComponent())
+        await render(getComponent())
         // Error text should be visible
         await expect.element(page.getByText(demoErrorText)).toBeVisible()
         // Input should have invalid state
@@ -121,7 +119,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Disabled state", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toBeDisabled()
       })
@@ -143,7 +141,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Required state", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toBeRequired()
       })
@@ -170,7 +168,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Read-only state", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toHaveAttribute("readonly")
         await expect.element(input).toHaveValue("Read only value")
@@ -193,7 +191,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Small size variant", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toBeVisible()
       })
@@ -215,7 +213,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Large size variant", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toBeVisible()
       })
@@ -245,7 +243,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Clear button functionality", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         // Input should have initial value
         await expect.element(input).toHaveValue("Initial value")
@@ -280,7 +278,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Start icon display", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toBeVisible()
         // Icon presence is tested through visual rendering
@@ -309,7 +307,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("End icon display", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toBeVisible()
         // Icon presence is tested through visual rendering
@@ -358,7 +356,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Value change callback", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await input.fill("test input")
         // Verify input value updated
@@ -401,7 +399,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Controlled value updates", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toHaveValue("initial")
         await page.getByRole("button", {name: "Update"}).click()
@@ -449,7 +447,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Focus change callback", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         const focusState = page.getByTestId("focus-state")
         const outsideButton = page.getByTestId("outside-button")
@@ -499,7 +497,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Root element props spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const root = page.getByTestId("text-input-root")
         await expect.element(root).toBeVisible()
         await expect.element(root).toHaveClass("custom-class")
@@ -542,7 +540,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Input element props spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByTestId("text-input-element")
         await expect.element(input).toBeVisible()
         await expect.element(input).toHaveAttribute("maxlength", "50")
@@ -580,7 +578,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Label props spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const label = page.getByText(demoLabel)
         await expect.element(label).toBeVisible()
         await expect.element(label).toHaveClass("custom-label-class")
@@ -618,7 +616,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Hint props spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const hint = page.getByText(demoHint)
         await expect.element(hint).toBeVisible()
         await expect.element(hint).toHaveClass("custom-hint-class")
@@ -659,7 +657,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Error text props spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const errorText = page.getByTestId("error-text")
         await expect.element(errorText).toBeVisible()
         await expect.element(errorText).toHaveClass("custom-error-class")
@@ -688,7 +686,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Form-related props spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toHaveAttribute("name", "custom-name")
         await expect.element(input).toHaveAttribute("form", "custom-form")
@@ -726,7 +724,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("ARIA and data attributes spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect
           .element(input)
@@ -770,7 +768,7 @@ const controlledStateTests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("Input behavior attributes spreading", async () => {
-        render(getComponent())
+        await render(getComponent())
         const input = page.getByLabelText(demoLabel)
         await expect.element(input).toHaveValue("default text")
         await expect.element(input).toHaveAttribute("autocapitalize", "words")

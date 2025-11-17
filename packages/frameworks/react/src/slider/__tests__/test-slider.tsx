@@ -1,6 +1,6 @@
 import type {HTMLAttributes} from "react"
 
-import {page} from "@vitest/browser/context"
+import {page} from "vitest/browser"
 
 import {Slider, type SliderRootProps} from "@qualcomm-ui/react/slider"
 

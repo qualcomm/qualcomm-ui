@@ -1,12 +1,10 @@
-import {page} from "@vitest/browser/context"
 import {describe, expect, test} from "vitest"
+import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import {Popover} from "@qualcomm-ui/react/popover"
-import {
-  type MultiComponentTestCase,
-  runTests,
-} from "@qualcomm-ui/react-test-utils"
+
+import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
 const triggerText = "Click me"
 const popoverLabel = "Popover Label"
@@ -49,7 +47,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("default state (closed)", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByText(triggerText)).toBeVisible()
         await expect
           .element(page.getByLabelText(popoverLabel))
@@ -92,7 +90,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("focus item on open", async () => {
-        render(getComponent())
+        await render(getComponent())
         await page.getByText(triggerText).click()
         await expect.element(page.getByText(focusableLinkText)).toHaveFocus()
       })
@@ -134,7 +132,7 @@ const tests: MultiComponentTestCase[] = [
     },
     testCase: (getComponent) => {
       test("content accessibility", async () => {
-        render(getComponent())
+        await render(getComponent())
         await expect.element(page.getByText(popoverLabel)).toBeVisible()
         await expect
           .element(page.getByLabelText(popoverLabel))

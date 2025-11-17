@@ -28,6 +28,7 @@ packages/**/stats.yml
 packages/**/meta.json
 packages/**/build-metafile.json
 packages/docs/*/public/*.js
+packages/docs/*/public/*.js.map
 .wireit
 .lint-cache
 

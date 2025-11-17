@@ -1,7 +1,7 @@
 import type {FormEvent} from "react"
 
-import {page, userEvent} from "@vitest/browser/context"
 import {describe, expect, test, vi} from "vitest"
+import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
 
 import type {MultiComponentTestCase} from "@qualcomm-ui/react-test-utils"
@@ -19,7 +19,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} />,
     testCase(component) {
       test(`default value — ${component.name}`, async () => {
-        render(component())
+        await render(component())
         await expect
           .element(page.getByTestId(testIds.sliderValueText))
           .toHaveTextContent("50")
@@ -31,7 +31,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider value={[75]} />,
     testCase(component) {
       test(`controlled value — ${component.name}`, async () => {
-        render(component())
+        await render(component())
         await expect
           .element(page.getByTestId(testIds.sliderValueText))
           .toHaveTextContent("75")
@@ -43,7 +43,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[25, 75]} />,
     testCase(component) {
       test(`range — ${component.name}`, async () => {
-        render(component())
+        await render(component())
         await expect
           .element(page.getByTestId(testIds.sliderValueText))
           .toHaveTextContent("25 - 75")
@@ -63,7 +63,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} max={80} min={20} />,
     testCase(component) {
       test(`aria-value[min|max|now] — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         const thumb = page.getByTestId(testIds.sliderThumb0)
         await expect.element(thumb).toHaveAttribute("aria-valuemin", "20")
@@ -77,7 +77,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} disabled />,
     testCase(component) {
       test(`disabled state — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         const thumb = page.getByTestId(testIds.sliderThumb0)
         await expect.element(thumb).toHaveAttribute("aria-disabled", "true")
@@ -92,7 +92,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} invalid />,
     testCase(component) {
       test(`invalid state — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderRoot))
@@ -105,7 +105,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} />,
     testCase(component) {
       test(`keyboard navigation - right/left arrow keys — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -131,7 +131,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} />,
     testCase(component) {
       test(`keyboard navigation - PageUp/PageDown keys — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -157,7 +157,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} max={90} min={10} />,
     testCase(component) {
       test(`keyboard navigation - home/end keys — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -183,7 +183,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[10]} />,
     testCase(component) {
       test(`respects min — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -203,7 +203,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[90]} />,
     testCase(component) {
       test(`respects max — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -223,7 +223,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} step={5} />,
     testCase(component) {
       test(`respects step — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -247,7 +247,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`range slider respects minStepsBetweenThumbs — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         await userEvent.tab()
@@ -269,7 +269,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} orientation="vertical" />,
     testCase(component) {
       test(`aria-orientation — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         const thumb = page.getByTestId(testIds.sliderThumb0)
         await expect
@@ -290,7 +290,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`aria-label — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         const thumb = page.getByTestId(testIds.sliderThumb0)
         await expect
@@ -304,7 +304,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} />,
     testCase(component) {
       test(`focus state — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -323,7 +323,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} readOnly />,
     testCase(component) {
       test(`prevents value changes when readOnly — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -344,7 +344,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[0]} />,
     testCase(component) {
       test(`handles value at minimum boundary — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderValueText))
@@ -360,7 +360,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[100]} />,
     testCase(component) {
       test(`handles value at maximum boundary — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderValueText))
@@ -380,7 +380,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`prevents thumbs from crossing in range slider — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         await userEvent.tab()
@@ -403,7 +403,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[-10]} />,
     testCase(component) {
       test(`clamps out of range defaultValue to min — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderThumb0))
@@ -416,7 +416,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[150]} />,
     testCase(component) {
       test(`clamps out of range defaultValue to max — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderThumb0))
@@ -433,7 +433,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`step of 0.1 for decimal values — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -450,7 +450,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} step={25} />,
     testCase(component) {
       test(`large step value — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -469,7 +469,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} dir="rtl" />,
     testCase(component) {
       test(`applies RTL direction to slider — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderRoot))
@@ -482,7 +482,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} dir="rtl" />,
     testCase(component) {
       test(`arrow key behavior is reversed in RTL mode — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -507,7 +507,7 @@ const tests: MultiComponentTestCase[] = [
       test(`calls onValueChange when value changes via keyboard — ${component.name}`, async () => {
         const onValueChange = vi.fn()
 
-        render(component({onValueChange}))
+        await render(component({onValueChange}))
 
         await clickFocusTarget()
         await userEvent.tab()
@@ -528,7 +528,7 @@ const tests: MultiComponentTestCase[] = [
       test(`calls onValueChange with both values in range slider — ${component.name}`, async () => {
         const onValueChange = vi.fn()
 
-        render(component({onValueChange}))
+        await render(component({onValueChange}))
 
         await clickFocusTarget()
         await userEvent.tab()
@@ -549,7 +549,7 @@ const tests: MultiComponentTestCase[] = [
       test(`calls onValueChange multiple times for multiple changes — ${component.name}`, async () => {
         const onValueChange = vi.fn()
 
-        render(component({onValueChange}))
+        await render(component({onValueChange}))
 
         await clickFocusTarget()
         await userEvent.tab()
@@ -576,7 +576,7 @@ const tests: MultiComponentTestCase[] = [
       test(`calls onValueChangeEnd when keyboard interaction completes — ${component.name}`, async () => {
         const onValueChangeEnd = vi.fn()
 
-        render(component({onValueChangeEnd}))
+        await render(component({onValueChangeEnd}))
 
         await clickFocusTarget()
         const thumb = page.getByTestId(testIds.sliderThumb0)
@@ -607,7 +607,7 @@ const tests: MultiComponentTestCase[] = [
         const getAriaValueText = (details: {value: number}) =>
           `${details.value} percent`
 
-        render(component({getAriaValueText}))
+        await render(component({getAriaValueText}))
 
         await expect
           .element(page.getByTestId(testIds.sliderThumb0))
@@ -620,7 +620,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} label="Volume" />,
     testCase(component) {
       test(`renders label — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderLabel))
@@ -636,7 +636,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} label="Volume" />,
     testCase(component) {
       test(`associates label with thumbs via aria-labelledby — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         const labelId = page
           .getByTestId(testIds.sliderLabel)
@@ -657,7 +657,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`renders hint text — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect.element(page.getByTestId(testIds.sliderHint)).toBeVisible()
         await expect
@@ -683,7 +683,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`hint is hidden when invalid — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderHint))
@@ -708,7 +708,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`renders error text when invalid — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderErrorText))
@@ -734,7 +734,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`error text is hidden when not invalid — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderErrorText))
@@ -751,7 +751,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`renders markers at specified values — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         const markerGroup = page.getByTestId(testIds.sliderMarkerGroup)
         await expect.element(markerGroup).toBeVisible()
@@ -773,7 +773,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} markers={[25, 50, 75]} />,
     testCase(component) {
       test(`markers have correct data-state based on value — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         const markerGroup = page.getByTestId(testIds.sliderMarkerGroup)
         await expect.element(markerGroup).toBeVisible()
@@ -799,7 +799,7 @@ const tests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} sideMarkers />,
     testCase(component) {
       test(`renders min and max markers with default range — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect.element(page.getByTestId(testIds.sliderMin)).toBeVisible()
         await expect.element(page.getByTestId(testIds.sliderMax)).toBeVisible()
@@ -822,7 +822,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`renders min and max markers with custom range — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderMin))
@@ -842,7 +842,7 @@ const tests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`min and max have data-value attributes — ${component.name}`, async () => {
-        render(component())
+        await render(component())
 
         await expect
           .element(page.getByTestId(testIds.sliderMin))
@@ -872,7 +872,7 @@ const formTests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[50]} name="volume" />,
     testCase(component) {
       test(`form: single name single thumb — ${component.name}`, async () => {
-        render(
+        await render(
           <form data-test-id="form" onSubmit={handleFormSubmit}>
             {component()}
             <button type="submit">Submit</button>
@@ -889,7 +889,7 @@ const formTests: MultiComponentTestCase[] = [
     simple: () => <SimpleSlider defaultValue={[25, 75]} name="range" />,
     testCase(component) {
       test(`form: single name two thumbs — ${component.name}`, async () => {
-        render(
+        await render(
           <form data-test-id="form" onSubmit={handleFormSubmit}>
             {component()}
             <button type="submit">Submit</button>
@@ -910,7 +910,7 @@ const formTests: MultiComponentTestCase[] = [
     ),
     testCase(component) {
       test(`form: two names two thumbs — ${component.name}`, async () => {
-        render(
+        await render(
           <form data-test-id="form" onSubmit={handleFormSubmit}>
             {component()}
             <button type="submit">Submit</button>

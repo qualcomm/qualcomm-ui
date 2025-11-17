@@ -11,6 +11,7 @@
       "DOM.Iterable",
       "ES2022"
     ],
+    "module": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "skipLibCheck": true,

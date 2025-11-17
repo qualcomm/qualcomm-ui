@@ -1,5 +1,11 @@
 # @qualcomm-ui/angular-core
 
+## 1.0.3 (2025/11/15)
+
+### Build System
+
+- use fesm format
+
 ## 1.0.2 (2025/11/14)
 
 ### Bug Fixes
