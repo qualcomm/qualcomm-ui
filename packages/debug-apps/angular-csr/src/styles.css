@@ -2,6 +2,8 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
@@ -43,5 +45,11 @@ body {
   background-color: var(--color-background-neutral-01);
   border: 1px solid var(--color-border-neutral-01);
   border-radius: 8px;
+  padding: 2rem;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
   padding: 2rem;
 }

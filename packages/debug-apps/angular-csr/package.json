@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "catalog:",
     "@angular/common": "catalog:",
     "@angular/compiler": "catalog:",
     "@angular/core": "catalog:",

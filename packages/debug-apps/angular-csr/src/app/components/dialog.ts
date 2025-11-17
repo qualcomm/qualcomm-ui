@@ -22,10 +22,7 @@ import {DialogSizesDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/dem
   ],
   selector: "app-dialog",
   template: `
-    <div
-      class="container"
-      style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
-    >
+    <div class="container">
       <div class="section">
         <h2 class="section-title">Alert Dialog</h2>
         <div class="demo-container">

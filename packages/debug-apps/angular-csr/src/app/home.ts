@@ -7,12 +7,6 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
   imports: [RouterLink, LinkDirective],
   selector: "app-home",
   styles: `
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
     .app-title {
       font: var(--font-static-heading-lg-default);
       color: var(--color-text-neutral-primary);

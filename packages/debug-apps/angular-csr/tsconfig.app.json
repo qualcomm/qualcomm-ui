@@ -3,8 +3,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./out-tsc/app",
-    "types": [],
+    "strict": false,
+    "strictPropertyInitialization": false,
     "paths": {
       "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
       "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],

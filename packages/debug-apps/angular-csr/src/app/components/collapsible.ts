@@ -7,10 +7,7 @@ import {CollapsibleShowcaseDemo} from "@qualcomm-ui/angular-docs/components+/col
   imports: [CollapsibleControlledDemo, CollapsibleShowcaseDemo],
   selector: "app-collapsible",
   template: `
-    <div
-      class="container"
-      style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
-    >
+    <div class="container">
       <div class="section">
         <h2 class="section-title">Controlled</h2>
         <div class="demo-container">

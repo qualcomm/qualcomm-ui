@@ -14,10 +14,7 @@ import {DrawerPlacementStartDemo} from "@qualcomm-ui/angular-docs/components+/dr
   ],
   selector: "app-drawer",
   template: `
-    <div
-      class="container"
-      style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
-    >
+    <div class="container">
       <div class="section">
         <h2 class="section-title">Controlled State</h2>
         <div class="demo-container">

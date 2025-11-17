@@ -16,10 +16,7 @@ import {DividerVariantsDemo} from "@qualcomm-ui/angular-docs/components+/divider
   ],
   selector: "app-divider",
   template: `
-    <div
-      class="container"
-      style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
-    >
+    <div class="container">
       <div class="section">
         <h2 class="section-title">Focusable</h2>
         <div class="demo-container">

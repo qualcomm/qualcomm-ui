@@ -7,10 +7,7 @@ import {InlineIconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components
   imports: [InlineIconButtonShowcaseDemo, InlineIconButtonVariantsDemo],
   selector: "app-inline-icon-button",
   template: `
-    <div
-      class="container"
-      style="max-width: 1200px; margin: 0 auto; padding: 2rem;"
-    >
+    <div class="container">
       <div class="section">
         <h2 class="section-title">Showcase</h2>
         <div class="demo-container">

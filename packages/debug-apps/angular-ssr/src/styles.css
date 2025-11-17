@@ -45,3 +45,9 @@ body {
   border-radius: 8px;
   padding: 2rem;
 }
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 2rem;
+}
