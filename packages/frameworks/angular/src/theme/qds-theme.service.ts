@@ -6,6 +6,7 @@ import {
   effect,
   inject,
   Injectable,
+  Renderer2,
   signal,
   type WritableSignal,
 } from "@angular/core"
@@ -16,19 +17,24 @@ import {
   BRAND_COOKIE,
   BRAND_COOKIE_NAME,
   QDS_THEME_OPTIONS,
+  readCookie,
   THEME_COOKIE,
   THEME_COOKIE_NAME,
 } from "./qds-theme-providers"
 import type {Brand, QdsThemeProviderOptions, Theme} from "./qds-theme.types"
-import {ThemeCookieService} from "./theme-cookie.service"
 
+/**
+ * A service that provides access to the current theme and brand, and ensures that
+ * the application's root element is in sync with the selected brand/theme.
+ */
 @Injectable({providedIn: "root"})
 export class QdsThemeService {
   readonly theme: WritableSignal<Theme> = signal(inject(THEME_COOKIE))
   readonly brand: WritableSignal<Brand> = signal(inject(BRAND_COOKIE))
 
-  private readonly response = inject(Response, {optional: true})
   private readonly document = inject(DOCUMENT)
+  private readonly response = inject(Response, {optional: true})
+  private readonly renderer = inject(Renderer2, {optional: true})
   protected readonly isCsr = useCsrCheck()
 
   private readonly themeOpts: Partial<QdsThemeProviderOptions | null> = inject(
@@ -36,20 +42,11 @@ export class QdsThemeService {
     {optional: true},
   )
 
-  private readonly themeCookieService = inject(ThemeCookieService)
-
   get themeOptions(): Required<
     Omit<QdsThemeProviderOptions, "brandOverride" | "themeOverride">
   > {
     const opts = this.themeOpts || {}
-    let rootElement = opts.rootElement
-    if (!rootElement) {
-      if (!this.isCsr()) {
-        rootElement = globalThis.document?.documentElement
-      } else {
-        rootElement = this.document.documentElement
-      }
-    }
+    const rootElement = opts.rootElement || this.document.documentElement
     return {
       rootElement,
       skipAttributes:
@@ -59,6 +56,7 @@ export class QdsThemeService {
               theme: opts.skipAttributes.theme || false,
             }
           : opts.skipAttributes || false,
+      skipColorSchemeStyle: opts.skipColorSchemeStyle || false,
     }
   }
 
@@ -88,7 +86,7 @@ export class QdsThemeService {
       this.syncAttributes(theme, brand)
       this.syncCookie(theme, brand)
     })
-    const theme = this.themeCookieService.get(THEME_COOKIE_NAME)
+    const theme = readCookie(THEME_COOKIE_NAME)
     if (theme === "dark" || theme === "light") {
       this.theme.set(theme)
       this.syncAttributes(theme, this.brand())
@@ -101,10 +99,13 @@ export class QdsThemeService {
 
   private syncAttributes(theme: Theme, brand: Brand): void {
     if (!this.skipBrandAttribute) {
-      this.updateHtmlAttribute("data-brand", brand)
+      this.updateAttribute("data-brand", brand)
     }
     if (!this.skipThemeAttribute) {
-      this.updateHtmlAttribute("data-theme", theme)
+      this.updateAttribute("data-theme", theme)
+    }
+    if (!this.themeOptions.skipColorSchemeStyle) {
+      this.updateColorScheme(theme)
     }
   }
 
@@ -121,8 +122,20 @@ export class QdsThemeService {
     }
   }
 
-  private updateHtmlAttribute(name: string, value: string): void {
-    this.rootElement?.setAttribute?.(name, value)
+  private updateAttribute(name: string, value: string): void {
+    if (this.renderer) {
+      this.renderer.setAttribute(this.rootElement, name, value)
+    } else {
+      this.rootElement?.setAttribute?.(name, value)
+    }
+  }
+
+  private updateColorScheme(theme: Theme): void {
+    if (this.renderer) {
+      this.renderer.setStyle(this.rootElement, "color-scheme", theme)
+    } else {
+      this.rootElement?.style?.setProperty?.("color-scheme", theme)
+    }
   }
 
   private appendSetCookieHeader(name: string, value: string): void {

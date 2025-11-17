@@ -1,15 +1,15 @@
-import {Component} from "@angular/core"
+import {Component, inject} from "@angular/core"
 import {RouterOutlet} from "@angular/router"
 
-import {QdsThemeProviderComponent} from "@qualcomm-ui/angular/theme"
+import {QdsThemeService} from "@qualcomm-ui/angular/theme"
 
 @Component({
-  imports: [RouterOutlet, QdsThemeProviderComponent],
+  imports: [RouterOutlet],
   selector: "app-root",
   template: `
-    <qds-theme-provider>
-      <router-outlet />
-    </qds-theme-provider>
+    <router-outlet />
   `,
 })
-export class App {}
+export class App {
+  protected readonly themeService = inject(QdsThemeService)
+}

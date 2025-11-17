@@ -36,6 +36,11 @@ export interface QdsThemeProviderOptions {
       }
 
   /**
+   * If `true`, skip writing the color scheme style to the {@link rootElement}.
+   */
+  skipColorSchemeStyle?: boolean
+
+  /**
    * The forced QDS theme for the application. This setting, if supplied, overrides
    * the value from the cookie.
    *
