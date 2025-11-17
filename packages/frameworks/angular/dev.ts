@@ -44,6 +44,9 @@ async function scanForEntrypoints() {
   return entrypoints.map((name) => resolve(ANGULAR_CORE_DIST_DIR, name))
 }
 
+/**
+ * Ensures that every entrypoint in the angular-core src directory has been built.
+ */
 async function validateAngularCore() {
   const entrypoints = await scanForEntrypoints()
 
