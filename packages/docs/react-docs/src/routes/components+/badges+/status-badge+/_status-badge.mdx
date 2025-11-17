@@ -1,0 +1,48 @@
+---
+title: Status Badge
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+Display colored dot indicators to communicate status or availability. Use status badges to show online/offline states, connection status, or other binary conditions.
+
+```typescript
+import {StatusBadge} from "@qualcomm-ui/react/badge"
+```
+
+## Examples
+
+### Emphasis
+
+Use the [emphasis](./#emphasis-1) prop to convey semantic meaning with colors. Available semantic emphasis are: `neutral`, `brand`, `info`, `success`, `warning`, and `danger`.
+
+<QdsDemo name="StatusBadgeEmphasisDemo" />
+
+### Variant
+
+The [variant](./#variant-1) prop controls the aspect of the badge. Two variants are available: `filled` (default) and `outlined`.
+
+<QdsDemo name="StatusBadgeVariantDemo" />
+
+### Size
+
+Control dimensions using the [size](./#size-1) prop. Five sizes are available: `xs`, `sm`, `md` (default), `lg`, and `xl`.
+
+<QdsDemo name="StatusBadgeSizeDemo" />
+
+### Disabled
+
+Set the [disabled](./#disabled-1) prop to visually indicate that the badge is inactive.
+
+<QdsDemo name="StatusBadgeDisabledDemo" />
+
+## API
+
+### \<StatusBadge\>
+
+<TypeDocProps name="StatusBadgeProps" />
+
+<TypeDocAttributes name="QdsStatusBadgeRootBindings" />

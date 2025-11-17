@@ -9,35 +9,47 @@ import {
   type OnInit,
 } from "@angular/core"
 
+import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {
+  type LucideIconOrString,
+  provideIcons,
+} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
+  QBindDirective,
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
-  createQdsTextBadgeApi,
-  type QdsBadgeBasicSize,
+  createQdsIconBadgeApi,
   type QdsBadgeCategoryEmphasis,
+  type QdsBadgeExtendedSize,
   type QdsBadgeSemanticEmphasis,
-  type QdsTextBadgeProps,
-  type QdsTextBadgeVariant,
+  type QdsIconBadgeProps,
+  type QdsIconBadgeVariant,
 } from "@qualcomm-ui/qds-core/badge"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 @Component({
-  selector: "[q-badge]",
+  imports: [IconDirective, QBindDirective],
+  providers: [provideIcons({})],
+  selector: "[q-icon-badge]",
   template: `
-    <ng-content />
+    <ng-content>
+      @if (icon()) {
+        <svg [q-bind]="api().getIconBindings()" [qIcon]="icon()!"></svg>
+      }
+    </ng-content>
   `,
 })
-export class BadgeDirective
-  implements OnInit, SignalifyInput<QdsTextBadgeProps>
+export class IconBadgeDirective
+  implements OnInit, SignalifyInput<QdsIconBadgeProps>
 {
   /**
    * Governs the size of the badge.
    * @default 'md'
    */
-  readonly size = input<QdsBadgeBasicSize>()
+  readonly size = input<QdsBadgeExtendedSize>()
 
   /**
    * The badge disabled state.
@@ -47,7 +59,7 @@ export class BadgeDirective
   })
 
   /**
-   * Governs the color of the text badge.
+   * Governs the color of the icon badge.
    * @default 'neutral'
    */
   readonly emphasis = input<
@@ -55,13 +67,18 @@ export class BadgeDirective
   >()
 
   /**
-   * Governs the style of the badge.
+   * Governs the style of the icon badge.
    * @default 'default'
    */
-  readonly variant = input<QdsTextBadgeVariant>()
+  readonly variant = input<QdsIconBadgeVariant>()
+
+  /**
+   * {@link https://lucide.dev/icons lucide-angular} icon to display in the icon badge.
+   */
+  readonly icon = input<LucideIconOrString>()
 
   protected readonly api = computed(() => {
-    return createQdsTextBadgeApi(
+    return createQdsIconBadgeApi(
       {
         disabled: this.disabled(),
         emphasis: this.emphasis(),

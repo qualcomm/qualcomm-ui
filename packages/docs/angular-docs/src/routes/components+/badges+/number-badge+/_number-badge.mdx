@@ -1,0 +1,57 @@
+---
+title: Number Badge
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+Display numeric values in compact, color-coded containers. Use number badges to show counts, notifications, or other numerical indicators.
+
+```typescript
+import {NumberBadgeDirective} from "@qualcomm-ui/angular/badge"
+```
+
+## Examples
+
+### Value
+
+Use the [value](./#value-1) input for auto formatting, or use content projection for manual content.
+
+<QdsDemo name="NumberBadgeValueDemo" />
+
+### Max (Auto Formatting)
+
+When using the [value](./#value-1) input with [max](./#max), overflow values are automatically formatted. If value exceeds max, the badge displays "max+" and applies special styling. The default max is 99.
+
+<QdsDemo name="NumberBadgeMaxDemo" />
+
+### Variant
+
+Multiple color and style options are available via the [variant](./#variant-1) input: `neutral` (default), `neutral-outline`, `brand`, `brand-outline`, `info`, `success`, `warning`, `danger`, `persistent-black` and `persistent-white`.
+
+<QdsDemo name="NumberBadgeVariantDemo" />
+
+### Size
+
+Control dimensions using the [size](./#size-1) input. Three sizes are available: `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="NumberBadgeSizeDemo" />
+
+### Disabled
+
+Set the [disabled](./#disabled-1) input to visually indicate that the badge is inactive.
+
+<QdsDemo name="NumberBadgeDisabledDemo" />
+
+## API
+
+### q-number-badge
+
+<TypeDocProps name="NumberBadgeDirective" />
+
+<TypeDocAngularAttributes name="QdsNumberBadgeRootBindings" />

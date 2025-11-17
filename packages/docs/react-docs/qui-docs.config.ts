@@ -53,6 +53,11 @@ export default {
         {
           id: "all-components",
         },
+        {
+          group: "Data Display",
+          id: "badges",
+          ignoreRouteMetaOrder: true,
+        },
       ],
       expanded: true,
       groupOrder: [

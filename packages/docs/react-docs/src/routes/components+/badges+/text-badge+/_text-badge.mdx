@@ -1,0 +1,48 @@
+---
+title: Text Badge
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+Display text labels in compact, color-coded containers. Use text badges to categorize content, show status, or highlight information with concise labels.
+
+```typescript
+import {Badge} from "@qualcomm-ui/react/badge"
+```
+
+## Examples
+
+### Emphasis
+
+Use the [emphasis](./#emphasis-1) prop to convey semantic meaning or categorize content. Available semantic emphasis are: `neutral`, `brand`, `info`, `success`, `warning`, and `danger`. Category emphasis options range from `cat-1` through `cat-10`.
+
+<QdsDemo name="TextBadgeEmphasisDemo" />
+
+### Variant
+
+The [variant](./#variant-1) prop controls the aspect of the badge. Two variants are available: `default` (bolder appearance) and `subtle` (muted appearance).
+
+<QdsDemo name="TextBadgeVariantDemo" />
+
+### Size
+
+Control dimensions using the [size](./#size-1) prop. Three sizes are available: `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="TextBadgeSizeDemo" />
+
+### Disabled
+
+Set the [disabled](./#disabled-1) prop to visually indicate that the badge is inactive.
+
+<QdsDemo name="TextBadgeDisabledDemo" />
+
+## API
+
+### \<Badge\>
+
+<TypeDocProps name="BadgeProps" />
+
+<TypeDocAttributes name="QdsTextBadgeRootBindings" />

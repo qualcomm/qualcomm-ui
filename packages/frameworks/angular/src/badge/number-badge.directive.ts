@@ -6,6 +6,7 @@ import {
   Component,
   computed,
   input,
+  numberAttribute,
   type OnInit,
 } from "@angular/core"
 
@@ -15,23 +16,21 @@ import {
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
-  createQdsTextBadgeApi,
+  createQdsNumberBadgeApi,
   type QdsBadgeBasicSize,
-  type QdsBadgeCategoryEmphasis,
-  type QdsBadgeSemanticEmphasis,
-  type QdsTextBadgeProps,
-  type QdsTextBadgeVariant,
+  type QdsNumberBadgeProps,
+  type QdsNumberBadgeVariant,
 } from "@qualcomm-ui/qds-core/badge"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 @Component({
-  selector: "[q-badge]",
+  selector: "[q-number-badge]",
   template: `
-    <ng-content />
+    <ng-content>{{ displayValue() }}</ng-content>
   `,
 })
-export class BadgeDirective
-  implements OnInit, SignalifyInput<QdsTextBadgeProps>
+export class NumberBadgeDirective
+  implements OnInit, SignalifyInput<QdsNumberBadgeProps>
 {
   /**
    * Governs the size of the badge.
@@ -47,30 +46,40 @@ export class BadgeDirective
   })
 
   /**
-   * Governs the color of the text badge.
+   * Governs the style of the badge.
    * @default 'neutral'
    */
-  readonly emphasis = input<
-    QdsBadgeSemanticEmphasis | QdsBadgeCategoryEmphasis
-  >()
+  readonly variant = input<QdsNumberBadgeVariant>()
 
   /**
-   * Governs the style of the badge.
-   * @default 'default'
+   * The numeric value to display for the number badge.
    */
-  readonly variant = input<QdsTextBadgeVariant>()
+  readonly value = input<number | undefined, string | number>(undefined, {
+    transform: numberAttribute,
+  })
+
+  /**
+   * Maximum value to display for the number badge.
+   * @default 99
+   */
+  readonly max = input<number | undefined, string | number>(undefined, {
+    transform: numberAttribute,
+  })
 
   protected readonly api = computed(() => {
-    return createQdsTextBadgeApi(
+    return createQdsNumberBadgeApi(
       {
         disabled: this.disabled(),
-        emphasis: this.emphasis(),
+        max: this.max(),
         size: this.size(),
+        value: this.value(),
         variant: this.variant(),
       },
       normalizeProps,
     )
   })
+
+  protected readonly displayValue = computed(() => this.api().displayValue)
 
   protected readonly trackBindings = useTrackBindings(() =>
     this.api().getRootBindings(),

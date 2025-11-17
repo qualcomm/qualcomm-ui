@@ -1,0 +1,64 @@
+.qui-badge__root[data-scope="number-badge"] {
+  block-size: var(--count-size);
+  min-inline-size: var(--count-size);
+  color: var(--badge-text);
+  background: var(--badge-background);
+  border: solid var(--border-size, 0) var(--badge-border);
+
+  /* override defaults */
+  &[data-size="sm"],
+  &[data-size="md"],
+  &[data-size="lg"] {
+    border-radius: var(--border-radius-rounded);
+    padding: 0;
+  }
+
+  &[data-overflow] {
+    padding: 0 var(--spacing-50);
+  }
+
+  &[data-variant="neutral"] {
+    --badge-background: var(--color-background-support-neutral);
+    --badge-text: var(--color-utility-persistent-white);
+  }
+  &[data-variant="neutral-outline"] {
+    --badge-background: transparent;
+    --badge-border: var(--color-border-support-neutral);
+    --badge-text: var(--color-text-neutral-primary);
+    --border-size: 1px;
+  }
+  &[data-variant="brand"] {
+    --badge-background: var(--color-background-brand-primary);
+    --badge-text: var(--color-utility-persistent-white);
+  }
+  &[data-variant="brand-outline"] {
+    --badge-background: transparent;
+    --badge-border: var(--color-border-support-neutral);
+    --badge-text: var(--color-text-brand-primary);
+    --border-size: 1px;
+  }
+  &[data-variant="info"] {
+    --badge-background: var(--color-background-support-info);
+    --badge-text: var(--color-utility-persistent-white);
+  }
+  &[data-variant="success"] {
+    --badge-background: var(--color-background-support-success);
+    --badge-text: var(--color-utility-persistent-white);
+  }
+  &[data-variant="warning"] {
+    --badge-background: var(--color-background-support-warning);
+    --badge-text: var(--color-utility-persistent-black);
+  }
+  &[data-variant="danger"] {
+    --badge-background: var(--color-background-support-danger);
+    --badge-text: var(--color-utility-persistent-white);
+  }
+  &[data-variant="persistent-black"] {
+    --badge-background: var(--color-utility-persistent-black);
+    --badge-text: var(--color-utility-persistent-white);
+  }
+  &[data-variant="persistent-white"] {
+    --badge-background: var(--color-utility-persistent-white);
+    --badge-text: var(--color-utility-persistent-black);
+  }
+}

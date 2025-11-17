@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // This file is generated automatically. Don't edit it directly.
 
 import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
@@ -10,8 +12,14 @@ export const lazyDemos: Record<
     import("virtual:qui-demo-scope/page:components+/accordion+"),
   "/components/avatar": () =>
     import("virtual:qui-demo-scope/page:components+/avatar+"),
-  "/components/badge": () =>
-    import("virtual:qui-demo-scope/page:components+/badge+"),
+  "/components/badges/icon-badge": () =>
+    import("virtual:qui-demo-scope/page:components+/badges+/icon-badge+"),
+  "/components/badges/number-badge": () =>
+    import("virtual:qui-demo-scope/page:components+/badges+/number-badge+"),
+  "/components/badges/status-badge": () =>
+    import("virtual:qui-demo-scope/page:components+/badges+/status-badge+"),
+  "/components/badges/text-badge": () =>
+    import("virtual:qui-demo-scope/page:components+/badges+/text-badge+"),
   "/components/breadcrumbs": () =>
     import("virtual:qui-demo-scope/page:components+/breadcrumbs+"),
   "/components/button": () =>

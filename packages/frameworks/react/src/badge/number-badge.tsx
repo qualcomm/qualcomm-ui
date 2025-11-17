@@ -4,8 +4,8 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {
-  createQdsTextBadgeApi,
-  type QdsTextBadgeProps as QdsTextBadgeProps,
+  createQdsNumberBadgeApi,
+  type QdsNumberBadgeProps as QdsNumberBadgeProps,
 } from "@qualcomm-ui/qds-core/badge"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
@@ -14,28 +14,31 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface BadgeProps
-  extends QdsTextBadgeProps,
+export interface NumberBadgeProps
+  extends QdsNumberBadgeProps,
     ElementRenderProp<"span"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   * When provided, overrides type-specific content.
    */
   children?: ReactNode
 }
 
-export function Badge({
+export function NumberBadge({
   children,
   disabled,
-  emphasis,
+  max,
   size,
+  value,
   variant,
   ...restProps
-}: BadgeProps): ReactElement {
-  const qdsApi = createQdsTextBadgeApi(
+}: NumberBadgeProps): ReactElement {
+  const qdsApi = createQdsNumberBadgeApi(
     {
       disabled,
-      emphasis,
+      max,
       size,
+      value,
       variant,
     },
     normalizeProps,
@@ -45,7 +48,7 @@ export function Badge({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      {children}
+      {children ?? qdsApi.displayValue}
     </PolymorphicElement>
   )
 }

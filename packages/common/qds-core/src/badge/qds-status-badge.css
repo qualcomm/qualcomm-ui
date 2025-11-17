@@ -1,0 +1,43 @@
+.qui-badge__root[data-scope="status-badge"] {
+  height: var(--status-size);
+  min-width: var(--status-size);
+  width: var(--status-size);
+  color: var(--badge-text);
+  background: var(--badge-background);
+  border: solid var(--border-size, 0) var(--badge-background);
+
+  /* Override size-specific styles with higher specificity */
+  &[data-size="xs"],
+  &[data-size="sm"],
+  &[data-size="md"],
+  &[data-size="lg"],
+  &[data-size="xl"] {
+    border-radius: var(--border-radius-rounded);
+    padding: 0;
+  }
+
+  &[data-emphasis="neutral"] {
+    --badge-background: var(--color-background-support-neutral);
+  }
+  &[data-emphasis="brand"] {
+    --badge-background: var(--color-background-brand-primary);
+  }
+  &[data-emphasis="info"] {
+    --badge-background: var(--color-background-support-info);
+  }
+  &[data-emphasis="success"] {
+    --badge-background: var(--color-background-support-success);
+  }
+  &[data-emphasis="warning"] {
+    --badge-background: var(--color-background-support-warning);
+  }
+  &[data-emphasis="danger"] {
+    --badge-background: var(--color-background-support-danger);
+  }
+}
+
+/* outlined variant */
+.qui-badge__root[data-scope="status-badge"][data-variant="outlined"] {
+  background: transparent;
+  border-width: 1px;
+}

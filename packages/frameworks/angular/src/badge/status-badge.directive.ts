@@ -3,8 +3,8 @@
 
 import {
   booleanAttribute,
-  Component,
   computed,
+  Directive,
   input,
   type OnInit,
 } from "@angular/core"
@@ -15,29 +15,25 @@ import {
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
-  createQdsTextBadgeApi,
-  type QdsBadgeBasicSize,
-  type QdsBadgeCategoryEmphasis,
+  createQdsStatusBadgeApi,
+  type QdsBadgeExtraSize,
   type QdsBadgeSemanticEmphasis,
-  type QdsTextBadgeProps,
-  type QdsTextBadgeVariant,
+  type QdsStatusBadgeProps,
+  type QdsStatusBadgeVariant,
 } from "@qualcomm-ui/qds-core/badge"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
-@Component({
-  selector: "[q-badge]",
-  template: `
-    <ng-content />
-  `,
+@Directive({
+  selector: "[q-status-badge]",
 })
-export class BadgeDirective
-  implements OnInit, SignalifyInput<QdsTextBadgeProps>
+export class StatusBadgeDirective
+  implements OnInit, SignalifyInput<QdsStatusBadgeProps>
 {
   /**
    * Governs the size of the badge.
    * @default 'md'
    */
-  readonly size = input<QdsBadgeBasicSize>()
+  readonly size = input<QdsBadgeExtraSize>()
 
   /**
    * The badge disabled state.
@@ -47,21 +43,19 @@ export class BadgeDirective
   })
 
   /**
-   * Governs the color of the text badge.
+   * Governs the color of the status badge.
    * @default 'neutral'
    */
-  readonly emphasis = input<
-    QdsBadgeSemanticEmphasis | QdsBadgeCategoryEmphasis
-  >()
+  readonly emphasis = input<QdsBadgeSemanticEmphasis>()
 
   /**
-   * Governs the style of the badge.
-   * @default 'default'
+   * Governs the style of the status badge.
+   * @default 'filled'
    */
-  readonly variant = input<QdsTextBadgeVariant>()
+  readonly variant = input<QdsStatusBadgeVariant>()
 
   protected readonly api = computed(() => {
-    return createQdsTextBadgeApi(
+    return createQdsStatusBadgeApi(
       {
         disabled: this.disabled(),
         emphasis: this.emphasis(),

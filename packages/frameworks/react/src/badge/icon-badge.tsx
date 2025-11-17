@@ -4,9 +4,11 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {
-  createQdsTextBadgeApi,
-  type QdsTextBadgeProps as QdsTextBadgeProps,
+  createQdsIconBadgeApi,
+  type QdsIconBadgeProps as QdsIconBadgeProps,
 } from "@qualcomm-ui/qds-core/badge"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
@@ -14,24 +16,31 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface BadgeProps
-  extends QdsTextBadgeProps,
+export interface IconBadgeProps
+  extends QdsIconBadgeProps,
     ElementRenderProp<"span"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   * When provided, overrides the icon prop.
    */
   children?: ReactNode
+
+  /**
+   * {@link https://lucide.dev lucide-react} icon to display in the badge.
+   */
+  icon?: LucideIconOrElement
 }
 
-export function Badge({
+export function IconBadge({
   children,
   disabled,
   emphasis,
+  icon,
   size,
   variant,
   ...restProps
-}: BadgeProps): ReactElement {
-  const qdsApi = createQdsTextBadgeApi(
+}: IconBadgeProps): ReactElement {
+  const qdsApi = createQdsIconBadgeApi(
     {
       disabled,
       emphasis,
@@ -45,7 +54,10 @@ export function Badge({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      {children}
+      {children ||
+        (icon ? (
+          <IconOrNode icon={icon} {...qdsApi.getIconBindings()} />
+        ) : null)}
     </PolymorphicElement>
   )
 }
