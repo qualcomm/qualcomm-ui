@@ -9,7 +9,6 @@
 @source "../../../docs/angular-docs/src/routes/components+";
 
 :root {
-  color: var(--color-text-neutral-primary);
   color-scheme: light dark;
 
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -20,13 +19,18 @@
 }
 
 html {
+  background-color: var(--color-background-neutral-01);
+  color: var(--color-text-neutral-primary);
+  color-scheme: var(--color-scheme);
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background-color: var(--color-background-neutral-01);
-  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .section {

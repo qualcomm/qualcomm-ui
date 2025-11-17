@@ -1,10 +1,12 @@
-import {Component} from "@angular/core"
+import {Component, inject} from "@angular/core"
 import {RouterLink} from "@angular/router"
 
+import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {LinkDirective} from "@qualcomm-ui/angular/link"
+import {QdsThemeService} from "@qualcomm-ui/angular/theme"
 
 @Component({
-  imports: [RouterLink, LinkDirective],
+  imports: [RouterLink, LinkDirective, ButtonModule],
   selector: "app-home",
   styles: `
     .app-title {
@@ -14,6 +16,10 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
   `,
   template: `
     <div class="container">
+      <button q-button (click)="themeService.toggleTheme()">
+        Toggle Theme
+      </button>
+
       <h1 class="app-title">Component Demos</h1>
 
       <ul class="space-y-2">
@@ -29,6 +35,8 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
   `,
 })
 export class Home {
+  protected readonly themeService = inject(QdsThemeService)
+
   groups = [
     {name: "Accordion", path: "/accordion"},
     {name: "Avatar", path: "/avatar"},
