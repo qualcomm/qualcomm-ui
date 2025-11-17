@@ -5,6 +5,7 @@ import {Component, computed} from "@angular/core"
 import {Minus} from "lucide-angular"
 
 import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreNumberInputDecrementTriggerDirective} from "@qualcomm-ui/angular-core/number-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -12,6 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsNumberInputContext} from "./qds-number-input-context.service"
 
 @Component({
+  hostDirectives: [QuiPreloadDirective],
   providers: [provideIcons({Minus})],
   selector: "[q-number-input-decrement-trigger]",
   standalone: false,

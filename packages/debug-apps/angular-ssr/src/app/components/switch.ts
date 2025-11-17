@@ -29,7 +29,7 @@ import {SwitchTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/swi
       <div class="section">
         <h2 class="section-title">Advanced Validation</h2>
         <div class="demo-container">
-          <switch-reactive-forms />
+          <switch-advanced-validation-demo />
         </div>
       </div>
       <div class="section">
