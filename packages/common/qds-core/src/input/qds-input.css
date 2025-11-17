@@ -109,10 +109,6 @@
     background: var(--color-utility-disabled-background);
     border-color: var(--color-utility-disabled-border);
     color: var(--color-utility-disabled-text);
-
-    &::placeholder {
-      color: var(--color-utility-disabled-text);
-    }
   }
 }
 
@@ -150,6 +146,9 @@
 
   &:disabled {
     color: var(--color-utility-disabled-text);
+    &::placeholder {
+      color: var(--color-utility-disabled-text);
+    }
   }
 
   &::placeholder {
