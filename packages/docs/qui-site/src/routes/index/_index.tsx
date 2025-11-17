@@ -21,7 +21,7 @@ export default function HomePage(): ReactNode {
           endIcon={<ReactLogo height={22} />}
           render={
             <a
-              href="https://react.qui.qualcomm.com/"
+              href="https://react-next.qui.qualcomm.com/"
               rel="noreferrer"
               target="_blank"
             />
@@ -35,7 +35,7 @@ export default function HomePage(): ReactNode {
           endIcon={<AngularLogo height={24} />}
           render={
             <a
-              href="https://angular.qui.aws.qualcomm.com"
+              href="https://angular-next.qui.qualcomm.com"
               rel="noreferrer"
               target="_blank"
             />
