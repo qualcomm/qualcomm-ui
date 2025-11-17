@@ -79,6 +79,10 @@ async function waitForAngularCore() {
       await setTimeoutPromise(1000)
     }
   }
+
+  if (!angularCoreBuilt) {
+    throw new Error("Failed to build @qualcomm-ui/angular-core")
+  }
 }
 
 await waitForAngularCore()
