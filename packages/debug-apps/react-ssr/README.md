@@ -1,5 +1,3 @@
-# QUI Site
+# React  SSR
 
-Currently deploys to https://qui.qualcomm.com on pushes to main.
-
-TODO: update with a storefront for QUI React and Angular
+A serverside rendered React app that imports the demos from the `@qualcomm-ui/react-docs` package. Useful for debugging our components in a real app scenario.

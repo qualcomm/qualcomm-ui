@@ -34,6 +34,7 @@
     "qds-core": "pnpm -C packages/common/qds-core",
     "utils": "pnpm -C packages/common/utils",
     "angular-ssr": "pnpm -C packages/debug-apps/angular-ssr",
+    "angular-csr": "pnpm -C packages/debug-apps/angular-csr",
     "react-ssr": "pnpm -C packages/debug-apps/react-ssr",
     "test": "turbo run test",
     "lint": "turbo run lint --continue",
