@@ -7,6 +7,7 @@ import {
   inject,
   Injectable,
   PLATFORM_ID,
+  REQUEST,
   signal,
   type WritableSignal,
 } from "@angular/core"
@@ -19,6 +20,7 @@ import {
   THEME_COOKIE_NAME,
 } from "./qds-theme-providers"
 import type {Brand, QdsThemeProviderOptions, Theme} from "./qds-theme.types"
+import {ThemeCookieService} from "./theme-cookie.service"
 
 @Injectable({providedIn: "root"})
 export class QdsThemeService {
@@ -28,11 +30,14 @@ export class QdsThemeService {
   private readonly platformId = inject(PLATFORM_ID)
   private readonly response = inject(Response, {optional: true})
   private readonly document = inject(DOCUMENT)
+  private readonly request = inject(REQUEST, {optional: true})
 
   private readonly themeOpts: Partial<QdsThemeProviderOptions | null> = inject(
     QDS_THEME_OPTIONS,
     {optional: true},
   )
+
+  private readonly themeCookieService = inject(ThemeCookieService)
 
   get themeOptions(): Required<
     Omit<QdsThemeProviderOptions, "brandOverride" | "themeOverride">
@@ -79,6 +84,11 @@ export class QdsThemeService {
 
   constructor() {
     effect(() => this.syncSideEffects(this.theme(), this.brand()))
+    const theme = this.themeCookieService.get(THEME_COOKIE_NAME)
+    if (theme === "dark" || theme === "light") {
+      this.theme.set(theme)
+      this.syncSideEffects(theme, this.brand())
+    }
   }
 
   toggleTheme(): void {
@@ -87,7 +97,6 @@ export class QdsThemeService {
 
   private syncSideEffects(theme: Theme, brand: Brand): void {
     if (!this.skipBrandAttribute) {
-      console.debug("applying brand")
       this.updateHtmlAttribute("data-brand", brand)
     }
     if (!this.skipThemeAttribute) {
