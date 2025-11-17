@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {type AfterViewInit, Directive, signal} from "@angular/core"
 
 import {useCsrCheck} from "@qualcomm-ui/angular-core/common"
