@@ -14,7 +14,6 @@ import {DividerVariantsDemo} from "@qualcomm-ui/angular-docs/components+/divider
     DividerValueTextDemo,
     DividerVariantsDemo,
   ],
-  selector: "app-divider",
   template: `
     <div
       class="container"

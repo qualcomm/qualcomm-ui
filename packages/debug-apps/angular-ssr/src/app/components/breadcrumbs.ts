@@ -12,7 +12,6 @@ import {BreadcrumbsSizesDemo} from "@qualcomm-ui/angular-docs/components+/breadc
     BreadcrumbsLinksDemo,
     BreadcrumbsSizesDemo,
   ],
-  selector: "app-breadcrumbs",
   template: `
     <div
       class="container"

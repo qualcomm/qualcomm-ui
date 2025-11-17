@@ -16,7 +16,6 @@ import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/
     TagStatesDemo,
     TagVariantsDemo,
   ],
-  selector: "app-tag",
   template: `
     <div
       class="container"

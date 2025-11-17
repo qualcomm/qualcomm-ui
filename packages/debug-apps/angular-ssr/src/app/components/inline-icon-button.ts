@@ -5,7 +5,6 @@ import {InlineIconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components
 
 @Component({
   imports: [InlineIconButtonShowcaseDemo, InlineIconButtonVariantsDemo],
-  selector: "app-inline-icon-button",
   template: `
     <div
       class="container"

@@ -46,7 +46,6 @@ import {SelectWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/sel
     SelectWithinDialogDemo,
     SelectWithinPopoverDemo,
   ],
-  selector: "app-select",
   template: `
     <div
       class="container"

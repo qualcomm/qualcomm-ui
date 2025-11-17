@@ -16,7 +16,6 @@ import {TooltipSimpleDemo} from "@qualcomm-ui/angular-docs/components+/tooltip+/
     TooltipPlacementDemo,
     TooltipSimpleDemo,
   ],
-  selector: "app-tooltip",
   template: `
     <div
       class="container"

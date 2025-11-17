@@ -20,7 +20,6 @@ import {DialogSizesDemo} from "@qualcomm-ui/angular-docs/components+/dialog+/dem
     DialogPlacementDemo,
     DialogSizesDemo,
   ],
-  selector: "app-dialog",
   template: `
     <div
       class="container"

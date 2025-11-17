@@ -13,7 +13,6 @@ import {ButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/button+/
     ButtonStylesDemo,
     ButtonVariantsDemo,
   ],
-  selector: "app-button",
   template: `
     <div
       class="container"

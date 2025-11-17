@@ -20,7 +20,6 @@ import {ToastPlacementDemo} from "@qualcomm-ui/angular-docs/components+/toast+/d
     ToastPersistentDemo,
     ToastPlacementDemo,
   ],
-  selector: "app-toast",
   template: `
     <div
       class="container"

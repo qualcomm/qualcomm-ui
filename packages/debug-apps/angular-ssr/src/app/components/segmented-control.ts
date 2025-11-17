@@ -26,7 +26,6 @@ import {SegmentedControlVariantDemo} from "@qualcomm-ui/angular-docs/components+
     SegmentedControlSizeDemo,
     SegmentedControlVariantDemo,
   ],
-  selector: "app-segmented-control",
   template: `
     <div
       class="container"

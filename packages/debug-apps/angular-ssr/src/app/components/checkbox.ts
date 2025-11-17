@@ -20,7 +20,6 @@ import {CheckboxTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/c
     CheckboxStatesDemo,
     CheckboxTemplateFormsDemo,
   ],
-  selector: "app-checkbox",
   template: `
     <div
       class="container"

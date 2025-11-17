@@ -20,7 +20,6 @@ import {SwitchTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/swi
     SwitchStatesDemo,
     SwitchTemplateFormsDemo,
   ],
-  selector: "app-switch",
   template: `
     <div
       class="container"

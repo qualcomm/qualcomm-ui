@@ -14,7 +14,6 @@ import {IconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/icon
     IconButtonVariantCombinationsDemo,
     IconButtonVariantsDemo,
   ],
-  selector: "app-icon-button",
   template: `
     <div
       class="container"

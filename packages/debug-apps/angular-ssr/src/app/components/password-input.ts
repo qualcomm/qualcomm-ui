@@ -24,7 +24,6 @@ import {PasswordInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/componen
     PasswordInputSimpleIconsDemo,
     PasswordInputTemplateFormsDemo,
   ],
-  selector: "app-password-input",
   template: `
     <div
       class="container"

@@ -12,7 +12,6 @@ import {PaginationShowcaseDemo} from "@qualcomm-ui/angular-docs/components+/pagi
     PaginationRangesDemo,
     PaginationShowcaseDemo,
   ],
-  selector: "app-pagination",
   template: `
     <div
       class="container"
