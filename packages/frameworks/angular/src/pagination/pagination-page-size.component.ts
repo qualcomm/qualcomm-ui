@@ -24,7 +24,7 @@ import {paginationClasses} from "@qualcomm-ui/qds-core/pagination"
       >
         {{ currentValue() }}
       </button>
-      <q-portal>
+      <ng-template qPortal>
         <div q-menu-positioner>
           <div q-menu-content>
             @for (option of menuOptions(); track option) {
@@ -32,7 +32,7 @@ import {paginationClasses} from "@qualcomm-ui/qds-core/pagination"
             }
           </div>
         </div>
-      </q-portal>
+      </ng-template>
     </q-menu>
   `,
 })

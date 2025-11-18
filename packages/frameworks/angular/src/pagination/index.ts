@@ -1,5 +1,6 @@
 export * from "./pagination-context.directive"
 export * from "./pagination-next-trigger.component"
+export * from "./pagination-page-buttons.directive"
 export * from "./pagination-page-item.component"
 export * from "./pagination-page-items.component"
 export * from "./pagination-page-metadata.directive"
