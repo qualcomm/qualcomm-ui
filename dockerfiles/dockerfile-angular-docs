@@ -15,7 +15,7 @@ RUN set -ex; \
 RUN corepack enable
 RUN pnpm install
 
-RUN pnpx playwright@1.53.2 install chromium --with-deps --only-shell
+RUN pnpm exec playwright install chromium --with-deps --only-shell
 
 RUN pnpm run build
 RUN pnpm angular-docs build:prod
