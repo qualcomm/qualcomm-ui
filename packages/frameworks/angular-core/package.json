@@ -60,7 +60,7 @@
     "@qualcomm-ui/core": "workspace:^1.0.6",
     "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/dom": "workspace:^1.0.5",
-    "@qualcomm-ui/tailwind-plugin": "workspace:^1.0.3",
+    "@qualcomm-ui/tailwind-plugin": "workspace:^1.1.0",
     "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
     "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@tailwindcss/vite": "^4.1.11",

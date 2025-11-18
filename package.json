@@ -32,6 +32,7 @@
     "mdx-docs": "pnpm -C packages/frameworks/mdx-docs",
     "mdx-vite": "pnpm -C packages/common/mdx-vite",
     "qds-core": "pnpm -C packages/common/qds-core",
+    "tailwind-plugin": "pnpm -C packages/common/tailwind-plugin",
     "utils": "pnpm -C packages/common/utils",
     "angular-ssr": "pnpm -C packages/debug-apps/angular-ssr",
     "angular-csr": "pnpm -C packages/debug-apps/angular-csr",

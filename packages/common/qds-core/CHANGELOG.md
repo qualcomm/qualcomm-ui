@@ -1,5 +1,11 @@
 # @qualcomm-ui/qds-core
 
+## 1.3.0 (2025/11/17)
+
+### Features
+
+- add new category colors
+
 ## 1.2.0 (2025/11/17)
 
 ### Features

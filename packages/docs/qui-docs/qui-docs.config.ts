@@ -2,7 +2,6 @@ import type {QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
 
 export default {
   appDirectory: "src",
-  hotUpdateIgnore: /.*changelog.*/,
   navConfig: [
     {
       hidden: true,

@@ -2,6 +2,8 @@ import {Component, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 import {Search} from "lucide-angular"
 
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 import {
   type AngularTable,
   createAngularTable,
@@ -19,7 +21,13 @@ import {
 import {createUserQuery, type User, userColumns} from "./data"
 
 @Component({
-  imports: [TableModule, TextInputModule, FormsModule],
+  imports: [
+    TableModule,
+    TextInputModule,
+    FormsModule,
+    ButtonModule,
+    ProgressRingModule,
+  ],
   providers: [provideIcons({Search})],
   selector: "filters-demo",
   template: `
@@ -31,6 +39,19 @@ import {createUserQuery, type User, userColumns} from "./data"
           startIcon="Search"
           [(ngModel)]="globalFilter"
         />
+        <button
+          q-button
+          size="sm"
+          variant="outline"
+          [disabled]="query.isFetching()"
+          (click)="query.refetch()"
+        >
+          Refresh Data
+        </button>
+
+        @if (query.isFetching()) {
+          <div q-progress-ring size="xs"></div>
+        }
       </div>
       <div q-table-scroll-container>
         <table q-table-table>
@@ -65,6 +86,13 @@ import {createUserQuery, type User, userColumns} from "./data"
           </tbody>
         </table>
       </div>
+      <div
+        q-table-pagination
+        [count]="pagination.count()"
+        [page]="pagination.page()"
+        [pageSize]="pagination.pageSize()"
+        (pageChanged)="pagination.onPageChange($event)"
+      ></div>
     </div>
   `,
 })

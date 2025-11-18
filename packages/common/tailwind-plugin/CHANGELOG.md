@@ -1,5 +1,11 @@
 # @qualcomm-ui/tailwind-plugin
 
+## 1.1.0 (2025/11/17)
+
+### Features
+
+- add new category colors
+
 ## 1.0.3 (2025/11/13)
 
 ### Bug Fixes
