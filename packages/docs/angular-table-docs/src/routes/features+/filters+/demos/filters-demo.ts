@@ -3,6 +3,7 @@ import {FormsModule} from "@angular/forms"
 import {Search} from "lucide-angular"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {PaginationModule} from "@qualcomm-ui/angular/pagination"
 import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 import {
   type AngularTable,
@@ -27,6 +28,7 @@ import {createUserQuery, type User, userColumns} from "./data"
     FormsModule,
     ButtonModule,
     ProgressRingModule,
+    PaginationModule,
   ],
   providers: [provideIcons({Search})],
   selector: "filters-demo",
@@ -36,6 +38,7 @@ import {createUserQuery, type User, userColumns} from "./data"
         <q-text-input
           class="w-56"
           placeholder="Search every column..."
+          size="sm"
           startIcon="Search"
           [(ngModel)]="globalFilter"
         />
@@ -92,7 +95,14 @@ import {createUserQuery, type User, userColumns} from "./data"
         [page]="pagination.page()"
         [pageSize]="pagination.pageSize()"
         (pageChanged)="pagination.onPageChange($event)"
-      ></div>
+      >
+        <div *paginationContext="let context" q-pagination-page-metadata>
+          @let meta = context.pageMetadata;
+          {{ meta.pageStart }}-{{ meta.pageEnd }} of {{ meta.count }} results
+        </div>
+
+        <div q-pagination-page-buttons></div>
+      </div>
     </div>
   `,
 })
