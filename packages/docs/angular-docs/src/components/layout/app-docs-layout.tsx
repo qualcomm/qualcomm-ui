@@ -91,23 +91,18 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
             <HeaderBar.Logo>
               <MobileSidebar>
                 <QuiLogo width={20} />
-                <HeaderBar.AppTitle>QUI React</HeaderBar.AppTitle>
+                <HeaderBar.AppTitle>QUI Angular</HeaderBar.AppTitle>
               </MobileSidebar>
               <ReactRouterLink className="flex items-center gap-2" to="/">
                 <QuiLogo width={20} />
                 <HeaderBar.AppTitle>
-                  <span className="whitespace-nowrap">QUI React</span>
+                  <span className="whitespace-nowrap">QUI Angular</span>
                 </HeaderBar.AppTitle>
               </ReactRouterLink>
               <Link
-                className="hidden md:inline-flex"
-                render={
-                  <ReactRouterLink
-                    prefetch="intent"
-                    to="/changelogs/react"
-                    viewTransition
-                  />
-                }
+                className="pointer-events-none hidden md:inline-flex"
+                emphasis="neutral"
+                render={<div />}
                 size="xs"
               >
                 NEXTGEN
