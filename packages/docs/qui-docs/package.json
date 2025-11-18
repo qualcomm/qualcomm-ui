@@ -80,7 +80,7 @@
     "cross-env": "^10.1.0",
     "execa": "^9.6.0",
     "fs-extra": "^11.2.0",
-    "glob": "^11.0.3",
+    "glob": "^11.1.0",
     "hast-util-to-text": "^4.0.2",
     "npm-run-all2": "^8.0.4",
     "postcss": "^8.5.6",

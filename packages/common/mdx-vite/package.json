@@ -62,7 +62,7 @@
     "chokidar": "^4.0.3",
     "cosmiconfig": "^9.0.0",
     "es-module-lexer": "^1.7.0",
-    "glob": "^11.0.3",
+    "glob": "^11.1.0",
     "hast-util-from-html": "^2.0.1",
     "hast-util-heading": "^3.0.0",
     "hast-util-heading-rank": "^3.0.0",
