@@ -10,11 +10,14 @@ import {
   ViewEncapsulation,
 } from "@angular/core"
 
+import {QdsThemeService} from "@qualcomm-ui/angular/theme"
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {
   PORTAL_CONTAINER,
   PortalContextService,
 } from "@qualcomm-ui/angular-core/portal"
+
+import {MockedThemeService} from "./mocked-theme.service"
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -25,6 +28,7 @@ import {
       useFactory: () =>
         inject(DOCUMENT).querySelector("#demo-portal-container"),
     },
+    {provide: QdsThemeService, useClass: MockedThemeService},
     PortalContextService,
   ],
   selector: "angular-demo",
@@ -94,7 +98,7 @@ export class AngularDemoComponent {
             ? `../src/routes/patterns+/${filePath.replace("./src/routes/patterns+/", "")}`
             : filePath.includes("src/routes/pitfalls")
               ? `../src/routes/pitfalls+/${filePath.replace("./src/routes/pitfalls+/", "")}`
-              : `../src/routes/theme+/${filePath.replace("./src/routes/theme+/", "")}`
+              : `../src/routes/theming+/${filePath.replace("./src/routes/theming+/", "")}`
       )
         .then((m: Record<string, Type<unknown>>) => {
           const component = m[componentName] as Type<unknown> | undefined

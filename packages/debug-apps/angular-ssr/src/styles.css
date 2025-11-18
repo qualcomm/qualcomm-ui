@@ -7,6 +7,7 @@
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
 
 @source "../../../docs/angular-docs/src/routes/components+";
+@source "./app";
 
 :root {
   color-scheme: light dark;

@@ -2,7 +2,11 @@
 title: Installation
 ---
 
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
 # {frontmatter.title}
+
+This library requires Angular ^20
 
 There are three steps to installation:
 
@@ -10,20 +14,74 @@ There are three steps to installation:
 2. Import the CSS
 3. Inject the theme service (and optionally change the default theme)
 
-If you'd like to skip all of that, you can use one of our pre-built templates:
+Soon we'll provide pre-built templates for quick starting new projects.
 
-- Angular web CSR
-- Angular web SSR
-- Angular Electron
+For now, continue reading to learn how to install manually.
 
-Otherwise, continue reading to learn how to install manually.
+## 1. Install the npm packages
 
-## Install the packages
-
-TODO: add
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/angular",
+    "@qualcomm-ui/angular-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/qds-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+  ]}
+/>
 
 ## Import the CSS
 
-in your application's global CSS file, import the QUI CSS for the theme you're targeting.
+> [!tip/Tailwind]
+> If you're using [Tailwind CSS](https://tailwindcss.com/), skip this step and refer to our Tailwind integration instead.
+
+In your application's global CSS file, import the QUI CSS for the theme you're targeting.
+
+```css
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+Learn more about the available themes in the [theme documentation](/theming/overview).
+
+### Angular SSR
+
+If you're using `@angular/ssr`, you'll need to register the theme provider at the root of your application.
+
+```angular-ts
+// app.config.server.ts
+import {ApplicationConfig, mergeApplicationConfig} from "@angular/core"
+import {provideServerRendering, withRoutes} from "@angular/ssr"
+
+import {provideQdsTheme} from "@qualcomm-ui/angular/theme"
+
+import {appConfig} from "./app.config"
+import {serverRoutes} from "./app.routes.server"
+
+const serverConfig: ApplicationConfig = {
+  providers: [
+    provideServerRendering(withRoutes(serverRoutes)),
+    provideQdsTheme(),
+  ],
+}
+
+export const config = mergeApplicationConfig(appConfig, serverConfig)
+```
+
+You'll also need to opt into full server-side rendering (not pre-rendering) in your route config:
+
+```angular-ts
+import {RenderMode, ServerRoute} from "@angular/ssr"
+
+export const serverRoutes: ServerRoute[] = [
+  {
+    path: "**",
+    // this ensures that the cookie-based theme storage is available on the initial render.
+    renderMode: RenderMode.Server,
+  },
+]
+```
 
 [//]: # "TODO: link to theme documentation."
