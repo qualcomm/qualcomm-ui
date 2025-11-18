@@ -29,23 +29,24 @@ import type {Brand, QdsThemeProviderOptions, Theme} from "./qds-theme.types"
  */
 @Injectable({providedIn: "root"})
 export class QdsThemeService {
-  readonly theme: WritableSignal<Theme> = signal(inject(THEME_COOKIE))
-  readonly brand: WritableSignal<Brand> = signal(inject(BRAND_COOKIE))
-
   private readonly document = inject(DOCUMENT)
   private readonly response = inject(Response, {optional: true})
   private readonly renderer = inject(Renderer2, {optional: true})
   protected readonly isCsr = useCsrCheck()
 
-  private readonly themeOpts: Partial<QdsThemeProviderOptions | null> = inject(
-    QDS_THEME_OPTIONS,
-    {optional: true},
-  )
+  readonly theme: WritableSignal<Theme> = signal(inject(THEME_COOKIE))
+  readonly brand: WritableSignal<Brand> = signal(inject(BRAND_COOKIE))
+
+  private readonly themeOpts: QdsThemeProviderOptions =
+    inject(QDS_THEME_OPTIONS)
 
   get themeOptions(): Required<
-    Omit<QdsThemeProviderOptions, "brandOverride" | "themeOverride">
+    Omit<
+      QdsThemeProviderOptions,
+      "brandOverride" | "themeOverride" | "defaultTheme" | "defaultBrand"
+    >
   > {
-    const opts = this.themeOpts || {}
+    const opts = this.themeOpts
     const rootElement = opts.rootElement || this.document.documentElement
     return {
       rootElement,
@@ -86,7 +87,8 @@ export class QdsThemeService {
       this.syncAttributes(theme, brand)
       this.syncCookie(theme, brand)
     })
-    const theme = readCookie(THEME_COOKIE_NAME)
+
+    const theme = readCookie(THEME_COOKIE_NAME) || this.themeOpts?.defaultTheme
     if (theme === "dark" || theme === "light") {
       this.theme.set(theme)
       this.syncAttributes(theme, this.brand())

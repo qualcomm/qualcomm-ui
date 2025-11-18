@@ -13,63 +13,15 @@ QUI Components use [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/
 - Three brands are available: `qualcomm`, `snapdragon`, and `dragonwing`.
 - Each brand supports both a `light` and `dark` theme.
 
-## Theme Switching
-
-We've built the CSS to enable dynamic switching without rebuilding.
-
-### Import CSS
-
-First import the theme CSS for your chosen brand. We'll demo with `qualcomm`:
-
-```css
-/* This import is always required, regardless of your chosen brand/theme */
-@import "@qualcomm-ui/qds-core/styles/components.css";
-
-@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
-@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
-```
-
-If you're using Tailwind, you should import the theme CSS at the `components` layer instead:
-
-```css
-@import "tailwindcss";
-
-/* Important: always order these imports after the tailwindcss import */
-@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
-@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
-@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
-```
-
-### Apply Data Attributes
-
-In order for the theme to take effect, you must apply the brand and theme to the root element of your application.
-
-This process is handled automatically when you inject the `QdsThemeService`.
-
-```angular-ts
-// app.component.ts
-import {Component, inject} from "@angular/core"
-import {RouterOutlet} from "@angular/router"
-
-import {QdsThemeService} from "@qualcomm-ui/angular/theme"
-
-@Component({
-  imports: [RouterOutlet],
-  selector: "app-root",
-  template: `
-    <router-outlet />
-  `,
-})
-export class App {
-  protected readonly themeService = inject(QdsThemeService)
-}
-```
+The CSS is built to enable dynamic switching without rebuilding.
 
 ::: spoiler Applying the Data Attributes Manually
 
-- Pick a DOM element. This is typically `html` or `body`.
-- Apply the brand to the element using the brand data attribute: `data-brand="qualcomm"` (or `snapdragon` / `dragonwing`).
-- Apply `data-theme="dark"` or `data-theme="light"` to the element.
+If you need to apply the theme data attributes manually instead of using `QdsThemeService`:
+
+- Pick a DOM element (typically `html` or `body`)
+- Apply the brand: `data-brand="qualcomm"` (or `snapdragon` / `dragonwing`)
+- Apply the theme: `data-theme="dark"` or `data-theme="light"`
 
 Example:
 
@@ -79,7 +31,7 @@ Example:
 </html>
 ```
 
-All descendants of this subtree inherit that theme unless overridden by a closer parent.
+All descendants inherit that theme unless overridden by a closer parent.
 
 > [!warning/Both attributes are required]
 > You must apply both the `data-brand` and `data-theme` attributes to the element in order for the theme to take effect.

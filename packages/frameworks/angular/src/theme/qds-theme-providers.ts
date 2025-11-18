@@ -1,68 +1,55 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {
-  type EnvironmentProviders,
-  inject,
-  InjectionToken,
-  makeEnvironmentProviders,
-  type Provider,
-  REQUEST,
-} from "@angular/core"
+import {inject, InjectionToken, type Provider, REQUEST} from "@angular/core"
 
 import type {Brand, QdsThemeProviderOptions, Theme} from "./qds-theme.types"
 
-export const THEME_COOKIE_NAME = "qds-theme"
-export const BRAND_COOKIE_NAME = "qds-brand"
+export const THEME_COOKIE_NAME = "app-qds-theme"
+export const BRAND_COOKIE_NAME = "app-qds-brand"
 
 /**
  * Concrete values are provided at bootstrap, but we attach a
  * factory so injection works even if the caller forgets to register them,
  * falling back to the light theme / first brand.
  */
-export const THEME_COOKIE = new InjectionToken<Theme>("THEME_COOKIE", {
-  factory: () => "dark",
-})
+export const THEME_COOKIE = new InjectionToken<Theme>("THEME_COOKIE")
 
-export const BRAND_COOKIE = new InjectionToken<Brand>("BRAND_COOKIE", {
-  factory: () => "qualcomm",
-})
+export const BRAND_COOKIE = new InjectionToken<Brand>("BRAND_COOKIE")
 
 /**
  * Reads the cookie in both the browser (document.cookie) and during SSR
  * (Fetch Request.headers) and makes it available through THEME_COOKIE.
  */
-function provideThemeCookie(): EnvironmentProviders {
-  return makeEnvironmentProviders([
-    {
-      provide: THEME_COOKIE,
-      useFactory: () => {
-        const opts = inject(QDS_THEME_OPTIONS, {optional: true})
-        return (
-          opts?.themeOverride || readCookie<Theme>(THEME_COOKIE_NAME) || "dark"
-        )
-      },
+function provideThemeCookie(opts?: QdsThemeProviderOptions): Provider {
+  return {
+    provide: THEME_COOKIE,
+    useFactory: () => {
+      return (
+        opts?.themeOverride ||
+        readCookie<Theme>(THEME_COOKIE_NAME) ||
+        opts?.defaultTheme ||
+        "dark"
+      )
     },
-  ])
+  }
 }
 
 /**
  * Same helper for the brand cookie.
  */
-function provideBrandCookie(): EnvironmentProviders {
-  return makeEnvironmentProviders([
-    {
-      provide: BRAND_COOKIE,
-      useFactory: () => {
-        const opts = inject(QDS_THEME_OPTIONS, {optional: true})
-        return (
-          opts?.brandOverride ||
-          readCookie<Brand>(BRAND_COOKIE_NAME) ||
-          "qualcomm"
-        )
-      },
+function provideBrandCookie(opts?: QdsThemeProviderOptions): Provider {
+  return {
+    provide: BRAND_COOKIE,
+    useFactory: () => {
+      return (
+        opts?.brandOverride ||
+        readCookie<Brand>(BRAND_COOKIE_NAME) ||
+        opts?.defaultBrand ||
+        "qualcomm"
+      )
     },
-  ])
+  }
 }
 
 export const QDS_THEME_OPTIONS = new InjectionToken<
@@ -81,8 +68,8 @@ function provideQdsThemeOptions(opts?: QdsThemeProviderOptions): Provider {
 export function provideQdsTheme(opts?: QdsThemeProviderOptions) {
   return [
     provideQdsThemeOptions(opts),
-    provideThemeCookie(),
-    provideBrandCookie(),
+    provideThemeCookie(opts),
+    provideBrandCookie(opts),
   ]
 }
 
