@@ -45,6 +45,8 @@ rm -f ./angular-demo-module/generated/demo-elements.json
 
 echo "Extracting site data"
 
+mkdir -p ./scripts/temp
+
 pnpm generate-page-map
 
 echo "Building application..."
