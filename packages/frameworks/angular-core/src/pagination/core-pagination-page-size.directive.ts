@@ -37,7 +37,7 @@ export class CorePaginationPageSizeDirective implements OnInit {
     return `${this.paginationContext().pageSize}`
   })
 
-  private readonly trackBindings = useTrackBindings(() =>
+  protected readonly trackBindings = useTrackBindings(() =>
     this.paginationContext().getPageSizeBindings(),
   )
 

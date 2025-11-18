@@ -6,12 +6,10 @@ import {Ellipsis} from "lucide-angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CorePaginationPageItemDirective} from "@qualcomm-ui/angular-core/pagination"
-import {paginationClasses} from "@qualcomm-ui/qds-core/pagination"
+
+import {useQdsPaginationContext} from "./qds-pagination-context.service"
 
 @Component({
-  host: {
-    "[class]": "paginationClasses.pageItem",
-  },
   providers: [provideIcons({Ellipsis})],
   selector: "[q-pagination-page-item]",
   standalone: false,
@@ -31,5 +29,12 @@ export class PaginationPageItemComponent extends CorePaginationPageItemDirective
     return props["data-type"] === "page" ? props["data-page"] : undefined
   })
 
-  protected readonly paginationClasses = paginationClasses
+  protected readonly qdsPaginationContext = useQdsPaginationContext()
+
+  constructor() {
+    super()
+    this.trackBindings.extendWith(
+      computed(() => this.qdsPaginationContext().getPageItemBindings()),
+    )
+  }
 }

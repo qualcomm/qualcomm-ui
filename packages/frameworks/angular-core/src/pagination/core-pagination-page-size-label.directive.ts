@@ -14,11 +14,11 @@ export class CorePaginationPageSizeLabelDirective implements OnInit {
 
   readonly id = input<string>()
 
-  private readonly hostId = computed(() => useId(this, this.id()))
+  protected readonly hostId = computed(() => useId(this, this.id()))
 
-  private readonly onDestroy = useOnDestroy()
+  protected readonly onDestroy = useOnDestroy()
 
-  private readonly trackBindings = useTrackBindings(() =>
+  protected readonly trackBindings = useTrackBindings(() =>
     this.paginationContext().getPageSizeLabelBindings({
       id: this.hostId(),
       onDestroy: this.onDestroy,

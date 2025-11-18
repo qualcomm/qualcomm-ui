@@ -21,7 +21,7 @@ export class CorePaginationPageItemDirective implements OnInit {
     this.paginationContext().getPageItemBindings(this.item()),
   )
 
-  private trackBindings = useTrackBindings(() => this.itemProps())
+  protected trackBindings = useTrackBindings(() => this.itemProps())
 
   ngOnInit() {
     this.trackBindings()
