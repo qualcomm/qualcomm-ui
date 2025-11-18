@@ -37,5 +37,8 @@ export async function action({request}: ActionFunctionArgs) {
     }
     faker.seed(seed)
   }
+  if (process.env.SKIP_LARGE_QUERIES === "true" && body.size[0] > 5000) {
+    return Response.json([])
+  }
   return Response.json(makeUserData(...body.size))
 }
