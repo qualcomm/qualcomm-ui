@@ -86,7 +86,7 @@
     "lucide-angular": "0.525.0",
     "lucide-react": "0.525.0",
     "morgan": "^1.10.0",
-    "playwright": "1.53.2",
+    "playwright": "1.56.1",
     "react": "catalog:",
     "react-device-detect": "^2.2.3",
     "react-dom": "catalog:",

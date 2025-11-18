@@ -76,7 +76,7 @@
     "execa": "^9.6.0",
     "lucide-angular": "0.525.0",
     "ng-packagr": "~20.3.2",
-    "playwright": "1.53.2",
+    "playwright": "1.56.1",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~7.8.0",
     "shx": "^0.4.0",

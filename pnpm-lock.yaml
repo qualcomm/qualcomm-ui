@@ -7,14 +7,14 @@ settings:
 catalogs:
   default:
     '@analogjs/platform':
-      specifier: 2.0.4
-      version: 2.0.4
+      specifier: 2.0.5
+      version: 2.0.5
     '@analogjs/vite-plugin-angular':
-      specifier: 2.0.4
-      version: 2.0.4
+      specifier: 2.0.5
+      version: 2.0.5
     '@analogjs/vitest-angular':
-      specifier: 2.0.4
-      version: 2.0.4
+      specifier: 2.0.5
+      version: 2.0.5
     '@angular-devkit/architect':
       specifier: 0.2003.10
       version: 0.2003.10
@@ -113,7 +113,7 @@ catalogs:
       version: 8.40.0
 
 overrides:
-  playwright: 1.53.2
+  playwright: 1.56.1
   typescript: 5.9.3
 
 patchedDependencies:
@@ -210,8 +210,8 @@ importers:
         specifier: ^8.0.4
         version: 8.0.4
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -1847,8 +1847,8 @@ importers:
         specifier: ^1.10.0
         version: 1.10.1
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -2181,8 +2181,8 @@ importers:
         specifier: ^1.10.0
         version: 1.10.1
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -3280,13 +3280,13 @@ importers:
     devDependencies:
       '@analogjs/platform':
         specifier: 'catalog:'
-        version: 2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))(@nx/angular@22.0.3(c9b39622a0c8a47983605c4ea12083e7))(@nx/devkit@22.0.3(nx@22.0.3))(@nx/vite@22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(typescript@5.9.3)(vitest@4.0.9))(encoding@0.1.13)(marked-gfm-heading-id@4.1.3(marked@15.0.12))(marked-mangle@1.1.12(marked@15.0.12))(marked@15.0.12)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(rolldown@1.0.0-beta.44)
+        version: 2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))(@nx/angular@22.0.3(c9b39622a0c8a47983605c4ea12083e7))(@nx/devkit@22.0.3(nx@22.0.3))(@nx/vite@22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(typescript@5.9.3)(vitest@4.0.9))(encoding@0.1.13)(marked-gfm-heading-id@4.1.3(marked@15.0.12))(marked-mangle@1.1.12(marked@15.0.12))(marked@15.0.12)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(rolldown@1.0.0-beta.44)
       '@analogjs/vite-plugin-angular':
         specifier: 'catalog:'
-        version: 2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
+        version: 2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
       '@analogjs/vitest-angular':
         specifier: 'catalog:'
-        version: 2.0.4(@analogjs/vite-plugin-angular@2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030)))(@angular-devkit/architect@0.2003.10(chokidar@4.0.3))(vitest@4.0.9)
+        version: 2.0.5(@analogjs/vite-plugin-angular@2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030)))(@angular-devkit/architect@0.2003.10(chokidar@4.0.3))(vitest@4.0.9)
       '@angular-devkit/architect':
         specifier: 'catalog:'
         version: 0.2003.10(chokidar@4.0.3)
@@ -3394,7 +3394,7 @@ importers:
         version: 4.0.9(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/browser-playwright':
         specifier: ^4.0.8
-        version: 4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+        version: 4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/coverage-v8':
         specifier: ^4.0.8
         version: 4.0.9(@vitest/browser@4.0.9(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9))(vitest@4.0.9)
@@ -3407,6 +3407,9 @@ importers:
       execa:
         specifier: ^9.6.0
         version: 9.6.0
+      js-yaml:
+        specifier: ^3.14.2
+        version: 3.14.2
       lucide-angular:
         specifier: 0.525.0
         version: 0.525.0(@angular/common@20.3.12(@angular/core@20.3.12(@angular/compiler@20.3.12)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.12(@angular/compiler@20.3.12)(rxjs@7.8.2))
@@ -3414,8 +3417,8 @@ importers:
         specifier: ~20.3.2
         version: 20.3.2(@angular/compiler-cli@20.3.12(@angular/compiler@20.3.12)(typescript@5.9.3))(tailwindcss@4.1.17)(tslib@2.5.3)(typescript@5.9.3)
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       postcss:
         specifier: ^8.5.6
         version: 8.5.6
@@ -3454,13 +3457,13 @@ importers:
     devDependencies:
       '@analogjs/platform':
         specifier: 'catalog:'
-        version: 2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))(@nx/angular@22.0.3(c9b39622a0c8a47983605c4ea12083e7))(@nx/devkit@22.0.3(nx@22.0.3))(@nx/vite@22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(typescript@5.9.3)(vitest@4.0.9))(encoding@0.1.13)(marked-gfm-heading-id@4.1.3(marked@15.0.12))(marked-mangle@1.1.12(marked@15.0.12))(marked@15.0.12)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(rolldown@1.0.0-beta.44)
+        version: 2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))(@nx/angular@22.0.3(c9b39622a0c8a47983605c4ea12083e7))(@nx/devkit@22.0.3(nx@22.0.3))(@nx/vite@22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(typescript@5.9.3)(vitest@4.0.9))(encoding@0.1.13)(marked-gfm-heading-id@4.1.3(marked@15.0.12))(marked-mangle@1.1.12(marked@15.0.12))(marked@15.0.12)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(rolldown@1.0.0-beta.44)
       '@analogjs/vite-plugin-angular':
         specifier: 'catalog:'
-        version: 2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
+        version: 2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
       '@analogjs/vitest-angular':
         specifier: 'catalog:'
-        version: 2.0.4(@analogjs/vite-plugin-angular@2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030)))(@angular-devkit/architect@0.2003.10(chokidar@4.0.3))(vitest@4.0.9)
+        version: 2.0.5(@analogjs/vite-plugin-angular@2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030)))(@angular-devkit/architect@0.2003.10(chokidar@4.0.3))(vitest@4.0.9)
       '@angular-devkit/architect':
         specifier: 'catalog:'
         version: 0.2003.10(chokidar@4.0.3)
@@ -3565,7 +3568,7 @@ importers:
         version: 4.0.9(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/browser-playwright':
         specifier: ^4.0.8
-        version: 4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+        version: 4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/coverage-v8':
         specifier: ^4.0.8
         version: 4.0.9(@vitest/browser@4.0.9(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9))(vitest@4.0.9)
@@ -3582,8 +3585,8 @@ importers:
         specifier: ~20.3.2
         version: 20.3.2(@angular/compiler-cli@20.3.12(@angular/compiler@20.3.12)(typescript@5.9.3))(tailwindcss@4.1.17)(tslib@2.5.3)(typescript@5.9.3)
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       resize-observer-polyfill:
         specifier: ^1.5.1
         version: 1.5.1
@@ -3680,7 +3683,7 @@ importers:
         version: 4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/browser-playwright':
         specifier: ^4.0.8
-        version: 4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+        version: 4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/coverage-v8':
         specifier: ^4.0.8
         version: 4.0.9(@vitest/browser@4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9))(vitest@4.0.9)
@@ -3697,8 +3700,8 @@ importers:
         specifier: 0.525.0
         version: 0.525.0(react@19.2.0)
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       quick-lru:
         specifier: ^7.2.0
         version: 7.3.0
@@ -3801,7 +3804,7 @@ importers:
         version: 4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/browser-playwright':
         specifier: ^4.0.8
-        version: 4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+        version: 4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/coverage-v8':
         specifier: ^4.0.8
         version: 4.0.9(@vitest/browser@4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9))(vitest@4.0.9)
@@ -3818,8 +3821,8 @@ importers:
         specifier: 0.525.0
         version: 0.525.0(react@19.2.0)
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       quick-lru:
         specifier: ^7.2.0
         version: 7.3.0
@@ -3946,7 +3949,7 @@ importers:
         version: 4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/browser-playwright':
         specifier: ^4.0.8
-        version: 4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+        version: 4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/coverage-v8':
         specifier: ^4.0.8
         version: 4.0.9(@vitest/browser@4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9))(vitest@4.0.9)
@@ -3972,8 +3975,8 @@ importers:
         specifier: 0.525.0
         version: 0.525.0(react@19.2.0)
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -4107,7 +4110,7 @@ importers:
         version: 4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/browser-playwright':
         specifier: ^4.0.8
-        version: 4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+        version: 4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/coverage-v8':
         specifier: ^4.0.8
         version: 4.0.9(@vitest/browser@4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9))(vitest@4.0.9)
@@ -4121,8 +4124,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       playwright:
-        specifier: 1.53.2
-        version: 1.53.2
+        specifier: 1.56.1
+        version: 1.56.1
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -4220,8 +4223,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@analogjs/platform@2.0.4':
-    resolution: {integrity: sha512-nJ/Vh7D9InqNs75QdtPP1GHYhfCpb8jEXfPeK7mypYqiIYzEpDLifRkRz2QFwcv/dhzl0iIxA3TJOF26A2sD8w==}
+  '@analogjs/platform@2.0.5':
+    resolution: {integrity: sha512-Bt29kYIMLjQrT/XchgdXBAgxY14nZS8maanF+1KT6P4x9EazDL4qwBnTdS76NYy8/46GtVGNrtNd/g+Bp7OL7g==}
     peerDependencies:
       '@nx/angular': ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0
       '@nx/devkit': ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0
@@ -4250,8 +4253,8 @@ packages:
       shiki:
         optional: true
 
-  '@analogjs/vite-plugin-angular@2.0.4':
-    resolution: {integrity: sha512-oDcF+sBgKBTRIc4YAejoh4MkjRLDVk9p/T5kGmkI+ZazhwijWUuidP5rCC2gTTOm+DJVwEB9qd5crcBJawN8RQ==}
+  '@analogjs/vite-plugin-angular@2.0.5':
+    resolution: {integrity: sha512-acO11cLruKfqUYFAkZxrl6WDtwhhKDVdUYbcM5MNslZd0gEOcljUj4Q1BSTYFKOvP91XNy36I+CS5fq5+AYw5Q==}
     peerDependencies:
       '@angular-devkit/build-angular': ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0
       '@angular/build': ^18.0.0 || ^19.0.0 || ^20.0.0
@@ -4261,11 +4264,11 @@ packages:
       '@angular/build':
         optional: true
 
-  '@analogjs/vite-plugin-nitro@2.0.4':
-    resolution: {integrity: sha512-hclw4LY6emLL6ipO+cNfygxQJ6tWJ/36qcySpolk1IpGo+ycdioQUWBKbzSYZFaw9vnqpyhLyOe4qwokWa2g9A==}
+  '@analogjs/vite-plugin-nitro@2.0.5':
+    resolution: {integrity: sha512-R7TAy8GeVvlJGf2dS1E8fZ/26h3NSpona/CpT82PQCp/25BtjA7c4Lx2tTu/G2X53bEsNHPO1UvQReNvg3ONkQ==}
 
-  '@analogjs/vitest-angular@2.0.4':
-    resolution: {integrity: sha512-/WN4Ad/kp+wj0Hx8YM7WUMB9qteuNKNWPiTQbwElJGRXHh89Hh/Zu/ZvsuWnErvxGGmKbIPO34VULrIrwzs6+Q==}
+  '@analogjs/vitest-angular@2.0.5':
+    resolution: {integrity: sha512-4zM9IhEOIbXYB/enE5wqewJpcWPczqKUvR8KKDD7McclCyC4XXxh4pXUU3Xtx7iSEjPEM8A/f36C3m2XZGMfig==}
     peerDependencies:
       '@analogjs/vite-plugin-angular': '*'
       '@angular-devkit/architect': '>=0.1500.0 < 0.2100.0'
@@ -8636,7 +8639,7 @@ packages:
   '@vitest/browser-playwright@4.0.9':
     resolution: {integrity: sha512-ayr0vCxvJIvodzfUTVzifFMT3bmcMeKzEWoPt7mtgrZsqJhMbYaftifuBZRQeF/glogsVr+jhtIePHw6g+0YRQ==}
     peerDependencies:
-      playwright: 1.53.2
+      playwright: 1.56.1
       vitest: 4.0.9
 
   '@vitest/browser@4.0.9':
@@ -13127,13 +13130,13 @@ packages:
   pkg-types@2.3.0:
     resolution: {integrity: sha512-SIqCzDRg0s9npO5XQ3tNZioRY1uK06lA41ynBC1YmFTmnY6FjUjVt6s4LoADmwoig1qqD0oK8h1p/8mlMx8Oig==}
 
-  playwright-core@1.53.2:
-    resolution: {integrity: sha512-ox/OytMy+2w1jcYEYlOo1Hhp8hZkLCximMTUTMBXjGUA1KoFfiSZ+DU+3a739jsPY0yoKH2TFy9S2fsJas8yAw==}
+  playwright-core@1.56.1:
+    resolution: {integrity: sha512-hutraynyn31F+Bifme+Ps9Vq59hKuUCz7H1kDOcBs+2oGguKkWTU50bBWrtz34OUWmIwpBTWDxaRPXrIXkgvmQ==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.53.2:
-    resolution: {integrity: sha512-6K/qQxVFuVQhRQhFsVZ9fGeatxirtrpPgxzBYWyZLEXJzqYwuL4fuNmfOfD5et1tJE4GScKyPNeLhZeRwuTU3A==}
+  playwright@1.56.1:
+    resolution: {integrity: sha512-aFi5B0WovBHTEvpM3DzXTUaeN6eN0qWnTkKx4NQaH4Wvcmc153PdaY2UBdSYKaGYw+UyWXSVyxDUg5DoPEttjw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16163,10 +16166,10 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@analogjs/platform@2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))(@nx/angular@22.0.3(c9b39622a0c8a47983605c4ea12083e7))(@nx/devkit@22.0.3(nx@22.0.3))(@nx/vite@22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(typescript@5.9.3)(vitest@4.0.9))(encoding@0.1.13)(marked-gfm-heading-id@4.1.3(marked@15.0.12))(marked-mangle@1.1.12(marked@15.0.12))(marked@15.0.12)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(rolldown@1.0.0-beta.44)':
+  '@analogjs/platform@2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))(@nx/angular@22.0.3(c9b39622a0c8a47983605c4ea12083e7))(@nx/devkit@22.0.3(nx@22.0.3))(@nx/vite@22.0.3(@babel/traverse@7.28.5)(nx@22.0.3)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(typescript@5.9.3)(vitest@4.0.9))(encoding@0.1.13)(marked-gfm-heading-id@4.1.3(marked@15.0.12))(marked-mangle@1.1.12(marked@15.0.12))(marked@15.0.12)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(rolldown@1.0.0-beta.44)':
     dependencies:
-      '@analogjs/vite-plugin-angular': 2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
-      '@analogjs/vite-plugin-nitro': 2.0.4(encoding@0.1.13)(rolldown@1.0.0-beta.44)
+      '@analogjs/vite-plugin-angular': 2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
+      '@analogjs/vite-plugin-nitro': 2.0.5(encoding@0.1.13)(rolldown@1.0.0-beta.44)
       marked: 15.0.12
       marked-gfm-heading-id: 4.1.3(marked@15.0.12)
       marked-mangle: 1.1.12(marked@15.0.12)
@@ -16210,14 +16213,14 @@ snapshots:
       - uploadthing
       - xml2js
 
-  '@analogjs/vite-plugin-angular@2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))':
+  '@analogjs/vite-plugin-angular@2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))':
     dependencies:
       ts-morph: 21.0.1
     optionalDependencies:
       '@angular-devkit/build-angular': 20.3.10(0534c01846a617685577e87aad32b6f0)
       '@angular/build': 20.3.10(94b8c2580d9d94af480586e86046b030)
 
-  '@analogjs/vite-plugin-nitro@2.0.4(encoding@0.1.13)(rolldown@1.0.0-beta.44)':
+  '@analogjs/vite-plugin-nitro@2.0.5(encoding@0.1.13)(rolldown@1.0.0-beta.44)':
     dependencies:
       defu: 6.1.4
       esbuild: 0.25.12
@@ -16255,9 +16258,9 @@ snapshots:
       - uploadthing
       - xml2js
 
-  '@analogjs/vitest-angular@2.0.4(@analogjs/vite-plugin-angular@2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030)))(@angular-devkit/architect@0.2003.10(chokidar@4.0.3))(vitest@4.0.9)':
+  '@analogjs/vitest-angular@2.0.5(@analogjs/vite-plugin-angular@2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030)))(@angular-devkit/architect@0.2003.10(chokidar@4.0.3))(vitest@4.0.9)':
     dependencies:
-      '@analogjs/vite-plugin-angular': 2.0.4(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
+      '@analogjs/vite-plugin-angular': 2.0.5(@angular-devkit/build-angular@20.3.10(0534c01846a617685577e87aad32b6f0))(@angular/build@20.3.10(94b8c2580d9d94af480586e86046b030))
       '@angular-devkit/architect': 0.2003.10(chokidar@4.0.3)
       vitest: 4.0.9(@types/debug@4.1.12)(@types/node@24.9.2)(@vitest/browser-playwright@4.0.9)(@vitest/ui@4.0.9)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1)
 
@@ -22918,11 +22921,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/browser-playwright@4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)':
+  '@vitest/browser-playwright@4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)':
     dependencies:
       '@vitest/browser': 4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/mocker': 4.0.9(rolldown-vite@7.1.19(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))
-      playwright: 1.53.2
+      playwright: 1.56.1
       tinyrainbow: 3.0.3
       vitest: 4.0.9(@types/debug@4.1.12)(@types/node@24.10.1)(@vitest/browser-playwright@4.0.9)(@vitest/ui@4.0.9)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1)
     transitivePeerDependencies:
@@ -22931,11 +22934,11 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser-playwright@4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)':
+  '@vitest/browser-playwright@4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)':
     dependencies:
       '@vitest/browser': 4.0.9(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/mocker': 4.0.9(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))
-      playwright: 1.53.2
+      playwright: 1.56.1
       tinyrainbow: 3.0.3
       vitest: 4.0.9(@types/debug@4.1.12)(@types/node@24.9.2)(@vitest/browser-playwright@4.0.9)(@vitest/ui@4.0.9)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1)
     transitivePeerDependencies:
@@ -22944,11 +22947,11 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser-playwright@4.0.9(playwright@1.53.2)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)':
+  '@vitest/browser-playwright@4.0.9(playwright@1.56.1)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)':
     dependencies:
       '@vitest/browser': 4.0.9(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/mocker': 4.0.9(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))
-      playwright: 1.53.2
+      playwright: 1.56.1
       tinyrainbow: 3.0.3
       vitest: 4.0.9(@types/debug@4.1.12)(@types/node@24.10.1)(@vitest/browser-playwright@4.0.9)(@vitest/ui@4.0.9)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1)
     transitivePeerDependencies:
@@ -28742,11 +28745,11 @@ snapshots:
       exsolve: 1.0.8
       pathe: 2.0.3
 
-  playwright-core@1.53.2: {}
+  playwright-core@1.56.1: {}
 
-  playwright@1.53.2:
+  playwright@1.56.1:
     dependencies:
-      playwright-core: 1.53.2
+      playwright-core: 1.56.1
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -31841,7 +31844,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.12
       '@types/node': 24.10.1
-      '@vitest/browser-playwright': 4.0.9(playwright@1.53.2)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+      '@vitest/browser-playwright': 4.0.9(playwright@1.56.1)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/ui': 4.0.9(vitest@4.0.9)
     transitivePeerDependencies:
       - jiti
@@ -31882,7 +31885,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.12
       '@types/node': 24.9.2
-      '@vitest/browser-playwright': 4.0.9(playwright@1.53.2)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
+      '@vitest/browser-playwright': 4.0.9(playwright@1.56.1)(rolldown-vite@7.1.19(@types/node@24.9.2)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(sass-embedded@1.93.3)(sass@1.94.0)(stylus@0.62.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.8.1))(vitest@4.0.9)
       '@vitest/ui': 4.0.9(vitest@4.0.9)
     transitivePeerDependencies:
       - jiti
