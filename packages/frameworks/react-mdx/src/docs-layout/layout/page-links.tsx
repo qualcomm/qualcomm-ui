@@ -3,6 +3,7 @@
 
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
+import {capitalCase} from "change-case"
 import {ChevronLeft, ChevronRight} from "lucide-react"
 
 import type {NavItem} from "@qualcomm-ui/mdx-common"
@@ -16,22 +17,32 @@ import {
   type MdxDocsContextValue,
   useMdxDocsContext,
 } from "@qualcomm-ui/react-mdx/context"
+import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {TreeCollection} from "@qualcomm-ui/utils/collection"
 
 import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
 
 interface PageLinkProp {
+  currentPage?: NavItem | false
   pageLink: NavItem
   prev?: boolean
   renderLink: MdxDocsContextValue["renderLink"]
 }
 
 function PageLink({
+  currentPage,
   pageLink,
   prev,
   renderLink: RenderLink,
 }: PageLinkProp): ReactNode {
+  const pathSegments = currentPage ? currentPage.pathSegments : []
+  const nextPathSegments = pageLink.pathSegments
+  const pathSegment =
+    nextPathSegments[0] !== pathSegments[0]
+      ? capitalCase(nextPathSegments[0])
+      : ""
+
   return bindingRenderProp(<RenderLink href={pageLink.pathname!} />, {
     children: (
       <>
@@ -45,10 +56,20 @@ function PageLink({
               {pageLink.title}
             </Link>
           )}
+
+          {pathSegment && pathSegment !== pageLink.title ? (
+            <div
+              className="qui-page-link__adjacent-route-title"
+              data-next={booleanDataAttr(!prev)}
+            >
+              {pathSegment}
+            </div>
+          ) : null}
         </span>
       </>
     ),
-    className: clsx("qui-page-link__root", {"q-next": !prev}),
+    className: "qui-page-link__root",
+    "data-next": booleanDataAttr(!prev),
   })
 }
 
@@ -76,7 +97,7 @@ export function PageLinks({className, ...props}: PageLinksProps): ReactElement {
         .filter((item) => item.pathname),
     [navItems],
   )
-  const [prevPage, nextPage] = useMemo(
+  const [prevPage, nextPage, currentPage] = useMemo(
     () => getPageLinks(flattenedItems, pathname),
     [flattenedItems, pathname],
   )
@@ -89,12 +110,21 @@ export function PageLinks({className, ...props}: PageLinksProps): ReactElement {
     >
       <div className="qui-page-links__link-wrapper">
         {prevPage ? (
-          <PageLink pageLink={prevPage} prev renderLink={renderLink} />
+          <PageLink
+            currentPage={currentPage}
+            pageLink={prevPage}
+            prev
+            renderLink={renderLink}
+          />
         ) : null}
       </div>
       <div className="qui-page-links__link-wrapper">
         {nextPage ? (
-          <PageLink pageLink={nextPage} renderLink={renderLink} />
+          <PageLink
+            currentPage={currentPage}
+            pageLink={nextPage}
+            renderLink={renderLink}
+          />
         ) : null}
       </div>
     </PolymorphicElement>
@@ -104,12 +134,12 @@ export function PageLinks({className, ...props}: PageLinksProps): ReactElement {
 export function getPageLinks(
   items: NavItem[],
   route: string,
-): [NavItem | false, NavItem | false] {
+): [NavItem | false, NavItem | false, NavItem | false] {
   const index = items.findIndex((item) => item.id === route)
   if (index === -1) {
-    return [false, false]
+    return [false, false, false]
   }
   const prevPage = items[index - 1]
   const nextPage = items[index + 1]
-  return [prevPage ?? false, nextPage ?? false]
+  return [prevPage ?? false, nextPage ?? false, items[index]]
 }

@@ -1,8 +1,9 @@
 .qui-page-link__container {
-  align-items: center;
   color: var(--color-text-neutral-primary);
   display: inline-flex;
+  flex-direction: column;
   font: var(--font-static-body-sm-default);
+  justify-content: center;
   white-space: nowrap;
 }
 
@@ -18,7 +19,7 @@
   text-decoration: inherit;
   width: 100%;
 
-  &.q-next {
+  &[data-next] {
     align-items: flex-end;
   }
 
@@ -27,6 +28,15 @@
       border-bottom-color: var(--color-interactive-text-link-default-hover);
       color: var(--color-interactive-text-link-default-hover);
     }
+  }
+}
+
+.qui-page-link__adjacent-route-title {
+  padding-left: 20px;
+  &[data-next] {
+    align-self: flex-end;
+    padding-left: 0;
+    padding-right: 20px;
   }
 }
 
