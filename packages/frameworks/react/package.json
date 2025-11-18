@@ -63,7 +63,7 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "esbuild": "^0.25.8",
     "lucide-react": "0.525.0",
-    "playwright": "1.53.2",
+    "playwright": "1.56.1",
     "quick-lru": "^7.2.0",
     "react": "catalog:",
     "react-compiler-runtime": "^1.0.0",
