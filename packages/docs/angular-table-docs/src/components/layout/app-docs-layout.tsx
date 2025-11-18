@@ -19,6 +19,7 @@ import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 
 import {DemoUpdateContextProvider} from "./demo-update-context"
 import {DocLink} from "./doc-link"
+import {GithubChangelogLink} from "./github-changelog-link"
 import {GlobalConfig} from "./global-config"
 import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
 import {QuiLogo} from "./qui-logo"
@@ -71,7 +72,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
             </Link>
             . Head over to the{" "}
             <Link
-              href="https://github.qualcomm.com/ProdTools/qui-docs-template"
+              href="https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/qui-docs-template"
               size="md"
               target="_blank"
             >
@@ -95,19 +96,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
                   <span className="whitespace-nowrap">QUI Angular Table</span>
                 </HeaderBar.AppTitle>
               </ReactRouterLink>
-              <Link
-                className="hidden md:inline-flex"
-                render={
-                  <ReactRouterLink
-                    prefetch="intent"
-                    to="/changelogs/react"
-                    viewTransition
-                  />
-                }
-                size="xs"
-              >
-                NEXTGEN
-              </Link>
+              <GithubChangelogLink />
             </HeaderBar.Logo>
 
             <HeaderBar.Divider />

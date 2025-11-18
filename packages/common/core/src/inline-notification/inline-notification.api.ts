@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {ariaAttr} from "@qualcomm-ui/utils/attributes"
 import type {
   IdRegistrationProps,
   Machine,
@@ -90,8 +91,8 @@ export function createInlineNotificationApi(
       scope.ids.register("root", props)
       return normalize.element({
         ...commonBindings,
-        "aria-describedby": domIds.description(scope),
-        "aria-labelledby": domIds.heading(scope),
+        "aria-describedby": ariaAttr(domIds.description(scope)),
+        "aria-labelledby": ariaAttr(domIds.heading(scope)),
         "aria-live": prop("role") === "status" ? "polite" : "assertive",
         "data-part": "root",
         "data-state": visible ? "visible" : "dismissed",

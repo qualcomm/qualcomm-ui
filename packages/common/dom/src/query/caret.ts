@@ -31,5 +31,5 @@ export function setCaretToEnd(
   if (start !== 0) {
     return
   }
-  input.setSelectionRange(input.value.length, input.value.length)
+  input?.setSelectionRange?.(input.value.length, input.value.length)
 }

@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {booleanAriaAttr} from "@qualcomm-ui/utils/attributes"
+import {ariaAttr, booleanAriaAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import type {
@@ -84,7 +84,7 @@ export function createDialogApi(
       const labelId = domIds.label(scope)
       return normalize.element({
         ...commonBindings,
-        "aria-describedby": domIds.description(scope) || undefined,
+        "aria-describedby": ariaAttr(domIds.description(scope)),
         "aria-label": ariaLabel || undefined,
         "aria-labelledby": ariaLabel || !labelId ? undefined : labelId,
         "aria-modal": prop("modal"),

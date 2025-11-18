@@ -23,7 +23,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsSegmentedControlContextProvider} from "./qds-segmented-control-context.js"
+import {QdsSegmentedControlContextProvider} from "./qds-segmented-control-context"
 
 export interface SegmentedControlRootProps
   extends Omit<

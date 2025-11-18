@@ -1,4 +1,10 @@
-import {type ReactNode, useCallback, useEffect, useRef} from "react"
+import {
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react"
 
 import {MoonIcon, SunIcon} from "lucide-react"
 
@@ -8,17 +14,15 @@ import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 export function ThemeToggle(): ReactNode {
   const [theme, setTheme] = useTheme()
 
-  const themeRef = useRef(theme)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const toggle = useCallback(() => {
-    setTheme((prevState) =>
-      prevState === Theme.DARK ? Theme.LIGHT : Theme.DARK,
-    )
-  }, [setTheme])
-
-  useEffect(() => {
-    themeRef.current = theme
-  }, [theme])
+  const handleThemeSwitch = useCallback(
+    (event?: MouseEvent) => {
+      const nextTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
+      setTheme(nextTheme, event)
+    },
+    [setTheme, theme],
+  )
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -28,7 +32,7 @@ export function ThemeToggle(): ReactNode {
         event.altKey &&
         event.shiftKey
       ) {
-        toggle()
+        handleThemeSwitch()
       }
     }
 
@@ -37,13 +41,14 @@ export function ThemeToggle(): ReactNode {
     return () => {
       document.removeEventListener("keydown", onKeyDown)
     }
-  }, [setTheme, toggle])
+  }, [handleThemeSwitch, setTheme])
 
   return (
     <HeaderBar.ActionIconButton
+      ref={buttonRef}
       aria-label="Toggle Theme"
       icon={theme === Theme.LIGHT ? SunIcon : MoonIcon}
-      onClick={toggle}
+      onClick={handleThemeSwitch}
     />
   )
 }

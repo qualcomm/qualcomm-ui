@@ -13,14 +13,17 @@ import {
   type IconTokenContext,
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreMenuTriggerDirective} from "@qualcomm-ui/angular-core/menu"
 
 import {useQdsMenuContext} from "./qds-menu-context.service"
 
 @Component({
-  hostDirectives: [{directive: CoreMenuTriggerDirective, inputs: ["id"]}],
-
+  hostDirectives: [
+    {directive: CoreMenuTriggerDirective, inputs: ["id"]},
+    QuiPreloadDirective,
+  ],
   providers: [
     provideIcons({ChevronDown}),
     provideQdsButtonContext(),

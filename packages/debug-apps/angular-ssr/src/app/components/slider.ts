@@ -1,49 +1,21 @@
-import {Component, ViewEncapsulation} from "@angular/core"
-
-import {SliderCompositeDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-composite-demo"
-import {SliderDisabledDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-disabled-demo"
-import {SliderDisplayDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-display-demo"
-import {SliderFocusCallbackDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-focus-callback-demo"
-import {SliderHintDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-hint-demo"
-import {SliderMarkersDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-markers-demo"
-import {SliderMinMaxStepDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-min-max-step-demo"
-import {SliderMinStepsDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-min-steps-demo"
-import {SliderOriginDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-origin-demo"
-import {SliderRangeDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-range-demo"
-import {SliderReactiveFormStatesDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-reactive-form-states-demo"
-import {SliderSideMarkersDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-side-markers-demo"
-import {SliderSimpleDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-simple-demo"
-import {SliderSizeDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-size-demo"
-import {SliderTemplateFormStateDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-template-form-state-demo"
-import {SliderTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-template-forms-demo"
-import {SliderTooltipDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-tooltip-demo"
-import {SliderValueCallbackDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-value-callback-demo"
-import {SliderVariantDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-variant-demo"
+import {Component} from "@angular/core"
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
-  imports: [
-    SliderCompositeDemo,
-    SliderDisabledDemo,
-    SliderDisplayDemo,
-    SliderFocusCallbackDemo,
-    SliderHintDemo,
-    SliderMarkersDemo,
-    SliderMinMaxStepDemo,
-    SliderMinStepsDemo,
-    SliderOriginDemo,
-    SliderRangeDemo,
-    SliderReactiveFormStatesDemo,
-    SliderSideMarkersDemo,
-    SliderSimpleDemo,
-    SliderSizeDemo,
-    SliderTemplateFormStateDemo,
-    SliderTemplateFormsDemo,
-    SliderTooltipDemo,
-    SliderValueCallbackDemo,
-    SliderVariantDemo,
-  ],
   selector: "app-slider",
+  styles: `
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .message {
+      font: var(--font-static-body-lg-default);
+      color: var(--color-text-neutral-secondary);
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+  `,
   template: `
     <div
       class="container"

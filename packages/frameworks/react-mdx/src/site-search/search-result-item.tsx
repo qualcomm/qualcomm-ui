@@ -72,7 +72,11 @@ export function SearchResultItem({
               <HighlightText
                 ignoreCase
                 matchAll
-                query={inputValue.split(" ").at(-1) ?? ""}
+                query={
+                  inputValue.length > 1
+                    ? (inputValue.split(" ").at(-1) ?? "")
+                    : ""
+                }
                 text={item.content.map((content) => content.content).join("")}
               />
             </span>

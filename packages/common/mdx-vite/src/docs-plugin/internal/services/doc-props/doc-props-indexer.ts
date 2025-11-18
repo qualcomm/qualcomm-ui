@@ -292,7 +292,7 @@ export class DocPropsIndexer {
 
     const comment = prop.comment
     if (!comment) {
-      return {content: [], heading}
+      return {content: [], heading, richContent: []}
     }
 
     const content = {
@@ -303,6 +303,6 @@ export class DocPropsIndexer {
           .join(""),
       ],
     }
-    return {content: [content], heading}
+    return {content: [content], heading, richContent: []}
   }
 }

@@ -15,7 +15,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.js"
+import {useQdsSegmentedControlContext} from "./qds-segmented-control-context"
 
 export interface SegmentedControlItemRootProps
   extends SegmentedControlItemApiProps,

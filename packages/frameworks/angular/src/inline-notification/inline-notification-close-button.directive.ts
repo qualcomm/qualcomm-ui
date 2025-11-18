@@ -5,6 +5,7 @@ import {Component, computed} from "@angular/core"
 import {X} from "lucide-angular"
 
 import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {CoreInlineNotificationCloseTriggerDirective} from "@qualcomm-ui/angular-core/inline-notification"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -12,6 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsInlineNotificationContext} from "./qds-inline-notification-context.service"
 
 @Component({
+  hostDirectives: [QuiPreloadDirective],
   providers: [provideIcons({X})],
   selector: "[q-inline-notification-close-button]",
   standalone: false,

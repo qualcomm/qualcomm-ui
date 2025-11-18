@@ -12,9 +12,11 @@ interface FormData {
   newsletter: boolean
 }
 
-const acceptTermsSchema = type.true.configure({
-  message: "Please accept the Terms of Service to continue",
-})
+const acceptTermsSchema = type("boolean")
+  .narrow((value: boolean) => value === true)
+  .configure({
+    message: "Please accept the Terms of Service to continue",
+  })
 const FormSchema = type({
   // must be true
   acceptTerms: acceptTermsSchema,
@@ -34,7 +36,9 @@ export default function CheckboxReactHookFormDemo(): ReactElement {
   return (
     <form
       className="flex w-56 flex-col gap-2"
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={(e) => {
+        void handleSubmit((data) => console.log(data))(e)
+      }}
     >
       <Controller
         control={control}

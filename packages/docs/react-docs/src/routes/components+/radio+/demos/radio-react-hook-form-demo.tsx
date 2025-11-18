@@ -29,7 +29,9 @@ export default function RadioReactHookFormDemo(): ReactElement {
   return (
     <form
       className="flex w-56 flex-col gap-4"
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={(e) => {
+        void handleSubmit((data) => console.log(data))(e)
+      }}
     >
       <Controller
         control={control}

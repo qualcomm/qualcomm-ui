@@ -8,10 +8,24 @@ export interface QdsThemeProviderOptions {
   /**
    * The forced QDS Brand for the application. This setting, if supplied, overrides
    * the value from the cookie.
+   */
+  brandOverride?: Brand
+
+  /**
+   * The default QDS brand for the application, applied on first visit if no cookie
+   * is set.
    *
    * @default 'qualcomm'
    */
-  brandOverride?: Brand
+  defaultBrand?: Brand
+
+  /**
+   * The default QDS theme for the application, applied on first visit if no cookie
+   * is set.
+   *
+   * @default 'light'
+   */
+  defaultTheme?: Theme
 
   /**
    * A root node to apply the theme/brand attributes to. Used for CSS scoping.
@@ -36,10 +50,13 @@ export interface QdsThemeProviderOptions {
       }
 
   /**
+   * If `true`, skip writing the color scheme style to the {@link rootElement}.
+   */
+  skipColorSchemeStyle?: boolean
+
+  /**
    * The forced QDS theme for the application. This setting, if supplied, overrides
    * the value from the cookie.
-   *
-   * @default 'dark'
    */
   themeOverride?: Theme
 }

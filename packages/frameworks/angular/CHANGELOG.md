@@ -1,5 +1,30 @@
 # @qualcomm-ui/angular
 
+## 1.2.1 (2025/11/17)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 1.2.0 (2025/11/17)
+
+### Features
+
+- [theme]: simplified theme provider setup and cookie parsing
+- [TableRowExpandButton]: add isExpanded prop for row expansion state updates
+- [theme]: add theme provider with CSR and SSR theme support
+- add preload directive for disabling transitions until after view init
+
+### Bug Fixes
+
+- [combobox]: add missing ssr guards
+- [password-input-visibility-trigger]: add preload styles
+- [transitions]: disable element transition styles until after view init
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core]
+
 ## 1.1.1 (2025/11/15)
 
 ### Build System

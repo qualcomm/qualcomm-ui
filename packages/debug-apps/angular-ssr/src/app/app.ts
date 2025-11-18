@@ -1,5 +1,7 @@
-import {Component} from "@angular/core"
+import {Component, inject} from "@angular/core"
 import {RouterOutlet} from "@angular/router"
+
+import {QdsThemeService} from "@qualcomm-ui/angular/theme"
 
 @Component({
   imports: [RouterOutlet],
@@ -8,4 +10,6 @@ import {RouterOutlet} from "@angular/router"
     <router-outlet />
   `,
 })
-export class App {}
+export class App {
+  protected themeService = inject(QdsThemeService)
+}

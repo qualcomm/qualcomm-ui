@@ -279,6 +279,7 @@ export class SearchIndexer {
             : defaultSection.pathname,
         id: `${defaultSection.id}-${index}${isDocProp ? "-prop" : ""}`,
         isDocProp: isDocProp || undefined,
+        richContent: section.richContent,
       }
     })
   }
@@ -311,14 +312,17 @@ export class SearchIndexer {
     const fileGlob = inputFileGlob.map(fixPath)
     this.navBuilder.reset()
     this.reset()
+
     const mdxFileGlob = filterFileGlob(
       fileGlob,
       "mdx",
       this.config.srcDir,
       this.config.routingStrategy,
     )
+
     this._mdxFileCount = mdxFileGlob.length
     const mdxIndex = mdxFileGlob.map((file) => this.compileMdxFile(file)).flat()
+
     filterFileGlob(
       fileGlob,
       "tsx",
@@ -327,6 +331,7 @@ export class SearchIndexer {
     ).map((file) => this.compileTsxFile(file))
 
     this._searchIndex.push(...mdxIndex.filter((entry) => !entry.hideFromSearch))
+
     this.navBuilder.build()
   }
 }

@@ -98,7 +98,7 @@ export default function GroupingDemo() {
                         {header.isPlaceholder ? null : (
                           <div className="flex items-center gap-1">
                             {header.column.getCanGroup() ? (
-                              // If the header can be grouped, let's add a toggle
+                              // If the header can be grouped, add a toggle
                               <Table.ColumnHeaderAction
                                 icon={
                                   header.column.getIsGrouped()

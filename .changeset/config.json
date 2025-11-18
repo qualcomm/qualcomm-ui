@@ -36,7 +36,8 @@
     "@qualcomm-ui/qui-docs",
     "@qualcomm-ui/react-table-docs",
     "@qualcomm-ui/qui-site",
-    "@qualcomm-ui/angular-ssr",
+    "angular-csr",
+    "angular-ssr",
     "react-ssr"
   ]
 }

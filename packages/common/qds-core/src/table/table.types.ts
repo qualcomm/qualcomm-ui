@@ -250,6 +250,7 @@ export interface QdsTableRowExpandButtonBindings {
 }
 
 export interface QdsTableRowExpandButtonProps {
+  isExpanded?: boolean
   row: Row<any>
 }
 

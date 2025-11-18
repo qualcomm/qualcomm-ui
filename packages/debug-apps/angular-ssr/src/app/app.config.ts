@@ -13,6 +13,8 @@ import {
   QueryClient,
 } from "@tanstack/angular-query-experimental"
 
+import {provideQdsTheme} from "@qualcomm-ui/angular/theme"
+
 import {routes} from "./app.routes"
 
 export const appConfig: ApplicationConfig = {
@@ -22,5 +24,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideQueryClient(new QueryClient()),
+    provideQdsTheme(),
   ],
 }

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/tailwind-plugin",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "sideEffects": false,
   "description": "Qualcomm UI Tailwind Plugin",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
