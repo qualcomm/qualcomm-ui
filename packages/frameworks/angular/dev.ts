@@ -19,7 +19,7 @@ const ANGULAR_CORE_SRC_DIR = resolve(__dirname, "../angular-core/src")
 let timeoutId: ReturnType<typeof setTimeout> | null = null
 
 // give the current angular-core dist dir time to clear its contents
-await setTimeoutPromise(500)
+await setTimeoutPromise(2000)
 
 async function scanForEntrypoints() {
   const files = await readdir(ANGULAR_CORE_SRC_DIR, {withFileTypes: true})
