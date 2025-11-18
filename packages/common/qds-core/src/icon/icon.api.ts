@@ -9,6 +9,10 @@ import type {QdsIconApiProps, QdsIconBindings, QdsIconSize} from "./icon.types"
 
 const qdsIconSizes = new Set<string>(["xs", "sm", "md", "lg", "xl"])
 
+/**
+ * Returns the size of the icon when it is supplied as a pixel value, or undefined
+ * if it is a predefined size.
+ */
 export function getIconSize(
   size: QdsIconSize | null | undefined,
 ): string | undefined {
@@ -34,6 +38,11 @@ export function getQdsIconBindings(
     stroke: "currentColor",
     strokeLinecap: "round",
     strokeLinejoin: "round",
+    style: iconSize
+      ? {
+          "--icon-size": iconSize,
+        }
+      : {},
     viewBox: props.viewBox || "0 0 24 24",
     xmlns: props.xmlns || "http://www.w3.org/2000/svg",
   })
