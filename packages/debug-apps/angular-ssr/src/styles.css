@@ -22,7 +22,6 @@
 html {
   background-color: var(--color-background-neutral-01);
   color: var(--color-text-neutral-primary);
-  color-scheme: var(--color-scheme);
   height: 100%;
   margin: 0;
   padding: 0;

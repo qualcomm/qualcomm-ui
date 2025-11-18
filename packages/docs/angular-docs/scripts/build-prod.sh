@@ -43,6 +43,10 @@ trap cleanup EXIT INT TERM
 echo "Cleaning up old demo html..."
 rm -f ./angular-demo-module/generated/demo-elements.json
 
+echo "Extracting site data"
+
+pnpm generate-page-map
+
 echo "Building application..."
 pnpm build
 
