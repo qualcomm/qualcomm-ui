@@ -48,7 +48,9 @@ export default function TextInputReactHookFormDemo() {
     <form
       className="mx-auto flex w-full max-w-sm flex-col gap-3"
       noValidate
-      onSubmit={handleSubmit(handleFormSubmit)}
+      onSubmit={(e) => {
+        void handleSubmit(handleFormSubmit)(e)
+      }}
     >
       <Controller
         control={control}
