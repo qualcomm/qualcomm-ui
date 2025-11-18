@@ -19,16 +19,16 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
         <span emphasis="danger" icon="Star" q-icon-badge></span>
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <span emphasis="cat-1" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-2" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-3" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-4" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-5" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-6" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-7" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-8" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-9" icon="Star" q-icon-badge></span>
-        <span emphasis="cat-10" icon="Star" q-icon-badge></span>
+        <span emphasis="blue" icon="Star" q-icon-badge></span>
+        <span emphasis="cyan" icon="Star" q-icon-badge></span>
+        <span emphasis="green" icon="Star" q-icon-badge></span>
+        <span emphasis="kiwi" icon="Star" q-icon-badge></span>
+        <span emphasis="magenta" icon="Star" q-icon-badge></span>
+        <span emphasis="orange" icon="Star" q-icon-badge></span>
+        <span emphasis="purple" icon="Star" q-icon-badge></span>
+        <span emphasis="red" icon="Star" q-icon-badge></span>
+        <span emphasis="teal" icon="Star" q-icon-badge></span>
+        <span emphasis="yellow" icon="Star" q-icon-badge></span>
       </div>
     </div>
   `,

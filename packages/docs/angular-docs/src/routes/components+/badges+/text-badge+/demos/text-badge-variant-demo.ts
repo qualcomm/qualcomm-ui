@@ -16,16 +16,16 @@ import {BadgeDirective} from "@qualcomm-ui/angular/badge"
         <span emphasis="danger" q-badge variant="subtle">Danger</span>
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <span emphasis="cat-1" q-badge variant="subtle">Cat 1</span>
-        <span emphasis="cat-2" q-badge variant="subtle">Cat 2</span>
-        <span emphasis="cat-3" q-badge variant="subtle">Cat 3</span>
-        <span emphasis="cat-4" q-badge variant="subtle">Cat 4</span>
-        <span emphasis="cat-5" q-badge variant="subtle">Cat 5</span>
-        <span emphasis="cat-6" q-badge variant="subtle">Cat 6</span>
-        <span emphasis="cat-7" q-badge variant="subtle">Cat 7</span>
-        <span emphasis="cat-8" q-badge variant="subtle">Cat 8</span>
-        <span emphasis="cat-9" q-badge variant="subtle">Cat 9</span>
-        <span emphasis="cat-10" q-badge variant="subtle">Cat 10</span>
+        <span emphasis="blue" q-badge variant="subtle">blue</span>
+        <span emphasis="cyan" q-badge variant="subtle">cyan</span>
+        <span emphasis="green" q-badge variant="subtle">green</span>
+        <span emphasis="kiwi" q-badge variant="subtle">kiwi</span>
+        <span emphasis="magenta" q-badge variant="subtle">magenta</span>
+        <span emphasis="orange" q-badge variant="subtle">orange</span>
+        <span emphasis="purple" q-badge variant="subtle">purple</span>
+        <span emphasis="red" q-badge variant="subtle">red</span>
+        <span emphasis="teal" q-badge variant="subtle">teal</span>
+        <span emphasis="yellow" q-badge variant="subtle">yellow</span>
       </div>
     </div>
   `,

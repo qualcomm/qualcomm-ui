@@ -16,16 +16,16 @@ export default function IconBadgeEmphasisDemo(): ReactElement {
         <IconBadge emphasis="danger" icon={Star} />
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <IconBadge emphasis="cat-1" icon={Star} />
-        <IconBadge emphasis="cat-2" icon={Star} />
-        <IconBadge emphasis="cat-3" icon={Star} />
-        <IconBadge emphasis="cat-4" icon={Star} />
-        <IconBadge emphasis="cat-5" icon={Star} />
-        <IconBadge emphasis="cat-6" icon={Star} />
-        <IconBadge emphasis="cat-7" icon={Star} />
-        <IconBadge emphasis="cat-8" icon={Star} />
-        <IconBadge emphasis="cat-9" icon={Star} />
-        <IconBadge emphasis="cat-10" icon={Star} />
+        <IconBadge emphasis="blue" icon={Star} />
+        <IconBadge emphasis="cyan" icon={Star} />
+        <IconBadge emphasis="green" icon={Star} />
+        <IconBadge emphasis="kiwi" icon={Star} />
+        <IconBadge emphasis="magenta" icon={Star} />
+        <IconBadge emphasis="orange" icon={Star} />
+        <IconBadge emphasis="purple" icon={Star} />
+        <IconBadge emphasis="red" icon={Star} />
+        <IconBadge emphasis="teal" icon={Star} />
+        <IconBadge emphasis="yellow" icon={Star} />
       </div>
     </div>
   )

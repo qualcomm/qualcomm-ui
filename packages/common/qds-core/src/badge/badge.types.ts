@@ -18,16 +18,16 @@ export type QdsBadgeSemanticEmphasis =
   | "danger"
 
 export type QdsBadgeCategoryEmphasis =
-  | "cat-1"
-  | "cat-2"
-  | "cat-3"
-  | "cat-4"
-  | "cat-5"
-  | "cat-6"
-  | "cat-7"
-  | "cat-8"
-  | "cat-9"
-  | "cat-10"
+  | "blue"
+  | "cyan"
+  | "green"
+  | "kiwi"
+  | "magenta"
+  | "orange"
+  | "purple"
+  | "red"
+  | "teal"
+  | "yellow"
 
 export interface QdsBaseBadgeProps {
   /**

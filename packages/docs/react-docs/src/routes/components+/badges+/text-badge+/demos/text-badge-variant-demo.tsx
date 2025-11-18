@@ -26,35 +26,35 @@ export default function TextBadgeVariantDemo(): ReactElement {
         </Badge>
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <Badge emphasis="cat-1" variant="subtle">
-          Cat 1
+        <Badge emphasis="blue" variant="subtle">
+          blue
         </Badge>
-        <Badge emphasis="cat-2" variant="subtle">
-          Cat 2
+        <Badge emphasis="cyan" variant="subtle">
+          cyan
         </Badge>
-        <Badge emphasis="cat-3" variant="subtle">
-          Cat 3
+        <Badge emphasis="green" variant="subtle">
+          green
         </Badge>
-        <Badge emphasis="cat-4" variant="subtle">
-          Cat 4
+        <Badge emphasis="kiwi" variant="subtle">
+          kiwi
         </Badge>
-        <Badge emphasis="cat-5" variant="subtle">
-          Cat 5
+        <Badge emphasis="magenta" variant="subtle">
+          magenta
         </Badge>
-        <Badge emphasis="cat-6" variant="subtle">
-          Cat 6
+        <Badge emphasis="orange" variant="subtle">
+          orange
         </Badge>
-        <Badge emphasis="cat-7" variant="subtle">
-          Cat 7
+        <Badge emphasis="purple" variant="subtle">
+          purple
         </Badge>
-        <Badge emphasis="cat-8" variant="subtle">
-          Cat 8
+        <Badge emphasis="red" variant="subtle">
+          red
         </Badge>
-        <Badge emphasis="cat-9" variant="subtle">
-          Cat 9
+        <Badge emphasis="teal" variant="subtle">
+          teal
         </Badge>
-        <Badge emphasis="cat-10" variant="subtle">
-          Cat 10
+        <Badge emphasis="yellow" variant="subtle">
+          yellow
         </Badge>
       </div>
     </div>

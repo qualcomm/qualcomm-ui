@@ -16,16 +16,16 @@ export default function IconBadgeVariantDemo(): ReactElement {
         <IconBadge emphasis="danger" icon={Star} variant="subtle" />
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <IconBadge emphasis="cat-1" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-2" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-3" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-4" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-5" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-6" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-7" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-8" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-9" icon={Star} variant="subtle" />
-        <IconBadge emphasis="cat-10" icon={Star} variant="subtle" />
+        <IconBadge emphasis="blue" icon={Star} variant="subtle" />
+        <IconBadge emphasis="cyan" icon={Star} variant="subtle" />
+        <IconBadge emphasis="green" icon={Star} variant="subtle" />
+        <IconBadge emphasis="kiwi" icon={Star} variant="subtle" />
+        <IconBadge emphasis="magenta" icon={Star} variant="subtle" />
+        <IconBadge emphasis="orange" icon={Star} variant="subtle" />
+        <IconBadge emphasis="purple" icon={Star} variant="subtle" />
+        <IconBadge emphasis="red" icon={Star} variant="subtle" />
+        <IconBadge emphasis="teal" icon={Star} variant="subtle" />
+        <IconBadge emphasis="yellow" icon={Star} variant="subtle" />
       </div>
     </div>
   )
