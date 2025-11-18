@@ -17,7 +17,7 @@ const minMaxNumber = type("20 <= number <= 80").configure({
 })
 
 const minRange = type(["number", "number"])
-  .narrow((values: number[]) => Math.abs(values[0] - values[1]) >= 30)
+  .narrow((values: [number, number]) => Math.abs(values[0] - values[1]) >= 30)
   .configure({
     message: "Range must be at least 30",
   })

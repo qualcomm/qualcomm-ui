@@ -8,7 +8,7 @@ import {
   CompositeComponent,
   globalItems,
   SimpleComponent,
-} from "./test-segmented-control.js"
+} from "./test-segmented-control"
 
 const item1 = page.getByTestId(globalItems[0])
 const item2 = page.getByTestId(globalItems[1])

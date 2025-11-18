@@ -78,7 +78,9 @@ export default function PasswordInputReactHookFormDemo() {
   return (
     <form
       className="mx-auto flex w-full max-w-xs flex-col gap-3"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={(e) => {
+        void handleSubmit(onSubmit)(e)
+      }}
     >
       <div className="grid grid-cols-1 gap-4">
         <div>
