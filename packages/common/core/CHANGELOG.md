@@ -1,5 +1,18 @@
 # @qualcomm-ui/core
 
+## 1.0.6 (2025/11/17)
+
+### Bug Fixes
+
+- [text-input]: remove aria-describedby attribute when hint is absence
+- [password-input]: remove aria-describedby attribute when hint is absence
+- [inline-notification]: remove accessibility attributes when heading/description are absent
+- [dialog]: remove aria-describedby attribute when description is absence
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/dom]
+
 ## 1.0.5 (2025/11/13)
 
 ### Bug Fixes

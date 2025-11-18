@@ -1,5 +1,11 @@
 # @qualcomm-ui/dom
 
+## 1.0.5 (2025/11/17)
+
+### Bug Fixes
+
+- [combobox]: add missing ssr guards
+
 ## 1.0.4 (2025/11/14)
 
 ### Bug Fixes
