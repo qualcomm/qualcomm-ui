@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {arktypeResolver} from "@hookform/resolvers/arktype"
 import {type} from "arktype"
-import {Controller, type Resolver, useForm} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 
 import {Button} from "@qualcomm-ui/react/button"
 import {Switch} from "@qualcomm-ui/react/switch"
@@ -30,7 +30,7 @@ export default function SwitchReactHookFormDemo(): ReactElement {
       acceptTerms: false,
       newsletter: true,
     },
-    resolver: arktypeResolver(FormSchema) as Resolver<FormData>,
+    resolver: arktypeResolver(FormSchema),
   })
 
   return (
