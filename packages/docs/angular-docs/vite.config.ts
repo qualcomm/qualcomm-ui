@@ -78,7 +78,7 @@ export default defineConfig({
         "./src/routes/components+/**/demos/**/*.ts",
         "./src/routes/pitfalls+/**/demos/**/*.ts",
         "./src/routes/patterns+/**/demos/**/*.ts",
-        "./src/routes/theme+/**/demos/**/*.ts",
+        "./src/routes/theming+/**/demos/**/*.ts",
       ],
       initialHtml: demoElementsJson,
       routesDir: "src/routes",

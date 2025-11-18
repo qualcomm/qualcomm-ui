@@ -3,6 +3,7 @@
 
 import {program} from "@commander-js/extra-typings"
 
+import {addGeneratePageMapCommand} from "./docs-plugin/generate-page-map"
 import {addDownloadKnowledgeCommand} from "./open-web-ui-knowledge/download-knowledge"
 import {addGenerateKnowledgeCommand} from "./open-web-ui-knowledge/generate-knowledge"
 import {addUploadKnowledgeCommand} from "./open-web-ui-knowledge/upload-knowledge"
@@ -16,6 +17,7 @@ function setupCli() {
   addUploadKnowledgeCommand()
   addDownloadKnowledgeCommand()
   addGenerateLazyDemoMapCommand()
+  addGeneratePageMapCommand()
 
   program.parse()
 }

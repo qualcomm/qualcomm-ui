@@ -1,5 +1,15 @@
 # @qualcomm-ui/mdx-vite
 
+## 1.1.0 (2025/11/17)
+
+### Features
+
+- [search]: add rich text metadata to search index
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
 ## 1.0.3 (2025/11/13)
 
 ### Bug Fixes

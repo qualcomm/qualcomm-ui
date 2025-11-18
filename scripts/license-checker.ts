@@ -322,18 +322,20 @@ const program = new Command()
 program
   .command("fix")
   .description("Add copyright headers to source files")
-  .argument("<directory>", "Directory to scan")
+  .option("--directory <directory>", "Directory to scan", ".")
   .option("--modified <source-url>", "Source URL for modified files")
   .option(
     "--license <license>",
     'License of source for modified files (e.g., "MIT License")',
   )
   .option("--interactive", "Interactively select files")
-  .action(async (directory, options) => {
+  .action(async (options) => {
     const manager = await LicenseHeaderManager.create(cwd())
     if (options.interactive) {
       intro("License Header Manager")
-      const invalidFiles = await manager.getFilesWithoutHeaders(directory)
+      const invalidFiles = await manager.getFilesWithoutHeaders(
+        options.directory,
+      )
       if (invalidFiles.length === 0) {
         outro("All files already have headers")
         return
@@ -341,7 +343,7 @@ program
       const selected = await multiselect({
         message: "Select files to add headers:",
         options: invalidFiles.map((file) => ({
-          label: relative(directory, file),
+          label: relative(options.directory, file),
           value: file,
         })),
         required: false,
@@ -361,7 +363,10 @@ program
           process.exit(0)
         }
       }
-      const config: AddHeadersConfig = {directory, type: "original"}
+      const config: AddHeadersConfig = {
+        directory: options.directory,
+        type: "original",
+      }
       if (isModified) {
         const sourceUrl = await text({
           initialValue: options.modified,
@@ -421,7 +426,10 @@ program
       clackSpinner.stop("Done")
       outro(`Modified ${count} file(s)`)
     } else {
-      const config: AddHeadersConfig = {directory, type: "original"}
+      const config: AddHeadersConfig = {
+        directory: options.directory,
+        type: "original",
+      }
       if (options.modified) {
         if (!options.license) {
           console.error("--license is required when using --modified")
@@ -439,8 +447,8 @@ program
 program
   .command("lint")
   .description("Check for missing copyright headers")
-  .argument("<directory>", "Directory to scan")
-  .action(async (directory) => {
+  .option("--directory <directory>", "Directory to scan", ".")
+  .action(async ({directory}) => {
     const manager = await LicenseHeaderManager.create(cwd())
     const now = performance.mark("Checking headers")
     const {metrics, results} = await manager.lintFiles(directory)

@@ -3,11 +3,13 @@
 
 import {computed, Directive} from "@angular/core"
 
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {CoreProgressRingBarDirective} from "@qualcomm-ui/angular-core/progress-ring"
 
 import {useQdsProgressRingContext} from "./qds-progress-ring-context.service"
 
 @Directive({
+  hostDirectives: [QuiPreloadDirective],
   selector: "circle[q-progress-ring-bar]",
   standalone: false,
 })

@@ -3,12 +3,14 @@
 
 import {computed, Directive} from "@angular/core"
 
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideCheckboxContext} from "@qualcomm-ui/angular-core/checkbox"
 import {CoreSegmentedControlItemDirective} from "@qualcomm-ui/angular-core/segmented-control"
 
 import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service"
 
 @Directive({
+  hostDirectives: [QuiPreloadDirective],
   providers: [provideCheckboxContext()],
   selector: "[q-segmented-control-item-root]",
   standalone: false,

@@ -20,6 +20,7 @@ import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 
 import {DemoUpdateContextProvider} from "./demo-update-context"
 import {DocLink} from "./doc-link"
+import {GithubChangelogLink} from "./github-changelog-link"
 import {GlobalConfig} from "./global-config"
 import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
 import {QuiLogo} from "./qui-logo"
@@ -27,6 +28,7 @@ import {ResetDemoDimensionsButton} from "./reset-demo-dimensions-button"
 import {ThemeToggle} from "./theme-toggle"
 import {useAngularDemoReloader} from "./use-angular-demo-reloader"
 import {useRouterLinkInterceptor} from "./use-router-link-interceptor"
+import {useThemeSwitchInterceptor} from "./use-theme-switch-interceptor"
 
 interface Props extends Partial<DocsLayoutSettings> {
   /**
@@ -40,6 +42,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
   const [searchParams] = useSearchParams()
   const demoUpdateContext = useAngularDemoReloader()
 
+  useThemeSwitchInterceptor()
   useRouterLinkInterceptor()
 
   // persist the search input to the URL
@@ -73,7 +76,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
             </Link>
             . Head over to the{" "}
             <Link
-              href="https://github.qualcomm.com/ProdTools/qui-docs-template"
+              href="https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/qui-docs-template"
               size="md"
               target="_blank"
             >
@@ -89,27 +92,15 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
             <HeaderBar.Logo>
               <MobileSidebar>
                 <QuiLogo width={20} />
-                <HeaderBar.AppTitle>QUI React</HeaderBar.AppTitle>
+                <HeaderBar.AppTitle>QUI Angular</HeaderBar.AppTitle>
               </MobileSidebar>
               <ReactRouterLink className="flex items-center gap-2" to="/">
                 <QuiLogo width={20} />
                 <HeaderBar.AppTitle>
-                  <span className="whitespace-nowrap">QUI React</span>
+                  <span className="whitespace-nowrap">QUI Angular</span>
                 </HeaderBar.AppTitle>
               </ReactRouterLink>
-              <Link
-                className="hidden md:inline-flex"
-                render={
-                  <ReactRouterLink
-                    prefetch="intent"
-                    to="/changelogs/react"
-                    viewTransition
-                  />
-                }
-                size="xs"
-              >
-                NEXTGEN
-              </Link>
+              <GithubChangelogLink />
             </HeaderBar.Logo>
 
             <HeaderBar.Divider />

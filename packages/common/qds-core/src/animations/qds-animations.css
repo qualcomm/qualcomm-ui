@@ -18,6 +18,10 @@
   --animation-duration-faster: 0ms !important;
 }
 
+[data-qui-preload] {
+  transition: none !important;
+}
+
 @keyframes expand-height {
   from {
     height: 0;

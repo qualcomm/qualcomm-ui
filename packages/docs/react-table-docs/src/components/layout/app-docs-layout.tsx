@@ -19,6 +19,7 @@ import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 import {updateSiteState} from "@qualcomm-ui/react-router-utils/client"
 
 import {DocLink} from "./doc-link"
+import {GithubChangelogLink} from "./github-changelog-link"
 import {GlobalConfig} from "./global-config"
 import {
   GlobalConfigContextProvider,
@@ -136,7 +137,7 @@ export function AppDocsLayout({
               </Link>
               . Head over to the{" "}
               <Link
-                href="https://github.qualcomm.com/ProdTools/qui-docs-template"
+                href="https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/qui-docs-template"
                 target="_blank"
               >
                 template repository
@@ -159,19 +160,7 @@ export function AppDocsLayout({
                     <span className="whitespace-nowrap">QUI React</span>
                   </HeaderBar.AppTitle>
                 </ReactRouterLink>
-                <Link
-                  className="hidden md:inline-flex"
-                  render={
-                    <ReactRouterLink
-                      prefetch="intent"
-                      to="/changelogs/react"
-                      viewTransition
-                    />
-                  }
-                  size="xs"
-                >
-                  NEXTGEN
-                </Link>
+                <GithubChangelogLink />
               </HeaderBar.Logo>
 
               <HeaderBar.Divider />

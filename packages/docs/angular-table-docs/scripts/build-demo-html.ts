@@ -1,4 +1,4 @@
-import {writeFile} from "node:fs/promises"
+import {readFile, writeFile} from "node:fs/promises"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import {
@@ -7,6 +7,8 @@ import {
   chromium,
   type Page,
 } from "playwright"
+
+import type {PageMap} from "@qualcomm-ui/mdx-common"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -32,8 +34,8 @@ class WebCrawler {
   private visitedUrls = new Set<string>()
   private foundElements: FoundElement[] = []
   private readonly options: Required<CrawlOptions>
-  private pendingUrls = new Set<string>()
   private ignoredUrls = /.*\/changelogs.*/
+  private urlQueue: string[] = []
 
   constructor(options: CrawlOptions) {
     this.options = {
@@ -47,6 +49,14 @@ class WebCrawler {
   }
 
   async initialize(): Promise<void> {
+    const siteData: PageMap = JSON.parse(
+      await readFile(resolve(__dirname, "./temp/site-data.json"), "utf-8"),
+    )
+
+    this.urlQueue = Object.keys(siteData).map((url) =>
+      new URL(url, this.options.baseUrl).toString(),
+    )
+
     this.browser = await chromium.launch({
       args: [
         "--no-sandbox",
@@ -71,60 +81,33 @@ class WebCrawler {
     }
 
     try {
-      const startUrls = [{depth: 0, url: this.options.baseUrl}]
-      await this.crawlUrls(startUrls)
+      await this.crawlUrls()
       return this.foundElements
     } finally {
       await this.cleanup()
     }
   }
 
-  private async crawlUrls(
-    urlsWithDepth: Array<{depth: number; url: string}>,
-  ): Promise<void> {
-    const urlQueue = [...urlsWithDepth]
+  private async crawlUrls(): Promise<void> {
     const activeTasks = new Set<Promise<void>>()
 
-    while (urlQueue.length > 0 || activeTasks.size > 0) {
+    while (this.urlQueue.length > 0 || activeTasks.size > 0) {
       // Start new tasks up to concurrency limit
       while (
-        urlQueue.length > 0 &&
+        this.urlQueue.length > 0 &&
         activeTasks.size < this.options.concurrency &&
         this.visitedUrls.size < this.options.maxPages
       ) {
-        const urlData = urlQueue.shift()!
+        const url = this.urlQueue.shift()!
 
-        if (
-          this.visitedUrls.has(urlData.url) ||
-          this.pendingUrls.has(urlData.url) ||
-          this.ignoredUrls.test(urlData.url)
-        ) {
+        if (this.ignoredUrls.test(url)) {
           continue
         }
 
-        this.pendingUrls.add(urlData.url)
         const contextIndex = activeTasks.size % this.contexts.length
-        const task = this.crawlSingleUrl(
-          urlData.url,
-          urlData.depth,
-          contextIndex,
-        )
-          .then((newUrls) => {
-            // Add new URLs to queue
-            for (const newUrl of newUrls) {
-              if (
-                urlData.depth < this.options.maxDepth &&
-                !this.visitedUrls.has(newUrl) &&
-                !this.pendingUrls.has(newUrl)
-              ) {
-                urlQueue.push({depth: urlData.depth + 1, url: newUrl})
-              }
-            }
-          })
-          .finally(() => {
-            activeTasks.delete(task)
-            this.pendingUrls.delete(urlData.url)
-          })
+        const task = this.crawlSingleUrl(url, contextIndex).finally(() => {
+          activeTasks.delete(task)
+        })
 
         activeTasks.add(task)
       }
@@ -137,20 +120,9 @@ class WebCrawler {
 
   private async crawlSingleUrl(
     url: string,
-    depth: number,
     contextIndex: number,
-  ): Promise<string[]> {
-    if (
-      this.visitedUrls.has(url) ||
-      this.visitedUrls.size >= this.options.maxPages
-    ) {
-      return []
-    }
-
-    this.visitedUrls.add(url)
-    console.log(
-      `[${contextIndex}] Crawling: ${url} (depth: ${depth}) [${this.visitedUrls.size}/${this.options.maxPages}]`,
-    )
+  ): Promise<void> {
+    console.log(`[${contextIndex}] Crawling: ${url}`)
 
     const context = this.contexts[contextIndex]
     const page = await context.newPage()
@@ -161,16 +133,9 @@ class WebCrawler {
         waitUntil: "networkidle",
       })
 
-      // Run both operations in parallel
-      const [newUrls] = await Promise.all([
-        this.extractLinks(page, url),
-        this.searchForDataAttribute(page, url),
-      ])
-
-      return newUrls
+      await this.searchForDataAttribute(page, url)
     } catch (error: any) {
       console.error(`[${contextIndex}] Error crawling ${url}:`, error.message)
-      return []
     } finally {
       await page.close().catch(() => {})
     }
@@ -278,85 +243,6 @@ class WebCrawler {
     }
   }
 
-  private async extractLinks(
-    page: Page,
-    currentUrl: string,
-  ): Promise<string[]> {
-    try {
-      const links = await page.locator("a[href]").all()
-      const urls: string[] = []
-
-      // Process links in smaller batches for speed
-      const batchSize = 10
-      for (let i = 0; i < links.length; i += batchSize) {
-        const batch = links.slice(i, i + batchSize)
-        const batchPromises = batch.map(async (link) => {
-          try {
-            const href = await link.getAttribute("href")
-            if (!href) {
-              return null
-            }
-
-            const absoluteUrl = this.resolveUrl(href, currentUrl)
-            return this.shouldCrawlUrl(absoluteUrl, currentUrl)
-              ? absoluteUrl
-              : null
-          } catch {
-            return null
-          }
-        })
-
-        const batchResults = await Promise.all(batchPromises)
-        const validUrls = batchResults.filter(
-          (url): url is string => url !== null,
-        )
-        urls.push(...validUrls)
-      }
-
-      return [...new Set(urls)]
-    } catch (error) {
-      console.error(`Error extracting links from ${currentUrl}:`, error)
-      return []
-    }
-  }
-
-  private resolveUrl(href: string, baseUrl: string): string {
-    try {
-      return new URL(href, baseUrl).toString()
-    } catch {
-      return ""
-    }
-  }
-
-  private shouldCrawlUrl(url: string, currentUrl: string): boolean {
-    if (!url || this.visitedUrls.has(url) || this.pendingUrls.has(url)) {
-      return false
-    }
-
-    try {
-      const urlObj = new URL(url)
-      const currentUrlObj = new URL(currentUrl)
-
-      if (!urlObj.protocol.startsWith("http")) {
-        return false
-      }
-      if (urlObj.href.includes("#")) {
-        return false
-      }
-
-      if (
-        this.options.sameDomainOnly &&
-        urlObj.hostname !== currentUrlObj.hostname
-      ) {
-        return false
-      }
-
-      return true
-    } catch {
-      return false
-    }
-  }
-
   private async cleanup(): Promise<void> {
     await Promise.all(
       this.contexts.map((context) => context.close().catch(() => {})),
@@ -404,7 +290,7 @@ async function crawlForDataAttribute(): Promise<void> {
     console.log("\n=== CRAWL COMPLETE ===")
     console.log(`Time taken: ${(endTime - startTime) / 1000}s`)
     console.log(`Pages visited: ${summary.totalPagesVisited}`)
-    console.log(`Elements found: ${summary.totalElementsFound}`)
+    console.log(`Demo Elements found: ${summary.totalElementsFound}`)
 
     if (summary.totalPagesVisited > 0) {
       console.log(
@@ -413,9 +299,6 @@ async function crawlForDataAttribute(): Promise<void> {
     }
 
     console.log("\nFound elements:")
-    results.forEach((element) => {
-      console.debug(`${element.demoId} (${element.url})`)
-    })
 
     if (results.length > 0) {
       await writeFile(

@@ -226,4 +226,4 @@ jobs:
     - uses: ./.github/actions/init-node-and-install
 
     - name: Run copyright/license checker
-      run: pnpm tsx scripts/license-checker lint .
+      run: pnpm tsx scripts/license-checker lint

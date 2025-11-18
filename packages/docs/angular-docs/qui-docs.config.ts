@@ -21,7 +21,18 @@ export default {
     {
       separator: true,
     },
-    {sectionTitle: "Patterns and Pitfalls"},
+    {sectionTitle: "Theming, Patterns, and Pitfalls"},
+    {
+      children: [
+        {
+          id: "overview",
+        },
+        {
+          id: "tailwind",
+        },
+      ],
+      id: "theming",
+    },
     {
       id: "patterns",
       title: "Patterns",

@@ -109,10 +109,6 @@
     background: var(--color-utility-disabled-background);
     border-color: var(--color-utility-disabled-border);
     color: var(--color-utility-disabled-text);
-
-    &::placeholder {
-      color: var(--color-utility-disabled-text);
-    }
   }
 }
 
@@ -150,6 +146,9 @@
 
   &:disabled {
     color: var(--color-utility-disabled-text);
+    &::placeholder {
+      color: var(--color-utility-disabled-text);
+    }
   }
 
   &::placeholder {
@@ -161,7 +160,7 @@
 .qui-input__icon {
   align-items: center;
   color: var(--icon-color);
-  display: inline-block;
+  display: inline-flex;
   justify-content: center;
   pointer-events: none;
   z-index: 2;

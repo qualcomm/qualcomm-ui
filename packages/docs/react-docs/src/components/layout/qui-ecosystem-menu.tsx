@@ -27,7 +27,9 @@ export function QuiEcosystemMenu(props: QuiEcosystemMenuProps): ReactElement {
                 value={entry.label}
               >
                 <Menu.ItemStartIcon icon={entry.logo} />
-                <Menu.ItemLabel>{entry.description}</Menu.ItemLabel>
+                <Menu.ItemLabel className="font-code-sm-bold">
+                  {entry.description}
+                </Menu.ItemLabel>
               </Menu.Item>
             ))}
           </Menu.Content>

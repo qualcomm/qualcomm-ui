@@ -85,7 +85,7 @@
     color: var(--color-utility-disabled-text);
     --icon-color: var(--color-utility-disabled-icon);
 
-    &::placeholder {
+    .qui-number-input__input::placeholder {
       color: var(--color-utility-disabled-text);
     }
   }
@@ -117,6 +117,17 @@
   text-overflow: ellipsis;
   width: 100%;
   z-index: 0;
+
+  &::placeholder {
+    color: var(--color-utility-placeholder-text);
+  }
+
+  &:disabled {
+    color: var(--color-utility-disabled-text);
+    &::placeholder {
+      color: var(--color-utility-disabled-text);
+    }
+  }
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);

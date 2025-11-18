@@ -1,10 +1,17 @@
-import {Component} from "@angular/core"
+import {Component, signal} from "@angular/core"
+import {FormsModule} from "@angular/forms"
+import {Search} from "lucide-angular"
 
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 import {
   type AngularTable,
   createAngularTable,
+  createTablePagination,
   TableModule,
 } from "@qualcomm-ui/angular/table"
+import {TextInputModule} from "@qualcomm-ui/angular/text-input"
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -14,10 +21,38 @@ import {
 import {createUserQuery, type User, userColumns} from "./data"
 
 @Component({
-  imports: [TableModule],
+  imports: [
+    TableModule,
+    TextInputModule,
+    FormsModule,
+    ButtonModule,
+    ProgressRingModule,
+  ],
+  providers: [provideIcons({Search})],
   selector: "filters-demo",
   template: `
     <div q-table-root>
+      <div q-table-action-bar>
+        <q-text-input
+          class="w-56"
+          placeholder="Search every column..."
+          startIcon="Search"
+          [(ngModel)]="globalFilter"
+        />
+        <button
+          q-button
+          size="sm"
+          variant="outline"
+          [disabled]="query.isFetching()"
+          (click)="query.refetch()"
+        >
+          Refresh Data
+        </button>
+
+        @if (query.isFetching()) {
+          <div q-progress-ring size="xs"></div>
+        }
+      </div>
       <div q-table-scroll-container>
         <table q-table-table>
           <thead q-table-header>
@@ -51,11 +86,19 @@ import {createUserQuery, type User, userColumns} from "./data"
           </tbody>
         </table>
       </div>
+      <div
+        q-table-pagination
+        [count]="pagination.count()"
+        [page]="pagination.page()"
+        [pageSize]="pagination.pageSize()"
+        (pageChanged)="pagination.onPageChange($event)"
+      ></div>
     </div>
   `,
 })
 export class FiltersDemo {
   protected readonly query = createUserQuery(100000)
+  readonly globalFilter = signal<string>("")
 
   protected table: AngularTable<User> = createAngularTable(() => ({
     columns: userColumns,
@@ -63,5 +106,10 @@ export class FiltersDemo {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      globalFilter: this.globalFilter(),
+    },
   }))
+
+  protected pagination = createTablePagination(this.table)
 }

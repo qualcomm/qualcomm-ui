@@ -12,6 +12,7 @@ import {
 } from "@angular/core"
 
 import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
@@ -34,6 +35,7 @@ import {
 } from "./qds-icon-button-context.service"
 
 @Component({
+  hostDirectives: [QuiPreloadDirective],
   providers: [provideQdsIconButtonContext()],
   selector: "[q-icon-button]",
   standalone: false,

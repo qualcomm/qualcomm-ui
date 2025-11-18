@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {Component, input, type OnInit} from "@angular/core"
+import {booleanAttribute, Component, input, type OnInit} from "@angular/core"
 import {ChevronRight} from "lucide-angular"
 
 import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
@@ -13,6 +13,7 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import type {Row} from "@qualcomm-ui/core/table"
 import type {QdsTableRowExpandButtonProps} from "@qualcomm-ui/qds-core/table"
+import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-api"
@@ -31,6 +32,10 @@ import {qdsTableApi} from "./qds-table-api"
 export class TableRowExpandButtonDirective
   implements OnInit, SignalifyInput<QdsTableRowExpandButtonProps>
 {
+  readonly isExpanded = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
   /**
    * The row associated with the expand button.
    */
@@ -53,6 +58,7 @@ export class TableRowExpandButtonDirective
     mergeProps(
       this.inlineIconButtonApi().getRootBindings(),
       qdsTableApi.getRowExpandButtonBindings({
+        isExpanded: this.isExpanded(),
         row: this.row(),
       }),
     ),

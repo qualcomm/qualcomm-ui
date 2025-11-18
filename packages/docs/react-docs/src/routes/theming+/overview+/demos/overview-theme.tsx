@@ -5,8 +5,8 @@ import {Moon, Sun} from "lucide-react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
-// This site is based on react-router and uses `@qualcomm-ui/react-router-utils` to manage
-// the active theme.
+// This site is based on react-router and uses `@qualcomm-ui/react-router-utils` to
+// manage the active theme.
 export default function OverviewTheme(): ReactNode {
   const [theme, setTheme] = useTheme()
 

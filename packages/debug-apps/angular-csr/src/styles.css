@@ -1,0 +1,55 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+
+@source "../../../docs/angular-docs/src/routes/components+";
+
+:root {
+  color: var(--color-text-neutral-primary);
+  color-scheme: light dark;
+
+  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  --q-font-mono: "Roboto Mono", monospace;
+  --qui-header-height: 48px;
+  --q-font-family: "Roboto Flex", sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-background-neutral-01);
+  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  height: 100%;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-heading-md-default);
+  margin-bottom: 1rem;
+}
+
+.demo-container {
+  background-color: var(--color-background-neutral-01);
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 2rem;
+}

@@ -1,5 +1,28 @@
 # @qualcomm-ui/qds-core
 
+## 1.3.0 (2025/11/17)
+
+### Features
+
+- add new category colors
+
+## 1.2.0 (2025/11/17)
+
+### Features
+
+- [TableRowExpandButton]: add manual override for expanded state
+
+### Bug Fixes
+
+- [number-input]: use correct placeholder colors when disabled
+- [input]: use correct placeholder colors when disabled
+- [input-icon]: use display: inline-flex for element flex alignment
+- [transitions]: disable element transition styles until after view init
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.1.0 (2025/11/14)
 
 ### Features
