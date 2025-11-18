@@ -19,6 +19,7 @@ import {Github} from "@qualcomm-ui/react-mdx/icons"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 
 import {DocLink} from "./doc-link"
+import {GithubChangelogLink} from "./github-changelog-link"
 import {GlobalConfig} from "./global-config"
 import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
 import {QuiLogo} from "./qui-logo"
@@ -106,19 +107,7 @@ export function AppDocsLayout({
                   <span className="whitespace-nowrap">QUI Docs</span>
                 </HeaderBar.AppTitle>
               </ReactRouterLink>
-              <Link
-                className="hidden md:inline-flex"
-                render={
-                  <ReactRouterLink
-                    prefetch="intent"
-                    to="/changelogs/react"
-                    viewTransition
-                  />
-                }
-                size="xs"
-              >
-                NEXTGEN
-              </Link>
+              <GithubChangelogLink />
             </HeaderBar.Logo>
 
             <HeaderBar.Divider />
