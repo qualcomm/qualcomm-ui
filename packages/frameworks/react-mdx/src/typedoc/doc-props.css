@@ -228,6 +228,7 @@ pre.qui-docs-code {
 
   a {
     cursor: pointer;
+    text-decoration: inherit;
   }
 
   code {
