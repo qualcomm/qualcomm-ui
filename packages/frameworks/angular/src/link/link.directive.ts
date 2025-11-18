@@ -17,6 +17,7 @@ import {
   START_ICON_CONTEXT_TOKEN,
   StartIconDirective,
 } from "@qualcomm-ui/angular/icon"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
@@ -34,6 +35,7 @@ import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
 @Component({
+  hostDirectives: [QuiPreloadDirective],
   imports: [EndIconDirective, StartIconDirective],
   providers: [
     {

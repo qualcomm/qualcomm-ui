@@ -1,51 +1,53 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {DOCUMENT, isPlatformBrowser, isPlatformServer} from "@angular/common"
+import {DOCUMENT} from "@angular/common"
 import {
   effect,
   inject,
   Injectable,
-  PLATFORM_ID,
+  Renderer2,
   signal,
   type WritableSignal,
 } from "@angular/core"
+
+import {useCsrCheck} from "@qualcomm-ui/angular-core/common"
 
 import {
   BRAND_COOKIE,
   BRAND_COOKIE_NAME,
   QDS_THEME_OPTIONS,
+  readCookie,
   THEME_COOKIE,
   THEME_COOKIE_NAME,
 } from "./qds-theme-providers"
 import type {Brand, QdsThemeProviderOptions, Theme} from "./qds-theme.types"
 
+/**
+ * A service that provides access to the current theme and brand, and ensures that
+ * the application's root element is in sync with the selected brand/theme.
+ */
 @Injectable({providedIn: "root"})
 export class QdsThemeService {
+  private readonly document = inject(DOCUMENT)
+  private readonly response = inject(Response, {optional: true})
+  private readonly renderer = inject(Renderer2, {optional: true})
+  protected readonly isCsr = useCsrCheck()
+
   readonly theme: WritableSignal<Theme> = signal(inject(THEME_COOKIE))
   readonly brand: WritableSignal<Brand> = signal(inject(BRAND_COOKIE))
 
-  private readonly platformId = inject(PLATFORM_ID)
-  private readonly response = inject(Response, {optional: true})
-  private readonly document = inject(DOCUMENT)
-
-  private readonly themeOpts: Partial<QdsThemeProviderOptions | null> = inject(
-    QDS_THEME_OPTIONS,
-    {optional: true},
-  )
+  private readonly themeOpts: QdsThemeProviderOptions =
+    inject(QDS_THEME_OPTIONS)
 
   get themeOptions(): Required<
-    Omit<QdsThemeProviderOptions, "brandOverride" | "themeOverride">
+    Omit<
+      QdsThemeProviderOptions,
+      "brandOverride" | "themeOverride" | "defaultTheme" | "defaultBrand"
+    >
   > {
-    const opts = this.themeOpts || {}
-    let rootElement = opts.rootElement
-    if (!rootElement) {
-      if (isPlatformServer(this.platformId)) {
-        rootElement = globalThis.document?.documentElement
-      } else {
-        rootElement = this.document.documentElement
-      }
-    }
+    const opts = this.themeOpts
+    const rootElement = opts.rootElement || this.document.documentElement
     return {
       rootElement,
       skipAttributes:
@@ -55,6 +57,7 @@ export class QdsThemeService {
               theme: opts.skipAttributes.theme || false,
             }
           : opts.skipAttributes || false,
+      skipColorSchemeStyle: opts.skipColorSchemeStyle || false,
     }
   }
 
@@ -78,23 +81,38 @@ export class QdsThemeService {
   }
 
   constructor() {
-    effect(() => this.syncSideEffects(this.theme(), this.brand()))
+    effect(() => {
+      const theme = this.theme()
+      const brand = this.brand()
+      this.syncAttributes(theme, brand)
+      this.syncCookie(theme, brand)
+    })
+
+    const theme = readCookie(THEME_COOKIE_NAME) || this.themeOpts?.defaultTheme
+    if (theme === "dark" || theme === "light") {
+      this.theme.set(theme)
+      this.syncAttributes(theme, this.brand())
+    }
   }
 
   toggleTheme(): void {
     this.theme.update((theme) => (theme === "dark" ? "light" : "dark"))
   }
 
-  private syncSideEffects(theme: Theme, brand: Brand): void {
+  private syncAttributes(theme: Theme, brand: Brand): void {
     if (!this.skipBrandAttribute) {
-      console.debug("applying brand")
-      this.updateHtmlAttribute("data-brand", brand)
+      this.updateAttribute("data-brand", brand)
     }
     if (!this.skipThemeAttribute) {
-      this.updateHtmlAttribute("data-theme", theme)
+      this.updateAttribute("data-theme", theme)
     }
+    if (!this.themeOptions.skipColorSchemeStyle) {
+      this.updateColorScheme(theme)
+    }
+  }
 
-    if (isPlatformBrowser(this.platformId)) {
+  private syncCookie(theme: Theme, brand: Brand): void {
+    if (this.isCsr()) {
       const maxAge = 60 * 60 * 24 * 365 // 1 year
 
       this.document.cookie = `${THEME_COOKIE_NAME}=${theme}; Path=/; Max-Age=${maxAge}; SameSite=Lax`
@@ -106,8 +124,20 @@ export class QdsThemeService {
     }
   }
 
-  private updateHtmlAttribute(name: string, value: string): void {
-    this.rootElement?.setAttribute?.(name, value)
+  private updateAttribute(name: string, value: string): void {
+    if (this.renderer) {
+      this.renderer.setAttribute(this.rootElement, name, value)
+    } else {
+      this.rootElement?.setAttribute?.(name, value)
+    }
+  }
+
+  private updateColorScheme(theme: Theme): void {
+    if (this.renderer) {
+      this.renderer.setStyle(this.rootElement, "color-scheme", theme)
+    } else {
+      this.rootElement?.style?.setProperty?.("color-scheme", theme)
+    }
   }
 
   private appendSetCookieHeader(name: string, value: string): void {

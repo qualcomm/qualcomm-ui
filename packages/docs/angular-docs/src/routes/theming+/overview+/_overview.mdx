@@ -1,0 +1,51 @@
+---
+title: Overview
+---
+
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+## Styling with CSS Variables
+
+QUI Components use [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for properties like `color`, `background-color`, and `border-color`. Instead of hardcoded values, components reference variables that change based on the active brand and theme.
+
+- Three brands are available: `qualcomm`, `snapdragon`, and `dragonwing`.
+- Each brand supports both a `light` and `dark` theme.
+
+The CSS is built to enable dynamic switching without rebuilding.
+
+::: spoiler Applying the Data Attributes Manually
+
+If you need to apply the theme data attributes manually instead of using `QdsThemeService`:
+
+- Pick a DOM element (typically `html` or `body`)
+- Apply the brand: `data-brand="qualcomm"` (or `snapdragon` / `dragonwing`)
+- Apply the theme: `data-theme="dark"` or `data-theme="light"`
+
+Example:
+
+```html
+<html data-brand="qualcomm" data-theme="dark">
+  <!-- the rest of your app -->
+</html>
+```
+
+All descendants inherit that theme unless overridden by a closer parent.
+
+> [!warning/Both attributes are required]
+> You must apply both the `data-brand` and `data-theme` attributes to the element in order for the theme to take effect.
+
+:::
+
+## Switching the Theme at Runtime
+
+You can switch the theme at runtime using the `QdsThemeService`:
+
+<QdsDemo name="ThemeSwitchingDemo" />
+
+## Force a Specific Theme on a Subtree
+
+The following example shows how to enforce a specific theme on a subtree. You must apply both the `data-brand` and `data-theme` attributes to the element in order for the theme to take effect.
+
+<QdsDemo name="ForceThemeDemo" />

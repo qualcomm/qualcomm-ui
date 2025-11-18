@@ -7,9 +7,9 @@
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
 
 @source "../../../docs/angular-docs/src/routes/components+";
+@source "./app";
 
 :root {
-  color: var(--color-text-neutral-primary);
   color-scheme: light dark;
 
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -20,13 +20,18 @@
 }
 
 html {
+  background-color: var(--color-background-neutral-01);
+  color: var(--color-text-neutral-primary);
+  color-scheme: var(--color-scheme);
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background-color: var(--color-background-neutral-01);
-  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .section {
@@ -43,5 +48,11 @@ body {
   background-color: var(--color-background-neutral-01);
   border: 1px solid var(--color-border-neutral-01);
   border-radius: 8px;
+  padding: 2rem;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
   padding: 2rem;
 }

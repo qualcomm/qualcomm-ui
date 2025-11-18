@@ -27,6 +27,7 @@ import {ResetDemoDimensionsButton} from "./reset-demo-dimensions-button"
 import {ThemeToggle} from "./theme-toggle"
 import {useAngularDemoReloader} from "./use-angular-demo-reloader"
 import {useRouterLinkInterceptor} from "./use-router-link-interceptor"
+import {useThemeSwitchInterceptor} from "./use-theme-switch-interceptor"
 
 interface Props extends Partial<DocsLayoutSettings> {
   /**
@@ -40,6 +41,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
   const [searchParams] = useSearchParams()
   const demoUpdateContext = useAngularDemoReloader()
 
+  useThemeSwitchInterceptor()
   useRouterLinkInterceptor()
 
   // persist the search input to the URL

@@ -18,6 +18,7 @@ export interface User {
 export const userColumns: ColumnDef<User>[] = [
   {
     accessorKey: "username",
+    enableGrouping: false,
     header: "Username",
     id: "username",
   },

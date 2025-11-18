@@ -1,0 +1,46 @@
+---
+title: Colors
+---
+
+import {themeColors} from "@qualcomm-ui/docs-base"
+import {ColorTable} from "~components/theme-docs"
+
+# {frontmatter.title}
+
+If you're using [Tailwind CSS](https://tailwindcss.com/), you can install the [@qualcomm-ui/tailwind-plugin](/integrations/tailwind) package to make each of these variables available as Tailwind classes.
+
+### Text
+
+Text colors are used for typography throughout your application. They automatically adapt when switching between light and dark modes to maintain proper contrast ratios.
+
+<ColorTable data={themeColors.text} />
+
+### Icon
+
+Icon colors ensure proper visual hierarchy and accessibility for icons. Like text colors, they automatically adjust for light and dark modes.
+
+<ColorTable data={themeColors.icon} />
+
+### Background
+
+Background colors include brand, neutral, and support colors. They are commonly used as colors for your app's surfaces, cards, and UI elements.
+
+<ColorTable data={themeColors.background} />
+
+### Surface
+
+Surface colors are used for primary application surfaces like pages, modals, and overlays.
+
+<ColorTable data={themeColors.surface} />
+
+### Border
+
+Border colors bring clarity to layouts by grouping and dividing content. They are used to divide text or components such as table rows, action button groups, and components within a panel.
+
+<ColorTable data={themeColors.border} />
+
+### Category
+
+Category colors provide a palette for data visualization and content categorization. Each category has three variants: subtle, medium, and strong.
+
+<ColorTable data={themeColors.category} />

@@ -1,5 +1,20 @@
 # @qualcomm-ui/react-mdx
 
+## 1.2.0 (2025/11/17)
+
+### Features
+
+- [PageLinks]: show adjacent page path segment prefix when it differs from current page path segment prefix
+
+### Bug Fixes
+
+- [site-search]: open dialog when input is focused
+- [site-search]: prevent match highlight when query length is < 2
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/core, @qualcomm-ui/react-core, @qualcomm-ui/react]
+
 ## 1.1.0 (2025/11/14)
 
 ### Features

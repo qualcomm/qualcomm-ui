@@ -114,6 +114,44 @@ export interface PageSectionContent {
   text: string[]
 }
 
+export interface ContentPosition {
+  column: number
+  line: number
+  offset: number
+}
+
+export interface RichContentTextNode {
+  position: {
+    end: ContentPosition
+    start: ContentPosition
+  }
+
+  /**
+   * Node type of HTML comments in hast.
+   */
+  type: "comment" | "text"
+
+  value: string
+}
+
+export interface RichContentMap {
+  comment: RichContentTextNode
+  element: RichContentNode
+  text: RichContentTextNode
+}
+
+export type RichContent = RichContentMap[keyof RichContentMap]
+
+export interface RichContentNode {
+  children: RichContent[]
+  position: {
+    end: ContentPosition
+    start: ContentPosition
+  }
+  tagName: string
+  type: "element"
+}
+
 /**
  * The data structure of each linkable entity in the search index.
  *
@@ -131,7 +169,7 @@ export interface PageSection extends PageFrontmatter {
   content?: string
 
   /**
-   * The section content of the indexed section with a bit more metadata.
+   * The section content of the indexed section with the wrapping element tags.
    */
   contentSections?: PageSectionContent[]
 
@@ -170,6 +208,8 @@ export interface PageSection extends PageFrontmatter {
    * The route path segments separated by `/`.
    */
   pathSegments: string[]
+
+  richContent?: RichContentNode[]
 
   /**
    * Page table of contents.

@@ -215,6 +215,7 @@ export function getCommitsSinceRef(branch: string) {
   gitFetch(branch)
   const currentBranch = getCurrentBranch()
   let sinceRef = `origin/${branch}`
+
   if (currentBranch === branch) {
     try {
       sinceRef = execSync("git describe --tags --abbrev=0").toString()
@@ -225,8 +226,9 @@ export function getCommitsSinceRef(branch: string) {
       sinceRef = execSync("git rev-list --max-parents=0 HEAD").toString()
     }
   }
+
   sinceRef = sinceRef.trim()
-  return execSync(`git rev-list --ancestry-path ${sinceRef}...HEAD`)
+  return execSync(`git rev-list ${sinceRef}..HEAD`)
     .toString()
     .split("\n")
     .filter(Boolean)

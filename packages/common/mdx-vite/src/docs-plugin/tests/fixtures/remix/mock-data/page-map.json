@@ -1,1 +1,144 @@
-{"/test/b/test":{"categories":["Test","B","B Test"],"id":"/routes/test.b.test._index.mdx","pathSegments":["test","b","test"],"pathname":"/test/b/test","title":"B Test"},"/test/a/test":{"categories":["Test","a","A Test"],"id":"/routes/test.a.test._index.mdx","pathSegments":["test","a","test"],"pathname":"/test/a/test","title":"A Test"},"/getting-started/log-in":{"categories":["Getting Started","Log In"],"id":"/routes/getting-started.log-in._index.mdx","pathSegments":["getting-started","log-in"],"pathname":"/getting-started/log-in","title":"Log In"},"/getting-started/home":{"categories":["Getting Started","Home"],"id":"/routes/getting-started.home._index.mdx","pathSegments":["getting-started","home"],"pathname":"/getting-started/home","title":"Home"},"/getting-started/dedicated-devices":{"categories":["Getting Started","Dedicated Devices"],"id":"/routes/getting-started.dedicated-devices._index.mdx","pathSegments":["getting-started","dedicated-devices"],"pathname":"/getting-started/dedicated-devices","title":"Dedicated Devices"},"/getting-started":{"categories":["Getting Started"],"id":"/routes/getting-started._index.mdx","pathSegments":["getting-started"],"pathname":"/getting-started","title":"Getting Started"},"/best-practices/choosing-dependencies":{"categories":["Best Practices","Choosing Dependencies"],"id":"/routes/best-practices.choosing-dependencies._index.mdx","pathSegments":["best-practices","choosing-dependencies"],"pathname":"/best-practices/choosing-dependencies","title":"Choosing Dependencies","toc":[{"headingLevel":3,"id":"check-the-popularity","tagName":"h3","textContent":"Check the Popularity"},{"headingLevel":3,"id":"check-the-open-github-issues","tagName":"h3","textContent":"Check the Open GitHub Issues"},{"headingLevel":3,"id":"evaluate-the-code-quality","tagName":"h3","textContent":"Evaluate the Code Quality"},{"headingLevel":3,"id":"consider-alternatives","tagName":"h3","textContent":"Consider Alternatives"}]},"/":{"categories":["Introduction"],"hideBreadcrumbs":true,"id":"/routes/_index.mdx","pathSegments":[],"pathname":"/","title":"Introduction"},"/getting-started/sign-up":{"categories":["Getting Started","Sign Up"],"id":"/routes/getting-started.sign-up._index/route.mdx","pathSegments":["getting-started","sign-up"],"pathname":"/getting-started/sign-up","title":"Sign Up"}}
+{
+  "/test/b/test": {
+    "categories": [
+      "Test",
+      "B",
+      "B Test"
+    ],
+    "id": "/routes/test.b.test._index.mdx",
+    "pathname": "/test/b/test",
+    "pathSegments": [
+      "test",
+      "b",
+      "test"
+    ],
+    "title": "B Test"
+  },
+  "/test/a/test": {
+    "categories": [
+      "Test",
+      "a",
+      "A Test"
+    ],
+    "id": "/routes/test.a.test._index.mdx",
+    "pathname": "/test/a/test",
+    "pathSegments": [
+      "test",
+      "a",
+      "test"
+    ],
+    "title": "A Test"
+  },
+  "/getting-started/log-in": {
+    "categories": [
+      "Getting Started",
+      "Log In"
+    ],
+    "id": "/routes/getting-started.log-in._index.mdx",
+    "pathname": "/getting-started/log-in",
+    "pathSegments": [
+      "getting-started",
+      "log-in"
+    ],
+    "title": "Log In"
+  },
+  "/getting-started/home": {
+    "categories": [
+      "Getting Started",
+      "Home"
+    ],
+    "id": "/routes/getting-started.home._index.mdx",
+    "pathname": "/getting-started/home",
+    "pathSegments": [
+      "getting-started",
+      "home"
+    ],
+    "title": "Home"
+  },
+  "/getting-started/dedicated-devices": {
+    "categories": [
+      "Getting Started",
+      "Dedicated Devices"
+    ],
+    "id": "/routes/getting-started.dedicated-devices._index.mdx",
+    "pathname": "/getting-started/dedicated-devices",
+    "pathSegments": [
+      "getting-started",
+      "dedicated-devices"
+    ],
+    "title": "Dedicated Devices"
+  },
+  "/getting-started": {
+    "categories": [
+      "Getting Started"
+    ],
+    "id": "/routes/getting-started._index.mdx",
+    "pathname": "/getting-started",
+    "pathSegments": [
+      "getting-started"
+    ],
+    "title": "Getting Started"
+  },
+  "/best-practices/choosing-dependencies": {
+    "categories": [
+      "Best Practices",
+      "Choosing Dependencies"
+    ],
+    "id": "/routes/best-practices.choosing-dependencies._index.mdx",
+    "pathname": "/best-practices/choosing-dependencies",
+    "pathSegments": [
+      "best-practices",
+      "choosing-dependencies"
+    ],
+    "title": "Choosing Dependencies",
+    "toc": [
+      {
+        "headingLevel": 3,
+        "id": "check-the-popularity",
+        "tagName": "h3",
+        "textContent": "Check the Popularity"
+      },
+      {
+        "headingLevel": 3,
+        "id": "check-the-open-github-issues",
+        "tagName": "h3",
+        "textContent": "Check the Open GitHub Issues"
+      },
+      {
+        "headingLevel": 3,
+        "id": "evaluate-the-code-quality",
+        "tagName": "h3",
+        "textContent": "Evaluate the Code Quality"
+      },
+      {
+        "headingLevel": 3,
+        "id": "consider-alternatives",
+        "tagName": "h3",
+        "textContent": "Consider Alternatives"
+      }
+    ]
+  },
+  "/": {
+    "categories": [
+      "Introduction"
+    ],
+    "hideBreadcrumbs": true,
+    "id": "/routes/_index.mdx",
+    "pathname": "/",
+    "pathSegments": [],
+    "title": "Introduction"
+  },
+  "/getting-started/sign-up": {
+    "categories": [
+      "Getting Started",
+      "Sign Up"
+    ],
+    "id": "/routes/getting-started.sign-up._index/route.mdx",
+    "pathname": "/getting-started/sign-up",
+    "pathSegments": [
+      "getting-started",
+      "sign-up"
+    ],
+    "title": "Sign Up"
+  }
+}

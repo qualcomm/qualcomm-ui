@@ -2,28 +2,144 @@
 title: Installation
 ---
 
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+import {QdsDemo} from "~components/demo"
+
 # {frontmatter.title}
 
-There are three steps to installation:
+This library requires Angular ^20.
+
+There are four steps to installation:
 
 1. Install the npm packages
 2. Import the CSS
-3. Inject the theme service (and optionally change the default theme)
+3. Add the theme provider
+4. Inject the theme service
 
-If you'd like to skip all of that, you can use one of our pre-built templates:
+Soon we'll provide pre-built templates for quick starting new projects.
+For now, continue reading to learn how to install manually.
 
-- Angular web CSR
-- Angular web SSR
-- Angular Electron
+## 1. Install the npm packages
 
-Otherwise, continue reading to learn how to install manually.
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/angular",
+    "@qualcomm-ui/angular-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/qds-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+  ]}
+/>
 
-## Install the packages
+## 2. Import the CSS
 
-TODO: add
+> [!tip/Tailwind]
+> If you're using [Tailwind CSS](https://tailwindcss.com/), see below for the correct import syntax.
 
-## Import the CSS
+In your application's global CSS file, import the QUI CSS for the theme you're targeting.
 
-in your application's global CSS file, import the QUI CSS for the theme you're targeting.
+```css
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
 
-[//]: # "TODO: link to theme documentation."
+If you're using Tailwind, import the theme CSS at the `components` layer instead:
+
+```css
+@import "tailwindcss";
+
+/* Important: always order these imports after the tailwindcss import */
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+```
+
+Learn more about the available themes in the [theme documentation](/theming/overview).
+
+## 3. Add the theme provider
+
+Register the theme provider at the root of your application.
+
+```angular-ts
+// app.config.ts
+import {provideQdsTheme} from "@qualcomm-ui/angular/theme"
+
+import {routes} from "./app.routes"
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    // ... existing configuration
+    provideQdsTheme(),
+  ],
+}
+```
+
+::: spoiler Angular SSR Configuration
+
+If using SSR, you'll need to opt into full server-side rendering (not pre-rendering) in your route config:
+
+```angular-ts
+// app.routes.server.ts
+import {RenderMode, ServerRoute} from "@angular/ssr"
+
+export const serverRoutes: ServerRoute[] = [
+  {
+    path: "**",
+    // this ensures that the cookie-based theme storage is available on the initial render.
+    renderMode: RenderMode.Server,
+  },
+]
+```
+
+:::
+
+## 4. Inject the theme service
+
+Inject `QdsThemeService` in your root component. This automatically applies the brand and theme data attributes to your application's root element.
+
+```angular-ts
+// app.component.ts
+import {Component, inject} from "@angular/core"
+import {RouterOutlet} from "@angular/router"
+import {QdsThemeService} from "@qualcomm-ui/angular/theme"
+
+@Component({
+  imports: [RouterOutlet],
+  selector: "app-root",
+  template: `
+    <router-outlet />
+  `,
+})
+export class App {
+  protected readonly themeService = inject(QdsThemeService)
+}
+```
+
+Your application is now ready to import and use our components.
+
+## Next Steps
+
+- Learn more about theming in our [theming documentation](/theming/overview).
+- Use the navigation menu on the left to view component documentation.
+
+### (Optional) Customize the default theme
+
+The default theme is a dark theme with Qualcomm brand colors.
+
+You can customize these defaults by overriding them in your application's provider configuration. Note that this will only affect users that have not already visited your site.
+
+```angular-ts
+// app.config.ts
+import {provideQdsTheme} from "@qualcomm-ui/angular/theme"
+
+import {routes} from "./app.routes"
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    // ... existing configuration
+    provideQdsTheme({defaultTheme: "light", defaultBrand: "snapdragon"}),
+  ],
+}
+```

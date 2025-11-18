@@ -5,6 +5,7 @@ import {Component, input, type OnInit} from "@angular/core"
 import {X} from "lucide-angular"
 
 import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {
   QBindDirective,
@@ -21,6 +22,7 @@ import {
 import {useInlineIconButtonApi} from "./use-inline-icon-button-api"
 
 @Component({
+  hostDirectives: [QuiPreloadDirective],
   imports: [IconDirective, QBindDirective],
   selector: "[q-inline-icon-button]",
   template: `

@@ -3,6 +3,7 @@
 
 import {isFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {
+  ariaAttr,
   booleanAriaAttr,
   booleanDataAttr,
   mergeAriaIds,
@@ -123,7 +124,7 @@ export function createPasswordInputApi(
       scope.ids.register("input", props)
       return normalize.input({
         ...commonBindings,
-        "aria-describedby": domIds.hint(scope),
+        "aria-describedby": ariaAttr(domIds.hint(scope)),
         "aria-invalid": booleanAriaAttr(invalid),
         "aria-labelledby": mergeAriaIds(
           domIds.label(scope),

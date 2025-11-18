@@ -5,7 +5,11 @@ import {
   createAngularTable,
   TableModule,
 } from "@qualcomm-ui/angular/table"
-import {getCoreRowModel} from "@qualcomm-ui/core/table"
+import {
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+} from "@qualcomm-ui/core/table"
 
 import {createUserQuery, type User, userColumns} from "./data"
 
@@ -57,5 +61,7 @@ export class PaginationDemo {
     columns: userColumns,
     data: this.query.data() || [],
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   }))
 }

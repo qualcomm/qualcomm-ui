@@ -189,6 +189,7 @@ export function SiteSearch({
             inputProps={{
               "aria-label": "Search the docs",
             }}
+            onFocus={() => setShowDialog(true)}
             placeholder="Search the docs"
             size="sm"
             startIcon={SearchIcon}
@@ -203,6 +204,7 @@ export function SiteSearch({
         <Dialog.Positioner>
           <Dialog.Content
             className="qui-site-search__mobile-dialog-content"
+            // close dialog when a result item is selected
             onClick={(event) => {
               if (
                 !dialogInputContainerRef.current?.contains(

@@ -14,7 +14,7 @@ import {
 } from "@angular/core"
 
 import {CoreComboboxContentDirective} from "@qualcomm-ui/angular-core/combobox"
-import {useIsMounted} from "@qualcomm-ui/angular-core/common"
+import {useCsrCheck, useIsMounted} from "@qualcomm-ui/angular-core/common"
 import {
   ANGULAR_VIRTUALIZER_INSTANCE_TOKEN,
   type AngularVirtualizerOptions,
@@ -55,6 +55,8 @@ export class ComboboxVirtualContentDirective
    */
   readonly virtualOptions =
     input<Partial<AngularVirtualizerOptions<any, any>>>()
+
+  protected readonly isCsr = useCsrCheck()
 
   protected readonly qdsComboboxContext = useQdsComboboxContext()
 
@@ -105,16 +107,18 @@ export class ComboboxVirtualContentDirective
     effect(() => {
       // recompute on context change
       this.comboboxContext()
-      requestAnimationFrame(() => {
-        const positioner = this.positionerRef()
-        if (!positioner) {
-          this.scrollbarWidth.set(`0px`)
-          return
-        }
-        this.scrollbarWidth.set(
-          `${positioner.offsetWidth - positioner.clientWidth}px`,
-        )
-      })
+      if (this.isCsr()) {
+        requestAnimationFrame(() => {
+          const positioner = this.positionerRef()
+          if (!positioner) {
+            this.scrollbarWidth.set(`0px`)
+            return
+          }
+          this.scrollbarWidth.set(
+            `${positioner.offsetWidth - positioner.clientWidth}px`,
+          )
+        })
+      }
     })
   }
 
