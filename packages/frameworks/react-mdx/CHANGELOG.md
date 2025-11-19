@@ -1,5 +1,16 @@
 # @qualcomm-ui/react-mdx
 
+## 1.2.3 (2025/11/18)
+
+### Build System
+
+- do not minify identifiers
+
+### Miscellaneous Chores
+
+- [dependencies]: omit all devDependencies from build
+- **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/react-core]
+
 ## 1.2.2 (2025/11/18)
 
 ### Bug Fixes
