@@ -6,6 +6,7 @@ env:
   TURBO_TOKEN: "turbo-cache-token"
 on:
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   id-token: write
