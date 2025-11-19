@@ -1,10 +1,12 @@
 # Architecture
 
+## Overview
+
 ![Architecture Diagram](./assets/qui-architecture.webp)
 
 This is a multi-layer component architecture with framework-agnostic core logic:
 
-**Headless Layer**
+### Headless Layer
 
 - `@qui/utils`: Generic tooling, zero dependencies
 - `@qui/dom`: DOM abstractions, cross-browser compatibility
@@ -12,20 +14,20 @@ This is a multi-layer component architecture with framework-agnostic core logic:
 
 The core is framework-agnostic. `@qui/core` depends on `@qui/dom` and `@qui/utils`, implementing component behavior as state machines (inspired by [zag.js](https://zagjs.com/overview/introduction)).
 
-**Framework Adapters**
+### Framework Adapters
 
 - `@qui/react-core`: React bindings (hooks, context, data binding)
 - `@qui/angular-core`: Angular bindings (services, directives, data binding)
 
 These wrap the headless core for specific frameworks without adding styling.
 
-**Design System**
+### Design System
 
 - `@qui/qds-core`: Design tokens, theme specs, brand guidelines
 
 Separate from component logic.
 
-**Styled Implementations**
+### Styled Implementations
 
 - `@qui/react`: React components with theme integration
 - `@qui/angular`: Angular components with theme integration
@@ -33,16 +35,16 @@ Separate from component logic.
 
 These combine framework adapters + design system to produce styled components.
 
-**Flow**
+### Flow
 
 1. Core logic is framework-agnostic (state machines, accessibility)
-2. Framework adapters provide bindings
+2. Framework adapters provide bindings and reactivity
 3. Styled implementations merge adapters + design tokens
 4. Applications consume styled implementations
 
 **Key difference from typical architectures**: Business logic lives in headless core, not in framework-specific code. Multiple framework implementations share the same behavior, similar to zag.js's approach of state machines + adapters.
 
-This architecture gives us maximum code reuse, consistent behavior across frameworks, centralized design management, and the flexibility to support new frameworks.
+This architecture gives us maximum code reuse, framework-native DX, consistent behavior across frameworks, centralized design management, and the flexibility to support new frameworks.
 
 ## Why Not Web Components?
 
