@@ -1,5 +1,6 @@
 import {useEffect} from "react"
 
+import {useLocation} from "react-router"
 import {getReactDemoConfig} from "virtual:qui-demo-scope/config"
 
 import {debounce} from "@qualcomm-ui/utils/functions"
@@ -36,6 +37,18 @@ export function requestSavedScrollPosition() {
  * longer rendered (and therefore don't have height).
  */
 export function useHmrScrollRestoration() {
+  const pathname = useLocation().pathname
+
+  useEffect(() => {
+    if (import.meta.hot) {
+      return () => {
+        import.meta.hot!.send("custom:store-scroll-position", {
+          scrollY: window.scrollY,
+        })
+      }
+    }
+  }, [pathname])
+
   useEffect(() => {
     if (import.meta.hot && getReactDemoConfig().lazyLoadDevModules) {
       const debouncedRestore = debounce((scrollY: number) => {

@@ -63,6 +63,55 @@ function logDev(...args: any[]) {
   console.log(...args)
 }
 
+/**
+ * Generates virtual modules for React demos with isolated scopes.
+ *
+ * ## Why This Is Complex
+ *
+ * Demo scopes contain live module references (components, hooks, utilities) that
+ * must be bundled at build time. Can't serialize over WebSocket, can't be
+ * dynamically required. When a demo's imports change, the entire virtual module
+ * regenerates.
+ *
+ * ## Core Constraints
+ *
+ * - **Adding/removing demos:** Structure changes, module regenerates, full reload
+ * - **Editing demo imports:** Dependencies change, scope rebuilds, module
+ * regenerates - **Editing demo code:** Still regenerates scope (even if imports
+ * unchanged)
+ *
+ * Vite's HMR assumes stable module structure. We violate this assumption.
+ *
+ * ## Design Choices
+ *
+ * Lazy per-page (dev only): Loading 300 demos upfront kills dev server
+ * performance. Split into ~30 page modules. Cost: dual code paths, regeneration
+ * affects whole page.
+ *
+ * Manual dependency tracking: Map utility files → demos directly instead of
+ * traversing Vite's graph (`utility.ts -> demo.tsx -> virtual:page:...`). Faster
+ * but can drift.
+ *
+ * Custom HMR events: Return `[]` from `handleHotUpdate` to prevent Vite's
+ * default HMR, manually invalidate modules, send WebSocket events for scroll
+ * restoration.
+ *
+ * **Global state:** `demoRegistry`, `pageScopes`, etc. are module-level. If Vite
+ * creates multiple plugin instances (SSR/client), they share state incorrectly.
+ *
+ * ## Alternatives Considered
+ *
+ * - `import.meta.glob`: Still requires regeneration when files added/removed
+ * - Per-demo virtual modules: 300 modules, but would allow granular HMR (might be
+ * worth it) - Runtime scope building: Defeats bundling, slower, no tree-shaking
+ * - Server components: Demos need client interactivity
+ *
+ * ## Performance (dev mode)
+ *
+ * - Initial scan: ~2-3s for 300 demos
+ * - Page navigation: ~100-300ms to load page module
+ * - Demo edit: ~50-200ms to regenerate + HMR
+ */
 export function reactDemoPlugin({
   demoPattern = "src/routes/**/demos/*.tsx",
   lazyLoadDevModules = true,
@@ -143,6 +192,12 @@ export function reactDemoPlugin({
       })
     },
 
+    /**
+     * The primary issue is that scoped demos need their dependencies re-evaluated,
+     * which means module invalidation. Vite's HMR isn't designed for this pattern.
+     * We can work around this by invalidating the entire page scope for the
+     * affected demo, and then re-evaluating the demo itself.
+     */
     async handleHotUpdate({file, server}) {
       if (isCssAsset(file)) {
         return server.moduleGraph.getModulesByFile(file)?.values()?.toArray()
