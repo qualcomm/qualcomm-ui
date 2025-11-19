@@ -1,11 +1,12 @@
-// scripts/check-versions.mjs
 import * as core from "@actions/core"
 
 import {getPublishablePackages} from "./utils"
 
 const packages = await getPublishablePackages()
 
-async function getPublishedVersion(packageName: string): Promise<string> {
+async function getPublishedVersion(
+  packageName: string,
+): Promise<string | null> {
   const response = await fetch(`https://registry.npmjs.org/${packageName}`)
 
   if (response.status === 404) {
@@ -17,7 +18,7 @@ async function getPublishedVersion(packageName: string): Promise<string> {
   }
 
   const data = await response.json()
-  return data["dist-tags"]?.latest
+  return data["dist-tags"]?.latest || null
 }
 
 function compareVersions(current: string, published: string) {
@@ -70,4 +71,6 @@ if (newer.length > 0) {
   )
 
   core.setOutput("should-publish", true)
+} else {
+  core.setOutput("should-publish", false)
 }

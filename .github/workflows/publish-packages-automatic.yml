@@ -16,8 +16,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
 
     - uses: ./.github/actions/init-node-and-install
 
