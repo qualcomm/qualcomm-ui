@@ -4,22 +4,6 @@ title: Vite / Webpack / etc.
 
 # {frontmatter.title}
 
-> [!tip]
-> We recommend starting with our preconfigured [Vite template](https://github.qualcomm.com/ProdTools/qui-react-vite-template). Otherwise, follow the steps below for manual installation.
-
-## Root Provider
-
-This library exports a `QuiRoot` component which provides context for global notifications and alerts. It should wrap your component tree.
-
-```tsx
-import {ReactNode} from "react"
-import {QuiRoot} from "@qualcomm-ui/react"
-
-export function App(): ReactNode {
-  return <QuiRoot>{/* The rest of your app */}</QuiRoot>
-}
-```
-
 ## Fonts
 
 Fonts are sourced from Google. Add the links to your application's `<head>` element:
