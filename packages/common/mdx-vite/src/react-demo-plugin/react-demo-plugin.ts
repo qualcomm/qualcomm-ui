@@ -191,6 +191,7 @@ export function reactDemoPlugin({
         })
       })
     },
+    enforce: "pre",
 
     /**
      * The primary issue is that scoped demos need their dependencies re-evaluated,
@@ -198,7 +199,7 @@ export function reactDemoPlugin({
      * We can work around this by invalidating the entire page scope for the
      * affected demo, and then re-evaluating the demo itself.
      */
-    async handleHotUpdate({file, server}) {
+    async handleHotUpdate({file, modules, server}) {
       if (isCssAsset(file)) {
         return server.moduleGraph.getModulesByFile(file)?.values()?.toArray()
       }
@@ -223,7 +224,7 @@ export function reactDemoPlugin({
             server.moduleGraph.invalidateModule(autoModule)
             await server.reloadModule(autoModule)
           }
-          return []
+          return modules
         }
       }
 
@@ -247,7 +248,6 @@ export function reactDemoPlugin({
           )
           server.moduleGraph.invalidateModule(pageModule)
           await server.reloadModule(pageModule)
-          // server.ws.send({type: "full-reload"})
         }
         if (wasNew) {
           const autoModule = server.moduleGraph.getModuleById(
@@ -261,24 +261,48 @@ export function reactDemoPlugin({
 
         server.ws.send({
           data: demoRegistry.get(createDemoName(file)),
-          event: "qui-demo-update",
+          event: "custom:qui-demo-update",
           type: "custom",
         })
       } else {
         const normalizedFile = resolve(file)
         const dependents = relativeImportDependents.get(normalizedFile)
+        if (!dependents?.size) {
+          return modules
+        }
+        const pageId = extractPageId(file, routesDir)
+        const allPageFiles = pageFiles.get(pageId)!
+        const scope = await generateScopeForPage(pageId, allPageFiles)
+        pageScopes.set(pageId, scope)
+        const pageModule = server.moduleGraph.getModuleById(
+          `${VIRTUAL_MODULE_IDS.PAGE_PREFIX}${pageId}`,
+        )
+        if (pageModule) {
+          console.debug(
+            "invalidating:",
+            `virtual:qui-demo-scope/page:${pageId}`,
+          )
+          server.moduleGraph.invalidateModule(pageModule)
+          await server.reloadModule(pageModule)
+        }
+
         if (dependents) {
           for (const demoName of dependents) {
             server.ws.send({
+              data: demoRegistry.get(demoName),
+              event: "custom:qui-demo-update",
+              type: "custom",
+            })
+            server.ws.send({
               data: {demoName},
-              event: "react-demo-updating",
+              event: "custom:qui-demo-scope-changed",
               type: "custom",
             })
           }
         }
       }
 
-      return []
+      return modules
     },
 
     async load(id) {

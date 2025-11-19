@@ -1,8 +1,9 @@
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
 
 import {useLocation} from "react-router"
 import {getReactDemoConfig} from "virtual:qui-demo-scope/config"
 
+import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
 import {debounce} from "@qualcomm-ui/utils/functions"
 
 /**
@@ -39,6 +40,10 @@ export function requestSavedScrollPosition() {
 export function useHmrScrollRestoration() {
   const pathname = useLocation().pathname
 
+  const [demoContext, setDemoContext] = useState<
+    Record<string, ReactDemoWithScope>
+  >({})
+
   useEffect(() => {
     if (import.meta.hot) {
       return () => {
@@ -70,14 +75,26 @@ export function useHmrScrollRestoration() {
       }
 
       import.meta.hot.on("custom:restore-scroll-position", debouncedRestore)
-      import.meta.hot.on("vite:invalidate", beforeFullReloadHandler)
       window.addEventListener("beforeunload", beforeFullReloadHandler)
       return () => {
         debouncedRestore.clear()
         import.meta.hot?.off("custom:restore-scroll-position", debouncedRestore)
-        import.meta.hot?.off("vite:invalidate", beforeFullReloadHandler)
         window.removeEventListener("beforeunload", beforeFullReloadHandler)
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (import.meta.hot && getReactDemoConfig().lazyLoadDevModules) {
+      function handler(data: ReactDemoWithScope) {
+        setDemoContext((prev) => ({...prev, [data.demoName]: data}))
+      }
+      import.meta.hot.on("custom:qui-demo-update", handler)
+      return () => {
+        import.meta.hot?.off("custom:qui-demo-update", handler)
+      }
+    }
+  }, [])
+
+  return demoContext
 }

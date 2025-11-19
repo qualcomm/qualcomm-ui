@@ -19,6 +19,8 @@ import {
 import {Github} from "@qualcomm-ui/react-mdx/icons"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 
+import {DemoContextProvider} from "../demo"
+
 import {DocLink} from "./doc-link"
 import {GithubChangelogLink} from "./github-changelog-link"
 import {GlobalConfig} from "./global-config"
@@ -48,7 +50,7 @@ export function AppDocsLayout({
 }: Props): ReactNode {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchParams] = useSearchParams()
-  useHmrScrollRestoration()
+  const demoContext = useHmrScrollRestoration()
 
   // persist the search input to the URL
   const query = searchParams.get("query") ?? ""
@@ -159,7 +161,9 @@ export function AppDocsLayout({
       {...props}
     >
       <PortalContextProvider value={portalContext}>
-        {children}
+        <DemoContextProvider value={demoContext}>
+          {children}
+        </DemoContextProvider>
       </PortalContextProvider>
     </DocsLayout>
   )

@@ -6,7 +6,6 @@ import {getReactDemoConfig} from "virtual:qui-demo-scope/config"
 
 import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
 import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
-import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {
   QdsDemoRunner,
   type QdsDemoRunnerProps,
@@ -14,6 +13,9 @@ import {
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 import {requestSavedScrollPosition, useGlobalConfigContext} from "../layout"
+
+import {cachedDemos} from "./cached-demos"
+import {useDemoContext} from "./demo-context"
 
 interface Props
   extends Omit<QdsDemoRunnerProps, "qdsBrand" | "setQdsBrand" | "demo"> {
@@ -25,9 +27,10 @@ export function QdsDemo({
   ...props
 }: Props): ReactNode {
   const [theme] = useTheme()
+  const demoContext = useDemoContext()
   const [demo, setDemo] = useState<ReactDemoWithScope | null>(() =>
     import.meta.env.DEV && getReactDemoConfig().lazyLoadDevModules
-      ? null
+      ? cachedDemos[props.name] || null
       : getDemo(props.name),
   )
   const {brand, setBrand} = useQdsThemeContext()
@@ -36,6 +39,7 @@ export function QdsDemo({
   const [devLoaded, setDevLoaded] = useState<boolean>(false)
   const updating = import.meta.env.DEV && !demo && !devLoaded
   const demoElementRef = useRef<HTMLDivElement>(null)
+  const [key, setKey] = useState<number>(0)
 
   const onDemoRendered = (error: Error | undefined) => {
     requestAnimationFrame(() => {
@@ -46,58 +50,30 @@ export function QdsDemo({
     })
   }
 
-  useSafeLayoutEffect(() => {
-    if (import.meta.hot && getReactDemoConfig().lazyLoadDevModules) {
-      void import("./lazy-demo-loader").then((mod) => {
-        const lazyDemos = mod.lazyDemos
-        const lazyModule = lazyDemos[pathname]
-        if (lazyModule) {
-          lazyModule().then((res) => {
-            const demo = res.getDemo(props.name)
-            if (demo) {
-              setDemo(demo)
-            }
-
-            setDevLoaded(true)
-          })
-        } else {
-          setDevLoaded(true)
-        }
-
-        function handler(data: ReactDemoWithScope) {
-          if (props.name === data.demoName) {
-            const lazyModule: any = lazyDemos[pathname]
-            if (lazyModule) {
-              import.meta.hot?.invalidate()
-            } else {
-              console.warn(
-                "HMR update failed. No lazy module for pathname:",
-                pathname,
-              )
-            }
-          }
-        }
-
-        import.meta.hot?.on("qui-demo-update", handler)
-        return () => {
-          import.meta.hot?.off("qui-demo-update", handler)
-        }
-      })
-    }
-  }, [pathname, props.name])
-
   useEffect(() => {
     if (import.meta.hot && getReactDemoConfig().lazyLoadDevModules) {
-      // force reload when dependent modules change. This happens when a demo
-      // imports an entity from a workspace-linked package, and that entity changes.
-      import.meta.hot.accept(() => {
-        window.location.reload()
+      void import("./lazy-demo-loader").then(async (mod) => {
+        const lazyDemos = mod.lazyDemos
+        const lazyModule = lazyDemos[pathname]
+        void lazyModule()
+          .then((res) => {
+            const demo = res.getDemo(props.name)
+            if (demo) {
+              setDemo({...demo, ...demoContext[props.name]})
+              cachedDemos[props.name] = {...demo, ...demoContext[props.name]}
+              setKey((prevState) => prevState + 1)
+            }
+          })
+          .finally(() => {
+            setDevLoaded(true)
+          })
       })
     }
-  }, [])
+  }, [demoContext, pathname, props.name])
 
   return (
     <QdsDemoRunner
+      key={key}
       ref={demoElementRef}
       colorScheme={theme === Theme.LIGHT ? "light" : "dark"}
       demo={demo}
