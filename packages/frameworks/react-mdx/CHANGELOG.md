@@ -1,5 +1,15 @@
 # @qualcomm-ui/react-mdx
 
+## 1.2.2 (2025/11/18)
+
+### Bug Fixes
+
+- [typedoc-descriptions]: use qui link component
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
 ## 1.2.1 (2025/11/17)
 
 ### Miscellaneous Chores

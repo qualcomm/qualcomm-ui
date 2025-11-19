@@ -1,5 +1,11 @@
 # @qualcomm-ui/core
 
+## 1.0.7 (2025/11/18)
+
+### Code Refactoring
+
+- deprecate core action-group api (unused)
+
 ## 1.0.6 (2025/11/17)
 
 ### Bug Fixes

@@ -8,7 +8,7 @@
   "version": "0.0.0",
   "scripts": {
     "build:prod": "./scripts/build-prod.sh",
-    "build": "run-s build:typedoc build:angular copy-build build:site",
+    "build": "run-s build:angular copy-build build:site",
     "build:angular": "ng build",
     "build:site": "react-router build",
     "build:typedoc": "qui-typedoc build",

@@ -11,7 +11,7 @@ import {usePaginationContext} from "./pagination-context.service"
 export class CorePaginationPrevTriggerDirective implements OnInit {
   readonly paginationContext = usePaginationContext()
 
-  private readonly trackBindings = useTrackBindings(() =>
+  protected readonly trackBindings = useTrackBindings(() =>
     this.paginationContext().getPrevTriggerBindings(),
   )
 

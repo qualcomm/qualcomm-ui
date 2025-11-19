@@ -15,8 +15,8 @@ export default function IconSizesDemo(): ReactNode {
         <Icon icon={ExternalLink} size="xl" />
       </div>
       <div className="flex items-center justify-center gap-4">
-        <Icon icon={ExternalLink} size="32" />
-        <Icon icon={ExternalLink} size="42" />
+        <Icon icon={ExternalLink} size={32} />
+        <Icon icon={ExternalLink} size={42} />
       </div>
     </div>
   )

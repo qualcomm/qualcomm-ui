@@ -1,0 +1,29 @@
+name: Publish Packages (automatic)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  check-versions:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: PR Build - ${{github.head_ref}}
+      cancel-in-progress: true
+    timeout-minutes: 10
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
+
+    - uses: ./.github/actions/init-node-and-install
+
+    - id: check
+      run: pnpm tsx scripts/release/check-versions.ts
+
+  trigger-publish:
+    needs: check-versions
+    if: needs.check-versions.outputs.has-newer == 'true'
+    uses: ./.github/workflows/publish-packages.yml
+    secrets: inherit

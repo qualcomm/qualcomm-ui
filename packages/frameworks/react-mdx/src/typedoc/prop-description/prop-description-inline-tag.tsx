@@ -21,13 +21,22 @@ export function PropDescriptionInlineTag({
     "@link": () =>
       text.startsWith("http") ||
       (typeof target === "string" && target.startsWith("http")) ? (
-        <Link endIcon={ExternalLink} href={target as string} target="_blank">
+        <Link
+          endIcon={ExternalLink}
+          href={target as string}
+          size="md"
+          target="_blank"
+        >
           {text}
         </Link>
       ) : text.startsWith("/") ? (
-        <RenderLink href={text}>{text}</RenderLink>
+        <Link render={<RenderLink href={text} />} size="md">
+          {text}
+        </Link>
       ) : (
-        <RenderLink href={`#${text}`}>{text}</RenderLink>
+        <Link render={<RenderLink href={`#${text}`} />} size="md">
+          {text}
+        </Link>
       ),
   }
 

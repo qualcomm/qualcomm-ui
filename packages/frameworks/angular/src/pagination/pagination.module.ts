@@ -6,10 +6,11 @@ import {FormsModule} from "@angular/forms"
 
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 import {PaginationContextDirective} from "./pagination-context.directive"
 import {PaginationNextTriggerComponent} from "./pagination-next-trigger.component"
+import {PaginationPageButtonsDirective} from "./pagination-page-buttons.directive"
 import {PaginationPageItemComponent} from "./pagination-page-item.component"
 import {PaginationPageItemsComponent} from "./pagination-page-items.component"
 import {PaginationPageMetadataDirective} from "./pagination-page-metadata.directive"
@@ -29,6 +30,7 @@ import {PaginationRootDirective} from "./pagination-root.directive"
     PaginationPageMetadataDirective,
     PaginationPageItemComponent,
     PaginationPageSizeLabelDirective,
+    PaginationPageButtonsDirective,
   ],
   exports: [
     PaginationRootDirective,
@@ -40,7 +42,8 @@ import {PaginationRootDirective} from "./pagination-root.directive"
     PaginationPageMetadataDirective,
     PaginationPageItemComponent,
     PaginationPageSizeLabelDirective,
+    PaginationPageButtonsDirective,
   ],
-  imports: [FormsModule, IconDirective, MenuModule, PortalComponent],
+  imports: [FormsModule, IconDirective, MenuModule, PortalDirective],
 })
 export class PaginationModule {}
