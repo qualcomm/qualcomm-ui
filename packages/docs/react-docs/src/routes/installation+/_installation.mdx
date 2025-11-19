@@ -3,7 +3,6 @@ title: Installation
 ---
 
 import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
-import {Versions} from "./demos/versions"
 
 # {frontmatter.title}
 
@@ -21,7 +20,18 @@ Get started with one of our preconfigured templates:
 
 ### Install
 
-<NpmInstallTabs packages="@qualcomm-ui/react @qualcomm-ui/base @qualcomm-ui/styles react-transition-group lucide-react" />
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/react",
+    "@qualcomm-ui/react-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/qds-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+    "@tanstack/react-virtual",
+    "lucide-react",
+  ]}
+/>
 
 ## Choose Your Flavor
 
@@ -29,4 +39,5 @@ We provide detailed setup instructions for specific React frameworks. To complet
 
 - [Next.js](/setup/nextjs)
 - [React Router](/setup/react-router)
+- [Tanstack Start](/setup/tanstack-start)
 - [Everything else](/setup/vite)
