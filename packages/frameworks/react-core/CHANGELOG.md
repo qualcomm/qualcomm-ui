@@ -1,5 +1,19 @@
 # @qualcomm-ui/react-core
 
+## 1.0.7 (2025/11/18)
+
+### Bug Fixes
+
+- [build]: add "use client"; banner
+
+### Build System
+
+- do not minify identifiers
+
+### Miscellaneous Chores
+
+- omit unused peerDependencies
+
 ## 1.0.6 (2025/11/18)
 
 ### Miscellaneous Chores
