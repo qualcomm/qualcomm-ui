@@ -1,7 +1,7 @@
 {
   "name": "@qualcomm-ui/react-core",
   "sideEffects": false,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Design-agnostic React building blocks and utilities.",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",

@@ -9,7 +9,6 @@ import {
   buildEntryPoints,
   type BuildEntryPointsOptions,
   collectFolders,
-  getArg,
   hasArg,
   logPlugin,
 } from "@qualcomm-ui/esbuild"
