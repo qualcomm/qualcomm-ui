@@ -8,9 +8,11 @@ jobs:
   check-versions:
     runs-on: ubuntu-latest
     concurrency:
-      group: PR Build - ${{github.head_ref}}
+      group: PR Check Versions - ${{github.head_ref}}
       cancel-in-progress: true
     timeout-minutes: 10
+    outputs:
+      should-publish: ${{ steps.check.outputs.should-publish }}
     steps:
     - name: checkout
       uses: actions/checkout@v4
