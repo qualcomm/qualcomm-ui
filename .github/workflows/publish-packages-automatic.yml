@@ -24,6 +24,6 @@ jobs:
 
   trigger-publish:
     needs: check-versions
-    if: needs.check-versions.outputs.has-newer == 'true'
+    if: needs.check-versions.outputs.should-publish == 'true'
     uses: ./.github/workflows/publish-packages.yml
     secrets: inherit
