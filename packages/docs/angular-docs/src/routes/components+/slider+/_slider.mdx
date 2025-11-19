@@ -59,6 +59,12 @@ Use [tooltip](./#tooltip-1) to display the slider's value in a tooltip rather th
 
 <QdsDemo name="SliderTooltipDemo" />
 
+#### Display
+
+You can customize the tooltip's content by using the [composite API](./#thumbs-with-tooltips) and passing a function to [display](./#display-5) on the `q-slider-thumb-indicator` component.
+
+<QdsDemo name="SliderTooltipDisplayDemo" />
+
 ### Markers
 
 #### Track Markers
@@ -160,16 +166,17 @@ The Slider component provides a composite API should you need more control over 
 
 The composite API is based on the following components and directives:
 
-- `q-slider.root`: The main component that wraps the slider subcomponents.
-- `q-slider.label`: The slider main label.
-- `q-slider.valueText`: The slider current value as text.
-- `q-slider.control`: The container for the thumb(s) and its track and range.
-- `q-slider.track`: The track along which the thumb(s) move.
-- `q-slider.range`: The filled portion of the track.
-- `q-slider.thumbs` component or `q-slider-thumb + q-slider-hiddenInput`: The draggable handle(s).
-- `q-slider.hint`: The hint text below the slider.
-- `q-slider.errorText`: The error message below the slider.
-- `q-slider.markers` component or `q-slider.MarkerGroup + q-slider.Marker`: The markers along the track.
+- `q-slider-root`: The main component that wraps the slider subcomponents.
+- `q-slider-label`: The slider main label.
+- `q-slider-valueText`: The slider current value as text.
+- `q-slider-control`: The container for the thumb(s) and its track and range.
+- `q-slider-track`: The track along which the thumb(s) move.
+- `q-slider-range`: The filled portion of the track.
+- `q-slider-thumbs` component or `q-slider-thumb + q-slider-hiddenInput`: The draggable handle(s).
+- `q-slider-thumb-indicator`: The thumb tooltip.
+- `q-slider-hint`: The hint text below the slider.
+- `q-slider-errorText`: The error message below the slider.
+- `q-slider-markers` component or `q-slider.MarkerGroup + q-slider.Marker`: The markers along the track.
 
 ### Thumbs
 
@@ -182,7 +189,7 @@ import {SliderModule} from "@qualcomm-ui/angular/slider"
 
 @Component({
   imports: [SliderModule],
-  selector: "slider-composite",
+  selector: "range-slider",
   template: `
     <div q-slider-root [defaultValue]="[25, 50]">
       <div q-slider-value-text></div>
@@ -200,55 +207,39 @@ import {SliderModule} from "@qualcomm-ui/angular/slider"
     </div>
   `,
 })
-export class SliderComposite {}
+export class RangeSlider {}
 ```
 
 ### Thumbs with tooltips
 
-Setting [tooltip](./#tooltip-1) on the `q-slider-thumbs` component is the equivalent of the following composition using `q-tooltip`:
+Setting [tooltip](./#tooltip-1) on the `q-slider-thumbs` or `q-slider-thumb` component is the equivalent of the following composition:
 
 ```angular-ts
 import {Component} from "@angular/core"
 import {SliderModule} from "@qualcomm-ui/angular/slider"
-import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
-import type {ValueChangeDetails} from "@qualcomm-ui/core/slider"
 
 @Component({
-  imports: [SliderModule, TooltipModule],
-  selector: "slider-composite",
+  imports: [SliderModule],
+  selector: "slider-with-tooltip",
   template: `
-    <div
-      q-slider-root
-      [defaultValue]="value"
-      (valueChanged)="onValueChange($event)"
-    >
-      <label q-slider-label>Choose a value</label>
+    <div q-slider-root [defaultValue]="[25, 65]">
       <div q-slider-control>
         <div q-slider-track>
           <div q-slider-range></div>
         </div>
-        <div q-tooltip [closeOnClick]="false" [positioning]="{flip: false}">
-          <div q-slider-thumb q-tooltip-trigger [index]="0">
-            <input q-slider-hidden-input />
-          </div>
-          {{ value[0] }}
+        <div q-slider-thumb [index]="0">
+          <input q-slider-hidden-input />
+          <div q-slider-thumb-indicator></div>
         </div>
-        <div q-tooltip [closeOnClick]="false" [positioning]="{flip: false}">
-          <div q-slider-thumb q-tooltip-trigger [index]="1">
-            <input q-slider-hidden-input />
-          </div>
-          {{ value[1] }}
+        <div q-slider-thumb [index]="1">
+          <input q-slider-hidden-input />
+          <div q-slider-thumb-indicator></div>
         </div>
       </div>
     </div>
   `,
 })
-export class SliderCompositeDemo {
-  value = [25, 75]
-  onValueChange(details: ValueChangeDetails) {
-    this.value = details.value
-  }
-}
+export class SliderWithTooltip {}
 ```
 
 ### Markers
@@ -262,10 +253,9 @@ import {SliderModule} from "@qualcomm-ui/angular/slider"
 
 @Component({
   imports: [SliderModule],
-  selector: "slider-composite",
+  selector: "slider-with-custom-markers",
   template: `
-    <div class="sm:w-80" q-slider-root [defaultValue]="[25, 50]">
-      <label q-slider-label>Label</label>
+    <div q-slider-root [defaultValue]="[25, 50]">
       <div q-slider-value-text></div>
       <div q-slider-control>
         <div q-slider-track>
@@ -283,7 +273,7 @@ import {SliderModule} from "@qualcomm-ui/angular/slider"
     </div>
   `,
 })
-export class SliderCompositeDemo {}
+export class SliderWithCustomMarkers {}
 ```
 
 ## API
@@ -310,7 +300,7 @@ The `q-slider` component extends the [q-slider-root](./#q-slider-root) directive
 
 ### q-slider-value-text
 
-<TypeDocProps name="SliderValueTextComponent" />
+<TypeDocProps name="SliderValueTextDirective" />
 
 <TypeDocAngularAttributes name={"SliderValueTextBindings"} />
 
@@ -341,6 +331,12 @@ The `q-slider` component extends the [q-slider-root](./#q-slider-root) directive
 <TypeDocProps name="SliderThumbDirective" />
 
 <TypeDocAngularAttributes name={"SliderThumbBindings"} />
+
+### q-slider-thumb-indicator
+
+<TypeDocProps name="SliderThumbIndicatorDirective" />
+
+<TypeDocAngularAttributes name={"SliderThumbIndicatorBindings"} />
 
 ### q-slider-hidden-input
 

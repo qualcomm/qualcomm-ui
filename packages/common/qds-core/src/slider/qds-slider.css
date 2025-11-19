@@ -1,11 +1,11 @@
 .qui-slider__root {
-  --slider-track-thickness: 4px;
+  --slider-track-thickness: var(--sizing-30);
 
   &[data-size="sm"] {
-    --slider-thumb-size: 8px;
+    --slider-thumb-size: var(--sizing-50);
   }
   &[data-size="md"] {
-    --slider-thumb-size: 16px;
+    --slider-thumb-size: var(--sizing-70);
   }
 
   --slider-label-color: var(--color-text-neutral-secondary);
@@ -160,44 +160,43 @@
   }
 }
 
-.qui-slider__control:has(.qui-slider__thumb[data-dragging])
-  .qui-slider__thumb:not([data-dragging]) {
-  background-color: var(--slider-thumb-color);
-  scale: 1;
-}
-
 .qui-slider__thumb {
-  &:not([data-disabled]):is(:hover, :active) {
-    scale: 1.15;
-  }
-  &:not([data-disabled]):hover {
-    background-color: var(--slider-thumb-color-hover);
-  }
-  &:not([data-disabled]):active {
-    background-color: var(--slider-thumb-color-active);
-  }
+  aspect-ratio: 1;
+  width: var(--slider-thumb-size);
+
   &[data-focus],
   &[data-dragging] {
     z-index: 1;
   }
-  aspect-ratio: 1;
-  background-color: var(--slider-thumb-color);
-  border-radius: 9999px;
-  outline: 2px solid var(--color-border-neutral-00);
-  transition:
-    scale 130ms ease-in-out,
-    background-color 130ms ease-in-out;
 
-  width: var(--slider-thumb-size);
-
-  /* TODO :focus-visible sometimes shows the ring, sometimes not, switch to just :focus? */
-  &:focus-visible {
+  /* the actual thumb (to avoid scaling children) */
+  &::before {
+    background-color: var(--slider-thumb-color);
+    border-radius: var(--border-radius-rounded);
+    content: "";
+    inset: 0;
+    outline: var(--sizing-20) solid var(--color-border-neutral-00);
+    position: absolute;
+    transition:
+      scale 130ms ease-in-out,
+      background-color 130ms ease-in-out;
+  }
+  &:focus-visible::before {
     box-shadow: 0 0 0 4px var(--color-utility-focus-border);
+  }
+  &:not([data-disabled]):is(:hover, :active)::before {
+    scale: 1.15;
+  }
+  &:not([data-disabled]):hover::before {
+    background-color: var(--slider-thumb-color-hover);
+  }
+  &:not([data-disabled]):active::before {
+    background-color: var(--slider-thumb-color-active);
   }
 
   /* hitbox */
   &::after {
-    border-radius: 9999px;
+    border-radius: var(--border-radius-rounded);
     bottom: -8px;
     content: "";
     left: -8px;
@@ -209,14 +208,13 @@
 
 .qui-slider__track {
   background-color: var(--slider-track-color);
-  border-radius: 9999px;
+  border-radius: var(--border-radius-rounded);
   overflow: hidden;
 
   &[data-orientation="horizontal"] {
     height: var(--slider-track-thickness);
     width: 100%;
   }
-
   &[data-orientation="vertical"] {
     height: 100%;
     width: var(--slider-track-thickness);
@@ -230,7 +228,6 @@
   &[data-orientation="horizontal"] {
     height: 100%;
   }
-
   &[data-orientation="vertical"] {
     width: 100%;
   }
@@ -272,6 +269,51 @@
   grid-column: 1 / -1;
   grid-row: error;
   margin-block-start: var(--row-gap);
+}
+
+.qui-slider__thumb-indicator {
+  background-color: var(--color-background-neutral-10);
+  border-radius: var(--border-radius-xs);
+  box-shadow: var(--shadow-high);
+  color: var(--color-text-neutral-inverse);
+  font: var(--font-static-body-xs-default);
+  width: max-content;
+  padding-block: var(--spacing-40);
+  padding-inline: var(--spacing-70);
+  pointer-events: none;
+  bottom: calc(100% + 12px);
+  left: 50%;
+
+  opacity: 0;
+  display: none;
+  transition:
+    opacity 130ms ease-in-out,
+    display 130ms ease-in-out allow-discrete;
+
+  .qui-slider__thumb:not([data-disabled]):is(:hover, :active, :focus-visible)
+    & {
+    opacity: 1;
+    display: block;
+  }
+
+  @starting-style {
+    .qui-slider__thumb:not([data-disabled]):is(:hover, :active, :focus-visible)
+      & {
+      opacity: 0;
+    }
+  }
+
+  /* arrow */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-background-neutral-10);
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  }
 }
 
 /* Angular extra markup */

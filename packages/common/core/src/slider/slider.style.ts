@@ -78,7 +78,7 @@ function getVerticalThumbOffset(
   const {context, prop} = params
   const {height = 0} = context.get("thumbSize") ?? {}
   const getValue = getValueTransformer(
-    [prop("min")!, prop("max")!],
+    [prop("min"), prop("max")],
     [-height / 2, height / 2],
   )
   return parseFloat(getValue(value).toFixed(2))
@@ -95,14 +95,14 @@ function getHorizontalThumbOffset(
 
   if (isRtl) {
     const getValue = getValueTransformer(
-      [prop("max")!, prop("min")!],
+      [prop("max"), prop("min")],
       [-width / 2, width / 2],
     )
     return -1 * parseFloat(getValue(value).toFixed(2))
   }
 
   const getValue = getValueTransformer(
-    [prop("min")!, prop("max")!],
+    [prop("min"), prop("max")],
     [-width / 2, width / 2],
   )
   return parseFloat(getValue(value).toFixed(2))
@@ -128,7 +128,7 @@ export function getThumbOffset(
   value: number,
 ): string {
   const {prop} = params
-  const percent = getValuePercent(value, prop("min")!, prop("max")!) * 100
+  const percent = getValuePercent(value, prop("min"), prop("max")) * 100
   return getOffset(params, percent, value)
 }
 

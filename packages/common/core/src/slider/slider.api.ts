@@ -33,7 +33,6 @@ import {
 import type {
   SliderApi,
   SliderControlBindings,
-  SliderDraggingIndicatorBindings,
   SliderErrorTextBindings,
   SliderHiddenInputBindings,
   SliderHintBindings,
@@ -45,6 +44,7 @@ import type {
   SliderRootBindings,
   SliderSchema,
   SliderThumbBindings,
+  SliderThumbIndicatorBindings,
   SliderTrackBindings,
   SliderValueTextBindings,
 } from "./slider.types"
@@ -179,18 +179,6 @@ export function createSliderApi(
           event.stopPropagation()
         },
         style: getControlStyle(),
-      })
-    },
-    getDraggingIndicatorBindings({index = 0}): SliderDraggingIndicatorBindings {
-      const isDragging = index === focusedIndex && dragging
-      return normalize.element({
-        ...commonProps,
-        "data-orientation": prop("orientation"),
-        "data-part": "dragging-indicator",
-        "data-state": isDragging ? "open" : "closed",
-        hidden: !isDragging,
-        role: "presentation",
-        style: getThumbStyle(store, index),
       })
     },
     getErrorTextBindings(props): SliderErrorTextBindings {
@@ -490,12 +478,40 @@ export function createSliderApi(
           if (!isLeftClick(event)) {
             return
           }
-          send({index, type: "THUMB_POINTER_DOWN"})
+
+          const thumbEl = event.currentTarget as HTMLElement
+          const rect = thumbEl.getBoundingClientRect()
+          const midpoint = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          }
+          const offset = {
+            x: event.clientX - midpoint.x,
+            y: event.clientY - midpoint.y,
+          }
+
+          send({index, offset, type: "THUMB_POINTER_DOWN"})
           event.stopPropagation()
         },
         role: "slider",
         style: getThumbStyle(store, index),
         tabIndex: disabled ? undefined : 0,
+      })
+    },
+    getThumbIndicatorBindings({
+      id,
+      index = 0,
+      onDestroy,
+    }): SliderThumbIndicatorBindings {
+      scope.ids
+        .collection("thumbIndicator")
+        .register(index.toString(), id, onDestroy)
+      return normalize.element({
+        ...commonProps,
+        "data-orientation": prop("orientation"),
+        "data-part": "thumb-indicator",
+        role: "presentation",
+        style: getThumbStyle(store, index),
       })
     },
     getTrackBindings(props): SliderTrackBindings {

@@ -7,7 +7,7 @@ import {SliderModule} from "@qualcomm-ui/angular/slider"
   selector: "slider-tooltip-demo",
   template: `
     <!-- preview -->
-    <q-slider class="sm:w-80" tooltip [defaultValue]="[25]" />
+    <q-slider class="mt-3 sm:w-80" tooltip [defaultValue]="[25]" />
     <!-- preview -->
   `,
 })

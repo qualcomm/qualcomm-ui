@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {booleanAttribute, Component, computed, input} from "@angular/core"
+import {booleanAttribute, Component, input} from "@angular/core"
 
 import {
   provideSliderContext,
@@ -106,8 +106,4 @@ export class SliderComponent extends SliderRootDirective {
   readonly display = input<string | ((value: number[]) => string) | undefined>()
 
   private readonly sliderContext = useSliderContext()
-
-  readonly thumbs = computed(() =>
-    this.sliderContext().value.map((_, idx) => idx),
-  )
 }

@@ -3,7 +3,6 @@
 
 import {booleanAttribute, Component, computed, input} from "@angular/core"
 
-import {useId} from "@qualcomm-ui/angular-core/common"
 import {useSliderContext} from "@qualcomm-ui/angular-core/slider"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
@@ -12,23 +11,12 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
   standalone: false,
   template: `
     @for (idx of thumbs(); track idx) {
-      @if (tooltip()) {
-        <div q-tooltip [closeOnClick]="false" [positioning]="{flip: false}">
-          <div
-            q-slider-thumb
-            q-tooltip-trigger
-            [id]="baseId + idx"
-            [index]="idx"
-          >
-            <input q-slider-hidden-input />
-          </div>
-          {{ value()[idx] }}
-        </div>
-      } @else {
-        <div q-slider-thumb [index]="idx">
-          <input q-slider-hidden-input />
-        </div>
-      }
+      <div q-slider-thumb [index]="idx">
+        <input q-slider-hidden-input />
+        @if (this.tooltip()) {
+          <div q-slider-thumb-indicator></div>
+        }
+      </div>
     }
   `,
 })
@@ -45,8 +33,4 @@ export class SliderThumbsComponent {
   readonly thumbs = computed(() =>
     this.sliderContext().value.map((_, idx) => idx),
   )
-
-  protected readonly value = computed(() => this.sliderContext().value)
-
-  protected readonly baseId = useId(this, null)
 }

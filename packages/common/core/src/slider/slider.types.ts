@@ -33,6 +33,7 @@ export interface SliderElementIds {
   range: string
   root: string
   thumb: string[]
+  thumbIndicator: string[]
   track: string
   valueText: string
 }
@@ -172,6 +173,7 @@ export interface Size {
 
 type Actions = ActionSchema<
   | "clearFocusedIndex"
+  | "clearThumbDragOffset"
   | "decrementThumbAtIndex"
   | "dispatchChangeEvent"
   | "focusActiveThumb"
@@ -182,6 +184,7 @@ type Actions = ActionSchema<
   | "setFocusedThumbToMax"
   | "setFocusedThumbToMin"
   | "setPointerValue"
+  | "setThumbDragOffset"
   | "setValue"
   | "setValueAtIndex"
   | "syncInputElements"
@@ -207,7 +210,7 @@ type Events =
   | {type: "POINTER_UP"}
   | {point: Point; type: "POINTER_MOVE"}
   | {index: number; type: "FOCUS"}
-  | {index: number; type: "THUMB_POINTER_DOWN"}
+  | {index: number; offset?: {x: number; y: number}; type: "THUMB_POINTER_DOWN"}
   | {index?: number; src: ArrowKeys; step: number; type: "ARROW_DEC"}
   | {index?: number; src: ArrowKeys; step: number; type: "ARROW_INC"}
   | {type: "HOME"}
@@ -247,6 +250,10 @@ interface Computed {
   valuePercent: number[]
 }
 
+interface Refs {
+  thumbDragOffset: {x: number; y: number} | null
+}
+
 export interface SliderSchema {
   actions: Actions
   computed: Computed
@@ -267,6 +274,7 @@ export interface SliderSchema {
     | "step"
     | "thumbAlignment"
   >
+  refs: Refs
 }
 
 export interface ThumbProps {
@@ -300,10 +308,9 @@ export interface SliderControlBindings extends CommonBindings {
   style: JSX.CSSProperties
 }
 
-export interface SliderDraggingIndicatorBindings extends CommonBindings {
-  "data-part": "dragging-indicator"
-  "data-state": "open" | "closed"
-  hidden: boolean
+export interface SliderThumbIndicatorBindings extends CommonBindings {
+  "data-orientation": Orientation | undefined
+  "data-part": "thumb-indicator"
   role: "presentation"
   style: JSX.CSSProperties
 }
@@ -465,13 +472,22 @@ export interface SliderApi {
   focus(): void
   focused: boolean
   focusedIndex: number
-  getControlBindings(props: IdRegistrationProps): SliderControlBindings
   getDefaultMarks: (count?: number) => number[]
-  getDraggingIndicatorBindings({
-    index,
-  }: {
-    index: number
-  }): SliderDraggingIndicatorBindings
+  getPercentValue: (percent: number) => number
+  getThumbMax(index: number): number
+  getThumbMin(index: number): number
+  getThumbPercent(index: number): number
+  getThumbValue(index: number): number
+  getValuePercent: (value: number) => number
+  increment(index: number): void
+  max: number
+  min: number
+  setThumbPercent(index: number, percent: number): void
+  setThumbValue(index: number, value: number): void
+  setValue(value: number[]): void
+  value: number[]
+  // group: bindings
+  getControlBindings(props: IdRegistrationProps): SliderControlBindings
   getErrorTextBindings(props: IdRegistrationProps): SliderErrorTextBindings
   getHiddenInputBindings(
     props: ThumbProps & IdRegistrationProps,
@@ -484,22 +500,12 @@ export interface SliderApi {
   getMarkerGroupBindings(props: IdRegistrationProps): SliderMarkerGroupBindings
   getMaxMarkerBindings(props: IdRegistrationProps): SliderMaxMarkerBindings
   getMinMarkerBindings(props: IdRegistrationProps): SliderMinMarkerBindings
-  getPercentValue: (percent: number) => number
   getRangeBindings(props: IdRegistrationProps): SliderRangeBindings
   getRootBindings(props: IdRegistrationProps): SliderRootBindings
   getThumbBindings(props: ThumbProps & IdRegistrationProps): SliderThumbBindings
-  getThumbMax(index: number): number
-  getThumbMin(index: number): number
-  getThumbPercent(index: number): number
-  getThumbValue(index: number): number
+  getThumbIndicatorBindings(
+    props: {index: number} & IdRegistrationProps,
+  ): SliderThumbIndicatorBindings
   getTrackBindings(props: IdRegistrationProps): SliderTrackBindings
-  getValuePercent: (value: number) => number
   getValueTextBindings(props: IdRegistrationProps): SliderValueTextBindings
-  increment(index: number): void
-  max: number
-  min: number
-  setThumbPercent(index: number, percent: number): void
-  setThumbValue(index: number, value: number): void
-  setValue(value: number[]): void
-  value: number[]
 }

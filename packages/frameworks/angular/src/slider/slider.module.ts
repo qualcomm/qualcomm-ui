@@ -4,8 +4,6 @@
 import {CommonModule} from "@angular/common"
 import {NgModule} from "@angular/core"
 
-import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
-
 import {SliderControlDirective} from "./slider-control.directive"
 import {SliderErrorTextDirective} from "./slider-error-text.directive"
 import {SliderHiddenInputDirective} from "./slider-hidden-input.directive"
@@ -18,6 +16,7 @@ import {SliderMaxDirective} from "./slider-max.directive"
 import {SliderMinDirective} from "./slider-min.directive"
 import {SliderRangeDirective} from "./slider-range.directive"
 import {SliderRootDirective} from "./slider-root.directive"
+import {SliderThumbIndicatorDirective} from "./slider-thumb-indicator.directive"
 import {SliderThumbDirective} from "./slider-thumb.directive"
 import {SliderThumbsComponent} from "./slider-thumbs.component"
 import {SliderTrackDirective} from "./slider-track.directive"
@@ -41,6 +40,7 @@ import {SliderComponent} from "./slider.component"
     SliderMinDirective,
     SliderMaxDirective,
     SliderComponent,
+    SliderThumbIndicatorDirective,
     SliderThumbsComponent,
     SliderMarkersComponent,
   ],
@@ -60,9 +60,10 @@ import {SliderComponent} from "./slider.component"
     SliderMinDirective,
     SliderMaxDirective,
     SliderComponent,
+    SliderThumbIndicatorDirective,
     SliderThumbsComponent,
     SliderMarkersComponent,
   ],
-  imports: [CommonModule, TooltipModule],
+  imports: [CommonModule],
 })
 export class SliderModule {}
