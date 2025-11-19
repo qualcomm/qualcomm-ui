@@ -3,31 +3,26 @@ title: Tailwind CSS
 ---
 
 import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
-import {Versions} from "./demos/versions"
 
 # {frontmatter.title}
 
-We provide a [Tailwind CSS](https://tailwindcss.com/) plugin which enhances your tailwind theme with QUI colors, fonts, and more.
+> [!tip]
+> This guide assumes you've already [installed Tailwind CSS](https://tailwindcss.com/docs/installation/using-vite) for your application.
 
-### Current Version
+We provide a Tailwind CSS [plugin](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/common/tailwind-plugin/CHANGELOG.md) which enhances your tailwind theme with QUI colors, fonts, and more.
 
-<Versions />
-
-### Install
-
-Follow the [Tailwind installation instructions](https://tailwindcss.com/docs/installation/using-vite) for your application.
-
-Then install the QUI plugin:
+## Install
 
 <NpmInstallTabs packages={["@qualcomm-ui/tailwind-plugin"]} />
 
-Once installed, import the plugin wherever you are configuring your tailwind theme:
+Once installed, import the plugin wherever you've configured your tailwind theme:
 
 ```css
 @import "tailwindcss";
+/* This import must be after the tailwindcss import */
 @import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 ```
 
-## Theme
+## Variables
 
-Refer to the [Theme](/theme/colors) section for documentation on the classes that this plugin provides.
+Continue to the next page to learn about the available variables.
