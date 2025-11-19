@@ -1,5 +1,5 @@
 // scripts/check-versions.mjs
-import {setOutput} from "@actions/core"
+import * as core from "@actions/core"
 
 import {getPublishablePackages} from "./utils"
 
@@ -69,5 +69,5 @@ if (newer.length > 0) {
     console.log(`  ${r.name}: ${r.published} -> ${r.current}`),
   )
 
-  setOutput("should-publish", true)
+  core.setOutput("should-publish", true)
 }
