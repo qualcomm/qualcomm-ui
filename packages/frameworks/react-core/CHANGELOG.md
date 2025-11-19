@@ -1,5 +1,11 @@
 # @qualcomm-ui/react-core
 
+## 1.0.6 (2025/11/18)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.0.5 (2025/11/17)
 
 ### Miscellaneous Chores

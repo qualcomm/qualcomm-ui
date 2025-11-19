@@ -1,10 +1,9 @@
-import {getPackages} from "@manypkg/get-packages"
 import {Octokit} from "@octokit/rest"
 import chalk from "chalk"
 import {config} from "dotenv"
 import {readFile} from "node:fs/promises"
-import {resolve} from "node:path"
-import {cwd} from "node:process"
+
+import {getPublishablePackages} from "./utils"
 
 config()
 
@@ -41,37 +40,6 @@ async function parseChangelog(path: string) {
   return {body, date, version}
 }
 
-/**
- * Retrieves all packages in the monorepo that should be published.
- * Filters out packages marked as private (except specific Angular packages) and
- * ignored packages.
- *
- * @returns Array of package objects that are eligible for publishing
- */
-async function getPublishablePackages() {
-  const {packages} = await getPackages(cwd())
-  const changesetConfig = JSON.parse(
-    await readFile(resolve(cwd(), ".changeset/config.json"), "utf-8"),
-  )
-  const publishablePrivatePackages = new Set([
-    "@qualcomm-ui/angular",
-    "@qualcomm-ui/angular-core",
-  ])
-  const ignoredPackages = new Set(changesetConfig.ignored ?? [])
-  return packages.filter((pkg) => {
-    if (ignoredPackages.has(pkg.packageJson.name)) {
-      return false
-    }
-    if (!pkg.packageJson.version) {
-      return false
-    }
-    if (!pkg.packageJson.private) {
-      return true
-    }
-    return publishablePrivatePackages.has(pkg.packageJson.name)
-  })
-}
-
 for (const pkg of await getPublishablePackages()) {
   const changelogPath = `${pkg.dir}/CHANGELOG.md`
   const changelog = await parseChangelog(changelogPath).catch(() => null)
@@ -81,7 +49,7 @@ for (const pkg of await getPublishablePackages()) {
   }
   if (changelog.version !== pkg.packageJson.version) {
     console.log(
-      `Skipping ${pkg.packageJson.name}: changelog ${changelog.version} ≠ package.json ${pkg.packageJson.version}`,
+      `Skipping ${pkg.packageJson.name}: changelog ${changelog.version} !== package.json ${pkg.packageJson.version}`,
     )
     continue
   }

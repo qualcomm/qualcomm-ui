@@ -1,10 +1,11 @@
 // scripts/check-versions.mjs
-import {getPackagesSync} from "@manypkg/get-packages"
 import {appendFileSync} from "node:fs"
 
-const {packages} = getPackagesSync(process.cwd())
+import {getPublishablePackages} from "./utils"
 
-async function getPublishedVersion(packageName) {
+const packages = await getPublishablePackages()
+
+async function getPublishedVersion(packageName: string): Promise<string> {
   const response = await fetch(`https://registry.npmjs.org/${packageName}`)
 
   if (response.status === 404) {
@@ -19,7 +20,7 @@ async function getPublishedVersion(packageName) {
   return data["dist-tags"]?.latest
 }
 
-function compareVersions(current, published) {
+function compareVersions(current: string, published: string) {
   const [cMajor, cMinor, cPatch] = current.split(".").map(Number)
   const [pMajor, pMinor, pPatch] = published.split(".").map(Number)
 
@@ -65,7 +66,7 @@ const newer = results.filter((r) => r.isNewer)
 if (newer.length > 0) {
   console.log("The following packages will be published:")
   newer.forEach((r) =>
-    console.log(`  ${r.name}: ${r.current} > ${r.published}`),
+    console.log(`  ${r.name}: ${r.published} -> ${r.current}`),
   )
 }
 
