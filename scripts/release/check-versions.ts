@@ -1,5 +1,5 @@
 // scripts/check-versions.mjs
-import {appendFileSync} from "node:fs"
+import {setOutput} from "@actions/core"
 
 import {getPublishablePackages} from "./utils"
 
@@ -68,11 +68,6 @@ if (newer.length > 0) {
   newer.forEach((r) =>
     console.log(`  ${r.name}: ${r.published} -> ${r.current}`),
   )
-}
 
-if (process.env.GITHUB_OUTPUT) {
-  appendFileSync(
-    process.env.GITHUB_OUTPUT,
-    `should-publish=${newer.length > 0}\n`,
-  )
+  setOutput("should-publish", true)
 }
