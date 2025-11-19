@@ -9,7 +9,6 @@ import {
   buildEntryPoints,
   type BuildEntryPointsOptions,
   collectFolders,
-  getArg,
   hasArg,
   logPlugin,
 } from "@qualcomm-ui/esbuild"
@@ -112,8 +111,6 @@ async function collectEntryPoints(): Promise<Record<string, string>> {
 }
 
 async function build(argv: string[]) {
-  const isDev = getArg(argv, "--mode") === "development"
-
   const buildOpts: BuildOptions = {
     banner: {js: '"use client";'} as const,
     bundle: true,
@@ -128,7 +125,7 @@ async function build(argv: string[]) {
       "@qualcomm-ui/utils/*",
     ],
     metafile: true,
-    minifyIdentifiers: !isDev,
+    minifyIdentifiers: false,
     minifySyntax: true,
     minifyWhitespace: true,
     outdir: "dist",

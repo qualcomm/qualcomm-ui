@@ -113,7 +113,6 @@ async function collectEntryPoints() {
 }
 
 async function build(argv: string[]) {
-  const isDev = getArg(argv, "--mode") === "development"
   const buildOpts: BuildOptions = {
     banner: {
       js: `"use client";`,
@@ -132,7 +131,7 @@ async function build(argv: string[]) {
       "@qualcomm-ui/utils/*",
     ],
     metafile: true,
-    minifyIdentifiers: !isDev,
+    minifyIdentifiers: false,
     minifySyntax: true,
     minifyWhitespace: true,
     outdir: "dist",
