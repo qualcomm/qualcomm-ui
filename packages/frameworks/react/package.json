@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
-    "@floating-ui/react": "^0.27.3",
     "@qualcomm-ui/cli": "workspace:^1.0.5",
     "@qualcomm-ui/core": "workspace:^1.0.7",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
@@ -86,8 +85,7 @@
     "@qualcomm-ui/utils": "workspace:^1.0.3",
     "lucide-react": ">=0.379.0 <1",
     "react": ">=19.0.0",
-    "react-dom": ">=19.0.0",
-    "typescript": ">=5.0.0"
+    "react-dom": ">=19.0.0"
   },
   "nyc": {
     "reporter": [
