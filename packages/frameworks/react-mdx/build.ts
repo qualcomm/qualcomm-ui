@@ -118,8 +118,9 @@ async function build(argv: string[]) {
     banner: {js: '"use client";'} as const,
     bundle: true,
     external: [
-      ...Object.keys(pkg.peerDependencies ?? {}),
       ...Object.keys(pkg.dependencies ?? {}),
+      ...Object.keys(pkg.devDependencies ?? {}),
+      ...Object.keys(pkg.peerDependencies ?? {}),
       "@qualcomm-ui/react/*",
       "@qualcomm-ui/core/*",
       "@qualcomm-ui/react-mdx/*",
