@@ -182,15 +182,7 @@ export function getRootStyle(
   const range = getRangeOffsets(params)
   const thumbSize = context.get("thumbSize")
 
-  const offsetStyles = context
-    .get("value")
-    .reduce<JSX.CSSProperties>((styles, value, index) => {
-      const offset = getThumbOffset(params, value)
-      return {...styles, [`--slider-thumb-offset-${index}`]: offset}
-    }, {})
-
-  return {
-    ...offsetStyles,
+  const styles: JSX.CSSProperties = {
     "--slider-range-end": range.end,
     "--slider-range-start": range.start,
     "--slider-thumb-height": toPx(thumbSize?.height),
@@ -201,6 +193,13 @@ export function getRootStyle(
         : "translateX(-50%)",
     "--slider-thumb-width": toPx(thumbSize?.width),
   }
+
+  const values = context.get("value")
+  for (let i = 0; i < values.length; i++) {
+    styles[`--slider-thumb-offset-${i}`] = getThumbOffset(params, values[i])
+  }
+
+  return styles
 }
 
 /** Marker style calculations */
