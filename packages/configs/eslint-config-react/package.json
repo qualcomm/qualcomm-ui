@@ -17,7 +17,9 @@
   },
   "main": "index.js",
   "module": "index.js",
+  "types": "index.d.ts",
   "files": [
+    "index.d.ts",
     "index.js",
     "base.js",
     "recommended.js",
@@ -28,10 +30,11 @@
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
+    "@eslint/core": "^1.0.0",
     "@qualcomm-ui/cli": "workspace:^1.0.3",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
-    "eslint": "9.37.0",
+    "eslint": "catalog:",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",

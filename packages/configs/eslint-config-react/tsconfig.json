@@ -1,4 +1,4 @@
 {
   "extends": "../tsconfig/tsconfig.node.json",
-  "include": ["./scripts", "index.d.ts"]
+  "files": ["index.d.ts"]
 }

@@ -12,7 +12,10 @@
     "config"
   ],
   "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
   "files": [
+    "index.d.ts",
     "index.js",
     "base.js",
     "jsdoc.js",
@@ -27,6 +30,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@eslint/core": "^1.0.0",
     "@qualcomm-ui/cli": "workspace:^1.0.2",
     "@stylistic/eslint-plugin": "5.2.0",
     "@typescript-eslint/eslint-plugin": "catalog:",
