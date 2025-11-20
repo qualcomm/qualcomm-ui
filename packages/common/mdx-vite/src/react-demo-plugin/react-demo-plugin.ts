@@ -3,7 +3,6 @@
 
 import {transformerRenderIndentGuides} from "@shikijs/transformers"
 import chalk from "chalk"
-import {type FSWatcher, watch} from "chokidar"
 import {glob} from "glob"
 import {readFile} from "node:fs/promises"
 import {basename, resolve} from "node:path"
@@ -13,40 +12,31 @@ import type {Plugin} from "vite"
 
 import {quiCustomDarkTheme, type ReactDemoData} from "@qualcomm-ui/mdx-common"
 import {dedent} from "@qualcomm-ui/utils/dedent"
-import {debounce} from "@qualcomm-ui/utils/functions"
 
 import {LOG_PREFIX, VIRTUAL_MODULE_IDS} from "./demo-plugin-constants"
 import type {QuiDemoPluginOptions} from "./demo-plugin-types"
 import {
   createDemoName,
-  createEmptyScopeModule,
-  extractAllImports,
   extractFileImports,
   extractPageId,
   getScriptKind,
   isCssAsset,
   isDemoFile,
-  type RelativeImport,
 } from "./demo-plugin-utils"
 
-const isDev = process.env.NODE_ENV === "development"
+interface HandleUpdateOptions {
+  demoName?: string
+  filePath: string
+  type: "add" | "update"
+}
 
 let highlighter: Highlighter | null = null
-let initCount = 0
 
-interface HmrState {
-  windowScrollY: number
-}
-
-const hmrState: HmrState = {
-  windowScrollY: 0,
-}
 const demoRegistry = new Map<string, ReactDemoData>()
-const pageScopes = new Map<string, string>()
 const pageFiles = new Map<string, string[]>()
 const relativeImportDependents = new Map<string, Set<string>>()
 
-let hasWatcherInitialized = false
+const hasWatcherInitialized = false
 
 /**
  * Logs in dev mode only after the watcher has been initialized. Vite runs setup
@@ -61,53 +51,8 @@ function logDev(...args: any[]) {
 }
 
 /**
- * Generates virtual modules for React demos with isolated scopes.
- *
- * ## Why This Is Complex
- *
- * Demo scopes contain live module references (components, hooks, utilities) that
- * must be bundled at build time. Can't serialize over WebSocket, can't be
- * dynamically required. When a demo's imports change, the entire virtual module
- * regenerates.
- *
- * ## Core Constraints
- *
- * - **Adding/removing demos:** Structure changes, module regenerates, full reload
- * - **Editing demo imports:** Dependencies change, scope rebuilds, module
- * regenerates - **Editing demo code:** Still regenerates scope (even if imports
- * unchanged)
- *
- * Vite's HMR assumes stable module structure. We violate this assumption.
- *
- * ## Design Choices
- *
- * Lazy per-page (dev only): Loading 300 demos upfront kills dev server
- * performance. Split into ~30 page modules. Cost: dual code paths, regeneration
- * affects whole page.
- *
- * Manual dependency tracking: Map utility files → demos directly instead of
- * traversing Vite's graph (`utility.ts -> demo.tsx -> virtual:page:...`). Faster
- * but can drift.
- *
- * Custom HMR events: Return `[]` from `handleHotUpdate` to prevent Vite's
- * default HMR, manually invalidate modules, send WebSocket events for scroll
- * restoration.
- *
- * **Global state:** `demoRegistry`, `pageScopes`, etc. are module-level. If Vite
- * creates multiple plugin instances (SSR/client), they share state incorrectly.
- *
- * ## Alternatives Considered
- *
- * - `import.meta.glob`: Still requires regeneration when files added/removed
- * - Per-demo virtual modules: 300 modules, but would allow granular HMR (might be
- * worth it) - Runtime scope building: Defeats bundling, slower, no tree-shaking
- * - Server components: Demos need client interactivity
- *
- * ## Performance (dev mode)
- *
- * - Initial scan: ~2-3s for 300 demos
- * - Page navigation: ~100-300ms to load page module
- * - Demo edit: ~50-200ms to regenerate + HMR
+ * Generates virtual modules for React demo components. Virtual modules contain
+ * highlighted source code and metadata about each demo.
  */
 export function reactDemoPlugin({
   demoPattern = "src/routes/**/demos/*.tsx",
@@ -119,23 +64,8 @@ export function reactDemoPlugin({
   transformers = [],
   transformLine,
 }: QuiDemoPluginOptions = {}): Plugin {
-  let watcher: FSWatcher | null = null
-
   return {
-    async buildEnd() {
-      if (watcher) {
-        await watcher.close()
-        watcher = null
-        hasWatcherInitialized = false
-      }
-    },
-
     async buildStart() {
-      if (initCount === 0) {
-        initCount++
-        return
-      }
-
       if (!highlighter) {
         try {
           highlighter = await createHighlighter({
@@ -153,159 +83,48 @@ export function reactDemoPlugin({
         }
       }
 
-      try {
-        await collectReactDemos()
-        if (isDev && !hasWatcherInitialized) {
-          hasWatcherInitialized = true
-          await setupFileWatcher()
-        } else if (isDev) {
-          logDev(
-            `${chalk.magenta.bold(LOG_PREFIX)} skipping watch: watcher already initialized by another instance`,
-          )
-        }
-      } catch (error) {
-        if (watcher) {
-          await watcher.close()
-          watcher = null
-          hasWatcherInitialized = false
-        }
-        throw error
-      }
+      await collectReactDemos()
     },
 
-    configureServer(server) {
-      const debouncedRestore = debounce((data: {scrollY: number}) => {
-        hmrState.windowScrollY = data.scrollY
-      }, 100)
-      server.ws.on("custom:store-scroll-position", debouncedRestore)
-
-      server.ws.on("custom:request-scroll-position", () => {
-        server.ws.send({
-          data: hmrState.windowScrollY,
-          event: "custom:restore-scroll-position",
-          type: "custom",
-        })
-      })
-    },
     enforce: "pre",
 
-    /**
-     * The primary issue is that scoped demos need their dependencies re-evaluated,
-     * which means module invalidation. Vite's HMR isn't designed for this pattern.
-     * We can work around this by invalidating the entire page scope for the
-     * affected demo, and then re-evaluating the demo itself.
-     */
     async handleHotUpdate({file, modules, server}) {
       if (isCssAsset(file)) {
-        return server.moduleGraph.getModulesByFile(file)?.values()?.toArray()
-      }
-
-      let shouldUpdate = false
-      if (isDemoFile(file)) {
-        await handleFileAdditionOrUpdate(file, false)
-        shouldUpdate = true
-      }
-      const normalizedFile = resolve(file)
-      const dependents = relativeImportDependents.get(normalizedFile)
-      if (dependents) {
-        shouldUpdate = true
-      }
-
-      if (shouldUpdate) {
-        const autoModule = server.moduleGraph.getModuleById(
-          VIRTUAL_MODULE_IDS.AUTO,
-        )
-        if (autoModule) {
-          server.moduleGraph.invalidateModule(autoModule)
-          await server.reloadModule(autoModule)
-        }
         return modules
       }
 
       if (isDemoFile(file)) {
-        logDev(
-          `${chalk.magenta.bold(LOG_PREFIX)} Processing change: ${chalk.blueBright.bold(file)}`,
-        )
-
-        const pageId = extractPageId(file, routesDir)
-        const demoName = createDemoName(file)
-        const wasNew = !demoRegistry.has(demoName)
-        await handleFileAdditionOrUpdate(file, false)
-
-        const pageModule = server.moduleGraph.getModuleById(
-          `${VIRTUAL_MODULE_IDS.PAGE_PREFIX}${pageId}`,
-        )
-        if (pageModule) {
-          console.debug(
-            "invalidating:",
-            `virtual:qui-demo-scope/page:${pageId}`,
-          )
-          server.moduleGraph.invalidateModule(pageModule)
-          await server.reloadModule(pageModule)
-        }
-        if (wasNew) {
-          const autoModule = server.moduleGraph.getModuleById(
-            VIRTUAL_MODULE_IDS.AUTO,
-          )
-          if (autoModule) {
-            server.moduleGraph.invalidateModule(autoModule)
-            await server.reloadModule(autoModule)
-          }
-        }
-
-        server.ws.send({
-          data: demoRegistry.get(createDemoName(file)),
-          event: "custom:qui-demo-update",
-          type: "custom",
-        })
+        await handleDemoAdditionOrUpdate({filePath: file, type: "update"})
       } else {
         const normalizedFile = resolve(file)
-        const dependents = relativeImportDependents.get(normalizedFile)
-        if (!dependents?.size) {
+        const dependentDemos = relativeImportDependents.get(normalizedFile)
+        if (!dependentDemos?.size) {
           return modules
         }
-        const pageId = extractPageId(file, routesDir)
-        const allPageFiles = pageFiles.get(pageId)!
-        const scope = await generateScopeForPage(pageId, allPageFiles)
-        pageScopes.set(pageId, scope)
-        const pageModule = server.moduleGraph.getModuleById(
-          `${VIRTUAL_MODULE_IDS.PAGE_PREFIX}${pageId}`,
-        )
-        if (pageModule) {
-          console.debug(
-            "invalidating:",
-            `virtual:qui-demo-scope/page:${pageId}`,
-          )
-          server.moduleGraph.invalidateModule(pageModule)
-          await server.reloadModule(pageModule)
-        }
-
-        if (dependents) {
-          for (const demoName of dependents) {
-            server.ws.send({
-              data: demoRegistry.get(demoName),
-              event: "custom:qui-demo-update",
-              type: "custom",
-            })
-            server.ws.send({
-              data: {demoName},
-              event: "custom:qui-demo-scope-changed",
-              type: "custom",
+        for (const demoName of Array.from(dependentDemos)) {
+          const demo = demoRegistry.get(demoName)
+          if (demo) {
+            await handleDemoAdditionOrUpdate({
+              filePath: demo.filePath,
+              type: "update",
             })
           }
         }
       }
 
+      const autoModule = server.moduleGraph.getModuleById(
+        VIRTUAL_MODULE_IDS.AUTO,
+      )
+      if (autoModule) {
+        server.moduleGraph.invalidateModule(autoModule)
+        await server.reloadModule(autoModule)
+      }
       return modules
     },
 
     async load(id) {
       if (id === VIRTUAL_MODULE_IDS.AUTO) {
         return generateAutoScopeModule()
-      }
-      if (id.startsWith(VIRTUAL_MODULE_IDS.PAGE_PREFIX)) {
-        const pageId = id.replace(VIRTUAL_MODULE_IDS.PAGE_PREFIX, "")
-        return pageScopes.get(pageId) || createEmptyScopeModule()
       }
     },
 
@@ -314,12 +133,6 @@ export function reactDemoPlugin({
     resolveId(id) {
       if (id === "virtual:qui-demo-scope/auto") {
         return VIRTUAL_MODULE_IDS.AUTO
-      }
-      if (id.startsWith("virtual:qui-demo-scope/page:")) {
-        return `\0${id}`
-      }
-      if (id === "virtual:qui-demo-scope/config") {
-        return VIRTUAL_MODULE_IDS.CONFIG
       }
     },
 
@@ -330,54 +143,10 @@ export function reactDemoPlugin({
     },
   }
 
-  async function setupFileWatcher() {
-    watcher = watch(routesDir, {
-      ignoreInitial: true,
-      persistent: true,
-    })
-
-    watcher.on("ready", () => {
-      logDev(
-        `${chalk.blue.bold(LOG_PREFIX)} Registered ${chalk.green(demoRegistry.size)} demo files. Watching for file changes...`,
-      )
-    })
-
-    watcher.on("addDir", (dirPath: string) => {
-      if (dirPath.endsWith("/demos")) {
-        logDev(
-          `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.greenBright("New demo directory detected:")} ${chalk.blueBright.bold(dirPath)}`,
-        )
-      }
-    })
-
-    watcher.on("unlink", async (filePath: string) => {
-      if (isDemoFile(filePath)) {
-        logDev(
-          `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.redBright("Demo file deleted:")} ${chalk.blueBright.bold(filePath)}`,
-        )
-        await handleFileDeletion(filePath)
-      }
-    })
-
-    watcher.on("add", async (filePath: string) => {
-      if (isDemoFile(filePath)) {
-        logDev(
-          `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.greenBright("Demo file added:")} ${chalk.blueBright.bold(filePath)}`,
-        )
-        await handleFileAdditionOrUpdate(filePath, true).catch(() => {
-          console.debug("failed to add file", filePath)
-        })
-      }
-    })
-  }
-
-  /**
-   * True if the scope changed
-   */
-  async function handleFileAdditionOrUpdate(
-    filePath: string,
-    isAdd?: boolean,
-  ): Promise<boolean> {
+  async function handleDemoAdditionOrUpdate({
+    filePath,
+    type,
+  }: HandleUpdateOptions): Promise<void> {
     const pageId = extractPageId(filePath, routesDir)
     const demoName = createDemoName(filePath)
 
@@ -407,49 +176,8 @@ export function reactDemoPlugin({
       }
     }
 
-    const previousScope = pageScopes.get(pageId)
-    const allPageFiles = pageFiles.get(pageId)!
-    const scope = await generateScopeForPage(pageId, allPageFiles)
-    pageScopes.set(pageId, scope)
-
     logDev(
-      `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.greenBright(isAdd ? "Added demo:" : "Updated demo:")} ${chalk.greenBright.bold(demoName)}`,
-    )
-
-    return previousScope !== scope
-  }
-
-  async function handleFileDeletion(deletedFile: string) {
-    const demoName = createDemoName(deletedFile)
-    const pageId = extractPageId(deletedFile, routesDir)
-
-    demoRegistry.delete(demoName)
-
-    for (const [importPath, dependents] of relativeImportDependents.entries()) {
-      dependents.delete(demoName)
-      if (dependents.size === 0) {
-        relativeImportDependents.delete(importPath)
-      }
-    }
-
-    const files = pageFiles.get(pageId)
-    if (files) {
-      const updatedFiles = files.filter((f) => f !== deletedFile)
-      if (updatedFiles.length === 0) {
-        pageFiles.delete(pageId)
-        pageScopes.delete(pageId)
-        logDev(
-          `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.redBright("Removed empty page:")} ${chalk.blueBright.bold(pageId)}`,
-        )
-      } else {
-        pageFiles.set(pageId, updatedFiles)
-        const scope = await generateScopeForPage(pageId, updatedFiles)
-        pageScopes.set(pageId, scope)
-      }
-    }
-
-    logDev(
-      `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.redBright("Cleaned up deleted file:")} ${chalk.blueBright.bold(deletedFile)}`,
+      `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.greenBright(type === "add" ? "Added demo:" : "Updated demo:")} ${chalk.greenBright.bold(demoName)}`,
     )
   }
 
@@ -526,7 +254,7 @@ export function reactDemoPlugin({
   }
 
   async function collectReactDemos() {
-    if (demoRegistry.size && pageScopes.size && pageFiles.size) {
+    if (demoRegistry.size) {
       logDev(
         `${chalk.magenta.bold(LOG_PREFIX)} Using cached ${chalk.cyanBright.bold(demoRegistry.size)} demos`,
       )
@@ -563,156 +291,12 @@ export function reactDemoPlugin({
       }
     }
 
-    // Generate one scope module per page
-    for (const [pageId, files] of pageFiles.entries()) {
-      const scope = await generateScopeForPage(pageId, files)
-      pageScopes.set(pageId, scope)
-    }
+    logDev(
+      `${chalk.blue.bold(LOG_PREFIX)} Registered ${chalk.green(demoRegistry.size)} demo files. Watching for file changes...`,
+    )
   }
 
-  async function generateScopeForPage(
-    pageId: string,
-    files: string[],
-  ): Promise<string> {
-    const demosData = []
-
-    // Collect all imports from all demos
-    const allThirdPartyImports = new Map<
-      string,
-      Set<{imported: string; local: string}>
-    >()
-    const allRelativeImports: RelativeImport[] = []
-    const demoImportData = new Map<
-      string,
-      {
-        relative: Array<{
-          resolvedPath: string
-          specifiers: Array<{imported: string; local: string}>
-        }>
-        thirdParty: Array<{
-          source: string
-          specifiers: Array<{imported: string; local: string}>
-        }>
-      }
-    >()
-
-    for (const file of files) {
-      const demoName = createDemoName(file)
-      const demo = demoRegistry.get(demoName)
-      if (!demo) {
-        continue
-      }
-
-      demosData.push({
-        demoName,
-        fileName: demo.fileName,
-        imports: demo.imports,
-        pageId: demo.pageId,
-        sourceCode: demo.sourceCode,
-      })
-
-      const {importMap, relativeImports} = await extractAllImports([file])
-
-      demoImportData.set(demoName, {
-        relative: relativeImports.map((r) => ({
-          resolvedPath: r.resolvedPath,
-          specifiers: r.specifiers,
-        })),
-        thirdParty: Array.from(importMap.entries()).map(([source, specs]) => ({
-          source,
-          specifiers: Array.from(specs),
-        })),
-      })
-
-      for (const [source, specifiers] of importMap) {
-        if (!allThirdPartyImports.has(source)) {
-          allThirdPartyImports.set(source, new Set())
-        }
-        for (const spec of specifiers) {
-          allThirdPartyImports.get(source)!.add(spec)
-        }
-      }
-      for (const relImport of relativeImports) {
-        if (
-          !allRelativeImports.some(
-            (r) => r.resolvedPath === relImport.resolvedPath,
-          )
-        ) {
-          allRelativeImports.push(relImport)
-        }
-      }
-    }
-
-    const demosJson = JSON.stringify(demosData)
-
-    return `// Auto-generated page scope for ${pageId}
-const demosData = ${demosJson}
-
-const scopeCache = new Map()
-
-function createScope(demoName) {
-  if (scopeCache.has(demoName)) {
-    return scopeCache.get(demoName)
-  }
-  
-  const imports = demoImportData.get(demoName)
-  if (!imports) return {}
-  
-  const scope = {...reactScope}
-  
-  for (const {source, specifiers} of imports.thirdParty) {
-    const mod = modules[source]
-    if (!mod) continue
-    
-    for (const {imported, local} of specifiers) {
-      if (imported === 'default') {
-        scope[local] = mod.default
-      } else if (imported === '*') {
-        Object.assign(scope, mod)
-      } else {
-        scope[local] = mod[imported]
-      }
-    }
-  }
-  
-  for (const {resolvedPath, specifiers} of imports.relative) {
-    const mod = modules[resolvedPath]
-    if (!mod) continue
-    
-    for (const {imported, local} of specifiers) {
-      if (imported === 'default') {
-        scope[local] = mod.default
-      } else if (imported === '*') {
-        Object.assign(scope, mod)
-      } else {
-        scope[local] = mod[imported]
-      }
-    }
-  }
-  
-  scopeCache.set(demoName, scope)
-  return scope
-}
-
-export function getDemo(demoName) {
-  const demo = demosData.find(d => d.demoName === demoName)
-  if (!demo) return null
-  return {
-    ...demo,
-    scope: createScope(demoName)
-  }
-}
-
-export function getDemos() {
-  return demosData.map(demo => ({
-    ...demo,
-    scope: createScope(demo.demoName)
-  }))
-}
-`
-  }
-
-  async function generateAutoScopeModule(): Promise<string> {
+  function generateAutoScopeModule(): string {
     const registryCode = generateDemoRegistry(demoRegistry)
     return [
       "// Auto-generated demo scope resolver (PROD MODE)",
@@ -886,6 +470,7 @@ export function getDemos() {
       return {
         demoName: createDemoName(filePath),
         fileName,
+        filePath,
         imports,
         sourceCode,
       }
@@ -987,24 +572,7 @@ export function getDemos() {
           sourceCode: [],
         }
       }
-      
-      const pageModule = pageModules[demo.pageId]
-      if (!pageModule) {
-        return {
-          fileName: "",
-          imports: [],
-          errorMessage: \`Page module not found.\`,
-          pageId: demo.pageId,
-          sourceCode: [],
-        }
-      }
-      
-      return pageModule.getDemo(demoName) || {
-        fileName: demo.fileName,
-        imports: demo.imports,
-        pageId: demo.pageId,
-        sourceCode: demo.sourceCode,
-      }
+      return demo
     }
   `
   }

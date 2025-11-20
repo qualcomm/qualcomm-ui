@@ -2,15 +2,14 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import chalk from "chalk"
-import {createHash} from "node:crypto"
-import {existsSync} from "node:fs"
+import {existsSync, readFileSync} from "node:fs"
 import {readFile} from "node:fs/promises"
 import {dirname, join, relative, resolve, sep} from "node:path"
 import * as ts from "typescript"
 
 import {pascalCase} from "@qualcomm-ui/utils/change-case"
 
-import {LOG_PREFIX, NODE_BUILTINS, REACT_IMPORTS} from "./demo-plugin-constants"
+import {LOG_PREFIX, NODE_BUILTINS} from "./demo-plugin-constants"
 
 interface PathAlias {
   pattern: RegExp
@@ -65,25 +64,6 @@ export async function extractFileImports(filePath: string): Promise<{
       error,
     )
     return null
-  }
-}
-
-function mergeImports(
-  importMap: Map<string, Set<{imported: string; local: string}>>,
-  imports: ImportSpecifier[],
-) {
-  for (const {source, specifiers} of imports) {
-    if (isNodeBuiltin(source)) {
-      continue
-    }
-    let sourceSpecifiers = importMap.get(source)
-    if (!sourceSpecifiers) {
-      sourceSpecifiers = new Set()
-      importMap.set(source, sourceSpecifiers)
-    }
-    for (const spec of specifiers) {
-      sourceSpecifiers.add(spec)
-    }
   }
 }
 
@@ -233,24 +213,6 @@ function resolveRelativeImport(source: string, fromFile: string): string {
   }
 
   return resolved
-}
-
-export async function extractAllImports(files: string[]): Promise<{
-  importMap: Map<string, Set<{imported: string; local: string}>>
-  relativeImports: RelativeImport[]
-}> {
-  const importMap = new Map<string, Set<{imported: string; local: string}>>()
-  const relativeImports: RelativeImport[] = []
-
-  for (const filePath of files) {
-    const result = await extractFileImports(filePath)
-    if (result) {
-      mergeImports(importMap, result.thirdPartyImports)
-      relativeImports.push(...result.relativeImports)
-    }
-  }
-
-  return {importMap, relativeImports}
 }
 
 function isRelativeImport(source: string): boolean {
@@ -418,138 +380,6 @@ function resolvePathAlias(
   return null
 }
 
-export function sanitizeSourceName(source: string): string {
-  return source
-    .replace(/@/g, "at_")
-    .replace(/\//g, "_")
-    .replace(/[^a-zA-Z0-9_]/g, "_")
-    .replace(/_+/g, "_")
-    .replace(/^_|_$/g, "")
-}
-
-export function sanitizeIdentifier(str: string): string {
-  return str.replace(/[^a-zA-Z0-9]/g, "_")
-}
-
-export function createUniqueModuleName(source: string): string {
-  const hash = createHash("sha256").update(source).digest("hex").substring(0, 8)
-  const baseName =
-    source
-      .split("/")
-      .pop()
-      ?.replace(/[^a-zA-Z0-9]/g, "_")
-      ?.replace(/^_+|_+$/g, "")
-      ?.replace(/^(\d)/, "_$1") || "module"
-
-  return `mod_${baseName}_${hash}`
-}
-
-export function addReactImports(imports: string[], scopeEntries: string[]) {
-  imports.push(`import React from "react"`)
-  imports.push(`import {
-    ${REACT_IMPORTS.join(", ")}
-  } from "react"`)
-  scopeEntries.push("React", ...REACT_IMPORTS)
-}
-
-export function addThirdPartyImports(
-  importMap: Map<string, Set<{imported: string; local: string}>>,
-  imports: string[],
-  scopeEntries: string[],
-) {
-  const sortedImports = Array.from(importMap.entries()).sort(([a], [b]) =>
-    a.localeCompare(b),
-  )
-  const usedNames = new Set(["React", ...REACT_IMPORTS])
-
-  for (const [source, specifiers] of sortedImports) {
-    const moduleName = createUniqueModuleName(source)
-    imports.push(`import * as ${moduleName} from "${source}"`)
-    addModuleToScope(source, specifiers, moduleName, scopeEntries, usedNames)
-  }
-}
-
-export function addThirdPartyImportsNamespaced(
-  importMap: Map<string, Set<{imported: string; local: string}>>,
-  imports: string[],
-  scopeEntries: string[],
-  demoName: string,
-) {
-  const sortedImports = Array.from(importMap.entries()).sort(([a], [b]) =>
-    a.localeCompare(b),
-  )
-  const usedNames = new Set(["React", ...REACT_IMPORTS])
-
-  for (const [source, specifiers] of sortedImports) {
-    const moduleName = `${sanitizeIdentifier(demoName)}_${createUniqueModuleName(source)}`
-    imports.push(`import * as ${moduleName} from "${source}"`)
-    addModuleToScope(source, specifiers, moduleName, scopeEntries, usedNames)
-  }
-}
-
-export function addRelativeImportsNamespaced(
-  relativeImports: RelativeImport[],
-  imports: string[],
-  scopeEntries: string[],
-  demoName: string,
-) {
-  const processedPaths = new Set<string>()
-
-  for (const {resolvedPath, specifiers} of relativeImports) {
-    if (processedPaths.has(resolvedPath)) {
-      continue
-    }
-    processedPaths.add(resolvedPath)
-
-    const moduleName = `${sanitizeIdentifier(demoName)}_${createUniqueModuleName(resolvedPath)}`
-    imports.push(`import * as ${moduleName} from "${resolvedPath}"`)
-
-    for (const {imported, local} of specifiers) {
-      if (imported === "default") {
-        scopeEntries.push(`${local}: ${moduleName}.default`)
-      } else if (imported === "*") {
-        scopeEntries.push(`...${moduleName}`)
-      } else {
-        scopeEntries.push(`${local}: ${moduleName}.${imported}`)
-      }
-    }
-  }
-}
-
-function addModuleToScope(
-  source: string,
-  specifiers: Set<{imported: string; local: string}>,
-  moduleName: string,
-  scopeEntries: string[],
-  usedNames: Set<string>,
-) {
-  const specArray = Array.from(specifiers)
-  const hasDefault = specArray.some((spec) => spec.imported === "default")
-  const hasNamespace = specArray.some((spec) => spec.imported === "*")
-  const namedImports = specArray.filter(
-    (spec) => spec.imported !== "default" && spec.imported !== "*",
-  )
-
-  if (hasNamespace) {
-    scopeEntries.push(`...${moduleName}`)
-    return
-  }
-
-  const sanitizedSource = sanitizeSourceName(source)
-  if (hasDefault) {
-    scopeEntries.push(`"${sanitizedSource}__default": ${moduleName}.default`)
-  }
-
-  for (const {imported, local} of namedImports) {
-    const sanitizedKey = `${sanitizedSource}__${imported}`
-    scopeEntries.push(`"${sanitizedKey}": ${moduleName}.${imported}`)
-    if (!usedNames.has(local)) {
-      scopeEntries.push(`${local}: ${moduleName}.${imported}`)
-      usedNames.add(local)
-    }
-  }
-}
-
 export function extractPageId(filePath: string, routesDir: string): string {
   const relativePath = relative(routesDir, filePath)
   const pathParts = relativePath.split(sep)
@@ -566,12 +396,12 @@ export function isCssAsset(filePath: string) {
 
 export function isDemoFile(filePath: string): boolean {
   try {
-    return filePath.includes("/demos/") && filePath.endsWith(".tsx")
+    return (
+      filePath.includes("/demos/") &&
+      filePath.endsWith(".tsx") &&
+      !readFileSync(filePath).includes("export default")
+    )
   } catch (error) {
     return false
   }
-}
-
-export function createEmptyScopeModule(): string {
-  return "export const createDemoScope = () => ({})"
 }
