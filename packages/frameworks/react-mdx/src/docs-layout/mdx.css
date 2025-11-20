@@ -383,3 +383,13 @@ hr.mdx {
     }
   }
 }
+
+.qui-code-tabs.mdx {
+  .qui-tabs__panel.mdx {
+    padding-top: 0;
+
+    .shiki-wrapper.mdx {
+      margin-top: 0;
+    }
+  }
+}
