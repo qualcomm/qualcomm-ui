@@ -1,5 +1,19 @@
 # @qualcomm-ui/react-mdx
 
+## 1.3.0 (2025/11/19)
+
+### Features
+
+- [Demos]: add ReactDemo and ReactDemoRunner components
+
+### Code Refactoring
+
+- [Demos]: deprecate QdsReactDemo and QdsDemoRunner
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
+
 ## 1.2.3 (2025/11/18)
 
 ### Build System

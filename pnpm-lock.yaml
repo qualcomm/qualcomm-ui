@@ -732,7 +732,7 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../esbuild
       '@qualcomm-ui/mdx-common':
-        specifier: workspace:^1.1.0
+        specifier: workspace:^1.2.0
         version: link:../mdx-common
       '@qualcomm-ui/tsconfig':
         specifier: workspace:^1.0.3
@@ -3366,7 +3366,7 @@ importers:
         specifier: workspace:^1.0.7
         version: link:../../common/core
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.4.0
+        specifier: workspace:^1.4.1
         version: link:../../common/qds-core
       '@qualcomm-ui/tailwind-plugin':
         specifier: workspace:^1.1.0
@@ -3642,7 +3642,7 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/esbuild
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.4.0
+        specifier: workspace:^1.4.1
         version: link:../../common/qds-core
       '@qualcomm-ui/react-core':
         specifier: workspace:^1.0.7
@@ -3895,10 +3895,10 @@ importers:
         specifier: workspace:^1.0.3
         version: link:../../common/esbuild
       '@qualcomm-ui/mdx-common':
-        specifier: workspace:^1.1.0
+        specifier: workspace:^1.2.0
         version: link:../../common/mdx-common
       '@qualcomm-ui/react':
-        specifier: workspace:^1.1.4
+        specifier: workspace:^1.1.5
         version: link:../react
       '@qualcomm-ui/react-core':
         specifier: workspace:^1.0.7

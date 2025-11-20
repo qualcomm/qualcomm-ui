@@ -1,5 +1,12 @@
 # @qualcomm-ui/qds-core
 
+## 1.4.1 (2025/11/19)
+
+### Bug Fixes
+
+- [tabs]: adjust font-size for sm and md sizes
+- [menu-item]: remove underline on link items
+
 ## 1.4.0 (2025/11/18)
 
 ### Features

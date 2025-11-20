@@ -1,5 +1,15 @@
 # @qualcomm-ui/mdx-vite
 
+## 2.0.0 (2025/11/19)
+
+### BREAKING CHANGES
+
+- [react-demo-plugin]: plugin scope reduced to syntax highlighting for demo files
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
 ## 1.1.0 (2025/11/17)
 
 ### Features
