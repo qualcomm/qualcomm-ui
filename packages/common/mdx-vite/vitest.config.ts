@@ -8,10 +8,5 @@ export default defineConfig({
     },
     css: false,
     include: ["src/**/*.spec.ts"],
-    poolOptions: {
-      threads: {
-        singleThread: true,
-      },
-    },
   },
 })
