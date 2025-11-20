@@ -306,8 +306,8 @@ hr.mdx {
 
 [data-theme="dark"] .shiki.mdx,
 [data-theme="dark"] .shiki.mdx span {
-  background: var(--shiki-dark-bg) !important;
-  color: var(--shiki-dark) !important;
+  background: var(--shiki-dark-bg);
+  color: var(--shiki-dark);
 }
 
 .qui-tabs__root.mdx {
