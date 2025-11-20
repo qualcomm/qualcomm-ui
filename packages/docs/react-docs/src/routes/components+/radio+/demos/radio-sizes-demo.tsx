@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 
-export default function RadioSizesDemo(): ReactElement {
+export function RadioSizesDemo(): ReactElement {
   return (
     <>
       {/* preview */}

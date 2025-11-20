@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Switch} from "@qualcomm-ui/react/switch"
 
-export default function SwitchStatesDemo(): ReactElement {
+export function SwitchStatesDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-3">
       {/* preview */}

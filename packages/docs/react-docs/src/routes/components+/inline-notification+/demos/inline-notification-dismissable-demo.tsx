@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 
-export default function InlineNotificationDismissableDemo(): ReactElement {
+export function InlineNotificationDismissableDemo(): ReactElement {
   return (
     <div className="flex w-96 flex-col gap-4">
       {/* preview */}

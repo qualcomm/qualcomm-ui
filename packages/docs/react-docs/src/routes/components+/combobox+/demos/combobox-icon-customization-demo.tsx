@@ -6,7 +6,7 @@ import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 import {countries} from "./country-list"
 
-export default function Demo() {
+export function ComboboxIconCustomizationDemo() {
   const {contains} = useFilter({sensitivity: "base"})
 
   const {collection, filter} = useListCollection({

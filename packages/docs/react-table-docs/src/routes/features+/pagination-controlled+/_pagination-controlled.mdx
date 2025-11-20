@@ -3,10 +3,15 @@ title: Pagination (Server-side)
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
 Server-side pagination demo with a simulated backend API. Pagination state is managed explicitly in the component. This is the standard approach for backend integrations. See the [Pagination Guide](/feature-guides/pagination) for implementation details.
 
-<QdsDemo expanded name="PaginationControlledDemo" />
+<Demo
+  expanded
+  name="PaginationControlledDemo"
+  component={demos.PaginationControlledDemo}
+/>

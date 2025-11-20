@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Switch} from "@qualcomm-ui/react/switch"
 
-export default function SwitchCompositeLayoutDemo(): ReactElement {
+export function SwitchCompositeLayoutDemo(): ReactElement {
   return (
     // preview
     <Switch.Root>

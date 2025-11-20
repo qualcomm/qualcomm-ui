@@ -26,7 +26,7 @@ export const items = [
   },
 ]
 
-export default function AccordionDisabledDemo(): ReactElement {
+export function AccordionDisabledDemo(): ReactElement {
   const [disabled, setDisabled] = useState(false)
   return (
     <div className="flex w-96 flex-col items-center gap-4">

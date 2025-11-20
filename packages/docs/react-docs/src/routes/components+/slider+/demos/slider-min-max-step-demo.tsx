@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Slider} from "@qualcomm-ui/react/slider"
 
-export default function SliderMinMaxStepDemo(): ReactElement {
+export function SliderMinMaxStepDemo(): ReactElement {
   return (
     // preview
     <Slider

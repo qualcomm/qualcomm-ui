@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-export default function TextInputErrorTextDemo(): ReactElement {
+export function TextInputErrorTextDemo(): ReactElement {
   const [value, setValue] = useState<string>("")
 
   return (

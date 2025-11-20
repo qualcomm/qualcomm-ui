@@ -15,7 +15,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectErrorDemo(): ReactElement {
   const [value, setValue] = useState<string[]>([])
   return (
     // preview

@@ -3,7 +3,8 @@ title: Polymorphic Components
 category: Composition
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -16,7 +17,11 @@ Most QUI components support the `render` prop, which lets you customize the rend
 
 For example, most buttons render a `<button>` element by default, but you can override this by passing a `render` prop.
 
-<QdsDemo hideDemoBrandSwitcher name="PolymorphicLinkDemo" />
+<Demo
+  hideDemoBrandSwitcher
+  name="PolymorphicLinkDemo"
+  component={demos.PolymorphicLinkDemo}
+/>
 
 The element that you pass to the `render` prop must forward its ref (automatic for all function components from React 19 onward) and spread all the receiving props on its underlying DOM node.
 
@@ -35,7 +40,11 @@ You can also pass a function that returns a React element.
 
 Here's an example of a custom component that renders a `button` by default, but accepts the `render` prop to override the default rendered element.
 
-<QdsDemo expanded name="PolymorphicExampleDemo" />
+<Demo
+  expanded
+  name="PolymorphicExampleDemo"
+  component={demos.PolymorphicExampleDemo}
+/>
 
 ### Breakdown
 

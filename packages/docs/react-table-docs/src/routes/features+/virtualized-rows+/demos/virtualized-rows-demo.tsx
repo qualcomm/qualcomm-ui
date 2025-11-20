@@ -16,7 +16,7 @@ import {makeUserData, type User} from "./make-data"
 
 // This is a dynamic row height example, which is more complicated, but allows for a
 // more realistic table.
-export default function VirtualizedRowsDemo() {
+export function VirtualizedRowsDemo() {
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {

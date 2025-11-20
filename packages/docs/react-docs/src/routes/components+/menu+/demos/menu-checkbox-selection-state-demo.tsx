@@ -9,7 +9,7 @@ const items: {label: string; value: string}[] = [
   {label: "Option 3", value: "item-3"},
 ]
 
-export default function MenuCheckboxSelectionStateDemo(): ReactElement {
+export function MenuCheckboxSelectionStateDemo(): ReactElement {
   const [checkboxState, setCheckboxState] = useState<Record<string, boolean>>({
     [items[0].value]: true,
   })

@@ -3,7 +3,7 @@ import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {collection} from "./items"
 import {QLogo} from "./q-logo"
 
-export default function Demo() {
+export function SideNavDefaultExpandedDemo() {
   return (
     <div className="flex justify-center">
       {/* preview */}

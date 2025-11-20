@@ -3,7 +3,7 @@ import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {collection} from "./grouped-items"
 import {QLogo} from "./q-logo"
 
-export default function Demo() {
+export function SideNavGroupsDemo() {
   return (
     <div className="flex justify-center">
       <SideNav.Root collection={collection}>

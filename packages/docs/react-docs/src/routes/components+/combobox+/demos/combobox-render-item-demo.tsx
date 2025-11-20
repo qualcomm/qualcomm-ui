@@ -5,7 +5,7 @@ import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 import {people, type Person} from "./people-list"
 
-export default function Demo() {
+export function ComboboxRenderItemDemo() {
   const {contains} = useFilter({sensitivity: "base"})
 
   const {collection, filter} = useListCollection<Person>({

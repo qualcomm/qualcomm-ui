@@ -10,7 +10,7 @@ const toaster = createToaster({
 })
 // preview
 
-export default function ToastMaxVisibleDemo(): ReactElement {
+export function ToastMaxVisibleDemo(): ReactElement {
   return (
     <>
       <Toaster toaster={toaster} />

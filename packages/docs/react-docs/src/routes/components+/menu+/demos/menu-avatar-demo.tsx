@@ -6,7 +6,7 @@ import {Avatar} from "@qualcomm-ui/react/avatar"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuAvatarDemo(): ReactElement {
+export function MenuAvatarDemo(): ReactElement {
   return (
     <Menu.Root positioning={{placement: "right-start"}}>
       <Menu.Trigger>

@@ -23,7 +23,7 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {type User, useUserData} from "./use-data"
 
-export default function PaginationDemo() {
+export function PaginationDemo() {
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {

@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {Accordion} from "@qualcomm-ui/react/accordion"
 import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 
-export default function AccordionCompositeDemo(): ReactElement {
+export function AccordionCompositeDemo(): ReactElement {
   return (
     <Accordion.Root className="w-96" defaultValue={["a"]}>
       {/* preview */}

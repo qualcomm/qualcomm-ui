@@ -1,3 +1,5 @@
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/qualcomm/qualcomm-ui)
+
 # Qualcomm UI (QUI)
 
 QUI is a collection of high-quality, reusable UI components that can be used to build beautiful and responsive web applications. It features a cross-framework core layer for unification of styling and behavior, as well as framework adapters for React and Angular.

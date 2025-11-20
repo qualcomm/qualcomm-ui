@@ -4,7 +4,7 @@ import {Sigma} from "lucide-react"
 
 import {NumberInput} from "@qualcomm-ui/react/number-input"
 
-export default function NumberInputSizesDemo(): ReactElement {
+export function NumberInputSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col items-start gap-4">
       {/* preview */}

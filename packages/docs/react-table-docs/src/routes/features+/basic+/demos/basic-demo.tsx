@@ -14,7 +14,7 @@ interface User {
 
 const columnHelper = createColumnHelper<User>()
 
-export default function BasicDemo() {
+export function BasicDemo() {
   // always memoize your data
   const defaultData: User[] = useMemo(
     () => [

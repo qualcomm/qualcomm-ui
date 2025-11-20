@@ -5,7 +5,7 @@ import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {collection} from "./grouped-items"
 import {QLogo} from "./q-logo"
 
-export default function Demo() {
+export function SideNavCollapsedDemo() {
   const [open, setOpen] = useState<boolean>(false)
 
   return (

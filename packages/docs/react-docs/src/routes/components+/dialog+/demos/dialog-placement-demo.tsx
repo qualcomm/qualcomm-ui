@@ -6,7 +6,7 @@ import {Dialog} from "@qualcomm-ui/react/dialog"
 
 const placement: QdsDialogPlacement[] = ["top", "center", "bottom"]
 
-export default function DialogPlacementDemo(): ReactElement {
+export function DialogPlacementDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       {placement.map((plc) => (

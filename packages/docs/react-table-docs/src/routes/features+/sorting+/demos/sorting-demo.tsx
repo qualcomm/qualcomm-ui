@@ -12,7 +12,7 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {userColumns, useUserData} from "./use-data"
 
-export default function SortingDemo() {
+export function SortingDemo() {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const {data = [], isFetching, refetch} = useUserData(20)

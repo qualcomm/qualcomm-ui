@@ -2,7 +2,7 @@ import {type ReactElement, useEffect, useState} from "react"
 
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 
-export default function ProgressRingValueTextDemo(): ReactElement {
+export function ProgressRingValueTextDemo(): ReactElement {
   const [value, setValue] = useState<number>(0)
 
   useEffect(() => {

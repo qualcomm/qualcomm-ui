@@ -24,7 +24,7 @@ const toaster = createToaster({
   placement: "bottom-end",
 })
 
-export default function Demo(): ReactElement {
+export function SelectTanstackFormDemo(): ReactElement {
   const form = useForm({
     defaultValues: {
       city: [] as string[],

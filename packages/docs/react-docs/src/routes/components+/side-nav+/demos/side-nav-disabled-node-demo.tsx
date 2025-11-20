@@ -74,7 +74,7 @@ export const collection = createTreeCollection<SideNavItem>({
   },
 })
 
-export default function Demo() {
+export function SideNavDisabledNodeDemo() {
   return (
     <div className="flex justify-center">
       <SideNav.Root collection={collection} defaultExpandedValue={["account"]}>

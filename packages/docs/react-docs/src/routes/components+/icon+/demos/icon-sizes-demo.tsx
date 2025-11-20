@@ -4,7 +4,7 @@ import {ExternalLink} from "lucide-react"
 
 import {Icon} from "@qualcomm-ui/react/icon"
 
-export default function IconSizesDemo(): ReactNode {
+export function IconSizesDemo(): ReactNode {
   return (
     <div className="q-foreground-1-primary grid justify-center gap-4">
       <div className="flex items-end justify-center gap-4">

@@ -4,7 +4,7 @@ import {Accordion} from "@qualcomm-ui/react/accordion"
 
 import {items} from "./accordion-example-data"
 
-export default function AccordionFocusCallbackDemo(): ReactElement {
+export function AccordionFocusCallbackDemo(): ReactElement {
   const [currentValue, setCurrentValue] = useState<string>("")
   return (
     <div className="w-96">

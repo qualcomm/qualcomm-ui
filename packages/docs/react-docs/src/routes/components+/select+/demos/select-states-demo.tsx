@@ -15,7 +15,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectStatesDemo(): ReactElement {
   return (
     <div className="flex w-60 flex-col gap-4">
       {/* preview */}

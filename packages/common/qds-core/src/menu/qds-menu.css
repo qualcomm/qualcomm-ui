@@ -78,6 +78,7 @@
   padding: var(--menu-padding-y) var(--menu-padding-x);
   position: relative;
   text-align: left;
+  text-decoration: inherit;
   --menu-padding-x: var(--spacing-100);
   --menu-padding-y: var(--spacing-80);
 

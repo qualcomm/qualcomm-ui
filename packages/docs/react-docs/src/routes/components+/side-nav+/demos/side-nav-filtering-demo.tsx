@@ -10,7 +10,7 @@ import {
 } from "./grouped-items"
 import {QLogo} from "./q-logo"
 
-export default function Demo() {
+export function SideNavFilteringDemo() {
   const [collection, setCollection] =
     useState<TreeCollection<SideNavItem>>(initialCollection)
   const [expandedValue, setExpandedValue] = useState<string[]>([])

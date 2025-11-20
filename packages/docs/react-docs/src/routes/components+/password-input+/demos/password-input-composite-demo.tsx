@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {PasswordInput} from "@qualcomm-ui/react/password-input"
 
-export default function PasswordInputCompositeDemo(): ReactElement {
+export function PasswordInputCompositeDemo(): ReactElement {
   return (
     // preview
     <PasswordInput.Root className="w-72">

@@ -92,7 +92,7 @@ const renderSubComponent = ({row}: {row: Row<User>}) => {
   )
 }
 
-export default function SubComponentsDemo() {
+export function SubComponentsDemo() {
   const {data = [], isFetching, refetch} = useUserData(10)
 
   const refreshData = () => refetch()

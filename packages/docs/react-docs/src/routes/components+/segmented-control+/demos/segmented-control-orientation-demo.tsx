@@ -1,6 +1,6 @@
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlOrientationDemo() {
+export function SegmentedControlOrientationDemo() {
   return (
     // preview
     <SegmentedControl.Root defaultValue={["chart"]} orientation="vertical">

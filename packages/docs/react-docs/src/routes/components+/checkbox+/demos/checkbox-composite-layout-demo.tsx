@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 
-export default function CheckboxCompositeLayoutDemo(): ReactElement {
+export function CheckboxCompositeLayoutDemo(): ReactElement {
   return (
     // preview
     <Checkbox.Root>

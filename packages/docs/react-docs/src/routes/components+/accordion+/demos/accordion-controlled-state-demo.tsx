@@ -3,7 +3,7 @@ import {type ReactElement, useState} from "react"
 import {Accordion} from "@qualcomm-ui/react/accordion"
 import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 
-export default function AccordionControlledStateDemo(): ReactElement {
+export function AccordionControlledStateDemo(): ReactElement {
   const [currentValue, setCurrentValue] = useState<string[]>(["a"])
   return (
     <div className="w-96">

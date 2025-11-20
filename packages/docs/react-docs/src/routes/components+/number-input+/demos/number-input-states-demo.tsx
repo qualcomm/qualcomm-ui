@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {NumberInput} from "@qualcomm-ui/react/number-input"
 
-export default function NumberInputStatesDemo(): ReactElement {
+export function NumberInputStatesDemo(): ReactElement {
   return (
     <div className="flex w-60 flex-col gap-4">
       {/* preview */}

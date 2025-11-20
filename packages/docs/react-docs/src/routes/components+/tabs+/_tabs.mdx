@@ -3,7 +3,8 @@ title: Tabs
 group: Disclosure
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -18,25 +19,32 @@ import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
 The default [orientation](./#orientation) is horizontal. The left and right arrow keys can be used to navigate between tabs.
 
-<QdsDemo name="TabsHorizontalDemo" />
+<Demo name="TabsHorizontalDemo" component={demos.TabsHorizontalDemo} />
 
 ### Vertical
 
 In vertical [orientation](./#orientation), the up and down arrow keys are used instead.
 
-<QdsDemo name="TabsVerticalDemo" />
+<Demo name="TabsVerticalDemo" component={demos.TabsVerticalDemo} />
 
 ### Icons and variants
 
 Tabs support start and end icons. Customize the variant with the [iconVariant](./#iconVariant) prop. Use the [variant](./#variant) prop to change the appearance of the tab.
 
-<QdsDemo wrapperProps={{className: "bg-neutral-02"}} name="TabsIconsDemo" />
+<Demo
+  wrapperProps={{className: "bg-neutral-02"}}
+  name="TabsIconsDemo"
+  component={demos.TabsIconsDemo}
+/>
 
 ### Controlled Value
 
 The tab's active value can be controlled via the [value](./#value), [onValueChange](./#onValueChange), and [defaultValue](./#defaultValue) properties. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<QdsDemo name="TabsControlledValueDemo" />
+<Demo
+  name="TabsControlledValueDemo"
+  component={demos.TabsControlledValueDemo}
+/>
 
 ### Sizes
 
@@ -44,44 +52,49 @@ The tab's active value can be controlled via the [value](./#value), [onValueChan
 
 The line [variant](./#variant) supports four [sizes](./#size): `sm`, `md`, `lg`, and `xl`
 
-<QdsDemo name="TabsLineSizesDemo" />
+<Demo name="TabsLineSizesDemo" component={demos.TabsLineSizesDemo} />
 
 #### Contained
 
 The contained [variant](./#variant) supports only two sizes: `sm` and `md`
 
-<QdsDemo
+<Demo
   wrapperProps={{className: "bg-neutral-02"}}
   name="TabsContainedSizesDemo"
+  component={demos.TabsContainedSizesDemo}
 />
 
 ### Lazy Mounted
 
 Use the [lazyMount](./#lazyMount) and [unmountOnExit](./#unmountOnExit) props to control render behavior for inactive tabs.
 
-<QdsDemo name="TabsLazyMountedDemo" />
+<Demo name="TabsLazyMountedDemo" component={demos.TabsLazyMountedDemo} />
 
 ### Disabled
 
 Disable specific tabs with the [disabled](./#disabled-1) prop on the `<Tab.Root>` component.
 
-<QdsDemo wrapperProps={{className: "bg-neutral-02"}} name="TabsDisabledDemo" />
+<Demo
+  wrapperProps={{className: "bg-neutral-02"}}
+  name="TabsDisabledDemo"
+  component={demos.TabsDisabledDemo}
+/>
 
 ### URL Search Parameters
 
 The following example demonstrates how to render tabs that sync with the URL search parameters using react-router.
 
-<QdsDemo name="TabsLinksDemo" />
+<Demo name="TabsLinksDemo" component={demos.TabsLinksDemo} />
 
 ### Context
 
 Use the `<Tabs.Context>` component to access the tabs API from JSX.
 
-<QdsDemo name="TabsContextDemo" />
+<Demo name="TabsContextDemo" component={demos.TabsContextDemo} />
 
 ### Add and Remove Tabs
 
-<QdsDemo name="TabsAddRemoveDemo" />
+<Demo name="TabsAddRemoveDemo" component={demos.TabsAddRemoveDemo} />
 
 ## API
 

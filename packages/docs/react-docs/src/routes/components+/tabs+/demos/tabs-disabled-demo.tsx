@@ -4,7 +4,7 @@ import {Code, Cpu, FileText, Smartphone} from "lucide-react"
 
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
-export default function TabsDisabledDemo(): ReactElement {
+export function TabsDisabledDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-6">
       <Tabs.Root defaultValue="documents" variant="line">

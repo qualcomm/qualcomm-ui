@@ -3,7 +3,8 @@ title: Side Nav
 group: Disclosure
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -39,37 +40,46 @@ We expose the `<SideNav.Nodes>` shorthand for rendering nodes. Use its [renderBr
 
 Note that `<SideNav.Nodes>` automatically renders child nodes for branches, so you only have to customize the content of the node itself.
 
-<QdsDemo name="SideNavNodeShorthandDemo" />
+<Demo
+  name="SideNavNodeShorthandDemo"
+  component={demos.SideNavNodeShorthandDemo}
+/>
 
 ### Grouping
 
 Group nodes using the collection's [groupChildren](./#groupChildren) method. This should be called on the top-level node of your SideNav. Nested groups are not supported.
 
-<QdsDemo name="SideNavGroupsDemo" />
+<Demo name="SideNavGroupsDemo" component={demos.SideNavGroupsDemo} />
 
 ### Default Expanded
 
 Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedChange](./#onExpandedChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<QdsDemo name="SideNavDefaultExpandedDemo" />
+<Demo
+  name="SideNavDefaultExpandedDemo"
+  component={demos.SideNavDefaultExpandedDemo}
+/>
 
 ### Disabled Nodes
 
 You can disable nodes by setting the `disabled` property on the node object.
 
-<QdsDemo name="SideNavDisabledNodeDemo" />
+<Demo
+  name="SideNavDisabledNodeDemo"
+  component={demos.SideNavDisabledNodeDemo}
+/>
 
 ### Filtering
 
 Here's an example that filters the items using `matchSorter`.
 
-<QdsDemo name="SideNavFilteringDemo" />
+<Demo name="SideNavFilteringDemo" component={demos.SideNavFilteringDemo} />
 
 ### Links
 
 Side Nav nodes can be links using [polymorphic composition](/polymorphic-components). Use the `render` prop on the `<SideNav.LeafNode>` to specify the element type.
 
-<QdsDemo name="SideNavLinksDemo" />
+<Demo name="SideNavLinksDemo" component={demos.SideNavLinksDemo} />
 
 ### Collapsed
 
@@ -77,7 +87,7 @@ Side Nav can be collapsed to render only the top-level icons.
 
 The open state of the panel can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<QdsDemo name="SideNavCollapsedDemo" />
+<Demo name="SideNavCollapsedDemo" component={demos.SideNavCollapsedDemo} />
 
 ## API
 

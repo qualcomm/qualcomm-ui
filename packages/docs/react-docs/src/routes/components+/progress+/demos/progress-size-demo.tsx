@@ -2,7 +2,7 @@ import {type ReactElement, useEffect, useState} from "react"
 
 import {Progress} from "@qualcomm-ui/react/progress"
 
-export default function ProgressSizeDemo(): ReactElement {
+export function ProgressSizeDemo(): ReactElement {
   const [value, setValue] = useState<number>(10)
 
   useEffect(() => {

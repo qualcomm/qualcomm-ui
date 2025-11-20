@@ -24,7 +24,7 @@ const FormSchema = type({
   newsletter: "boolean",
 })
 
-export default function CheckboxReactHookFormDemo(): ReactElement {
+export function CheckboxReactHookFormDemo(): ReactElement {
   const {control, handleSubmit} = useForm<FormData>({
     defaultValues: {
       acceptTerms: false,

@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 
-export default function InlineNotificationEmphasisDemo(): ReactElement {
+export function InlineNotificationEmphasisDemo(): ReactElement {
   return (
     <div className="grid w-96 gap-4">
       {/* preview */}

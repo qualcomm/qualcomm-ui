@@ -5,7 +5,7 @@ import {ChevronLeft, ChevronRight} from "lucide-react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
-export default function TabsContextDemo(): ReactElement {
+export function TabsContextDemo(): ReactElement {
   return (
     <Tabs.Root className="w-full" defaultValue="tab-1">
       <Tabs.List>

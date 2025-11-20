@@ -46,6 +46,7 @@
 .qui-tab__root {
   align-items: center;
   display: inline-flex;
+  font: var(--font-static-body-xs-bold);
   position: relative;
   --dismiss-spacing-offset: 0px;
 

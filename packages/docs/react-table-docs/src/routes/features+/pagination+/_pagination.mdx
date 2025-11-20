@@ -3,10 +3,11 @@ title: Pagination (Client-side)
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
 This page features a clientside pagination demo that fetches all data up front. Refer to the [Pagination Guide](/feature-guides/pagination) for a detailed explanation. For serverside pagination, refer to the [Server-side Pagination Example](/features/pagination-controlled).
 
-<QdsDemo expanded name="PaginationDemo" />
+<Demo expanded name="PaginationDemo" component={demos.PaginationDemo} />

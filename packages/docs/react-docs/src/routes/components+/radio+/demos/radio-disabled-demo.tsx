@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 
-export default function RadioDisabledDemo(): ReactElement {
+export function RadioDisabledDemo(): ReactElement {
   return (
     <div className="space-y-4">
       <div className="text-neutral-primary font-heading-xxs">Disabled</div>

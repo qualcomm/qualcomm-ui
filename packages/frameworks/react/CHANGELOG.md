@@ -1,5 +1,12 @@
 # @qualcomm-ui/react
 
+## 1.1.5 (2025/11/19)
+
+### Miscellaneous Chores
+
+- [QuiRoot]: deprecate component
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
 ## 1.1.4 (2025/11/18)
 
 ### Bug Fixes

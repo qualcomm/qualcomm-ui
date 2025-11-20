@@ -11,7 +11,7 @@ interface Node {
   nodes?: Node[]
 }
 
-export default function Demo(): ReactElement {
+export function TreeDefaultExpandedDemo(): ReactElement {
   return (
     // preview
     <Tree.Root

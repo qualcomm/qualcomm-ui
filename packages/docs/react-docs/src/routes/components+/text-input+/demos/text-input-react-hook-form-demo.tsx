@@ -13,7 +13,7 @@ const addressSchema = type({
 
 type AddressFormData = typeof addressSchema.infer
 
-export default function TextInputReactHookFormDemo() {
+export function TextInputReactHookFormDemo() {
   const {
     control,
     formState: {isSubmitting},

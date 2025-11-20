@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {Switch} from "@qualcomm-ui/react/switch"
 
-export default function SwitchControlledDemo(): ReactElement {
+export function SwitchControlledDemo(): ReactElement {
   const [checked, setChecked] = useState<boolean>(false)
 
   return (

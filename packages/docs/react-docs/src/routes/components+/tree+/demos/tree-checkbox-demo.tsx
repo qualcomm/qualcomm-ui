@@ -9,7 +9,7 @@ interface Node {
   text: string
 }
 
-export default function Demo(): ReactElement {
+export function TreeCheckboxDemo(): ReactElement {
   return (
     <Tree.Root
       className="w-full max-w-sm"

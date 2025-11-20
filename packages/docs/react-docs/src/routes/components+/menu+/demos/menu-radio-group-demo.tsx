@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuRadioGroupDemo(): ReactElement {
+export function MenuRadioGroupDemo(): ReactElement {
   return (
     <Menu.Root>
       <Menu.Trigger>

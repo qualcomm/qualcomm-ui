@@ -17,7 +17,7 @@ const defaultFormData: FormData = {
 
 const requiredMessage = "Please select an option"
 
-export default function RadioTanstackFormDemo(): ReactElement {
+export function RadioTanstackFormDemo(): ReactElement {
   const form = useForm({
     defaultValues: defaultFormData,
     onSubmit: async ({value}) => {
