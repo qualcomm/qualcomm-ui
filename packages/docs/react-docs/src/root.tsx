@@ -259,7 +259,12 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     jsx = (
       <>
-        <h1 className="text-neutral-primary font-static-body-lg-bold">
+        <h1
+          style={{
+            color: "var(--color-text-neutral-primary)",
+            font: "var(--font-static-body-lg-bold)",
+          }}
+        >
           {error.status} {error.statusText}
         </h1>
         <p>{error.data}</p>
@@ -267,16 +272,27 @@ export function ErrorBoundary() {
     )
   } else if (error instanceof Error) {
     jsx = (
-      <>
-        <h1 className="text-neutral-primary font-static-body-lg-bold">Error</h1>
+      <div style={{color: "var(--color-text-neutral-primary)"}}>
+        <h1
+          style={{
+            font: "var(--font-static-body-lg-bold)",
+          }}
+        >
+          Error
+        </h1>
         <p>{error.message}</p>
         <p>The stack trace is:</p>
         <pre>{error.stack}</pre>
-      </>
+      </div>
     )
   } else {
     jsx = (
-      <h1 className="text-neutral-primary font-static-body-lg-bold">
+      <h1
+        style={{
+          color: "var(--color-text-neutral-primary)",
+          font: "var(--font-static-body-lg-bold)",
+        }}
+      >
         Unknown Error
       </h1>
     )

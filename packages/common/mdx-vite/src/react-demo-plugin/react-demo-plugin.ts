@@ -27,7 +27,6 @@ import {
 interface HandleUpdateOptions {
   demoName?: string
   filePath: string
-  type: "add" | "update"
 }
 
 let highlighter: Highlighter | null = null
@@ -35,20 +34,6 @@ let highlighter: Highlighter | null = null
 const demoRegistry = new Map<string, ReactDemoData>()
 const pageFiles = new Map<string, string[]>()
 const relativeImportDependents = new Map<string, Set<string>>()
-
-const hasWatcherInitialized = false
-
-/**
- * Logs in dev mode only after the watcher has been initialized. Vite runs setup
- * hooks multiple times (once for each environment), so we use this approach to
- * ensure that certain messages are only logged once.
- */
-function logDev(...args: any[]) {
-  if (!hasWatcherInitialized) {
-    return
-  }
-  console.log(...args)
-}
 
 /**
  * Generates virtual modules for React demo components. Virtual modules contain
@@ -94,7 +79,7 @@ export function reactDemoPlugin({
       }
 
       if (isDemoFile(file)) {
-        await handleDemoAdditionOrUpdate({filePath: file, type: "update"})
+        await handleDemoAdditionOrUpdate({filePath: file})
       } else {
         const normalizedFile = resolve(file)
         const dependentDemos = relativeImportDependents.get(normalizedFile)
@@ -106,7 +91,6 @@ export function reactDemoPlugin({
           if (demo) {
             await handleDemoAdditionOrUpdate({
               filePath: demo.filePath,
-              type: "update",
             })
           }
         }
@@ -145,7 +129,6 @@ export function reactDemoPlugin({
 
   async function handleDemoAdditionOrUpdate({
     filePath,
-    type,
   }: HandleUpdateOptions): Promise<void> {
     const pageId = extractPageId(filePath, routesDir)
     const demoName = createDemoName(filePath)
@@ -175,10 +158,6 @@ export function reactDemoPlugin({
         }
       }
     }
-
-    logDev(
-      `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.greenBright(type === "add" ? "Added demo:" : "Updated demo:")} ${chalk.greenBright.bold(demoName)}`,
-    )
   }
 
   function isPreviewLine(trimmedLine: string): boolean {
@@ -255,9 +234,6 @@ export function reactDemoPlugin({
 
   async function collectReactDemos() {
     if (demoRegistry.size) {
-      logDev(
-        `${chalk.magenta.bold(LOG_PREFIX)} Using cached ${chalk.cyanBright.bold(demoRegistry.size)} demos`,
-      )
       return
     }
 
@@ -290,10 +266,6 @@ export function reactDemoPlugin({
         }
       }
     }
-
-    logDev(
-      `${chalk.blue.bold(LOG_PREFIX)} Registered ${chalk.green(demoRegistry.size)} demo files. Watching for file changes...`,
-    )
   }
 
   function generateAutoScopeModule(): string {
@@ -459,11 +431,7 @@ export function reactDemoPlugin({
                 withoutImports: importedCodeWithoutImports,
               },
             })
-          } catch (error) {
-            logDev(
-              `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.yellowBright("Failed to process relative import:")} ${chalk.blueBright.bold(relativeImport.resolvedPath)}`,
-            )
-          }
+          } catch {}
         }
       }
 
@@ -474,10 +442,7 @@ export function reactDemoPlugin({
         imports,
         sourceCode,
       }
-    } catch (e) {
-      logDev(
-        `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.yellowBright("Failed to parse")} ${chalk.blueBright.bold(filePath)}. ${chalk.yellowBright("Removing from registry")}`,
-      )
+    } catch {
       return null
     }
   }
@@ -539,10 +504,6 @@ export function reactDemoPlugin({
         strippedCode: strippedCode.replace(/^\n+/, ""),
       }
     } catch (error) {
-      logDev(
-        `${chalk.magenta.bold(LOG_PREFIX)} ${chalk.redBright("Failed to strip imports from")} ${chalk.blueBright.bold(fileName)}:`,
-        error,
-      )
       return {
         imports: [],
         strippedCode: code,

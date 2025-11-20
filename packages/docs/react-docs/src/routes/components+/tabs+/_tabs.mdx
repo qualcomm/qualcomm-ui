@@ -31,7 +31,10 @@ In vertical [orientation](./#orientation), the up and down arrow keys are used i
 
 Tabs support start and end icons. Customize the variant with the [iconVariant](./#iconVariant) prop. Use the [variant](./#variant) prop to change the appearance of the tab.
 
-<QdsDemo wrapperProps={{className: "bg-neutral-02"}} name="TabsIconsDemo" />
+<Demo
+  wrapperProps={{className: "bg-neutral-02"}}
+  component={demos.TabsIconsDemo}
+/>
 
 ### Controlled Value
 
@@ -51,9 +54,9 @@ The line [variant](./#variant) supports four [sizes](./#size): `sm`, `md`, `lg`,
 
 The contained [variant](./#variant) supports only two sizes: `sm` and `md`
 
-<QdsDemo
+<Demo
   wrapperProps={{className: "bg-neutral-02"}}
-  name="TabsContainedSizesDemo"
+  component={demos.TabsContainedSizesDemo}
 />
 
 ### Lazy Mounted
@@ -66,7 +69,10 @@ Use the [lazyMount](./#lazyMount) and [unmountOnExit](./#unmountOnExit) props to
 
 Disable specific tabs with the [disabled](./#disabled-1) prop on the `<Tab.Root>` component.
 
-<QdsDemo wrapperProps={{className: "bg-neutral-02"}} name="TabsDisabledDemo" />
+<Demo
+  wrapperProps={{className: "bg-neutral-02"}}
+  component={demos.TabsDisabledDemo}
+/>
 
 ### URL Search Parameters
 
