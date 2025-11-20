@@ -64,7 +64,6 @@ export default defineConfig({
         "./src/routes/theming+/**/demos/**/*.ts",
         "./src/routes/theming+/**/demos/**/*.tsx",
       ],
-      lazyLoadDevModules: false,
       transformLine: (line) => {
         if (
           line.trim().startsWith("// group:") ||
