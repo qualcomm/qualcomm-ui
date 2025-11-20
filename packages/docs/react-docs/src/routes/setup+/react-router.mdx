@@ -2,8 +2,100 @@
 title: React Router
 ---
 
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
 # {frontmatter.title}
 
-This installation page will be updated in the future.
+This library requires React 19+.
 
-Use our preconfigured template to get started: https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/qui-docs-template
+There are four quick steps to installation:
+
+1. Install the npm packages
+2. Import the CSS
+3. Configure fonts
+4. Configure theme provider
+
+This guide assumes you've already installed React and React Router in framework mode (v7 and up). If not, scaffold your project as follows:
+
+```shell
+npm create react-router@latest
+```
+
+## 1. Install the npm packages
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/react",
+    "@qualcomm-ui/react-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/qds-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+    "@qualcomm-ui/react-router-utils",
+    "@tanstack/react-virtual",
+    "lucide-react",
+  ]}
+/>
+
+## 2. Import the CSS
+
+In your global CSS file (default `app/app.css`), import the QUI CSS.
+
+```css
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+If you're using Tailwind, import the theme CSS at the `components` layer instead:
+
+```css
+@import "tailwindcss";
+
+/* Important: always order these imports after the tailwindcss import */
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+```
+
+Learn more about the available brands in the [theme documentation](/theming/overview).
+
+## 3. Configure fonts
+
+QUI components are designed with the Roboto Flex and Roboto Mono font families.
+
+In your `root.tsx` file, add the font links:
+
+```tsx
+<html lang="en">
+  <head>
+    {/* ... */}
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>{/* ... */}</body>
+</html>
+```
+
+## 4. Configure theme provider
+
+QUI styles support both light and dark modes. Follow this step to configure cookies for theme switching so that the user's preferred theme is remembered when they return to the site.
+
+Create a file:
+
+- `app/sessions.server.ts`
+
+```ts
+export const qdsBrandCookie = createCookie("qds-brand", {
+  // one year
+  maxAge: 31449600,
+})
+```

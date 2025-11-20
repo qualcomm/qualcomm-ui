@@ -6,14 +6,16 @@ import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 # {frontmatter.title}
 
-This library requires React 19+. This guide assumes you're using Next.js with the app router. For page router support, see the corresponding [next-themes](https://www.npmjs.com/package/next-themes) documentation.
+This library requires React 19+.
 
 There are four quick steps to installation:
 
 1. Install the npm packages
 2. Import the CSS
-3. Configure fonts and theme provider
-4. Set up root layout
+3. Configure fonts
+4. Configure theme provider
+
+This guide assumes you're using Next.js with the app router. For page router support, see the corresponding [next-themes](https://www.npmjs.com/package/next-themes) documentation in step 3.
 
 ## 1. Install the npm packages
 
@@ -33,7 +35,7 @@ There are four quick steps to installation:
 
 ## 2. Import the CSS
 
-In your `app/globals.css` file, import the QUI CSS for the theme you're targeting.
+In your `app/globals.css` file, import the QUI CSS.
 
 ```css
 @import "@qualcomm-ui/qds-core/styles/components.css";
@@ -52,7 +54,7 @@ If you're using Tailwind, import the theme CSS at the `components` layer instead
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
 ```
 
-Learn more about the available themes in the [theme documentation](/theming/overview).
+Learn more about the available brands in the [theme documentation](/theming/overview).
 
 ## 3. Configure fonts and theme provider
 
@@ -65,8 +67,6 @@ import type {Metadata} from "next"
 import {Roboto_Flex, Roboto_Mono} from "next/font/google"
 import "./globals.css"
 import {type ReactNode} from "react"
-import {ThemeProvider} from "next-themes"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 
 const sansFont = Roboto_Flex({
   variable: "--font-roboto-flex",
@@ -90,8 +90,76 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning data-brand="qualcomm">
-      <body className={`${sansFont.variable} ${monoFont.variable} antialiased`}>
+    // preview
+    <html lang="en">
+      <body className={`${sansFont.variable} ${monoFont.variable}`}>
+        {children}
+      </body>
+    </html>
+    // preview
+  )
+}
+```
+
+## 4. Configure the theme provider
+
+QUI styles support both light and dark modes. Follow this step to configure storage for theme switching so that the user's preferred theme is remembered when they return to the site.
+
+From the previous step, add the `ThemeProvider` to your root layout:
+
+{/* eslint-disable-next-line prettier/prettier */}
+```tsx
+// previous imports and setup...
+import {ThemeProvider} from "next-themes"; // [!code ++]
+
+<html lang="en"> // [!code --]
+<html lang="en" data-brand="qualcomm" suppressHydrationWarning> // [!code ++]
+  <body className={`${sansFont.variable} ${monoFont.variable}`}>
+    <ThemeProvider attribute="data-theme">{children}</ThemeProvider>
+  </body>
+</html>
+```
+
+Key configuration details:
+
+- `suppressHydrationWarning` on `<html>` prevents hydration warnings from theme switching
+- `data-brand="qualcomm"` sets the brand attribute (change to `"snapdragon"` or `"dragonwing"` to use those brands instead)
+- `ThemeProvider` with `attribute="data-theme"` enables theme switching via data attributes
+
+::: spoiler Full code sample
+
+```tsx
+import type {Metadata} from "next"
+import {Roboto_Flex, Roboto_Mono} from "next/font/google"
+import "./globals.css"
+import {type ReactNode} from "react"
+import {QuiRoot} from "@qualcomm-ui/react/qui-root"
+import {ThemeProvider} from "next-themes"
+
+const sansFont = Roboto_Flex({
+  variable: "--font-roboto-flex",
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+})
+
+const monoFont = Roboto_Mono({
+  variable: "--font-roboto-mono",
+  subsets: ["latin"],
+})
+
+export const metadata: Metadata = {
+  title: "Your App Title",
+  description: "Your app description",
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: ReactNode
+}>) {
+  return (
+    <html lang="en" data-brand="qualcomm" suppressHydrationWarning>
+      <body className={`${sansFont.variable} ${monoFont.variable}`}>
         <ThemeProvider attribute="data-theme">{children}</ThemeProvider>
       </body>
     </html>
@@ -99,11 +167,7 @@ export default function RootLayout({
 }
 ```
 
-Key configuration details:
-
-- `suppressHydrationWarning` on `<html>` prevents hydration warnings from theme switching
-- `data-brand="qualcomm"` sets the brand attribute (change to `"snapdragon"` or `"dragonwing"` as needed)
-- `ThemeProvider` with `attribute="data-theme"` enables theme switching via data attributes
+:::
 
 Your application is now ready to import and use our components.
 
@@ -120,7 +184,7 @@ Note that setting a different default theme is [currently bugged](https://github
 
 ```tsx
 <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
-  <QuiRoot>{children}</QuiRoot>
+  {children}
 </ThemeProvider>
 ```
 
