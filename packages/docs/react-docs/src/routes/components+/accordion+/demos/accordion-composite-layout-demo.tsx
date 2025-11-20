@@ -4,7 +4,7 @@ import {Accordion} from "@qualcomm-ui/react/accordion"
 
 import {items} from "./accordion-example-data"
 
-export default function AccordionCompositeLayoutDemo(): ReactElement {
+export function AccordionCompositeLayoutDemo(): ReactElement {
   return (
     // preview
     <Accordion.Root className="w-96">

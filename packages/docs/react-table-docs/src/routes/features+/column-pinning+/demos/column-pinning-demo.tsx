@@ -17,7 +17,7 @@ import {clsx} from "@qualcomm-ui/utils/clsx"
 import {PinnableHeader} from "./pinnable-header"
 import {userColumns, useUserData} from "./use-data"
 
-export default function ColumnPinningDemo() {
+export function ColumnPinningDemo() {
   const {data = [], isFetching, refetch} = useUserData(15)
 
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})

@@ -5,7 +5,7 @@ import {ExternalLink} from "lucide-react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuLinksDemo(): ReactElement {
+export function MenuLinksDemo(): ReactElement {
   return (
     <Menu.Root>
       <Menu.Trigger>

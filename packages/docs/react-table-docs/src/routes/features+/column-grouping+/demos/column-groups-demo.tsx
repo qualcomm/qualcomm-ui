@@ -39,7 +39,7 @@ const columns = [
   }),
 ]
 
-export default function ColumnGroupsDemo() {
+export function ColumnGroupsDemo() {
   const {data = [], isFetching, refetch} = useUserData(10)
 
   const table = useReactTable({

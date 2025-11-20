@@ -12,7 +12,7 @@ interface Node {
   pathname?: string
 }
 
-export default function Demo(): ReactElement {
+export function TreeLinksDemo(): ReactElement {
   return (
     <Tree.Root
       className="w-full max-w-sm"

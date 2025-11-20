@@ -31,7 +31,7 @@ const validatePassword = (password: string): string | undefined => {
   return undefined
 }
 
-export default function PasswordInputTanstackFormDemo() {
+export function PasswordInputTanstackFormDemo() {
   const form = useForm({
     canSubmitWhenInvalid: true,
     defaultValues: {

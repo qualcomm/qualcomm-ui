@@ -4,7 +4,8 @@ group: Buttons
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -18,33 +19,33 @@ import {Button} from "@qualcomm-ui/react/button"
 
 Buttons come in three variants: `fill`, `outline`, and `ghost`. Customize these with the [variant](./#variant) property.
 
-<QdsDemo name="ButtonShowcaseDemo" />
+<Demo name="ButtonShowcaseDemo" component={demos.ButtonShowcaseDemo} />
 
 ### Emphasis
 
 Control the visual [emphasis](./#emphasis) with different colors: `neutral`, `primary`, and `danger`.
 
-<QdsDemo name="ButtonEmphasisDemo" />
+<Demo name="ButtonEmphasisDemo" component={demos.ButtonEmphasisDemo} />
 
 ### Sizes and Icons
 
 Control dimensions with the [size](./#size) prop. Icons are supplied using the [startIcon](./#startIcon) and [endIcon](./#endIcon) props.
 
-<QdsDemo name="ButtonSizesDemo" />
+<Demo name="ButtonSizesDemo" component={demos.ButtonSizesDemo} />
 
 ### Compact Density
 
 Use the [density](./#density) prop to reduce the padding and height of the button. The options are `default` and `compact`.
 
-<QdsDemo name="ButtonDensityDemo" />
+<Demo name="ButtonDensityDemo" component={demos.ButtonDensityDemo} />
 
 ### Variant Combinations
 
-<QdsDemo name="ButtonVariantsDemo" />
+<Demo name="ButtonVariantsDemo" component={demos.ButtonVariantsDemo} />
 
 ### Contrast Colors
 
-<QdsDemo name="ButtonContrastDemo" />
+<Demo name="ButtonContrastDemo" component={demos.ButtonContrastDemo} />
 
 ## API
 

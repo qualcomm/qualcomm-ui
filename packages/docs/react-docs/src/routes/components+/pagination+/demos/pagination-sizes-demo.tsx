@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Pagination} from "@qualcomm-ui/react/pagination"
 
-export default function PaginationSizesDemo(): ReactElement {
+export function PaginationSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       <Pagination.Root count={120} defaultPageSize={10} size="sm">

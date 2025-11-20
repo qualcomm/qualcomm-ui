@@ -3,10 +3,15 @@ title: Virtualized Rows
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
 Row virtualization is not ideal from a UX standpoint. We recommend using [Pagination](/features/pagination-controlled) combined with [Filtering](/features/filters) instead.
 
-<QdsDemo expanded name="VirtualizedRowsDemo" />
+<Demo
+  expanded
+  name="VirtualizedRowsDemo"
+  component={demos.VirtualizedRowsDemo}
+/>

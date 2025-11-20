@@ -9,12 +9,13 @@ import {QdsDemo} from "~components/demo"
 
 This library requires Angular ^20.
 
-There are four steps to installation:
+There are five quick steps to installation:
 
 1. Install the npm packages
 2. Import the CSS
-3. Add the theme provider
-4. Inject the theme service
+3. Add the fonts
+4. Add the theme provider
+5. Inject the theme service
 
 Soon we'll provide pre-built templates for quick starting new projects.
 For now, continue reading to learn how to install manually.
@@ -33,9 +34,6 @@ For now, continue reading to learn how to install manually.
 />
 
 ## 2. Import the CSS
-
-> [!tip/Tailwind]
-> If you're using [Tailwind CSS](https://tailwindcss.com/), see below for the correct import syntax.
 
 In your application's global CSS file, import the QUI CSS for the theme you're targeting.
 
@@ -58,7 +56,33 @@ If you're using Tailwind, import the theme CSS at the `components` layer instead
 
 Learn more about the available themes in the [theme documentation](/theming/overview).
 
-## 3. Add the theme provider
+## 3. Add the fonts
+
+QDS components are designed with the Roboto Flex and Roboto Mono font families. For best results, import these fonts in your application's `index.html`:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- existing head content...  -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>
+```
+
+## 4. Add the theme provider
 
 Register the theme provider at the root of your application.
 

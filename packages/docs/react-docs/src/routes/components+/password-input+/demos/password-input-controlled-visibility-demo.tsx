@@ -3,7 +3,7 @@ import {type ReactElement, useState} from "react"
 import {Button} from "@qualcomm-ui/react/button"
 import {PasswordInput} from "@qualcomm-ui/react/password-input"
 
-export default function PasswordInputControlledVisibilityDemo(): ReactElement {
+export function PasswordInputControlledVisibilityDemo(): ReactElement {
   const [visible, setVisible] = useState<boolean>(false)
 
   return (

@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Slider} from "@qualcomm-ui/react/slider"
 
-export default function SliderCompositeDemo(): ReactElement {
+export function SliderCompositeDemo(): ReactElement {
   return (
     // preview
     <Slider.Root className="sm:w-80" defaultValue={[25]}>

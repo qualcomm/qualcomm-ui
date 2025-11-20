@@ -5,7 +5,7 @@ import {AArrowDown} from "lucide-react"
 import type {QdsButtonGroupLayout} from "@qualcomm-ui/qds-core/button"
 import {Button, ButtonGroup} from "@qualcomm-ui/react/button"
 
-export default function ButtonGroupLayoutDemo(): ReactElement {
+export function ButtonGroupLayoutDemo(): ReactElement {
   return (
     <div className="flex w-full flex-col gap-4">
       {/* preview */}

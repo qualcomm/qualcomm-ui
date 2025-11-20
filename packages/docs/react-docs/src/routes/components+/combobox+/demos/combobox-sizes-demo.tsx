@@ -5,7 +5,7 @@ import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 const cityList = ["San Diego", "Dallas", "Denver"]
 
-export default function Demo() {
+export function ComboboxSizesDemo() {
   const {contains} = useFilter({sensitivity: "base"})
 
   const {collection, filter} = useListCollection({

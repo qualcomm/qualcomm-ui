@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Tag} from "@qualcomm-ui/react/tag"
 
-export default function TagEmphasisDemo(): ReactElement {
+export function TagEmphasisDemo(): ReactElement {
   return (
     <div className="flex items-center gap-2">
       {/* preview */}

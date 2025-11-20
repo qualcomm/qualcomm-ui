@@ -3,7 +3,7 @@ import {type ReactElement, useState} from "react"
 import {Button} from "@qualcomm-ui/react/button"
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-export default function TextInputControlledStateDemo(): ReactElement {
+export function TextInputControlledStateDemo(): ReactElement {
   const [value, setValue] = useState<string>("Controlled value")
 
   return (

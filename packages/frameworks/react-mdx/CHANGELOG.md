@@ -1,5 +1,40 @@
 # @qualcomm-ui/react-mdx
 
+## 1.3.0 (2025/11/19)
+
+### Features
+
+- [Demos]: add ReactDemo and ReactDemoRunner components
+
+### Code Refactoring
+
+- [Demos]: deprecate QdsReactDemo and QdsDemoRunner
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
+
+## 1.2.3 (2025/11/18)
+
+### Build System
+
+- do not minify identifiers
+
+### Miscellaneous Chores
+
+- [dependencies]: omit all devDependencies from build
+- **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/react-core]
+
+## 1.2.2 (2025/11/18)
+
+### Bug Fixes
+
+- [typedoc-descriptions]: use qui link component
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
 ## 1.2.1 (2025/11/17)
 
 ### Miscellaneous Chores

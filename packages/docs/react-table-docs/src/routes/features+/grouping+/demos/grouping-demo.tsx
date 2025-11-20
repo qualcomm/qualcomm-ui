@@ -52,7 +52,7 @@ const columns: ColumnDef<User>[] = [
   },
 ]
 
-export default function GroupingDemo() {
+export function GroupingDemo() {
   const {data = [], isFetching, refetch} = useUserData(10000)
   const refreshData = () => refetch()
 

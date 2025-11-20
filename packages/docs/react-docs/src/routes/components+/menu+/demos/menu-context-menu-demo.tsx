@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuContextMenuDemo(): ReactElement {
+export function MenuContextMenuDemo(): ReactElement {
   return (
     <Menu.Root>
       <Menu.ContextTrigger className="flex h-48 w-full items-center justify-center border border-dashed">

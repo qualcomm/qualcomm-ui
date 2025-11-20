@@ -4,7 +4,7 @@ import {ExternalLink} from "lucide-react"
 
 import {Button} from "@qualcomm-ui/react/button"
 
-export default function PolymorphicLinkDemo(): ReactElement {
+export function PolymorphicLinkDemo(): ReactElement {
   return (
     // preview
     <Button

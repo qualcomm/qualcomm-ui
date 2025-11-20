@@ -4,7 +4,7 @@ import {Search} from "lucide-react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-export default function TextInputSizesDemo(): ReactElement {
+export function TextInputSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col items-start gap-4">
       {/* preview */}

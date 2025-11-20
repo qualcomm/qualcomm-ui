@@ -1,0 +1,6 @@
+export * from "./tag-emphasis-demo"
+export * from "./tag-icons-demo"
+export * from "./tag-radius-demo"
+export * from "./tag-sizes-demo"
+export * from "./tag-states-demo"
+export * from "./tag-variants-demo"

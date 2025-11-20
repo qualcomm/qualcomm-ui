@@ -16,7 +16,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectCompositeDemo(): ReactElement {
   return (
     // preview
     <Select.Root

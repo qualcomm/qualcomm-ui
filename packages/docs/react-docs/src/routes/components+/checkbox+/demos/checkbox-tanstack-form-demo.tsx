@@ -17,7 +17,7 @@ const defaultFormData: FormData = {
 
 const errorMessage = "Please accept the Terms of Service to continue"
 
-export default function CheckboxTanstackFormDemo(): ReactElement {
+export function CheckboxTanstackFormDemo(): ReactElement {
   const form = useForm({
     defaultValues: defaultFormData,
     onSubmit: async ({value}) => {

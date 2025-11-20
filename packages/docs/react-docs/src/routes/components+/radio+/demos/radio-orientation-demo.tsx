@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 
-export default function RadioOrientationDemo(): ReactElement {
+export function RadioOrientationDemo(): ReactElement {
   return (
     <form>
       {/* preview */}

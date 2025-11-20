@@ -2,7 +2,7 @@ import type {ReactNode} from "react"
 
 import {Divider} from "@qualcomm-ui/react/divider"
 
-export default function DividerFocusableDemo(): ReactNode {
+export function DividerFocusableDemo(): ReactNode {
   return (
     <div className="flex flex-col gap-4 px-8">
       {/* preview */}

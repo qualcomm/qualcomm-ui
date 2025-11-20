@@ -17,8 +17,7 @@ export interface QuiRootProps {
 }
 
 /**
- * Render this component as close as possible to the root of your app's DOM tree.
- * It needs to wrap your application.
+ * @deprecated no longer required
  */
 export function QuiRoot({
   children,

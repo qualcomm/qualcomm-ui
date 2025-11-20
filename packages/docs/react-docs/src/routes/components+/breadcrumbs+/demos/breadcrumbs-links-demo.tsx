@@ -5,7 +5,7 @@ import {Link} from "react-router"
 
 import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 
-export default function BreadcrumbsLinksDemo(): ReactElement {
+export function BreadcrumbsLinksDemo(): ReactElement {
   return (
     // preview
     <Breadcrumbs.Root aria-label="Breadcrumbs">

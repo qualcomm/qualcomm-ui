@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
-export default function TabsVerticalDemo(): ReactElement {
+export function TabsVerticalDemo(): ReactElement {
   return (
     <Tabs.Root
       className="w-full"

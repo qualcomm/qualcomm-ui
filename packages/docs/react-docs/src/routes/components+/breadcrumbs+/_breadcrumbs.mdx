@@ -3,7 +3,8 @@ title: Breadcrumbs
 group: Disclosure
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -25,25 +26,31 @@ import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 
 Use the [emphasis](./#emphasis) prop to change the color of the breadcrumbs.
 
-<QdsDemo name="BreadcrumbsEmphasisDemo" />
+<Demo
+  name="BreadcrumbsEmphasisDemo"
+  component={demos.BreadcrumbsEmphasisDemo}
+/>
 
 ### Sizes
 
 Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. The default size is `md`.
 
-<QdsDemo name="BreadcrumbsSizesDemo" />
+<Demo name="BreadcrumbsSizesDemo" component={demos.BreadcrumbsSizesDemo} />
 
 ### Links
 
 Use the [render](./#render-1) prop on the `<Breadcrumbs.Item>` component to change the root element to your framework's link component. The following example uses React Router:
 
-<QdsDemo name="BreadcrumbsLinksDemo" />
+<Demo name="BreadcrumbsLinksDemo" component={demos.BreadcrumbsLinksDemo} />
 
 ### Disabled Item
 
 Use the [disabled](./#disabled) prop to disable a breadcrumb item.
 
-<QdsDemo name="BreadcrumbsDisabledDemo" />
+<Demo
+  name="BreadcrumbsDisabledDemo"
+  component={demos.BreadcrumbsDisabledDemo}
+/>
 
 ## Shortcuts
 

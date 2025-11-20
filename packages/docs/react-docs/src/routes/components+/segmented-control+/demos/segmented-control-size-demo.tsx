@@ -1,7 +1,7 @@
 import type {QdsSegmentedControlSize} from "@qualcomm-ui/qds-core/segmented-control"
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlSizeDemo() {
+export function SegmentedControlSizeDemo() {
   return (
     <div className="flex w-full flex-col items-center gap-4">
       {/* preview */}

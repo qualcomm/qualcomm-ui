@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 
-export default function CheckboxSizesDemo(): ReactElement {
+export function CheckboxSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col items-start gap-4">
       <Checkbox label="Small (sm)" size="sm" />

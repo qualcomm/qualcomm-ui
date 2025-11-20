@@ -5,7 +5,7 @@ import {Dialog} from "@qualcomm-ui/react/dialog"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuWithinDialogDemo(): ReactElement {
+export function MenuWithinDialogDemo(): ReactElement {
   return (
     <Dialog.Root>
       <Dialog.Trigger>

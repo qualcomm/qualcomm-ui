@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Progress} from "@qualcomm-ui/react/progress"
 
-export default function ProgressLabelOrientationDemo(): ReactElement {
+export function ProgressLabelOrientationDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-6">
       <Progress

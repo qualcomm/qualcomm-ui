@@ -4,7 +4,8 @@ group: Buttons
 ---
 
 import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -30,7 +31,10 @@ When you set certain props on the `ButtonGroup`, they are automatically applied 
 
 - [emphasis](./#emphasis) and [variant](./#variant): If set on the group, these will be the default for all buttons, but individual buttons can override them as needed.
 
-<QdsDemo name="ButtonGroupSharedPropsDemo" />
+<Demo
+  name="ButtonGroupSharedPropsDemo"
+  component={demos.ButtonGroupSharedPropsDemo}
+/>
 
 ### Layout
 
@@ -43,7 +47,7 @@ Use the [layout](./#layout-1) prop to control how the button group is sized and 
 
 Borders have been added to the example below to better illustrate these layout options.
 
-<QdsDemo name="ButtonGroupLayoutDemo" />
+<Demo name="ButtonGroupLayoutDemo" component={demos.ButtonGroupLayoutDemo} />
 
 ## Accessibility
 

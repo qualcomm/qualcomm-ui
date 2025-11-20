@@ -3,7 +3,7 @@ import {type ReactElement, useState} from "react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Collapsible} from "@qualcomm-ui/react/collapsible"
 
-export default function CollapsibleControlledStateDemo(): ReactElement {
+export function CollapsibleControlledStateDemo(): ReactElement {
   const [open, setOpen] = useState<boolean>(false)
 
   return (

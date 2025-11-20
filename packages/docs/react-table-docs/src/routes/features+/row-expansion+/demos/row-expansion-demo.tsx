@@ -111,7 +111,7 @@ const columns: ColumnDef<User>[] = [
   },
 ]
 
-export default function RowExpansionDemo() {
+export function RowExpansionDemo() {
   const {data = [], isFetching, refetch} = useUserData(100, 5, 3)
   const refreshData = () => refetch()
 

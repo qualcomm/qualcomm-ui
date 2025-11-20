@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Button} from "@qualcomm-ui/react/button"
 
-export default function Demo(): ReactElement {
+export function ButtonVariantsDemo(): ReactElement {
   return (
     <div className="grid grid-cols-3 grid-rows-4 gap-x-8 gap-y-5">
       <span className="text-neutral-primary font-heading-xs">Fill</span>

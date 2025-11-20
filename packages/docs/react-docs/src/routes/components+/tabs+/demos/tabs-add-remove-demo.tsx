@@ -19,7 +19,7 @@ const items: Item[] = [
   {content: "Tab Content", id: "4", title: "Tab"},
 ]
 
-export default function TabsAddRemoveDemo(): ReactElement {
+export function TabsAddRemoveDemo(): ReactElement {
   const [tabs, setTabs] = useState<Item[]>(items)
   const [selectedTab, setSelectedTab] = useState<string | null>(items[0].id)
 

@@ -4,7 +4,7 @@ import {Button} from "@qualcomm-ui/react/button"
 import {Drawer} from "@qualcomm-ui/react/drawer"
 import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 
-export default function DrawerControlledStateDemo(): ReactElement {
+export function DrawerControlledStateDemo(): ReactElement {
   const [open, setOpen] = useState<boolean>(false)
 
   return (

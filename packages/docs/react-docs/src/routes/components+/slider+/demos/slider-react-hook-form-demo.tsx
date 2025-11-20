@@ -27,7 +27,7 @@ const FormSchema = type({
   minRange,
 })
 
-export default function SliderReactHookFormDemo(): ReactElement {
+export function SliderReactHookFormDemo(): ReactElement {
   const {control, handleSubmit} = useForm<FormData>({
     defaultValues: {
       minMaxNumber: 30,

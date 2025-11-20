@@ -4,7 +4,7 @@ import {Button} from "@qualcomm-ui/react/button"
 import {Popover} from "@qualcomm-ui/react/popover"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function PopoverCompositeDemo(): ReactNode {
+export function PopoverCompositeDemo(): ReactNode {
   return (
     // preview
     <Popover.Root>

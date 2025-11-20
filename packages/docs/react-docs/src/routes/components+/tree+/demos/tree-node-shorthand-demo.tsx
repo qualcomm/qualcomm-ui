@@ -11,7 +11,7 @@ interface Node {
   nodes?: Node[]
 }
 
-export default function Demo(): ReactElement {
+export function TreeNodeShorthandDemo(): ReactElement {
   return (
     <Tree.Root className="w-full max-w-sm" collection={collection}>
       {collection.rootNode.nodes?.map((parentNode, index) => {

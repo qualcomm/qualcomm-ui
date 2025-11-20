@@ -63,7 +63,7 @@ const changelogFunctions = {
     }
 
     const section = isBreaking
-      ? "⚠ BREAKING CHANGES"
+      ? "BREAKING CHANGES"
       : typeMap[conventionalType] || "Miscellaneous"
 
     let line = `### ${section}\n* ${scope ? `[${scope}]: ` : ""}${summary}`

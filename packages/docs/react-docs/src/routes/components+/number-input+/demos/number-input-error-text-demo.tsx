@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {NumberInput} from "@qualcomm-ui/react/number-input"
 
-export default function NumberInputErrorTextDemo(): ReactElement {
+export function NumberInputErrorTextDemo(): ReactElement {
   const [value, setValue] = useState<string>("")
 
   return (

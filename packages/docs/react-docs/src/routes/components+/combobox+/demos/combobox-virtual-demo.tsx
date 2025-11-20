@@ -7,7 +7,7 @@ import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 import {useMockUsers} from "./use-mock-users"
 
-export default function Demo() {
+export function ComboboxVirtualDemo() {
   const {data, isFetching} = useMockUsers(5000)
   const {contains} = useFilter({sensitivity: "base"})
 

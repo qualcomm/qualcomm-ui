@@ -1,5 +1,15 @@
 # @qualcomm-ui/mdx-common
 
+## 1.2.0 (2025/11/19)
+
+### Features
+
+- add filePath field to ReactDemoData
+
+### Code Refactoring
+
+- deprecated ReactDemoWithScope
+
 ## 1.1.0 (2025/11/17)
 
 ### Features

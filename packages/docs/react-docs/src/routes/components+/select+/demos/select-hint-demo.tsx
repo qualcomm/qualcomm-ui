@@ -15,7 +15,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectHintDemo(): ReactElement {
   return (
     // preview
     <Select

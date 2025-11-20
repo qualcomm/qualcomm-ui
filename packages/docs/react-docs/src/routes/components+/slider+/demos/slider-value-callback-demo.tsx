@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {Slider} from "@qualcomm-ui/react/slider"
 
-export default function SliderValueCallbackDemo(): ReactElement {
+export function SliderValueCallbackDemo(): ReactElement {
   const [value, setValue] = useState<number[]>([25, 75])
   const [finalValue, setFinalValue] = useState<number[]>(value)
   return (

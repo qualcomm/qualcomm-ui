@@ -17,7 +17,7 @@ const types: QdsNotificationEmphasis[] = [
   "loading",
 ]
 
-export default function ToastEmphasisDemo(): ReactElement {
+export function ToastEmphasisDemo(): ReactElement {
   return (
     <>
       <div className="flex flex-wrap gap-4">

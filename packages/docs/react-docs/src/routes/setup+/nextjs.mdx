@@ -1,0 +1,131 @@
+---
+title: Next.js
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+This library requires Next.js 14+ and React 19+.
+
+There are four quick steps to installation:
+
+1. Install the npm packages
+2. Import the CSS
+3. Configure fonts and theme provider
+4. Set up root layout
+
+## 1. Install the npm packages
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/react",
+    "@qualcomm-ui/react-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/qds-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+    "@tanstack/react-virtual",
+    "lucide-react",
+    "next-themes",
+  ]}
+/>
+
+## 2. Import the CSS
+
+In your `app/globals.css` file, import the QUI CSS for the theme you're targeting.
+
+```css
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+If you're using Tailwind, import the theme CSS at the `components` layer instead:
+
+```css
+@import "tailwindcss";
+
+/* Important: always order these imports after the tailwindcss import */
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+```
+
+Learn more about the available themes in the [theme documentation](/theming/overview).
+
+## 3. Configure fonts and theme provider
+
+QUI components are designed with the Roboto Flex and Roboto Mono font families.
+
+In Next.js, configure fonts using `next/font/google` and set up the theme provider in your root layout:
+
+```tsx
+import type {Metadata} from "next"
+import {Roboto_Flex, Roboto_Mono} from "next/font/google"
+import "./globals.css"
+import {type ReactNode} from "react"
+import {ThemeProvider} from "next-themes"
+import {QuiRoot} from "@qualcomm-ui/react/qui-root"
+
+const sansFont = Roboto_Flex({
+  variable: "--font-roboto-flex",
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+})
+
+const monoFont = Roboto_Mono({
+  variable: "--font-roboto-mono",
+  subsets: ["latin"],
+})
+
+export const metadata: Metadata = {
+  title: "Your App Title",
+  description: "Your app description",
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: ReactNode
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning data-brand="qualcomm">
+      <body className={`${sansFont.variable} ${monoFont.variable} antialiased`}>
+        <ThemeProvider attribute="data-theme">{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+Key configuration details:
+
+- `suppressHydrationWarning` on `<html>` prevents hydration warnings from theme switching
+- `data-brand="qualcomm"` sets the brand attribute (change to `"snapdragon"` or `"dragonwing"` as needed)
+- `ThemeProvider` with `attribute="data-theme"` enables theme switching via data attributes
+
+Your application is now ready to import and use our components.
+
+## Next Steps
+
+- Learn more about theming in our [theming documentation](/theming/overview).
+- Use the navigation menu on the left to view component documentation.
+
+### (Optional) Customize the default theme
+
+The default theme is determined by user system preferences.
+
+Note that setting a different default theme is [currently bugged](https://github.com/pacocoursey/next-themes/issues/240). When that bug is fixed, you can set a different default theme using the ThemeProvider:
+
+```tsx
+<ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
+  <QuiRoot>{children}</QuiRoot>
+</ThemeProvider>
+```
+
+To set a different brand, change the `data-brand` attribute on the `<html>` element:
+
+```tsx
+<html lang="en" suppressHydrationWarning data-brand="snapdragon">
+```

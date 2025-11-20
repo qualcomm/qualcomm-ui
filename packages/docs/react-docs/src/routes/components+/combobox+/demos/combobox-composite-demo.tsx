@@ -8,7 +8,7 @@ import {Portal} from "@qualcomm-ui/react-core/portal"
 
 import {countries} from "./country-list"
 
-export default function Demo() {
+export function ComboboxCompositeDemo() {
   const {contains} = useFilter({sensitivity: "base"})
 
   const {collection, filter} = useListCollection({

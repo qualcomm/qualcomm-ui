@@ -6,7 +6,7 @@ import {Avatar} from "@qualcomm-ui/react/avatar"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Icon} from "@qualcomm-ui/react/icon"
 
-export default function Demo(): ReactElement {
+export function HeaderBarSurfacesDemo(): ReactElement {
   return (
     <div className="flex w-full flex-col gap-4">
       <HeaderBar.Root className="@container">

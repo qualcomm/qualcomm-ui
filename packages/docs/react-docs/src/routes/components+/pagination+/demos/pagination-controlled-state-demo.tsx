@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {Pagination} from "@qualcomm-ui/react/pagination"
 
-export default function PaginationControlledStateDemo(): ReactElement {
+export function PaginationControlledStateDemo(): ReactElement {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 

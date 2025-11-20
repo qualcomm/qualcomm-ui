@@ -9,7 +9,7 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {DraggableColumnHeader} from "./draggable-column-header"
 import {userColumns, useUserData} from "./use-data"
 
-export default function ColumnDndDemo() {
+export function ColumnDndDemo() {
   const {data = [], isFetching, refetch} = useUserData(10)
 
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>(

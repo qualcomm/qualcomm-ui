@@ -1,4 +1,4 @@
-export default function Demo() {
+export function TypographyExampleDemo() {
   return (
     <div className="flex flex-col gap-4">
       {/* preview */}

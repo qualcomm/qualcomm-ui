@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Collapsible} from "@qualcomm-ui/react/collapsible"
 
-export default function CollapsibleShowcaseDemo(): ReactElement {
+export function CollapsibleShowcaseDemo(): ReactElement {
   return (
     <Collapsible.Root className="flex flex-col items-center">
       <Collapsible.Trigger

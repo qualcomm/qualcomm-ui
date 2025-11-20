@@ -8,7 +8,7 @@ const toaster = createToaster({
   placement: "bottom-end",
 })
 
-export default function ToastDurationDemo(): ReactElement {
+export function ToastDurationDemo(): ReactElement {
   return (
     <>
       <Toaster toaster={toaster} />

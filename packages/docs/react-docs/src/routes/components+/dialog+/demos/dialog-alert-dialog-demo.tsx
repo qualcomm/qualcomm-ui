@@ -5,7 +5,7 @@ import {Trash2} from "lucide-react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Dialog} from "@qualcomm-ui/react/dialog"
 
-export default function DialogAlertDialogDemo(): ReactElement {
+export function DialogAlertDialogDemo(): ReactElement {
   return (
     <Dialog.Root emphasis="danger" role="alertdialog">
       <Dialog.Trigger>

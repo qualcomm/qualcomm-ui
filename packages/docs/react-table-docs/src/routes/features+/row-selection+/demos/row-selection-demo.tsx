@@ -19,7 +19,7 @@ import {useDebounce} from "@qualcomm-ui/react-core/effects"
 
 import {userColumns, useUserData} from "./use-data"
 
-export default function RowSelectionDemo() {
+export function RowSelectionDemo() {
   const [rowSelection, setRowSelection] = useState({})
   const [globalFilter, setGlobalFilter] = useState("")
 

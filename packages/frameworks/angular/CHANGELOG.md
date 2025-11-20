@@ -1,5 +1,26 @@
 # @qualcomm-ui/angular
 
+## 1.3.1 (2025/11/19)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.3.0 (2025/11/18)
+
+### Features
+
+- [pagination]: add page-buttons-directive shortcut
+
+### Miscellaneous Chores
+
+- [pagination]: use updated qds api
+- **deps:** update dependencies [@qualcomm-ui/angular-core, @qualcomm-ui/qds-core, @qualcomm-ui/core]
+
+### Bug Fixes
+
+- [table-pagination]: add missing provider
+
 ## 1.2.1 (2025/11/17)
 
 ### Miscellaneous Chores

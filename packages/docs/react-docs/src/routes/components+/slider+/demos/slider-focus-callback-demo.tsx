@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {Slider} from "@qualcomm-ui/react/slider"
 
-export default function SliderFocusCallbackDemo(): ReactElement {
+export function SliderFocusCallbackDemo(): ReactElement {
   const [currentOutput, setCurrentOutput] = useState<string>("none")
   return (
     <div className="sm:w-80">

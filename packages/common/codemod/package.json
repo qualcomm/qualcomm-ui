@@ -48,7 +48,7 @@
     "commander": "^14.0.2",
     "dayjs": "^1.11.19",
     "esbuild": "^0.25.8",
-    "glob": "^11.0.3",
+    "glob": "^11.1.0",
     "npm-run-all2": "^8.0.4",
     "ora": "^9.0.0",
     "remark-frontmatter": "^5.0.0",

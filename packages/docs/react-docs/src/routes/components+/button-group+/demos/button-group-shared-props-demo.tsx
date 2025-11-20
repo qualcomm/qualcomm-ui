@@ -4,7 +4,7 @@ import {AArrowDown} from "lucide-react"
 
 import {Button, ButtonGroup} from "@qualcomm-ui/react/button"
 
-export default function ButtonGroupSharedPropsDemo(): ReactElement {
+export function ButtonGroupSharedPropsDemo(): ReactElement {
   return (
     <div className="flex w-full flex-col gap-4">
       {/* preview */}

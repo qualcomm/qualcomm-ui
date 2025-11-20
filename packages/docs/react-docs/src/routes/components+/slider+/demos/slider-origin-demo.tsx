@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Slider} from "@qualcomm-ui/react/slider"
 
-export default function SliderOriginDemo(): ReactElement {
+export function SliderOriginDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       {/* preview */}

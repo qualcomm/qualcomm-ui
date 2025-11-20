@@ -4,7 +4,7 @@ import {Button} from "@qualcomm-ui/react/button"
 import {Drawer} from "@qualcomm-ui/react/drawer"
 import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 
-export default function DrawerPlacementDemo(): ReactElement {
+export function DrawerPlacementDemo(): ReactElement {
   return (
     <Drawer.Root>
       <Drawer.Trigger>

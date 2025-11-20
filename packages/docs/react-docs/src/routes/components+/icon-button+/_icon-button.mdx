@@ -4,7 +4,8 @@ group: Buttons
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -18,33 +19,36 @@ import {IconButton} from "@qualcomm-ui/react/button"
 
 Buttons come in three variants: `fill`, `outline`, and `ghost`. Customize these with the [variant](./#variant) property.
 
-<QdsDemo name="IconButtonVariantsDemo" />
+<Demo name="IconButtonVariantsDemo" component={demos.IconButtonVariantsDemo} />
 
 ### Emphasis
 
 Control the visual emphasis with different colors: `neutral`, `primary`, and `danger`. Customize these with the [emphasis](./#emphasis) prop.
 
-<QdsDemo name="IconButtonEmphasisDemo" />
+<Demo name="IconButtonEmphasisDemo" component={demos.IconButtonEmphasisDemo} />
 
 ### Sizes and Icons
 
 Customize size using the [size](./#size) property. QUI buttons come with built-in support for [lucide-react](https://lucide.dev) icons.
 
-<QdsDemo name="IconButtonSizesDemo" />
+<Demo name="IconButtonSizesDemo" component={demos.IconButtonSizesDemo} />
 
 ### Compact Density
 
 Use the [density](./#density) prop to reduce the padding and height of the button. The options are `default` and `compact`.
 
-<QdsDemo name="IconButtonDensityDemo" />
+<Demo name="IconButtonDensityDemo" component={demos.IconButtonDensityDemo} />
 
 ### Variant Combinations
 
-<QdsDemo name="IconButtonVariantCombinationsDemo" />
+<Demo
+  name="IconButtonVariantCombinationsDemo"
+  component={demos.IconButtonVariantCombinationsDemo}
+/>
 
 ### Contrast Colors
 
-<QdsDemo name="IconButtonContrastDemo" />
+<Demo name="IconButtonContrastDemo" component={demos.IconButtonContrastDemo} />
 
 ## API
 

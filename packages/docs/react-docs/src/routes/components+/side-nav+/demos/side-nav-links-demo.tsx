@@ -49,7 +49,7 @@ const collection = createTreeCollection<SideNavItem>({
   },
 })
 
-export default function Demo() {
+export function SideNavLinksDemo() {
   const pathname = useLocation().pathname
 
   const selectedNode = collection.findNodeBy(

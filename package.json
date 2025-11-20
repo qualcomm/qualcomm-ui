@@ -51,6 +51,8 @@
     "prep-release": "run-s changeset-generate bump consolidate-changelogs"
   },
   "devDependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.7",
     "@changesets/get-github-info": "^0.6.0",
@@ -76,10 +78,10 @@
     "dotenv": "^17.2.3",
     "eslint": "9.37.0",
     "execa": "^9.6.0",
-    "glob": "^11.0.3",
+    "glob": "^11.1.0",
     "ignore": "^7.0.5",
     "npm-run-all2": "^8.0.4",
-    "playwright": "1.53.2",
+    "playwright": "1.56.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "pretty-ms": "^9.3.0",
@@ -96,7 +98,7 @@
     "typescript-eslint": "catalog:"
   },
   "resolutions": {
-    "playwright": "1.53.2",
+    "playwright": "1.56.1",
     "typescript": "5.9.3"
   },
   "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c"
