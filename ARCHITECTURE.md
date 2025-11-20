@@ -52,7 +52,7 @@ Web components promise framework-agnostic reusability through encapsulation. The
 
 ### Wrappers Defeat the Purpose
 
-Teams implementing web components for framework integration inevitably create framework-specific adapters. These wrappers exist to provide functionality web components can't natively support in Angular and React:
+Teams implementing web components for framework integration typically create framework-specific adapters. These wrappers exist to provide functionality web components can't natively support in Angular and React:
 
 #### Angular
 
