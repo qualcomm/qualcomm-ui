@@ -4,7 +4,7 @@ import {Link2} from "lucide-react"
 
 import {Tag} from "@qualcomm-ui/react/tag"
 
-export default function TagVariantsDemo(): ReactElement {
+export function TagVariantsDemo(): ReactElement {
   return (
     <div className="flex flex-col items-start gap-2">
       {/* preview */}

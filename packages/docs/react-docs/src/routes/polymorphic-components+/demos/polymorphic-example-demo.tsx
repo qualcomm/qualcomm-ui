@@ -21,7 +21,7 @@ function AlertButton(props: AlertButtonProps): ReactElement {
   return <PolymorphicElement as="button" {...mergedProps} />
 }
 
-export default function PolymorphicExampleDemo(): ReactNode {
+export function PolymorphicExampleDemo(): ReactNode {
   return (
     <div className="flex flex-col gap-4">
       <AlertButton className="border p-1">

@@ -1,6 +1,6 @@
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlSimpleDemo() {
+export function SegmentedControlSimpleDemo() {
   return (
     // preview
     <SegmentedControl.Root defaultValue={["chart"]}>

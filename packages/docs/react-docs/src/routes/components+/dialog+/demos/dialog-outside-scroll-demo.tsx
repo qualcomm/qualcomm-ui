@@ -4,7 +4,7 @@ import {Button} from "@qualcomm-ui/react/button"
 import {Dialog} from "@qualcomm-ui/react/dialog"
 import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 
-export default function DialogOutsideScrollDemo(): ReactElement {
+export function DialogOutsideScrollDemo(): ReactElement {
   return (
     <Dialog.Root>
       <Dialog.Trigger>

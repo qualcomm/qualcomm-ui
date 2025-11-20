@@ -4,7 +4,7 @@ import {ChevronLeft, ChevronRight} from "lucide-react"
 
 import {Link} from "@qualcomm-ui/react/link"
 
-export default function LinkIconsDemo(): ReactElement {
+export function LinkIconsDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       {/* preview */}

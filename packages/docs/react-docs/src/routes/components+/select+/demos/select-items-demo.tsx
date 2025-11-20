@@ -19,7 +19,7 @@ const cityCollection = selectCollection({
 })
 // preview
 
-export default function Demo(): ReactElement {
+export function SelectItemsDemo(): ReactElement {
   return (
     <Select
       className="w-48"

@@ -5,7 +5,7 @@ import {ChevronLeft, ChevronRight} from "lucide-react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
-export default function TabsControlledValueDemo(): ReactElement {
+export function TabsControlledValueDemo(): ReactElement {
   const [value, setValue] = useState<string>("software")
 
   const goToSoftwareTab = () => setValue("software")

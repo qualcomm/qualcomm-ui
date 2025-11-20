@@ -3,7 +3,7 @@ import {type ReactElement, useState} from "react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 
-export default function TooltipControlledStateDemo(): ReactElement {
+export function TooltipControlledStateDemo(): ReactElement {
   const [open, setOpen] = useState(false)
 
   return (

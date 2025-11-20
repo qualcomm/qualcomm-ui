@@ -9,7 +9,6 @@ import {
   buildEntryPoints,
   type BuildEntryPointsOptions,
   collectFolders,
-  getArg,
   hasArg,
   logPlugin,
 } from "@qualcomm-ui/esbuild"
@@ -113,11 +112,13 @@ async function collectEntryPoints() {
 }
 
 async function build(argv: string[]) {
-  const isDev = getArg(argv, "--mode") === "development"
   const buildOpts: BuildOptions = {
+    banner: {
+      js: `"use client";`,
+    },
     bundle: true,
     external: [
-      ...Object.keys(pkg.dependencies ?? {}),
+      ...Object.keys(pkg.devDependencies ?? {}),
       ...Object.keys(pkg.peerDependencies ?? {}),
       "@tanstack/virtual-core",
       "@qualcomm-ui/core",
@@ -129,7 +130,7 @@ async function build(argv: string[]) {
       "@qualcomm-ui/utils/*",
     ],
     metafile: true,
-    minifyIdentifiers: !isDev,
+    minifyIdentifiers: false,
     minifySyntax: true,
     minifyWhitespace: true,
     outdir: "dist",

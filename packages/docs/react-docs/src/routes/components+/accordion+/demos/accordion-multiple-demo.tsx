@@ -4,7 +4,7 @@ import {Accordion} from "@qualcomm-ui/react/accordion"
 
 import {items} from "./accordion-example-data"
 
-export default function AccordionMultipleDemo(): ReactElement {
+export function AccordionMultipleDemo(): ReactElement {
   return (
     // preview
     <Accordion.Root className="w-96" multiple>

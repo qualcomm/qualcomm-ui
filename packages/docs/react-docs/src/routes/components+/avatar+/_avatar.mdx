@@ -4,7 +4,8 @@ group: Data Display
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -33,37 +34,41 @@ The anatomy of the avatar component is as follows:
 
 Here's a typical usage example:
 
-<QdsDemo name="AvatarShowcaseDemo" />
+<Demo name="AvatarShowcaseDemo" component={demos.AvatarShowcaseDemo} />
 
 ### Content
 
 The `Avatar.Content` component displays alternative content within the avatar. Use it by itself to show initials or an icon, or together with `Avatar.Image` to provide fallback content if the image cannot be loaded.
 
-<QdsDemo name="AvatarContentDemo" />
+<Demo name="AvatarContentDemo" component={demos.AvatarContentDemo} />
 
 ### Sizes
 
 Use the [size](./#size) prop to set the size of the avatar. The available sizes are `xs`, `sm`, `md` (default), `lg`, and `xl`.
 
-<QdsDemo name="AvatarSizeDemo" />
+<Demo name="AvatarSizeDemo" component={demos.AvatarSizeDemo} />
 
 ### Variants
 
 When displaying initials or an icon, use the [variant](./#variant) prop on `Avatar.Content` to set the avatar's style. Available variants are `neutral` (default), `contrast`, and `brand`.
 
-<QdsDemo name="AvatarVariantDemo" />
+<Demo name="AvatarVariantDemo" component={demos.AvatarVariantDemo} />
 
 ### Status
 
 To indicate the status of the user or entity, use the `Avatar.Status` component and set its [status](./#status-1) prop to one of: `active`, `offline` (default), `away`, or `busy`.
 
-<QdsDemo name="AvatarStatusDemo" />
+<Demo name="AvatarStatusDemo" component={demos.AvatarStatusDemo} />
 
 ### State Callback
 
 You can listen for changes to the avatar's state by using the [onStateChange](./#onStateChange) prop.
 
-<QdsDemo expanded name="AvatarStateCallbackDemo" />
+<Demo
+  expanded
+  name="AvatarStateCallbackDemo"
+  component={demos.AvatarStateCallbackDemo}
+/>
 
 ## API
 

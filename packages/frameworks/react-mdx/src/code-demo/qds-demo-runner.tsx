@@ -21,6 +21,8 @@ export interface QdsDemoRunnerProps
 
   colorScheme?: ColorScheme
 
+  component?: () => ReactNode
+
   /**
    * The default source code index to render.
    */
@@ -69,6 +71,9 @@ export interface QdsDemoRunnerProps
   wrapperProps?: HTMLAttributes<HTMLDivElement>
 }
 
+/**
+ * @deprecated migrate to ReactDemoRunner
+ */
 export function QdsDemoRunner({
   hideBrandSwitcher,
   qdsBrand = "qualcomm",

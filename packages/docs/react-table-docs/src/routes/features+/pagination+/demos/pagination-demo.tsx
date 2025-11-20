@@ -1,16 +1,15 @@
-import {useMemo} from "react"
+import {useMemo, useState} from "react"
+
+import {Search} from "lucide-react"
 
 import {
-  type Column,
   type ColumnDef,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  type TableInstance,
 } from "@qualcomm-ui/core/table"
 import {ActionGroup} from "@qualcomm-ui/react/action-group"
 import {Button} from "@qualcomm-ui/react/button"
-import {NumberInput} from "@qualcomm-ui/react/number-input"
 import {Pagination} from "@qualcomm-ui/react/pagination"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {
@@ -24,7 +23,7 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {type User, useUserData} from "./use-data"
 
-export default function PaginationDemo() {
+export function PaginationDemo() {
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {
@@ -67,12 +66,18 @@ export default function PaginationDemo() {
 
   const regenerateData = () => refetch()
 
+  const [globalFilter, setGlobalFilter] = useState<string>("")
+
   const table = useReactTable({
     columns,
     data,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
+    state: {
+      globalFilter,
+    },
   })
 
   const paginationProps = useTablePagination(table)
@@ -81,7 +86,17 @@ export default function PaginationDemo() {
     <div className="flex w-full flex-col gap-4">
       <Table.Root>
         <Table.ActionBar>
-          <Button onClick={regenerateData} variant="outline">
+          <TextInput
+            className="w-56"
+            inputProps={{
+              "aria-label": "Global filter",
+            }}
+            placeholder="Search..."
+            size="sm"
+            startIcon={Search}
+            value={globalFilter}
+          />
+          <Button onClick={regenerateData} size="sm" variant="outline">
             Regenerate
           </Button>
           {isFetching ? <ProgressRing size="xs" /> : null}
@@ -97,19 +112,12 @@ export default function PaginationDemo() {
                         key={header.id}
                         colSpan={header.colSpan}
                       >
-                        {header.isPlaceholder ? null : (
-                          <div className="inline-flex flex-col gap-1">
-                            <div className="inline-flex items-center justify-center">
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                            </div>
-                            {header.column.getCanFilter() ? (
-                              <Filter column={header.column} table={table} />
-                            ) : null}
-                          </div>
-                        )}
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
                       </Table.HeaderCell>
                     )
                   })}
@@ -162,66 +170,6 @@ export default function PaginationDemo() {
         )}
         disableCopy
         language="json"
-      />
-    </div>
-  )
-}
-
-interface FilterProps {
-  column: Column<User>
-  table: TableInstance<User>
-}
-
-function Filter({column, table}: FilterProps) {
-  const firstValue = table
-    .getPreFilteredRowModel()
-    .flatRows[0]?.getValue(column.id)
-
-  return typeof firstValue === "number" ? (
-    <MinMaxNumberFilter column={column} table={table} />
-  ) : (
-    <TextInput
-      className="w-32"
-      onValueChange={(value) => column.setFilterValue(value)}
-      placeholder="Search..."
-      size="sm"
-      value={(column.getFilterValue() as string) ?? ""}
-    />
-  )
-}
-
-function MinMaxNumberFilter({column}: FilterProps) {
-  const columnFilterValue = column.getFilterValue() as [number, number]
-
-  const [min, max] = columnFilterValue ?? [0, 0]
-
-  return (
-    <div className="flex w-32 gap-2">
-      <NumberInput
-        controlProps={{hidden: true}}
-        min={0}
-        onValueChange={({valueAsNumber}) =>
-          column.setFilterValue((old: [number, number]) => [
-            valueAsNumber,
-            old?.[1],
-          ])
-        }
-        placeholder="Min"
-        size="sm"
-        value={min ? `${min}` : ""}
-      />
-      <NumberInput
-        controlProps={{hidden: true}}
-        max={130}
-        onValueChange={({valueAsNumber}) =>
-          column.setFilterValue((old: [number, number]) => [
-            old?.[0],
-            valueAsNumber,
-          ])
-        }
-        placeholder="Max"
-        size="sm"
-        value={max ? `${max}` : ""}
       />
     </div>
   )

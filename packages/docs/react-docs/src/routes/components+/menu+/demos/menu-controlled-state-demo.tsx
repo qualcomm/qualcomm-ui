@@ -3,7 +3,7 @@ import {type ReactElement, useState} from "react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuControlledStateDemo(): ReactElement {
+export function MenuControlledStateDemo(): ReactElement {
   const [open, setOpen] = useState<boolean>(false)
 
   return (

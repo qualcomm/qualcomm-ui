@@ -33,7 +33,7 @@ const toaster = createToaster({
   placement: "bottom-end",
 })
 
-export default function Demo(): ReactElement {
+export function SelectHookFormDemo(): ReactElement {
   const {
     control,
     formState: {isSubmitting},

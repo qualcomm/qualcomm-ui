@@ -4,7 +4,7 @@ import {ExternalLink} from "lucide-react"
 
 import {IconButton} from "@qualcomm-ui/react/button"
 
-export default function Demo(): ReactElement {
+export function IconButtonContrastDemo(): ReactElement {
   return (
     <div className="grid gap-4">
       {/* preview */}

@@ -7,7 +7,7 @@ const toaster = createToaster({
   placement: "bottom-end",
 })
 
-export default function ToastPauseDemo(): ReactElement {
+export function ToastPauseDemo(): ReactElement {
   const [paused, setPaused] = useState(false)
   const [shown, setShown] = useState(false)
 

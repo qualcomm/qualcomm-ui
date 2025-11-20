@@ -89,6 +89,9 @@ export interface QdsReactDemoProps extends ComponentPropsWithRef<"div"> {
   wrapperProps?: HTMLAttributes<HTMLDivElement>
 }
 
+/**
+ * @deprecated migrate to ReactDemo
+ */
 export function QdsReactDemo({
   children,
   colorScheme,
@@ -108,6 +111,7 @@ export function QdsReactDemo({
     ({
       demoName: "",
       fileName: "",
+      filePath: "",
       imports: [],
       pageId: "",
       scope: {},

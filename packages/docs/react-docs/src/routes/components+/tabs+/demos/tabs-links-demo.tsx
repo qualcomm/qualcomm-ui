@@ -6,7 +6,7 @@ import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
 const tabValues = ["documents", "products", "software", "hardware"]
 
-export default function TabsLinksDemo(): ReactElement {
+export function TabsLinksDemo(): ReactElement {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [value, setValue] = useState<string>(

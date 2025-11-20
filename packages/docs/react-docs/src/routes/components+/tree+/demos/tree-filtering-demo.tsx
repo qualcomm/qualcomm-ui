@@ -14,7 +14,7 @@ interface Node {
   nodes?: Node[]
 }
 
-export default function Demo(): ReactElement {
+export function TreeFilteringDemo(): ReactElement {
   const [collection, setCollection] =
     useState<TreeCollection<Node>>(initialCollection)
   const [expanded, setExpanded] = useState<string[]>([])

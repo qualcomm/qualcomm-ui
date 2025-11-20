@@ -1,5 +1,33 @@
 # @qualcomm-ui/react
 
+## 1.1.5 (2025/11/19)
+
+### Miscellaneous Chores
+
+- [QuiRoot]: deprecate component
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.1.4 (2025/11/18)
+
+### Bug Fixes
+
+- [build]: add "use client"; banner
+
+### Build System
+
+- do not minify identifiers
+
+### Miscellaneous Chores
+
+- omit unused peerDependencies
+- **deps:** update dependencies [@qualcomm-ui/react-core]
+
+## 1.1.3 (2025/11/18)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
 ## 1.1.2 (2025/11/17)
 
 ### Miscellaneous Chores

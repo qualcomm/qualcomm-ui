@@ -20,6 +20,10 @@ import {
 
 const isDev = process.env.NODE_ENV === "development"
 
+interface ChangeOptions {
+  onComplete?: () => void
+}
+
 export interface QuiDocsPluginOptions {
   /**
    * Path to the qui-docs config file. This is automatically detected if omitted.
@@ -33,6 +37,8 @@ export interface QuiDocsPluginOptions {
    */
   cwd?: string
 }
+
+const VIRTUAL_MODULE_ID = "\0@qualcomm-ui/mdx-vite-plugin"
 
 /**
  * TODO: adjust when https://github.com/vitejs/vite/discussions/16358 lands.
@@ -48,13 +54,7 @@ class PluginState {
   timeout: ReturnType<typeof setTimeout> | undefined = undefined
   watching = false
 
-  readonly resolvedVirtualModuleId: string
-  readonly virtualModuleId = "@qualcomm-ui/mdx-vite-plugin"
   private cwd!: string
-
-  constructor() {
-    this.resolvedVirtualModuleId = `\0${this.virtualModuleId}`
-  }
 
   init(cwd: string) {
     this.cwd = cwd
@@ -122,15 +122,13 @@ class PluginState {
   }
 
   /**
-   * When the user edits MDX content or modifies the plugin config, we re-index the
-   * site. This function handles module invalidation so that virtual file imports
-   * are refreshed as expected by the consumer's dev server.
+   * When the user adds or removes mdx files, we re-index the site. This function
+   * handles module invalidation so that virtual file imports are refreshed as
+   * expected by the consumer's dev server.
    */
   sendUpdate() {
     for (const server of this.servers) {
-      const virtualModule = server.moduleGraph.getModuleById(
-        this.resolvedVirtualModuleId,
-      )
+      const virtualModule = server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
       if (virtualModule) {
         server.moduleGraph.invalidateModule(virtualModule)
         server.reloadModule(virtualModule)
@@ -138,7 +136,7 @@ class PluginState {
     }
   }
 
-  handleChange(callback?: () => void) {
+  handleChange(opts: ChangeOptions = {}) {
     // the plugin is activating twice in dev mode. It's mostly harmless, but we
     // prevent logs from emitting twice by flipping a flag
 
@@ -148,7 +146,7 @@ class PluginState {
     this.timeout = setTimeout(() => {
       this.buildIndex(true)
       this.sendUpdate()
-      callback?.()
+      opts?.onComplete?.()
     }, 300)
   }
 
@@ -203,21 +201,25 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       state.initWatchers(opts?.configFile)
       server.watcher.on("add", (path: string) => {
         if (path.endsWith(".mdx")) {
-          state.handleChange(() => {
-            server.ws.send({type: "full-reload"})
+          state.handleChange({
+            onComplete: () => {
+              server.ws.send({type: "full-reload"})
+            },
           })
         }
       })
       server.watcher.on("unlink", (path: string) => {
         if (path.endsWith(".mdx")) {
-          state.handleChange(() => {
-            server.ws.send({type: "full-reload"})
+          state.handleChange({
+            onComplete: () => {
+              server.ws.send({type: "full-reload"})
+            },
           })
         }
       })
       state.servers.push(server)
     },
-    handleHotUpdate: async ({file: updateFile}) => {
+    handleHotUpdate: async ({file: updateFile, modules, server}) => {
       const file = fixPath(updateFile)
 
       if (
@@ -231,20 +233,30 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
         ) {
           return []
         }
-        state.handleChange()
+
+        state.buildIndex(true)
+        if (updateFile.endsWith(".mdx")) {
+          // invalidate the plugin module so that the virtual file is refreshed
+          const virtualModule =
+            server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
+          if (virtualModule) {
+            server.moduleGraph.invalidateModule(virtualModule)
+          }
+        }
       }
-      return []
+
+      return modules
     },
     load: (id): string | undefined => {
-      if (id === state.resolvedVirtualModuleId) {
+      if (id === VIRTUAL_MODULE_ID) {
         return `export const siteData = ${JSON.stringify({navItems: state.indexer.navItems, pageDocProps: state.indexer.pageDocProps, pageMap: state.indexer.pageMap, searchIndex: state.indexer.searchIndex})}`
       }
       return undefined
     },
     name: "qui-mdx-vite-plugin",
     resolveId: (id) => {
-      if (id === state.virtualModuleId) {
-        return state.resolvedVirtualModuleId
+      if (id === "@qualcomm-ui/mdx-vite-plugin") {
+        return VIRTUAL_MODULE_ID
       }
       return undefined
     },

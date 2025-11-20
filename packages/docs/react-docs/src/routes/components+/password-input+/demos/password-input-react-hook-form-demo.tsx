@@ -53,7 +53,7 @@ const passwordSchema = type({
   return valid
 })
 
-export default function PasswordInputReactHookFormDemo() {
+export function PasswordInputReactHookFormDemo() {
   const {
     control,
     formState: {errors, isSubmitting, submitCount, touchedFields},

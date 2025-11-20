@@ -2,7 +2,7 @@ import type {ReactNode} from "react"
 
 import {Divider} from "@qualcomm-ui/react/divider"
 
-export default function DividerValueTextDemo(): ReactNode {
+export function DividerValueTextDemo(): ReactNode {
   return (
     <div className="flex w-full flex-col items-center gap-4 px-8">
       {/* preview */}

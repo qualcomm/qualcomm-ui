@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Avatar} from "@qualcomm-ui/react/avatar"
 
-export default function AvatarStatusDemo(): ReactElement {
+export function AvatarStatusDemo(): ReactElement {
   return (
     <div className="flex items-center gap-4">
       {/* preview */}

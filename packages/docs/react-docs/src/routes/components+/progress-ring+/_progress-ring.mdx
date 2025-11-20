@@ -3,7 +3,8 @@ title: Progress Ring
 group: Feedback
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -29,37 +30,46 @@ Indeterminate progress rings keep users informed that work is happening when tim
 
 For most use cases, you can use the simple `ProgressRing` component.
 
-<QdsDemo name="ProgressRingSimpleDemo" />
+<Demo name="ProgressRingSimpleDemo" component={demos.ProgressRingSimpleDemo} />
 
 ### Composite
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<QdsDemo name="ProgressRingCompositeDemo" />
+<Demo
+  name="ProgressRingCompositeDemo"
+  component={demos.ProgressRingCompositeDemo}
+/>
 
 ### Value
 
 When the [value](./#value-1) prop is set, the filled portion of the circle will represent the total percent relative to [max](./#max) and [min](./#min). This is referred to as the "determinate" state.
 
-<QdsDemo name="ProgressRingValueDemo" />
+<Demo name="ProgressRingValueDemo" component={demos.ProgressRingValueDemo} />
 
 ### Value Text
 
 Display the value text by passing a value to the [valueText](./#valuetext) prop. The value text only shows when the size is `lg` or `xl`.
 
-<QdsDemo name="ProgressRingValueTextDemo" />
+<Demo
+  name="ProgressRingValueTextDemo"
+  component={demos.ProgressRingValueTextDemo}
+/>
 
 ### Sizes
 
 Use the [size](./#size) prop to change the size of the circle.
 
-<QdsDemo name="ProgressRingSizesDemo" />
+<Demo name="ProgressRingSizesDemo" component={demos.ProgressRingSizesDemo} />
 
 ### Thickness
 
 Use the [thickness](./#thickness) prop to change the pixel width of the track and bar.
 
-<QdsDemo name="ProgressRingThicknessDemo" />
+<Demo
+  name="ProgressRingThicknessDemo"
+  component={demos.ProgressRingThicknessDemo}
+/>
 
 ## Shortcuts
 

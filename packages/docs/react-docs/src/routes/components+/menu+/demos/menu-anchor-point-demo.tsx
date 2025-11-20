@@ -3,7 +3,7 @@ import {type ReactElement, useRef} from "react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuAnchorPointDemo(): ReactElement {
+export function MenuAnchorPointDemo(): ReactElement {
   const ref = useRef<HTMLDivElement | null>(null)
   const getAnchorRect = () => ref.current!.getBoundingClientRect()
 

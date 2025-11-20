@@ -25,7 +25,6 @@ import {GlobalConfig} from "./global-config"
 import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
 import {QuiLogo} from "./qui-logo"
 import {ThemeToggle} from "./theme-toggle"
-import {useHmrScrollRestoration} from "./use-hmr-scroll-restoration"
 
 interface Props extends Partial<DocsLayoutSettings> {
   /**
@@ -48,7 +47,6 @@ export function AppDocsLayout({
 }: Props): ReactNode {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchParams] = useSearchParams()
-  useHmrScrollRestoration()
 
   // persist the search input to the URL
   const query = searchParams.get("query") ?? ""

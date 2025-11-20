@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 
-export default function TooltipCloseEventsDemo(): ReactElement {
+export function TooltipCloseEventsDemo(): ReactElement {
   return (
     // preview
     <Tooltip

@@ -4,7 +4,7 @@ import {Accordion} from "@qualcomm-ui/react/accordion"
 
 import {items} from "./accordion-example-data"
 
-export default function AccordionUncontainedDemo(): ReactElement {
+export function AccordionUncontainedDemo(): ReactElement {
   return (
     // preview
     <Accordion.Root className="w-96" uncontained>

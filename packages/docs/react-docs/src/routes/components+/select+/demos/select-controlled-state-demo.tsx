@@ -15,7 +15,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectControlledStateDemo(): ReactElement {
   const [value, setValue] = useState<string[]>([cityCollection.firstValue!])
 
   return (

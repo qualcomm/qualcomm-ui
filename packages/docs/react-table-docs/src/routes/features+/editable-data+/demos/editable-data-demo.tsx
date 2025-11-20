@@ -79,7 +79,7 @@ function useSkipper() {
   return [shouldSkip, skip] as const
 }
 
-export default function EditableDataDemo() {
+export function EditableDataDemo() {
   const {data: userData = [], isFetching, refetch} = useUserData(1000)
 
   const [mutableData, setMutableData] = useState<User[]>(userData)

@@ -17,7 +17,7 @@ const FormSchema = type({
   language: "string>0",
 })
 
-export default function RadioReactHookFormDemo(): ReactElement {
+export function RadioReactHookFormDemo(): ReactElement {
   const {control, handleSubmit} = useForm<FormData>({
     defaultValues: {
       framework: "",

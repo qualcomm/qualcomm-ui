@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 import {Link} from "@qualcomm-ui/react/link"
 
-export default function InlineNotificationLayoutDemo(): ReactElement {
+export function InlineNotificationLayoutDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       {/* preview */}

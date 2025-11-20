@@ -12,7 +12,7 @@ interface Starship {
   url: string
 }
 
-export default function Demo() {
+export function ComboboxAsyncDemo() {
   const {data, isFetching} = useQuery({
     queryFn: async () => {
       return fetch("https://www.swapi.tech/api/starships?page=1&limit=100", {

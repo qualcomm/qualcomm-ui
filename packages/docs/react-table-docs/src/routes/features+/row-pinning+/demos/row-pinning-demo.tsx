@@ -31,7 +31,7 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {type User, useUserData} from "./use-data"
 
-export default function RowPinningDemo() {
+export function RowPinningDemo() {
   // table states
   const [rowPinning, setRowPinning] = useState<RowPinningState>({
     bottom: [],

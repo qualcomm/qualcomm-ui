@@ -1,0 +1,126 @@
+---
+title: Vite / Webpack / etc.
+---
+
+# {frontmatter.title}
+
+## Fonts
+
+Fonts are sourced from Google. Add the links to your application's `<head>` element:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,110,400;8..144,110,560;8..144,114,400;8..144,114,500;8..144,114,520;8..144,114,660;8..144,114,680&family=Roboto+Mono&display=swap"
+  rel="stylesheet"
+/>
+```
+
+## Theme
+
+All components ship with `dark` and `light` variants.
+
+> [!Tip]
+> The `@qualcomm-ui/styles` package applies CSS variables based on the presence of a `dark` or `light` className on the nearest ancestor element. To manage this, we'll use hooks and context.
+
+```tsx label="theme-provider.tsx" collapsible="false"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+} from "react"
+
+// this will be used to store the theme in localStorage.
+export const appThemeKey = "my-qui-app-theme-key"
+
+export interface ThemeState {
+  mode: QuiTheme
+  setMode: Dispatch<SetStateAction<QuiTheme>>
+  toggleMode: () => void
+}
+
+const ThemeContext = createContext<ThemeState | null>(null)
+
+interface Props {
+  children: ReactNode
+}
+
+export function ThemeProvider({children}: Props) {
+  const [mode, setMode] = useState<QuiTheme>(
+    localStorage.getItem(appThemeKey) === "light" ? "light" : "dark",
+  )
+
+  const html = document.getElementById("html")
+  if (html && !html.className.includes(mode)) {
+    html.className = mode
+  }
+
+  const toggleMode = useCallback(() => {
+    const html = document.getElementById("html")
+    if (!html) {
+      console.warn("Error, expecting HTML element but it was not found")
+      return
+    }
+    setMode((prevState) => {
+      const nextState = prevState === "dark" ? "light" : "dark"
+      html.classList.remove(prevState)
+      html.classList.add(nextState)
+      localStorage.setItem(appThemeKey, nextState)
+      return nextState
+    })
+  }, [])
+
+  const context: ThemeState = useMemo(
+    () => ({mode, setMode, toggleMode}),
+    [mode, setMode, toggleMode],
+  )
+
+  return (
+    <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>
+  )
+}
+
+/* Optional: export a helper hook. */
+export function useTheme() {
+  const themeContext = useContext(ThemeContext)
+
+  if (!themeContext) {
+    throw new Error(
+      "All calls to useTheme can only be performed from a child of a <ThemeProvider>",
+    )
+  }
+
+  return themeContext
+}
+```
+
+Next, wrap your application in the theme provider:
+
+```tsx label="main.tsx" collapsible="false"
+import {createRoot} from "react-dom/client"
+import {ThemeProvider} from "./theme-provider"
+import App from "./App"
+import "./index.css"
+
+createRoot(document.getElementById("root")!).render(
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>,
+)
+```
+
+## Import Styles
+
+Add the following imports to your project's App root or global CSS.
+
+```tsx
+import "@qualcomm-ui/styles/dist/all.min.css"
+```
+
+## Setup Complete
+
+Now you're ready to start importing and using our components. Continue on to our [Component Documentation](/components/accordion).

@@ -4,7 +4,7 @@ import {Home} from "lucide-react"
 
 import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 
-export default function BreadcrumbsDisabledDemo(): ReactElement {
+export function BreadcrumbsDisabledDemo(): ReactElement {
   return (
     <Breadcrumbs.Root aria-label="Breadcrumbs">
       <Breadcrumbs.List>

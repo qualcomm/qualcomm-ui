@@ -6,7 +6,7 @@ import {Accordion} from "@qualcomm-ui/react/accordion"
 
 import {items} from "./accordion-example-data"
 
-export default function AccordionIconDemo(): ReactElement {
+export function AccordionIconDemo(): ReactElement {
   return (
     // preview
     <Accordion.Root className="w-96">

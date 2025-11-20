@@ -7,7 +7,7 @@ const cityCollection = selectCollection({
   items: ["San Diego", "Dallas", "Denver"],
 })
 
-export default function Demo(): ReactElement {
+export function SelectSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col items-center gap-4">
       <Select

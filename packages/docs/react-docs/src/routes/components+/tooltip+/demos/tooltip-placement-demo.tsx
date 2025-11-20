@@ -22,7 +22,7 @@ const positions = selectCollection({
   ],
 })
 
-export default function TooltipPlacementDemo(): ReactElement {
+export function TooltipPlacementDemo(): ReactElement {
   const [placement, setPlacement] = useState<Placement>("top")
 
   return (

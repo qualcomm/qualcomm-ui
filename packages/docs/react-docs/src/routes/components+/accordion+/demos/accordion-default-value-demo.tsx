@@ -4,7 +4,7 @@ import {Accordion} from "@qualcomm-ui/react/accordion"
 
 import {items} from "./accordion-example-data"
 
-export default function AccordionDefaultValueDemo(): ReactElement {
+export function AccordionDefaultValueDemo(): ReactElement {
   return (
     // preview
     <Accordion.Root className="w-96" defaultValue={["a"]}>

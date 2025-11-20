@@ -1,1 +1,1 @@
-export * from "./qds-demo"
+export * from "./demo"

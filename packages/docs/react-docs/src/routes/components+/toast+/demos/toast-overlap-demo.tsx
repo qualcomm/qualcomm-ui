@@ -10,7 +10,7 @@ const toaster = createToaster({
 })
 // preview
 
-export default function ToastOverlapDemo(): ReactElement {
+export function ToastOverlapDemo(): ReactElement {
   return (
     <>
       <Toaster toaster={toaster} />

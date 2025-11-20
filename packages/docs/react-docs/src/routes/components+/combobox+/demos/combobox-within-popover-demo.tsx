@@ -9,7 +9,7 @@ import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 import {countries} from "./country-list"
 
-export default function Demo(): ReactElement {
+export function ComboboxWithinPopoverDemo(): ReactElement {
   const {contains} = useFilter({sensitivity: "base"})
 
   const {collection, filter} = useListCollection({

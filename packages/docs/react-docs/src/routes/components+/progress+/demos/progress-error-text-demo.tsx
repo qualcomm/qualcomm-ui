@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Progress} from "@qualcomm-ui/react/progress"
 
-export default function ProgressErrorTextDemo(): ReactElement {
+export function ProgressErrorTextDemo(): ReactElement {
   return (
     // preview
     <Progress

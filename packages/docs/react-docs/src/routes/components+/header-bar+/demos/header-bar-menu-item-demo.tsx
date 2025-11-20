@@ -5,7 +5,7 @@ import {Icon} from "@qualcomm-ui/react/icon"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function Demo() {
+export function HeaderBarMenuItemDemo() {
   return (
     <HeaderBar.Root>
       <HeaderBar.Logo>

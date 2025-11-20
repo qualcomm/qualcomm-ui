@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-export default function TextInputSimpleDemo(): ReactElement {
+export function TextInputSimpleDemo(): ReactElement {
   return (
     // preview
     <TextInput

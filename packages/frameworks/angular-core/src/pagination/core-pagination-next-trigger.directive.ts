@@ -11,7 +11,7 @@ import {usePaginationContext} from "./pagination-context.service"
 export class CorePaginationNextTriggerDirective implements OnInit {
   readonly paginationContext = usePaginationContext()
 
-  private readonly trackBindings = useTrackBindings(() =>
+  protected readonly trackBindings = useTrackBindings(() =>
     this.paginationContext().getNextTriggerBindings(),
   )
 

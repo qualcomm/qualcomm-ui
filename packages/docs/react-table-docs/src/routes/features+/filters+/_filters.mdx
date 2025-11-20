@@ -3,10 +3,11 @@ title: Filters
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
 The following example demonstrates clientside filters for a table with 100,000 rows of data.
 
-<QdsDemo expanded name="FiltersDemo" />
+<Demo expanded name="FiltersDemo" component={demos.FiltersDemo} />

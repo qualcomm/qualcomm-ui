@@ -7,7 +7,7 @@ import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
 const sizes: QdsTabsSize[] = ["sm", "md", "lg", "xl"]
 
-export default function TabsLineSizesDemo(): ReactElement {
+export function TabsLineSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       {sizes.map((size) => (

@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuPlacementDemo(): ReactElement {
+export function MenuPlacementDemo(): ReactElement {
   return (
     <Menu.Root positioning={{placement: "right-start"}}>
       <Menu.Trigger>

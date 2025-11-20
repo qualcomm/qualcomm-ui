@@ -114,7 +114,7 @@ function TableBody({table}: Props) {
   )
 }
 
-export default function SizesDemo(): ReactNode {
+export function SizesDemo(): ReactNode {
   const table = useReactTable({
     columns,
     data: defaultData,

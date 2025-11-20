@@ -1,5 +1,12 @@
 # @qualcomm-ui/angular-core
 
+## 1.0.5 (2025/11/18)
+
+### Miscellaneous Chores
+
+- [pagination]: use updated qds api
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.0.4 (2025/11/17)
 
 ### Miscellaneous Chores

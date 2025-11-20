@@ -6,7 +6,7 @@ import {Icon} from "@qualcomm-ui/react/icon"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuItemCustomizationDemo(): ReactElement {
+export function MenuItemCustomizationDemo(): ReactElement {
   return (
     <Menu.Root>
       <Menu.Trigger>

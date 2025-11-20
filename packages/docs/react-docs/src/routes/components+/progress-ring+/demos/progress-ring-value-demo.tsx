@@ -5,7 +5,7 @@ import {Minus, Plus} from "lucide-react"
 import {IconButton} from "@qualcomm-ui/react/button"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 
-export default function ProgressRingValueDemo(): ReactElement {
+export function ProgressRingValueDemo(): ReactElement {
   const [value, setValue] = useState<number>(0)
 
   const increment = () => setValue((prevValue) => Math.min(100, prevValue + 10))
