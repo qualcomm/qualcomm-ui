@@ -4,7 +4,7 @@ import {Button} from "@qualcomm-ui/react/button"
 import {Drawer} from "@qualcomm-ui/react/drawer"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function DrawerCustomContainerDemo(): ReactElement {
+export function DrawerCustomContainerDemo(): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   return (

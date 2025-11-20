@@ -7,7 +7,7 @@ import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 // This site is based on react-router and uses `@qualcomm-ui/react-router-utils` to
 // manage the active theme.
-export default function OverviewTheme(): ReactNode {
+export function OverviewThemeDemo(): ReactNode {
   const [theme, setTheme] = useTheme()
 
   return (

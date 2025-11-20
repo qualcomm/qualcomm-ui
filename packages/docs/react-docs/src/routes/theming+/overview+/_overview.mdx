@@ -2,7 +2,8 @@
 title: Overview
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -61,4 +62,4 @@ All descendants of this subtree inherit that theme unless overridden by a closer
 
 The following example shows how to enforce a specific theme on a subtree.
 
-<QdsDemo name="OverviewTheme" />
+<Demo component={demos.OverviewThemeDemo} />

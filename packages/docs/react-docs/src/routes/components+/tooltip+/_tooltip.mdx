@@ -4,7 +4,8 @@ group: Overlays
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -33,38 +34,38 @@ In general, tooltips should be used sparingly and only contain succinct informat
 
 The simple API provides a standalone component with built-in layout. The trigger is supplied as a [prop](./#trigger), and the content of the tooltip is the children.
 
-<QdsDemo name="TooltipSimpleDemo" />
+<Demo component={demos.TooltipSimpleDemo} />
 
 ### Composite
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<QdsDemo name="TooltipCompositeDemo" />
+<Demo component={demos.TooltipCompositeDemo} />
 
 ### Placement
 
 The tooltip's position, relative to the trigger element, can be set using the `placement` option of the [positioning](./#positioning) prop. Its default value is `top`.
 Change the values in the example below and hover over the select to see the tooltip position change.
 
-<QdsDemo expanded name="TooltipPlacementDemo" />
+<Demo expanded component={demos.TooltipPlacementDemo} />
 
 ### Close On Click / Escape
 
 By default, the tooltip will close when the `Escape` key is pressed or a click is detected. You can customize this behavior by using the [closeOnClick](./#closeOnClick) and [closeOnEscape](./#closeOnEscape) props.
 
-<QdsDemo name="TooltipCloseEventsDemo" />
+<Demo component={demos.TooltipCloseEventsDemo} />
 
 ### Controlled Visibility
 
 Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use [open](./#open) and [onOpenChange](./#onOpenChange) to control the visibility manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<QdsDemo expanded name="TooltipControlledStateDemo" />
+<Demo expanded component={demos.TooltipControlledStateDemo} />
 
 ### Disabled
 
 You can disable the tooltip by using the [disabled](./#disabled-1) prop.
 
-<QdsDemo expanded name="TooltipDisabledDemo" />
+<Demo expanded component={demos.TooltipDisabledDemo} />
 
 ## Shortcuts
 

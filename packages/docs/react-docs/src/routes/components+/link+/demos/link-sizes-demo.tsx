@@ -4,7 +4,7 @@ import {ExternalLink} from "lucide-react"
 
 import {Link} from "@qualcomm-ui/react/link"
 
-export default function LinkSizesDemo(): ReactElement {
+export function LinkSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col items-center gap-4">
       {/* preview */}

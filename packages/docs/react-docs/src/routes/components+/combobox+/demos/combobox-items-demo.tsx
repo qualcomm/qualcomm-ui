@@ -19,7 +19,7 @@ const cityCollection = comboboxCollection({
 })
 // preview
 
-export default function Demo(): ReactElement {
+export function ComboboxItemsDemo(): ReactElement {
   return (
     <Combobox
       className="w-48"

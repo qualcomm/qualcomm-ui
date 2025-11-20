@@ -4,7 +4,7 @@ import {ExternalLink} from "lucide-react"
 
 import {Button} from "@qualcomm-ui/react/button"
 
-export default function Demo(): ReactElement {
+export function ButtonSizesDemo(): ReactElement {
   return (
     <div className="grid justify-items-center gap-4">
       {/* preview */}

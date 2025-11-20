@@ -4,7 +4,7 @@ import {X} from "lucide-react"
 
 import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 
-export default function InlineIconButtonVariantsDemo(): ReactElement {
+export function InlineIconButtonVariantsDemo(): ReactElement {
   return (
     <div className="flex flex-col items-center justify-center gap-3">
       {/* preview */}

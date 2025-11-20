@@ -3,7 +3,8 @@ title: Menu
 group: Overlays
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -18,25 +19,25 @@ import {Menu} from "@qualcomm-ui/react/menu"
 
 Compose the menu to include icons and commands.
 
-<QdsDemo name="MenuItemCustomizationDemo" />
+<Demo component={demos.MenuItemCustomizationDemo} />
 
 ### Context Menu
 
 Demonstrates how to trigger a menu on right-click or other context events.
 
-<QdsDemo name="MenuContextMenuDemo" />
+<Demo component={demos.MenuContextMenuDemo} />
 
 ### Nested Menus
 
 Compose nested menus by nesting `<Menu.Root>` components inside each other.
 
-<QdsDemo name="MenuNestedDemo" />
+<Demo component={demos.MenuNestedDemo} />
 
 ### Links
 
 Menu items can be links using [polymorphic composition](/polymorphic-components). Use the [render](./#render) prop on the `<Menu.Item>` to specify the element type.
 
-<QdsDemo name="MenuLinksDemo" />
+<Demo component={demos.MenuLinksDemo} />
 
 ### Groups
 
@@ -57,19 +58,19 @@ There are two appearance options:
 - For a checkbox appearance, render the `<Menu.CheckboxItemControl>` element as a child of the item.
 - Render the `<Menu.ItemIndicator />` element for a simple selection indicator.
 
-<QdsDemo name="MenuCheckboxItemsDemo" />
+<Demo component={demos.MenuCheckboxItemsDemo} />
 
 #### Checkbox Selection State
 
 Illustrates how to manage and reflect the checked state of checkbox menu items.
 
-<QdsDemo name="MenuCheckboxSelectionStateDemo" />
+<Demo component={demos.MenuCheckboxSelectionStateDemo} />
 
 #### Radio Group
 
 Demonstrates how to group radio menu items so only one can be selected at a time.
 
-<QdsDemo name="MenuRadioGroupDemo" />
+<Demo component={demos.MenuRadioGroupDemo} />
 
 ### Controlled State
 
@@ -81,43 +82,43 @@ The menu's visibility can be controlled via the `open`, `onOpenChange`, and `def
 
 In controlled mode, the `open` prop should be updated in response to `onOpenChange` events to reflect the desired visibility.
 
-<QdsDemo name="MenuControlledStateDemo" />
+<Demo component={demos.MenuControlledStateDemo} />
 
 ### Placement
 
 Configure the menu's placement using the [positioning.placement](./#positioning) prop.
 
-<QdsDemo name="MenuPlacementDemo" />
+<Demo component={demos.MenuPlacementDemo} />
 
 ### Sizes
 
 Use the [size](./#size) prop to control the size of the menu. The default size is `md`. The demo features the small (`sm`) size.
 
-<QdsDemo name="MenuSizesDemo" />
+<Demo component={demos.MenuSizesDemo} />
 
 ### Anchor Point
 
 Use the [positioning.anchorPoint](./#positioning) prop to control the anchor point of the menu.
 
-<QdsDemo name="MenuAnchorPointDemo" />
+<Demo component={demos.MenuAnchorPointDemo} />
 
 ### Avatar
 
 Here's an example that composes the `Menu` with the [Avatar](/components/avatar) component to display a user account menu.
 
-<QdsDemo name="MenuAvatarDemo" />
+<Demo component={demos.MenuAvatarDemo} />
 
 ### Within Dialog
 
 When using the `Menu` inside a `Dialog`, don't render the `<Menu.Positioner>` within a `<Portal>` element.
 
-<QdsDemo name="MenuWithinDialogDemo" />
+<Demo component={demos.MenuWithinDialogDemo} />
 
 ### Hide When Detached
 
 Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu when it's detached from the trigger.
 
-<QdsDemo name="MenuHideWhenDetachedDemo" />
+<Demo component={demos.MenuHideWhenDetachedDemo} />
 
 ## API
 

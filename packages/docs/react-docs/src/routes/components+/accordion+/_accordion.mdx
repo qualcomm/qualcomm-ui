@@ -4,7 +4,8 @@ group: Disclosure
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -25,70 +26,70 @@ import {Accordion} from "@qualcomm-ui/react/accordion"
 
 Here's a typical usage example that uses the shorthand syntax for the item.
 
-<QdsDemo name="AccordionSimpleDemo" />
+<Demo component={demos.AccordionSimpleDemo} />
 
 ### Composite
 
 The following example is equivalent to the previous example, but uses the composite approach.
 
-<QdsDemo name="AccordionCompositeDemo" />
+<Demo component={demos.AccordionCompositeDemo} />
 
 ### Composite Layout
 
 Use the composite form only when the simple approach can't achieve your desired layout or behavior. The following example demonstrates how to display the expand/collapse indicator at the start of the trigger by changing its DOM position.
 
-<QdsDemo name="AccordionCompositeLayoutDemo" />
+<Demo component={demos.AccordionCompositeLayoutDemo} />
 
 ### Multiple
 
 By default, only a single accordion section can be open at a time. Setting [multiple](./#multiple-1) allows multiple sections to be open or closed simultaneously.
 
-<QdsDemo name="AccordionMultipleDemo" />
+<Demo component={demos.AccordionMultipleDemo} />
 
 ### Collapsible
 
 When [multiple](./#multiple-1) is not set, enabling [collapsible](./#collapsible-1) lets the user close an open accordion item by clicking it again.
 
-<QdsDemo name="AccordionCollapsibleDemo" />
+<Demo component={demos.AccordionCollapsibleDemo} />
 
 ### Default Value
 
 The [defaultValue](./#defaultValue) prop allows you to set the initial state for the accordion by specifying which accordion item or items (if [multiple](./#multiple-1) is set) should be open by default.
 It expects an array of values that should match those passed to each `Accordion.Item`.
 
-<QdsDemo name="AccordionDefaultValueDemo" />
+<Demo component={demos.AccordionDefaultValueDemo} />
 
 ### Disabled
 
 You can disable accordion items by setting their [disabled](./#disabled-2) prop. This prevents the item from being interacted with.
 You can disable the entire accordion by setting the [disabled](./#disabled-1) prop on `Accordion.Root`.
 
-<QdsDemo name="AccordionDisabledDemo" />
+<Demo component={demos.AccordionDisabledDemo} />
 
 ### Uncontained
 
 Set the [uncontained](./#uncontained-1) prop when the accordion is not placed inside a container and needs to align flush with adjacent layout elements—such as when positioned directly below a paragraph of text.
 This prop removes the default horizontal padding from accordion items, allowing them to sit seamlessly within the surrounding content.
 
-<QdsDemo name="AccordionUncontainedDemo" />
+<Demo component={demos.AccordionUncontainedDemo} />
 
 ### Size
 
 Use the [size](./#size-1) prop to control the size of the accordion items. The available sizes are `sm`, `md` (default), and `lg`.
 
-<QdsDemo name="AccordionSizeDemo" />
+<Demo component={demos.AccordionSizeDemo} />
 
 ### Secondary Text
 
 Use the `Accordion.ItemSecondaryText` component to display additional text opposite the trigger title.
 
-<QdsDemo name="AccordionSecondaryTextDemo" />
+<Demo component={demos.AccordionSecondaryTextDemo} />
 
 ### Icon
 
 Pass an icon to the [icon](./#icon-1) prop on the `Accordion.ItemTrigger` element to display it next to the trigger title.
 
-<QdsDemo name="AccordionIconDemo" />
+<Demo component={demos.AccordionIconDemo} />
 
 > [!warning/UX considerations]
 > In order to prevent visual confusion, only one icon can appear next to the trigger title. If you place the indicator at the start, the [icon prop](#icon) will be ignored.
@@ -101,13 +102,13 @@ The Accordion follows our [controlled state](/patterns/controlled-state) pattern
 - [onValueChange](./#onValueChange) - callback fired when the value changes: `(value: string[]) => void`
 - [defaultValue](./#defaultValue) - initial state for uncontrolled mode
 
-<QdsDemo name="AccordionControlledStateDemo" />
+<Demo component={demos.AccordionControlledStateDemo} />
 
 ### Focus Callback
 
 The [onFocusChange](./#onFocusChange) prop allows you to listen for focus events on the accordion's items.
 
-<QdsDemo name="AccordionFocusCallbackDemo" />
+<Demo component={demos.AccordionFocusCallbackDemo} />
 
 ## Shortcuts
 

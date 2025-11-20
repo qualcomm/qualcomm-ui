@@ -4,7 +4,8 @@ group: Data Display
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -23,19 +24,19 @@ It is typically used for filtering content, sorting elements or switching betwee
 
 Use the simple API to create segmented control items using minimal markup.
 
-<QdsDemo name="SegmentedControlSimpleDemo" />
+<Demo component={demos.SegmentedControlSimpleDemo} />
 
 ### Composite
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<QdsDemo name="SegmentedControlCompositeDemo" />
+<Demo component={demos.SegmentedControlCompositeDemo} />
 
 ### Multiple
 
 By default, a segmented control allows for a single selection. Use the [multiple](./#multiple-1) prop to create a segmented control that allows for multiple selections.
 
-<QdsDemo name="SegmentedControlMultipleDemo" />
+<Demo component={demos.SegmentedControlMultipleDemo} />
 
 ### Orientation
 
@@ -44,13 +45,13 @@ Use the [orientation](./#orientation-1) prop to control the layout direction of 
 - `horizontal`: Items are laid out in a row (default).
 - `vertical`: Items are laid out in a column.
 
-<QdsDemo name="SegmentedControlOrientationDemo" />
+<Demo component={demos.SegmentedControlOrientationDemo} />
 
 ### Icon
 
 Use the [icon](./#icon-1) prop on the `SegmentedControl.Item` or `SegmentedControl.ItemRoot` components to add icons to the segmented control items.
 
-<QdsDemo name="SegmentedControlIconDemo" />
+<Demo component={demos.SegmentedControlIconDemo} />
 
 ### Layout
 
@@ -59,31 +60,31 @@ Use the [layout](./#layout-1) prop to control how the `SegmentedControl` is size
 - `hug`: Content-sized; width matches the items only (default).
 - `fill`: Full width; items share space evenly.
 
-<QdsDemo name="SegmentedControlLayoutDemo" />
+<Demo component={demos.SegmentedControlLayoutDemo} />
 
 ### Size
 
 Use the [size](./#size-1) prop to control the size of the segmented control. The available sizes are `sm`, `md` (default), and `lg`.
 
-<QdsDemo name="SegmentedControlSizeDemo" />
+<Demo component={demos.SegmentedControlSizeDemo} />
 
 ### Variant
 
 Use the [variant](./#variant-1) prop to control the visual style of the segmented control. The available variants are `primary` (default) and `neutral`.
 
-<QdsDemo name="SegmentedControlVariantDemo" />
+<Demo component={demos.SegmentedControlVariantDemo} />
 
 ### Disabled
 
 Use the segmented control's [disabled](./#disabled-1) prop to control the disabled state of the entire control. Use the segmented control item's [disabled](./#disabled-2) prop to control the disabled state of individual items.
 
-<QdsDemo name="SegmentedControlDisabledDemo" />
+<Demo component={demos.SegmentedControlDisabledDemo} />
 
 ### Controlled state
 
 Use the [value](./#value-1) prop to control the selected value of the segmented control. This allows for more complex interactions and integration with form libraries.
 
-<QdsDemo name="SegmentedControlControlledDemo" />
+<Demo component={demos.SegmentedControlControlledDemo} />
 
 ## Accessibility
 
@@ -99,7 +100,7 @@ Users can navigate the segmented control using the keyboard. The following keys 
 While it is possible to use icon-only items in the segmented control, it is important to ensure that they are easily understood and accessible.
 Pick meaningful icons and use the `aria-label` attribute to describe their purpose.
 
-<QdsDemo name="SegmentedControlIconOnlyDemo" />
+<Demo component={demos.SegmentedControlIconOnlyDemo} />
 
 ## API
 

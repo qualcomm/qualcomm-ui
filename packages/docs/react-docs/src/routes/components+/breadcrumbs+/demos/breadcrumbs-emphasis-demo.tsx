@@ -4,7 +4,7 @@ import {Home} from "lucide-react"
 
 import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 
-export default function BreadcrumbsEmphasisDemo(): ReactElement {
+export function BreadcrumbsEmphasisDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       {/* preview */}

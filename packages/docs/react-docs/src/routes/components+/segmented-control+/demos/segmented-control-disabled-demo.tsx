@@ -1,6 +1,6 @@
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlDisabledDemo() {
+export function SegmentedControlDisabledDemo() {
   return (
     // preview
     <SegmentedControl.Root disabled>

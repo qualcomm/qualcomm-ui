@@ -5,7 +5,7 @@ import {Portal} from "@qualcomm-ui/react-core/portal"
 
 import {people, type Person} from "./people-list"
 
-export default function Demo() {
+export function ComboboxMultiFieldSearchDemo() {
   const {collection, set} = useListCollection({
     initialItems: people,
     itemLabel: (item) => item.name,

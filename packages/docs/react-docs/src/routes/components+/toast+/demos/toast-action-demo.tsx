@@ -7,7 +7,7 @@ const toaster = createToaster({
   placement: "bottom-end",
 })
 
-export default function ToastActionDemo(): ReactElement {
+export function ToastActionDemo(): ReactElement {
   return (
     <>
       <Toaster toaster={toaster} />

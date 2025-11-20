@@ -12,7 +12,7 @@ interface Node {
   nodes?: Node[]
 }
 
-export default function Demo(): ReactElement {
+export function TreeAddRemoveDemo(): ReactElement {
   const [collection, setCollection] = useState(initialCollection)
 
   const removeNode = (nodeProps: TreeNodeActionsProps) => {

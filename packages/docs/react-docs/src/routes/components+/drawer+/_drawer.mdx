@@ -3,7 +3,8 @@ title: Drawer
 group: Overlays
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -22,19 +23,19 @@ The drawer's API is similar to the [Dialog](/components/dialog) component.
 
 The drawer's default [placement](./#placement) is `end`, which maps to the right side of the screen in LTR languages and the left side in RTL languages.
 
-<QdsDemo name="DrawerPlacementDemo" />
+<Demo component={demos.DrawerPlacementDemo} />
 
 ### Placement Start
 
 Use [placement](./#placement) `start` to change the placement to the left side of the screen.
 
-<QdsDemo name="DrawerPlacementStartDemo" />
+<Demo component={demos.DrawerPlacementStartDemo} />
 
 ### Controlled State
 
 Drawer visibility can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<QdsDemo name="DrawerControlledStateDemo" />
+<Demo component={demos.DrawerControlledStateDemo} />
 
 ### Custom Container
 
@@ -42,7 +43,7 @@ Use the `container` prop of the `Portal` component to render the drawer in a cus
 
 Consider setting [closeOnInteractOutside](./#closeOnInteractOutside) to `false` to prevent the drawer from closing when interacting outside the drawer.
 
-<QdsDemo name="DrawerCustomContainerDemo" expanded />
+<Demo component={demos.DrawerCustomContainerDemo} expanded />
 
 ## Shortcuts
 

@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {NumberInput} from "@qualcomm-ui/react/number-input"
 
-export default function NumberInputCompositeDemo(): ReactElement {
+export function NumberInputCompositeDemo(): ReactElement {
   return (
     // preview
     <NumberInput.Root className="w-72">

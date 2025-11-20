@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 
-export default function CheckboxDisabledDemo(): ReactElement {
+export function CheckboxDisabledDemo(): ReactElement {
   return (
     <div className="grid grid-cols-3 grid-rows-2 gap-x-4 gap-y-2">
       <div className="text-neutral-primary font-heading-xxs">Checked</div>

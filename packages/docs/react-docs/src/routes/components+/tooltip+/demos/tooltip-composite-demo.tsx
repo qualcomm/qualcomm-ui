@@ -4,7 +4,7 @@ import {Button} from "@qualcomm-ui/react/button"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function TooltipCompositeDemo(): ReactElement {
+export function TooltipCompositeDemo(): ReactElement {
   return (
     // preview
     <Tooltip.Root>

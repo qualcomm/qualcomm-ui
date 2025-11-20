@@ -2,7 +2,7 @@ import type {ReactNode} from "react"
 
 import {Divider} from "@qualcomm-ui/react/divider"
 
-export default function DividerOrientationDemo(): ReactNode {
+export function DividerOrientationDemo(): ReactNode {
   return (
     <div className="flex gap-4 px-8">
       {/* preview */}

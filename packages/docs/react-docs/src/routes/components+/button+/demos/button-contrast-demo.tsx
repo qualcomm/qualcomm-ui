@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Button} from "@qualcomm-ui/react/button"
 
-export default function Demo(): ReactElement {
+export function ButtonContrastDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-8">
       {/* preview */}

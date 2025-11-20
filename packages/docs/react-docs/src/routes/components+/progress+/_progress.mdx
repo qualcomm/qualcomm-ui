@@ -3,7 +3,8 @@ title: Progress
 group: Feedback
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -29,27 +30,27 @@ Indeterminate progress bars keep users informed that work is happening when time
 
 The simple API provides a standalone component with built-in layout.
 
-<QdsDemo name="ProgressSimpleDemo" />
+<Demo component={demos.ProgressSimpleDemo} />
 
 ### Composite
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<QdsDemo name="ProgressCompositeDemo" />
+<Demo component={demos.ProgressCompositeDemo} />
 
 ### Label Orientation
 
 Use the [labelOrientation](./#labelOrientation) property to change the positioning of the label and value text relative to the progress bar.
 
-<QdsDemo name="ProgressLabelOrientationDemo" />
+<Demo component={demos.ProgressLabelOrientationDemo} />
 
 ### Sizes
 
-<QdsDemo name="ProgressSizeDemo" />
+<Demo component={demos.ProgressSizeDemo} />
 
 ### Emphasis (Color)
 
-<QdsDemo name="ProgressEmphasisDemo" />
+<Demo component={demos.ProgressEmphasisDemo} />
 
 ### Error Text
 
@@ -60,7 +61,7 @@ Error messages are displayed using two props:
 
 The error text will only render when `invalid` is true.
 
-<QdsDemo name="ProgressErrorTextDemo" />
+<Demo component={demos.ProgressErrorTextDemo} />
 
 ## Shortcuts
 

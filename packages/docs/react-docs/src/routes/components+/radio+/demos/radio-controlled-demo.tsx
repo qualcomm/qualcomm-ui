@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 
-export default function RadioControlledDemo(): ReactElement {
+export function RadioControlledDemo(): ReactElement {
   const [value, setValue] = useState<string | null>("html")
 
   return (

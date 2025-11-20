@@ -4,7 +4,7 @@ import {Button} from "@qualcomm-ui/react/button"
 import {Dialog, useQdsDialogContext} from "@qualcomm-ui/react/dialog"
 import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 
-export default function DialogSizesDemo(): ReactElement {
+export function DialogSizesDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       <Dialog.Root size="sm">

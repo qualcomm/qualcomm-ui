@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
-export default function TabsHorizontalDemo(): ReactElement {
+export function TabsHorizontalDemo(): ReactElement {
   return (
     <Tabs.Root defaultValue="documents">
       <Tabs.List>

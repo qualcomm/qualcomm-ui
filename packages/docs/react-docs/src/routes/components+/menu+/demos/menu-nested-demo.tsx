@@ -3,7 +3,7 @@ import type {ReactElement} from "react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuNestedDemo(): ReactElement {
+export function MenuNestedDemo(): ReactElement {
   return (
     // preview
     <Menu.Root>

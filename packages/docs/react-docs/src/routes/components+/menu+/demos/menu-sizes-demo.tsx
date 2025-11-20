@@ -5,7 +5,7 @@ import {LogOut, Settings, User} from "lucide-react"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-export default function MenuSizesDemo(): ReactElement {
+export function MenuSizesDemo(): ReactElement {
   return (
     <Menu.Root size="sm">
       <Menu.Trigger>

@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-export default function TextInputCompositeDemo(): ReactElement {
+export function TextInputCompositeDemo(): ReactElement {
   return (
     // preview
     <TextInput.Root className="w-72">

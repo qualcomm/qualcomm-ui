@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Pagination} from "@qualcomm-ui/react/pagination"
 
-export default function PaginationRangesDemo(): ReactElement {
+export function PaginationRangesDemo(): ReactElement {
   return (
     <div className="grid justify-center gap-4">
       <Pagination.Root count={12} defaultPage={6} siblingCount={0}>

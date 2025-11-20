@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Avatar} from "@qualcomm-ui/react/avatar"
 
-export default function AvatarShowcaseDemo(): ReactElement {
+export function AvatarShowcaseDemo(): ReactElement {
   return (
     // preview
     <Avatar.Root status="active">

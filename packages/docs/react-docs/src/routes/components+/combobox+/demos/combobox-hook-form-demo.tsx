@@ -25,7 +25,7 @@ const toaster = createToaster({
   placement: "bottom-end",
 })
 
-export default function Demo(): ReactElement {
+export function ComboboxHookFormDemo(): ReactElement {
   const {contains} = useFilter({sensitivity: "base"})
 
   const {collection, filter} = useListCollection({

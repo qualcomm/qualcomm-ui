@@ -18,7 +18,7 @@ const defaultFormData: FormData = {
 const minmaxErrorMessage = "Value must be between 20 and 80"
 const minRangeErrorMessage = "Range must be at least 30"
 
-export default function SliderTanstackFormDemo(): ReactElement {
+export function SliderTanstackFormDemo(): ReactElement {
   const form = useForm({
     defaultValues: defaultFormData,
     onSubmit: (data) => console.log(data.value),

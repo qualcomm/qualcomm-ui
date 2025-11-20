@@ -15,7 +15,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectAriaLabelDemo(): ReactElement {
   return (
     // preview
     <Select

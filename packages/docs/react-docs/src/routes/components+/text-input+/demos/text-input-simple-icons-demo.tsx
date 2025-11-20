@@ -4,7 +4,7 @@ import {AArrowDown, Calendar} from "lucide-react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-export default function TextInputSimpleIconsDemo(): ReactElement {
+export function TextInputSimpleIconsDemo(): ReactElement {
   return (
     // preview
     <TextInput

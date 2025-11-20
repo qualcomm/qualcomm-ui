@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-export default function TextInputClearTriggerDemo(): ReactElement {
+export function TextInputClearTriggerDemo(): ReactElement {
   return (
     <div className="flex w-48 flex-col gap-4">
       {/* preview */}

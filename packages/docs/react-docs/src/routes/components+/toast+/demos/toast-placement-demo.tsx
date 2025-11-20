@@ -13,7 +13,7 @@ const bottomToaster = createToaster({
 })
 // preview
 
-export default function ToastPlacementDemo(): ReactElement {
+export function ToastPlacementDemo(): ReactElement {
   return (
     <div className="flex gap-4">
       <Toaster toaster={topToaster} />

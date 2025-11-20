@@ -17,7 +17,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectWithinPopoverDemo(): ReactElement {
   return (
     <Popover
       label="Select Example"

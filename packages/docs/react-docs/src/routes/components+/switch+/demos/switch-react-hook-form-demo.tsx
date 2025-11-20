@@ -24,7 +24,7 @@ const FormSchema = type({
   newsletter: "boolean",
 })
 
-export default function SwitchReactHookFormDemo(): ReactElement {
+export function SwitchReactHookFormDemo(): ReactElement {
   const {control, handleSubmit} = useForm<FormData>({
     defaultValues: {
       acceptTerms: false,

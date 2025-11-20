@@ -23,8 +23,6 @@ export function Demo({
   const {brand, setBrand} = useQdsThemeContext()
   const {hideDemoBrandSwitcher} = useGlobalConfigContext()
 
-  console.debug(getDemo(component.name))
-
   return (
     <ReactDemoRunner
       colorScheme={theme === Theme.LIGHT ? "light" : "dark"}

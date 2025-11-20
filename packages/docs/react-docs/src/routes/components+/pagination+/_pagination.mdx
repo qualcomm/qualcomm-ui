@@ -4,7 +4,8 @@ group: Disclosure
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -20,19 +21,19 @@ import {Pagination} from "@qualcomm-ui/react/pagination"
 
 The component renders the number of pages based on the `count` and `pageSize` props.
 
-<QdsDemo name="PaginationShowcaseDemo" />
+<Demo component={demos.PaginationShowcaseDemo} />
 
 ### Sizes
 
 Customize the size of the component and its elements using the [size](./#size) prop.
 
-<QdsDemo expanded name="PaginationSizesDemo" />
+<Demo expanded component={demos.PaginationSizesDemo} />
 
 ### Page Size
 
 Render a dropdown via `<Pagination.PageSize>` to adjust the number of data items per page.
 
-<QdsDemo name="PaginationPageSizeDemo" />
+<Demo component={demos.PaginationPageSizeDemo} />
 
 ### Page Metadata
 
@@ -40,11 +41,11 @@ Show metadata about the current and total pages with `<Pagination.PageMetadata>`
 
 To customize the text, supply children as a render prop.
 
-<QdsDemo name="PaginationMetadataDemo" />
+<Demo component={demos.PaginationMetadataDemo} />
 
 ### Ranges
 
-<QdsDemo expanded name="PaginationRangesDemo" />
+<Demo expanded component={demos.PaginationRangesDemo} />
 
 ### Controlled State
 
@@ -52,7 +53,7 @@ The Pagination component follows our [controlled state](/patterns/controlled-sta
 
 By default, the component is uncontrolled and manages these values internally. You may optionally control the current page or page size by supplying the properties and their corresponding onChange functions:
 
-<QdsDemo expanded name="PaginationControlledStateDemo" />
+<Demo expanded component={demos.PaginationControlledStateDemo} />
 
 ## Shortcuts
 

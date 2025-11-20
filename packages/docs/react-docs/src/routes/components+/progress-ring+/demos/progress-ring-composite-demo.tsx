@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 
-export default function ProgressRingCompositeDemo(): ReactElement {
+export function ProgressRingCompositeDemo(): ReactElement {
   return (
     <ProgressRing.Root size="lg">
       <ProgressRing.CircleContainer>

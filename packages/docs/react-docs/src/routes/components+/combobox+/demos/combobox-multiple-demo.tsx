@@ -8,7 +8,7 @@ import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 import {countries} from "./country-list"
 
-export default function Demo() {
+export function ComboboxMultipleDemo() {
   const {contains} = useFilter({sensitivity: "base"})
   const [value, setValue] = useState<string[]>([])
 

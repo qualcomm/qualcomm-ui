@@ -4,7 +4,8 @@ group: Data Display
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -24,13 +25,13 @@ Many components like the [Button](/components/button) and [Icon Button](/compone
 
 ### Showcase
 
-<QdsDemo name="IconShowcaseDemo" />
+<Demo component={demos.IconShowcaseDemo} />
 
 ### Sizes
 
 Size can be customized using the [size](./#size) input. There are five available values: `xs`, `sm`, `md`, `lg`, `xl`. Should you need more control over the rendered size, supply a number instead which will be converted to pixels.
 
-<QdsDemo name="IconSizesDemo" />
+<Demo component={demos.IconSizesDemo} />
 
 ## API
 

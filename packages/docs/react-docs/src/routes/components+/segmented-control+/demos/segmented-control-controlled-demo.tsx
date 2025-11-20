@@ -2,7 +2,7 @@ import {useState} from "react"
 
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlControlledDemo() {
+export function SegmentedControlControlledDemo() {
   const [value, setValue] = useState<string[] | null | undefined>(null)
 
   return (

@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Slider} from "@qualcomm-ui/react/slider"
 
-export default function SliderVerticalDemo(): ReactElement {
+export function SliderVerticalDemo(): ReactElement {
   return (
     // preview
     <Slider

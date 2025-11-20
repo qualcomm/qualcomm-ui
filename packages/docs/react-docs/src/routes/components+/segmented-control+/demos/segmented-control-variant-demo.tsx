@@ -1,7 +1,7 @@
 import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-control"
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlVariantDemo() {
+export function SegmentedControlVariantDemo() {
   return (
     <div className="flex w-full flex-col items-center gap-4">
       {/* preview */}

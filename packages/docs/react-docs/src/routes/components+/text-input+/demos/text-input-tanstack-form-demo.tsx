@@ -10,7 +10,7 @@ interface AddressFormData {
   zipCode: string
 }
 
-export default function TextInputTanstackFormDemo() {
+export function TextInputTanstackFormDemo() {
   const form = useForm({
     defaultValues: {
       city: "",

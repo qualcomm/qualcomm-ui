@@ -17,7 +17,7 @@ const cityCollection = selectCollection({
   ],
 })
 
-export default function Demo(): ReactElement {
+export function SelectIconDemo(): ReactElement {
   return (
     // preview
     <Select

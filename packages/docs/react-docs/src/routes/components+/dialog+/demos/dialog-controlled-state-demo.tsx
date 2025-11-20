@@ -3,7 +3,7 @@ import {type ReactElement, useState} from "react"
 import {Button} from "@qualcomm-ui/react/button"
 import {Dialog} from "@qualcomm-ui/react/dialog"
 
-export default function DialogControlledStateDemo(): ReactElement {
+export function DialogControlledStateDemo(): ReactElement {
   const [open, setOpen] = useState<boolean>(false)
 
   return (

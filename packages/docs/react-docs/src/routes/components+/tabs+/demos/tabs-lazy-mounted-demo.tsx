@@ -2,7 +2,7 @@ import {type ReactElement, useEffect, useState} from "react"
 
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
-export default function TabsLazyMountedDemo(): ReactElement {
+export function TabsLazyMountedDemo(): ReactElement {
   return (
     <Tabs.Root className="w-80" defaultValue="tab-1" lazyMount unmountOnExit>
       <Tabs.List>

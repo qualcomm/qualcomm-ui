@@ -3,7 +3,8 @@ title: Combobox
 group: Form Controls
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -22,73 +23,73 @@ import {Combobox} from "@qualcomm-ui/react/combobox"
 
 The simple API provides a standalone component with bundled subcomponents.
 
-<QdsDemo name="ComboboxSimpleDemo" />
+<Demo component={demos.ComboboxSimpleDemo} />
 
 ### Composite
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<QdsDemo name="ComboboxCompositeDemo" />
+<Demo component={demos.ComboboxCompositeDemo} />
 
 ### Open on Click
 
 Use the [openOnClick](./#openOnClick) prop to open the combobox when the user clicks on the input.
 
-<QdsDemo name="ComboboxOpenOnClickDemo" />
+<Demo component={demos.ComboboxOpenOnClickDemo} />
 
 ### Input Behavior
 
 Adjust the auto-completion behavior of the combobox with the [inputBehavior](./#inputBehavior) prop.
 
-<QdsDemo name="ComboboxInputBehaviorDemo" />
+<Demo component={demos.ComboboxInputBehaviorDemo} />
 
 ### Multiple Selection
 
 Use the [multiple](./#multiple) prop to enable multiple selection. When this is set, the combobox will always clear the input value when the user selects an option.
 
-<QdsDemo name="ComboboxMultipleDemo" />
+<Demo component={demos.ComboboxMultipleDemo} />
 
 ### Highlight Matching Text
 
 Use the [highlightMatchingText](./#highlightMatchingText) prop to highlight the portion of each option that matches the user's input. This provides visual feedback during filtering.
 
-<QdsDemo name="ComboboxHighlightDemo" />
+<Demo component={demos.ComboboxHighlightDemo} />
 
 ### ARIA Label
 
 The Combobox's label is automatically associated with the input element for accessibility. If you omit the label, you should provide an aria-label to the input to give your combobox an accessible name.
 
-<QdsDemo name="ComboboxAriaLabelDemo" />
+<Demo component={demos.ComboboxAriaLabelDemo} />
 
 ### Content Width
 
 The [positioning.sameWidth](./#sameWidth) property controls whether the width of the combobox content matches the width of the input element. The default is `true`.
 
-<QdsDemo name="ComboboxSameWidthDemo" />
+<Demo component={demos.ComboboxSameWidthDemo} />
 
 ### Input Icon
 
 Use the [icon](./#icon) prop to add an icon to the start of the input element.
 
-<QdsDemo name="ComboboxIconDemo" />
+<Demo component={demos.ComboboxIconDemo} />
 
 ### Icon Customization
 
 Supply a ReactNode to the [icon](./#icon) prop to customize the icon. This example features a loading indicator:
 
-<QdsDemo name="ComboboxIconCustomizationDemo" />
+<Demo component={demos.ComboboxIconCustomizationDemo} />
 
 ### Items as Objects
 
 The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [comboboxCollection](./#ListCollection) to specify the label and value of each item.
 
-<QdsDemo name="ComboboxItemsDemo" />
+<Demo component={demos.ComboboxItemsDemo} />
 
 ### Custom Item Rendering
 
 When using the simple API, use the [renderItem](./#renderItem) prop to customize the rendering of each item.
 
-<QdsDemo name="ComboboxRenderItemDemo" />
+<Demo component={demos.ComboboxRenderItemDemo} />
 
 > [!warning]
 > When rendering custom items with [virtual](./#virtual) set to `true`, you must forward the `data-virtual` and `style` props to the rendered item:
@@ -111,25 +112,25 @@ This component supports three [size](./#size) options to accommodate different l
 
 The available sizes are `sm`, `md`, and `lg`. The default size is `md`.
 
-<QdsDemo name="ComboboxSizesDemo" />
+<Demo component={demos.ComboboxSizesDemo} />
 
 ### Content Height
 
 Change the height of the item container by adjusting the style of the Content element.
 
-<QdsDemo name="ComboboxMaxHeightDemo" />
+<Demo component={demos.ComboboxMaxHeightDemo} />
 
 ### Controlled State
 
 Set the initial value using the [defaultValue](./#defaultValue) prop, or use [value](./#value) and [onValueChange](./#onValueChange) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<QdsDemo name="ComboboxControlledStateDemo" />
+<Demo component={demos.ComboboxControlledStateDemo} />
 
 ### States
 
 The following shows how the Combobox component appears in each interactive state.
 
-<QdsDemo name="ComboboxStatesDemo" />
+<Demo component={demos.ComboboxStatesDemo} />
 
 ### Error Text and Indicator
 
@@ -140,37 +141,37 @@ Error messages are displayed using two props:
 
 The error text and indicator will only render when [invalid](./#invalid) is true.
 
-<QdsDemo name="ComboboxErrorDemo" />
+<Demo component={demos.ComboboxErrorDemo} />
 
 ### Hint Text
 
 Use the [hintText](./#hintText) prop to provide additional context or instructions below the combobox.
 
-<QdsDemo name="ComboboxHintDemo" />
+<Demo component={demos.ComboboxHintDemo} />
 
 ### Within Dialog
 
 To use the Combobox within a Dialog, you need to avoid portalling the `Combobox.Positioner` to the document's body. To do this using the simple API, set `portalProps.disabled` to `true`:
 
-<QdsDemo name="ComboboxWithinDialogDemo" />
+<Demo component={demos.ComboboxWithinDialogDemo} />
 
 ### Within Popover
 
 Like with the Dialog, you need to avoid portalling the `Combobox.Positioner` to the document's body:
 
-<QdsDemo name="ComboboxWithinPopoverDemo" />
+<Demo component={demos.ComboboxWithinPopoverDemo} />
 
 ### Async Loading
 
 This example shows how to load items asynchronously and display a loading indicator.
 
-<QdsDemo name="ComboboxAsyncDemo" />
+<Demo component={demos.ComboboxAsyncDemo} />
 
 ### Virtualized
 
 For large lists, use the [virtual](./#virtual) prop to improve performance. This virtualizes the visible list items for performant scrolling and searching. The following example features a list of 5000 mock usernames.
 
-<QdsDemo name="ComboboxVirtualDemo" />
+<Demo component={demos.ComboboxVirtualDemo} />
 
 ## Forms
 
@@ -180,13 +181,13 @@ Choose the form library that fits your needs—we've built examples with React H
 
 Use [React Hook Form](https://react-hook-form.com/) to handle the input state and validation. [ArkType](https://arktype.io/) works great for schema validation if you need it.
 
-<QdsDemo expanded name="ComboboxHookFormDemo" />
+<Demo expanded component={demos.ComboboxHookFormDemo} />
 
 ### Tanstack Form
 
 [Tanstack Form](https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts) handles validation with its built-in validators.
 
-<QdsDemo expanded name="ComboboxTanstackFormDemo" />
+<Demo expanded component={demos.ComboboxTanstackFormDemo} />
 
 Tanstack form also supports [ArkType](https://tanstack.com/form/latest/docs/framework/react/guides/validation#validation-through-schema-libraries).
 

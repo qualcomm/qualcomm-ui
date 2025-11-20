@@ -1,6 +1,6 @@
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlMultipleDemo() {
+export function SegmentedControlMultipleDemo() {
   return (
     // preview
     <SegmentedControl.Root multiple>

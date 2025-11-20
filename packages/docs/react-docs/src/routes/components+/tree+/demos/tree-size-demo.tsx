@@ -11,7 +11,7 @@ interface Node {
   nodes?: Node[]
 }
 
-export default function Demo(): ReactElement {
+export function TreeSizeDemo(): ReactElement {
   return (
     <div className="flex w-full flex-col gap-4">
       <Tree.Root className="w-full max-w-sm" collection={collection} size="sm">

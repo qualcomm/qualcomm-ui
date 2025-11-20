@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Pagination} from "@qualcomm-ui/react/pagination"
 
-export default function PaginationPageSizeDemo(): ReactElement {
+export function PaginationPageSizeDemo(): ReactElement {
   return (
     // preview
     <Pagination.Root count={120} defaultPageSize={10}>

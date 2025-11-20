@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 
-export default function InlineNotificationCompositeDemo(): ReactElement {
+export function InlineNotificationCompositeDemo(): ReactElement {
   return (
     // preview
     <InlineNotification.Root className="w-96">

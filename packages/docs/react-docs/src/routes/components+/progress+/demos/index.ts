@@ -1,0 +1,6 @@
+export * from "./progress-composite-demo"
+export * from "./progress-emphasis-demo"
+export * from "./progress-error-text-demo"
+export * from "./progress-label-orientation-demo"
+export * from "./progress-simple-demo"
+export * from "./progress-size-demo"

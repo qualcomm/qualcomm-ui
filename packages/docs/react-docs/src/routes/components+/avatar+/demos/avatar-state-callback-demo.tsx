@@ -2,7 +2,7 @@ import {type ReactElement, useState} from "react"
 
 import {Avatar} from "@qualcomm-ui/react/avatar"
 
-export default function AvatarStateCallbackDemo(): ReactElement {
+export function AvatarStateCallbackDemo(): ReactElement {
   const [currentStateValid, setCurrentStateValid] = useState<string | null>(
     null,
   )

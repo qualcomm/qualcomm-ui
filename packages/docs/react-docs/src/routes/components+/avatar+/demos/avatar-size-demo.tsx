@@ -5,7 +5,7 @@ import {Avatar} from "@qualcomm-ui/react/avatar"
 
 const sizes: QdsAvatarSize[] = ["xs", "sm", "md", "lg", "xl"]
 
-export default function AvatarSizeDemo(): ReactElement {
+export function AvatarSizeDemo(): ReactElement {
   return (
     <div className="flex items-center gap-4">
       {/* preview */}

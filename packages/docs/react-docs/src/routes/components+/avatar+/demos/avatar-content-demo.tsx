@@ -4,7 +4,7 @@ import {User} from "lucide-react"
 
 import {Avatar} from "@qualcomm-ui/react/avatar"
 
-export default function AvatarFallback(): ReactElement {
+export function AvatarFallback(): ReactElement {
   return (
     <div className="flex items-center gap-4">
       {/* preview */}

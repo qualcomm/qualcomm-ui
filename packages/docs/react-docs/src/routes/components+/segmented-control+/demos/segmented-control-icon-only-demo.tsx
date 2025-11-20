@@ -2,7 +2,7 @@ import {ChartArea, Map, Table} from "lucide-react"
 
 import {SegmentedControl} from "@qualcomm-ui/react/segmented-control"
 
-export default function SegmentedControlIconOnlyDemo() {
+export function SegmentedControlIconOnlyDemo() {
   return (
     // preview
     <SegmentedControl.Root defaultValue={["chart"]}>

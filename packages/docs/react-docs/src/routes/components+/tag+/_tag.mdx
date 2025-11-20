@@ -3,7 +3,8 @@ title: Tag
 group: Data Display
 ---
 
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -18,37 +19,37 @@ import {Tag} from "@qualcomm-ui/react/tag"
 
 Icons are supplied using the [startIcon](./#startIcon) and [endIcon](./#endIcon) props.
 
-<QdsDemo name="TagIconsDemo" />
+<Demo component={demos.TagIconsDemo} />
 
 ### Variants
 
 Choose from three [variants](./#variant): `link`, `selectable` and `dismissable`.
 
-<QdsDemo name="TagVariantsDemo" />
+<Demo component={demos.TagVariantsDemo} />
 
 ### Colors
 
 Control the visual emphasis with different colors via the [emphasis](./#emphasis) prop.
 
-<QdsDemo name="TagEmphasisDemo" />
+<Demo component={demos.TagEmphasisDemo} />
 
 ### Sizes
 
 Choose from three [sizes](./#size): `sm`, `md` and `lg`. The default size is `md`.
 
-<QdsDemo name="TagSizesDemo" />
+<Demo component={demos.TagSizesDemo} />
 
 ### States
 
 Disable the tag by setting the [disabled](./#disabled) prop.
 
-<QdsDemo name="TagStatesDemo" />
+<Demo component={demos.TagStatesDemo} />
 
 ### Radius
 
 Control the border radius of the tag with the [radius](./#radius-1) prop. The default radius is `square`.
 
-<QdsDemo name="TagRadiusDemo" />
+<Demo component={demos.TagRadiusDemo} />
 
 ## API
 

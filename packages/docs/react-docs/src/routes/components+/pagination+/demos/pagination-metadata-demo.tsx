@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Pagination} from "@qualcomm-ui/react/pagination"
 
-export default function PaginationMetadataDemo(): ReactElement {
+export function PaginationMetadataDemo(): ReactElement {
   return (
     <div className="flex flex-col">
       <div className="text-neutral-primary font-heading-xxs mb-2">Default</div>

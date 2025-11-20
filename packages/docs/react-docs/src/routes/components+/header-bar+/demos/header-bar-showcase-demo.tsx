@@ -6,7 +6,7 @@ import {Avatar} from "@qualcomm-ui/react/avatar"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Icon} from "@qualcomm-ui/react/icon"
 
-export default function Demo(): ReactElement {
+export function HeaderBarShowcaseDemo(): ReactElement {
   return (
     <HeaderBar.Root className="@container">
       <HeaderBar.Logo>

@@ -6,7 +6,7 @@ import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 
 import {items} from "./accordion-example-data"
 
-export default function AccordionSizeDemo(): ReactElement {
+export function AccordionSizeDemo(): ReactElement {
   const [size, setSize] = useState<QdsAccordionSize>("md")
   return (
     <div className="flex w-96 flex-col items-center gap-8">
