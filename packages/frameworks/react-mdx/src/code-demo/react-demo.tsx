@@ -3,7 +3,6 @@
 
 import {
   type ComponentPropsWithRef,
-  type HTMLAttributes,
   type ReactNode,
   useMemo,
   useState,
@@ -13,27 +12,27 @@ import * as React from "react"
 
 import {ChevronsLeftRight} from "lucide-react"
 
-import type {ReactDemoWithScope, SourceCodeData} from "@qualcomm-ui/mdx-common"
+import type {ReactDemoData, SourceCodeData} from "@qualcomm-ui/mdx-common"
 import {Button} from "@qualcomm-ui/react/button"
-import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
-import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"
+import type {ColorScheme} from "@qualcomm-ui/react/qds-theme"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
-import {useRunner, type UseRunnerProps} from "@qualcomm-ui/react-mdx/runner"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {getDefaultSourceCode} from "./code-demo.utils"
 
-export interface QdsReactDemoProps extends ComponentPropsWithRef<"div"> {
+export interface ReactDemoProps extends ComponentPropsWithRef<"div"> {
   /**
    * Optional child element, rendered above the component demo.
    */
   children?: ReactNode
 
   colorScheme?: ColorScheme
+
+  component: () => ReactNode
 
   /**
    * The default source code index to render.
@@ -43,7 +42,7 @@ export interface QdsReactDemoProps extends ComponentPropsWithRef<"div"> {
   /**
    * Demo getter function provided by the vite plugin.
    */
-  demo: ReactDemoWithScope | null
+  demo: ReactDemoData | null
 
   /**
    * Whether the source code is viewable. If false, the source code and filename
@@ -74,48 +73,31 @@ export interface QdsReactDemoProps extends ComponentPropsWithRef<"div"> {
    */
   name: string
 
-  onDemoRendered?: ((error: Error | undefined) => void) | undefined
-
-  qdsBrand?: QdsBrand
-
-  /**
-   * Whether the demo is currently updating from the vite HMR backend.
-   */
-  updating?: boolean | undefined
-
   /**
    * Props applied to the element that wraps the component demo.
    */
-  wrapperProps?: HTMLAttributes<HTMLDivElement>
+  wrapperProps?: ComponentPropsWithRef<"div">
 }
 
-/**
- * @deprecated migrate to ReactDemo
- */
-export function QdsReactDemo({
+export function ReactDemo({
   children,
   colorScheme,
+  component: Component,
   defaultSourceIndex: _defaultSourceIndex = 0,
   demo: demoProp,
   expandable = true,
   expanded: expandedProp = false,
   name,
-  onDemoRendered,
-  qdsBrand,
-  updating,
   wrapperProps = {},
   ...props
-}: QdsReactDemoProps): ReactNode {
-  const demo: ReactDemoWithScope =
-    demoProp ||
-    ({
-      demoName: "",
-      fileName: "",
-      imports: [],
-      pageId: "",
-      scope: {},
-      sourceCode: [],
-    } satisfies ReactDemoWithScope)
+}: ReactDemoProps): ReactNode {
+  const demo: ReactDemoData = demoProp || {
+    demoName: "",
+    fileName: "",
+    imports: [],
+    pageId: "",
+    sourceCode: [],
+  }
 
   const [activeTab, setActiveTab] = useState<string>(demo?.fileName || "")
 
@@ -146,28 +128,12 @@ export function QdsReactDemo({
 
   const fileNames = demo.sourceCode?.map((item) => item.fileName) ?? []
 
-  const sourceCode = demo.sourceCode?.[0] ?? getDefaultSourceCode()
   const activeTabSourceCode: SourceCodeData =
     (demo.sourceCode ?? []).find((item) => item.fileName === activeTab) ??
     getDefaultSourceCode()
 
   const hasPreview = !!activeTabSourceCode.raw.preview
   const scheme = colorScheme || "dark"
-
-  const missingDefaultExport = useMemo(
-    () =>
-      !sourceCode.raw.full.includes("export default") &&
-      !sourceCode.raw.full.includes("function Demo()"),
-    [sourceCode.raw.full],
-  )
-
-  const scope = useMemo(
-    () => ({
-      ...demo.scope,
-      React,
-    }),
-    [demo.scope],
-  )
 
   const mergedProps = mergeProps(
     {
@@ -177,40 +143,6 @@ export function QdsReactDemo({
     },
     props,
   )
-
-  const runnerProps: UseRunnerProps = useMemo(() => {
-    return {
-      code: sourceCode.raw.withoutImports,
-      disableCache: true,
-      onRendered: (error) => {
-        onDemoRendered?.(error)
-      },
-      scope,
-    }
-  }, [onDemoRendered, scope, sourceCode.raw.withoutImports])
-
-  const {element: demoComponent, error} = useRunner(runnerProps)
-
-  const renderedDemo = useMemo(() => {
-    if (demo.errorMessage || missingDefaultExport) {
-      return (
-        <div
-          className="qds-demo-runner__render-error"
-          data-updating={booleanDataAttr(updating)}
-        >
-          {updating ? (
-            <>
-              <div>Loading...</div>
-              <ProgressRing size="xs" />
-            </>
-          ) : (
-            demo.errorMessage || "Error: missing default export"
-          )}
-        </div>
-      )
-    }
-    return demoComponent || error
-  }, [demo.errorMessage, demoComponent, error, missingDefaultExport, updating])
 
   const getCopyableCode = () => {
     return expanded
@@ -232,7 +164,7 @@ export function QdsReactDemo({
       {children}
 
       {!expandable ? (
-        renderedDemo
+        <Component />
       ) : (
         <>
           <div
@@ -240,10 +172,9 @@ export function QdsReactDemo({
               {className: "qui-demo-runner__wrapper"},
               wrapperProps,
             )}
-            data-brand={qdsBrand}
             data-theme={scheme}
           >
-            {renderedDemo}
+            <Component />
           </div>
           <div className="qui-demo-runner__tabs">
             <div

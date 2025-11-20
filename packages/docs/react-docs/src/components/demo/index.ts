@@ -1,2 +1,2 @@
-export * from "./demo-context"
+export * from "./demo"
 export * from "./qds-demo"

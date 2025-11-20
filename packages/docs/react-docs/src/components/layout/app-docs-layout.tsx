@@ -19,15 +19,12 @@ import {
 import {Github} from "@qualcomm-ui/react-mdx/icons"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 
-import {DemoContextProvider} from "../demo"
-
 import {DocLink} from "./doc-link"
 import {GithubChangelogLink} from "./github-changelog-link"
 import {GlobalConfig} from "./global-config"
 import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
 import {QuiLogo} from "./qui-logo"
 import {ThemeToggle} from "./theme-toggle"
-import {useHmrScrollRestoration} from "./use-hmr-scroll-restoration"
 
 interface Props extends Partial<DocsLayoutSettings> {
   /**
@@ -50,7 +47,6 @@ export function AppDocsLayout({
 }: Props): ReactNode {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchParams] = useSearchParams()
-  const demoContext = useHmrScrollRestoration()
 
   // persist the search input to the URL
   const query = searchParams.get("query") ?? ""
@@ -161,9 +157,7 @@ export function AppDocsLayout({
       {...props}
     >
       <PortalContextProvider value={portalContext}>
-        <DemoContextProvider value={demoContext}>
-          {children}
-        </DemoContextProvider>
+        {children}
       </PortalContextProvider>
     </DocsLayout>
   )

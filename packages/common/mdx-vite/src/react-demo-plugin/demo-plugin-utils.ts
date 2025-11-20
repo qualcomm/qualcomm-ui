@@ -3,7 +3,7 @@
 
 import chalk from "chalk"
 import {createHash} from "node:crypto"
-import {existsSync, readFileSync} from "node:fs"
+import {existsSync} from "node:fs"
 import {readFile} from "node:fs/promises"
 import {dirname, join, relative, resolve, sep} from "node:path"
 import * as ts from "typescript"
@@ -566,12 +566,7 @@ export function isCssAsset(filePath: string) {
 
 export function isDemoFile(filePath: string): boolean {
   try {
-    return (
-      filePath.includes("/demos/") &&
-      filePath.endsWith(".tsx") &&
-      // could also be in a comment, probably need to use TS parser
-      readFileSync(filePath, "utf-8").includes("export default")
-    )
+    return filePath.includes("/demos/") && filePath.endsWith(".tsx")
   } catch (error) {
     return false
   }
