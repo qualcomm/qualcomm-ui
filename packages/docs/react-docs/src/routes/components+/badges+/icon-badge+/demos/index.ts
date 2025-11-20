@@ -1,0 +1,5 @@
+export * from "./icon-badge-disabled-demo"
+export * from "./icon-badge-emphasis-demo"
+export * from "./icon-badge-icon-demo"
+export * from "./icon-badge-size-demo"
+export * from "./icon-badge-variant-demo"

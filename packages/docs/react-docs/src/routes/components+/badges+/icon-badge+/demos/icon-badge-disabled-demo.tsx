@@ -4,7 +4,7 @@ import {Star} from "lucide-react"
 
 import {IconBadge} from "@qualcomm-ui/react/badge"
 
-export default function IconBadgeDisabledDemo(): ReactElement {
+export function IconBadgeDisabledDemo(): ReactElement {
   return (
     <div className="flex flex-wrap items-center gap-4">
       {/* preview */}

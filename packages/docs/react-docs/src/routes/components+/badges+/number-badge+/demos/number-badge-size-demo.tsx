@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {NumberBadge} from "@qualcomm-ui/react/badge"
 
-export default function NumberBadgeSizeDemo(): ReactElement {
+export function NumberBadgeSizeDemo(): ReactElement {
   return (
     <div className="flex flex-wrap items-center gap-4">
       {/* preview */}

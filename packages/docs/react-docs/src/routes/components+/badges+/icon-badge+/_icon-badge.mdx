@@ -3,7 +3,8 @@ title: Icon Badge
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -19,32 +20,31 @@ import {IconBadge} from "@qualcomm-ui/react/badge"
 
 Use the [icon](./#icon-1) prop to provide a Lucide icon, or use [children](./#children) for custom SVG content.
 
-<QdsDemo name="IconBadgeIconDemo" />
+<Demo name="IconBadgeIconDemo" component={demos.IconBadgeIconDemo} />
 
 ### Emphasis
 
 Use the [emphasis](./#emphasis-1) prop to convey semantic meaning or categorize content. Available semantic emphasis are: `neutral`, `brand`, `info`, `success`, `warning`, and `danger`. Color emphasis are: `blue`, `cyan`, `green`, `kiwi`, `magenta`, `orange`, `purple`, `red`, `teal`, and `yellow`.
 
-<QdsDemo name="IconBadgeEmphasisDemo" />
+<Demo name="IconBadgeEmphasisDemo" component={demos.IconBadgeEmphasisDemo} />
 
 ### Variant
 
 The [variant](./#variant-1) prop controls the aspect of the badge. Two variants are available: `default` (bolder appearance) and `subtle` (muted appearance).
 
-<QdsDemo name="IconBadgeVariantDemo" />
+<Demo name="IconBadgeVariantDemo" component={demos.IconBadgeVariantDemo} />
 
 ### Size
 
 Control dimensions using the [size](./#size-1) prop. Six sizes are available: `xxs`, `xs`, `sm`, `md` (default), `lg`, and `xl`.
 
-<QdsDemo name="IconBadgeSizeDemo" />
+<Demo name="IconBadgeSizeDemo" component={demos.IconBadgeSizeDemo} />
 
 ### Disabled
 
 Set the [disabled](./#disabled-1) prop to visually indicate that the badge is inactive.
 
-<QdsDemo name="IconBadgeDisabledDemo" />
-
+<Demo name="IconBadgeDisabledDemo" component={demos.IconBadgeDisabledDemo} />
 ## API
 
 ### \<IconBadge\>

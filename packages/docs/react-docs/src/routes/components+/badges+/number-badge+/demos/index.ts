@@ -1,0 +1,5 @@
+export * from "./number-badge-disabled-demo"
+export * from "./number-badge-max-demo"
+export * from "./number-badge-size-demo"
+export * from "./number-badge-value-demo"
+export * from "./number-badge-variant-demo"

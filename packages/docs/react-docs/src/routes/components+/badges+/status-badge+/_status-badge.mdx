@@ -3,7 +3,8 @@ title: Status Badge
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -19,25 +20,31 @@ import {StatusBadge} from "@qualcomm-ui/react/badge"
 
 Use the [emphasis](./#emphasis-1) prop to convey semantic meaning with colors. Available semantic emphasis are: `neutral`, `brand`, `info`, `success`, `warning`, and `danger`.
 
-<QdsDemo name="StatusBadgeEmphasisDemo" />
+<Demo
+  name="StatusBadgeEmphasisDemo"
+  component={demos.StatusBadgeEmphasisDemo}
+/>
 
 ### Variant
 
 The [variant](./#variant-1) prop controls the aspect of the badge. Two variants are available: `filled` (default) and `outlined`.
 
-<QdsDemo name="StatusBadgeVariantDemo" />
+<Demo name="StatusBadgeVariantDemo" component={demos.StatusBadgeVariantDemo} />
 
 ### Size
 
 Control dimensions using the [size](./#size-1) prop. Five sizes are available: `xs`, `sm`, `md` (default), `lg`, and `xl`.
 
-<QdsDemo name="StatusBadgeSizeDemo" />
+<Demo name="StatusBadgeSizeDemo" component={demos.StatusBadgeSizeDemo} />
 
 ### Disabled
 
 Set the [disabled](./#disabled-1) prop to visually indicate that the badge is inactive.
 
-<QdsDemo name="StatusBadgeDisabledDemo" />
+<Demo
+  name="StatusBadgeDisabledDemo"
+  component={demos.StatusBadgeDisabledDemo}
+/>
 
 ## API
 

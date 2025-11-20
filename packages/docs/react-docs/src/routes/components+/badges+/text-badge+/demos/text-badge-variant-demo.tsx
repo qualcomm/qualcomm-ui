@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Badge} from "@qualcomm-ui/react/badge"
 
-export default function TextBadgeVariantDemo(): ReactElement {
+export function TextBadgeVariantDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-2">

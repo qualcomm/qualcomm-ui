@@ -3,7 +3,8 @@ title: Number Badge
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -19,31 +20,34 @@ import {NumberBadge} from "@qualcomm-ui/react/badge"
 
 Use the [value](./#value-1) prop for auto formatting, or use [children](./#children) for manual content.
 
-<QdsDemo name="NumberBadgeValueDemo" />
+<Demo name="NumberBadgeValueDemo" component={demos.NumberBadgeValueDemo} />
 
 ### Max (Auto Formatting)
 
 When using the [value](./#value-1) prop with [max](./#max), overflow values are automatically formatted. If value exceeds max, the badge displays "max+" and applies special styling. The default max is 99.
 
-<QdsDemo name="NumberBadgeMaxDemo" />
+<Demo name="NumberBadgeMaxDemo" component={demos.NumberBadgeMaxDemo} />
 
 ### Variant
 
 Multiple color and style options are available via the [variant](./#variant-1) prop: `neutral` (default), `neutral-outline`, `brand`, `brand-outline`, `info`, `success`, `warning`, `danger`, `persistent-black` and `persistent-white`.
 
-<QdsDemo name="NumberBadgeVariantDemo" />
+<Demo name="NumberBadgeVariantDemo" component={demos.NumberBadgeVariantDemo} />
 
 ### Size
 
 Control dimensions using the [size](./#size-1) prop. Three sizes are available: `sm`, `md` (default), and `lg`.
 
-<QdsDemo name="NumberBadgeSizeDemo" />
+<Demo name="NumberBadgeSizeDemo" component={demos.NumberBadgeSizeDemo} />
 
 ### Disabled
 
 Set the [disabled](./#disabled-1) prop to visually indicate that the badge is inactive.
 
-<QdsDemo name="NumberBadgeDisabledDemo" />
+<Demo
+  name="NumberBadgeDisabledDemo"
+  component={demos.NumberBadgeDisabledDemo}
+/>
 
 ## API
 
