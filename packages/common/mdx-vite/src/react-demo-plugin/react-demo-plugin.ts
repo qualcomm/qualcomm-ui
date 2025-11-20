@@ -1,7 +1,6 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {transformerRenderIndentGuides} from "@shikijs/transformers"
 import chalk from "chalk"
 import {glob} from "glob"
 import {readFile} from "node:fs/promises"
@@ -12,6 +11,8 @@ import type {Plugin} from "vite"
 
 import {quiCustomDarkTheme, type ReactDemoData} from "@qualcomm-ui/mdx-common"
 import {dedent} from "@qualcomm-ui/utils/dedent"
+
+import {getShikiTransformers} from "../docs-plugin"
 
 import {LOG_PREFIX, VIRTUAL_MODULE_IDS} from "./demo-plugin-constants"
 import type {QuiDemoPluginOptions} from "./demo-plugin-types"
@@ -221,7 +222,17 @@ export function reactDemoPlugin({
           dark: theme.dark,
           light: theme.light,
         },
-        transformers: [transformerRenderIndentGuides(), ...transformers],
+        transformers: [
+          ...getShikiTransformers(),
+          {
+            enforce: "post",
+            name: "shiki-transformer-trim",
+            preprocess(code) {
+              return code.trim()
+            },
+          },
+          ...transformers,
+        ],
       })
     } catch (error) {
       console.warn(
