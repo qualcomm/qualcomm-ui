@@ -19,13 +19,13 @@ import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
 The default [orientation](./#orientation) is horizontal. The left and right arrow keys can be used to navigate between tabs.
 
-<Demo component={demos.TabsHorizontalDemo} />
+<Demo name="TabsHorizontalDemo" component={demos.TabsHorizontalDemo} />
 
 ### Vertical
 
 In vertical [orientation](./#orientation), the up and down arrow keys are used instead.
 
-<Demo component={demos.TabsVerticalDemo} />
+<Demo name="TabsVerticalDemo" component={demos.TabsVerticalDemo} />
 
 ### Icons and variants
 
@@ -33,6 +33,7 @@ Tabs support start and end icons. Customize the variant with the [iconVariant](.
 
 <Demo
   wrapperProps={{className: "bg-neutral-02"}}
+  name="TabsIconsDemo"
   component={demos.TabsIconsDemo}
 />
 
@@ -40,7 +41,10 @@ Tabs support start and end icons. Customize the variant with the [iconVariant](.
 
 The tab's active value can be controlled via the [value](./#value), [onValueChange](./#onValueChange), and [defaultValue](./#defaultValue) properties. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<Demo component={demos.TabsControlledValueDemo} />
+<Demo
+  name="TabsControlledValueDemo"
+  component={demos.TabsControlledValueDemo}
+/>
 
 ### Sizes
 
@@ -48,7 +52,7 @@ The tab's active value can be controlled via the [value](./#value), [onValueChan
 
 The line [variant](./#variant) supports four [sizes](./#size): `sm`, `md`, `lg`, and `xl`
 
-<Demo component={demos.TabsLineSizesDemo} />
+<Demo name="TabsLineSizesDemo" component={demos.TabsLineSizesDemo} />
 
 #### Contained
 
@@ -56,6 +60,7 @@ The contained [variant](./#variant) supports only two sizes: `sm` and `md`
 
 <Demo
   wrapperProps={{className: "bg-neutral-02"}}
+  name="TabsContainedSizesDemo"
   component={demos.TabsContainedSizesDemo}
 />
 
@@ -63,7 +68,7 @@ The contained [variant](./#variant) supports only two sizes: `sm` and `md`
 
 Use the [lazyMount](./#lazyMount) and [unmountOnExit](./#unmountOnExit) props to control render behavior for inactive tabs.
 
-<Demo component={demos.TabsLazyMountedDemo} />
+<Demo name="TabsLazyMountedDemo" component={demos.TabsLazyMountedDemo} />
 
 ### Disabled
 
@@ -71,6 +76,7 @@ Disable specific tabs with the [disabled](./#disabled-1) prop on the `<Tab.Root>
 
 <Demo
   wrapperProps={{className: "bg-neutral-02"}}
+  name="TabsDisabledDemo"
   component={demos.TabsDisabledDemo}
 />
 
@@ -78,17 +84,17 @@ Disable specific tabs with the [disabled](./#disabled-1) prop on the `<Tab.Root>
 
 The following example demonstrates how to render tabs that sync with the URL search parameters using react-router.
 
-<Demo component={demos.TabsLinksDemo} />
+<Demo name="TabsLinksDemo" component={demos.TabsLinksDemo} />
 
 ### Context
 
 Use the `<Tabs.Context>` component to access the tabs API from JSX.
 
-<Demo component={demos.TabsContextDemo} />
+<Demo name="TabsContextDemo" component={demos.TabsContextDemo} />
 
 ### Add and Remove Tabs
 
-<Demo component={demos.TabsAddRemoveDemo} />
+<Demo name="TabsAddRemoveDemo" component={demos.TabsAddRemoveDemo} />
 
 ## API
 

@@ -23,19 +23,25 @@ The drawer's API is similar to the [Dialog](/components/dialog) component.
 
 The drawer's default [placement](./#placement) is `end`, which maps to the right side of the screen in LTR languages and the left side in RTL languages.
 
-<Demo component={demos.DrawerPlacementDemo} />
+<Demo name="DrawerPlacementDemo" component={demos.DrawerPlacementDemo} />
 
 ### Placement Start
 
 Use [placement](./#placement) `start` to change the placement to the left side of the screen.
 
-<Demo component={demos.DrawerPlacementStartDemo} />
+<Demo
+  name="DrawerPlacementStartDemo"
+  component={demos.DrawerPlacementStartDemo}
+/>
 
 ### Controlled State
 
 Drawer visibility can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<Demo component={demos.DrawerControlledStateDemo} />
+<Demo
+  name="DrawerControlledStateDemo"
+  component={demos.DrawerControlledStateDemo}
+/>
 
 ### Custom Container
 
@@ -43,7 +49,11 @@ Use the `container` prop of the `Portal` component to render the drawer in a cus
 
 Consider setting [closeOnInteractOutside](./#closeOnInteractOutside) to `false` to prevent the drawer from closing when interacting outside the drawer.
 
-<Demo component={demos.DrawerCustomContainerDemo} expanded />
+<Demo
+  name="DrawerCustomContainerDemo"
+  component={demos.DrawerCustomContainerDemo}
+  expanded
+/>
 
 ## Shortcuts
 

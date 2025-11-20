@@ -27,7 +27,7 @@ export function Demo({
     <ReactDemoRunner
       colorScheme={theme === Theme.LIGHT ? "light" : "dark"}
       component={component}
-      demo={getDemo(component.name)}
+      demo={getDemo(props.name)}
       hideBrandSwitcher={hideDemoBrandSwitcher || hideBrandSwitcherProp}
       qdsBrand={brand || "qualcomm"}
       setQdsBrand={setBrand}

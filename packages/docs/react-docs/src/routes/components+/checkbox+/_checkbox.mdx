@@ -20,13 +20,16 @@ import {Checkbox} from "@qualcomm-ui/react/checkbox"
 
 The simple API provides a standalone component with built-in layout.
 
-<Demo component={demos.CheckboxSimpleDemo} />
+<Demo name="CheckboxSimpleDemo" component={demos.CheckboxSimpleDemo} />
 
 ### Composite
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<Demo component={demos.CheckboxCompositeLayoutDemo} />
+<Demo
+  name="CheckboxCompositeLayoutDemo"
+  component={demos.CheckboxCompositeLayoutDemo}
+/>
 
 ### States
 
@@ -43,23 +46,27 @@ Based on the inputs, the checkbox will render as checked, indeterminate, or unch
 
 :::
 
-<Demo component={demos.CheckboxStatesDemo} />
+<Demo name="CheckboxStatesDemo" component={demos.CheckboxStatesDemo} />
 
 ### Disabled State
 
 When [disabled](./#disabled) is true, the checkbox becomes non-interactive and is typically rendered with reduced opacity to indicate its unavailable state.
 
-<Demo component={demos.CheckboxDisabledDemo} />
+<Demo name="CheckboxDisabledDemo" component={demos.CheckboxDisabledDemo} />
 
 ### Controlled State
 
 Set the initial value using the [defaultChecked](./#defaultChecked) prop, or use [checked](./#checked) and [onCheckedChange](./#onCheckedChange) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<Demo expanded component={demos.CheckboxControlledDemo} />
+<Demo
+  expanded
+  name="CheckboxControlledDemo"
+  component={demos.CheckboxControlledDemo}
+/>
 
 ### Sizes
 
-<Demo expanded component={demos.CheckboxSizesDemo} />
+<Demo expanded name="CheckboxSizesDemo" component={demos.CheckboxSizesDemo} />
 
 ## Forms
 
@@ -69,13 +76,21 @@ Choose the form library that fits your needs—we've built examples with React H
 
 Use [React Hook Form](https://react-hook-form.com/) to handle the checkbox state and validation. [ArkType](https://arktype.io/) works great for schema validation if you need it.
 
-<Demo expanded component={demos.CheckboxReactHookFormDemo} />
+<Demo
+  expanded
+  name="CheckboxReactHookFormDemo"
+  component={demos.CheckboxReactHookFormDemo}
+/>
 
 ### Tanstack Form
 
 [Tanstack Form](https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts) handles checkbox validation with its built-in validators.
 
-<Demo expanded component={demos.CheckboxTanstackFormDemo} />
+<Demo
+  expanded
+  name="CheckboxTanstackFormDemo"
+  component={demos.CheckboxTanstackFormDemo}
+/>
 
 Tanstack form also supports [ArkType](https://tanstack.com/form/latest/docs/framework/react/guides/validation#validation-through-schema-libraries).
 

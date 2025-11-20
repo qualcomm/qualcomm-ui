@@ -30,37 +30,46 @@ Indeterminate progress rings keep users informed that work is happening when tim
 
 For most use cases, you can use the simple `ProgressRing` component.
 
-<Demo component={demos.ProgressRingSimpleDemo} />
+<Demo name="ProgressRingSimpleDemo" component={demos.ProgressRingSimpleDemo} />
 
 ### Composite
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<Demo component={demos.ProgressRingCompositeDemo} />
+<Demo
+  name="ProgressRingCompositeDemo"
+  component={demos.ProgressRingCompositeDemo}
+/>
 
 ### Value
 
 When the [value](./#value-1) prop is set, the filled portion of the circle will represent the total percent relative to [max](./#max) and [min](./#min). This is referred to as the "determinate" state.
 
-<Demo component={demos.ProgressRingValueDemo} />
+<Demo name="ProgressRingValueDemo" component={demos.ProgressRingValueDemo} />
 
 ### Value Text
 
 Display the value text by passing a value to the [valueText](./#valuetext) prop. The value text only shows when the size is `lg` or `xl`.
 
-<Demo component={demos.ProgressRingValueTextDemo} />
+<Demo
+  name="ProgressRingValueTextDemo"
+  component={demos.ProgressRingValueTextDemo}
+/>
 
 ### Sizes
 
 Use the [size](./#size) prop to change the size of the circle.
 
-<Demo component={demos.ProgressRingSizesDemo} />
+<Demo name="ProgressRingSizesDemo" component={demos.ProgressRingSizesDemo} />
 
 ### Thickness
 
 Use the [thickness](./#thickness) prop to change the pixel width of the track and bar.
 
-<Demo component={demos.ProgressRingThicknessDemo} />
+<Demo
+  name="ProgressRingThicknessDemo"
+  component={demos.ProgressRingThicknessDemo}
+/>
 
 ## Shortcuts
 

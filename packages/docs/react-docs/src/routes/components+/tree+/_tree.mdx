@@ -38,7 +38,7 @@ We expose the `<Tree.Nodes>` shorthand for rendering Branch and Leaf nodes. Use 
 
 Note that `<Tree.Nodes>` automatically renders child nodes for branches, so you only have to customize the content of the node itself.
 
-<Demo component={demos.TreeNodeShorthandDemo} />
+<Demo name="TreeNodeShorthandDemo" component={demos.TreeNodeShorthandDemo} />
 
 ### Nodes
 
@@ -47,19 +47,22 @@ You can bring your own `TreeNodes` to create your own abstraction for the tree.
 > [!note]
 > This approach is recommended only for advanced use cases. Most users should use the shorthand `<Tree.Nodes>` instead.
 
-<Demo component={demos.TreeNodesDemo} />
+<Demo name="TreeNodesDemo" component={demos.TreeNodesDemo} />
 
 ### Default Expanded
 
 Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedChange](./#onExpandedChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<Demo component={demos.TreeDefaultExpandedDemo} />
+<Demo
+  name="TreeDefaultExpandedDemo"
+  component={demos.TreeDefaultExpandedDemo}
+/>
 
 ### Checkbox Trees
 
 Use the `Tree.CheckboxNode` to create a checkbox tree. The checked state of the tree can be controlled using the [checkedValue](./#checkedValue), [onCheckedChange](./#onCheckedChange), and [defaultCheckedValue](./#defaultCheckedValue) props, which follow our [controlled state](/patterns/controlled-state) pattern.
 
-<Demo component={demos.TreeCheckboxDemo} />
+<Demo name="TreeCheckboxDemo" component={demos.TreeCheckboxDemo} />
 
 #### Checkbox selection state
 
@@ -129,31 +132,31 @@ function Component() {
 
 You can disable nodes by setting the `disabled` property on the node object.
 
-<Demo component={demos.TreeDisabledNodeDemo} />
+<Demo name="TreeDisabledNodeDemo" component={demos.TreeDisabledNodeDemo} />
 
 ### Filtering
 
 Here's an example that filters the nodes using `matchSorter`.
 
-<Demo component={demos.TreeFilteringDemo} />
+<Demo name="TreeFilteringDemo" component={demos.TreeFilteringDemo} />
 
 ### Links
 
 Tree nodes can be links using [polymorphic composition](/polymorphic-components). Use the `render` prop on the `<Tree.BranchNode>` or `<Tree.LeafNode>` to specify the element type.
 
-<Demo component={demos.TreeLinksDemo} />
+<Demo name="TreeLinksDemo" component={demos.TreeLinksDemo} />
 
 ### Sizes
 
 Tree item sizes are controlled using the [size](./#size) prop on the root of the tree.
 
-<Demo component={demos.TreeSizeDemo} />
+<Demo name="TreeSizeDemo" component={demos.TreeSizeDemo} />
 
 ### Add / Remove nodes
 
 The `TreeCollection` class exposes methods to handle the addition and removal of nodes. Here's an example of how to use them.
 
-<Demo component={demos.TreeAddRemoveDemo} />
+<Demo name="TreeAddRemoveDemo" component={demos.TreeAddRemoveDemo} />
 
 ## API
 

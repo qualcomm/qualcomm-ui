@@ -19,25 +19,28 @@ import {Menu} from "@qualcomm-ui/react/menu"
 
 Compose the menu to include icons and commands.
 
-<Demo component={demos.MenuItemCustomizationDemo} />
+<Demo
+  name="MenuItemCustomizationDemo"
+  component={demos.MenuItemCustomizationDemo}
+/>
 
 ### Context Menu
 
 Demonstrates how to trigger a menu on right-click or other context events.
 
-<Demo component={demos.MenuContextMenuDemo} />
+<Demo name="MenuContextMenuDemo" component={demos.MenuContextMenuDemo} />
 
 ### Nested Menus
 
 Compose nested menus by nesting `<Menu.Root>` components inside each other.
 
-<Demo component={demos.MenuNestedDemo} />
+<Demo name="MenuNestedDemo" component={demos.MenuNestedDemo} />
 
 ### Links
 
 Menu items can be links using [polymorphic composition](/polymorphic-components). Use the [render](./#render) prop on the `<Menu.Item>` to specify the element type.
 
-<Demo component={demos.MenuLinksDemo} />
+<Demo name="MenuLinksDemo" component={demos.MenuLinksDemo} />
 
 ### Groups
 
@@ -58,19 +61,22 @@ There are two appearance options:
 - For a checkbox appearance, render the `<Menu.CheckboxItemControl>` element as a child of the item.
 - Render the `<Menu.ItemIndicator />` element for a simple selection indicator.
 
-<Demo component={demos.MenuCheckboxItemsDemo} />
+<Demo name="MenuCheckboxItemsDemo" component={demos.MenuCheckboxItemsDemo} />
 
 #### Checkbox Selection State
 
 Illustrates how to manage and reflect the checked state of checkbox menu items.
 
-<Demo component={demos.MenuCheckboxSelectionStateDemo} />
+<Demo
+  name="MenuCheckboxSelectionStateDemo"
+  component={demos.MenuCheckboxSelectionStateDemo}
+/>
 
 #### Radio Group
 
 Demonstrates how to group radio menu items so only one can be selected at a time.
 
-<Demo component={demos.MenuRadioGroupDemo} />
+<Demo name="MenuRadioGroupDemo" component={demos.MenuRadioGroupDemo} />
 
 ### Controlled State
 
@@ -82,43 +88,49 @@ The menu's visibility can be controlled via the `open`, `onOpenChange`, and `def
 
 In controlled mode, the `open` prop should be updated in response to `onOpenChange` events to reflect the desired visibility.
 
-<Demo component={demos.MenuControlledStateDemo} />
+<Demo
+  name="MenuControlledStateDemo"
+  component={demos.MenuControlledStateDemo}
+/>
 
 ### Placement
 
 Configure the menu's placement using the [positioning.placement](./#positioning) prop.
 
-<Demo component={demos.MenuPlacementDemo} />
+<Demo name="MenuPlacementDemo" component={demos.MenuPlacementDemo} />
 
 ### Sizes
 
 Use the [size](./#size) prop to control the size of the menu. The default size is `md`. The demo features the small (`sm`) size.
 
-<Demo component={demos.MenuSizesDemo} />
+<Demo name="MenuSizesDemo" component={demos.MenuSizesDemo} />
 
 ### Anchor Point
 
 Use the [positioning.anchorPoint](./#positioning) prop to control the anchor point of the menu.
 
-<Demo component={demos.MenuAnchorPointDemo} />
+<Demo name="MenuAnchorPointDemo" component={demos.MenuAnchorPointDemo} />
 
 ### Avatar
 
 Here's an example that composes the `Menu` with the [Avatar](/components/avatar) component to display a user account menu.
 
-<Demo component={demos.MenuAvatarDemo} />
+<Demo name="MenuAvatarDemo" component={demos.MenuAvatarDemo} />
 
 ### Within Dialog
 
 When using the `Menu` inside a `Dialog`, don't render the `<Menu.Positioner>` within a `<Portal>` element.
 
-<Demo component={demos.MenuWithinDialogDemo} />
+<Demo name="MenuWithinDialogDemo" component={demos.MenuWithinDialogDemo} />
 
 ### Hide When Detached
 
 Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu when it's detached from the trigger.
 
-<Demo component={demos.MenuHideWhenDetachedDemo} />
+<Demo
+  name="MenuHideWhenDetachedDemo"
+  component={demos.MenuHideWhenDetachedDemo}
+/>
 
 ## API
 

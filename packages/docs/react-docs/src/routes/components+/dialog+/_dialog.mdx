@@ -21,43 +21,49 @@ import {Dialog} from "@qualcomm-ui/react/dialog"
 
 The dialog component has two sizes: `sm` and `md`. Size governs the width of the dialog, as well as the content's spacing, font size, and padding.
 
-<Demo component={demos.DialogSizesDemo} />
+<Demo name="DialogSizesDemo" component={demos.DialogSizesDemo} />
 
 ### Indicator Emphasis
 
 Use the [emphasis](./#emphasis) prop to change the intent of the dialog's indicator icon.
 
-<Demo component={demos.DialogEmphasisDemo} />
+<Demo name="DialogEmphasisDemo" component={demos.DialogEmphasisDemo} />
 
 ### Placement
 
 Use the [placement](./#placement) prop to change the placement of the dialog.
 
-<Demo component={demos.DialogPlacementDemo} />
+<Demo name="DialogPlacementDemo" component={demos.DialogPlacementDemo} />
 
 ### Controlled State
 
 Dialog visibility can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-<Demo component={demos.DialogControlledStateDemo} />
+<Demo
+  name="DialogControlledStateDemo"
+  component={demos.DialogControlledStateDemo}
+/>
 
 ### Outside Scroll
 
 The default [scrollBehavior](./#scrollBehavior) is `outside`, which makes the entire page scrollable when modal content exceeds viewport height. The modal and backdrop move with the page scroll instead of creating an internal scroll area within the modal.
 
-<Demo component={demos.DialogOutsideScrollDemo} />
+<Demo
+  name="DialogOutsideScrollDemo"
+  component={demos.DialogOutsideScrollDemo}
+/>
 
 ### Inside Scroll
 
 Set the [scrollBehavior](./#scrollBehavior) prop to `inside` to create an internal scroll area within the modal.
 
-<Demo component={demos.DialogInsideScrollDemo} />
+<Demo name="DialogInsideScrollDemo" component={demos.DialogInsideScrollDemo} />
 
 ### Alert Dialog
 
 Set the [role](./#role) prop to `alertdialog` to change the dialog component to an [alert dialog](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role). This is recommended for situations where the dialog is used to notify users of urgent information that demands their immediate attention.
 
-<Demo component={demos.DialogAlertDialogDemo} />
+<Demo name="DialogAlertDialogDemo" component={demos.DialogAlertDialogDemo} />
 
 ## Shortcuts
 

@@ -72,31 +72,31 @@ Alternatively, you can provide children to the `Toaster` component to customize 
 
 Use the [action](./#action) property to add an action button to the toast.
 
-<Demo component={demos.ToastActionDemo} />
+<Demo name="ToastActionDemo" component={demos.ToastActionDemo} />
 
 ### Toast Emphasis
 
 Here's an example of each toast type.
 
-<Demo component={demos.ToastEmphasisDemo} />
+<Demo name="ToastEmphasisDemo" component={demos.ToastEmphasisDemo} />
 
 ### Overlapping Toasts
 
 By default, toasts are stacked on top of each other. To conserve space when rendering many toasts, set the [overlap](./#overlap) property to true in the `toaster.create` function.
 
-<Demo component={demos.ToastOverlapDemo} />
+<Demo name="ToastOverlapDemo" component={demos.ToastOverlapDemo} />
 
 ### Toast Duration
 
 Use the [duration](./#duration) property to set the duration of the toast.
 
-<Demo component={demos.ToastDurationDemo} />
+<Demo name="ToastDurationDemo" component={demos.ToastDurationDemo} />
 
 ### Persistent Toast
 
 Set the [type](./#type) property to `loading` to make the toast stay on screen until dismissed.
 
-<Demo component={demos.ToastPersistentDemo} />
+<Demo name="ToastPersistentDemo" component={demos.ToastPersistentDemo} />
 
 ### Pause and Resume
 
@@ -104,19 +104,19 @@ Use the [pause](./#pause) and [resume](./#resume) methods on the toaster instanc
 
 Pausing a toast prevents it from timing out, while resuming it will continue the timeout from the remaining duration.
 
-<Demo component={demos.ToastPauseDemo} />
+<Demo name="ToastPauseDemo" component={demos.ToastPauseDemo} />
 
 ### Max Visible
 
 Set the [max](./#max) prop on the `createToaster` function to define the maximum number of toasts that can be rendered at a time. Extra toasts will be queued and rendered when the number of visible toasts drops below the max.
 
-<Demo component={demos.ToastMaxVisibleDemo} />
+<Demo name="ToastMaxVisibleDemo" component={demos.ToastMaxVisibleDemo} />
 
 ### Screen Placement
 
 Toasts can be displayed on all four corners of a page. We recommend picking a single placement for your app, as this creates a consistent experience for your users.
 
-<Demo component={demos.ToastPlacementDemo} />
+<Demo name="ToastPlacementDemo" component={demos.ToastPlacementDemo} />
 
 ## API
 
