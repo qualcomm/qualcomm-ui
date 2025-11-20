@@ -7,7 +7,7 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {userColumns, useUserData} from "./use-data"
 
-export default function ColumnVisibilityDemo() {
+export function ColumnVisibilityDemo() {
   const {data = []} = useUserData(5)
 
   const [columnVisibility, setColumnVisibility] = useState({})

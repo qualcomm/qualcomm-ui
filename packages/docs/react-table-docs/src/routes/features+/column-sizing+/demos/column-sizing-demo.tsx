@@ -12,7 +12,7 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {columns, useUserData} from "./use-data"
 
-export default function ColumnSizingDemo() {
+export function ColumnSizingDemo() {
   const {data = [], refetch} = useUserData(5)
 
   const [columnResizeMode, setColumnResizeMode] =

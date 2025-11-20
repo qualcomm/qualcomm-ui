@@ -9,7 +9,7 @@ import {arrayMove} from "@qualcomm-ui/utils/array"
 import {DraggableRow} from "./draggable-row"
 import {type User, userColumns, useUserData} from "./use-data"
 
-export default function RowDndDemo() {
+export function RowDndDemo() {
   const {data = [], isFetching, refetch} = useUserData(10)
 
   const [mutableData, setMutableData] = useState<User[]>(data)
