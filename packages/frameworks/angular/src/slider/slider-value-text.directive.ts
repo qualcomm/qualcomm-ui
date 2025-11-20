@@ -15,7 +15,7 @@ import {useQdsSliderContext} from "./qds-slider-context.service"
 export class SliderValueTextDirective extends CoreSliderValueTextDirective {
   /**
    * How to display range values: a separator string or a function that receives the
-   * value array and returns a React node.
+   * value array and returns a string.
    *
    * @default ' - '
    */

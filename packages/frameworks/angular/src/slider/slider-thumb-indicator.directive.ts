@@ -14,8 +14,8 @@ import {useQdsSliderContext} from "./qds-slider-context.service.js"
 })
 export class SliderThumbIndicatorDirective extends CoreSliderThumbIndicatorDirective {
   /**
-   * Custom value display: a function that receives the value array and returns a
-   * React node.
+   * Custom value display: a function that receives the value and returns a
+   * string.
    *
    * @default ' - '
    */

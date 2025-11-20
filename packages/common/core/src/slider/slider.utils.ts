@@ -120,10 +120,3 @@ export function getClosestIndex(
   const {context} = params
   return getClosestValueIndex(context.get("value"), pointValue)
 }
-
-export function assignArray(current: number[], next: number[]): void {
-  for (let i = 0; i < next.length; i++) {
-    const value = next[i]
-    current[i] = value
-  }
-}

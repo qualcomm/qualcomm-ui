@@ -467,7 +467,6 @@ export interface SliderMaxMarkerBindings extends CommonBindings {
 
 export interface SliderApi {
   decrement(index: number): void
-  decrement(index: number): void
   dragging: boolean
   focus(): void
   focused: boolean
