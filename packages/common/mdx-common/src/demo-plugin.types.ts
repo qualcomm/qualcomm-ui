@@ -19,13 +19,16 @@ export interface ReactDemoData {
   demoName: string
   errorMessage?: string
   fileName: string
+  filePath: string
   imports: string[]
   pageId: string
   sourceCode: SourceCodeData[]
 }
 
+/**
+ * @deprecated no longer used
+ */
 export interface ReactDemoWithScope extends ReactDemoData {
-  demoName: string
   scope: Record<string, any>
 }
 
