@@ -111,6 +111,7 @@ export function QdsReactDemo({
     ({
       demoName: "",
       fileName: "",
+      filePath: "",
       imports: [],
       pageId: "",
       scope: {},

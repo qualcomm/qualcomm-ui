@@ -94,6 +94,7 @@ export function ReactDemo({
   const demo: ReactDemoData = demoProp || {
     demoName: "",
     fileName: "",
+    filePath: "",
     imports: [],
     pageId: "",
     sourceCode: [],
@@ -110,6 +111,16 @@ export function ReactDemo({
   const [expanded, setExpanded] = useState(
     state?.[name]?.expanded || expandedProp,
   )
+
+  /**
+   * If the activeTab is a relative file, and it's removed from the demo scope
+   * (i.e., no longer imported by the demo file), reset the active tab.
+   */
+  useSafeLayoutEffect(() => {
+    if (demo.sourceCode.every((item) => item.fileName !== activeTab)) {
+      setActiveTab(demo.sourceCode[0].fileName)
+    }
+  }, [demo.sourceCode])
 
   useSafeLayoutEffect(() => {
     if (demo.fileName && !activeTab) {
