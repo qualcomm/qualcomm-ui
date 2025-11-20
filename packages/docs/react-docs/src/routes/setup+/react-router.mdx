@@ -41,16 +41,17 @@ npm create react-router@latest
 
 In your global CSS file (default `app/app.css`), import the QUI CSS.
 
-```css
+```css tabs="css-import" label="Default"
 @import "@qualcomm-ui/qds-core/styles/components.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 ```
 
-If you're using Tailwind, import the theme CSS at the `components` layer instead:
-
-```css
+```css tabs="css-import" label="Tailwind"
 @import "tailwindcss";
+
+/* Recommended: install and import the @qualcomm-ui/tailwind plugin */
+@import "@qualcomm-ui/tailwind/qui-strict.css";
 
 /* Important: always order these imports after the tailwindcss import */
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
