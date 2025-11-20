@@ -2,7 +2,7 @@ import type {ReactElement} from "react"
 
 import {Slider} from "@qualcomm-ui/react/slider"
 
-export default function SliderTooltipDisplayDemo(): ReactElement {
+export function SliderTooltipDisplayDemo(): ReactElement {
   return (
     <Slider.Root className="mt-3 sm:w-80" defaultValue={[25, 65]}>
       <Slider.Control>

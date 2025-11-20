@@ -290,14 +290,24 @@
     opacity 130ms ease-in-out,
     display 130ms ease-in-out allow-discrete;
 
-  .qui-slider__thumb:not([data-disabled]):is(:hover, :active, :focus-visible)
+  .qui-slider__thumb:not([data-disabled]):is(
+      :hover,
+      :active,
+      :focus-visible,
+      [data-dragging]
+    )
     & {
     opacity: 1;
     display: block;
   }
 
   @starting-style {
-    .qui-slider__thumb:not([data-disabled]):is(:hover, :active, :focus-visible)
+    .qui-slider__thumb:not([data-disabled]):is(
+        :hover,
+        :active,
+        :focus-visible,
+        [data-dragging]
+      )
       & {
       opacity: 0;
     }
@@ -319,8 +329,6 @@
 /* Angular extra markup */
 
 q-slider-markers,
-q-slider-thumbs,
-:is(q-slider-thumbs, [q-slider-control])
-  > [q-tooltip][data-scope="tooltip"][data-part="root"] {
+q-slider-thumbs {
   display: contents;
 }
