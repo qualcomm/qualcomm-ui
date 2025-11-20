@@ -549,10 +549,10 @@ async function processMdxContent(
   } else {
     processedContent = processedContent.replace(/<TypeDocProps\s+[^>]*\/>/g, "")
   }
-  let demoRegex = /<(?:QdsDemo|CodeDemo)\s+[^>]*name="(\w+)"[^>]*\/>/g
+  let demoRegex = /<(?:QdsDemo|CodeDemo|Demo)\s+[^>]*name="(\w+)"[^>]*\/>/g
   let demoMatches = Array.from(processedContent.matchAll(demoRegex))
   if (!demoMatches.length) {
-    demoRegex = /<(?:QdsDemo|CodeDemo)\s+[^>]*node=\{Demo\.(\w+)\}[^>]*\/>/g
+    demoRegex = /<(?:QdsDemo|CodeDemo|Demo)\s+[^>]*node=\{Demo\.(\w+)\}[^>]*\/>/g
     demoMatches = Array.from(processedContent.matchAll(demoRegex))
   }
   const replacements = await Promise.all(
