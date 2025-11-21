@@ -8,6 +8,7 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight,
   transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
   transformerRenderIndentGuides,
 } from "@shikijs/transformers"
 import {merge} from "lodash-es"
@@ -45,6 +46,7 @@ export function getShikiTransformers(): ShikiTransformer[] {
     transformerNotationWordHighlight(),
     transformerNotationErrorLevel(),
     transformerRenderIndentGuides(),
+    transformerRemoveNotationEscape(),
   ]
 }
 
