@@ -2,51 +2,26 @@
 title: Overview
 ---
 
-import {Demo} from "~components/demo"
-import * as demos from "./demos"
+import {QdsDemo} from "~components/demo"
 
 # {frontmatter.title}
 
 ## Styling with CSS Variables
 
-QUI Components use [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for properties like `color`, `background-color`, and `border-color`. Instead of hardcoded values, components reference variables that change based on the active theme.
+QUI Components use [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for properties like `color`, `background-color`, and `border-color`. Instead of hardcoded values, components reference variables that change based on the active brand and theme.
 
-## Available Brands and Themes
+- Three brands are available: `qualcomm`, `snapdragon`, and `dragonwing`.
+- Each brand supports both a `light` and `dark` theme.
 
-Three brands are available: `qualcomm`, `snapdragon`, and `dragonwing`.
+The CSS is built to enable dynamic switching without rebuilding.
 
-Each brand supports both a `light` and `dark` theme.
+::: spoiler Applying the Data Attributes Manually
 
-## Theme Switching
+If you need to apply the theme data attributes manually instead of using `QdsThemeService`:
 
-We've built the CSS to enable dynamic switching without rebuilding.
-
-### Import CSS
-
-First import the theme CSS for your chosen brand. We'll demo with `qualcomm`:
-
-```css
-/* import component styles too */
-@import "@qualcomm-ui/qds-core/styles/components.css";
-@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
-@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
-```
-
-If you're using Tailwind, you should import the theme CSS at the `components` layer instead:
-
-```css
-@import "tailwindcss";
-
-@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
-@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
-@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
-```
-
-### Apply Data Attributes
-
-- Pick a DOM element. This is typically `html` or `body`.
-- Apply the brand to the element using the brand data attribute: `data-brand="qualcomm"` (or snapdragon / dragonwing).
-- Apply `data-theme="dark"` or `data-theme="light"` to the element.
+- Pick a DOM element (typically `html` or `body`)
+- Apply the brand: `data-brand="qualcomm"` (or `snapdragon` / `dragonwing`)
+- Apply the theme: `data-theme="dark"` or `data-theme="light"`
 
 Example:
 
@@ -56,13 +31,21 @@ Example:
 </html>
 ```
 
-All descendants of this subtree inherit that theme unless overridden by a closer parent.
+All descendants inherit that theme unless overridden by a closer parent.
 
 > [!warning/Both attributes are required]
 > You must apply both the `data-brand` and `data-theme` attributes to the element in order for the theme to take effect.
 
-### Enforce a Specific Theme
+:::
 
-The following example shows how to enforce a specific theme on a subtree.
+## Switching the Theme at Runtime
 
-<Demo name="OverviewThemeDemo" component={demos.OverviewThemeDemo} />
+You can switch the theme at runtime using the `QdsThemeService`:
+
+<QdsDemo name="ThemeSwitchingDemo" />
+
+## Force a Specific Theme on a Subtree
+
+The following example shows how to enforce a specific theme on a subtree. You must apply both the `data-brand` and `data-theme` attributes to the element in order for the theme to take effect.
+
+<QdsDemo name="ForceThemeDemo" />

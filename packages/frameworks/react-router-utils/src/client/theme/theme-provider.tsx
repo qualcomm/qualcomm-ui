@@ -61,7 +61,7 @@ export interface ThemeProviderProps {
   /**
    * The theme to use for the application.
    */
-  theme: Theme | null
+  theme?: Theme | null
   /**
    * The route used to change the theme in the
    */
