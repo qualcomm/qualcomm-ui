@@ -6,7 +6,7 @@ import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 # {frontmatter.title}
 
-This library requires React 19+.
+This library requires React 19+
 
 There are four steps to installation:
 
@@ -15,7 +15,7 @@ There are four steps to installation:
 3. Configure fonts
 4. Configure theme provider
 
-This guide assumes you've already installed React and React Router in framework mode (v7 and up). If not, scaffold your project as follows:
+This guide assumes you've already installed React and React Router in framework mode (v7 and up). If not, run this command and follow the prompts to create your project:
 
 ```shell
 npm create react-router@latest
@@ -50,8 +50,8 @@ In your global CSS file (default `app/app.css`), import the QUI styles.
 ```css tabs="css-import" label="Tailwind"
 @import "tailwindcss";
 
-/* Recommended: install and import the @qualcomm-ui/tailwind plugin */
-@import "@qualcomm-ui/tailwind/qui-strict.css";
+/* Recommended: install and import @qualcomm-ui/tailwind-plugin */
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 
 /* Important: always order these imports after the tailwindcss import */
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
@@ -68,9 +68,10 @@ Learn more about the available brands in the [theme documentation](/theming/over
 
 QUI components are designed with the Roboto Flex and Roboto Mono font families.
 
-In your `root.tsx` file, add the font links:
+Add the links to your application's `<head>` element:
 
 ```tsx
+// root.tsx
 <html lang="en">
   <head>
     {/* ... */}
@@ -91,28 +92,41 @@ In your `root.tsx` file, add the font links:
 
 ## 4. Configure theme provider
 
-QUI components support both light and dark modes. Choose from one of two approachces for your site:
+QUI components support both light and dark modes. Choose one of the following approaches for your site:
 
-- [Theme switching (dynamic)](./#theme-switching-dynamic): support both light and dark modes, persist the user's choice to browser storage
-- [Single theme (static)](./#single-theme-static): choose a single theme
+- [Single theme (static)](./#single-theme-static): lock to one theme
+- [Theme switching (dynamic)](./#theme-switching-dynamic): support both light and dark modes and persist the user's choice to browser storage
+
+### Single theme (static)
+
+If you only intend to support one theme, apply the theme attribute to your app's root element:
+
+```tsx
+// [!code word:data-theme="dark"]
+<html data-theme="dark" data-brand="qualcomm" style={{colorScheme: "dark"}}>
+  {/* ... */}
+</html>
+```
+
+Continue to [next steps](./#next-steps)
 
 ### Theme switching (dynamic)
 
 Follow this step to configure a cookie for theme switching. The user's preferred theme will be restored when they return to the site.
 
-#### Create a file:
+#### Create the cookie
 
 ```ts
+// app/sessions.server.ts
 import {createCookie} from "react-router"
 
-// app/sessions.server.ts
 export const qdsThemeCookie = createCookie("app-qds-theme", {
   // one year
   maxAge: 31536000,
 })
 ```
 
-#### Update your root component
+#### Update the root component
 
 First we'll read the cookie. Create a [loader function](https://reactrouter.com/start/framework/data-loading#server-data-loading):
 
@@ -226,13 +240,9 @@ export function ThemeToggle(): ReactNode {
 }
 ```
 
-### Single theme (static)
+Your application is now ready to import and use our components.
 
-If you only intend to support one theme, apply the theme attribute to your app's root element:
+## Next Steps
 
-```tsx
-// [!code word:data-theme="dark"]
-<html data-theme="dark" data-brand="qualcomm" style={{colorScheme: "dark"}}>
-  {/* ... */}
-</html>
-```
+- Learn more about theming in our [theming documentation](/theming/overview).
+- Use the navigation menu on the left to view component documentation and examples.
