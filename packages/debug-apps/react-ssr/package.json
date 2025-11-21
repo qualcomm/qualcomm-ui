@@ -19,7 +19,6 @@
     "@floating-ui/react": "^0.27.3",
     "@hookform/resolvers": "^5.2.2",
     "@qualcomm-ui/core": "workspace:*",
-    "@qualcomm-ui/docs-base": "workspace:*",
     "@qualcomm-ui/dom": "workspace:*",
     "@qualcomm-ui/react-mdx": "workspace:*",
     "@qualcomm-ui/mdx-common": "workspace:*",

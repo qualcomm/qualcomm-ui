@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react"
 
-import type {FontData} from "@qualcomm-ui/docs-base"
+import type {FontData} from "@qualcomm-ui/react-internal"
 
 interface FontTableProps {
   data: FontData[]

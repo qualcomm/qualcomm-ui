@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react"
 
-import type {ColorData} from "@qualcomm-ui/docs-base"
+import type {ColorData} from "@qualcomm-ui/react-internal"
 import {useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 interface ColorProps {

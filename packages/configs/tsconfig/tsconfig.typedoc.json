@@ -30,8 +30,5 @@
     "strictPropertyInitialization": false,
     "strict": false,
     "target": "ESNext",
-    "paths": {
-      "@qualcomm-ui/docs-base": ["../docs-base/src"]
-    }
   },
 }

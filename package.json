@@ -25,6 +25,7 @@
     "angular-table-docs": "pnpm -C packages/docs/angular-table-docs",
     "qui-docs": "pnpm -C packages/docs/qui-docs",
     "react-docs": "pnpm -C packages/docs/react-docs",
+    "react-internal": "pnpm -C packages/frameworks/react-internal",
     "react-table-docs": "pnpm -C packages/docs/react-table-docs",
     "react-test-utils": "pnpm -C packages/frameworks/react-test-utils",
     "core": "pnpm -C packages/common/core",

@@ -52,7 +52,6 @@
     "@qualcomm-ui/angular": "workspace:*",
     "@qualcomm-ui/angular-core": "workspace:*",
     "@qualcomm-ui/core": "workspace:*",
-    "@qualcomm-ui/docs-base": "workspace:*",
     "@qualcomm-ui/dom": "workspace:*",
     "@qualcomm-ui/react-mdx": "workspace:*",
     "@qualcomm-ui/mdx-common": "workspace:*",

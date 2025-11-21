@@ -39,7 +39,7 @@ npm create react-router@latest
 
 ## 2. Import the CSS
 
-In your global CSS file (default `app/app.css`), import the QUI CSS.
+In your global CSS file (default `app/app.css`), import the QUI styles.
 
 ```css tabs="css-import" label="Default"
 @import "@qualcomm-ui/qds-core/styles/components.css";
@@ -58,6 +58,9 @@ In your global CSS file (default `app/app.css`), import the QUI CSS.
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
 ```
+
+> [!note/Multi Theme]
+> If you only intend to support a single theme, you may omit the other import.
 
 Learn more about the available brands in the [theme documentation](/theming/overview).
 

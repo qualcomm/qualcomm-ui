@@ -1,0 +1,21 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "incremental": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "dist/tsbuildinfo",
+    "paths": {
+      "@qualcomm-ui/react-core/*": ["./src/*/index.ts"],
+    }
+  },
+  "include": ["./src"],
+  "exclude": ["./src/**/*.spec.tsx"],
+  "references": [
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    }
+  ]
+}

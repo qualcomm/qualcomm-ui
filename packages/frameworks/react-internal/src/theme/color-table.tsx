@@ -1,13 +1,14 @@
 import {useEffect, useState} from "react"
 
-import type {ColorData} from "@qualcomm-ui/react-internal"
 import {useTheme} from "@qualcomm-ui/react-router-utils/client"
 
-interface ColorProps {
+import type {ColorData} from "./theme-colors"
+
+interface ColorTableProps {
   data: ColorData[]
 }
 
-export function ColorTable({data = []}: ColorProps) {
+export function ColorTable({data = []}: ColorTableProps) {
   // we need to force a re-render after mount and on theme change to reflect the
   // computed property values.
   const [theme] = useTheme()

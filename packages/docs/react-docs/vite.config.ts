@@ -18,6 +18,7 @@ export default defineConfig({
       "@faker-js/faker",
       "@floating-ui/react",
       "@hookform/resolvers/arktype",
+      "@internationalized/number",
       "@mdx-js/react",
       "@shikijs/langs/angular-ts",
       "@shikijs/langs/angular-html",

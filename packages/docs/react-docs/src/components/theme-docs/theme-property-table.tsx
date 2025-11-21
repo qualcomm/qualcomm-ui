@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react"
 
-import type {BasicThemeData} from "@qualcomm-ui/docs-base"
+import type {BasicThemeData} from "@qualcomm-ui/react-internal"
 
 interface ColorProps {
   cssProperty: string
