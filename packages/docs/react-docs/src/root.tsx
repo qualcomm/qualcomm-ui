@@ -195,12 +195,10 @@ export default function AppWithProviders() {
   const data = useLoaderData<{qdsBrand: QdsBrand; theme: Theme | null}>()
 
   const [propsLayout, setPropsLayout] = useState<DocPropsLayout>("table")
-
+  const [brand, setBrand] = useState<QdsBrand | null>(data.qdsBrand)
   const [docsSiteData, setDocsSiteData] = useState<SiteData>(
     siteData ?? siteDataFallback,
   )
-
-  const [brand, setBrand] = useState<QdsBrand | null>(data.qdsBrand)
 
   const propsLayoutContext: PropsLayoutState = useMemo(
     () => ({
@@ -234,9 +232,6 @@ export default function AppWithProviders() {
     if (import.meta.env.DEV) {
       console.debug(siteData)
     }
-  }, [])
-
-  useEffect(() => {
     if (import.meta.hot) {
       import.meta.hot.on("qui-docs-plugin:refresh-site-data", setDocsSiteData)
       return () => {
