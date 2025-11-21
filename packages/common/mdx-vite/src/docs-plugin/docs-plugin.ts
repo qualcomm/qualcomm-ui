@@ -7,8 +7,9 @@ import {glob} from "glob"
 import {readFileSync} from "node:fs"
 import {resolve} from "node:path"
 import prettyMilliseconds from "pretty-ms"
-import type {PluginOption, ViteDevServer} from "vite"
+import type {ModuleNode, PluginOption, ViteDevServer} from "vite"
 
+import type {PageDocProps, SiteData} from "@qualcomm-ui/mdx-common"
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import {
@@ -69,6 +70,15 @@ class PluginState {
       0,
       this.docPropsFilePath.lastIndexOf("/"),
     )
+  }
+
+  get siteData(): SiteData {
+    return {
+      navItems: state.indexer.navItems,
+      pageDocProps: state.indexer.pageDocProps as unknown as PageDocProps,
+      pageMap: state.indexer.pageMap,
+      searchIndex: state.indexer.searchIndex,
+    }
   }
 
   private resolveDocProps(): Record<string, QuiPropTypes> {
@@ -234,9 +244,8 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       })
       state.servers.push(server)
     },
-    handleHotUpdate: async ({file: updateFile, modules, server}) => {
+    handleHotUpdate: async ({file: updateFile, server}) => {
       const file = fixPath(updateFile)
-
       if (
         (!config.hotUpdateIgnore || !config.hotUpdateIgnore.test(file)) &&
         // ignore watched files. We watch for these separately.
@@ -250,28 +259,43 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
         }
 
         if (updateFile.endsWith(".mdx")) {
+          const mods: ModuleNode[] = []
           const files = state.buildIndex(true)
-          // invalidate the plugin module so that the virtual file is refreshed
+
+          const moduleByFile = server.moduleGraph.getModulesByFile(updateFile)
+          if (!moduleByFile?.size) {
+            console.debug("no module found for file, returning", updateFile)
+            return []
+          }
+
           const virtualModule =
             server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
           if (virtualModule) {
+            // invalidate the plugin module so that the virtual file is refreshed
             server.moduleGraph.invalidateModule(virtualModule)
-            await server.reloadModule(virtualModule)
+            // can't refresh the module here, otherwise we get react router hmr
+            // conflicts. But we can send the updated site data to the site.
+            server.ws.send({
+              data: state.siteData,
+              event: "qui-docs-plugin:refresh-site-data",
+              type: "custom",
+            })
           }
           if (files.some((file) => file.metadata.changed.frontmatter)) {
             console.debug(
               "Frontmatter changed, reloading plugin to reflect changes in the page configuration",
             )
             server.ws.send({type: "full-reload"})
+            return []
           }
+          return mods
         }
       }
-
-      return modules
+      return []
     },
     load: (id): string | undefined => {
       if (id === VIRTUAL_MODULE_ID) {
-        return `export const siteData = ${JSON.stringify({navItems: state.indexer.navItems, pageDocProps: state.indexer.pageDocProps, pageMap: state.indexer.pageMap, searchIndex: state.indexer.searchIndex})}`
+        return `export const siteData = ${JSON.stringify(state.siteData)}`
       }
       return undefined
     },

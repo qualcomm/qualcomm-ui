@@ -87,13 +87,17 @@ export function reactDemoPlugin({
         return modules
       }
 
+      if (file.endsWith(".mdx")) {
+        return []
+      }
+
       if (isDemoFile(file)) {
         await handleDemoAdditionOrUpdate({filePath: file})
       } else {
         const normalizedFile = resolve(file)
         const dependentDemos = relativeImportDependents.get(normalizedFile)
         if (!dependentDemos?.size) {
-          return modules
+          return []
         }
         for (const demoName of Array.from(dependentDemos)) {
           const demo = demoRegistry.get(demoName)
@@ -112,7 +116,7 @@ export function reactDemoPlugin({
         server.moduleGraph.invalidateModule(autoModule)
         await server.reloadModule(autoModule)
       }
-      return modules
+      return []
     },
 
     async load(id) {
