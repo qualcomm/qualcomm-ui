@@ -121,18 +121,78 @@ Lists denote nesting with alternating list styles based on the nesting level.
 
 ### Code Blocks
 
-````markdown disableCopy
-```tsx
-export function defined<T>(value: T | null | undefined): value is T {
-  return typeof value !== "undefined" && value !== null
-}
+Code blocks are syntax highlighted using [Shiki](https://shiki.style/guide/). We've enabled most [common transformers](https://shiki.style/packages/transformers#transformers) by default, detailed below:
+
+#### Diff Notation
+
+Use `[!code ++]` and `[!code --]` to mark added and removed lines.
+
+````markdown
+```ts
+console.log("hewwo") // [\!code --]
+console.log("hello") // [\!code ++]
+console.log("goodbye")
 ```
 ````
 
-```tsx
-export function defined<T>(value: T | null | undefined): value is T {
-  return typeof value !== "undefined" && value !== null
-}
+```ts
+console.log("hewwo") // [!code --]
+console.log("hello") // [!code ++]
+console.log("goodbye")
+```
+
+#### Line Highlighting
+
+Use `[!code highlight]` to highlight a line.
+
+````markdown
+```ts
+console.log("Not highlighted")
+console.log("Highlighted") // [\!code highlight]
+console.log("Not highlighted")
+```
+````
+
+```ts
+console.log("Not highlighted")
+console.log("Highlighted") // [!code highlight]
+console.log("Not highlighted")
+```
+
+You can also highlight multiple lines with a single comment:
+
+````markdown
+```ts
+// [\!code highlight:3]
+console.log("Not highlighted")
+console.log("Highlighted")
+console.log("Not highlighted")
+```
+````
+
+```ts
+// [!code highlight:3]
+console.log("Not highlighted")
+console.log("Highlighted")
+console.log("Not highlighted")
+```
+
+#### Word Highlighting
+
+Use `[!code word:Hello]` to highlight the word Hello in any subsequent code.
+
+````markdown
+```ts
+// [\!code word:Hello]
+const message = "Hello World"
+console.log(message) // prints Hello World
+```
+````
+
+```ts
+// [!code word:Hello]
+const message = "Hello World"
+console.log(message) // prints Hello World
 ```
 
 ### Links
