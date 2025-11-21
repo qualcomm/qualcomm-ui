@@ -1,0 +1,120 @@
+/* default variant */
+.qui-badge__root {
+  &[data-emphasis] {
+    --badge-text: var(--color-utility-persistent-white);
+  }
+  &[data-emphasis="brand"] {
+    --badge-background: var(--color-background-brand-primary);
+  }
+  &[data-emphasis="info"] {
+    --badge-background: var(--color-background-support-info);
+  }
+  &[data-emphasis="success"] {
+    --badge-background: var(--color-background-support-success);
+  }
+  &[data-emphasis="danger"] {
+    --badge-background: var(--color-background-support-danger);
+  }
+  &[data-emphasis="blue"] {
+    --badge-background: var(--color-category-blue-strong);
+  }
+  &[data-emphasis="cyan"] {
+    --badge-background: var(--color-category-cyan-strong);
+  }
+  &[data-emphasis="green"] {
+    --badge-background: var(--color-category-green-strong);
+  }
+  &[data-emphasis="kiwi"] {
+    --badge-background: var(--color-category-kiwi-strong);
+  }
+  &[data-emphasis="magenta"] {
+    --badge-background: var(--color-category-magenta-strong);
+  }
+  &[data-emphasis="orange"] {
+    --badge-background: var(--color-category-orange-strong);
+  }
+  &[data-emphasis="purple"] {
+    --badge-background: var(--color-category-purple-strong);
+  }
+  &[data-emphasis="red"] {
+    --badge-background: var(--color-category-red-strong);
+  }
+  &[data-emphasis="teal"] {
+    --badge-background: var(--color-category-teal-strong);
+  }
+  &[data-emphasis="warning"] {
+    --badge-background: var(--color-background-support-warning);
+    --badge-text: var(--color-utility-persistent-black);
+  }
+  &[data-emphasis="neutral"] {
+    --badge-background: var(--color-background-neutral-10);
+    --badge-text: var(--color-text-neutral-inverse);
+  }
+  &[data-emphasis="yellow"] {
+    --badge-background: var(--color-category-yellow-strong);
+    --badge-text: var(--color-utility-persistent-black);
+  }
+}
+
+/* Shared color definitions for subtle variant (used by text and icon badges) */
+.qui-badge__root[data-variant="subtle"] {
+  &[data-emphasis] {
+    --badge-text: var(--color-text-neutral-primary);
+  }
+  &[data-emphasis="brand"] {
+    --badge-background: var(--color-background-brand-primary-subtle);
+  }
+  &[data-emphasis="info"] {
+    --badge-background: var(--color-background-support-info-medium);
+  }
+  &[data-emphasis="success"] {
+    --badge-background: var(--color-background-support-success-medium);
+  }
+  &[data-emphasis="warning"] {
+    --badge-background: var(--color-background-support-warning-medium);
+  }
+  &[data-emphasis="danger"] {
+    --badge-background: var(--color-background-support-danger-medium);
+  }
+  &[data-emphasis="blue"] {
+    --badge-background: var(--color-category-blue-subtle);
+  }
+  &[data-emphasis="cyan"] {
+    --badge-background: var(--color-category-cyan-subtle);
+  }
+  &[data-emphasis="green"] {
+    --badge-background: var(--color-category-green-subtle);
+  }
+  &[data-emphasis="kiwi"] {
+    --badge-background: var(--color-category-kiwi-subtle);
+  }
+  &[data-emphasis="magenta"] {
+    --badge-background: var(--color-category-magenta-subtle);
+  }
+  &[data-emphasis="orange"] {
+    --badge-background: var(--color-category-orange-subtle);
+  }
+  &[data-emphasis="purple"] {
+    --badge-background: var(--color-category-purple-subtle);
+  }
+  &[data-emphasis="red"] {
+    --badge-background: var(--color-category-red-subtle);
+  }
+  &[data-emphasis="teal"] {
+    --badge-background: var(--color-category-teal-subtle);
+  }
+  &[data-emphasis="yellow"] {
+    --badge-background: var(--color-category-yellow-subtle);
+  }
+  &[data-emphasis="neutral"] {
+    --badge-background: var(--color-background-support-neutral);
+    --badge-text: var(--color-utility-persistent-white);
+  }
+}
+
+.qui-badge__root[data-scope][data-emphasis][data-disabled] {
+  --badge-background: var(--color-utility-disabled-background);
+  --badge-border: var(--color-utility-disabled-border);
+  --badge-text: var(--color-utility-disabled-text);
+  --icon-color: var(--color-utility-disabled-icon);
+}

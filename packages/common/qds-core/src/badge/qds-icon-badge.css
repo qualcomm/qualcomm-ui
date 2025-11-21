@@ -1,178 +1,61 @@
+.qui-badge__root {
+  &[data-size="xxs"] {
+    --icon-radius: var(--border-radius-xs);
+    --icon-size: var(--sizing-60);
+  }
+  &[data-size="xs"] {
+    --icon-radius: var(--border-radius-xs);
+    --icon-size: var(--sizing-70);
+  }
+  &[data-size="sm"] {
+    --icon-radius: var(--border-radius-sm);
+    --icon-size: var(--sizing-80);
+  }
+  &[data-size="md"] {
+    --icon-radius: var(--border-radius-sm);
+    --icon-size: var(--sizing-90);
+  }
+  &[data-size="lg"] {
+    --icon-radius: var(--border-radius-md);
+    --icon-size: var(--sizing-120);
+  }
+  &[data-size="xl"] {
+    --icon-radius: var(--border-radius-lg);
+    --icon-size: var(--sizing-140);
+  }
+}
+
 .qui-badge__root[data-scope="icon-badge"] {
-  color: var(--badge-text);
   background: var(--badge-background);
   border: solid var(--border-size, 0) var(--badge-border);
-
-  /* Override size-specific styles with higher specificity */
-  &[data-size="xxs"],
-  &[data-size="xs"],
-  &[data-size="sm"],
-  &[data-size="md"],
-  &[data-size="lg"],
-  &[data-size="xl"] {
-    border-radius: var(--icon-radius);
-  }
+  border-radius: var(--icon-radius);
+  color: var(--badge-text);
 
   &[data-size="xxs"],
   &[data-size="xs"],
   &[data-size="sm"] {
     padding: var(--spacing-20);
   }
+
   &[data-size="md"] {
     padding: var(--spacing-40);
   }
+
   &[data-size="lg"] {
     padding: var(--spacing-50);
   }
+
   &[data-size="xl"] {
     padding: var(--spacing-60);
   }
 }
 
-/* default variant */
-.qui-badge__root[data-scope="icon-badge"][data-variant="default"] {
-  &[data-emphasis="neutral"] {
-    --badge-background: var(--color-background-neutral-10);
-    --badge-text: var(--color-text-neutral-inverse);
-  }
-  &[data-emphasis="brand"] {
-    --badge-background: var(--color-background-brand-primary);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="info"] {
-    --badge-background: var(--color-background-support-info);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="success"] {
-    --badge-background: var(--color-background-support-success);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="warning"] {
-    --badge-background: var(--color-background-support-warning);
-    --badge-text: var(--color-utility-persistent-black);
-  }
-  &[data-emphasis="danger"] {
-    --badge-background: var(--color-background-support-danger);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="blue"] {
-    --badge-background: var(--color-category-blue-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="cyan"] {
-    --badge-background: var(--color-category-cyan-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="green"] {
-    --badge-background: var(--color-category-green-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="kiwi"] {
-    --badge-background: var(--color-category-kiwi-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="magenta"] {
-    --badge-background: var(--color-category-magenta-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="orange"] {
-    --badge-background: var(--color-category-orange-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="purple"] {
-    --badge-background: var(--color-category-purple-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="red"] {
-    --badge-background: var(--color-category-red-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="teal"] {
-    --badge-background: var(--color-category-teal-strong);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="yellow"] {
-    --badge-background: var(--color-category-yellow-strong);
-    --badge-text: var(--color-utility-persistent-black);
-  }
-}
-
-/* subtle variant */
-.qui-badge__root[data-scope="icon-badge"][data-variant="subtle"] {
-  &[data-emphasis="neutral"] {
-    --badge-background: var(--color-background-support-neutral);
-    --badge-text: var(--color-utility-persistent-white);
-  }
-  &[data-emphasis="brand"] {
-    --badge-background: var(--color-background-brand-primary-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="info"] {
-    --badge-background: var(--color-background-support-info-medium);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="success"] {
-    --badge-background: var(--color-background-support-success-medium);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="warning"] {
-    --badge-background: var(--color-background-support-warning-medium);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="danger"] {
-    --badge-background: var(--color-background-support-danger-medium);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="blue"] {
-    --badge-background: var(--color-category-blue-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="cyan"] {
-    --badge-background: var(--color-category-cyan-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="green"] {
-    --badge-background: var(--color-category-green-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="kiwi"] {
-    --badge-background: var(--color-category-kiwi-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="magenta"] {
-    --badge-background: var(--color-category-magenta-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="orange"] {
-    --badge-background: var(--color-category-orange-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="purple"] {
-    --badge-background: var(--color-category-purple-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="red"] {
-    --badge-background: var(--color-category-red-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="teal"] {
-    --badge-background: var(--color-category-teal-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-  &[data-emphasis="yellow"] {
-    --badge-background: var(--color-category-yellow-subtle);
-    --badge-text: var(--color-text-neutral-primary);
-  }
-}
-
-/* icon overrides - higher specificity than .qui-icon__root[data-size] rules */
 .qui-badge__icon[data-scope="icon-badge"] {
   color: var(--icon-color, inherit);
   --icon-size: inherit;
 }
 
-/* style custom SVG children in icon badges (used with children prop) */
 .qui-badge__root[data-scope="icon-badge"] > svg {
-  inline-size: var(--icon-size);
   block-size: var(--icon-size);
+  inline-size: var(--icon-size);
 }

@@ -18,8 +18,8 @@ import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   createQdsNumberBadgeApi,
   type QdsBadgeBasicSize,
+  type QdsNumberBadgeEmphasis,
   type QdsNumberBadgeProps,
-  type QdsNumberBadgeVariant,
 } from "@qualcomm-ui/qds-core/badge"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
@@ -33,12 +33,6 @@ export class NumberBadgeDirective
   implements OnInit, SignalifyInput<QdsNumberBadgeProps>
 {
   /**
-   * Governs the size of the badge.
-   * @default 'md'
-   */
-  readonly size = input<QdsBadgeBasicSize>()
-
-  /**
    * The badge disabled state.
    */
   readonly disabled = input<boolean | undefined, Booleanish>(undefined, {
@@ -46,17 +40,10 @@ export class NumberBadgeDirective
   })
 
   /**
-   * Governs the style of the badge.
+   * Governs the color and style of the number badge.
    * @default 'neutral'
    */
-  readonly variant = input<QdsNumberBadgeVariant>()
-
-  /**
-   * The numeric value to display for the number badge.
-   */
-  readonly value = input<number | undefined, string | number>(undefined, {
-    transform: numberAttribute,
-  })
+  readonly emphasis = input<QdsNumberBadgeEmphasis>()
 
   /**
    * Maximum value to display for the number badge.
@@ -66,14 +53,27 @@ export class NumberBadgeDirective
     transform: numberAttribute,
   })
 
+  /**
+   * Governs the size of the badge.
+   * @default 'md'
+   */
+  readonly size = input<QdsBadgeBasicSize>()
+
+  /**
+   * The numeric value to display for the number badge.
+   */
+  readonly value = input<number | undefined, string | number>(undefined, {
+    transform: numberAttribute,
+  })
+
   protected readonly api = computed(() => {
     return createQdsNumberBadgeApi(
       {
         disabled: this.disabled(),
+        emphasis: this.emphasis(),
         max: this.max(),
         size: this.size(),
         value: this.value(),
-        variant: this.variant(),
       },
       normalizeProps,
     )

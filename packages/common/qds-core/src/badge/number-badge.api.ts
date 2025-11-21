@@ -30,11 +30,11 @@ export function createQdsNumberBadgeApi(
       return normalize.element({
         className: badgeClasses.root,
         "data-disabled": booleanDataAttr(props.disabled),
+        "data-emphasis": props.emphasis || "neutral",
         "data-overflow": booleanDataAttr(overflow),
         "data-part": "root",
         "data-scope": "number-badge",
         "data-size": props.size || "md",
-        "data-variant": props.variant || "neutral",
       })
     },
   }

@@ -9,7 +9,7 @@ import type {
   QdsBaseBadgeProps,
 } from "./badge.types"
 
-export type QdsNumberBadgeVariant =
+export type QdsNumberBadgeEmphasis =
   | "neutral"
   | "neutral-outline"
   | "brand"
@@ -22,6 +22,12 @@ export type QdsNumberBadgeVariant =
   | "persistent-white"
 
 export interface QdsNumberBadgeProps extends QdsBaseBadgeProps {
+  /**
+   * Governs the color and style of the number badge.
+   * @default 'neutral'
+   */
+  emphasis?: QdsNumberBadgeEmphasis
+
   /**
    * Maximum value to display.
    * @default 99
@@ -38,22 +44,16 @@ export interface QdsNumberBadgeProps extends QdsBaseBadgeProps {
    * The numeric value to display.
    */
   value?: number
-
-  /**
-   * Governs the color and style of the number badge.
-   * @default 'neutral'
-   */
-  variant?: QdsNumberBadgeVariant
 }
 
 export interface QdsNumberBadgeRootBindings {
   className: BadgeClasses["root"]
   "data-disabled": BooleanDataAttr
+  "data-emphasis": QdsNumberBadgeEmphasis
   "data-overflow": BooleanDataAttr
   "data-part": "root"
   "data-scope": "number-badge"
   "data-size": QdsBadgeBasicSize
-  "data-variant": QdsNumberBadgeVariant
 }
 
 export interface QdsNumberBadgeApi {
