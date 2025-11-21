@@ -29,7 +29,7 @@
     "build-demo-html": "tsx scripts/build-demo-html.ts",
     "update-knowledge-saga": "run-s generate-knowledge-saga upload-knowledge-saga",
     "update-knowledge-qui": "run-s generate-knowledge-qui upload-knowledge-qui",
-    "generate-knowledge": "qui-mdx-vite generate-llms-txt --clean --output-mode per-page --exclude 'setup*' 'theme*' 'legacy*' 'changelogs*' 'troubleshooting*' 'integrations*' 'installation*'",
+    "generate-knowledge": "qui-mdx-vite generate-llms-txt --clean --output-mode per-page",
     "upload-knowledge": "run-p upload-knowledge-saga upload-knowledge-qui",
     "generate-knowledge-saga": "pnpm generate-knowledge --env .env.saga-ai",
     "upload-knowledge-saga": "qui-mdx-vite upload-knowledge --env .env.saga-ai",

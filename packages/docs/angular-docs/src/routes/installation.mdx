@@ -37,16 +37,17 @@ For now, continue reading to learn how to install manually.
 
 In your application's global CSS file, import the QUI CSS for the theme you're targeting.
 
-```css
+```css tabs="css-import" label="Default"
 @import "@qualcomm-ui/qds-core/styles/components.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 ```
 
-If you're using Tailwind, import the theme CSS at the `components` layer instead:
-
-```css
+```css tabs="css-import" label="Tailwind"
 @import "tailwindcss";
+
+/* Recommended: install and import @qualcomm-ui/tailwind-plugin */
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 
 /* Important: always order these imports after the tailwindcss import */
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
@@ -167,3 +168,69 @@ export const appConfig: ApplicationConfig = {
   ],
 }
 ```
+
+## Troubleshooting
+
+### Styles aren't loading
+
+If `@qualcomm-ui/angular` components are appearing without styles, check the following:
+
+- Ensure that you've [imported the CSS](./#2-import-the-css) from step 2.
+- Verify that you've [added the theme provider](./#4-add-the-theme-provider) from step 4.
+- Verify that you've [injected the theme service](./#5-inject-the-theme-service) from step 5.
+
+If styles still aren't appearing, inspect the DOM of your application in your browser's dev tools. Your application's `<html>` element should have at least two attributes:
+
+- `data-brand`: the QDS brand (either `qualcomm`, `snapdragon`, or `dragonwing`)
+- `data-theme`: the QDS theme (either `light` or `dark`)
+
+Note that you need to import the corresponding CSS for the brand you've selected:
+
+```css tabs="css-brand" label="Qualcomm"
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+```css tabs="css-brand" label="Snapdragon"
+@import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css";
+@import "@qualcomm-ui/qds-core/themes/snapdragon-light.css";
+```
+
+```css tabs="css-brand" label="Dragonwing"
+@import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css";
+@import "@qualcomm-ui/qds-core/themes/dragonwing-light.css";
+```
+
+> [!tip/Component Styles]
+> Always import component styles, regardless of the chosen brand.
+
+```css
+@import "@qualcomm-ui/qds-core/styles/components.css";
+```
+
+Your `<html>` element should look something like this:
+
+```html
+<html
+  data-brand="qualcomm"
+  data-theme="light"
+  style="color-scheme: light"
+></html>
+```
+
+### Migrating from legacy QUI
+
+NextGen is independent of the legacy `@qui/angular` package. Both can be installed and used in the same project without conflicts.
+
+```css
+/* this is fine */
+@import "@qui/styles/dist/all.min.css";
+@import "@qui/base/dist/all.min.css";
+
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+> [!note]
+> We're working on a codemod script for automatic migrations. Check back regularly for updates!
