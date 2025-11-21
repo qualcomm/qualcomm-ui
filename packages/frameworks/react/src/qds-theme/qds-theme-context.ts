@@ -14,7 +14,14 @@ export interface QdsThemeContextValue {
   setBrand: Dispatch<SetStateAction<QdsBrand | null>>
 }
 
+/**
+ * @deprecated migrate to {@link isQdsBrand}
+ */
 export function isQdsTheme(value: unknown): value is QdsBrand {
+  return isQdsBrand(value)
+}
+
+export function isQdsBrand(value: unknown): value is QdsBrand {
   return (
     typeof value === "string" &&
     (value === "qualcomm" || value === "snapdragon" || value === "dragonwing")
