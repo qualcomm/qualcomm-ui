@@ -19,6 +19,9 @@ export default {
       id: "installation",
     },
     {
+      id: "integrations",
+    },
+    {
       separator: true,
     },
     {sectionTitle: "Theming, Patterns, and Pitfalls"},
@@ -26,9 +29,6 @@ export default {
       children: [
         {
           id: "overview",
-        },
-        {
-          id: "tailwind",
         },
       ],
       id: "theming",

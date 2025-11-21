@@ -242,7 +242,6 @@ export default function AppWithProviders() {
     }
   }, [])
 
-
   return (
     <SiteContextProvider value={docsSiteData}>
       <PropsLayoutProvider value={propsLayoutContext}>

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {program} from "@commander-js/extra-typings"
-import {kebabCase} from "@qualcomm-ui/utils/change-case"
 import {
   access,
   mkdir,
@@ -23,6 +22,7 @@ import type {
   QuiComment,
   QuiCommentDisplayPart,
 } from "@qualcomm-ui/typedoc-common"
+import {kebabCase} from "@qualcomm-ui/utils/change-case"
 
 import {remarkSelfLinkHeadings} from "../docs-plugin"
 import {
@@ -552,7 +552,8 @@ async function processMdxContent(
   let demoRegex = /<(?:QdsDemo|CodeDemo|Demo)\s+[^>]*name="(\w+)"[^>]*\/>/g
   let demoMatches = Array.from(processedContent.matchAll(demoRegex))
   if (!demoMatches.length) {
-    demoRegex = /<(?:QdsDemo|CodeDemo|Demo)\s+[^>]*node=\{Demo\.(\w+)\}[^>]*\/>/g
+    demoRegex =
+      /<(?:QdsDemo|CodeDemo|Demo)\s+[^>]*node=\{Demo\.(\w+)\}[^>]*\/>/g
     demoMatches = Array.from(processedContent.matchAll(demoRegex))
   }
   const replacements = await Promise.all(
