@@ -18,6 +18,7 @@ import type {
   QdsSliderRangeBindings,
   QdsSliderRootBindings,
   QdsSliderThumbBindings,
+  QdsSliderThumbIndicatorBindings,
   QdsSliderTrackBindings,
   QdsSliderValueTextBindings,
 } from "./slider.types"
@@ -82,6 +83,11 @@ export function createQdsSliderApi(
     getThumbBindings(): QdsSliderThumbBindings {
       return normalize.element({
         className: sliderClasses.thumb,
+      })
+    },
+    getThumbIndicatorBindings(): QdsSliderThumbIndicatorBindings {
+      return normalize.element({
+        className: sliderClasses.thumbIndicator,
       })
     },
     getTrackBindings(): QdsSliderTrackBindings {

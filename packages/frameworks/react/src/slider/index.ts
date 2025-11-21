@@ -18,6 +18,10 @@ import {SliderMin, type SliderMinProps} from "./slider-min"
 import {SliderRange, type SliderRangeProps} from "./slider-range"
 import {SliderRoot, type SliderRootProps} from "./slider-root"
 import {SliderThumb, type SliderThumbProps} from "./slider-thumb"
+import {
+  SliderThumbIndicator,
+  type SliderThumbIndicatorProps,
+} from "./slider-thumb-indicator"
 import {SliderThumbs} from "./slider-thumbs"
 import {SliderTrack, type SliderTrackProps} from "./slider-track"
 import {SliderValueText, type SliderValueTextProps} from "./slider-value-text"
@@ -28,6 +32,7 @@ export type {
   SliderValueTextProps,
   SliderHiddenInputProps,
   SliderControlProps,
+  SliderThumbIndicatorProps,
   SliderTrackProps,
   SliderRangeProps,
   SliderThumbProps,
@@ -53,6 +58,7 @@ type SliderComponent = typeof SimpleSlider & {
   Range: typeof SliderRange
   Root: typeof SliderRoot
   Thumb: typeof SliderThumb
+  ThumbIndicator: typeof SliderThumbIndicator
   Thumbs: typeof SliderThumbs
   Track: typeof SliderTrack
   ValueText: typeof SliderValueText
@@ -61,6 +67,7 @@ type SliderComponent = typeof SimpleSlider & {
 export const Slider = SimpleSlider as SliderComponent
 
 Slider.Control = SliderControl
+Slider.ThumbIndicator = SliderThumbIndicator
 Slider.ErrorText = SliderErrorText
 Slider.HiddenInput = SliderHiddenInput
 Slider.Hint = SliderHint

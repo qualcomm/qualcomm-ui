@@ -13,6 +13,7 @@ export const sliderClasses = {
   range: "qui-slider__range",
   root: "qui-slider__root",
   thumb: "qui-slider__thumb",
+  thumbIndicator: "qui-slider__thumb-indicator",
   track: "qui-slider__track",
   valueText: "qui-slider__value-text",
 } as const

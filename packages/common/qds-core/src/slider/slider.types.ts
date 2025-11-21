@@ -24,6 +24,9 @@ type SliderClasses = typeof sliderClasses
 export interface QdsSliderControlBindings {
   className: SliderClasses["control"]
 }
+export interface QdsSliderThumbIndicatorBindings {
+  className: SliderClasses["thumbIndicator"]
+}
 export interface QdsSliderErrorTextBindings {
   className: SliderClasses["errorText"]
 }
@@ -75,6 +78,7 @@ export interface QdsSliderApi {
   getRangeBindings(): QdsSliderRangeBindings
   getRootBindings(): QdsSliderRootBindings
   getThumbBindings(): QdsSliderThumbBindings
+  getThumbIndicatorBindings(): QdsSliderThumbIndicatorBindings
   getTrackBindings(): QdsSliderTrackBindings
   getValueTextBindings(): QdsSliderValueTextBindings
 }

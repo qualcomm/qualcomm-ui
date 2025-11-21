@@ -17,6 +17,7 @@ export const sliderProps: (keyof SliderApiProps)[] =
     "disabled",
     "form",
     "getAriaValueText",
+    "getRootNode",
     "invalid",
     "max",
     "min",

@@ -20,7 +20,7 @@ export interface SliderValueTextProps
    * How to display range values: a separator string or a function that receives the
    * value array and returns a React node.
    *
-   * @default '-'
+   * @default ' - '
    */
   display?: string | ((value: number[]) => ReactNode)
 }
