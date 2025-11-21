@@ -63,7 +63,7 @@
     "terminate": "^2.6.1",
     "tsx": "^4.20.6",
     "typedoc": "~0.28.13",
-    "vite": "npm:rolldown-vite@7.1.19",
+    "vite": "npm:rolldown-vite@7.2.6",
     "vitest": "^4.0.8"
   },
   "peerDependencies": {

@@ -47,6 +47,8 @@ catalog:
   tsx: 4.20.6
   typescript-eslint: 8.46.2
 
+minimumReleaseAge: 1440
+
 onlyBuiltDependencies:
   - '@bundled-es-modules/glob'
   - '@parcel/watcher'
