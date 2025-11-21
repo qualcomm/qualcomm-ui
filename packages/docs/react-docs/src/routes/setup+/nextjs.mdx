@@ -108,13 +108,15 @@ QUI styles support both light and dark modes. Follow this step to configure stor
 
 From the previous step, add the `ThemeProvider` to your root layout:
 
-{/* eslint-disable-next-line prettier/prettier */}
 ```tsx
 // previous imports and setup...
-import {ThemeProvider} from "next-themes"; // [!code ++]
+// [!code ++]
+import {ThemeProvider} from "next-themes";
 
-<html lang="en"> // [!code --]
-<html lang="en" data-brand="qualcomm" suppressHydrationWarning> // [!code ++]
+// [!code --]
+<html lang="en">
+// [!code ++]
+<html lang="en" data-brand="qualcomm" suppressHydrationWarning>
   <body className={`${sansFont.variable} ${monoFont.variable}`}>
     <ThemeProvider attribute="data-theme">{children}</ThemeProvider>
   </body>
@@ -134,7 +136,6 @@ import type {Metadata} from "next"
 import {Roboto_Flex, Roboto_Mono} from "next/font/google"
 import "./globals.css"
 import {type ReactNode} from "react"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {ThemeProvider} from "next-themes"
 
 const sansFont = Roboto_Flex({

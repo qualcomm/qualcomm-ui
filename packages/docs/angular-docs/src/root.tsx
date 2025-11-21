@@ -26,7 +26,6 @@ import {
   type QdsThemeContextValue,
   useQdsThemeContext,
 } from "@qualcomm-ui/react/qds-theme"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {
   type PackageManager,
   SiteContextProvider,
@@ -106,7 +105,6 @@ function App() {
 
   return (
     <html
-      className={`${theme || "dark"} qui-preload`}
       data-brand="qualcomm"
       data-theme={theme}
       lang="en"
@@ -149,19 +147,17 @@ function App() {
       <body>
         <GlobalConfigContextProvider value={globalConfigContext}>
           <QueryClientProvider client={queryClient}>
-            <QuiRoot>
-              <AppDocsLayout
-                onPackageManagerChange={(nextValue) =>
-                  updateSiteState("/action/set-site-state", {
-                    packageManager: nextValue,
-                  })
-                }
-                packageManager={data.packageManager}
-                ssrUserAgent={data.ssrUserAgent}
-              >
-                <Outlet />
-              </AppDocsLayout>
-            </QuiRoot>
+            <AppDocsLayout
+              onPackageManagerChange={(nextValue) =>
+                updateSiteState("/action/set-site-state", {
+                  packageManager: nextValue,
+                })
+              }
+              packageManager={data.packageManager}
+              ssrUserAgent={data.ssrUserAgent}
+            >
+              <Outlet />
+            </AppDocsLayout>
           </QueryClientProvider>
         </GlobalConfigContextProvider>
         <ScrollRestoration />

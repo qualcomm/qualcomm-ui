@@ -25,7 +25,6 @@ import {
   QdsThemeContextProvider,
   type QdsThemeContextValue,
 } from "@qualcomm-ui/react/qds-theme"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {
   type PackageManager,
   type RouteDemoState,
@@ -100,15 +99,10 @@ function App() {
   const location = useLocation()
   const title = siteData.pageMap[location.pathname]?.title || ""
   const appTitle = title ? `QUI | ${title}` : "QUI React"
-  const [mounted, setMounted] = useState<boolean>(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   return (
     <html
-      className={clsx(`${theme || "dark"}`, {"qui-preload": !mounted})}
+      className={clsx(`${theme || "dark"}`)}
       data-brand="qualcomm"
       data-theme={theme}
       lang="en"
@@ -152,25 +146,23 @@ function App() {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <QuiRoot>
-            <AppDocsLayout
-              demoState={data.demoState}
-              hideDemoBrandSwitcher={data.hideDemoBrandSwitcher}
-              onDemoStateChange={(nextValue) => {
-                void updateDemoState("/action/set-demo-state", nextValue)
-              }}
-              onPackageManagerChange={(nextValue) =>
-                updateSiteState("/action/set-site-state", {
-                  packageManager: nextValue,
-                })
-              }
-              packageManager={data.packageManager}
-              sidebarScrollTop={data.sidebarScrollTop}
-              ssrUserAgent={data.ssrUserAgent}
-            >
-              <Outlet />
-            </AppDocsLayout>
-          </QuiRoot>
+          <AppDocsLayout
+            demoState={data.demoState}
+            hideDemoBrandSwitcher={data.hideDemoBrandSwitcher}
+            onDemoStateChange={(nextValue) => {
+              void updateDemoState("/action/set-demo-state", nextValue)
+            }}
+            onPackageManagerChange={(nextValue) =>
+              updateSiteState("/action/set-site-state", {
+                packageManager: nextValue,
+              })
+            }
+            packageManager={data.packageManager}
+            sidebarScrollTop={data.sidebarScrollTop}
+            ssrUserAgent={data.ssrUserAgent}
+          >
+            <Outlet />
+          </AppDocsLayout>
         </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />

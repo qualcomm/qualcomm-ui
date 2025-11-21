@@ -14,10 +14,14 @@ export default {
     {
       id: "setup",
     },
+    {
+      children: [{id: "tailwind"}],
+      id: "integrations",
+    },
     {separator: true},
     {sectionTitle: "Theming & Patterns"},
     {
-      children: [{id: "overview"}, {id: "tailwind"}],
+      children: [{id: "overview"}],
       id: "theming",
     },
     {
@@ -95,20 +99,6 @@ export default {
     },
     {
       id: "troubleshooting",
-    },
-    {
-      children: [
-        {
-          id: "react",
-        },
-        {
-          id: "base",
-        },
-        {
-          id: "tailwind-plugin",
-        },
-      ],
-      id: "changelogs",
     },
     {
       hidden: true,
