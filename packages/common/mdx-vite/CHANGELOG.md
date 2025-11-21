@@ -1,5 +1,11 @@
 # @qualcomm-ui/mdx-vite
 
+## 2.1.1 (2025/11/21)
+
+### Bug Fixes
+
+- [owui-knowledge]: remove unused jsx from parsed mdx
+
 ## 2.1.0 (2025/11/21)
 
 ### Features

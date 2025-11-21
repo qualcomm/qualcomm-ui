@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/mdx-vite",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Vite documentation plugin for applications that use MDX",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",

@@ -20,6 +20,7 @@ import type {
 } from "@qualcomm-ui/typedoc-common"
 
 import type {IndexedSection} from "../markdown"
+import {extractNamesFromAttribute} from "../mdx-utils"
 
 function extractPickPropsRecord(
   node: MdxJsxAttribute,
@@ -94,48 +95,6 @@ export class DocPropsIndexer {
     this.docPropsEntries = []
   }
 
-  private extractNamesFromAttribute(attr: MdxJsxAttribute): string[] {
-    if (!attr.value) {
-      return []
-    }
-
-    if (typeof attr.value === "string") {
-      return [attr.value]
-    }
-
-    if (attr.value.type === "mdxJsxAttributeValueExpression") {
-      const estree = attr.value.data?.estree
-      if (!estree?.body?.[0] || estree.body[0].type !== "ExpressionStatement") {
-        return []
-      }
-
-      const expression = estree.body[0].expression
-
-      if (expression.type === "ArrayExpression") {
-        const names: string[] = []
-        for (const element of expression.elements) {
-          if (
-            element?.type === "Literal" &&
-            typeof element.value === "string"
-          ) {
-            names.push(element.value)
-          }
-        }
-        return names
-      }
-
-      // Handle single string expression
-      if (
-        expression.type === "Literal" &&
-        typeof expression.value === "string"
-      ) {
-        return [expression.value]
-      }
-    }
-
-    return []
-  }
-
   /**
    * Finds all JSX `<TypeDocProps />` nodes on the current page and adds their names
    * to an array. Once all nodes have been collected, we process them into
@@ -152,11 +111,11 @@ export class DocPropsIndexer {
             (attr: MdxJsxAttribute) => attr.name === "omitFrom",
           )
           const omitFrom = omitFromAttr
-            ? this.extractNamesFromAttribute(omitFromAttr)
+            ? extractNamesFromAttribute(omitFromAttr)
             : undefined
 
           if (nameAttr) {
-            const names = this.extractNamesFromAttribute(nameAttr)
+            const names = extractNamesFromAttribute(nameAttr)
             for (const name of names) {
               this.docPropsEntries.push({name, omitFrom})
               if (name.endsWith("Props")) {
