@@ -6,7 +6,7 @@ export function SliderDisplayDemo(): ReactElement {
   return (
     // preview
     <Slider
-      className="sm:w-[340px]"
+      className="sm:w-80"
       defaultValue={[20, 50]}
       display={(values) => `from ${values[0]} to ${values[1]}`}
     />

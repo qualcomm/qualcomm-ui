@@ -35,6 +35,8 @@ export const domIds: ScopeDomIds<SliderElementIds, Scope> = {
   range: (scope) => scope.ids.get("range"),
   root: (scope) => scope.ids.get("root"),
   thumb: (scope, key) => scope.ids.collection("thumb").get(key),
+  thumbIndicator: (scope, key) =>
+    scope.ids.collection("thumbIndicator").get(key),
   track: (scope) => scope.ids.get("track"),
   valueText: (scope) => scope.ids.get("valueText"),
 }
@@ -52,6 +54,8 @@ export const domEls: ScopeDomElements<SliderElementIds, Scope> = {
   range: (scope) => scope.getById(domIds.range(scope)),
   root: (scope) => scope.getById(domIds.root(scope)),
   thumb: (scope, key) => scope.getById(domIds.thumb(scope, key)!),
+  thumbIndicator: (scope, key) =>
+    scope.getById(domIds.thumbIndicator(scope, key)!),
   track: (scope) => scope.getById(domIds.track(scope)),
   valueText: (scope) => scope.getById(domIds.valueText(scope)),
 }
@@ -77,7 +81,7 @@ export const getPointValue = (
     inverted: {y: true},
     orientation: prop("orientation"),
   })
-  return getPercentValue(percent, prop("min")!, prop("max")!, prop("step")!)
+  return getPercentValue(percent, prop("min"), prop("max"), prop("step"))
 }
 
 export const dispatchChangeEvent = (scope: Scope, value: number[]): void => {

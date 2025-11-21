@@ -59,6 +59,15 @@ Use the [tooltip](./#tooltip-1) prop to display the slider's value in a tooltip 
 
 <Demo name="SliderTooltipDemo" component={demos.SliderTooltipDemo} />
 
+#### Display
+
+You can customize the tooltip's content by using the [composite API](./#thumbs-with-tooltips) and passing a function to [display](./#display-3) on the `SliderThumbIndicator` component.
+
+<Demo
+  name="SliderTooltipDisplayDemo"
+  component={demos.SliderTooltipDisplayDemo}
+/>
+
 ### Markers
 
 #### Track Markers
@@ -175,6 +184,7 @@ The composite API is based on the following components:
 - `Slider.Track`: The track along which the thumb(s) move.
 - `Slider.Range`: The filled portion of the track.
 - `Slider.Thumbs` or `Slider.Thumb + Slider.HiddenInput`: The draggable handle(s).
+- `Slider.ThumbIndicator`: The thumb tooltip.
 - `Slider.Hint`: The hint text below the slider.
 - `Slider.ErrorText`: The error message below the slider.
 - `Slider.Markers` or `Slider.MarkerGroup + Slider.Marker`: The markers along the track.
@@ -209,48 +219,26 @@ function RangeSlider() {
 
 ### Thumbs with tooltips
 
-Setting the [tooltip](#./tooltip) prop on the `Slider.Thumbs` component is the equivalent of the following composition using the `Tooltip` component:
+Setting the [tooltip](#./tooltip) prop on the `Slider.Thumbs` component is the equivalent of the following composition:
 
 ```tsx
 import {Slider} from "@qualcomm-ui/react/slider"
-import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import {useSliderContext} from "@qualcomm-ui/react-core/slider"
 
-export function SliderWithTooltip() {
-  function ThumbValue({index}: {index: number}) {
-    const context = useSliderContext()
-    return context.getThumbValue(index)
-  }
+function SliderWithTooltip() {
   return (
     <Slider.Root defaultValue={[25, 50]}>
-      <Slider.Label>Label</Slider.Label>
-      <Slider.ValueText />
       <Slider.Control>
         <Slider.Track>
           <Slider.Range />
         </Slider.Track>
-        <Tooltip
-          closeOnClick={false}
-          positioning={{flip: false}}
-          trigger={
-            <Slider.Thumb index={0} name="min">
-              <Slider.HiddenInput />
-            </Slider.Thumb>
-          }
-        >
-          <ThumbValue index={0} />
-        </Tooltip>
-        <Tooltip
-          closeOnClick={false}
-          positioning={{flip: false}}
-          trigger={
-            <Slider.Thumb index={1} name="max">
-              <Slider.HiddenInput />
-            </Slider.Thumb>
-          }
-        >
-          <ThumbValue index={1} />
-        </Tooltip>
+        <Slider.Thumb index={0}>
+          <Slider.HiddenInput />
+          <Slider.ThumbIndicator />
+        </Slider.Thumb>
+        <Slider.Thumb index={1}>
+          <Slider.HiddenInput />
+          <Slider.ThumbIndicator />
+        </Slider.Thumb>
       </Slider.Control>
     </Slider.Root>
   )
@@ -267,20 +255,20 @@ import {Slider} from "@qualcomm-ui/react/slider"
 function SliderWithCustomMarkers() {
   return (
     <Slider.Root defaultValue={[25, 50]}>
-      <Slider.Label>Label</Slider.Label>
       <Slider.ValueText />
       <Slider.Control>
         <Slider.Track>
           <Slider.Range />
         </Slider.Track>
-        <Slider.MarkerGroup>
-          <Slider.Marker value={0}>0</Slider.Marker>
-          <Slider.Marker value={25}>25</Slider.Marker>
-          <Slider.Marker value={50}>50</Slider.Marker>
-          <Slider.Marker value={75}>75</Slider.Marker>
-          <Slider.Marker value={100}>100</Slider.Marker>
-        </Slider.MarkerGroup>
+        <Slider.Thumbs />
       </Slider.Control>
+      <Slider.MarkerGroup>
+        <Slider.Marker value={0}>0</Slider.Marker>
+        <Slider.Marker value={25}>25</Slider.Marker>
+        <Slider.Marker value={50}>50</Slider.Marker>
+        <Slider.Marker value={75}>75</Slider.Marker>
+        <Slider.Marker value={100}>100</Slider.Marker>
+      </Slider.MarkerGroup>
     </Slider.Root>
   )
 }
@@ -341,6 +329,12 @@ The `Slider` extends the [Slider.Root](./#slider-root) with the following props:
 <TypeDocProps name="SliderThumbProps" />
 
 <TypeDocAttributes name={"SliderThumbBindings"} />
+
+### \<Slider.ThumbIndicator\>
+
+<TypeDocProps name="SliderThumbIndicatorProps" />
+
+<TypeDocAttributes name={"SliderThumbIndicatorBindings"} />
 
 ### \<Slider.HiddenInput\>
 

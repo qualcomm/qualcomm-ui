@@ -10,6 +10,7 @@ import {
   type SliderHiddenInputProps,
 } from "./slider-hidden-input"
 import {SliderThumb, type SliderThumbProps} from "./slider-thumb"
+import {SliderThumbIndicator} from "./slider-thumb-indicator"
 
 export interface SliderThumbsProps {
   /**
@@ -45,8 +46,9 @@ export function SliderThumbs({
   return (
     <>
       {context.value.map((_, idx) => (
-        <SliderThumb key={idx} index={idx} tooltip={tooltip} {...thumbProps}>
+        <SliderThumb key={idx} index={idx} {...thumbProps}>
           <SliderHiddenInput {...hiddenInputProps} />
+          {tooltip && <SliderThumbIndicator />}
         </SliderThumb>
       ))}
     </>

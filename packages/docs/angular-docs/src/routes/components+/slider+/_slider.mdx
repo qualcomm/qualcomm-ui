@@ -1,0 +1,373 @@
+---
+title: Slider
+group: Form Controls
+---
+
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
+import {QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+```typescript
+import {SliderModule} from "@qualcomm-ui/angular/slider"
+```
+
+## Usage
+
+The slider component lets users select a single value or a range of values by moving one or two thumbs along a track. Sliders are ideal for adjusting settings such as volume, brightness, or selecting a numeric range.
+
+## Examples
+
+### Simple
+
+Use the simple API to create a slider using minimal markup.
+
+<QdsDemo name="SliderSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="SliderCompositeDemo" />
+
+### Min/Max/Step
+
+Use [min](./#min), [max](./#max), and [step](./#step) to control the slider's value range and increments:
+
+- `min`: The minimum value of the slider (default is 0).
+- `max`: The maximum value of the slider (default is 100).
+- `step`: The increment/decrement step value (default is 1).
+
+<QdsDemo name="SliderMinMaxStepDemo" />
+
+### Origin
+
+Use [origin](./#origin) to control where the track is filled from for single-value sliders:
+
+- `start`: Fills from the start of the track to the thumb. Useful when the value represents an absolute value (default).
+- `center`: Fills from the center of the track to the thumb. Useful when the value represents an offset or relative value.
+- `end`: Fills from the end of the track to the thumb. Useful when the value represents an offset from the end.
+
+<QdsDemo name="SliderOriginDemo" />
+
+### Tooltip
+
+Use [tooltip](./#tooltip-1) to display the slider's value in a tooltip rather than above the component.
+
+<QdsDemo name="SliderTooltipDemo" />
+
+#### Display
+
+You can customize the tooltip's content by using the [composite API](./#thumbs-with-tooltips) and passing a function to [display](./#display-5) on the `q-slider-thumb-indicator` component.
+
+<QdsDemo name="SliderTooltipDisplayDemo" />
+
+### Markers
+
+#### Track Markers
+
+By default, the component generates 11 default marks based on the slider's [min](./#min) and [max](./#max) values.
+You can provide your own set using [marks](./#marks).
+
+<QdsDemo name="SliderMarkersDemo" />
+
+#### Side Markers
+
+For more compact designs, you can display the `min` and `max` markers at the ends of the track using [sideMarkers](./#sideMarkers).
+
+<QdsDemo name="SliderSideMarkersDemo" />
+
+### Range
+
+Set [value](./#value) or [defaultValue](./#defaultValue) with two values to create a range slider.
+
+<QdsDemo name="SliderRangeDemo" />
+
+#### Minimum Steps Between Thumbs
+
+To prevent overlapping thumbs, use [minStepsBetweenThumbs](./#minStepsBetweenThumbs) to set a minimum distance between them.
+
+<QdsDemo name="SliderMinStepsDemo" />
+
+#### Display
+
+By default, range values are displayed separated by an em dash (—). You can customize this by passing a separator string or a function to [display](./#display-1).
+
+<QdsDemo name="SliderDisplayDemo" />
+
+### Size
+
+Set [size](./#size-1) to adjust the size of the thumbs. Available sizes are `sm` (small) and `md` (medium, default).
+
+<QdsDemo name="SliderSizeDemo" />
+
+### Variant
+
+Set [variant](./#variant-1) to adjust the visual style of the slider. Available variants are `neutral` and `primary` (default).
+
+<QdsDemo name="SliderVariantDemo" />
+
+### Hint
+
+Use [hint](./#hint-1) to add additional guidance or context to the user below the slider.
+
+<QdsDemo name="SliderHintDemo" />
+
+### Disabled
+
+Use [disabled](./#disabled-1) to prevent user interaction.
+
+<QdsDemo name="SliderDisabledDemo" />
+
+### Focus Callback
+
+The [focusChanged](./#focusChanged) output allows you to listen for focus events on the slider's thumbs.
+
+<QdsDemo name="SliderFocusCallbackDemo" />
+
+### Value Callbacks
+
+Use [valueChanged](./#valueChanged) or [valueChangedEnd](./#valueChangedEnd) to monitor the value of the slider.
+
+<QdsDemo name="SliderValueCallbackDemo" />
+
+## Forms
+
+### Template Forms
+
+#### States
+
+When using template forms, the [disabled](./#disabled), [readOnly](./#readOnly), and [invalid](./#invalid) properties govern the interactive state of the control.
+
+<QdsDemo name="SliderTemplateFormStateDemo" />
+
+#### Validation
+
+This example shows a range slider where values must be at least 30 units apart.
+
+<QdsDemo name="SliderTemplateFormsDemo" />
+
+### Reactive Forms
+
+#### State Guidelines
+
+The [disabled](./#disabled) and [invalid](./#invalid) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+
+<QdsDemo name="SliderReactiveFormStatesDemo" />
+
+## Composite API and Shortcuts
+
+The Slider component provides a composite API should you need more control over the slider's behavior and appearance.
+
+### Anatomy
+
+The composite API is based on the following components and directives:
+
+- `q-slider-root`: The main component that wraps the slider subcomponents.
+- `q-slider-label`: The slider main label.
+- `q-slider-valueText`: The slider current value as text.
+- `q-slider-control`: The container for the thumb(s) and its track and range.
+- `q-slider-track`: The track along which the thumb(s) move.
+- `q-slider-range`: The filled portion of the track.
+- `q-slider-thumbs` component or `q-slider-thumb + q-slider-hiddenInput`: The draggable handle(s).
+- `q-slider-thumb-indicator`: The thumb tooltip.
+- `q-slider-hint`: The hint text below the slider.
+- `q-slider-errorText`: The error message below the slider.
+- `q-slider-markers` component or `q-slider.MarkerGroup + q-slider.Marker`: The markers along the track.
+
+### Thumbs
+
+If you need more control over the thumbs, you can use the `q-slider-thumb` directive instead of the `q-slider-thumbs` shortcut component.
+Note that `q-slider-thumbs` automatically creates a range slider when the slider's `value` or `defaultValue` is set accordingly.
+
+```angular-ts
+import {Component} from "@angular/core"
+import {SliderModule} from "@qualcomm-ui/angular/slider"
+
+@Component({
+  imports: [SliderModule],
+  selector: "range-slider",
+  template: `
+    <div q-slider-root [defaultValue]="[25, 50]">
+      <div q-slider-value-text></div>
+      <div q-slider-control>
+        <div q-slider-track>
+          <div q-slider-range></div>
+        </div>
+        <div q-slider-thumb [index]="0">
+          <input q-slider-hidden-input />
+        </div>
+        <div q-slider-thumb [index]="1">
+          <input q-slider-hidden-input />
+        </div>
+      </div>
+    </div>
+  `,
+})
+export class RangeSlider {}
+```
+
+### Thumbs with tooltips
+
+Setting [tooltip](./#tooltip-1) on the `q-slider-thumbs` or `q-slider-thumb` component is the equivalent of the following composition:
+
+```angular-ts
+import {Component} from "@angular/core"
+import {SliderModule} from "@qualcomm-ui/angular/slider"
+
+@Component({
+  imports: [SliderModule],
+  selector: "slider-with-tooltip",
+  template: `
+    <div q-slider-root [defaultValue]="[25, 65]">
+      <div q-slider-control>
+        <div q-slider-track>
+          <div q-slider-range></div>
+        </div>
+        <div q-slider-thumb [index]="0">
+          <input q-slider-hidden-input />
+          <div q-slider-thumb-indicator></div>
+        </div>
+        <div q-slider-thumb [index]="1">
+          <input q-slider-hidden-input />
+          <div q-slider-thumb-indicator></div>
+        </div>
+      </div>
+    </div>
+  `,
+})
+export class SliderWithTooltip {}
+```
+
+### Markers
+
+The `q-slider-markers` component is a convenient shortcut to display custom track markers. But you can also create your own markers using the `q-slider-marker-group` and `q-slider-marker` directives.
+
+```angular-ts
+import {Component} from "@angular/core"
+
+import {SliderModule} from "@qualcomm-ui/angular/slider"
+
+@Component({
+  imports: [SliderModule],
+  selector: "slider-with-custom-markers",
+  template: `
+    <div q-slider-root [defaultValue]="[25, 50]">
+      <div q-slider-value-text></div>
+      <div q-slider-control>
+        <div q-slider-track>
+          <div q-slider-range></div>
+        </div>
+        <q-slider-thumbs />
+      </div>
+      <div q-slider-marker-group>
+        <span q-slider-marker [value]="0">0</span>
+        <span q-slider-marker [value]="25">25</span>
+        <span q-slider-marker [value]="50">50</span>
+        <span q-slider-marker [value]="75">75</span>
+        <span q-slider-marker [value]="100">100</span>
+      </div>
+    </div>
+  `,
+})
+export class SliderWithCustomMarkers {}
+```
+
+## API
+
+### q-slider
+
+The `q-slider` component extends the [q-slider-root](./#q-slider-root) directive with the following props:
+
+<TypeDocProps name="SliderComponent" omitFrom="SliderRootDirective" />
+
+## Composite API
+
+### q-slider-root
+
+<TypeDocProps name="SliderRootDirective" />
+
+<TypeDocAngularAttributes name={["QdsSliderProps", "SliderRootBindings"]} />
+
+### q-slider-label
+
+<TypeDocProps name="SliderLabelDirective" />
+
+<TypeDocAngularAttributes name={"SliderLabelBindings"} />
+
+### q-slider-value-text
+
+<TypeDocProps name="SliderValueTextDirective" />
+
+<TypeDocAngularAttributes name={"SliderValueTextBindings"} />
+
+### q-slider-control
+
+<TypeDocProps name="SliderControlDirective" />
+
+<TypeDocAngularAttributes name={"SliderControlBindings"} />
+
+### q-slider-track
+
+<TypeDocProps name="SliderTrackDirective" />
+
+<TypeDocAngularAttributes name={"SliderTrackBindings"} />
+
+### q-slider-range
+
+<TypeDocProps name="SliderRangeDirective" />
+
+<TypeDocAngularAttributes name={"SliderRangeBindings"} />
+
+### q-slider-thumbs shortcut
+
+<TypeDocProps name="SliderThumbsComponent" />
+
+### q-slider-thumb
+
+<TypeDocProps name="SliderThumbDirective" />
+
+<TypeDocAngularAttributes name={"SliderThumbBindings"} />
+
+### q-slider-thumb-indicator
+
+<TypeDocProps name="SliderThumbIndicatorDirective" />
+
+<TypeDocAngularAttributes name={"SliderThumbIndicatorBindings"} />
+
+### q-slider-hidden-input
+
+<TypeDocProps name="SliderHiddenInputDirective" />
+
+<TypeDocAngularAttributes name={"SliderHiddenInputBindings"} />
+
+### q-slider-markers shortcut
+
+<TypeDocProps name="SliderMarkersComponent" />
+
+### q-slider-marker-group
+
+<TypeDocProps name="SliderMarkerGroupDirective" />
+
+<TypeDocAngularAttributes name={"SliderMarkerGroupBindings"} />
+
+### q-slider-marker
+
+<TypeDocProps name="SliderMarkerDirective" />
+
+<TypeDocAngularAttributes name={"SliderMarkerBindings"} />
+
+### q-slider-hint
+
+<TypeDocProps name="SliderHintDirective" />
+
+<TypeDocAngularAttributes name={"SliderHintBindings"} />
+
+### q-slider-error-text
+
+<TypeDocProps name="SliderErrorTextDirective" />
+
+<TypeDocAngularAttributes name={"SliderErrorTextBindings"} />

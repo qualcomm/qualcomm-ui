@@ -6,7 +6,7 @@ export function SliderMinStepsDemo(): ReactElement {
   return (
     // preview
     <Slider
-      className="sm:w-[340px]"
+      className="sm:w-80"
       defaultValue={[20, 50]}
       minStepsBetweenThumbs={10}
     />

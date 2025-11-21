@@ -6,7 +6,7 @@ export function SliderSimpleDemo(): ReactElement {
   return (
     // preview
     <Slider
-      className="sm:w-[340px]"
+      className="sm:w-80"
       defaultValue={[25]}
       hint="Some contextual help here"
       label="Choose a value"

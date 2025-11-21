@@ -21,7 +21,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 import {getPercentValue, getValuePercent} from "@qualcomm-ui/utils/number"
 
-import {getFirstThumbEl} from "./slider.dom"
+import {domIds, getFirstThumbEl} from "./slider.dom"
 import {
   getControlStyle,
   getMarkerGroupStyle,
@@ -30,7 +30,24 @@ import {
   getRootStyle,
   getThumbStyle,
 } from "./slider.style"
-import type {SliderApi, SliderSchema} from "./slider.types"
+import type {
+  SliderApi,
+  SliderControlBindings,
+  SliderErrorTextBindings,
+  SliderHiddenInputBindings,
+  SliderHintBindings,
+  SliderMarkerBindings,
+  SliderMarkerGroupBindings,
+  SliderMaxMarkerBindings,
+  SliderMinMarkerBindings,
+  SliderRangeBindings,
+  SliderRootBindings,
+  SliderSchema,
+  SliderThumbBindings,
+  SliderThumbIndicatorBindings,
+  SliderTrackBindings,
+  SliderValueTextBindings,
+} from "./slider.types"
 import {getRangeAtIndex} from "./slider.utils"
 
 export function createSliderApi(
@@ -65,8 +82,8 @@ export function createSliderApi(
   }
 
   function getDefaultMarks(count = 11): number[] {
-    const max = prop("max")!
-    const min = prop("min")!
+    const max = prop("max")
+    const min = prop("min")
 
     if (max <= min) {
       return [min]
@@ -114,8 +131,8 @@ export function createSliderApi(
     increment(index) {
       send({index, type: "INCREMENT"})
     },
-    max: prop("max")!,
-    min: prop("min")!,
+    max: prop("max"),
+    min: prop("min"),
     setThumbPercent(index, percent) {
       const value = getPercentValueFn(percent)
       send({index, type: "SET_VALUE", value})
@@ -130,7 +147,7 @@ export function createSliderApi(
 
     // group: bindings
 
-    getControlBindings(props) {
+    getControlBindings(props): SliderControlBindings {
       scope.ids.register("control", props)
       return normalize.element({
         ...commonProps,
@@ -142,8 +159,8 @@ export function createSliderApi(
         "data-part": "control",
         "data-readonly": booleanDataAttr(readOnly),
         id: props.id,
-        max: prop("max")!,
-        min: prop("min")!,
+        max: prop("max"),
+        min: prop("min"),
         onPointerDown(event) {
           if (!interactive) {
             return
@@ -164,19 +181,7 @@ export function createSliderApi(
         style: getControlStyle(),
       })
     },
-    getDraggingIndicatorBindings({index = 0}) {
-      const isDragging = index === focusedIndex && dragging
-      return normalize.element({
-        ...commonProps,
-        "data-orientation": prop("orientation"),
-        "data-part": "dragging-indicator",
-        "data-state": isDragging ? "open" : "closed",
-        hidden: !isDragging,
-        role: "presentation",
-        style: getThumbStyle(store, index),
-      })
-    },
-    getErrorTextBindings(props) {
+    getErrorTextBindings(props): SliderErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.label({
         ...commonProps,
@@ -189,7 +194,12 @@ export function createSliderApi(
         id: props.id,
       })
     },
-    getHiddenInputBindings({id, index = 0, name, onDestroy}) {
+    getHiddenInputBindings({
+      id,
+      index = 0,
+      name,
+      onDestroy,
+    }): SliderHiddenInputBindings {
       scope.ids
         .collection("hiddenInput")
         .register(index.toString(), id, onDestroy)
@@ -222,7 +232,7 @@ export function createSliderApi(
         type: "text",
       })
     },
-    getHintBindings(props) {
+    getHintBindings(props): SliderHintBindings {
       scope.ids.register("hint", props)
       return normalize.label({
         ...commonProps,
@@ -263,7 +273,7 @@ export function createSliderApi(
         },
       })
     },
-    getMarkerBindings({id, onDestroy, value}) {
+    getMarkerBindings({id, onDestroy, value}): SliderMarkerBindings {
       scope.ids.collection("marker").register(value.toString(), id, onDestroy)
 
       const style = getMarkerStyle(store, value)
@@ -290,7 +300,7 @@ export function createSliderApi(
         style,
       })
     },
-    getMarkerGroupBindings(props) {
+    getMarkerGroupBindings(props): SliderMarkerGroupBindings {
       scope.ids.register("markerGroup", props)
       return normalize.element({
         ...commonProps,
@@ -302,7 +312,7 @@ export function createSliderApi(
         style: getMarkerGroupStyle(),
       })
     },
-    getMaxMarkerBindings(props) {
+    getMaxMarkerBindings(props): SliderMaxMarkerBindings {
       scope.ids.register("maxMarker", props)
       return normalize.element({
         ...commonProps,
@@ -310,12 +320,12 @@ export function createSliderApi(
         "data-orientation": prop("orientation"),
         "data-part": "max",
         "data-readonly": booleanDataAttr(readOnly),
-        "data-value": prop("max")!,
+        "data-value": prop("max"),
         id: props.id,
         role: "presentation",
       })
     },
-    getMinMarkerBindings(props) {
+    getMinMarkerBindings(props): SliderMinMarkerBindings {
       scope.ids.register("minMarker", props)
       return normalize.element({
         ...commonProps,
@@ -323,12 +333,12 @@ export function createSliderApi(
         "data-orientation": prop("orientation"),
         "data-part": "min",
         "data-readonly": booleanDataAttr(readOnly),
-        "data-value": prop("min")!,
+        "data-value": prop("min"),
         id: props.id,
         role: "presentation",
       })
     },
-    getRangeBindings(props) {
+    getRangeBindings(props): SliderRangeBindings {
       scope.ids.register("range", props)
       return normalize.element({
         ...commonProps,
@@ -343,7 +353,7 @@ export function createSliderApi(
         style: getRangeStyle(store),
       })
     },
-    getRootBindings(props) {
+    getRootBindings(props): SliderRootBindings {
       scope.ids.register("root", props)
       return normalize.element({
         ...commonProps,
@@ -358,7 +368,7 @@ export function createSliderApi(
         style: getRootStyle(store),
       })
     },
-    getThumbBindings({id, index = 0, name, onDestroy}) {
+    getThumbBindings({id, index = 0, name, onDestroy}): SliderThumbBindings {
       scope.ids.collection("thumb").register(index.toString(), id, onDestroy)
 
       const value = sliderValue[index]
@@ -369,9 +379,10 @@ export function createSliderApi(
 
       return normalize.element({
         ...commonProps,
+        "aria-describedby": domIds.hint(scope),
         "aria-disabled": booleanAriaAttr(disabled),
         "aria-label": _ariaLabel,
-        "aria-labelledby": _ariaLabelledBy ?? scope.ids.get("label"),
+        "aria-labelledby": _ariaLabelledBy ?? domIds.label(scope),
         "aria-orientation": prop("orientation"),
         "aria-valuemax": range.max,
         "aria-valuemin": range.min,
@@ -407,7 +418,7 @@ export function createSliderApi(
             return
           }
 
-          const step = getEventStep(event) * prop("step")!
+          const step = getEventStep(event) * prop("step")
 
           const keyMap: EventKeyMap = {
             ArrowDown() {
@@ -467,7 +478,19 @@ export function createSliderApi(
           if (!isLeftClick(event)) {
             return
           }
-          send({index, type: "THUMB_POINTER_DOWN"})
+
+          const thumbEl = event.currentTarget as HTMLElement
+          const rect = thumbEl.getBoundingClientRect()
+          const midpoint = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          }
+          const offset = {
+            x: event.clientX - midpoint.x,
+            y: event.clientY - midpoint.y,
+          }
+
+          send({index, offset, type: "THUMB_POINTER_DOWN"})
           event.stopPropagation()
         },
         role: "slider",
@@ -475,7 +498,23 @@ export function createSliderApi(
         tabIndex: disabled ? undefined : 0,
       })
     },
-    getTrackBindings(props) {
+    getThumbIndicatorBindings({
+      id,
+      index = 0,
+      onDestroy,
+    }): SliderThumbIndicatorBindings {
+      scope.ids
+        .collection("thumbIndicator")
+        .register(index.toString(), id, onDestroy)
+      return normalize.element({
+        ...commonProps,
+        "data-orientation": prop("orientation"),
+        "data-part": "thumb-indicator",
+        role: "presentation",
+        style: getThumbStyle(store, index),
+      })
+    },
+    getTrackBindings(props): SliderTrackBindings {
       scope.ids.register("track", props)
       return normalize.element({
         ...commonProps,
@@ -490,7 +529,7 @@ export function createSliderApi(
         style: {position: "relative"},
       })
     },
-    getValueTextBindings(props) {
+    getValueTextBindings(props): SliderValueTextBindings {
       scope.ids.register("valueText", props)
       return normalize.element({
         ...commonProps,
