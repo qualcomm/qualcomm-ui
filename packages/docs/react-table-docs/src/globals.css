@@ -10,6 +10,8 @@
 @import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css" layer(components);
 @import "@qualcomm-ui/react-mdx/styles.css" layer(components);
 
+@source "../../../frameworks/react-internal/src";
+
 :root {
   color: var(--color-text-neutral-primary);
   color-scheme: light dark;
