@@ -16,6 +16,10 @@
   }
 }
 
+.shiki-code {
+  padding: 16px;
+}
+
 .qui-docs-highlighter__root {
   border-radius: 6px;
   position: relative;
@@ -148,8 +152,32 @@ pre.shiki.has-highlighted {
     background: var(--color-interactive-background-ghost-hover);
     display: inline-block;
     width: 100%;
+
+    &.error {
+      background: var(--color-background-support-danger-medium);
+    }
+    &.warning {
+      background: var(--color-background-support-warning-medium);
+    }
+
     * {
       background: transparent;
+    }
+  }
+}
+
+pre.shiki.has-focused {
+  .line:not(.focused) {
+    filter: blur(0.095rem);
+    opacity: 0.7;
+    transition:
+      filter 0.35s,
+      opacity 0.35s;
+  }
+  &:hover {
+    .line:not(.focused) {
+      filter: unset;
+      opacity: 1;
     }
   }
 }
@@ -160,8 +188,4 @@ pre.shiki.has-highlighted {
       background: var(--color-interactive-background-ghost-hover);
     }
   }
-}
-
-.shiki-code {
-  padding: 16px;
 }

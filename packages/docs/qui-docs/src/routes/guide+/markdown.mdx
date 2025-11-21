@@ -195,6 +195,60 @@ const message = "Hello World"
 console.log(message) // prints Hello World
 ```
 
+#### Line Focus
+
+Use `[!code focus]` to focus a line.
+
+````markdown
+```ts
+console.log("Not focused")
+console.log("Focused") // [\!code focus]
+console.log("Not focused")
+```
+````
+
+```ts
+console.log("Not focused")
+console.log("Focused") // [!code focus]
+console.log("Not focused")
+```
+
+You can also focus multiple lines with a single comment:
+
+````markdown
+```ts
+// [\!code focus:2]
+console.log("Focused")
+console.log("Focused")
+console.log("Not focused")
+```
+````
+
+```ts
+// [!code focus:2]
+console.log("Focused")
+console.log("Focused")
+console.log("Not focused")
+```
+
+#### Error Levels
+
+Use `[!code error]` and `[!code warning]` to mark a line with error and warning levels.
+
+````markdown
+```ts
+console.log("No errors or warnings")
+console.error("Error") // [\!code error]
+console.warn("Warning") // [\!code warning]
+```
+````
+
+```ts
+console.log("No errors or warnings")
+console.error("Error") // [!code error]
+console.warn("Warning") // [!code warning]
+```
+
 ### Links
 
 All relative Markdown links are automatically converted to Remix or React Router links. This means that the target page will be prefetched. When you click on a link, the page will be loaded on the client-side, without making a full page load (SPA routing). For example:
