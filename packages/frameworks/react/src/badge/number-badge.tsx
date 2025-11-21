@@ -27,19 +27,19 @@ export interface NumberBadgeProps
 export function NumberBadge({
   children,
   disabled,
+  emphasis,
   max,
   size,
   value,
-  variant,
   ...restProps
 }: NumberBadgeProps): ReactElement {
   const qdsApi = createQdsNumberBadgeApi(
     {
       disabled,
+      emphasis,
       max,
       size,
       value,
-      variant,
     },
     normalizeProps,
   )
