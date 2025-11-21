@@ -199,6 +199,12 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
   state.createIndexer(config)
 
   return {
+    apply(config, env) {
+      return (
+        (env.mode === "development" && env.command === "serve") ||
+        (env.mode === "production" && env.command === "build")
+      )
+    },
     buildStart: async () => {
       state.buildIndex(state.buildCount > 0)
       state.buildCount++
@@ -243,8 +249,8 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           return []
         }
 
-        const files = state.buildIndex(true)
         if (updateFile.endsWith(".mdx")) {
+          const files = state.buildIndex(true)
           // invalidate the plugin module so that the virtual file is refreshed
           const virtualModule =
             server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
