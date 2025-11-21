@@ -49,7 +49,7 @@ export interface MdxDocsContextValue {
   /**
    * User agent from SSR>
    */
-  ssrUserAgent?: string
+  ssrUserAgent?: string | null
 
   /**
    * @default 'nearest'
