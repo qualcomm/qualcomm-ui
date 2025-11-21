@@ -26,11 +26,6 @@
     "watch:js": "tsx build.ts --watch --mode development",
     "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "lint": "eslint --quiet",
-    "test": "vitest -c vitest.config.ts --run",
-    "test:coverage": "vitest -c vitest.config.ts --run --coverage",
-    "test:react-core:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=forks --no-file-parallelism",
-    "test:watch": "cross-env vitest -c vitest.config.ts",
-    "test:ui": "cross-env vitest -c vitest.config.ts --browser.headless=false",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },
