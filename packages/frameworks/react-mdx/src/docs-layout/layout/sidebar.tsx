@@ -116,6 +116,16 @@ export function Sidebar({
     setSelectedValue(getSelectedValue())
   }, [pathname])
 
+  useEffect(() => {
+    const node = collection.findNodeBy((node) => node.pathname === pathname)
+    if (node) {
+      const parents = collection.getParentNodes(node.id)
+      if (parents.length) {
+        setExpandedValue((prev) => [...prev, ...parents.map((node) => node.id)])
+      }
+    }
+  }, [collection, pathname])
+
   const search = (value: string) => {
     setQuery(value)
 
@@ -218,7 +228,6 @@ export function Sidebar({
           onSelectedValueChange(details.selectedValue)
         }}
         selectedValue={selectedValue}
-        surface="secondary"
       >
         {children ? (
           <SideNav.Header data-sticky={booleanDataAttr(stickyHeader)}>

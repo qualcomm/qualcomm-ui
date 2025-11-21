@@ -212,20 +212,35 @@ const border: ColorData[] = [
   },
 ]
 
-const category: ColorData[] = Array.from({length: 10}, (_, i) => [
-  {
-    tailwind: `*-category-${i + 1}-medium`,
-    variable: `--color-category-${i + 1}-medium`,
-  },
-  {
-    tailwind: `*-category-${i + 1}-strong`,
-    variable: `--color-category-${i + 1}-strong`,
-  },
-  {
-    tailwind: `*-category-${i + 1}-subtle`,
-    variable: `--color-category-${i + 1}-subtle`,
-  },
-]).flat()
+const categories: string[] = [
+  "blue",
+  "cyan",
+  "teal",
+  "green",
+  "kiwi",
+  "yellow",
+  "orange",
+  "red",
+  "magenta",
+  "purple",
+]
+
+const category: ColorData[] = categories
+  .map((category) => [
+    {
+      tailwind: `*-category-${category}-medium`,
+      variable: `--color-category-${category}-medium`,
+    },
+    {
+      tailwind: `*-category-${category}-strong`,
+      variable: `--color-category-${category}-strong`,
+    },
+    {
+      tailwind: `*-category-${category}-subtle`,
+      variable: `--color-category-${category}-subtle`,
+    },
+  ])
+  .flat()
 
 export const themeColors = {
   background,

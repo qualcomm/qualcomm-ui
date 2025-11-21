@@ -17,7 +17,6 @@ import {
 
 import {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {
   PackageManager,
   SiteContextProvider,
@@ -70,9 +69,10 @@ function App() {
 
   return (
     <html
-      className={theme ?? "dark"}
+      data-brand="qualcomm"
+      data-theme={theme}
       lang="en"
-      style={{colorScheme: theme === Theme.DARK ? "dark" : "light"}}
+      style={{colorScheme: theme || "dark"}}
     >
       <head>
         <meta charSet="utf-8" />
@@ -96,19 +96,17 @@ function App() {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <QuiRoot>
-            <AppDocsLayout
-              onPackageManagerChange={(nextValue) =>
-                updateSiteState("/action/set-site-state", {
-                  packageManager: nextValue,
-                })
-              }
-              packageManager={data.packageManager}
-              ssrUserAgent={data.ssrUserAgent}
-            >
-              <Outlet />
-            </AppDocsLayout>
-          </QuiRoot>
+          <AppDocsLayout
+            onPackageManagerChange={(nextValue) =>
+              updateSiteState("/action/set-site-state", {
+                packageManager: nextValue,
+              })
+            }
+            packageManager={data.packageManager}
+            ssrUserAgent={data.ssrUserAgent}
+          >
+            <Outlet />
+          </AppDocsLayout>
         </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
@@ -125,6 +123,9 @@ export default function AppWithProviders() {
   const data = useLoaderData<{theme: Theme | null}>()
 
   const [propsLayout, setPropsLayout] = useState<DocPropsLayout>("table")
+  const [docsSiteData, setDocsSiteData] = useState<SiteData>(
+    siteData ?? siteDataFallback,
+  )
 
   const propsLayoutContext: PropsLayoutState = useMemo(
     () => ({
@@ -135,11 +136,22 @@ export default function AppWithProviders() {
   )
 
   useEffect(() => {
-    console.debug(siteData)
+    if (import.meta.env.DEV) {
+      console.debug(siteData)
+    }
+    if (import.meta.hot) {
+      import.meta.hot.on("qui-docs-plugin:refresh-site-data", setDocsSiteData)
+      return () => {
+        import.meta.hot?.off(
+          "qui-docs-plugin:refresh-site-data",
+          setDocsSiteData,
+        )
+      }
+    }
   }, [])
 
   return (
-    <SiteContextProvider value={siteData ?? siteDataFallback}>
+    <SiteContextProvider value={docsSiteData}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider
           specifiedTheme={data.theme}

@@ -26,6 +26,8 @@ We've built the CSS to enable dynamic switching without rebuilding.
 First import the theme CSS for your chosen brand. We'll demo with `qualcomm`:
 
 ```css
+/* import component styles too */
+@import "@qualcomm-ui/qds-core/styles/components.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 ```
@@ -35,6 +37,7 @@ If you're using Tailwind, you should import the theme CSS at the `components` la
 ```css
 @import "tailwindcss";
 
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
 ```

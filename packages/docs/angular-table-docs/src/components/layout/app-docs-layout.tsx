@@ -84,7 +84,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
       }
       header={
         <div className="qui-docs__header">
-          <HeaderBar.Root surface="secondary">
+          <HeaderBar.Root>
             <HeaderBar.Logo>
               <MobileSidebar>
                 <QuiLogo width={20} />

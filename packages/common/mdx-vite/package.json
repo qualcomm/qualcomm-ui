@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/mdx-vite",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Vite documentation plugin for applications that use MDX",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
@@ -94,7 +94,7 @@
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
     "@qualcomm-ui/mdx-common": "workspace:^1.2.0",
     "@qualcomm-ui/utils": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.4",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "^4.17.12",
@@ -102,7 +102,6 @@
     "@types/uuid": "^10.0.0",
     "@vitest/coverage-v8": "^4.0.8",
     "@vitest/ui": "^4.0.8",
-    "change-case": "^5.4.4",
     "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "esbuild": "^0.25.8",
@@ -118,7 +117,7 @@
     "test": "^3.3.0",
     "tsx": "^4.20.6",
     "typescript": "5.9.3",
-    "vite": "npm:rolldown-vite@7.1.19",
+    "vite": "npm:rolldown-vite@7.2.6",
     "vitest": "^4.0.8",
     "zod": "^3.23.8"
   },

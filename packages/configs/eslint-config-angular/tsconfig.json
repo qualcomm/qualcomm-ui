@@ -1,0 +1,4 @@
+{
+  "extends": "../tsconfig/tsconfig.node.json",
+  "files": ["index.d.ts"]
+}

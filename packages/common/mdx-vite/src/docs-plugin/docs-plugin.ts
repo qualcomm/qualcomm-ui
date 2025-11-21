@@ -7,11 +7,13 @@ import {glob} from "glob"
 import {readFileSync} from "node:fs"
 import {resolve} from "node:path"
 import prettyMilliseconds from "pretty-ms"
-import type {PluginOption, ViteDevServer} from "vite"
+import type {ModuleNode, PluginOption, ViteDevServer} from "vite"
 
+import type {PageDocProps, SiteData} from "@qualcomm-ui/mdx-common"
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import {
+  type CompiledMdxFile,
   ConfigLoader,
   fixPath,
   type ResolvedQuiDocsConfig,
@@ -70,6 +72,15 @@ class PluginState {
     )
   }
 
+  get siteData(): SiteData {
+    return {
+      navItems: state.indexer.navItems,
+      pageDocProps: state.indexer.pageDocProps as unknown as PageDocProps,
+      pageMap: state.indexer.pageMap,
+      searchIndex: state.indexer.searchIndex,
+    }
+  }
+
   private resolveDocProps(): Record<string, QuiPropTypes> {
     if (!this.docPropsFilePath) {
       return {}
@@ -97,7 +108,7 @@ class PluginState {
     })
   }
 
-  buildIndex(shouldLog: boolean) {
+  buildIndex(shouldLog: boolean): CompiledMdxFile[] {
     const files = glob.sync(
       [`${this.routesDir}/**/*.mdx`, `${this.routesDir}/**/*.tsx`],
       {
@@ -107,18 +118,20 @@ class PluginState {
     )
 
     if (!files.length) {
-      return
+      return []
     }
 
     const startTime = Date.now()
 
-    this.indexer.buildIndex(files, shouldLog)
+    const compiledMdxFiles = this.indexer.buildIndex(files, shouldLog)
 
     if (isDev && shouldLog) {
       console.debug(
         `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Compiled search index in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${state.indexer.cachedFileCount ? chalk.greenBright.bold(` (${state.indexer.cachedFileCount}/${state.indexer.mdxFileCount} files cached)`) : ""}`,
       )
     }
+
+    return compiledMdxFiles
   }
 
   /**
@@ -173,7 +186,13 @@ class PluginState {
         const resolvedConfig = this.configLoader.loadConfig()
         this.configFilePath = resolvedConfig.filePath
         this.createIndexer(resolvedConfig)
-        this.handleChange()
+        this.handleChange({
+          onComplete: () => {
+            this.servers.forEach((server) =>
+              server.ws.send({type: "full-reload"}),
+            )
+          },
+        })
       })
   }
 }
@@ -190,6 +209,12 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
   state.createIndexer(config)
 
   return {
+    apply(config, env) {
+      return (
+        (env.mode === "development" && env.command === "serve") ||
+        (env.mode === "production" && env.command === "build")
+      )
+    },
     buildStart: async () => {
       state.buildIndex(state.buildCount > 0)
       state.buildCount++
@@ -219,9 +244,8 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       })
       state.servers.push(server)
     },
-    handleHotUpdate: async ({file: updateFile, modules, server}) => {
+    handleHotUpdate: async ({file: updateFile, server}) => {
       const file = fixPath(updateFile)
-
       if (
         (!config.hotUpdateIgnore || !config.hotUpdateIgnore.test(file)) &&
         // ignore watched files. We watch for these separately.
@@ -234,22 +258,44 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           return []
         }
 
-        state.buildIndex(true)
         if (updateFile.endsWith(".mdx")) {
-          // invalidate the plugin module so that the virtual file is refreshed
+          const mods: ModuleNode[] = []
+          const files = state.buildIndex(true)
+
+          const moduleByFile = server.moduleGraph.getModulesByFile(updateFile)
+          if (!moduleByFile?.size) {
+            console.debug("no module found for file, returning", updateFile)
+            return []
+          }
+
           const virtualModule =
             server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
           if (virtualModule) {
+            // invalidate the plugin module so that the virtual file is refreshed
             server.moduleGraph.invalidateModule(virtualModule)
+            // can't refresh the module here, otherwise we get react router hmr
+            // conflicts. But we can send the updated site data to the site.
+            server.ws.send({
+              data: state.siteData,
+              event: "qui-docs-plugin:refresh-site-data",
+              type: "custom",
+            })
           }
+          if (files.some((file) => file.metadata.changed.frontmatter)) {
+            console.debug(
+              "Frontmatter changed, reloading plugin to reflect changes in the page configuration",
+            )
+            server.ws.send({type: "full-reload"})
+            return []
+          }
+          return mods
         }
       }
-
-      return modules
+      return []
     },
     load: (id): string | undefined => {
       if (id === VIRTUAL_MODULE_ID) {
-        return `export const siteData = ${JSON.stringify({navItems: state.indexer.navItems, pageDocProps: state.indexer.pageDocProps, pageMap: state.indexer.pageMap, searchIndex: state.indexer.searchIndex})}`
+        return `export const siteData = ${JSON.stringify(state.siteData)}`
       }
       return undefined
     },

@@ -2,6 +2,17 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import rehypeShiki, {type RehypeShikiOptions} from "@shikijs/rehype"
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
+  transformerRenderIndentGuides,
+} from "@shikijs/transformers"
+import {merge} from "lodash-es"
+import type {ShikiTransformer} from "shiki"
 import type {PluggableList} from "unified"
 
 import {quiCustomDarkTheme} from "@qualcomm-ui/mdx-common"
@@ -16,6 +27,7 @@ import {
 import {ConfigLoader, type ConfigLoaderOptions} from "./internal"
 import {rehypeSectionize, rehypeSlug, type RehypeSlugOptions} from "./rehype"
 import {remarkAlerts, remarkCodeTabs, remarkSpoilers} from "./remark"
+import {transformerCodeAttribute} from "./shiki"
 
 /**
  * @deprecated migrate to the {@link getRehypePlugins} function
@@ -24,6 +36,18 @@ export const quiRehypePlugins: PluggableList = [rehypeSectionize, rehypeSlug]
 
 export interface QuiRehypePluginOptions extends ConfigLoaderOptions {
   rehypeShikiOptions?: Partial<RehypeShikiOptions>
+}
+
+export function getShikiTransformers(): ShikiTransformer[] {
+  return [
+    transformerNotationDiff(),
+    transformerNotationFocus(),
+    transformerNotationHighlight(),
+    transformerNotationWordHighlight(),
+    transformerNotationErrorLevel(),
+    transformerRenderIndentGuides(),
+    transformerRemoveNotationEscape(),
+  ]
 }
 
 /**
@@ -35,7 +59,7 @@ export function getRehypePlugins(
 ): PluggableList {
   const config = new ConfigLoader(options).loadConfig()
   return [
-    rehypeMdxCodeProps,
+    [rehypeMdxCodeProps, {enforce: "pre"}],
     [
       rehypeSlug,
       {allowedHeadings: config.headings} satisfies RehypeSlugOptions,
@@ -43,14 +67,17 @@ export function getRehypePlugins(
     rehypeSectionize,
     [
       rehypeShiki,
-      {
-        defaultColor: "light-dark()",
-        themes: {
-          dark: quiCustomDarkTheme,
-          light: "github-light-high-contrast",
-        },
-        ...options.rehypeShikiOptions,
-      } satisfies RehypeShikiOptions,
+      merge(
+        {
+          defaultColor: "light-dark()",
+          themes: {
+            dark: quiCustomDarkTheme,
+            light: "github-light-high-contrast",
+          },
+          transformers: [...getShikiTransformers(), transformerCodeAttribute()],
+        } satisfies RehypeShikiOptions,
+        options.rehypeShikiOptions,
+      ),
     ],
   ]
 }

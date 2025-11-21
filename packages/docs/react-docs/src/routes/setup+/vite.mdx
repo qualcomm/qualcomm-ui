@@ -1,7 +1,108 @@
 ---
-title: Vite / Webpack / etc.
+title: Vite / Other
 ---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 # {frontmatter.title}
 
-Coming soon™
+This library requires React 19+
+
+There are four steps to installation:
+
+1. Install the npm packages
+2. Import the CSS
+3. Configure fonts
+4. Configure theme provider
+
+This guide assumes you've already installed React. If not, run this command and follow the prompts to create your project:
+
+```shell
+npx create-vite@latest
+```
+
+## 1. Install the npm packages
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/react",
+    "@qualcomm-ui/react-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/qds-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+    "@tanstack/react-virtual",
+    "lucide-react",
+  ]}
+/>
+
+## 2. Import the CSS
+
+In your global CSS file (default `app/app.css`), import the QUI styles.
+
+```css tabs="css-import" label="Default"
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+```css tabs="css-import" label="Tailwind"
+@import "tailwindcss";
+
+/* Recommended: install and import @qualcomm-ui/tailwind-plugin */
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+/* Important: always order these imports after the tailwindcss import */
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+```
+
+> [!note/Multi Theme]
+> If you only intend to support a single theme, you may omit the other import.
+
+## 3. Configure fonts
+
+QUI components are designed with the Roboto Flex and Roboto Mono font families.
+
+Add the links to your application's `<head>` element:
+
+```html
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link href="https://fonts.gstatic.com" rel="preconnect" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
+  rel="stylesheet"
+/>
+```
+
+## 4. Configure theme provider
+
+QUI components support both light and dark modes. Choose one of the following approaches for your site:
+
+- [Single theme (static)](./#single-theme-static): lock to one theme
+- [Theme switching (dynamic)](./#theme-switching-dynamic): support both light and dark modes and persist the user's choice to browser storage
+
+### Single theme (static)
+
+If you only intend to support one theme, apply the theme attribute to your app's index.html:
+
+```html
+// [!code word:data-theme="dark"]
+<html data-theme="dark" data-brand="qualcomm" style="color-scheme: dark">
+  <!-- ... -->
+</html>
+```
+
+### Theme switching (dynamic)
+
+Guide coming soon
+
+## Next steps
+
+- Learn more about theming in our [theming documentation](/theming/overview).
+- Use the navigation menu on the left to view component documentation and examples.

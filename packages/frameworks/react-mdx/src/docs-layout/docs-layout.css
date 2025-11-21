@@ -82,6 +82,19 @@
   }
 }
 
+[data-theme="dark"] {
+  .qui-docs-sidebar__root {
+    .qui-side-nav__root {
+      background: var(--color-background-neutral-01);
+    }
+  }
+  .qui-docs__header {
+    .qui-header-bar__root {
+      background: var(--color-background-neutral-01);
+    }
+  }
+}
+
 .qui-docs-sidebar__root {
   appearance: none;
   box-sizing: border-box;
@@ -99,6 +112,10 @@
 
   &[data-mobile] {
     display: block;
+  }
+
+  .qui-side-nav__root {
+    height: 100%;
   }
 }
 

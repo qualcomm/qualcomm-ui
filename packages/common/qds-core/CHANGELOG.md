@@ -1,5 +1,12 @@
 # @qualcomm-ui/qds-core
 
+## 1.4.2 (2025/11/21)
+
+### Miscellaneous Chores
+
+- migrate change-case to @qualcomm-ui/utils/change-case
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils]
+
 ## 1.4.1 (2025/11/19)
 
 ### Bug Fixes

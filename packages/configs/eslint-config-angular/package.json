@@ -1,12 +1,14 @@
 {
   "name": "@qualcomm-ui/eslint-config-angular",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "description": "QUI ESLint config for consistent Angular code formatting",
   "sideEffects": false,
   "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
   "type": "module",
   "keywords": [
     "eslint",
@@ -14,6 +16,7 @@
     "react"
   ],
   "files": [
+    "index.d.ts",
     "index.js",
     "base-template.js",
     "base-typescript.js",
@@ -30,11 +33,12 @@
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
+    "@eslint/core": "^1.0.0",
     "@qualcomm-ui/cli": "workspace:^1.0.2",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
-    "angular-eslint": "^20.3.0",
-    "eslint": "9.37.0",
+    "angular-eslint": "^20.6.0",
+    "eslint": "catalog:",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.4.0",
     "typescript-eslint": "catalog:"

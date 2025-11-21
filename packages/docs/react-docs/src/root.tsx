@@ -7,7 +7,7 @@ import {Provider} from "jotai"
 import {
   isRouteErrorResponse,
   Links,
-  type LoaderFunction,
+  type LoaderFunctionArgs,
   Meta,
   Outlet,
   Scripts,
@@ -20,13 +20,12 @@ import {
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
-  isQdsTheme,
+  isQdsBrand,
   type QdsBrand,
   QdsThemeContextProvider,
   type QdsThemeContextValue,
   useQdsThemeContext,
 } from "@qualcomm-ui/react/qds-theme"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {
   type PackageManager,
   type RouteDemoState,
@@ -61,20 +60,31 @@ import {
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 
+interface RootLoaderData {
+  demoState: RouteDemoState
+  hideDemoBrandSwitcher: boolean
+  packageManager: PackageManager
+  qdsBrand: QdsBrand
+  ssrUserAgent: string | null
+  theme: Theme
+}
+
 // Return the theme from the session storage using the loader
-export const loader: LoaderFunction = async ({request}) => {
+export async function loader({
+  request,
+}: LoaderFunctionArgs): Promise<RootLoaderData> {
   const cookie = request.headers.get("cookie")
 
   const cookieTheme = await themeCookie.parse(cookie)
   const docState = await siteStateCookie.parse(cookie)
-  const qdsTheme = await qdsBrandCookie.parse(cookie)
+  const qdsBrand = await qdsBrandCookie.parse(cookie)
   const demoState = await demoStateCookie.parse(cookie)
 
   return {
     demoState: demoState ?? {},
     hideDemoBrandSwitcher: docState?.hideDemoBrandSwitcher || false,
     packageManager: docState?.packageManager || "npm",
-    qdsBrand: isQdsTheme(qdsTheme) ? qdsTheme : ("qualcomm" satisfies QdsBrand),
+    qdsBrand: isQdsBrand(qdsBrand) ? qdsBrand : ("qualcomm" satisfies QdsBrand),
     ssrUserAgent: request.headers.get("user-agent"),
     theme: isTheme(cookieTheme) ? cookieTheme : Theme.DARK,
   }
@@ -82,13 +92,7 @@ export const loader: LoaderFunction = async ({request}) => {
 
 function App() {
   const [queryClient] = useState(new QueryClient())
-  const data = useLoaderData<{
-    demoState: RouteDemoState
-    hideDemoBrandSwitcher: boolean
-    packageManager: PackageManager
-    qdsBrand: QdsBrand
-    ssrUserAgent: string
-  }>()
+  const data = useLoaderData<RootLoaderData>()
 
   const [theme] = useTheme()
   const {brand} = useQdsThemeContext()
@@ -115,7 +119,6 @@ function App() {
 
   return (
     <html
-      className={theme || "dark"}
       data-brand="qualcomm"
       data-theme={theme}
       lang="en"
@@ -155,27 +158,25 @@ function App() {
           rel="stylesheet"
         />
       </head>
-      <body className="qui-preload">
+      <body>
         <GlobalConfigContextProvider value={globalConfigContext}>
           <QueryClientProvider client={queryClient}>
-            <QuiRoot>
-              <AppDocsLayout
-                demoState={data.demoState}
-                onDemoStateChange={(nextValue) => {
-                  void updateDemoState("/action/set-demo-state", nextValue)
-                }}
-                onPackageManagerChange={(nextValue) =>
-                  updateSiteState("/action/set-site-state", {
-                    packageManager: nextValue,
-                  })
-                }
-                packageManager={data.packageManager}
-                portalContainerRef={portalContainerRef}
-                ssrUserAgent={data.ssrUserAgent}
-              >
-                <Outlet />
-              </AppDocsLayout>
-            </QuiRoot>
+            <AppDocsLayout
+              demoState={data.demoState}
+              onDemoStateChange={(nextValue) => {
+                void updateDemoState("/action/set-demo-state", nextValue)
+              }}
+              onPackageManagerChange={(nextValue) =>
+                updateSiteState("/action/set-site-state", {
+                  packageManager: nextValue,
+                })
+              }
+              packageManager={data.packageManager}
+              portalContainerRef={portalContainerRef}
+              ssrUserAgent={data.ssrUserAgent}
+            >
+              <Outlet />
+            </AppDocsLayout>
           </QueryClientProvider>
         </GlobalConfigContextProvider>
         <ScrollRestoration />
@@ -190,16 +191,14 @@ function App() {
   )
 }
 
-// Wrap your app with ThemeProvider.
-// `specifiedTheme` is the stored theme in the session storage.
-// `themeAction` is the action name that's used to change the theme in the session
-// storage.
 export default function AppWithProviders() {
   const data = useLoaderData<{qdsBrand: QdsBrand; theme: Theme | null}>()
 
   const [propsLayout, setPropsLayout] = useState<DocPropsLayout>("table")
-
   const [brand, setBrand] = useState<QdsBrand | null>(data.qdsBrand)
+  const [docsSiteData, setDocsSiteData] = useState<SiteData>(
+    siteData ?? siteDataFallback,
+  )
 
   const propsLayoutContext: PropsLayoutState = useMemo(
     () => ({
@@ -233,10 +232,19 @@ export default function AppWithProviders() {
     if (import.meta.env.DEV) {
       console.debug(siteData)
     }
+    if (import.meta.hot) {
+      import.meta.hot.on("qui-docs-plugin:refresh-site-data", setDocsSiteData)
+      return () => {
+        import.meta.hot?.off(
+          "qui-docs-plugin:refresh-site-data",
+          setDocsSiteData,
+        )
+      }
+    }
   }, [])
 
   return (
-    <SiteContextProvider value={siteData ?? siteDataFallback}>
+    <SiteContextProvider value={docsSiteData}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider
           specifiedTheme={data.theme}

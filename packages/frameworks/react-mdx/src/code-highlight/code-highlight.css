@@ -1,3 +1,25 @@
+[data-theme="dark"] {
+  .shiki.mdx,
+  .shiki-code {
+    span {
+      font-weight: var(--shiki-dark-font-weight, 400);
+    }
+  }
+}
+
+[data-theme="light"] {
+  .shiki.mdx,
+  .shiki-code {
+    span {
+      font-weight: var(--shiki-light-font-weight, 400);
+    }
+  }
+}
+
+.shiki-code {
+  padding: 16px;
+}
+
 .qui-docs-highlighter__root {
   border-radius: 6px;
   position: relative;
@@ -8,19 +30,11 @@
     }
   }
 
-  &.not-allowed {
-    pre.shiki-code {
-      background: var(--color-background-support-warning-subtle) !important;
-      border: 1px solid var(--color-border-support-warning) !important;
-    }
-  }
-
   pre {
     border-radius: 3px;
     font-family: var(--q-font-code-demo, var(--q-font-mono)), monospace;
     font-size: 14px;
     line-height: 18px;
-    padding: 16px;
     &.disable-padding {
       padding: 0;
     }
@@ -112,20 +126,66 @@ pre.shiki .indent::before {
   width: 1px;
 }
 
-[data-theme="dark"] {
-  .shiki.mdx,
-  .shiki-code {
-    span {
-      font-weight: var(--shiki-dark-font-weight, 400);
+pre.shiki.has-diff {
+  .line.diff.remove {
+    opacity: 0.7;
+    &::before {
+      color: var(--color-icon-support-danger);
+      content: "-";
+      left: 3px;
+      position: absolute;
+    }
+  }
+
+  .line.diff.add {
+    &::before {
+      color: var(--color-icon-support-success);
+      content: "+";
+      left: 3px;
+      position: absolute;
     }
   }
 }
 
-[data-theme="light"] {
-  .shiki.mdx,
-  .shiki-code {
-    span {
-      font-weight: var(--shiki-light-font-weight, 400);
+pre.shiki.has-highlighted {
+  .line.highlighted {
+    background: var(--color-interactive-background-ghost-hover);
+    display: inline-block;
+    width: 100%;
+
+    &.error {
+      background: var(--color-background-support-danger-medium);
+    }
+    &.warning {
+      background: var(--color-background-support-warning-medium);
+    }
+
+    * {
+      background: transparent;
+    }
+  }
+}
+
+pre.shiki.has-focused {
+  .line:not(.focused) {
+    filter: blur(0.095rem);
+    opacity: 0.7;
+    transition:
+      filter 0.35s,
+      opacity 0.35s;
+  }
+  &:hover {
+    .line:not(.focused) {
+      filter: unset;
+      opacity: 1;
+    }
+  }
+}
+
+[data-theme] {
+  pre.shiki {
+    span.highlighted-word {
+      background: var(--color-interactive-background-ghost-hover);
     }
   }
 }

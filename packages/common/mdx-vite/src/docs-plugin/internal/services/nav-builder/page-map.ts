@@ -1,8 +1,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {capitalCase} from "change-case"
 import {join} from "node:path"
+
+import {capitalCase} from "@qualcomm-ui/utils/change-case"
 
 import type {RouteMetaInternal, RoutingStrategy} from "../../../types"
 

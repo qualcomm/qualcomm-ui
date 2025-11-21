@@ -61,7 +61,7 @@
     "@qualcomm-ui/cli": "workspace:^1",
     "@qualcomm-ui/dom": "workspace:^1.0.5",
     "@qualcomm-ui/tailwind-plugin": "workspace:^1.1.0",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.4",
     "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/virtual-core": "^3.13.12",
@@ -85,7 +85,7 @@
     "tslib": "~2.5.3",
     "tsx": "^4.20.6",
     "typescript": "5.9.3",
-    "vite": "npm:rolldown-vite@7.1.19",
+    "vite": "npm:rolldown-vite@7.2.6",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.8"
   },

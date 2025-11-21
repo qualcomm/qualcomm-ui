@@ -45,7 +45,7 @@
     "@qualcomm-ui/css-utils": "workspace:^1.0.3",
     "@qualcomm-ui/dom": "workspace:^1.0.5",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.4",
     "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@types/node": "~24.9.2",
     "@vitest/coverage-v8": "^4.0.8",

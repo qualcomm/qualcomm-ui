@@ -1,5 +1,6 @@
 import type {LocalVariable} from "@figma/rest-api-spec"
-import {kebabCase} from "change-case"
+
+import {kebabCase} from "@qualcomm-ui/utils/change-case"
 
 import type {TokenType} from "./token-types"
 

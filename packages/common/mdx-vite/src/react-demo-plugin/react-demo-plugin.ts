@@ -1,7 +1,6 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {transformerRenderIndentGuides} from "@shikijs/transformers"
 import chalk from "chalk"
 import {glob} from "glob"
 import {readFile} from "node:fs/promises"
@@ -12,6 +11,8 @@ import type {Plugin} from "vite"
 
 import {quiCustomDarkTheme, type ReactDemoData} from "@qualcomm-ui/mdx-common"
 import {dedent} from "@qualcomm-ui/utils/dedent"
+
+import {getShikiTransformers} from "../docs-plugin"
 
 import {LOG_PREFIX, VIRTUAL_MODULE_IDS} from "./demo-plugin-constants"
 import type {QuiDemoPluginOptions} from "./demo-plugin-types"
@@ -30,6 +31,7 @@ interface HandleUpdateOptions {
 }
 
 let highlighter: Highlighter | null = null
+let initializingHighlighter = false
 
 const demoRegistry = new Map<string, ReactDemoData>()
 const pageFiles = new Map<string, string[]>()
@@ -50,12 +52,21 @@ export function reactDemoPlugin({
   transformLine,
 }: QuiDemoPluginOptions = {}): Plugin {
   return {
+    apply(config, env) {
+      return (
+        (env.mode === "development" && env.command === "serve") ||
+        (env.mode === "production" && env.command === "build")
+      )
+    },
     async buildStart() {
-      if (!highlighter) {
+      if (!highlighter && !initializingHighlighter) {
+        initializingHighlighter = true
         try {
           highlighter = await createHighlighter({
             langs: ["tsx", "typescript"],
             themes: [theme.dark, theme.light],
+          }).finally(() => {
+            initializingHighlighter = false
           })
           console.log(
             `${chalk.magenta.bold(LOG_PREFIX)} Shiki highlighter initialized`,
@@ -71,11 +82,13 @@ export function reactDemoPlugin({
       await collectReactDemos()
     },
 
-    enforce: "pre",
-
     async handleHotUpdate({file, modules, server}) {
       if (isCssAsset(file)) {
         return modules
+      }
+
+      if (file.endsWith(".mdx")) {
+        return []
       }
 
       if (isDemoFile(file)) {
@@ -84,7 +97,7 @@ export function reactDemoPlugin({
         const normalizedFile = resolve(file)
         const dependentDemos = relativeImportDependents.get(normalizedFile)
         if (!dependentDemos?.size) {
-          return modules
+          return []
         }
         for (const demoName of Array.from(dependentDemos)) {
           const demo = demoRegistry.get(demoName)
@@ -103,7 +116,7 @@ export function reactDemoPlugin({
         server.moduleGraph.invalidateModule(autoModule)
         await server.reloadModule(autoModule)
       }
-      return modules
+      return []
     },
 
     async load(id) {
@@ -221,7 +234,17 @@ export function reactDemoPlugin({
           dark: theme.dark,
           light: theme.light,
         },
-        transformers: [transformerRenderIndentGuides(), ...transformers],
+        transformers: [
+          ...getShikiTransformers(),
+          {
+            enforce: "post",
+            name: "shiki-transformer-trim",
+            preprocess(code) {
+              return code.trim()
+            },
+          },
+          ...transformers,
+        ],
       })
     } catch (error) {
       console.warn(

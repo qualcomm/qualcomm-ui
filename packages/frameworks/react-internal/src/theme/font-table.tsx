@@ -1,13 +1,15 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import {useEffect, useState} from "react"
 
-import type {BasicThemeData} from "@qualcomm-ui/docs-base"
+import type {FontData} from "./theme-fonts"
 
-interface ColorProps {
-  cssProperty: string
-  data: BasicThemeData[]
+interface FontTableProps {
+  data: FontData[]
 }
 
-export function ThemePropertyTable({cssProperty, data = []}: ColorProps) {
+export function FontTable({data = []}: FontTableProps) {
   // we need to force a re-render after mount to reflect the computed property
   // values.
   const [key, setKey] = useState<number>(0)
@@ -25,69 +27,65 @@ export function ThemePropertyTable({cssProperty, data = []}: ColorProps) {
     return getComputedStyle(document.documentElement).getPropertyValue(variable)
   }
 
-  const showTailwindColumn = data.some(({tailwind}) => tailwind)
-
   return (
     <div key={key} className="w-full">
-      <div className="doc-props-list__root bottom-border block sm:hidden">
+      <div className="doc-props-list__root bottom-border block md:hidden">
         {data.map(({tailwind, variable}) => {
           return (
             <div key={variable} className="doc-props-list-item__root">
               <div className="doc-props-list-item__name-wrapper"></div>
               <div className="doc-props-columns">
-                {tailwind ? (
-                  <div className="doc-props__content">
-                    <div className="doc-props__title">Tailwind Class</div>
-                    <code className="fit !bg-transparent font-mono">
-                      {tailwind}
-                    </code>
-                  </div>
-                ) : null}
+                <div className="doc-props__content">
+                  <div className="doc-props__title">Tailwind Class</div>
+                  <code className="fit !bg-transparent font-mono text-sm">
+                    {tailwind}
+                  </code>
+                </div>
                 <div className="doc-props__content">
                   <div className="doc-props__title">CSS Variable</div>
-                  <code className="fit !bg-transparent font-mono">
+                  <code className="fit !bg-transparent font-mono text-sm">
                     {variable}
                   </code>
                 </div>
                 <div className="doc-props__content">
-                  <div className="doc-props__title">Equivalent CSS</div>
+                  <div className="doc-props__title">Computed Value</div>
                   <code
-                    className="flex flex-col gap-1 !bg-transparent font-mono"
+                    className="flex flex-col gap-1 !bg-transparent font-mono text-sm"
                     suppressHydrationWarning
                   >
-                    <div>
-                      {cssProperty}:{" "}
-                      <span suppressHydrationWarning>
-                        {getPropertyValue(variable)}
-                      </span>
-                    </div>
+                    <span suppressHydrationWarning>
+                      {getPropertyValue(variable)}
+                    </span>
                   </code>
+                </div>
+                <div className="doc-props__content">
+                  <div className="doc-props__title">Example</div>
+                  <div style={{font: `var(${variable})`}}>Aa</div>
                 </div>
               </div>
             </div>
           )
         })}
       </div>
-      <div className="typedoc-props__table-wrapper hidden w-full sm:block">
+      <div className="typedoc-props__table-wrapper hidden w-full md:block">
         <table>
           <thead>
             <tr>
-              {showTailwindColumn ? <th>Tailwind Class</th> : null}
+              <th>Tailwind Class</th>
               <th>CSS Variable</th>
-              <th>Equivalent CSS</th>
+              <th>Computed Value</th>
+              <th>Example</th>
             </tr>
           </thead>
           <tbody>
             {data.map(({tailwind, variable}) => {
               return (
                 <tr key={variable}>
-                  {showTailwindColumn ? (
-                    <td>
-                      <code className="fit !bg-transparent font-mono">
-                        {tailwind}
-                      </code>
-                    </td>
-                  ) : null}
+                  <td>
+                    <code className="fit !bg-transparent font-mono">
+                      {tailwind}
+                    </code>
+                  </td>
                   <td>
                     <code className="fit !bg-transparent font-mono">
                       {variable}
@@ -98,14 +96,12 @@ export function ThemePropertyTable({cssProperty, data = []}: ColorProps) {
                       className="flex flex-col gap-1 !bg-transparent font-mono"
                       suppressHydrationWarning
                     >
-                      <div>
-                        {cssProperty}:{" "}
-                        <span suppressHydrationWarning>
-                          {getPropertyValue(variable)}
-                        </span>
-                      </div>
+                      <span suppressHydrationWarning>
+                        {getPropertyValue(variable)}
+                      </span>
                     </code>
                   </td>
+                  <td style={{font: `var(${variable})`}}>Aa</td>
                 </tr>
               )
             })}

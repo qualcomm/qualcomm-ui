@@ -1,5 +1,11 @@
 # @qualcomm-ui/tsconfig
 
+## 1.0.4 (2025/11/21)
+
+### Miscellaneous Chores
+
+- rename docs-base to react-internal
+
 ## 1.0.3 (2025/11/14)
 
 ### Miscellaneous Chores

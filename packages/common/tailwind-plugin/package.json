@@ -47,7 +47,7 @@
     "@qualcomm-ui/cli": "workspace:^1.0.5",
     "@qualcomm-ui/css-utils": "workspace:^1.0.3",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.4",
     "esbuild": "^0.25.8",
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",

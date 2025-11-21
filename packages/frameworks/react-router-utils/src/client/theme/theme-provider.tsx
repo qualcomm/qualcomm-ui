@@ -50,8 +50,21 @@ export const mediaQuery =
 
 export interface ThemeProviderProps {
   children: ReactNode
+  /**
+   * Disable the brief transition animation when changing themes.
+   */
   disableTransitionOnThemeChange?: boolean
+  /**
+   * @deprecated migrate to the {@link theme} prop
+   */
   specifiedTheme: Theme | null
+  /**
+   * The theme to use for the application.
+   */
+  theme?: Theme | null
+  /**
+   * The route used to change the theme in the
+   */
   themeAction: string
 }
 
@@ -59,19 +72,22 @@ export function ThemeProvider({
   children,
   disableTransitionOnThemeChange = false,
   specifiedTheme,
+  theme: themeProp,
   themeAction,
 }: ThemeProviderProps) {
   const ensureCorrectTransition = useCorrectCssTransition({
     disableTransitions: disableTransitionOnThemeChange,
   })
 
+  const resolvedTheme = themeProp || specifiedTheme
+
   const [theme, setTheme] = useState<Theme | null>(() => {
     // On the server, if we don't have a specified theme then we should
     // return null and the clientThemeCode will set the theme for us
     // before hydration. Then (during hydration), this code will get the same
     // value that clientThemeCode got so hydration is happy.
-    if (specifiedTheme) {
-      return themes.includes(specifiedTheme) ? specifiedTheme : null
+    if (resolvedTheme) {
+      return themes.includes(resolvedTheme) ? resolvedTheme : null
     }
 
     // there's no way for us to know what the theme should be in this context
@@ -85,7 +101,7 @@ export function ThemeProvider({
 
   const [themeDefinedBy, setThemeDefinedBy] = useState<
     ThemeMetadata["definedBy"]
-  >(specifiedTheme ? "USER" : "SYSTEM")
+  >(resolvedTheme ? "USER" : "SYSTEM")
 
   const broadcastThemeChange = useBroadcastChannel<{
     definedBy: ThemeMetadata["definedBy"]

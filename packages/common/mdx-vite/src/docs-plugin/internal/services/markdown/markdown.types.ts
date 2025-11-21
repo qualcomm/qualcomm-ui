@@ -3,6 +3,7 @@
 
 import type {
   PageHeading,
+  PageSection,
   PageSectionContent,
   RichContentNode,
 } from "@qualcomm-ui/mdx-common"
@@ -16,4 +17,22 @@ export interface IndexedSection {
 export interface IndexedPage {
   sections: IndexedSection[]
   toc: PageHeading[]
+}
+
+export interface CompiledMdxFileMetadata {
+  changed: {
+    /**
+     * True if the file's frontmatter has changed since the last build.
+     */
+    frontmatter?: boolean | undefined
+  }
+  filePath: string
+}
+
+export interface CompiledMdxFile {
+  /**
+   * Metadata about the file.
+   */
+  metadata: CompiledMdxFileMetadata
+  pageSections: PageSection[]
 }

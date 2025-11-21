@@ -37,13 +37,13 @@
   "devDependencies": {
     "@qualcomm-ui/cli": "workspace:^1.0.5",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.4",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
     "esbuild": "^0.25.8",
     "fuzzysort": "^3.0.1",
     "shx": "^0.4.0",
     "tsx": "^4.20.6",
-    "vite": "npm:rolldown-vite@7.1.19"
+    "vite": "npm:rolldown-vite@7.2.6"
   },
   "peerDependencies": {
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",

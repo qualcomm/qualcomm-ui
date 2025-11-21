@@ -1,16 +1,19 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {type HTMLAttributes, type ReactElement, useRef} from "react"
+import {type ComponentPropsWithRef, type ReactElement, useRef} from "react"
 
 import {CopyToClipboardIconButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
-export interface ShikiPreProps extends HTMLAttributes<HTMLPreElement> {}
+export interface ShikiPreProps extends ComponentPropsWithRef<"pre"> {
+  "data-code"?: string
+}
 
 export function ShikiPre({
   children,
   className,
+  "data-code": code,
   ...props
 }: ShikiPreProps): ReactElement {
   const preRef = useRef<HTMLPreElement>(null)
@@ -25,7 +28,9 @@ export function ShikiPre({
       >
         {children}
       </pre>
-      <CopyToClipboardIconButton valueOrFn={() => preRef.current!.innerText} />
+      <CopyToClipboardIconButton
+        valueOrFn={() => code || preRef.current!.innerText}
+      />
     </div>
   )
 }

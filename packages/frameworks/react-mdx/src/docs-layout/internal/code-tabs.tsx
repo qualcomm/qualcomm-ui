@@ -12,12 +12,12 @@ export function CodeTabs({children, ...props}: CodeTabsProps): ReactElement {
   const tabs = Children.toArray(children).filter(
     (child): child is ReactElement => isValidElement(child),
   )
-  const mergedProps = mergeProps({className: "mdx"}, props)
+  const mergedProps = mergeProps({className: "mdx qui-code-tabs"}, props)
   const firstTab = (tabs[0] as any)?.props?.label
 
   return (
     <Tabs.Root defaultValue={firstTab} {...mergedProps}>
-      <Tabs.List>
+      <Tabs.List className="mdx">
         <Tabs.Indicator />
         {tabs.map((tab) => {
           const label = (tab.props as any)?.label
@@ -32,7 +32,7 @@ export function CodeTabs({children, ...props}: CodeTabsProps): ReactElement {
       {tabs.map((tab) => {
         const label = (tab.props as any)?.label
         return (
-          <Tabs.Panel key={label} value={label}>
+          <Tabs.Panel key={label} className="mdx" value={label}>
             {(tab.props as any)?.children}
           </Tabs.Panel>
         )

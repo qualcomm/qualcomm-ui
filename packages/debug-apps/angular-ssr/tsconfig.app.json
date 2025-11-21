@@ -13,7 +13,6 @@
     "paths": {
       "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
       "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
-      "@qualcomm-ui/docs-base": ["../../common/docs-base/src"],
       "@qualcomm-ui/angular-docs/*": ["../../docs/angular-docs/src/routes/*"]
     }
   },

@@ -20,12 +20,11 @@ import {
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
-  isQdsTheme,
+  isQdsBrand,
   type QdsBrand,
   QdsThemeContextProvider,
   type QdsThemeContextValue,
 } from "@qualcomm-ui/react/qds-theme"
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
 import {
   type PackageManager,
   type RouteDemoState,
@@ -70,7 +69,7 @@ export const loader: LoaderFunction = async ({request}) => {
     demoState: demoState ?? {},
     hideDemoBrandSwitcher: docState?.hideDemoBrandSwitcher || false,
     packageManager: docState?.packageManager || "npm",
-    qdsBrand: isQdsTheme(qdsTheme) ? qdsTheme : ("qualcomm" satisfies QdsBrand),
+    qdsBrand: isQdsBrand(qdsTheme) ? qdsTheme : ("qualcomm" satisfies QdsBrand),
     sidebarScrollTop: docState?.sidebarScrollTop,
     ssrUserAgent: request.headers.get("user-agent"),
     theme: isTheme(cookieTheme) ? cookieTheme : Theme.DARK,
@@ -100,15 +99,10 @@ function App() {
   const location = useLocation()
   const title = siteData.pageMap[location.pathname]?.title || ""
   const appTitle = title ? `QUI | ${title}` : "QUI React"
-  const [mounted, setMounted] = useState<boolean>(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   return (
     <html
-      className={clsx(`${theme || "dark"}`, {"qui-preload": !mounted})}
+      className={clsx(`${theme || "dark"}`)}
       data-brand="qualcomm"
       data-theme={theme}
       lang="en"
@@ -152,25 +146,23 @@ function App() {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <QuiRoot>
-            <AppDocsLayout
-              demoState={data.demoState}
-              hideDemoBrandSwitcher={data.hideDemoBrandSwitcher}
-              onDemoStateChange={(nextValue) => {
-                void updateDemoState("/action/set-demo-state", nextValue)
-              }}
-              onPackageManagerChange={(nextValue) =>
-                updateSiteState("/action/set-site-state", {
-                  packageManager: nextValue,
-                })
-              }
-              packageManager={data.packageManager}
-              sidebarScrollTop={data.sidebarScrollTop}
-              ssrUserAgent={data.ssrUserAgent}
-            >
-              <Outlet />
-            </AppDocsLayout>
-          </QuiRoot>
+          <AppDocsLayout
+            demoState={data.demoState}
+            hideDemoBrandSwitcher={data.hideDemoBrandSwitcher}
+            onDemoStateChange={(nextValue) => {
+              void updateDemoState("/action/set-demo-state", nextValue)
+            }}
+            onPackageManagerChange={(nextValue) =>
+              updateSiteState("/action/set-site-state", {
+                packageManager: nextValue,
+              })
+            }
+            packageManager={data.packageManager}
+            sidebarScrollTop={data.sidebarScrollTop}
+            ssrUserAgent={data.ssrUserAgent}
+          >
+            <Outlet />
+          </AppDocsLayout>
         </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
@@ -187,8 +179,10 @@ export default function AppWithProviders() {
   const data = useLoaderData<{qdsBrand: QdsBrand; theme: Theme | null}>()
 
   const [propsLayout, setPropsLayout] = useState<DocPropsLayout>("table")
-
   const [brand, setBrand] = useState<QdsBrand | null>(data.qdsBrand)
+  const [docsSiteData, setDocsSiteData] = useState<SiteData>(
+    siteData ?? siteDataFallback,
+  )
 
   const propsLayoutContext: PropsLayoutState = useMemo(
     () => ({
@@ -207,11 +201,22 @@ export default function AppWithProviders() {
   )
 
   useEffect(() => {
-    console.debug(siteData)
+    if (import.meta.env.DEV) {
+      console.debug(siteData)
+    }
+    if (import.meta.hot) {
+      import.meta.hot.on("qui-docs-plugin:refresh-site-data", setDocsSiteData)
+      return () => {
+        import.meta.hot?.off(
+          "qui-docs-plugin:refresh-site-data",
+          setDocsSiteData,
+        )
+      }
+    }
   }, [])
 
   return (
-    <SiteContextProvider value={siteData ?? siteDataFallback}>
+    <SiteContextProvider value={docsSiteData}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider
           specifiedTheme={data.theme}

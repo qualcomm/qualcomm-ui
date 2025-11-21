@@ -28,7 +28,7 @@ catalog:
   '@angular/platform-server': ~20.3.12
   '@angular/router': ~20.3.12
   '@angular/ssr': ~20.3.10
-  '@eslint/js': 9.37.0
+  '@eslint/js': 9.39.1
   '@react-router/dev': 7.9.4
   '@react-router/express': 7.9.4
   '@react-router/node': 7.9.4
@@ -40,11 +40,14 @@ catalog:
   '@typescript-eslint/parser': 8.46.2
   '@typescript-eslint/utils': 8.46.2
   esbuild: 0.25.11
+  eslint: 9.39.1
   react: 19.2.0
   react-dom: 19.2.0
   react-router: 7.9.4
   tsx: 4.20.6
-  typescript-eslint: 8.40.0
+  typescript-eslint: 8.46.2
+
+minimumReleaseAge: 1440
 
 onlyBuiltDependencies:
   - '@bundled-es-modules/glob'

@@ -136,6 +136,22 @@ function renderTabs(tabs: Tab[], parent: Parent): any[] {
 
 /**
  * Very cool. TODO: document this https://docs.qui.qualcomm.com/guide/markdown
+ *
+ * @example
+ * ```angular-html tabs="demo" label="HTML"
+ * <div class="w-72" q-text-input [invalid]="!value()" [(ngModel)]="value">
+ *   <label q-text-input-label>Label</label>
+ *   <input placeholder="Enter a value" q-text-input-input />
+ *   <div q-text-input-error-text>You must enter a value</div>
+ * </div>
+ * ```
+ *
+ * ```angular-ts tabs="demo" label="TS"
+ * @Component()
+ * export class DemoComponent {
+ *   readonly value = signal("")
+ * }
+ * ```
  */
 export const remarkCodeTabs: Plugin<[], Root> = () => {
   return (tree) => {

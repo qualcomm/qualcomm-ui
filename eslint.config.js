@@ -151,7 +151,7 @@ export default defineConfig(
       quiEslintTs.configs.performance,
     ],
     files: [
-      "packages/*/{charts-base,core,docs-base,eslint-config-qui-boundaries,mdx-vite,typedoc}/**/*.ts",
+      "packages/*/{charts-base,core,eslint-config-qui-boundaries,mdx-vite,typedoc}/**/*.ts",
     ],
     languageOptions,
   },
