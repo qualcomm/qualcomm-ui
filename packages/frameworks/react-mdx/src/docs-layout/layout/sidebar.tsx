@@ -228,7 +228,6 @@ export function Sidebar({
           onSelectedValueChange(details.selectedValue)
         }}
         selectedValue={selectedValue}
-        surface="secondary"
       >
         {children ? (
           <SideNav.Header data-sticky={booleanDataAttr(stickyHeader)}>
