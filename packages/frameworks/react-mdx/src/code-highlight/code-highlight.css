@@ -154,6 +154,14 @@ pre.shiki.has-highlighted {
   }
 }
 
+[data-theme] {
+  pre.shiki {
+    span.highlighted-word {
+      background: var(--color-interactive-background-ghost-hover);
+    }
+  }
+}
+
 .shiki-code {
   padding: 16px;
 }
