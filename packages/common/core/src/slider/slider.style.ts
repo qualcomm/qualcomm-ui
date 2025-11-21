@@ -78,7 +78,7 @@ function getVerticalThumbOffset(
   const {context, prop} = params
   const {height = 0} = context.get("thumbSize") ?? {}
   const getValue = getValueTransformer(
-    [prop("min")!, prop("max")!],
+    [prop("min"), prop("max")],
     [-height / 2, height / 2],
   )
   return parseFloat(getValue(value).toFixed(2))
@@ -95,14 +95,14 @@ function getHorizontalThumbOffset(
 
   if (isRtl) {
     const getValue = getValueTransformer(
-      [prop("max")!, prop("min")!],
+      [prop("max"), prop("min")],
       [-width / 2, width / 2],
     )
     return -1 * parseFloat(getValue(value).toFixed(2))
   }
 
   const getValue = getValueTransformer(
-    [prop("min")!, prop("max")!],
+    [prop("min"), prop("max")],
     [-width / 2, width / 2],
   )
   return parseFloat(getValue(value).toFixed(2))
@@ -128,7 +128,7 @@ export function getThumbOffset(
   value: number,
 ): string {
   const {prop} = params
-  const percent = getValuePercent(value, prop("min")!, prop("max")!) * 100
+  const percent = getValuePercent(value, prop("min"), prop("max")) * 100
   return getOffset(params, percent, value)
 }
 
@@ -182,15 +182,7 @@ export function getRootStyle(
   const range = getRangeOffsets(params)
   const thumbSize = context.get("thumbSize")
 
-  const offsetStyles = context
-    .get("value")
-    .reduce<JSX.CSSProperties>((styles, value, index) => {
-      const offset = getThumbOffset(params, value)
-      return {...styles, [`--slider-thumb-offset-${index}`]: offset}
-    }, {})
-
-  return {
-    ...offsetStyles,
+  const styles: JSX.CSSProperties = {
     "--slider-range-end": range.end,
     "--slider-range-start": range.start,
     "--slider-thumb-height": toPx(thumbSize?.height),
@@ -201,6 +193,13 @@ export function getRootStyle(
         : "translateX(-50%)",
     "--slider-thumb-width": toPx(thumbSize?.width),
   }
+
+  const values = context.get("value")
+  for (let i = 0; i < values.length; i++) {
+    styles[`--slider-thumb-offset-${i}`] = getThumbOffset(params, values[i])
+  }
+
+  return styles
 }
 
 /** Marker style calculations */

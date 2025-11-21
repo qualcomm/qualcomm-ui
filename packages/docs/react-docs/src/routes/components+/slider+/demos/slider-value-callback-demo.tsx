@@ -6,7 +6,7 @@ export function SliderValueCallbackDemo(): ReactElement {
   const [value, setValue] = useState<number[]>([25, 75])
   const [finalValue, setFinalValue] = useState<number[]>(value)
   return (
-    <div className="sm:w-[340px]">
+    <div className="sm:w-80">
       {/* preview */}
       <Slider
         onValueChange={(e) => {

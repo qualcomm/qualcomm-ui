@@ -57,8 +57,8 @@ export function getRangeAtIndex(
   min: number
 } {
   const {context, prop} = params
-  const step = prop("step")! * prop("minStepsBetweenThumbs")!
-  return getValueRanges(context.get("value"), prop("min")!, prop("max")!, step)[
+  const step = prop("step") * prop("minStepsBetweenThumbs")
+  return getValueRanges(context.get("value"), prop("min"), prop("max"), step)[
     index
   ]
 }
@@ -74,7 +74,7 @@ export function constrainValue(
     value,
     prop("min"),
     prop("max"),
-    prop("step")!,
+    prop("step"),
   )
   return clampValue(snapValue, range.min, range.max)
 }
@@ -89,7 +89,7 @@ export function decrement(
   const range = getRangeAtIndex(params, idx)
   const nextValues = getPreviousStepValue(idx, {
     ...range,
-    step: step ?? prop("step")!,
+    step: step ?? prop("step"),
     values: context.get("value"),
   })
   nextValues[idx] = clampValue(nextValues[idx], range.min, range.max)
@@ -106,7 +106,7 @@ export function increment(
   const range = getRangeAtIndex(params, idx)
   const nextValues = getNextStepValue(idx, {
     ...range,
-    step: step ?? prop("step")!,
+    step: step ?? prop("step"),
     values: context.get("value"),
   })
   nextValues[idx] = clampValue(nextValues[idx], range.min, range.max)
@@ -119,11 +119,4 @@ export function getClosestIndex(
 ): number {
   const {context} = params
   return getClosestValueIndex(context.get("value"), pointValue)
-}
-
-export function assignArray(current: number[], next: number[]): void {
-  for (let i = 0; i < next.length; i++) {
-    const value = next[i]
-    current[i] = value
-  }
 }

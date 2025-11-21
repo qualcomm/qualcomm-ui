@@ -41,6 +41,9 @@ export const sliderMachine: MachineConfig<SliderSchema> =
       clearFocusedIndex({context}) {
         context.set("focusedIndex", -1)
       },
+      clearThumbDragOffset({refs}) {
+        refs.set("thumbDragOffset", null)
+      },
       decrementThumbAtIndex(params) {
         const {context, event} = params
         const {index, step} = event as {index?: number; step?: number}
@@ -119,6 +122,13 @@ export const sliderMachine: MachineConfig<SliderSchema> =
             setValueAtIndex(prev, focusedIndex, value),
           )
         })
+      },
+      setThumbDragOffset(params) {
+        const {event, refs} = params
+        if (!("offset" in event)) {
+          return
+        }
+        refs.set("thumbDragOffset", event.offset ?? null)
       },
       setValue(params) {
         const {context, event} = params
@@ -229,22 +239,29 @@ export const sliderMachine: MachineConfig<SliderSchema> =
           return
         }
 
-        return trackElementRect(getThumbEls(scope), {
-          box: "border-box",
-          measure(el) {
-            return getOffsetRect(el)
-          },
-          onEntry({rects}) {
-            if (rects.length === 0) {
-              return
-            }
-            const size = pick(rects[0], ["width", "height"])
-            if (isEqualSize(context.get("thumbSize"), size)) {
-              return
-            }
-            context.set("thumbSize", size)
-          },
+        let cleanup: VoidFunction | undefined
+        const rafId = requestAnimationFrame(() => {
+          cleanup = trackElementRect(getThumbEls(scope), {
+            box: "border-box",
+            measure(el) {
+              return getOffsetRect(el)
+            },
+            onEntry({rects}) {
+              if (rects.length === 0) {
+                return
+              }
+              const size = pick(rects[0], ["width", "height"])
+              if (isEqualSize(context.get("thumbSize"), size)) {
+                return
+              }
+              context.set("thumbSize", size)
+            },
+          })
         })
+        return () => {
+          cancelAnimationFrame(rafId)
+          cleanup?.()
+        }
       },
     },
 
@@ -266,6 +283,7 @@ export const sliderMachine: MachineConfig<SliderSchema> =
         range: bindableId<string>(),
         root: bindableId<string>(),
         thumb: bindableIdCollection<string>(),
+        thumbIndicator: bindableIdCollection<string>(),
         track: bindableId<string>(),
         valueText: bindableId<string>(),
       }
@@ -324,6 +342,12 @@ export const sliderMachine: MachineConfig<SliderSchema> =
       }
     },
 
+    refs: () => {
+      return {
+        thumbDragOffset: null,
+      }
+    },
+
     states: {
       dragging: {
         effects: ["trackPointerMove"],
@@ -333,7 +357,7 @@ export const sliderMachine: MachineConfig<SliderSchema> =
             actions: ["setPointerValue"],
           },
           POINTER_UP: {
-            actions: ["invokeOnChangeEnd"],
+            actions: ["invokeOnChangeEnd", "clearThumbDragOffset"],
             target: "focus",
           },
         },
@@ -367,7 +391,11 @@ export const sliderMachine: MachineConfig<SliderSchema> =
             target: "dragging",
           },
           THUMB_POINTER_DOWN: {
-            actions: ["setFocusedIndex", "focusActiveThumb"],
+            actions: [
+              "setFocusedIndex",
+              "setThumbDragOffset",
+              "focusActiveThumb",
+            ],
             target: "dragging",
           },
         },
@@ -388,7 +416,11 @@ export const sliderMachine: MachineConfig<SliderSchema> =
             target: "dragging",
           },
           THUMB_POINTER_DOWN: {
-            actions: ["setFocusedIndex", "focusActiveThumb"],
+            actions: [
+              "setFocusedIndex",
+              "setThumbDragOffset",
+              "focusActiveThumb",
+            ],
             target: "dragging",
           },
         },

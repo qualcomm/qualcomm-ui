@@ -40,21 +40,14 @@ import {defined, isDefined} from "@qualcomm-ui/utils/guard"
 import {initInputFormControl} from "./input-form-control-provider"
 
 @Directive()
-export abstract class AbstractListCollectionFormControlDirective<
+export abstract class AbstractBaseListCollectionFormControlDirective<
     T extends CollectionItem,
   >
   implements ControlValueAccessor, OnInit
 {
   /**
-   * The item collection
-   *
-   * @inheritDoc
-   */
-  readonly collection = input.required<ListCollection<T>>()
-
-  /**
-   * The initial state of the input when rendered. Use when you don't need to
-   * control the checked state of the input. This property will be ignored if you
+   * The initial value of the input when rendered. Use when you don't need to
+   * control the value of the input. This property will be ignored if you
    * opt into controlled state via form control bindings.
    *
    * @inheritDoc
@@ -341,4 +334,16 @@ export abstract class AbstractListCollectionFormControlDirective<
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled.set(isDisabled)
   }
+}
+
+@Directive()
+export abstract class AbstractListCollectionFormControlDirective<
+  T extends CollectionItem,
+> extends AbstractBaseListCollectionFormControlDirective<T> {
+  /**
+   * The item collection
+   *
+   * @inheritDoc
+   */
+  readonly collection = input.required<ListCollection<T>>()
 }

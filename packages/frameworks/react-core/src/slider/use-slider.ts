@@ -17,6 +17,7 @@ import {
   type SliderMinMarkerBindings,
   type SliderRangeBindings,
   type SliderThumbBindings,
+  type SliderThumbIndicatorBindings,
   type SliderTrackBindings,
   type SliderValueTextBindings,
   type ThumbProps,
@@ -89,19 +90,16 @@ export function useSliderRange({id}: IdProp): SliderRangeBindings {
   })
 }
 
-export function useSliderThumb({id, ...thumbProps}: IdProp & ThumbProps): {
-  bindings: SliderThumbBindings
-  value: number
-} {
+export function useSliderThumb({
+  id,
+  ...thumbProps
+}: IdProp & ThumbProps): SliderThumbBindings {
   const context = useSliderContext()
-  return {
-    bindings: context.getThumbBindings({
-      id: useControlledId(id),
-      ...thumbProps,
-      onDestroy: useOnDestroy(),
-    }),
-    value: context.value[thumbProps.index],
-  }
+  return context.getThumbBindings({
+    id: useControlledId(id),
+    ...thumbProps,
+    onDestroy: useOnDestroy(),
+  })
 }
 
 export function useSliderHiddenInput({id}: IdProp): SliderHiddenInputBindings {
@@ -148,4 +146,20 @@ export function useSliderMaxMarker({id}: IdProp): SliderMaxMarkerBindings {
     id: useControlledId(id),
     onDestroy: useOnDestroy(),
   })
+}
+
+export function useSliderThumbIndicator({id}: IdProp): {
+  bindings: SliderThumbIndicatorBindings
+  value: number
+} {
+  const context = useSliderContext()
+  const {index} = useSliderThumbContext()
+  return {
+    bindings: context.getThumbIndicatorBindings({
+      id: useControlledId(id),
+      index,
+      onDestroy: useOnDestroy(),
+    }),
+    value: context.getThumbValue(index),
+  }
 }
