@@ -1,5 +1,27 @@
 # @qualcomm-ui/react-mdx
 
+## 1.4.0 (2025/11/21)
+
+### Features
+
+- [shiki]: add error/warning notation styles
+- [shiki]: add word highlight styles
+- [mdx-docs-context]: expand ssrUserAgent type to include null
+- [shiki]: add focus notation styles
+- [shiki styles]: add line highlight, diff styles for shiki transformers
+
+### Bug Fixes
+
+- [sidebar, header]: use correct background in light mode
+- [mdx-css]: add top margin to qui-tabs\_\_root in mdx
+- [code-tabs]: remove margin from child shiki blocks
+- [sidebar]: expand parent node when pathname changes to a hidden child node
+
+### Miscellaneous Chores
+
+- migrate change-case to @qualcomm-ui/utils/change-case
+- **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/core, @qualcomm-ui/mdx-common, @qualcomm-ui/utils, @qualcomm-ui/react-core]
+
 ## 1.3.0 (2025/11/19)
 
 ### Features

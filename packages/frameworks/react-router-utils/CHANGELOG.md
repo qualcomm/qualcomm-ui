@@ -1,5 +1,11 @@
 # @qualcomm-ui/react-router-utils
 
+## 1.0.5 (2025/11/21)
+
+### Code Refactoring
+
+- [theme-provider]: deprecate specifiedTheme prop in favor of theme prop for clarity
+
 ## 1.0.4 (2025/11/14)
 
 ### Performance Improvements

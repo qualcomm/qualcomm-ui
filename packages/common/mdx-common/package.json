@@ -37,7 +37,7 @@
   "devDependencies": {
     "@qualcomm-ui/cli": "workspace:^1.0.5",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.4",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
     "esbuild": "^0.25.8",
     "fuzzysort": "^3.0.1",

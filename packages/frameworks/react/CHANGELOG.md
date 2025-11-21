@@ -1,5 +1,15 @@
 # @qualcomm-ui/react
 
+## 1.1.6 (2025/11/21)
+
+### Code Refactoring
+
+- [qds-theme-context]: deprecate isQdsTheme. Replace with isQdsBrand
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/react-core]
+
 ## 1.1.5 (2025/11/19)
 
 ### Miscellaneous Chores

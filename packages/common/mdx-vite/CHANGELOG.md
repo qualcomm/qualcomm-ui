@@ -1,5 +1,28 @@
 # @qualcomm-ui/mdx-vite
 
+## 2.1.0 (2025/11/21)
+
+### Features
+
+- [docs-plugin]: enable common shiki transformers by default
+- [react-demo-plugin]: enable common shiki transformers
+- [docs-plugin]: add initial shiki-preview-blocks transformer
+- [docs-plugin]: add shiki-transformer-code-attribute
+
+### Bug Fixes
+
+- restrict plugin scope to avoid duplicate init
+- [docs-plugin]: trigger full reload on frontmatter/config changes
+- force reload module when mdx changes to update toc
+- [plugin-hmr]: only invalidate associated modules
+
+### Miscellaneous Chores
+
+- [remark-code-tabs]: update jsdoc comment with example
+- migrate change-case to @qualcomm-ui/utils/change-case
+- remove legacy object key in test config
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/typedoc-common, @qualcomm-ui/utils]
+
 ## 2.0.0 (2025/11/19)
 
 ### BREAKING CHANGES

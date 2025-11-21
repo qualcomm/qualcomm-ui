@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/qds-core",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "qds core components",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "author": "Ryan Bower",
@@ -62,7 +62,7 @@
     "@qualcomm-ui/core": "workspace:^1.0.7",
     "@qualcomm-ui/css-utils": "workspace:^1.0.3",
     "@qualcomm-ui/esbuild": "workspace:^1.0.3",
-    "@qualcomm-ui/tsconfig": "workspace:^1.0.3",
+    "@qualcomm-ui/tsconfig": "workspace:^1.0.4",
     "@qualcomm-ui/utils": "workspace:^1.0.3",
     "@types/culori": "^4.0.0",
     "@types/lodash-es": "^4.17.12",

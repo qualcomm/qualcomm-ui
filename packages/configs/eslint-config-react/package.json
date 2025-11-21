@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-react",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "QUI ESLint config for consistent React code",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",

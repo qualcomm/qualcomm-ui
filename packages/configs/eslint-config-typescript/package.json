@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-typescript",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "QUI ESLint config for consistent TypeScript code",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
