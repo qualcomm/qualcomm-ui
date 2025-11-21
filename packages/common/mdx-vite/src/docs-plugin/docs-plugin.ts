@@ -12,6 +12,7 @@ import type {PluginOption, ViteDevServer} from "vite"
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import {
+  type CompiledMdxFile,
   ConfigLoader,
   fixPath,
   type ResolvedQuiDocsConfig,
@@ -97,7 +98,7 @@ class PluginState {
     })
   }
 
-  buildIndex(shouldLog: boolean) {
+  buildIndex(shouldLog: boolean): CompiledMdxFile[] {
     const files = glob.sync(
       [`${this.routesDir}/**/*.mdx`, `${this.routesDir}/**/*.tsx`],
       {
@@ -107,18 +108,20 @@ class PluginState {
     )
 
     if (!files.length) {
-      return
+      return []
     }
 
     const startTime = Date.now()
 
-    this.indexer.buildIndex(files, shouldLog)
+    const compiledMdxFiles = this.indexer.buildIndex(files, shouldLog)
 
     if (isDev && shouldLog) {
       console.debug(
         `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Compiled search index in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${state.indexer.cachedFileCount ? chalk.greenBright.bold(` (${state.indexer.cachedFileCount}/${state.indexer.mdxFileCount} files cached)`) : ""}`,
       )
     }
+
+    return compiledMdxFiles
   }
 
   /**
@@ -173,7 +176,13 @@ class PluginState {
         const resolvedConfig = this.configLoader.loadConfig()
         this.configFilePath = resolvedConfig.filePath
         this.createIndexer(resolvedConfig)
-        this.handleChange()
+        this.handleChange({
+          onComplete: () => {
+            this.servers.forEach((server) =>
+              server.ws.send({type: "full-reload"}),
+            )
+          },
+        })
       })
   }
 }
@@ -234,13 +243,19 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           return []
         }
 
-        state.buildIndex(true)
+        const files = state.buildIndex(true)
         if (updateFile.endsWith(".mdx")) {
           // invalidate the plugin module so that the virtual file is refreshed
           const virtualModule =
             server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
           if (virtualModule) {
             server.moduleGraph.invalidateModule(virtualModule)
+          }
+          if (files.some((file) => file.metadata.changed.frontmatter)) {
+            console.debug(
+              "Frontmatter changed, reloading plugin to reflect changes in the page configuration",
+            )
+            server.ws.send({type: "full-reload"})
           }
         }
       }

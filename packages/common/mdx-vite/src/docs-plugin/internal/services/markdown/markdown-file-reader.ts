@@ -40,8 +40,12 @@ export class MarkdownFileReader {
     this.cachedFileCount = 0
   }
 
+  readCache(filePath: string): PageCache | null {
+    return this.mdxCache[filePath] || null
+  }
+
   private checkCache(
-    filepath: string,
+    filePath: string,
     fileContents: string,
   ): Omit<PageCache, "md5"> | undefined {
     if (!this.enabled) {
@@ -49,7 +53,7 @@ export class MarkdownFileReader {
     }
 
     const fileMd5 = this.hash(fileContents)
-    const cached = this.mdxCache[filepath]
+    const cached = this.mdxCache[filePath]
 
     if (cached?.md5 !== fileMd5) {
       return

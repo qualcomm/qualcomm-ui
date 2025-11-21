@@ -18,6 +18,8 @@ import type {
 } from "../types"
 
 import {
+  type CompiledMdxFile,
+  type CompiledMdxFileMetadata,
   DocPropsIndexer,
   filterFileGlob,
   getCategoriesFromPathSegments,
@@ -177,14 +179,29 @@ export class SearchIndexer {
    * Parses an MDX file to extract the site data for the nav items, doc props,
    * breadcrumbs, and search index.
    */
-  private compileMdxFile(filepath: string): PageSection[] {
+  private compileMdxFile(filePath: string): CompiledMdxFile {
     const {cached, fileContents, frontmatter} =
-      this.fileCache.readFile(filepath)
+      this.fileCache.readFile(filePath)
+
+    const metadata: CompiledMdxFileMetadata = {
+      changed: {},
+      filePath,
+    }
+    if (!cached) {
+      const previousData = this.fileCache.readCache(filePath)
+      if (previousData) {
+        const cachedFm = JSON.stringify(previousData.frontmatter)
+        const currentFm = JSON.stringify(frontmatter)
+        if (cachedFm !== currentFm) {
+          metadata.changed.frontmatter = true
+        }
+      }
+    }
 
     this.docPropsIndexer.reset()
     this.markdownIndexer.reset()
 
-    const defaultSection: PageSection = this.getPageEntry(filepath, frontmatter)
+    const defaultSection: PageSection = this.getPageEntry(filePath, frontmatter)
     if (!defaultSection.categories.length && defaultSection.title) {
       defaultSection.categories = [defaultSection.title]
     }
@@ -205,10 +222,10 @@ export class SearchIndexer {
       console.debug(
         `${chalk.yellowBright.bold(
           "Failed to parse mdx page content.",
-        )} ${chalk.blueBright.bold(filepath)}`,
+        )} ${chalk.blueBright.bold(filePath)}`,
       )
 
-      return [defaultSection]
+      return {metadata, pageSections: [defaultSection]}
     }
 
     const {sections, toc} = indexedPage
@@ -231,7 +248,7 @@ export class SearchIndexer {
       this._pageDocProps[defaultSection.pathname] = docProps
     }
 
-    this.fileCache.updateCache(filepath, fileContents, {
+    this.fileCache.updateCache(filePath, fileContents, {
       frontmatter,
       page: indexedPage,
       pageDocProps: docProps,
@@ -240,11 +257,11 @@ export class SearchIndexer {
 
     // omit entries from pages that are explicitly omitted from the index.
     if (frontmatter.hideFromSearch) {
-      return [defaultSection]
+      return {metadata, pageSections: [defaultSection]}
     }
 
     if (!sections.length && !docPropSections.length) {
-      return [defaultSection]
+      return {metadata, pageSections: [defaultSection]}
     }
 
     const sectionReturn: PageSection[] = [
@@ -257,7 +274,7 @@ export class SearchIndexer {
       )
     }
 
-    return sectionReturn
+    return {metadata, pageSections: sectionReturn}
   }
 
   private formatSections(
@@ -305,7 +322,10 @@ export class SearchIndexer {
     return entry
   }
 
-  buildIndex(inputFileGlob: string[], logWarnings: boolean = true): void {
+  buildIndex(
+    inputFileGlob: string[],
+    logWarnings: boolean = true,
+  ): CompiledMdxFile[] {
     this.logWarnings = logWarnings
     this.fileCache.logWarnings = logWarnings
     // Windows path fix
@@ -321,7 +341,11 @@ export class SearchIndexer {
     )
 
     this._mdxFileCount = mdxFileGlob.length
-    const mdxIndex = mdxFileGlob.map((file) => this.compileMdxFile(file)).flat()
+    const compiledFiles = mdxFileGlob.map((file) => this.compileMdxFile(file))
+
+    const mdxIndex = compiledFiles
+      .map((fileData) => fileData.pageSections)
+      .flat()
 
     filterFileGlob(
       fileGlob,
@@ -333,5 +357,7 @@ export class SearchIndexer {
     this._searchIndex.push(...mdxIndex.filter((entry) => !entry.hideFromSearch))
 
     this.navBuilder.build()
+
+    return compiledFiles
   }
 }
