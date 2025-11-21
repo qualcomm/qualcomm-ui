@@ -256,6 +256,7 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
             server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
           if (virtualModule) {
             server.moduleGraph.invalidateModule(virtualModule)
+            await server.reloadModule(virtualModule)
           }
           if (files.some((file) => file.metadata.changed.frontmatter)) {
             console.debug(
