@@ -3,7 +3,6 @@
 
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
-import {capitalCase} from "change-case"
 import {ChevronLeft, ChevronRight} from "lucide-react"
 
 import type {NavItem} from "@qualcomm-ui/mdx-common"
@@ -18,6 +17,7 @@ import {
   useMdxDocsContext,
 } from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import {capitalCase} from "@qualcomm-ui/utils/change-case"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {TreeCollection} from "@qualcomm-ui/utils/collection"
 

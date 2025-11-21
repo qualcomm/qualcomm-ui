@@ -76,7 +76,6 @@
     "@vitest/coverage-v8": "^4.0.8",
     "@vitest/ui": "^4.0.8",
     "babel-plugin-react-compiler": "^1.0.0",
-    "change-case": "^5.4.4",
     "esbuild": "^0.25.8",
     "fuzzysort": "^3.0.1",
     "lodash-es": "^4.17.21",

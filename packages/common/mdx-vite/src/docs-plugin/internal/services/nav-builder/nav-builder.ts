@@ -1,7 +1,6 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {capitalCase} from "change-case"
 import {sortBy} from "lodash-es"
 import {v4 as uuidv4} from "uuid"
 
@@ -10,6 +9,7 @@ import type {
   PageFrontmatter,
   PageSection,
 } from "@qualcomm-ui/mdx-common"
+import {capitalCase} from "@qualcomm-ui/utils/change-case"
 
 import type {
   NavMeta,

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {program} from "@commander-js/extra-typings"
-import {kebabCase} from "change-case"
+import {kebabCase} from "@qualcomm-ui/utils/change-case"
 import {
   access,
   mkdir,

@@ -1,6 +1,7 @@
 import type {GetLocalVariablesResponse} from "@figma/rest-api-spec"
-import {camelCase, kebabCase} from "change-case"
 import {sortBy} from "lodash-es"
+
+import {camelCase, kebabCase} from "@qualcomm-ui/utils/change-case"
 
 import type {
   ColorRawValue,
