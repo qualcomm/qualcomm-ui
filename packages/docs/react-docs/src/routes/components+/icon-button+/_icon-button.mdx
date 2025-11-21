@@ -9,9 +9,15 @@ import * as demos from "./demos"
 
 # {frontmatter.title}
 
+An icon button performs an action when clicked (like a button), and it visually represents the action it will perform (like an icon).
+
 ```tsx
 import {IconButton} from "@qualcomm-ui/react/button"
 ```
+
+## Accessibility Guidelines
+
+Icon-only buttons rely on visual cues that screen readers cannot access. Use [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label) or [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-labelledby) to give every icon-only button an accessible name so its purpose is clear to assistive technologies.
 
 ## Examples
 

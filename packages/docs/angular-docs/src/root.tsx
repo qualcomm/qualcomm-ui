@@ -20,7 +20,7 @@ import {
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
-  isQdsTheme,
+  isQdsBrand,
   type QdsBrand,
   QdsThemeContextProvider,
   type QdsThemeContextValue,
@@ -71,7 +71,7 @@ export const loader: LoaderFunction = async ({request}) => {
   return {
     hideDemoBrandSwitcher: docState?.hideDemoBrandSwitcher || false,
     packageManager: docState?.packageManager || "npm",
-    qdsBrand: isQdsTheme(qdsTheme) ? qdsTheme : ("qualcomm" satisfies QdsBrand),
+    qdsBrand: isQdsBrand(qdsTheme) ? qdsTheme : ("qualcomm" satisfies QdsBrand),
     ssrUserAgent: request.headers.get("user-agent"),
     theme: isTheme(cookieTheme) ? cookieTheme : Theme.DARK,
   }

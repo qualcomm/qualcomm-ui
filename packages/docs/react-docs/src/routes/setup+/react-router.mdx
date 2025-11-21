@@ -8,7 +8,7 @@ import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 This library requires React 19+.
 
-There are four quick steps to installation:
+There are four steps to installation:
 
 1. Install the npm packages
 2. Import the CSS
@@ -91,15 +91,148 @@ In your `root.tsx` file, add the font links:
 
 ## 4. Configure theme provider
 
-QUI styles support both light and dark modes. Follow this step to configure cookies for theme switching so that the user's preferred theme is remembered when they return to the site.
+QUI components support both light and dark modes. Choose from one of two approachces for your site:
 
-Create a file:
+- [Theme switching (dynamic)](./#theme-switching-dynamic): support both light and dark modes, persist the user's choice to browser storage
+- [Single theme (static)](./#single-theme-static): choose a single theme
 
-- `app/sessions.server.ts`
+### Theme switching (dynamic)
+
+Follow this step to configure a cookie for theme switching. The user's preferred theme will be restored when they return to the site.
+
+#### Create a file:
 
 ```ts
-export const qdsBrandCookie = createCookie("qds-brand", {
+import {createCookie} from "react-router"
+
+// app/sessions.server.ts
+export const qdsThemeCookie = createCookie("app-qds-theme", {
   // one year
-  maxAge: 31449600,
+  maxAge: 31536000,
 })
+```
+
+#### Update your root component
+
+First we'll read the cookie. Create a [loader function](https://reactrouter.com/start/framework/data-loading#server-data-loading):
+
+```tsx
+import {type LoaderFunctionArgs, useLoaderData} from "react-router"
+import {
+  isTheme,
+  PreventFlashOnWrongTheme,
+  Theme,
+  ThemeProvider,
+  useTheme,
+} from "@qualcomm-ui/react-router-utils/client"
+import {type QdsThemeContextValue} from "@qualcomm-ui/react/qds-theme"
+
+import {qdsThemeCookie} from "./sessions.server"
+
+interface RootLoaderData {
+  qdsTheme: Theme
+}
+
+export async function loader({
+  request,
+}: LoaderFunctionArgs): Promise<RootLoaderData> {
+  const cookie = request.headers.get("cookie")
+
+  const qdsTheme = await qdsThemeCookie.parse(cookie)
+
+  return {
+    // add fallback if data from cookie is malformed
+    qdsTheme: isTheme(qdsTheme) ? qdsTheme : Theme.DARK,
+  }
+}
+
+// ...
+```
+
+Then we'll read the data and set up the theme provider:
+
+```tsx
+export default function App({children}) {
+  const {qdsTheme} = useLoaderData<RootLoaderData>()
+
+  return (
+    <html
+      data-brand="qualcomm" // or snapdragon, or dragonwing
+      data-theme={qdsTheme}
+      lang="en"
+      style={{colorScheme: qdsTheme || "dark"}}
+    >
+      <head>
+        {/* If the cookie is empty, this component injects an inline script
+       to apply the user's system theme before hydration */}
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(qdsTheme)} />
+      </head>
+      <body>
+        <ThemeProvider theme={qdsTheme} themeAction="/action/set-theme">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+Next, we'll set up the server action that stores theme changes:
+
+```ts
+// app/routes/action.set-theme.ts
+import type {ActionFunction} from "react-router"
+
+import {createThemeAction} from "@qualcomm-ui/react-router-utils/client"
+
+import {qdsThemeCookie} from "../sessions.server"
+
+export const action: ActionFunction = createThemeAction(qdsThemeCookie)
+```
+
+(Optional) create a component that toggles between themes:
+
+```tsx
+import {
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react"
+
+import {MoonIcon, SunIcon} from "lucide-react"
+
+import {IconButton} from "@qualcomm-ui/react/button"
+import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
+
+export function ThemeToggle(): ReactNode {
+  const [theme, setTheme] = useTheme()
+
+  const handleThemeSwitch = () => {
+    const nextTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
+    setTheme(nextTheme)
+  }
+
+  return (
+    <IconButton
+      aria-label="Toggle Theme"
+      icon={theme === Theme.LIGHT ? SunIcon : MoonIcon}
+      onClick={handleThemeSwitch}
+      size="sm"
+      variant="ghost"
+    />
+  )
+}
+```
+
+### Single theme (static)
+
+If you only intend to support one theme, apply the theme attribute to your app's root element:
+
+```tsx
+// [!code word:data-theme="dark"]
+<html data-theme="dark" data-brand="qualcomm" style={{colorScheme: "dark"}}>
+  {/* ... */}
+</html>
 ```
