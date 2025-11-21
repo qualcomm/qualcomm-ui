@@ -44,6 +44,13 @@ export default {
       separator: true,
     },
     {
+      children: [
+        {
+          group: "Data Display",
+          id: "badges",
+          ignoreRouteMetaOrder: true,
+        },
+      ],
       expanded: true,
       groupOrder: [
         "Buttons",

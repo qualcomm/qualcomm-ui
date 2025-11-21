@@ -1,0 +1,66 @@
+/* shared styles */
+
+.qui-badge__root {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 1;
+  cursor: default;
+  box-sizing: border-box;
+
+  &[data-size="xxs"] {
+    --status-size: var(--sizing-40);
+    --icon-radius: var(--border-radius-xs);
+    --icon-size: var(--sizing-60);
+  }
+
+  &[data-size="xs"] {
+    --status-size: var(--sizing-40);
+    --icon-radius: var(--border-radius-xs);
+    --icon-size: var(--sizing-70);
+  }
+
+  &[data-size="sm"] {
+    border-radius: var(--border-radius-xs);
+    font: var(--font-static-body-xs-default);
+    padding: var(--spacing-10) var(--spacing-40);
+    --count-size: var(--sizing-80);
+    --status-size: var(--sizing-50);
+    --icon-radius: var(--border-radius-sm);
+    --icon-size: var(--sizing-80);
+  }
+
+  &[data-size="md"] {
+    border-radius: var(--border-radius-sm);
+    font: var(--font-static-body-sm-default);
+    padding: var(--spacing-20) var(--spacing-50);
+    --count-size: var(--sizing-90);
+    --status-size: var(--sizing-60);
+    --icon-radius: var(--border-radius-sm);
+    --icon-size: var(--sizing-90);
+  }
+
+  &[data-size="lg"] {
+    border-radius: var(--border-radius-sm);
+    font: var(--font-static-body-md-default);
+    padding: var(--spacing-40) var(--spacing-70);
+    --count-size: var(--sizing-120);
+    --status-size: var(--sizing-70);
+    --icon-radius: var(--border-radius-md);
+    --icon-size: var(--sizing-120);
+  }
+
+  &[data-size="xl"] {
+    --status-size: var(--sizing-80);
+    --icon-radius: var(--border-radius-lg);
+    --icon-size: var(--sizing-140);
+  }
+
+  /* MOAR SPECIFICITY */
+  &[data-disabled][data-disabled][data-disabled] {
+    background: var(--color-utility-disabled-background);
+    border-color: var(--color-utility-disabled-border);
+    color: var(--color-utility-disabled-text);
+    --icon-color: var(--color-utility-disabled-icon);
+  }
+}

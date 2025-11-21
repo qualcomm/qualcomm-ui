@@ -1,0 +1,51 @@
+---
+title: Text Badge
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+Display text labels in compact, color-coded containers. Use text badges to categorize content, show status, or highlight information with concise labels.
+
+```typescript
+import {BadgeDirective} from "@qualcomm-ui/angular/badge"
+```
+
+## Examples
+
+### Emphasis
+
+Use the [emphasis](./#emphasis-1) input to convey semantic meaning or categorize content. Available semantic emphasis are: `neutral`, `brand`, `info`, `success`, `warning`, and `danger`. Color emphasis are: `blue`, `cyan`, `green`, `kiwi`, `magenta`, `orange`, `purple`, `red`, `teal`, and `yellow`.
+
+<QdsDemo name="TextBadgeEmphasisDemo" />
+
+### Variant
+
+The [variant](./#variant-1) input controls the aspect of the badge. Two variants are available: `default` (bolder appearance) and `subtle` (muted appearance).
+
+<QdsDemo name="TextBadgeVariantDemo" />
+
+### Size
+
+Control dimensions using the [size](./#size-1) input. Three sizes are available: `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="TextBadgeSizeDemo" />
+
+### Disabled
+
+Set the [disabled](./#disabled-1) input to visually indicate that the badge is inactive.
+
+<QdsDemo name="TextBadgeDisabledDemo" />
+
+## API
+
+### q-badge
+
+<TypeDocProps name="BadgeDirective" />
+
+<TypeDocAngularAttributes name="QdsTextBadgeRootBindings" />
