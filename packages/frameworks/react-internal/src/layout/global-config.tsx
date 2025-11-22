@@ -1,8 +1,11 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 import type {ReactElement} from "react"
 
 import {AlertCircle, Settings} from "lucide-react"
 
-import {IconButton} from "@qualcomm-ui/react/button"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Popover} from "@qualcomm-ui/react/popover"
 import {type QdsBrand, useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
@@ -32,11 +35,9 @@ export function GlobalConfig(): ReactElement {
     <Popover
       label="Global Config"
       trigger={
-        <IconButton
+        <HeaderBar.ActionIconButton
           aria-label="Configure global settings"
-          icon={<Icon icon={Settings} size={14} />}
-          size="sm"
-          variant="ghost"
+          icon={Settings}
         />
       }
     >

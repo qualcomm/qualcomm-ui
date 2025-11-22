@@ -27,6 +27,10 @@ import {
   useQdsThemeContext,
 } from "@qualcomm-ui/react/qds-theme"
 import {
+  GlobalConfigContextProvider,
+  type GlobalConfigContextValue,
+} from "@qualcomm-ui/react-internal/layout"
+import {
   type PackageManager,
   type RouteDemoState,
   SiteContextProvider,
@@ -46,11 +50,7 @@ import {
   useTheme,
 } from "@qualcomm-ui/react-router-utils/client"
 
-import {
-  AppDocsLayout,
-  GlobalConfigContextProvider,
-  type GlobalConfigContextValue,
-} from "./components"
+import {AppDocsLayout} from "./components"
 import {
   demoStateCookie,
   qdsBrandCookie,
@@ -246,10 +246,7 @@ export default function AppWithProviders() {
   return (
     <SiteContextProvider value={docsSiteData}>
       <PropsLayoutProvider value={propsLayoutContext}>
-        <ThemeProvider
-          specifiedTheme={data.theme}
-          themeAction="/action/set-theme"
-        >
+        <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
           <QdsThemeContextProvider value={qdsThemeContext}>
             <Provider>
               <App />

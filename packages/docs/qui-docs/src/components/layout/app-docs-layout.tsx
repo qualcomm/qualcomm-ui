@@ -7,23 +7,21 @@ import {
 } from "react-router"
 
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
-import {Link} from "@qualcomm-ui/react/link"
 import {PortalContextProvider} from "@qualcomm-ui/react-core/portal"
 import {
-  DocsFooter,
+  DocLink,
+  Footer,
+  GlobalConfig,
+  HeaderLogo,
+  HeaderRepositoryLink,
+  QuiEcosystemMenu,
+  ThemeToggle,
+} from "@qualcomm-ui/react-internal/layout"
+import {
   DocsLayout,
   type DocsLayoutSettings,
-  MobileSidebar,
 } from "@qualcomm-ui/react-mdx/docs-layout"
-import {Github} from "@qualcomm-ui/react-mdx/icons"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
-
-import {DocLink} from "./doc-link"
-import {GithubChangelogLink} from "./github-changelog-link"
-import {GlobalConfig} from "./global-config"
-import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
-import {QuiLogo} from "./qui-logo"
-import {ThemeToggle} from "./theme-toggle"
 
 interface Props extends Partial<DocsLayoutSettings> {
   /**
@@ -44,7 +42,6 @@ export function AppDocsLayout({
   portalContainerRef,
   ...props
 }: Props): ReactNode {
-  const [menuOpen, setMenuOpen] = useState(false)
   const [searchParams] = useSearchParams()
 
   // persist the search input to the URL
@@ -69,66 +66,24 @@ export function AppDocsLayout({
       docProps={{
         changelogUrl: "/changelogs/react",
       }}
-      footer={
-        <DocsFooter className="flex flex-col items-start justify-center gap-1">
-          Copyright © 2026 QUALCOMM incorporated. All rights reserved.{" "}
-          <span>
-            This site is built with{" "}
-            <Link
-              href="https://docs-next.qui.qualcomm.com/"
-              size="md"
-              target="_blank"
-            >
-              QUI Docs
-            </Link>
-            . Head over to the{" "}
-            <Link
-              href="https://github.com/qualcomm/qualcomm-ui-templates"
-              size="md"
-              target="_blank"
-            >
-              template repository
-            </Link>{" "}
-            to start building.
-          </span>
-        </DocsFooter>
-      }
+      footer={<Footer />}
       header={
         <div className="qui-docs__header">
           <HeaderBar.Root>
-            <HeaderBar.Logo>
-              <MobileSidebar>
-                <QuiLogo width={20} />
-                <HeaderBar.AppTitle>QUI Docs</HeaderBar.AppTitle>
-              </MobileSidebar>
-              <ReactRouterLink className="flex items-center gap-2" to="/">
-                <QuiLogo width={20} />
-                <HeaderBar.AppTitle>
-                  <span className="whitespace-nowrap">QUI Docs</span>
-                </HeaderBar.AppTitle>
-              </ReactRouterLink>
-              <GithubChangelogLink />
-            </HeaderBar.Logo>
+            <HeaderLogo
+              appTitle="QUI Docs"
+              changelogHref="https://github.com/qualcomm/qualcomm-ui/tree/main/packages/frameworks/react-mdx/CHANGELOG.md"
+            />
 
             <HeaderBar.Divider />
 
             <HeaderBar.Nav className="hidden @min-[600px]:flex">
-              <QuiEcosystemMenu onOpenChange={setMenuOpen} open={menuOpen} />
+              <QuiEcosystemMenu />
             </HeaderBar.Nav>
 
             <HeaderBar.ActionBar>
               <SiteSearch />
-              <HeaderBar.ActionIconButton
-                aria-label="Navigate to the Github repository"
-                icon={Github}
-                render={
-                  <a
-                    href="https://github.com/qualcomm/qualcomm-ui"
-                    rel="noreferrer"
-                    target="_blank"
-                  />
-                }
-              />
+              <HeaderRepositoryLink />
               <GlobalConfig />
               <ThemeToggle />
             </HeaderBar.ActionBar>
