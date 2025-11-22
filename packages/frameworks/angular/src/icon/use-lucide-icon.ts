@@ -150,7 +150,7 @@ export function useLucideIcon<
       icons[iconName] || icons[`${iconName}Icon`] || icons[iconOrName]
     if (options.throwOnUnresolvedStringIcon && !icon) {
       throw new Error(
-        `Expected to find an icon named "${iconName}" but none was provided. Refer to the provider documentation at https://qui.aws.qualcomm.com/components/icons#provider`,
+        `Expected to find an icon named "${iconName}" but none was provided. Refer to the provider documentation at https://angular-next.qui.qualcomm.com/components/icon#provider`,
       )
     }
     return icon
