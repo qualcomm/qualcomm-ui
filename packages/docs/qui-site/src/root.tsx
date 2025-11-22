@@ -153,10 +153,7 @@ export default function AppWithProviders() {
   return (
     <SiteContextProvider value={docsSiteData}>
       <PropsLayoutProvider value={propsLayoutContext}>
-        <ThemeProvider
-          theme={data.theme}
-          themeAction="/action/set-theme"
-        >
+        <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
           <Provider>
             <App />
           </Provider>
