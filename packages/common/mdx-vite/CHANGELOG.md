@@ -1,5 +1,11 @@
 # @qualcomm-ui/mdx-vite
 
+## 2.1.2 (2025/11/21)
+
+### Bug Fixes
+
+- [docs-plugin]: add css HMR
+
 ## 2.1.1 (2025/11/21)
 
 ### Bug Fixes
