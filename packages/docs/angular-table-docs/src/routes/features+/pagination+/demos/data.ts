@@ -70,7 +70,7 @@ export function createUserQuery(
       isInitialLoad.set(false)
       return data
     },
-    queryKey: ["mock-user-data", dimensions],
+    queryKey: ["mock-user-data", "pagination", dimensions],
     refetchOnWindowFocus: false,
   }))
 }

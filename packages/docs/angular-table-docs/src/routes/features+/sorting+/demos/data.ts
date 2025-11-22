@@ -62,7 +62,7 @@ export function createUserQuery(
         method: "POST",
       }).then((res) => res.json())
     },
-    queryKey: ["mock-user-data", dimensions],
+    queryKey: ["mock-user-data", "sorting", dimensions],
     refetchOnWindowFocus: false,
   }))
 }
