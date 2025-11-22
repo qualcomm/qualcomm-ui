@@ -3,7 +3,7 @@
 
 import {InjectionToken, type Signal} from "@angular/core"
 
-import type {Dict} from "@qualcomm-ui/utils/machine"
+import type {Dict} from "@qualcomm-ui/utils/object"
 
 export interface IconTokenContext {
   getBindings: Signal<Dict>

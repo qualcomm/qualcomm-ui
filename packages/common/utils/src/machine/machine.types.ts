@@ -5,11 +5,10 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {IdParam} from "@qualcomm-ui/utils/attributes"
+import type {Dict} from "@qualcomm-ui/utils/object"
 
 import type {JSX} from "./jsx"
 import type {ElementCleanup} from "./prop-normalizer"
-
-export type Dict = Record<string, any>
 
 export type IdRegistrationProps = IdParam & ElementCleanup
 

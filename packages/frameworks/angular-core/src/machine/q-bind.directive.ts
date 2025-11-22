@@ -17,8 +17,9 @@ import {
 
 import {isEqual} from "@qualcomm-ui/utils/equal"
 import {isNumber, isString} from "@qualcomm-ui/utils/guard"
+import type {Dict} from "@qualcomm-ui/utils/object"
 
-import type {Dict, StyleObject} from "./normalize-props"
+import type {StyleObject} from "./normalize-props"
 
 export interface NgBindOptions {
   /**

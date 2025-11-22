@@ -4,8 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {Dict} from "@qualcomm-ui/utils/object"
+
 import type {JSX} from "./jsx"
-import type {Dict} from "./machine.types"
 
 // It's still fundamentally Dict, but signals transformation
 type NormalizedPropsDict = Dict // Or Record<string, any>

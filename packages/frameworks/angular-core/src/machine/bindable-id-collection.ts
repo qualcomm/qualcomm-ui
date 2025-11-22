@@ -3,7 +3,8 @@
 
 import {signal} from "@angular/core"
 
-import type {BindableIdCollection, Dict} from "@qualcomm-ui/utils/machine"
+import type {BindableIdCollection} from "@qualcomm-ui/utils/machine"
+import type {Dict} from "@qualcomm-ui/utils/object"
 
 export function bindableIdCollection<T extends Dict>(): BindableIdCollection<
   any,

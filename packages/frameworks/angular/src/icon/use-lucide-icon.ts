@@ -26,7 +26,7 @@ import {
   type QdsIconSize,
 } from "@qualcomm-ui/qds-core/icon"
 import {pascalCase} from "@qualcomm-ui/utils/change-case"
-import type {Dict} from "@qualcomm-ui/utils/machine"
+import type {Dict} from "@qualcomm-ui/utils/object"
 
 export interface UseLucideIconOptions<
   ThrowOnUnresolvedStringIcon extends boolean | undefined = false,

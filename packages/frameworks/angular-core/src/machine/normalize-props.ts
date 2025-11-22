@@ -5,6 +5,7 @@ import {normalizeAriaAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {isObject, isString} from "@qualcomm-ui/utils/guard"
 import {createPropNormalizer} from "@qualcomm-ui/utils/machine"
+import type {Dict} from "@qualcomm-ui/utils/object"
 
 const propMap: Record<string, string> = {
   className: "class",
@@ -32,8 +33,6 @@ const transformers: Record<string, (value: unknown) => any> = {
 }
 
 export type StyleObject = Record<string, string | number>
-
-export type Dict = Record<string, any>
 
 export const normalizeProps = createPropNormalizer((props) => {
   const normalized: Dict = {}
