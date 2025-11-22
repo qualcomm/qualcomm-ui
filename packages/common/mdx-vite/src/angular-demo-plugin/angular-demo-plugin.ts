@@ -824,6 +824,7 @@ export function angularDemoPlugin({
 
           sourceCode.push({
             fileName: importedFileName,
+            filePath: resolvedPath,
             highlighted: {
               full: highlightedImportedSource,
               preview: "",
