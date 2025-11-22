@@ -16,6 +16,18 @@
   "references": [
     {
       "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../react/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-mdx/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-router-utils/tsconfig.lib.json"
     }
   ]
 }

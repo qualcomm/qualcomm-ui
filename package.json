@@ -14,7 +14,7 @@
     "build:react": "turbo run build --filter=!./packages/configs/* --filter=!./packages/docs/* --filter=!./packages/debug-apps/* --filter=!./packages/frameworks/angular*",
     "build:docs": "turbo run build --filter=./packages/docs/*",
     "dev": "turbo run dev --filter=!./packages/docs/* --filter=!./packages/debug-apps/*",
-    "dev:react": "turbo run dev --filter '@qualcomm-ui/react-mdx*...' --filter '@qualcomm-ui/mdx-vite*...'",
+    "dev:react": "turbo run dev --filter '@qualcomm-ui/react-internal' --filter '@qualcomm-ui/react-mdx*...' --filter '@qualcomm-ui/mdx-vite*...'",
     "dev:angular": "turbo run dev --filter=@qualcomm-ui/angular-core --filter=@qualcomm-ui/angular",
     "build:typedoc:ci": "turbo run build:typedoc --filter=$PACKAGE_NAME",
     "angular": "pnpm -C packages/frameworks/angular",

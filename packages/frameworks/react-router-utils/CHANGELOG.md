@@ -1,5 +1,11 @@
 # @qualcomm-ui/react-router-utils
 
+## 1.0.6 (2025/11/21)
+
+### Bug Fixes
+
+- [theme-provider]: make deprecated specifiedTheme prop optional
+
 ## 1.0.5 (2025/11/21)
 
 ### Code Refactoring

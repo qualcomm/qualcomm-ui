@@ -4,13 +4,12 @@ import {getDemo} from "virtual:qui-demo-scope/auto"
 
 import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
 import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
+import {useGlobalConfigContext} from "@qualcomm-ui/react-internal/layout"
 import {
   QdsDemoRunner,
   type QdsDemoRunnerProps,
 } from "@qualcomm-ui/react-mdx/code-demo"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
-
-import {useGlobalConfigContext} from "../layout"
 
 interface Props
   extends Omit<QdsDemoRunnerProps, "qdsBrand" | "setQdsBrand" | "demo"> {

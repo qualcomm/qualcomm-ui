@@ -1,5 +1,15 @@
 # @qualcomm-ui/react-mdx
 
+## 1.5.0 (2025/11/21)
+
+### Features
+
+- [qui-ecosystem]: add qui-docs link
+
+### Bug Fixes
+
+- [site-search]: increase text-input right margin
+
 ## 1.4.0 (2025/11/21)
 
 ### Features

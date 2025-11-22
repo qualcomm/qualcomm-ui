@@ -19,6 +19,9 @@
     },
     {
       "path": "../../common/mdx-vite/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-internal/tsconfig.lib.json"
     }
   ]
 }

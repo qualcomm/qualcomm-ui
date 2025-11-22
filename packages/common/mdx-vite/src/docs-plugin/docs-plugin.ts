@@ -244,7 +244,10 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       })
       state.servers.push(server)
     },
-    handleHotUpdate: async ({file: updateFile, server}) => {
+    handleHotUpdate: async ({file: updateFile, modules, server}) => {
+      if (updateFile.endsWith(".css")) {
+        return modules
+      }
       const file = fixPath(updateFile)
       if (
         (!config.hotUpdateIgnore || !config.hotUpdateIgnore.test(file)) &&

@@ -5,9 +5,16 @@ import type {ReactElement} from "react"
 
 import {QuiLogo} from "./qui-logo"
 
+export interface QuiEcosystemEntry {
+  description: string
+  href: string
+  label: string
+  logo: ReactElement
+}
+
 export const quiEcosystem: Record<
   "angular" | "angularTable" | "quiDocs" | "react" | "reactTable",
-  {description: string; href: string; label: string; logo: ReactElement}
+  QuiEcosystemEntry
 > = {
   angular: {
     description: "@qualcomm-ui/angular",
@@ -22,7 +29,7 @@ export const quiEcosystem: Record<
     logo: <QuiLogo height={18} width={18} />,
   },
   quiDocs: {
-    description: "@qualcomm-ui/react-mdx",
+    description: "QUI Docs",
     href: "https://docs-next.qui.qualcomm.com",
     label: "QUI Docs",
     logo: <QuiLogo height={18} width={16} />,

@@ -5,6 +5,7 @@ import {getAngularDemoInfo} from "virtual:angular-demo-registry"
 import type {AngularDemoInfo} from "@qualcomm-ui/mdx-common"
 import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
+import {useGlobalConfigContext} from "@qualcomm-ui/react-internal/layout"
 import {
   QdsAngularDemoRunner,
   type QdsAngularDemoRunnerProps,
@@ -13,7 +14,7 @@ import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useDemoUpdateContext, useGlobalConfigContext} from "../layout"
+import {useDemoUpdateContext} from "../layout"
 
 declare global {
   interface Window {

@@ -57,7 +57,7 @@ export interface ThemeProviderProps {
   /**
    * @deprecated migrate to the {@link theme} prop
    */
-  specifiedTheme: Theme | null
+  specifiedTheme?: Theme | null
   /**
    * The theme to use for the application.
    */
