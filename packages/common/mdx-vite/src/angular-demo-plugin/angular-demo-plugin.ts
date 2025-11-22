@@ -173,10 +173,10 @@ export function angularDemoPlugin({
       })
     },
 
-    async handleHotUpdate({file, server}) {
+    async handleHotUpdate({file, modules, server}) {
       if (!isAngularDemoFile(file)) {
         if (isCssAsset(file)) {
-          return server.moduleGraph.getModulesByFile(file)?.values()?.toArray()
+          return modules
         } else if (file.endsWith("main.js")) {
           const ids = [...hotUpdateDemoIds]
           server.ws.send({
@@ -210,22 +210,8 @@ export function angularDemoPlugin({
 
         if (affectedDemos.length > 0) {
           hotUpdateDemoIds = []
-          const mainModule = server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
-          if (mainModule) {
-            server.moduleGraph.invalidateModule(mainModule)
-            await server.reloadModule(mainModule)
-          }
           for (const demo of affectedDemos) {
             hotUpdateDemoIds.push(demo.id)
-          }
-          const pageIds = new Set(affectedDemos.map((demo) => demo.pageId))
-          for (const pageId of pageIds) {
-            const pageModuleId = `\0${VIRTUAL_MODULE_PREFIX}${pageId}`
-            const pageModule = server.moduleGraph.getModuleById(pageModuleId)
-            if (pageModule) {
-              server.moduleGraph.invalidateModule(pageModule)
-              await server.reloadModule(pageModule)
-            }
           }
         }
 
