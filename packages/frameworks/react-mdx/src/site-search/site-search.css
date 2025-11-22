@@ -29,7 +29,7 @@
 
 .qui-site-search__text-input {
   display: none;
-  margin-right: 4px;
+  margin-right: 8px;
   width: 185px;
   @container (min-width: 850px) {
     display: flex;
