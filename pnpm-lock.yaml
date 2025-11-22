@@ -3824,9 +3824,15 @@ importers:
       '@qualcomm-ui/esbuild':
         specifier: workspace:*
         version: link:../../common/esbuild
+      '@qualcomm-ui/react':
+        specifier: workspace:*
+        version: link:../react
       '@qualcomm-ui/react-core':
         specifier: workspace:*
         version: link:../react-core
+      '@qualcomm-ui/react-mdx':
+        specifier: workspace:*
+        version: link:../react-mdx
       '@qualcomm-ui/react-router-utils':
         specifier: workspace:*
         version: link:../react-router-utils
@@ -3869,6 +3875,9 @@ importers:
       react-dom:
         specifier: 'catalog:'
         version: 19.2.0(react@19.2.0)
+      react-router:
+        specifier: 'catalog:'
+        version: 7.9.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       shx:
         specifier: ^0.4.0
         version: 0.4.0

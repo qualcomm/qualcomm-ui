@@ -11,5 +11,3 @@ export function DocLink({href, ref, ...props}: DocLinkProps) {
     <Link ref={ref} prefetch="intent" to={href} viewTransition {...props} />
   )
 }
-
-DocLink.displayName = "DocLink"

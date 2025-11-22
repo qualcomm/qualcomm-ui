@@ -27,6 +27,7 @@ pnpm i
 
 ## Usage
 
+- It's generally a good idea to run `pnpm build` if you've just pulled from the main branch.
 - `pnpm dev` will run the dev script in every package except for documentation sites. I recommend using the filter option with `...`:
   - `pnpm dev --filter @qualcomm-ui/react...`
   - `pnpm dev --filter @qualcomm-ui/angular...`

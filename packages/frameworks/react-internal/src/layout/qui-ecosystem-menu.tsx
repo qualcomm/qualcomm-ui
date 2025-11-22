@@ -7,7 +7,7 @@ import {Menu, type MenuRootProps} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import {quiEcosystem} from "@qualcomm-ui/react-mdx/qui-ecosystem"
 
-const {angular, angularTable, quiDocs, react} = quiEcosystem
+const {angular, angularTable, quiDocs, react, reactTable} = quiEcosystem
 
 export interface QuiEcosystemMenuProps extends Partial<MenuRootProps> {}
 
@@ -20,18 +20,20 @@ export function QuiEcosystemMenu(props: QuiEcosystemMenuProps): ReactElement {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            {[quiDocs, react, angular, angularTable].map((entry) => (
-              <Menu.Item
-                key={entry.label}
-                render={<a href={entry.href} />}
-                value="qui-docs"
-              >
-                <Menu.ItemStartIcon icon={entry.logo} />
-                <Menu.ItemLabel className="font-code-sm-bold">
-                  {entry.description}
-                </Menu.ItemLabel>
-              </Menu.Item>
-            ))}
+            {[react, reactTable, angular, angularTable, quiDocs].map(
+              (entry) => (
+                <Menu.Item
+                  key={entry.label}
+                  render={<a href={entry.href} />}
+                  value="qui-docs"
+                >
+                  <Menu.ItemStartIcon icon={entry.logo} />
+                  <Menu.ItemLabel className="font-code-sm-bold">
+                    {entry.description}
+                  </Menu.ItemLabel>
+                </Menu.Item>
+              ),
+            )}
           </Menu.Content>
         </Menu.Positioner>
       </Portal>

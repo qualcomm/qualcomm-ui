@@ -9,25 +9,23 @@ import {
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Link} from "@qualcomm-ui/react/link"
 import {
-  DocsFooter,
-  DocsLayout,
-  type DocsLayoutSettings,
-  MobileSidebar,
-} from "@qualcomm-ui/react-mdx/docs-layout"
-import {Github} from "@qualcomm-ui/react-mdx/icons"
-import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
-import {updateSiteState} from "@qualcomm-ui/react-router-utils/client"
-
-import {DocLink} from "./doc-link"
-import {GithubChangelogLink} from "./github-changelog-link"
-import {GlobalConfig} from "./global-config"
-import {
+  DocLink,
+  Footer,
+  GlobalConfig,
   GlobalConfigContextProvider,
   type GlobalConfigContextValue,
-} from "./global-config-context"
-import {QuiEcosystemMenu} from "./qui-ecosystem-menu"
-import {QuiLogo} from "./qui-logo"
-import {ThemeToggle} from "./theme-toggle"
+  HeaderAiLink,
+  HeaderLogo,
+  HeaderRepositoryLink,
+  QuiEcosystemMenu,
+  ThemeToggle,
+} from "@qualcomm-ui/react-internal/layout"
+import {
+  DocsLayout,
+  type DocsLayoutSettings,
+} from "@qualcomm-ui/react-mdx/docs-layout"
+import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
+import {updateSiteState} from "@qualcomm-ui/react-router-utils/client"
 
 interface Props extends Partial<DocsLayoutSettings> {
   /**
@@ -53,7 +51,6 @@ export function AppDocsLayout({
   sidebarScrollTop,
   ...props
 }: Props): ReactNode {
-  const [menuOpen, setMenuOpen] = useState(false)
   const [searchParams] = useSearchParams()
   const [hideDemoBrandSwitcher, setHideDemoBrandSwitcher] = useState<boolean>(
     hideDemoBrandSwitcherProp,
@@ -124,65 +121,26 @@ export function AppDocsLayout({
   return (
     <GlobalConfigContextProvider value={globalConfigContext}>
       <DocsLayout
-        docProps={{
-          changelogUrl: "/changelogs/react",
-        }}
-        footer={
-          <DocsFooter className="flex flex-col items-start justify-center gap-1">
-            Copyright © 2026 QUALCOMM incorporated. All rights reserved.{" "}
-            <span>
-              This site is built with{" "}
-              <Link href="https://docs.qui.qualcomm.com/" target="_blank">
-                QUI Docs
-              </Link>
-              . Head over to the{" "}
-              <Link
-                href="https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/qui-docs-template"
-                target="_blank"
-              >
-                template repository
-              </Link>{" "}
-              to start building.
-            </span>
-          </DocsFooter>
-        }
+        footer={<Footer />}
         header={
           <div className="qui-docs__header">
             <HeaderBar.Root surface="secondary">
-              <HeaderBar.Logo>
-                <MobileSidebar>
-                  <QuiLogo width={20} />
-                  <HeaderBar.AppTitle>QUI React</HeaderBar.AppTitle>
-                </MobileSidebar>
-                <ReactRouterLink className="flex items-center gap-2" to="/">
-                  <QuiLogo width={20} />
-                  <HeaderBar.AppTitle>
-                    <span className="whitespace-nowrap">QUI React</span>
-                  </HeaderBar.AppTitle>
-                </ReactRouterLink>
-                <GithubChangelogLink />
-              </HeaderBar.Logo>
+              <HeaderLogo
+                appTitle="QUI React Table"
+                changelogHref="https://github.com/qualcomm/qualcomm-ui/tree/main/packages/frameworks/react/CHANGELOG.md"
+              />
 
               <HeaderBar.Divider />
 
               <HeaderBar.Nav className="hidden @min-[600px]:flex">
-                <QuiEcosystemMenu onOpenChange={setMenuOpen} open={menuOpen} />
+                <QuiEcosystemMenu />
               </HeaderBar.Nav>
 
               <HeaderBar.ActionBar>
                 <SiteSearch />
-                <HeaderBar.ActionIconButton
-                  aria-label="Navigate to the Github repository"
-                  icon={Github}
-                  render={
-                    <a
-                      href="https://github.com/qualcomm/qualcomm-ui"
-                      rel="noreferrer"
-                      target="_blank"
-                    />
-                  }
-                />
+                <HeaderRepositoryLink />
                 <GlobalConfig />
+                <HeaderAiLink modelId="cs45-qui-react-nextgen" />
                 <ThemeToggle />
               </HeaderBar.ActionBar>
             </HeaderBar.Root>
