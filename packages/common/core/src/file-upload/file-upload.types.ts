@@ -1,16 +1,19 @@
-import type {Locale} from "@qualcomm-ui/utils/direction"
+import type {
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
+import type {DirectionProperty, Locale} from "@qualcomm-ui/utils/direction"
 import type {FileError, FileMimeType} from "@qualcomm-ui/utils/files"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
   CommonProperties,
   EffectSchema,
-  EventType,
+  JSX,
   MachineSchema,
   PropNormalizer,
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
-import type {Dict} from "@qualcomm-ui/utils/object"
 
 export interface FileRejection {
   errors: FileError[]
@@ -188,8 +191,17 @@ type Events =
       type: "FILE.DELETE"
     }
   | {
-      files: File[]
+      count?: number
+      files: (File | (File | null)[] | null)[]
       type: "FILE.SELECT" | "DROPZONE.DROP" | "FILES.SET"
+    }
+  | {
+      count: number
+      type: "DROPZONE.DRAG_OVER"
+    }
+  | {
+      src?: "keydown"
+      type: "DROPZONE.CLICK"
     }
   | {
       type:
@@ -197,8 +209,6 @@ type Events =
         | "REJECTED_FILES.CLEAR"
         | "DROPZONE.DRAG_LEAVE"
         | "DROPZONE.BLUR"
-        | "DROPZONE.CLICK"
-        | "DROPZONE.DRAG_OVER"
         | "OPEN"
         | "DROPZONE.FOCUS"
     }
@@ -279,24 +289,27 @@ export interface FileUploadApi<T extends PropNormalizer = PropNormalizer> {
    * Whether the user is focused on the dropzone element
    */
   focused: boolean
-  getClearTriggerProps: () => T["button"]
-  getDropzoneProps: (props?: DropzoneProps) => T["element"]
+  getClearTriggerProps: () => FileUploadClearTriggerBindings
+  getDropzoneProps: (props?: DropzoneProps) => FileUploadDropzoneBindings
   /**
    * Returns the formatted file size (e.g. 1.2MB)
    */
   getFileSize: (file: File) => string
-  getHiddenInputProps: () => T["input"]
-  getItemDeleteTriggerProps: (props: ItemProps) => T["button"]
-  getItemGroupProps: (props?: ItemGroupProps) => T["element"]
-
-  getItemNameProps: (props: ItemProps) => T["element"]
-  getItemPreviewImageProps: (props: ItemPreviewImageProps) => T["img"]
-  getItemPreviewProps: (props: ItemProps) => T["element"]
-  getItemProps: (props: ItemProps) => T["element"]
-  getItemSizeTextProps: (props: ItemProps) => T["element"]
-  getLabelProps: () => T["label"]
-  getRootProps: () => T["element"]
-  getTriggerProps: () => T["button"]
+  getHiddenInputProps: () => FileUploadHiddenInputBindings
+  getItemDeleteTriggerProps: (
+    props: ItemProps,
+  ) => FileUploadItemDeleteTriggerBindings
+  getItemGroupProps: (props?: ItemGroupProps) => FileUploadItemBindings
+  getItemNameProps: (props: ItemProps) => FileUploadItemIdBindings
+  getItemPreviewImageProps: (
+    props: ItemPreviewImageProps,
+  ) => FileUploadItemPreviewImageBindings
+  getItemPreviewProps: (props: ItemProps) => FileUploadItemIdBindings
+  getItemProps: (props: ItemProps) => FileUploadItemIdBindings
+  getItemSizeTextProps: (props: ItemProps) => FileUploadItemIdBindings
+  getLabelProps: () => FileUploadLabelBindings
+  getRootProps: () => FileUploadRootBindings
+  getTriggerProps: () => FileUploadTriggerBindings
   /**
    * Function to open the file dialog
    */
@@ -318,4 +331,98 @@ export interface FileUploadApi<T extends PropNormalizer = PropNormalizer> {
    * Whether files are currently being transformed via `transformFiles`
    */
   transforming: boolean
+}
+
+interface CommonBindings extends DirectionProperty {
+  "data-scope": "file-upload"
+}
+
+export interface FileUploadClearTriggerBindings extends CommonBindings {
+  "aria-label": string | undefined
+  "data-invalid": BooleanDataAttr
+  "data-part": "clear-trigger"
+  disabled: boolean | undefined
+  hidden: boolean
+  onClick: JSX.MouseEventHandler
+  type: "button"
+}
+
+export interface FileUploadDropzoneBindings extends CommonBindings {
+  "aria-disabled": BooleanAriaAttr
+  "aria-label": string | undefined
+  "data-disabled": BooleanDataAttr
+  "data-dragging": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  id: string
+  onBlur: JSX.FocusEventHandler
+  onClick: JSX.MouseEventHandler<HTMLElement>
+  onDragLeave: JSX.DragEventHandler
+  onDragOver: JSX.DragEventHandler
+  onDrop: JSX.DragEventHandler
+  onFocus: JSX.FocusEventHandler
+  onKeyDown: JSX.KeyboardEventHandler<HTMLElement>
+  role: "application" | "button"
+  tabIndex: 0 | undefined
+}
+
+export interface FileUploadHiddenInputBindings extends CommonBindings {
+  accept: string | undefined
+  capture: string | undefined
+  disabled: boolean | undefined
+  id: string
+  multiple: boolean
+  name?: string
+  onClick: JSX.MouseEventHandler<HTMLInputElement>
+  onInput: JSX.FormEventHandler<HTMLInputElement>
+  required: boolean | undefined
+  style: JSX.CSSProperties
+  tabIndex: -1
+  type: "file"
+  webkitdirectory: string | undefined
+}
+
+export interface FileUploadItemDeleteTriggerBindings extends CommonBindings {
+  "aria-label": string | undefined
+  "data-disabled": BooleanDataAttr
+  "data-type": ItemType
+  disabled: boolean
+  onClick: JSX.MouseEventHandler<HTMLInputElement>
+  type: "button"
+}
+
+export interface FileUploadItemBindings extends CommonBindings {
+  "data-disabled": BooleanDataAttr
+  "data-type": ItemType
+}
+
+export interface FileUploadItemIdBindings extends FileUploadItemBindings {
+  id: string
+}
+
+export interface FileUploadItemPreviewImageBindings
+  extends FileUploadItemBindings {
+  alt: string | undefined
+  src: string
+}
+
+export interface FileUploadLabelBindings extends CommonBindings {
+  "data-disabled": BooleanDataAttr
+  "data-required": BooleanDataAttr
+  htmlFor: string
+  id: string
+}
+
+export interface FileUploadRootBindings extends CommonBindings {
+  "data-disabled": BooleanDataAttr
+  "data-dragging": BooleanDataAttr
+  id: string
+}
+
+export interface FileUploadTriggerBindings extends CommonBindings {
+  "data-disabled": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  disabled: boolean
+  id: string
+  onClick: JSX.MouseEventHandler<HTMLElement>
+  type: "button"
 }

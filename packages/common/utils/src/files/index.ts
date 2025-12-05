@@ -1,3 +1,4 @@
+export * from "./data-transfer"
 export * from "./get-accept-attribute"
 export * from "./get-file-mime-type"
 export * from "./is-file-equal"
