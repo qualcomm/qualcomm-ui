@@ -46,6 +46,7 @@ export interface FileUploadElementIds {
 }
 
 export interface IntlTranslations {
+  clearTriggerLabel: string
   deleteFile?: ((file: File) => string) | undefined
   dropzone?: string | undefined
   itemPreview?: ((file: File) => string) | undefined
@@ -191,9 +192,13 @@ type Events =
       type: "FILE.DELETE"
     }
   | {
-      count?: number
       files: (File | (File | null)[] | null)[]
-      type: "FILE.SELECT" | "DROPZONE.DROP" | "FILES.SET"
+      type: "FILE.SELECT" | "DROPZONE.DROP"
+    }
+  | {
+      count?: number
+      files: File[]
+      type: "FILES.SET"
     }
   | {
       count: number

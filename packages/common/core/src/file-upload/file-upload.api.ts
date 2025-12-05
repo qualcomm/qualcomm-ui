@@ -83,7 +83,7 @@ export function createFileUploadApi(
     getClearTriggerProps(): FileUploadClearTriggerBindings {
       return normalize.button({
         ...commonBindings,
-        "aria-label": "Clear file",
+        "aria-label": translations.clearTriggerLabel,
         "data-invalid": booleanDataAttr(disabled),
         "data-part": "clear-trigger",
         disabled,

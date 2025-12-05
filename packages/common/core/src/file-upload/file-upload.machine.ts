@@ -53,10 +53,10 @@ export const fileUploadMachine: MachineConfig<FileUploadSchema> = createMachine(
 
         const currentAcceptedFiles = context.get("acceptedFiles")
         const currentRejectedFiles = context.get("rejectedFiles")
-
+        const eventFiles = event.files.flat().filter((f) => f !== null)
         const {acceptedFiles, rejectedFiles} = getEventFiles(
           params,
-          event.files,
+          eventFiles,
           currentAcceptedFiles,
           currentRejectedFiles,
         )
@@ -240,6 +240,7 @@ export const fileUploadMachine: MachineConfig<FileUploadSchema> = createMachine(
         preventDocumentDrop: true,
         ...props,
         translations: {
+          clearTriggerLabel: "Clear file",
           deleteFile: (file) => `delete file ${file.name}`,
           dropzone: "dropzone",
           itemPreview: (file) => `preview of ${file.name}`,
