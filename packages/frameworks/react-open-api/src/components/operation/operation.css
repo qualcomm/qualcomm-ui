@@ -1,0 +1,34 @@
+.openapi-operation__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  flex-wrap: wrap;
+}
+
+.openapi-operation__header[data-deprecated] {
+  opacity: 0.6;
+}
+
+.openapi-operation__path {
+  font: var(--font-static-code-lg-default);
+  color: var(--color-text-neutral-primary);
+  word-break: break-all;
+}
+
+.openapi-operation__summary {
+  font: var(--font-static-heading-lg-bold);
+  color: var(--color-text-neutral-primary);
+  margin: 0 0 var(--spacing-50);
+  line-height: 1.3;
+}
+
+.openapi-operation__summary[data-deprecated] {
+  text-decoration: line-through;
+}
+
+.openapi-operation__description {
+  font: var(--font-static-body-md-default);
+  color: var(--color-text-neutral-secondary);
+  margin: 0 0 var(--spacing-100);
+  line-height: 1.5;
+}

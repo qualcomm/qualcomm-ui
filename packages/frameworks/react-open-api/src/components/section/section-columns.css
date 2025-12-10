@@ -1,0 +1,11 @@
+.openapi-section-columns {
+  display: flex;
+  gap: var(--spacing-200);
+}
+
+@container openapi-container (max-width: 900px) {
+  .openapi-section-columns {
+    flex-direction: column;
+    gap: var(--spacing-100);
+  }
+}

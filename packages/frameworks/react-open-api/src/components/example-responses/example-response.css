@@ -1,0 +1,23 @@
+.openapi-example-response {
+  flex: 1;
+  overflow: auto;
+}
+
+.openapi-example-response__code {
+  font: var(--font-static-code-sm-default);
+  margin: 0;
+  padding: var(--spacing-70);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.openapi-example-response__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-neutral-secondary);
+  text-align: center;
+  padding: var(--spacing-50);
+}

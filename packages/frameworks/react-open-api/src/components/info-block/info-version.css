@@ -1,0 +1,7 @@
+.openapi-info-version {
+  font: var(--font-static-code-sm-default);
+  color: var(--color-text-neutral-secondary);
+  background: var(--color-background-neutral-02);
+  padding: var(--spacing-20) var(--spacing-40);
+  border-radius: var(--border-radius-sm);
+}

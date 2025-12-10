@@ -1,0 +1,32 @@
+.openapi-loading-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-secondary) 25%,
+    var(--color-surface-tertiary) 50%,
+    var(--color-surface-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: openapi-skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+.openapi-loading-skeleton[data-variant="text"] {
+  height: 1em;
+  border-radius: var(--border-radius-sm);
+}
+
+.openapi-loading-skeleton[data-variant="rectangular"] {
+  border-radius: var(--border-radius-md);
+}
+
+.openapi-loading-skeleton[data-variant="circular"] {
+  border-radius: 50%;
+}
+
+@keyframes openapi-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

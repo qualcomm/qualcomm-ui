@@ -1,0 +1,27 @@
+.openapi-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-20) var(--spacing-40);
+  border-radius: var(--border-radius-sm);
+  font: var(--font-static-body-xs-default);
+}
+
+.openapi-badge[data-variant="default"] {
+  background-color: var(--color-background-neutral-03);
+  color: var(--color-text-neutral-secondary);
+}
+
+.openapi-badge[data-variant="deprecated"] {
+  background-color: var(--color-background-support-warning-subtle);
+  color: var(--color-text-support-warning);
+}
+
+.openapi-badge[data-variant="required"] {
+  background-color: var(--color-background-support-danger-subtle);
+  color: var(--color-text-support-danger);
+}
+
+.openapi-badge[data-variant="optional"] {
+  background-color: var(--color-background-neutral-02);
+  color: var(--color-text-neutral-secondary);
+}

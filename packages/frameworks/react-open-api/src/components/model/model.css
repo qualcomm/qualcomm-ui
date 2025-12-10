@@ -1,0 +1,63 @@
+.openapi-model {
+  display: flex;
+  flex-direction: column;
+}
+
+.openapi-model__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-40);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.openapi-model__header:hover .openapi-model__caret {
+  color: var(--color-text-neutral-primary);
+}
+
+.openapi-model__caret {
+  color: var(--color-text-neutral-tertiary);
+  transition: transform 100ms ease;
+  flex-shrink: 0;
+}
+
+.openapi-model__caret[data-open] {
+  transform: rotate(90deg);
+}
+
+.openapi-model__name {
+  font: var(--font-static-code-lg-bold);
+  color: var(--color-text-neutral-primary);
+  margin: 0;
+}
+
+.openapi-model__type {
+  font: var(--font-static-code-sm-default);
+  color: var(--color-text-neutral-secondary);
+}
+
+.openapi-model__description {
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-neutral-secondary);
+  margin: var(--spacing-50) 0;
+  line-height: 1.5;
+}
+
+.openapi-model__schema {
+  margin-top: var(--spacing-50);
+}
+
+.openapi-model__code {
+  font: var(--font-static-code-sm-default);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-neutral-02);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-70);
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

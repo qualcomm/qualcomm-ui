@@ -8,13 +8,17 @@
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "exports": {
-    "./*": {
-      "types": "./dist/*/index.d.ts",
-      "import": "./dist/*/index.js",
-      "default": "./dist/*/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": {
+      "style": "./dist/all.min.css",
+      "default": "./dist/all.min.css"
     }
   },
-  "types": "./dist/stub.d.ts",
+  "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -34,6 +38,10 @@
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
+  },
+  "dependencies": {
+    "@scalar/openapi-types": "^0.5.2",
+    "@scalar/types": "^0.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",

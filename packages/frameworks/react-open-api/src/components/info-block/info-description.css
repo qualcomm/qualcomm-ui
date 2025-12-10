@@ -1,0 +1,29 @@
+.openapi-info-description {
+  font: var(--font-static-body-md-default);
+  color: var(--color-text-neutral-secondary);
+  line-height: 1.6;
+}
+
+.openapi-info-description p {
+  margin: 0 0 var(--spacing-70);
+}
+
+.openapi-info-description p:last-child {
+  margin-bottom: 0;
+}
+
+.openapi-info-description a {
+  color: var(--color-text-brand-primary);
+  text-decoration: none;
+}
+
+.openapi-info-description a:hover {
+  text-decoration: underline;
+}
+
+.openapi-info-description code {
+  font: var(--font-static-code-sm-default);
+  background: var(--color-background-neutral-02);
+  padding: var(--spacing-10) var(--spacing-30);
+  border-radius: var(--border-radius-sm);
+}

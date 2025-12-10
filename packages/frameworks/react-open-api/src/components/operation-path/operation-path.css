@@ -1,0 +1,15 @@
+.openapi-operation-path {
+  font: var(--font-static-code-sm-default);
+  color: var(--color-text-neutral-primary);
+  word-break: break-all;
+}
+
+.openapi-operation-path[data-deprecated] {
+  text-decoration: line-through;
+  color: var(--color-text-neutral-secondary);
+}
+
+.openapi-operation-path__segment[data-type="parameter"] {
+  color: var(--color-text-info);
+  font-weight: 600;
+}

@@ -1,0 +1,96 @@
+.openapi-schema-composition {
+  display: flex;
+  flex-direction: column;
+}
+
+.openapi-schema-composition__selector {
+  position: relative;
+}
+
+.openapi-schema-composition__button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-30);
+  width: 100%;
+  padding: var(--spacing-40) var(--spacing-60);
+  padding-right: var(--spacing-70);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-neutral-02);
+  border-bottom: none;
+  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+  cursor: pointer;
+  text-align: left;
+  font: var(--font-static-body-sm-default);
+}
+
+.openapi-schema-composition__button:hover {
+  background: var(--color-surface-tertiary);
+}
+
+.openapi-schema-composition__type {
+  color: var(--color-text-neutral-secondary);
+}
+
+.openapi-schema-composition__label {
+  color: var(--color-text-neutral-primary);
+}
+
+.openapi-schema-composition__label[data-deprecated] {
+  text-decoration: line-through;
+}
+
+.openapi-schema-composition__deprecated {
+  color: var(--color-text-support-danger);
+  font: var(--font-static-body-xs-default);
+}
+
+.openapi-schema-composition__caret {
+  margin-left: auto;
+  color: var(--color-text-neutral-secondary);
+}
+
+.openapi-schema-composition__dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-surface-primary);
+  border: 1px solid var(--color-border-neutral-02);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--elevation-200);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.openapi-schema-composition__selector:focus-within .openapi-schema-composition__dropdown,
+.openapi-schema-composition__button:focus + .openapi-schema-composition__dropdown {
+  display: block;
+}
+
+.openapi-schema-composition__option {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-40) var(--spacing-60);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-neutral-primary);
+}
+
+.openapi-schema-composition__option:hover {
+  background: var(--color-surface-secondary);
+}
+
+.openapi-schema-composition__option[data-selected] {
+  background: var(--color-surface-tertiary);
+}
+
+.openapi-schema-composition__panel {
+  border: 1px solid var(--color-border-neutral-02);
+  border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+  padding: var(--spacing-70);
+}

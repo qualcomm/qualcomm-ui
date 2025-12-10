@@ -1,0 +1,16 @@
+.openapi-section-container {
+  position: relative;
+  padding: 0 var(--spacing-250);
+  width: 100%;
+  border-top: 1px solid var(--color-border-neutral-02);
+}
+
+.openapi-section-container:has(.openapi-introduction-section) {
+  border-top: none;
+}
+
+@container openapi-container (max-width: 900px) {
+  .openapi-section-container {
+    padding: 0;
+  }
+}

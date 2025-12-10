@@ -1,0 +1,64 @@
+.openapi-schema-property-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  row-gap: var(--spacing-50);
+  white-space: nowrap;
+}
+
+.openapi-schema-property-heading:has(+ .openapi-schema-property__children),
+.openapi-schema-property-heading:has(+ .openapi-schema-property-rule) {
+  margin-bottom: var(--spacing-50);
+}
+
+.openapi-schema-property-heading > * {
+  margin-right: var(--spacing-50);
+}
+
+.openapi-schema-property-heading:last-child {
+  margin-right: 0;
+}
+
+.openapi-schema-property-heading
+  > .openapi-schema-property-detail:not(:last-of-type) {
+  margin-right: 0;
+}
+
+.openapi-schema-property-heading__name {
+  max-width: 100%;
+  font: var(--font-static-code-md-bold);
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.openapi-schema-property-heading__name[data-deprecated] {
+  text-decoration: line-through;
+}
+
+.openapi-schema-property-heading__additional {
+  font: var(--font-static-code-sm-default);
+}
+
+.openapi-schema-property-heading__required {
+  font: var(--font-static-body-xs-default);
+  color: var(--color-category-orange-strong);
+}
+
+.openapi-schema-property-heading__read-only {
+  font: var(--font-static-body-xs-default);
+  color: var(--color-category-blue-strong);
+}
+
+.openapi-schema-property-heading__write-only {
+  font: var(--font-static-body-xs-default);
+  color: var(--color-category-green-strong);
+}
+
+.openapi-schema-property-heading__discriminator {
+  font: var(--font-static-body-xs-default);
+  color: var(--color-category-purple-strong);
+}
+
+.openapi-schema-property-heading__const {
+  color: var(--color-text-neutral-primary);
+}

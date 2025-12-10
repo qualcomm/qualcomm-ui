@@ -10,6 +10,7 @@
 @import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css" layer(components);
 @import "@qualcomm-ui/react-mdx/styles.css" layer(components);
 @import "@qualcomm-ui/react-swagger/styles.css" layer(components);
+@import "@qualcomm-ui/react-open-api/styles.css" layer(components);
 
 @source "../../../frameworks/react-internal/src";
 

@@ -1,0 +1,23 @@
+.openapi-schema {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-70);
+}
+
+.openapi-schema__title {
+  font: var(--font-static-heading-sm-bold);
+  color: var(--color-text-neutral-primary);
+  margin: 0;
+}
+
+.openapi-schema__description {
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-neutral-secondary);
+  margin: 0;
+}
+
+.openapi-schema__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-50);
+}

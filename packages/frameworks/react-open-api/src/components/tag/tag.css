@@ -1,0 +1,28 @@
+.openapi-tag {
+  display: flex;
+  flex-direction: column;
+}
+
+.openapi-tag__name {
+  font: var(--font-static-heading-xl-bold);
+  color: var(--color-text-neutral-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.openapi-tag__description {
+  font: var(--font-static-body-md-default);
+  color: var(--color-text-neutral-secondary);
+  margin: var(--spacing-50) 0 0;
+  line-height: 1.5;
+}
+
+.openapi-tag__operations {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--spacing-100);
+}
+
+.openapi-tag[data-collapsed] .openapi-tag__operations {
+  display: none;
+}

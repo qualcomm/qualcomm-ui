@@ -1,0 +1,16 @@
+.openapi-external-docs {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-20);
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+
+.openapi-external-docs:hover {
+  text-decoration: underline;
+}
+
+.openapi-external-docs__icon {
+  flex-shrink: 0;
+}

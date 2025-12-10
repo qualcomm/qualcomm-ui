@@ -32,6 +32,7 @@
     "@qualcomm-ui/qds-core": "workspace:*",
     "@qualcomm-ui/react": "workspace:*",
     "@qualcomm-ui/react-core": "workspace:*",
+    "@qualcomm-ui/react-open-api": "workspace:*",
     "@qualcomm-ui/react-router-utils": "workspace:*",
     "@qualcomm-ui/react-swagger": "workspace:*",
     "@qualcomm-ui/tailwind-plugin": "workspace:*",

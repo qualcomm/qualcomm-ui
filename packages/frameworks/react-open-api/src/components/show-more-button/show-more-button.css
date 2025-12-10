@@ -1,0 +1,23 @@
+.openapi-show-more-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-20);
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-link);
+  background: transparent;
+  border: none;
+  padding: var(--spacing-20) 0;
+  cursor: pointer;
+}
+
+.openapi-show-more-button:hover {
+  text-decoration: underline;
+}
+
+.openapi-show-more-button__icon {
+  transition: transform 200ms ease;
+}
+
+.openapi-show-more-button__icon[data-rotated] {
+  transform: rotate(180deg);
+}

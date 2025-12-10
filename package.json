@@ -42,6 +42,7 @@
     "eslint-plugin-angular": "pnpm -C packages/configs/eslint-plugin-angular",
     "eslint-plugin-react": "pnpm -C packages/configs/eslint-plugin-react",
     "react-swagger": "pnpm -C packages/frameworks/react-swagger",
+    "react-open-api": "pnpm -C packages/frameworks/react-open-api",
     "test": "turbo run test",
     "lint": "turbo run lint --continue",
     "lint:ci": "turbo run lint --concurrency 6",

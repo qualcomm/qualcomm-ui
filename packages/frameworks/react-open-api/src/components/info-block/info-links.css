@@ -1,0 +1,28 @@
+.openapi-info-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-50);
+}
+
+.openapi-info-links__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-30);
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-neutral-secondary);
+  text-decoration: none;
+  padding: var(--spacing-30) var(--spacing-50);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-neutral-02);
+  border-radius: var(--border-radius-sm);
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.openapi-info-links__item:hover {
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-neutral-primary);
+}
+
+.openapi-info-links__item svg {
+  flex-shrink: 0;
+}

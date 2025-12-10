@@ -1,0 +1,42 @@
+.openapi-contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+}
+
+.openapi-contact__name {
+  font: var(--font-static-body-sm-bold);
+  color: var(--color-text-neutral-primary);
+}
+
+.openapi-contact__email,
+.openapi-contact__url {
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+
+.openapi-contact__email:hover,
+.openapi-contact__url:hover {
+  text-decoration: underline;
+}
+
+.openapi-license {
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+
+.openapi-license:hover {
+  text-decoration: underline;
+}
+
+.openapi-terms-of-service {
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+
+.openapi-terms-of-service:hover {
+  text-decoration: underline;
+}

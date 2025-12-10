@@ -1,0 +1,13 @@
+.openapi-schema-heading {
+  font: var(--font-static-code-sm-default);
+  color: var(--color-text-neutral-primary);
+}
+
+.openapi-schema-heading__icon {
+  color: var(--color-text-neutral-primary);
+  display: none;
+}
+
+.openapi-schema-heading__name {
+  word-break: break-word;
+}

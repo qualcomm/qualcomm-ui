@@ -1,0 +1,56 @@
+.openapi-schema-enum-item {
+  color: var(--color-text-neutral-tertiary);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  --decorator-width: 1px;
+  --decorator-color: var(--color-border-neutral-02);
+}
+
+.openapi-schema-enum-item__content {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-20) 0;
+}
+
+.openapi-schema-enum-item__label {
+  display: flex;
+  font: var(--font-static-code-sm-default);
+  color: var(--color-text-neutral-primary);
+  position: relative;
+}
+
+.openapi-schema-enum-item:last-of-type .openapi-schema-enum-item__label {
+  padding-bottom: 0;
+}
+
+.openapi-schema-enum-item::before {
+  content: '';
+  margin-right: var(--spacing-60);
+  width: var(--decorator-width);
+  display: block;
+  background-color: var(--decorator-color);
+}
+
+.openapi-schema-enum-item:last-of-type::before,
+.openapi-schema-enum-values:has(.openapi-schema-enum-toggle)
+  .openapi-schema-enum-item:nth-last-child(2)::before {
+  height: calc(0.75em + 4px);
+}
+
+.openapi-schema-enum-item__label::after {
+  content: '';
+  position: absolute;
+  top: calc(0.5lh);
+  left: calc(-1 * var(--spacing-60));
+  width: var(--spacing-50);
+  height: var(--decorator-width);
+  background-color: var(--decorator-color);
+}
+
+.openapi-schema-enum-item__description {
+  color: var(--color-text-neutral-tertiary);
+  font: var(--font-static-body-xs-default);
+}

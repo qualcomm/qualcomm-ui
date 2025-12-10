@@ -1,0 +1,38 @@
+.openapi-section-header-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@container openapi-container (min-width: 1200px) {
+  .openapi-section-header-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-200);
+  }
+}
+
+.openapi-section-header {
+  font: var(--font-static-heading-xl-bold);
+  color: var(--color-text-neutral-primary);
+  word-wrap: break-word;
+  line-height: 1.45;
+  margin-top: 0;
+  margin-bottom: var(--spacing-60);
+}
+
+.openapi-section-header[data-tight] {
+  margin-bottom: var(--spacing-40);
+}
+
+.openapi-section-header__skeleton {
+  height: 32px;
+  width: 80%;
+  background: var(--color-background-neutral-02);
+  border-radius: var(--border-radius-sm);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.openapi-section-header__links {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-50);
+}

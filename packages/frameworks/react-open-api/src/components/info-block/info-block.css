@@ -1,0 +1,27 @@
+.openapi-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+}
+
+.openapi-info-block__header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-70);
+  flex-wrap: wrap;
+}
+
+.openapi-info-block__title {
+  font: var(--font-static-heading-2xl-bold);
+  color: var(--color-text-neutral-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.openapi-info-block__content {
+  margin-top: var(--spacing-100);
+}
+
+.openapi-info-block[data-layout='classic'] {
+  max-width: 720px;
+}

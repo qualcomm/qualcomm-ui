@@ -1,0 +1,69 @@
+.openapi-search-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-40);
+  width: 100%;
+  padding: var(--spacing-40) var(--spacing-50);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-neutral-02);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.openapi-search-button:hover {
+  background: var(--color-surface-tertiary);
+  border-color: var(--color-border-neutral-03);
+}
+
+.openapi-search-button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.openapi-search-button__icon {
+  color: var(--color-text-neutral-tertiary);
+  flex-shrink: 0;
+}
+
+.openapi-search-button__text {
+  flex: 1;
+  font: var(--font-static-body-sm-default);
+  color: var(--color-text-neutral-tertiary);
+  text-align: left;
+}
+
+.openapi-search-button__shortcut {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-10);
+  font: var(--font-static-code-xs-default);
+  color: var(--color-text-neutral-tertiary);
+  background: var(--color-surface-tertiary);
+  padding: var(--spacing-10) var(--spacing-30);
+  border-radius: var(--border-radius-sm);
+}
+
+.openapi-search-button--icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  color: var(--color-text-neutral-secondary);
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.openapi-search-button--icon:hover {
+  background: var(--color-surface-secondary);
+  color: var(--color-text-neutral-primary);
+}
+
+.openapi-search-button--icon:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
