@@ -53,10 +53,25 @@ function isDefined<T>(value: T | undefined | null): value is T {
 }
 
 function getSchemaType(schema: SchemaObject): string {
-  if (schema.type) {
-    return Array.isArray(schema.type) ? schema.type.join(" | ") : schema.type
+  if (!schema.type) {
+    return "unknown"
   }
-  return "unknown"
+
+  const baseType = Array.isArray(schema.type) ? schema.type.join(" | ") : schema.type
+
+  if (baseType === "array" && schema.items) {
+    const items = schema.items as SchemaObject
+    if (items.type) {
+      const itemType = Array.isArray(items.type) ? items.type.join(" | ") : items.type
+      return `array ${itemType}[]`
+    }
+    if (items.title) {
+      return `array ${items.title}[]`
+    }
+    return "array object[]"
+  }
+
+  return baseType
 }
 
 function getModelName(

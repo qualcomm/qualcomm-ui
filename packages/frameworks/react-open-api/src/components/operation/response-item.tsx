@@ -1,6 +1,7 @@
 import {useMemo, useState} from "react"
 
-import type {ResponseObject} from "../../types"
+import type {OpenAPIV3_1, ResponseObject} from "../../types"
+import {SchemaRenderer} from "../schema"
 
 export interface ResponseItemProps {
   breadcrumb?: string[]
@@ -99,7 +100,9 @@ export function ResponseItem({
             )}
             {selectedContent?.schema && (
               <div className="openapi-response-item__schema">
-                <pre>{JSON.stringify(selectedContent.schema, null, 2)}</pre>
+                <SchemaRenderer
+                  schema={selectedContent.schema as OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject}
+                />
               </div>
             )}
           </div>

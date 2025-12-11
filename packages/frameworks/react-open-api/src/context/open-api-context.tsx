@@ -5,6 +5,8 @@ import {
   useContext,
 } from "react"
 
+import type {OpenAPIV3_1} from "../types"
+
 /**
  * Function used to render client-side navigation links.
  * Allows consumers to provide their own router link component
@@ -19,6 +21,11 @@ export interface OpenApiContextValue {
    * Base path for internal links.
    */
   basePath?: string
+
+  /**
+   * The OpenAPI document, used for resolving $ref references.
+   */
+  document?: OpenAPIV3_1.Document
 
   /**
    * Callback fired when navigating to a section.
@@ -50,13 +57,14 @@ export interface OpenApiProviderProps extends Partial<OpenApiContextValue> {
 export function OpenApiProvider({
   basePath,
   children,
+  document,
   onNavigate,
   pathname,
   renderLink = defaultRenderLink,
 }: OpenApiProviderProps) {
   return (
     <OpenApiContext.Provider
-      value={{basePath, onNavigate, pathname, renderLink}}
+      value={{basePath, document, onNavigate, pathname, renderLink}}
     >
       {children}
     </OpenApiContext.Provider>

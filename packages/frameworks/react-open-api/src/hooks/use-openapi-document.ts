@@ -1,5 +1,7 @@
 import {useMemo} from "react"
 
+import {dereference} from "@scalar/openapi-parser"
+
 import type {OpenAPIV3_1} from "../types"
 
 export interface ParsedOperation {
@@ -47,6 +49,7 @@ const HTTP_METHODS = [
 
 /**
  * Parses an OpenAPI document into a structure optimized for rendering.
+ * Automatically dereferences $ref references using @scalar/openapi-parser.
  */
 export function useOpenApiDocument(
   document: OpenAPIV3_1.Document | undefined,
@@ -56,11 +59,20 @@ export function useOpenApiDocument(
       return null
     }
 
+    const {schema: dereferencedDoc} = dereference(document)
+    if (!dereferencedDoc) {
+      return null
+    }
+
+    const doc = dereferencedDoc as OpenAPIV3_1.Document
+    if (!doc.info) {
+      return null
+    }
     const operations: ParsedOperation[] = []
     const tagMap = new Map<string, ParsedTag>()
 
     // Initialize tags from document
-    for (const tag of document.tags || []) {
+    for (const tag of doc.tags || []) {
       tagMap.set(tag.name, {
         description: tag.description,
         name: tag.name,
@@ -69,7 +81,7 @@ export function useOpenApiDocument(
     }
 
     // Parse paths and operations
-    for (const [path, pathItem] of Object.entries(document.paths || {})) {
+    for (const [path, pathItem] of Object.entries(doc.paths || {})) {
       if (!pathItem) {
         continue
       }
@@ -120,10 +132,8 @@ export function useOpenApiDocument(
 
     // Parse models from components/schemas
     const models: ParsedModel[] = []
-    if (document.components?.schemas) {
-      for (const [name, schema] of Object.entries(
-        document.components.schemas,
-      )) {
+    if (doc.components?.schemas) {
+      for (const [name, schema] of Object.entries(doc.components.schemas)) {
         if (schema && !("$ref" in schema)) {
           models.push({
             name,
@@ -134,10 +144,10 @@ export function useOpenApiDocument(
     }
 
     return {
-      externalDocs: document.externalDocs,
-      info: document.info,
+      externalDocs: doc.externalDocs,
+      info: doc.info,
       models,
-      servers: document.servers,
+      servers: doc.servers,
       tags: Array.from(tagMap.values()).filter(
         (tag) => tag.operations.length > 0,
       ),

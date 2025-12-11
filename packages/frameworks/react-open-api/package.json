@@ -42,6 +42,7 @@
     "postpublish": "qui-cli post-publish"
   },
   "dependencies": {
+    "@scalar/openapi-parser": "^0.23.6",
     "@scalar/openapi-types": "^0.5.2",
     "@scalar/types": "^0.5.1"
   },

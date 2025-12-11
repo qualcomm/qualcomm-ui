@@ -2,6 +2,7 @@
   font: var(--font-static-body-md-default);
   color: var(--color-text-neutral-secondary);
   line-height: 1.6;
+  max-width: 80ch;
 }
 
 .openapi-info-description p {

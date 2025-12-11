@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   max-width: var(--openapi-content-max-width, 1400px);
-  margin: auto;
   padding: var(--spacing-80) 0;
   scroll-margin-top: var(--openapi-viewport-offset, 0);
 }

@@ -1,7 +1,7 @@
 import {type ReactNode, useId, useMemo, useState} from "react"
 
-import type {RequestBodyObject} from "../../types"
-import {Schema} from "../schema"
+import type {OpenAPIV3_1, RequestBodyObject} from "../../types"
+import {SchemaRenderer} from "../schema"
 
 export interface RequestBodyProps {
   breadcrumb?: string[]
@@ -71,11 +71,12 @@ export function RequestBody({
       )}
 
       {selectedContent?.schema && (
-        <Schema title={undefined}>
-          <div className="openapi-request-body__schema">
-            {JSON.stringify(selectedContent.schema, null, 2)}
-          </div>
-        </Schema>
+        <div className="openapi-request-body__schema">
+          <SchemaRenderer
+            schema={selectedContent.schema as OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject}
+            breadcrumb={breadcrumb}
+          />
+        </div>
       )}
     </div>
   )

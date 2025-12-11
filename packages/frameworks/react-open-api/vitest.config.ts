@@ -21,8 +21,8 @@ export default defineConfig({
       provider: playwright(),
       testerHtmlPath: "./test-utils/test-setup.html",
       viewport: {
-        height: 1200,
-        width: 1200,
+        height: 1400,
+        width: 1600,
       },
     },
     coverage: {

@@ -5,7 +5,7 @@ import {render} from "vitest-browser-react"
 import {ParameterList} from "../components/operation/parameter-list"
 import {SchemaPropertyHeading} from "../components/schema/schema-property-heading"
 import {sampleOpenApiDocument} from "../test-utils/sample-openapi-document"
-import type {ParameterObject, SchemaObject} from "../types"
+import type {OpenAPIV3_1, ParameterObject, SchemaObject} from "../types"
 
 import petStoreApi from "./__tests__/pet-store.json"
 import {ApiReference} from "./api-reference"
@@ -84,7 +84,7 @@ describe("ApiReference", () => {
   })
 
   test("renders large spec for debugging", async () => {
-    await render(<ApiReference document={petStoreApi} />)
+    await render(<ApiReference document={petStoreApi as OpenAPIV3_1.Document} />)
 
     // Wait for content to render
     await new Promise((resolve) => setTimeout(resolve, 500))

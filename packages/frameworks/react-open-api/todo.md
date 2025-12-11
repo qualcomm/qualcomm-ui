@@ -48,7 +48,7 @@
 - [x] `schema/schema-property.tsx` (from `Schema/SchemaProperty.vue`)
 - [x] `schema/schema-property-heading.tsx` (from `Schema/SchemaPropertyHeading.vue`)
 - [x] `schema/schema-property-detail.tsx` (from `Schema/SchemaPropertyDetail.vue`)
-- [x] `schema/schema-property-examples.tsx` (from `Schema/SchemaPropertyExamples.vue`)
+- [x] removed (from `Schema/SchemaPropertyExamples.vue`)
 - [x] `schema/schema-object-properties.tsx` (from `Schema/SchemaObjectProperties.vue`)
 - [x] `schema/schema-composition.tsx` (from `Schema/SchemaComposition.vue`)
 - [x] `schema/schema-heading.tsx` (from `Schema/SchemaHeading.vue`)
