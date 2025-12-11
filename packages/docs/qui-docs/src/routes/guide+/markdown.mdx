@@ -32,7 +32,7 @@ import {Button} from "@qualcomm-ui/react/button"
 
 [Frontmatter](https://jekyllrb.com/docs/front-matter/) is used to add metadata to Markdown files. It's also the only good thing to come from Jekyll. It's placed at the top of the Markdown file enclosed in `---` lines. You can access frontmatter variables in the markdown body using the `frontmatter` keyword enclosed in brackets.
 
-```markdown highlight="5" label="example._index/route.mdx" collapsible="false"
+```markdown
 ---
 title: Example Page
 ---
@@ -118,6 +118,395 @@ Lists denote nesting with alternating list styles based on the nesting level.
 | :-------- | :---------: | ----------: |
 | Header    |    Title    | Here's this |
 | Paragraph |    Text     |    And more |
+
+### Mermaid
+
+Unsupported:
+
+- ERD
+- Gantt Chart
+- Mindmap
+- Sankey
+- Sequence Diagram
+
+#### Flow Chart
+
+```mermaid
+flowchart TD
+    A[Incoming Request] --> B{Authenticated?}
+    B -->|No| C[Return 401]
+    B -->|Yes| D{Rate Limited?}
+
+    D -->|Yes| E[Return 429]
+    D -->|No| F{Valid Payload?}
+
+    F -->|No| G[Return 400]
+    F -->|Yes| H{Resource Exists?}
+
+    H -->|No| I{Create Request?}
+    I -->|Yes| J[(Create in DB)]
+    I -->|No| K[Return 404]
+
+    H -->|Yes| L{Operation Type}
+
+    L -->|GET| M[Fetch Resource]
+    L -->|PUT| N[Update Resource]
+    L -->|DELETE| O[Delete Resource]
+
+    J --> P{Success?}
+    M --> P
+    N --> P
+    O --> P
+
+    P -->|Yes| Q[Return 2xx]
+    P -->|No| R[Return 500]
+
+    subgraph Middleware
+        B
+        D
+        F
+    end
+
+    subgraph Business Logic
+        H
+        I
+        L
+        J
+        M
+        N
+        O
+    end
+
+    subgraph Response
+        C
+        E
+        G
+        K
+        Q
+        R
+    end
+```
+
+#### Class Diagram
+
+```mermaid
+---
+title: Class Diagram - All Features
+---
+classDiagram
+    direction TB
+
+    namespace Animals {
+        class Animal {
+            <<abstract>>
+            +String name
+            #int age
+            -boolean alive
+            ~String habitat
+            +makeSound()* void
+            +move() void
+            #eat(food: String) boolean
+            -die() void
+            +getInfo()$ String
+        }
+
+        class Dog {
+            +String breed
+            +bark() void
+            +fetch(item: String) boolean
+        }
+
+        class Cat {
+            +int lives
+            +meow() void
+            +scratch(target: Object) void
+        }
+    }
+
+    namespace Interfaces {
+        class Flyable {
+            <<interface>>
+            +fly() void
+            +land() void
+        }
+
+        class Swimmable {
+            <<interface>>
+            +swim() void
+            +dive(depth: int) void
+        }
+
+        class Pet {
+            <<interface>>
+            +play() void
+        }
+    }
+
+    namespace Services {
+        class AnimalService {
+            <<service>>
+            -List~Animal~ animals
+            +addAnimal(a: Animal) void
+            +removeAnimal(id: int) boolean
+            +findByName(name: String) Animal
+        }
+
+        class AnimalFactory {
+            <<singleton>>
+            -AnimalFactory instance$
+            +getInstance()$ AnimalFactory
+            +create(type: String) Animal
+        }
+    }
+
+    class Bird {
+        +String wingSpan
+        +fly() void
+        +land() void
+    }
+
+    class Duck {
+        +String color
+        +quack() void
+        +swim() void
+        +dive(depth: int) void
+    }
+
+    class Penguin {
+        +swim() void
+        +dive(depth: int) void
+        +slide() void
+    }
+
+    class Owner {
+        +String name
+        +List~Pet~ pets
+        +adopt(p: Pet) void
+    }
+
+    Animal <|-- Dog : inheritance
+    Animal <|-- Cat : inheritance
+    Animal <|-- Bird : inheritance
+    Bird <|-- Duck : inheritance
+    Bird <|-- Penguin : inheritance
+
+    Flyable <|.. Bird : realization
+    Swimmable <|.. Duck : realization
+    Swimmable <|.. Penguin : realization
+    Pet <|.. Dog : realization
+    Pet <|.. Cat : realization
+
+    Owner "1" --> "*" Pet : owns
+    AnimalService "1" o-- "*" Animal : aggregation
+    Duck "1" *-- "2" Wing : composition
+    Dog "1" -- "1" Collar : association
+    Cat ..> Toy : dependency
+
+    class Wing {
+        +double length
+        +flap() void
+    }
+
+    class Collar {
+        +String color
+        +String tag
+    }
+
+    class Toy {
+        +String type
+    }
+
+    link Animal "https://example.com/animal"
+    click Dog call callback()
+    click Cat href "https://example.com/cat"
+
+    note for Animal "Base class for all animals"
+    note for Duck "Can both fly and swim"
+```
+
+#### Pie Chart
+
+```mermaid
+---
+title: Pie Chart
+---
+pie showData
+    title Browser Market Share
+    "Chrome" : 65.8
+    "Safari" : 18.7
+    "Firefox" : 3.1
+    "Edge" : 4.9
+    "Opera" : 2.3
+    "Other" : 5.2
+```
+
+#### Quadrant Chart
+
+```mermaid
+---
+title: Quadrant Chart - All Features
+---
+quadrantChart
+    title Technology Evaluation Matrix
+    x-axis Low Complexity --> High Complexity
+    y-axis Low Value --> High Value
+
+    quadrant-1 Invest Heavily
+    quadrant-2 Consider Carefully
+    quadrant-3 Avoid
+    quadrant-4 Quick Wins
+
+    React: [0.8, 0.9]
+    Vue: [0.6, 0.75]
+    Angular: [0.85, 0.7]
+    Svelte: [0.4, 0.65]
+    jQuery: [0.2, 0.3]
+    Backbone: [0.5, 0.2]
+    Ember: [0.7, 0.4]
+    Solid: [0.35, 0.6]
+    Preact: [0.25, 0.55]
+    Alpine: [0.15, 0.45]
+    HTMX: [0.2, 0.7]
+    Qwik: [0.55, 0.5]
+```
+
+#### Git Graph
+
+```mermaid
+---
+title: Git Graph - All Features
+---
+gitGraph TB:
+    commit id: "Initial"
+    commit id: "Add README"
+
+    branch develop
+    checkout develop
+    commit id: "Setup project"
+    commit id: "Add config"
+
+    branch feature/auth
+    checkout feature/auth
+    commit id: "Auth scaffold"
+    commit id: "Login form"
+    commit id: "JWT tokens"
+
+    checkout develop
+    branch feature/api
+    commit id: "API routes"
+    commit id: "Controllers"
+
+    checkout feature/auth
+    commit id: "OAuth support"
+
+    checkout develop
+    merge feature/auth id: "Merge auth" tag: "v0.1.0"
+
+    checkout feature/api
+    commit id: "Middleware"
+    commit id: "Validation"
+
+    checkout develop
+    merge feature/api id: "Merge API" tag: "v0.2.0"
+
+    checkout main
+    merge develop id: "Release prep" type: REVERSE
+
+    branch hotfix/security
+    commit id: "Patch CVE"
+
+    checkout main
+    merge hotfix/security id: "Emergency fix" tag: "v0.2.1" type: HIGHLIGHT
+
+    checkout develop
+    cherry-pick id: "Patch CVE"
+
+    branch release/1.0
+    commit id: "Version bump"
+    commit id: "Changelog"
+
+    checkout main
+    merge release/1.0 id: "v1.0 Release" tag: "v1.0.0"
+
+    checkout develop
+    commit id: "Next iteration"
+```
+
+#### Timeline
+
+```mermaid
+---
+title: Timeline - All Features
+---
+timeline
+    title Software Development Evolution
+
+    section Early Computing
+        1950s : Assembly Language
+              : FORTRAN created
+        1960s : COBOL emerges
+              : BASIC introduced
+              : First operating systems
+
+    section Structured Programming
+        1970s : C language
+              : SQL developed
+              : Unix created
+        1980s : C++ released
+              : Object-oriented paradigm
+              : Personal computers
+
+    section Web Era
+        1990s : HTML & WWW
+              : Java released
+              : JavaScript born
+              : PHP & dynamic web
+        2000s : .NET framework
+              : Ruby on Rails
+              : AJAX revolution
+              : Cloud computing begins
+
+    section Modern Development
+        2010s : Node.js
+              : TypeScript
+              : React & Angular
+              : Docker & containers
+              : Microservices
+        2020s : AI-assisted coding
+              : Edge computing
+              : WebAssembly
+              : Serverless maturity
+```
+
+#### Quadrant Chart
+
+```mermaid
+---
+title: Quadrant Chart - All Features
+---
+quadrantChart
+    title Technology Evaluation Matrix
+    x-axis Low Complexity --> High Complexity
+    y-axis Low Value --> High Value
+
+    quadrant-1 Invest Heavily
+    quadrant-2 Consider Carefully
+    quadrant-3 Avoid
+    quadrant-4 Quick Wins
+
+    React: [0.8, 0.9]
+    Vue: [0.6, 0.75]
+    Angular: [0.85, 0.7]
+    Svelte: [0.4, 0.65]
+    jQuery: [0.2, 0.3]
+    Backbone: [0.5, 0.2]
+    Ember: [0.7, 0.4]
+    Solid: [0.35, 0.6]
+    Preact: [0.25, 0.55]
+    Alpine: [0.15, 0.45]
+    HTMX: [0.2, 0.7]
+    Qwik: [0.55, 0.5]
+```
 
 ### Code Blocks
 

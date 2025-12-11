@@ -13,7 +13,7 @@ import {
 } from "@shikijs/transformers"
 import {merge} from "lodash-es"
 import type {ShikiTransformer} from "shiki"
-import type {PluggableList} from "unified"
+import type {Pluggable, PluggableList} from "unified"
 
 import {quiCustomDarkTheme} from "@qualcomm-ui/mdx-common"
 
@@ -25,7 +25,12 @@ import {
 } from "../exports"
 
 import {ConfigLoader, type ConfigLoaderOptions} from "./internal"
-import {rehypeSectionize, rehypeSlug, type RehypeSlugOptions} from "./rehype"
+import {
+  rehypeSectionize,
+  rehypeSlug,
+  type RehypeSlugOptions,
+  tryImportRehypeMermaid,
+} from "./rehype"
 import {remarkAlerts, remarkCodeTabs, remarkSpoilers} from "./remark"
 import {transformerCodeAttribute, transformerNotationHidden} from "./shiki"
 
@@ -55,17 +60,21 @@ export function getShikiTransformers(): ShikiTransformer[] {
  * Used to retrieve all the rehype plugins required for QUI Docs MDX.
  * These should be passed to the `mdx` vite plugin from
  */
-export function getRehypePlugins(
+export async function getRehypePlugins(
   options: QuiRehypePluginOptions = {},
-): PluggableList {
+): Promise<PluggableList> {
   const config = new ConfigLoader(options).loadConfig()
-  return [
+
+  const rehypeMermaid = await tryImportRehypeMermaid()
+
+  const plugins: Pluggable[] = [
     [rehypeMdxCodeProps, {enforce: "pre"}],
     [
       rehypeSlug,
       {allowedHeadings: config.headings} satisfies RehypeSlugOptions,
     ],
     rehypeSectionize,
+    rehypeMermaid ? rehypeMermaid : {},
     [
       rehypeShiki,
       merge(
@@ -81,6 +90,8 @@ export function getRehypePlugins(
       ),
     ],
   ]
+
+  return plugins
 }
 
 /**

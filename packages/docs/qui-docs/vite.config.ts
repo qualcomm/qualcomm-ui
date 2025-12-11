@@ -19,7 +19,7 @@ export default defineConfig({
     tailwindcss(),
     mdx({
       providerImportSource: "@mdx-js/react",
-      rehypePlugins: [...getRehypePlugins()],
+      rehypePlugins: [...(await getRehypePlugins())],
       remarkPlugins: [...getRemarkPlugins()],
     }),
     reactRouter(),
