@@ -1,0 +1,137 @@
+.dark .json-model-viewer {
+  background-color: #0d1117;
+}
+
+.light .json-model-viewer {
+  background-color: var(--color-background-neutral-03);
+}
+
+.json-model-viewer {
+  user-select: none;
+  font: var(--font-static-code-sm-default);
+  width: 100%;
+  padding: 6px 8px 6px 24px;
+  border-radius: 5px;
+  min-width: 400px;
+  position: relative;
+
+  .model-gutter {
+    width: 17px;
+    background-color: var(--color-background-neutral-02);
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+}
+
+.data-key-pair {
+  user-select: text;
+
+  .data-key {
+    &.expandable {
+      cursor: pointer;
+    }
+  }
+
+  .data-type-label {
+    margin: 0 2px;
+    display: inline-block;
+    user-select: none;
+    opacity: 0.8;
+  }
+
+  .indicator {
+    margin-right: 2px;
+    display: inline-block;
+  }
+
+  .rest-spread {
+    cursor: pointer;
+    display: inline-block;
+    opacity: 0.8;
+
+    &.no-select {
+      user-select: none;
+    }
+  }
+
+  .data-value {
+    overflow-wrap: anywhere;
+  }
+
+  .simple-type {
+    display: inline-block;
+  }
+
+  .simple-value {
+    display: inline-block;
+    margin-left: 2px;
+  }
+
+  .show-rest {
+    padding: 2px;
+  }
+
+  .data-function-body {
+    padding: 2px;
+  }
+
+  .inline-icon {
+    display: inline;
+    line-height: normal;
+  }
+
+  .expand-icon {
+    margin-right: 2px;
+    position: absolute;
+    left: 0;
+    height: 16px;
+  }
+
+  .data-object > .data-key-pair {
+    margin-left: 16px;
+  }
+
+  .data-object-start {
+    display: inline-block;
+  }
+
+  .data-object-end {
+    display: inline-block;
+  }
+
+  .data-object-end {
+    opacity: 0.8;
+  }
+
+  .data-size-label {
+    display: inline-block;
+    margin-left: 4px;
+    font: var(--font-static-body-xs-default);
+  }
+
+  .data-ref-name-wrapper {
+    display: inline-flex;
+    gap: 4px;
+    margin-right: 2px;
+  }
+
+  .data-ref-name {
+    display: inline-block;
+    margin: 0 0 0 8px;
+    font: var(--font-static-code-sm-bold);
+
+    &.inspect {
+      margin: 0 0 0 8px;
+    }
+  }
+
+  .data-object-body {
+    user-select: none;
+    padding: 2px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

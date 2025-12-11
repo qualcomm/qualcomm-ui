@@ -4,98 +4,177 @@ import type {OpenAPIV3_1} from "../types"
  * Sample OpenAPI document for visual testing.
  */
 export const sampleOpenApiDocument: OpenAPIV3_1.Document = {
-  openapi: "3.1.0",
+  components: {
+    schemas: {
+      Category: {
+        properties: {
+          id: {
+            format: "int64",
+            type: "integer",
+          },
+          name: {
+            type: "string",
+          },
+        },
+        type: "object",
+      },
+      NewPet: {
+        properties: {
+          category: {
+            $ref: "#/components/schemas/Category",
+          },
+          name: {
+            maxLength: 100,
+            minLength: 1,
+            type: "string",
+          },
+          status: {
+            default: "available",
+            enum: ["available", "pending", "sold"],
+            type: "string",
+          },
+        },
+        required: ["name"],
+        type: "object",
+      },
+      Order: {
+        properties: {
+          complete: {
+            default: false,
+            type: "boolean",
+          },
+          id: {
+            format: "uuid",
+            type: "string",
+          },
+          petId: {
+            format: "uuid",
+            type: "string",
+          },
+          quantity: {
+            format: "int32",
+            minimum: 1,
+            type: "integer",
+          },
+          shipDate: {
+            format: "date-time",
+            type: "string",
+          },
+          status: {
+            enum: ["placed", "approved", "delivered"],
+            type: "string",
+          },
+        },
+        required: ["petId", "quantity"],
+        type: "object",
+      },
+      Pet: {
+        properties: {
+          category: {
+            $ref: "#/components/schemas/Category",
+          },
+          createdAt: {
+            description: "When the pet was added to the store",
+            format: "date-time",
+            type: "string",
+          },
+          id: {
+            description: "Unique identifier for the pet",
+            format: "uuid",
+            type: "string",
+          },
+          name: {
+            description: "Name of the pet",
+            example: "Fluffy",
+            type: "string",
+          },
+          status: {
+            description: "Pet status in the store",
+            enum: ["available", "pending", "sold"],
+            type: "string",
+          },
+          tags: {
+            description: "Tags associated with the pet",
+            items: {
+              type: "string",
+            },
+            type: "array",
+          },
+        },
+        required: ["id", "name"],
+        type: "object",
+      },
+    },
+  },
   info: {
-    title: "Pet Store API",
-    version: "1.0.0",
-    description:
-      "A sample API that uses a petstore as an example to demonstrate features in the OpenAPI specification.",
     contact: {
-      name: "API Support",
       email: "support@example.com",
+      name: "API Support",
       url: "https://example.com/support",
     },
+    description:
+      "A sample API that uses a petstore as an example to demonstrate features in the OpenAPI specification.",
     license: {
       name: "Apache 2.0",
       url: "https://www.apache.org/licenses/LICENSE-2.0.html",
     },
+    title: "Pet Store API",
+    version: "1.0.0",
   },
-  servers: [
-    {
-      url: "https://api.example.com/v1",
-      description: "Production server",
-    },
-    {
-      url: "https://staging-api.example.com/v1",
-      description: "Staging server",
-    },
-  ],
-  tags: [
-    {
-      name: "pets",
-      description: "Operations related to pets",
-    },
-    {
-      name: "store",
-      description: "Access to Petstore orders",
-    },
-  ],
+  openapi: "3.1.0",
   paths: {
     "/pets": {
       get: {
-        operationId: "listPets",
-        summary: "List all pets",
         description: "Returns a list of all pets in the store.",
-        tags: ["pets"],
+        operationId: "listPets",
         parameters: [
           {
-            name: "limit",
-            in: "query",
             description: "Maximum number of pets to return",
+            in: "query",
+            name: "limit",
             required: false,
             schema: {
-              type: "integer",
-              format: "int32",
               default: 20,
+              format: "int32",
               maximum: 100,
+              type: "integer",
             },
           },
           {
-            name: "status",
-            in: "query",
             description: "Filter by pet status",
+            in: "query",
+            name: "status",
             schema: {
-              type: "string",
               enum: ["available", "pending", "sold"],
+              type: "string",
             },
           },
         ],
         responses: {
           "200": {
-            description: "A list of pets",
             content: {
               "application/json": {
                 schema: {
-                  type: "array",
                   items: {
                     $ref: "#/components/schemas/Pet",
                   },
+                  type: "array",
                 },
               },
             },
+            description: "A list of pets",
           },
           "400": {
             description: "Invalid request",
           },
         },
+        summary: "List all pets",
+        tags: ["pets"],
       },
       post: {
-        operationId: "createPet",
-        summary: "Create a pet",
         description: "Creates a new pet in the store.",
-        tags: ["pets"],
+        operationId: "createPet",
         requestBody: {
-          required: true,
           content: {
             "application/json": {
               schema: {
@@ -103,10 +182,10 @@ export const sampleOpenApiDocument: OpenAPIV3_1.Document = {
               },
             },
           },
+          required: true,
         },
         responses: {
           "201": {
-            description: "Pet created successfully",
             content: {
               "application/json": {
                 schema: {
@@ -114,87 +193,23 @@ export const sampleOpenApiDocument: OpenAPIV3_1.Document = {
                 },
               },
             },
+            description: "Pet created successfully",
           },
           "400": {
             description: "Invalid input",
           },
         },
+        summary: "Create a pet",
+        tags: ["pets"],
       },
     },
     "/pets/{petId}": {
-      get: {
-        operationId: "getPetById",
-        summary: "Get a pet by ID",
-        description: "Returns a single pet by its ID.",
-        tags: ["pets"],
-        parameters: [
-          {
-            name: "petId",
-            in: "path",
-            description: "The ID of the pet to retrieve",
-            required: true,
-            schema: {
-              type: "string",
-              format: "uuid",
-            },
-          },
-        ],
-        responses: {
-          "200": {
-            description: "A pet",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/Pet",
-                },
-              },
-            },
-          },
-          "404": {
-            description: "Pet not found",
-          },
-        },
-      },
-      put: {
-        operationId: "updatePet",
-        summary: "Update a pet",
-        description: "Updates an existing pet.",
-        tags: ["pets"],
-        deprecated: true,
-        parameters: [
-          {
-            name: "petId",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string",
-            },
-          },
-        ],
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                $ref: "#/components/schemas/NewPet",
-              },
-            },
-          },
-        },
-        responses: {
-          "200": {
-            description: "Pet updated",
-          },
-        },
-      },
       delete: {
         operationId: "deletePet",
-        summary: "Delete a pet",
-        tags: ["pets"],
         parameters: [
           {
-            name: "petId",
             in: "path",
+            name: "petId",
             required: true,
             schema: {
               type: "string",
@@ -206,16 +221,80 @@ export const sampleOpenApiDocument: OpenAPIV3_1.Document = {
             description: "Pet deleted",
           },
         },
+        summary: "Delete a pet",
+        tags: ["pets"],
+      },
+      get: {
+        description: "Returns a single pet by its ID.",
+        operationId: "getPetById",
+        parameters: [
+          {
+            description: "The ID of the pet to retrieve",
+            in: "path",
+            name: "petId",
+            required: true,
+            schema: {
+              format: "uuid",
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/Pet",
+                },
+              },
+            },
+            description: "A pet",
+          },
+          "404": {
+            description: "Pet not found",
+          },
+        },
+        summary: "Get a pet by ID",
+        tags: ["pets"],
+      },
+      put: {
+        deprecated: true,
+        description: "Updates an existing pet.",
+        operationId: "updatePet",
+        parameters: [
+          {
+            in: "path",
+            name: "petId",
+            required: true,
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/NewPet",
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          "200": {
+            description: "Pet updated",
+          },
+        },
+        summary: "Update a pet",
+        tags: ["pets"],
       },
     },
     "/store/orders": {
       post: {
-        operationId: "placeOrder",
-        summary: "Place an order",
         description: "Place a new order in the store.",
-        tags: ["store"],
+        operationId: "placeOrder",
         requestBody: {
-          required: true,
           content: {
             "application/json": {
               schema: {
@@ -223,115 +302,36 @@ export const sampleOpenApiDocument: OpenAPIV3_1.Document = {
               },
             },
           },
+          required: true,
         },
         responses: {
           "200": {
             description: "Order placed",
           },
         },
+        summary: "Place an order",
+        tags: ["store"],
       },
     },
   },
-  components: {
-    schemas: {
-      Pet: {
-        type: "object",
-        required: ["id", "name"],
-        properties: {
-          id: {
-            type: "string",
-            format: "uuid",
-            description: "Unique identifier for the pet",
-          },
-          name: {
-            type: "string",
-            description: "Name of the pet",
-            example: "Fluffy",
-          },
-          status: {
-            type: "string",
-            enum: ["available", "pending", "sold"],
-            description: "Pet status in the store",
-          },
-          category: {
-            $ref: "#/components/schemas/Category",
-          },
-          tags: {
-            type: "array",
-            items: {
-              type: "string",
-            },
-            description: "Tags associated with the pet",
-          },
-          createdAt: {
-            type: "string",
-            format: "date-time",
-            description: "When the pet was added to the store",
-          },
-        },
-      },
-      NewPet: {
-        type: "object",
-        required: ["name"],
-        properties: {
-          name: {
-            type: "string",
-            minLength: 1,
-            maxLength: 100,
-          },
-          status: {
-            type: "string",
-            enum: ["available", "pending", "sold"],
-            default: "available",
-          },
-          category: {
-            $ref: "#/components/schemas/Category",
-          },
-        },
-      },
-      Category: {
-        type: "object",
-        properties: {
-          id: {
-            type: "integer",
-            format: "int64",
-          },
-          name: {
-            type: "string",
-          },
-        },
-      },
-      Order: {
-        type: "object",
-        required: ["petId", "quantity"],
-        properties: {
-          id: {
-            type: "string",
-            format: "uuid",
-          },
-          petId: {
-            type: "string",
-            format: "uuid",
-          },
-          quantity: {
-            type: "integer",
-            format: "int32",
-            minimum: 1,
-          },
-          shipDate: {
-            type: "string",
-            format: "date-time",
-          },
-          status: {
-            type: "string",
-            enum: ["placed", "approved", "delivered"],
-          },
-          complete: {
-            type: "boolean",
-            default: false,
-          },
-        },
-      },
+  servers: [
+    {
+      description: "Production server",
+      url: "https://api.example.com/v1",
     },
-  },
+    {
+      description: "Staging server",
+      url: "https://staging-api.example.com/v1",
+    },
+  ],
+  tags: [
+    {
+      description: "Operations related to pets",
+      name: "pets",
+    },
+    {
+      description: "Access to Petstore orders",
+      name: "store",
+    },
+  ],
 }

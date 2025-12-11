@@ -84,10 +84,11 @@ describe("ApiReference", () => {
   })
 
   test("renders large spec for debugging", async () => {
-    await render(<ApiReference document={petStoreApi as OpenAPIV3_1.Document} />)
+    await render(
+      <ApiReference document={petStoreApi as OpenAPIV3_1.Document} />,
+    )
 
-    // Wait for content to render
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await expect.element(page.getByText(petStoreApi.info.title)).toBeVisible()
 
     await page.screenshot({
       element: document.body,

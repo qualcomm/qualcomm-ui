@@ -44,7 +44,8 @@
   "dependencies": {
     "@scalar/openapi-parser": "^0.23.6",
     "@scalar/openapi-types": "^0.5.2",
-    "@scalar/types": "^0.5.1"
+    "@scalar/types": "^0.5.1",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
