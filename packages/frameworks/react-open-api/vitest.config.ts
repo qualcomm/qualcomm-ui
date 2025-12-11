@@ -19,10 +19,10 @@ export default defineConfig({
         testIdAttribute: "data-test-id",
       },
       provider: playwright(),
-      testerHtmlPath: "../react-test-utils/src/react-test-setup.html",
+      testerHtmlPath: "./test-utils/test-setup.html",
       viewport: {
-        height: 500,
-        width: 500,
+        height: 1200,
+        width: 1200,
       },
     },
     coverage: {
@@ -37,8 +37,8 @@ export default defineConfig({
       },
     },
     globals: true,
-    include: "src/**/*.spec.tsx",
+    include: ["src/**/*.spec.tsx"],
     passWithNoTests: true,
-    setupFiles: ["@qualcomm-ui/react-test-utils/src/react-test-setup.ts"],
+    setupFiles: ["./test-utils/test-setup.ts"],
   },
 })

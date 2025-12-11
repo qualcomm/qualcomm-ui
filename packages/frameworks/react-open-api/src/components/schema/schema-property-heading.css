@@ -27,6 +27,7 @@
 .openapi-schema-property-heading__name {
   max-width: 100%;
   font: var(--font-static-code-md-bold);
+  color: var(--color-text-neutral-primary);
   white-space: normal;
   overflow-wrap: break-word;
 }

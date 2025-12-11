@@ -1,7 +1,7 @@
 .openapi-info-block {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-100);
+  gap: var(--spacing-50);
 }
 
 .openapi-info-block__header {
@@ -19,7 +19,7 @@
 }
 
 .openapi-info-block__content {
-  margin-top: var(--spacing-100);
+  margin-top: var(--spacing-50);
 }
 
 .openapi-info-block[data-layout='classic'] {

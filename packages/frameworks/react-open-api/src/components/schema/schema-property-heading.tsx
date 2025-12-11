@@ -5,7 +5,6 @@ import {Badge} from "../badge"
 
 import {RenderString} from "./render-string"
 import {SchemaPropertyDetail} from "./schema-property-detail"
-import {SchemaPropertyExamples} from "./schema-property-examples"
 
 export interface SchemaPropertyHeadingProps {
   additional?: boolean
@@ -347,15 +346,6 @@ export function SchemaPropertyHeading({
         <div className="openapi-schema-property-heading__required">
           required
         </div>
-      )}
-
-      {withExamples && (
-        <SchemaPropertyExamples
-          example={
-            value?.example || (isArraySchema(value!) && value?.items?.example)
-          }
-          examples={value?.examples}
-        />
       )}
     </div>
   )

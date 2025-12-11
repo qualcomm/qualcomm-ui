@@ -1,7 +1,7 @@
 .openapi-api-reference {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-100);
+  gap: var(--spacing-80);
   padding: var(--spacing-80);
   max-width: 1400px;
   margin: 0 auto;
@@ -10,7 +10,7 @@
 .openapi-api-reference__content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-100);
+  gap: var(--spacing-80);
 }
 
 .openapi-api-reference__models {

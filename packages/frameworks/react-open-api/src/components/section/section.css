@@ -4,7 +4,7 @@
   flex-direction: column;
   max-width: var(--openapi-content-max-width, 1400px);
   margin: auto;
-  padding: var(--spacing-300) 0;
+  padding: var(--spacing-80) 0;
   scroll-margin-top: var(--openapi-viewport-offset, 0);
 }
 
@@ -17,13 +17,13 @@
 }
 
 .openapi-reference--classic .openapi-section {
-  padding: var(--spacing-200) 0;
-  gap: var(--spacing-100);
+  padding: var(--spacing-60) 0;
+  gap: var(--spacing-60);
 }
 
 @container openapi-container (max-width: 900px) {
   .openapi-reference--classic .openapi-section,
   .openapi-section {
-    padding: var(--spacing-200) var(--spacing-100);
+    padding: var(--spacing-60) var(--spacing-60);
   }
 }

@@ -20,7 +20,8 @@
 .openapi-tag__operations {
   display: flex;
   flex-direction: column;
-  margin-top: var(--spacing-100);
+  gap: var(--spacing-80);
+  margin-top: var(--spacing-60);
 }
 
 .openapi-tag[data-collapsed] .openapi-tag__operations {

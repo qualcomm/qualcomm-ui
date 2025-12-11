@@ -15,6 +15,6 @@ export default defineConfig({
     }) as any,
   ],
   test: getReactTestConfig({
-    include: "src/**/*.spec.tsx",
+    include: ["src/**/*.spec.tsx"],
   }),
 })

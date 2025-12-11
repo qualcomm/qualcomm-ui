@@ -1,0 +1,8 @@
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "../dist/all.min.css";
+
+* {
+  font-family: sans-serif !important;
+}

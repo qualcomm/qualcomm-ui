@@ -37,7 +37,7 @@ export default defineConfig({
       },
     },
     globals: true,
-    include: "src/**/*.spec.tsx",
+    include: ["src/**/*.spec.tsx"],
     passWithNoTests: true,
     setupFiles: ["@qualcomm-ui/react-test-utils/src/react-test-setup.ts"],
   },

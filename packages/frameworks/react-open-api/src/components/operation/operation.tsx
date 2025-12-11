@@ -81,7 +81,7 @@ export function Operation({
             <OperationResponses responses={responses} breadcrumb={breadcrumb} />
           </SectionColumn>
 
-          <SectionColumn>{children}</SectionColumn>
+          {children ? <SectionColumn>{children}</SectionColumn> : null}
         </SectionColumns>
       </SectionContent>
     </Section>

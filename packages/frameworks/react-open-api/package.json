@@ -35,6 +35,8 @@
     "watch:js": "tsx build.ts --watch --mode development",
     "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "watch:css": "qui-css-utils watch",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
@@ -52,6 +54,7 @@
     "@qualcomm-ui/core": "workspace:^1.0.11",
     "@qualcomm-ui/dom": "workspace:^1.0.6",
     "@qualcomm-ui/esbuild": "workspace:^1.0.4",
+    "@qualcomm-ui/qds-core": "workspace:^1.9.3",
     "@qualcomm-ui/react": "workspace:^1.5.0",
     "@qualcomm-ui/react-core": "workspace:^1.0.11",
     "@qualcomm-ui/react-test-utils": "workspace:^1.0.0",

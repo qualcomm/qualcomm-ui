@@ -1,5 +1,3 @@
-"use client"
-
 import type {ReactNode} from "react"
 
 import {InfoBlock} from "../components/info-block"
