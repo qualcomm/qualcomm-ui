@@ -8,7 +8,7 @@
 
 export const ganttStyles = `
 .mermaid-main-font {
-  font-family: var(--type-font-family-tertiary);
+  
 }
 
 .exclude-range {
@@ -43,7 +43,7 @@ export const ganttStyles = `
 
 .sectionTitle {
   text-anchor: start;
-  font-family: var(--type-font-family-tertiary);
+  
 }
 
 .grid .tick {
@@ -53,7 +53,7 @@ export const ganttStyles = `
 }
 
 .grid .tick text {
-  font-family: var(--type-font-family-tertiary);
+  
   fill: var(--color-text-neutral-primary);
 }
 
@@ -73,13 +73,13 @@ export const ganttStyles = `
 
 .taskText {
   text-anchor: middle;
-  font-family: var(--type-font-family-tertiary);
+  
 }
 
 .taskTextOutsideRight {
   fill: var(--color-text-neutral-primary);
   text-anchor: start;
-  font-family: var(--type-font-family-tertiary);
+  
 }
 
 .taskTextOutsideLeft {
@@ -227,6 +227,6 @@ export const ganttStyles = `
   text-anchor: middle;
   font-size: 18px;
   fill: var(--color-text-neutral-primary);
-  font-family: var(--type-font-family-tertiary);
+  
 }
 `

@@ -8,7 +8,7 @@
 
 export const blockStyles = `
 .label {
-  font-family: var(--type-font-family-tertiary);
+  
   color: var(--color-text-neutral-primary);
 }
 
@@ -99,7 +99,7 @@ div.mermaidTooltip {
   text-align: center;
   max-width: 200px;
   padding: 2px;
-  font-family: var(--type-font-family-tertiary);
+  
   font-size: 12px;
   background: var(--color-background-neutral-03);
   border: 1px solid var(--color-border-neutral-02);

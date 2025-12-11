@@ -1,4 +1,4 @@
-import {dirname, resolve} from "node:path"
+import {dirname} from "node:path"
 import {fileURLToPath} from "node:url"
 import type {RehypeMermaidOptions} from "rehype-mermaid"
 import type {Pluggable} from "unified"
@@ -7,15 +7,11 @@ import {mermaidStyles} from "./mermaid-styles"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-function getCssFile() {
-  return resolve(__dirname, "./mermaid.css")
-}
-
 export const rehypeMermaidOptions: RehypeMermaidOptions = {
-  css: getCssFile(),
   mermaidConfig: {
-    fontFamily: "var(--type-font-family-secondary)",
-    fontSize: 8,
+    altFontFamily: "Fira Mono",
+    fontFamily: "sans-serif",
+    fontSize: 14,
     themeCSS: mermaidStyles,
   },
 }

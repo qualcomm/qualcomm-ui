@@ -12,7 +12,7 @@ export const gitStyles = `
 .branch-label {
   fill: var(--color-text-neutral-secondary);
   color: var(--color-text-neutral-secondary);
-  font-family: var(--type-font-family-tertiary);
+  
 }
 
 .branch-label0 { fill: var(--color-category-blue-strong); }

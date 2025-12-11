@@ -10,7 +10,7 @@ export const classStyles = `
 g.classGroup text {
   fill: var(--color-border-neutral-02);
   stroke: none;
-  font-family: var(--type-font-family-tertiary);
+  
   font-size: 10px;
 }
 

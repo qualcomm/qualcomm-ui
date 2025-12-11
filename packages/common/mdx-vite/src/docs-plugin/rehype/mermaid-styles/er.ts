@@ -32,7 +32,7 @@ export const erStyles = `
 }
 
 .label {
-  font-family: var(--type-font-family-tertiary);
+  
   color: var(--color-text-neutral-primary);
 }
 

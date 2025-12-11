@@ -8,6 +8,6 @@
 
 export const sankeyStyles = `
 .label {
-  font-family: var(--type-font-family-tertiary);
+  
 }
 `

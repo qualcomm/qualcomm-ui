@@ -17,7 +17,7 @@ marker.cross {
 }
 
 svg {
-  font-family: var(--type-font-family-tertiary);
+  
   font-size: var(--type-static-body-sm-font-size);
 }
 
@@ -58,7 +58,7 @@ svg {
 }
 
 .label {
-  font-family: var(--type-font-family-tertiary);
+  
   color: var(--color-text-neutral-primary);
 }
 

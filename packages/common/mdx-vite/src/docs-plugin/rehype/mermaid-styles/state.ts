@@ -217,4 +217,4 @@ g.stateGroup line {
   font-size: 18px;
   fill: var(--color-text-neutral-primary);
 }
-`;
+`
