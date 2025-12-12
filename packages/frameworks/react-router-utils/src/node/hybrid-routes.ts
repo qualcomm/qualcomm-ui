@@ -4,8 +4,8 @@
 import minimatch from "minimatch"
 import {readdirSync, statSync} from "node:fs"
 import {extname, join, relative, resolve, sep} from "node:path"
-import win32 from "node:path/win32"
 
+import {normalizeSlashes} from "./path-segments"
 import type {DefineRouteFunction, DefineRoutesFunction} from "./shared"
 
 export interface ConfigRoute {
@@ -464,10 +464,6 @@ export function defaultVisitFiles(
 
 export function createRouteId(file: string) {
   return normalizeSlashes(stripFileExtension(file))
-}
-
-export function normalizeSlashes(file: string) {
-  return file.split(win32.sep).join("/")
 }
 
 function stripFileExtension(file: string) {

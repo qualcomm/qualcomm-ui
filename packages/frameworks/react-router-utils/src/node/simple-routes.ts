@@ -20,9 +20,9 @@
  */
 
 import {readdirSync, statSync} from "node:fs"
-import {extname, join, relative, resolve, sep} from "node:path"
-import win32 from "node:path/win32"
+import {extname, join, relative, resolve} from "node:path"
 
+import {convertParam, normalizeSlashes} from "./path-segments"
 import type {DefineRouteFunction} from "./shared"
 
 export interface RouteConfig {
@@ -179,7 +179,7 @@ function buildRouteTree(files: string[], routeDir: string): RouteNode {
       }
 
       // Convert $param to :param, $ to *
-      urlSegment = convertParams(urlSegment)
+      urlSegment = convertParam(urlSegment)
 
       // For route.tsx and _folder.tsx, set file on parent and stop
       if (isRoute || isFolderRoute) {
@@ -218,22 +218,6 @@ function buildRouteTree(files: string[], routeDir: string): RouteNode {
   }
 
   return root
-}
-
-function convertParams(segment: string): string {
-  if (segment === "$") {
-    return "*"
-  }
-  if (segment.startsWith("$")) {
-    return `:${segment.slice(1)}`
-  }
-  if (segment.startsWith("($") && segment.endsWith(")")) {
-    return `:${segment.slice(2, -1)}?`
-  }
-  if (segment.startsWith("(") && segment.endsWith(")")) {
-    return `${segment.slice(1, -1)}?`
-  }
-  return segment
 }
 
 function renderRouteTree(
@@ -299,8 +283,4 @@ function getRoutePath(node: RouteNode, parentPath: string): string {
 
 function stripExtension(file: string): string {
   return file.replace(/\.[^/.]+$/, "")
-}
-
-function normalizeSlashes(file: string): string {
-  return file.split(win32.sep).join("/").split(sep).join("/")
 }
