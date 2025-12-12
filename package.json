@@ -27,6 +27,7 @@
     "react-docs": "pnpm -C packages/docs/react-docs",
     "react-internal": "pnpm -C packages/frameworks/react-internal",
     "react-mdx": "pnpm -C packages/frameworks/react-mdx",
+    "react-router-utils": "pnpm -C packages/frameworks/react-router-utils",
     "react-table-docs": "pnpm -C packages/docs/react-table-docs",
     "react-test-utils": "pnpm -C packages/frameworks/react-test-utils",
     "core": "pnpm -C packages/common/core",

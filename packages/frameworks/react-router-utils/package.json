@@ -33,6 +33,7 @@
     "watch:js": "tsx build.ts --watch",
     "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "lint": "eslint --quiet",
+    "test": "vitest -c vitest.config.ts --run",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },
@@ -53,7 +54,8 @@
     "react-router": "catalog:",
     "shx": "^0.4.0",
     "tsx": "^4.20.6",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "^4.0.8"
   },
   "peerDependencies": {
     "minimatch": ">=10.0.3",

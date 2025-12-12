@@ -6,6 +6,8 @@ import {readdirSync, statSync} from "node:fs"
 import {extname, join, relative, resolve, sep} from "node:path"
 import win32 from "node:path/win32"
 
+import type {DefineRouteFunction, DefineRoutesFunction} from "./shared"
+
 export interface ConfigRoute {
   /**
    * Should be `true` if the `path` is case-sensitive. Defaults to `false`.
@@ -39,28 +41,6 @@ export interface RouteManifest {
   [routeId: string]: ConfigRoute
 }
 
-export interface DefineRouteFunction {
-  (
-    /**
-     * The path this route uses to match the URL pathname.
-     */
-    path: string | undefined,
-    /**
-     * The path to the file that exports the React component rendered by this
-     * route as its default export, relative to the `app` directory.
-     */
-    file: string,
-    /**
-     * Options for defining routes, or a function for defining child routes.
-     */
-    optionsOrChildren?: DefineRouteOptions | DefineRouteChildren,
-    /**
-     * A function for defining child routes.
-     */
-    children?: DefineRouteChildren,
-  ): void
-}
-
 export interface RouteInfo {
   caseSensitive?: boolean
   file: string
@@ -71,15 +51,6 @@ export interface RouteInfo {
   parentId?: string
   path: string
   segments: string[]
-}
-
-export interface DefineRouteOptions {
-  caseSensitive?: boolean
-  index?: boolean
-}
-
-export type DefineRouteChildren = {
-  (): void
 }
 
 export type VisitFilesFunction = (
@@ -98,10 +69,6 @@ export type FlatRoutesOptions = {
   routeRegex?: RegExp
   visitFiles?: VisitFilesFunction
 }
-
-export type DefineRoutesFunction = (
-  callback: (route: DefineRouteFunction) => void,
-) => any
 
 const defaultOptions: FlatRoutesOptions = {
   appDir: "app",
