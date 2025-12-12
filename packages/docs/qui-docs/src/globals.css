@@ -13,28 +13,6 @@
 
 @source "../../../frameworks/react-internal/src";
 
-@font-face {
-  font-display: fallback;
-  font-family: "Qualcomm Next";
-  font-style: normal;
-  font-weight: 100;
-  src: url(./assets/fonts/qc-next/QualcommNext-Thin.woff) format("woff");
-}
-@font-face {
-  font-display: fallback;
-  font-family: "Qualcomm Next";
-  font-style: normal;
-  font-weight: 400;
-  src: url(./assets/fonts/qc-next/QualcommNext-Regular.woff) format("woff");
-}
-@font-face {
-  font-display: fallback;
-  font-family: "Qualcomm Next";
-  font-style: normal;
-  font-weight: 500;
-  src: url(./assets/fonts/qc-next/QualcommNext-Medium.woff) format("woff");
-}
-
 :root {
   color: var(--color-text-neutral-primary);
   color-scheme: light dark;

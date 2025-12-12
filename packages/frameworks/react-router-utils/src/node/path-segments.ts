@@ -8,9 +8,68 @@
 
 import {sep, win32} from "node:path"
 
-const INDEX_FILE = "index"
-const ROUTE_FILE = "route"
-const ROOT_FILE = "__root"
+export const INDEX_FILE = "index"
+export const ROUTE_FILE = "route"
+export const ROOT_FILE = "__root"
+
+/**
+ * Result of analyzing a path segment.
+ */
+export interface SegmentInfo {
+  /** Whether this escapes the parent layout (suffix_) */
+  escapesLayout: boolean
+  /** Whether this is a folder route file (_folder.tsx) */
+  isFolderRoute: boolean
+  /** Whether this is an index file (index.tsx) */
+  isIndex: boolean
+  /** Whether this is an index folder used for co-location */
+  isIndexFolder: boolean
+  /** Whether this is a pathless layout (_prefix) */
+  isPathless: boolean
+  /** Whether this is a route file (route.tsx) */
+  isRoute: boolean
+  /** The URL segment to use (empty if this segment doesn't contribute to path) */
+  urlSegment: string
+}
+
+/**
+ * Analyzes a path segment and returns its routing characteristics.
+ * This is the single source of truth for how segments map to URLs.
+ */
+export function analyzeSegment(
+  segment: string,
+  isLast: boolean,
+  parentSegment: string,
+): SegmentInfo {
+  const isIndex = isLast && segment === INDEX_FILE
+  const isRoute = isLast && segment === ROUTE_FILE
+  const isFolderRoute = isLast && segment === `_${parentSegment}`
+  const isPathless =
+    segment.startsWith("_") && !segment.startsWith("__") && !isFolderRoute
+  const isIndexFolder = !isLast && segment === INDEX_FILE
+  const escapesLayout = segment.endsWith("_")
+
+  // Determine the URL segment
+  let urlSegment = segment
+  if (isIndex || isRoute || isFolderRoute || isIndexFolder || isPathless) {
+    urlSegment = ""
+  } else if (escapesLayout) {
+    urlSegment = segment.slice(0, -1)
+  }
+
+  // Convert params ($param → :param, $ → *, etc.)
+  urlSegment = convertParam(urlSegment)
+
+  return {
+    escapesLayout,
+    isFolderRoute,
+    isIndex,
+    isIndexFolder,
+    isPathless,
+    isRoute,
+    urlSegment,
+  }
+}
 
 /**
  * Converts a file path to an array of URL path segments following TanStack Router
@@ -32,49 +91,35 @@ export function getPathSegments(filePath: string): string[] {
   const startIndex = parts[0] === "routes" ? 1 : 0
   const segments = parts.slice(startIndex)
 
+  return processSegments(segments)
+}
+
+/**
+ * Processes an array of path segments and returns URL path segments.
+ * Shared logic used by both getPathSegments and createSimpleRoutingStrategy.
+ */
+export function processSegments(segments: string[]): string[] {
   if (segments.length === 0) {
     return []
   }
 
-  const result: string[] = []
   const fileName = segments[segments.length - 1]
 
-  // Skip root files
   if (fileName === ROOT_FILE) {
     return []
   }
+
+  const result: string[] = []
 
   for (let i = 0; i < segments.length; i++) {
     const segment = segments[i]
     const isLast = i === segments.length - 1
     const parentSegment = i > 0 ? segments[i - 1] : ""
 
-    // Skip index and route files - they don't add to the path
-    if (isLast && (segment === INDEX_FILE || segment === ROUTE_FILE)) {
-      continue
-    }
+    const info = analyzeSegment(segment, isLast, parentSegment)
 
-    // Skip _folder.tsx pattern (e.g., about/_about.tsx)
-    if (isLast && segment === `_${parentSegment}`) {
-      continue
-    }
-
-    // Skip pathless layouts (leading _)
-    if (segment.startsWith("_") && !segment.startsWith("__")) {
-      continue
-    }
-
-    // Handle layout escaping (trailing _)
-    let urlSegment = segment
-    if (segment.endsWith("_")) {
-      urlSegment = segment.slice(0, -1)
-    }
-
-    // Convert params
-    urlSegment = convertParam(urlSegment)
-
-    if (urlSegment) {
-      result.push(urlSegment)
+    if (info.urlSegment) {
+      result.push(info.urlSegment)
     }
   }
 
@@ -123,10 +168,10 @@ export function normalizeSlashes(file: string): string {
  * Can be configured to strip a custom route directory prefix.
  *
  * @example
- * const strategy = createRoutingStrategy({ routeDir: "pages" })
+ * const strategy = createRoutingStrategy({ routeDir: "routes" })
  * strategy("pages/about/index.tsx") // ["about"]
  */
-export function createRoutingStrategy(
+export function createSimpleRoutingStrategy(
   options: {
     routeDir?: string
   } = {},
@@ -143,46 +188,6 @@ export function createRoutingStrategy(
     const startIndex = routeDirIndex >= 0 ? routeDirIndex + 1 : 0
     const segments = parts.slice(startIndex)
 
-    if (segments.length === 0) {
-      return []
-    }
-
-    const result: string[] = []
-    const fileName = segments[segments.length - 1]
-
-    if (fileName === ROOT_FILE) {
-      return []
-    }
-
-    for (let i = 0; i < segments.length; i++) {
-      const segment = segments[i]
-      const isLast = i === segments.length - 1
-      const parentSegment = i > 0 ? segments[i - 1] : ""
-
-      if (isLast && (segment === INDEX_FILE || segment === ROUTE_FILE)) {
-        continue
-      }
-
-      if (isLast && segment === `_${parentSegment}`) {
-        continue
-      }
-
-      if (segment.startsWith("_") && !segment.startsWith("__")) {
-        continue
-      }
-
-      let urlSegment = segment
-      if (segment.endsWith("_")) {
-        urlSegment = segment.slice(0, -1)
-      }
-
-      urlSegment = convertParam(urlSegment)
-
-      if (urlSegment) {
-        result.push(urlSegment)
-      }
-    }
-
-    return result
+    return processSegments(segments)
   }
 }

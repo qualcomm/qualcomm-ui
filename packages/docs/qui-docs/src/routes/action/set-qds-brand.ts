@@ -1,6 +1,6 @@
 import type {ActionFunction, ActionFunctionArgs} from "react-router"
 
-import {qdsBrandCookie} from "../sessions.server"
+import {qdsBrandCookie} from "../../sessions.server"
 
 export const action: ActionFunction = async ({request}: ActionFunctionArgs) => {
   const state = await request.text()

@@ -5,7 +5,7 @@ import {describe, expect, test} from "vitest"
 
 import {
   convertParam,
-  createRoutingStrategy,
+  createSimpleRoutingStrategy,
   getPathSegments,
   normalizeSlashes,
   stripExtension,
@@ -26,6 +26,11 @@ describe("getPathSegments", () => {
   test("handles index files", () => {
     expect(getPathSegments("routes/index.tsx")).toEqual([])
     expect(getPathSegments("routes/posts/index.tsx")).toEqual(["posts"])
+  })
+
+  test("handles index folder with _index.tsx", () => {
+    expect(getPathSegments("routes/index/_index.tsx")).toEqual([])
+    expect(getPathSegments("routes/posts/index/_index.tsx")).toEqual(["posts"])
   })
 
   test("handles route.tsx files", () => {
@@ -87,18 +92,18 @@ describe("getPathSegments", () => {
 
 describe("createRoutingStrategy", () => {
   test("creates strategy with default routes dir", () => {
-    const strategy = createRoutingStrategy()
+    const strategy = createSimpleRoutingStrategy()
     expect(strategy("routes/about.tsx")).toEqual(["about"])
   })
 
   test("creates strategy with custom routes dir", () => {
-    const strategy = createRoutingStrategy({routeDir: "pages"})
+    const strategy = createSimpleRoutingStrategy({routeDir: "pages"})
     expect(strategy("pages/about.tsx")).toEqual(["about"])
     expect(strategy("src/pages/about.tsx")).toEqual(["about"])
   })
 
   test("handles nested paths with custom routes dir", () => {
-    const strategy = createRoutingStrategy({routeDir: "views"})
+    const strategy = createSimpleRoutingStrategy({routeDir: "views"})
     expect(strategy("app/views/posts/$postId.tsx")).toEqual([
       "posts",
       ":postId",

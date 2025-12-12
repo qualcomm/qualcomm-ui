@@ -109,6 +109,19 @@ describe("simpleRoutes", () => {
       expect(routes["routes/index"].path).toBeUndefined()
     })
 
+    test("creates index route from index/_index.tsx", () => {
+      createRouteFile("index/_index.tsx")
+
+      const routes = simpleRoutes("routes", mockDefineRoutes, {
+        appDir: APP_DIR,
+      })
+
+      expect(routes["routes/index"]).toBeDefined()
+      expect(routes["routes/index"].index).toBe(true)
+      // Index routes have undefined path
+      expect(routes["routes/index"].path).toBeUndefined()
+    })
+
     test("creates simple route from about.tsx", () => {
       createRouteFile("about.tsx")
 
@@ -141,9 +154,61 @@ describe("simpleRoutes", () => {
       expect(routes["routes/about"]).toBeDefined()
       expect(routes["routes/about"].path).toBe("about")
     })
+
+    test("creates pathless layout from _folder.tsx with children", () => {
+      createRouteFile("guide/page-setup/_page-setup.tsx")
+      createRouteFile("guide/page-setup/hybrid-routes.tsx")
+      createRouteFile("guide/page-setup/simple-routes.tsx")
+
+      const routes = simpleRoutes("routes", mockDefineRoutes, {
+        appDir: APP_DIR,
+      })
+
+      // _page-setup.tsx becomes pathless when it has children
+      expect(routes["routes/guide/page-setup"]).toBeDefined()
+      expect(routes["routes/guide/page-setup"].path).toBeUndefined()
+
+      // Children get full paths and are nested under the layout
+      expect(routes["routes/guide/page-setup/hybrid-routes"]).toBeDefined()
+      expect(routes["routes/guide/page-setup/hybrid-routes"].path).toBe(
+        "guide/page-setup/hybrid-routes",
+      )
+      expect(routes["routes/guide/page-setup/hybrid-routes"].parentId).toBe(
+        "routes/guide/page-setup",
+      )
+
+      expect(routes["routes/guide/page-setup/simple-routes"]).toBeDefined()
+      expect(routes["routes/guide/page-setup/simple-routes"].path).toBe(
+        "guide/page-setup/simple-routes",
+      )
+      expect(routes["routes/guide/page-setup/simple-routes"].parentId).toBe(
+        "routes/guide/page-setup",
+      )
+    })
   })
 
   describe("nested routes", () => {
+    test("creates nested routes without layout (virtual folder)", () => {
+      // No guide.tsx - just files inside guide/
+      createRouteFile("guide/getting-started.tsx")
+      createRouteFile("guide/typedoc.mdx")
+
+      const routes = simpleRoutes("routes", mockDefineRoutes, {
+        appDir: APP_DIR,
+      })
+
+      // Routes should have full path since there's no parent layout
+      expect(routes["routes/guide/getting-started"]).toBeDefined()
+      expect(routes["routes/guide/getting-started"].path).toBe(
+        "guide/getting-started",
+      )
+      expect(routes["routes/guide/getting-started"].parentId).toBe("root")
+
+      expect(routes["routes/guide/typedoc"]).toBeDefined()
+      expect(routes["routes/guide/typedoc"].path).toBe("guide/typedoc")
+      expect(routes["routes/guide/typedoc"].parentId).toBe("root")
+    })
+
     test("creates nested routes with layout", () => {
       createRouteFile("posts.tsx")
       createRouteFile("posts/index.tsx")
@@ -183,7 +248,8 @@ describe("simpleRoutes", () => {
       })
 
       expect(routes["routes/posts/$postId"]).toBeDefined()
-      expect(routes["routes/posts/$postId"].path).toBe(":postId")
+      // Full path since there's no posts.tsx layout
+      expect(routes["routes/posts/$postId"].path).toBe("posts/:postId")
     })
 
     test("creates nested dynamic routes", () => {
@@ -218,7 +284,8 @@ describe("simpleRoutes", () => {
       })
 
       expect(routes["routes/files/$"]).toBeDefined()
-      expect(routes["routes/files/$"].path).toBe("*")
+      // Full path since there's no files.tsx layout
+      expect(routes["routes/files/$"].path).toBe("files/*")
     })
   })
 
@@ -270,7 +337,8 @@ describe("simpleRoutes", () => {
       })
 
       expect(routes["routes/docs/(lang)"]).toBeDefined()
-      expect(routes["routes/docs/(lang)"].path).toBe("lang?")
+      // Full path since there's no docs.tsx layout
+      expect(routes["routes/docs/(lang)"].path).toBe("docs/lang?")
     })
 
     test("creates optional param with ($param)", () => {
@@ -281,7 +349,8 @@ describe("simpleRoutes", () => {
       })
 
       expect(routes["routes/users/($userId)"]).toBeDefined()
-      expect(routes["routes/users/($userId)"].path).toBe(":userId?")
+      // Full path since there's no users.tsx layout
+      expect(routes["routes/users/($userId)"].path).toBe("users/:userId?")
     })
   })
 

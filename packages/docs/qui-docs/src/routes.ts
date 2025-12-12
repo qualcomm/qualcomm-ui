@@ -1,13 +1,13 @@
 import {RouteConfigEntry} from "@react-router/dev/routes"
 import {remixRoutesOptionAdapter} from "@react-router/remix-routes-option-adapter"
 
-import {hybridRoutes} from "@qualcomm-ui/react-router-utils/node"
+import {simpleRoutes} from "@qualcomm-ui/react-router-utils/node"
 
 export const routes: Promise<RouteConfigEntry[]> = remixRoutesOptionAdapter(
   (defineRoutes) => {
-    return hybridRoutes("routes", defineRoutes, {
+    return simpleRoutes("routes", defineRoutes, {
       appDir: "src",
-      ignoredRouteFiles: ["**/*components/**/*", "**/*demos/**/*"],
+      ignoredFiles: ["**/*components/**/*", "**/*demos/**/*"],
     })
   },
 )

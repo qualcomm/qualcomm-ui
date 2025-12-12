@@ -19,10 +19,16 @@
  * - `files/$.tsx`          → Splat/catch-all route /files/*
  */
 
+import minimatch from "minimatch"
 import {readdirSync, statSync} from "node:fs"
 import {extname, join, relative, resolve} from "node:path"
 
-import {convertParam, normalizeSlashes} from "./path-segments"
+import {
+  analyzeSegment,
+  INDEX_FILE,
+  normalizeSlashes,
+  ROOT_FILE,
+} from "./path-segments"
 import type {DefineRouteFunction} from "./shared"
 
 export interface RouteConfig {
@@ -46,7 +52,6 @@ export interface SimpleRoutesOptions {
   appDir?: string
   basePath?: string
   ignoredFiles?: string[]
-  routeDir?: string
 }
 
 interface RouteNode {
@@ -54,6 +59,7 @@ interface RouteNode {
   file?: string
   id: string
   index?: boolean
+  isFolderRoute?: boolean
   isPathless: boolean
   name: string
   path: string
@@ -61,9 +67,6 @@ interface RouteNode {
 }
 
 const ROUTE_EXTENSIONS = [".tsx", ".ts", ".jsx", ".js", ".mdx", ".md"]
-const ROOT_FILE = "__root"
-const INDEX_FILE = "index"
-const ROUTE_FILE = "route"
 
 export function simpleRoutes(
   routeDir: string,
@@ -107,7 +110,9 @@ function collectRouteFiles(dir: string, ignored: string[]): string[] {
       const fullPath = resolve(currentDir, entry)
       const relativePath = relative(baseDir, fullPath)
 
-      if (ignored.some((pattern) => relativePath.includes(pattern))) {
+      if (
+        ignored.some((pattern) => minimatch(relativePath, pattern, {dot: true}))
+      ) {
         continue
       }
 
@@ -160,49 +165,35 @@ function buildRouteTree(files: string[], routeDir: string): RouteNode {
       const segment = segments[i]
       const isLast = i === segments.length - 1
       const parentSegment = i > 0 ? segments[i - 1] : ""
-      const isIndex = isLast && segment === INDEX_FILE
-      const isRoute = isLast && segment === ROUTE_FILE
-      // _<parentFolder>.tsx acts as route file for the parent folder
-      const isFolderRoute = isLast && segment === `_${parentSegment}`
-      const isPathless =
-        segment.startsWith("_") && !segment.startsWith("__") && !isFolderRoute
-      const escapesLayout = segment.endsWith("_")
+      const info = analyzeSegment(segment, isLast, parentSegment)
 
-      // Determine the URL segment
-      let urlSegment = segment
-      if (isIndex || isRoute || isFolderRoute) {
-        urlSegment = ""
-      } else if (isPathless) {
-        urlSegment = ""
-      } else if (escapesLayout) {
-        urlSegment = segment.slice(0, -1)
-      }
-
-      // Convert $param to :param, $ to *
-      urlSegment = convertParam(urlSegment)
-
-      // For route.tsx and _folder.tsx, set file on parent and stop
-      if (isRoute || isFolderRoute) {
+      if (info.isRoute || info.isFolderRoute) {
         current.file = join(routeDir, file)
+        if (info.isFolderRoute) {
+          current.isFolderRoute = true
+        }
+        if (parentSegment === INDEX_FILE) {
+          current.index = true
+        }
         break
       }
 
-      if (!isIndex && urlSegment) {
-        pathSegments.push(urlSegment)
+      if (!info.isIndex && info.urlSegment) {
+        pathSegments.push(info.urlSegment)
       }
 
-      const nodeKey = isIndex ? "__index__" : segment
+      const nodeKey = info.isIndex ? "__index__" : segment
 
       if (!current.children.has(nodeKey)) {
         const nodePath = pathSegments.join("/")
         current.children.set(nodeKey, {
           children: new Map(),
           id: join(routeDir, segments.slice(0, i + 1).join("/")),
-          index: isIndex,
-          isPathless,
+          index: info.isIndex,
+          isPathless: info.isPathless,
           name: segment,
           path: nodePath ? `/${nodePath}` : "/",
-          segment: urlSegment,
+          segment: info.urlSegment,
         })
       }
 
@@ -210,7 +201,7 @@ function buildRouteTree(files: string[], routeDir: string): RouteNode {
 
       if (isLast) {
         node.file = join(routeDir, file)
-        node.index = isIndex
+        node.index = info.isIndex
       }
 
       current = node
@@ -246,17 +237,38 @@ function renderRouteTree(
 
     if (child.file) {
       if (child.index) {
-        defineRoute(routePath || "", child.file, {index: true})
+        // For index routes, check if the parent path matches the expected parent
+        // If not (virtual folders), use the full path instead of index: true
+        const expectedParent = child.path.replace(/\/$/, "")
+        const normalizedParent = parentPath.startsWith("/")
+          ? parentPath
+          : parentPath
+            ? `/${parentPath}`
+            : ""
+        if (expectedParent === normalizedParent || expectedParent === "/") {
+          defineRoute("", child.file, {index: true})
+        } else {
+          // Virtual folder case - register with full path as regular route
+          const fullPath = child.path.startsWith("/")
+            ? child.path.slice(1)
+            : child.path
+          defineRoute(fullPath, child.file)
+        }
       } else if (hasChildren) {
-        defineRoute(routePath, child.file, () => {
-          renderRouteTree(child, defineRoute, basePath, child.path)
-        })
+        if (child.isFolderRoute) {
+          defineRoute(undefined, child.file, () => {
+            renderRouteTree(child, defineRoute, basePath, parentPath)
+          })
+        } else {
+          defineRoute(routePath, child.file, () => {
+            renderRouteTree(child, defineRoute, basePath, child.path)
+          })
+        }
       } else {
         defineRoute(routePath, child.file)
       }
     } else if (hasChildren) {
-      // Virtual node (folder without route file) - render children directly
-      renderRouteTree(child, defineRoute, basePath, child.path)
+      renderRouteTree(child, defineRoute, basePath, parentPath)
     }
   }
 }

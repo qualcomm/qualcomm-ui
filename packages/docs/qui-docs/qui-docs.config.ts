@@ -1,4 +1,5 @@
 import type {QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
+import {createSimpleRoutingStrategy} from "@qualcomm-ui/react-router-utils/node"
 
 export default {
   appDirectory: "src",
@@ -24,12 +25,14 @@ export default {
     {
       children: [
         {
-          expanded: true,
-          id: "page-setup",
-        },
-        {
           id: "markdown",
         },
+        {
+          expanded: true,
+          id: "page-setup",
+          title: "Page Setup",
+        },
+
         {
           id: "typedoc",
         },
@@ -53,26 +56,9 @@ export default {
       id: "api",
       title: "API",
     },
-    {
-      children: [
-        {
-          id: "mdx-docs",
-        },
-        {
-          id: "mdx-vite",
-        },
-        {
-          id: "react",
-        },
-        {
-          id: "base",
-        },
-      ],
-      id: "changelogs",
-      title: "Changelogs",
-    },
   ],
   pageDirectory: "routes",
   pageTimestampMetadata: "user-and-timestamp",
+  routingStrategy: createSimpleRoutingStrategy(),
   typeDocProps: ".typedoc/doc-props.json",
 } satisfies QuiDocsConfig
