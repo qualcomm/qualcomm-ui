@@ -1,0 +1,35 @@
+.qui-split-button__root {
+  align-items: center;
+  display: inline-flex;
+
+  .qui-button__root[data-size][data-kind="text"] {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .qui-button__root[data-size][data-kind="icon"] {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+}
+
+.qui-split-button__divider {
+  width: 1px;
+
+  &[data-size="sm"] {
+    height: var(--sizing-60);
+  }
+
+  &[data-size="md"] {
+    height: var(--sizing-70);
+  }
+
+  &[data-size="lg"] {
+    height: var(--sizing-80);
+  }
+
+  &[data-variant="fill"] {
+    background-color: transparent;
+    height: 100%;
+  }
+}
