@@ -20,7 +20,7 @@ catalog:
   '@angular/cdk-experimental': ~20.2.14
   '@angular/cli': ~20.3.12
   '@angular/common': ~20.3.15
-  '@angular/compiler': ~20.3.15
+  '@angular/compiler': ~20.3.16
   '@angular/compiler-cli': ~20.3.15
   '@angular/core': ~20.3.15
   '@angular/forms': ~20.3.15
