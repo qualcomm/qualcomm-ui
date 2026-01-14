@@ -1,0 +1,7 @@
+.qui-file-upload__root {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}

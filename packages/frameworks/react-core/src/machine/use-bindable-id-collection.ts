@@ -4,7 +4,8 @@
 import {useRef, useState} from "react"
 
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
-import type {BindableIdCollection, Dict} from "@qualcomm-ui/utils/machine"
+import type {BindableIdCollection} from "@qualcomm-ui/utils/machine"
+import type {Dict} from "@qualcomm-ui/utils/object"
 
 export function useBindableIdCollection<T extends Dict>(): BindableIdCollection<
   any,

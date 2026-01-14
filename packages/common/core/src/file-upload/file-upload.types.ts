@@ -2,7 +2,10 @@ import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty, Locale} from "@qualcomm-ui/utils/direction"
+import type {
+  DirectionProperty,
+  LocaleProperty,
+} from "@qualcomm-ui/utils/direction"
 import type {FileError, FileMimeType} from "@qualcomm-ui/utils/files"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
@@ -11,7 +14,6 @@ import type {
   EffectSchema,
   JSX,
   MachineSchema,
-  PropNormalizer,
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
@@ -52,7 +54,10 @@ export interface IntlTranslations {
   itemPreview?: ((file: File) => string) | undefined
 }
 
-export interface FileUploadApiProps extends Locale, CommonProperties {
+export interface FileUploadApiProps
+  extends LocaleProperty,
+    DirectionProperty,
+    CommonProperties {
   /**
    * The accept file types
    */
@@ -260,7 +265,7 @@ export interface DropzoneProps {
   disableClick?: boolean | undefined
 }
 
-export interface FileUploadApi<T extends PropNormalizer = PropNormalizer> {
+export interface FileUploadApi {
   /**
    * The accepted files that have been dropped or selected
    */
@@ -294,27 +299,27 @@ export interface FileUploadApi<T extends PropNormalizer = PropNormalizer> {
    * Whether the user is focused on the dropzone element
    */
   focused: boolean
-  getClearTriggerProps: () => FileUploadClearTriggerBindings
-  getDropzoneProps: (props?: DropzoneProps) => FileUploadDropzoneBindings
+  getClearTriggerBindings: () => FileUploadClearTriggerBindings
+  getDropzoneBindings: (props?: DropzoneProps) => FileUploadDropzoneBindings
   /**
    * Returns the formatted file size (e.g. 1.2MB)
    */
   getFileSize: (file: File) => string
-  getHiddenInputProps: () => FileUploadHiddenInputBindings
-  getItemDeleteTriggerProps: (
+  getHiddenInputBindings: () => FileUploadHiddenInputBindings
+  getItemBindings: (props: ItemProps) => FileUploadItemIdBindings
+  getItemDeleteTriggerBindings: (
     props: ItemProps,
   ) => FileUploadItemDeleteTriggerBindings
-  getItemGroupProps: (props?: ItemGroupProps) => FileUploadItemBindings
-  getItemNameProps: (props: ItemProps) => FileUploadItemIdBindings
-  getItemPreviewImageProps: (
+  getItemGroupBindings: (props?: ItemGroupProps) => FileUploadItemBindings
+  getItemNameBindings: (props: ItemProps) => FileUploadItemIdBindings
+  getItemPreviewBindings: (props: ItemProps) => FileUploadItemIdBindings
+  getItemPreviewImageBindings: (
     props: ItemPreviewImageProps,
   ) => FileUploadItemPreviewImageBindings
-  getItemPreviewProps: (props: ItemProps) => FileUploadItemIdBindings
-  getItemProps: (props: ItemProps) => FileUploadItemIdBindings
-  getItemSizeTextProps: (props: ItemProps) => FileUploadItemIdBindings
-  getLabelProps: () => FileUploadLabelBindings
-  getRootProps: () => FileUploadRootBindings
-  getTriggerProps: () => FileUploadTriggerBindings
+  getItemSizeTextBindings: (props: ItemProps) => FileUploadItemIdBindings
+  getLabelBindings: () => FileUploadLabelBindings
+  getRootBindings: () => FileUploadRootBindings
+  getTriggerBindings: () => FileUploadTriggerBindings
   /**
    * Function to open the file dialog
    */

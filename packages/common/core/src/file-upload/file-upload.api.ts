@@ -80,7 +80,7 @@ export function createFileUploadApi(
     disabled,
     dragging,
     focused,
-    getClearTriggerProps(): FileUploadClearTriggerBindings {
+    getClearTriggerBindings(): FileUploadClearTriggerBindings {
       return normalize.button({
         ...commonBindings,
         "aria-label": translations.clearTriggerLabel,
@@ -100,7 +100,7 @@ export function createFileUploadApi(
         type: "button",
       })
     },
-    getDropzoneProps(props = {}): FileUploadDropzoneBindings {
+    getDropzoneBindings(props = {}): FileUploadDropzoneBindings {
       return normalize.element({
         ...commonBindings,
         "aria-disabled": booleanAriaAttr(disabled),
@@ -231,7 +231,7 @@ export function createFileUploadApi(
     getFileSize(file) {
       return formatBytes(file.size, prop("locale"))
     },
-    getHiddenInputProps() {
+    getHiddenInputBindings() {
       return normalize.input({
         ...commonBindings,
         accept: computed("acceptAttr"),
@@ -259,7 +259,7 @@ export function createFileUploadApi(
         webkitdirectory: prop("directory") ? "" : undefined,
       })
     },
-    getItemDeleteTriggerProps(props) {
+    getItemDeleteTriggerBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE} = props
       return normalize.button({
         ...commonBindings,
@@ -276,7 +276,7 @@ export function createFileUploadApi(
         type: "button",
       })
     },
-    getItemGroupProps(props = {}) {
+    getItemGroupBindings(props = {}) {
       const {type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
         ...commonBindings,
@@ -285,7 +285,7 @@ export function createFileUploadApi(
       })
     },
 
-    getItemNameProps(props) {
+    getItemNameBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
         ...commonBindings,
@@ -295,7 +295,7 @@ export function createFileUploadApi(
       })
     },
 
-    getItemPreviewImageProps(props) {
+    getItemPreviewImageBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE, url} = props
       const isImage = file.type.startsWith("image/")
       if (!isImage) {
@@ -310,7 +310,7 @@ export function createFileUploadApi(
       })
     },
 
-    getItemPreviewProps(props) {
+    getItemPreviewBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
         ...commonBindings,
@@ -320,7 +320,7 @@ export function createFileUploadApi(
       })
     },
 
-    getItemProps(props) {
+    getItemBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
         ...commonBindings,
@@ -330,7 +330,7 @@ export function createFileUploadApi(
       })
     },
 
-    getItemSizeTextProps(props) {
+    getItemSizeTextBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
         ...commonBindings,
@@ -340,7 +340,7 @@ export function createFileUploadApi(
       })
     },
 
-    getLabelProps() {
+    getLabelBindings() {
       return normalize.label({
         ...commonBindings,
         "data-disabled": booleanDataAttr(disabled),
@@ -351,7 +351,7 @@ export function createFileUploadApi(
       })
     },
 
-    getRootProps() {
+    getRootBindings() {
       return normalize.element({
         ...commonBindings,
         "data-disabled": booleanDataAttr(disabled),
@@ -360,7 +360,7 @@ export function createFileUploadApi(
       })
     },
 
-    getTriggerProps() {
+    getTriggerBindings() {
       return normalize.button({
         ...commonBindings,
         "data-disabled": booleanDataAttr(disabled),
