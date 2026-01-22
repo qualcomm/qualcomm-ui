@@ -100,7 +100,12 @@ export function createFileUploadApi(
         type: "button",
       })
     },
-    getDropzoneBindings(props = {}): FileUploadDropzoneBindings {
+    getDropzoneBindings(
+      props: {disableClick?: boolean; id?: string} = {},
+    ): FileUploadDropzoneBindings {
+      if (props.id) {
+        scope.ids.register("dropzone", props as {id: string})
+      }
       return normalize.element({
         ...commonBindings,
         "aria-disabled": booleanAriaAttr(disabled),
@@ -231,7 +236,8 @@ export function createFileUploadApi(
     getFileSize(file) {
       return formatBytes(file.size, prop("locale"))
     },
-    getHiddenInputBindings() {
+    getHiddenInputBindings(props: {id: string}) {
+      scope.ids.register("hiddenInput", props)
       return normalize.input({
         ...commonBindings,
         accept: computed("acceptAttr"),
@@ -240,23 +246,32 @@ export function createFileUploadApi(
         id: domIds.hiddenInput(scope),
         multiple: computed("multiple") || prop("maxFiles") > 1,
         name: prop("name"),
-        onClick(event) {
-          event.stopPropagation()
-          // allow for re-selection of the same file
-          event.currentTarget.value = ""
-        },
-        onInput(event) {
+        onChange(event) {
           if (disabled) {
             return
           }
           const {files} = event.currentTarget
           send({files: files ? Array.from(files) : [], type: "FILE.SELECT"})
         },
+        onClick(event) {
+          event.stopPropagation()
+          // allow for re-selection of the same file
+          event.currentTarget.value = ""
+        },
         required: prop("required"),
         style: visuallyHiddenStyle,
         tabIndex: -1,
         type: "file",
         webkitdirectory: prop("directory") ? "" : undefined,
+      })
+    },
+    getItemBindings(props) {
+      const {file, type = DEFAULT_ITEM_TYPE} = props
+      return normalize.element({
+        ...commonBindings,
+        "data-disabled": booleanDataAttr(disabled),
+        "data-type": type,
+        id: getItem(scope, file.name),
       })
     },
     getItemDeleteTriggerBindings(props) {
@@ -276,6 +291,7 @@ export function createFileUploadApi(
         type: "button",
       })
     },
+
     getItemGroupBindings(props = {}) {
       const {type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
@@ -295,6 +311,16 @@ export function createFileUploadApi(
       })
     },
 
+    getItemPreviewBindings(props) {
+      const {file, type = DEFAULT_ITEM_TYPE} = props
+      return normalize.element({
+        ...commonBindings,
+        "data-disabled": booleanDataAttr(disabled),
+        "data-type": type,
+        id: getItemPreview(scope, file.name),
+      })
+    },
+
     getItemPreviewImageBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE, url} = props
       const isImage = file.type.startsWith("image/")
@@ -310,26 +336,6 @@ export function createFileUploadApi(
       })
     },
 
-    getItemPreviewBindings(props) {
-      const {file, type = DEFAULT_ITEM_TYPE} = props
-      return normalize.element({
-        ...commonBindings,
-        "data-disabled": booleanDataAttr(disabled),
-        "data-type": type,
-        id: getItemPreview(scope, file.name),
-      })
-    },
-
-    getItemBindings(props) {
-      const {file, type = DEFAULT_ITEM_TYPE} = props
-      return normalize.element({
-        ...commonBindings,
-        "data-disabled": booleanDataAttr(disabled),
-        "data-type": type,
-        id: getItem(scope, file.name),
-      })
-    },
-
     getItemSizeTextBindings(props) {
       const {file, type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
@@ -340,7 +346,8 @@ export function createFileUploadApi(
       })
     },
 
-    getLabelBindings() {
+    getLabelBindings(props: {id: string}) {
+      scope.ids.register("label", props)
       return normalize.label({
         ...commonBindings,
         "data-disabled": booleanDataAttr(disabled),
@@ -360,7 +367,8 @@ export function createFileUploadApi(
       })
     },
 
-    getTriggerBindings() {
+    getTriggerBindings(props: {id: string}) {
+      scope.ids.register("trigger", props)
       return normalize.button({
         ...commonBindings,
         "data-disabled": booleanDataAttr(disabled),

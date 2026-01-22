@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {Directive, type OnInit} from "@angular/core"
+import {Directive, ElementRef, inject, type OnInit} from "@angular/core"
 
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 
@@ -12,14 +12,18 @@ import {useFileUploadItemContext} from "./file-upload-item-context.service"
 export class CoreFileUploadItemNameDirective implements OnInit {
   protected readonly fileUploadContext = useFileUploadContext()
   protected readonly fileUploadItemContext = useFileUploadItemContext()
+  private readonly elementRef = inject(ElementRef)
 
   protected readonly trackBindings = useTrackBindings(() =>
-    this.fileUploadContext().getItemNameBindings(
-      this.fileUploadItemContext(),
-    ),
+    this.fileUploadContext().getItemNameBindings(this.fileUploadItemContext()),
   )
 
   ngOnInit() {
     this.trackBindings()
+
+    const itemContext = this.fileUploadItemContext()
+    if (itemContext.file) {
+      this.elementRef.nativeElement.textContent = itemContext.file.name
+    }
   }
 }

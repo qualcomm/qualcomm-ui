@@ -300,12 +300,14 @@ export interface FileUploadApi {
    */
   focused: boolean
   getClearTriggerBindings: () => FileUploadClearTriggerBindings
-  getDropzoneBindings: (props?: DropzoneProps) => FileUploadDropzoneBindings
+  getDropzoneBindings: (
+    props?: DropzoneProps & {id?: string},
+  ) => FileUploadDropzoneBindings
   /**
    * Returns the formatted file size (e.g. 1.2MB)
    */
   getFileSize: (file: File) => string
-  getHiddenInputBindings: () => FileUploadHiddenInputBindings
+  getHiddenInputBindings: (props: {id: string}) => FileUploadHiddenInputBindings
   getItemBindings: (props: ItemProps) => FileUploadItemIdBindings
   getItemDeleteTriggerBindings: (
     props: ItemProps,
@@ -317,9 +319,9 @@ export interface FileUploadApi {
     props: ItemPreviewImageProps,
   ) => FileUploadItemPreviewImageBindings
   getItemSizeTextBindings: (props: ItemProps) => FileUploadItemIdBindings
-  getLabelBindings: () => FileUploadLabelBindings
+  getLabelBindings: (props: {id: string}) => FileUploadLabelBindings
   getRootBindings: () => FileUploadRootBindings
-  getTriggerBindings: () => FileUploadTriggerBindings
+  getTriggerBindings: (props: {id: string}) => FileUploadTriggerBindings
   /**
    * Function to open the file dialog
    */
@@ -382,8 +384,8 @@ export interface FileUploadHiddenInputBindings extends CommonBindings {
   id: string
   multiple: boolean
   name?: string
+  onChange: JSX.FormEventHandler<HTMLInputElement>
   onClick: JSX.MouseEventHandler<HTMLInputElement>
-  onInput: JSX.FormEventHandler<HTMLInputElement>
   required: boolean | undefined
   style: JSX.CSSProperties
   tabIndex: -1

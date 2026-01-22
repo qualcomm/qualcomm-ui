@@ -80,8 +80,8 @@ export interface QdsFileUploadApi {
   size: QdsFileUploadSize
 
   // group: bindings
-  getClearTriggerBindings(): QdsFileUploadClearTriggerBindings
-  getDropzoneBindings(): QdsFileUploadDropzoneBindings
+  getClearTriggerBindings(props?: {id: string}): QdsFileUploadClearTriggerBindings
+  getDropzoneBindings(props?: {id: string; disableClick?: boolean}): QdsFileUploadDropzoneBindings
   getItemBindings(): QdsFileUploadItemBindings
   getItemDeleteTriggerBindings(): QdsFileUploadItemDeleteTriggerBindings
   getItemGroupBindings(): QdsFileUploadItemGroupBindings
@@ -89,7 +89,7 @@ export interface QdsFileUploadApi {
   getItemPreviewBindings(): QdsFileUploadItemPreviewBindings
   getItemPreviewImageBindings(): QdsFileUploadItemPreviewImageBindings
   getItemSizeTextBindings(): QdsFileUploadItemSizeTextBindings
-  getLabelBindings(): QdsFileUploadLabelBindings
+  getLabelBindings(props?: {id: string}): QdsFileUploadLabelBindings
   getRootBindings(): QdsFileUploadRootBindings
-  getTriggerBindings(): QdsFileUploadTriggerBindings
+  getTriggerBindings(props?: {id: string}): QdsFileUploadTriggerBindings
 }

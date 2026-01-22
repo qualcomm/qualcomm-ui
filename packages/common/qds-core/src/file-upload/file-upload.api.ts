@@ -31,13 +31,18 @@ export function createQdsFileUploadApi(
     size,
 
     // group: bindings
-    getClearTriggerBindings(): QdsFileUploadClearTriggerBindings {
+    getClearTriggerBindings(props?: {
+      id: string
+    }): QdsFileUploadClearTriggerBindings {
       return normalize.element({
         className: fileUploadClasses.clearTrigger,
         "data-size": size,
       })
     },
-    getDropzoneBindings(): QdsFileUploadDropzoneBindings {
+    getDropzoneBindings(props?: {
+      disableClick?: boolean
+      id: string
+    }): QdsFileUploadDropzoneBindings {
       return normalize.element({
         className: fileUploadClasses.dropzone,
         "data-size": size,
@@ -85,7 +90,7 @@ export function createQdsFileUploadApi(
         "data-size": size,
       })
     },
-    getLabelBindings(): QdsFileUploadLabelBindings {
+    getLabelBindings(props?: {id: string}): QdsFileUploadLabelBindings {
       return normalize.element({
         className: fileUploadClasses.label,
         "data-size": size,
@@ -97,7 +102,7 @@ export function createQdsFileUploadApi(
         "data-size": size,
       })
     },
-    getTriggerBindings(): QdsFileUploadTriggerBindings {
+    getTriggerBindings(props?: {id: string}): QdsFileUploadTriggerBindings {
       return normalize.element({
         className: fileUploadClasses.trigger,
         "data-size": size,

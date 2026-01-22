@@ -1,0 +1,125 @@
+---
+title: File Upload
+group: Form Controls
+description: The File Upload component provides an accessible interface for selecting and uploading files, with support for drag-and-drop, file validation, and preview functionality.
+component: FileUpload
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```typescript
+import {FileUploadModule} from "@qualcomm-ui/angular/file-upload"
+```
+
+## Overview
+
+The File Upload component supports both click-to-browse and drag-and-drop interactions. It provides file validation, size limits, and customizable UI for displaying accepted and rejected files.
+
+## Examples
+
+### Simple
+
+The simple API provides a standalone component with built-in layout.
+
+<QdsDemo name="FileUploadSimpleDemo" />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<QdsDemo name="FileUploadCompositeDemo" />
+
+## API
+
+### \<q-file-upload\>
+
+The simple file upload extends the [q-file-upload-root](./#q-file-upload-root) directive with the following properties:
+
+<TypeDocProps name="FileUploadComponent" omitFrom="FileUploadRootDirective" />
+
+## Composite API
+
+This section describes the directives available in the File Upload composite API.
+
+### q-file-upload-root
+
+The root directive provides context and state for all child directives.
+
+<TypeDocProps name="FileUploadRootDirective" />
+
+### q-file-upload-label
+
+A label for the file input.
+
+<TypeDocProps name="FileUploadLabelDirective" />
+
+### q-file-upload-trigger
+
+A button that opens the file picker when activated.
+
+<TypeDocProps name="FileUploadTriggerDirective" />
+
+### q-file-upload-hidden-input
+
+The hidden file input element.
+
+<TypeDocProps name="FileUploadHiddenInputDirective" />
+
+### q-file-upload-dropzone
+
+A drop target for drag-and-drop file uploads.
+
+<TypeDocProps name="FileUploadDropzoneDirective" />
+
+### q-file-upload-item-group
+
+A container for the list of file items.
+
+<TypeDocProps name="FileUploadItemGroupDirective" />
+
+### q-file-upload-item
+
+A container for each individual file.
+
+<TypeDocProps name="FileUploadItemDirective" />
+
+### q-file-upload-item-name
+
+Displays the file name.
+
+<TypeDocProps name="FileUploadItemNameDirective" />
+
+### q-file-upload-item-size-text
+
+Displays the formatted file size.
+
+<TypeDocProps name="FileUploadItemSizeTextDirective" />
+
+### q-file-upload-item-preview
+
+A container for file preview.
+
+<TypeDocProps name="FileUploadItemPreviewDirective" />
+
+### q-file-upload-item-preview-image
+
+Displays an image preview for image files.
+
+<TypeDocProps name="FileUploadItemPreviewImageDirective" />
+
+### q-file-upload-item-delete-trigger
+
+A button to remove a specific file.
+
+<TypeDocProps name="FileUploadItemDeleteTriggerDirective" />
+
+### q-file-upload-clear-trigger
+
+A button to clear all files.
+
+<TypeDocProps name="FileUploadClearTriggerDirective" />

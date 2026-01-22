@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, input, type OnInit} from "@angular/core"
+import {Directive, input, type OnInit} from "@angular/core"
 
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
@@ -25,15 +25,10 @@ export class CoreFileUploadItemPreviewImageDirective
   protected readonly fileUploadItemContext = useFileUploadItemContext()
 
   protected readonly trackBindings = useTrackBindings(() =>
-    this.fileUploadContext().getItemPreviewImageBindings(
-      computed(
-        () =>
-          ({
-            ...this.fileUploadItemContext(),
-            url: this.url(),
-          }) as ItemPreviewImageProps,
-      )(),
-    ),
+    this.fileUploadContext().getItemPreviewImageBindings({
+      ...this.fileUploadItemContext(),
+      url: this.url(),
+    }),
   )
 
   ngOnInit() {
