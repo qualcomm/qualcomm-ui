@@ -1,5 +1,11 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.14.0 (2026/01/22)
+
+### Features
+
+- [header-bar]: add padding prop
+
 ## 1.13.0 (2026/01/19)
 
 ### Features
