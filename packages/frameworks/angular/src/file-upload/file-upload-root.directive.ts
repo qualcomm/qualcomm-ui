@@ -30,7 +30,7 @@ export class FileUploadRootDirective
   /**
    * Governs the size and padding of file upload elements.
    *
-   * @default 'sm'
+   * @default 'md'
    */
   readonly size = input<QdsFileUploadSize>()
 

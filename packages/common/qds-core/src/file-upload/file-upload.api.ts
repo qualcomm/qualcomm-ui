@@ -25,7 +25,7 @@ export function createQdsFileUploadApi(
   props: QdsFileUploadApiProps,
   normalize: PropNormalizer,
 ): QdsFileUploadApi {
-  const size = props.size || "sm"
+  const size = props.size || "md"
 
   return {
     size,

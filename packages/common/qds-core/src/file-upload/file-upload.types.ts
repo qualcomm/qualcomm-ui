@@ -9,7 +9,7 @@ export interface QdsFileUploadApiProps {
   /**
    * Governs the size and padding of file upload elements.
    *
-   * @default 'sm'
+   * @default 'md'
    */
   size?: QdsFileUploadSize
 }
