@@ -66,12 +66,13 @@ import type {FileDetails} from "@qualcomm-ui/core/file-upload"
                   <span q-file-upload-item-size-text></span>
                 </div>
                 <button
+                  q-button
                   aria-label="Remove file"
                   q-file-upload-item-delete-trigger
+                  startIcon="Trash2"
                   type="button"
-                >
-                  <svg qIcon="Trash2" style="width: 16px; height: 16px;"></svg>
-                </button>
+                  variant="ghost"
+                ></button>
               </div>
             }
           </div>

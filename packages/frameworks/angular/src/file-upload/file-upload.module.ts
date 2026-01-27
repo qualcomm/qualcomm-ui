@@ -3,6 +3,7 @@
 
 import {NgModule} from "@angular/core"
 
+import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 import {FileUploadClearTriggerDirective} from "./file-upload-clear-trigger.directive"
@@ -56,6 +57,6 @@ import {FileUploadComponent} from "./file-upload.component"
     FileUploadItemSizeTextDirective,
     FileUploadItemDeleteTriggerDirective,
   ],
-  imports: [IconDirective],
+  imports: [ButtonModule, IconDirective],
 })
 export class FileUploadModule {}
