@@ -278,19 +278,11 @@
 
 .qui-file-upload__item-size-text {
   color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  &[data-size="sm"] {
-    font: var(--font-static-body-xs-default);
-  }
-
-  &[data-size="md"],
-  &[data-size="lg"] {
-    font: var(--font-static-body-xs-default);
-  }
 
   &[data-invalid] {
     color: var(--color-text-support-danger);

@@ -12,7 +12,7 @@ import {
   input,
   signal,
 } from "@angular/core"
-import {File, FilePlus, Trash2, Upload} from "lucide-angular"
+import {AlertCircle, File, FilePlus, Trash2, Upload} from "lucide-angular"
 
 import {provideFileUploadContext} from "@qualcomm-ui/angular-core/file-upload"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -28,7 +28,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    provideIcons({File, FilePlus, Trash2, Upload}),
+    provideIcons({AlertCircle, File, FilePlus, Trash2, Upload}),
     provideFileUploadContext(),
     provideQdsFileUploadContext(),
   ],
@@ -123,9 +123,16 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                   <div class="qui-file-upload__item-content">
                     <span q-file-upload-item-name></span>
                     <span
-                      class="qui-file-upload__item-size-text"
-                      style="color: var(--color-text-support-danger)"
+                      class="qui-file-upload__item-size-text flex items-center gap-1"
+                      data-invalid
                     >
+                      <svg
+                        qIcon="AlertCircle"
+                        [style.height]="12"
+                        [style.min-height]="12"
+                        [style.min-width]="12"
+                        [style.width]="12"
+                      ></svg>
                       {{ getErrorMessage(rejection.errors) }}
                     </span>
                   </div>
@@ -315,7 +322,9 @@ export class FileUploadComponent extends FileUploadRootDirective {
     })
 
     this.fileUrls.set(newUrls)
-    this.fileCount.set(details.acceptedFiles.length)
+    this.fileCount.set(
+      details.acceptedFiles.length + details.rejectedFiles.length,
+    )
   }
 
   protected isImageFile(file: File): boolean {
@@ -324,12 +333,12 @@ export class FileUploadComponent extends FileUploadRootDirective {
 
   protected getErrorMessage(errors: FileError[]): string {
     const errorMessages: Record<string, string> = {
+      FILE_EXISTS: "File already exists",
+      FILE_INVALID: "Invalid file",
       FILE_INVALID_TYPE: "Invalid file type",
       FILE_TOO_LARGE: "File is too large",
       FILE_TOO_SMALL: "File is too small",
       TOO_MANY_FILES: "Too many files",
-      FILE_INVALID: "Invalid file",
-      FILE_EXISTS: "File already exists",
     }
 
     const firstError = errors[0]
