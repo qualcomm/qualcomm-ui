@@ -1,15 +1,16 @@
 import {Component, DestroyRef, inject, signal} from "@angular/core"
-import {File, FilePlus, Trash2, Upload} from "lucide-angular"
+import {AlertCircle, FilePlus, Layers, Trash2, Upload} from "lucide-angular"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {FileUploadModule} from "@qualcomm-ui/angular/file-upload"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import type {FileDetails} from "@qualcomm-ui/core/file-upload"
+import type {FileError} from "@qualcomm-ui/utils/files"
 
 @Component({
   imports: [ButtonModule, FileUploadModule, IconDirective],
-  providers: [provideIcons({File, FilePlus, Trash2, Upload})],
+  providers: [provideIcons({AlertCircle, FilePlus, Layers, Trash2, Upload})],
   selector: "file-upload-composite-demo",
   standalone: true,
   template: `
@@ -49,7 +50,7 @@ import type {FileDetails} from "@qualcomm-ui/core/file-upload"
       <input q-file-upload-hidden-input />
 
       <ng-container *fileUploadContext="let ctx">
-        @if (ctx.acceptedFiles.length > 0) {
+        @if (ctx.acceptedFiles.length > 0 || ctx.rejectedFiles.length > 0) {
           <div q-file-upload-item-group>
             @for (file of ctx.acceptedFiles; track file) {
               <div q-file-upload-item [file]="file">
@@ -66,8 +67,39 @@ import type {FileDetails} from "@qualcomm-ui/core/file-upload"
                   <span q-file-upload-item-size-text></span>
                 </div>
                 <button
-                  q-button
                   aria-label="Remove file"
+                  q-button
+                  q-file-upload-item-delete-trigger
+                  startIcon="Trash2"
+                  type="button"
+                  variant="ghost"
+                ></button>
+              </div>
+            }
+            @for (rejection of ctx.rejectedFiles; track rejection.file) {
+              <div q-file-upload-item type="rejected" [file]="rejection.file">
+                <div q-file-upload-item-preview>
+                  <svg qIcon="Layers" style="width: 36px; height: 36px;"></svg>
+                </div>
+                <div class="qui-file-upload__item-content">
+                  <span q-file-upload-item-name></span>
+                  <span
+                    class="qui-file-upload__item-size-text flex items-center gap-1"
+                    data-invalid
+                  >
+                    <svg
+                      qIcon="AlertCircle"
+                      [style.height]="12"
+                      [style.min-height]="12"
+                      [style.min-width]="12"
+                      [style.width]="12"
+                    ></svg>
+                    {{ getErrorMessage(rejection.errors) }}
+                  </span>
+                </div>
+                <button
+                  aria-label="Remove file"
+                  q-button
                   q-file-upload-item-delete-trigger
                   startIcon="Trash2"
                   type="button"
@@ -137,6 +169,22 @@ export class FileUploadCompositeDemo {
     })
 
     this.fileUrls.set(newUrls)
-    this.fileCount.set(details.acceptedFiles.length)
+    this.fileCount.set(
+      details.acceptedFiles.length + details.rejectedFiles.length,
+    )
+  }
+
+  getErrorMessage(errors: FileError[]): string {
+    const errorMessages: Record<string, string> = {
+      FILE_EXISTS: "File already exists",
+      FILE_INVALID: "Invalid file",
+      FILE_INVALID_TYPE: "Invalid file type",
+      FILE_TOO_LARGE: "File is too large",
+      FILE_TOO_SMALL: "File is too small",
+      TOO_MANY_FILES: "Too many files",
+    }
+
+    const firstError = errors[0]
+    return errorMessages[firstError] || firstError
   }
 }

@@ -12,7 +12,7 @@ import {
   input,
   signal,
 } from "@angular/core"
-import {AlertCircle, File, FilePlus, Trash2, Upload} from "lucide-angular"
+import {AlertCircle, FilePlus, Layers, Trash2, Upload} from "lucide-angular"
 
 import {provideFileUploadContext} from "@qualcomm-ui/angular-core/file-upload"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -28,7 +28,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    provideIcons({AlertCircle, File, FilePlus, Trash2, Upload}),
+    provideIcons({AlertCircle, FilePlus, Layers, Trash2, Upload}),
     provideFileUploadContext(),
     provideQdsFileUploadContext(),
   ],
@@ -91,7 +91,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                   } @else {
                     <div q-file-upload-item-preview>
                       <svg
-                        qIcon="File"
+                        qIcon="Layers"
                         [style.height]="fileIconSize()"
                         [style.width]="fileIconSize()"
                       ></svg>
@@ -115,7 +115,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                 <div q-file-upload-item type="rejected" [file]="rejection.file">
                   <div q-file-upload-item-preview>
                     <svg
-                      qIcon="File"
+                      qIcon="Layers"
                       [style.height]="fileIconSize()"
                       [style.width]="fileIconSize()"
                     ></svg>
