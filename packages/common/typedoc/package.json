@@ -54,7 +54,7 @@
     "cosmiconfig": "^9.0.0",
     "esbuild": "^0.25.8",
     "inquirer": "^12.1.0",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "npm-run-all2": "^8.0.4",
     "shx": "^0.4.0",
     "terminate": "^2.6.1",

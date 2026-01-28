@@ -81,7 +81,7 @@
     "fuzzysort": "^3.0.1",
     "isbot": "^4.1.0",
     "jotai": "^2.7.1",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "lucide-angular": "0.525.0",
     "lucide-react": "0.525.0",
     "morgan": "^1.10.0",
