@@ -35,6 +35,11 @@ export interface FileRejectDetails {
   files: FileRejection[]
 }
 
+export type FileValidateFn = (
+  file: File,
+  details: FileDetails,
+) => FileError[] | null
+
 export interface FileUploadElementIds {
   dropzone: string
   hiddenInput: string

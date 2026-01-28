@@ -10,7 +10,6 @@ import {FileUploadModule} from "@qualcomm-ui/angular/file-upload"
     <!-- preview -->
     <div class="flex w-full flex-col items-center gap-8">
       <div class="w-full max-w-md">
-        <h3 class="mb-4 text-sm font-semibold">Small</h3>
         <q-file-upload
           dropzoneHint="Supported file types: .jpg, .jpeg, .png, .pdf"
           label="Upload files (Small)"
@@ -21,7 +20,6 @@ import {FileUploadModule} from "@qualcomm-ui/angular/file-upload"
       </div>
 
       <div class="w-full max-w-md">
-        <h3 class="mb-4 text-sm font-semibold">Medium (Default)</h3>
         <q-file-upload
           dropzoneHint="Supported file types: .jpg, .jpeg, .png, .pdf"
           label="Upload files (Medium)"
@@ -32,7 +30,6 @@ import {FileUploadModule} from "@qualcomm-ui/angular/file-upload"
       </div>
 
       <div class="w-full max-w-md">
-        <h3 class="mb-4 text-sm font-semibold">Large</h3>
         <q-file-upload
           dropzoneHint="Supported file types: .jpg, .jpeg, .png, .pdf"
           label="Upload files (Large)"

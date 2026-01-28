@@ -84,3 +84,9 @@ export type FileMimeType =
   | AudioFileMimeType
   | FileMimeTypeGroup
   | AnyString
+
+export type FileAcceptType =
+  | Record<string, string[]>
+  | FileMimeType
+  | FileMimeType[]
+  | undefined

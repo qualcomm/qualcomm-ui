@@ -26,11 +26,12 @@ import {
   type FileRejectDetails,
   type FileUploadApiProps,
   fileUploadMachine,
+  type FileValidateFn,
   type IntlTranslations,
 } from "@qualcomm-ui/core/file-upload"
 import type {Booleanish, NumberInput} from "@qualcomm-ui/utils/coercion"
 import type {Direction} from "@qualcomm-ui/utils/direction"
-import type {FileError, FileMimeType} from "@qualcomm-ui/utils/files"
+import type {FileAcceptType} from "@qualcomm-ui/utils/files"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
 import {FileUploadContextService} from "./file-upload-context.service"
@@ -41,10 +42,10 @@ export class CoreFileUploadRootDirective
 {
   /**
    * The accept file types
+   *
+   *  @inheritDoc
    */
-  readonly accept = input<
-    Record<string, string[]> | FileMimeType | FileMimeType[] | undefined
-  >()
+  readonly accept = input<FileAcceptType>()
 
   /**
    * The controlled accepted files
@@ -53,6 +54,7 @@ export class CoreFileUploadRootDirective
 
   /**
    * Whether to allow drag and drop in the dropzone element
+   *
    * @default true
    */
   readonly allowDrop = input<boolean | undefined, Booleanish>(undefined, {
@@ -60,7 +62,7 @@ export class CoreFileUploadRootDirective
   })
 
   /**
-   * The default camera to use when capturing media
+   * The default camera to use when capturing media (for mobile only)
    */
   readonly capture = input<"user" | "environment" | undefined>()
 
@@ -170,10 +172,10 @@ export class CoreFileUploadRootDirective
 
   /**
    * Function to validate a file
+   *
+   * @inheritDoc
    */
-  readonly validate = input<
-    ((file: File, details: FileDetails) => FileError[] | null) | undefined
-  >()
+  readonly validate = input<FileValidateFn>()
 
   /**
    * Callback fired when the file is accepted
@@ -182,11 +184,15 @@ export class CoreFileUploadRootDirective
 
   /**
    * Callback fired when the value changes, whether accepted or rejected
+   *
+   * @inheritDoc
    */
   readonly fileChanged = output<FileDetails>()
 
   /**
    * Callback fired when the file is rejected
+   *
+   * @inheritDoc
    */
   readonly fileRejected = output<FileRejectDetails>()
 
