@@ -389,8 +389,8 @@ export interface FileUploadHiddenInputBindings extends CommonBindings {
   id: string
   multiple: boolean
   name?: string
-  onChange: JSX.FormEventHandler<HTMLInputElement>
   onClick: JSX.MouseEventHandler<HTMLInputElement>
+  onInput: JSX.FormEventHandler<HTMLInputElement>
   required: boolean | undefined
   style: JSX.CSSProperties
   tabIndex: -1

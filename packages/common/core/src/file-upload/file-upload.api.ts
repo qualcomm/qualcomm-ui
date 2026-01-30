@@ -246,17 +246,17 @@ export function createFileUploadApi(
         id: domIds.hiddenInput(scope),
         multiple: computed("multiple") || prop("maxFiles") > 1,
         name: prop("name"),
-        onChange(event) {
+        onClick(event) {
+          event.stopPropagation()
+          // allow for re-selection of the same file
+          event.currentTarget.value = ""
+        },
+        onInput(event) {
           if (disabled) {
             return
           }
           const {files} = event.currentTarget
           send({files: files ? Array.from(files) : [], type: "FILE.SELECT"})
-        },
-        onClick(event) {
-          event.stopPropagation()
-          // allow for re-selection of the same file
-          event.currentTarget.value = ""
         },
         required: prop("required"),
         style: visuallyHiddenStyle,
