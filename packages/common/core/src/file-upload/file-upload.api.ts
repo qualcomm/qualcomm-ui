@@ -4,11 +4,19 @@ import {
   visuallyHiddenStyle,
 } from "@qualcomm-ui/dom/query"
 import {flatArray} from "@qualcomm-ui/utils/array"
-import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import {
+  ariaAttr,
+  booleanAriaAttr,
+  booleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import {getFileEntries} from "@qualcomm-ui/utils/files"
 import {formatBytes} from "@qualcomm-ui/utils/i18n"
-import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
+import type {
+  IdRegistrationProps,
+  Machine,
+  PropNormalizer,
+} from "@qualcomm-ui/utils/machine"
 
 import {
   domEls,
@@ -22,6 +30,7 @@ import type {
   FileUploadApi,
   FileUploadClearTriggerBindings,
   FileUploadDropzoneBindings,
+  FileUploadErrorTextBindings,
   FileUploadSchema,
   ItemType,
 } from "./file-upload.types"
@@ -50,6 +59,7 @@ export function createFileUploadApi(
   const {computed, context, prop, scope, send, state} = machine
   const disabled = !!prop("disabled")
   const required = !!prop("required")
+  const invalid = prop("invalid")
   const allowDrop = prop("allowDrop")
   const translations = prop("translations")
 
@@ -112,7 +122,7 @@ export function createFileUploadApi(
         "aria-label": translations.dropzone,
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
-        "data-invalid": booleanDataAttr(prop("invalid")),
+        "data-invalid": booleanDataAttr(invalid),
         id: domIds.dropzone(scope),
         onBlur() {
           if (disabled) {
@@ -233,6 +243,16 @@ export function createFileUploadApi(
         tabIndex: disabled || props.disableClick ? undefined : 0,
       })
     },
+    getErrorTextBindings(props: IdRegistrationProps): FileUploadErrorTextBindings {
+      scope.ids.register("errorText", props)
+      return normalize.element({
+        ...commonBindings,
+        "aria-live": "polite",
+        "data-part": "error-text",
+        hidden: !invalid,
+        id: domIds.errorText(scope),
+      })
+    },
     getFileSize(file) {
       return formatBytes(file.size, prop("locale"))
     },
@@ -241,6 +261,8 @@ export function createFileUploadApi(
       return normalize.input({
         ...commonBindings,
         accept: computed("acceptAttr"),
+        "aria-describedby": ariaAttr(invalid ? domIds.errorText(scope) : undefined),
+        "aria-invalid": booleanAriaAttr(invalid),
         capture: prop("capture"),
         disabled,
         id: domIds.hiddenInput(scope),
@@ -372,7 +394,7 @@ export function createFileUploadApi(
       return normalize.button({
         ...commonBindings,
         "data-disabled": booleanDataAttr(disabled),
-        "data-invalid": booleanDataAttr(prop("invalid")),
+        "data-invalid": booleanDataAttr(invalid),
         disabled,
         id: domIds.trigger(scope),
         onClick(event) {

@@ -31,9 +31,33 @@ export interface QdsFileUploadDropzoneBindings {
   "data-size": QdsFileUploadSize
 }
 
+export interface QdsFileUploadDropzoneTextGroupBindings {
+  className: FileUploadClasses["dropzoneTextGroup"]
+}
+
+export interface QdsFileUploadDropzoneTextLineBindings {
+  className: FileUploadClasses["dropzoneTextLine"]
+}
+
+export interface QdsFileUploadDropzoneTextBindings {
+  className: FileUploadClasses["dropzoneText"]
+}
+
+export interface QdsFileUploadDropzoneHintBindings {
+  className: FileUploadClasses["dropzoneHint"]
+}
+
+export interface QdsFileUploadErrorTextBindings {
+  className: FileUploadClasses["errorText"]
+}
+
 export interface QdsFileUploadItemBindings {
   className: FileUploadClasses["item"]
   "data-size": QdsFileUploadSize
+}
+
+export interface QdsFileUploadItemContentBindings {
+  className: FileUploadClasses["itemContent"]
 }
 
 export interface QdsFileUploadItemDeleteTriggerBindings {
@@ -82,7 +106,13 @@ export interface QdsFileUploadApi {
   // group: bindings
   getClearTriggerBindings(props?: {id: string}): QdsFileUploadClearTriggerBindings
   getDropzoneBindings(props?: {id: string; disableClick?: boolean}): QdsFileUploadDropzoneBindings
+  getDropzoneTextGroupBindings(): QdsFileUploadDropzoneTextGroupBindings
+  getDropzoneTextLineBindings(): QdsFileUploadDropzoneTextLineBindings
+  getDropzoneTextBindings(): QdsFileUploadDropzoneTextBindings
+  getDropzoneHintBindings(): QdsFileUploadDropzoneHintBindings
+  getErrorTextBindings(): QdsFileUploadErrorTextBindings
   getItemBindings(): QdsFileUploadItemBindings
+  getItemContentBindings(): QdsFileUploadItemContentBindings
   getItemDeleteTriggerBindings(): QdsFileUploadItemDeleteTriggerBindings
   getItemGroupBindings(): QdsFileUploadItemGroupBindings
   getItemNameBindings(): QdsFileUploadItemNameBindings

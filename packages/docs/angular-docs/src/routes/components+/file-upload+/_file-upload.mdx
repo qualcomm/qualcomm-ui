@@ -40,6 +40,12 @@ The File Upload component supports three size variants: `sm`, `md` (default), an
 
 <QdsDemo name="FileUploadSizesDemo" />
 
+### Errors
+
+The File Upload component displays component-level error messages when the `invalid` property is `true`. Per-file validation errors are shown automatically for rejected files.
+
+<QdsDemo name="FileUploadErrorsDemo" />
+
 ## API
 
 ### \<q-file-upload\>
@@ -82,6 +88,30 @@ A drop target for drag-and-drop file uploads.
 
 <TypeDocProps name="FileUploadDropzoneDirective" />
 
+### q-file-upload-dropzone-text-group
+
+Container for dropzone text content.
+
+<TypeDocProps name="FileUploadDropzoneTextGroupDirective" />
+
+### q-file-upload-dropzone-text-line
+
+Container for the dropzone text line.
+
+<TypeDocProps name="FileUploadDropzoneTextLineDirective" />
+
+### q-file-upload-dropzone-text
+
+The main dropzone text content.
+
+<TypeDocProps name="FileUploadDropzoneTextDirective" />
+
+### q-file-upload-dropzone-hint
+
+Hint text displayed below the dropzone instructions.
+
+<TypeDocProps name="FileUploadDropzoneHintDirective" />
+
 ### q-file-upload-item-group
 
 A container for the list of file items.
@@ -93,6 +123,12 @@ A container for the list of file items.
 A container for each individual file.
 
 <TypeDocProps name="FileUploadItemDirective" />
+
+### q-file-upload-item-content
+
+Container for file item text content (name and size).
+
+<TypeDocProps name="FileUploadItemContentDirective" />
 
 ### q-file-upload-item-name
 

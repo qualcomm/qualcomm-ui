@@ -25,7 +25,7 @@ export class CoreFileUploadItemSizeTextDirective implements OnInit {
 
     const context = this.fileUploadContext()
     const itemContext = this.fileUploadItemContext()
-    if (itemContext.file) {
+    if (itemContext.file && itemContext.type !== "rejected") {
       this.elementRef.nativeElement.textContent = context.getFileSize(
         itemContext.file,
       )

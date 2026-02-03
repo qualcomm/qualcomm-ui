@@ -42,6 +42,7 @@ export type FileValidateFn = (
 
 export interface FileUploadElementIds {
   dropzone: string
+  errorText: string
   hiddenInput: string
   item: string[]
   itemName: string[]
@@ -308,6 +309,7 @@ export interface FileUploadApi {
   getDropzoneBindings: (
     props?: DropzoneProps & {id?: string},
   ) => FileUploadDropzoneBindings
+  getErrorTextBindings: (props: {id: string}) => FileUploadErrorTextBindings
   /**
    * Returns the formatted file size (e.g. 1.2MB)
    */
@@ -403,7 +405,7 @@ export interface FileUploadItemDeleteTriggerBindings extends CommonBindings {
   "data-disabled": BooleanDataAttr
   "data-type": ItemType
   disabled: boolean
-  onClick: JSX.MouseEventHandler<HTMLInputElement>
+  onClick: JSX.MouseEventHandler<HTMLButtonElement>
   type: "button"
 }
 
@@ -442,4 +444,11 @@ export interface FileUploadTriggerBindings extends CommonBindings {
   id: string
   onClick: JSX.MouseEventHandler<HTMLElement>
   type: "button"
+}
+
+export interface FileUploadErrorTextBindings extends CommonBindings {
+  "aria-live": "polite"
+  "data-part": "error-text"
+  hidden: boolean
+  id: string
 }

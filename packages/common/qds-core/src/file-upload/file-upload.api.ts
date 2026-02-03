@@ -9,7 +9,13 @@ import type {
   QdsFileUploadApiProps,
   QdsFileUploadClearTriggerBindings,
   QdsFileUploadDropzoneBindings,
+  QdsFileUploadDropzoneHintBindings,
+  QdsFileUploadDropzoneTextBindings,
+  QdsFileUploadDropzoneTextGroupBindings,
+  QdsFileUploadDropzoneTextLineBindings,
+  QdsFileUploadErrorTextBindings,
   QdsFileUploadItemBindings,
+  QdsFileUploadItemContentBindings,
   QdsFileUploadItemDeleteTriggerBindings,
   QdsFileUploadItemGroupBindings,
   QdsFileUploadItemNameBindings,
@@ -48,10 +54,40 @@ export function createQdsFileUploadApi(
         "data-size": size,
       })
     },
+    getDropzoneTextGroupBindings(): QdsFileUploadDropzoneTextGroupBindings {
+      return normalize.element({
+        className: fileUploadClasses.dropzoneTextGroup,
+      })
+    },
+    getDropzoneTextLineBindings(): QdsFileUploadDropzoneTextLineBindings {
+      return normalize.element({
+        className: fileUploadClasses.dropzoneTextLine,
+      })
+    },
+    getDropzoneTextBindings(): QdsFileUploadDropzoneTextBindings {
+      return normalize.element({
+        className: fileUploadClasses.dropzoneText,
+      })
+    },
+    getDropzoneHintBindings(): QdsFileUploadDropzoneHintBindings {
+      return normalize.element({
+        className: fileUploadClasses.dropzoneHint,
+      })
+    },
+    getErrorTextBindings(): QdsFileUploadErrorTextBindings {
+      return normalize.element({
+        className: fileUploadClasses.errorText,
+      })
+    },
     getItemBindings(): QdsFileUploadItemBindings {
       return normalize.element({
         className: fileUploadClasses.item,
         "data-size": size,
+      })
+    },
+    getItemContentBindings(): QdsFileUploadItemContentBindings {
+      return normalize.element({
+        className: fileUploadClasses.itemContent,
       })
     },
     getItemDeleteTriggerBindings(): QdsFileUploadItemDeleteTriggerBindings {

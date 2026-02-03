@@ -8,6 +8,7 @@ export const fileUploadClasses = {
   dropzoneText: "qui-file-upload__dropzone-text",
   dropzoneTextGroup: "qui-file-upload__dropzone-text-group",
   dropzoneTextLine: "qui-file-upload__dropzone-text-line",
+  errorText: "qui-file-upload__error-text",
   item: "qui-file-upload__item",
   itemContent: "qui-file-upload__item-content",
   itemDeleteTrigger: "qui-file-upload__item-delete-trigger",

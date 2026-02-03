@@ -3,11 +3,11 @@
 
 import {computed, Directive, inject, input, type OnInit} from "@angular/core"
 
-import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
   CoreFileUploadRootDirective,
   provideFileUploadContext,
 } from "@qualcomm-ui/angular-core/file-upload"
+import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
   createQdsFileUploadApi,
   type QdsFileUploadSize,

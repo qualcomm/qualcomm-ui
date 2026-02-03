@@ -125,6 +125,11 @@
   font: var(--font-static-body-xs-default);
 }
 
+.qui-file-upload__error-text {
+  color: var(--color-text-support-danger);
+  font: var(--font-static-body-xs-default);
+}
+
 .qui-file-upload__trigger {
   background: transparent;
   border: none;
@@ -179,6 +184,11 @@
 
   &[data-size="lg"] {
     max-height: 188px;
+  }
+
+  &[data-invalid] {
+    border-color: var(--color-interactive-border-danger-idle);
+    border-width: var(--border-width-md);
   }
 }
 
@@ -249,6 +259,9 @@
   white-space: nowrap;
 
   &[data-invalid] {
+    align-items: center;
     color: var(--color-text-support-danger);
+    display: flex;
+    gap: var(--spacing-40);
   }
 }

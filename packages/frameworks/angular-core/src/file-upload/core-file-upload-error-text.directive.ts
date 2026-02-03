@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {Directive, input, type OnInit} from "@angular/core"
+import {computed, Directive, input, type OnInit} from "@angular/core"
 
 import {useId} from "@qualcomm-ui/angular-core/common"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
@@ -9,21 +9,18 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {useFileUploadContext} from "./file-upload-context.service"
 
 @Directive()
-export class CoreFileUploadLabelDirective implements OnInit {
-  /**
-   * {@link https://www.w3schools.com/html/html_id.asp id attribute}. If
-   * omitted, a unique identifier will be generated for accessibility.
-   */
+export class CoreFileUploadErrorTextDirective implements OnInit {
   readonly id = input<string>()
 
   protected readonly fileUploadContext = useFileUploadContext()
-  private readonly generatedId = useId(this, null)
 
   protected readonly trackBindings = useTrackBindings(() =>
-    this.fileUploadContext().getLabelBindings({
-      id: this.id() || this.generatedId,
+    this.fileUploadContext().getErrorTextBindings({
+      id: this.hostId(),
     }),
   )
+
+  private readonly hostId = computed(() => useId(this, this.id()))
 
   ngOnInit() {
     this.trackBindings()

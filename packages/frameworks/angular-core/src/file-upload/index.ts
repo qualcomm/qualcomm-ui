@@ -1,5 +1,6 @@
 export * from "./core-file-upload-clear-trigger.directive"
 export * from "./core-file-upload-dropzone.directive"
+export * from "./core-file-upload-error-text.directive"
 export * from "./core-file-upload-hidden-input.directive"
 export * from "./core-file-upload-item-delete-trigger.directive"
 export * from "./core-file-upload-item-group.directive"

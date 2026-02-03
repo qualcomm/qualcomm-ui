@@ -10,6 +10,7 @@ export const domIds: ScopeDomIds<
   FileUploadScope
 > = {
   dropzone: (scope) => scope.ids.get("dropzone"),
+  errorText: (scope) => scope.ids.get("errorText"),
   hiddenInput: (scope) => scope.ids.get("hiddenInput"),
   label: (scope) => scope.ids.get("label"),
   root: (scope) => scope.ids.get("root"),
@@ -32,6 +33,7 @@ export const domEls: ScopeDomElements<
   hiddenInput: (scope: FileUploadScope) => HTMLInputElement | null
 } = {
   dropzone: (scope) => scope.getById<HTMLElement>(domIds.dropzone(scope)),
+  errorText: (scope) => scope.getById(domIds.errorText(scope)),
   hiddenInput: (scope) => scope.getById(domIds.hiddenInput(scope)),
   root: (scope) => scope.getById<HTMLElement>(domIds.root(scope)),
 }

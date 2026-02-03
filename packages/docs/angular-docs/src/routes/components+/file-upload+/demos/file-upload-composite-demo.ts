@@ -27,20 +27,12 @@ import type {FileError} from "@qualcomm-ui/utils/files"
       @if (fileCount() === 0) {
         <div q-file-upload-dropzone>
           <svg qIcon="Upload" style="width: 24px; height: 24px;"></svg>
-          <div class="qui-file-upload__dropzone-text-group">
-            <div class="qui-file-upload__dropzone-text-line">
-              <span class="qui-file-upload__dropzone-text">
-                Drag & drop images, or
-              </span>
-              <button
-                class="cursor-pointer"
-                q-file-upload-trigger
-                type="button"
-              >
-                browse
-              </button>
+          <div q-file-upload-dropzone-text-group>
+            <div q-file-upload-dropzone-text-line>
+              <span q-file-upload-dropzone-text>Drag & drop images, or</span>
+              <button q-file-upload-trigger type="button">browse</button>
             </div>
-            <span class="qui-file-upload__dropzone-hint">
+            <span q-file-upload-dropzone-hint>
               Supported file types: Images only
             </span>
           </div>
@@ -51,7 +43,10 @@ import type {FileError} from "@qualcomm-ui/utils/files"
 
       <ng-container *fileUploadContext="let ctx">
         @if (ctx.acceptedFiles.length > 0 || ctx.rejectedFiles.length > 0) {
-          <div q-file-upload-item-group>
+          <div
+            q-file-upload-item-group
+            [attr.data-invalid]="ctx.rejectedFiles.length > 0 ? true : null"
+          >
             @for (file of ctx.acceptedFiles; track file) {
               <div q-file-upload-item [file]="file">
                 <div q-file-upload-item-preview>
@@ -62,7 +57,7 @@ import type {FileError} from "@qualcomm-ui/utils/files"
                     />
                   }
                 </div>
-                <div class="qui-file-upload__item-content">
+                <div q-file-upload-item-content>
                   <span q-file-upload-item-name></span>
                   <span q-file-upload-item-size-text></span>
                 </div>
@@ -81,18 +76,15 @@ import type {FileError} from "@qualcomm-ui/utils/files"
                 <div q-file-upload-item-preview>
                   <svg qIcon="Layers" style="width: 36px; height: 36px;"></svg>
                 </div>
-                <div class="qui-file-upload__item-content">
+                <div q-file-upload-item-content>
                   <span q-file-upload-item-name></span>
-                  <span
-                    class="qui-file-upload__item-size-text flex items-center gap-1"
-                    data-invalid
-                  >
+                  <span data-invalid q-file-upload-item-size-text>
                     <svg
                       qIcon="AlertCircle"
-                      [style.height]="12"
-                      [style.min-height]="12"
-                      [style.min-width]="12"
-                      [style.width]="12"
+                      [style.height.px]="12"
+                      [style.min-height.px]="12"
+                      [style.min-width.px]="12"
+                      [style.width.px]="12"
                     ></svg>
                     {{ getErrorMessage(rejection.errors) }}
                   </span>
@@ -108,7 +100,11 @@ import type {FileError} from "@qualcomm-ui/utils/files"
               </div>
             }
           </div>
+        }
+      </ng-container>
 
+      <ng-container *fileUploadContext="let ctx">
+        @if (ctx.acceptedFiles.length > 0 || ctx.rejectedFiles.length > 0) {
           <div class="flex justify-start">
             <button
               q-button

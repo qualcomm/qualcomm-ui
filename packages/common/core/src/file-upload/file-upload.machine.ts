@@ -199,6 +199,7 @@ export const fileUploadMachine: MachineConfig<FileUploadSchema> = createMachine(
     ids: ({bindableId, bindableIdCollection, ids}) => {
       return {
         dropzone: bindableId<string>(ids?.dropzone),
+        errorText: bindableId<string>(ids?.errorText),
         hiddenInput: bindableId<string>(ids?.hiddenInput),
         item: bindableIdCollection(),
         itemName: bindableIdCollection(),

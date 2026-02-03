@@ -46,21 +46,17 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
         @if (shouldRenderDefaultDropzone()) {
           <div q-file-upload-dropzone>
             <svg qIcon="Upload" style="width: 24px; height: 24px;"></svg>
-            <div class="qui-file-upload__dropzone-text-group">
-              <div class="qui-file-upload__dropzone-text-line">
-                <span class="qui-file-upload__dropzone-text">
+            <div q-file-upload-dropzone-text-group>
+              <div q-file-upload-dropzone-text-line>
+                <span q-file-upload-dropzone-text>
                   {{ dropzoneText() }}
                 </span>
-                <button
-                  class="cursor-pointer"
-                  q-file-upload-trigger
-                  type="button"
-                >
+                <button q-file-upload-trigger type="button">
                   {{ triggerText() }}
                 </button>
               </div>
               @if (dropzoneHint()) {
-                <span class="qui-file-upload__dropzone-hint">
+                <span q-file-upload-dropzone-hint>
                   {{ dropzoneHint() }}
                 </span>
               }
@@ -76,7 +72,10 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
       @if (ctx.acceptedFiles.length > 0 || ctx.rejectedFiles.length > 0) {
         <ng-content select="[q-file-upload-item-group]">
           @if (shouldRenderDefaultItemGroup()) {
-            <div q-file-upload-item-group>
+            <div
+              q-file-upload-item-group
+              [attr.data-invalid]="ctx.rejectedFiles.length > 0 ? true : null"
+            >
               @for (file of ctx.acceptedFiles; track file) {
                 <div q-file-upload-item [file]="file">
                   @if (showPreviews() && isImageFile(file)) {
@@ -97,7 +96,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                       ></svg>
                     </div>
                   }
-                  <div class="qui-file-upload__item-content">
+                  <div q-file-upload-item-content>
                     <span q-file-upload-item-name></span>
                     <span q-file-upload-item-size-text></span>
                   </div>
@@ -120,18 +119,15 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                       [style.width]="fileIconSize()"
                     ></svg>
                   </div>
-                  <div class="qui-file-upload__item-content">
+                  <div q-file-upload-item-content>
                     <span q-file-upload-item-name></span>
-                    <span
-                      class="qui-file-upload__item-size-text flex items-center gap-1"
-                      data-invalid
-                    >
+                    <span data-invalid q-file-upload-item-size-text>
                       <svg
                         qIcon="AlertCircle"
-                        [style.height]="12"
-                        [style.min-height]="12"
-                        [style.min-width]="12"
-                        [style.width]="12"
+                        [style.height.px]="12"
+                        [style.min-height.px]="12"
+                        [style.min-width.px]="12"
+                        [style.width.px]="12"
                       ></svg>
                       {{ getErrorMessage(rejection.errors) }}
                     </span>
@@ -149,10 +145,23 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
             </div>
           }
         </ng-content>
+      }
+    </ng-container>
 
+    <ng-content select="[q-file-upload-error-text]">
+      @if (errorText()) {
+        <div q-file-upload-error-text>
+          {{ errorText() }}
+        </div>
+      }
+    </ng-content>
+
+    <ng-container *fileUploadContext="let ctx">
+      @if (ctx.acceptedFiles.length > 0 || ctx.rejectedFiles.length > 0) {
         <div class="flex justify-start">
           @if (showAddMoreButton()) {
             <button
+              aria-label="Add more files"
               q-button
               q-file-upload-trigger
               startIcon="FilePlus"
@@ -165,6 +174,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
 
           @if (showClearButton()) {
             <button
+              aria-label="Clear all files"
               q-button
               q-file-upload-clear-trigger
               startIcon="Trash2"
@@ -177,12 +187,6 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
         </div>
       }
     </ng-container>
-
-    @if (errorText() && invalid()) {
-      <div class="mt-1 text-xs text-[var(--color-text-support-danger)]">
-        {{ errorText() }}
-      </div>
-    }
   `,
 })
 export class FileUploadComponent extends FileUploadRootDirective {
@@ -225,6 +229,13 @@ export class FileUploadComponent extends FileUploadRootDirective {
 
   /**
    * Optional error message that describes the element when {@link invalid} is true.
+   *
+   * @remarks
+   * To customize the element, provide it using the directive instead:
+   *
+   * ```angular-html
+   * <div q-file-upload-error-text>...</div>
+   * ```
    */
   readonly errorText = input<string | undefined>()
 
