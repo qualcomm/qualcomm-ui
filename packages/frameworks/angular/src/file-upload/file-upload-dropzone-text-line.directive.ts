@@ -7,9 +7,6 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context.service"
 
-/**
- * Container for the dropzone text line.
- */
 @Directive({
   selector: "[q-file-upload-dropzone-text-line]",
   standalone: false,

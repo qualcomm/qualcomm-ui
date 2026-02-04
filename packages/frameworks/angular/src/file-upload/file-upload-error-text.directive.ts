@@ -8,9 +8,6 @@ import {CoreFileUploadErrorTextDirective} from "@qualcomm-ui/angular-core/file-u
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context.service"
 
-/**
- * Error message displayed when the file upload is invalid.
- */
 @Component({
   selector: "[q-file-upload-error-text]",
   standalone: false,

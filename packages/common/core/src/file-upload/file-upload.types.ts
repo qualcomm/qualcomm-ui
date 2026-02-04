@@ -65,20 +65,22 @@ export interface FileUploadApiProps
     DirectionProperty,
     CommonProperties {
   /**
-   * The accept file types
+   * Accepted file types (e.g., `['image/*', '.pdf']`). Supports MIME types,
+   * file extensions, or custom validation.
    */
   accept?: Record<string, string[]> | FileMimeType | FileMimeType[] | undefined
   /**
-   * The controlled accepted files
+   * Controlled accepted files. Use with `onFileChange` for controlled state.
    */
   acceptedFiles?: File[] | undefined
   /**
-   * Whether to allow drag and drop in the dropzone element
+   * Whether to allow drag and drop in the dropzone.
+   *
    * @default true
    */
   allowDrop?: boolean | undefined
   /**
-   * The default camera to use when capturing media
+   * Default camera for capturing media on mobile devices.
    */
   capture?: "user" | "environment" | undefined
   /**
@@ -87,7 +89,7 @@ export interface FileUploadApiProps
    */
   defaultAcceptedFiles?: File[] | undefined
   /**
-   * Whether to accept directories, only works in webkit browsers
+   * Whether to accept directories. Only supported in webkit browsers.
    */
   directory?: boolean | undefined
   /**
@@ -99,7 +101,9 @@ export interface FileUploadApiProps
    */
   ids?: Partial<FileUploadElementIds> | undefined
   /**
-   * Whether the file input is invalid
+   * Whether the file input is invalid. When true, applies error styling and
+   * shows the error text. Use for form-level validation. Per-file rejection
+   * errors are handled automatically.
    */
   invalid?: boolean | undefined
   /**
@@ -108,19 +112,19 @@ export interface FileUploadApiProps
    */
   maxFiles?: number | undefined
   /**
-   * The maximum file size in bytes
+   * Maximum file size in bytes.
    *
    * @default Infinity
    */
   maxFileSize?: number | undefined
   /**
-   * The minimum file size in bytes
+   * Minimum file size in bytes.
    *
    * @default 0
    */
   minFileSize?: number | undefined
   /**
-   * The name of the underlying file input
+   * Name attribute for the underlying file input.
    */
   name?: string | undefined
   /**
@@ -136,7 +140,8 @@ export interface FileUploadApiProps
    */
   onFileReject?: ((details: FileRejectDetails) => void) | undefined
   /**
-   * Whether to prevent the drop event on the document
+   * Whether to prevent dropping files outside the dropzone.
+   *
    * @default true
    */
   preventDocumentDrop?: boolean | undefined
@@ -145,11 +150,13 @@ export interface FileUploadApiProps
    */
   required?: boolean | undefined
   /**
-   * Function to transform the accepted files to apply transformations
+   * Transforms accepted files asynchronously after validation.
+   * Use for compression, resizing, format conversion, or other processing before
+   * setting final state.
    */
   transformFiles?: ((files: File[]) => Promise<File[]>) | undefined
   /**
-   * The localized messages to use.
+   * Localized messages for accessibility labels.
    */
   translations?: IntlTranslations | undefined
   /**
@@ -305,6 +312,10 @@ export interface FileUploadApi {
    * Whether the user is focused on the dropzone element
    */
   focused: boolean
+  /**
+   * Whether the file input is required
+   */
+  required: boolean
   getClearTriggerBindings: () => FileUploadClearTriggerBindings
   getDropzoneBindings: (
     props?: DropzoneProps & {id?: string},

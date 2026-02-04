@@ -23,6 +23,7 @@ import type {
   QdsFileUploadItemPreviewImageBindings,
   QdsFileUploadItemSizeTextBindings,
   QdsFileUploadLabelBindings,
+  QdsFileUploadRequiredIndicatorBindings,
   QdsFileUploadRootBindings,
   QdsFileUploadTriggerBindings,
 } from "./file-upload.types"
@@ -37,21 +38,26 @@ export function createQdsFileUploadApi(
     size,
 
     // group: bindings
-    getClearTriggerBindings(props?: {
-      id: string
-    }): QdsFileUploadClearTriggerBindings {
+    getClearTriggerBindings(): QdsFileUploadClearTriggerBindings {
       return normalize.element({
         className: fileUploadClasses.clearTrigger,
         "data-size": size,
       })
     },
-    getDropzoneBindings(props?: {
-      disableClick?: boolean
-      id: string
-    }): QdsFileUploadDropzoneBindings {
+    getDropzoneBindings(): QdsFileUploadDropzoneBindings {
       return normalize.element({
         className: fileUploadClasses.dropzone,
         "data-size": size,
+      })
+    },
+    getDropzoneHintBindings(): QdsFileUploadDropzoneHintBindings {
+      return normalize.element({
+        className: fileUploadClasses.dropzoneHint,
+      })
+    },
+    getDropzoneTextBindings(): QdsFileUploadDropzoneTextBindings {
+      return normalize.element({
+        className: fileUploadClasses.dropzoneText,
       })
     },
     getDropzoneTextGroupBindings(): QdsFileUploadDropzoneTextGroupBindings {
@@ -62,16 +68,6 @@ export function createQdsFileUploadApi(
     getDropzoneTextLineBindings(): QdsFileUploadDropzoneTextLineBindings {
       return normalize.element({
         className: fileUploadClasses.dropzoneTextLine,
-      })
-    },
-    getDropzoneTextBindings(): QdsFileUploadDropzoneTextBindings {
-      return normalize.element({
-        className: fileUploadClasses.dropzoneText,
-      })
-    },
-    getDropzoneHintBindings(): QdsFileUploadDropzoneHintBindings {
-      return normalize.element({
-        className: fileUploadClasses.dropzoneHint,
       })
     },
     getErrorTextBindings(): QdsFileUploadErrorTextBindings {
@@ -126,10 +122,15 @@ export function createQdsFileUploadApi(
         "data-size": size,
       })
     },
-    getLabelBindings(props?: {id: string}): QdsFileUploadLabelBindings {
+    getLabelBindings(): QdsFileUploadLabelBindings {
       return normalize.element({
         className: fileUploadClasses.label,
         "data-size": size,
+      })
+    },
+    getRequiredIndicatorBindings(): QdsFileUploadRequiredIndicatorBindings {
+      return normalize.element({
+        className: fileUploadClasses.requiredIndicator,
       })
     },
     getRootBindings(): QdsFileUploadRootBindings {
@@ -138,7 +139,7 @@ export function createQdsFileUploadApi(
         "data-size": size,
       })
     },
-    getTriggerBindings(props?: {id: string}): QdsFileUploadTriggerBindings {
+    getTriggerBindings(): QdsFileUploadTriggerBindings {
       return normalize.element({
         className: fileUploadClasses.trigger,
         "data-size": size,

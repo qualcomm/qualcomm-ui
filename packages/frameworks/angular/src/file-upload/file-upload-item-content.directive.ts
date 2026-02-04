@@ -7,9 +7,6 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context.service"
 
-/**
- * Container for file item text content (name and size).
- */
 @Directive({
   selector: "[q-file-upload-item-content]",
   standalone: false,

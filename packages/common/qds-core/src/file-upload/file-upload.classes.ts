@@ -18,6 +18,7 @@ export const fileUploadClasses = {
   itemPreviewImage: "qui-file-upload__item-preview-image",
   itemSizeText: "qui-file-upload__item-size-text",
   label: "qui-file-upload__label",
+  requiredIndicator: "qui-file-upload__required-indicator",
   root: "qui-file-upload__root",
   trigger: "qui-file-upload__trigger",
 } as const

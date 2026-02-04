@@ -13,12 +13,16 @@ import type {FileDetails} from "@qualcomm-ui/core/file-upload"
       class="w-full max-w-md"
       dropzoneHint="Supported file types: .jpg, .jpeg, .png, .pdf"
       label="Upload files"
+      required
       [accept]="['image/png', 'image/jpg', 'image/jpeg', 'application/pdf']"
-      [errorText]="errorText()"
       [invalid]="invalid()"
       [maxFiles]="3"
       (fileChanged)="handleFileChange($event)"
-    />
+    >
+      <div q-file-upload-error-text>
+        {{ errorText() }}
+      </div>
+    </q-file-upload>
     <!-- preview -->
   `,
 })

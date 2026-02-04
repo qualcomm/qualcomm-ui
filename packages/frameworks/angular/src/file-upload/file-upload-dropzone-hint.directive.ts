@@ -7,9 +7,6 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context.service"
 
-/**
- * Hint text displayed below the dropzone instructions.
- */
 @Directive({
   selector: "[q-file-upload-dropzone-hint]",
   standalone: false,

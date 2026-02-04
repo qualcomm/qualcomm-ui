@@ -90,6 +90,7 @@ export function createFileUploadApi(
     disabled,
     dragging,
     focused,
+    required,
     getClearTriggerBindings(): FileUploadClearTriggerBindings {
       return normalize.button({
         ...commonBindings,
