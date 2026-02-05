@@ -17,9 +17,7 @@ export class FileUploadItemPreviewImageDirective extends CoreFileUploadItemPrevi
   constructor() {
     super()
     this.trackBindings.extendWith(
-      computed(() =>
-        this.qdsFileUploadContext().getItemPreviewImageBindings(),
-      ),
+      computed(() => this.qdsFileUploadContext().getItemPreviewImageBindings()),
     )
   }
 }

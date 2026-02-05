@@ -5,12 +5,12 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Asterisk} from "lucide-react"
 
+import {Icon} from "@qualcomm-ui/react/icon"
 import {
   CoreFileUpload,
   type CoreFileUploadLabelProps,
   useFileUploadContext,
 } from "@qualcomm-ui/react-core/file-upload"
-import {Icon} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context"

@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context"
 
-export interface FileUploadDropzoneProps
-  extends CoreFileUploadDropzoneProps {}
+export interface FileUploadDropzoneProps extends CoreFileUploadDropzoneProps {}
 
 export function FileUploadDropzone(
   props: FileUploadDropzoneProps,

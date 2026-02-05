@@ -6,7 +6,6 @@ import {type ReactElement, useEffect, useState} from "react"
 import {AlertCircle, FilePlus, Layers, Trash2, Upload} from "lucide-react"
 
 import type {FileDetails} from "@qualcomm-ui/core/file-upload"
-import type {FileError} from "@qualcomm-ui/utils/files"
 import {Button} from "@qualcomm-ui/react/button"
 import {FileUpload} from "@qualcomm-ui/react/file-upload"
 import {Icon} from "@qualcomm-ui/react/icon"
@@ -14,6 +13,7 @@ import {
   useFileUploadContext,
   useFileUploadItemContext,
 } from "@qualcomm-ui/react-core/file-upload"
+import type {FileError} from "@qualcomm-ui/utils/files"
 
 function FileUploadItemDeleteButton(): ReactElement {
   const api = useFileUploadContext()
@@ -140,7 +140,9 @@ function FileUploadCompositeDemoDropzone(): ReactElement {
       <Icon icon={Upload} style={{height: 24, width: 24}} />
       <FileUpload.DropzoneTextGroup>
         <FileUpload.DropzoneTextLine>
-          <FileUpload.DropzoneText>Drag & drop images, or</FileUpload.DropzoneText>
+          <FileUpload.DropzoneText>
+            Drag & drop images, or
+          </FileUpload.DropzoneText>
           <FileUpload.Trigger>
             {(triggerProps) => (
               <button {...triggerProps} type="button">

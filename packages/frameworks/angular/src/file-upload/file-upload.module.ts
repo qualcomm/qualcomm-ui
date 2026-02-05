@@ -5,15 +5,15 @@ import {NgModule} from "@angular/core"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
-
 import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
+
 import {FileUploadClearTriggerDirective} from "./file-upload-clear-trigger.directive"
 import {FileUploadContextDirective} from "./file-upload-context.directive"
+import {FileUploadDropzoneHintDirective} from "./file-upload-dropzone-hint.directive"
+import {FileUploadDropzoneTextGroupDirective} from "./file-upload-dropzone-text-group.directive"
 import {FileUploadDropzoneTextLineDirective} from "./file-upload-dropzone-text-line.directive"
 import {FileUploadDropzoneTextDirective} from "./file-upload-dropzone-text.directive"
 import {FileUploadDropzoneDirective} from "./file-upload-dropzone.directive"
-import {FileUploadDropzoneHintDirective} from "./file-upload-dropzone-hint.directive"
-import {FileUploadDropzoneTextGroupDirective} from "./file-upload-dropzone-text-group.directive"
 import {FileUploadErrorTextDirective} from "./file-upload-error-text.directive"
 import {FileUploadHiddenInputDirective} from "./file-upload-hidden-input.directive"
 import {FileUploadItemContentDirective} from "./file-upload-item-content.directive"

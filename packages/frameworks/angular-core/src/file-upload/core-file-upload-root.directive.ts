@@ -12,8 +12,8 @@ import {
   output,
 } from "@angular/core"
 
-import {useId} from "@qualcomm-ui/angular-core/common"
 import {numberAttributeOrUndefined} from "@qualcomm-ui/angular-core/attributes"
+import {useId} from "@qualcomm-ui/angular-core/common"
 import {
   normalizeProps,
   useMachine,

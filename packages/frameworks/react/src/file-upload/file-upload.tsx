@@ -6,7 +6,6 @@ import {type ReactElement, type ReactNode, useEffect, useState} from "react"
 import {AlertCircle, FilePlus, Layers, Trash2, Upload} from "lucide-react"
 
 import type {FileDetails} from "@qualcomm-ui/core/file-upload"
-import type {FileError} from "@qualcomm-ui/utils/files"
 import {Button} from "@qualcomm-ui/react/button"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {
@@ -14,6 +13,7 @@ import {
   useFileUploadItemContext,
 } from "@qualcomm-ui/react-core/file-upload"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
+import type {FileError} from "@qualcomm-ui/utils/files"
 
 import {
   FileUploadDropzone,
@@ -262,6 +262,13 @@ export interface FileUploadProps extends FileUploadRootProps {
   dropzoneProps?: FileUploadDropzoneProps
 
   /**
+   * The main text displayed in the dropzone.
+   *
+   * @default "Drag & drop files, or"
+   */
+  dropzoneText?: string
+
+  /**
    * Optional error message that describes the element when {@link invalid} is true.
    *
    * @remarks
@@ -272,13 +279,6 @@ export interface FileUploadProps extends FileUploadRootProps {
    * ```
    */
   errorText?: ReactNode
-
-  /**
-   * The main text displayed in the dropzone.
-   *
-   * @default "Drag & drop files, or"
-   */
-  dropzoneText?: string
 
   /**
    * Props applied to the hidden input element.

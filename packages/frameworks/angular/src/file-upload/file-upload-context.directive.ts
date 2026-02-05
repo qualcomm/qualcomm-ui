@@ -3,8 +3,8 @@
 
 import {Directive, inject} from "@angular/core"
 
-import {ApiContextDirective} from "@qualcomm-ui/angular-core/machine"
 import {FileUploadContextService} from "@qualcomm-ui/angular-core/file-upload"
+import {ApiContextDirective} from "@qualcomm-ui/angular-core/machine"
 import type {FileUploadApi} from "@qualcomm-ui/core/file-upload"
 
 @Directive({

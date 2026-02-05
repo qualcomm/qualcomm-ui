@@ -90,7 +90,6 @@ export function createFileUploadApi(
     disabled,
     dragging,
     focused,
-    required,
     getClearTriggerBindings(): FileUploadClearTriggerBindings {
       return normalize.button({
         ...commonBindings,
@@ -244,7 +243,9 @@ export function createFileUploadApi(
         tabIndex: disabled || props.disableClick ? undefined : 0,
       })
     },
-    getErrorTextBindings(props: IdRegistrationProps): FileUploadErrorTextBindings {
+    getErrorTextBindings(
+      props: IdRegistrationProps,
+    ): FileUploadErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
         ...commonBindings,
@@ -262,7 +263,9 @@ export function createFileUploadApi(
       return normalize.input({
         ...commonBindings,
         accept: computed("acceptAttr"),
-        "aria-describedby": ariaAttr(invalid ? domIds.errorText(scope) : undefined),
+        "aria-describedby": ariaAttr(
+          invalid ? domIds.errorText(scope) : undefined,
+        ),
         "aria-invalid": booleanAriaAttr(invalid),
         capture: prop("capture"),
         disabled,
@@ -314,7 +317,6 @@ export function createFileUploadApi(
         type: "button",
       })
     },
-
     getItemGroupBindings(props = {}) {
       const {type = DEFAULT_ITEM_TYPE} = props
       return normalize.element({
@@ -422,6 +424,8 @@ export function createFileUploadApi(
     },
 
     rejectedFiles: context.get("rejectedFiles"),
+
+    required,
 
     setClipboardFiles(dt) {
       if (disabled) {

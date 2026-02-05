@@ -312,10 +312,6 @@ export interface FileUploadApi {
    * Whether the user is focused on the dropzone element
    */
   focused: boolean
-  /**
-   * Whether the file input is required
-   */
-  required: boolean
   getClearTriggerBindings: () => FileUploadClearTriggerBindings
   getDropzoneBindings: (
     props?: DropzoneProps & {id?: string},
@@ -348,6 +344,10 @@ export interface FileUploadApi {
    * The files that have been rejected
    */
   rejectedFiles: FileRejection[]
+  /**
+   * Whether the file input is required
+   */
+  required: boolean
   /**
    * Sets the clipboard files
    * Returns `true` if the clipboard data contains files, `false` otherwise.

@@ -3,8 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context"

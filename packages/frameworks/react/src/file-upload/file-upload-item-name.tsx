@@ -12,8 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context"
 
-export interface FileUploadItemNameProps
-  extends CoreFileUploadItemNameProps {}
+export interface FileUploadItemNameProps extends CoreFileUploadItemNameProps {}
 
 export function FileUploadItemName(
   props: FileUploadItemNameProps,
