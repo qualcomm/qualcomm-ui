@@ -6,6 +6,8 @@ import type {ReactElement} from "react"
 import {
   CoreFileUpload,
   type CoreFileUploadItemSizeTextProps,
+  useFileUploadContext,
+  useFileUploadItemContext,
 } from "@qualcomm-ui/react-core/file-upload"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -18,6 +20,18 @@ export function FileUploadItemSizeText(
   props: FileUploadItemSizeTextProps,
 ): ReactElement {
   const qdsContext = useQdsFileUploadContext()
+  const fileUploadContext = useFileUploadContext()
+  const itemContext = useFileUploadItemContext()
   const mergedProps = mergeProps(qdsContext.getItemSizeTextBindings(), props)
-  return <CoreFileUpload.ItemSizeText {...mergedProps} />
+
+  const defaultContent =
+    itemContext.type !== "rejected"
+      ? fileUploadContext.getFileSize(itemContext.file)
+      : null
+
+  return (
+    <CoreFileUpload.ItemSizeText {...mergedProps}>
+      {props.children ?? defaultContent}
+    </CoreFileUpload.ItemSizeText>
+  )
 }

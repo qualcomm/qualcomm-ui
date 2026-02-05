@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {FileUpload as SimpleFileUpload} from "./file-upload"
 import {
   FileUploadClearTrigger,
   type FileUploadClearTriggerProps,
@@ -10,10 +11,34 @@ import {
   type FileUploadDropzoneProps,
 } from "./file-upload-dropzone"
 import {
+  FileUploadDropzoneHint,
+  type FileUploadDropzoneHintProps,
+} from "./file-upload-dropzone-hint"
+import {
+  FileUploadDropzoneText,
+  type FileUploadDropzoneTextProps,
+} from "./file-upload-dropzone-text"
+import {
+  FileUploadDropzoneTextGroup,
+  type FileUploadDropzoneTextGroupProps,
+} from "./file-upload-dropzone-text-group"
+import {
+  FileUploadDropzoneTextLine,
+  type FileUploadDropzoneTextLineProps,
+} from "./file-upload-dropzone-text-line"
+import {
+  FileUploadErrorText,
+  type FileUploadErrorTextProps,
+} from "./file-upload-error-text"
+import {
   FileUploadHiddenInput,
   type FileUploadHiddenInputProps,
 } from "./file-upload-hidden-input"
 import {FileUploadItem, type FileUploadItemProps} from "./file-upload-item"
+import {
+  FileUploadItemContent,
+  type FileUploadItemContentProps,
+} from "./file-upload-item-content"
 import {
   FileUploadItemDeleteTrigger,
   type FileUploadItemDeleteTriggerProps,
@@ -51,10 +76,16 @@ export type {
   FileUploadRootProps,
   FileUploadClearTriggerProps,
   FileUploadDropzoneProps,
+  FileUploadDropzoneHintProps,
+  FileUploadDropzoneTextProps,
+  FileUploadDropzoneTextGroupProps,
+  FileUploadDropzoneTextLineProps,
+  FileUploadErrorTextProps,
   FileUploadTriggerProps,
   FileUploadLabelProps,
   FileUploadHiddenInputProps,
   FileUploadItemProps,
+  FileUploadItemContentProps,
   FileUploadItemGroupProps,
   FileUploadItemNameProps,
   FileUploadItemPreviewProps,
@@ -63,34 +94,47 @@ export type {
   FileUploadItemDeleteTriggerProps,
 }
 
-type FileUploadComponent = {
-  Root: typeof FileUploadRoot
+type FileUploadComponent = typeof SimpleFileUpload & {
   ClearTrigger: typeof FileUploadClearTrigger
   Dropzone: typeof FileUploadDropzone
-  Trigger: typeof FileUploadTrigger
-  Label: typeof FileUploadLabel
+  DropzoneHint: typeof FileUploadDropzoneHint
+  DropzoneText: typeof FileUploadDropzoneText
+  DropzoneTextGroup: typeof FileUploadDropzoneTextGroup
+  DropzoneTextLine: typeof FileUploadDropzoneTextLine
+  ErrorText: typeof FileUploadErrorText
   HiddenInput: typeof FileUploadHiddenInput
   Item: typeof FileUploadItem
+  ItemContent: typeof FileUploadItemContent
+  ItemDeleteTrigger: typeof FileUploadItemDeleteTrigger
   ItemGroup: typeof FileUploadItemGroup
   ItemName: typeof FileUploadItemName
   ItemPreview: typeof FileUploadItemPreview
   ItemPreviewImage: typeof FileUploadItemPreviewImage
   ItemSizeText: typeof FileUploadItemSizeText
-  ItemDeleteTrigger: typeof FileUploadItemDeleteTrigger
+  Label: typeof FileUploadLabel
+  Root: typeof FileUploadRoot
+  Trigger: typeof FileUploadTrigger
 }
 
-export const FileUpload: FileUploadComponent = {
-  Root: FileUploadRoot,
-  ClearTrigger: FileUploadClearTrigger,
-  Dropzone: FileUploadDropzone,
-  Trigger: FileUploadTrigger,
-  Label: FileUploadLabel,
-  HiddenInput: FileUploadHiddenInput,
-  Item: FileUploadItem,
-  ItemGroup: FileUploadItemGroup,
-  ItemName: FileUploadItemName,
-  ItemPreview: FileUploadItemPreview,
-  ItemPreviewImage: FileUploadItemPreviewImage,
-  ItemSizeText: FileUploadItemSizeText,
-  ItemDeleteTrigger: FileUploadItemDeleteTrigger,
-}
+export const FileUpload: FileUploadComponent =
+  SimpleFileUpload as FileUploadComponent
+
+FileUpload.Root = FileUploadRoot
+FileUpload.ClearTrigger = FileUploadClearTrigger
+FileUpload.Dropzone = FileUploadDropzone
+FileUpload.DropzoneHint = FileUploadDropzoneHint
+FileUpload.DropzoneText = FileUploadDropzoneText
+FileUpload.DropzoneTextGroup = FileUploadDropzoneTextGroup
+FileUpload.DropzoneTextLine = FileUploadDropzoneTextLine
+FileUpload.ErrorText = FileUploadErrorText
+FileUpload.Trigger = FileUploadTrigger
+FileUpload.Label = FileUploadLabel
+FileUpload.HiddenInput = FileUploadHiddenInput
+FileUpload.Item = FileUploadItem
+FileUpload.ItemContent = FileUploadItemContent
+FileUpload.ItemGroup = FileUploadItemGroup
+FileUpload.ItemName = FileUploadItemName
+FileUpload.ItemPreview = FileUploadItemPreview
+FileUpload.ItemPreviewImage = FileUploadItemPreviewImage
+FileUpload.ItemSizeText = FileUploadItemSizeText
+FileUpload.ItemDeleteTrigger = FileUploadItemDeleteTrigger

@@ -6,6 +6,7 @@ import type {ReactElement} from "react"
 import {
   CoreFileUpload,
   type CoreFileUploadItemNameProps,
+  useFileUploadItemContext,
 } from "@qualcomm-ui/react-core/file-upload"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -18,6 +19,12 @@ export function FileUploadItemName(
   props: FileUploadItemNameProps,
 ): ReactElement {
   const qdsContext = useQdsFileUploadContext()
+  const itemContext = useFileUploadItemContext()
   const mergedProps = mergeProps(qdsContext.getItemNameBindings(), props)
-  return <CoreFileUpload.ItemName {...mergedProps} />
+
+  return (
+    <CoreFileUpload.ItemName {...mergedProps}>
+      {props.children ?? itemContext.file.name}
+    </CoreFileUpload.ItemName>
+  )
 }

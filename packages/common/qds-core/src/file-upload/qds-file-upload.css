@@ -195,6 +195,7 @@
 .qui-file-upload__item {
   align-items: center;
   background: var(--color-interactive-background-ghost-idle);
+  box-sizing: border-box;
   display: flex;
   gap: var(--spacing-70);
   padding: var(--spacing-50) var(--spacing-70);

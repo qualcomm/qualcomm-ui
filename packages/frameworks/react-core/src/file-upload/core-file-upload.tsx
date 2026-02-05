@@ -31,10 +31,12 @@ import {
 
 export interface CoreFileUploadRootProps
   extends FileUploadApiProps,
-    Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {}
+    Omit<ElementRenderProp<"div">, "defaultValue" | "dir">,
+    IdProp {}
 
 export function CoreFileUploadRoot({
   children,
+  id,
   ...props
 }: CoreFileUploadRootProps): ReactElement {
   const [fileUploadProps, localProps] =
@@ -42,7 +44,10 @@ export function CoreFileUploadRoot({
   const config = useMachine(fileUploadMachine, fileUploadProps)
   const context = createFileUploadApi(config, normalizeProps)
 
-  const mergedProps = mergeProps(context.getRootBindings(), localProps)
+  const mergedProps = mergeProps(
+    context.getRootBindings({id: useControlledId(id)}),
+    localProps,
+  )
 
   return (
     <FileUploadContextProvider value={context}>
@@ -255,6 +260,23 @@ export function CoreFileUploadItemPreview(
   const itemContext = useFileUploadItemContext()
   const mergedProps = mergeProps(
     fileUploadContext.getItemPreviewBindings(itemContext),
+    props,
+  )
+  return <PolymorphicElement as="div" {...mergedProps} />
+}
+
+export interface CoreFileUploadErrorTextProps
+  extends ElementRenderProp<"div">,
+    IdProp {
+  children?: ReactNode
+}
+
+export function CoreFileUploadErrorText(
+  props: CoreFileUploadErrorTextProps,
+): ReactElement {
+  const context = useFileUploadContext()
+  const mergedProps = mergeProps(
+    context.getErrorTextBindings({id: useControlledId(props.id)}),
     props,
   )
   return <PolymorphicElement as="div" {...mergedProps} />

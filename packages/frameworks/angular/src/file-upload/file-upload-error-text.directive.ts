@@ -3,8 +3,8 @@
 
 import {Component, computed, input} from "@angular/core"
 
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {CoreFileUploadErrorTextDirective} from "@qualcomm-ui/angular-core/file-upload"
+import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context.service"
 

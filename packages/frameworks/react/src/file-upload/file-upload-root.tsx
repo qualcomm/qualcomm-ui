@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {type ReactElement, type ReactNode, useMemo} from "react"
+import {type ReactElement, useMemo} from "react"
 
 import {
   createQdsFileUploadApi,
@@ -18,9 +18,7 @@ import {QdsFileUploadContextProvider} from "./qds-file-upload-context"
 
 export interface FileUploadRootProps
   extends CoreFileUploadRootProps,
-    QdsFileUploadApiProps {
-  children: ReactNode
-}
+    QdsFileUploadApiProps {}
 
 export function FileUploadRoot({
   size,

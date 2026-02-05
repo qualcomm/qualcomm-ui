@@ -381,7 +381,8 @@ export function createFileUploadApi(
       })
     },
 
-    getRootBindings() {
+    getRootBindings(props: IdRegistrationProps) {
+      scope.ids.register("root", props)
       return normalize.element({
         ...commonBindings,
         "data-disabled": booleanDataAttr(disabled),

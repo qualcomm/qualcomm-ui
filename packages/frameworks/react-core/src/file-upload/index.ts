@@ -6,6 +6,8 @@ import {
   type CoreFileUploadClearTriggerProps,
   CoreFileUploadDropzone,
   type CoreFileUploadDropzoneProps,
+  CoreFileUploadErrorText,
+  type CoreFileUploadErrorTextProps,
   CoreFileUploadHiddenInput,
   type CoreFileUploadHiddenInputProps,
   CoreFileUploadItem,
@@ -37,6 +39,7 @@ export type {
   CoreFileUploadRootProps,
   CoreFileUploadClearTriggerProps,
   CoreFileUploadDropzoneProps,
+  CoreFileUploadErrorTextProps,
   CoreFileUploadTriggerProps,
   CoreFileUploadLabelProps,
   CoreFileUploadHiddenInputProps,
@@ -52,6 +55,7 @@ export type {
 type CoreFileUploadComponent = {
   ClearTrigger: typeof CoreFileUploadClearTrigger
   Dropzone: typeof CoreFileUploadDropzone
+  ErrorText: typeof CoreFileUploadErrorText
   HiddenInput: typeof CoreFileUploadHiddenInput
   Item: typeof CoreFileUploadItem
   ItemDeleteTrigger: typeof CoreFileUploadItemDeleteTrigger
@@ -68,6 +72,7 @@ type CoreFileUploadComponent = {
 export const CoreFileUpload: CoreFileUploadComponent = {
   ClearTrigger: CoreFileUploadClearTrigger,
   Dropzone: CoreFileUploadDropzone,
+  ErrorText: CoreFileUploadErrorText,
   HiddenInput: CoreFileUploadHiddenInput,
   Item: CoreFileUploadItem,
   ItemDeleteTrigger: CoreFileUploadItemDeleteTrigger,

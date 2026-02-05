@@ -12,6 +12,7 @@ import {
   output,
 } from "@angular/core"
 
+import {useId} from "@qualcomm-ui/angular-core/common"
 import {numberAttributeOrUndefined} from "@qualcomm-ui/angular-core/attributes"
 import {
   normalizeProps,
@@ -82,6 +83,12 @@ export class CoreFileUploadRootDirective
    * Iframes, Electron.
    */
   readonly getRootNode = input<() => ShadowRoot | Document | Node>()
+
+  /**
+   * {@link https://www.w3schools.com/html/html_id.asp id attribute}. If
+   * omitted, a unique identifier will be generated for accessibility.
+   */
+  readonly id = input<string | undefined>(undefined)
 
   /**
    * Whether to accept directories, only works in webkit browsers.
@@ -202,8 +209,9 @@ export class CoreFileUploadRootDirective
    */
   readonly fileRejected = output<FileRejectDetails>()
 
+  protected readonly hostId = computed(() => useId(this, this.id()))
   protected readonly trackBindings = useTrackBindings(() =>
-    this.fileUploadContext.context().getRootBindings(),
+    this.fileUploadContext.context().getRootBindings({id: this.hostId()}),
   )
 
   private readonly fileUploadContext = inject(FileUploadContextService)

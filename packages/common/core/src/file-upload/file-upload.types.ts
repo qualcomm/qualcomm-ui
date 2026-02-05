@@ -338,7 +338,7 @@ export interface FileUploadApi {
   ) => FileUploadItemPreviewImageBindings
   getItemSizeTextBindings: (props: ItemProps) => FileUploadItemIdBindings
   getLabelBindings: (props: {id: string}) => FileUploadLabelBindings
-  getRootBindings: () => FileUploadRootBindings
+  getRootBindings: (props: {id: string}) => FileUploadRootBindings
   getTriggerBindings: (props: {id: string}) => FileUploadTriggerBindings
   /**
    * Function to open the file dialog
