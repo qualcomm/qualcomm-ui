@@ -92,7 +92,9 @@ export const fileUploadMachine: MachineConfig<FileUploadSchema> = createMachine(
           transform(acceptedFiles)
             .then(set)
             .catch((err) => {
-              warn(`[qualcomm-ui/file-upload] error transforming files\n${err}`)
+              warn(
+                `[qualcomm-ui/file-upload] error transforming files\n${String(err)}`,
+              )
             })
             .finally(() => {
               context.set("transforming", false)

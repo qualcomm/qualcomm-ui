@@ -23,6 +23,7 @@ import type {
   Machine,
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
+import {warn} from "@qualcomm-ui/utils/warning"
 
 import {
   domEls,
@@ -209,11 +210,15 @@ export function createFileUploadApi(
             return
           }
 
-          void getFileEntries(event.dataTransfer.items, prop("directory")).then(
-            (files) => {
+          getFileEntries(event.dataTransfer.items, prop("directory"))
+            .then((files) => {
               send({files: flatArray(files), type: "DROPZONE.DROP"})
-            },
-          )
+            })
+            .catch((err) => {
+              warn(
+                `[qualcomm-ui/file-upload] error processing dropped files\n${String(err)}`,
+              )
+            })
         },
         onFocus() {
           if (disabled) {
