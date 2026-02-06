@@ -100,7 +100,7 @@ export function createFileUploadApi(
       return normalize.button({
         ...commonBindings,
         "aria-label": translations.clearTriggerLabel,
-        "data-invalid": booleanDataAttr(disabled),
+        "data-invalid": booleanDataAttr(invalid),
         "data-part": "clear-trigger",
         disabled,
         hidden: context.get("acceptedFiles").length === 0,

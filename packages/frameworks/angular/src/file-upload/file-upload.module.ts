@@ -76,6 +76,6 @@ import {FileUploadComponent} from "./file-upload.component"
     FileUploadItemSizeTextDirective,
     FileUploadItemDeleteTriggerDirective,
   ],
-  imports: [ButtonModule, IconDirective, IconDirective, QBindDirective],
+  imports: [ButtonModule, IconDirective, QBindDirective],
 })
 export class FileUploadModule {}

@@ -302,14 +302,16 @@ export class FileUploadComponent extends FileUploadRootDirective {
 
   constructor() {
     super()
+
+    const subscription = this.fileChanged.subscribe((details) => {
+      this.handleFileChanged(details)
+    })
+
     this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe()
       Object.values(this.fileUrls()).forEach((url) => {
         URL.revokeObjectURL(url)
       })
-    })
-
-    this.fileChanged.subscribe((details) => {
-      this.handleFileChanged(details)
     })
   }
 
