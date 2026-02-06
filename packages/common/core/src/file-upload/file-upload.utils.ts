@@ -11,6 +11,7 @@ import {
   isValidFileType,
 } from "@qualcomm-ui/utils/files"
 import type {Params} from "@qualcomm-ui/utils/machine"
+import {warn} from "@qualcomm-ui/utils/warning"
 
 import type {FileRejection, FileUploadSchema} from "./file-upload.types"
 
@@ -111,7 +112,7 @@ export function setInputFiles(inputEl: HTMLInputElement, files: File[]): void {
       })
       inputEl.files = dataTransfer.files
     }
-  } catch {
-    // do nothing
+  } catch (err) {
+    warn(`[qualcomm-ui/file-upload] error setting input files\n${String(err)}`)
   }
 }

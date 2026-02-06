@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, type OnInit} from "@angular/core"
+import {Directive, type OnInit} from "@angular/core"
 
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 
@@ -14,8 +14,8 @@ import {useQdsFileUploadContext} from "./qds-file-upload-context.service"
 export class FileUploadDropzoneTextDirective implements OnInit {
   protected readonly qdsContext = useQdsFileUploadContext()
 
-  protected readonly trackBindings = useTrackBindings(
-    computed(() => this.qdsContext().getDropzoneTextBindings()),
+  protected readonly trackBindings = useTrackBindings(() =>
+    this.qdsContext().getDropzoneTextBindings(),
   )
 
   ngOnInit() {
