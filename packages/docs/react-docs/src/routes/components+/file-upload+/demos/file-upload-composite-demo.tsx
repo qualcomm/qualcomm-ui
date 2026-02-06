@@ -29,7 +29,6 @@ function FileUploadItemDeleteButton(): ReactElement {
   )
 }
 
-
 function FileUploadCompositeDemoContent({
   fileUrls,
 }: {
