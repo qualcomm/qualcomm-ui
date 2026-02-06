@@ -56,7 +56,6 @@ function FileUploadItemDeleteButton(): ReactElement {
   )
 }
 
-
 interface FileUploadDefaultDropzoneProps {
   dropzoneHint?: ReactNode
   dropzoneProps?: FileUploadDropzoneProps
