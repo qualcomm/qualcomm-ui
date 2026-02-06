@@ -6,7 +6,7 @@ import {FileUploadModule} from "@qualcomm-ui/angular/file-upload"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import type {FileDetails} from "@qualcomm-ui/core/file-upload"
-import type {FileError} from "@qualcomm-ui/utils/files"
+import {getFileErrorMessage} from "@qualcomm-ui/utils/files"
 
 @Component({
   imports: [ButtonModule, FileUploadModule, IconDirective],
@@ -86,7 +86,7 @@ import type {FileError} from "@qualcomm-ui/utils/files"
                       [style.min-width.px]="12"
                       [style.width.px]="12"
                     ></svg>
-                    {{ getErrorMessage(rejection.errors) }}
+                    {{ getFileErrorMessage(rejection.errors) }}
                   </span>
                 </div>
                 <button
@@ -136,6 +136,7 @@ export class FileUploadCompositeDemo {
 
   readonly fileUrls = signal<Record<string, string>>({})
   readonly fileCount = signal(0)
+  readonly getFileErrorMessage = getFileErrorMessage
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -168,19 +169,5 @@ export class FileUploadCompositeDemo {
     this.fileCount.set(
       details.acceptedFiles.length + details.rejectedFiles.length,
     )
-  }
-
-  getErrorMessage(errors: FileError[]): string {
-    const errorMessages: Record<string, string> = {
-      FILE_EXISTS: "File already exists",
-      FILE_INVALID: "Invalid file",
-      FILE_INVALID_TYPE: "Invalid file type",
-      FILE_TOO_LARGE: "File is too large",
-      FILE_TOO_SMALL: "File is too small",
-      TOO_MANY_FILES: "Too many files",
-    }
-
-    const firstError = errors[0]
-    return errorMessages[firstError] || firstError
   }
 }

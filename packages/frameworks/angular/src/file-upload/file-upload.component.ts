@@ -18,7 +18,7 @@ import {provideFileUploadContext} from "@qualcomm-ui/angular-core/file-upload"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import type {FileDetails} from "@qualcomm-ui/core/file-upload"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
-import type {FileError} from "@qualcomm-ui/utils/files"
+import {getFileErrorMessage} from "@qualcomm-ui/utils/files"
 
 import {FileUploadDropzoneDirective} from "./file-upload-dropzone.directive"
 import {FileUploadItemGroupDirective} from "./file-upload-item-group.directive"
@@ -129,7 +129,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                         [style.min-width.px]="12"
                         [style.width.px]="12"
                       ></svg>
-                      {{ getErrorMessage(rejection.errors) }}
+                      {{ getFileErrorMessage(rejection.errors) }}
                     </span>
                   </div>
                   <button
@@ -344,17 +344,5 @@ export class FileUploadComponent extends FileUploadRootDirective {
     return file.type.startsWith("image/")
   }
 
-  protected getErrorMessage(errors: FileError[]): string {
-    const errorMessages: Record<string, string> = {
-      FILE_EXISTS: "File already exists",
-      FILE_INVALID: "Invalid file",
-      FILE_INVALID_TYPE: "Invalid file type",
-      FILE_TOO_LARGE: "File is too large",
-      FILE_TOO_SMALL: "File is too small",
-      TOO_MANY_FILES: "Too many files",
-    }
-
-    const firstError = errors[0]
-    return errorMessages[firstError] || firstError
-  }
+  protected readonly getFileErrorMessage = getFileErrorMessage
 }

@@ -1,5 +1,6 @@
 export * from "./data-transfer"
 export * from "./get-accept-attribute"
+export * from "./get-file-error-message"
 export * from "./get-file-mime-type"
 export * from "./is-file-equal"
 export * from "./is-valid-file-size"

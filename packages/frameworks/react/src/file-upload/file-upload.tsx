@@ -13,7 +13,7 @@ import {
   useFileUploadItemContext,
 } from "@qualcomm-ui/react-core/file-upload"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
-import type {FileError} from "@qualcomm-ui/utils/files"
+import {getFileErrorMessage} from "@qualcomm-ui/utils/files"
 
 import {
   FileUploadDropzone,
@@ -56,19 +56,6 @@ function FileUploadItemDeleteButton(): ReactElement {
   )
 }
 
-function getErrorMessage(errors: FileError[]): string {
-  const errorMessages: Record<string, string> = {
-    FILE_EXISTS: "File already exists",
-    FILE_INVALID: "Invalid file",
-    FILE_INVALID_TYPE: "Invalid file type",
-    FILE_TOO_LARGE: "File is too large",
-    FILE_TOO_SMALL: "File is too small",
-    TOO_MANY_FILES: "Too many files",
-  }
-
-  const firstError = errors[0]
-  return errorMessages[firstError] || firstError
-}
 
 interface FileUploadDefaultDropzoneProps {
   dropzoneHint?: ReactNode
@@ -197,7 +184,7 @@ function FileUploadDefaultContent({
                     width: 12,
                   }}
                 />
-                {getErrorMessage(rejection.errors)}
+                {getFileErrorMessage(rejection.errors)}
               </FileUploadItemSizeText>
             </FileUploadItemContent>
             <FileUploadItemDeleteButton />
