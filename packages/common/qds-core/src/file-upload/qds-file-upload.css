@@ -90,6 +90,18 @@
     pointer-events: none;
   }
 
+  &[data-disabled][data-size] {
+    & .qui-file-upload__dropzone-text,
+    & .qui-file-upload__dropzone-hint,
+    & .qui-file-upload__trigger {
+      color: var(--color-utility-disabled-text);
+    }
+
+    & svg {
+      color: var(--color-utility-disabled-text);
+    }
+  }
+
   &[data-invalid] {
     border-color: var(--color-interactive-border-danger-idle);
     border-width: var(--border-width-md);

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 export * from "./file-upload-composite-demo"
+export * from "./file-upload-disabled-demo"
 export * from "./file-upload-errors-demo"
 export * from "./file-upload-simple-demo"
 export * from "./file-upload-sizes-demo"

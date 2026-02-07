@@ -19,7 +19,9 @@ export function FileUploadErrorsDemo(): ReactElement {
       setErrorText("At least one file is required")
     } else {
       setInvalid(true)
-      setErrorText("Files must be .jpg, .jpeg, .png, or .pdf.")
+      setErrorText(
+        "Files must be .jpg, .jpeg, .png, or .pdf. and less than 5MB in size.",
+      )
     }
   }
 
@@ -28,9 +30,10 @@ export function FileUploadErrorsDemo(): ReactElement {
     <FileUpload
       accept={["image/png", "image/jpg", "image/jpeg", "application/pdf"]}
       className="w-full max-w-md"
-      dropzoneHint="Supported file types: .jpg, .jpeg, .png, .pdf"
+      dropzoneHint="Supported: .jpg, .jpeg, .png, .pdf (max 5MB each)"
       invalid={invalid}
       label="Upload files"
+      maxFileSize={5 * 1024 * 1024}
       maxFiles={3}
       onFileChange={handleFileChange}
       required

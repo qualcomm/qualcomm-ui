@@ -11,11 +11,12 @@ import type {FileDetails} from "@qualcomm-ui/core/file-upload"
     <!-- preview -->
     <q-file-upload
       class="w-full max-w-md"
-      dropzoneHint="Supported file types: .jpg, .jpeg, .png, .pdf"
+      dropzoneHint="Supported: .jpg, .jpeg, .png, .pdf (max 5MB each)"
       label="Upload files"
       required
       [accept]="['image/png', 'image/jpg', 'image/jpeg', 'application/pdf']"
       [invalid]="invalid()"
+      [maxFileSize]="5 * 1024 * 1024"
       [maxFiles]="3"
       (fileChanged)="handleFileChange($event)"
     >
@@ -39,7 +40,9 @@ export class FileUploadErrorsDemo {
       this.errorText.set("At least one file is required")
     } else {
       this.invalid.set(true)
-      this.errorText.set("Files must be .jpg, .jpeg, .png, or .pdf.")
+      this.errorText.set(
+        "Files must be .jpg, .jpeg, .png, or .pdf. and less than 5MB in size.",
+      )
     }
   }
 }
