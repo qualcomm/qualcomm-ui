@@ -39,6 +39,9 @@ export function useBindable<T, ChangeEvent extends EventDetails | void | null>(
     const next = isFunction(value) ? value(prev as T) : value
 
     if (!controlled) {
+      if (props().syncRead) {
+        valueRef.current = next
+      }
       setValue(next)
     }
     if (!eq(next, prev)) {

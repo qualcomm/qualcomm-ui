@@ -156,6 +156,7 @@ export const fileUploadMachine: MachineConfig<FileUploadSchema> = createMachine(
               rejectedFiles: ctx.get("rejectedFiles"),
             })
           },
+          syncRead: true,
           value: prop("acceptedFiles"),
         })),
         rejectedFiles: bindable<FileRejection[]>(() => ({
@@ -171,6 +172,7 @@ export const fileUploadMachine: MachineConfig<FileUploadSchema> = createMachine(
               rejectedFiles: value,
             })
           },
+          syncRead: true,
         })),
         transforming: bindable<boolean>(() => ({
           defaultValue: false,
