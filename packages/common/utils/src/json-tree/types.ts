@@ -82,19 +82,44 @@ export interface JsonNodeText {
 export type JsonNodeHastElement = JsonNodeElement | JsonNodeText
 
 export interface JsonNode<T = any> {
+  /** @inheritDoc */
   children?: JsonNode[]
   constructorName?: string | undefined
   isNonEnumerable?: boolean
   keyPath: JsonNodeKeyPath
   propertyDescriptor?: PropertyDescriptor | undefined
+  /** @inheritDoc */
   type: JsonNodeType
   value: T
 }
 
 export interface JsonNodePreviewOptions {
+  /**
+   * Truncates string values longer than this character count in the preview.
+   *
+   * @default 30
+   */
   collapseStringsAfterLength: number
+
+  /**
+   * Groups array entries into chunks when the array length exceeds this value.
+   *
+   * @default 100
+   */
   groupArraysAfterLength: number
+
+  /**
+   * Maximum number of items shown in a collapsed container preview.
+   *
+   * @default 3
+   */
   maxPreviewItems: number
+
+  /**
+   * Whether to display non-enumerable properties (e.g. prototype methods).
+   *
+   * @default true
+   */
   showNonenumerable: boolean
 }
 

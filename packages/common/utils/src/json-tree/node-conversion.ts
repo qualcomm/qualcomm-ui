@@ -34,15 +34,15 @@ export function keyPathToKey(
   return String(keyPath[keyPath.length - 1])
 }
 
-export function nodeToValue(node: JsonNode) {
+export function nodeToValue(node: JsonNode): string {
   return hash(keyPathToId(node.keyPath))
 }
 
-export function jsonPathToValue(path: string) {
+export function jsonPathToValue(path: string): string {
   return hash(path)
 }
 
-export function nodeToString(node: JsonNode) {
+export function nodeToString(node: JsonNode): string {
   return keyPathToKey(node.keyPath) || "root"
 }
 

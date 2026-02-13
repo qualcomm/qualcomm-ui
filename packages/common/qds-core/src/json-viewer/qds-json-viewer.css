@@ -1,0 +1,134 @@
+.qui-json-viewer__root {
+  --json-viewer-color-string: var(--color-category-green-strong);
+  --json-viewer-color-number: var(--color-category-blue-strong);
+  --json-viewer-color-boolean: var(--color-category-orange-strong);
+  --json-viewer-color-null: var(--color-text-neutral-secondary);
+  --json-viewer-color-undefined: var(--color-text-neutral-secondary);
+  --json-viewer-color-function: var(--color-category-red-strong);
+  --json-viewer-color-date: var(--color-category-blue-strong);
+  --json-viewer-color-regex: var(--color-category-red-strong);
+  --json-viewer-color-symbol: var(--color-category-purple-strong);
+  --json-viewer-color-bigint: var(--color-category-blue-strong);
+  --json-viewer-color-error: var(--color-category-red-strong);
+  --json-viewer-color-circular: var(--color-text-neutral-secondary);
+  --json-viewer-color-constructor: var(--color-text-neutral-secondary);
+  --json-viewer-color-brace: var(--color-text-neutral-secondary);
+  --json-viewer-color-preview: var(--color-text-neutral-secondary);
+  --json-viewer-color-key: var(--color-category-purple-strong);
+  --json-viewer-color-colon: var(--color-text-neutral-secondary);
+
+  font-family: var(--font-family-mono, ui-monospace, monospace);
+  width: 100%;
+}
+
+/* Compact row height — override tree node defaults */
+.qui-json-viewer__root .qui-tree__node-root {
+  gap: var(--spacing-30);
+  height: auto;
+  min-height: unset;
+}
+
+/* Value type coloring — same-element selector since data-type is on the .value element */
+.qui-json-viewer__value[data-type="string"] {
+  color: var(--json-viewer-color-string);
+}
+
+.qui-json-viewer__value[data-type="number"] {
+  color: var(--json-viewer-color-number);
+}
+
+.qui-json-viewer__value[data-type="boolean"] {
+  color: var(--json-viewer-color-boolean);
+}
+
+.qui-json-viewer__value[data-type="null"] {
+  color: var(--json-viewer-color-null);
+}
+
+.qui-json-viewer__value[data-type="undefined"] {
+  color: var(--json-viewer-color-undefined);
+}
+
+.qui-json-viewer__value[data-type="function"] {
+  color: var(--json-viewer-color-function);
+}
+
+.qui-json-viewer__value[data-type="date"] {
+  color: var(--json-viewer-color-date);
+}
+
+.qui-json-viewer__value[data-type="regex"] {
+  color: var(--json-viewer-color-regex);
+}
+
+.qui-json-viewer__value[data-type="symbol"] {
+  color: var(--json-viewer-color-symbol);
+}
+
+.qui-json-viewer__value[data-type="bigint"] {
+  color: var(--json-viewer-color-bigint);
+}
+
+.qui-json-viewer__value[data-type="error"] {
+  color: var(--json-viewer-color-error);
+}
+
+.qui-json-viewer__value[data-type="circular"] {
+  color: var(--json-viewer-color-circular);
+  font-style: italic;
+}
+
+/* Container type preview text (branch nodes showing collapsed summary) */
+.qui-json-viewer__value[data-type="object"],
+.qui-json-viewer__value[data-type="array"],
+.qui-json-viewer__value[data-type="map"],
+.qui-json-viewer__value[data-type="set"],
+.qui-json-viewer__value[data-type="weakmap"],
+.qui-json-viewer__value[data-type="weakset"],
+.qui-json-viewer__value[data-type="headers"],
+.qui-json-viewer__value[data-type="formdata"],
+.qui-json-viewer__value[data-type="urlsearchparams"],
+.qui-json-viewer__value[data-type="iterable"] {
+  color: var(--json-viewer-color-preview);
+}
+
+/* Syntax element styling — descendant selectors for nested HAST elements */
+.qui-json-viewer__value [data-kind="constructor"] {
+  color: var(--json-viewer-color-constructor);
+}
+
+.qui-json-viewer__value [data-kind="brace"] {
+  color: var(--json-viewer-color-brace);
+}
+
+.qui-json-viewer__value [data-kind="preview-text"] {
+  color: var(--json-viewer-color-preview);
+}
+
+.qui-json-viewer__value [data-kind="function-type"] {
+  color: var(--json-viewer-color-function);
+  font-style: italic;
+}
+
+.qui-json-viewer__value [data-kind="colon"] {
+  color: var(--json-viewer-color-colon);
+}
+
+.qui-json-viewer__value [data-kind="error-stack"] {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Key styling */
+.qui-json-viewer__key {
+  color: var(--json-viewer-color-key);
+}
+
+.qui-json-viewer__key[data-non-enumerable] {
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.qui-json-viewer__colon {
+  color: var(--json-viewer-color-colon);
+}
