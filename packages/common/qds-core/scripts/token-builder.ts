@@ -14,6 +14,7 @@ import {StyleDictionary} from "style-dictionary-utils"
 
 import {dedent} from "@qualcomm-ui/utils/dedent"
 
+import {mermaidThemeFormat} from "./mermaid-theme-format"
 import {omittedPrefixRegexp} from "./constants"
 import {tokenFilesFromLocalVariables} from "./figma-to-dtcg"
 import {registerCustomTransformsForDtcg} from "./style-dictionary-transformers"
@@ -199,6 +200,7 @@ export class FigmaTokenBuilder {
         const dictionary = new StyleDictionary({
           hooks: {
             formats: {
+              mermaidTheme: mermaidThemeFormat,
               qdsCss: (opts) => this.qdsCssFormatter(opts, brand, theme),
             },
             preprocessors: {
@@ -278,6 +280,10 @@ export class FigmaTokenBuilder {
                       ),
                     selector: `[data-brand="${brand}"][data-theme="${theme}"]`,
                   },
+                },
+                {
+                  destination: `${brand}-${theme}-mermaid.ts`,
+                  format: "mermaidTheme",
                 },
               ],
               // preprocessors don't seem to impact variable resolution either

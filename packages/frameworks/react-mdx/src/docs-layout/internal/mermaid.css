@@ -1,0 +1,22 @@
+.qui-docs__mermaid-renderer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.qui-docs__mermaid-diagram {
+  min-height: 100px;
+}
+
+[data-theme="dark"][data-brand="qualcomm"] {
+  .qui-docs__mermaid-diagram[data-light] {
+    display: none;
+  }
+}
+
+[data-theme="light"][data-brand="qualcomm"] {
+  .qui-docs__mermaid-diagram[data-dark] {
+    display: none;
+  }
+}

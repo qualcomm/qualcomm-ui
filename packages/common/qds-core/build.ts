@@ -9,12 +9,13 @@ import {
 } from "@qualcomm-ui/esbuild"
 
 async function collectEntryPoints() {
-  return (await collectFolders("./src"))
-    .filter((folder) => folder !== "styles")
-    .reduce((acc: Record<string, string>, name) => {
+  return (await collectFolders("./src")).reduce(
+    (acc: Record<string, string>, name) => {
       acc[`${name}/index`] = `./src/${name}/index.ts`
       return acc
-    }, {})
+    },
+    {},
+  )
 }
 
 async function build(argv: string[]) {

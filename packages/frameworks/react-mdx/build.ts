@@ -129,7 +129,7 @@ async function build(argv: string[]) {
     minifySyntax: true,
     minifyWhitespace: true,
     outdir: "dist",
-    platform: "node",
+    platform: "browser",
     sourcemap: true,
     target: "es2023",
     tsconfig: "tsconfig.lib.json",

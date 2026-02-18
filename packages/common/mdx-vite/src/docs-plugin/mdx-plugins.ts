@@ -31,6 +31,7 @@ import {
   remarkCodeTabs,
   remarkFrontmatterDescription,
   remarkFrontmatterTitle,
+  remarkMermaid,
   remarkSpoilers,
   remarkSteps,
 } from "./remark"
@@ -121,6 +122,7 @@ export function getRemarkPlugins(): PluggableList {
     remarkGfm,
     remarkAlerts,
     remarkCodeTabs,
+    remarkMermaid,
     remarkFrontmatterTitle,
     remarkFrontmatterDescription,
     remarkSpoilers,

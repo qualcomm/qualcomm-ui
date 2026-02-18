@@ -6,5 +6,10 @@
   "include": [
     "./scripts",
     "*.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
   ]
 }

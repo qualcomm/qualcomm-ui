@@ -63,6 +63,18 @@ Combination of inlineable classes and variant classes.
 
 <TypeDocProps partial name="TokenManager" />
 
-### Swagger Debug
+## Mermaid
 
-<DocSwagger spec={petStore} />
+```mermaid
+sequenceDiagram
+    participant CI as GitHub Actions
+    participant ALB as Load Balancer
+    participant ECS as Cache Server
+
+    CI->>ALB: GET /v8/artifacts/{hash} + API Key
+    ALB->>ECS: Forward request
+    ECS->>ECS: Validate API key
+    ECS->>ECS: Check local disk
+    ECS->>ALB: 200 + artifact OR 404
+    ALB->>CI: Response
+```

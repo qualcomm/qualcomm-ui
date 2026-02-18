@@ -17,7 +17,7 @@ import {
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {AnchorHeader, CodeTabs, ShikiPre} from "./internal"
+import {AnchorHeader, CodeTabs, MermaidDiagram, ShikiPre} from "./internal"
 
 interface Props {
   /**
@@ -160,6 +160,9 @@ export function MdxProvider({children, components}: Props): ReactNode {
           hr: (props) => <hr className="mdx" {...props} />,
           img: (props) => <img className="mdx" {...props} />,
           li: (props) => <li className="mdx" {...props} />,
+          MermaidDiagram: ({...props}) => {
+            return <MermaidDiagram {...props} />
+          },
           ol: (props) => <ol className="mdx" {...props} />,
           p: ({className, ...props}) => (
             <p className={clsx(className, "mdx")} {...props} />
