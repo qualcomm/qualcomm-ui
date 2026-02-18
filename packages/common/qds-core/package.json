@@ -52,6 +52,7 @@
     "watch:css": "qui-css-utils watch",
     "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "lint": "eslint --quiet",
+    "debug-mermaid": "vite -c scripts/mermaid-debugger/index.html",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish",
     "update-design-tokens": "tsx scripts/token-builder.ts"
