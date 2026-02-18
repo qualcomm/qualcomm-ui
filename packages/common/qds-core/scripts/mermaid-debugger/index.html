@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mermaid Theme Debugger — QDS</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Roboto Flex", system-ui, sans-serif;
+        background: #18181b;
+        color: #e4e4e7;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #09090b;
+        border-bottom: 1px solid #27272a;
+        padding: 12px 24px;
+      }
+
+      header h1 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .controls label {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 13px;
+        cursor: pointer;
+        padding: 2px 8px;
+        border-radius: 4px;
+        background: #27272a;
+        user-select: none;
+      }
+
+      .controls label:hover {
+        background: #3f3f46;
+      }
+
+      .controls input[type="checkbox"] {
+        accent-color: #2d3ee0;
+      }
+
+      .columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .column {
+        padding: 24px;
+        min-width: 0;
+      }
+
+      .column.dark {
+        background: #0a0a0a;
+        color: #ffffff;
+      }
+
+      .column.light {
+        background: #ffffff;
+        color: #0a0a0a;
+      }
+
+      .column h2 {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 16px;
+        opacity: 0.6;
+      }
+
+      .diagram-section {
+        margin-bottom: 32px;
+      }
+
+      .diagram-section h3 {
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        opacity: 0.5;
+      }
+
+      .diagram-container {
+        overflow-x: auto;
+      }
+
+      .diagram-container svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .error {
+        color: #ef4444;
+        font-size: 12px;
+        font-family: monospace;
+        padding: 8px;
+        background: rgba(239, 68, 68, 0.1);
+        border-radius: 4px;
+      }
+
+      .loading {
+        font-size: 13px;
+        opacity: 0.4;
+        padding: 16px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Mermaid Theme Debugger — QDS Qualcomm</h1>
+      <div class="controls" id="controls"></div>
+    </header>
+    <div class="columns">
+      <div class="column dark">
+        <h2>Dark Theme</h2>
+        <div id="dark-diagrams">
+          <p class="loading">Rendering dark diagrams…</p>
+        </div>
+      </div>
+      <div class="column light">
+        <h2>Light Theme</h2>
+        <div id="light-diagrams">
+          <p class="loading">Rendering light diagrams…</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      import {qualcommDarkMermaidTheme as darkTheme} from "../../src/styles/qualcomm-dark-mermaid.ts";
+      import {qualcommLightMermaidTheme as lightTheme} from "../../src/styles/qualcomm-light-mermaid.ts";
+
+      const diagrams = [
+        {
+          id: "flowchart",
+          label: "Flowchart",
+          code: `flowchart TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Process A]
+    B -->|No| D[Process B]
+    C --> E[End]
+    D --> E
+    subgraph Validation
+      F[Check Input] --> G[Validate]
+      G --> H[Transform]
+    end
+    A --> F
+    H --> B`,
+        },
+        {
+          id: "sequence",
+          label: "Sequence Diagram",
+          code: `sequenceDiagram
+    participant Client
+    participant API
+    participant DB
+    Client->>+API: POST /login
+    API->>+DB: SELECT user
+    DB-->>-API: user record
+    Note over API: Validate credentials
+    alt Valid
+      API-->>Client: 200 OK + token
+    else Invalid
+      API-->>Client: 401 Unauthorized
+    end
+    loop Heartbeat
+      Client->>API: ping
+      API-->>Client: pong
+    end`,
+        },
+        {
+          id: "gantt",
+          label: "Gantt Chart",
+          code: `gantt
+    title Project Timeline
+    dateFormat YYYY-MM-DD
+    section Planning
+      Requirements   :a1, 2024-01-01, 14d
+      Design         :a2, after a1, 10d
+    section Development
+      Backend        :crit, b1, after a2, 21d
+      Frontend       :b2, after a2, 18d
+    section Testing
+      Integration    :c1, after b1, 7d
+      UAT            :c2, after c1, 5d
+    section Release
+      Deploy         :milestone, after c2, 0d`,
+        },
+        {
+          id: "state",
+          label: "State Diagram",
+          code: `stateDiagram-v2
+    [*] --> Idle
+    Idle --> Loading: fetch()
+    Loading --> Success: resolve
+    Loading --> Error: reject
+    Success --> Idle: reset
+    Error --> Loading: retry
+    Error --> Idle: dismiss
+    state Loading {
+      [*] --> Requesting
+      Requesting --> Parsing
+      Parsing --> [*]
+    }`,
+        },
+        {
+          id: "class",
+          label: "Class Diagram",
+          code: `classDiagram
+    class Component {
+      +string id
+      +render() void
+      +destroy() void
+    }
+    class Button {
+      +string label
+      +boolean disabled
+      +onClick() void
+    }
+    class IconButton {
+      +string icon
+      +string size
+    }
+    Component <|-- Button
+    Button <|-- IconButton
+    Component *-- EventEmitter
+    class EventEmitter {
+      +on(event, handler)
+      +emit(event, data)
+    }`,
+        },
+        {
+          id: "er",
+          label: "ER Diagram",
+          code: `erDiagram
+    USER ||--o{ ORDER : places
+    USER {
+      int id PK
+      string name
+      string email
+    }
+    ORDER ||--|{ LINE_ITEM : contains
+    ORDER {
+      int id PK
+      date created
+      string status
+    }
+    LINE_ITEM }o--|| PRODUCT : references
+    PRODUCT {
+      int id PK
+      string name
+      float price
+    }`,
+        },
+        {
+          id: "pie",
+          label: "Pie Chart",
+          code: `pie title Browser Market Share
+    "Chrome" : 65
+    "Safari" : 19
+    "Firefox" : 4
+    "Edge" : 4
+    "Other" : 8`,
+        },
+        {
+          id: "gitgraph",
+          label: "Git Graph",
+          code: `gitGraph
+    commit id: "init"
+    branch develop
+    checkout develop
+    commit id: "feat-1"
+    commit id: "feat-2"
+    branch feature/auth
+    commit id: "auth-1"
+    commit id: "auth-2"
+    checkout develop
+    merge feature/auth tag: "v0.2"
+    checkout main
+    merge develop tag: "v1.0"
+    commit id: "hotfix"`,
+        },
+        {
+          id: "mindmap",
+          label: "Mindmap",
+          code: `mindmap
+  root((Design System))
+    Tokens
+      Colors
+      Typography
+      Spacing
+    Components
+      Button
+      Input
+      Select
+    Patterns
+      Forms
+      Navigation
+      Modals`,
+        },
+        {
+          id: "timeline",
+          label: "Timeline",
+          code: `timeline
+    title Release History
+    section 2023
+      Q1 : Alpha release
+         : Internal testing
+      Q2 : Beta release
+         : Community feedback
+    section 2024
+      Q1 : v1.0 GA
+         : Production ready
+      Q2 : v1.1
+         : New components`,
+        },
+        {
+          id: "xychart",
+          label: "XY Chart",
+          code: `xychart-beta
+    title "Monthly Revenue"
+    x-axis [Jan, Feb, Mar, Apr, May, Jun]
+    y-axis "Revenue (USD)" 4000 --> 11000
+    bar [5000, 6000, 7500, 8200, 9800, 10500]
+    line [5000, 6000, 7500, 8200, 9800, 10500]`,
+        },
+        {
+          id: "architecture",
+          label: "Architecture",
+          code: `architecture-beta
+    group api(cloud)[API Layer]
+    group db(database)[Data Layer]
+
+    service gateway(internet)[Gateway] in api
+    service auth(server)[Auth Service] in api
+    service users(server)[User Service] in api
+    service pg(database)[PostgreSQL] in db
+    service redis(database)[Redis] in db
+
+    gateway:R --> L:auth
+    gateway:B --> T:users
+    auth:B --> T:redis
+    users:B --> T:pg`,
+        },
+        {
+          id: "quadrant",
+          label: "Quadrant Chart",
+          code: `quadrantChart
+    title Priority Matrix
+    x-axis Low Effort --> High Effort
+    y-axis Low Impact --> High Impact
+    quadrant-1 Do First
+    quadrant-2 Schedule
+    quadrant-3 Delegate
+    quadrant-4 Eliminate
+    Auth Refactor: [0.8, 0.9]
+    Fix Typos: [0.1, 0.2]
+    New Dashboard: [0.7, 0.6]
+    Update Deps: [0.3, 0.8]
+    Dark Mode: [0.5, 0.5]`,
+        },
+        {
+          id: "journey",
+          label: "User Journey",
+          code: `journey
+    title User Onboarding
+    section Sign Up
+      Visit landing page: 5: User
+      Fill registration form: 3: User
+      Verify email: 2: User
+    section First Use
+      Complete tutorial: 4: User
+      Create first project: 3: User, System
+      Invite team members: 4: User`,
+        },
+      ];
+
+      // Build toggle controls
+      const controlsEl = document.getElementById("controls");
+      for (const d of diagrams) {
+        const label = document.createElement("label");
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = true;
+        cb.dataset.diagram = d.id;
+        cb.addEventListener("change", () => {
+          for (const el of document.querySelectorAll(
+            `[data-section="${d.id}"]`,
+          )) {
+            el.style.display = cb.checked ? "" : "none";
+          }
+        });
+        label.appendChild(cb);
+        label.appendChild(document.createTextNode(d.label));
+        controlsEl.appendChild(label);
+      }
+
+      function createSections(containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+        const sections = {};
+        for (const d of diagrams) {
+          const section = document.createElement("div");
+          section.className = "diagram-section";
+          section.dataset.section = d.id;
+
+          const heading = document.createElement("h3");
+          heading.textContent = d.label;
+          section.appendChild(heading);
+
+          const diagramContainer = document.createElement("div");
+          diagramContainer.className = "diagram-container";
+          diagramContainer.id = `${containerId}-${d.id}`;
+          section.appendChild(diagramContainer);
+
+          container.appendChild(section);
+          sections[d.id] = diagramContainer;
+        }
+        return sections;
+      }
+
+      async function renderDiagrams(themeVariables, sections, prefix) {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: "base",
+          themeVariables,
+        });
+
+        for (const d of diagrams) {
+          const container = sections[d.id];
+          try {
+            const { svg } = await mermaid.render(
+              `${prefix}-${d.id}`,
+              d.code,
+            );
+            container.innerHTML = svg;
+          } catch (err) {
+            container.innerHTML = `<div class="error">Failed to render ${d.label}: ${err.message}</div>`;
+          }
+        }
+      }
+
+      async function main() {
+        const darkSections = createSections("dark-diagrams");
+        const lightSections = createSections("light-diagrams");
+
+        await renderDiagrams(darkTheme, darkSections, "dark");
+        await renderDiagrams(lightTheme, lightSections, "light");
+      }
+
+      main();
+    </script>
+  </body>
+</html>
