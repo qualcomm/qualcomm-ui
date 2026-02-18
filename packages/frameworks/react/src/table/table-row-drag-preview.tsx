@@ -10,26 +10,27 @@ import {flexRender} from "./dynamic-render"
 import {qdsTableApi} from "./qds-table-context"
 
 export interface TableRowDragPreviewProps {
-  container: HTMLElement
+  container?: HTMLElement
   row: Row<any>
 }
 
 /**
- * Preview element displayed when dragging a row. Renders content in a portal.
+ * `container` uses a Portal for libs that need it (e.g., pragmatic-dnd)
+ * otherwise content is directly rendered (e.g., dnd-kit's DragOverlay)
  */
 export function TableRowDragPreview({
   container,
   row,
 }: TableRowDragPreviewProps): ReactElement {
-  return (
-    <Portal container={container}>
-      <div {...qdsTableApi.getRowDragPreviewBindings()}>
-        {row.getVisibleCells().map((cell) => (
-          <div key={cell.id}>
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </div>
-        ))}
-      </div>
-    </Portal>
+  const content = (
+    <div {...qdsTableApi.getRowDragPreviewBindings()}>
+      {row.getVisibleCells().map((cell) => (
+        <div key={cell.id}>
+          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </div>
+      ))}
+    </div>
   )
+
+  return container ? <Portal container={container}>{content}</Portal> : content
 }
