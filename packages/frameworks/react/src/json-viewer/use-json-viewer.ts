@@ -45,7 +45,8 @@ export interface UseJsonViewerReturn {
   collection: TreeCollection<JsonNode>
 
   /**
-   * Derived from `defaultExpandedDepth`.
+   * Array of node values to expand by default, derived from `defaultExpandedDepth`.
+   * Pass to `[expandedValue]` as the initial controlled value.
    */
   defaultExpandedValue: string[] | undefined
 
