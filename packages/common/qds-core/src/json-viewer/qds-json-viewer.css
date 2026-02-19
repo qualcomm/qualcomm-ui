@@ -21,14 +21,13 @@
   width: 100%;
 }
 
-/* Compact row height — override tree node defaults */
+/* Compact row height - override tree node defaults */
 .qui-json-viewer__root .qui-tree__node-root {
   gap: var(--spacing-30);
   height: auto;
   min-height: unset;
 }
 
-/* Value type coloring — same-element selector since data-type is on the .value element */
 .qui-json-viewer__value[data-type="string"] {
   color: var(--json-viewer-color-string);
 }
@@ -78,7 +77,6 @@
   font-style: italic;
 }
 
-/* Container type preview text (branch nodes showing collapsed summary) */
 .qui-json-viewer__value[data-type="object"],
 .qui-json-viewer__value[data-type="array"],
 .qui-json-viewer__value[data-type="map"],
@@ -92,7 +90,6 @@
   color: var(--json-viewer-color-preview);
 }
 
-/* Syntax element styling — descendant selectors for nested HAST elements */
 .qui-json-viewer__value [data-kind="constructor"] {
   color: var(--json-viewer-color-constructor);
 }
@@ -119,7 +116,6 @@
   word-break: break-all;
 }
 
-/* Key styling */
 .qui-json-viewer__key {
   color: var(--json-viewer-color-key);
 }
