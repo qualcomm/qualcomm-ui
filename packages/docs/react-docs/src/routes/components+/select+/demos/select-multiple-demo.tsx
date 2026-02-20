@@ -5,13 +5,16 @@ import {Select} from "@qualcomm-ui/react/select"
 
 const cityCollection = selectCollection({
   items: [
-    "San Diego",
-    "Nashville",
-    "Denver",
-    "Miami",
-    "Las Vegas",
-    "New York City",
-    "San Francisco",
+    "San",
+    "Nas",
+    "Den",
+    "Mia",
+    "I",
+    "0",
+    "i",
+    ",",
+    ".",
+    "fdfdsfdsgdgfllkjhljkhgdfsgsdflgjdfhslkghdfslgjkhdslkgjhdlsfkgjhdlfskjghdsflkhgdflk",
   ],
 })
 
@@ -22,6 +25,7 @@ export function SelectMultipleDemo(): ReactElement {
       className="w-72"
       collection={cityCollection}
       controlProps={{"aria-label": "City"}}
+      maxTagCount="responsive"
       multiple
       placeholder="Select cities"
       selectionIndicator="checkbox"

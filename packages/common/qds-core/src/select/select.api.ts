@@ -17,6 +17,7 @@ import type {
   QdsSelectItemIndicatorBindings,
   QdsSelectItemTextBindings,
   QdsSelectLabelBindings,
+  QdsSelectOverflowIndicatorBindings,
   QdsSelectPositionerBindings,
   QdsSelectRootBindings,
   QdsSelectValueTextBindings,
@@ -26,9 +27,11 @@ export function createQdsSelectApi(
   props: QdsSelectApiProps,
   normalize: PropNormalizer,
 ): QdsSelectApi {
+  const maxTagCount = props.maxTagCount
   const selectionIndicator = props.selectionIndicator || "checkmark"
   const size = props.size || "md"
   return {
+    maxTagCount,
     selectionIndicator,
     size,
 
@@ -87,6 +90,11 @@ export function createQdsSelectApi(
     getLabelBindings(): QdsSelectLabelBindings {
       return normalize.element({
         className: selectClasses.label,
+      })
+    },
+    getOverflowIndicatorBindings(): QdsSelectOverflowIndicatorBindings {
+      return normalize.element({
+        className: selectClasses.overflowIndicator,
       })
     },
     getPositionerBindings(): QdsSelectPositionerBindings {

@@ -14,6 +14,7 @@ export const selectClasses = {
   itemIndicator: "qui-select__item-indicator",
   itemText: "qui-select__item-text",
   label: "qui-select__label",
+  overflowIndicator: "qui-select__overflow-indicator",
   positioner: "qui-select__positioner",
   root: "qui-select__root",
   valueText: "qui-select__value-text",

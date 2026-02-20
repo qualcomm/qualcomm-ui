@@ -7,7 +7,18 @@ export type QdsSelectSize = "sm" | "md" | "lg"
 
 export type QdsSelectSelectionIndicator = "checkmark" | "checkbox"
 
+export type QdsSelectMaxTagCount = "responsive" | number
+
 export interface QdsSelectApiProps {
+  /**
+   * Maximum number of tags to display in multiple selection mode.
+   * When set, tags display in a single line without wrapping.
+   * - `'responsive'`: Auto-detect overflow and show "+N" indicator
+   * - `number`: Show at most N tags, with "+N" indicator for the rest
+   * - `0`: Show only the overflow indicator with total count (no individual tags)
+   * - `undefined`: Show all tags with wrapping (default behavior)
+   */
+  maxTagCount?: QdsSelectMaxTagCount
   /**
    * Visual indicator style for selected items. Use "checkbox" for multi-select
    * with always-visible checkboxes on the left, or "checkmark" for a checkmark
@@ -87,7 +98,12 @@ export interface QdsSelectIconBindings {
   "data-size": QdsSelectSize
 }
 
+export interface QdsSelectOverflowIndicatorBindings {
+  className: SelectClasses["overflowIndicator"]
+}
+
 export interface QdsSelectApi {
+  maxTagCount: QdsSelectMaxTagCount | undefined
   selectionIndicator: QdsSelectSelectionIndicator
   size: QdsSelectSize
 
@@ -102,6 +118,7 @@ export interface QdsSelectApi {
   getItemIndicatorBindings(): QdsSelectItemIndicatorBindings
   getItemTextBindings(): QdsSelectItemTextBindings
   getLabelBindings(): QdsSelectLabelBindings
+  getOverflowIndicatorBindings(): QdsSelectOverflowIndicatorBindings
   getPositionerBindings(): QdsSelectPositionerBindings
   getRootBindings(): QdsSelectRootBindings
   getValueTextBindings(): QdsSelectValueTextBindings

@@ -18,7 +18,6 @@ import {
   CoreSelect,
   type CoreSelectRootProps,
 } from "@qualcomm-ui/react-core/select"
-import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {QdsSelectContextProvider} from "./qds-select-context"
@@ -39,6 +38,7 @@ export interface SelectRootProps
 export function SelectRoot({
   children,
   icon,
+  maxTagCount,
   selectionIndicator,
   size,
   ...props
@@ -46,10 +46,14 @@ export function SelectRoot({
   const qdsSelectApi = useMemo(
     () =>
       createQdsSelectApi(
-        {selectionIndicator, size} satisfies Explicit<QdsSelectApiProps>,
+        {
+          maxTagCount,
+          selectionIndicator,
+          size,
+        },
         normalizeProps,
       ),
-    [selectionIndicator, size],
+    [maxTagCount, selectionIndicator, size],
   )
   const mergedProps = mergeProps(qdsSelectApi.getRootBindings(), props)
   const qdsInputApi: QdsReactInputApi = useMemo(
