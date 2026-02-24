@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 export interface CalculateVisibleTagsInput {
-  containerWidth: number
+  availableWidth: number
   gap: number
   indicatorWidth: number
+  minInputWidth: number
   tagWidths: number[]
 }
 
@@ -24,7 +25,7 @@ export interface CalculateVisibleTagsResult {
 export function calculateVisibleTags(
   input: CalculateVisibleTagsInput,
 ): CalculateVisibleTagsResult {
-  const {containerWidth, gap, indicatorWidth, tagWidths} = input
+  const {availableWidth, gap, indicatorWidth, minInputWidth, tagWidths} = input
   const total = tagWidths.length
 
   if (total === 0) {
@@ -40,15 +41,15 @@ export function calculateVisibleTags(
     totalWidth += tagWidths[i]
   }
 
-  if (totalWidth <= containerWidth) {
+  if (totalWidth <= availableWidth) {
     return {overflowCount: 0, visibleCount: total}
   }
 
-  // Tags overflow — reserve space for the indicator
-  const reservedSpace = indicatorWidth + gap
-  const availableWidth = containerWidth - reservedSpace
+  // Tags overflow — reserve space for the indicator and input field
+  const reservedSpace = indicatorWidth + gap + minInputWidth
+  const remainingWidth = availableWidth - reservedSpace
 
-  if (availableWidth <= 0) {
+  if (remainingWidth <= 0) {
     return {overflowCount: total, visibleCount: 0}
   }
 
@@ -57,7 +58,7 @@ export function calculateVisibleTags(
 
   for (let i = 0; i < total; i++) {
     const nextWidth = i > 0 ? tagWidths[i] + gap : tagWidths[i]
-    if (usedWidth + nextWidth > availableWidth) {
+    if (usedWidth + nextWidth > remainingWidth) {
       break
     }
     usedWidth += nextWidth

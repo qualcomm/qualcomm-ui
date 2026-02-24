@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactElement} from "react"
+import {Fragment, type ReactElement} from "react"
 
 import {createTagsApi, tagsMachine} from "@qualcomm-ui/core/tags"
 import {Tag} from "@qualcomm-ui/react/tag"
@@ -31,16 +31,27 @@ export function ComboboxTags(): ReactElement | null {
         id: useControlledId(),
       })}
     >
-      {tagsApi.values.map((item) => (
-        <Tag
-          key={item}
-          {...tagsApi.getTagBindings(item)}
-          emphasis="neutral"
-          variant="dismissable"
-        >
-          {collection.stringifyItem(item)}
-        </Tag>
-      ))}
+      {tagsApi.values.map((item) => {
+        const label = collection.stringifyItem(item)
+        return (
+          <Fragment key={item}>
+            <Tag
+              {...tagsApi.getTagBindings(item)}
+              emphasis="neutral"
+              variant="dismissable"
+            >
+              {label}
+            </Tag>
+            <Tag
+              {...tagsApi.getInvisibleTagBindings(item)}
+              emphasis="neutral"
+              variant="dismissable"
+            >
+              {label}
+            </Tag>
+          </Fragment>
+        )
+      })}
       <span {...tagsApi.getIndicatorBindings({id: useControlledId()})}>
         +{tagsApi.overflowCount}
       </span>

@@ -10,6 +10,7 @@ import type {
 import {
   getContainerId,
   getIndicatorId,
+  getInvisibleTagId,
   getMeasureIndicatorId,
   getTagId,
 } from "./internal"
@@ -17,6 +18,8 @@ import type {
   TagsApi,
   TagsContainerBindings,
   TagsIndicatorBindings,
+  TagsInvisibleTagBindings,
+  TagsInvisibleTagContainerBindings,
   TagsMeasureIndicatorBindings,
   TagsSchema,
   TagsTagBindings,
@@ -26,7 +29,7 @@ export function createTagsApi(
   machine: Machine<TagsSchema>,
   normalize: PropNormalizer,
 ): TagsApi {
-  const {computed, prop, scope} = machine
+  const {computed, context, prop, scope} = machine
 
   return {
     get empty() {
@@ -61,8 +64,8 @@ export function createTagsApi(
           display: "flex",
           flexWrap: "nowrap",
           gap: `${prop("gap")}px`,
-          minWidth: 0,
-          overflow: "hidden",
+          minWidth: "max-content",
+          position: "relative",
         },
       })
     },
@@ -82,6 +85,34 @@ export function createTagsApi(
       })
     },
 
+    getInvisibleTagBindings(value): TagsInvisibleTagBindings {
+      return normalize.element({
+        "data-part": "invisible-tag",
+        "data-scope": "tags",
+        "data-value": value,
+        id: getInvisibleTagId(scope, value),
+        style: {
+          minWidth: "max-content",
+          position: "absolute",
+          visibility: "hidden",
+        },
+      })
+    },
+
+    getInvisibleTagsContainerBindings(
+      props: IdRegistrationProps,
+    ): TagsInvisibleTagContainerBindings {
+      scope.ids.register("invisibleTagsContainer", props)
+      return normalize.element({
+        "data-part": "invisible-tag-container",
+        "data-scope": "tags",
+        id: scope.ids.get("invisibleTagsContainer"),
+        style: {
+          position: "relative",
+        },
+      })
+    },
+
     getMeasureIndicatorBindings(): TagsMeasureIndicatorBindings {
       return normalize.element({
         "aria-hidden": true,
@@ -95,7 +126,6 @@ export function createTagsApi(
         },
       })
     },
-
     getTagBindings(value): TagsTagBindings {
       const values = computed("values")
       const visibleTags = computed("visibleTags")
@@ -111,7 +141,7 @@ export function createTagsApi(
           parent?.selectValue(value)
         },
         style: {
-          flexShrink: 0,
+          whiteSpace: "nowrap",
         },
       })
     },

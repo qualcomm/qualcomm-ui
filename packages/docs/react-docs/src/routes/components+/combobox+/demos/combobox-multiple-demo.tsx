@@ -21,9 +21,29 @@ export function ComboboxMultipleDemo() {
   }
 
   return (
-    <div className="flex w-72 flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Combobox
-        className="w-full"
+        className="w-48"
+        collection={collection}
+        label="Country"
+        multiple
+        onInputValueChange={handleInputChange}
+        onValueChange={(details) => setValue(details.value)}
+        placeholder="Select a country"
+        value={value}
+      />
+      <Combobox
+        className="w-72"
+        collection={collection}
+        label="Country"
+        multiple
+        onInputValueChange={handleInputChange}
+        onValueChange={(details) => setValue(details.value)}
+        placeholder="Select a country"
+        value={value}
+      />
+      <Combobox
+        className="w-96"
         collection={collection}
         label="Country"
         multiple

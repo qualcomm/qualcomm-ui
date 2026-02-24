@@ -37,8 +37,15 @@ export interface TagsProps extends CommonProperties {
   ids?: Partial<TagElementIds>
 
   /**
-   * The parent machine (select or combobox) that provides selected values.
-   * Only `context.get("value")` is accessed.
+   * Minimum width of the input element in pixels, used for tag overflow calculation.
+   *
+   * @default 75
+   */
+  minInputWidth?: number
+
+  /**
+   * The parent machine (select or combobox) that provides the necessary context for
+   * this machine to function.
    */
   parent: TagsParentMachine
 }
@@ -46,14 +53,13 @@ export interface TagsProps extends CommonProperties {
 export interface TagElementIds {
   container: string
   indicator: string
+  invisibleTagsContainer: string
 }
 
 export type TagElementScope = ScopeWithIds<TagsSchema>
 
 export interface TagsSchema {
-  actions: ActionSchema<
-    "remeasure" | "measureIndicator" | "measureTags" | "recalculate"
-  >
+  actions: ActionSchema<"measureIndicator" | "measureTags" | "recalculate">
   computed: {
     empty: boolean
     hasOverflow: boolean
@@ -62,7 +68,7 @@ export interface TagsSchema {
     visibleTags: string[]
   }
   context: {
-    containerWidth: number
+    availableWidth: number
     indicatorWidth: number
     tagWidths: number[]
     visibleCount: number
@@ -70,10 +76,7 @@ export interface TagsSchema {
   effects: EffectSchema<"trackControlResize">
   events: {type: "REMEASURE"}
   ids: TagElementIds
-  props: RequiredBy<TagsProps, "gap" | "parent">
-  refs: {
-    containerResizeObserver: VoidFunction | null | undefined
-  }
+  props: RequiredBy<TagsProps, "gap" | "minInputWidth" | "parent">
   state: "idle"
 }
 
@@ -90,7 +93,16 @@ export interface TagsTagBindings {
   "data-scope": "tags"
   "data-value": string
   hidden: boolean
+  id: string
   onClick: JSX.MouseEventHandler
+  style: JSX.CSSProperties
+}
+
+export interface TagsInvisibleTagBindings {
+  "data-part": "invisible-tag"
+  "data-scope": "tags"
+  "data-value": string
+  id: string
   style: JSX.CSSProperties
 }
 
@@ -105,6 +117,12 @@ export interface TagsIndicatorBindings {
 export interface TagsMeasureIndicatorBindings {
   "aria-hidden": true
   "data-part": "tags-measure-indicator"
+  "data-scope": "tags"
+  style: JSX.CSSProperties
+}
+
+export interface TagsInvisibleTagContainerBindings {
+  "data-part": "invisible-tag-container"
   "data-scope": "tags"
   style: JSX.CSSProperties
 }
@@ -139,6 +157,12 @@ export interface TagsApi {
   getContainerBindings(props: IdRegistrationProps): TagsContainerBindings
 
   getIndicatorBindings(props: IdRegistrationProps): TagsIndicatorBindings
+
+  getInvisibleTagBindings(value: string): TagsInvisibleTagBindings
+
+  getInvisibleTagsContainerBindings(
+    props: IdRegistrationProps,
+  ): TagsInvisibleTagContainerBindings
 
   getMeasureIndicatorBindings(): TagsMeasureIndicatorBindings
 
