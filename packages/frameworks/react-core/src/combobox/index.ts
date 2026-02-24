@@ -38,6 +38,7 @@ import {
 export * from "./combobox-context"
 export * from "./combobox-item-context"
 export * from "./combobox-item-group-context"
+export * from "./combobox-machine-context"
 
 export type {
   CoreComboboxRootProps,

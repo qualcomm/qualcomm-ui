@@ -36,6 +36,7 @@ import {
   useSelectContext,
   useSelectItemContext,
 } from "./select-context"
+import {SelectMachineContextProvider} from "./select-machine-context"
 
 export interface CoreSelectRootProps
   extends SelectApiProps,
@@ -60,13 +61,15 @@ export function CoreSelectRoot({
   )
 
   return (
-    <SelectContextProvider value={context}>
-      <PresenceContextProvider value={presence}>
-        <PolymorphicElement as="div" {...mergedProps}>
-          {children}
-        </PolymorphicElement>
-      </PresenceContextProvider>
-    </SelectContextProvider>
+    <SelectMachineContextProvider value={config}>
+      <SelectContextProvider value={context}>
+        <PresenceContextProvider value={presence}>
+          <PolymorphicElement as="div" {...mergedProps}>
+            {children}
+          </PolymorphicElement>
+        </PresenceContextProvider>
+      </SelectContextProvider>
+    </SelectMachineContextProvider>
   )
 }
 

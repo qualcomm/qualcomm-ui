@@ -32,6 +32,7 @@ import {
   type ComboboxPositionerProps,
 } from "./combobox-positioner"
 import {ComboboxRoot, type ComboboxRootProps} from "./combobox-root"
+import {ComboboxTags} from "./combobox-tags"
 import {ComboboxTrigger, type ComboboxTriggerProps} from "./combobox-trigger"
 import {ComboboxVirtualContent} from "./combobox-virtual-content"
 
@@ -239,6 +240,7 @@ export function Combobox<T extends CollectionItem = CollectionItem>({
         </ComboboxLabel>
       ) : null}
       <ComboboxControl {...controlProps} id={ids.control}>
+        <ComboboxTags />
         <ComboboxInput {...inputProps} id={ids.input} />
         <ComboboxClearTrigger {...clearTriggerProps} id={ids.clearTrigger} />
         <ComboboxErrorIndicator {...errorIndicatorProps} />

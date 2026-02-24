@@ -31,6 +31,7 @@ export function ComboboxControl({
       {qdsInputContext.startIcon ? (
         <InputStartIcon icon={qdsInputContext.startIcon} />
       ) : null}
+
       {children}
     </CoreCombobox.Control>
   )

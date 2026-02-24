@@ -18,6 +18,7 @@ import {
 } from "./core-select"
 
 export * from "./select-context"
+export * from "./select-machine-context"
 export * from "./use-select"
 
 export type {
