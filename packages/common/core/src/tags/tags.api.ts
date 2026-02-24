@@ -29,7 +29,7 @@ export function createTagsApi(
   machine: Machine<TagsSchema>,
   normalize: PropNormalizer,
 ): TagsApi {
-  const {computed, context, prop, scope} = machine
+  const {computed, prop, scope} = machine
 
   return {
     get empty() {

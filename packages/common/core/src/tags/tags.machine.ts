@@ -34,7 +34,6 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
             tagWidths.push(el.getBoundingClientRect().width)
           }
         }
-        console.debug(tagWidths)
         context.set("tagWidths", tagWidths)
       },
 
@@ -46,7 +45,6 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
           minInputWidth: prop("minInputWidth"),
           tagWidths: context.get("tagWidths"),
         })
-        console.debug(result)
         context.set("visibleCount", result.visibleCount)
       },
     },

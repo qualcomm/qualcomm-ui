@@ -11,26 +11,33 @@ import {
 } from "@qualcomm-ui/react-core/combobox"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export function ComboboxTags(): ReactElement | null {
+export interface ComboboxTagsProps extends ElementRenderProp<"div"> {}
+
+export function ComboboxTags({
+  id,
+  ...props
+}: ComboboxTagsProps): ReactElement | null {
   const {collection, selectValue, value} = useComboboxContext()
   const comboboxMachine = useComboboxMachineContext()
 
-  const machine = useMachine(
-    tagsMachine,
-    {
-      parent: {...comboboxMachine, selectValue},
-    },
-    {debug: true},
-  )
+  const machine = useMachine(tagsMachine, {
+    parent: {...comboboxMachine, selectValue},
+  })
   const tagsApi = createTagsApi(machine, normalizeProps)
 
+  const mergedProps = mergeProps(
+    {className: "", id: useControlledId(id)},
+    props,
+  )
+
   return (
-    <div
-      {...tagsApi.getContainerBindings({
-        id: useControlledId(),
-      })}
-    >
+    <PolymorphicElement as="div" {...mergedProps}>
       {tagsApi.values.map((item) => {
         const label = collection.stringifyItem(item)
         return (
@@ -61,6 +68,6 @@ export function ComboboxTags(): ReactElement | null {
       <Tag {...tagsApi.getMeasureIndicatorBindings()} emphasis="neutral">
         +{value.length}
       </Tag>
-    </div>
+    </PolymorphicElement>
   )
 }
