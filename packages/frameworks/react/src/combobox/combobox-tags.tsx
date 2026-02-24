@@ -9,39 +9,41 @@ import {
   useComboboxContext,
   useComboboxMachineContext,
 } from "@qualcomm-ui/react-core/combobox"
-import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 
 export function ComboboxTags(): ReactElement | null {
-  const {collection, multiple, selectValue, value} = useComboboxContext()
+  const {collection, selectValue, value} = useComboboxContext()
   const comboboxMachine = useComboboxMachineContext()
 
-  const machine = useMachine(tagsMachine, {parent: comboboxMachine})
+  const machine = useMachine(
+    tagsMachine,
+    {
+      parent: {...comboboxMachine, selectValue},
+    },
+    {debug: true},
+  )
   const tagsApi = createTagsApi(machine, normalizeProps)
-
-  const rootId = useControlledId()
-  const onRootDestroy = useOnDestroy()
 
   return (
     <div
-      {...tagsApi.getContainerBindings({id: rootId, onDestroy: onRootDestroy})}
+      {...tagsApi.getContainerBindings({
+        id: useControlledId(),
+      })}
     >
       {tagsApi.values.map((item) => (
         <Tag
           key={item}
           {...tagsApi.getTagBindings(item)}
           emphasis="neutral"
-          onClick={(event) => {
-            event.stopPropagation()
-            selectValue(item)
-          }}
           variant="dismissable"
         >
           {collection.stringifyItem(item)}
         </Tag>
       ))}
-      <span {...tagsApi.getIndicatorBindings()}>+{tagsApi.overflowCount}</span>
+      <span {...tagsApi.getIndicatorBindings({id: useControlledId()})}>
+        +{tagsApi.overflowCount}
+      </span>
       <span {...tagsApi.getMeasureIndicatorBindings()}>+{value.length}</span>
     </div>
   )

@@ -24,7 +24,6 @@ export interface CalculateVisibleTagsResult {
 export function calculateVisibleTags(
   input: CalculateVisibleTagsInput,
 ): CalculateVisibleTagsResult {
-  console.debug(input)
   const {containerWidth, gap, indicatorWidth, tagWidths} = input
   const total = tagWidths.length
 

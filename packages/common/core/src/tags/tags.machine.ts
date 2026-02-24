@@ -2,37 +2,17 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {trackElementSize} from "@qualcomm-ui/dom/element-size"
+import {raf} from "@qualcomm-ui/dom/query"
 import {ensureProps} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {getContainerEl, getMeasureIndicatorEl, getTagEl} from "./internal"
+import {getControlEl, getMeasureIndicatorEl, getTagEl} from "./internal"
 import {calculateVisibleTags} from "./tags.overflow"
 import type {TagsSchema} from "./tags.types"
-
-function getTagEls(
-  scope: Parameters<typeof getTagEl>[0],
-  values: string[],
-): HTMLElement[] {
-  const elements: HTMLElement[] = []
-  for (const value of values) {
-    const el = getTagEl(scope, value)
-    if (el) {
-      elements.push(el)
-    }
-  }
-  return elements
-}
 
 export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
   {
     actions: {
-      measureContainer({context, scope}) {
-        const container = getContainerEl(scope)
-        if (container) {
-          context.set("containerWidth", container.getBoundingClientRect().width)
-        }
-      },
-
       measureIndicator({context, scope}) {
         const el = getMeasureIndicatorEl(scope)
         if (el) {
@@ -66,7 +46,7 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
     computed: {
       empty: ({prop}) => {
         const values = prop("parent").context.get("value")
-        return !values || values.length === 0
+        return !values?.length
       },
 
       hasOverflow: ({context, prop}) => {
@@ -110,14 +90,13 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
     },
 
     effects: {
-      trackContainerResize({context, scope, send}) {
-        const container = getContainerEl(scope)
-        console.debug(container)
-        if (!container) {
+      trackControlResize({context, scope, send}) {
+        const controlElement = getControlEl(scope)
+        if (!controlElement) {
           return
         }
 
-        return trackElementSize(container, (size) => {
+        return trackElementSize(controlElement, (size) => {
           if (size) {
             context.set("containerWidth", size.width)
             send({type: "REMEASURE"})
@@ -126,11 +105,9 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
       },
     },
 
-    guards: {},
-
-    ids: ({bindableId}) => ({
-      container: bindableId(),
-      indicator: bindableId(),
+    ids: ({bindableId, ids}) => ({
+      container: bindableId(ids?.container),
+      indicator: bindableId(ids?.indicator),
     }),
 
     initialState() {
@@ -147,28 +124,22 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
       ensureProps(props, ["parent"], "tags")
       return {
         gap: 4,
+        ids: {},
         ...props,
-      }
-    },
-
-    refs() {
-      return {
-        measureIndicatorElement: null,
       }
     },
 
     states: {
       idle: {
-        effects: ["trackContainerResize"],
-      },
-      measuring: {
-        entry: ["measureTags", "measureIndicator", "recalculate"],
+        effects: ["trackControlResize"],
       },
     },
 
-    watch({action, prop, track}) {
-      track([() => prop("parent").context.get("value")?.toString()], () => {
-        action(["measureTags", "measureIndicator", "recalculate"])
+    watch({prop, send, track}) {
+      track([() => JSON.stringify(prop("parent").context.get("value"))], () => {
+        raf(() => {
+          send({type: "REMEASURE"})
+        })
       })
     },
   },

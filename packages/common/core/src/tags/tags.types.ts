@@ -9,6 +9,7 @@ import type {
   IdRegistrationProps,
   JSX,
   PropNormalizer,
+  ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
 /**
@@ -19,6 +20,7 @@ export interface TagsParentMachine {
   context: {
     get(key: "value"): string[]
   }
+  selectValue: (value: string) => void
 }
 
 export interface TagsProps extends CommonProperties {
@@ -28,6 +30,11 @@ export interface TagsProps extends CommonProperties {
    * @default 4
    */
   gap?: number
+
+  /**
+   * Override the default element IDs.
+   */
+  ids?: Partial<TagElementIds>
 
   /**
    * The parent machine (select or combobox) that provides selected values.
@@ -41,10 +48,10 @@ export interface TagElementIds {
   indicator: string
 }
 
+export type TagElementScope = ScopeWithIds<TagsSchema>
+
 export interface TagsSchema {
-  actions: ActionSchema<
-    "measureContainer" | "measureIndicator" | "measureTags" | "recalculate"
-  >
+  actions: ActionSchema<"measureIndicator" | "measureTags" | "recalculate">
   computed: {
     empty: boolean
     hasOverflow: boolean
@@ -58,15 +65,11 @@ export interface TagsSchema {
     tagWidths: number[]
     visibleCount: number
   }
-  effects: EffectSchema<"trackContainerResize">
+  effects: EffectSchema<"trackControlResize">
   events: {type: "REMEASURE"}
-  guards: Record<string, never>
   ids: TagElementIds
   props: RequiredBy<TagsProps, "gap" | "parent">
-  refs: {
-    measureIndicatorElement: HTMLElement | null
-  }
-  state: "idle" | "measuring"
+  state: "idle"
 }
 
 // Binding interfaces
@@ -82,6 +85,7 @@ export interface TagsTagBindings {
   "data-scope": "tags"
   "data-value": string
   hidden: boolean
+  onClick: JSX.MouseEventHandler
   style: JSX.CSSProperties
 }
 
@@ -129,7 +133,7 @@ export interface TagsApi {
   // group: bindings
   getContainerBindings(props: IdRegistrationProps): TagsContainerBindings
 
-  getIndicatorBindings(): TagsIndicatorBindings
+  getIndicatorBindings(props: IdRegistrationProps): TagsIndicatorBindings
 
   getMeasureIndicatorBindings(): TagsMeasureIndicatorBindings
 

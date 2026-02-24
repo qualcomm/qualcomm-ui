@@ -106,6 +106,10 @@ export function createTagsApi(
         "data-value": value,
         hidden: !isVisible && values.includes(value),
         id: getTagId(scope, value),
+        onClick: () => {
+          const parent = prop("parent")
+          parent?.selectValue(value)
+        },
         style: {
           flexShrink: 0,
         },

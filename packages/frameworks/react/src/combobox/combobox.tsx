@@ -192,6 +192,7 @@ export function Combobox<T extends CollectionItem = CollectionItem>({
   inputProps: inputPropsProp,
   label,
   labelProps,
+  multiple,
   portalProps,
   positionerProps,
   renderItem,
@@ -233,14 +234,14 @@ export function Combobox<T extends CollectionItem = CollectionItem>({
   }
 
   return (
-    <ComboboxRoot {...props} ids={ids}>
+    <ComboboxRoot {...props} ids={ids} multiple={multiple}>
       {labelContent ? (
         <ComboboxLabel {...labelProps} id={ids.label}>
           {labelContent}
         </ComboboxLabel>
       ) : null}
       <ComboboxControl {...controlProps} id={ids.control}>
-        <ComboboxTags />
+        {multiple ? <ComboboxTags /> : null}
         <ComboboxInput {...inputProps} id={ids.input} />
         <ComboboxClearTrigger {...clearTriggerProps} id={ids.clearTrigger} />
         <ComboboxErrorIndicator {...errorIndicatorProps} />
