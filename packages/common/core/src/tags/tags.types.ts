@@ -51,7 +51,9 @@ export interface TagElementIds {
 export type TagElementScope = ScopeWithIds<TagsSchema>
 
 export interface TagsSchema {
-  actions: ActionSchema<"measureIndicator" | "measureTags" | "recalculate">
+  actions: ActionSchema<
+    "remeasure" | "measureIndicator" | "measureTags" | "recalculate"
+  >
   computed: {
     empty: boolean
     hasOverflow: boolean
@@ -69,6 +71,9 @@ export interface TagsSchema {
   events: {type: "REMEASURE"}
   ids: TagElementIds
   props: RequiredBy<TagsProps, "gap" | "parent">
+  refs: {
+    containerResizeObserver: VoidFunction | null | undefined
+  }
   state: "idle"
 }
 

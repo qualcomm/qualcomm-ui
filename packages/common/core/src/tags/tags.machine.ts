@@ -6,7 +6,12 @@ import {raf} from "@qualcomm-ui/dom/query"
 import {ensureProps} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {getControlEl, getMeasureIndicatorEl, getTagEl} from "./internal"
+import {
+  getContainerEl,
+  getControlEl,
+  getMeasureIndicatorEl,
+  getTagEl,
+} from "./internal"
 import {calculateVisibleTags} from "./tags.overflow"
 import type {TagsSchema} from "./tags.types"
 
@@ -19,19 +24,19 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
           context.set("indicatorWidth", el.getBoundingClientRect().width)
         }
       },
-
       measureTags({context, prop, scope}) {
-        const values = prop("parent").context.get("value") ?? []
-        const tagWidths: number[] = []
-        for (const value of values) {
-          const el = getTagEl(scope, value)
-          if (el) {
-            tagWidths.push(el.getBoundingClientRect().width)
+        raf(() => {
+          const values = prop("parent").context.get("value") ?? []
+          const tagWidths: number[] = []
+          for (const value of values) {
+            const el = getTagEl(scope, value)
+            if (el) {
+              tagWidths.push(el.getBoundingClientRect().width)
+            }
           }
-        }
-        context.set("tagWidths", tagWidths)
+          context.set("tagWidths", tagWidths)
+        })
       },
-
       recalculate({context, prop}) {
         const result = calculateVisibleTags({
           containerWidth: context.get("containerWidth"),
@@ -40,6 +45,32 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
           tagWidths: context.get("tagWidths"),
         })
         context.set("visibleCount", result.visibleCount)
+      },
+      remeasure: ({context, prop, refs, scope}) => {
+        refs.get?.("containerResizeObserver")?.()
+        const tagsContainer = getContainerEl(scope)
+        if (!tagsContainer) {
+          return
+        }
+
+        // tag rendering is asynchronous. Value changes don't immediately correspond
+        // to an updated DOM.
+        const unsub = trackElementSize(tagsContainer, () => {
+          const values = prop("parent").context.get("value") ?? []
+          const tagWidths: number[] = []
+          for (const value of values) {
+            const el = getTagEl(scope, value)
+            if (el) {
+              tagWidths.push(el.getBoundingClientRect().width)
+            }
+          }
+          if (tagWidths.every((width) => width > 0)) {
+            context.set("tagWidths", tagWidths)
+            refs.set("containerResizeObserver", null)
+          }
+        })
+
+        refs.set("containerResizeObserver", unsub)
       },
     },
 
@@ -116,7 +147,7 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
 
     on: {
       REMEASURE: {
-        actions: ["measureTags", "measureIndicator", "recalculate"],
+        actions: ["remeasure"],
       },
     },
 
@@ -124,8 +155,13 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
       ensureProps(props, ["parent"], "tags")
       return {
         gap: 4,
-        ids: {},
         ...props,
+      }
+    },
+
+    refs() {
+      return {
+        containerResizeObserver: null,
       }
     },
 
