@@ -52,10 +52,15 @@ export function ComboboxTags(): ReactElement | null {
           </Fragment>
         )
       })}
-      <span {...tagsApi.getIndicatorBindings({id: useControlledId()})}>
+      <Tag
+        {...tagsApi.getIndicatorBindings({id: useControlledId()})}
+        emphasis="neutral"
+      >
         +{tagsApi.overflowCount}
-      </span>
-      <span {...tagsApi.getMeasureIndicatorBindings()}>+{value.length}</span>
+      </Tag>
+      <Tag {...tagsApi.getMeasureIndicatorBindings()} emphasis="neutral">
+        +{value.length}
+      </Tag>
     </div>
   )
 }

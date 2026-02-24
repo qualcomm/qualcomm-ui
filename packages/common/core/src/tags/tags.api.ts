@@ -56,12 +56,14 @@ export function createTagsApi(
     getContainerBindings(props: IdRegistrationProps): TagsContainerBindings {
       scope.ids.register("container", props)
       return normalize.element({
+        "data-empty": computed("empty"),
         "data-part": "tags-container",
         "data-scope": "tags",
+        hidden: computed("empty"),
         id: getContainerId(scope),
         style: {
           alignItems: "center",
-          display: "flex",
+          display: computed("empty") ? "none" : "flex",
           flexWrap: "nowrap",
           gap: `${prop("gap")}px`,
           minWidth: "max-content",
