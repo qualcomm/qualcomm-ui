@@ -7,6 +7,16 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
+import type {
+  InputTagsApi,
+  InputTagsContainerBindings,
+  InputTagsIndicatorBindings,
+  InputTagsInvisibleTagBindings,
+  InputTagsInvisibleTagContainerBindings,
+  InputTagsMeasureIndicatorBindings,
+  InputTagsSchema,
+  InputTagsTagBindings,
+} from "./input-tags.types"
 import {
   getContainerId,
   getIndicatorId,
@@ -14,21 +24,11 @@ import {
   getMeasureIndicatorId,
   getTagId,
 } from "./internal"
-import type {
-  TagsApi,
-  TagsContainerBindings,
-  TagsIndicatorBindings,
-  TagsInvisibleTagBindings,
-  TagsInvisibleTagContainerBindings,
-  TagsMeasureIndicatorBindings,
-  TagsSchema,
-  TagsTagBindings,
-} from "./tags.types"
 
-export function createTagsApi(
-  machine: Machine<TagsSchema>,
+export function createInputTagsApi(
+  machine: Machine<InputTagsSchema>,
   normalize: PropNormalizer,
-): TagsApi {
+): InputTagsApi {
   const {computed, prop, scope} = machine
 
   return {
@@ -53,7 +53,9 @@ export function createTagsApi(
     },
 
     // group: bindings
-    getContainerBindings(props: IdRegistrationProps): TagsContainerBindings {
+    getContainerBindings(
+      props: IdRegistrationProps,
+    ): InputTagsContainerBindings {
       scope.ids.register("container", props)
       return normalize.element({
         "data-empty": computed("empty"),
@@ -72,7 +74,7 @@ export function createTagsApi(
       })
     },
 
-    getIndicatorBindings(): TagsIndicatorBindings {
+    getIndicatorBindings(): InputTagsIndicatorBindings {
       const hasOverflow = computed("hasOverflow")
       return normalize.element({
         "data-part": "tags-indicator",
@@ -87,7 +89,7 @@ export function createTagsApi(
       })
     },
 
-    getInvisibleTagBindings(value): TagsInvisibleTagBindings {
+    getInvisibleTagBindings(value): InputTagsInvisibleTagBindings {
       return normalize.element({
         "data-part": "invisible-tag",
         "data-scope": "tags",
@@ -103,7 +105,7 @@ export function createTagsApi(
 
     getInvisibleTagsContainerBindings(
       props: IdRegistrationProps,
-    ): TagsInvisibleTagContainerBindings {
+    ): InputTagsInvisibleTagContainerBindings {
       scope.ids.register("invisibleTagsContainer", props)
       return normalize.element({
         "data-part": "invisible-tag-container",
@@ -115,7 +117,7 @@ export function createTagsApi(
       })
     },
 
-    getMeasureIndicatorBindings(): TagsMeasureIndicatorBindings {
+    getMeasureIndicatorBindings(): InputTagsMeasureIndicatorBindings {
       return normalize.element({
         "aria-hidden": true,
         "data-part": "tags-measure-indicator",
@@ -128,7 +130,7 @@ export function createTagsApi(
         },
       })
     },
-    getTagBindings(value): TagsTagBindings {
+    getTagBindings(value): InputTagsTagBindings {
       const values = computed("values")
       const visibleTags = computed("visibleTags")
       const isVisible = visibleTags.includes(value)

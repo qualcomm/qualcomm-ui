@@ -3,7 +3,10 @@
 
 import {Fragment, type ReactElement} from "react"
 
-import {createTagsApi, tagsMachine} from "@qualcomm-ui/core/tags"
+import {
+  createInputTagsApi,
+  inputTagsMachine,
+} from "@qualcomm-ui/core/input-tags"
 import {Tag} from "@qualcomm-ui/react/tag"
 import {
   useComboboxContext,
@@ -26,13 +29,14 @@ export function ComboboxTags({
   const {collection, selectValue, value} = useComboboxContext()
   const comboboxMachine = useComboboxMachineContext()
 
-  const machine = useMachine(tagsMachine, {
+  const machine = useMachine(inputTagsMachine, {
     parent: {...comboboxMachine, selectValue},
   })
-  const tagsApi = createTagsApi(machine, normalizeProps)
+  const tagsApi = createInputTagsApi(machine, normalizeProps)
 
   const mergedProps = mergeProps(
-    {className: "", id: useControlledId(id)},
+    {className: ""},
+    tagsApi.getContainerBindings({id: useControlledId(id)}),
     props,
   )
 

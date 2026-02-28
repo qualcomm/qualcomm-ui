@@ -1,13 +1,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {TagElementScope} from "../tags.types"
+import type {InputTagsElementScope} from "../input-tags.types"
 
-export function getContainerId(scope: TagElementScope): string {
+export function getContainerId(scope: InputTagsElementScope): string {
   return scope.ids.get("container")
 }
 
-function getClosestCombobox(scope: TagElementScope): HTMLElement | null {
+function getClosestCombobox(scope: InputTagsElementScope): HTMLElement | null {
   return (
     getContainerEl(scope)?.closest(
       `[data-part="control"][data-scope="combobox"]`,
@@ -15,7 +15,7 @@ function getClosestCombobox(scope: TagElementScope): HTMLElement | null {
   )
 }
 
-function getClosestSelect(scope: TagElementScope): HTMLElement | null {
+function getClosestSelect(scope: InputTagsElementScope): HTMLElement | null {
   return (
     getContainerEl(scope)?.closest(
       `[data-part="control"][data-scope="select"]`,
@@ -23,73 +23,83 @@ function getClosestSelect(scope: TagElementScope): HTMLElement | null {
   )
 }
 
-export function getControlEl(scope: TagElementScope): HTMLElement | null {
+export function getControlEl(scope: InputTagsElementScope): HTMLElement | null {
   return getClosestCombobox(scope) ?? getClosestSelect(scope) ?? null
 }
 
-function getComboboxInputElement(scope: TagElementScope): HTMLElement | null {
+function getComboboxInputElement(
+  scope: InputTagsElementScope,
+): HTMLElement | null {
   return getClosestCombobox(scope)?.querySelector('[data-part="input"]') ?? null
 }
 
-function getSelectInputElement(scope: TagElementScope): HTMLElement | null {
+function getSelectInputElement(
+  scope: InputTagsElementScope,
+): HTMLElement | null {
   return (
     getClosestSelect(scope)?.querySelector('[data-part="value-text"]') ?? null
   )
 }
 
-export function getInputElement(scope: TagElementScope): HTMLElement | null {
+export function getInputElement(
+  scope: InputTagsElementScope,
+): HTMLElement | null {
   return getComboboxInputElement(scope) ?? getSelectInputElement(scope) ?? null
 }
 
-export function getContainerEl(scope: TagElementScope): HTMLElement | null {
+export function getContainerEl(
+  scope: InputTagsElementScope,
+): HTMLElement | null {
   return scope.getById(getContainerId(scope))
 }
 
-export function getTagId(scope: TagElementScope, value: string): string {
+export function getTagId(scope: InputTagsElementScope, value: string): string {
   return `tags:${getContainerId(scope)}:tag:${value}`
 }
 
 export function getInvisibleTagId(
-  scope: TagElementScope,
+  scope: InputTagsElementScope,
   value: string,
 ): string {
   return `tags:${getContainerId(scope)}:invisible-tag:${value}`
 }
 
 export function getTagEl(
-  scope: TagElementScope,
+  scope: InputTagsElementScope,
   value: string,
 ): HTMLElement | null {
   return scope.getById(getTagId(scope, value))
 }
 
 export function getInvisibleTagEl(
-  scope: TagElementScope,
+  scope: InputTagsElementScope,
   value: string,
 ): HTMLElement | null {
   return scope.getById(getInvisibleTagId(scope, value))
 }
 
 export function getInvisibleTagsContainerEl(
-  scope: TagElementScope,
+  scope: InputTagsElementScope,
 ): HTMLElement | null {
   return scope.getById(scope.ids.get("invisibleTagsContainer"))
 }
 
-export function getIndicatorId(scope: TagElementScope): string {
+export function getIndicatorId(scope: InputTagsElementScope): string {
   return `tags:${getContainerId(scope)}:indicator`
 }
 
-export function getIndicatorEl(scope: TagElementScope): HTMLElement | null {
+export function getIndicatorEl(
+  scope: InputTagsElementScope,
+): HTMLElement | null {
   return scope.getById(getIndicatorId(scope))
 }
 
-export function getMeasureIndicatorId(scope: TagElementScope): string {
+export function getMeasureIndicatorId(scope: InputTagsElementScope): string {
   return `tags:${getContainerId(scope)}:measure-indicator`
 }
 
 export function getMeasureIndicatorEl(
-  scope: TagElementScope,
+  scope: InputTagsElementScope,
 ): HTMLElement | null {
   return scope.getById(getMeasureIndicatorId(scope))
 }

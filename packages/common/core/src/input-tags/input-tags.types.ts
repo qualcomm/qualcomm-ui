@@ -16,7 +16,7 @@ import type {
  * Minimal interface for reading parent machine state.
  * Both select and combobox machines satisfy this shape at runtime.
  */
-export interface TagsParentMachine {
+export interface InputTagsParentMachine {
   context: {
     get(key: "value"): string[]
   }
@@ -34,7 +34,7 @@ export interface TagsProps extends CommonProperties {
   /**
    * Override the default element IDs.
    */
-  ids?: Partial<TagElementIds>
+  ids?: Partial<InputTagsElementIds>
 
   /**
    * Minimum width of the input element in pixels, used for tag overflow calculation.
@@ -47,18 +47,18 @@ export interface TagsProps extends CommonProperties {
    * The parent machine (select or combobox) that provides the necessary context for
    * this machine to function.
    */
-  parent: TagsParentMachine
+  parent: InputTagsParentMachine
 }
 
-export interface TagElementIds {
+export interface InputTagsElementIds {
   container: string
   indicator: string
   invisibleTagsContainer: string
 }
 
-export type TagElementScope = ScopeWithIds<TagsSchema>
+export type InputTagsElementScope = ScopeWithIds<InputTagsSchema>
 
-export interface TagsSchema {
+export interface InputTagsSchema {
   actions: ActionSchema<"measureIndicator" | "measureTags" | "recalculate">
   computed: {
     empty: boolean
@@ -75,20 +75,20 @@ export interface TagsSchema {
   }
   effects: EffectSchema<"trackControlResize">
   events: {type: "REMEASURE"}
-  ids: TagElementIds
+  ids: InputTagsElementIds
   props: RequiredBy<TagsProps, "gap" | "minInputWidth" | "parent">
   state: "idle"
 }
 
 // Binding interfaces
 
-export interface TagsContainerBindings {
+export interface InputTagsContainerBindings {
   "data-part": "tags-container"
   "data-scope": "tags"
   style: JSX.CSSProperties
 }
 
-export interface TagsTagBindings {
+export interface InputTagsTagBindings {
   "data-part": "tag"
   "data-scope": "tags"
   "data-value": string
@@ -98,7 +98,7 @@ export interface TagsTagBindings {
   style: JSX.CSSProperties
 }
 
-export interface TagsInvisibleTagBindings {
+export interface InputTagsInvisibleTagBindings {
   "data-part": "invisible-tag"
   "data-scope": "tags"
   "data-value": string
@@ -106,7 +106,7 @@ export interface TagsInvisibleTagBindings {
   style: JSX.CSSProperties
 }
 
-export interface TagsIndicatorBindings {
+export interface InputTagsIndicatorBindings {
   "data-part": "tags-indicator"
   "data-scope": "tags"
   "data-state": "visible" | "hidden"
@@ -114,20 +114,20 @@ export interface TagsIndicatorBindings {
   style: JSX.CSSProperties
 }
 
-export interface TagsMeasureIndicatorBindings {
+export interface InputTagsMeasureIndicatorBindings {
   "aria-hidden": true
   "data-part": "tags-measure-indicator"
   "data-scope": "tags"
   style: JSX.CSSProperties
 }
 
-export interface TagsInvisibleTagContainerBindings {
+export interface InputTagsInvisibleTagContainerBindings {
   "data-part": "invisible-tag-container"
   "data-scope": "tags"
   style: JSX.CSSProperties
 }
 
-export interface TagsApi {
+export interface InputTagsApi {
   /**
    * Whether the tag list is empty (no values selected).
    */
@@ -154,22 +154,22 @@ export interface TagsApi {
   visibleTags: string[]
 
   // group: bindings
-  getContainerBindings(props: IdRegistrationProps): TagsContainerBindings
+  getContainerBindings(props: IdRegistrationProps): InputTagsContainerBindings
 
-  getIndicatorBindings(props: IdRegistrationProps): TagsIndicatorBindings
+  getIndicatorBindings(props: IdRegistrationProps): InputTagsIndicatorBindings
 
-  getInvisibleTagBindings(value: string): TagsInvisibleTagBindings
+  getInvisibleTagBindings(value: string): InputTagsInvisibleTagBindings
 
   getInvisibleTagsContainerBindings(
     props: IdRegistrationProps,
-  ): TagsInvisibleTagContainerBindings
+  ): InputTagsInvisibleTagContainerBindings
 
-  getMeasureIndicatorBindings(): TagsMeasureIndicatorBindings
+  getMeasureIndicatorBindings(): InputTagsMeasureIndicatorBindings
 
-  getTagBindings(value: string): TagsTagBindings
+  getTagBindings(value: string): InputTagsTagBindings
 }
 
 export type CreateTagsApi = (
   machine: unknown,
   normalize: PropNormalizer,
-) => TagsApi
+) => InputTagsApi

@@ -6,17 +6,17 @@ import {raf} from "@qualcomm-ui/dom/query"
 import {ensureProps} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
+import {calculateVisibleTags} from "./input-tags.overflow"
+import type {InputTagsSchema} from "./input-tags.types"
 import {
   getControlEl,
   getInputElement,
   getInvisibleTagEl,
   getMeasureIndicatorEl,
 } from "./internal"
-import {calculateVisibleTags} from "./tags.overflow"
-import type {TagsSchema} from "./tags.types"
 
-export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
-  {
+export const inputTagsMachine: MachineConfig<InputTagsSchema> =
+  createMachine<InputTagsSchema>({
     actions: {
       measureIndicator({context, scope}) {
         const el = getMeasureIndicatorEl(scope)
@@ -113,10 +113,8 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
               return
             }
             const availableWidth =
-              controlElementRect.width -
-              (controlElementRect.right - inputElementRect.right)
+              inputElementRect.right - controlElementRect.left
             context.set("availableWidth", availableWidth)
-            console.debug(availableWidth)
             send({type: "REMEASURE"})
           }
         })
@@ -167,5 +165,4 @@ export const tagsMachine: MachineConfig<TagsSchema> = createMachine<TagsSchema>(
         })
       })
     },
-  },
-)
+  })

@@ -41,7 +41,7 @@ export function calculateVisibleTags(
     totalWidth += tagWidths[i]
   }
 
-  if (totalWidth <= availableWidth) {
+  if (totalWidth + gap + minInputWidth <= availableWidth) {
     return {overflowCount: 0, visibleCount: total}
   }
 
