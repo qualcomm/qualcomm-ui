@@ -1,0 +1,136 @@
+---
+title: Checkbox Group
+group: Form Controls
+description: Groups related checkboxes with a shared label, hint text, and validation state.
+component: CheckboxGroup
+aliases: [checkbox group, field group]
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```ts
+import {CheckboxGroupModule} from "@qualcomm-ui/angular/checkbox-group"
+```
+
+## Examples
+
+### Simple
+
+Use the simple API to create a checkbox group using minimal markup.
+
+If you omit the [label](./#label), you should provide an `aria-label` to keep your group accessible.
+
+<QdsDemo name="CheckboxGroupSimpleDemo" />
+
+### Composite
+
+The composite API exposes `FieldGroup` directives for granular control over the group structure.
+
+<QdsDemo name="CheckboxGroupCompositeDemo" />
+
+### Size
+
+::: terms
+small
+medium
+large
+:::
+
+The [size](./#size) input controls the size of child checkboxes. Available sizes are `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="CheckboxGroupSizeDemo" />
+
+### Orientation
+
+::: terms
+vertical
+horizontal
+row
+column
+:::
+
+Use the [orientation](./#orientation) input to control the layout direction of the group. Options include:
+
+- `vertical`: checkboxes are laid out in a column (default).
+- `horizontal`: checkboxes are laid out in a row.
+
+<QdsDemo name="CheckboxGroupOrientationDemo" />
+
+### Indented
+
+Set [indented](./#indented) to add padding at the start of the group.
+
+<QdsDemo name="CheckboxGroupIndentedDemo" />
+
+### Hint
+
+::: terms
+helper text
+description
+:::
+
+Use [hint](./#hint) to add additional guidance or context to the user below the group.
+
+<QdsDemo name="CheckboxGroupHintDemo" />
+
+### Error Text
+
+::: terms
+validation
+invalid
+:::
+
+Set [invalid](./#invalid) and [errorText](./#errorText) to display validation errors. The error text replaces the hint when present.
+
+<QdsDemo name="CheckboxGroupErrorDemo" />
+
+## API
+
+### q-checkbox-group
+
+The `q-checkbox-group` directive extends [q-field-group-root](./#q-field-group-root) with the following inputs:
+
+<TypeDocProps
+  name="CheckboxGroupComponent"
+  omitFrom="FieldGroupRootDirective"
+/>
+
+## Composite API
+
+### q-field-group-root
+
+<TypeDocProps name="FieldGroupRootDirective" />
+
+<TypeDocAngularAttributes name="QdsFieldGroupRootBindings" />
+
+### q-field-group-label
+
+<TypeDocProps name="FieldGroupLabelDirective" />
+
+<TypeDocAngularAttributes name="QdsFieldGroupLabelBindings" />
+
+### q-field-group-items
+
+<TypeDocProps name="FieldGroupItemsDirective" />
+
+<TypeDocAngularAttributes name="QdsFieldGroupItemsBindings" />
+
+### q-field-group-hint
+
+<TypeDocProps name="FieldGroupHintDirective" />
+
+<TypeDocAngularAttributes name="QdsFieldGroupHintBindings" />
+
+### q-field-group-error-text
+
+<TypeDocProps name="FieldGroupErrorTextComponent" />
+
+<TypeDocAngularAttributes name="QdsFieldGroupErrorTextBindings" />

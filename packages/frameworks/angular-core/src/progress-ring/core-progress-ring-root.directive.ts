@@ -37,6 +37,7 @@ export class CoreProgressRingRootDirective
       computed<Explicit<ProgressApiProps>>(() => ({
         defaultValue: this.defaultValue(),
         dir: this.dir(),
+        disabled: this.disabled(),
         ids: undefined,
         invalid: this.invalid(),
         max: this.max(),

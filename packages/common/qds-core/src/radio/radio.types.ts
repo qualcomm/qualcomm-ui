@@ -67,6 +67,7 @@ export interface QdsRadioGroupLabelBindings {
 export interface QdsRadioGroupItemsBindings {
   className: RadioClasses["items"]
   "data-indented"?: BooleanDataAttr
+  "data-size": QdsRadioSize
 }
 
 export interface QdsRadioApi {

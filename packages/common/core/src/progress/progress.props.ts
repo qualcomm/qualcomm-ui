@@ -12,6 +12,7 @@ export const progressProps: (keyof ProgressApiProps)[] =
   createProps<ProgressApiProps>()(
     "defaultValue",
     "dir",
+    "disabled",
     "ids",
     "invalid",
     "max",

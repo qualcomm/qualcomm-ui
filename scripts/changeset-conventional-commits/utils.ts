@@ -152,9 +152,13 @@ function extractConventionalCommits(commitMessage: string): string[] {
  */
 export function conventionalMessagesWithCommitsToChangesets(
   conventionalMessagesToCommits: ConventionalMessagesToCommits[],
-  options: {ignoredFiles?: (string | RegExp)[]; packages: ManyPkgPackage[]},
+  options: {
+    ignoredFiles?: (string | RegExp)[]
+    includeCommitLinks?: boolean
+    packages: ManyPkgPackage[]
+  },
 ) {
-  const {ignoredFiles = [], packages} = options
+  const {ignoredFiles = [], includeCommitLinks, packages} = options
   return conventionalMessagesToCommits
     .flatMap((entry) => {
       const filesChanged = getFilesChangedSince({
@@ -175,24 +179,34 @@ export function conventionalMessagesWithCommitsToChangesets(
       const allConventionalCommits = entry.commitHashes
         .flatMap((hash) => {
           const fullMessage = getCommitMessage(hash)
-          return extractConventionalCommits(fullMessage)
+          return extractConventionalCommits(fullMessage).map((msg) => ({
+            hash,
+            message: msg,
+          }))
         })
-        .filter((msg, index, self) => self.indexOf(msg) === index)
-      return allConventionalCommits.flatMap((conventionalCommit) => {
-        const changeType = isBreakingChange(conventionalCommit)
-          ? "major"
-          : conventionalCommit.startsWith("feat")
-            ? "minor"
-            : "patch"
-        return {
-          packagesChanged,
-          releases: packagesChanged.map((pkg) => ({
-            name: pkg.packageJson.name,
-            type: changeType,
-          })),
-          summary: conventionalCommit,
-        } as Changeset
-      })
+        .filter(
+          (item, index, self) =>
+            index === self.findIndex((other) => other.message === item.message),
+        )
+      return allConventionalCommits.flatMap(
+        ({hash, message: conventionalCommit}) => {
+          const changeType = isBreakingChange(conventionalCommit)
+            ? "major"
+            : conventionalCommit.startsWith("feat")
+              ? "minor"
+              : "patch"
+          return {
+            packagesChanged,
+            releases: packagesChanged.map((pkg) => ({
+              name: pkg.packageJson.name,
+              type: changeType,
+            })),
+            summary: includeCommitLinks
+              ? `${conventionalCommit}\n\ncommit: ${hash.slice(0, 7)}`
+              : conventionalCommit,
+          } as Changeset
+        },
+      )
     })
     .filter(Boolean)
 }

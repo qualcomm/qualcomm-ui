@@ -1,0 +1,7 @@
+export * from "./switch-group-composite-demo"
+export * from "./switch-group-error-demo"
+export * from "./switch-group-hint-demo"
+export * from "./switch-group-orientation-demo"
+export * from "./switch-group-indented-demo"
+export * from "./switch-group-simple-demo"
+export * from "./switch-group-size-demo"

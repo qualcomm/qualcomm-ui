@@ -17,6 +17,7 @@ import {
 
 import type {ScrollToIndexDetails} from "@qualcomm-ui/core/select"
 import {useComboboxContext} from "@qualcomm-ui/react-core/combobox"
+import {useNoMemo} from "@qualcomm-ui/react-core/compat"
 import {HighlightText} from "@qualcomm-ui/react-core/highlight"
 import {useMergedRef} from "@qualcomm-ui/react-core/refs"
 import type {CollectionItem} from "@qualcomm-ui/utils/collection"
@@ -102,7 +103,7 @@ export function ComboboxVirtualContent<
     qdsContext.getContentBindings(),
     {
       style: {
-        height: `${virtualizer.getTotalSize()}px`,
+        height: `${useNoMemo(() => virtualizer.getTotalSize())}px`,
       } satisfies CSSProperties,
     },
     props,
@@ -131,11 +132,13 @@ export function ComboboxVirtualContent<
     setScrollToIndexFn(handleScrollToIndexFn)
   }, [setScrollToIndexFn, virtualizer])
 
+  const virtualItems = useNoMemo(() => virtualizer.getVirtualItems())
+
   if (renderItem) {
     return (
       <ComboboxContent {...mergedProps} ref={mergedRef} data-virtual>
         {children}
-        {virtualizer.getVirtualItems().map((virtualItem) => {
+        {virtualItems.map((virtualItem) => {
           const item = collection.items.at(virtualItem.index)
           const value = collection.getItemValue(item)
 
@@ -158,7 +161,7 @@ export function ComboboxVirtualContent<
   return (
     <ComboboxContent {...mergedProps} ref={mergedRef} data-virtual>
       {children}
-      {virtualizer.getVirtualItems().map((virtualItem) => {
+      {virtualItems.map((virtualItem) => {
         const item = collection.items.at(virtualItem.index)
         const label = collection.stringifyItem(item)
         const value = collection.getItemValue(item)

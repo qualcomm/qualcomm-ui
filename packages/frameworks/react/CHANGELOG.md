@@ -1,5 +1,35 @@
 # @qualcomm-ui/react Changelog
 
+## 1.15.0 (2026/02/27)
+
+### Features
+
+- [table]: add experimental useReactTableCompilerCompat_unstable hook ([94ef329](https://github.com/qualcomm/qualcomm-ui/commit/94ef329))
+
+### Bug Fixes
+
+- [combobox]: use useNoMemo for virtualizer calls to avoid stale memoization ([e269f8f](https://github.com/qualcomm/qualcomm-ui/commit/e269f8f))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core]
+
+## 1.14.1 (2026/02/26)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.14.0 (2026/02/24)
+
+### Features
+
+- checkbox/switch group
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
 ## 1.13.0 (2026/02/13)
 
 ### Features

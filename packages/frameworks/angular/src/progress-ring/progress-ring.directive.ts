@@ -14,7 +14,11 @@ import {provideQdsProgressRingContext} from "./qds-progress-ring-context.service
   standalone: false,
   template: `
     <div q-progress-ring-circle-container>
-      <ng-content select="[q-progress-ring-value-text]" />
+      <ng-content select="[q-progress-ring-value-text]">
+        @if (valueText()) {
+          <div q-progress-ring-value-text>{{ valueText() }}</div>
+        }
+      </ng-content>
       <ng-content select="[q-progress-ring-circle]">
         <svg q-progress-ring-circle></svg>
       </ng-content>
@@ -53,4 +57,15 @@ export class ProgressRingDirective extends ProgressRingRootDirective {
    * ```
    */
   readonly label = input<string>()
+
+  /**
+   * Optional value text displayed inside the progress ring.
+   *
+   * @remarks
+   * To customize the element, provide it using the directive instead:
+   * ```angular-html
+   * <div q-progress-ring-value-text>...</div>
+   * ```
+   */
+  readonly valueText = input<string>()
 }

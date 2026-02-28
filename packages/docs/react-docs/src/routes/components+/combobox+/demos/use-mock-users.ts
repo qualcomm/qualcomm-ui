@@ -7,7 +7,7 @@ export interface User {
 export function useMockUsers(count: number) {
   return useQuery<string[]>({
     queryFn: async () => {
-      const data = await fetch("/get-mock-user-data", {
+      const data = await fetch("/get-simple-mock-user-data", {
         body: JSON.stringify({count}),
         headers: {"Content-Type": "application/json"},
         method: "POST",

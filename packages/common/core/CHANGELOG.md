@@ -1,5 +1,11 @@
 # @qualcomm-ui/core Changelog
 
+## 1.4.0 (2026/02/24)
+
+### Features
+
+- progress[-bar] disabled
+
 ## 1.3.0 (2026/01/30)
 
 ### Features

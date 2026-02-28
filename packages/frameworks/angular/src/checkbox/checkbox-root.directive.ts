@@ -3,6 +3,7 @@
 
 import {computed, Directive, inject, input} from "@angular/core"
 
+import {useQdsFieldGroupContext} from "@qualcomm-ui/angular/field-group"
 import {
   CoreCheckboxRootDirective,
   provideCheckboxContext,
@@ -41,11 +42,18 @@ export class CheckboxRootDirective
 
   readonly qdsCheckboxService = inject(QdsCheckboxContextService)
 
+  private readonly fieldGroupContext = useQdsFieldGroupContext({optional: true})
+
   override ngOnInit() {
     super.ngOnInit()
 
     this.qdsCheckboxService.init(
-      computed(() => createQdsCheckboxApi({size: this.size()}, normalizeProps)),
+      computed(() =>
+        createQdsCheckboxApi(
+          {size: this.size() ?? this.fieldGroupContext?.().size},
+          normalizeProps,
+        ),
+      ),
     )
 
     this.trackBindings.extendWith(

@@ -1,0 +1,90 @@
+name: Build and Deploy to EKS
+
+on:
+  workflow_call:
+    inputs:
+      dockerfile:
+        required: true
+        type: string
+      ecr-repository-name:
+        required: true
+        type: string
+      eks-deployment-name:
+        required: true
+        type: string
+      container-name:
+        required: true
+        type: string
+      namespace:
+        required: true
+        type: string
+      aws-region:
+        required: true
+        type: string
+    secrets:
+      AWS_ECR_ACCESS_KEY_ID:
+        required: true
+      AWS_ECR_SECRET_ACCESS_KEY:
+        required: true
+      AWS_EKS_ACCESS_KEY_ID:
+        required: true
+      AWS_EKS_SECRET_ACCESS_KEY:
+        required: true
+      ECR_REGISTRY_URL:
+        required: true
+      EKS_CLUSTER_NAME:
+        required: true
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Log in to ECR
+      run: |
+        aws ecr get-login-password --region ${{ inputs.aws-region }} | \
+          docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY_URL }}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
+
+    - name: Build and push
+      run: |
+        docker build \
+          --network=host \
+          --platform=linux/amd64 \
+          --progress=plain \
+          --no-cache \
+          -t ${{ secrets.ECR_REGISTRY_URL }}/${{ inputs.ecr-repository-name }}:${{ github.sha }} \
+          -t ${{ secrets.ECR_REGISTRY_URL }}/${{ inputs.ecr-repository-name }}:latest \
+          -f ${{ inputs.dockerfile }} .
+        docker push \
+          ${{ secrets.ECR_REGISTRY_URL }}/${{ inputs.ecr-repository-name }} \
+          --all-tags
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Update EKS deployment
+      run: |
+        aws eks update-kubeconfig \
+          --name ${{ secrets.EKS_CLUSTER_NAME }} \
+          --region ${{ inputs.aws-region }}
+        kubectl set image deployment/${{ inputs.eks-deployment-name }} \
+          -n ${{ inputs.namespace }} \
+          ${{ inputs.container-name }}=${{ secrets.ECR_REGISTRY_URL }}/${{ inputs.ecr-repository-name }}:${{ github.sha }}
+        kubectl rollout status deployment/${{ inputs.eks-deployment-name }} \
+          -n ${{ inputs.namespace }} \
+          --timeout=300s
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_EKS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_EKS_SECRET_ACCESS_KEY }}

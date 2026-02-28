@@ -11,6 +11,7 @@ import {
   createQdsCheckboxApi,
   type QdsCheckboxApiProps,
 } from "@qualcomm-ui/qds-core/checkbox"
+import {useQdsFieldGroupContext} from "@qualcomm-ui/react/field-group"
 import {
   CheckboxContextProvider,
   useCheckbox,
@@ -48,9 +49,11 @@ export function CheckboxRoot({
 }: CheckboxRootProps): ReactElement {
   const [checkboxProps, localProps] = splitCheckboxProps(props)
   const context = useCheckbox(checkboxProps)
+  const groupContext = useQdsFieldGroupContext()
+  const groupSize = size ?? groupContext?.size
   const qdsContext = useMemo(
-    () => createQdsCheckboxApi({size}, normalizeProps),
-    [size],
+    () => createQdsCheckboxApi({size: groupSize}, normalizeProps),
+    [groupSize],
   )
   const mergedProps = mergeProps(
     context.getRootBindings({id: useControlledId(id)}),

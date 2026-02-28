@@ -8,6 +8,13 @@ import {useSliderContext} from "@qualcomm-ui/angular-core/slider"
 @Component({
   selector: "q-slider-markers",
   standalone: false,
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
   template: `
     <div q-slider-marker-group>
       @for (mark of markerValues(); track mark) {

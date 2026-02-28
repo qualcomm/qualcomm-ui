@@ -1,8 +1,9 @@
 import dayjs from "dayjs"
 import {execSync} from "node:child_process"
 import {readFile, writeFile} from "node:fs/promises"
+import {fileURLToPath} from "node:url"
 
-function getChangedChangelogs(): string[] {
+export function getChangedChangelogs(): string[] {
   try {
     const output = execSync("git diff --name-only HEAD", {
       encoding: "utf-8",
@@ -16,7 +17,9 @@ function getChangedChangelogs(): string[] {
   }
 }
 
-async function consolidateChangelog(changelogPath: string): Promise<void> {
+export async function consolidateChangelog(
+  changelogPath: string,
+): Promise<void> {
   const changelog = await readFile(changelogPath, "utf-8")
   const lines = changelog.split("\n")
 
@@ -66,7 +69,7 @@ async function consolidateChangelog(changelogPath: string): Promise<void> {
     }
 
     if (currentSection && line.trim()) {
-      sections.get(currentSection).push(line.trim())
+      sections.get(currentSection)?.push(line.trim())
     }
   }
 
@@ -88,18 +91,24 @@ async function consolidateChangelog(changelogPath: string): Promise<void> {
   await writeFile(changelogPath, result)
 }
 
-const changedChangelogs = getChangedChangelogs()
+export async function consolidateChangelogs(): Promise<void> {
+  const changedChangelogs = getChangedChangelogs()
 
-if (changedChangelogs.length === 0) {
-  console.log("No changelogs changed")
-  process.exit(0)
+  if (changedChangelogs.length === 0) {
+    console.log("No changelogs changed")
+    return
+  }
+
+  console.log(`Consolidating ${changedChangelogs.length} changelog(s)...`)
+
+  for (const changelogPath of changedChangelogs) {
+    console.log(`  - ${changelogPath}`)
+    await consolidateChangelog(changelogPath)
+  }
+
+  console.log("Done")
 }
 
-console.log(`Consolidating ${changedChangelogs.length} changelog(s)...`)
-
-for (const changelogPath of changedChangelogs) {
-  console.log(`  - ${changelogPath}`)
-  await consolidateChangelog(changelogPath)
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  await consolidateChangelogs()
 }
-
-console.log("Done")

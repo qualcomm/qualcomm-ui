@@ -8,6 +8,7 @@ import {
   createQdsSwitchApi,
   type QdsSwitchApiProps,
 } from "@qualcomm-ui/qds-core/switch"
+import {useQdsFieldGroupContext} from "@qualcomm-ui/react/field-group"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {SwitchContextProvider, useSwitch} from "@qualcomm-ui/react-core/switch"
@@ -40,10 +41,12 @@ export function SwitchRoot({
 }: SwitchRootProps): ReactElement {
   const [switchProps, localProps] = splitSwitchProps(props)
   const context = useSwitch(switchProps)
+  const groupContext = useQdsFieldGroupContext()
+  const groupSize = size ?? groupContext?.size
 
   const qdsContext = useMemo(
-    () => createQdsSwitchApi({size}, normalizeProps),
-    [size],
+    () => createQdsSwitchApi({size: groupSize}, normalizeProps),
+    [groupSize],
   )
 
   const mergedProps = mergeProps(

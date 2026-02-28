@@ -107,11 +107,6 @@ const background: ColorData[] = [
   {tailwindClass: "bg-neutral-02", variable: "--color-background-neutral-02"},
   {tailwindClass: "bg-neutral-03", variable: "--color-background-neutral-03"},
   {tailwindClass: "bg-neutral-04", variable: "--color-background-neutral-04"},
-  {tailwindClass: "bg-neutral-05", variable: "--color-background-neutral-05"},
-  {tailwindClass: "bg-neutral-06", variable: "--color-background-neutral-06"},
-  {tailwindClass: "bg-neutral-07", variable: "--color-background-neutral-07"},
-  {tailwindClass: "bg-neutral-08", variable: "--color-background-neutral-08"},
-  {tailwindClass: "bg-neutral-09", variable: "--color-background-neutral-09"},
   {tailwindClass: "bg-neutral-10", variable: "--color-background-neutral-10"},
   {
     tailwindClass: "bg-support-danger-medium",
@@ -176,10 +171,10 @@ const background: ColorData[] = [
 ]
 
 const surface: ColorData[] = [
-  {tailwindClass: "bg-overlay", variable: "--color-surface-overlay"},
   {tailwindClass: "bg-primary", variable: "--color-surface-primary"},
-  {tailwindClass: "bg-raised", variable: "--color-surface-raised"},
   {tailwindClass: "bg-secondary", variable: "--color-surface-secondary"},
+  {tailwindClass: "bg-raised", variable: "--color-surface-raised"},
+  {tailwindClass: "bg-overlay", variable: "--color-surface-overlay"},
 ]
 
 const border: ColorData[] = [

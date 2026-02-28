@@ -1,5 +1,11 @@
 # @qualcomm-ui/tailwind-plugin Changelog
 
+## 1.6.0 (2026/02/26)
+
+### Features
+
+- update design tokens
+
 ## 1.5.1 (2026/01/23)
 
 ### Documentation

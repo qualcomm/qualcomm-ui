@@ -93,12 +93,15 @@ export function SpacingTable({data = []}: SpacingTableProps) {
                 <Table.Cell>{variable}</Table.Cell>
                 <Table.Cell>{getPropertyValue(variable)}</Table.Cell>
                 <Table.Cell>
-                  <div
-                    className="flex h-full"
-                    style={{gap: `var(${variable})`}}
-                  >
-                    <div className="bg-brand-primary h-full w-1.5 rounded-sm"></div>
-                    <div className="bg-brand-primary h-full w-1.5 rounded-sm"></div>
+                  <div className="flex h-full">
+                    <div className="bg-brand-primary h-full w-0.5"></div>
+                    <div
+                      className="flex h-full items-center"
+                      style={{width: `var(${variable})`}}
+                    >
+                      <div className="bg-brand-primary h-0.5 w-full"></div>
+                    </div>
+                    <div className="bg-brand-primary h-full w-0.5"></div>
                   </div>
                 </Table.Cell>
               </Table.Row>

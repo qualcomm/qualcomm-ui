@@ -1,5 +1,15 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 2.17.1 (2026/02/26)
+
+### Bug Fixes
+
+- [search-index]: remove knowledge metadata from contents
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
 ## 2.17.0 (2026/02/14)
 
 ### Features

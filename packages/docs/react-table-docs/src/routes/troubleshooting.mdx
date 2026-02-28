@@ -1,0 +1,39 @@
+---
+title: Troubleshooting
+---
+
+# {frontmatter.title}
+
+## React Compiler
+
+The standard `useReactTable` hook stores the table instance in a ref-like pattern using `useState`:
+
+```ts
+const [tableRef] = useState(() => ({
+  current: createTable<TData>(resolvedOptions),
+}))
+// ...
+return tableRef.current
+```
+
+React Compiler's automatic memoization can conflict with this manual memoization pattern, leading to stale state or rendering bugs.
+
+### Experimental Compat Hook
+
+> [!warning]
+> This hook is experimental. It has been tested but may yield unexpected results in specific use cases. Only use this hook if you have React Compiler enabled — it provides no benefit otherwise.
+
+`useReactTableCompilerCompat_unstable` is a drop-in replacement for `useReactTable` that is compatible with React Compiler. It opts out of our internal optimizations, relying instead on React Compiler's automatic memoization.
+
+The API is identical to `useReactTable`.
+
+```tsx
+import {useReactTableCompilerCompat_unstable} from "@qualcomm-ui/react/table"
+import {getCoreRowModel} from "@qualcomm-ui/core/table"
+
+const table = useReactTableCompilerCompat_unstable({
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+})
+```

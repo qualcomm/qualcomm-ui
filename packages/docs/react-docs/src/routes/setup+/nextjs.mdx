@@ -6,6 +6,9 @@ import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 # {frontmatter.title}
 
+> [!tip/Starter Template]
+> Starting fresh? An example application is available in our [template repository](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-nextjs).
+
 This library requires React 19+
 
 There are four steps to installation:
@@ -13,7 +16,7 @@ There are four steps to installation:
 1. Install the npm packages
 2. Import the CSS
 3. Configure fonts
-4. Configure theme provider
+4. Configure the theme provider
 
 This guide assumes you're using Next.js with the app router.
 
@@ -43,7 +46,7 @@ In your `app/globals.css` file, import the QUI styles.
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 
-:root {
+body {
   --type-font-family-secondary: var(--font-roboto-flex), sans-serif;
   --type-font-family-tertiary: var(--font-roboto-mono), monospace;
 }
@@ -60,7 +63,7 @@ In your `app/globals.css` file, import the QUI styles.
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
 
-:root {
+body {
   --type-font-family-secondary: var(--font-roboto-flex);
   --type-font-family-tertiary: var(--font-roboto-mono);
 }
@@ -103,6 +106,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/nhs4wvu.css" />
+      </head>
       <body className={`${sansFont.variable} ${monoFont.variable}`}>
         {children}
       </body>
@@ -113,9 +119,14 @@ export default function RootLayout({
 
 ## Configure the theme provider
 
-QUI styles support both light and dark modes. This step configures theme storage using cookies so the user's preferred theme is remembered and rendered without flash on page load.
+QUI styles support both light and dark modes. Choose the approach that matches your rendering strategy:
 
-### Create the ThemeProvider
+- [SSR](./#SSR): for server-rendered apps. Uses cookies for flash-free theme persistence.
+- [SSG](./#SSG): for static exports (`output: "export"`). Uses `localStorage` with an inline script to prevent theme flash.
+
+### SSR
+
+#### Create the Theme Provider
 
 First, create a `ThemeProvider` component at `app/components/theme-provider.tsx`:
 
@@ -130,9 +141,9 @@ import {
   useState,
 } from "react"
 
-import type {QdsTheme} from "@qualcomm-ui/qds-core/theme"
+import {QdsTheme} from "@qualcomm-ui/qds-core/theme"
 
-type ThemeContextValue = {
+interface ThemeContextValue {
   setTheme: (theme: QdsTheme) => void
   theme: QdsTheme
   toggleTheme: () => void
@@ -148,7 +159,7 @@ export function useTheme(): ThemeContextValue {
   return context
 }
 
-type ThemeProviderProps = {
+interface ThemeProviderProps {
   children: ReactNode
   defaultTheme: QdsTheme
 }
@@ -166,7 +177,7 @@ export function ThemeProvider({
   }, [])
 
   const toggleTheme = useCallback(() => {
-    setTheme(theme === "dark" ? "light" : "dark")
+    setTheme(theme === QdsTheme.DARK ? QdsTheme.LIGHT : QdsTheme.DARK)
   }, [theme, setTheme])
 
   return (
@@ -177,49 +188,9 @@ export function ThemeProvider({
 }
 ```
 
-### Update the root layout
+#### Update the root layout
 
 Update your `app/layout.tsx` to read the theme cookie server-side and pass it to the provider:
-
-```tsx
-// previous imports and setup...
-import {cookies} from "next/headers"
-import type {QdsTheme} from "@qualcomm-ui/qds-core/theme"
-import {ThemeProvider} from "./components/theme-provider"
-
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: ReactNode
-}>) {
-  const cookieStore = await cookies()
-  const themeCookie = cookieStore.get("theme")
-  const theme: QdsTheme = themeCookie?.value === "light" ? "light" : "dark"
-
-  return (
-    <html
-      lang="en"
-      data-brand="qualcomm"
-      data-theme={theme}
-      style={{colorScheme: theme}}
-    >
-      <body className={`${sansFont.variable} ${monoFont.variable}`}>
-        <ThemeProvider defaultTheme={theme}>{children}</ThemeProvider>
-      </body>
-    </html>
-  )
-}
-```
-
-::: /steps
-
-Key configuration details:
-
-- `cookies()` reads the theme preference server-side to prevent flash of wrong theme
-- `data-theme={theme}` on `<html>` ensures correct theme on first render
-- `data-brand="qualcomm"` sets the brand (change to `"snapdragon"` or `"dragonwing"` for other brands)
-
-::: spoiler Full code sample
 
 ```tsx
 import "./globals.css"
@@ -229,7 +200,7 @@ import type {Metadata} from "next"
 import {Roboto_Flex, Roboto_Mono} from "next/font/google"
 import {cookies} from "next/headers"
 
-import type {QdsTheme} from "@qualcomm-ui/qds-core/theme"
+import {QdsTheme} from "@qualcomm-ui/qds-core/theme"
 
 import {ThemeProvider} from "./components/theme-provider"
 
@@ -256,10 +227,14 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies()
   const themeCookie = cookieStore.get("app-qds-theme")
-  const theme: QdsTheme = themeCookie?.value === "light" ? "light" : "dark"
+  const theme: QdsTheme =
+    themeCookie?.value === QdsTheme.LIGHT ? QdsTheme.LIGHT : QdsTheme.DARK
 
   return (
     <html lang="en" data-brand="qualcomm" data-theme={theme}>
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/nhs4wvu.css" />
+      </head>
       <body className={`${sansFont.variable} ${monoFont.variable} antialiased`}>
         <ThemeProvider defaultTheme={theme}>{children}</ThemeProvider>
       </body>
@@ -268,9 +243,164 @@ export default async function RootLayout({
 }
 ```
 
-:::
+Key configuration details:
 
-Your application is now ready to import and use our components. An example application with this configuration is available in our [templates repository](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-nextjs).
+- `cookies()` reads the theme preference server-side to prevent flash of wrong theme
+- `data-theme={theme}` on `<html>` ensures correct theme on first render
+- `data-brand="qualcomm"` sets the brand (change to `"snapdragon"` or `"dragonwing"` for other brands)
+
+---
+
+### SSG
+
+For static exports (`output: "export"`), cookies and server-side APIs are unavailable. This approach uses `localStorage` for theme persistence and an inline script to apply the saved theme before the page paints.
+
+In your `next.config.ts`, enable static exports:
+
+```ts
+import type {NextConfig} from "next"
+
+const nextConfig: NextConfig = {
+  output: "export",
+}
+
+export default nextConfig
+```
+
+#### Create the Theme Provider
+
+Create a `ThemeProvider` component at `app/components/theme-provider.tsx`:
+
+```tsx
+"use client"
+
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from "react"
+
+import {QdsTheme} from "@qualcomm-ui/qds-core/theme"
+
+const THEME_STORAGE_KEY = "app-qds-theme"
+
+interface ThemeContextValue {
+  setTheme: (theme: QdsTheme) => void
+  theme: QdsTheme
+  toggleTheme: () => void
+}
+
+const ThemeContext = createContext<ThemeContextValue | null>(null)
+
+export function useTheme(): ThemeContextValue {
+  const context = useContext(ThemeContext)
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider")
+  }
+  return context
+}
+
+interface ThemeProviderProps {
+  children: ReactNode
+}
+
+export function ThemeProvider({children}: ThemeProviderProps): ReactNode {
+  const [theme, setThemeState] = useState<QdsTheme>(() => {
+    if (typeof window === "undefined") {
+      return QdsTheme.DARK
+    }
+    return localStorage.getItem(THEME_STORAGE_KEY) === QdsTheme.LIGHT
+      ? QdsTheme.LIGHT
+      : QdsTheme.DARK
+  })
+
+  const setTheme = useCallback((newTheme: QdsTheme) => {
+    localStorage.setItem(THEME_STORAGE_KEY, newTheme)
+    document.documentElement.setAttribute("data-theme", newTheme)
+    document.documentElement.style.colorScheme = newTheme
+    setThemeState(newTheme)
+  }, [])
+
+  const toggleTheme = useCallback(() => {
+    setTheme(theme === QdsTheme.DARK ? QdsTheme.LIGHT : QdsTheme.DARK)
+  }, [theme, setTheme])
+
+  return (
+    <ThemeContext.Provider value={{setTheme, theme, toggleTheme}}>
+      {children}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+#### Update the root layout
+
+Update your `app/layout.tsx`. An inline `<script>` in `<head>` reads `localStorage` before paint to prevent a flash of the wrong theme:
+
+```tsx
+import "./globals.css"
+import type {ReactNode} from "react"
+
+import type {Metadata} from "next"
+import {Roboto_Flex, Roboto_Mono} from "next/font/google"
+
+import {ThemeProvider} from "./components/theme-provider"
+
+const sansFont = Roboto_Flex({
+  subsets: ["latin"],
+  variable: "--font-roboto-flex",
+  weight: ["400", "500", "600"],
+})
+
+const monoFont = Roboto_Mono({
+  subsets: ["latin"],
+  variable: "--font-roboto-mono",
+})
+
+export const metadata: Metadata = {
+  description: "Your app description",
+  title: "Your App Title",
+}
+
+const themeScript = `
+(function() {
+  var theme = localStorage.getItem("app-qds-theme") || "dark";
+  document.documentElement.setAttribute("data-theme", theme);
+  document.documentElement.style.colorScheme = theme;
+})();
+`
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: ReactNode
+}>) {
+  return (
+    <html lang="en" data-brand="qualcomm" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{__html: themeScript}} />
+        <link rel="stylesheet" href="https://use.typekit.net/nhs4wvu.css" />
+      </head>
+      <body className={`${sansFont.variable} ${monoFont.variable} antialiased`}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+Key configuration details:
+
+- The inline `<script>` runs before paint, reading `localStorage` to set `data-theme` and `colorScheme`
+- `suppressHydrationWarning` on `<html>` is required because the inline script modifies attributes before React hydrates
+- `data-brand="qualcomm"` sets the brand (change to `"snapdragon"` or `"dragonwing"` for other brands)
+- The layout is a synchronous function with no `cookies()` import
+
+::: /steps
+
+Your application is now ready to import and use our components.
 
 ## Next Steps
 
@@ -293,10 +423,36 @@ function ThemeToggle() {
 
 ### Customize the default theme
 
-The default theme is `"dark"` when no cookie is set. To change this, modify the fallback in your layout:
+The default theme is `"dark"`. To change the default to `"light"`, modify the fallback depending on your approach.
+
+#### SSR
+
+update the fallback in your layout:
 
 ```tsx
 const theme: QdsTheme = themeCookie?.value === "dark" ? "dark" : "light"
+```
+
+#### SSG
+
+Update 3 places:
+
+1. The `useState` initializer in `theme-provider.tsx`:
+
+```tsx
+return localStorage.getItem(THEME_STORAGE_KEY) === "dark" ? "dark" : "light"
+```
+
+2. The server-side fallback in the same file:
+
+```tsx
+if (typeof window === "undefined") return "light"
+```
+
+3. The inline script in `layout.tsx`:
+
+```tsx
+var theme = localStorage.getItem("app-qds-theme") || "light"
 ```
 
 To set a different brand, change the `data-brand` attribute on the `<html>` element:
@@ -366,6 +522,3 @@ NextGen is independent of the legacy `@qui/react` package. Both can be installed
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 ```
-
-> [!note]
-> We're working on a codemod script to automate the migration process. Check back regularly for updates!

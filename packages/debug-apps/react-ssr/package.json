@@ -29,7 +29,7 @@
     "@qualcomm-ui/tailwind-plugin": "workspace:*",
     "@qualcomm-ui/typedoc-common": "workspace:*",
     "@qualcomm-ui/typedoc": "workspace:*",
-    "@qualcomm-ui/utils": "workspace:^*",
+    "@qualcomm-ui/utils": "workspace:*",
     "@react-router/express": "catalog:",
     "@react-router/node": "catalog:",
     "@react-router/remix-routes-option-adapter": "catalog:",
@@ -73,6 +73,7 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "autoprefixer": "^10.4.21",
+    "babel-plugin-react-compiler": "^1.0.0",
     "chalk": "^5.6.2",
     "chokidar": "^4.0.3",
     "cross-env": "^10.1.0",
@@ -92,6 +93,7 @@
     "typescript": "catalog:",
     "unified": "^11.0.5",
     "vite": "npm:rolldown-vite@7.2.10",
+    "vite-plugin-babel": "^1.5.1",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "engines": {

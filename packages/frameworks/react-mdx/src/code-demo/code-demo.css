@@ -224,16 +224,9 @@ pre.shiki.mdx {
   display: inline-flex;
 }
 
-[data-brand="qualcomm"][data-theme="dark"] {
-  .qui-demo-runner__action-bar {
-    /* in between color-background-neutral-00 and color-background-neutral-01 */
-    background: oklch(0.149 0.004 275);
-  }
-}
-
 .qui-demo-runner__action-bar {
   align-items: center;
-  background: var(--color-surface-secondary);
+  background: var(--color-background-neutral-00);
   border-bottom: solid 1px var(--color-border-neutral-01);
   display: flex;
   flex: 1;

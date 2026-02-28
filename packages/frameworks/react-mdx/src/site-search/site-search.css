@@ -9,8 +9,10 @@
 }
 
 .qui-site-search__floating-panel-mobile {
-  background: var(--color-background-neutral-03);
+  background: var(--color-background-neutral-00);
+  border: solid 1px var(--color-border-neutral-01);
   border-radius: var(--border-radius-md);
+  border-top-width: 0;
   flex-direction: column;
   max-height: 400px;
   overflow-y: auto;
@@ -49,8 +51,8 @@
 }
 
 .qui-site-search__mobile-input-wrapper {
+  box-shadow: var(--shadow-medium);
   display: flex;
-  elevation: var(--shadow-medium);
   flex-direction: column;
   margin: 0 auto;
   width: 100%;

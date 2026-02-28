@@ -26,6 +26,11 @@ export interface ProgressApiProps extends DirectionProperty {
   defaultValue?: number | undefined
 
   /**
+   * If `true`, the progress is disabled.
+   */
+  disabled?: boolean
+
+  /**
    * The element ids that are associated with the progress. These will be
    * automatically generated if omitted.
    */
@@ -97,6 +102,7 @@ export interface ProgressCommonBindings {
 }
 
 export interface ProgressRootBindings extends ProgressCommonBindings {
+  "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-max": number
   "data-part": "root"
@@ -106,6 +112,7 @@ export interface ProgressRootBindings extends ProgressCommonBindings {
 }
 
 export interface ProgressBarBindings extends ProgressCommonBindings {
+  "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-max": number
   "data-part": "bar"
@@ -125,6 +132,7 @@ export interface ProgressTrackBindings extends ProgressCommonBindings {
   "aria-valuemax": number
   "aria-valuemin": number
   "aria-valuenow": number | undefined
+  "data-disabled": BooleanDataAttr
   "data-part": "track"
   "data-state": ProgressState
   id: string
@@ -153,11 +161,13 @@ export interface ProgressHintBindings extends ProgressCommonBindings {
 export interface ProgressRingRootBindings extends ProgressRootBindings {}
 
 export interface ProgressRingTrackBindings extends ProgressCommonBindings {
+  "data-disabled": BooleanDataAttr
   "data-part": "circle-track"
   "data-state": ProgressState
 }
 
 export interface ProgressRingBarBindings extends ProgressCommonBindings {
+  "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-max": number
   "data-part": "circle-bar"

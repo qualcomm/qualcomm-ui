@@ -1,0 +1,141 @@
+---
+title: Checkbox Group
+group: Form Controls
+description: Groups related checkboxes with a shared label, hint text, and validation state.
+component: CheckboxGroup
+aliases: [checkbox group, field group]
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {CheckboxGroup} from "@qualcomm-ui/react/checkbox-group"
+```
+
+## Examples
+
+### Simple
+
+Use the simple API to create a checkbox group using minimal markup.
+
+If you omit the [label](./#label), you should provide an `aria-label` prop to keep your group accessible.
+
+<Demo
+  name="CheckboxGroupSimpleDemo"
+  component={demos.CheckboxGroupSimpleDemo}
+/>
+
+### Composite
+
+Use the composite API for granular control over the group structure.
+
+<Demo
+  name="CheckboxGroupCompositeDemo"
+  component={demos.CheckboxGroupCompositeDemo}
+/>
+
+### Size
+
+::: terms
+small
+medium
+large
+:::
+
+The [size](./#size-1) prop controls the size of child checkboxes. Available sizes are `sm`, `md` (default), and `lg`.
+
+<Demo name="CheckboxGroupSizeDemo" component={demos.CheckboxGroupSizeDemo} />
+
+### Orientation
+
+::: terms
+vertical
+horizontal
+row
+column
+:::
+
+Use the [orientation](./#orientation-1) prop to control the layout direction of the group. Options include:
+
+- `vertical`: checkboxes are laid out in a column (default).
+- `horizontal`: checkboxes are laid out in a row.
+
+<Demo
+  name="CheckboxGroupOrientationDemo"
+  component={demos.CheckboxGroupOrientationDemo}
+/>
+
+### Indented
+
+Set [indented](./#indented-1) to add padding at the start of the group.
+
+<Demo
+  name="CheckboxGroupIndentedDemo"
+  component={demos.CheckboxGroupIndentedDemo}
+/>
+
+### Hint
+
+::: terms
+helper text
+description
+:::
+
+Use [hint](./#hint-1) to add additional guidance or context to the user below the group.
+
+<Demo name="CheckboxGroupHintDemo" component={demos.CheckboxGroupHintDemo} />
+
+### Error Text
+
+::: terms
+validation
+invalid
+:::
+
+Set [invalid](./#invalid) and [errorText](./#errorText) to display validation errors. The error text replaces the hint when present.
+
+<Demo name="CheckboxGroupErrorDemo" component={demos.CheckboxGroupErrorDemo} />
+
+## API
+
+### \<CheckboxGroup\>
+
+<TypeDocProps name="CheckboxGroupProps" />
+
+## Composite API
+
+### \<CheckboxGroup.Root\>
+
+<TypeDocProps name="FieldGroupRootProps" />
+
+<TypeDocAttributes name="QdsFieldGroupRootBindings" />
+
+### \<CheckboxGroup.Label\>
+
+<TypeDocProps name="FieldGroupLabelProps" />
+
+<TypeDocAttributes name="QdsFieldGroupLabelBindings" />
+
+### \<CheckboxGroup.Items\>
+
+<TypeDocProps name="FieldGroupItemsProps" />
+
+<TypeDocAttributes name="QdsFieldGroupItemsBindings" />
+
+### \<CheckboxGroup.Hint\>
+
+<TypeDocProps name="FieldGroupHintProps" />
+
+<TypeDocAttributes name="QdsFieldGroupHintBindings" />
+
+### \<CheckboxGroup.ErrorText\>
+
+<TypeDocProps name="FieldGroupErrorTextProps" />
+
+<TypeDocAttributes name="QdsFieldGroupErrorTextBindings" />

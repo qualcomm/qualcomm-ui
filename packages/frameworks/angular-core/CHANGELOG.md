@@ -1,5 +1,15 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 1.6.0 (2026/02/24)
+
+### Features
+
+- progress[-bar] disabled
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.5.0 (2026/01/30)
 
 ### Features

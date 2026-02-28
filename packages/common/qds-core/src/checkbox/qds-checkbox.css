@@ -2,8 +2,8 @@
   align-items: center;
   -webkit-box-align: center;
   column-gap: var(--spacing-70);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto 1fr;
   justify-content: start;
   position: relative;
   row-gap: var(--spacing-50);
@@ -21,7 +21,8 @@
 
   [data-part="hint"],
   [data-part="error-text"] {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
+    width: fit-content;
   }
 }
 

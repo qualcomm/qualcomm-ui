@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.3.0 (2026/02/27)
+
+### Features
+
+- [react-core]: add useNoMemo compat utility for react compiler opt-out ([d281c23](https://github.com/qualcomm/qualcomm-ui/commit/d281c23))
+
+## 1.2.1 (2026/02/24)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.2.0 (2026/01/30)
 
 ### Features
