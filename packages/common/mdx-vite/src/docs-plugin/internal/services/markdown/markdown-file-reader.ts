@@ -5,7 +5,7 @@ import chalk from "chalk"
 import {execSync} from "node:child_process"
 import {createHash} from "node:crypto"
 import {readFileSync} from "node:fs"
-import {relative} from "node:path"
+import {resolve} from "node:path"
 import remarkFrontmatter from "remark-frontmatter"
 import remarkParse from "remark-parse"
 import remarkParseFrontmatter from "remark-parse-frontmatter"
@@ -25,50 +25,51 @@ export interface GitMetadata {
   updatedOn?: string
 }
 
-function getRepoRoot(): string {
-  return execSync("git rev-parse --show-toplevel", {
-    encoding: "utf-8",
-  }).trim()
-}
-
 /**
- * Gets the last git commit metadata for a file.
- * Returns undefined values if the file is not tracked by git or if git is
- * unavailable.
+ * Runs a single git log command to collect the last commit metadata for all
+ * MDX files under srcDir. Returns a map keyed by absolute file path.
  */
-export function getGitMetadata(
-  filePath: string,
+export function buildGitMetadataMap(
+  srcDir: string,
   mode: PageTimestampMetadataMode,
-): GitMetadata {
+): Map<string, GitMetadata> {
+  const map = new Map<string, GitMetadata>()
   if (mode === "off") {
-    return {}
+    return map
   }
 
   try {
-    const repoRoot = getRepoRoot()
-    const relativePath = relative(repoRoot, filePath)
-    const format = mode === "user-and-timestamp" ? "%cI%n%aN" : "%cI"
-    const result = execSync(
-      `git log -1 --format=${format} -- "${relativePath}"`,
-      {
-        encoding: "utf-8",
-        stdio: ["pipe", "pipe", "pipe"],
-      },
-    ).trim()
+    const repoRoot = execSync("git rev-parse --show-toplevel", {
+      encoding: "utf-8",
+    }).trim()
 
-    if (!result) {
-      return {}
+    const format = mode === "user-and-timestamp" ? "%cI%x09%aN" : "%cI"
+    const output = execSync(
+      `git log --format="COMMIT%x09${format}" --name-only -- "${srcDir}/**/*.mdx"`,
+      {encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"]},
+    )
+
+    let currentMetadata: GitMetadata = {}
+
+    for (const line of output.split("\n")) {
+      if (line.startsWith("COMMIT\t")) {
+        const parts = line.split("\t")
+        currentMetadata =
+          mode === "user-and-timestamp"
+            ? {updatedBy: parts[2], updatedOn: parts[1]}
+            : {updatedOn: parts[1]}
+      } else if (line.trim()) {
+        const absolutePath = resolve(repoRoot, line.trim())
+        if (!map.has(absolutePath)) {
+          map.set(absolutePath, currentMetadata)
+        }
+      }
     }
-
-    if (mode === "user-and-timestamp") {
-      const [updatedOn, updatedBy] = result.split("\n")
-      return {updatedBy, updatedOn}
-    }
-
-    return {updatedOn: result}
   } catch {
-    return {}
+    // git unavailable — return empty map
   }
+
+  return map
 }
 
 interface PageCache {
@@ -81,6 +82,7 @@ interface PageCache {
 
 export class MarkdownFileReader {
   cachedFileCount = 0
+  gitMetadataMap: Map<string, GitMetadata> = new Map()
   logWarnings = true
   private mdxCache: Record<string, PageCache> = {}
 
@@ -189,7 +191,7 @@ export class MarkdownFileReader {
     const shouldFetchGitMetadata = !this.enabled || !existingCache
 
     if (shouldFetchGitMetadata) {
-      const gitMetadata = getGitMetadata(filepath, this.pageTimestampMetadata)
+      const gitMetadata = this.gitMetadataMap.get(filepath) ?? {}
       if (!frontmatter.updatedOn && gitMetadata.updatedOn) {
         frontmatter.updatedOn = gitMetadata.updatedOn
       }

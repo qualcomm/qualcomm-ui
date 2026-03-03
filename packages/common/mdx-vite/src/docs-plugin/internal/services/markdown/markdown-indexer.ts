@@ -21,6 +21,7 @@ import type {
 
 import {rehypeSlug} from "../../../rehype/rehype-slug"
 import {remarkAlerts} from "../../../remark/remark-alerts"
+import {remarkExtractMeta} from "../../../remark/remark-extract-meta"
 import {remarkFrontmatterInterpolation} from "../../../remark/remark-frontmatter-interpolation"
 
 import type {IndexedPage, IndexedSection} from "./markdown.types"
@@ -138,6 +139,7 @@ export class MarkdownIndexer {
       .use(remarkGfm)
       .use(remarkAlerts)
       .use(remarkFrontmatterInterpolation, frontmatter)
+      .use(remarkExtractMeta, {})
       .use(remarkRehype)
       .use(rehypeStringify)
       .processSync(fileContents)

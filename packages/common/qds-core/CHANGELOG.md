@@ -1,5 +1,41 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.20.0 (2026/02/26)
+
+### Features
+
+- [tokens]: add persistent disabled state tokens for black/white variants
+- [tokens]: add track-default and disabled-handle/track-fill tokens
+- [tokens]: update design tokens to latest version
+
+### Styles
+
+- [tokens]: simplify neutral color scale from 10 to 5 levels
+
+### Code Refactoring
+
+- [slider]: simplify disabled state styling with new tokens
+
+### Bug Fixes
+
+- use grid layout for hint and error text column spanning
+- [switch]: use interactive icon tokens for thumb states
+
+## 1.19.0 (2026/02/24)
+
+### Features
+
+- progress[-bar] disabled
+- checkbox/switch group
+
+### Styles
+
+- slider update
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.18.0 (2026/02/13)
 
 ### Features

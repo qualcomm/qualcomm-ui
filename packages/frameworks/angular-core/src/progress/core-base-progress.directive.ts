@@ -29,6 +29,13 @@ export class CoreBaseProgressDirective
   readonly dir = input<Direction | undefined>()
 
   /**
+   * If `true`, the progress is disabled.
+   */
+  readonly disabled = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
+  /**
    * If `true`, the progress is marked as invalid.
    */
   readonly invalid = input<boolean | undefined, Booleanish>(undefined, {

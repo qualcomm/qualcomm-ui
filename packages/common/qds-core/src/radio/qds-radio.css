@@ -12,13 +12,6 @@
   color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-xs-default);
 
-  &[data-size="md"] {
-    font: var(--font-static-body-sm-default);
-  }
-  &[data-size="lg"] {
-    font: var(--font-static-body-lg-default);
-  }
-
   &[data-disabled] {
     color: var(--color-utility-disabled-text);
   }
@@ -27,11 +20,14 @@
 .qui-radio-group__items {
   display: inline-flex;
   flex-direction: column;
-  gap: var(--spacing-70);
+  gap: var(--spacing-90);
+
+  &[data-size="sm"] {
+    gap: var(--spacing-80);
+  }
 
   &[data-orientation="horizontal"] {
     flex-direction: row;
-    gap: var(--spacing-100);
   }
 
   &[data-indented] {

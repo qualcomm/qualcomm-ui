@@ -59,6 +59,7 @@ import {TableTitleBar, type TableTitleBarProps} from "./table-title-bar"
 export * from "./dynamic-render"
 export * from "./qds-table-context"
 export * from "./use-react-table"
+export * from "./use-react-table-react-compiler-compat"
 export * from "./use-table-pagination"
 
 export type {

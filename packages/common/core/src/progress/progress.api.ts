@@ -61,6 +61,7 @@ export function createProgressApi(
     const value = context.get("value")
     return normalize.element({
       ...commonBindings,
+      "data-disabled": booleanDataAttr(prop("disabled")),
       "data-invalid": booleanDataAttr(prop("invalid")),
       "data-max": max,
       "data-part": "root",
@@ -87,6 +88,7 @@ export function createProgressApi(
       "aria-valuemax": max,
       "aria-valuemin": min,
       "aria-valuenow": value ?? undefined,
+      "data-disabled": booleanDataAttr(prop("disabled")),
       "data-part": "track",
       "data-state": state,
       role: "progressbar",
@@ -106,6 +108,7 @@ export function createProgressApi(
     getBarBindings(): ProgressBarBindings {
       return normalize.element({
         ...commonBindings,
+        "data-disabled": booleanDataAttr(prop("disabled")),
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
         "data-part": "bar",
@@ -148,6 +151,7 @@ export function createProgressApi(
     getRingBarBindings(): ProgressRingBarBindings {
       return normalize.element({
         ...commonBindings,
+        "data-disabled": booleanDataAttr(prop("disabled")),
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
         "data-part": "circle-bar",
@@ -174,6 +178,7 @@ export function createProgressApi(
     getRingTrackBindings(): ProgressRingTrackBindings {
       return normalize.element({
         ...commonBindings,
+        "data-disabled": booleanDataAttr(prop("disabled")),
         "data-part": "circle-track",
         "data-state": state,
       })

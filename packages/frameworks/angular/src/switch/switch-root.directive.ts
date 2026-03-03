@@ -3,6 +3,7 @@
 
 import {computed, Directive, inject, input} from "@angular/core"
 
+import {useQdsFieldGroupContext} from "@qualcomm-ui/angular/field-group"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
@@ -38,11 +39,18 @@ export class SwitchRootDirective
 
   readonly qdsSwitchService = inject(QdsSwitchContextService)
 
+  private readonly fieldGroupContext = useQdsFieldGroupContext({optional: true})
+
   override ngOnInit() {
     super.ngOnInit()
 
     this.qdsSwitchService.init(
-      computed(() => createQdsSwitchApi({size: this.size()}, normalizeProps)),
+      computed(() =>
+        createQdsSwitchApi(
+          {size: this.size() ?? this.fieldGroupContext?.().size},
+          normalizeProps,
+        ),
+      ),
     )
 
     this.trackBindings.extendWith(

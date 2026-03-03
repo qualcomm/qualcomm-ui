@@ -1,0 +1,20 @@
+name: Deploy Angular Table Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/common/**
+      - packages/frameworks/react*/**
+      - packages/frameworks/angular*/**
+      - packages/docs/angular-table-docs/**
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/reusable-docs-deploy.yml
+    with:
+      dockerfile: dockerfiles/dockerfile-angular-table-docs
+      ecr-repository-name: angular-table-next
+    secrets: inherit

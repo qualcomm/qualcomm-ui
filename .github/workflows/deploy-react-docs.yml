@@ -2,18 +2,18 @@ name: Deploy React Docs
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/common/**
+      - packages/frameworks/react*/**
+      - packages/docs/react-docs/**
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
-
-    - name: build react docs
-      run: docker buildx build -f dockerfiles/dockerfile-react-docs .
-
-    - name: push react docs
-      run: echo NOT IMPLEMENTED
+  deploy:
+    uses: ./.github/workflows/reusable-docs-deploy.yml
+    with:
+      dockerfile: dockerfiles/dockerfile-react-docs
+      ecr-repository-name: react-next-docs
+    secrets: inherit

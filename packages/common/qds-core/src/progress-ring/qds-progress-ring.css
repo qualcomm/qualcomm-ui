@@ -55,7 +55,7 @@
     --thickness: 6px;
   }
 
-  &[data-state="indeterminate"] {
+  &[data-state="indeterminate"]:not([data-disabled]) {
     animation: qui-progress-ring__indeterminate-rotate 3s linear infinite;
     .qui-progress-ring__bar {
       animation: qui-progress-ring__indeterminate-circle 2s linear infinite;
@@ -67,6 +67,10 @@
   fill: transparent;
   stroke: var(--color-background-neutral-04);
   stroke-width: var(--stroke-width);
+
+  &[data-disabled] {
+    stroke: var(--color-utility-disabled-background);
+  }
 }
 
 .qui-progress-ring__bar {
@@ -89,8 +93,20 @@
     --progress-color: var(--color-background-support-neutral);
   }
 
+  &[data-state="complete"]:not([data-invalid]):not([data-disabled]) {
+    --progress-color: var(--color-background-support-success);
+  }
+
   &[data-invalid] {
     --progress-color: var(--color-text-support-danger);
+  }
+
+  &[data-disabled] {
+    --progress-color: var(--color-utility-disabled-border);
+  }
+
+  &[data-disabled][data-state="indeterminate"] {
+    --progress-color: var(--color-utility-disabled-background);
   }
 }
 
@@ -102,6 +118,10 @@
   line-height: normal;
   position: absolute;
   transform: translate(-50%, -50%);
+
+  .qui-progress-ring__root[data-disabled] & {
+    color: var(--color-utility-disabled-text);
+  }
 }
 
 .qui-progress-ring__label {
@@ -112,6 +132,10 @@
 
   &[data-invalid] {
     color: var(--color-text-support-danger);
+  }
+
+  .qui-progress-ring__root[data-disabled] & {
+    color: var(--color-utility-disabled-text);
   }
 }
 

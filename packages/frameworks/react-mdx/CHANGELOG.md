@@ -1,5 +1,51 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 1.13.2 (2026/03/02)
+
+### Styles
+
+- [react-mdx]: update updated-on typography to use heading font with italic ([d534f3c](https://github.com/qualcomm/qualcomm-ui/commit/d534f3c))
+
+### Code Refactoring
+
+- [react-mdx]: extract UpdatedOnDate into its own component ([7d4f5e4](https://github.com/qualcomm/qualcomm-ui/commit/7d4f5e4))
+
+## 1.13.1 (2026/02/27)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/react]
+
+## 1.13.0 (2026/02/26)
+
+### Features
+
+- [tokens]: add persistent disabled state tokens for black/white variants
+- [tokens]: add track-default and disabled-handle/track-fill tokens
+- [tokens]: update design tokens to latest version
+
+### Styles
+
+- [tokens]: simplify neutral color scale from 10 to 5 levels
+
+### Code Refactoring
+
+- [slider]: simplify disabled state styling with new tokens
+
+### Bug Fixes
+
+- [switch]: use interactive icon tokens for thumb states
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
+
+## 1.12.1 (2026/02/24)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
 ## 1.12.0 (2026/02/14)
 
 ### Features

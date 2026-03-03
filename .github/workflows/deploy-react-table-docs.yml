@@ -1,0 +1,19 @@
+name: Deploy React Table Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/common/**
+      - packages/frameworks/react*/**
+      - packages/docs/react-table-docs/**
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/reusable-docs-deploy.yml
+    with:
+      dockerfile: dockerfiles/dockerfile-react-table-docs
+      ecr-repository-name: react-table-next
+    secrets: inherit

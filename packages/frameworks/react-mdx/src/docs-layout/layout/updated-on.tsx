@@ -5,6 +5,7 @@ import type {ComponentPropsWithoutRef, ReactElement} from "react"
 
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
+import {UpdatedOnDate} from "./updated-on-date"
 import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
 
 export interface UpdatedOnProps extends ComponentPropsWithoutRef<"div"> {}
@@ -21,18 +22,7 @@ export function UpdatedOn({...props}: UpdatedOnProps): ReactElement | null {
 
   return (
     <div {...mergeProps({className: "qui-docs__updated-on-wrapper"}, props)}>
-      {updatedOn && (
-        <span>
-          Last updated on{" "}
-          <time className="qui-docs__updated-on-time">
-            {new Date(updatedOn).toLocaleDateString("en-US", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
-          </time>
-        </span>
-      )}
+      <UpdatedOnDate />
       {updatedBy && (
         <span>
           {updatedOn ? " by " : "Updated by "}

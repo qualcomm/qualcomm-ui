@@ -374,13 +374,20 @@ pre.qui-docs-code {
 .qui-docs__updated-on-wrapper {
   align-items: center;
   display: flex;
-  font: var(--font-static-body-sm-default);
+  font: var(--font-static-heading-xxs-default);
+  font-style: italic;
   gap: 4px;
   justify-content: flex-end;
   padding-top: var(--qui-mdx-margin-default);
 }
 
+.qui-docs__updated-on-date {
+  font: var(--font-static-heading-xxs-default);
+  font-style: italic;
+}
+
 .qui-docs__updated-on-time,
 .qui-docs__updated-by {
-  font: var(--font-static-body-sm-bold);
+  font: var(--font-static-heading-xxs-bold);
+  font-style: italic;
 }

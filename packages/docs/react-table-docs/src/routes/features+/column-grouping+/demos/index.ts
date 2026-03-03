@@ -1,1 +1,1 @@
-export * from "./column-groups-demo"
+export * from "./column-grouping-demo"

@@ -18,6 +18,7 @@ import type {
 } from "../types"
 
 import {
+  buildGitMetadataMap,
   type CompiledMdxFile,
   type CompiledMdxFileMetadata,
   DocPropsIndexer,
@@ -362,6 +363,10 @@ export class SearchIndexer {
     )
 
     this._mdxFileCount = mdxFileGlob.length
+    this.fileCache.gitMetadataMap = buildGitMetadataMap(
+      this.config.srcDir,
+      this.fileCache.pageTimestampMetadata,
+    )
     const compiledFiles = mdxFileGlob.map((file) => this.compileMdxFile(file))
 
     const mdxIndex = compiledFiles

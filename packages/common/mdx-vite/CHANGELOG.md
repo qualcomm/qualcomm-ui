@@ -1,5 +1,21 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 2.17.2 (2026/03/02)
+
+### Performance Improvements
+
+- [mdx-vite]: batch git metadata lookups into a single command ([dbb2b9b](https://github.com/qualcomm/qualcomm-ui/commit/dbb2b9b))
+
+## 2.17.1 (2026/02/26)
+
+### Bug Fixes
+
+- [search-index]: remove knowledge metadata from contents
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
 ## 2.17.0 (2026/02/14)
 
 ### Features

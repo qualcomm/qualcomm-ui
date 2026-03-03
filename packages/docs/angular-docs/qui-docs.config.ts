@@ -93,6 +93,16 @@ const extraFiles: KnowledgeExtraFile[] = [
     id: "component-list",
     processAsMdx: true,
   },
+  {
+    contents: readFileSync(
+      resolve(
+        __dirname,
+        "../../frameworks/react-internal/files/mcp-server-setup.md",
+      ),
+      "utf-8",
+    ),
+    id: "mcp-server-setup",
+  },
 ]
 
 export default {

@@ -2,18 +2,19 @@ name: Deploy Angular Docs
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/common/**
+      - packages/frameworks/react*/**
+      - packages/frameworks/angular*/**
+      - packages/docs/angular-docs/**
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
-
-    - name: build angular docs
-      run: docker buildx build -f dockerfiles/dockerfile-angular-docs .
-
-    - name: push angular docs
-      run: echo NOT IMPLEMENTED
+  deploy:
+    uses: ./.github/workflows/reusable-docs-deploy.yml
+    with:
+      dockerfile: dockerfiles/dockerfile-angular-docs
+      ecr-repository-name: angular-next
+    secrets: inherit

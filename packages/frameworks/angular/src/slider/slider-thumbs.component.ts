@@ -9,6 +9,13 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 @Component({
   selector: "q-slider-thumbs",
   standalone: false,
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
   template: `
     @for (idx of thumbs(); track idx) {
       <div q-slider-thumb [index]="idx">

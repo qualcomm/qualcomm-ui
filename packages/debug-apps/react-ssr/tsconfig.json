@@ -6,6 +6,8 @@
     "paths": {
       "@qualcomm-ui/react-docs/*": ["../../docs/react-docs/src/routes/*"],
       "@qualcomm-ui/react-docs-utils/*": ["../../docs/react-docs/src/utils/*"],
+      "@qualcomm-ui/react-table-docs/*": ["../../docs/react-table-docs/src/routes/*"],
+      "@qualcomm-ui/react-table-docs-utils/*": ["../../docs/react-table-docs/src/utils/*"],
       "~/*": ["./src/*"]
     }
   },

@@ -1,20 +1,27 @@
-import type {ReactNode} from "react"
+import type {ComponentPropsWithRef, ReactNode} from "react"
 
 import {Link} from "react-router"
+
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 interface Demo {
   component: () => ReactNode
   title: string
 }
 
-interface DemoPageLayoutProps {
+interface DemoPageLayoutProps extends ComponentPropsWithRef<"div"> {
   componentName: string
   demos: Demo[]
 }
 
-export function DemoPageLayout({componentName, demos}: DemoPageLayoutProps) {
+export function DemoPageLayout({
+  componentName,
+  demos,
+  ...props
+}: DemoPageLayoutProps) {
+  const mergedProps = mergeProps({className: "page"}, props)
   return (
-    <div className="page">
+    <div {...mergedProps}>
       {demos.map(({component: Demo, title}) => {
         const demoSlug = title.toLowerCase().replace(/\s+/g, "-")
         return (

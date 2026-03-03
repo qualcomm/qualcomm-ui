@@ -8,6 +8,9 @@ const navConfig: NavConfig[] = [
     id: "installation",
   },
   {
+    id: "troubleshooting",
+  },
+  {
     children: [
       {
         id: "overview",

@@ -12,6 +12,7 @@ import {getPackagesSync} from "@manypkg/get-packages"
 import {execSync} from "node:child_process"
 import {readFileSync} from "node:fs"
 import {join} from "node:path"
+import {fileURLToPath} from "node:url"
 
 import {
   conventionalMessagesWithCommitsToChangesets,
@@ -35,16 +36,13 @@ function getCommitsWithMessages(commitHashes: string[]) {
   })
 }
 
-interface CliOptions {
-  /**
-   * @default main
-   */
-  baseBranch?: string
+export interface ChangesetGenerateOptions {
   fromReleaseTags?: boolean | undefined
+  includeCommitLinks?: boolean | undefined
 }
 
-async function conventionalCommitChangeset(
-  options: CliOptions,
+export async function conventionalCommitChangeset(
+  options: ChangesetGenerateOptions,
   cwd: string = process.cwd(),
 ) {
   const changesetConfig = JSON.parse(
@@ -57,8 +55,8 @@ async function conventionalCommitChangeset(
       !ignored.includes(pkg.packageJson.name),
   )
 
-  const {baseBranch = "main"} = options ?? changesetConfig
-  const {fromReleaseTags} = options
+  const {baseBranch = "main"} = changesetConfig
+  const {fromReleaseTags, includeCommitLinks} = options
 
   let changesets
 
@@ -83,6 +81,7 @@ async function conventionalCommitChangeset(
 
       return conventionalMessagesWithCommitsToChangesets(changelogMessages, {
         ignoredFiles: ignored,
+        includeCommitLinks,
         packages: [pkg],
       })
     })
@@ -108,6 +107,7 @@ async function conventionalCommitChangeset(
       changelogMessagesWithAssociatedCommits,
       {
         ignoredFiles: ignored,
+        includeCommitLinks,
         packages,
       },
     )
@@ -120,18 +120,26 @@ async function conventionalCommitChangeset(
       ? changesets
       : difference(changesets, currentChangesets)
 
-  newChangesets.forEach((changeset) => writeChangeset(changeset, cwd))
+  await Promise.all(
+    newChangesets.map((changeset) => writeChangeset(changeset, cwd)),
+  )
 }
 
-const program = new Command()
-  .name("changeset-generate")
-  .description("Generate changesets from conventional commits")
-  .option(
-    "--from-release-tags",
-    "Diff each package from its most recent release tag instead of the base branch",
-    false,
-  )
-  .option("--base-branch <baseBranch>", "Base branch to diff against", "main")
-  .action((options) => conventionalCommitChangeset(options))
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const program = new Command()
+    .name("changeset-generate")
+    .description("Generate changesets from conventional commits")
+    .option(
+      "--from-release-tags",
+      "Diff each package from its most recent release tag instead of the base branch",
+      false,
+    )
+    .option(
+      "--include-commit-links",
+      "Embed commit hashes in changeset summaries for changelog links",
+      false,
+    )
+    .action((options) => conventionalCommitChangeset(options))
 
-program.parse()
+  program.parse()
+}

@@ -1,0 +1,138 @@
+---
+title: Switch Group
+group: Form Controls
+description: Groups related switches with a shared label, hint text, and validation state.
+component: SwitchGroup
+aliases: [switch group, toggle group, field group]
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {SwitchGroup} from "@qualcomm-ui/react/switch-group"
+```
+
+## Examples
+
+### Simple
+
+Use the simple API to create a switch group using minimal markup.
+
+If you omit the [label](./#label), you should provide an `aria-label` prop to keep your group accessible.
+
+<Demo name="SwitchGroupSimpleDemo" component={demos.SwitchGroupSimpleDemo} />
+
+### Composite
+
+Use the composite API for granular control over the group structure.
+
+<Demo
+  name="SwitchGroupCompositeDemo"
+  component={demos.SwitchGroupCompositeDemo}
+/>
+
+### Size
+
+::: terms
+small
+medium
+large
+:::
+
+The [size](./#size-1) prop controls the size of child switches. Available sizes are `sm`, `md` (default), and `lg`.
+
+<Demo name="SwitchGroupSizeDemo" component={demos.SwitchGroupSizeDemo} />
+
+### Orientation
+
+::: terms
+vertical
+horizontal
+row
+column
+:::
+
+Use the [orientation](./#orientation-1) prop to control the layout direction of the group. Options include:
+
+- `vertical`: switches are laid out in a column (default).
+- `horizontal`: switches are laid out in a row.
+
+<Demo
+  name="SwitchGroupOrientationDemo"
+  component={demos.SwitchGroupOrientationDemo}
+/>
+
+### Indented
+
+Set [indented](./#indented-1) to add padding at the start of the group.
+
+<Demo
+  name="SwitchGroupIndentedDemo"
+  component={demos.SwitchGroupIndentedDemo}
+/>
+
+### Hint
+
+::: terms
+helper text
+description
+:::
+
+Use [hint](./#hint-1) to add additional guidance or context to the user below the group.
+
+<Demo name="SwitchGroupHintDemo" component={demos.SwitchGroupHintDemo} />
+
+### Error Text
+
+::: terms
+validation
+invalid
+:::
+
+Set [invalid](./#invalid) and [errorText](./#errorText) to display validation errors. The error text replaces the hint when present.
+
+<Demo name="SwitchGroupErrorDemo" component={demos.SwitchGroupErrorDemo} />
+
+## API
+
+### \<SwitchGroup\>
+
+<TypeDocProps name="SwitchGroupProps" />
+
+## Composite API
+
+### \<SwitchGroup.Root\>
+
+<TypeDocProps name="FieldGroupRootProps" />
+
+<TypeDocAttributes name="QdsFieldGroupRootBindings" />
+
+### \<SwitchGroup.Label\>
+
+<TypeDocProps name="FieldGroupLabelProps" />
+
+<TypeDocAttributes name="QdsFieldGroupLabelBindings" />
+
+### \<SwitchGroup.Items\>
+
+<TypeDocProps name="FieldGroupItemsProps" />
+
+<TypeDocAttributes name="QdsFieldGroupItemsBindings" />
+
+### \<SwitchGroup.Hint\>
+
+<TypeDocProps name="FieldGroupHintProps" />
+
+<TypeDocAttributes name="QdsFieldGroupHintBindings" />
+
+### \<SwitchGroup.ErrorText\>
+
+<TypeDocProps name="FieldGroupErrorTextProps" />
+
+<TypeDocAttributes name="QdsFieldGroupErrorTextBindings" />

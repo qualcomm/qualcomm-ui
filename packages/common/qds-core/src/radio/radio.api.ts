@@ -48,6 +48,7 @@ export function createQdsRadioApi(
       return normalize.element({
         className: radioClasses.items,
         "data-indented": booleanDataAttr(indented),
+        "data-size": size,
       })
     },
     getGroupLabelBindings(): QdsRadioGroupLabelBindings {

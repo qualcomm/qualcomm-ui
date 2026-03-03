@@ -39,30 +39,73 @@ const components = [
   "tree",
 ]
 
+const tableFeatures = [
+  "basic",
+  "column-dnd",
+  "column-grouping",
+  "column-pinning",
+  "column-sizing",
+  "column-visibility",
+  "editable-data",
+  "filters-client-side",
+  "filters-server-side",
+  "grouping",
+  "pagination-client-side",
+  "pagination-server-side",
+  "row-dnd",
+  "row-expansion",
+  "row-expansion-customization",
+  "row-pinning",
+  "row-selection",
+  "sorting",
+  "virtualized-rows",
+]
+
+function kebabToTitle(str: string) {
+  return str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}
+
 export default function HomePage() {
   return (
     <div className="page">
-      <div className="section">
-        <h1 className="section-title">Component Demos</h1>
-        <p className="text-neutral-secondary mb-4">
-          Click any component to view all its demos. On each component page,
-          click individual demo titles to view them in isolation.
-        </p>
-        <ul className="space-y-2">
-          {components.map((component) => (
-            <li key={component}>
-              <Link
-                to={`/components/${component}`}
-                className="text-primary hover:underline"
-              >
-                {component
-                  .split("-")
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(" ")}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <p className="text-neutral-secondary mb-4">
+        Click any item to view its demos. On each page, click individual demo
+        titles to view them in isolation.
+      </p>
+      <div className="grid grid-cols-2 gap-8">
+        <div className="section">
+          <h1 className="section-title">Component Demos</h1>
+          <ul className="space-y-2">
+            {components.map((component) => (
+              <li key={component}>
+                <Link
+                  to={`/components/${component}`}
+                  className="text-primary hover:underline"
+                >
+                  {kebabToTitle(component)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="section">
+          <h1 className="section-title">Table Demos</h1>
+          <ul className="space-y-2">
+            {tableFeatures.map((feature) => (
+              <li key={feature}>
+                <Link
+                  to={`/table/features/${feature}`}
+                  className="text-primary hover:underline"
+                >
+                  {kebabToTitle(feature)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )

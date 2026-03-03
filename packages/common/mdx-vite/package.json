@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/mdx-vite",
-  "version": "2.17.0",
+  "version": "2.17.2",
   "description": "Vite documentation plugin for applications that use MDX",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -92,10 +92,10 @@
     "@types/adm-zip": "^0.5.7",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/esbuild": "catalog:",
-    "@qualcomm-ui/mdx-common": "workspace:^1.9.1",
+    "@qualcomm-ui/mdx-common": "workspace:^1.10.0",
     "@qualcomm-ui/utils": "workspace:^1.1.0",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/tailwind-plugin": "workspace:^1.5.1",
+    "@qualcomm-ui/tailwind-plugin": "workspace:^1.6.0",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "catalog:",
@@ -127,7 +127,7 @@
     "zod": "^4.1.13"
   },
   "peerDependencies": {
-    "@qualcomm-ui/mdx-common": "workspace:^1.9.1",
+    "@qualcomm-ui/mdx-common": "workspace:^1.10.0",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
     "@qualcomm-ui/utils": "workspace:^1.1.0",
     "lodash-es": ">=4.17.21 <5",
@@ -142,7 +142,7 @@
     "zod": ">=4.1.0"
   },
   "optionalDependencies": {
-    "@qualcomm-ui/tailwind-plugin": "workspace:^1.5.1",
+    "@qualcomm-ui/tailwind-plugin": "workspace:^1.6.0",
     "postcss": "^8.5.6",
     "postcss-selector-parser": "^7.1.1",
     "tailwindcss": "^4.1.17"
