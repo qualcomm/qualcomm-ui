@@ -5,6 +5,7 @@ env:
   TURBO_TEAM: "qualcomm-ui"
   TURBO_TOKEN: "turbo-cache-token"
 on:
+  
   pull_request:
     types: [ opened, synchronize ]
     branches: [ main, dev ]
