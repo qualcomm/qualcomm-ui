@@ -6,7 +6,6 @@ env:
   TURBO_TOKEN: "turbo-cache-token"
 on:
   pull_request:
-    # Run every time a PR to origin/main is created or updated
     types: [ opened, synchronize ]
     branches: [ main, dev ]
   workflow_dispatch:
