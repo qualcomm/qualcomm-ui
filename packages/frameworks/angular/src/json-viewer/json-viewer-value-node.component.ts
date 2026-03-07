@@ -3,8 +3,11 @@
 
 import {Component, computed, input} from "@angular/core"
 
-import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
+import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
+import {createQdsJsonViewerApi} from "@qualcomm-ui/qds-core/json-viewer"
 import type {JsonNodeHastElement} from "@qualcomm-ui/utils/json-tree"
+
+const qdsApi = createQdsJsonViewerApi(normalizeProps)
 
 @Component({
   selector: "q-json-viewer-value-node",
@@ -15,36 +18,21 @@ import type {JsonNodeHastElement} from "@qualcomm-ui/utils/json-tree"
     } @else {
       @switch (tagName()) {
         @case ("a") {
-          <a
-            [attr.data-kind]="kind()"
-            [attr.data-root]="isRoot() ? '' : null"
-            [attr.data-type]="nodeType()"
-            [class]="rootClass()"
-          >
+          <a [q-bind]="bindings()">
             @for (child of children(); track $index) {
               <q-json-viewer-value-node [node]="child" />
             }
           </a>
         }
         @case ("div") {
-          <div
-            [attr.data-kind]="kind()"
-            [attr.data-root]="isRoot() ? '' : null"
-            [attr.data-type]="nodeType()"
-            [class]="rootClass()"
-          >
+          <div [q-bind]="bindings()">
             @for (child of children(); track $index) {
               <q-json-viewer-value-node [node]="child" />
             }
           </div>
         }
         @default {
-          <span
-            [attr.data-kind]="kind()"
-            [attr.data-root]="isRoot() ? '' : null"
-            [attr.data-type]="nodeType()"
-            [class]="rootClass()"
-          >
+          <span [q-bind]="bindings()">
             @for (child of children(); track $index) {
               <q-json-viewer-value-node [node]="child" />
             }
@@ -69,30 +57,21 @@ export class JsonViewerValueNodeComponent {
     return node.type === "element" ? node.tagName : undefined
   })
 
-  protected readonly isRoot = computed(() => {
-    const node = this.node()
-    if (node.type !== "element") {
-      return false
-    }
-    return node.properties.root || node.properties.nodeType != null
-  })
-
-  protected readonly kind = computed(() => {
-    const node = this.node()
-    return node.type === "element" ? node.properties.kind : undefined
-  })
-
-  protected readonly nodeType = computed(() => {
-    const node = this.node()
-    return node.type === "element" ? node.properties.nodeType : undefined
-  })
-
   protected readonly children = computed(() => {
     const node = this.node()
     return node.type === "element" ? node.children : []
   })
 
-  protected readonly rootClass = computed(() =>
-    this.isRoot() ? jsonViewerClasses.value : undefined,
-  )
+  protected readonly bindings = computed(() => {
+    const node = this.node()
+    if (node.type !== "element") {
+      return qdsApi.getValueBindings({})
+    }
+    const isRoot = node.properties.root || node.properties.nodeType != null
+    return qdsApi.getValueBindings({
+      kind: node.properties.kind,
+      nodeType: node.properties.nodeType,
+      root: isRoot,
+    })
+  })
 }

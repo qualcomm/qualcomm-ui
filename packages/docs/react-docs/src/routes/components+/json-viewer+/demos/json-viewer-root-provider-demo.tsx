@@ -25,7 +25,7 @@ export function JsonViewerRootProviderDemo(): ReactElement {
   const handleCollapseAll = () => setExpanded([])
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mb-2 flex gap-2">
         <Button onClick={handleExpandAll}>Expand all</Button>
         <Button onClick={handleCollapseAll}>Collapse all</Button>

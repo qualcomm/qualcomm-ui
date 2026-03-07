@@ -20,7 +20,7 @@ const data = {
   imports: [JsonViewerModule, ButtonModule],
   selector: "json-viewer-root-provider-demo",
   template: `
-    <div>
+    <div class="w-full">
       <div class="mb-2 flex gap-2">
         <button q-button (click)="expandAll()">Expand all</button>
         <button q-button (click)="collapseAll()">Collapse all</button>

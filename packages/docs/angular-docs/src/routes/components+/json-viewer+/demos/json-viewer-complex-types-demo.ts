@@ -10,12 +10,19 @@ const users = new Map([
 
 const tags = new Set(["typescript", "angular", "design-system", "components"])
 
+// Remove stack to avoid SSR hydration mismatch
+// Server and client produce different stacks
+function createDemoError<T extends Error>(error: T): T {
+  error.stack = undefined
+  return error
+}
+
 const data = {
   binary: new ArrayBuffer(16),
   callback: function onUpdate() {},
   errors: [
-    new Error("Connection timeout"),
-    new TypeError("Expected string, received number"),
+    createDemoError(new Error("Connection timeout")),
+    createDemoError(new TypeError("Expected string, received number")),
   ],
   metadata: {
     endpoint: new URL("https://api.example.com/v1/users?active=true"),

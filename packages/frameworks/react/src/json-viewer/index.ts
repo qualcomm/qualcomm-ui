@@ -1,4 +1,4 @@
-import {JsonViewerSimple, type JsonViewerSimpleProps} from "./json-viewer"
+import {type JsonViewerProps, JsonViewerSimple} from "./json-viewer"
 import {JsonViewerRoot, type JsonViewerRootProps} from "./json-viewer-root"
 import {
   JsonViewerRootProvider,
@@ -9,7 +9,7 @@ import {JsonViewerTree, type JsonViewerTreeProps} from "./json-viewer-tree"
 export type {
   JsonViewerRootProps,
   JsonViewerRootProviderProps,
-  JsonViewerSimpleProps,
+  JsonViewerProps,
   JsonViewerTreeProps,
 }
 

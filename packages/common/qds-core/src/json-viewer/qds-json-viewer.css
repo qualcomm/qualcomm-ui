@@ -17,7 +17,7 @@
   --json-viewer-color-key: var(--color-category-purple-strong);
   --json-viewer-color-colon: var(--color-text-neutral-secondary);
 
-  font-family: var(--font-family-mono, ui-monospace, monospace);
+  font: var(--font-static-code-sm-default);
   width: 100%;
 }
 
@@ -103,7 +103,7 @@
 }
 
 .qui-json-viewer__value [data-kind="function-type"] {
-  color: var(--json-viewer-color-function);
+  color: var(--json-viewer-color-constructor);
   font-style: italic;
 }
 

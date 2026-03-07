@@ -3,8 +3,11 @@
 
 import type {ReactNode} from "react"
 
-import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
+import {createQdsJsonViewerApi} from "@qualcomm-ui/qds-core/json-viewer"
+import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {type JsonNode, keyPathToKey} from "@qualcomm-ui/utils/json-tree"
+
+const qdsApi = createQdsJsonViewerApi(normalizeProps)
 
 interface JsonViewerKeyNodeProps {
   node: JsonNode
@@ -16,16 +19,15 @@ export function JsonViewerKeyNode({
   showQuotes,
 }: JsonViewerKeyNodeProps): ReactNode {
   const key = keyPathToKey(node.keyPath)
+  const keyBindings = qdsApi.getKeyBindings({
+    isNonEnumerable: node.isNonEnumerable,
+  })
+  const colonBindings = qdsApi.getColonBindings()
 
   return (
     <>
-      <span
-        className={jsonViewerClasses.key}
-        data-non-enumerable={node.isNonEnumerable ? "" : undefined}
-      >
-        {showQuotes ? `"${key}"` : key}
-      </span>
-      <span className={jsonViewerClasses.colon}>{": "}</span>
+      <span {...keyBindings}>{showQuotes ? `"${key}"` : key}</span>
+      <span {...colonBindings}>{": "}</span>
     </>
   )
 }

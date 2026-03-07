@@ -4,6 +4,7 @@
 import {NgModule} from "@angular/core"
 
 import {TreeModule} from "@qualcomm-ui/angular/tree"
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 
 import {JsonViewerKeyNodeComponent} from "./json-viewer-key-node.component"
 import {JsonViewerNodeComponent} from "./json-viewer-node.component"
@@ -31,6 +32,6 @@ import {JsonViewerComponent} from "./json-viewer.component"
     JsonViewerRootProviderComponent,
     JsonViewerTreeComponent,
   ],
-  imports: [TreeModule],
+  imports: [QBindDirective, TreeModule],
 })
 export class JsonViewerModule {}

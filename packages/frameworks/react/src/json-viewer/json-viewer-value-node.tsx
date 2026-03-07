@@ -3,8 +3,11 @@
 
 import type {ReactNode} from "react"
 
-import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
+import {createQdsJsonViewerApi} from "@qualcomm-ui/qds-core/json-viewer"
+import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import type {JsonNodeHastElement} from "@qualcomm-ui/utils/json-tree"
+
+const qdsApi = createQdsJsonViewerApi(normalizeProps)
 
 export interface JsonViewerValueNodeProps {
   node: JsonNodeHastElement
@@ -21,14 +24,14 @@ export function JsonViewerValueNode({
 
   const Element = node.tagName
   const isRoot = node.properties.root || node.properties.nodeType != null
+  const bindings = qdsApi.getValueBindings({
+    kind: node.properties.kind,
+    nodeType: node.properties.nodeType,
+    root: isRoot,
+  })
 
   return (
-    <Element
-      className={isRoot ? jsonViewerClasses.value : undefined}
-      data-kind={node.properties.kind}
-      data-root={node.properties.root ? "" : undefined}
-      data-type={node.properties.nodeType}
-    >
+    <Element {...bindings}>
       {node.children.map((child, index) => (
         <JsonViewerValueNode
           key={index}

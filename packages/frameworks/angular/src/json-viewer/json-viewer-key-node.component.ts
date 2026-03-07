@@ -3,28 +3,31 @@
 
 import {Component, computed, input} from "@angular/core"
 
-import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
+import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
+import {createQdsJsonViewerApi} from "@qualcomm-ui/qds-core/json-viewer"
 import {type JsonNode, keyPathToKey} from "@qualcomm-ui/utils/json-tree"
+
+const qdsApi = createQdsJsonViewerApi(normalizeProps)
 
 @Component({
   selector: "q-json-viewer-key-node",
   standalone: false,
   template: `
-    <span
-      [attr.data-non-enumerable]="node().isNonEnumerable ? '' : null"
-      [class]="keyClass"
-    >
+    <span [q-bind]="keyBindings()">
       {{ displayKey() }}
     </span>
-    <span [class]="colonClass">{{ ": " }}</span>
+    <span [q-bind]="colonBindings">{{ ": " }}</span>
   `,
 })
 export class JsonViewerKeyNodeComponent {
   readonly node = input.required<JsonNode>()
   readonly showQuotes = input<boolean>()
 
-  protected readonly keyClass = jsonViewerClasses.key
-  protected readonly colonClass = jsonViewerClasses.colon
+  protected readonly colonBindings = qdsApi.getColonBindings()
+
+  protected readonly keyBindings = computed(() =>
+    qdsApi.getKeyBindings({isNonEnumerable: this.node().isNonEnumerable}),
+  )
 
   protected readonly displayKey = computed(() => {
     const key = keyPathToKey(this.node().keyPath)

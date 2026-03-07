@@ -8,7 +8,7 @@ import {ChevronRight} from "lucide-react"
 import {JsonViewerRoot, type JsonViewerRootProps} from "./json-viewer-root"
 import {JsonViewerTree, type JsonViewerTreeProps} from "./json-viewer-tree"
 
-export interface JsonViewerSimpleProps
+export interface JsonViewerProps
   extends Omit<JsonViewerRootProps, "children">,
     Omit<JsonViewerTreeProps, "renderValue"> {
   /**
@@ -24,7 +24,7 @@ export function JsonViewerSimple({
   indentGuide = true,
   treeProps,
   ...rootProps
-}: JsonViewerSimpleProps): ReactElement {
+}: JsonViewerProps): ReactElement {
   return (
     <JsonViewerRoot {...rootProps}>
       <JsonViewerTree arrow={arrow} indentGuide={indentGuide} {...treeProps} />
