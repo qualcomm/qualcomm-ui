@@ -3,8 +3,16 @@
   "compilerOptions": {
     "baseUrl": "./",
     "moduleResolution": "bundler",
+    "paths": {
+      // TODO: remove this once WebStorm fixes symlinks in WSL2
+      "@qualcomm-ui/core/*": ["../../common/core/src/*/index.ts"],
+      "@qualcomm-ui/dom/*": ["../../common/dom/src/*/index.ts"],
+      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/src/*/index.ts"],
+      "@qualcomm-ui/react/*": ["../../frameworks/react/src/*/index.ts"],
+      "@qualcomm-ui/react-core/*": ["../../frameworks/react-core/src/*/index.ts"]
+    }
   },
-  "include": ["./src/**/*.mdx"],
+  "include": ["./src"],
   "references": [
     {
       "path": "./tsconfig.lib.json"
