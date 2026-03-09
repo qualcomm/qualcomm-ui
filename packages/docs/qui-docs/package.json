@@ -18,8 +18,7 @@
     "dev:app": "react-router typegen && vite -c vite.config.ts",
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
-    "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
-    "update-lazy-demo-map": "qui-mdx-vite generate-lazy-demo-map -r src/routes -o src/components/demo/lazy-demo-loader.ts"
+    "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput"
   },
   "dependencies": {
     "@faker-js/faker": "~9.6.0",

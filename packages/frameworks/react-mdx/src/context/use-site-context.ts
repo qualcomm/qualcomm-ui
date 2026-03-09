@@ -3,16 +3,20 @@
 
 import {createContext, type Provider, useContext} from "react"
 
-import type {SiteData} from "@qualcomm-ui/mdx-common"
+import type {KnowledgePages, SiteData} from "@qualcomm-ui/mdx-common"
 
 const SiteContext = createContext<SiteData | null>(null)
 
-export const SiteContextProvider: Provider<SiteData | null> =
+export interface SiteDataContextValue extends SiteData {
+  getPages?: () => Promise<KnowledgePages | null>
+}
+
+export const SiteContextProvider: Provider<SiteDataContextValue | null> =
   SiteContext.Provider
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 
-export function useSiteContext(): SiteData {
+export function useSiteContext(): SiteDataContextValue {
   const context = useContext(SiteContext)
 
   if (!context) {

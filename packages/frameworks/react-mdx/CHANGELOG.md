@@ -1,5 +1,29 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.0.0 (2026/03/06)
+
+### BREAKING CHANGES
+
+- [react-mdx]: rework page fetcher to support new virtual module ([4d4c33d](https://github.com/qualcomm/qualcomm-ui/commit/4d4c33d))
+
+### Features
+
+- add url prop to 404 page ([d9cda5e](https://github.com/qualcomm/qualcomm-ui/commit/d9cda5e))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
+## 1.13.2 (2026/03/02)
+
+### Styles
+
+- [react-mdx]: update updated-on typography to use heading font with italic ([d534f3c](https://github.com/qualcomm/qualcomm-ui/commit/d534f3c))
+
+### Code Refactoring
+
+- [react-mdx]: extract UpdatedOnDate into its own component ([7d4f5e4](https://github.com/qualcomm/qualcomm-ui/commit/7d4f5e4))
+
 ## 1.13.1 (2026/02/27)
 
 ### Miscellaneous Chores

@@ -1,5 +1,48 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.0.0 (2026/03/06)
+
+### BREAKING CHANGES
+
+- [mdx-vite]: remove ai-knowledge generator and lazy demo map CLI ([8aae4c0](https://github.com/qualcomm/qualcomm-ui/commit/8aae4c0))
+- [docs-plugin]: refactor SearchIndexer and rename MarkdownFileReader ([18ac56f](https://github.com/qualcomm/qualcomm-ui/commit/18ac56f))
+- [open-web-ui]: relocate from ai-knowledge and simplify upload ([cef9bfb](https://github.com/qualcomm/qualcomm-ui/commit/cef9bfb))
+- [docs-plugin]: restructure modules and flatten knowledge config ([872a3d9](https://github.com/qualcomm/qualcomm-ui/commit/872a3d9))
+
+### Features
+
+- [docs-plugin]: add KnowledgeExporter and remark pipeline ([1a546a6](https://github.com/qualcomm/qualcomm-ui/commit/1a546a6))
+
+### Code Refactoring
+
+- [docs-plugin]: extract PluginState and add virtual modules ([7820f49](https://github.com/qualcomm/qualcomm-ui/commit/7820f49))
+- [docs-plugin]: fix exported types ([2a12df1](https://github.com/qualcomm/qualcomm-ui/commit/2a12df1))
+- [docs-plugin]: clean up type imports ([25e49d1](https://github.com/qualcomm/qualcomm-ui/commit/25e49d1))
+
+### Tests
+
+- [docs-plugin]: update knowledge and section tests ([a949f23](https://github.com/qualcomm/qualcomm-ui/commit/a949f23))
+- [docs-plugin]: rename remix test fixtures to react-router ([b32584f](https://github.com/qualcomm/qualcomm-ui/commit/b32584f))
+
+### Documentation
+
+- [qui-docs]: update ai-knowledge guide ([137ad67](https://github.com/qualcomm/qualcomm-ui/commit/137ad67))
+
+### Miscellaneous Chores
+
+- [mdx-vite]: update build script to watch virtual module types ([6e66362](https://github.com/qualcomm/qualcomm-ui/commit/6e66362))
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
+### Bug Fixes
+
+- forward pageIdPrefix down to knowledge consumers ([9f0b18c](https://github.com/qualcomm/qualcomm-ui/commit/9f0b18c))
+
+## 2.17.2 (2026/03/02)
+
+### Performance Improvements
+
+- [mdx-vite]: batch git metadata lookups into a single command ([dbb2b9b](https://github.com/qualcomm/qualcomm-ui/commit/dbb2b9b))
+
 ## 2.17.1 (2026/02/26)
 
 ### Bug Fixes

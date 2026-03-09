@@ -1,0 +1,19 @@
+name: Deploy QUI Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - packages/common/**
+      - packages/frameworks/react*/**
+      - packages/docs/qui-docs/**
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/reusable-docs-deploy.yml
+    with:
+      dockerfile: dockerfiles/dockerfile-qui-docs
+      ecr-repository-name: docs-next
+    secrets: inherit

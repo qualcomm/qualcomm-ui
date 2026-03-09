@@ -2,7 +2,6 @@ dist/
 build/
 .dockerignore
 node_modules
-**/.git
 **/.DS_Store
 *.md
 .gitignore

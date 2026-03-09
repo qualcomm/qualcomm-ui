@@ -3,21 +3,27 @@
 
 import type {HTMLAttributes, ReactNode} from "react"
 
-import {ChevronLeftIcon} from "lucide-react"
-
 import {Link} from "@qualcomm-ui/react/link"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface NotFoundProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {}
+  extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
+  url?: string | null
+}
 
-export function NotFound({className, ...props}: NotFoundProps): ReactNode {
+export function NotFound({url, ...props}: NotFoundProps): ReactNode {
   const {renderLink: RenderLink} = useMdxDocsContext()
+  const mergedProps = mergeProps({className: "qui-docs__not-found"}, props)
   return (
-    <div className={clsx("qui-docs__not-found", className)} {...props}>
+    <div {...mergedProps}>
       <h1 className="mdx">Not Found</h1>
-      <Link render={<RenderLink href="/" />} startIcon={ChevronLeftIcon}>
+      {url ? (
+        <p className="qui-docs__not-found-url">
+          The page at &#34;{url}&#34; does not exist.
+        </p>
+      ) : null}
+      <Link render={<RenderLink href="/" />} size="lg">
         Click here to return home
       </Link>
     </div>

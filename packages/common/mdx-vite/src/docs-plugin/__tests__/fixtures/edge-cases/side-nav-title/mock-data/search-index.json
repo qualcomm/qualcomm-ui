@@ -14,77 +14,27 @@
     "content": "Page",
     "heading": "Snapdragon Guardian APIs",
     "headingLevel": 1,
-    "href": "/snapdragon-guardian/try-it-out",
-    "richContent": [
+    "href": "/snapdragon-guardian/try-it-out"
+  },
+  {
+    "categories": [
+      "Snapdragon Guardian",
+      "Snapdragon Guardian API Guide"
+    ],
+    "id": "/routes/snapdragon-guardian+/documentation.mdx",
+    "pathname": "/snapdragon-guardian/documentation",
+    "pathSegments": [
+      "snapdragon-guardian",
+      "documentation"
+    ],
+    "title": "Snapdragon Guardian API Guide",
+    "toc": [
       {
-        "type": "element",
-        "tagName": "p",
-        "properties": {},
-        "children": [
-          {
-            "type": "text",
-            "value": "Page",
-            "position": {
-              "start": {
-                "line": 2,
-                "column": 4,
-                "offset": 37
-              },
-              "end": {
-                "line": 2,
-                "column": 8,
-                "offset": 41
-              }
-            }
-          }
-        ],
-        "position": {
-          "start": {
-            "line": 2,
-            "column": 1,
-            "offset": 34
-          },
-          "end": {
-            "line": 2,
-            "column": 12,
-            "offset": 45
-          }
-        }
+        "headingLevel": 2,
+        "id": "overview",
+        "tagName": "h2",
+        "textContent": "Overview"
       }
     ]
-  },
-  {
-    "categories": [
-      "Snapdragon Guardian",
-      "Snapdragon Guardian API Guide"
-    ],
-    "id": "/routes/snapdragon-guardian+/documentation.mdx-0",
-    "pathname": "/snapdragon-guardian/documentation",
-    "pathSegments": [
-      "snapdragon-guardian",
-      "documentation"
-    ],
-    "title": "Snapdragon Guardian API Guide",
-    "heading": "Snapdragon Guardian API Guide",
-    "headingLevel": 1,
-    "href": "/snapdragon-guardian/documentation",
-    "richContent": []
-  },
-  {
-    "categories": [
-      "Snapdragon Guardian",
-      "Snapdragon Guardian API Guide"
-    ],
-    "id": "/routes/snapdragon-guardian+/documentation.mdx-1",
-    "pathname": "/snapdragon-guardian/documentation",
-    "pathSegments": [
-      "snapdragon-guardian",
-      "documentation"
-    ],
-    "title": "Snapdragon Guardian API Guide",
-    "heading": "Overview",
-    "headingLevel": 2,
-    "href": "/snapdragon-guardian/documentation#overview",
-    "richContent": []
   }
 ]

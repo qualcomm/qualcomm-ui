@@ -7,7 +7,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "run-s build:typedoc generate-llms-txt build:site",
+    "build": "run-s build:typedoc build:site",
     "build:site": "react-router build",
     "build:typedoc": "qui-typedoc build",
     "watch:typedoc": "qui-typedoc watch",
@@ -16,10 +16,7 @@
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
-    "generate-llms-txt": "qui-mdx-vite generate-llms-txt --clean --output-mode aggregated -o public/llms-full.txt --name 'QUI React Table Documentation'",
-    "generate-knowledge": "qui-mdx-vite generate-llms-txt --clean --output-mode per-page",
-    "upload-knowledge": "qui-mdx-vite upload-knowledge",
-    "update-knowledge": "run-s generate-knowledge upload-knowledge"
+    "upload-knowledge": "qui-mdx-vite upload-knowledge"
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",

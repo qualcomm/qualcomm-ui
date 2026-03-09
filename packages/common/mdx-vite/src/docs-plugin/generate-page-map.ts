@@ -7,7 +7,9 @@ import {writeFile} from "node:fs/promises"
 import {resolve} from "node:path"
 import {cwd} from "node:process"
 
-import {ConfigLoader, fixPath, SearchIndexer} from "./internal"
+import {ConfigLoader} from "./config"
+import {fixPath} from "./path-utils"
+import {SearchIndexer} from "./search-indexer"
 
 export function addGeneratePageMapCommand() {
   program

@@ -1,5 +1,20 @@
 # @qualcomm-ui/react-router-utils Changelog
 
+## 2.0.0 (2026/03/06)
+
+### Features
+
+- add url prop to 404 page ([d9cda5e](https://github.com/qualcomm/qualcomm-ui/commit/d9cda5e))
+- [react-router-utils]: add exports loader ([c2b6d4a](https://github.com/qualcomm/qualcomm-ui/commit/c2b6d4a)) and ([ca47e95](https://github.com/qualcomm/qualcomm-ui/commit/ca47e95))
+
+### Bug Fixes
+
+- added missing license. ([fad71f5](https://github.com/qualcomm/qualcomm-ui/commit/fad71f5))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/mdx-vite]
+
 ## 1.0.8 (2026/01/23)
 
 ### Code Refactoring

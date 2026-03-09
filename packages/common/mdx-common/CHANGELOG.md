@@ -1,5 +1,15 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.0.0 (2026/03/06)
+
+### BREAKING CHANGES
+
+- [mdx-common]: restructure shared types for knowledge exports ([20bee30](https://github.com/qualcomm/qualcomm-ui/commit/20bee30))
+
+### Code Refactoring
+
+- [docs-plugin]: clean up type imports ([25e49d1](https://github.com/qualcomm/qualcomm-ui/commit/25e49d1))
+
 ## 1.10.0 (2026/02/26)
 
 ### Features

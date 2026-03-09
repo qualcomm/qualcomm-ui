@@ -7,6 +7,8 @@ import {toString} from "hast-util-to-string"
 import type {Plugin} from "unified"
 import {visit} from "unist-util-visit"
 
+import {SlugGenerator} from "../markdown/create-slug"
+
 export interface RehypeSlugOptions {
   /**
    * @default ['h2', 'h3', 'h4']
@@ -30,43 +32,17 @@ export const rehypeSlug: Plugin<[RehypeSlugOptions?], Root> = (
   const allowedHeadings = new Set<string>(
     settings.allowedHeadings || ["h2", "h3", "h4"],
   )
-  const seenIds = new Map<string, number>()
-
-  function createSlug(text: string): string {
-    const cleaned = text
-      .replace(/[<>]/g, "")
-      .replace(/[^\w\s-]/g, "")
-      .trim()
-
-    let slug: string
-    if (cleaned.includes(" ")) {
-      slug = cleaned
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/^-+|-+$/g, "")
-    } else if ((cleaned.match(/[A-Z]/g) || []).length >= 2) {
-      slug = cleaned
-        .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
-        .toLowerCase()
-    } else {
-      slug = cleaned.toLowerCase()
-    }
-
-    const count = seenIds.get(slug) || 0
-    seenIds.set(slug, count + 1)
-    return count > 0 ? `${slug}-${count}` : slug
-  }
+  const slugGenerator = new SlugGenerator()
 
   return (tree) => {
-    seenIds.clear()
+    slugGenerator.reset()
     visit(tree, "element", function (node) {
       if (
         headingRank(node) &&
         !node.properties.id &&
         allowedHeadings.has(node.tagName)
       ) {
-        node.properties.id = prefix + createSlug(toString(node))
+        node.properties.id = prefix + slugGenerator.createSlug(toString(node))
       }
     })
   }

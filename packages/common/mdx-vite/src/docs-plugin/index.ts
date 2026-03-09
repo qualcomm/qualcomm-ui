@@ -1,5 +1,6 @@
+export * from "./config"
 export * from "./docs-plugin"
+export type * from "./nav-builder"
 export * from "./mdx-plugins"
 export * from "./rehype"
 export * from "./remark"
-export type * from "./types"

@@ -131,44 +131,6 @@ export interface PageSectionContent {
   text: string[]
 }
 
-export interface ContentPosition {
-  column: number
-  line: number
-  offset: number
-}
-
-export interface RichContentTextNode {
-  position: {
-    end: ContentPosition
-    start: ContentPosition
-  }
-
-  /**
-   * Node type of HTML comments in hast.
-   */
-  type: "comment" | "text"
-
-  value: string
-}
-
-export interface RichContentMap {
-  comment: RichContentTextNode
-  element: RichContentNode
-  text: RichContentTextNode
-}
-
-export type RichContent = RichContentMap[keyof RichContentMap]
-
-export interface RichContentNode {
-  children: RichContent[]
-  position: {
-    end: ContentPosition
-    start: ContentPosition
-  }
-  tagName: string
-  type: "element"
-}
-
 /**
  * The data structure of each linkable entity in the search index.
  *
@@ -225,8 +187,6 @@ export interface PageSection extends PageFrontmatter {
    * The route path segments separated by `/`.
    */
   pathSegments: string[]
-
-  richContent?: RichContentNode[]
 
   /**
    * Page table of contents.
@@ -351,19 +311,19 @@ export interface KnowledgePageData {
 
 export interface SiteDataExports {
   /**
-   * Base URL path for exported Markdown files.
+   * Base URL path for exported knowledge files.
    */
-  basePath: string
+  dir: string
 
   /**
-   * Whether markdown exports are enabled.
+   * Whether knowledge exports are enabled.
    */
   enabled: boolean
 
   /**
-   * List of page IDs that have Markdown exports available.
+   * List of pathnames that have knowledge exports available.
    */
-  pages: KnowledgePageData[]
+  pathnames: string[]
 }
 
 export interface SiteData {
@@ -402,79 +362,162 @@ export interface SiteData {
   searchIndex: PageSection[]
 }
 
+export interface SimplifiedProp {
+  defaultValue?: string
+  description: string
+  name: string
+  propType?: "input" | "output" | undefined
+  required: boolean | undefined
+  type: string
+}
+
 /**
- * Individual file entry in the export manifest.
+ * A code example extracted from a section.
  */
-export interface ManifestEntry {
+export interface CodeExample {
   /**
-   * Unique identifier for this page.
+   * The code content.
    */
-  id: string
+  code: string
 
   /**
-   * MD5 hash of the file contents.
+   * Programming language from fence info string.
    */
-  md5: string
+  language: string
+}
+
+export interface SectionTypes {
+  /**
+   * Props extracted from the TypeDoc code block.
+   */
+  props: SimplifiedProp[]
 
   /**
-   * Relative path to the markdown file.
+   * Name of the type, interface, or class.
    */
-  path: string
+  type: string
+}
+
+/**
+ * A single section entry extracted from documentation.
+ */
+export interface SectionEntry {
+  /**
+   * Code examples extracted from this section.
+   */
+  codeExamples?: CodeExample[]
 
   /**
-   * File size in bytes.
+   * Prose content with code blocks removed. Used for formatted output.
    */
-  size: number
+  content: string
 
   /**
-   * Page title from frontmatter.
+   * Hash of this section's contents. Includes {@link codeExamples}, {@link
+   * metadata}, {@link headerPath}, and {@link rawContent}.
    */
-  title: string
+  hash: string
 
   /**
-   * Full URL to the documentation page.
+   * Breadcrumb path of headers leading to this section.
+   * @example ["Button", "Examples", "Variants"]
+   */
+  headerPath: string[]
+
+  /**
+   * Depth of this section's heading (1-6). Matches the heading that starts
+   * this section (e.g. an h2 section has headingLevel 2).
+   */
+  headingLevel: number
+
+  /**
+   * Frontmatter from the source page.
+   */
+  pageFrontmatter?: Record<string, unknown>
+
+  /**
+   * Source page identifier.
+   */
+  pageId: string
+
+  /**
+   * Raw markdown content from the AST, including code blocks.
+   */
+  rawContent: string
+
+  /**
+   * Generated section ID for anchor links.
+   * @example "button-examples-variants"
+   */
+  sectionId: string
+
+  /**
+   * Search terms extracted from ::: terms ::: blocks within this section.
+   */
+  terms?: string[]
+
+  /**
+   * Name of the types or interfaces described by typeDocProps in this section.
+   */
+  types?: SectionTypes[]
+
+  /**
+   * URL with anchor to this specific section.
    */
   url?: string
 }
 
 /**
- * Export manifest containing all exported files and metadata.
+ * Output structure for the sections.json export.
  */
-export interface ExportManifest {
-  /**
-   * Aggregate MD5 hash of all content for change detection.
-   */
-  aggregateHash: string
-
-  /**
-   * Base URL for documentation links.
-   */
-  baseUrl?: string
-
-  /**
-   * List of all exported files.
-   *
-   * @inheritDoc
-   */
-  files: ManifestEntry[]
-
-  /**
-   * ISO 8601 timestamp of when the manifest was generated.
-   */
+export interface KnowledgeSections {
   generatedAt: string
+  hash: string
+  /** @inheritDoc */
+  sections: SectionEntry[]
+  totalSections: number
+  version: 1
+}
+
+/**
+ * A single page entry containing the full raw markdown content.
+ */
+export interface PageEntry {
+  /**
+   * Full raw markdown content of the page.
+   */
+  content: string
 
   /**
-   * Total number of exported files.
+   * MD5 hash for change detection.
    */
-  totalFiles: number
+  hash: string
 
   /**
-   * Total size of all files in bytes.
+   * Source page identifier.
    */
-  totalSize: number
+  pageId: string
 
   /**
-   * Schema version for future compatibility.
+   * Route pathname.
+   * @example "/components/button"
    */
+  pathname: string
+
+  /**
+   * Page title.
+   */
+  title: string
+}
+
+/**
+ * Output structure for the pages.json export.
+ */
+export interface KnowledgePages {
+  generatedAt: string
+  hash: string
+  /** @inheritDoc */
+  pages: PageEntry[]
+  totalPages: number
   version: 1
 }

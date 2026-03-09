@@ -17,6 +17,7 @@ import {
   useRouteError,
 } from "react-router"
 
+import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
@@ -226,8 +227,15 @@ export default function AppWithProviders() {
     }
   }, [])
 
+  const siteContext = useMemo(() => {
+    return {
+      ...docsSiteData,
+      getPages,
+    }
+  }, [docsSiteData])
+
   return (
-    <SiteContextProvider value={docsSiteData}>
+    <SiteContextProvider value={siteContext}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
           <QdsThemeContextProvider value={qdsThemeContext}>

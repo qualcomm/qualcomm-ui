@@ -145,35 +145,30 @@ const extraFiles: KnowledgeExtraFile[] = [
     id: "component-list",
     processAsMdx: true,
   },
+  {
+    contents: readFileSync(
+      resolve(
+        __dirname,
+        "../../frameworks/react-internal/files/mcp-server-setup.md",
+      ),
+      "utf-8",
+    ),
+    id: "mcp-server-setup",
+  },
 ]
 
 export default {
   appDirectory: "src",
   knowledge: {
-    environments: [
-      {
-        id: "qui-ai",
-        outputPath: "./knowledge/qui-ai",
-      },
-      {
-        id: "saga-ai",
-        outputPath: "./knowledge/saga-ai",
-      },
-      {
-        id: "saga-ai-test",
-        outputPath: "./knowledge/saga-ai-test",
-      },
+    baseUrl: "https://react-next.qui.qualcomm.com",
+    exclude: [
+      "**/installation+/**",
+      "index.mdx",
+      "**/components+/overview*",
+      "**/components+/overview*",
     ],
-    global: {
-      baseUrl: "https://react-next.qui.qualcomm.com",
-      exclude: ["**/installation+/**", "index.mdx", "**/components+/overview*"],
-      exports: {
-        enabled: true,
-        exclude: ["**/components+/overview*"],
-      },
-      extraFiles,
-      frontmatter: {exclude: ["url"], include: ["*"]},
-    },
+    extraFiles,
+    frontmatter: {exclude: ["url"], include: ["*"]},
     integrations: {
       openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],
     },

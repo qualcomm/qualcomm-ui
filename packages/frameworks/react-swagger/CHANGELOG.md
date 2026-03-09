@@ -1,5 +1,11 @@
 # @qualcomm-ui/react-swagger Changelog
 
+## 1.2.9 (2026/03/06)
+
+### Miscellaneous Chores
+
+- update pnpm, react, and swagger-ui dependencies ([a3a87fe](https://github.com/qualcomm/qualcomm-ui/commit/a3a87fe))
+
 ## 1.2.8 (2026/02/27)
 
 ### Miscellaneous Chores

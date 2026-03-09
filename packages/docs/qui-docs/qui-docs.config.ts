@@ -59,30 +59,24 @@ const navConfig: NavConfig[] = [
 export default {
   appDirectory: "src",
   knowledge: {
-    global: {
-      baseUrl: "https://docs-next.qui.qualcomm.com",
-      exclude: ["**/debug+/**"],
-      exports: {
-        enabled: true,
-        exclude: ["**/debug+/**", "*guide+/swagger*"],
+    baseUrl: "https://docs-next.qui.qualcomm.com",
+    exclude: ["**/debug+/**", "*guide+/swagger*"],
+    extraFiles: [
+      {
+        contents: readFileSync(
+          resolve(__dirname, "../../frameworks/react-mdx/CHANGELOG.md"),
+          "utf-8",
+        ),
+        id: "react-mdx-changelog",
       },
-      extraFiles: [
-        {
-          contents: readFileSync(
-            resolve(__dirname, "../../frameworks/react-mdx/CHANGELOG.md"),
-            "utf-8",
-          ),
-          id: "react-mdx-changelog",
-        },
-        {
-          contents: readFileSync(
-            resolve(__dirname, "../../common/mdx-vite/CHANGELOG.md"),
-            "utf-8",
-          ),
-          id: "mdx-vite-changelog",
-        },
-      ],
-    },
+      {
+        contents: readFileSync(
+          resolve(__dirname, "../../common/mdx-vite/CHANGELOG.md"),
+          "utf-8",
+        ),
+        id: "mdx-vite-changelog",
+      },
+    ],
   },
   navConfig,
   pageDirectory: "routes",

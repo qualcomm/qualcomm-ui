@@ -22,7 +22,6 @@ export const componentList: UiComponent[] = [
       "An alert banner displays important system-wide messages or notifications.",
     fileName: "alert-banner.svg",
     name: "Alert Banner",
-    planned: true,
     url: "/components/alert-banner",
   },
   {
