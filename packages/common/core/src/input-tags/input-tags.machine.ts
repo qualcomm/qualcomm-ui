@@ -18,6 +18,15 @@ import {
 export const inputTagsMachine: MachineConfig<InputTagsSchema> =
   createMachine<InputTagsSchema>({
     actions: {
+      dismissTag({event, prop}) {
+        const eventValue =
+          event.type === "INPUT_TAG.DISMISS" ? event.value : null
+        if (!eventValue) {
+          return
+        }
+        prop("onSelectValue")(eventValue)
+      },
+
       measureIndicator({context, scope}) {
         const el = getMeasureIndicatorEl(scope)
         if (el) {
@@ -26,7 +35,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
       },
 
       measureTags({context, prop, scope}) {
-        const values = prop("parent").context.get("value") ?? []
+        const values = prop("value") ?? []
         const tagWidths: number[] = []
         for (const value of values) {
           const el = getInvisibleTagEl(scope, value)
@@ -51,28 +60,28 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
 
     computed: {
       empty: ({prop}) => {
-        const values = prop("parent").context.get("value")
+        const values = prop("value")
         return !values?.length
       },
 
       hasOverflow: ({context, prop}) => {
-        const values = prop("parent").context.get("value")
+        const values = prop("value")
         const total = values?.length ?? 0
         return total > context.get("visibleCount")
       },
 
       overflowCount: ({context, prop}) => {
-        const values = prop("parent").context.get("value")
+        const values = prop("value")
         const total = values?.length ?? 0
         return Math.max(0, total - context.get("visibleCount"))
       },
 
       values: ({prop}) => {
-        return prop("parent").context.get("value") ?? []
+        return prop("value") ?? []
       },
 
       visibleTags: ({context, prop}) => {
-        const values = prop("parent").context.get("value") ?? []
+        const values = prop("value") ?? []
         return values.slice(0, context.get("visibleCount"))
       },
     },
@@ -132,13 +141,16 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
     },
 
     on: {
+      "INPUT_TAG.DISMISS": {
+        actions: ["dismissTag"],
+      },
       REMEASURE: {
         actions: ["measureTags", "measureIndicator", "recalculate"],
       },
     },
 
     props({props}) {
-      ensureProps(props, ["parent"], "tags")
+      ensureProps(props, ["value", "onSelectValue"], "tags")
       return {
         gap: 4,
         minInputWidth: 75,
@@ -159,7 +171,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
     },
 
     watch({prop, send, track}) {
-      track([() => JSON.stringify(prop("parent").context.get("value"))], () => {
+      track([() => JSON.stringify(prop("value"))], () => {
         raf(() => {
           send({type: "REMEASURE"})
         })

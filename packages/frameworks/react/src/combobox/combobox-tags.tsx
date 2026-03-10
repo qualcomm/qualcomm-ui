@@ -8,10 +8,7 @@ import {
   inputTagsMachine,
 } from "@qualcomm-ui/core/input-tags"
 import {Tag} from "@qualcomm-ui/react/tag"
-import {
-  useComboboxContext,
-  useComboboxMachineContext,
-} from "@qualcomm-ui/react-core/combobox"
+import {useComboboxContext} from "@qualcomm-ui/react-core/combobox"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
@@ -26,11 +23,12 @@ export function ComboboxTags({
   id,
   ...props
 }: ComboboxTagsProps): ReactElement | null {
-  const {collection, selectValue, value} = useComboboxContext()
-  const comboboxMachine = useComboboxMachineContext()
+  const {collection, open, selectValue, value} = useComboboxContext()
 
   const machine = useMachine(inputTagsMachine, {
-    parent: {...comboboxMachine, selectValue},
+    onSelectValue: selectValue,
+    open,
+    value,
   })
   const tagsApi = createInputTagsApi(machine, normalizeProps)
 

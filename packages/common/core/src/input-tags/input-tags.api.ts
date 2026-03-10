@@ -29,7 +29,7 @@ export function createInputTagsApi(
   machine: Machine<InputTagsSchema>,
   normalize: PropNormalizer,
 ): InputTagsApi {
-  const {computed, prop, scope} = machine
+  const {computed, prop, scope, send} = machine
 
   return {
     get empty() {
@@ -140,9 +140,8 @@ export function createInputTagsApi(
         "data-value": value,
         hidden: !isVisible && values.includes(value),
         id: getTagId(scope, value),
-        onClick: () => {
-          const parent = prop("parent")
-          parent?.selectValue(value)
+        onDismiss: () => {
+          send({type: "INPUT_TAG.DISMISS", value})
         },
         style: {
           whiteSpace: "nowrap",

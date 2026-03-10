@@ -12,17 +12,6 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-/**
- * Minimal interface for reading parent machine state.
- * Both select and combobox machines satisfy this shape at runtime.
- */
-export interface InputTagsParentMachine {
-  context: {
-    get(key: "value"): string[]
-  }
-  selectValue: (value: string) => void
-}
-
 export interface TagsProps extends CommonProperties {
   /**
    * Gap between tags in pixels, used for overflow calculation.
@@ -44,10 +33,20 @@ export interface TagsProps extends CommonProperties {
   minInputWidth?: number
 
   /**
-   * The parent machine (select or combobox) that provides the necessary context for
-   * this machine to function.
+   * Value selection function
+   * @param value
    */
-  parent: InputTagsParentMachine
+  onSelectValue(value: string): void
+
+  /**
+   * Whether the parent component's dropdown is open.
+   */
+  open?: boolean
+
+  /**
+   * Value from the parent machine.
+   */
+  value: string[]
 }
 
 export interface InputTagsElementIds {
@@ -59,7 +58,9 @@ export interface InputTagsElementIds {
 export type InputTagsElementScope = ScopeWithIds<InputTagsSchema>
 
 export interface InputTagsSchema {
-  actions: ActionSchema<"measureIndicator" | "measureTags" | "recalculate">
+  actions: ActionSchema<
+    "measureIndicator" | "measureTags" | "recalculate" | "dismissTag"
+  >
   computed: {
     empty: boolean
     hasOverflow: boolean
@@ -74,9 +75,12 @@ export interface InputTagsSchema {
     visibleCount: number
   }
   effects: EffectSchema<"trackControlResize">
-  events: {type: "REMEASURE"}
+  events: {type: "REMEASURE"} | {type: "INPUT_TAG.DISMISS"; value: string}
   ids: InputTagsElementIds
-  props: RequiredBy<TagsProps, "gap" | "minInputWidth" | "parent">
+  props: RequiredBy<
+    TagsProps,
+    "gap" | "minInputWidth" | "onSelectValue" | "value"
+  >
   state: "idle"
 }
 
@@ -94,7 +98,7 @@ export interface InputTagsTagBindings {
   "data-value": string
   hidden: boolean
   id: string
-  onClick: JSX.MouseEventHandler
+  onDismiss: () => void
   style: JSX.CSSProperties
 }
 
