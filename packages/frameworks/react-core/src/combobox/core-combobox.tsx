@@ -41,7 +41,6 @@ import {
   ComboboxItemGroupContextProvider,
   useComboboxItemGroupContext,
 } from "./combobox-item-group-context"
-import {ComboboxMachineContextProvider} from "./combobox-machine-context"
 
 export interface CoreComboboxRootProps<T extends CollectionItem>
   extends ComboboxApiProps<T>,
@@ -70,15 +69,13 @@ export function CoreComboboxRoot<T extends CollectionItem = CollectionItem>({
   )
 
   return (
-    <ComboboxMachineContextProvider value={machine}>
-      <PresenceContextProvider value={presence}>
-        <ComboboxContextProvider value={comboboxApi}>
-          <PolymorphicElement as="div" {...mergedProps}>
-            {children}
-          </PolymorphicElement>
-        </ComboboxContextProvider>
-      </PresenceContextProvider>
-    </ComboboxMachineContextProvider>
+    <PresenceContextProvider value={presence}>
+      <ComboboxContextProvider value={comboboxApi}>
+        <PolymorphicElement as="div" {...mergedProps}>
+          {children}
+        </PolymorphicElement>
+      </ComboboxContextProvider>
+    </PresenceContextProvider>
   )
 }
 

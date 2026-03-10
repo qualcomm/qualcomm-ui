@@ -8,11 +8,15 @@ import type {
   EffectSchema,
   IdRegistrationProps,
   JSX,
-  PropNormalizer,
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-export interface TagsProps extends CommonProperties {
+export interface InputTagsApiProps extends CommonProperties {
+  /**
+   * Function used to focus the input field
+   */
+  focusInput: () => void
+
   /**
    * Gap between tags in pixels, used for overflow calculation.
    *
@@ -24,6 +28,11 @@ export interface TagsProps extends CommonProperties {
    * Override the default element IDs.
    */
   ids?: Partial<InputTagsElementIds>
+
+  /**
+   * Whether the input field is focused
+   */
+  inputFocused: boolean
 
   /**
    * Minimum width of the input element in pixels, used for tag overflow calculation.
@@ -65,7 +74,6 @@ export interface InputTagsSchema {
     empty: boolean
     hasOverflow: boolean
     overflowCount: number
-    values: string[]
     visibleTags: string[]
   }
   context: {
@@ -78,23 +86,30 @@ export interface InputTagsSchema {
   events: {type: "REMEASURE"} | {type: "INPUT_TAG.DISMISS"; value: string}
   ids: InputTagsElementIds
   props: RequiredBy<
-    TagsProps,
-    "gap" | "minInputWidth" | "onSelectValue" | "value"
+    InputTagsApiProps,
+    | "focusInput"
+    | "gap"
+    | "inputFocused"
+    | "minInputWidth"
+    | "onSelectValue"
+    | "value"
   >
   state: "idle"
 }
 
 // Binding interfaces
 
-export interface InputTagsContainerBindings {
-  "data-part": "tags-container"
+interface CommonBindings {
   "data-scope": "tags"
+}
+
+export interface InputTagsContainerBindings extends CommonBindings {
+  "data-part": "tags-container"
   style: JSX.CSSProperties
 }
 
-export interface InputTagsTagBindings {
+export interface InputTagsTagBindings extends CommonBindings {
   "data-part": "tag"
-  "data-scope": "tags"
   "data-value": string
   hidden: boolean
   id: string
@@ -102,33 +117,35 @@ export interface InputTagsTagBindings {
   style: JSX.CSSProperties
 }
 
-export interface InputTagsInvisibleTagBindings {
+export interface InputTagsInvisibleTagBindings extends CommonBindings {
   "data-part": "invisible-tag"
-  "data-scope": "tags"
   "data-value": string
   id: string
   style: JSX.CSSProperties
 }
 
-export interface InputTagsIndicatorBindings {
+export interface InputTagsIndicatorBindings extends CommonBindings {
   "data-part": "tags-indicator"
-  "data-scope": "tags"
   "data-state": "visible" | "hidden"
   hidden: boolean
   style: JSX.CSSProperties
 }
 
-export interface InputTagsMeasureIndicatorBindings {
+export interface InputTagsMeasureIndicatorBindings extends CommonBindings {
   "aria-hidden": true
   "data-part": "tags-measure-indicator"
-  "data-scope": "tags"
   style: JSX.CSSProperties
 }
 
-export interface InputTagsInvisibleTagContainerBindings {
+export interface InputTagsInvisibleTagContainerBindings extends CommonBindings {
   "data-part": "invisible-tag-container"
-  "data-scope": "tags"
   style: JSX.CSSProperties
+}
+
+export interface InputTagsSelectionTagBindings extends CommonBindings {
+  "data-part": "selection-tag"
+  hidden: boolean
+  onClick: JSX.MouseEventHandler
 }
 
 export interface InputTagsApi {
@@ -170,10 +187,7 @@ export interface InputTagsApi {
 
   getMeasureIndicatorBindings(): InputTagsMeasureIndicatorBindings
 
+  getSelectionTagBindings(): InputTagsSelectionTagBindings
+
   getTagBindings(value: string): InputTagsTagBindings
 }
-
-export type CreateTagsApi = (
-  machine: unknown,
-  normalize: PropNormalizer,
-) => InputTagsApi

@@ -5,6 +5,7 @@ import {Fragment, type ReactElement} from "react"
 
 import {
   createInputTagsApi,
+  type InputTagsApiProps,
   inputTagsMachine,
 } from "@qualcomm-ui/core/input-tags"
 import {Tag} from "@qualcomm-ui/react/tag"
@@ -23,13 +24,22 @@ export function ComboboxTags({
   id,
   ...props
 }: ComboboxTagsProps): ReactElement | null {
-  const {collection, open, selectValue, value} = useComboboxContext()
+  const {
+    collection,
+    focus: focusInput,
+    focused: inputFocused,
+    open,
+    selectValue,
+    value,
+  } = useComboboxContext()
 
   const machine = useMachine(inputTagsMachine, {
+    focusInput,
+    inputFocused,
     onSelectValue: selectValue,
     open,
     value,
-  })
+  } satisfies InputTagsApiProps)
   const tagsApi = createInputTagsApi(machine, normalizeProps)
 
   const mergedProps = mergeProps(

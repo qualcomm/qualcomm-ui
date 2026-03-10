@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {
   IdRegistrationProps,
   Machine,
@@ -15,6 +16,7 @@ import type {
   InputTagsInvisibleTagContainerBindings,
   InputTagsMeasureIndicatorBindings,
   InputTagsSchema,
+  InputTagsSelectionTagBindings,
   InputTagsTagBindings,
 } from "./input-tags.types"
 import {
@@ -45,7 +47,7 @@ export function createInputTagsApi(
     },
 
     get values() {
-      return computed("values")
+      return prop("value")
     },
 
     get visibleTags() {
@@ -120,6 +122,7 @@ export function createInputTagsApi(
     getMeasureIndicatorBindings(): InputTagsMeasureIndicatorBindings {
       return normalize.element({
         "aria-hidden": true,
+        "data-open": booleanDataAttr(prop("open")),
         "data-part": "tags-measure-indicator",
         "data-scope": "tags",
         id: getMeasureIndicatorId(scope),
@@ -130,15 +133,23 @@ export function createInputTagsApi(
         },
       })
     },
+    getSelectionTagBindings(): InputTagsSelectionTagBindings {
+      return normalize.element({
+        "data-part": "selection-tag",
+        "data-scope": "tags",
+        hidden: !prop("inputFocused"),
+        onClick: () => {},
+      })
+    },
     getTagBindings(value): InputTagsTagBindings {
-      const values = computed("values")
+      const values = prop("value")
       const visibleTags = computed("visibleTags")
       const isVisible = visibleTags.includes(value)
       return normalize.element({
         "data-part": "tag",
         "data-scope": "tags",
         "data-value": value,
-        hidden: !isVisible && values.includes(value),
+        hidden: (!isVisible && values.includes(value)) || prop("inputFocused"),
         id: getTagId(scope, value),
         onDismiss: () => {
           send({type: "INPUT_TAG.DISMISS", value})

@@ -20,22 +20,6 @@ export function createQdsTagApi(
 ): QdsTagApi {
   const size = props.size || "md"
 
-  function isInteractiveVariant(): boolean {
-    return props.variant === "link" || props.variant === "selectable"
-  }
-
-  const commonBindings = {
-    className: tagClasses.root,
-    "data-disabled": booleanDataAttr(props.disabled),
-    "data-emphasis": props.emphasis || "outline-brand",
-    "data-part": "root" as const,
-    "data-radius": props.radius || "square",
-    "data-scope": "tag" as const,
-    "data-selected": booleanDataAttr(props.selected),
-    "data-size": size,
-    "data-variant": props.variant,
-  }
-
   return {
     getDismissButtonBindings(): QdsTagDismissButtonBindings {
       return normalize.button({
@@ -58,9 +42,18 @@ export function createQdsTagApi(
       })
     },
     getRootBindings(): QdsTagRootBindings {
-      return isInteractiveVariant()
-        ? normalize.button({...commonBindings, disabled: props.disabled})
-        : normalize.element(commonBindings)
+      return normalize.button({
+        className: tagClasses.root,
+        "data-disabled": booleanDataAttr(props.disabled),
+        "data-emphasis": props.emphasis || "outline-brand",
+        "data-part": "root" as const,
+        "data-radius": props.radius || "square",
+        "data-scope": "tag" as const,
+        "data-selected": booleanDataAttr(props.selected),
+        "data-size": size,
+        "data-variant": props.variant,
+        disabled: props.disabled,
+      })
     },
     getStartIconBindings(): QdsTagStartIconBindings {
       return normalize.element({
@@ -70,6 +63,8 @@ export function createQdsTagApi(
         "data-size": size,
       })
     },
-    isInteractiveVariant,
+    isInteractiveVariant() {
+      return props.variant === "link" || props.variant === "selectable"
+    },
   }
 }

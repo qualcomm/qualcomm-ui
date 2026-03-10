@@ -60,7 +60,13 @@ export interface QdsTagApiProps {
 
 type TagClasses = typeof tagClasses
 
-export interface QdsTagSpanRootBindings {
+/** @deprecated no longer used, migrate to {@link QdsTagRootBindings} */
+export interface QdsTagSpanRootBindings extends QdsTagRootBindings {}
+
+/** @deprecated no longer used, migrate to {@link QdsTagRootBindings} */
+export interface QdsTagButtonRootBindings extends QdsTagRootBindings {}
+
+export interface QdsTagRootBindings {
   className: TagClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsTagEmphasis
@@ -68,24 +74,9 @@ export interface QdsTagSpanRootBindings {
   "data-radius": QdsTagRadius
   "data-scope": "tag"
   "data-size": QdsTagSize
-  "data-variant"?: QdsTagVariant
+  "data-variant": QdsTagVariant | undefined
+  disabled?: boolean | undefined
 }
-
-export interface QdsTagButtonRootBindings {
-  className: TagClasses["root"]
-  "data-disabled": BooleanDataAttr
-  "data-emphasis": QdsTagEmphasis
-  "data-part": "root"
-  "data-radius": QdsTagRadius
-  "data-scope": "tag"
-  "data-size": QdsTagSize
-  "data-variant"?: QdsTagVariant
-  disabled: boolean | undefined
-}
-
-export type QdsTagRootBindings =
-  | QdsTagSpanRootBindings
-  | QdsTagButtonRootBindings
 
 export interface QdsTagStartIconBindings {
   className: TagClasses["icon"]

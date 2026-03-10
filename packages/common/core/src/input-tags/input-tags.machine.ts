@@ -64,20 +64,14 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         return !values?.length
       },
 
-      hasOverflow: ({context, prop}) => {
-        const values = prop("value")
-        const total = values?.length ?? 0
-        return total > context.get("visibleCount")
+      hasOverflow: ({computed}) => {
+        return computed("overflowCount") > 0
       },
 
       overflowCount: ({context, prop}) => {
         const values = prop("value")
         const total = values?.length ?? 0
         return Math.max(0, total - context.get("visibleCount"))
-      },
-
-      values: ({prop}) => {
-        return prop("value") ?? []
       },
 
       visibleTags: ({context, prop}) => {
@@ -150,7 +144,11 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
     },
 
     props({props}) {
-      ensureProps(props, ["value", "onSelectValue"], "tags")
+      ensureProps(
+        props,
+        ["value", "onSelectValue", "inputFocused", "focusInput"],
+        "tags",
+      )
       return {
         gap: 4,
         minInputWidth: 75,
