@@ -1,6 +1,3 @@
-// Modified from https://github.com/chakra-ui/zag
-// MIT License
-// Changes from Qualcomm Technologies, Inc. are provided under the following license:
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
@@ -35,31 +32,41 @@ export const tagMachine: MachineConfig<TagSchema> = createMachine<TagSchema>({
     }
   },
 
-  initialState() {
-    return "idle"
+  guards: {
+    isDismissable: ({prop}) => prop("variant") === "dismissable",
+    isSelectable: ({prop}) => prop("variant") === "selectable",
   },
 
-  on: {
-    DISMISS: {
-      actions: ["dismiss"],
-    },
-    "SELECTED.SET": {
-      actions: ["setSelected"],
-    },
-    "SELECTED.TOGGLE": {
-      actions: ["toggleSelected"],
-    },
+  initialState() {
+    return "idle"
   },
 
   props({props}) {
     return {
       defaultSelected: false,
       dir: "ltr",
+      variant: "link",
       ...props,
     }
   },
 
   states: {
-    idle: {},
+    dismissed: {},
+    idle: {
+      on: {
+        DISMISS: {
+          actions: ["dismiss"],
+          guard: "isDismissable",
+          target: "dismissed",
+        },
+        "SELECTED.SET": {
+          actions: ["setSelected"],
+        },
+        "SELECTED.TOGGLE": {
+          actions: ["toggleSelected"],
+          guard: "isSelectable",
+        },
+      },
+    },
   },
 })

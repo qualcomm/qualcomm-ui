@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {TagVariant} from "@qualcomm-ui/core/tag"
 
 import type {tagClasses} from "./tag.classes"
 
@@ -24,15 +24,10 @@ export type QdsTagRadius = "square" | "rounded"
 
 export type QdsTagSize = "sm" | "md" | "lg"
 
-export type QdsTagVariant = "link" | "selectable" | "dismissable"
+// backwards compatibility. `TagVariant` was added in an update
+export type QdsTagVariant = TagVariant
 
 export interface QdsTagApiProps {
-  /**
-   * Controls the component's interactivity. If `true`, the component becomes
-   * unresponsive to input and is visually dimmed to indicate its disabled state.
-   */
-  disabled?: boolean
-
   /**
    * Governs the color of the tag.
    * @default 'outline-brand'
@@ -68,14 +63,9 @@ export interface QdsTagButtonRootBindings extends QdsTagRootBindings {}
 
 export interface QdsTagRootBindings {
   className: TagClasses["root"]
-  "data-disabled": BooleanDataAttr
   "data-emphasis": QdsTagEmphasis
-  "data-part": "root"
   "data-radius": QdsTagRadius
-  "data-scope": "tag"
   "data-size": QdsTagSize
-  "data-variant": QdsTagVariant | undefined
-  disabled?: boolean | undefined
 }
 
 export interface QdsTagStartIconBindings {
@@ -95,11 +85,7 @@ export interface QdsTagEndIconBindings {
 export interface QdsTagDismissButtonBindings {
   "aria-label": string
   className: TagClasses["dismissButton"]
-  "data-disabled": BooleanDataAttr
-  "data-part": "dismiss-button"
-  "data-scope": "tag"
   "data-size": QdsTagSize
-  disabled: boolean | undefined
   type: "button"
 }
 

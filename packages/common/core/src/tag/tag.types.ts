@@ -4,13 +4,19 @@
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
-import type {ActionSchema, JSX, MachineSchema} from "@qualcomm-ui/utils/machine"
+import type {
+  ActionSchema,
+  GuardSchema,
+  JSX,
+  MachineSchema,
+} from "@qualcomm-ui/utils/machine"
 
-export type TagVariant = ""
+export type TagVariant = "link" | "selectable" | "dismissable"
 
 export interface TagApiProps extends DirectionProperty {
   /**
-   * The default selected state of the tag.
+   * The default selected state of the tag. Only applicable when {@link variant} is
+   * `selectable`.
    */
   defaultSelected?: boolean | undefined
 
@@ -21,7 +27,7 @@ export interface TagApiProps extends DirectionProperty {
 
   /**
    * Callback fired when the dismiss button is clicked. Only applicable when
-   * the tag is dismissable.
+   * {@link variant} is `dismissable`.
    */
   onDismiss?: (() => void) | undefined
 
@@ -31,12 +37,15 @@ export interface TagApiProps extends DirectionProperty {
   onSelectedChange?: ((pressed: boolean) => void) | undefined
 
   /**
-   * The selected state of the tag.
+   * The selected state of the tag. Only applicable when {@link variant} is
+   * `selectable`.
    */
   selected?: boolean | undefined
 
   /**
+   * Governs the interactive features of the tag.
    *
+   * @default 'link'
    */
   variant?: TagVariant
 }
@@ -50,8 +59,9 @@ export interface TagSchema extends MachineSchema {
     | {type: "SELECTED.TOGGLE"}
     | {type: "DISMISS"}
     | {type: "SELECTED.SET"; value: boolean | undefined}
-  props: RequiredBy<TagApiProps, "dir">
-  state: "idle"
+  guards: GuardSchema<"isSelectable" | "isDismissable">
+  props: RequiredBy<TagApiProps, "dir" | "variant">
+  state: "idle" | "dismissed"
 }
 
 export interface TagCommonBindings extends Required<DirectionProperty> {
@@ -66,9 +76,11 @@ export interface TagDismissButtonBindings extends TagCommonBindings {
 
 export interface TagRootBindings extends TagCommonBindings {
   "data-disabled": BooleanDataAttr
+  "data-dismissed": BooleanDataAttr
   "data-part": "root"
   "data-selected": BooleanDataAttr
-  disabled: boolean | undefined
+  "data-variant": TagVariant
+  disabled?: boolean | undefined
   onClick: JSX.MouseEventHandler
 }
 
@@ -89,6 +101,6 @@ export interface TagApi {
   setSelected: (pressed: boolean | undefined) => void
 
   // group: bindings
-  getDismissButtonBindings: () => TagDismissButtonBindings
-  getRootBindings: () => TagRootBindings
+  getDismissButtonBindings(): TagDismissButtonBindings
+  getRootBindings(): TagRootBindings
 }

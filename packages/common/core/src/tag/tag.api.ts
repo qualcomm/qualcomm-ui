@@ -15,9 +15,10 @@ export function createTagApi(
   machine: Machine<TagSchema>,
   normalize: PropNormalizer,
 ): TagApi {
-  const {context, prop, send} = machine
+  const {context, prop, send, state} = machine
   const selected = context.get("selected")
   const dir = prop("dir")
+  const dismissed = state.matches("dismissed")
 
   return {
     disabled: !!prop("disabled"),
@@ -46,9 +47,11 @@ export function createTagApi(
     getRootBindings(): TagRootBindings {
       return normalize.element({
         "data-disabled": booleanDataAttr(prop("disabled")),
+        "data-dismissed": booleanDataAttr(dismissed),
         "data-part": "root",
         "data-scope": "tag",
         "data-selected": booleanDataAttr(selected),
+        "data-variant": prop("variant"),
         dir,
         disabled: prop("disabled"),
         onClick(event) {
