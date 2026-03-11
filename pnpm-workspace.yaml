@@ -11,24 +11,24 @@ catalog:
   '@analogjs/platform': 2.0.5
   '@analogjs/vite-plugin-angular': 2.0.5
   '@analogjs/vitest-angular': 2.0.5
-  '@angular-devkit/architect': 0.2003.10
-  '@angular-devkit/build-angular': ~20.3.18
-  '@angular-devkit/core': ~20.3.18
-  '@angular/animations': ~20.3.17
-  '@angular/build': ~20.3.18
-  '@angular/cdk': ~20.2.14
-  '@angular/cdk-experimental': ~20.2.14
-  '@angular/cli': ~20.3.18
-  '@angular/common': ~20.3.17
-  '@angular/compiler': ~20.3.17
-  '@angular/compiler-cli': ~20.3.17
-  '@angular/core': ~20.3.17
-  '@angular/forms': ~20.3.17
-  '@angular/platform-browser': ~20.3.17
-  '@angular/platform-browser-dynamic': ~20.3.17
-  '@angular/platform-server': ~20.3.17
-  '@angular/router': ~20.3.17
-  '@angular/ssr': ~20.3.18
+  '@angular-devkit/architect': 0.2102.1
+  '@angular-devkit/build-angular': ~21.2.1
+  '@angular-devkit/core': ~21.2.1
+  '@angular/animations': ~21.2.2
+  '@angular/build': ~21.2.1
+  '@angular/cdk': ~21.2.1
+  '@angular/cdk-experimental': ~21.2.1
+  '@angular/cli': ~21.2.1
+  '@angular/common': ~21.2.2
+  '@angular/compiler': ~21.2.2
+  '@angular/compiler-cli': ~21.2.2
+  '@angular/core': ~21.2.2
+  '@angular/forms': ~21.2.2
+  '@angular/platform-browser': ~21.2.2
+  '@angular/platform-browser-dynamic': ~21.2.2
+  '@angular/platform-server': ~21.2.2
+  '@angular/router': ~21.2.2
+  '@angular/ssr': ~21.2.1
   '@eslint/js': 9.39.1
   '@qualcomm-ui/cli': 1.0.6
   '@qualcomm-ui/css-utils': 1.0.5
@@ -45,15 +45,21 @@ catalog:
   '@typescript-eslint/eslint-plugin': 8.48.1
   '@typescript-eslint/parser': 8.48.1
   '@typescript-eslint/utils': 8.48.1
-  esbuild: 0.27.0
+  '@vitest/browser': 4.0.18
+  '@vitest/browser-playwright': 4.0.18
+  '@vitest/coverage-v8': 4.0.18
+  '@vitest/ui': 4.0.18
+  esbuild: 0.27.3
   eslint: 9.39.1
   glob: 13.0.3
   lodash-es: 4.17.23
+  ng-packagr: 21.2.0
   react: 19.2.4
   react-dom: 19.2.4
   react-router: 7.12.0
   tsx: 4.21.0
   typescript-eslint: 8.48.1
+  vitest: 4.0.18
 
 minimumReleaseAge: 1440
 

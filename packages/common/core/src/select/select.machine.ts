@@ -351,8 +351,11 @@ export const selectMachine: MachineConfig<SelectSchema> =
           return
         }
 
-        for (const option of selectEl.options) {
-          option.selected = context.get("value").includes(option.value)
+        for (let i = 0; i < selectEl.options.length; i++) {
+          const option = selectEl.options.item(i)
+          if (option) {
+            option.selected = context.get("value").includes(option.value)
+          }
         }
       },
 

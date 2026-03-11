@@ -42,14 +42,14 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@typescript-eslint/rule-tester": "8.48.1",
     "@typescript-eslint/utils": "catalog:",
-    "angular-eslint": "^20.6.0",
-    "esbuild": "^0.25.8",
+    "angular-eslint": "^21.3.0",
+    "esbuild": "catalog:",
     "npm-run-all2": "^8.0.4",
     "shx": "^0.4.0",
-    "tsx": "^4.20.6",
+    "tsx": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",
-    "vitest": "^4.0.8"
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "eslint": "^9.0.0"

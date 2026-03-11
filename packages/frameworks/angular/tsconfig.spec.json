@@ -9,8 +9,7 @@
     "moduleResolution": "Bundler",
     "types": [
       "vitest",
-      "@vitest/browser/matchers",
-      "@testing-library/angular"
+      "@vitest/browser/matchers"
     ],
     "target": "ES2023",
     "paths": {

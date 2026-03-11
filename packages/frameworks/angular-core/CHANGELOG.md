@@ -1,5 +1,24 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 2.0.0 (2026/03/10)
+
+### BREAKING CHANGES
+
+- [angular-core]: bump peer dependency minimums for angular to >=21.2 and update typescript/lucide ranges ([f28d14c](https://github.com/qualcomm/qualcomm-ui/commit/f28d14c))
+
+### Code Refactoring
+
+- [angular-core]: remove @testing-library/angular from tsconfig types and add test utils path ([710816d](https://github.com/qualcomm/qualcomm-ui/commit/710816d))
+
+### Miscellaneous Chores
+
+- [angular-core]: upgrade @testing-library/angular to v19 and remove unused test deps ([8e0bf63](https://github.com/qualcomm/qualcomm-ui/commit/8e0bf63))
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+### Tests
+
+- [angular-core]: add spec for accessSignal utility ([a8219c3](https://github.com/qualcomm/qualcomm-ui/commit/a8219c3))
+
 ## 1.6.0 (2026/02/24)
 
 ### Features

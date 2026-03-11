@@ -102,7 +102,7 @@
     "stylelint-prettier": "^5.0.3",
     "syncpack": "14.0.0-alpha.32",
     "tailwindcss": "^4.1.17",
-    "tsx": "^4.20.6",
+    "tsx": "catalog:",
     "turbo": "^2.7.6",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",

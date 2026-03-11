@@ -1,5 +1,24 @@
 # @qualcomm-ui/angular Changelog
 
+## 2.0.0 (2026/03/10)
+
+### BREAKING CHANGES
+
+- [angular]: bump peer dependency minimums for angular to >=21.2 and update typescript/lucide ranges ([530268d](https://github.com/qualcomm/qualcomm-ui/commit/530268d))
+
+### Bug Fixes
+
+- [angular]: update monorepo angular-core dist path pattern in tsconfig.lib.json ([52c65ad](https://github.com/qualcomm/qualcomm-ui/commit/52c65ad))
+
+### Code Refactoring
+
+- [angular]: remove @testing-library/angular from tsconfig types and add types.d.ts file reference ([5d730e8](https://github.com/qualcomm/qualcomm-ui/commit/5d730e8))
+
+### Miscellaneous Chores
+
+- [angular]: upgrade @testing-library/angular to v19 and remove unused test deps ([c6015fc](https://github.com/qualcomm/qualcomm-ui/commit/c6015fc))
+- **deps:** update dependencies [@qualcomm-ui/angular-core, @qualcomm-ui/core, @qualcomm-ui/qds-core]
+
 ## 1.20.0 (2026/02/26)
 
 ### Features

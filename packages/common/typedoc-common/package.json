@@ -37,9 +37,9 @@
     "@qualcomm-ui/esbuild": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
     "chalk": "^5.6.2",
-    "chokidar": "^4.0.3",
-    "esbuild": "^0.25.8",
+    "chokidar": "^5.0.0",
+    "esbuild": "catalog:",
     "shx": "^0.4.0",
-    "tsx": "^4.20.6"
+    "tsx": "catalog:"
   }
 }

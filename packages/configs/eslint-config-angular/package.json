@@ -33,7 +33,7 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
-    "angular-eslint": "^20.6.0",
+    "angular-eslint": "^21.3.0",
     "eslint": "catalog:",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.4.0",

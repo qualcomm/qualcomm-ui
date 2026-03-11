@@ -47,13 +47,13 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "esbuild": "^0.25.8",
+    "esbuild": "catalog:",
     "minimatch": "^10.2.4",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-router": "catalog:",
     "shx": "^0.4.0",
-    "tsx": "^4.20.6",
+    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {

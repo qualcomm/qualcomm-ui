@@ -1,5 +1,11 @@
 # @qualcomm-ui/core Changelog
 
+## 1.4.1 (2026/03/10)
+
+### Bug Fixes
+
+- [select]: use indexed loop with null check for select options iteration ([6ed1c90](https://github.com/qualcomm/qualcomm-ui/commit/6ed1c90))
+
 ## 1.4.0 (2026/02/24)
 
 ### Features

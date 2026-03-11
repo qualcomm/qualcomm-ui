@@ -1,5 +1,11 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.0.1 (2026/03/10)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
 ## 2.0.0 (2026/03/06)
 
 ### BREAKING CHANGES

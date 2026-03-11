@@ -2,6 +2,7 @@
 // we provide this file as an alternative for its loader.
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "files": ["./test/types.d.ts"],
   "compilerOptions": {
     "baseUrl": "./",
     "emitDeclarationOnly": false,
@@ -9,8 +10,7 @@
     "moduleResolution": "Bundler",
     "types": [
       "vitest",
-      "@vitest/browser/matchers",
-      "@testing-library/angular"
+      "@vitest/browser/matchers"
     ],
     "target": "ES2023",
     "paths": {

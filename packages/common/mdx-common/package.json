@@ -39,11 +39,11 @@
     "@qualcomm-ui/esbuild": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
-    "esbuild": "^0.25.8",
+    "esbuild": "catalog:",
     "fuzzysort": "^3.0.1",
     "shx": "^0.4.0",
-    "tsx": "^4.20.6",
-    "vite": "npm:rolldown-vite@7.2.10"
+    "tsx": "catalog:",
+    "vite": "npm:rolldown-vite@7.3.1"
   },
   "peerDependencies": {
     "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",

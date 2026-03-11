@@ -79,8 +79,8 @@
     "isbot": "^4.1.0",
     "jotai": "^2.7.1",
     "lodash-es": "catalog:",
-    "lucide-angular": "0.525.0",
-    "lucide-react": "0.525.0",
+    "lucide-angular": "0.569.0",
+    "lucide-react": "0.569.0",
     "morgan": "^1.10.0",
     "playwright": "1.56.1",
     "react": "catalog:",
@@ -100,7 +100,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "catalog:",
     "@angular/cli": "catalog:",
     "@angular/compiler-cli": "catalog:",
     "@commander-js/extra-typings": "^14.0.0",
@@ -116,8 +115,8 @@
     "@types/react-dom": "catalog:",
     "autoprefixer": "^10.4.21",
     "chalk": "^5.6.2",
-    "chokidar": "^4.0.3",
-    "esbuild": "^0.25.8",
+    "chokidar": "^5.0.0",
+    "esbuild": "catalog:",
     "execa": "^9.6.0",
     "glob": "catalog:",
     "hast-util-to-text": "^4.0.2",
@@ -136,10 +135,10 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",
-    "tsx": "^4.20.6",
+    "tsx": "catalog:",
     "typescript": "catalog:",
     "unified": "^11.0.5",
-    "vite": "npm:rolldown-vite@7.2.10",
+    "vite": "npm:rolldown-vite@7.3.1",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "engines": {

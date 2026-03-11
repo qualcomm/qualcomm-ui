@@ -9,17 +9,18 @@
     "types": [
       "vitest/globals",
       "node",
-      "@vitest/browser/matchers",
-      "@testing-library/angular"
+      "@vitest/browser/matchers"
     ],
     "target": "es2020",
     "paths": {
+      "~test-utils": ["./test/index.ts"],
       "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"]
     }
   },
   "files": ["./test/test-setup.ts"],
   "include": [
-    "src/**/*.spec.ts"
+    "src/**/*.spec.ts",
+    "./test"
   ],
   "references": [
     {

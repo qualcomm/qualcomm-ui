@@ -1,5 +1,11 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.20.1 (2026/03/10)
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.20.0 (2026/02/26)
 
 ### Features
