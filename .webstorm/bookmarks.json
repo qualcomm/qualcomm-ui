@@ -1682,6 +1682,11 @@
         "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/tag"
       },
       {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/tag"
+      },
+      {
         "description": "qds-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
         "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/tag"
