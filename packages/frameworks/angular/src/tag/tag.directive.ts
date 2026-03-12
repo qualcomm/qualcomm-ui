@@ -94,24 +94,24 @@ import {provideTagContext, TagContextService} from "./tag-context.service"
   template: `
     <ng-content select="[q-start-icon]">
       @if (startIcon()) {
-        <svg q-start-icon [icon]="startIcon()!"></svg>
+        <svg data-test-id="qui-icon" q-start-icon [icon]="startIcon()!"></svg>
       }
     </ng-content>
 
     <ng-content />
 
     @if (variant() === "dismissable") {
-      <button
-        type="button"
-        [q-bind]="qdsTagApi.context().getDismissButtonBindings()"
-        (click)="dismiss.emit()"
-      >
-        <svg qIcon="X" [q-bind]="qdsTagApi.context().getEndIconBindings()" />
+      <button type="button" [q-bind]="dismissButtonBindings()">
+        <svg
+          data-test-id="qui-icon"
+          qIcon="X"
+          [q-bind]="qdsTagApi.context().getEndIconBindings()"
+        />
       </button>
     } @else {
       <ng-content select="[q-end-icon]">
         @if (endIcon()) {
-          <svg q-end-icon [icon]="endIcon()!"></svg>
+          <svg data-test-id="qui-icon" q-end-icon [icon]="endIcon()!"></svg>
         }
       </ng-content>
     }
