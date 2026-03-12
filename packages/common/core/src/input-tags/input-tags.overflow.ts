@@ -12,15 +12,17 @@ export interface CalculateVisibleTagsInput {
 export interface CalculateVisibleTagsResult {
   overflowCount: number
   visibleCount: number
+  visibleIndices: number[]
 }
 
 /**
- * Determines how many tags fit in the container, reserving space for the
- * "+N" indicator when overflow occurs.
+ * Determines which tags fit in the container by iterating in order
+ * and skipping any tag that doesn't fit, so smaller tags after an
+ * oversized one are still shown.
  *
- * When tags overflow, the indicator takes `indicatorWidth + gap` of reserved
- * space. If even 0 tags + indicator don't fit, visibleCount is 0 and the
- * indicator shows the total count.
+ * Gap model: with CSS flex `gap`, K visible tags + indicator + input
+ * = K+2 children and K+1 gaps. Base overhead accounts for 1 gap
+ * (indicator-to-input); each tag adds its width + 1 gap.
  */
 export function calculateVisibleTags(
   input: CalculateVisibleTagsInput,
@@ -29,41 +31,50 @@ export function calculateVisibleTags(
   const total = tagWidths.length
 
   if (total === 0) {
-    return {overflowCount: 0, visibleCount: 0}
+    return {overflowCount: 0, visibleCount: 0, visibleIndices: []}
   }
 
-  // Check if all tags fit without an indicator
-  let totalWidth = 0
+  // Check if all tags fit without an indicator.
+  // Layout: [tag0] gap [tag1] ... [tagN-1] gap [input]
+  // = sum(tagWidths) + total * gap + minInputWidth
+  let allTagsWidth = 0
   for (let i = 0; i < total; i++) {
-    if (i > 0) {
-      totalWidth += gap
+    allTagsWidth += tagWidths[i]
+  }
+  const allFitWidth = allTagsWidth + total * gap + minInputWidth
+
+  if (allFitWidth <= availableWidth) {
+    return {
+      overflowCount: 0,
+      visibleCount: total,
+      visibleIndices: Array.from({length: total}, (_, i) => i),
     }
-    totalWidth += tagWidths[i]
   }
 
-  if (totalWidth + gap + minInputWidth <= availableWidth) {
-    return {overflowCount: 0, visibleCount: total}
+  // Overflow — iterate in order, skipping tags that don't fit.
+  // Base overhead: indicatorWidth + gap (indicator-to-input) + minInputWidth
+  // Each tag costs: tagWidth + gap
+  const baseOverhead = indicatorWidth + gap + minInputWidth
+  const remaining = availableWidth - baseOverhead
+
+  if (remaining <= 0) {
+    return {overflowCount: total, visibleCount: 0, visibleIndices: []}
   }
 
-  // Tags overflow — reserve space for the indicator and input field
-  const reservedSpace = indicatorWidth + gap + minInputWidth
-  const remainingWidth = availableWidth - reservedSpace
-
-  if (remainingWidth <= 0) {
-    return {overflowCount: total, visibleCount: 0}
-  }
-
+  const visibleIndices: number[] = []
   let usedWidth = 0
-  let visibleCount = 0
 
   for (let i = 0; i < total; i++) {
-    const nextWidth = i > 0 ? tagWidths[i] + gap : tagWidths[i]
-    if (usedWidth + nextWidth > remainingWidth) {
-      break
+    const cost = tagWidths[i] + gap
+    if (usedWidth + cost <= remaining) {
+      usedWidth += cost
+      visibleIndices.push(i)
     }
-    usedWidth += nextWidth
-    visibleCount++
   }
 
-  return {overflowCount: total - visibleCount, visibleCount}
+  return {
+    overflowCount: total - visibleIndices.length,
+    visibleCount: visibleIndices.length,
+    visibleIndices,
+  }
 }

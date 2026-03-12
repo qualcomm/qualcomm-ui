@@ -54,7 +54,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
           minInputWidth: prop("minInputWidth"),
           tagWidths: context.get("tagWidths"),
         })
-        context.set("visibleCount", result.visibleCount)
+        context.set("visibleIndices", result.visibleIndices)
       },
     },
 
@@ -63,7 +63,6 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         const values = prop("value")
         return !values?.length
       },
-
       hasOverflow: ({computed}) => {
         return computed("overflowCount") > 0
       },
@@ -71,12 +70,15 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
       overflowCount: ({context, prop}) => {
         const values = prop("value")
         const total = values?.length ?? 0
-        return Math.max(0, total - context.get("visibleCount"))
+        return Math.max(0, total - context.get("visibleIndices").length)
       },
+
+      showSelectionCount: ({prop}) => !!prop("open"),
 
       visibleTags: ({context, prop}) => {
         const values = prop("value") ?? []
-        return values.slice(0, context.get("visibleCount"))
+        const indices = context.get("visibleIndices")
+        return indices.map((i) => values[i]).filter(Boolean)
       },
     },
 
@@ -93,14 +95,15 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
           hash: (v) => v.join(","),
           sync: true,
         })),
-        visibleCount: bindable<number>(() => ({
-          defaultValue: 0,
+        visibleIndices: bindable<number[]>(() => ({
+          defaultValue: [],
+          hash: (v) => v.join(","),
         })),
       }
     },
 
     effects: {
-      trackControlResize({context, scope, send}) {
+      trackControlResize({context, prop, scope, send}) {
         const controlElement = getControlEl(scope)
         if (!controlElement) {
           return
@@ -115,8 +118,10 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
             if (!inputElementRect || !controlElementRect) {
               return
             }
-            const availableWidth =
-              inputElementRect.right - controlElementRect.left
+            const isRtl = prop("dir") === "rtl"
+            const availableWidth = isRtl
+              ? controlElementRect.right - inputElementRect.left
+              : inputElementRect.right - controlElementRect.left
             context.set("availableWidth", availableWidth)
             send({type: "REMEASURE"})
           }
@@ -150,8 +155,9 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         "tags",
       )
       return {
+        dir: "ltr",
         gap: 4,
-        minInputWidth: 75,
+        minInputWidth: 50,
         ...props,
       }
     },
@@ -168,11 +174,17 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
       },
     },
 
-    watch({prop, send, track}) {
-      track([() => JSON.stringify(prop("value"))], () => {
-        raf(() => {
-          send({type: "REMEASURE"})
-        })
-      })
+    watch({computed, prop, send, track}) {
+      track(
+        [
+          () => JSON.stringify(prop("value")),
+          () => computed("showSelectionCount"),
+        ],
+        () => {
+          raf(() => {
+            send({type: "REMEASURE"})
+          })
+        },
+      )
     },
   })

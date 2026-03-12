@@ -11,10 +11,10 @@ import type {
 import type {
   InputTagsApi,
   InputTagsContainerBindings,
-  InputTagsIndicatorBindings,
+  InputTagsInvisibleOverflowTagBindings,
   InputTagsInvisibleTagBindings,
   InputTagsInvisibleTagContainerBindings,
-  InputTagsMeasureIndicatorBindings,
+  InputTagsOverflowTagBindings,
   InputTagsSchema,
   InputTagsSelectionTagBindings,
   InputTagsTagBindings,
@@ -32,6 +32,8 @@ export function createInputTagsApi(
   normalize: PropNormalizer,
 ): InputTagsApi {
   const {computed, prop, scope, send} = machine
+
+  const dir = prop("dir")
 
   return {
     get empty() {
@@ -63,9 +65,11 @@ export function createInputTagsApi(
         "data-empty": computed("empty"),
         "data-part": "tags-container",
         "data-scope": "tags",
+        dir,
         hidden: computed("empty"),
         id: getContainerId(scope),
         style: {
+          "--gap": `${prop("gap")}px`,
           alignItems: "center",
           display: computed("empty") ? "none" : "flex",
           flexWrap: "nowrap",
@@ -76,16 +80,17 @@ export function createInputTagsApi(
       })
     },
 
-    getIndicatorBindings(): InputTagsIndicatorBindings {
-      const hasOverflow = computed("hasOverflow")
+    getInvisibleOverflowTagBindings(): InputTagsInvisibleOverflowTagBindings {
       return normalize.element({
-        "data-part": "tags-indicator",
+        "aria-hidden": true,
+        "data-open": booleanDataAttr(prop("open")),
+        "data-part": "invisible-overflow-tag",
         "data-scope": "tags",
-        "data-state": hasOverflow ? "visible" : "hidden",
-        hidden: !hasOverflow,
-        id: getIndicatorId(scope),
+        dir,
+        id: getMeasureIndicatorId(scope),
         style: {
-          flexShrink: 0,
+          position: "absolute",
+          visibility: "hidden",
           whiteSpace: "nowrap",
         },
       })
@@ -96,6 +101,7 @@ export function createInputTagsApi(
         "data-part": "invisible-tag",
         "data-scope": "tags",
         "data-value": value,
+        dir,
         id: getInvisibleTagId(scope, value),
         style: {
           minWidth: "max-content",
@@ -112,6 +118,7 @@ export function createInputTagsApi(
       return normalize.element({
         "data-part": "invisible-tag-container",
         "data-scope": "tags",
+        dir,
         id: scope.ids.get("invisibleTagsContainer"),
         style: {
           position: "relative",
@@ -119,16 +126,17 @@ export function createInputTagsApi(
       })
     },
 
-    getMeasureIndicatorBindings(): InputTagsMeasureIndicatorBindings {
+    getOverflowTagBindings(): InputTagsOverflowTagBindings {
+      const hasOverflow = computed("hasOverflow")
       return normalize.element({
-        "aria-hidden": true,
-        "data-open": booleanDataAttr(prop("open")),
-        "data-part": "tags-measure-indicator",
+        "data-part": "overflow-tag",
         "data-scope": "tags",
-        id: getMeasureIndicatorId(scope),
+        "data-state": hasOverflow ? "visible" : "hidden",
+        dir,
+        hidden: !hasOverflow || computed("showSelectionCount"),
+        id: getIndicatorId(scope),
         style: {
-          position: "absolute",
-          visibility: "hidden",
+          flexShrink: 0,
           whiteSpace: "nowrap",
         },
       })
@@ -137,8 +145,13 @@ export function createInputTagsApi(
       return normalize.element({
         "data-part": "selection-tag",
         "data-scope": "tags",
-        hidden: !prop("inputFocused"),
-        onClick: () => {},
+        dir,
+        hidden: !computed("showSelectionCount"),
+        onClick: (event) => {
+          event.preventDefault()
+          event.stopPropagation()
+          prop("setOpen")?.(true)
+        },
       })
     },
     getTagBindings(value): InputTagsTagBindings {
@@ -149,7 +162,10 @@ export function createInputTagsApi(
         "data-part": "tag",
         "data-scope": "tags",
         "data-value": value,
-        hidden: (!isVisible && values.includes(value)) || prop("inputFocused"),
+        dir,
+        hidden:
+          (!isVisible && values.includes(value)) ||
+          computed("showSelectionCount"),
         id: getTagId(scope, value),
         onDismiss: () => {
           send({type: "INPUT_TAG.DISMISS", value})

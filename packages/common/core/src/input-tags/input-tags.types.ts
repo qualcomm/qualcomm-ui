@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -11,7 +12,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-export interface InputTagsApiProps extends CommonProperties {
+export interface InputTagsApiProps extends CommonProperties, DirectionProperty {
   /**
    * Function used to focus the input field
    */
@@ -53,6 +54,11 @@ export interface InputTagsApiProps extends CommonProperties {
   open?: boolean
 
   /**
+   * Function to open the parent component's dropdown.
+   */
+  setOpen(open: boolean): void
+
+  /**
    * Value from the parent machine.
    */
   value: string[]
@@ -74,19 +80,21 @@ export interface InputTagsSchema {
     empty: boolean
     hasOverflow: boolean
     overflowCount: number
+    showSelectionCount: boolean
     visibleTags: string[]
   }
   context: {
     availableWidth: number
     indicatorWidth: number
     tagWidths: number[]
-    visibleCount: number
+    visibleIndices: number[]
   }
   effects: EffectSchema<"trackControlResize">
   events: {type: "REMEASURE"} | {type: "INPUT_TAG.DISMISS"; value: string}
   ids: InputTagsElementIds
   props: RequiredBy<
     InputTagsApiProps,
+    | "dir"
     | "focusInput"
     | "gap"
     | "inputFocused"
@@ -99,7 +107,7 @@ export interface InputTagsSchema {
 
 // Binding interfaces
 
-interface CommonBindings {
+interface CommonBindings extends Required<DirectionProperty> {
   "data-scope": "tags"
 }
 
@@ -111,7 +119,7 @@ export interface InputTagsContainerBindings extends CommonBindings {
 export interface InputTagsTagBindings extends CommonBindings {
   "data-part": "tag"
   "data-value": string
-  hidden: boolean
+  hidden: boolean | undefined
   id: string
   onDismiss: () => void
   style: JSX.CSSProperties
@@ -124,16 +132,16 @@ export interface InputTagsInvisibleTagBindings extends CommonBindings {
   style: JSX.CSSProperties
 }
 
-export interface InputTagsIndicatorBindings extends CommonBindings {
-  "data-part": "tags-indicator"
+export interface InputTagsOverflowTagBindings extends CommonBindings {
+  "data-part": "overflow-tag"
   "data-state": "visible" | "hidden"
   hidden: boolean
   style: JSX.CSSProperties
 }
 
-export interface InputTagsMeasureIndicatorBindings extends CommonBindings {
+export interface InputTagsInvisibleOverflowTagBindings extends CommonBindings {
   "aria-hidden": true
-  "data-part": "tags-measure-indicator"
+  "data-part": "invisible-overflow-tag"
   style: JSX.CSSProperties
 }
 
@@ -177,7 +185,7 @@ export interface InputTagsApi {
   // group: bindings
   getContainerBindings(props: IdRegistrationProps): InputTagsContainerBindings
 
-  getIndicatorBindings(props: IdRegistrationProps): InputTagsIndicatorBindings
+  getInvisibleOverflowTagBindings(): InputTagsInvisibleOverflowTagBindings
 
   getInvisibleTagBindings(value: string): InputTagsInvisibleTagBindings
 
@@ -185,7 +193,9 @@ export interface InputTagsApi {
     props: IdRegistrationProps,
   ): InputTagsInvisibleTagContainerBindings
 
-  getMeasureIndicatorBindings(): InputTagsMeasureIndicatorBindings
+  getOverflowTagBindings(
+    props: IdRegistrationProps,
+  ): InputTagsOverflowTagBindings
 
   getSelectionTagBindings(): InputTagsSelectionTagBindings
 

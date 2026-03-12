@@ -30,6 +30,7 @@ export function ComboboxTags({
     focused: inputFocused,
     open,
     selectValue,
+    setOpen,
     value,
   } = useComboboxContext()
 
@@ -38,12 +39,12 @@ export function ComboboxTags({
     inputFocused,
     onSelectValue: selectValue,
     open,
+    setOpen,
     value,
   } satisfies InputTagsApiProps)
   const tagsApi = createInputTagsApi(machine, normalizeProps)
 
   const mergedProps = mergeProps(
-    {className: ""},
     tagsApi.getContainerBindings({id: useControlledId(id)}),
     props,
   )
@@ -72,13 +73,16 @@ export function ComboboxTags({
         )
       })}
       <Tag
-        {...tagsApi.getIndicatorBindings({id: useControlledId()})}
+        {...tagsApi.getOverflowTagBindings({id: useControlledId()})}
         emphasis="neutral"
       >
         +{tagsApi.overflowCount}
       </Tag>
-      <Tag {...tagsApi.getMeasureIndicatorBindings()} emphasis="neutral">
+      <Tag {...tagsApi.getInvisibleOverflowTagBindings()} emphasis="neutral">
         +{value.length}
+      </Tag>
+      <Tag {...tagsApi.getSelectionTagBindings()} emphasis="neutral">
+        Selected ({value.length})
       </Tag>
     </PolymorphicElement>
   )
