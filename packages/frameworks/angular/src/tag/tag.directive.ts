@@ -6,10 +6,10 @@ import {
   Component,
   computed,
   inject,
+  Injector,
   input,
   type OnInit,
   output,
-  signal,
 } from "@angular/core"
 import {X} from "lucide-angular"
 
@@ -28,22 +28,33 @@ import {
 import {
   normalizeProps,
   QBindDirective,
+  useMachine,
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {
+  createTagApi,
+  type TagApiProps,
+  tagMachine,
+  type TagVariant,
+} from "@qualcomm-ui/core/tag"
 import {
   createQdsTagApi,
   type QdsTagApiProps,
   type QdsTagEmphasis,
   type QdsTagRadius,
   type QdsTagSize,
-  type QdsTagVariant,
 } from "@qualcomm-ui/qds-core/tag"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
+import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsTagContextService} from "./qds-tag-context.service"
+import {
+  provideQdsTagContext,
+  QdsTagContextService,
+} from "./qds-tag-context.service"
+import {provideTagContext, TagContextService} from "./tag-context.service"
 
 @Component({
   imports: [
@@ -53,7 +64,8 @@ import {QdsTagContextService} from "./qds-tag-context.service"
     IconDirective,
   ],
   providers: [
-    QdsTagContextService,
+    provideTagContext(),
+    provideQdsTagContext(),
     provideIcons({X}),
     {
       provide: START_ICON_CONTEXT_TOKEN,
@@ -105,12 +117,29 @@ import {QdsTagContextService} from "./qds-tag-context.service"
     }
   `,
 })
-export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
+export class TagDirective
+  implements SignalifyInput<TagApiProps & QdsTagApiProps>, OnInit
+{
+  /**
+   * The document's text/writing direction.
+   *
+   * @default "ltr"
+   */
+  readonly dir = input<Direction | undefined>(undefined)
+
   /**
    * Emits when the dismiss button is clicked. Only applicable when
    * {@link variant} is `dismissable`.
    */
   readonly dismiss = output<void>()
+
+  /**
+   * The default selected state of the tag. Only applicable when {@link variant} is
+   * `selectable`.
+   */
+  readonly defaultSelected = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
 
   /**
    * Controls the component's interactivity. If `true`, the component becomes
@@ -153,6 +182,14 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
   readonly size = input<QdsTagSize>()
 
   /**
+   * The selected state of the tag. Only applicable when {@link variant} is
+   * `selectable`.
+   */
+  readonly selected = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
+  /**
    * {@link https://lucide.dev/icons lucide-angular} icon, positioned before the label.
    *
    * @remarks
@@ -164,33 +201,63 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
   readonly startIcon = input<LucideIconOrString>()
 
   /**
-   * Governs the interactive style of the tag.
+   * Governs the interactive features of the tag.
+   *
+   * @default 'link'
    */
-  readonly variant = input<QdsTagVariant>()
+  readonly variant = input<TagVariant>()
 
-  protected readonly selected = signal<boolean>(false)
+  /**
+   * Event handler called when the selected state of the tag changes.
+   */
+  readonly selectedChanged = output<boolean | undefined>()
 
   protected readonly trackBindings = useTrackBindings(() =>
-    mergeProps(this.qdsTagApi.context().getRootBindings(), {
-      onclick: () => {
-        if (this.variant() === "selectable") {
-          this.selected.update((prev) => !prev)
-        }
-      },
-    }),
+    mergeProps(
+      this.tagApi.context().getRootBindings(),
+      this.qdsTagApi.context().getRootBindings(),
+    ),
   )
 
+  protected readonly dismissButtonBindings = computed(() =>
+    mergeProps(
+      this.tagApi.context().getDismissButtonBindings(),
+      this.qdsTagApi.context().getDismissButtonBindings(),
+    ),
+  )
+
+  protected readonly injector = inject(Injector)
+
+  protected readonly tagApi = inject(TagContextService)
   protected readonly qdsTagApi = inject(QdsTagContextService)
 
   ngOnInit() {
+    const machine = useMachine(
+      tagMachine,
+      computed<Explicit<TagApiProps>>(() => ({
+        defaultSelected: this.defaultSelected(),
+        dir: this.dir(),
+        disabled: this.disabled(),
+        onDismiss: () => {
+          this.dismiss.emit()
+        },
+        onSelectedChange: (selected) => {
+          this.selectedChanged.emit(selected)
+        },
+        selected: this.selected(),
+        variant: this.variant(),
+      })),
+      this.injector,
+    )
+
+    this.tagApi.init(computed(() => createTagApi(machine, normalizeProps)))
+
     this.qdsTagApi.init(
       computed(() =>
         createQdsTagApi(
           {
-            disabled: this.disabled(),
             emphasis: this.emphasis(),
             radius: this.radius(),
-            selected: this.selected(),
             size: this.size(),
             variant: this.variant(),
           } satisfies Explicit<QdsTagApiProps> & {
