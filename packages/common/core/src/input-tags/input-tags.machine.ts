@@ -73,7 +73,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         return Math.max(0, total - context.get("visibleTagIndices").length)
       },
 
-      showSelectionCount: ({prop}) => !!prop("open"),
+      showSelectionCount: ({prop}) => prop("open") || prop("inputFocused"),
 
       visibleTags: ({context, prop}) => {
         const values = prop("value") ?? []
