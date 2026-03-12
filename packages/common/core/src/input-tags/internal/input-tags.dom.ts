@@ -4,7 +4,7 @@
 import type {InputTagsElementScope} from "../input-tags.types"
 
 export function getContainerId(scope: InputTagsElementScope): string {
-  return scope.ids.get("container")
+  return scope.ids.get("tagContainer")
 }
 
 function getClosestCombobox(scope: InputTagsElementScope): HTMLElement | null {
@@ -81,17 +81,7 @@ export function getInvisibleTagEl(
 export function getInvisibleTagsContainerEl(
   scope: InputTagsElementScope,
 ): HTMLElement | null {
-  return scope.getById(scope.ids.get("invisibleTagsContainer"))
-}
-
-export function getIndicatorId(scope: InputTagsElementScope): string {
-  return `tags:${getContainerId(scope)}:indicator`
-}
-
-export function getIndicatorEl(
-  scope: InputTagsElementScope,
-): HTMLElement | null {
-  return scope.getById(getIndicatorId(scope))
+  return scope.getById(scope.ids.get("invisibleTagContainer"))
 }
 
 export function getMeasureIndicatorId(scope: InputTagsElementScope): string {

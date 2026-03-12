@@ -27,10 +27,10 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         prop("onSelectValue")(eventValue)
       },
 
-      measureIndicator({context, scope}) {
+      measureOverflowTag({context, scope}) {
         const el = getMeasureIndicatorEl(scope)
         if (el) {
-          context.set("indicatorWidth", el.getBoundingClientRect().width)
+          context.set("overflowTagWidth", el.getBoundingClientRect().width)
         }
       },
 
@@ -46,15 +46,15 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         context.set("tagWidths", tagWidths)
       },
 
-      recalculate({context, prop}) {
+      recalculateVisibleTags({context, prop}) {
         const result = calculateVisibleTags({
-          availableWidth: context.get("availableWidth"),
+          availableWidth: context.get("availableTagWidth"),
           gap: prop("gap"),
-          indicatorWidth: context.get("indicatorWidth"),
+          indicatorWidth: context.get("overflowTagWidth"),
           minInputWidth: prop("minInputWidth"),
           tagWidths: context.get("tagWidths"),
         })
-        context.set("visibleIndices", result.visibleIndices)
+        context.set("visibleTagIndices", result.visibleIndices)
       },
     },
 
@@ -64,30 +64,30 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         return !values?.length
       },
       hasOverflow: ({computed}) => {
-        return computed("overflowCount") > 0
+        return computed("overflowTagCount") > 0
       },
 
-      overflowCount: ({context, prop}) => {
+      overflowTagCount: ({context, prop}) => {
         const values = prop("value")
         const total = values?.length ?? 0
-        return Math.max(0, total - context.get("visibleIndices").length)
+        return Math.max(0, total - context.get("visibleTagIndices").length)
       },
 
       showSelectionCount: ({prop}) => !!prop("open"),
 
       visibleTags: ({context, prop}) => {
         const values = prop("value") ?? []
-        const indices = context.get("visibleIndices")
+        const indices = context.get("visibleTagIndices")
         return indices.map((i) => values[i]).filter(Boolean)
       },
     },
 
     context({bindable}) {
       return {
-        availableWidth: bindable<number>(() => ({
+        availableTagWidth: bindable<number>(() => ({
           defaultValue: 0,
         })),
-        indicatorWidth: bindable<number>(() => ({
+        overflowTagWidth: bindable<number>(() => ({
           defaultValue: 0,
         })),
         tagWidths: bindable<number[]>(() => ({
@@ -95,7 +95,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
           hash: (v) => v.join(","),
           sync: true,
         })),
-        visibleIndices: bindable<number[]>(() => ({
+        visibleTagIndices: bindable<number[]>(() => ({
           defaultValue: [],
           hash: (v) => v.join(","),
         })),
@@ -122,17 +122,16 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
             const availableWidth = isRtl
               ? controlElementRect.right - inputElementRect.left
               : inputElementRect.right - controlElementRect.left
-            context.set("availableWidth", availableWidth)
-            send({type: "REMEASURE"})
+            context.set("availableTagWidth", availableWidth)
+            send({type: "REMEASURE_INPUT_TAGS"})
           }
         })
       },
     },
 
     ids: ({bindableId, ids}) => ({
-      container: bindableId(ids?.container),
-      indicator: bindableId(ids?.indicator),
-      invisibleTagsContainer: bindableId(ids?.invisibleTagsContainer),
+      invisibleTagContainer: bindableId(ids?.invisibleTagContainer),
+      tagContainer: bindableId(ids?.tagContainer),
     }),
 
     initialState() {
@@ -143,8 +142,12 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
       "INPUT_TAG.DISMISS": {
         actions: ["dismissTag"],
       },
-      REMEASURE: {
-        actions: ["measureTags", "measureIndicator", "recalculate"],
+      REMEASURE_INPUT_TAGS: {
+        actions: [
+          "measureTags",
+          "measureOverflowTag",
+          "recalculateVisibleTags",
+        ],
       },
     },
 
@@ -157,7 +160,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
       return {
         dir: "ltr",
         gap: 4,
-        minInputWidth: 50,
+        minInputWidth: 75,
         ...props,
       }
     },
@@ -182,7 +185,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         ],
         () => {
           raf(() => {
-            send({type: "REMEASURE"})
+            send({type: "REMEASURE_INPUT_TAGS"})
           })
         },
       )

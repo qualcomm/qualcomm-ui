@@ -65,32 +65,36 @@ export interface InputTagsApiProps extends CommonProperties, DirectionProperty {
 }
 
 export interface InputTagsElementIds {
-  container: string
-  indicator: string
-  invisibleTagsContainer: string
+  invisibleTagContainer: string
+  tagContainer: string
 }
 
 export type InputTagsElementScope = ScopeWithIds<InputTagsSchema>
 
 export interface InputTagsSchema {
   actions: ActionSchema<
-    "measureIndicator" | "measureTags" | "recalculate" | "dismissTag"
+    | "measureOverflowTag"
+    | "measureTags"
+    | "recalculateVisibleTags"
+    | "dismissTag"
   >
   computed: {
     empty: boolean
     hasOverflow: boolean
-    overflowCount: number
+    overflowTagCount: number
     showSelectionCount: boolean
     visibleTags: string[]
   }
   context: {
-    availableWidth: number
-    indicatorWidth: number
+    availableTagWidth: number
+    overflowTagWidth: number
     tagWidths: number[]
-    visibleIndices: number[]
+    visibleTagIndices: number[]
   }
   effects: EffectSchema<"trackControlResize">
-  events: {type: "REMEASURE"} | {type: "INPUT_TAG.DISMISS"; value: string}
+  events:
+    | {type: "REMEASURE_INPUT_TAGS"}
+    | {type: "INPUT_TAG.DISMISS"; value: string}
   ids: InputTagsElementIds
   props: RequiredBy<
     InputTagsApiProps,

@@ -21,7 +21,6 @@ import type {
 } from "./input-tags.types"
 import {
   getContainerId,
-  getIndicatorId,
   getInvisibleTagId,
   getMeasureIndicatorId,
   getTagId,
@@ -45,7 +44,7 @@ export function createInputTagsApi(
     },
 
     get overflowCount() {
-      return computed("overflowCount")
+      return computed("overflowTagCount")
     },
 
     get values() {
@@ -60,7 +59,7 @@ export function createInputTagsApi(
     getContainerBindings(
       props: IdRegistrationProps,
     ): InputTagsContainerBindings {
-      scope.ids.register("container", props)
+      scope.ids.register("tagContainer", props)
       return normalize.element({
         "data-empty": computed("empty"),
         "data-part": "tags-container",
@@ -114,12 +113,12 @@ export function createInputTagsApi(
     getInvisibleTagsContainerBindings(
       props: IdRegistrationProps,
     ): InputTagsInvisibleTagContainerBindings {
-      scope.ids.register("invisibleTagsContainer", props)
+      scope.ids.register("invisibleTagContainer", props)
       return normalize.element({
         "data-part": "invisible-tag-container",
         "data-scope": "tags",
         dir,
-        id: scope.ids.get("invisibleTagsContainer"),
+        id: scope.ids.get("invisibleTagContainer"),
         style: {
           position: "relative",
         },
@@ -134,7 +133,6 @@ export function createInputTagsApi(
         "data-state": hasOverflow ? "visible" : "hidden",
         dir,
         hidden: !hasOverflow || computed("showSelectionCount"),
-        id: getIndicatorId(scope),
         style: {
           flexShrink: 0,
           whiteSpace: "nowrap",
