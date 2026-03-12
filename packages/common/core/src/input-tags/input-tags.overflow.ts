@@ -27,8 +27,10 @@ export interface CalculateVisibleTagsResult {
 export function calculateVisibleTags(
   input: CalculateVisibleTagsInput,
 ): CalculateVisibleTagsResult {
-  const {availableWidth, gap, indicatorWidth, minInputWidth, tagWidths} = input
+  const {availableWidth, gap, indicatorWidth, tagWidths} = input
   const total = tagWidths.length
+  // input padding
+  const minInputWidth = input.minInputWidth + 12
 
   if (total === 0) {
     return {overflowCount: 0, visibleCount: 0, visibleIndices: []}
