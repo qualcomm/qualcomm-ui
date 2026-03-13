@@ -7,7 +7,9 @@
 import type {
   GuardFn,
   MachineConfig,
+  MachineConfigBase,
   MachineSchema,
+  NarrowedActionsProperty,
   Params,
   Transition,
 } from "./machine.types"
@@ -46,6 +48,17 @@ export function createMachine<T extends MachineSchema>(
   config: MachineConfig<T>,
 ): MachineConfig<T> {
   return config
+}
+
+export function createNarrowedMachine<T extends MachineSchema>() {
+  return <const TConfig extends MachineConfigBase<T>>(
+    base: TConfig,
+    actions: NarrowedActionsProperty<T, TConfig> extends {actions: infer A}
+      ? A
+      : Record<string, never>,
+  ): MachineConfig<T> => {
+    return {...base, actions} as unknown as MachineConfig<T>
+  }
 }
 
 export function createChoose<T extends MachineSchema>(

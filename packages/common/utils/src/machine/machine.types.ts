@@ -458,11 +458,144 @@ export type ActionsOrFn<T extends Dict> =
   | (keyof T["actions"])[]
   | ((params: Params<T>) => (keyof T["actions"])[] | undefined)
 
+// ---------------------------------------------------------------------------
+// Event→Action extraction types for automatic action handler narrowing.
+//
+// These types extract the reverse mapping (action → triggering events) from a
+// machine config whose literal types have been preserved via `const` generic
+// inference on `createMachine`.
+// ---------------------------------------------------------------------------
+
+type ExtractActionsFromTransition<Trans> = Trans extends {
+  actions: ReadonlyArray<infer A>
+}
+  ? A
+  : Trans extends ReadonlyArray<infer Item>
+    ? Item extends {actions: ReadonlyArray<infer A>}
+      ? A
+      : never
+    : never
+
+type EventsFromRootOn<TConfig, A extends string> = TConfig extends {
+  on: infer On
+}
+  ? {
+      [E in keyof On]: A extends ExtractActionsFromTransition<On[E]> ? E : never
+    }[keyof On]
+  : never
+
+type EventsFromStatesOn<TConfig, A extends string> = TConfig extends {
+  states: infer S
+}
+  ? {
+      [St in keyof S]: S[St] extends {on: infer On}
+        ? {
+            [E in keyof On]: A extends ExtractActionsFromTransition<On[E]>
+              ? E
+              : never
+          }[keyof On]
+        : never
+    }[keyof S]
+  : never
+
 /**
- * aka `Machine` in Zag
+ * Given a machine config type (with preserved literals via `const` inference)
+ * and an action name, returns the union of all event type strings that can
+ * trigger that action via `on` or `states.*.on` transitions.
+ *
+ * @example
+ * ```ts
+ * type E = EventsForAction<typeof comboboxMachine, "selectItem">
+ * // = "ITEM.SELECT" | "ITEM.CLICK"
+ * ```
  */
-export type MachineConfig<T extends Dict> = ActionsProperty<T> &
-  ContextProperty<T> &
+export type EventsForAction<TConfig, A extends string> =
+  | EventsFromRootOn<TConfig, A>
+  | EventsFromStatesOn<TConfig, A>
+
+/**
+ * Given a machine config type and an event type string, returns the union of
+ * all action names that the event can trigger across root `on` and
+ * `states.*.on`.
+ */
+export type ActionsForEvent<
+  TConfig,
+  E extends string,
+> = ExtractActionsFromTransition<
+  | (TConfig extends {on: infer On}
+      ? E extends keyof On
+        ? On[E]
+        : never
+      : never)
+  | (TConfig extends {states: infer S}
+      ? S[keyof S] extends infer State
+        ? State extends {on: infer On}
+          ? E extends keyof On
+            ? On[E]
+            : never
+          : never
+        : never
+      : never)
+>
+
+/**
+ * Extracts action names that appear in `entry` or `exit` arrays across all
+ * states. These actions can be triggered by ANY event (whatever event caused
+ * the state transition), so they must fall back to the full event union.
+ *
+ * When entry/exit is a function (e.g. `createChoose`), we cannot extract
+ * action names statically — those actions get whatever narrowing the `on`
+ * transitions provide.
+ */
+type EntryExitActions<TConfig> = TConfig extends {states: infer S}
+  ? S[keyof S] extends infer State
+    ?
+        | (State extends {entry: ReadonlyArray<infer A>} ? A : never)
+        | (State extends {exit: ReadonlyArray<infer A>} ? A : never)
+    : never
+  : never
+
+type NonTransitionActions<TConfig> = EntryExitActions<TConfig>
+
+type NarrowedEvent<T extends Dict, TConfig, K extends string> =
+  K extends NonTransitionActions<TConfig>
+    ? EventType<T>
+    : EventsForAction<TConfig, K> extends infer Events
+      ? [Events] extends [never]
+        ? EventType<T>
+        : Extract<EventType<T>, {type: Events}>
+      : EventType<T>
+
+export type NarrowedParams<T extends Dict, TConfig, K extends string> = Omit<
+  Params<T>,
+  "event"
+> & {
+  event: NarrowedEvent<T, TConfig, K> & {
+    current(): EventType<T>
+    previous(): EventType<T>
+  }
+}
+
+export type NarrowedActionsProperty<T extends Dict, TConfig> = T extends {
+  actions: any
+}
+  ? {
+      actions: {
+        [K in keyof T["actions"]]: (
+          params: NarrowedParams<T, TConfig, K & string>,
+        ) => void
+      }
+    }
+  : {actions?: any}
+
+// ---------------------------------------------------------------------------
+
+/**
+ * `MachineConfig` without the `ActionsProperty`. Used by `createMachine` to
+ * infer `TConfig` from non-action fields (via `const` generic), breaking the
+ * circularity that would otherwise prevent event narrowing in action handlers.
+ */
+export type MachineConfigBase<T extends Dict> = ContextProperty<T> &
   ComputedProperty<T> &
   EffectsProperty<T> &
   GuardsProperty<T> &
@@ -516,6 +649,12 @@ export type MachineConfig<T extends Dict> = ActionsProperty<T> &
      */
     watch?: (params: WatchParams<T>) => void
   }
+
+/**
+ * aka `Machine` in Zag
+ */
+export type MachineConfig<T extends Dict> = ActionsProperty<T> &
+  MachineConfigBase<T>
 
 type State<T extends MachineSchema> = Bindable<T["state"], void> & {
   hasTag: (tag: T["tag"]) => boolean
