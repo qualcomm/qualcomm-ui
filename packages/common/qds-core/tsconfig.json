@@ -4,7 +4,9 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "@qualcomm-ui/qds-core/*": ["./src/*/index.ts"]
+      "@qualcomm-ui/qds-core/*": ["./src/*/index.ts"],
+      // TODO: remove this once WebStorm fixes symlinks in WSL2
+      "@qualcomm-ui/core/*": ["../core/src/*"]
     }
   },
   "include": ["./src"],

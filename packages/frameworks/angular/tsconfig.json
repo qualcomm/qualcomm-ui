@@ -13,7 +13,7 @@
       "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
       "@qualcomm-ui/angular-core/*": ["../angular-core/src/*"],
       "@qualcomm-ui/core/*": ["../../common/core/src/*"],
-      "@qualcomm-ui/dom/*": ["../../common/core/src/*"],
+      "@qualcomm-ui/dom/*": ["../../common/dom/src/*"],
       "@qualcomm-ui/qds-core/*": ["../../common/qds-core/src/*"],
       "@qualcomm-ui/utils/*": ["../../common/utils/src/*"]
     }
