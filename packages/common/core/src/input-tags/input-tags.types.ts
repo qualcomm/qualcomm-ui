@@ -92,9 +92,7 @@ export interface InputTagsSchema {
     visibleTagIndices: number[]
   }
   effects: EffectSchema<"trackControlResize">
-  events:
-    | {type: "REMEASURE_INPUT_TAGS"}
-    | {type: "INPUT_TAG.DISMISS"; value: string}
+  events: {type: "REMEASURE"} | {type: "TAG.DISMISS"; value: string}
   ids: InputTagsElementIds
   props: RequiredBy<
     InputTagsApiProps,

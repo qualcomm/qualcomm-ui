@@ -166,7 +166,7 @@ export function createInputTagsApi(
           computed("showSelectionCount"),
         id: getTagId(scope, value),
         onDismiss: () => {
-          send({type: "INPUT_TAG.DISMISS", value})
+          send({type: "TAG.DISMISS", value})
         },
         style: {
           whiteSpace: "nowrap",

@@ -20,7 +20,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface ComboboxTagsProps extends ElementRenderProp<"div"> {}
 
-export function ComboboxTags({
+export function ComboboxInputTags({
   id,
   ...props
 }: ComboboxTagsProps): ReactElement | null {

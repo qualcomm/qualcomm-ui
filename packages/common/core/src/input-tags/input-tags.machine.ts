@@ -19,8 +19,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
   createMachine<InputTagsSchema>({
     actions: {
       dismissTag({event, prop}) {
-        const eventValue =
-          event.type === "INPUT_TAG.DISMISS" ? event.value : null
+        const eventValue = event.type === "TAG.DISMISS" ? event.value : null
         if (!eventValue) {
           return
         }
@@ -123,7 +122,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
               ? controlElementRect.right - inputElementRect.left
               : inputElementRect.right - controlElementRect.left
             context.set("availableTagWidth", availableWidth)
-            send({type: "REMEASURE_INPUT_TAGS"})
+            send({type: "REMEASURE"})
           }
         })
       },
@@ -139,15 +138,15 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
     },
 
     on: {
-      "INPUT_TAG.DISMISS": {
-        actions: ["dismissTag"],
-      },
-      REMEASURE_INPUT_TAGS: {
+      REMEASURE: {
         actions: [
           "measureTags",
           "measureOverflowTag",
           "recalculateVisibleTags",
         ],
+      },
+      "TAG.DISMISS": {
+        actions: ["dismissTag"],
       },
     },
 
@@ -185,7 +184,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
         ],
         () => {
           raf(() => {
-            send({type: "REMEASURE_INPUT_TAGS"})
+            send({type: "REMEASURE"})
           })
         },
       )
