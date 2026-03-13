@@ -12,7 +12,7 @@ import {
 
 import type {ToggleSchema} from "./toggle.types"
 
-const transitions = {
+const toggleMachineBase = {
   context({bindable, prop}) {
     return {
       pressed: bindable<boolean>(() => ({
@@ -52,7 +52,7 @@ const transitions = {
 } satisfies MachineConfigBase<ToggleSchema>
 
 export const toggleMachine: MachineConfig<ToggleSchema> =
-  createNarrowedMachine<ToggleSchema>()(transitions, {
+  createNarrowedMachine<ToggleSchema>()(toggleMachineBase, {
     setPressed({context, event}) {
       context.set("pressed", event.value || false)
     },
