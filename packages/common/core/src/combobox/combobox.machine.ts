@@ -6,6 +6,7 @@
 
 import {ariaHidden} from "@qualcomm-ui/dom/aria-hidden"
 import {trackDismissableElement} from "@qualcomm-ui/dom/dismissable"
+import {trackElementSize} from "@qualcomm-ui/dom/element-size"
 import {getPlacement, type Placement} from "@qualcomm-ui/dom/floating-ui"
 import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {
@@ -30,12 +31,20 @@ import {
 import {getIn} from "@qualcomm-ui/utils/object"
 
 import {emptyCollection} from "./combobox.collection"
+import {calculateVisibleTags} from "./combobox.overflow"
 import type {
   ComboboxInputValueChangeReason,
   ComboboxOpenChangeReason,
   ComboboxSchema,
 } from "./combobox.types"
-import {domEls, focusInputEl, focusTriggerEl, getItemEl} from "./internal"
+import {
+  domEls,
+  focusInputEl,
+  focusTriggerEl,
+  getInvisibleOverflowTagEl,
+  getInvisibleTagEl,
+  getItemEl,
+} from "./internal"
 
 const {and, not} = createGuards<ComboboxSchema>()
 
@@ -43,13 +52,16 @@ const comboboxMachineBase = {
   computed: {
     autoComplete: ({prop}) => prop("inputBehavior") === "autocomplete",
     autoHighlight: ({prop}) => prop("inputBehavior") === "autohighlight",
+    hasOverflowTags: () => false,
     hasSelectedItems: ({context}) => context.get("value").length > 0,
     isCustomValue: ({computed, context}) =>
       context.get("inputValue") !== computed("valueAsString"),
     isInputValueEmpty: ({context}) => context.get("inputValue").length === 0,
     isInteractive: ({prop}) => !(prop("readOnly") || prop("disabled")),
+    overflowTagCount: () => 0,
     valueAsString: ({context, prop}) =>
       prop("collection").stringifyItems(context.get("selectedItems")),
+    visibleTags: () => [] as string[],
   },
 
   context({bindable, getContext, getEvent, prop}) {
@@ -127,6 +139,22 @@ const comboboxMachineBase = {
           prop("onValueChange")?.({items: nextItems, value})
         },
         value: prop("value"),
+      })),
+      // group: tags
+      availableTagWidth: bindable<number>(() => ({
+        defaultValue: 0,
+      })),
+      overflowTagWidth: bindable<number>(() => ({
+        defaultValue: 0,
+      })),
+      tagWidths: bindable<number[]>(() => ({
+        defaultValue: [],
+        hash: (v) => v.join(","),
+        sync: true,
+      })),
+      visibleTagIndices: bindable<number[]>(() => ({
+        defaultValue: [],
+        hash: (v) => v.join(","),
       })),
     }
   },
@@ -215,6 +243,23 @@ const comboboxMachineBase = {
         type: "listbox",
       })
     },
+    trackDropdownResize({context, refs, scope, send}) {
+      const positionerEl = domEls.positioner(scope)
+      if (!positionerEl) {
+        return
+      }
+      refs.get("untrackDropdownSize")?.()
+      refs.set(
+        "untrackDropdownSize",
+        trackElementSize(positionerEl, (size) => {
+          if (size) {
+            const availableWidth = size.width
+            context.set("availableTagWidth", availableWidth)
+            send({type: "REMEASURE_TAGS"})
+          }
+        }),
+      )
+    },
     trackFocusVisible({scope}) {
       return trackFocusVisible({root: scope.getRootNode?.()})
     },
@@ -272,9 +317,11 @@ const comboboxMachineBase = {
       errorText: bindableId(ids?.errorText),
       hint: bindableId(ids?.hint),
       input: bindableId(ids?.input),
+      invisibleTagContainer: bindableId(ids?.invisibleTagContainer),
       label: bindableId(ids?.label),
       positioner: bindableId(ids?.positioner),
       root: bindableId(ids?.root),
+      tagContainer: bindableId(ids?.tagContainer),
       trigger: bindableId(ids?.trigger),
     }
   },
@@ -303,8 +350,14 @@ const comboboxMachineBase = {
     "POSITIONING.SET": {
       actions: ["reposition"],
     },
+    REMEASURE_TAGS: {
+      actions: ["measureTags", "measureOverflowTag", "recalculateVisibleTags"],
+    },
     "SELECTED_ITEMS.SYNC": {
       actions: ["syncSelectedItems"],
+    },
+    "TAG.DISMISS": {
+      actions: ["selectItem"],
     },
     "VALUE.SET": {
       actions: ["setValue"],
@@ -357,6 +410,7 @@ const comboboxMachineBase = {
   refs: ({prop}) => {
     return {
       scrollToIndexFn: prop("scrollToIndexFn"),
+      untrackDropdownSize: () => {},
     }
   },
 
@@ -554,6 +608,7 @@ const comboboxMachineBase = {
         "trackDismissableLayer",
         "trackPlacement",
         "hideOtherElements",
+        "trackDropdownResize",
       ],
       entry: ["setInitialFocus"],
       on: {
@@ -935,9 +990,14 @@ const comboboxMachineBase = {
     },
   },
 
-  watch({action, context, prop, send, track}) {
+  watch({action, context, prop, send, state, track}) {
     track([() => context.hash("value")], () => {
       action(["syncSelectedItems"])
+    })
+    track([() => context.hash("value"), () => state.hasTag("open")], () => {
+      raf(() => {
+        send({type: "REMEASURE_TAGS"})
+      })
     })
     track([() => context.get("inputValue")], () => {
       action(["syncInputValue"])
@@ -956,6 +1016,37 @@ const comboboxMachineBase = {
 
 export const comboboxMachine: MachineConfig<ComboboxSchema> =
   createNarrowedMachine<ComboboxSchema>()(comboboxMachineBase, {
+    measureOverflowTag({context, scope}) {
+      const showAllButtonEl = getInvisibleOverflowTagEl(scope)
+      if (!showAllButtonEl) {
+        return
+      }
+      const width = showAllButtonEl.getBoundingClientRect().width
+      context.set("overflowTagWidth", width)
+    },
+    measureTags({context, scope}) {
+      const values = context.get("value")
+      const tagWidths: number[] = []
+      for (const value of values) {
+        const el = getInvisibleTagEl(scope, value)
+        if (el) {
+          tagWidths.push(el.getBoundingClientRect().width)
+        }
+      }
+      context.set("tagWidths", tagWidths)
+    },
+    recalculateVisibleTags({context}) {
+      const result = calculateVisibleTags({
+        availableWidth: context.get("availableTagWidth"),
+        // TODO: move to prop
+        gap: 4,
+        showAllButtonWidth: context.get("overflowTagWidth"),
+        tagWidths: context.get("tagWidths"),
+      })
+      context.set("visibleTagIndices", result.visibleIndices)
+    },
+
+    // group: TODO delete me
     autofillInputValue({computed, context, event, prop, scope}) {
       const inputEl = domEls.input(scope)
       const collection = prop("collection")

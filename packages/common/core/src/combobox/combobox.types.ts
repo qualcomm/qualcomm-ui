@@ -381,9 +381,11 @@ export interface ComboboxElementIds {
   errorText: string
   hint: string
   input: string
+  invisibleTagContainer: string
   label: string
   positioner: string
   root: string
+  tagContainer: string
   trigger: string
 }
 
@@ -433,23 +435,33 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
     | "syncInputValue"
     | "syncSelectedItems"
     | "toggleVisibility"
+    | "measureOverflowTag"
+    | "measureTags"
+    | "recalculateVisibleTags"
   >
   computed: {
     autoComplete: boolean
     autoHighlight: boolean
+    hasOverflowTags: boolean
     hasSelectedItems: boolean
     isCustomValue: boolean
     isInputValueEmpty: boolean
     isInteractive: boolean
+    overflowTagCount: number
     valueAsString: string
+    visibleTags: string[]
   }
   context: {
+    availableTagWidth: number
     currentPlacement?: Placement | undefined
     highlightedItem: T | null
     highlightedValue: string | null
     inputValue: string
+    overflowTagWidth: number
     selectedItems: T[]
+    tagWidths: number[]
     value: string[]
+    visibleTagIndices: number[]
   }
   effects: EffectSchema<
     | "hideOtherElements"
@@ -457,6 +469,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
     | "trackDismissableLayer"
     | "trackPlacement"
     | "trackFocusVisible"
+    | "trackDropdownResize"
   >
   events: {
     previousEvent?: ComboboxSchema["events"]
@@ -518,6 +531,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
         type: "LAYER.INTERACT_OUTSIDE"
       }
     | {src: "trigger-click"; type: "TRIGGER.CLICK"}
+    | {type: "REMEASURE_TAGS"}
   )
 
   guards: GuardSchema<
@@ -544,6 +558,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
       | ((details: ComboboxScrollToIndexDetails) => void)
       | null
       | undefined
+    untrackDropdownSize: (() => void) | undefined
   }
   state: "idle" | "focused" | "suggesting" | "interacting"
   tag: "open" | "focused" | "idle" | "closed"
@@ -948,4 +963,22 @@ export interface ComboboxTriggerBindings extends CommonBindings {
   onPointerDown: JSX.PointerEventHandler
   tabIndex: -1 | undefined
   type: "button"
+}
+
+export interface ComboboxDropdownTagsRoot extends CommonBindings {
+  "data-part": "dropdown-tags-root"
+  style: JSX.CSSProperties
+}
+
+export interface ComboboxOverflowTagBindings extends CommonBindings {
+  "data-part": "overflow-tag"
+  "data-state": "visible" | "hidden"
+  hidden: boolean
+  style: JSX.CSSProperties
+}
+
+export interface ComboboxInvisibleOverflowTagBindings extends CommonBindings {
+  "aria-hidden": true
+  "data-part": "invisible-overflow-tag"
+  style: JSX.CSSProperties
 }
