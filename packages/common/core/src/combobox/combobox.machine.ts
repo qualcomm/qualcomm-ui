@@ -26,9 +26,14 @@ import {
   type GuardFn,
   type MachineConfig,
 } from "@qualcomm-ui/utils/machine"
+import {getIn} from "@qualcomm-ui/utils/object"
 
 import {emptyCollection} from "./combobox.collection"
-import type {ComboboxOpenChangeReason, ComboboxSchema} from "./combobox.types"
+import type {
+  ComboboxInputValueChangeReason,
+  ComboboxOpenChangeReason,
+  ComboboxSchema,
+} from "./combobox.types"
 import {domEls, focusInputEl, focusTriggerEl, getItemEl} from "./internal"
 
 const {and, not} = createGuards<ComboboxSchema>()
@@ -39,7 +44,11 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
       autofillInputValue({computed, context, event, prop, scope}) {
         const inputEl = domEls.input(scope)
         const collection = prop("collection")
-        if (!computed("autoComplete") || !inputEl || !event.keypress) {
+        if (
+          !computed("autoComplete") ||
+          !inputEl ||
+          !getIn(event, "keypress")
+        ) {
           return
         }
         const valueText = collection.stringify(context.get("highlightedValue"))
@@ -55,11 +64,12 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
       },
       clearItem(params) {
         const {context, event, flush, prop} = params
-        if (event.value == null) {
+        if (event.type !== "ITEM.CLEAR" || event.value == null) {
           return
         }
         flush(() => {
-          const nextValue = remove(context.get("value"), event.value)
+          const eventValue = event.value!
+          const nextValue = remove(context.get("value"), eventValue)
           context.set("value", nextValue)
 
           // set input value
@@ -187,9 +197,11 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
       reposition({context, event, prop, scope}) {
         const controlEl = () => domEls.control(scope)
         const positionerEl = () => domEls.positioner(scope)
+        const options =
+          event.type === "POSITIONING.SET" ? event.options : undefined
         getPlacement(controlEl, positionerEl, {
           ...prop("positioning"),
-          ...event.options,
+          ...options,
           defer: true,
           listeners: false,
           onComplete(data) {
@@ -282,7 +294,10 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
       },
       selectItem(params) {
         const {context, event, flush, prop} = params
-        if (event.value == null) {
+        if (
+          (event.type !== "ITEM.SELECT" && event.type !== "ITEM.CLICK") ||
+          event.value == null
+        ) {
           return
         }
         flush(() => {
@@ -312,7 +327,11 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
         })
       },
       setHighlightedValue({context, event}) {
-        if (event.value == null) {
+        if (
+          (event.type !== "HIGHLIGHTED_VALUE.SET" &&
+            event.type !== "ITEM.POINTER_MOVE") ||
+          event.value == null
+        ) {
           return
         }
         context.set("highlightedValue", event.value)
@@ -323,18 +342,25 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
         })
       },
       setInputValue({context, event}) {
+        if (event.type !== "INPUT_VALUE.SET" && event.type !== "INPUT.CHANGE") {
+          return
+        }
         context.set("inputValue", event.value)
       },
       setValue(params) {
         const {context, event, flush, prop} = params
+        const eventValue = getIn(event, "value")
+        if (!eventValue || !Array.isArray(eventValue)) {
+          return
+        }
         flush(() => {
-          context.set("value", event.value)
+          context.set("value", eventValue)
 
           // set input value
           const inputValue = match(prop("selectionBehavior"), {
             clear: "",
             preserve: context.get("inputValue"),
-            replace: prop("collection").stringifyMany(event.value),
+            replace: prop("collection").stringifyMany(eventValue),
           })
           context.set("inputValue", inputValue)
         })
@@ -453,7 +479,10 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
             onChange(value) {
               const event = getEvent()
               const reason = (event.previousEvent || event).src
-              prop("onInputValueChange")?.({inputValue: value, reason})
+              prop("onInputValueChange")?.({
+                inputValue: value,
+                reason: reason as ComboboxInputValueChangeReason,
+              })
             },
             value: prop("inputValue"),
           }
@@ -619,8 +648,10 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
         }
         return !!openOnChange?.({inputValue: context.get("inputValue")})
       },
-      restoreFocus: ({event}) =>
-        event.restoreFocus == null ? true : !!event.restoreFocus,
+      restoreFocus: ({event}) => {
+        const restoreFocus = getIn(event, "restoreFocus")
+        return restoreFocus == null ? true : !!restoreFocus
+      },
     },
 
     ids: ({bindableId, ids}) => {
@@ -631,9 +662,11 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
         errorText: bindableId(ids?.errorText),
         hint: bindableId(ids?.hint),
         input: bindableId(ids?.input),
+        invisibleTagContainer: bindableId(ids?.invisibleTagContainer),
         label: bindableId(ids?.label),
         positioner: bindableId(ids?.positioner),
         root: bindableId(ids?.root),
+        tagContainer: bindableId(ids?.tagContainer),
         trigger: bindableId(ids?.trigger),
       }
     },

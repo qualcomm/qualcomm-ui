@@ -78,6 +78,7 @@ export type ComboboxOpenChangeReason =
   | "escape-key" // User pressed escape
   | "item-select" // User selected an item
   | "clear-trigger" // User clicked clear button
+  | "input-focus" // User focuses the input
 
 export interface ComboboxOpenChangeDetails {
   open: boolean
@@ -380,9 +381,11 @@ export interface ComboboxElementIds {
   errorText: string
   hint: string
   input: string
+  invisibleTagContainer: string
   label: string
   positioner: string
   root: string
+  tagContainer: string
   trigger: string
 }
 
@@ -457,7 +460,68 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
     | "trackPlacement"
     | "trackFocusVisible"
   >
-  events: any
+  events: {
+    previousEvent?: ComboboxSchema["events"]
+    src?: ComboboxOpenChangeReason
+  } & (
+    | {
+        type: "TAG.DISMISS"
+        value: string
+      }
+    | {
+        options: Partial<PositioningOptions> | undefined
+        type: "POSITIONING.SET"
+      }
+    | {
+        type: "ITEM.SELECT"
+        value: string
+      }
+    | {
+        src?: string
+        type: "ITEM.CLICK"
+        value: string
+      }
+    | {
+        type: "CHILDREN_CHANGE"
+      }
+    | {type: "CONTROLLED.CLOSE"}
+    | {type: "INPUT.BLUR"}
+    | {src?: "input-focus"; type: "INPUT.FOCUS"}
+    | {src: "input-click"; type: "INPUT.CLICK"}
+    | {type: "CONTROLLED.OPEN"}
+    | {type: "VALUE.SET"; value: string[]}
+    | {type: "ITEM.CLEAR"; value: string | undefined}
+    | {type: "SELECTED_ITEMS.SYNC"}
+    | {type: "HIGHLIGHTED_VALUE.CLEAR" | "VALUE.CLEAR"}
+    | {type: "HIGHLIGHTED_VALUE.SET"; value: string}
+    | {type: "ITEM.POINTER_MOVE" | "ITEM.POINTER_LEAVE"; value: string}
+    | {
+        keypress?: boolean
+        src: "arrow-key"
+        type: "INPUT.ARROW_DOWN" | "INPUT.ARROW_UP"
+      }
+    | {
+        keypress?: boolean
+        type: "OPEN" | "CLOSE"
+      }
+    | {keypress: boolean; src: "item-select"; type: "INPUT.ENTER"}
+    | {keypress: boolean; type: "INPUT.END"}
+    | {keypress: boolean; src: "escape-key"; type: "INPUT.ESCAPE"}
+    | {keypress: boolean; type: "INPUT.HOME"}
+    | {
+        src: ComboboxInputValueChangeReason
+        type: "INPUT_VALUE.SET" | "INPUT.CHANGE"
+        value: string
+      }
+    | {src: "escape-key"; type: "LAYER.ESCAPE"}
+    | {
+        restoreFocus: boolean | undefined
+        src: "interact-outside"
+        type: "LAYER.INTERACT_OUTSIDE"
+      }
+    | {src: "trigger-click"; type: "TRIGGER.CLICK"}
+  )
+
   guards: GuardSchema<
     | "allowCustomValue"
     | "autoComplete"

@@ -595,7 +595,7 @@ export function createComboboxApi(
           if (!props.focusable) {
             return
           }
-          send({src: "trigger", type: "INPUT.FOCUS"})
+          send({src: "input-focus", type: "INPUT.FOCUS"})
         },
         onKeyDown(event) {
           if (event.defaultPrevented) {
