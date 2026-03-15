@@ -123,12 +123,6 @@ const inputTagsMachineBase = {
     }
   },
 
-  refs() {
-    return {
-      tagObserver: null,
-    }
-  },
-
   states: {
     idle: {
       effects: ["trackControlResize"],
