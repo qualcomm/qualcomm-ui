@@ -1,7 +1,7 @@
 {
   "ignoreFiles": [
     "packages/*/coverage/**",
-    "packages/utilities/qds-core/src/styles/*.css",
+    "packages/common/qds-core/src/styles/*.css",
     "**/dist/**",
     "node_modules/**"
   ],
