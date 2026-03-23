@@ -8,11 +8,11 @@ export function getVariableTypeFromName(name: string): TokenType | undefined {
   if (["measurement", "stroke"].some((part) => name.includes(part))) {
     return "dimension"
   }
-  if (name.includes("opacity")) {
-    return "number"
-  }
   if (name.includes("color")) {
     return "color"
+  }
+  if (name.includes("opacity")) {
+    return "number"
   }
   if (name.includes("font-family")) {
     return "fontFamily"
