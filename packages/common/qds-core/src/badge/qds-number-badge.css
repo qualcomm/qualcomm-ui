@@ -28,6 +28,9 @@
 
   &[data-emphasis="neutral"] {
     --badge-background: var(--color-background-support-neutral);
+  }
+
+  &[data-emphasis="brand"] {
     --badge-text: var(--color-utility-persistent-white);
   }
 

@@ -18,15 +18,17 @@ export type QdsBadgeSemanticEmphasis =
   | "danger"
 
 export type QdsBadgeCategoryEmphasis =
+  | "amber"
   | "blue"
   | "cyan"
   | "green"
-  | "kiwi"
+  | "lime"
   | "magenta"
   | "orange"
   | "purple"
   | "red"
   | "teal"
+  | "violet"
   | "yellow"
 
 export interface QdsBaseBadgeProps {
