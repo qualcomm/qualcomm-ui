@@ -27,7 +27,12 @@ export type QdsTagEmphasis =
   | "yellow"
   | QdsTagEmphasis__deprecated
 
-export type QdsTagRadius = "square" | "rounded"
+/**
+ * @deprecated in {@link https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1160-20260324 v1.16.0}, migrate to {@link QdsTagShape}
+ */
+export type QdsTagRadius = QdsTagShape
+
+export type QdsTagShape = "square" | "rounded"
 
 export type QdsTagSize = "sm" | "md" | "lg"
 
@@ -47,11 +52,22 @@ export interface QdsTagApiProps {
   emphasis?: QdsTagEmphasis
 
   /**
+   * @deprecated in {@link https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1160-20260324 v1.16.0}, migrate to {@link shape}
+   *
    * Governs the shape of the tag.
    *
    * @default 'square'
    */
   radius?: QdsTagRadius
+
+  /**
+   * Governs the shape of the tag.
+   *
+   * @since 1.16.0
+   *
+   * @default 'square'
+   */
+  shape?: QdsTagShape
 
   /**
    * Governs the size of the text, icons, spacing, and padding.
@@ -72,8 +88,8 @@ export interface QdsTagSpanRootBindings {
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsTagEmphasis
   "data-part": "root"
-  "data-radius": QdsTagRadius
   "data-scope": "tag"
+  "data-shape": QdsTagShape
   "data-size": QdsTagSize
   "data-variant"?: QdsTagVariant
 }
@@ -83,8 +99,8 @@ export interface QdsTagButtonRootBindings {
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsTagEmphasis
   "data-part": "root"
-  "data-radius": QdsTagRadius
   "data-scope": "tag"
+  "data-shape": QdsTagShape
   "data-size": QdsTagSize
   "data-variant"?: QdsTagVariant
   disabled: boolean | undefined

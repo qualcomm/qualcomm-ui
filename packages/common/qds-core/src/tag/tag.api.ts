@@ -29,9 +29,9 @@ export function createQdsTagApi(
     "data-disabled": booleanDataAttr(props.disabled),
     "data-emphasis": props.emphasis || "outline-brand",
     "data-part": "root" as const,
-    "data-radius": props.radius || "square",
     "data-scope": "tag" as const,
     "data-selected": booleanDataAttr(props.selected),
+    "data-shape": props.shape || props.radius || "square",
     "data-size": size,
     "data-variant": props.variant,
   }
