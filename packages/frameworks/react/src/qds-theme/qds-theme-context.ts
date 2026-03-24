@@ -5,7 +5,7 @@ import type {Dispatch, SetStateAction} from "react"
 
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 
-export type QdsBrand = "qualcomm" | "snapdragon" | "dragonwing"
+export type QdsBrand = "qualcomm" | "snapdragon" | "dragonwing" | "arduino"
 
 export type ColorScheme = "light" | "dark"
 
@@ -24,7 +24,10 @@ export function isQdsTheme(value: unknown): value is QdsBrand {
 export function isQdsBrand(value: unknown): value is QdsBrand {
   return (
     typeof value === "string" &&
-    (value === "qualcomm" || value === "snapdragon" || value === "dragonwing")
+    (value === "qualcomm" ||
+      value === "snapdragon" ||
+      value === "dragonwing" ||
+      value === "arduino")
   )
 }
 
