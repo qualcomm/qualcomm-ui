@@ -65,7 +65,7 @@
 
 .qui-progress-ring__track {
   fill: transparent;
-  stroke: var(--color-background-neutral-04);
+  stroke: var(--track-default);
   stroke-width: var(--stroke-width);
 
   &[data-disabled] {

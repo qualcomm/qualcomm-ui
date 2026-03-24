@@ -1442,7 +1442,7 @@
     min-width: 230px;
   }
   .auth-container .errors {
-    background-color: var(--color-background-neutral-04);
+    background-color: var(--color-background-neutral-03);
     border-radius: 4px;
     color: var(--color-text-neutral-primary);
     font: var(--font-static-code-sm-bold);

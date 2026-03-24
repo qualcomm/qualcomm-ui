@@ -106,7 +106,7 @@
 .qui-progress__track {
   align-items: baseline;
   align-self: center;
-  background: var(--color-background-neutral-04);
+  background: var(--track-default);
   border-radius: 360px;
   display: flex;
   grid-column: var(--bar-start-column) / var(--bar-column-end);

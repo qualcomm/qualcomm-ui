@@ -404,7 +404,7 @@ hr.mdx {
 
     &::before {
       align-items: center;
-      background-color: var(--color-background-neutral-04);
+      background-color: var(--color-background-neutral-03);
       border-radius: 9999px;
       box-sizing: border-box;
       color: var(--color-text-neutral-secondary);
