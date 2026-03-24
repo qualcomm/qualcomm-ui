@@ -1,7 +1,9 @@
 import {Component} from "@angular/core"
 
 import {IconButtonContrastDemo} from "@qualcomm-ui/angular-docs/components+/icon-button+/demos/icon-button-contrast-demo"
+import {IconButtonDensityDemo} from "@qualcomm-ui/angular-docs/components+/icon-button+/demos/icon-button-density-demo"
 import {IconButtonEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/icon-button+/demos/icon-button-emphasis-demo"
+import {IconButtonInverseDemo} from "@qualcomm-ui/angular-docs/components+/icon-button+/demos/icon-button-inverse-demo"
 import {IconButtonSizesDemo} from "@qualcomm-ui/angular-docs/components+/icon-button+/demos/icon-button-sizes-demo"
 import {IconButtonVariantCombinationsDemo} from "@qualcomm-ui/angular-docs/components+/icon-button+/demos/icon-button-variant-combinations-demo"
 import {IconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/icon-button+/demos/icon-button-variants-demo"
@@ -9,7 +11,9 @@ import {IconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/icon
 @Component({
   imports: [
     IconButtonContrastDemo,
+    IconButtonDensityDemo,
     IconButtonEmphasisDemo,
+    IconButtonInverseDemo,
     IconButtonSizesDemo,
     IconButtonVariantCombinationsDemo,
     IconButtonVariantsDemo,
@@ -24,9 +28,21 @@ import {IconButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/icon
         </div>
       </div>
       <div class="section">
+        <h2 class="section-title">Density</h2>
+        <div class="demo-container">
+          <icon-button-density-demo />
+        </div>
+      </div>
+      <div class="section">
         <h2 class="section-title">Emphasis</h2>
         <div class="demo-container">
           <icon-button-emphasis-demo />
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Inverse</h2>
+        <div class="demo-container">
+          <icon-button-inverse-demo />
         </div>
       </div>
       <div class="section">
