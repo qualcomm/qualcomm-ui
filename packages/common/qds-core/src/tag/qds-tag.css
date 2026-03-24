@@ -1,6 +1,7 @@
 .qui-tag__root {
   align-items: center;
-  background-color: transparent;
+  background: var(--tag-bg-base);
+  border: solid 1px var(--tag-border-base);
   border-radius: var(--tag-radius);
   box-sizing: border-box;
   cursor: default;
@@ -10,8 +11,6 @@
   min-height: var(--tag-size);
   outline: none;
   padding: var(--spacing-30) var(--spacing-70);
-  background: var(--tag-bg-base);
-  border: solid 1px var(--tag-border-base);
   user-select: none;
 
   --tag-size: var(--sizing-90);
@@ -98,7 +97,8 @@
     --tag-border-selected: var(--color-category-green-strong);
   }
 
-  &[data-emphasis="lime"] {
+  &[data-emphasis="lime"],
+  &[data-emphasis="kiwi"] {
     --tag-bg-base: var(--color-category-lime-subtle);
     --tag-bg-selected: var(--color-category-lime-strong);
     --tag-border-base: var(--color-category-lime-medium);
@@ -240,13 +240,13 @@
   border: none;
   border-radius: 0 var(--tag-radius) var(--tag-radius) 0;
   color: var(--color-interactive-icon-neutral-idle);
-  padding: 0;
-  margin-inline-start: var(--spacing-20);
-  --icon-color: var(--color-interactive-icon-neutral-idle);
-  width: var(--tag-size);
-  height: var(--tag-size);
   display: inline-flex;
+  height: var(--tag-size);
   justify-content: center;
+  margin-inline-start: var(--spacing-20);
+  padding: 0;
+  width: var(--tag-size);
+  --icon-color: var(--color-interactive-icon-neutral-idle);
 
   &:hover {
     background: var(--color-interactive-background-ghost-hover);

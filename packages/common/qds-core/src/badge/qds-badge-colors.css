@@ -27,7 +27,8 @@
   &[data-emphasis="green"] {
     --badge-background: var(--color-category-green-strong);
   }
-  &[data-emphasis="lime"] {
+  &[data-emphasis="lime"],
+  &[data-emphasis="kiwi"] {
     --badge-background: var(--color-category-lime-strong);
   }
   &[data-emphasis="magenta"] {
@@ -93,7 +94,8 @@
   &[data-emphasis="green"] {
     --badge-background: var(--color-category-green-subtle);
   }
-  &[data-emphasis="lime"] {
+  &[data-emphasis="lime"],
+  &[data-emphasis="kiwi"] {
     --badge-background: var(--color-category-lime-subtle);
   }
   &[data-emphasis="magenta"] {

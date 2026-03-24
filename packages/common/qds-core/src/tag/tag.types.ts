@@ -5,6 +5,10 @@ import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import type {tagClasses} from "./tag.classes"
 
+/** @deprecated use "lime" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsTagEmphasis__deprecated = "kiwi"
+
 export type QdsTagEmphasis =
   | "outline-brand"
   | "outline-neutral"
@@ -21,6 +25,7 @@ export type QdsTagEmphasis =
   | "teal"
   | "violet"
   | "yellow"
+  | QdsTagEmphasis__deprecated
 
 export type QdsTagRadius = "square" | "rounded"
 

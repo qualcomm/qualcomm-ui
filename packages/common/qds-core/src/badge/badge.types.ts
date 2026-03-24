@@ -17,6 +17,10 @@ export type QdsBadgeSemanticEmphasis =
   | "warning"
   | "danger"
 
+/** @deprecated use "lime" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsBadgeCategoryEmphasis__deprecated = "kiwi"
+
 export type QdsBadgeCategoryEmphasis =
   | "amber"
   | "blue"
@@ -30,6 +34,7 @@ export type QdsBadgeCategoryEmphasis =
   | "teal"
   | "violet"
   | "yellow"
+  | QdsBadgeCategoryEmphasis__deprecated
 
 export interface QdsBaseBadgeProps {
   /**
