@@ -4,6 +4,7 @@
   background: var(--button-bg-idle);
   background-image: none;
   border: var(--border-width-sm) solid transparent;
+  border-radius: var(--component-button-global-border-radius);
   box-sizing: border-box;
   color: var(--button-text-idle);
   cursor: pointer;
@@ -96,7 +97,6 @@
 
   /* Sizes */
   &[data-size="sm"] {
-    border-radius: var(--border-radius-sm);
     font: var(--font-static-body-xs-bold);
     gap: var(--spacing-40);
     height: var(--sizing-120);
@@ -116,7 +116,6 @@
   }
 
   &[data-size="md"] {
-    border-radius: var(--border-radius-md);
     font: var(--font-static-body-sm-bold);
     gap: var(--spacing-70);
     height: var(--sizing-140);
@@ -137,7 +136,6 @@
   }
 
   &[data-size="lg"] {
-    border-radius: var(--border-radius-md);
     font: var(--font-static-body-md-bold);
     gap: var(--spacing-90);
     height: var(--sizing-160);
@@ -246,7 +244,6 @@
     &[data-emphasis="danger"] {
       &:focus-visible::before {
         border: 1px solid var(--color-border-neutral-00);
-        border-radius: var(--border-radius-sm);
         content: "";
         height: 100%;
         left: 0;
