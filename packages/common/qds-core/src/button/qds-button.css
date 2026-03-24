@@ -100,9 +100,12 @@
 
   /* Sizes */
   &[data-size="sm"] {
-    font: var(--font-static-body-xs-bold);
+    font-family: var(--component-button-type-sm-font-family);
+    font-size: var(--component-button-type-sm-font-size);
+    font-weight: var(--component-button-type-sm-font-weight);
     gap: var(--spacing-40);
     height: var(--sizing-120);
+    line-height: var(--component-button-type-sm-line-height);
     padding: 0 var(--spacing-90);
 
     &[data-density="compact"] {
@@ -119,9 +122,12 @@
   }
 
   &[data-size="md"] {
-    font: var(--font-static-body-sm-bold);
+    font-family: var(--component-button-type-md-font-family);
+    font-size: var(--component-button-type-md-font-size);
+    font-weight: var(--component-button-type-md-font-weight);
     gap: var(--spacing-70);
     height: var(--sizing-140);
+    line-height: var(--component-button-type-md-line-height);
     padding: 0 var(--spacing-100);
 
     &[data-density="compact"] {
@@ -139,13 +145,15 @@
   }
 
   &[data-size="lg"] {
-    font: var(--font-static-body-md-bold);
+    font-family: var(--component-button-type-md-font-family);
+    font-size: var(--component-button-type-md-font-size);
+    font-weight: var(--component-button-type-md-font-weight);
     gap: var(--spacing-90);
     height: var(--sizing-160);
+    line-height: var(--component-button-type-md-line-height);
     padding: 0 var(--spacing-110);
 
     &[data-density="compact"] {
-      font: var(--font-static-body-sm-bold);
       gap: var(--spacing-50);
       height: var(--sizing-100);
       padding: 0 var(--spacing-70);
@@ -157,6 +165,13 @@
         width: var(--sizing-100);
       }
     }
+  }
+
+  &[data-density="compact"] {
+    font-family: var(--component-button-type-sm-font-family);
+    font-size: var(--component-button-type-sm-font-size);
+    font-weight: var(--component-button-type-sm-font-weight);
+    line-height: var(--component-button-type-sm-line-height);
   }
 
   /* Variants */
