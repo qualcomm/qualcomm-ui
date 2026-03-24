@@ -79,7 +79,7 @@ import {QdsTagContextService} from "./qds-tag-context.service"
       },
     },
   ],
-  selector: "span[q-tag], button[q-tag]",
+  selector: "span[q-tag], button[q-tag], div[q-tag]",
   template: `
     <ng-content select="[q-start-icon]">
       @if (startIcon()) {
@@ -202,8 +202,8 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
             disabled: this.disabled(),
             emphasis: this.emphasis(),
             radius: this.radius(),
-            shape: this.shape(),
             selected: this.selected(),
+            shape: this.shape(),
             size: this.size(),
             variant: this.variant(),
           } satisfies Explicit<QdsTagApiProps> & {
