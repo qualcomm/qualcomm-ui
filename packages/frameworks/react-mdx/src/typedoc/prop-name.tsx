@@ -5,6 +5,7 @@ import {type ReactNode, useMemo} from "react"
 
 import {Info} from "lucide-react"
 
+import {Badge} from "@qualcomm-ui/react/badge"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Link} from "@qualcomm-ui/react/link"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
@@ -56,8 +57,7 @@ export function PropName({changelogPathname, id, prop}: Props): ReactNode {
 
   const {docProps} = useMdxDocsContext()
 
-  const changelogUrl =
-    changelogPathname || docProps?.changelogUrl || "/changelog"
+  const changelogUrl = changelogPathname || docProps?.changelogUrl || ""
 
   const nameElement = linkifyPrimaryColumn ? (
     <Link
@@ -100,8 +100,18 @@ export function PropName({changelogPathname, id, prop}: Props): ReactNode {
       ) : null}
 
       {sinceText ? (
-        changelogPathname === null ? (
-          <div className="doc-props__since">{sinceText}</div>
+        !changelogPathname ? (
+          <Badge className="doc-props__since" emphasis="info" size="sm">
+            v{sinceText}
+          </Badge>
+        ) : changelogPathname?.startsWith("http") ? (
+          <Link
+            className="doc-prop__since"
+            emphasis="neutral"
+            href={formatSinceUrl(changelogUrl, sinceText)}
+          >
+            {sinceText}
+          </Link>
         ) : (
           <Link
             className="doc-props__since"
