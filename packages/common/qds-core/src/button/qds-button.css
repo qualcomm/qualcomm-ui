@@ -4,6 +4,7 @@
   background: var(--button-bg-idle);
   background-image: none;
   border: var(--border-width-sm) solid transparent;
+  border-radius: var(--component-button-global-border-radius);
   box-sizing: border-box;
   color: var(--button-text-idle);
   cursor: pointer;
@@ -96,7 +97,6 @@
 
   /* Sizes */
   &[data-size="sm"] {
-    border-radius: var(--border-radius-sm);
     font: var(--font-static-body-xs-bold);
     gap: var(--spacing-40);
     height: var(--sizing-120);
@@ -116,7 +116,6 @@
   }
 
   &[data-size="md"] {
-    border-radius: var(--border-radius-md);
     font: var(--font-static-body-sm-bold);
     gap: var(--spacing-70);
     height: var(--sizing-140);
@@ -137,7 +136,6 @@
   }
 
   &[data-size="lg"] {
-    border-radius: var(--border-radius-md);
     font: var(--font-static-body-md-bold);
     gap: var(--spacing-90);
     height: var(--sizing-160);
@@ -188,6 +186,19 @@
         --color-interactive-background-persistent-black-ghost-pressed
       );
     }
+
+    &[data-emphasis="inverse"] {
+      --button-text-idle: var(--color-text-neutral-inverse);
+      --button-text-hover: var(--color-text-neutral-inverse);
+      --button-text-pressed: var(--color-text-neutral-inverse);
+      --button-bg-idle: var(--color-interactive-background-inverse-ghost-idle);
+      --button-bg-hover: var(
+        --color-interactive-background-inverse-ghost-hover
+      );
+      --button-bg-pressed: var(
+        --color-interactive-background-inverse-ghost-pressed
+      );
+    }
   }
 
   &[data-variant="outline"] {
@@ -230,6 +241,18 @@
         border-color: var(--color-interactive-border-persistent-black-pressed);
       }
     }
+
+    &[data-emphasis="inverse"] {
+      border-color: var(--color-interactive-border-inverse-idle);
+
+      &:hover {
+        border-color: var(--color-interactive-border-inverse-hover);
+      }
+
+      &:active {
+        border-color: var(--color-interactive-border-inverse-pressed);
+      }
+    }
   }
 
   &[data-variant="fill"] {
@@ -246,7 +269,6 @@
     &[data-emphasis="danger"] {
       &:focus-visible::before {
         border: 1px solid var(--color-border-neutral-00);
-        border-radius: var(--border-radius-sm);
         content: "";
         height: 100%;
         left: 0;
@@ -283,6 +305,17 @@
       );
       --button-bg-pressed: var(
         --color-interactive-background-persistent-black-fill-pressed
+      );
+    }
+
+    &[data-emphasis="inverse"] {
+      --button-text-idle: var(--color-text-neutral-primary);
+      --button-text-hover: var(--color-text-neutral-primary);
+      --button-text-pressed: var(--color-text-neutral-primary);
+      --button-bg-idle: var(--color-interactive-background-inverse-fill-idle);
+      --button-bg-hover: var(--color-interactive-background-inverse-fill-hover);
+      --button-bg-pressed: var(
+        --color-interactive-background-inverse-fill-pressed
       );
     }
   }

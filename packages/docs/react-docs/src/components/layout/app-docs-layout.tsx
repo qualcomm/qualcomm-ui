@@ -68,9 +68,6 @@ export function AppDocsLayout({
 
   return (
     <DocsLayout
-      docProps={{
-        changelogUrl: "/changelogs/react",
-      }}
       footer={<Footer />}
       header={
         <div className="qui-docs__header">

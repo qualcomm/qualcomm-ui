@@ -19,6 +19,7 @@ export type QdsButtonEmphasis =
   | "danger"
   | "white-persistent"
   | "black-persistent"
+  | "inverse"
 
 export type QdsButtonSize = "sm" | "md" | "lg"
 

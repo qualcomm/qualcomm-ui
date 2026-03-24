@@ -36,6 +36,7 @@ import {
   type QdsTagApiProps,
   type QdsTagEmphasis,
   type QdsTagRadius,
+  type QdsTagShape,
   type QdsTagSize,
   type QdsTagVariant,
 } from "@qualcomm-ui/qds-core/tag"
@@ -78,7 +79,7 @@ import {QdsTagContextService} from "./qds-tag-context.service"
       },
     },
   ],
-  selector: "span[q-tag], button[q-tag]",
+  selector: "span[q-tag], button[q-tag], div[q-tag]",
   template: `
     <ng-content select="[q-start-icon]">
       @if (startIcon()) {
@@ -140,11 +141,22 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
   readonly emphasis = input<QdsTagEmphasis>()
 
   /**
+   * @deprecated in {@link https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1160-20260324 v1.16.0}, migrate to {@link shape}
+   *
    * Governs the shape of the tag.
    *
    * @default 'square'
    */
   readonly radius = input<QdsTagRadius>()
+
+  /**
+   * Governs the shape of the tag.
+   *
+   * @since 1.16.0
+   *
+   * @default 'square'
+   */
+  readonly shape = input<QdsTagShape>()
 
   /**
    * Governs the size of the text, icons, spacing, and padding.
@@ -191,6 +203,7 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
             emphasis: this.emphasis(),
             radius: this.radius(),
             selected: this.selected(),
+            shape: this.shape(),
             size: this.size(),
             variant: this.variant(),
           } satisfies Explicit<QdsTagApiProps> & {
