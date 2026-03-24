@@ -14,7 +14,7 @@ import type {
   DimensionRawValue,
   DimensionValue,
 } from "./token-types"
-import {rgbaToOklch, toCssVar} from "./utils"
+import {rgbaToHex, toCssVar} from "./utils"
 
 function isMeasurementAlias(value: unknown): value is string {
   return typeof value === "string" && value.includes("{measurements")
@@ -71,7 +71,7 @@ export function registerCustomTransformsForDtcg({
       const [red, green, blue] = components
       if (red !== undefined && green !== undefined && blue !== undefined) {
         // TODO: remove cast
-        return rgbaToOklch({a: alpha, b: blue, g: green, r: red} as RGBA)
+        return rgbaToHex({a: alpha, b: blue, g: green, r: red} as RGBA)
       }
     }
     return value
