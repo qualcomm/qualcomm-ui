@@ -4,7 +4,6 @@ import type {
   RGBA,
   VariableAlias,
 } from "@figma/rest-api-spec"
-import {oklch as toOklch} from "culori"
 import {mkdir, writeFile} from "node:fs/promises"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
@@ -40,30 +39,14 @@ const formatNumber = (value: number, precision: number): string =>
  * Convert an RGBA colour (0-255, alpha 0-1) to an `oklch(...)` CSS string.
  * Throws if any channel is out of range.
  */
-export const rgbaToOklch = (rgba: RGBA): string => {
-  const {a = 1, b, g, r} = rgba
+export function rgbaToHex({a, b, g, r}: RGBA): string {
+  const to8Bit = (v: number) => Math.round(Math.min(1, Math.max(0, v)) * 255)
+  const toHex = (v: number) => to8Bit(v).toString(16).padStart(2, "0")
 
-  // Basic range validation
-  if (![r, g, b].every((c) => c >= 0 && c <= 255)) {
-    throw new RangeError("RGB channels must be between 0 and 255")
-  }
-  if (a < 0 || a > 1) {
-    throw new RangeError("Alpha channel must be between 0 and 1")
-  }
+  const hex = [r, g, b].map(toHex).join("")
+  const alpha = to8Bit(a)
 
-  const {
-    c = 0,
-    h = 0,
-    l = 0,
-  } = toOklch({
-    alpha: a !== 1 ? a : undefined,
-    b,
-    g,
-    mode: "rgb",
-    r,
-  })
-
-  return oklchToString({alpha: a === 1 ? undefined : a, c, h, l})
+  return `#${hex}${alpha === 255 ? "" : alpha.toString(16).padStart(2, "0")}`
 }
 
 /**
