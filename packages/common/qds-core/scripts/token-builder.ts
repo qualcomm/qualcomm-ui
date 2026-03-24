@@ -256,11 +256,7 @@ export class FigmaTokenBuilder {
                   case "arduino":
                     delete dictionary.qc
                     delete dictionary.sd
-                    // Arduino needs dw for typography references (dw.type.*),
-                    // but dw.styles references DW primitives not in Arduino's source
-                    if (dictionary.dw) {
-                      delete dictionary.dw.styles
-                    }
+                    delete dictionary.dw
                     break
                 }
                 return dictionary
