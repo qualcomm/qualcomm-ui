@@ -36,14 +36,14 @@
 
   &[data-emphasis="neutral-outline"] {
     --badge-background: transparent;
-    --badge-border: var(--color-border-support-neutral);
+    --badge-border: var(--color-border-support-neutral-medium);
     --badge-text: var(--color-text-neutral-primary);
     --border-size: 1px;
   }
 
   &[data-emphasis="brand-outline"] {
     --badge-background: transparent;
-    --badge-border: var(--color-border-support-neutral);
+    --badge-border: var(--color-border-support-neutral-medium);
     --badge-text: var(--color-text-brand-primary);
     --border-size: 1px;
   }
