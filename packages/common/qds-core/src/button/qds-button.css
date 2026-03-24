@@ -186,6 +186,19 @@
         --color-interactive-background-persistent-black-ghost-pressed
       );
     }
+
+    &[data-emphasis="inverse"] {
+      --button-text-idle: var(--color-text-neutral-inverse);
+      --button-text-hover: var(--color-text-neutral-inverse);
+      --button-text-pressed: var(--color-text-neutral-inverse);
+      --button-bg-idle: var(--color-interactive-background-inverse-ghost-idle);
+      --button-bg-hover: var(
+        --color-interactive-background-inverse-ghost-hover
+      );
+      --button-bg-pressed: var(
+        --color-interactive-background-inverse-ghost-pressed
+      );
+    }
   }
 
   &[data-variant="outline"] {
@@ -226,6 +239,18 @@
 
       &:active {
         border-color: var(--color-interactive-border-persistent-black-pressed);
+      }
+    }
+
+    &[data-emphasis="inverse"] {
+      border-color: var(--color-interactive-border-inverse-idle);
+
+      &:hover {
+        border-color: var(--color-interactive-border-inverse-hover);
+      }
+
+      &:active {
+        border-color: var(--color-interactive-border-inverse-pressed);
       }
     }
   }
@@ -280,6 +305,17 @@
       );
       --button-bg-pressed: var(
         --color-interactive-background-persistent-black-fill-pressed
+      );
+    }
+
+    &[data-emphasis="inverse"] {
+      --button-text-idle: var(--color-text-neutral-primary);
+      --button-text-hover: var(--color-text-neutral-primary);
+      --button-text-pressed: var(--color-text-neutral-primary);
+      --button-bg-idle: var(--color-interactive-background-inverse-fill-idle);
+      --button-bg-hover: var(--color-interactive-background-inverse-fill-hover);
+      --button-bg-pressed: var(
+        --color-interactive-background-inverse-fill-pressed
       );
     }
   }
