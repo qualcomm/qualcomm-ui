@@ -117,8 +117,6 @@ export class FigmaTokenBuilder {
        /* stylelint-disable */\n\n
     `)
 
-    const malformedCssVariableRegex = /(['"])var\(--[\w-]+\)\1/g
-
     const formattedVariableOutput = formattedVariables({
       dictionary,
       format: propertyFormatNames.css,
@@ -127,14 +125,6 @@ export class FigmaTokenBuilder {
     })
       .split("\n")
       .map((line) => line.trim())
-      .map((line) => {
-        // match
-        if (malformedCssVariableRegex.test(line)) {
-          return line.replace(/(['"])var\((--[\w-]+)\)\1/g, "var($2)")
-        }
-
-        return line
-      })
       .sort((a, b) => {
         // sort colors first
         if (a.startsWith("--color")) {
