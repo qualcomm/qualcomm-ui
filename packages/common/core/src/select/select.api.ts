@@ -290,6 +290,9 @@ export function createSelectApi(
           if (!interactive) {
             return
           }
+          if (event.target !== event.currentTarget) {
+            return
+          }
 
           const keyMap: EventKeyMap = {
             ArrowDown(event) {
