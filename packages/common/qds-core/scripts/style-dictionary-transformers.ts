@@ -49,6 +49,10 @@ function formatUnitValue<T>(obj: T): string | number | T {
   return value === 0 || value === "0" ? value : `${value}${unit}`
 }
 
+function formatFontFamilyValue(value: any): string {
+  return value.replaceAll("'", '"')
+}
+
 export function registerCustomTransformsForDtcg({
   measurements,
 }: {
@@ -108,9 +112,9 @@ export function registerCustomTransformsForDtcg({
       const {$value} = token
       if (typeof $value === "string") {
         if ($value.includes("Mono")) {
-          return `${$value}, monospace`
+          return `${formatFontFamilyValue($value)}, monospace`
         } else {
-          return `${$value}, sans-serif`
+          return `${formatFontFamilyValue($value)}, sans-serif`
         }
       }
       return $value
@@ -263,8 +267,6 @@ export function registerCustomTransformsForDtcg({
       const typographyCssShorthand = `${resolvedFontWeight ? `${resolvedFontWeight} ` : ""}${
         flatFontSize ? `${flatFontSize} ` : `${getBasePxFontSize(platform)}px `
       }${flatLineHeight ? `/ ${flatLineHeight} ` : " "}${resolvedFontFamily}`
-
-      // console.debug(typographyCssShorthand)
 
       return typographyCssShorthand
     },
