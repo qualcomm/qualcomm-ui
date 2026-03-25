@@ -6,7 +6,7 @@
 
 import {trackDismissableElement} from "@qualcomm-ui/dom/dismissable"
 import {getPlacement, type Placement} from "@qualcomm-ui/dom/floating-ui"
-import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
+import {isFocusVisible, trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {
   getByTypeahead,
   getInitialFocus,
@@ -290,7 +290,7 @@ export const selectMachine: MachineConfig<SelectSchema> =
           const element = getInitialFocus({
             root: domEls.content(scope),
           })
-          element?.focus({preventScroll: true})
+          element?.focus({focusVisible: isFocusVisible(), preventScroll: true})
         })
       },
 

@@ -16,6 +16,12 @@ import {
   isMac,
 } from "@qualcomm-ui/dom/query"
 
+declare global {
+  interface FocusOptions {
+    focusVisible?: boolean
+  }
+}
+
 function isVirtualClick(event: MouseEvent | PointerEvent): boolean {
   if ((event as any).mozInputSource === 0 && event.isTrusted) {
     return true
@@ -184,12 +190,14 @@ function setupGlobalFocusEvents(root?: RootNode) {
   const doc = getDocument(root)
 
   const focus = win.HTMLElement.prototype.focus
-  win.HTMLElement.prototype.focus = function () {
+  win.HTMLElement.prototype.focus = function (options?: FocusOptions) {
     // For programmatic focus, we remove the focus visible state to prevent showing
-    // focus rings When `options.focusVisible` is supported in most browsers, we can
-    // remove this @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#focusvisible
-    currentModality = "virtual"
-    triggerChangeHandlers("virtual", null)
+    // focus rings. Call sites can opt back in by passing `focusVisible: true`.
+    // @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#focusvisible
+    if (options?.focusVisible !== true) {
+      currentModality = "virtual"
+      triggerChangeHandlers("virtual", null)
+    }
 
     hasEventBeforeFocus = true
     focus.apply(
