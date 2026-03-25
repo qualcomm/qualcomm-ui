@@ -23,7 +23,7 @@ export interface SelectIndicatorProps extends ElementRenderProp<"button"> {
 
 /**
  * Icon that indicates the open/close state of the select's associated panel.
- * Renders a `<div>` element by default.
+ * Renders a `<button>` element by default.
  */
 export function SelectIndicator({
   icon = ChevronDown,
@@ -40,6 +40,7 @@ export function SelectIndicator({
   return (
     <InlineIconButton
       icon={icon}
+      inert
       size={qdsSelectContext.size === "sm" ? "sm" : "md"}
       variant="scale"
       {...mergedProps}
