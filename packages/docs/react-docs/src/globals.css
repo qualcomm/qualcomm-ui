@@ -11,6 +11,8 @@
 @import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/dragonwing-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/arduino-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/arduino-dark.css" layer(components);
 @import "@qualcomm-ui/react-mdx/styles.css" layer(components);
 @import "@qualcomm-ui/react-internal/styles.css" layer(components);
 

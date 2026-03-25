@@ -32,6 +32,7 @@ export const themeOptCollection: ListCollection<ThemeOpt> =
       {id: "qualcomm", label: "Qualcomm"},
       {id: "snapdragon", label: "Snapdragon"},
       {id: "dragonwing", label: "Dragonwing"},
+      {id: "arduino", label: "Arduino"},
     ],
     itemValue: (item) => item.id,
   })
