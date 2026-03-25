@@ -106,7 +106,7 @@
     "turbo": "^2.7.6",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",
-    "yaml": "^2.8.2"
+    "yaml": "^2.8.3"
   },
   "resolutions": {
     "eslint": "catalog:",
