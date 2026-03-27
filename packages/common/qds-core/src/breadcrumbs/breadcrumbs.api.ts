@@ -12,6 +12,7 @@ import type {
   QdsBreadcrumbsItemBindings,
   QdsBreadcrumbsItemIconBindings,
   QdsBreadcrumbsItemSeparatorBindings,
+  QdsBreadcrumbsItemTooltipBindings,
   QdsBreadcrumbsItemTriggerBindings,
   QdsBreadcrumbsListBindings,
   QdsBreadcrumbsRootBindings,
@@ -47,6 +48,13 @@ export function createQdsBreadcrumbsApi(
         "aria-hidden": true,
         className: breadcrumbsClasses.separator,
         "data-size": size,
+      })
+    },
+    getItemTooltipBindings({id}): QdsBreadcrumbsItemTooltipBindings {
+      return normalize.element({
+        className: breadcrumbsClasses.itemTooltip,
+        id,
+        role: "tooltip",
       })
     },
     getItemTriggerBindings(): QdsBreadcrumbsItemTriggerBindings {

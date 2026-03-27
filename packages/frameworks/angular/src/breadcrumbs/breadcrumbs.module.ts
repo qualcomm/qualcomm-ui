@@ -7,6 +7,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 import {BreadcrumbItemIconDirective} from "./breadcrumb-item-icon.directive"
 import {BreadcrumbItemSeparatorDirective} from "./breadcrumb-item-separator.directive"
+import {BreadcrumbItemTooltipDirective} from "./breadcrumb-item-tooltip.directive"
 import {BreadcrumbItemTriggerDirective} from "./breadcrumb-item-trigger.directive"
 import {BreadcrumbItemDirective} from "./breadcrumb-item.directive"
 import {BreadcrumbsListDirective} from "./breadcrumbs-list.directive"
@@ -17,6 +18,7 @@ import {BreadcrumbsRootDirective} from "./breadcrumbs-root.directive"
     BreadcrumbsRootDirective,
     BreadcrumbItemDirective,
     BreadcrumbItemIconDirective,
+    BreadcrumbItemTooltipDirective,
     BreadcrumbItemTriggerDirective,
     BreadcrumbItemSeparatorDirective,
     BreadcrumbsListDirective,
@@ -25,6 +27,7 @@ import {BreadcrumbsRootDirective} from "./breadcrumbs-root.directive"
     BreadcrumbsRootDirective,
     BreadcrumbItemDirective,
     BreadcrumbItemIconDirective,
+    BreadcrumbItemTooltipDirective,
     BreadcrumbItemTriggerDirective,
     BreadcrumbItemSeparatorDirective,
     BreadcrumbsListDirective,

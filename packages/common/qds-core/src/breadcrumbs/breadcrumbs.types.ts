@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {BooleanDataAttr, IdParam} from "@qualcomm-ui/utils/attributes"
 
 import type {breadcrumbsClasses} from "./breadcrumbs.classes"
 
@@ -56,6 +56,12 @@ export interface QdsBreadcrumbsItemIconBindings
   "data-emphasis": QdsBreadcrumbsEmphasis
 }
 
+export interface QdsBreadcrumbsItemTooltipBindings {
+  className: BreadcrumbsClasses["itemTooltip"]
+  id: string
+  role: "tooltip"
+}
+
 export interface QdsBreadcrumbsItemTriggerBindings
   extends QdsBreadcrumbsCommonBindings {
   className: BreadcrumbsClasses["itemTrigger"]
@@ -80,6 +86,7 @@ export interface QdsBreadcrumbsApi {
   ): QdsBreadcrumbsItemBindings
   getItemIconBindings(): QdsBreadcrumbsItemIconBindings
   getItemSeparatorBindings(): QdsBreadcrumbsItemSeparatorBindings
+  getItemTooltipBindings(params: IdParam): QdsBreadcrumbsItemTooltipBindings
   getItemTriggerBindings(): QdsBreadcrumbsItemTriggerBindings
   getListBindings(): QdsBreadcrumbsListBindings
   getRootBindings(): QdsBreadcrumbsRootBindings

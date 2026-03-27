@@ -12,6 +12,10 @@ import {
   type BreadcrumbsItemSeparatorProps,
 } from "./breadcrumbs-item-separator"
 import {
+  BreadcrumbsItemTooltip,
+  type BreadcrumbsItemTooltipProps,
+} from "./breadcrumbs-item-tooltip"
+import {
   BreadcrumbsItemTrigger,
   type BreadcrumbsItemTriggerProps,
 } from "./breadcrumbs-item-trigger"
@@ -24,6 +28,7 @@ export type {
   BreadcrumbsItemIconProps,
   BreadcrumbsItemRootProps,
   BreadcrumbsItemSeparatorProps,
+  BreadcrumbsItemTooltipProps,
   BreadcrumbsItemTriggerProps,
   BreadcrumbsItemProps,
   BreadcrumbsListProps,
@@ -35,6 +40,7 @@ type BreadcrumbsComponent = {
   ItemIcon: typeof BreadcrumbsItemIcon
   ItemRoot: typeof BreadcrumbsItemRoot
   ItemSeparator: typeof BreadcrumbsItemSeparator
+  ItemTooltip: typeof BreadcrumbsItemTooltip
   ItemTrigger: typeof BreadcrumbsItemTrigger
   /**
    * The list of breadcrumbs. Renders an `<ol>` element by default.
@@ -52,6 +58,7 @@ export const Breadcrumbs: BreadcrumbsComponent = {
   ItemIcon: BreadcrumbsItemIcon,
   ItemRoot: BreadcrumbsItemRoot,
   ItemSeparator: BreadcrumbsItemSeparator,
+  ItemTooltip: BreadcrumbsItemTooltip,
   ItemTrigger: BreadcrumbsItemTrigger,
   List: BreadcrumbsList,
   Root: BreadcrumbsRoot,

@@ -4,6 +4,7 @@
 import {booleanAttribute, Component, input, type OnInit} from "@angular/core"
 import {ChevronRight} from "lucide-angular"
 
+import {useId} from "@qualcomm-ui/angular-core/common"
 import {
   type LucideIconOrString,
   provideIcons,
@@ -19,8 +20,16 @@ import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
   standalone: false,
   template: `
     <ng-content select="[q-breadcrumb-item-trigger]">
-      <button q-breadcrumb-item-trigger>
+      <button
+        q-breadcrumb-item-trigger
+        [attr.aria-describedby]="tooltip() ? tooltipId : null"
+      >
         <ng-content />
+        @if (tooltip()) {
+          <span q-breadcrumb-item-tooltip [id]="tooltipId">
+            {{ tooltip() }}
+          </span>
+        }
       </button>
     </ng-content>
 
@@ -44,6 +53,14 @@ export class BreadcrumbItemDirective implements OnInit {
    * @default ChevronRight
    */
   readonly separator = input<LucideIconOrString>("ChevronRight")
+
+  /**
+   * Text content of a tooltip displayed above the trigger on hover or
+   * keyboard focus.
+   */
+  readonly tooltip = input<string | undefined>()
+
+  protected readonly tooltipId = useId(this, null)
 
   protected readonly qdsContext = useQdsBreadcrumbsContext()
 

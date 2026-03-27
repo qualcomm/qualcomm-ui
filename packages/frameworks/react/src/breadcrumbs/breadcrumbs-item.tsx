@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactElement, ReactNode} from "react"
+import {type ReactElement, type ReactNode, useId} from "react"
 
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import type {BindingRenderProp} from "@qualcomm-ui/react-core/system"
@@ -18,6 +18,10 @@ import {
   BreadcrumbsItemSeparator,
   type BreadcrumbsItemSeparatorProps,
 } from "./breadcrumbs-item-separator"
+import {
+  BreadcrumbsItemTooltip,
+  type BreadcrumbsItemTooltipProps,
+} from "./breadcrumbs-item-tooltip"
 import {
   BreadcrumbsItemTrigger,
   type BreadcrumbsItemTriggerProps,
@@ -47,6 +51,12 @@ export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
   itemIconProps?: BreadcrumbsItemIconProps
 
   /**
+   * Props applied to the item tooltip element.
+   * @inheritDoc
+   */
+  itemTooltipProps?: BreadcrumbsItemTooltipProps
+
+  /**
    * Props applied to the item trigger element.
    * @inheritDoc
    */
@@ -69,6 +79,12 @@ export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
    * @inheritDoc
    */
   separatorProps?: BreadcrumbsItemSeparatorProps
+
+  /**
+   * Text content of a tooltip displayed above the trigger on hover or
+   * keyboard focus.
+   */
+  tooltip?: string
 }
 
 export function BreadcrumbsItem({
@@ -76,21 +92,31 @@ export function BreadcrumbsItem({
   children,
   icon,
   itemIconProps,
+  itemTooltipProps,
   itemTriggerProps,
   render,
   separator,
   separatorProps,
+  tooltip,
   ...props
 }: BreadcrumbsItemProps): ReactElement {
+  const tooltipId = useId()
+
   return (
     <BreadcrumbsItemRoot {...props}>
       <BreadcrumbsItemTrigger
         aria-current={ariaCurrent}
+        aria-describedby={tooltip ? tooltipId : undefined}
         render={render}
         {...itemTriggerProps}
       >
         {icon ? <BreadcrumbsItemIcon icon={icon} {...itemIconProps} /> : null}
         {children}
+        {tooltip ? (
+          <BreadcrumbsItemTooltip id={tooltipId} {...itemTooltipProps}>
+            {tooltip}
+          </BreadcrumbsItemTooltip>
+        ) : null}
       </BreadcrumbsItemTrigger>
       <BreadcrumbsItemSeparator icon={separator} {...separatorProps} />
     </BreadcrumbsItemRoot>

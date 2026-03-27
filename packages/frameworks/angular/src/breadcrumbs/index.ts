@@ -1,5 +1,6 @@
 export * from "./breadcrumb-item-icon.directive"
 export * from "./breadcrumb-item-separator.directive"
+export * from "./breadcrumb-item-tooltip.directive"
 export * from "./breadcrumb-item-trigger.directive"
 export * from "./breadcrumb-item.directive"
 export * from "./breadcrumbs-list.directive"

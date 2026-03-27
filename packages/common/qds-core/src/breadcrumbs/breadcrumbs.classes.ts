@@ -4,6 +4,7 @@
 export const breadcrumbsClasses = {
   item: "qui-breadcrumbs__item",
   itemIcon: "qui-breadcrumbs__item-icon",
+  itemTooltip: "qui-breadcrumbs__item-tooltip",
   itemTrigger: "qui-breadcrumbs__item-trigger",
   list: "qui-breadcrumbs__list",
   root: "qui-breadcrumbs__root",
