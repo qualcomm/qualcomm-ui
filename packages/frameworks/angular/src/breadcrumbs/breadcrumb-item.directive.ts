@@ -1,7 +1,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {booleanAttribute, Component, input, type OnInit} from "@angular/core"
+import {
+  booleanAttribute,
+  Component,
+  computed,
+  input,
+  type OnInit,
+} from "@angular/core"
 import {ChevronRight} from "lucide-angular"
 
 import {useId} from "@qualcomm-ui/angular-core/common"
@@ -12,10 +18,16 @@ import {
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
-import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
+import {
+  QDS_BREADCRUMB_ITEM,
+  useQdsBreadcrumbsContext,
+} from "./qds-breadcrumbs-context.service"
 
 @Component({
-  providers: [provideIcons({ChevronRight})],
+  providers: [
+    provideIcons({ChevronRight}),
+    {provide: QDS_BREADCRUMB_ITEM, useExisting: BreadcrumbItemDirective},
+  ],
   selector: "[q-breadcrumb-item]",
   standalone: false,
   template: `
@@ -26,7 +38,7 @@ import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
         </button>
       </ng-content>
       @if (tooltip()) {
-        <span q-breadcrumb-item-tooltip [id]="tooltipId">
+        <span q-breadcrumb-item-tooltip [attr.id]="tooltipId()">
           {{ tooltip() }}
         </span>
       }
@@ -59,7 +71,9 @@ export class BreadcrumbItemDirective implements OnInit {
    */
   readonly tooltip = input<string | undefined>()
 
-  protected readonly tooltipId = useId(this, null)
+  private readonly _tooltipId = useId(this, null)
+
+  readonly tooltipId = computed(() => (this.tooltip() ? this._tooltipId : null))
 
   protected readonly qdsContext = useQdsBreadcrumbsContext()
 

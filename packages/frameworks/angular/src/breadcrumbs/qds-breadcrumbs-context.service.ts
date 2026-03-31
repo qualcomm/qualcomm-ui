@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {Injectable} from "@angular/core"
+import {Injectable, InjectionToken, type Signal} from "@angular/core"
 
 import {
   type ApiContext,
@@ -21,3 +21,7 @@ export const [
   "QdsBreadcrumbsContext",
   QdsBreadcrumbsContextService,
 )
+
+export const QDS_BREADCRUMB_ITEM = new InjectionToken<{
+  tooltipId: Signal<string | null>
+}>("QdsBreadcrumbItem")
