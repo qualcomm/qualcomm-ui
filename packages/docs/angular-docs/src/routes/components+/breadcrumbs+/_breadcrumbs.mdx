@@ -79,6 +79,19 @@ Use the [disabled](./#disabled) prop to disable a breadcrumb item.
 
 <QdsDemo name="BreadcrumbsDisabledDemo" />
 
+### Overflow
+
+::: terms
+overflow
+collapsed
+ellipsis
+truncated
+:::
+
+Use the `q-breadcrumb-overflow-item` directive to collapse intermediate breadcrumb items into a dropdown menu. The developer decides which items to collapse by placing the overflow item explicitly in the list. Clicking the ellipsis ("...") opens a menu with the collapsed items.
+
+<QdsDemo name="BreadcrumbsOverflowDemo" />
+
 ## API
 
 ### q-breadcrumbs-root
@@ -116,3 +129,13 @@ Use the [disabled](./#disabled) prop to disable a breadcrumb item.
 <TypeDocProps name="BreadcrumbItemSeparatorDirective" />
 
 <TypeDocAttributes name="QdsBreadcrumbsItemSeparatorBindings" />
+
+### q-breadcrumb-overflow-item
+
+<TypeDocProps name="BreadcrumbOverflowItemComponent" />
+
+### q-breadcrumb-overflow-trigger
+
+<TypeDocProps name="BreadcrumbOverflowTriggerDirective" />
+
+<TypeDocAttributes name="QdsBreadcrumbsOverflowTriggerBindings" />

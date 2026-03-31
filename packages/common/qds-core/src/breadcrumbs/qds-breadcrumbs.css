@@ -102,6 +102,12 @@
   }
 }
 
+.qui-breadcrumbs__overflow-trigger {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .qui-breadcrumbs__item-icon {
   color: var(--icon-color);
 

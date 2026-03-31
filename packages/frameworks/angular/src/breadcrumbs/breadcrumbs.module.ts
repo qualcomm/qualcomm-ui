@@ -4,11 +4,15 @@
 import {NgModule} from "@angular/core"
 
 import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {MenuModule} from "@qualcomm-ui/angular/menu"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 import {BreadcrumbItemIconDirective} from "./breadcrumb-item-icon.directive"
 import {BreadcrumbItemSeparatorDirective} from "./breadcrumb-item-separator.directive"
 import {BreadcrumbItemTriggerDirective} from "./breadcrumb-item-trigger.directive"
 import {BreadcrumbItemDirective} from "./breadcrumb-item.directive"
+import {BreadcrumbOverflowItemComponent} from "./breadcrumb-overflow-item.component"
+import {BreadcrumbOverflowTriggerDirective} from "./breadcrumb-overflow-trigger.directive"
 import {BreadcrumbsListDirective} from "./breadcrumbs-list.directive"
 import {BreadcrumbsRootDirective} from "./breadcrumbs-root.directive"
 
@@ -19,6 +23,8 @@ import {BreadcrumbsRootDirective} from "./breadcrumbs-root.directive"
     BreadcrumbItemIconDirective,
     BreadcrumbItemTriggerDirective,
     BreadcrumbItemSeparatorDirective,
+    BreadcrumbOverflowItemComponent,
+    BreadcrumbOverflowTriggerDirective,
     BreadcrumbsListDirective,
   ],
   exports: [
@@ -27,8 +33,10 @@ import {BreadcrumbsRootDirective} from "./breadcrumbs-root.directive"
     BreadcrumbItemIconDirective,
     BreadcrumbItemTriggerDirective,
     BreadcrumbItemSeparatorDirective,
+    BreadcrumbOverflowItemComponent,
+    BreadcrumbOverflowTriggerDirective,
     BreadcrumbsListDirective,
   ],
-  imports: [IconDirective],
+  imports: [IconDirective, MenuModule, PortalDirective],
 })
 export class BreadcrumbsModule {}
