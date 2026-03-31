@@ -19,19 +19,18 @@ import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
   selector: "[q-breadcrumb-item]",
   standalone: false,
   template: `
-    <ng-content select="[q-breadcrumb-item-trigger]">
-      <button
-        q-breadcrumb-item-trigger
-        [attr.aria-describedby]="tooltip() ? tooltipId : null"
-      >
-        <ng-content />
-        @if (tooltip()) {
-          <span q-breadcrumb-item-tooltip [id]="tooltipId">
-            {{ tooltip() }}
-          </span>
-        }
-      </button>
-    </ng-content>
+    <span class="qui-breadcrumbs__item-trigger-container">
+      <ng-content select="[q-breadcrumb-item-trigger]">
+        <button q-breadcrumb-item-trigger>
+          <ng-content />
+        </button>
+      </ng-content>
+      @if (tooltip()) {
+        <span q-breadcrumb-item-tooltip [id]="tooltipId">
+          {{ tooltip() }}
+        </span>
+      }
+    </span>
 
     <ng-content select="[q-breadcrumb-item-separator]">
       <svg q-breadcrumb-item-separator [qIcon]="separator()"></svg>

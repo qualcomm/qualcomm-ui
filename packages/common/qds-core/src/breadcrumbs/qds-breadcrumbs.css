@@ -132,6 +132,11 @@
   }
 }
 
+.qui-breadcrumbs__item-trigger-container {
+  display: inline-flex;
+  position: relative;
+}
+
 .qui-breadcrumbs__item-tooltip {
   background-color: var(--color-background-neutral-10);
   border-radius: var(--border-radius-xs);
@@ -154,7 +159,9 @@
   width: max-content;
 
   .qui-breadcrumbs__item-trigger:not([data-disabled]):is(:hover, :focus-visible)
-    & {
+    &,
+  .qui-breadcrumbs__item-trigger:not([data-disabled]):is(:hover, :focus-visible)
+    ~ & {
     display: block;
     opacity: 1;
   }
@@ -164,7 +171,12 @@
         :hover,
         :focus-visible
       )
-      & {
+      &,
+    .qui-breadcrumbs__item-trigger:not([data-disabled]):is(
+        :hover,
+        :focus-visible
+      )
+      ~ & {
       opacity: 0;
     }
   }
