@@ -15,7 +15,11 @@ import {
   BreadcrumbsItemTrigger,
   type BreadcrumbsItemTriggerProps,
 } from "./breadcrumbs-item-trigger"
-import {BreadcrumbsList, type BreadcrumbsListProps} from "./breadcrumbs-list"
+import {
+  type BreadcrumbsItemData,
+  BreadcrumbsList,
+  type BreadcrumbsListProps,
+} from "./breadcrumbs-list"
 import {
   BreadcrumbsOverflowItem,
   type BreadcrumbsOverflowItemProps,
@@ -29,6 +33,7 @@ import {BreadcrumbsRoot, type BreadcrumbsRootProps} from "./breadcrumbs-root"
 export * from "./qds-breadcrumbs-context"
 
 export type {
+  BreadcrumbsItemData,
   BreadcrumbsItemIconProps,
   BreadcrumbsItemRootProps,
   BreadcrumbsItemSeparatorProps,

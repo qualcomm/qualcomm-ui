@@ -12,12 +12,12 @@ export function BreadcrumbsOverflowDemo(): ReactElement {
         <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
         {/* preview */}
         <Breadcrumbs.OverflowItem>
-          <Menu.Item value="products">Products</Menu.Item>
-          <Menu.Item value="category">Category</Menu.Item>
+          <Menu.Item value="settings">Settings</Menu.Item>
+          <Menu.Item value="account">Account</Menu.Item>
         </Breadcrumbs.OverflowItem>
         {/* preview */}
-        <Breadcrumbs.Item>Subcategory</Breadcrumbs.Item>
-        <Breadcrumbs.Item aria-current="page">Current Page</Breadcrumbs.Item>
+        <Breadcrumbs.Item>Security</Breadcrumbs.Item>
+        <Breadcrumbs.Item aria-current="page">Sessions</Breadcrumbs.Item>
       </Breadcrumbs.List>
     </Breadcrumbs.Root>
   )

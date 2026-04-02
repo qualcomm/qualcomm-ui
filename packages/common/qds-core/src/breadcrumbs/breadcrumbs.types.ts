@@ -68,6 +68,41 @@ export interface QdsBreadcrumbsOverflowTriggerBindings
   "data-emphasis": QdsBreadcrumbsEmphasis
 }
 
+export interface QdsBreadcrumbItemData<TIcon = unknown, TLink = unknown> {
+  /**
+   * Disables the breadcrumb item.
+   */
+  disabled?: boolean
+
+  /**
+   * URL of the breadcrumb item. Renders as a native `<a href="...">`.
+   */
+  href?: string
+
+  /**
+   * Icon displayed before the item label.
+   */
+  icon?: TIcon
+
+  /**
+   * Text content of the breadcrumb item.
+   */
+  label: string
+
+  /**
+   * Framework router destination. In React, a `<Link>` element; in Angular,
+   * a `routerLink` string or path array.
+   */
+  link?: TLink
+}
+
+export interface QdsBreadcrumbsCollapsedRange {
+  /** last collapsed item (exclusive). */
+  end: number
+  /** first collapsed item (inclusive). */
+  start: number
+}
+
 export interface QdsBreadcrumbsItemApiProps {
   /**
    * Controls the component's interactivity. If `true`, the component becomes

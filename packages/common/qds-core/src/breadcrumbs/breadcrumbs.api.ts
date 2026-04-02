@@ -9,6 +9,7 @@ import {breadcrumbsClasses} from "./breadcrumbs.classes"
 import type {
   QdsBreadcrumbsApi,
   QdsBreadcrumbsApiProps,
+  QdsBreadcrumbsCollapsedRange,
   QdsBreadcrumbsItemBindings,
   QdsBreadcrumbsItemIconBindings,
   QdsBreadcrumbsItemSeparatorBindings,
@@ -17,6 +18,22 @@ import type {
   QdsBreadcrumbsOverflowTriggerBindings,
   QdsBreadcrumbsRootBindings,
 } from "./breadcrumbs.types"
+
+export function getCollapsedRange(
+  itemCount: number,
+  maxItems: number | undefined,
+  startItems: number,
+  endItems: number,
+): QdsBreadcrumbsCollapsedRange | null {
+  return maxItems === undefined ||
+    itemCount <= maxItems ||
+    startItems + endItems >= itemCount
+    ? null
+    : {
+        end: itemCount - endItems,
+        start: startItems,
+      }
+}
 
 export function createQdsBreadcrumbsApi(
   props: Explicit<QdsBreadcrumbsApiProps>,
