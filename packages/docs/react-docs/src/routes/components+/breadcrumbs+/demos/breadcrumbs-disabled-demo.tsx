@@ -8,7 +8,9 @@ export function BreadcrumbsDisabledDemo(): ReactElement {
   return (
     <Breadcrumbs.Root aria-label="Breadcrumbs">
       <Breadcrumbs.List>
-        <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
+        <Breadcrumbs.Item href="/" icon={Home}>
+          Home
+        </Breadcrumbs.Item>
         {/* preview */}
         <Breadcrumbs.Item disabled>Components</Breadcrumbs.Item>
         {/* preview */}

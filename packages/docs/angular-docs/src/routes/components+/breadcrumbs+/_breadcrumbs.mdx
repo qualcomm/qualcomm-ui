@@ -20,43 +20,15 @@ import {BreadcrumbsModule} from "@qualcomm-ui/angular/breadcrumbs"
 ## Overview
 
 ::: terms
-a11y
-WCAG
-site hierarchy
-wayfinding
-location indicator
+a11y, WCAG, site hierarchy, wayfinding, location indicator
 :::
 
 - The root element should be labeled with `aria-label="Breadcrumbs"` to indicate that it's a breadcrumb navigation.
 - The first breadcrumb item is always the root item, and is typically reserved for the home page or base route of your application.
 - The last breadcrumb item is always the active item.
-- The last breadcrumb item should always be annotated with the `aria-current="page"` attribute.
+- The last breadcrumb item should always be annotated with the [`aria-current`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current)`="page"` attribute.
 
 ## Examples
-
-### Emphasis (color)
-
-::: terms
-neutral
-muted
-subdued
-:::
-
-Use the [emphasis](./#emphasis) prop to change the color of the breadcrumbs.
-
-<QdsDemo name="BreadcrumbsEmphasisDemo" />
-
-### Sizes
-
-::: terms
-small
-medium
-large
-:::
-
-Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. The default size is `md`.
-
-<QdsDemo name="BreadcrumbsSizesDemo" />
 
 ### Links
 
@@ -64,18 +36,37 @@ Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. Th
 polymorphic
 :::
 
-Apply the `routerLink` directive to a breadcrumb item's trigger to make it a link.
+Each item renders an inactive `<a>` by default, suitable for the current page or disabled items. For navigable items, provide an explicit [`<a q-breadcrumb-item-trigger>`](./#q-breadcrumb-item-trigger) with `href` or `routerLink`.
 
 <QdsDemo name="BreadcrumbsLinksDemo" />
+
+### Emphasis (color)
+
+::: terms
+neutral, muted, subdued
+:::
+
+Use the [emphasis](./#emphasis) input to change the color of the breadcrumbs.
+
+<QdsDemo name="BreadcrumbsEmphasisDemo" />
+
+### Sizes
+
+::: terms
+small, medium, large
+:::
+
+Three sizes are available via the [size](./#size) input: `sm`, `md`, and `lg`. The default size is `md`.
+
+<QdsDemo name="BreadcrumbsSizesDemo" />
 
 ### Disabled Item
 
 ::: terms
-inactive
-non-clickable
+inactive, non-clickable
 :::
 
-Use the [disabled](./#disabled) prop to disable a breadcrumb item.
+Use the [disabled](./#disabled) input to disable a breadcrumb item.
 
 <QdsDemo name="BreadcrumbsDisabledDemo" />
 
