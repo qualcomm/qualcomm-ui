@@ -120,6 +120,11 @@ export interface DatePickerApiProps
   form?: string | undefined
 
   /**
+   * The unique identifier of the machine
+   */
+  id?: string
+
+  /**
    * The ids of the date picker elements
    */
   ids?: Partial<DatePickerElementIds> | undefined

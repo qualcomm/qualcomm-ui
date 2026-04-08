@@ -7,7 +7,8 @@ import {
   createDatePickerApi,
   type DatePickerApiProps,
   datePickerMachine,
-  type DatePickerCellProps as CoreDatePickerCellProps,
+  type DatePickerCellProps,
+  type DatePickerCellState,
   getCalendarDates,
   getDayOfMonth,
   getMonthName,
@@ -312,9 +313,9 @@ export function CoreDatePickerCalendar({
 }
 
 export interface CoreDatePickerCellProps
-  extends CoreDatePickerCellProps,
+  extends DatePickerCellProps,
     Omit<ElementRenderProp<"button">, "children"> {
-  children?: (state: ReturnType<typeof useDatePickerContext>["getCellState"]) => ReactElement
+  children?: (state: DatePickerCellState) => ReactElement
 }
 
 export function CoreDatePickerCell({
