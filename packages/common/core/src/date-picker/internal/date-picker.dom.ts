@@ -11,7 +11,9 @@ import type {
   DatePickerScope,
 } from "../date-picker.types"
 
-export const domIds: ScopeDomIds<DatePickerElementIds, DatePickerScope> = {
+export const domIds: ScopeDomIds<DatePickerElementIds, DatePickerScope> & {
+  calendarCell: (scope: DatePickerScope, date: string) => string
+} = {
   calendar: (scope) => scope.ids.get("calendar"),
   calendarCell: (scope, date) => `${scope.ids.get("root")}-cell-${date}`,
   calendarRow: (scope, rowIndex) =>

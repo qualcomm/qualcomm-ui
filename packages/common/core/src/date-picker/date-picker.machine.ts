@@ -157,7 +157,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         context.set("value", date)
         context.set("valueAsString", formatDate(date, format, locale))
 
-        prop("onValueChange")?({
+        prop("onValueChange")?.({
           value: date,
           valueAsString: formatDate(date, format, locale),
         })
@@ -171,7 +171,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         context.set("value", date)
         context.set("valueAsString", formatDate(date, format, locale))
 
-        prop("onValueChange")?({
+        prop("onValueChange")?.({
           value: date,
           valueAsString: formatDate(date, format, locale),
         })
@@ -186,7 +186,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         context.set("valueAsString", formatDate(date, format, locale))
         context.set("focusedDate", date)
 
-        prop("onValueChange")?({
+        prop("onValueChange")?.({
           value: date,
           valueAsString: formatDate(date, format, locale),
         })
@@ -227,7 +227,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           return
         }
         context.set("view", event.view)
-        prop("onViewChange")?({view: event.view})
+        prop("onViewChange")?.({view: event.view})
       },
 
       setViewToDay({context}) {
@@ -269,7 +269,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           return {
             defaultValue: defaultFocusedDate,
             onChange(focusedDate) {
-              prop("onFocusChange")?({
+              prop("onFocusChange")?.({
                 focusedDate,
                 view: prop("view"),
               })
@@ -282,7 +282,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           onChange(value) {
             const format = prop("format")
             const locale = prop("locale")
-            prop("onValueChange")?({
+            prop("onValueChange")?.({
               value,
               valueAsString: value ? formatDate(value, format, locale) : "",
             })
@@ -300,7 +300,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         view: bindable<"day" | "month" | "year">(() => ({
           defaultValue: prop("view"),
           onChange(view) {
-            prop("onViewChange")?({view})
+            prop("onViewChange")?.({view})
           },
         })),
       }
@@ -607,7 +607,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
       })
       track([() => context.get("view")], () => {
         const view = context.get("view")
-        prop("onViewChange")?({view})
+        prop("onViewChange")?.({view})
       })
     },
   })
