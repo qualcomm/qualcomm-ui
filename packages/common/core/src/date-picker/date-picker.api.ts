@@ -110,7 +110,7 @@ export function createDatePickerApi(
     clearValue() {
       send({type: "VALUE.CLEAR"})
     },
-    disabled,
+    disabled: Boolean(disabled),
     empty: computed("isEmpty"),
     focus() {
       domEls.input(scope)?.focus({preventScroll: true})
@@ -172,7 +172,7 @@ export function createDatePickerApi(
         "data-selected": booleanDataAttr(selected),
         "data-today": booleanDataAttr(cellState.isToday),
         dir: prop("dir"),
-        id: domIds.calendarCell(scope, dateId),
+        id: (domIds.calendarCell as any)(scope, dateId),
         onClick(event) {
           if (!interactive || cellDisabled) {
             return
@@ -252,7 +252,7 @@ export function createDatePickerApi(
         dir: prop("dir"),
         hidden: !open,
         id: domIds.content(scope),
-        onKeyDown(event) {
+        onKeyDown(event: any) {
           if (!interactive) {
             return
           }
@@ -281,11 +281,12 @@ export function createDatePickerApi(
     getErrorIndicatorBindings(): DatePickerErrorIndicatorBindings {
       return normalize.element({
         "aria-hidden": true,
+        "aria-label": "Error",
         "data-invalid": booleanDataAttr(invalid),
         "data-part": "error-indicator",
         "data-scope": "date-picker",
         dir: prop("dir"),
-        hidden: !invalid,
+        hidden: Boolean(!invalid),
       })
     },
 
@@ -305,9 +306,11 @@ export function createDatePickerApi(
     getHintBindings(props): DatePickerHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
+        "data-disabled": booleanDataAttr(disabled),
         "data-part": "hint",
         "data-scope": "date-picker",
         dir: prop("dir"),
+        hidden: Boolean(disabled),
         id: domIds.hint(scope),
       })
     },
@@ -339,6 +342,7 @@ export function createDatePickerApi(
             return
           }
           const target = getEventTarget<HTMLInputElement>(event)
+          if (!target) return
           send({type: "INPUT.CHANGE", value: target.value})
         },
         onFocus(event) {

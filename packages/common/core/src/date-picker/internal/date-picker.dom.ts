@@ -11,13 +11,11 @@ import type {
   DatePickerScope,
 } from "../date-picker.types"
 
-export const domIds: ScopeDomIds<DatePickerElementIds, DatePickerScope> & {
-  calendarCell: (scope: DatePickerScope, date: string) => string
-} = {
+export const domIds: ScopeDomIds<DatePickerElementIds, DatePickerScope> = {
   calendar: (scope) => scope.ids.get("calendar"),
-  calendarCell: (scope, date) => `${scope.ids.get("root")}-cell-${date}`,
-  calendarRow: (scope, rowIndex) =>
-    `${scope.ids.get("root")}-row-${rowIndex}`,
+  calendarCell: ((scope: DatePickerScope, date: string) => `${scope.ids.get("root")}-cell-${date}`) as any,
+  calendarRow: ((scope: DatePickerScope, rowIndex: number) =>
+    `${scope.ids.get("root")}-row-${rowIndex}`) as any,
   clearTrigger: (scope) => scope.ids.get("clearTrigger"),
   content: (scope) => scope.ids.get("content"),
   controls: (scope) => scope.ids.get("controls"),
@@ -41,7 +39,7 @@ export const domEls: ScopeDomElements<
   calendarCell: (scope: DatePickerScope, date: string) => HTMLElement | null
 } = {
   calendar: (scope) => scope.getById(domIds.calendar(scope)),
-  calendarCell: (scope, date) => scope.getById(domIds.calendarCell(scope, date)),
+  calendarCell: (scope, date) => scope.getById((domIds.calendarCell as any)(scope, date)),
   clearTrigger: (scope) => scope.getById(domIds.clearTrigger(scope)),
   content: (scope) => scope.getById(domIds.content(scope)),
   controls: (scope) => scope.getById(domIds.controls(scope)),

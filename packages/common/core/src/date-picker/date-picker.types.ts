@@ -53,8 +53,8 @@ export interface DatePickerElementIds {
   content: string
   positioner: string
   calendar: string
-  calendarRow: (rowIndex: number) => string
-  calendarCell: (date: string) => string
+  calendarRow(rowIndex: number): string
+  calendarCell(date: string): string
   controls: string
   prevTrigger: string
   nextTrigger: string
