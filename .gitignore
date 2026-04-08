@@ -97,6 +97,7 @@ tsconfig.*.tsbuildinfo
 # Test artifacts & screenshots
 ###############################################################################
 **screenshots**
+**/.vitest-attachments/
 .react-router/
 **/*\wsl.*
 **/coverage
