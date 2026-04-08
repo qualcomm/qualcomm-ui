@@ -1,0 +1,172 @@
+---
+title: QDS Core
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+
+# {frontmatter.title}
+
+`@qualcomm-ui/qds-core` separates visual design from component behavior. It defines CSS class names, QDS-specific APIs, and stylesheets using design tokens. This layer is framework-agnostic: the same CSS and class names are used by both React and Angular.
+
+## Purpose
+
+The [headless core](/contribution-guidelines/headless-core) handles behavior and produces `data-*` attributes (`data-state`, `data-disabled`, `data-hover`, etc.). QDS Core hooks into those data attributes with CSS selectors and adds CSS class names. This two-part split means you can change the visual design without touching component logic, or swap the design system entirely.
+
+## Package Structure
+
+Each component in `qds-core` follows this file structure:
+
+<FileTree
+  items={[
+    {
+      name: "checkbox",
+      items: [
+        {name: "checkbox.classes.ts", comment: "CSS class name constants"},
+        {name: "checkbox.api.ts", comment: "QDS API factory"},
+        {name: "checkbox.types.ts", comment: "QDS-specific TypeScript types"},
+        {name: "qds-checkbox.css", comment: "Stylesheet with design tokens"},
+        {name: "index.ts", comment: "Barrel exports"},
+      ],
+    },
+  ]}
+  defaultExpandedValue={["checkbox"]}
+/>
+
+## Classes (`checkbox.classes.ts`)
+
+Each component defines a classes object mapping part names to BEM-like CSS class strings. The naming convention is `qui-[component]__[part]`.
+
+```ts
+export const checkboxClasses = {
+  control: "qui-checkbox__control",
+  errorText: "qui-checkbox__error-text",
+  hiddenInput: "qui-checkbox__hidden-input",
+  indicator: "qui-checkbox__indicator",
+  label: "qui-checkbox__label",
+  root: "qui-checkbox__root",
+} as const
+```
+
+Some components reuse shared classes. For example, `checkboxClasses.errorText` follows the same pattern as `inputClasses.errorText` because error text styling is shared across form controls.
+
+## Types (`checkbox.types.ts`)
+
+QDS types are separate from core types because they represent visual properties (like `size`) rather than behavioral ones (like `checked`).
+
+```ts
+export type QdsCheckboxSize = "sm" | "md" | "lg"
+
+export interface QdsCheckboxApiProps {
+  /**
+   * The size of the checkbox and its elements. Governs properties like label font
+   * size, control size, and indicator size.
+   * @default 'md'
+   */
+  size?: QdsCheckboxSize
+}
+```
+
+The types file also defines binding interfaces for each part, ensuring type safety between the API factory and the consuming framework layer:
+
+```ts
+export interface QdsCheckboxControlBindings {
+  className: CheckboxClasses["control"]
+  "data-size": QdsCheckboxSize
+}
+
+export interface QdsCheckboxRootBindings {
+  className: CheckboxClasses["root"]
+}
+```
+
+## API (`checkbox.api.ts`)
+
+`createQdsCheckboxApi(props, normalize)` mirrors the core API pattern but produces CSS-class-based bindings:
+
+```ts
+export function createQdsCheckboxApi(
+  props: Explicit<QdsCheckboxApiProps>,
+  normalize: PropNormalizer,
+): QdsCheckboxApi {
+  const size = props.size || "md"
+  return {
+    size,
+
+    getControlBindings(): QdsCheckboxControlBindings {
+      return normalize.element({
+        className: checkboxClasses.control,
+        "data-size": size,
+      })
+    },
+    getRootBindings(): QdsCheckboxRootBindings {
+      return normalize.label({
+        className: checkboxClasses.root,
+      })
+    },
+    // ...getLabelBindings(), getIndicatorBindings(), etc.
+  }
+}
+```
+
+The binding getters parallel the core API getters (same method names). In the styled layer, both sets of bindings are merged. Core provides `data-state`, `aria-checked`, and event handlers. QDS provides `className` and `data-size`.
+
+## CSS (`qds-checkbox.css`)
+
+The stylesheet uses design tokens and data-attribute selectors:
+
+```css
+.qui-checkbox__control {
+  background: var(--color-background-neutral-00);
+  border: var(--border-width-sm, 1px) solid
+    var(--color-interactive-border-neutral-idle);
+  border-radius: var(--border-radius-xs, 2px);
+  box-sizing: border-box;
+  --control-size: var(--sizing-70);
+
+  &[data-size="md"] {
+    --control-size: var(--sizing-80);
+  }
+  &[data-size="lg"] {
+    --control-size: var(--sizing-90);
+  }
+
+  &[data-state="checked"],
+  &[data-state="indeterminate"] {
+    background: var(--color-interactive-background-primary-idle);
+    border-color: var(--color-interactive-background-primary-idle);
+  }
+
+  &[data-disabled] {
+    border-color: var(--color-utility-disabled-border);
+  }
+}
+```
+
+Conventions:
+
+- **Design tokens**: All colors, spacing, borders, and sizes reference CSS custom properties from the theme (e.g., `var(--color-background-neutral-00)`). All themes share the same base design tokens with different values. The CSS does not change per theme.
+- **Data-attribute selectors**: State styling uses `[data-state="checked"]`, `[data-disabled]`, `[data-hover]`, etc. These data attributes are set by the core machine, so the CSS requires no JavaScript.
+- **Size variants**: Use `[data-size="sm"]`, `[data-size="md"]`, `[data-size="lg"]` selectors.
+- **No class-based state**: Avoid `.checked` or `.disabled` classes. Data attributes are the single source of truth for state, set by the core machine.
+
+## Creating a New QDS Component
+
+1. Create a directory at `packages/common/qds-core/src/[component]/`
+2. Define `[component].classes.ts` with part-name-to-class-name mappings
+3. Define `[component].types.ts` with QDS-specific props (e.g., `size`, `variant`)
+4. Implement `[component].api.ts` with `createQds[Component]Api()`. Return binding getters that add `className` and data attributes.
+5. Create `qds-[component].css` using design tokens and data-attribute selectors
+6. Create barrel `index.ts`
+
+## Design Tokens
+
+The full token catalog is at `packages/common/qds-core/src/styles/`. Use `qualcomm-dark.css` as a reference. The tokens follow a naming convention:
+
+- `--color-[category]-[variant]-[state]`
+- `--spacing-[scale]`
+- `--sizing-[scale]`
+- `--border-width-[scale]`
+- `--border-radius-[scale]`
+- `--font-[category]-[variant]-[weight]`
+
+See [React Component](/contribution-guidelines/react-component) and [Angular Component](/contribution-guidelines/angular-component) for how the styled layer merges QDS bindings with core bindings.

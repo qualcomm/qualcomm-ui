@@ -1,0 +1,252 @@
+---
+title: React Documentation
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+
+# {frontmatter.title}
+
+This page covers how to document React components in the docs site at `packages/docs/react-docs`.
+
+## Docs Site Overview
+
+The documentation site uses [React Router v7](https://reactrouter.com/) with [remix-flat-routes](https://github.com/kiliman/remix-flat-routes) for file-based routing. Pages are MDX files (Markdown with JSX components). The docs build reads TypeScript interfaces to generate API tables automatically via TypeDoc.
+
+## File Structure
+
+Each component has a documentation directory under `src/routes/components+/`:
+
+<FileTree
+  items={[
+    {
+      name: "src/routes/components+",
+      items: [
+        {
+          name: "checkbox+",
+          items: [
+            {name: "_checkbox.mdx"},
+            {
+              name: "demos",
+              items: [
+                {name: "checkbox-simple-demo.tsx"},
+                {name: "checkbox-composite-demo.tsx"},
+                {name: "checkbox-disabled-demo.tsx"},
+                {name: "index.ts"},
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+  defaultExpandedValue={[
+    "src/routes/components+",
+    "checkbox+",
+    "demos",
+  ]}
+/>
+
+Naming conventions:
+
+- `components+/`: The `+` suffix creates a route segment
+- `checkbox+/`: Another segment for the component
+- `_checkbox.mdx`: The underscore prefix maps this file to the parent route (`/components/checkbox`)
+- Demo files use the pattern `[component]-[variant]-demo.tsx`
+
+## Frontmatter
+
+Every component page starts with YAML frontmatter:
+
+```yaml
+---
+title: Checkbox
+group: Form Controls
+description: A control that allows toggling between checked and unchecked states.
+component: Checkbox
+aliases: [check, tick]
+---
+```
+
+| Field | Description |
+| :-- | :-- |
+| `title` | Page title, displayed as heading and in sidebar |
+| `group` | Component category for sidebar grouping (e.g., `"Buttons"`, `"Form Controls"`, `"Data Display"`, `"Overlays"`, `"Disclosure"`, `"Feedback"`) |
+| `description` | One-sentence description, displayed on the page |
+| `component` | Component name for nav association |
+| `aliases` | Search keywords for discoverability |
+| `badges` | Optional badges displayed next to the title (e.g., `["New"]`) |
+
+## Page Structure Template
+
+The standard MDX structure for a component page:
+
+```mdx
+import {Demo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+\`\`\`tsx
+import {ComponentName} from "@qualcomm-ui/react/component-name"
+\`\`\`
+
+## Examples
+
+### Simple
+
+Brief explanation of the simple API.
+
+<Demo name="DemoName" component={demos.DemoName} />
+
+### Composite
+
+Brief explanation of the composite (parts-based) API.
+
+<Demo name="DemoName" component={demos.DemoName} />
+
+## API
+
+### \<ComponentName\>
+
+<TypeDocProps name="ComponentProps" />
+
+### \<ComponentName.Root\>
+
+<TypeDocProps name="ComponentRootProps" />
+
+<TypeDocAttributes name={["ComponentRootBindings", "QdsComponentRootBindings"]} />
+```
+
+Key structural rules:
+
+- The page heading uses `{frontmatter.title}` and the subtitle uses `{frontmatter.description}` from frontmatter
+- The import code block appears immediately after the subtitle
+- The Examples section comes before the API section
+- Each `<TypeDocProps>` and `<TypeDocAttributes>` references the exact TypeScript interface name
+
+## Demo Components
+
+Each demo is a standalone React component in the `demos/` directory.
+
+```tsx
+import type {ReactElement} from "react"
+import {Checkbox} from "@qualcomm-ui/react/checkbox"
+
+export function CheckboxSimpleDemo(): ReactElement {
+  return (
+    // preview
+    <Checkbox label="Label" />
+    // preview
+  )
+}
+```
+
+The `// preview` comments mark the region displayed in the source code viewer. Content outside these comments is hidden from the viewer but still executes.
+
+The barrel file at `demos/index.ts` re-exports all demos:
+
+```ts
+export * from "./checkbox-simple-demo"
+export * from "./checkbox-composite-demo"
+export * from "./checkbox-disabled-demo"
+```
+
+Import all demos as a namespace in the MDX file:
+
+```tsx
+import * as demos from "./demos"
+```
+
+Render a demo with the `<Demo>` component:
+
+```mdx
+<Demo name="CheckboxSimpleDemo" component={demos.CheckboxSimpleDemo} />
+```
+
+The `name` prop must match the exported function name exactly. Pass `expanded` to show the source code viewer open by default:
+
+```mdx
+<Demo expanded name="CheckboxControlledDemo" component={demos.CheckboxControlledDemo} />
+```
+
+## MDX Components
+
+Available components for documentation pages:
+
+| Component | Usage |
+| :-- | :-- |
+| `<Demo>` | Renders a live component example with source code viewer |
+| `<TypeDocProps name="InterfaceName">` | Generates a prop table from TypeScript interfaces. Props are extracted from JSDoc annotations. |
+| `<TypeDocAttributes name={["BindingInterface"]}>` | Shows data-attribute documentation for a component's HTML bindings |
+| `<ComponentExplorer>` | Interactive component playground |
+| `FileTree` | File/folder tree visualization |
+| `NpmInstallTabs` | Multi-package-manager install tabs |
+
+## Alerts and Callouts
+
+Three callout types are available:
+
+```md
+> [!note]
+> Informational callout
+
+> [!tip]
+> Helpful tip
+
+> [!warning]
+> Important warning
+```
+
+Use sparingly. State facts only.
+
+## JSDoc for API Documentation
+
+`TypeDocProps` reads JSDoc from the TypeScript interfaces. Every exported prop must have a JSDoc comment.
+
+Required annotations:
+
+- Description on the first line
+- `@default` tag for default values (strings in single quotes, booleans and numbers raw)
+- `{@link PropName}` for cross-references to other props
+- `{@link https://... Display Text}` for external links
+
+```ts
+export interface CheckboxProps {
+  /**
+   * The checked state of the checkbox.
+   *
+   * @default false
+   */
+  checked?: boolean
+
+  /**
+   * The size of the checkbox control.
+   * See {@link CheckboxControlProps} for additional control styling.
+   *
+   * @default 'md'
+   */
+  size?: QdsCheckboxSize
+}
+```
+
+## navConfig
+
+Component pages are auto-discovered from their frontmatter `group` field and sorted alphabetically within each group. The sidebar group ordering is defined in `qui-docs.config.ts`:
+
+```ts
+groupOrder: [
+  "Buttons",
+  "Form Controls",
+  "Data Display",
+  "Overlays",
+  "Disclosure",
+  "Feedback",
+],
+```
+
+Override ordering or grouping for a specific component by adding an entry to the `navConfig` array in `qui-docs.config.ts`.
+
+See [Angular Documentation](/contribution-guidelines/angular-documentation) for how Angular docs differ.

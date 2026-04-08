@@ -1,0 +1,224 @@
+---
+title: React Component
+---
+
+# {frontmatter.title}
+
+React components span two packages: `@qualcomm-ui/react-core` (hooks and context wrapping the headless core) and `@qualcomm-ui/react` (styled components merging all layers into JSX). Both are covered here using the checkbox as a reference implementation.
+
+## react-core: Hooks and Context
+
+### The Component Hook
+
+Each component has a primary hook that bridges the headless state machine into React's reactivity system.
+
+```ts
+export function useCheckbox(props: CheckboxApiProps): CheckboxApi {
+  const machine = useMachine(checkboxMachine, props)
+  return createCheckboxApi(machine, normalizeProps)
+}
+```
+
+Two things happen here:
+
+1. `useMachine(checkboxMachine, props)` wraps the headless state machine in React's reactivity system (`useEffect`, `useState` under the hood). Props are tracked reactively. When they change, the machine's context updates.
+2. `createCheckboxApi(machine, normalizeProps)` creates the public API with binding getters. This is the same `createCheckboxApi` defined in `@qualcomm-ui/core`.
+
+The hook returns a `CheckboxApi`, the same interface defined in the core package.
+
+### Sub-hooks
+
+Sub-hooks consume the component context and call the appropriate binding getter. These are what subcomponents use in the styled layer.
+
+```ts
+export function useCheckboxLabel({id}: IdProp) {
+  const context = useCheckboxContext()
+  return context.getLabelBindings({id: useControlledId(id)})
+}
+
+export function useCheckboxControl({id}: IdProp) {
+  const context = useCheckboxContext()
+  return context.getControlBindings({id: useControlledId(id)})
+}
+
+export interface UseCheckboxIndicator {
+  contextProps: CheckboxIndicatorBindings
+  indeterminate: boolean | undefined
+}
+
+export function useCheckboxIndicator(): UseCheckboxIndicator {
+  const context = useCheckboxContext()
+  return {
+    contextProps: context.getIndicatorBindings(),
+    indeterminate: context.indeterminate,
+  }
+}
+```
+
+Each sub-hook reads from the context provider established by the root component, retrieves bindings for its specific part, and returns them for the styled subcomponent to merge and render.
+
+### Context
+
+`createGuardedContext` creates a provider and a hook with runtime validation. If a subcomponent is used outside its provider, a clear error message identifies both the missing provider and the hook that failed.
+
+```ts
+export interface CheckboxContextValue extends CheckboxApi {}
+
+export const [CheckboxContextProvider, useCheckboxContext] =
+  createGuardedContext<CheckboxContextValue>({
+    hookName: "useCheckboxContext",
+    providerName: "<CheckboxContextProvider>",
+    strict: true,
+  })
+```
+
+### Key Utilities
+
+- **`useMachine(machine, props)`**: React hook that instantiates the state machine with reactive prop tracking.
+- **`normalizeProps`**: Converts binding objects to React-compatible props (e.g., `class` to `className`).
+- **`useControlledId(id)`**: Generates a stable ID if none is provided, or uses the controlled one.
+- **`PolymorphicElement`**: Renders any HTML element based on the `as` prop. Supports the `render` prop for full control over the rendered output.
+- **`mergeProps(a, b, c)`**: Merges multiple prop objects, composing event handlers and concatenating classNames.
+
+## react: Styled Components
+
+### Root Component
+
+The root component assembles all layers: core behavior, QDS styling, and user props.
+
+```tsx
+export interface CheckboxRootProps
+  extends IdProp, CheckboxApiProps, QdsCheckboxApiProps,
+    Omit<ElementRenderProp<"label">, "dir"> {
+  children?: ReactNode
+}
+
+export function CheckboxRoot({
+  children,
+  id,
+  size,
+  ...props
+}: CheckboxRootProps): ReactElement {
+  const [checkboxProps, localProps] = splitCheckboxProps(props)
+  const context = useCheckbox(checkboxProps)
+  const qdsContext = useMemo(
+    () => createQdsCheckboxApi({size}, normalizeProps),
+    [size],
+  )
+  const mergedProps = mergeProps(
+    context.getRootBindings({id: useControlledId(id)}),
+    qdsContext.getRootBindings(),
+    localProps,
+  )
+
+  return (
+    <QdsCheckboxContextProvider value={qdsContext}>
+      <CheckboxContextProvider value={context}>
+        <PolymorphicElement as="label" {...mergedProps}>
+          {children}
+        </PolymorphicElement>
+      </CheckboxContextProvider>
+    </QdsCheckboxContextProvider>
+  )
+}
+```
+
+Step by step:
+
+1. **Props interface**: Extends `CheckboxApiProps` (core machine props), `QdsCheckboxApiProps` (design system props like `size`), and `ElementRenderProp<"label">` (HTML element props including `render` and `as`).
+2. **Split props**: `splitCheckboxProps(props)` separates machine props from HTML/local props. Machine props go to the hook. Everything else goes to the rendered element.
+3. **Core hook**: `useCheckbox(checkboxProps)` returns the behavior API with binding getters.
+4. **QDS API**: `createQdsCheckboxApi({size}, normalizeProps)` creates the styling API. Memoized on `size` to avoid unnecessary recalculations.
+5. **Merge bindings**: `mergeProps(core, qds, local)` combines all three binding sources into a single props object.
+6. **Dual context**: Both `QdsCheckboxContextProvider` and `CheckboxContextProvider` wrap children so subcomponents can access both the behavior API and the styling API.
+7. **Render**: `PolymorphicElement` renders as `<label>` by default. Users can override this with the `as` or `render` prop.
+
+> [!note]
+> `mergeProps` ordering matters: core bindings first, QDS bindings second, user props last. This ensures user-provided props override everything, QDS overrides core, and core provides the baseline.
+
+### Subcomponents
+
+Subcomponents follow a consistent pattern, shown here with `CheckboxControl`:
+
+```tsx
+export function CheckboxControl({
+  children = <CheckboxIndicator />,
+  id,
+  ...props
+}: CheckboxControlProps): ReactElement {
+  const contextProps = useCheckboxControl({id})
+  const qdsContext = useQdsCheckboxContext()
+  const mergedProps = mergeProps(
+    contextProps,
+    qdsContext.getControlBindings(),
+    props,
+  )
+  return (
+    <PolymorphicElement as="div" {...mergedProps}>
+      {children}
+    </PolymorphicElement>
+  )
+}
+```
+
+Every subcomponent follows this pattern:
+
+1. Consume core bindings via the sub-hook (`useCheckboxControl`)
+2. Consume QDS bindings via `useQdsCheckboxContext()`
+3. Merge both with user props
+4. Render via `PolymorphicElement`
+
+`CheckboxControl` defaults its children to `<CheckboxIndicator />`. This is a common pattern where a subcomponent has a sensible default child that users can override.
+
+### Convenience Component
+
+The convenience component assembles all subcomponents into a flat API for common use cases. Props like `label`, `hint`, and `errorText` get forwarded to their respective subcomponents internally.
+
+```ts
+export interface CheckboxProps extends CheckboxRootProps {
+  "aria-label"?: string
+  "aria-labelledby"?: string
+  children?: never
+  controlProps?: CheckboxControlProps
+  errorText?: string
+  errorTextProps?: CheckboxErrorTextProps
+  hiddenInputProps?: CheckboxHiddenInputProps
+  hint?: ReactNode
+  hintProps?: CheckboxHintProps
+  indicatorProps?: CheckboxIndicatorProps
+  label?: ReactNode
+  labelProps?: CheckboxLabelProps
+}
+```
+
+Root props are spread directly. Sub-props are namespaced (`controlProps`, `labelProps`, `indicatorProps`). This gives consumers a single-import component for standard usage. Users who need more control use the composite API with individual parts.
+
+## Creating a New React Component
+
+### In react-core
+
+1. Create `packages/frameworks/react-core/src/[component]/`
+2. Create `use-[component].ts`: main hook calling `useMachine` + `createApi`, plus sub-hooks for each part
+3. Create `[component]-context.ts`: `createGuardedContext` for the component API
+4. Export from `index.ts`
+
+### In react
+
+1. Create `packages/frameworks/react/src/[component]/`
+2. Create `[component]-root.tsx`: follows the pattern of split props, core hook, QDS API, merge bindings, dual context, render
+3. Create subcomponent files for each part (`[component]-control.tsx`, `[component]-label.tsx`, etc.)
+4. Create `qds-[component]-context.ts`: QDS context for sharing the QDS API with subcomponents
+5. Create `[component].tsx`: convenience component assembling all parts
+6. Create `[component].spec.tsx`: tests covering both the convenience and composite APIs
+7. Export from `index.ts`
+
+## Key Patterns
+
+- Split machine props from HTML props with `split[Component]Props`
+- Every styled root provides dual context (core + QDS)
+- `mergeProps` order: core, QDS, user. User always wins.
+- Subcomponents consume both contexts
+- Convenience components compose the composite parts into a flat API
+- `PolymorphicElement` handles the `as` prop for element type customization
+
+See [Testing Guidelines](/contribution-guidelines/testing-guidelines) for how to test both APIs. See [React Documentation](/contribution-guidelines/react-documentation) for how to document the component.

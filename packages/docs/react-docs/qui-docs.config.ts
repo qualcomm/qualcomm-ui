@@ -86,27 +86,18 @@ const navConfig: NavConfig[] = [
   {separator: true},
   {
     children: [
-      {
-        id: "getting-started",
-      },
-      {
-        id: "overview",
-      },
-      {
-        id: "component-authoring",
-      },
-      {
-        id: "base-component",
-      },
-      {
-        id: "react-component",
-      },
-      {
-        id: "react-documentation",
-      },
-      {
-        id: "testing-guidelines",
-      },
+      {id: "overview"},
+      {id: "getting-started"},
+      {id: "architecture"},
+      {id: "headless-core"},
+      {id: "qds-core"},
+      {id: "react-component"},
+      {id: "angular-component"},
+      {id: "react-documentation"},
+      {id: "angular-documentation"},
+      {id: "testing-guidelines"},
+      {id: "build-system"},
+      {id: "code-quality"},
     ],
     id: "contribution-guidelines",
   },
