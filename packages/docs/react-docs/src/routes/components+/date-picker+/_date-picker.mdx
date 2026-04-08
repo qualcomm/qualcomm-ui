@@ -1,0 +1,95 @@
+---
+title: DatePicker
+group: Forms
+description: DatePicker enables users to select dates through an interactive calendar interface. Built with comprehensive keyboard navigation, accessibility features, and flexible date constraints, it provides a consistent date selection experience across applications.
+component: DatePicker
+aliases: [calendar, date selector, date input]
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {DatePicker} from "@qualcomm-ui/react/date-picker"
+```
+
+## Examples
+
+### Basic Usage
+
+::: terms
+date picker
+calendar input
+date selection
+:::
+
+The DatePicker component provides a text input with a calendar popup for selecting dates. Use the [value](./#value) and [onValueChange](./#onValueChange) props to control the selected date.
+
+<Demo name="DatePickerBasicDemo" component={demos.DatePickerBasicDemo} />
+
+### Sizes
+
+::: terms
+small
+medium
+large
+:::
+
+Control the size of the date picker with the [size](./#size) prop. The options are `sm`, `md`, and `lg`.
+
+<Demo name="DatePickerSizesDemo" component={demos.DatePickerSizesDemo} />
+
+### Date Constraints
+
+::: terms
+min date
+max date
+date range
+:::
+
+Restrict selectable dates using the [min](./#min) and [max](./#max) props. Dates outside this range will be disabled in the calendar.
+
+<Demo name="DatePickerMinMaxDemo" component={demos.DatePickerMinMaxDemo} />
+
+### States
+
+::: terms
+disabled
+invalid
+read-only
+error
+:::
+
+The DatePicker supports standard form states including [disabled](./#disabled), [invalid](./#invalid), and [readOnly](./#readOnly).
+
+<Demo name="DatePickerStatesDemo" component={demos.DatePickerStatesDemo} />
+
+## Keyboard Navigation
+
+The DatePicker supports comprehensive keyboard navigation:
+
+- **Arrow Keys**: Navigate between dates in the calendar
+- **Enter**: Select the focused date
+- **Escape**: Close the calendar
+- **Home**: Jump to the start of the current month
+- **End**: Jump to the end of the current month
+- **Page Up**: Go to the previous month
+- **Page Down**: Go to the next month
+
+## Accessibility
+
+The DatePicker follows WAI-ARIA best practices:
+
+- Proper ARIA labels and roles for screen readers
+- Keyboard navigation support
+- Focus management
+- Clear visual indicators for selected, today, and disabled dates
+
+## API
+
+<TypeDocProps of="DatePicker" />
