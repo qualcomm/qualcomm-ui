@@ -77,6 +77,19 @@ Use the [disabled](./#disabled) prop to disable a breadcrumb item.
   component={demos.BreadcrumbsDisabledDemo}
 />
 
+### Overflow
+
+::: terms
+overflow, collapsed, ellipsis, truncated
+:::
+
+Use the `<Breadcrumbs.OverflowItem>` component to collapse intermediate breadcrumb items into a dropdown menu. The overflow trigger displays an ellipsis by default. Use the [icon](./#icon-4) prop to add an icon, or provide your own trigger via `<Breadcrumbs.OverflowTrigger>`.
+
+<Demo
+  name="BreadcrumbsOverflowDemo"
+  component={demos.BreadcrumbsOverflowDemo}
+/>
+
 ### Tooltip
 
 ::: terms
@@ -106,6 +119,30 @@ The [`Breadcrumbs.Item`](./#breadcrumbsitem) component is a convenient shorthand
   </Breadcrumbs.ItemTrigger>
   <Breadcrumbs.ItemSeparator icon={separator} {...separatorProps} />
 </Breadcrumbs.ItemRoot>
+```
+
+### OverflowItem
+
+The `Breadcrumbs.OverflowItem` component is a convenient shorthand that composes a menu trigger with the overflow ellipsis. It's equivalent to the following:
+
+```tsx
+<Breadcrumbs.OverflowItemRoot {...props}>
+  <Menu.Root size={menuSize}>
+    <Menu.Trigger>
+      <Breadcrumbs.OverflowTrigger
+        aria-label={ariaLabel}
+        icon={icon}
+        {...overflowTriggerProps}
+      />
+    </Menu.Trigger>
+    <Portal>
+      <Menu.Positioner>
+        <Menu.Content>{children}</Menu.Content>
+      </Menu.Positioner>
+    </Portal>
+  </Menu.Root>
+  <Breadcrumbs.ItemSeparator icon={separator} {...separatorProps} />
+</Breadcrumbs.OverflowItemRoot>
 ```
 
 ## API
@@ -145,3 +182,13 @@ The [`Breadcrumbs.Item`](./#breadcrumbsitem) component is a convenient shorthand
 <TypeDocProps name="BreadcrumbsItemSeparatorProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsItemSeparatorBindings" />
+
+### \<Breadcrumbs.OverflowItem\>
+
+<TypeDocProps name="BreadcrumbsOverflowItemProps" />
+
+### \<Breadcrumbs.OverflowTrigger\>
+
+<TypeDocProps name="BreadcrumbsOverflowTriggerProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsOverflowTriggerBindings" />
