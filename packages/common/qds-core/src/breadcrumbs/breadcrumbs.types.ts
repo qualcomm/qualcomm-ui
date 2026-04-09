@@ -5,6 +5,8 @@ import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import type {breadcrumbsClasses} from "./breadcrumbs.classes"
 
+export type QdsBreadcrumbsMaxItems = number | "auto"
+
 export type QdsBreadcrumbsSize = "sm" | "md" | "lg"
 
 export type QdsBreadcrumbsEmphasis = "primary" | "neutral"
@@ -66,6 +68,43 @@ export interface QdsBreadcrumbsOverflowTriggerBindings
   extends QdsBreadcrumbsCommonBindings {
   className: `${BreadcrumbsClasses["itemTrigger"]} ${BreadcrumbsClasses["overflowTrigger"]}`
   "data-emphasis": QdsBreadcrumbsEmphasis
+}
+
+export interface QdsBreadcrumbItemData<TIcon = unknown, TLink = unknown> {
+  /**
+   * Disables the breadcrumb item.
+   */
+  disabled?: boolean
+
+  /**
+   * URL of the breadcrumb item. Renders as a native `<a href="...">`.
+   */
+  href?: string
+
+  /**
+   * Icon displayed before the item label.
+   */
+  icon?: TIcon
+
+  /**
+   * Text content of the breadcrumb item.
+   */
+  label: string
+
+  /**
+   * Framework router destination. In React, a `<Link>` element; in Angular,
+   * a `routerLink` string or path array.
+   */
+  link?: TLink
+}
+
+export interface QdsBreadcrumbsItemSegments<T> {
+  /** Items rendered after the overflow indicator. */
+  after: T[]
+  /** Items rendered before the overflow indicator. */
+  before: T[]
+  /** Items rendered inside the overflow menu. */
+  collapsed: T[]
 }
 
 export interface QdsBreadcrumbsItemApiProps {

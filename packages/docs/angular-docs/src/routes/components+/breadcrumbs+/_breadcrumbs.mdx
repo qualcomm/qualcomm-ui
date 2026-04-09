@@ -40,6 +40,16 @@ Each item renders an `<a>` by default. Without an explicit `href` or `routerLink
 
 <QdsDemo name="BreadcrumbsLinksDemo" />
 
+### Items
+
+::: terms
+data-driven, items array, programmatic
+:::
+
+To render a collection of breadcrumbs from data, pass an [items](./#items-1) array to `q-breadcrumbs-list`. Each item can specify a [link](./#link) string or path array for `routerLink` navigation, or an [href](./#href) string for plain anchor links.
+
+<QdsDemo name="BreadcrumbsItemsDemo" />
+
 ### Emphasis (color)
 
 ::: terms
@@ -80,6 +90,16 @@ Use the `q-breadcrumb-overflow-item` component to collapse intermediate breadcru
 
 <QdsDemo name="BreadcrumbsOverflowDemo" />
 
+### Max items
+
+::: terms
+overflow, collapsed, ellipsis, truncated, max items, auto collapse
+:::
+
+When using the [items](./#items) input, add [maxItems](./#maxItems) to automatically collapse intermediate items into a dropdown menu when the total count exceeds the threshold. The first and last items remain visible by default. Use [startItems](./#startItems) and [endItems](./#endItems) to control how many items stay visible at each end.
+
+<QdsDemo name="BreadcrumbsMaxItemsDemo" />
+
 ### Tooltip
 
 ::: terms
@@ -103,6 +123,10 @@ To provide additional context on hover, add a tooltip to a breadcrumb item by wr
 <TypeDocProps name="BreadcrumbsListDirective" />
 
 <TypeDocAttributes name="QdsBreadcrumbsListBindings" />
+
+### QdsBreadcrumbItemData
+
+<TypeDocProps name="QdsBreadcrumbItemData" />
 
 ### q-breadcrumb-item
 

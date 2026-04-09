@@ -41,6 +41,16 @@ By default, breadcrumb items render as `<a>`. Without an explicit `href` or `ren
 
 <Demo name="BreadcrumbsLinksDemo" component={demos.BreadcrumbsLinksDemo} />
 
+### Items
+
+::: terms
+data-driven, items array, programmatic
+:::
+
+To render a collection of breadcrumbs from data, pass an [items](./#items-1) array to `<Breadcrumbs.List>`. Each item can specify a [link](./#link) element to render a custom `<Link>` component (such as React Router's) or an [href](./#href) string for plain anchor links.
+
+<Demo name="BreadcrumbsItemsDemo" component={demos.BreadcrumbsItemsDemo} />
+
 ### Emphasis (color)
 
 ::: terms
@@ -88,6 +98,19 @@ Use the `<Breadcrumbs.OverflowItem>` component to collapse intermediate breadcru
 <Demo
   name="BreadcrumbsOverflowDemo"
   component={demos.BreadcrumbsOverflowDemo}
+/>
+
+### Max items
+
+::: terms
+overflow, collapsed, ellipsis, truncated, max items, auto collapse
+:::
+
+When using the [items](./#items) prop, add [maxItems](./#maxItems) to automatically collapse intermediate items into a dropdown menu when the total count exceeds the threshold. The first and last items remain visible by default. Use [startItems](./#startItems) and [endItems](./#endItems) to control how many items stay visible at each end.
+
+<Demo
+  name="BreadcrumbsMaxItemsDemo"
+  component={demos.BreadcrumbsMaxItemsDemo}
 />
 
 ### Tooltip
@@ -158,6 +181,10 @@ The `Breadcrumbs.OverflowItem` component is a convenient shorthand that composes
 <TypeDocProps name="BreadcrumbsListProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsListBindings" />
+
+### QdsBreadcrumbItemData
+
+<TypeDocProps name="QdsBreadcrumbItemData" />
 
 ### \<Breadcrumbs.Item\>
 
