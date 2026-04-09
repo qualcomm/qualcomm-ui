@@ -6,4 +6,5 @@ export const tooltipClasses = {
   arrowTip: "qui-tooltip__arrow-tip",
   content: "qui-tooltip__content",
   positioner: "qui-tooltip__positioner",
+  root: "qui-tooltip__root",
 } as const

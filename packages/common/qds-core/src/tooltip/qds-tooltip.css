@@ -1,3 +1,7 @@
+.qui-tooltip__root {
+  display: contents;
+}
+
 .qui-tooltip__content {
   background-color: var(--color-background-neutral-10);
   border-radius: 2px;

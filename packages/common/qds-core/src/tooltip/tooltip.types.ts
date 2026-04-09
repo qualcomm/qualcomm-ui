@@ -5,6 +5,10 @@ import type {tooltipClasses} from "./tooltip.classes"
 
 type TooltipClasses = typeof tooltipClasses
 
+export interface QdsTooltipRootBindings {
+  className: TooltipClasses["root"]
+}
+
 export interface QdsTooltipArrowBindings {
   className: TooltipClasses["arrow"]
 }
