@@ -3,8 +3,6 @@
     "baseUrl": "./",
     "paths": {
       "@qualcomm-ui/dom/*": ["./src/*/index.ts"],
-      // TODO: remove this once WebStorm fixes symlinks in WSL2
-      "@qualcomm-ui/utils/*": ["../utils/src/*/index.ts"]
     }
   },
   "references": [

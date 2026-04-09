@@ -3,14 +3,11 @@
   "compilerOptions": {
     "composite": true,
     "baseUrl": "./",
-    "outDir": "./dist",
-    "moduleResolution": "bundler",
     "paths": {
       // fixes WebStorm usage detection, not used otherwise
       "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"],
     }
   },
-  "include": ["./src"],
   "exclude": ["./src/**/*.spec.ts"],
   "references": [
     {

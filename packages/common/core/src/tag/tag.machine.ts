@@ -22,11 +22,6 @@ const tagMachineBase = {
     }
   },
 
-  guards: {
-    isDismissable: ({prop}) => prop("variant") === "dismissable",
-    isSelectable: ({prop}) => prop("variant") === "selectable",
-  },
-
   initialState() {
     return "idle"
   },
@@ -63,13 +58,19 @@ const tagMachineBase = {
 
 export const tagMachine: MachineConfig<TagSchema> =
   createNarrowedMachine<TagSchema>()(tagMachineBase, {
-    dismiss: ({prop}) => {
-      prop("onDismiss")?.()
+    actions: {
+      dismiss: ({prop}) => {
+        prop("onDismiss")?.()
+      },
+      setSelected({context, event}) {
+        context.set("selected", event.value || false)
+      },
+      toggleSelected({context}) {
+        context.set("selected", !context.get("selected"))
+      },
     },
-    setSelected({context, event}) {
-      context.set("selected", event.value || false)
-    },
-    toggleSelected({context}) {
-      context.set("selected", !context.get("selected"))
+    guards: {
+      isDismissable: ({prop}) => prop("variant") === "dismissable",
+      isSelectable: ({prop}) => prop("variant") === "selectable",
     },
   })

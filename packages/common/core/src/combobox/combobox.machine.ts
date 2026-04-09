@@ -986,6 +986,37 @@ const comboboxMachineBase = {
 export const comboboxMachine: MachineConfig<ComboboxSchema> =
   createNarrowedMachine<ComboboxSchema>()(comboboxMachineBase, {
     actions: {
+      measureOverflowTag({context, scope}) {
+        const showAllButtonEl = getInvisibleOverflowTagEl(scope)
+        if (!showAllButtonEl) {
+          return
+        }
+        const width = showAllButtonEl.getBoundingClientRect().width
+        context.set("overflowTagWidth", width)
+      },
+      measureTags({context, scope}) {
+        const values = context.get("value")
+        const tagWidths: number[] = []
+        for (const value of values) {
+          const el = getInvisibleTagEl(scope, value)
+          if (el) {
+            tagWidths.push(el.getBoundingClientRect().width)
+          }
+        }
+        context.set("tagWidths", tagWidths)
+      },
+      recalculateVisibleTags({context}) {
+        const result = calculateVisibleTags({
+          availableWidth: context.get("availableTagWidth"),
+          // TODO: move to prop
+          gap: 4,
+          showAllButtonWidth: context.get("overflowTagWidth"),
+          tagWidths: context.get("tagWidths"),
+        })
+        context.set("visibleTagIndices", result.visibleIndices)
+      },
+
+      // group: combobox actions
       autofillInputValue({computed, context, event, prop, scope}) {
         const inputEl = domEls.input(scope)
         const collection = prop("collection")

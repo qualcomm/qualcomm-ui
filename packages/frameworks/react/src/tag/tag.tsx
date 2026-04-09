@@ -19,6 +19,7 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TagProps
@@ -51,12 +52,19 @@ export function Tag(props: TagProps): ReactElement {
   const machine = useMachine(tagMachine, tagApiProps)
   const tagApi = createTagApi(machine, normalizeProps)
 
-  const {variant} = tagApiProps
-  const {children, emphasis, endIcon, radius, size, startIcon, ...rest} =
+  const {selected, variant} = tagApiProps
+  const {children, emphasis, endIcon, radius, shape, size, startIcon, ...rest} =
     localProps
 
   const qdsApi = createQdsTagApi(
-    {emphasis, radius, size, variant},
+    {
+      emphasis,
+      radius,
+      selected,
+      shape,
+      size,
+      variant,
+    } satisfies Explicit<QdsTagApiProps>,
     normalizeProps,
   )
 

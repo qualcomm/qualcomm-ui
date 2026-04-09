@@ -146,40 +146,42 @@ const inputTagsMachineBase = {
 
 export const inputTagsMachine: MachineConfig<InputTagsSchema> =
   createNarrowedMachine<InputTagsSchema>()(inputTagsMachineBase, {
-    dismissTag({event, prop}) {
-      if (!event.value) {
-        return
-      }
-      prop("onSelectValue")(event.value)
-    },
-
-    measureOverflowTag({context, scope}) {
-      const el = getMeasureIndicatorEl(scope)
-      if (el) {
-        context.set("overflowTagWidth", el.getBoundingClientRect().width)
-      }
-    },
-
-    measureTags({context, prop, scope}) {
-      const values = prop("value") ?? []
-      const tagWidths: number[] = []
-      for (const value of values) {
-        const el = getInvisibleTagEl(scope, value)
-        if (el) {
-          tagWidths.push(el.getBoundingClientRect().width)
+    actions: {
+      dismissTag({event, prop}) {
+        if (!event.value) {
+          return
         }
-      }
-      context.set("tagWidths", tagWidths)
-    },
+        prop("onSelectValue")(event.value)
+      },
 
-    recalculateVisibleTags({context, prop}) {
-      const result = calculateVisibleTags({
-        availableWidth: context.get("availableTagWidth"),
-        gap: prop("gap"),
-        indicatorWidth: context.get("overflowTagWidth"),
-        minInputWidth: prop("minInputWidth"),
-        tagWidths: context.get("tagWidths"),
-      })
-      context.set("visibleTagIndices", result.visibleIndices)
+      measureOverflowTag({context, scope}) {
+        const el = getMeasureIndicatorEl(scope)
+        if (el) {
+          context.set("overflowTagWidth", el.getBoundingClientRect().width)
+        }
+      },
+
+      measureTags({context, prop, scope}) {
+        const values = prop("value") ?? []
+        const tagWidths: number[] = []
+        for (const value of values) {
+          const el = getInvisibleTagEl(scope, value)
+          if (el) {
+            tagWidths.push(el.getBoundingClientRect().width)
+          }
+        }
+        context.set("tagWidths", tagWidths)
+      },
+
+      recalculateVisibleTags({context, prop}) {
+        const result = calculateVisibleTags({
+          availableWidth: context.get("availableTagWidth"),
+          gap: prop("gap"),
+          indicatorWidth: context.get("overflowTagWidth"),
+          minInputWidth: prop("minInputWidth"),
+          tagWidths: context.get("tagWidths"),
+        })
+        context.set("visibleTagIndices", result.visibleIndices)
+      },
     },
   })

@@ -56,6 +56,11 @@ export interface QdsTagApiProps {
   radius?: QdsTagRadius
 
   /**
+   * Whether the tag is selected.
+   */
+  selected?: boolean | undefined
+
+  /**
    * Governs the shape of the tag.
    *
    * @since 1.16.0
