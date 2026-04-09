@@ -87,6 +87,16 @@ Use the [disabled](./#disabled) prop to disable a breadcrumb item.
   component={demos.BreadcrumbsDisabledDemo}
 />
 
+### Tooltip
+
+::: terms
+tooltip, hover hint, title, description
+:::
+
+To provide additional context on hover, make [`Breadcrumbs.ItemTrigger`](./#breadcrumbsitemtrigger) a [Tooltip](/components/tooltip) trigger using the composite API.
+
+<Demo name="BreadcrumbsTooltipDemo" component={demos.BreadcrumbsTooltipDemo} />
+
 ### Overflow
 
 ::: terms
@@ -113,15 +123,18 @@ When using the [items](./#items) prop, add [maxItems](./#maxItems) to automatica
   component={demos.BreadcrumbsMaxItemsDemo}
 />
 
-### Tooltip
+### Auto overflow
 
 ::: terms
-tooltip, hover hint, title, description
+responsive, auto overflow, dynamic, resize, container width
 :::
 
-To provide additional context on hover, make [`Breadcrumbs.ItemTrigger`](./#breadcrumbsitemtrigger) a [Tooltip](/components/tooltip) trigger using the composite API.
+Set [maxItems](./#maxItems) to `"auto"` to automatically collapse items that don't fit within the available space. As the container shrinks or grows, the visible items adjust accordingly. This requires the [items](./#items) prop.
 
-<Demo name="BreadcrumbsTooltipDemo" component={demos.BreadcrumbsTooltipDemo} />
+<Demo
+  name="BreadcrumbsAutoOverflowDemo"
+  component={demos.BreadcrumbsAutoOverflowDemo}
+/>
 
 ## Shortcuts
 

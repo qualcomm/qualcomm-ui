@@ -30,16 +30,6 @@ a11y, WCAG, site hierarchy, wayfinding, location indicator
 
 ## Examples
 
-### Links
-
-::: terms
-polymorphic
-:::
-
-Each item renders an `<a>` by default. Without an explicit `href` or `routerLink`, the anchor links to the current page. For navigable items, provide an explicit [`<a q-breadcrumb-item-trigger>`](./#q-breadcrumb-item-trigger) with `href` or `routerLink`.
-
-<QdsDemo name="BreadcrumbsLinksDemo" />
-
 ### Items
 
 ::: terms
@@ -49,6 +39,16 @@ data-driven, items array, programmatic
 To render a collection of breadcrumbs from data, pass an [items](./#items-1) array to `q-breadcrumbs-list`. Each item can specify a [link](./#link) string or path array for `routerLink` navigation, or an [href](./#href) string for plain anchor links.
 
 <QdsDemo name="BreadcrumbsItemsDemo" />
+
+### Links
+
+::: terms
+polymorphic
+:::
+
+Each item renders an `<a>` by default. Without an explicit `href` or `routerLink`, the anchor links to the current page. For navigable items, provide an explicit [`<a q-breadcrumb-item-trigger>`](./#q-breadcrumb-item-trigger) with `href` or `routerLink`.
+
+<QdsDemo name="BreadcrumbsLinksDemo" />
 
 ### Emphasis (color)
 
@@ -80,6 +80,16 @@ Use the [disabled](./#disabled) input to disable a breadcrumb item.
 
 <QdsDemo name="BreadcrumbsDisabledDemo" />
 
+### Tooltip
+
+::: terms
+tooltip, hover hint, title, description
+:::
+
+To provide additional context on hover, add a tooltip to a breadcrumb item by wrapping its trigger with a [Tooltip](/components/tooltip) and apply `q-tooltip-trigger` to it.
+
+<QdsDemo name="BreadcrumbsTooltipDemo" />
+
 ### Overflow
 
 ::: terms
@@ -100,15 +110,15 @@ When using the [items](./#items) input, add [maxItems](./#maxItems) to automatic
 
 <QdsDemo name="BreadcrumbsMaxItemsDemo" />
 
-### Tooltip
+### Auto overflow
 
 ::: terms
-tooltip, hover hint, title, description
+responsive, auto overflow, dynamic, resize, container width
 :::
 
-To provide additional context on hover, add a tooltip to a breadcrumb item by wrapping its trigger with a [Tooltip](/components/tooltip) and apply `q-tooltip-trigger` to it.
+Set [maxItems](./#maxItems) to `"auto"` to automatically collapse items that don't fit within the available space. As the container shrinks or grows, the visible items adjust accordingly. This requires the [items](./#items) input.
 
-<QdsDemo name="BreadcrumbsTooltipDemo" />
+<QdsDemo name="BreadcrumbsAutoOverflowDemo" />
 
 ## API
 

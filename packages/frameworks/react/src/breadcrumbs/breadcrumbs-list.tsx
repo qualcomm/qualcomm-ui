@@ -4,12 +4,14 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {
+  breadcrumbsClasses,
   getItemSegments,
   type QdsBreadcrumbItemData,
   type QdsBreadcrumbsMaxItems,
 } from "@qualcomm-ui/qds-core/breadcrumbs"
 import {Menu} from "@qualcomm-ui/react/menu"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
+import {useMergedRef} from "@qualcomm-ui/react-core/refs"
 import {
   type ElementRenderProp,
   PolymorphicElement,
@@ -21,7 +23,9 @@ import {BreadcrumbsItemRoot} from "./breadcrumbs-item-root"
 import {BreadcrumbsItemSeparator} from "./breadcrumbs-item-separator"
 import {BreadcrumbsItemTrigger} from "./breadcrumbs-item-trigger"
 import {BreadcrumbsOverflowItem} from "./breadcrumbs-overflow-item"
+import {BreadcrumbsOverflowTrigger} from "./breadcrumbs-overflow-trigger"
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context"
+import {useAutoMaxItems} from "./use-auto-max-items"
 
 export type BreadcrumbsItemData = QdsBreadcrumbItemData<
   LucideIconOrElement,
@@ -75,30 +79,65 @@ export function BreadcrumbsList({
   ...props
 }: BreadcrumbsListProps): ReactElement {
   const qdsContext = useQdsBreadcrumbsContext()
+  const isAutoOverflow = maxItems === "auto" && !!items
+
+  const {computedMaxItems, isMeasuring, listRef, triggerMeasureRef} =
+    useAutoMaxItems({
+      enabled: isAutoOverflow,
+      endItems,
+      items,
+      startItems,
+    })
+
+  const effectiveMaxItems = maxItems === "auto" ? computedMaxItems : maxItems
 
   const segments = useMemo(
     () =>
-      items
-        ? getItemSegments(
-            items,
-            maxItems as number | undefined,
-            startItems,
-            endItems,
-          )
+      items && !isMeasuring
+        ? getItemSegments(items, effectiveMaxItems, startItems, endItems)
         : null,
-    [items, maxItems, startItems, endItems],
+    [items, isMeasuring, effectiveMaxItems, startItems, endItems],
   )
 
-  const mergedProps = mergeProps(qdsContext.getListBindings(), props)
+  const mergedRef = useMergedRef(ref, listRef)
+
+  const mergedProps = mergeProps(qdsContext.getListBindings(), props, {
+    ...(isAutoOverflow ? {"data-auto-overflow": ""} : undefined),
+    ...(isMeasuring ? {"data-measuring": ""} : undefined),
+  })
 
   return (
-    <PolymorphicElement ref={ref} as="ol" {...mergedProps}>
-      {segments ? (
-        <DataDrivenItems segments={segments} />
-      ) : (
-        children
+    <>
+      <PolymorphicElement ref={mergedRef} as="ol" {...mergedProps}>
+        {isMeasuring && items ? (
+          items.map((item, index) => (
+            <BreadcrumbsItemRoot key={index} disabled={item.disabled}>
+              <BreadcrumbsItemTrigger render={getTriggerRender(item)}>
+                {item.icon ? <BreadcrumbsItemIcon icon={item.icon} /> : null}
+                {item.label}
+              </BreadcrumbsItemTrigger>
+              <BreadcrumbsItemSeparator />
+            </BreadcrumbsItemRoot>
+          ))
+        ) : segments ? (
+          <DataDrivenItems segments={segments} />
+        ) : (
+          children
+        )}
+      </PolymorphicElement>
+      {isAutoOverflow && (
+        <div
+          ref={triggerMeasureRef}
+          aria-hidden
+          className={breadcrumbsClasses.measureContainer}
+        >
+          <BreadcrumbsItemRoot>
+            <BreadcrumbsOverflowTrigger />
+            <BreadcrumbsItemSeparator />
+          </BreadcrumbsItemRoot>
+        </div>
       )}
-    </PolymorphicElement>
+    </>
   )
 }
 

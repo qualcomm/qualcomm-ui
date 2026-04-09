@@ -4,8 +4,12 @@
 import {
   Component,
   computed,
+  effect,
+  ElementRef,
+  inject,
   input,
   type OnInit,
+  viewChild,
 } from "@angular/core"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
@@ -17,6 +21,7 @@ import {
 } from "@qualcomm-ui/qds-core/breadcrumbs"
 
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
+import {useAutoMaxItems} from "./use-auto-max-items"
 
 export type BreadcrumbsItemData = QdsBreadcrumbItemData<
   LucideIconOrString,
@@ -59,63 +64,80 @@ export type BreadcrumbsItemData = QdsBreadcrumbItemData<
     </ng-template>
 
     @if (items()) {
-      @for (item of segments().before; track $index) {
-        <ng-container
-          *ngTemplateOutlet="itemTmpl; context: {$implicit: item}"
-        />
-      }
-      @if (segments().collapsed.length) {
-        <li q-breadcrumb-overflow-item>
-          @for (item of segments().collapsed; track $index) {
-            @if (item.link) {
-              <a
-                q-menu-item
-                [disabled]="!!item.disabled"
-                [routerLink]="item.link"
-                [value]="'breadcrumb-overflow-' + $index"
-              >
-                @if (item.icon) {
-                  <span q-menu-item-start-icon [icon]="item.icon"></span>
-                }
-                {{ item.label }}
-              </a>
-            } @else if (item.href) {
-              <a
-                q-menu-item
-                [attr.href]="item.href"
-                [disabled]="!!item.disabled"
-                [value]="'breadcrumb-overflow-' + $index"
-              >
-                @if (item.icon) {
-                  <span q-menu-item-start-icon [icon]="item.icon"></span>
-                }
-                {{ item.label }}
-              </a>
-            } @else {
-              <button
-                q-menu-item
-                [disabled]="!!item.disabled"
-                [value]="'breadcrumb-overflow-' + $index"
-              >
-                @if (item.icon) {
-                  <span q-menu-item-start-icon [icon]="item.icon"></span>
-                }
-                {{ item.label }}
-              </button>
+      @if (isMeasuring()) {
+        @for (item of items(); track $index) {
+          <ng-container
+            *ngTemplateOutlet="itemTmpl; context: {$implicit: item}"
+          />
+        }
+      } @else {
+        @for (item of segments().before; track $index) {
+          <ng-container
+            *ngTemplateOutlet="itemTmpl; context: {$implicit: item}"
+          />
+        }
+        @if (segments().collapsed.length) {
+          <li q-breadcrumb-overflow-item>
+            @for (item of segments().collapsed; track $index) {
+              @if (item.link) {
+                <a
+                  q-menu-item
+                  [disabled]="!!item.disabled"
+                  [routerLink]="item.link"
+                  [value]="'breadcrumb-overflow-' + $index"
+                >
+                  @if (item.icon) {
+                    <span q-menu-item-start-icon [icon]="item.icon"></span>
+                  }
+                  {{ item.label }}
+                </a>
+              } @else if (item.href) {
+                <a
+                  q-menu-item
+                  [attr.href]="item.href"
+                  [disabled]="!!item.disabled"
+                  [value]="'breadcrumb-overflow-' + $index"
+                >
+                  @if (item.icon) {
+                    <span q-menu-item-start-icon [icon]="item.icon"></span>
+                  }
+                  {{ item.label }}
+                </a>
+              } @else {
+                <button
+                  q-menu-item
+                  [disabled]="!!item.disabled"
+                  [value]="'breadcrumb-overflow-' + $index"
+                >
+                  @if (item.icon) {
+                    <span q-menu-item-start-icon [icon]="item.icon"></span>
+                  }
+                  {{ item.label }}
+                </button>
+              }
             }
-          }
-        </li>
-      }
-      @for (item of segments().after; track $index; let last = $last) {
-        <ng-container
-          *ngTemplateOutlet="
-            itemTmpl;
-            context: {$implicit: item, current: last}
-          "
-        />
+          </li>
+        }
+        @for (item of segments().after; track $index; let last = $last) {
+          <ng-container
+            *ngTemplateOutlet="
+              itemTmpl;
+              context: {$implicit: item, current: last}
+            "
+          />
+        }
       }
     } @else {
       <ng-content />
+    }
+    @if (isAutoOverflow()) {
+      <div
+        #triggerMeasure
+        aria-hidden="true"
+        class="qui-breadcrumbs__measure-container"
+      >
+        <li q-breadcrumb-overflow-item></li>
+      </div>
     }
   `,
 })
@@ -149,25 +171,63 @@ export class BreadcrumbsListDirective implements OnInit {
 
   protected readonly qdsContext = useQdsBreadcrumbsContext()
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.qdsContext().getListBindings(),
+  private readonly elementRef = inject(ElementRef)
+  private readonly triggerMeasureRef =
+    viewChild<ElementRef<HTMLElement>>("triggerMeasure")
+
+  protected readonly isAutoOverflow = computed(
+    () => this.maxItems() === "auto" && !!this.items(),
   )
+
+  private readonly autoMaxItems = useAutoMaxItems({
+    element: this.elementRef,
+    endItems: () => this.endItems(),
+    startItems: () => this.startItems(),
+    triggerElement: () => this.triggerMeasureRef(),
+  })
+
+  protected readonly isMeasuring = this.autoMaxItems.isMeasuring
+
+  protected readonly trackBindings = useTrackBindings(() => ({
+    ...this.qdsContext().getListBindings(),
+    "data-auto-overflow": this.isAutoOverflow() || undefined,
+    "data-measuring": this.isMeasuring() || undefined,
+  }))
+
+  private readonly effectiveMaxItems = computed(() => {
+    if (this.maxItems() === "auto") {
+      return this.autoMaxItems.computedMaxItems()
+    }
+    return this.maxItems() as number | undefined
+  })
 
   protected readonly segments = computed(() => {
     const items = this.items()
-    if (!items) {
+    if (!items || this.isMeasuring()) {
       return {after: [], before: [], collapsed: []}
     }
 
-    const maxItems = this.maxItems()
-
     return getItemSegments(
       items,
-      maxItems as number | undefined,
+      this.effectiveMaxItems(),
       this.startItems(),
       this.endItems(),
     )
   })
+
+  constructor() {
+    effect(() => {
+      const maxItems = this.maxItems()
+      const items = this.items()
+
+      if (maxItems !== "auto" || !items || items.length === 0) {
+        this.autoMaxItems.reset()
+        return
+      }
+
+      this.autoMaxItems.startMeasurement()
+    })
+  }
 
   ngOnInit() {
     this.trackBindings()
