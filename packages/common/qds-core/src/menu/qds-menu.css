@@ -112,11 +112,17 @@
     grid-template-columns: auto auto 1fr repeat(3, auto);
   }
 
-  &:hover {
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+    --icon-color: var(--color-utility-disabled-icon);
+    pointer-events: none;
+  }
+
+  &:hover:not([data-disabled]) {
     background: var(--color-interactive-background-ghost-hover);
   }
 
-  &:active {
+  &:active:not([data-disabled]) {
     background: var(--color-interactive-background-ghost-pressed);
   }
 
@@ -133,6 +139,7 @@
 }
 
 .qui-menu-item__start-icon {
+  color: var(--icon-color, currentColor);
   margin-right: var(--spacing-50);
 }
 
