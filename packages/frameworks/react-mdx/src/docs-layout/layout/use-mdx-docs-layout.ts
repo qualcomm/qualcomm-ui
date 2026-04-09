@@ -23,6 +23,7 @@ export interface MdxDocsLayoutContextState {
   mainContentElement: HTMLElement | null
   navItems: NavItem[]
   pageExport: boolean | KnowledgePageData | undefined
+  pageFrontmatter: Record<string, unknown>
   pageMap: PageMap
   pageProps: PropsContextValue | null
   pathname: string

@@ -290,6 +290,9 @@ export function createSelectApi(
           if (!interactive) {
             return
           }
+          if (event.target !== event.currentTarget) {
+            return
+          }
 
           const keyMap: EventKeyMap = {
             ArrowDown(event) {
@@ -421,6 +424,7 @@ export function createSelectApi(
         "data-scope": "select",
         "data-state": open ? "open" : "closed",
         dir: prop("dir"),
+        inert: true,
         tabIndex: -1,
       })
     },

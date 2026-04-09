@@ -1,6 +1,24 @@
 # @qualcomm-ui/mdx-common Changelog
 
-## 2.0.0 (2026/03/06)
+## 2.1.1
+
+Apr 2nd, 2026
+
+### Miscellaneous Chores
+
+- upgrade to vite v8 and bump dependencies ([18596c5](https://github.com/qualcomm/qualcomm-ui/commit/18596c5))
+
+## 2.1.0
+
+Mar 28th, 2026
+
+### Features
+
+- [docs-plugin]: add raw frontmatter data field to PageSection type ([d4544cc](https://github.com/qualcomm/qualcomm-ui/commit/d4544cc))
+
+## 2.0.0
+
+Mar 6th, 2026
 
 ### BREAKING CHANGES
 
@@ -10,7 +28,9 @@
 
 - [docs-plugin]: clean up type imports ([25e49d1](https://github.com/qualcomm/qualcomm-ui/commit/25e49d1))
 
-## 1.10.0 (2026/02/26)
+## 1.10.0
+
+Feb 26th, 2026
 
 ### Features
 
@@ -31,13 +51,17 @@
 
 - [switch]: use interactive icon tokens for thumb states
 
-## 1.9.1 (2026/01/22)
+## 1.9.1
+
+Jan 22nd, 2026
 
 ### Styles
 
 - [shiki]: darken shiki theme background colors
 
-## 1.9.0 (2026/01/18)
+## 1.9.0
+
+Jan 18th, 2026
 
 ### Features
 
@@ -47,32 +71,42 @@
 
 - [qui-docs]: document manifest schema and MCP client usage
 
-## 1.8.0 (2025/12/24)
+## 1.8.0
+
+Dec 24th, 2025
 
 ### Features
 
 - [types]: add KnowledgePageData type
 
-## 1.7.0 (2025/12/22)
+## 1.7.0
+
+Dec 22nd, 2025
 
 ### Features
 
 - [docs-plugin]: add knowledge build to docs-plugin
 - [knowledge]: add live knowledge exports configuration
 
-## 1.6.0 (2025/12/18)
+## 1.6.0
+
+Dec 18th, 2025
 
 ### Features
 
 - [remark-plugins]: add support for frontmatter descriptions
 
-## 1.5.0 (2025/12/08)
+## 1.5.0
+
+Dec 8th, 2025
 
 ### Features
 
 - [docs]: add frontmatter fields for update metadata
 
-## 1.4.0 (2025/12/03)
+## 1.4.0
+
+Dec 3rd, 2025
 
 ### Features
 
@@ -87,13 +121,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/typedoc-common]
 
-## 1.3.0 (2025/11/25)
+## 1.3.0
+
+Nov 25th, 2025
 
 ### Features
 
 - [mdx-common]: relax SourceCodeData shape and deprecate withoutImports field
 
-## 1.2.0 (2025/11/19)
+## 1.2.0
+
+Nov 19th, 2025
 
 ### Features
 
@@ -103,7 +141,9 @@
 
 - deprecated ReactDemoWithScope
 
-## 1.1.0 (2025/11/17)
+## 1.1.0
+
+Nov 17th, 2025
 
 ### Features
 
@@ -113,7 +153,9 @@
 
 - [site-search]: use word boundary for result truncation, increase character limit
 
-## 1.0.3 (2025/11/13)
+## 1.0.3
+
+Nov 13th, 2025
 
 ### Bug Fixes
 
@@ -123,7 +165,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/typedoc-common]
 
-## 1.0.2 (2025/11/12)
+## 1.0.2
+
+Nov 12th, 2025
 
 ### Bug Fixes
 
@@ -133,7 +177,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/typedoc-common]
 
-## 1.0.1 (2025/11/12)
+## 1.0.1
+
+Nov 12th, 2025
 
 ### Miscellaneous Chores
 

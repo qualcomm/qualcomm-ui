@@ -22,6 +22,7 @@ import type {ResolvedQuiDocsConfig} from "./config"
 import {ConfigLoader} from "./config/config-loader"
 import {type CompiledMdxFile, MdxFileReader} from "./markdown"
 import {KnowledgeExporter} from "./markdown/knowledge"
+import type {KnowledgePageCache} from "./markdown/knowledge/types"
 import {fixPath} from "./path-utils"
 import {SearchIndexer} from "./search-indexer"
 
@@ -55,6 +56,7 @@ export class PluginState {
   indexer!: SearchIndexer
   configLoader: ConfigLoader | null = null
   knowledgeConfig: ResolvedQuiDocsConfig["knowledge"] = undefined
+  private knowledgePageCache: KnowledgePageCache = new Map()
   pages: KnowledgePages | null = null
   sections: KnowledgeSections | null = null
   routesDir!: string
@@ -114,6 +116,7 @@ export class PluginState {
   }
 
   createIndexer(config: ResolvedQuiDocsConfig) {
+    this.knowledgePageCache.clear()
     this.config = config
     this.configFilePath = config.filePath
     this.docPropsFilePath = config.typeDocProps
@@ -227,7 +230,7 @@ export class PluginState {
     )
     const startTime = Date.now()
 
-    const fileReader = new MdxFileReader(false)
+    const fileReader = new MdxFileReader(isDev)
     const exporter = new KnowledgeExporter(
       {
         baseUrl: this.knowledgeConfig.baseUrl,
@@ -241,6 +244,7 @@ export class PluginState {
         sections: this.knowledgeConfig.sections,
       },
       fileReader,
+      this.knowledgePageCache,
     )
 
     const result = await exporter.generate()
@@ -261,8 +265,14 @@ export class PluginState {
 
     this.exports.pathnames = result.pages.pages.map((p) => p.pathname)
 
+    const cacheInfo =
+      result.cachedPageCount > 0
+        ? chalk.greenBright.bold(
+            ` (${result.cachedPageCount}/${result.totalPageCount} pages cached)`,
+          )
+        : ""
     console.debug(
-      `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Generated knowledge exports in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}`,
+      `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Generated knowledge exports in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${cacheInfo}`,
     )
   }
 

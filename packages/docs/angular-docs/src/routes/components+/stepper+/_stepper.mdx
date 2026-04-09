@@ -1,0 +1,280 @@
+---
+title: Stepper
+description: Use steppers to visualize a group of connected actions or the order of a workflow.
+group: Disclosure
+aliases: [steps]
+badges:
+  - id: since
+    label: 2.3.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#230
+  - id: developerPreview
+    label: Developer Preview
+    url: /developer-previews
+---
+
+import {QdsDemo, ComponentExplorer} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```ts
+import {StepperModule} from "@qualcomm-ui/angular/stepper"
+```
+
+## Examples
+
+### Linear Mode
+
+The stepper is linear by default ([linear](./#linear) is `true`). Steps must be completed in order.
+
+- Backward navigation is always allowed
+- Previously visited steps can be re-clicked without restriction
+- Forward navigation is restricted to the immediate next step
+- [canGoToStep](./#canGoToStep) can override forward navigation decisions
+
+<QdsDemo name="StepperLinearDemo" />
+
+### Non-linear Mode
+
+Set [linear](./#linear) to `false` to allow accessing any step at any time. Use the [completed](./#completed) prop to manually track which steps are done.
+
+[canGoToStep](./#canGoToStep) applies to all navigation if provided. Otherwise, all navigation is allowed.
+
+<QdsDemo name="StepperNonLinearDemo" />
+
+### Icon
+
+Use the `q-stepper-indicator-icon` directive on an `<svg>` element to use an icon for each step's indicator.
+
+<QdsDemo name="StepperIconDemo" />
+
+### Hint
+
+Add a hint to provide additional context below the step label.
+
+<QdsDemo name="StepperHintDemo" />
+
+### Layout & Orientation
+
+Stepper orientation and label placement are controlled through the [orientation](./#orientation) input.
+
+#### Horizontal
+
+`horizontal` (default): The step list is centered horizontally, and the labels are stacked vertically and centered below the step indicator.
+
+<QdsDemo name="StepperHorizontalDemo" />
+
+#### Horizontal Inline
+
+`horizontal-inline` is a variant of `horizontal` that places the step indicator and labels inline. The step items are left-aligned and take the full width of their parent container
+
+<QdsDemo name="StepperHorizontalInlineDemo" />
+
+#### Horizontal Bottom Start
+
+`horizontal-bottom-start` is a variant of `horizontal` that places the labels below each step, aligned to the start. The items are left-aligned and take the full width of their parent container.
+
+<QdsDemo name="StepperHorizontalBottomStartDemo" />
+
+#### Vertical
+
+Set [orientation](./#orientation) to `vertical` to stack the steps vertically. The labels are centered relative to the step indicator.
+
+<QdsDemo name="StepperVerticalDemo" />
+
+#### Vertical Inline
+
+Set [orientation](./#orientation) to `vertical-inline` to stack the steps vertically while aligning the labels inline with the step indicator.
+
+<QdsDemo name="StepperVerticalInlineDemo" />
+
+### Controlled State
+
+Use [step](./#step) and [(stepChanged)](./#stepChanged) to control the active step externally.
+
+<QdsDemo expanded name="StepperControlledDemo" />
+
+### Manual Completion
+
+Set [linear](./#linear) to `false` and use the [completed](./#completed) input to manually control which steps are marked as complete.
+
+<QdsDemo expanded name="StepperCompletedDemo" />
+
+### Pending Steps
+
+Use the [pending](./#pending) input to mark steps as pending. This is typically used to indicate that a step has been visited but not completed.
+
+<QdsDemo name="StepperPendingDemo" />
+
+### Sizes
+
+The stepper comes in two [sizes](./#size): `sm` and `lg`. The default size is `lg`.
+
+<QdsDemo expanded name="StepperSizesDemo" />
+
+### Validation Examples
+
+#### Non-linear Form
+
+Combine `linear={false}` with per-step validation to let users complete steps in any order. Use the [invalid](./#invalid) and [completed](./#completed) props to track each step's status, and [stepperContext](./#stepper-context) to conditionally render a submit action once all steps pass.
+
+<QdsDemo expanded name="StepperNonlinearFormDemo" />
+
+#### Skippable Steps
+
+Use [isStepSkippable](./#isStepSkippable) to mark optional steps that can be bypassed during navigation.
+
+<QdsDemo expanded name="StepperSkippableStepsDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  name="StepperExplorerDemo"
+  linkPrefix="stepper"
+  parts={[
+    "root",
+    "list",
+    "item",
+    "trigger",
+    "separator",
+    "label",
+    "hint",
+    "content",
+    "completed-content",
+    "next-trigger",
+    "prev-trigger",
+  ]}
+/>
+
+## API
+
+### q-stepper-root
+
+<TypeDocProps name="StepperRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperRootBindings", "StepperRootBindings"]}
+/>
+
+### q-stepper-list
+
+<TypeDocProps name="StepperListDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperListBindings", "StepperListBindings"]}
+/>
+
+### q-stepper-item
+
+<TypeDocProps name="StepperItemDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperItemBindings", "StepperItemBindings"]}
+/>
+
+### q-stepper-trigger
+
+<TypeDocProps name="StepperTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperTriggerBindings", "StepperTriggerBindings"]}
+/>
+
+### q-stepper-indicator
+
+<TypeDocProps name="StepperIndicatorDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperIndicatorBindings", "StepperIndicatorBindings"]}
+/>
+
+### q-stepper-separator
+
+<TypeDocProps name="StepperSeparatorDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperSeparatorBindings", "StepperSeparatorBindings"]}
+/>
+
+### q-stepper-completed-content
+
+Content displayed when all steps are completed.
+
+<TypeDocProps name="StepperCompletedContentDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsStepperCompletedContentBindings",
+    "StepperCompletedContentBindings",
+  ]}
+/>
+
+### q-stepper-content
+
+<TypeDocProps name="StepperContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperContentBindings", "StepperContentBindings"]}
+/>
+
+### q-stepper-label
+
+<TypeDocProps name="StepperLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperLabelBindings", "StepperLabelBindings"]}
+/>
+
+### q-stepper-hint
+
+<TypeDocProps name="StepperHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperHintBindings", "StepperHintBindings"]}
+/>
+
+### q-stepper-next-trigger
+
+<TypeDocProps name="StepperNextTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperNextTriggerBindings", "StepperNextTriggerBindings"]}
+/>
+
+### q-stepper-prev-trigger
+
+<TypeDocProps name="StepperPrevTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsStepperPrevTriggerBindings", "StepperPrevTriggerBindings"]}
+/>
+
+### stepperContext
+
+<TypeDocProps name="StepperContextDirective" />
+
+### StepperApi
+
+<TypeDocProps
+  name="StepperApi"
+  omit={[
+    "getCompletedContentBindings",
+    "getContentBindings",
+    "getHintBindings",
+    "getIndicatorBindings",
+    "getItemBindings",
+    "getLabelBindings",
+    "getListBindings",
+    "getNextTriggerBindings",
+    "getPrevTriggerBindings",
+    "getRootBindings",
+    "getSeparatorBindings",
+    "getTriggerBindings",
+  ]}
+  partial
+/>

@@ -14,5 +14,11 @@ export interface SideNavDividerProps
 export function SideNavDivider(props: SideNavDividerProps): ReactElement {
   const mergedProps = mergeProps(qdsSideNavApi.getDividerBindings(), props)
 
-  return <Divider {...mergedProps} />
+  return (
+    <Divider
+      {...mergedProps}
+      aria-orientation={undefined}
+      role="presentation"
+    />
+  )
 }

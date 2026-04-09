@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/utils",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "A browser-safe, comprehensive utility library providing essential functions for array manipulation, DOM operations, class name management, type coercion, equality checks, functional programming helpers, type guards, numeric operations, object manipulation, timing utilities, and more",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",

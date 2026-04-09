@@ -28,7 +28,7 @@ import {
   type MachineConfig,
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
-import {getIn} from "@qualcomm-ui/utils/object"
+import {maybeAccess} from "@qualcomm-ui/utils/object"
 
 import {emptyCollection} from "./combobox.collection"
 import {calculateVisibleTags} from "./combobox.overflow"
@@ -275,37 +275,6 @@ const comboboxMachineBase = {
           context.set("currentPlacement", data.placement)
         },
       })
-    },
-  },
-
-  guards: {
-    allowCustomValue: ({prop}) => !!prop("allowCustomValue"),
-    autoComplete: ({computed, prop}) =>
-      computed("autoComplete") && !prop("multiple"),
-    autoFocus: ({prop}) => !!prop("autoFocus"),
-    autoHighlight: ({computed}) => computed("autoHighlight"),
-    closeOnSelect: ({prop}) => !!prop("closeOnSelect"),
-    hasHighlightedItem: ({context}) => context.get("highlightedValue") != null,
-    isChangeEvent: ({event}) => event.previousEvent?.type === "INPUT.CHANGE",
-    isCustomValue: ({computed}) => computed("isCustomValue"),
-    isFirstItemHighlighted: ({context, prop}) =>
-      prop("collection").firstValue === context.get("highlightedValue"),
-    isHighlightedItemRemoved: ({context, prop}) =>
-      !prop("collection").has(context.get("highlightedValue")),
-    isInputValueEmpty: ({computed}) => computed("isInputValueEmpty"),
-    isLastItemHighlighted: ({context, prop}) =>
-      prop("collection").lastValue === context.get("highlightedValue"),
-    isOpenControlled: ({prop}) => prop("open") != null,
-    openOnChange: ({context, prop}) => {
-      const openOnChange = prop("openOnChange")
-      if (isBoolean(openOnChange)) {
-        return openOnChange
-      }
-      return !!openOnChange?.({inputValue: context.get("inputValue")})
-    },
-    restoreFocus: ({event}) => {
-      const restoreFocus = getIn(event, "restoreFocus")
-      return restoreFocus == null ? true : !!restoreFocus
     },
   },
 
@@ -1016,403 +985,410 @@ const comboboxMachineBase = {
 
 export const comboboxMachine: MachineConfig<ComboboxSchema> =
   createNarrowedMachine<ComboboxSchema>()(comboboxMachineBase, {
-    measureOverflowTag({context, scope}) {
-      const showAllButtonEl = getInvisibleOverflowTagEl(scope)
-      if (!showAllButtonEl) {
-        return
-      }
-      const width = showAllButtonEl.getBoundingClientRect().width
-      context.set("overflowTagWidth", width)
-    },
-    measureTags({context, scope}) {
-      const values = context.get("value")
-      const tagWidths: number[] = []
-      for (const value of values) {
-        const el = getInvisibleTagEl(scope, value)
-        if (el) {
-          tagWidths.push(el.getBoundingClientRect().width)
-        }
-      }
-      context.set("tagWidths", tagWidths)
-    },
-    recalculateVisibleTags({context}) {
-      const result = calculateVisibleTags({
-        availableWidth: context.get("availableTagWidth"),
-        // TODO: move to prop
-        gap: 4,
-        showAllButtonWidth: context.get("overflowTagWidth"),
-        tagWidths: context.get("tagWidths"),
-      })
-      context.set("visibleTagIndices", result.visibleIndices)
-    },
-
-    // group: TODO delete me
-    autofillInputValue({computed, context, event, prop, scope}) {
-      const inputEl = domEls.input(scope)
-      const collection = prop("collection")
-      if (!computed("autoComplete") || !inputEl || !getIn(event, "keypress")) {
-        return
-      }
-      const valueText = collection.stringify(context.get("highlightedValue"))
-      raf(() => {
-        inputEl.value = valueText || context.get("inputValue")
-      })
-    },
-    clearHighlightedValue({context}) {
-      context.set("highlightedValue", null)
-    },
-    clearInputValue({context}) {
-      context.set("inputValue", "")
-    },
-    clearItem(params) {
-      const {context, event, flush, prop} = params
-      if (event.value == null) {
-        return
-      }
-      flush(() => {
-        const eventValue = event.value!
-        const nextValue = remove(context.get("value"), eventValue)
-        context.set("value", nextValue)
-
-        // set input value
-        const inputValue = match(prop("selectionBehavior"), {
-          clear: "",
-          preserve: context.get("inputValue"),
-          replace: prop("collection").stringifyMany(nextValue),
-        })
-        context.set("inputValue", inputValue)
-      })
-    },
-    clearSelectedItems(params) {
-      const {context, flush, prop} = params
-      flush(() => {
-        context.set("value", [])
-
-        // set input value
-        const inputValue = match(prop("selectionBehavior"), {
-          clear: "",
-          preserve: context.get("inputValue"),
-          replace: prop("collection").stringifyMany([]),
-        })
-        context.set("inputValue", inputValue)
-      })
-    },
-    highlightFirstItem({context, prop, scope}) {
-      const exec = domEls.content(scope) ? queueMicrotask : raf
-      exec(() => {
-        const value = prop("collection").firstValue
-        if (value) {
-          context.set("highlightedValue", value)
-        }
-      })
-    },
-    highlightFirstItemIfNeeded({action, computed}) {
-      if (!computed("autoHighlight")) {
-        return
-      }
-      action(["highlightFirstItem"])
-    },
-    highlightFirstOrSelectedItem({computed, context, prop}) {
-      raf(() => {
-        let value: string | null = null
-        if (computed("hasSelectedItems")) {
-          value = prop("collection").sort(context.get("value"))[0]
-        } else {
-          value = prop("collection").firstValue
-        }
-        if (value) {
-          context.set("highlightedValue", value)
-        }
-      })
-    },
-    highlightFirstSelectedItem({context, prop}) {
-      raf(() => {
-        const [value] = prop("collection").sort(context.get("value"))
-        if (value) {
-          context.set("highlightedValue", value)
-        }
-      })
-    },
-    highlightLastItem({context, prop, scope}) {
-      const exec = domEls.content(scope) ? queueMicrotask : raf
-      exec(() => {
-        const value = prop("collection").lastValue
-        if (value) {
-          context.set("highlightedValue", value)
-        }
-      })
-    },
-    highlightLastOrSelectedItem({computed, context, prop}) {
-      raf(() => {
+    actions: {
+      autofillInputValue({computed, context, event, prop, scope}) {
+        const inputEl = domEls.input(scope)
         const collection = prop("collection")
+        if (
+          !computed("autoComplete") ||
+          !inputEl ||
+          !maybeAccess(event, "keypress")
+        ) {
+          return
+        }
+        const valueText = collection.stringify(context.get("highlightedValue"))
+        raf(() => {
+          inputEl.value = valueText || context.get("inputValue")
+        })
+      },
+      clearHighlightedValue({context}) {
+        context.set("highlightedValue", null)
+      },
+      clearInputValue({context}) {
+        context.set("inputValue", "")
+      },
+      clearItem(params) {
+        const {context, event, flush, prop} = params
+        if (event.value == null) {
+          return
+        }
+        flush(() => {
+          const eventValue = event.value!
+          const nextValue = remove(context.get("value"), eventValue)
+          context.set("value", nextValue)
+
+          // set input value
+          const inputValue = match(prop("selectionBehavior"), {
+            clear: "",
+            preserve: context.get("inputValue"),
+            replace: prop("collection").stringifyMany(nextValue),
+          })
+          context.set("inputValue", inputValue)
+        })
+      },
+      clearSelectedItems(params) {
+        const {context, flush, prop} = params
+        flush(() => {
+          context.set("value", [])
+
+          // set input value
+          const inputValue = match(prop("selectionBehavior"), {
+            clear: "",
+            preserve: context.get("inputValue"),
+            replace: prop("collection").stringifyMany([]),
+          })
+          context.set("inputValue", inputValue)
+        })
+      },
+      highlightFirstItem({context, prop, scope}) {
+        const exec = domEls.content(scope) ? queueMicrotask : raf
+        exec(() => {
+          const value = prop("collection").firstValue
+          if (value) {
+            context.set("highlightedValue", value)
+          }
+        })
+      },
+      highlightFirstItemIfNeeded({action, computed}) {
+        if (!computed("autoHighlight")) {
+          return
+        }
+        action(["highlightFirstItem"])
+      },
+      highlightFirstOrSelectedItem({computed, context, prop}) {
+        raf(() => {
+          let value: string | null = null
+          if (computed("hasSelectedItems")) {
+            value = prop("collection").sort(context.get("value"))[0]
+          } else {
+            value = prop("collection").firstValue
+          }
+          if (value) {
+            context.set("highlightedValue", value)
+          }
+        })
+      },
+      highlightFirstSelectedItem({context, prop}) {
+        raf(() => {
+          const [value] = prop("collection").sort(context.get("value"))
+          if (value) {
+            context.set("highlightedValue", value)
+          }
+        })
+      },
+      highlightLastItem({context, prop, scope}) {
+        const exec = domEls.content(scope) ? queueMicrotask : raf
+        exec(() => {
+          const value = prop("collection").lastValue
+          if (value) {
+            context.set("highlightedValue", value)
+          }
+        })
+      },
+      highlightLastOrSelectedItem({computed, context, prop}) {
+        raf(() => {
+          const collection = prop("collection")
+          let value: string | null = null
+          if (computed("hasSelectedItems")) {
+            value = collection.sort(context.get("value"))[0]
+          } else {
+            value = collection.lastValue
+          }
+          if (value) {
+            context.set("highlightedValue", value)
+          }
+        })
+      },
+      highlightNextItem({context, prop}) {
         let value: string | null = null
-        if (computed("hasSelectedItems")) {
-          value = collection.sort(context.get("value"))[0]
+        const highlightedValue = context.get("highlightedValue")
+        const collection = prop("collection")
+        if (highlightedValue) {
+          value = collection.getNextValue(highlightedValue)
+          if (!value && prop("loopFocus")) {
+            value = collection.firstValue
+          }
         } else {
-          value = collection.lastValue
-        }
-        if (value) {
-          context.set("highlightedValue", value)
-        }
-      })
-    },
-    highlightNextItem({context, prop}) {
-      let value: string | null = null
-      const highlightedValue = context.get("highlightedValue")
-      const collection = prop("collection")
-      if (highlightedValue) {
-        value = collection.getNextValue(highlightedValue)
-        if (!value && prop("loopFocus")) {
           value = collection.firstValue
         }
-      } else {
-        value = collection.firstValue
-      }
-      if (value) {
-        context.set("highlightedValue", value)
-      }
-    },
-    highlightPrevItem({context, prop}) {
-      let value: string | null = null
-      const highlightedValue = context.get("highlightedValue")
-      const collection = prop("collection")
-      if (highlightedValue) {
-        value = collection.getPreviousValue(highlightedValue)
-        if (!value && prop("loopFocus")) {
+        if (value) {
+          context.set("highlightedValue", value)
+        }
+      },
+      highlightPrevItem({context, prop}) {
+        let value: string | null = null
+        const highlightedValue = context.get("highlightedValue")
+        const collection = prop("collection")
+        if (highlightedValue) {
+          value = collection.getPreviousValue(highlightedValue)
+          if (!value && prop("loopFocus")) {
+            value = collection.lastValue
+          }
+        } else {
           value = collection.lastValue
         }
-      } else {
-        value = collection.lastValue
-      }
-      if (value) {
-        context.set("highlightedValue", value)
-      }
-    },
-    invokeOnClose({event, prop}) {
-      const reason = getOpenChangeReason(event)
-      prop("onOpenChange")?.({open: false, reason})
-    },
-    invokeOnOpen({event, prop}) {
-      const reason = getOpenChangeReason(event)
-      prop("onOpenChange")?.({open: true, reason})
-    },
-    reposition({context, event, prop, scope}) {
-      const controlEl = () => domEls.control(scope)
-      const positionerEl = () => domEls.positioner(scope)
-      getPlacement(controlEl, positionerEl, {
-        ...prop("positioning"),
-        ...event.options,
-        defer: true,
-        listeners: false,
-        onComplete(data) {
-          context.set("currentPlacement", data.placement)
-        },
-      })
-    },
-    revertInputValue({computed, context, prop}) {
-      const selectionBehavior = prop("selectionBehavior")
-      // Without this, all items briefly render as the text input filter is
-      // removed. This creates a noticeable jump as the content expands briefly
-      // before it closes.
-      raf(() => {
-        const inputValue = match(selectionBehavior, {
-          clear: "",
-          preserve: context.get("inputValue"),
-          replace: computed("hasSelectedItems")
-            ? computed("valueAsString")
-            : "",
-        })
-        context.set("inputValue", inputValue)
-      })
-    },
-    scrollContentToTop({prop, refs, scope}) {
-      const scrollToIndexFn = refs.get("scrollToIndexFn")
-      if (scrollToIndexFn) {
-        const firstValue = prop("collection").firstValue
-        scrollToIndexFn({
-          getElement: () => getItemEl(scope, firstValue),
-          immediate: true,
-          index: 0,
-        })
-      } else {
-        const contentEl = domEls.content(scope)
-        if (!contentEl) {
-          return
+        if (value) {
+          context.set("highlightedValue", value)
         }
-        contentEl.scrollTop = 0
-      }
-    },
-    scrollToHighlightedItem({context, prop, refs, scope}) {
-      nextTick(() => {
-        const highlightedValue = context.get("highlightedValue")
-        if (highlightedValue == null) {
-          return
-        }
-
-        const itemEl = getItemEl(scope, highlightedValue)
-        const contentEl = domEls.content(scope)
-
+      },
+      invokeOnClose({event, prop}) {
+        const reason = getOpenChangeReason(event)
+        prop("onOpenChange")?.({open: false, reason})
+      },
+      invokeOnOpen({event, prop}) {
+        const reason = getOpenChangeReason(event)
+        prop("onOpenChange")?.({open: true, reason})
+      },
+      reposition({context, event, prop, scope}) {
+        const controlEl = () => domEls.control(scope)
+        const positionerEl = () => domEls.positioner(scope)
+        getPlacement(controlEl, positionerEl, {
+          ...prop("positioning"),
+          ...event.options,
+          defer: true,
+          listeners: false,
+          onComplete(data) {
+            context.set("currentPlacement", data.placement)
+          },
+        })
+      },
+      revertInputValue({computed, context, prop}) {
+        const selectionBehavior = prop("selectionBehavior")
+        // Without this, all items briefly render as the text input filter is
+        // removed. This creates a noticeable jump as the content expands briefly
+        // before it closes.
+        raf(() => {
+          const inputValue = match(selectionBehavior, {
+            clear: "",
+            preserve: context.get("inputValue"),
+            replace: computed("hasSelectedItems")
+              ? computed("valueAsString")
+              : "",
+          })
+          context.set("inputValue", inputValue)
+        })
+      },
+      scrollContentToTop({prop, refs, scope}) {
         const scrollToIndexFn = refs.get("scrollToIndexFn")
         if (scrollToIndexFn) {
-          const highlightedIndex = prop("collection").indexOf(highlightedValue)
+          const firstValue = prop("collection").firstValue
           scrollToIndexFn({
-            getElement: () => getItemEl(scope, highlightedValue),
+            getElement: () => getItemEl(scope, firstValue),
             immediate: true,
-            index: highlightedIndex,
+            index: 0,
           })
+        } else {
+          const contentEl = domEls.content(scope)
+          if (!contentEl) {
+            return
+          }
+          contentEl.scrollTop = 0
+        }
+      },
+      scrollToHighlightedItem({context, prop, refs, scope}) {
+        nextTick(() => {
+          const highlightedValue = context.get("highlightedValue")
+          if (highlightedValue == null) {
+            return
+          }
+
+          const itemEl = getItemEl(scope, highlightedValue)
+          const contentEl = domEls.content(scope)
+
+          const scrollToIndexFn = refs.get("scrollToIndexFn")
+          if (scrollToIndexFn) {
+            const highlightedIndex =
+              prop("collection").indexOf(highlightedValue)
+            scrollToIndexFn({
+              getElement: () => getItemEl(scope, highlightedValue),
+              immediate: true,
+              index: highlightedIndex,
+            })
+            return
+          }
+
+          scrollIntoView(itemEl, {block: "nearest", rootEl: contentEl})
+        })
+      },
+      selectHighlightedItem(params) {
+        const {context, prop} = params
+        const collection = prop("collection")
+
+        // check if item is valid
+        const highlightedValue = context.get("highlightedValue")
+        if (!highlightedValue || !collection.has(highlightedValue)) {
           return
         }
 
-        scrollIntoView(itemEl, {block: "nearest", rootEl: contentEl})
-      })
-    },
-    selectHighlightedItem(params) {
-      const {context, prop} = params
-      const collection = prop("collection")
-
-      // check if item is valid
-      const highlightedValue = context.get("highlightedValue")
-      if (!highlightedValue || !collection.has(highlightedValue)) {
-        return
-      }
-
-      // select item
-      const nextValue = prop("multiple")
-        ? addOrRemove(context.get("value"), highlightedValue)
-        : [highlightedValue]
-      prop("onSelect")?.({itemValue: highlightedValue, value: nextValue})
-      context.set("value", nextValue)
-
-      // set input value
-      const inputValue = match(prop("selectionBehavior"), {
-        clear: "",
-        preserve: context.get("inputValue"),
-        replace: collection.stringifyMany(nextValue),
-      })
-      context.set("inputValue", inputValue)
-    },
-    selectItem(params) {
-      const {context, event, flush, prop} = params
-      if (event.value == null) {
-        return
-      }
-      flush(() => {
+        // select item
         const nextValue = prop("multiple")
-          ? addOrRemove(context.get("value"), event.value)
-          : [event.value]
-        prop("onSelect")?.({itemValue: event.value, value: nextValue})
+          ? addOrRemove(context.get("value"), highlightedValue)
+          : [highlightedValue]
+        prop("onSelect")?.({itemValue: highlightedValue, value: nextValue})
         context.set("value", nextValue)
 
         // set input value
         const inputValue = match(prop("selectionBehavior"), {
           clear: "",
           preserve: context.get("inputValue"),
-          replace: prop("collection").stringifyMany(nextValue),
+          replace: collection.stringifyMany(nextValue),
         })
         context.set("inputValue", inputValue)
-      })
-    },
-    setFinalFocus({scope}) {
-      raf(() => {
-        const triggerEl = domEls.trigger(scope)
-        if (triggerEl?.dataset.focusable == null) {
-          focusInputEl(scope)
-        } else {
-          focusTriggerEl(scope)
-        }
-      })
-    },
-    setHighlightedValue({context, event}) {
-      if (event.value == null) {
-        return
-      }
-      context.set("highlightedValue", event.value)
-    },
-    setInitialFocus({scope}) {
-      raf(() => {
-        focusInputEl(scope)
-      })
-    },
-    setInputValue({context, event}) {
-      context.set("inputValue", event.value)
-    },
-    setValue(params) {
-      const {context, event, flush, prop} = params
-      if (!event.value || !Array.isArray(event.value)) {
-        return
-      }
-      flush(() => {
-        context.set("value", event.value)
-
-        // set input value
-        const inputValue = match(prop("selectionBehavior"), {
-          clear: "",
-          preserve: context.get("inputValue"),
-          replace: prop("collection").stringifyMany(event.value),
-        })
-        context.set("inputValue", inputValue)
-      })
-    },
-    syncHighlightedItem({context, prop}) {
-      const item = prop("collection").find(context.get("highlightedValue"))
-      context.set("highlightedItem", item, {})
-    },
-    syncInputFocus({scope, state}) {
-      const input = domEls.input(scope)
-      if (!input) {
-        return
-      }
-      if (
-        input.ownerDocument.activeElement === input &&
-        state.get() !== "focused"
-      ) {
-        state.set("focused")
-      }
-    },
-    syncInputValue({context, event, scope}) {
-      const inputEl = domEls.input(scope)
-
-      if (!inputEl) {
-        return
-      }
-      inputEl.value = context.get("inputValue")
-
-      queueMicrotask(() => {
-        if (event.current().type === "INPUT.CHANGE") {
+      },
+      selectItem(params) {
+        const {context, event, flush, prop} = params
+        if (event.value == null) {
           return
         }
-        setCaretToEnd(inputEl)
-      })
-    },
-    syncSelectedItems(params) {
-      queueMicrotask(() => {
-        const {context, prop} = params
-        const collection = prop("collection")
-        const value = context.get("value")
+        flush(() => {
+          const nextValue = prop("multiple")
+            ? addOrRemove(context.get("value"), event.value)
+            : [event.value]
+          prop("onSelect")?.({itemValue: event.value, value: nextValue})
+          context.set("value", nextValue)
 
-        // set selected items (based on value)
-        const selectedItems = value.map((v) => {
-          const item = context
-            .get("selectedItems")
-            .find((item) => collection.getItemValue(item) === v)
-          return item || collection.find(v)
+          // set input value
+          const inputValue = match(prop("selectionBehavior"), {
+            clear: "",
+            preserve: context.get("inputValue"),
+            replace: prop("collection").stringifyMany(nextValue),
+          })
+          context.set("inputValue", inputValue)
         })
-        context.set("selectedItems", selectedItems)
+      },
+      setFinalFocus({scope}) {
+        raf(() => {
+          const triggerEl = domEls.trigger(scope)
+          if (triggerEl?.dataset.focusable == null) {
+            focusInputEl(scope)
+          } else {
+            focusTriggerEl(scope)
+          }
+        })
+      },
+      setHighlightedValue({context, event}) {
+        if (event.value == null) {
+          return
+        }
+        context.set("highlightedValue", event.value)
+      },
+      setInitialFocus({scope}) {
+        raf(() => {
+          focusInputEl(scope)
+        })
+      },
+      setInputValue({context, event}) {
+        context.set("inputValue", event.value)
+      },
+      setValue(params) {
+        const {context, event, flush, prop} = params
+        if (!event.value || !Array.isArray(event.value)) {
+          return
+        }
+        flush(() => {
+          context.set("value", event.value)
 
-        // set input value
-        const inputValue = match(prop("selectionBehavior"), {
-          clear: "",
-          preserve: context.get("inputValue"),
-          replace: collection.stringifyMany(value),
+          // set input value
+          const inputValue = match(prop("selectionBehavior"), {
+            clear: "",
+            preserve: context.get("inputValue"),
+            replace: prop("collection").stringifyMany(event.value),
+          })
+          context.set("inputValue", inputValue)
         })
-        context.set("inputValue", inputValue)
-      })
+      },
+      syncHighlightedItem({context, prop}) {
+        const item = prop("collection").find(context.get("highlightedValue"))
+        context.set("highlightedItem", item, {})
+      },
+      syncInputFocus({scope, state}) {
+        const input = domEls.input(scope)
+        if (!input) {
+          return
+        }
+        if (
+          input.ownerDocument.activeElement === input &&
+          state.get() !== "focused"
+        ) {
+          state.set("focused")
+        }
+      },
+      syncInputValue({context, event, scope}) {
+        const inputEl = domEls.input(scope)
+
+        if (!inputEl) {
+          return
+        }
+        inputEl.value = context.get("inputValue")
+
+        queueMicrotask(() => {
+          if (event.current().type === "INPUT.CHANGE") {
+            return
+          }
+          setCaretToEnd(inputEl)
+        })
+      },
+      syncSelectedItems(params) {
+        queueMicrotask(() => {
+          const {context, prop} = params
+          const collection = prop("collection")
+          const value = context.get("value")
+
+          // set selected items (based on value)
+          const selectedItems = value.map((v) => {
+            const item = context
+              .get("selectedItems")
+              .find((item) => collection.getItemValue(item) === v)
+            return item || collection.find(v)
+          })
+          context.set("selectedItems", selectedItems)
+
+          // set input value
+          const inputValue = match(prop("selectionBehavior"), {
+            clear: "",
+            preserve: context.get("inputValue"),
+            replace: collection.stringifyMany(value),
+          })
+          context.set("inputValue", inputValue)
+        })
+      },
+      toggleVisibility({event, prop, send}) {
+        send({
+          previousEvent: event,
+          type: prop("open") ? "CONTROLLED.OPEN" : "CONTROLLED.CLOSE",
+        })
+      },
     },
-    toggleVisibility({event, prop, send}) {
-      send({
-        previousEvent: event,
-        type: prop("open") ? "CONTROLLED.OPEN" : "CONTROLLED.CLOSE",
-      })
+    guards: {
+      allowCustomValue: ({prop}) => !!prop("allowCustomValue"),
+      autoComplete: ({computed, prop}) =>
+        computed("autoComplete") && !prop("multiple"),
+      autoFocus: ({prop}) => !!prop("autoFocus"),
+      autoHighlight: ({computed}) => computed("autoHighlight"),
+      closeOnSelect: ({prop}) => !!prop("closeOnSelect"),
+      hasHighlightedItem: ({context}) =>
+        context.get("highlightedValue") != null,
+      isChangeEvent: ({event}) => event.previousEvent?.type === "INPUT.CHANGE",
+      isCustomValue: ({computed}) => computed("isCustomValue"),
+      isFirstItemHighlighted: ({context, prop}) =>
+        prop("collection").firstValue === context.get("highlightedValue"),
+      isHighlightedItemRemoved: ({context, prop}) =>
+        !prop("collection").has(context.get("highlightedValue")),
+      isInputValueEmpty: ({computed}) => computed("isInputValueEmpty"),
+      isLastItemHighlighted: ({context, prop}) =>
+        prop("collection").lastValue === context.get("highlightedValue"),
+      isOpenControlled: ({prop}) => prop("open") != null,
+      openOnChange: ({context, prop}) => {
+        const openOnChange = prop("openOnChange")
+        if (isBoolean(openOnChange)) {
+          return openOnChange
+        }
+        return !!openOnChange?.({inputValue: context.get("inputValue")})
+      },
+      restoreFocus: ({event}) => {
+        const restoreFocus = maybeAccess(event, "restoreFocus")
+        return restoreFocus == null ? true : !!restoreFocus
+      },
     },
   })
 

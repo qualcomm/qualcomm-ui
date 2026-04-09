@@ -4,6 +4,10 @@
   background: var(--button-bg-idle);
   background-image: none;
   border: var(--border-width-sm) solid transparent;
+  border-radius: var(
+    --button-radius,
+    var(--component-button-global-border-radius)
+  );
   box-sizing: border-box;
   color: var(--button-text-idle);
   cursor: pointer;
@@ -21,6 +25,9 @@
     color var(--animation-duration-faster) ease-out;
   user-select: none;
   vertical-align: middle;
+
+  --button-bg-disabled: var(--color-utility-disabled-background);
+  --button-icon-color: var(--button-icon-idle);
 
   &[hidden] {
     display: none;
@@ -42,15 +49,20 @@
   &:hover {
     background: var(--button-bg-hover);
     color: var(--button-text-hover);
+    --button-icon-color: var(--button-icon-hover);
   }
 
   &:active {
     background: var(--button-bg-pressed);
     color: var(--button-text-pressed);
+    --button-icon-color: var(--button-icon-pressed);
   }
 
-  &[data-disabled] {
+  &[data-disabled],
+  &:disabled {
+    background: var(--button-bg-disabled);
     color: var(--color-utility-disabled-text);
+    --button-icon-color: var(--color-utility-disabled-icon);
     pointer-events: none;
   }
 
@@ -62,6 +74,9 @@
     --button-text-idle: var(--color-interactive-text-neutral-idle);
     --button-text-hover: var(--color-interactive-text-neutral-hover);
     --button-text-pressed: var(--color-interactive-text-neutral-pressed);
+    --button-icon-idle: var(--color-interactive-icon-neutral-idle);
+    --button-icon-hover: var(--color-interactive-icon-neutral-hover);
+    --button-icon-pressed: var(--color-interactive-icon-neutral-pressed);
   }
 
   &[data-emphasis="primary"] {
@@ -71,6 +86,9 @@
     --button-text-idle: var(--color-interactive-text-primary-idle);
     --button-text-hover: var(--color-interactive-text-primary-hover);
     --button-text-pressed: var(--color-interactive-text-primary-pressed);
+    --button-icon-idle: var(--color-interactive-icon-primary-idle);
+    --button-icon-hover: var(--color-interactive-icon-primary-hover);
+    --button-icon-pressed: var(--color-interactive-icon-primary-pressed);
   }
 
   &[data-emphasis="danger"] {
@@ -80,26 +98,57 @@
     --button-text-idle: var(--color-interactive-text-danger-idle);
     --button-text-hover: var(--color-interactive-text-danger-hover);
     --button-text-pressed: var(--color-interactive-text-danger-pressed);
+    --button-icon-idle: var(--color-interactive-icon-danger-idle);
+    --button-icon-hover: var(--color-interactive-icon-danger-hover);
+    --button-icon-pressed: var(--color-interactive-icon-danger-pressed);
   }
 
   &[data-emphasis="white-persistent"] {
     --button-text-idle: var(--color-utility-persistent-white);
     --button-text-hover: var(--color-utility-persistent-white);
     --button-text-pressed: var(--color-utility-persistent-white);
+    --button-icon-idle: var(--color-utility-persistent-white);
+    --button-icon-hover: var(--color-utility-persistent-white);
+    --button-icon-pressed: var(--color-utility-persistent-white);
+
+    &[data-disabled],
+    &:disabled {
+      color: var(--color-utility-disabled-persistent-white-text);
+      --button-icon-color: var(--color-utility-disabled-persistent-white-icon);
+    }
   }
 
   &[data-emphasis="black-persistent"] {
     --button-text-idle: var(--color-utility-persistent-black);
     --button-text-hover: var(--color-utility-persistent-black);
     --button-text-pressed: var(--color-utility-persistent-black);
+    --button-icon-idle: var(--color-utility-persistent-black);
+    --button-icon-hover: var(--color-utility-persistent-black);
+    --button-icon-pressed: var(--color-utility-persistent-black);
+
+    &[data-disabled],
+    &:disabled {
+      color: var(--color-utility-disabled-persistent-black-text);
+      --button-icon-color: var(--color-utility-disabled-persistent-black-icon);
+    }
+  }
+
+  &[data-emphasis="inverse"] {
+    &[data-disabled],
+    &:disabled {
+      color: var(--color-utility-disabled-inverse-text);
+      --button-icon-color: var(--color-utility-disabled-inverse-icon);
+    }
   }
 
   /* Sizes */
   &[data-size="sm"] {
-    border-radius: var(--border-radius-sm);
-    font: var(--font-static-body-xs-bold);
+    font-family: var(--component-button-type-sm-font-family);
+    font-size: var(--component-button-type-sm-font-size);
+    font-weight: var(--component-button-type-sm-font-weight);
     gap: var(--spacing-40);
     height: var(--sizing-120);
+    line-height: var(--component-button-type-sm-line-height);
     padding: 0 var(--spacing-90);
 
     &[data-density="compact"] {
@@ -116,10 +165,12 @@
   }
 
   &[data-size="md"] {
-    border-radius: var(--border-radius-md);
-    font: var(--font-static-body-sm-bold);
+    font-family: var(--component-button-type-md-font-family);
+    font-size: var(--component-button-type-md-font-size);
+    font-weight: var(--component-button-type-md-font-weight);
     gap: var(--spacing-70);
     height: var(--sizing-140);
+    line-height: var(--component-button-type-md-line-height);
     padding: 0 var(--spacing-100);
 
     &[data-density="compact"] {
@@ -137,14 +188,15 @@
   }
 
   &[data-size="lg"] {
-    border-radius: var(--border-radius-md);
-    font: var(--font-static-body-md-bold);
+    font-family: var(--component-button-type-lg-font-family);
+    font-size: var(--component-button-type-lg-font-size);
+    font-weight: var(--component-button-type-lg-font-weight);
     gap: var(--spacing-90);
     height: var(--sizing-160);
+    line-height: var(--component-button-type-lg-line-height);
     padding: 0 var(--spacing-110);
 
     &[data-density="compact"] {
-      font: var(--font-static-body-sm-bold);
       gap: var(--spacing-50);
       height: var(--sizing-100);
       padding: 0 var(--spacing-70);
@@ -158,12 +210,28 @@
     }
   }
 
+  &[data-kind="icon"] {
+    --button-radius: var(--border-radius-md);
+
+    &[data-shape="rounded"] {
+      --button-radius: var(--border-radius-rounded);
+    }
+  }
+
+  &[data-density="compact"] {
+    font-family: var(--component-button-type-sm-font-family);
+    font-size: var(--component-button-type-sm-font-size);
+    font-weight: var(--component-button-type-sm-font-weight);
+    line-height: var(--component-button-type-sm-line-height);
+  }
+
   /* Variants */
   &[data-variant="outline"],
   &[data-variant="ghost"] {
     --button-bg-idle: var(--color-interactive-background-ghost-idle);
     --button-bg-hover: var(--color-interactive-background-ghost-hover);
     --button-bg-pressed: var(--color-interactive-background-ghost-pressed);
+    --button-bg-disabled: var(--color-interactive-background-ghost-idle);
 
     &[data-emphasis="white-persistent"] {
       --button-bg-idle: var(
@@ -174,6 +242,9 @@
       );
       --button-bg-pressed: var(
         --color-interactive-background-persistent-white-ghost-pressed
+      );
+      --button-bg-disabled: var(
+        --color-interactive-background-persistent-white-ghost-idle
       );
     }
 
@@ -187,58 +258,150 @@
       --button-bg-pressed: var(
         --color-interactive-background-persistent-black-ghost-pressed
       );
+      --button-bg-disabled: var(
+        --color-interactive-background-persistent-black-ghost-idle
+      );
+    }
+
+    &[data-emphasis="inverse"] {
+      --button-text-idle: var(--color-text-neutral-inverse);
+      --button-text-hover: var(--color-text-neutral-inverse);
+      --button-text-pressed: var(--color-text-neutral-inverse);
+      --button-icon-idle: var(--color-icon-neutral-inverse);
+      --button-icon-hover: var(--color-icon-neutral-inverse);
+      --button-icon-pressed: var(--color-icon-neutral-inverse);
+      --button-bg-idle: var(--color-interactive-background-inverse-ghost-idle);
+      --button-bg-hover: var(
+        --color-interactive-background-inverse-ghost-hover
+      );
+      --button-bg-pressed: var(
+        --color-interactive-background-inverse-ghost-pressed
+      );
+      --button-bg-disabled: var(
+        --color-interactive-background-inverse-ghost-idle
+      );
     }
   }
 
   &[data-variant="outline"] {
-    border: var(--border-width-sm) solid
-      var(--color-interactive-border-neutral-idle);
+    border: var(--component-button-variant-outline-border-width) solid
+      var(--outline-border-idle);
     box-shadow: 0 0 0 1px inset transparent;
 
-    &:hover {
-      border-color: var(--color-interactive-border-neutral-hover);
+    --outline-border-idle: var(
+      --component-button-variant-outline-neutral-border-idle
+    );
+    --outline-border-hover: var(
+      --component-button-variant-outline-neutral-border-hover
+    );
+    --outline-border-pressed: var(
+      --component-button-variant-outline-neutral-border-pressed
+    );
+    --outline-border-disabled: var(--color-utility-disabled-border);
+
+    &[data-emphasis="primary"] {
+      --outline-border-idle: var(
+        --component-button-variant-outline-primary-border-idle
+      );
+      --outline-border-hover: var(
+        --component-button-variant-outline-primary-border-hover
+      );
+      --outline-border-pressed: var(
+        --component-button-variant-outline-primary-border-pressed
+      );
     }
 
-    &:active {
-      border-color: var(--color-interactive-border-neutral-pressed);
-    }
-
-    &[data-disabled] {
-      border-color: var(--color-utility-disabled-border);
+    &[data-emphasis="danger"] {
+      --outline-border-idle: var(
+        --component-button-variant-outline-danger-border-idle
+      );
+      --outline-border-hover: var(
+        --component-button-variant-outline-danger-border-hover
+      );
+      --outline-border-pressed: var(
+        --component-button-variant-outline-danger-border-pressed
+      );
     }
 
     &[data-emphasis="white-persistent"] {
-      border-color: var(--color-interactive-border-persistent-white-idle);
-
-      &:hover {
-        border-color: var(--color-interactive-border-persistent-white-hover);
-      }
-
-      &:active {
-        border-color: var(--color-interactive-border-persistent-white-pressed);
-      }
+      --outline-border-idle: var(
+        --color-interactive-border-persistent-white-idle
+      );
+      --outline-border-hover: var(
+        --color-interactive-border-persistent-white-hover
+      );
+      --outline-border-pressed: var(
+        --color-interactive-border-persistent-white-pressed
+      );
+      --outline-border-disabled: var(
+        --color-utility-disabled-persistent-white-border
+      );
     }
 
     &[data-emphasis="black-persistent"] {
-      border-color: var(--color-interactive-border-persistent-black-idle);
+      --outline-border-idle: var(
+        --color-interactive-border-persistent-black-idle
+      );
+      --outline-border-hover: var(
+        --color-interactive-border-persistent-black-hover
+      );
+      --outline-border-pressed: var(
+        --color-interactive-border-persistent-black-pressed
+      );
+      --outline-border-disabled: var(
+        --color-utility-disabled-persistent-black-border
+      );
+    }
 
-      &:hover {
-        border-color: var(--color-interactive-border-persistent-black-hover);
-      }
+    &[data-emphasis="inverse"] {
+      --outline-border-idle: var(--color-interactive-border-inverse-idle);
+      --outline-border-hover: var(--color-interactive-border-inverse-hover);
+      --outline-border-pressed: var(--color-interactive-border-inverse-pressed);
+      --outline-border-disabled: var(--color-utility-disabled-inverse-border);
+    }
 
-      &:active {
-        border-color: var(--color-interactive-border-persistent-black-pressed);
-      }
+    &:hover {
+      border-color: var(--outline-border-hover);
+    }
+
+    &:active {
+      border-color: var(--outline-border-pressed);
+    }
+
+    &[data-disabled],
+    &:disabled {
+      border-color: var(--outline-border-disabled);
     }
   }
 
   &[data-variant="fill"] {
-    --button-text-idle: var(--color-utility-persistent-white);
-    --button-text-hover: var(--color-utility-persistent-white);
-    --button-text-pressed: var(--color-utility-persistent-white);
+    --button-bg-disabled: var(--color-utility-disabled-background);
 
-    &[data-disabled] {
-      background: var(--color-utility-disabled-background);
+    &[data-emphasis="neutral"] {
+      --button-text-idle: var(--component-button-variant-fill-neutral-text);
+      --button-text-hover: var(--component-button-variant-fill-neutral-text);
+      --button-text-pressed: var(--component-button-variant-fill-neutral-text);
+      --button-icon-idle: var(--component-button-variant-fill-neutral-icon);
+      --button-icon-hover: var(--component-button-variant-fill-neutral-icon);
+      --button-icon-pressed: var(--component-button-variant-fill-neutral-icon);
+    }
+
+    &[data-emphasis="primary"] {
+      --button-text-idle: var(--component-button-variant-fill-primary-text);
+      --button-text-hover: var(--component-button-variant-fill-primary-text);
+      --button-text-pressed: var(--component-button-variant-fill-primary-text);
+      --button-icon-idle: var(--component-button-variant-fill-primary-icon);
+      --button-icon-hover: var(--component-button-variant-fill-primary-icon);
+      --button-icon-pressed: var(--component-button-variant-fill-primary-icon);
+    }
+
+    &[data-emphasis="danger"] {
+      --button-text-idle: var(--component-button-variant-fill-danger-text);
+      --button-text-hover: var(--component-button-variant-fill-danger-text);
+      --button-text-pressed: var(--component-button-variant-fill-danger-text);
+      --button-icon-idle: var(--component-button-variant-fill-danger-icon);
+      --button-icon-hover: var(--component-button-variant-fill-danger-icon);
+      --button-icon-pressed: var(--component-button-variant-fill-danger-icon);
     }
 
     &[data-emphasis="neutral"],
@@ -246,7 +409,7 @@
     &[data-emphasis="danger"] {
       &:focus-visible::before {
         border: 1px solid var(--color-border-neutral-00);
-        border-radius: var(--border-radius-sm);
+        border-radius: inherit;
         content: "";
         height: 100%;
         left: 0;
@@ -260,6 +423,9 @@
       --button-text-idle: var(--color-utility-persistent-black);
       --button-text-hover: var(--color-utility-persistent-black);
       --button-text-pressed: var(--color-utility-persistent-black);
+      --button-icon-idle: var(--color-utility-persistent-black);
+      --button-icon-hover: var(--color-utility-persistent-black);
+      --button-icon-pressed: var(--color-utility-persistent-black);
       --button-bg-idle: var(
         --color-interactive-background-persistent-white-fill-idle
       );
@@ -269,12 +435,18 @@
       --button-bg-pressed: var(
         --color-interactive-background-persistent-white-fill-pressed
       );
+      --button-bg-disabled: var(
+        --color-utility-disabled-persistent-white-background
+      );
     }
 
     &[data-emphasis="black-persistent"] {
       --button-text-idle: var(--color-utility-persistent-white);
       --button-text-hover: var(--color-utility-persistent-white);
       --button-text-pressed: var(--color-utility-persistent-white);
+      --button-icon-idle: var(--color-utility-persistent-white);
+      --button-icon-hover: var(--color-utility-persistent-white);
+      --button-icon-pressed: var(--color-utility-persistent-white);
       --button-bg-idle: var(
         --color-interactive-background-persistent-black-fill-idle
       );
@@ -284,6 +456,24 @@
       --button-bg-pressed: var(
         --color-interactive-background-persistent-black-fill-pressed
       );
+      --button-bg-disabled: var(
+        --color-utility-disabled-persistent-black-background
+      );
+    }
+
+    &[data-emphasis="inverse"] {
+      --button-text-idle: var(--color-text-neutral-primary);
+      --button-text-hover: var(--color-text-neutral-primary);
+      --button-text-pressed: var(--color-text-neutral-primary);
+      --button-icon-idle: var(--color-icon-neutral-primary);
+      --button-icon-hover: var(--color-icon-neutral-primary);
+      --button-icon-pressed: var(--color-icon-neutral-primary);
+      --button-bg-idle: var(--color-interactive-background-inverse-fill-idle);
+      --button-bg-hover: var(--color-interactive-background-inverse-fill-hover);
+      --button-bg-pressed: var(
+        --color-interactive-background-inverse-fill-pressed
+      );
+      --button-bg-disabled: var(--color-utility-disabled-inverse-background);
     }
   }
 
@@ -294,6 +484,7 @@
 }
 
 .qui-button__icon {
+  color: var(--button-icon-color);
   height: var(--icon-height, var(--icon-size));
   min-height: var(--icon-height, var(--icon-size));
   min-width: var(--icon-width, var(--icon-size));
@@ -313,6 +504,27 @@
     --icon-size: 20px;
     &[data-density="compact"] {
       --icon-size: 16px;
+    }
+  }
+
+  &[data-scope="icon-button"] {
+    &[data-size="sm"] {
+      --icon-size: 16px;
+      &[data-density="compact"] {
+        --icon-size: 12px;
+      }
+    }
+    &[data-size="md"] {
+      --icon-size: 20px;
+      &[data-density="compact"] {
+        --icon-size: 16px;
+      }
+    }
+    &[data-size="lg"] {
+      --icon-size: 24px;
+      &[data-density="compact"] {
+        --icon-size: 16px;
+      }
     }
   }
 

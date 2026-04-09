@@ -1,9 +1,6 @@
 {
-  "files": ["./src/index.ts"],
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist",
   },
   "references": [
     {
@@ -14,6 +11,9 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "../typedoc-common/tsconfig.lib.json"
     }
   ]
 }

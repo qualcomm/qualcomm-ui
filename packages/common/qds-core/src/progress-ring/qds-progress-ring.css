@@ -22,7 +22,6 @@
   display: block;
   height: var(--size);
   transform: rotate(-90deg);
-  vertical-align: middle;
   width: var(--size);
   --thickness: 7px;
   --stroke-width: var(--thickness-override, var(--thickness));
@@ -65,12 +64,8 @@
 
 .qui-progress-ring__track {
   fill: transparent;
-  stroke: var(--color-background-neutral-04);
+  stroke: var(--track-default);
   stroke-width: var(--stroke-width);
-
-  &[data-disabled] {
-    stroke: var(--color-utility-disabled-background);
-  }
 }
 
 .qui-progress-ring__bar {
@@ -102,7 +97,7 @@
   }
 
   &[data-disabled] {
-    --progress-color: var(--color-utility-disabled-border);
+    --progress-color: var(--color-utility-disabled-track-fill);
   }
 
   &[data-disabled][data-state="indeterminate"] {

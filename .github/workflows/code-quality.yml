@@ -25,7 +25,7 @@ jobs:
     steps:
     - name: clone
       id: install
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -39,7 +39,7 @@ jobs:
       run: pnpm build --filter='@qualcomm-ui/eslint-plugin-angular...' --filter='@qualcomm-ui/eslint-plugin-react...'
 
     - name: Restore timing data
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@v5
       with:
         path: .lint-cache
         key: lint-timings-v1
@@ -56,7 +56,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
 
@@ -82,7 +82,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
 
@@ -108,7 +108,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
 
@@ -142,7 +142,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
 
@@ -176,7 +176,7 @@ jobs:
       cancel-in-progress: true
     steps:
     - name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
 
@@ -207,7 +207,7 @@ jobs:
       cancel-in-progress: true
     steps:
     - name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
 
@@ -234,7 +234,7 @@ jobs:
       cancel-in-progress: true
     steps:
     - name: Checkout PR head
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
 

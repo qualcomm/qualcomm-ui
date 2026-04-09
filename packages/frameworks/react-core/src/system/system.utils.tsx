@@ -47,7 +47,7 @@ export function bindingRenderProp<
   const props = forwardPropsToClone ? computedProps : {}
   const mergedProps =
     mergeElementProps && isValidElement(render)
-      ? mergeProps(render.props as NonNullable<unknown>, props)
+      ? mergeProps(props, render.props as NonNullable<unknown>)
       : props
   return cloneElement(render, mergedProps)
 }

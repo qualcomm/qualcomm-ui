@@ -19,6 +19,7 @@ export type QdsButtonEmphasis =
   | "danger"
   | "white-persistent"
   | "black-persistent"
+  | "inverse"
 
 export type QdsButtonSize = "sm" | "md" | "lg"
 
@@ -38,7 +39,7 @@ export interface QdsButtonApiProps {
    *
    * @default false
    */
-  disabled?: boolean
+  disabled?: boolean | undefined
 
   /**
    * The style variant of the button. Governs colors.

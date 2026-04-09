@@ -563,7 +563,13 @@ type NarrowedEvent<T extends Dict, TConfig, K extends string> =
     : EventsForAction<TConfig, K> extends infer Events
       ? [Events] extends [never]
         ? EventType<T>
-        : Extract<EventType<T>, {type: Events}>
+        : EventType<T> extends infer E
+          ? E extends {type: infer ET}
+            ? Extract<ET, Events> extends never
+              ? never
+              : E
+            : never
+          : EventType<T>
       : EventType<T>
 
 export type NarrowedParams<T extends Dict, TConfig, K extends string> = Omit<
@@ -588,6 +594,18 @@ export type NarrowedActionsProperty<T extends Dict, TConfig> = T extends {
     }
   : {actions?: any}
 
+export type NarrowedGuardsProperty<T extends Dict, TConfig> = T extends {
+  guards: any
+}
+  ? {
+      guards: {
+        [K in keyof T["guards"]]: (
+          params: NarrowedParams<T, TConfig, K & string>,
+        ) => void
+      }
+    }
+  : {guards?: any}
+
 // ---------------------------------------------------------------------------
 
 /**
@@ -598,7 +616,6 @@ export type NarrowedActionsProperty<T extends Dict, TConfig> = T extends {
 export type MachineConfigBase<T extends Dict> = ContextProperty<T> &
   ComputedProperty<T> &
   EffectsProperty<T> &
-  GuardsProperty<T> &
   IdsProperty<T> &
   PropsProperty<T> &
   RefsProperty<T> & {
@@ -654,6 +671,7 @@ export type MachineConfigBase<T extends Dict> = ContextProperty<T> &
  * aka `Machine` in Zag
  */
 export type MachineConfig<T extends Dict> = ActionsProperty<T> &
+  GuardsProperty<T> &
   MachineConfigBase<T>
 
 type State<T extends MachineSchema> = Bindable<T["state"], void> & {

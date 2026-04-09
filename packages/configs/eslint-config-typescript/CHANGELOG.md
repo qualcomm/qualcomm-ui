@@ -1,18 +1,24 @@
 # @qualcomm-ui/eslint-config-typescript Changelog
 
-## 2.0.0 (2026/01/23)
+## 2.0.0
+
+Jan 23rd, 2026
 
 ### BREAKING CHANGES
 
 - migrate several rules to strict to conform with official recommended config
 
-## 1.1.1 (2026/01/19)
+## 1.1.1
+
+Jan 19th, 2026
 
 ### Miscellaneous Chores
 
 - [eslint]: allow react-router Response to be thrown in typescript config
 
-## 1.1.0 (2025/11/21)
+## 1.1.0
+
+Nov 21st, 2025
 
 ### Features
 
@@ -22,7 +28,9 @@
 
 - use correct types from @eslint/core for exported configs
 
-## 1.0.1 (2025/11/12)
+## 1.0.1
+
+Nov 12th, 2025
 
 ### Miscellaneous Chores
 

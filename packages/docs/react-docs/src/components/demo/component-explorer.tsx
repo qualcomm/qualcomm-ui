@@ -21,10 +21,12 @@ export function ComponentExplorer({
   const scheme = theme === Theme.LIGHT ? "light" : "dark"
 
   return (
-    <ComponentExplorerBase {...props}>
-      <div data-brand={brand || "qualcomm"} data-theme={scheme}>
-        <Component />
-      </div>
+    <ComponentExplorerBase
+      data-brand={brand || "qualcomm"}
+      data-theme={scheme}
+      {...props}
+    >
+      <Component />
     </ComponentExplorerBase>
   )
 }

@@ -3,6 +3,11 @@
     "categories": [
       "Introduction"
     ],
+    "data": {
+      "hideBreadcrumbs": true,
+      "id": "_index",
+      "title": "Introduction"
+    },
     "hideBreadcrumbs": true,
     "id": "/routes/index.mdx",
     "pathname": "/",
@@ -14,6 +19,9 @@
       "Test",
       "B Test"
     ],
+    "data": {
+      "title": "B Test"
+    },
     "id": "/routes/test+/b+/route.mdx",
     "pathname": "/test/b",
     "pathSegments": [
@@ -27,6 +35,9 @@
       "Test",
       "A Test"
     ],
+    "data": {
+      "title": "A Test"
+    },
     "id": "/routes/test+/a+/_a.mdx",
     "pathname": "/test/a",
     "pathSegments": [
@@ -40,6 +51,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -133,6 +147,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx",
     "pathname": "/guide/markdown",
@@ -305,6 +323,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx",
     "pathname": "/guide/ai-knowledge",
@@ -447,6 +469,9 @@
       "Getting Started",
       "Sign Up"
     ],
+    "data": {
+      "title": "Sign Up"
+    },
     "id": "/routes/getting-started+/sign-up.mdx",
     "pathname": "/getting-started/sign-up",
     "pathSegments": [
@@ -460,6 +485,9 @@
       "Getting Started",
       "Log In"
     ],
+    "data": {
+      "title": "Log In"
+    },
     "id": "/routes/getting-started+/log-in.mdx",
     "pathname": "/getting-started/log-in",
     "pathSegments": [
@@ -472,6 +500,9 @@
     "categories": [
       "Getting Started"
     ],
+    "data": {
+      "title": "Getting Started"
+    },
     "id": "/routes/getting-started+/index.mdx",
     "pathname": "/getting-started",
     "pathSegments": [
@@ -484,6 +515,9 @@
       "Getting Started",
       "Home"
     ],
+    "data": {
+      "title": "Home"
+    },
     "id": "/routes/getting-started+/home.mdx",
     "pathname": "/getting-started/home",
     "pathSegments": [
@@ -497,6 +531,9 @@
       "Getting Started",
       "Dedicated Devices"
     ],
+    "data": {
+      "title": "Dedicated Devices"
+    },
     "id": "/routes/getting-started+/dedicated-devices.mdx",
     "pathname": "/getting-started/dedicated-devices",
     "pathSegments": [
@@ -510,6 +547,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/routes/best-practices+/choosing-dependencies.mdx",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [

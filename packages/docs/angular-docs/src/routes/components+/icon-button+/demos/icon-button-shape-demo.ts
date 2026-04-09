@@ -1,0 +1,30 @@
+import {Component} from "@angular/core"
+import {ExternalLink} from "lucide-angular"
+
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+
+@Component({
+  imports: [ButtonModule],
+  providers: [provideIcons({ExternalLink})],
+  selector: "icon-button-shape-demo",
+  template: `
+    <div class="flex gap-2">
+      <!-- preview -->
+      <button
+        aria-label="External Link"
+        icon="ExternalLink"
+        q-icon-button
+        shape="square"
+      ></button>
+      <button
+        aria-label="External Link"
+        icon="ExternalLink"
+        q-icon-button
+        shape="rounded"
+      ></button>
+      <!-- preview -->
+    </div>
+  `,
+})
+export class IconButtonShapeDemo {}

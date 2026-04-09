@@ -106,7 +106,7 @@
 .qui-progress__track {
   align-items: baseline;
   align-self: center;
-  background: var(--color-background-neutral-04);
+  background: var(--track-default);
   border-radius: 360px;
   display: flex;
   grid-column: var(--bar-start-column) / var(--bar-column-end);
@@ -115,10 +115,6 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-
-  &[data-disabled] {
-    background: var(--color-utility-disabled-background);
-  }
 }
 
 .qui-progress__bar {
@@ -144,7 +140,7 @@
   }
 
   &[data-disabled] {
-    --progress-color: var(--color-utility-disabled-border);
+    --progress-color: var(--color-utility-disabled-track-fill);
   }
 
   &[data-state="loading"],

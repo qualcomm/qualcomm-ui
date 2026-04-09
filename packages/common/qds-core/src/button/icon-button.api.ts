@@ -20,6 +20,7 @@ export function createQdsIconButtonApi(
   const density = props.density || "default"
   const disabled = props.disabled
   const emphasis = props.emphasis || "neutral"
+  const shape = props.shape || "square"
   const size = props.size || "md"
   const variant = props.variant || "fill"
 
@@ -42,6 +43,7 @@ export function createQdsIconButtonApi(
         "data-kind": "icon",
         "data-part": "root",
         "data-scope": "icon-button",
+        "data-shape": shape,
         "data-size": size,
         "data-variant": variant,
         disabled,

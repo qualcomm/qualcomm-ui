@@ -1,18 +1,18 @@
-.qui-badge__root {
+.qui-badge__root[data-scope="icon-badge"] {
   &[data-size="xxs"] {
     --icon-radius: var(--border-radius-xs);
     --icon-size: var(--sizing-60);
   }
   &[data-size="xs"] {
-    --icon-radius: var(--border-radius-xs);
+    --icon-radius: var(--border-radius-md);
     --icon-size: var(--sizing-70);
   }
   &[data-size="sm"] {
-    --icon-radius: var(--border-radius-sm);
+    --icon-radius: var(--border-radius-md);
     --icon-size: var(--sizing-80);
   }
   &[data-size="md"] {
-    --icon-radius: var(--border-radius-sm);
+    --icon-radius: var(--border-radius-md);
     --icon-size: var(--sizing-90);
   }
   &[data-size="lg"] {
@@ -20,12 +20,10 @@
     --icon-size: var(--sizing-120);
   }
   &[data-size="xl"] {
-    --icon-radius: var(--border-radius-lg);
+    --icon-radius: var(--border-radius-md);
     --icon-size: var(--sizing-140);
   }
-}
 
-.qui-badge__root[data-scope="icon-badge"] {
   background: var(--badge-background);
   border: solid var(--border-size, 0) var(--badge-border);
   border-radius: var(--icon-radius);

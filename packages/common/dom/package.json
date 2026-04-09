@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/dom",
-  "version": "1.0.8",
+  "version": "1.0.11",
   "description": "DOM utilities and helpers.",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -40,7 +40,7 @@
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/esbuild": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/utils": "workspace:^1.2.0",
+    "@qualcomm-ui/utils": "workspace:^1.2.2",
     "@types/node": "~24.9.2",
     "esbuild": "catalog:",
     "shx": "^0.4.0",
@@ -49,6 +49,6 @@
   },
   "peerDependencies": {
     "@floating-ui/dom": ">=1.7.0",
-    "@qualcomm-ui/utils": "workspace:^1.2.0"
+    "@qualcomm-ui/utils": "workspace:^1.2.2"
   }
 }

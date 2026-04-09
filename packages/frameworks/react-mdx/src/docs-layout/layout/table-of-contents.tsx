@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {
+  type CSSProperties,
   type ReactNode,
   type RefObject,
   useCallback,
@@ -19,7 +20,7 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import {TocLink} from "../internal"
 
-import {PageHeader} from "./page-header"
+import {PageActions} from "./page-actions"
 import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
 
 const HEADING_LEVELS: TocHeading[] = ["h2", "h3", "h4"]
@@ -249,53 +250,75 @@ function useActiveHeading() {
 export function TableOfContents(): ReactNode {
   const containerRef = useRef<HTMLDivElement>(null)
   const {renderLink: Link} = useMdxDocsContext()
-  const {pageExport, showToc, toc: headings} = useMdxDocsLayoutContext()
+  const {showToc, toc: headings} = useMdxDocsLayoutContext()
 
   const activeId = useActiveHeading()
   const linkRefs = useTocScrollSync(activeId, containerRef)
 
-  if (!headings.length && !pageExport) {
+  if (!showToc) {
     return null
   }
 
   return (
     <div className="qui-toc">
       <div ref={containerRef} className="qui-toc__container">
-        <PageHeader />
-        {showToc ? (
-          <div className="qui-toc__links">
-            <div className="qui-toc-bar" />
-            {headings.map(({headingLevel, id, textContent}) => {
-              const isActive = activeId === id
-              return (
-                <TocLink
-                  key={id}
-                  ref={(element: HTMLDivElement | null) => {
-                    if (element) {
-                      linkRefs.current.set(id, element)
-                    } else {
-                      linkRefs.current.delete(id)
-                    }
-                  }}
-                  className="qui-toc__link"
-                  data-active={booleanDataAttr(isActive)}
-                  style={{
-                    paddingLeft: INDENT_PER_LEVEL * (headingLevel - 1),
-                  }}
-                >
-                  {headingLevel > 2 ? (
+        <PageActions />
+        <div className="qui-toc__links">
+          {headings.map(({headingLevel, id, textContent}) => {
+            const isActive = activeId === id
+            const indentDepth = headingLevel - 2
+
+            return (
+              <TocLink
+                key={id}
+                ref={(element: HTMLDivElement | null) => {
+                  if (element) {
+                    linkRefs.current.set(id, element)
+                  } else {
+                    linkRefs.current.delete(id)
+                  }
+                }}
+                className="qui-toc__link"
+                data-active={booleanDataAttr(isActive)}
+                data-heading-level={headingLevel}
+                style={
+                  {
+                    "--indent-depth": indentDepth,
+                    paddingLeft:
+                      INDENT_PER_LEVEL * (headingLevel - 1) +
+                      (headingLevel === 4 ? 1 : 0),
+                  } as CSSProperties
+                }
+              >
+                {headingLevel > 2 ? (
+                  <>
                     <div
                       aria-hidden
                       className="qui-toc__link-indent-guide"
-                      data-active={booleanDataAttr(isActive)}
-                    ></div>
-                  ) : null}
-                  <Link href={`#${id}`}>{textContent}</Link>
-                </TocLink>
-              )
-            })}
-          </div>
-        ) : null}
+                      data-active={booleanDataAttr(
+                        isActive && headingLevel !== 4,
+                      )}
+                    />
+                    {headingLevel === 4 ? (
+                      <div
+                        aria-hidden
+                        className="qui-toc__link-indent-guide"
+                        data-active={booleanDataAttr(isActive)}
+                        style={
+                          {
+                            "--indent-depth": 1,
+                          } as CSSProperties
+                        }
+                      />
+                    ) : null}
+                  </>
+                ) : null}
+
+                <Link href={`#${id}`}>{textContent}</Link>
+              </TocLink>
+            )
+          })}
+        </div>
       </div>
     </div>
   )

@@ -13,7 +13,7 @@ export function AvatarSizeDemo(): ReactElement {
         <div key={size} className="flex flex-col items-center gap-2">
           <Avatar.Root size={size}>
             <Avatar.Image alt="Jane Doe" src="/images/avatar-woman.png" />
-            <Avatar.Content>JD</Avatar.Content>
+            <Avatar.Content>J</Avatar.Content>
           </Avatar.Root>
           {size}
         </div>

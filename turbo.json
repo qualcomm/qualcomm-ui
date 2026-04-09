@@ -4,8 +4,10 @@
   "concurrency": "30",
   "tasks": {
     "dev": {
+      "dependsOn": ["^build"],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "interruptible": true
     },
     "build": {
       "dependsOn": [

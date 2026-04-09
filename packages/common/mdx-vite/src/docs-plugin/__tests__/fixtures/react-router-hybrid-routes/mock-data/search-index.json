@@ -3,6 +3,11 @@
     "categories": [
       "Introduction"
     ],
+    "data": {
+      "hideBreadcrumbs": true,
+      "id": "_index",
+      "title": "Introduction"
+    },
     "hideBreadcrumbs": true,
     "id": "/routes/index.mdx-0",
     "pathname": "/",
@@ -18,6 +23,9 @@
       "Test",
       "B Test"
     ],
+    "data": {
+      "title": "B Test"
+    },
     "id": "/routes/test+/b+/route.mdx",
     "pathname": "/test/b",
     "pathSegments": [
@@ -31,6 +39,9 @@
       "Test",
       "A Test"
     ],
+    "data": {
+      "title": "A Test"
+    },
     "id": "/routes/test+/a+/_a.mdx",
     "pathname": "/test/a",
     "pathSegments": [
@@ -44,6 +55,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-0",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -61,6 +75,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-1",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -78,6 +95,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-2",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -95,6 +115,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-3",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -112,6 +135,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-4",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -129,6 +155,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-5",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -146,6 +175,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-6",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -163,6 +195,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-7",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -180,6 +215,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-8",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -197,6 +235,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-9",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -214,6 +255,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-10",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -231,6 +275,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-11",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -248,6 +295,9 @@
       "Guide",
       "Page Setup"
     ],
+    "data": {
+      "title": "Page Setup"
+    },
     "id": "/routes/guide+/page-setup.mdx-12",
     "pathname": "/guide/page-setup",
     "pathSegments": [
@@ -265,6 +315,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-0",
     "pathname": "/guide/markdown",
@@ -283,6 +337,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-1",
     "pathname": "/guide/markdown",
@@ -301,6 +359,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-2",
     "pathname": "/guide/markdown",
@@ -319,6 +381,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-3",
     "pathname": "/guide/markdown",
@@ -337,6 +403,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-4",
     "pathname": "/guide/markdown",
@@ -355,6 +425,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-5",
     "pathname": "/guide/markdown",
@@ -373,6 +447,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-6",
     "pathname": "/guide/markdown",
@@ -391,6 +469,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-7",
     "pathname": "/guide/markdown",
@@ -409,6 +491,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-8",
     "pathname": "/guide/markdown",
@@ -427,6 +513,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-9",
     "pathname": "/guide/markdown",
@@ -445,6 +535,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-10",
     "pathname": "/guide/markdown",
@@ -463,6 +557,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-11",
     "pathname": "/guide/markdown",
@@ -481,6 +579,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-12",
     "pathname": "/guide/markdown",
@@ -499,6 +601,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-13",
     "pathname": "/guide/markdown",
@@ -517,6 +623,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-14",
     "pathname": "/guide/markdown",
@@ -535,6 +645,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-15",
     "pathname": "/guide/markdown",
@@ -553,6 +667,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-16",
     "pathname": "/guide/markdown",
@@ -571,6 +689,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-17",
     "pathname": "/guide/markdown",
@@ -589,6 +711,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-18",
     "pathname": "/guide/markdown",
@@ -607,6 +733,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-19",
     "pathname": "/guide/markdown",
@@ -625,6 +755,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-20",
     "pathname": "/guide/markdown",
@@ -643,6 +777,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-21",
     "pathname": "/guide/markdown",
@@ -661,6 +799,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-22",
     "pathname": "/guide/markdown",
@@ -679,6 +821,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-23",
     "pathname": "/guide/markdown",
@@ -697,6 +843,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-24",
     "pathname": "/guide/markdown",
@@ -715,6 +865,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-25",
     "pathname": "/guide/markdown",
@@ -733,6 +887,10 @@
       "Guide",
       "Markdown"
     ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
     "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
     "id": "/routes/guide+/markdown.mdx-26",
     "pathname": "/guide/markdown",
@@ -751,6 +909,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-0",
     "pathname": "/guide/ai-knowledge",
@@ -769,6 +931,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-1",
     "pathname": "/guide/ai-knowledge",
@@ -787,6 +953,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-2",
     "pathname": "/guide/ai-knowledge",
@@ -805,6 +975,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-3",
     "pathname": "/guide/ai-knowledge",
@@ -823,6 +997,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-4",
     "pathname": "/guide/ai-knowledge",
@@ -841,6 +1019,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-5",
     "pathname": "/guide/ai-knowledge",
@@ -859,6 +1041,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-6",
     "pathname": "/guide/ai-knowledge",
@@ -877,6 +1063,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-7",
     "pathname": "/guide/ai-knowledge",
@@ -895,6 +1085,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-8",
     "pathname": "/guide/ai-knowledge",
@@ -913,6 +1107,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-9",
     "pathname": "/guide/ai-knowledge",
@@ -931,6 +1129,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-10",
     "pathname": "/guide/ai-knowledge",
@@ -948,6 +1150,10 @@
       "Guide",
       "AI Knowledge"
     ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
     "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
     "id": "/routes/guide+/ai-knowledge.mdx-11",
     "pathname": "/guide/ai-knowledge",
@@ -966,6 +1172,9 @@
       "Getting Started",
       "Sign Up"
     ],
+    "data": {
+      "title": "Sign Up"
+    },
     "id": "/routes/getting-started+/sign-up.mdx-0",
     "pathname": "/getting-started/sign-up",
     "pathSegments": [
@@ -983,6 +1192,9 @@
       "Getting Started",
       "Log In"
     ],
+    "data": {
+      "title": "Log In"
+    },
     "id": "/routes/getting-started+/log-in.mdx",
     "pathname": "/getting-started/log-in",
     "pathSegments": [
@@ -995,6 +1207,9 @@
     "categories": [
       "Getting Started"
     ],
+    "data": {
+      "title": "Getting Started"
+    },
     "id": "/routes/getting-started+/index.mdx-0",
     "pathname": "/getting-started",
     "pathSegments": [
@@ -1011,6 +1226,9 @@
       "Getting Started",
       "Home"
     ],
+    "data": {
+      "title": "Home"
+    },
     "id": "/routes/getting-started+/home.mdx-0",
     "pathname": "/getting-started/home",
     "pathSegments": [
@@ -1028,6 +1246,9 @@
       "Getting Started",
       "Dedicated Devices"
     ],
+    "data": {
+      "title": "Dedicated Devices"
+    },
     "id": "/routes/getting-started+/dedicated-devices.mdx",
     "pathname": "/getting-started/dedicated-devices",
     "pathSegments": [
@@ -1041,6 +1262,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/routes/best-practices+/choosing-dependencies.mdx-0",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [
@@ -1058,6 +1282,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/routes/best-practices+/choosing-dependencies.mdx-1",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [
@@ -1075,6 +1302,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/routes/best-practices+/choosing-dependencies.mdx-2",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [
@@ -1092,6 +1322,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/routes/best-practices+/choosing-dependencies.mdx-3",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [
@@ -1109,6 +1342,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/routes/best-practices+/choosing-dependencies.mdx-4",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [

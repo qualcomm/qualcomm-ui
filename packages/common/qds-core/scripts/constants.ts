@@ -1,4 +1,5 @@
 const omittedPrefixes: (string | RegExp)[] = [
+  "arduino",
   "qc",
   "dw",
   "sd",

@@ -44,6 +44,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import {TreeCollection, type TreeNode} from "@qualcomm-ui/utils/collection"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {SideNavContextService} from "./side-nav-context.service"
 
@@ -242,9 +243,14 @@ export class CoreSideNavRootDirective<T extends TreeNode = TreeNode>
   protected readonly treeContextService = inject(TreeContextService)
 
   protected readonly trackBindings = useTrackBindings(() =>
-    this.sideNavContextService.context().getRootBindings({
-      id: this.hostId(),
-    }),
+    mergeProps(
+      this.treeContextService.context().getRootBindings({
+        id: this.hostId(),
+      }),
+      this.sideNavContextService.context().getRootBindings({
+        id: this.hostId(),
+      }),
+    ),
   )
 
   ngOnInit() {

@@ -12,7 +12,7 @@ on:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/reusable-docs-deploy.yml
+    uses: ./.github/workflows/reusable-docs-deploy-test.yml
     with:
       dockerfile: dockerfiles/dockerfile-qui-docs
       ecr-repository-name: docs-next

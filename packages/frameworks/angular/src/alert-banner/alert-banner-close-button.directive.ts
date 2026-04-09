@@ -4,7 +4,7 @@
 import {Component, computed, type OnInit} from "@angular/core"
 import {X} from "lucide-angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
@@ -19,34 +19,29 @@ import {useQdsAlertBannerContext} from "./qds-alert-banner-context.service"
   standalone: false,
   template: `
     <ng-content>
-      <svg qIcon="X" [q-bind]="inlineIconButtonApi().getIconBindings()"></svg>
+      <svg qIcon="X" [q-bind]="iconProps()"></svg>
     </ng-content>
   `,
 })
 export class AlertBannerCloseButtonDirective implements OnInit {
   protected readonly qdsContext = useQdsAlertBannerContext()
 
-  protected readonly buttonEmphasis = computed(() => {
-    const context = this.qdsContext()
-    if (context.variant === "strong") {
-      return context.emphasis === "warning"
-        ? "persistent-black"
-        : "persistent-white"
-    }
-    return undefined
+  protected readonly iconButtonApi = useIconButtonApi({
+    density: "compact",
+    emphasis: computed(() => this.qdsContext().closeButtonEmphasis),
+    size: "md",
+    variant: "ghost",
   })
 
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
-    emphasis: this.buttonEmphasis,
-    size: "md",
-    variant: "fixed",
-  })
+  protected readonly iconProps = computed(() =>
+    this.iconButtonApi().getIconBindings(),
+  )
 
   protected readonly trackBindings = useTrackBindings(() =>
     mergeProps(
       {onclick: () => this.qdsContext().onClose?.()},
       this.qdsContext().getCloseButtonBindings(),
-      this.inlineIconButtonApi().getRootBindings(),
+      this.iconButtonApi().getRootBindings(),
     ),
   )
 

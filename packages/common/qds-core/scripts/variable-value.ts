@@ -87,6 +87,13 @@ export function resolveTokenValueFromVariable(
 
   switch (type) {
     case "fontFamily":
+      if (
+        typeof value === "string" &&
+        value.startsWith("{") &&
+        value.endsWith("}")
+      ) {
+        return value
+      }
       return [value]
     case "fontWeight":
       if (typeof value === "string") {

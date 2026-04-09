@@ -1,18 +1,123 @@
 # @qualcomm-ui/react-mdx Changelog
 
-## 2.0.2 (2026/03/12)
+## 2.3.0
+
+Apr 7th, 2026
+
+### Features
+
+- [react-mdx]: add frontmatter badge support ([2c36e23](https://github.com/qualcomm/qualcomm-ui/commit/2c36e23))
+
+### Documentation
+
+- [stepper]: add stepper documentation and demos ([14a58bf](https://github.com/qualcomm/qualcomm-ui/commit/14a58bf))
 
 ### Miscellaneous Chores
 
-- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/utils, @qualcomm-ui/react-core]
+- **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/core, @qualcomm-ui/react]
 
-## 2.0.1 (2026/03/10)
+## 2.2.3
+
+Apr 6th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react]
+
+## 2.2.2
+
+Apr 2nd, 2026
+
+### Bug Fixes
+
+- [type-doc-props]: log missing prop types in dev mode ([e83d1f7](https://github.com/qualcomm/qualcomm-ui/commit/e83d1f7))
+
+### Styles
+
+- [docs-layout]: bump heading font sizes and improve table of contents ([b67fd27](https://github.com/qualcomm/qualcomm-ui/commit/b67fd27))
+
+### Miscellaneous Chores
+
+- upgrade to vite v8 and bump dependencies ([18596c5](https://github.com/qualcomm/qualcomm-ui/commit/18596c5))
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react, @qualcomm-ui/react-core, @qualcomm-ui/core, @qualcomm-ui/utils]
+
+## 2.2.1
+
+Mar 30th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react]
+
+## 2.2.0
+
+Mar 28th, 2026
+
+### Features
+
+- [docs-layout]: expose pageFrontmatter in layout context ([fde228d](https://github.com/qualcomm/qualcomm-ui/commit/fde228d))
+- [page-header]: display "since" version badge ([a97c9d6](https://github.com/qualcomm/qualcomm-ui/commit/a97c9d6))
+
+### Code Refactoring
+
+- [docs-layout]: separate page header from page actions ([58fc23e](https://github.com/qualcomm/qualcomm-ui/commit/58fc23e))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
+## 2.1.1
+
+Mar 25th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 2.0.0 (2026/03/06)
+## 2.1.0
+
+Mar 24th, 2026
+
+### Features
+
+- [prop-name]: improve `since` version display with badge and link support ([f26d230](https://github.com/qualcomm/qualcomm-ui/commit/f26d230))
+- [theme]: add arduino to theme selectors across apps ([9fa4fef](https://github.com/qualcomm/qualcomm-ui/commit/9fa4fef))
+
+### Bug Fixes
+
+- [styles]: replaced neutral-04 token and rename kiwi to lime ([9c9b50f](https://github.com/qualcomm/qualcomm-ui/commit/9c9b50f))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react]
+
+## 2.0.3
+
+Mar 20th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
+## 2.0.2
+
+Mar 12th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/utils, @qualcomm-ui/react-core]
+
+## 2.0.1
+
+Mar 10th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
+## 2.0.0
+
+Mar 6th, 2026
 
 ### BREAKING CHANGES
 
@@ -26,7 +131,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common]
 
-## 1.13.2 (2026/03/02)
+## 1.13.2
+
+Mar 2nd, 2026
 
 ### Styles
 
@@ -36,13 +143,17 @@
 
 - [react-mdx]: extract UpdatedOnDate into its own component ([7d4f5e4](https://github.com/qualcomm/qualcomm-ui/commit/7d4f5e4))
 
-## 1.13.1 (2026/02/27)
+## 1.13.1
+
+Feb 27th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/react]
 
-## 1.13.0 (2026/02/26)
+## 1.13.0
+
+Feb 26th, 2026
 
 ### Features
 
@@ -66,13 +177,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
 
-## 1.12.1 (2026/02/24)
+## 1.12.1
+
+Feb 24th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.12.0 (2026/02/14)
+## 1.12.0
+
+Feb 14th, 2026
 
 ### Features
 
@@ -82,19 +197,25 @@
 
 - [mdx-provider]: spread props onto header elements
 
-## 1.11.9 (2026/02/13)
+## 1.11.9
+
+Feb 13th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.11.8 (2026/02/11)
+## 1.11.8
+
+Feb 11th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.11.7 (2026/02/07)
+## 1.11.7
+
+Feb 7th, 2026
 
 ### Bug Fixes
 
@@ -107,25 +228,33 @@
 - [docs-layout]: move pageExport computation to root and add to layout context
 - [docs-layout]: decouple toc visibility from export display
 
-## 1.11.6 (2026/01/30)
+## 1.11.6
+
+Jan 30th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.11.5 (2026/01/29)
+## 1.11.5
+
+Jan 29th, 2026
 
 ### Bug Fixes
 
 - [docs-layout]: adjust sidebar height for proper scrolling on mobile
 
-## 1.11.4 (2026/01/29)
+## 1.11.4
+
+Jan 29th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.11.3 (2026/01/28)
+## 1.11.3
+
+Jan 28th, 2026
 
 ### Code Refactoring
 
@@ -137,19 +266,25 @@
 
 - [react-mdx]: use data-active attribute instead of class for toc links
 
-## 1.11.2 (2026/01/27)
+## 1.11.2
+
+Jan 27th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.11.1 (2026/01/23)
+## 1.11.1
+
+Jan 23rd, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react-core, @qualcomm-ui/react, @qualcomm-ui/mdx-common, @qualcomm-ui/utils]
 
-## 1.11.0 (2026/01/22)
+## 1.11.0
+
+Jan 22nd, 2026
 
 ### Features
 
@@ -170,7 +305,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common]
 
-## 1.10.5 (2026/01/19)
+## 1.10.5
+
+Jan 19th, 2026
 
 ### Styles
 
@@ -182,7 +319,9 @@
 
 - [docs-layout]: use surface-primary color for backgrounds
 
-## 1.10.4 (2026/01/19)
+## 1.10.4
+
+Jan 19th, 2026
 
 ### Bug Fixes
 
@@ -192,19 +331,25 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.10.3 (2026/01/18)
+## 1.10.3
+
+Jan 18th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common]
 
-## 1.10.2 (2026/01/17)
+## 1.10.2
+
+Jan 17th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.10.1 (2026/01/15)
+## 1.10.1
+
+Jan 15th, 2026
 
 ### Styles
 
@@ -214,7 +359,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.10.0 (2026/01/03)
+## 1.10.0
+
+Jan 3rd, 2026
 
 ### Features
 
@@ -224,19 +371,25 @@
 
 - [typedoc]: resolve jsdoc @link anchors via toc ids
 
-## 1.9.1 (2026/01/02)
+## 1.9.1
+
+Jan 2nd, 2026
 
 ### Bug Fixes
 
 - [typedoc]: improve method arg styling
 
-## 1.9.0 (2026/01/01)
+## 1.9.0
+
+Jan 1st, 2026
 
 ### Features
 
 - [shiki]: add markdown language support to CodeHighlight component
 
-## 1.8.1 (2025/12/24)
+## 1.8.1
+
+Dec 24th, 2025
 
 ### Bug Fixes
 
@@ -246,7 +399,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/mdx-common, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.8.0 (2025/12/22)
+## 1.8.0
+
+Dec 22nd, 2025
 
 ### Features
 
@@ -266,13 +421,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
 
-## 1.7.4 (2025/12/18)
+## 1.7.4
+
+Dec 18th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
 
-## 1.7.3 (2025/12/15)
+## 1.7.3
+
+Dec 15th, 2025
 
 ### Bug Fixes
 
@@ -282,7 +441,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.7.2 (2025/12/11)
+## 1.7.2
+
+Dec 11th, 2025
 
 ### Bug Fixes
 
@@ -292,7 +453,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/core, @qualcomm-ui/react-core]
 
-## 1.7.1 (2025/12/10)
+## 1.7.1
+
+Dec 10th, 2025
 
 ### Bug Fixes
 
@@ -302,7 +465,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core, @qualcomm-ui/utils]
 
-## 1.7.0 (2025/12/08)
+## 1.7.0
+
+Dec 8th, 2025
 
 ### Features
 
@@ -312,7 +477,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common]
 
-## 1.6.3 (2025/12/08)
+## 1.6.3
+
+Dec 8th, 2025
 
 ### Bug Fixes
 
@@ -322,13 +489,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
 
-## 1.6.2 (2025/12/05)
+## 1.6.2
+
+Dec 5th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.6.1 (2025/12/03)
+## 1.6.1
+
+Dec 3rd, 2025
 
 ### Code Refactoring
 
@@ -343,7 +514,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.6.0 (2025/12/03)
+## 1.6.0
+
+Dec 3rd, 2025
 
 ### Features
 
@@ -363,7 +536,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/utils, @qualcomm-ui/react-core]
 
-## 1.5.9 (2025/12/01)
+## 1.5.9
+
+Dec 1st, 2025
 
 ### Bug Fixes
 
@@ -380,43 +555,57 @@
 
 - **deps:** update dependencies [@qualcomm-ui/utils, @qualcomm-ui/react, @qualcomm-ui/react-core, @qualcomm-ui/core]
 
-## 1.5.8 (2025/12/01)
+## 1.5.8
+
+Dec 1st, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.5.7 (2025/12/01)
+## 1.5.7
+
+Dec 1st, 2025
 
 ### Bug Fixes
 
 - [docs-layout]: prevent crash when path segment missing
 
-## 1.5.6 (2025/12/01)
+## 1.5.6
+
+Dec 1st, 2025
 
 ### Bug Fixes
 
 - [site-search]: prevent firefox search input hiding on mouseup
 
-## 1.5.5 (2025/11/30)
+## 1.5.5
+
+Nov 30th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.5.4 (2025/11/30)
+## 1.5.4
+
+Nov 30th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.5.3 (2025/11/25)
+## 1.5.3
+
+Nov 25th, 2025
 
 ### Bug Fixes
 
 - [react-demo]: guard for missing demo data
 
-## 1.5.2 (2025/11/25)
+## 1.5.2
+
+Nov 25th, 2025
 
 ### Bug Fixes
 
@@ -427,13 +616,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/mdx-common, @qualcomm-ui/core, @qualcomm-ui/react-core]
 
-## 1.5.1 (2025/11/24)
+## 1.5.1
+
+Nov 24th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.5.0 (2025/11/21)
+## 1.5.0
+
+Nov 21st, 2025
 
 ### Features
 
@@ -443,7 +636,9 @@
 
 - [site-search]: increase text-input right margin
 
-## 1.4.0 (2025/11/21)
+## 1.4.0
+
+Nov 21st, 2025
 
 ### Features
 
@@ -465,7 +660,9 @@
 - migrate change-case to @qualcomm-ui/utils/change-case
 - **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/core, @qualcomm-ui/mdx-common, @qualcomm-ui/utils, @qualcomm-ui/react-core]
 
-## 1.3.0 (2025/11/19)
+## 1.3.0
+
+Nov 19th, 2025
 
 ### Features
 
@@ -479,7 +676,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/react]
 
-## 1.2.3 (2025/11/18)
+## 1.2.3
+
+Nov 18th, 2025
 
 ### Build System
 
@@ -490,7 +689,9 @@
 - [dependencies]: omit all devDependencies from build
 - **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.2.2 (2025/11/18)
+## 1.2.2
+
+Nov 18th, 2025
 
 ### Bug Fixes
 
@@ -500,13 +701,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.2.1 (2025/11/17)
+## 1.2.1
+
+Nov 17th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.2.0 (2025/11/17)
+## 1.2.0
+
+Nov 17th, 2025
 
 ### Features
 
@@ -521,7 +726,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/core, @qualcomm-ui/react-core, @qualcomm-ui/react]
 
-## 1.1.0 (2025/11/14)
+## 1.1.0
+
+Nov 14th, 2025
 
 ### Features
 
@@ -544,7 +751,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/react, @qualcomm-ui/core, @qualcomm-ui/mdx-common, @qualcomm-ui/utils]
 
-## 1.0.4 (2025/11/14)
+## 1.0.4
+
+Nov 14th, 2025
 
 ### Bug Fixes
 
@@ -555,7 +764,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react]
 
-## 1.0.3 (2025/11/13)
+## 1.0.3
+
+Nov 13th, 2025
 
 ### Bug Fixes
 
@@ -565,7 +776,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/mdx-common, @qualcomm-ui/utils, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.0.2 (2025/11/12)
+## 1.0.2
+
+Nov 12th, 2025
 
 ### Bug Fixes
 
@@ -575,7 +788,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/mdx-common, @qualcomm-ui/utils, @qualcomm-ui/react, @qualcomm-ui/react-core]
 
-## 1.0.1 (2025/11/12)
+## 1.0.1
+
+Nov 12th, 2025
 
 ### Miscellaneous Chores
 

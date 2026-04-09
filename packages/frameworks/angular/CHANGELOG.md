@@ -1,6 +1,102 @@
 # @qualcomm-ui/angular Changelog
 
-## 2.0.1 (2026/03/12)
+## 2.3.0
+
+Apr 7th, 2026
+
+### Features
+
+- [stepper]: add angular stepper component ([16856bf](https://github.com/qualcomm/qualcomm-ui/commit/16856bf))
+
+### Tests
+
+- [stepper]: add stepper tests ([bc6da98](https://github.com/qualcomm/qualcomm-ui/commit/bc6da98))
+
+### Miscellaneous Chores
+
+- simplify angular test configuration ([50dd356](https://github.com/qualcomm/qualcomm-ui/commit/50dd356))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 2.2.2
+
+Apr 6th, 2026
+
+### Bug Fixes
+
+- update changelog links ([78aca35](https://github.com/qualcomm/qualcomm-ui/commit/78aca35))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 2.2.1
+
+Apr 2nd, 2026
+
+### Miscellaneous Chores
+
+- [angular]: configure tsconfigPaths project in vitest ([77da531](https://github.com/qualcomm/qualcomm-ui/commit/77da531))
+- upgrade to vite v8 and bump dependencies ([18596c5](https://github.com/qualcomm/qualcomm-ui/commit/18596c5))
+- **deps:** update dependencies [@qualcomm-ui/angular-core, @qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core]
+
+## 2.2.0
+
+Mar 30th, 2026
+
+### Features
+
+- [icon-button]: add shape prop ([9c93d49](https://github.com/qualcomm/qualcomm-ui/commit/9c93d49))
+
+### Bug Fixes
+
+- [badge]: update tokens and apply text-box cap-to-baseline ([9804845](https://github.com/qualcomm/qualcomm-ui/commit/9804845))
+- [alert-banner]: use compact icon button for close action ([74d1316](https://github.com/qualcomm/qualcomm-ui/commit/74d1316))
+- [tag]: update tokens and apply text-box cap-to-baseline ([3f94cdf](https://github.com/qualcomm/qualcomm-ui/commit/3f94cdf))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 2.1.1
+
+Mar 25th, 2026
+
+### Bug Fixes
+
+- [select]: make disclosure indicator inert ([012754b](https://github.com/qualcomm/qualcomm-ui/commit/012754b))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 2.1.0
+
+Mar 24th, 2026
+
+### Features
+
+- [tag]: deprecate radius prop in favor of shape and add new colors ([b6aa6ae](https://github.com/qualcomm/qualcomm-ui/commit/b6aa6ae))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 2.0.2
+
+Mar 20th, 2026
+
+### Bug Fixes
+
+- [side-nav]: set filter input wrapper element role to treeitem ([68efb90](https://github.com/qualcomm/qualcomm-ui/commit/68efb90))
+- [side-nav]: set divider role to presentation and remove aria-orientation ([2d8d54e](https://github.com/qualcomm/qualcomm-ui/commit/2d8d54e))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/angular-core, @qualcomm-ui/utils, @qualcomm-ui/qds-core]
+
+## 2.0.1
+
+Mar 12th, 2026
 
 ### Tests
 
@@ -10,7 +106,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 2.0.0 (2026/03/10)
+## 2.0.0
+
+Mar 10th, 2026
 
 ### BREAKING CHANGES
 
@@ -29,7 +127,9 @@
 - [angular]: upgrade @testing-library/angular to v19 and remove unused test deps ([c6015fc](https://github.com/qualcomm/qualcomm-ui/commit/c6015fc))
 - **deps:** update dependencies [@qualcomm-ui/angular-core, @qualcomm-ui/core, @qualcomm-ui/qds-core]
 
-## 1.20.0 (2026/02/26)
+## 1.20.0
+
+Feb 26th, 2026
 
 ### Features
 
@@ -53,7 +153,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.19.0 (2026/02/24)
+## 1.19.0
+
+Feb 24th, 2026
 
 ### Features
 
@@ -63,7 +165,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core]
 
-## 1.18.0 (2026/02/13)
+## 1.18.0
+
+Feb 13th, 2026
 
 ### Features
 
@@ -73,7 +177,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.17.0 (2026/02/11)
+## 1.17.0
+
+Feb 11th, 2026
 
 ### Features
 
@@ -89,7 +195,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.16.0 (2026/01/30)
+## 1.16.0
+
+Jan 30th, 2026
 
 ### Features
 
@@ -105,13 +213,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.15.1 (2026/01/29)
+## 1.15.1
+
+Jan 29th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.15.0 (2026/01/27)
+## 1.15.0
+
+Jan 27th, 2026
 
 ### Features
 
@@ -121,7 +233,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.14.0 (2026/01/23)
+## 1.14.0
+
+Jan 23rd, 2026
 
 ### Features
 
@@ -135,13 +249,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/angular-core, @qualcomm-ui/qds-core, @qualcomm-ui/utils]
 
-## 1.13.1 (2026/01/19)
+## 1.13.1
+
+Jan 19th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.13.0 (2026/01/17)
+## 1.13.0
+
+Jan 17th, 2026
 
 ### Features
 
@@ -151,7 +269,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.12.0 (2026/01/15)
+## 1.12.0
+
+Jan 15th, 2026
 
 ### Features
 
@@ -161,31 +281,41 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.11.4 (2025/12/24)
+## 1.11.4
+
+Dec 24th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.11.3 (2025/12/22)
+## 1.11.3
+
+Dec 22nd, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.11.2 (2025/12/18)
+## 1.11.2
+
+Dec 18th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.11.1 (2025/12/15)
+## 1.11.1
+
+Dec 15th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.11.0 (2025/12/11)
+## 1.11.0
+
+Dec 11th, 2025
 
 ### Features
 
@@ -199,13 +329,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core]
 
-## 1.10.1 (2025/12/10)
+## 1.10.1
+
+Dec 10th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.10.0 (2025/12/08)
+## 1.10.0
+
+Dec 8th, 2025
 
 ### Features
 
@@ -219,20 +353,26 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.9.2 (2025/12/05)
+## 1.9.2
+
+Dec 5th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.9.1 (2025/12/04)
+## 1.9.1
+
+Dec 4th, 2025
 
 ### Miscellaneous Chores
 
 - [peer-dependencies]: loosen `@angular/*` version range restrictions
 - **deps:** update dependencies [@qualcomm-ui/angular-core]
 
-## 1.9.0 (2025/12/03)
+## 1.9.0
+
+Dec 3rd, 2025
 
 ### Features
 
@@ -242,13 +382,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/angular-core, @qualcomm-ui/qds-core]
 
-## 1.8.1 (2025/12/03)
+## 1.8.1
+
+Dec 3rd, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core, @qualcomm-ui/utils]
 
-## 1.8.0 (2025/12/01)
+## 1.8.0
+
+Dec 1st, 2025
 
 ### Features
 
@@ -262,19 +406,25 @@
 
 - **deps:** update dependencies [@qualcomm-ui/utils, @qualcomm-ui/angular-core, @qualcomm-ui/qds-core, @qualcomm-ui/core]
 
-## 1.7.2 (2025/12/01)
+## 1.7.2
+
+Dec 1st, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.7.1 (2025/11/30)
+## 1.7.1
+
+Nov 30th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.7.0 (2025/11/30)
+## 1.7.0
+
+Nov 30th, 2025
 
 ### Features
 
@@ -289,7 +439,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.6.0 (2025/11/30)
+## 1.6.0
+
+Nov 30th, 2025
 
 ### Features
 
@@ -299,7 +451,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/angular-core]
 
-## 1.5.0 (2025/11/25)
+## 1.5.0
+
+Nov 25th, 2025
 
 ### Features
 
@@ -314,7 +468,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core]
 
-## 1.4.0 (2025/11/24)
+## 1.4.0
+
+Nov 24th, 2025
 
 ### Features
 
@@ -328,25 +484,33 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.3.3 (2025/11/23)
+## 1.3.3
+
+Nov 23rd, 2025
 
 ### Bug Fixes
 
 - [icon]: use correct docs site url in error message
 
-## 1.3.2 (2025/11/21)
+## 1.3.2
+
+Nov 21st, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/angular-core]
 
-## 1.3.1 (2025/11/19)
+## 1.3.1
+
+Nov 19th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.3.0 (2025/11/18)
+## 1.3.0
+
+Nov 18th, 2025
 
 ### Features
 
@@ -361,13 +525,17 @@
 
 - [table-pagination]: add missing provider
 
-## 1.2.1 (2025/11/17)
+## 1.2.1
+
+Nov 17th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.2.0 (2025/11/17)
+## 1.2.0
+
+Nov 17th, 2025
 
 ### Features
 
@@ -386,7 +554,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core]
 
-## 1.1.1 (2025/11/15)
+## 1.1.1
+
+Nov 15th, 2025
 
 ### Build System
 
@@ -396,7 +566,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/angular-core]
 
-## 1.1.0 (2025/11/14)
+## 1.1.0
+
+Nov 14th, 2025
 
 ### Features
 
@@ -406,7 +578,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/angular-core]
 
-## 1.0.2 (2025/11/14)
+## 1.0.2
+
+Nov 14th, 2025
 
 ### Bug Fixes
 
@@ -416,7 +590,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
 
-## 1.0.1 (2025/11/13)
+## 1.0.1
+
+Nov 13th, 2025
 
 ### Miscellaneous Chores
 

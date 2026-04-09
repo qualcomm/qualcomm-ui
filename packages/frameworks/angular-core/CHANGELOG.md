@@ -1,12 +1,57 @@
 # @qualcomm-ui/angular-core Changelog
 
-## 2.0.1 (2026/03/12)
+## 2.1.0
+
+Apr 7th, 2026
+
+### Features
+
+- [stepper]: add angular stepper component ([16856bf](https://github.com/qualcomm/qualcomm-ui/commit/16856bf))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 2.0.4
+
+Apr 2nd, 2026
+
+### Miscellaneous Chores
+
+- upgrade to vite v8 and bump dependencies ([18596c5](https://github.com/qualcomm/qualcomm-ui/commit/18596c5))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 2.0.3
+
+Mar 25th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/dom]
+
+## 2.0.2
+
+Mar 20th, 2026
+
+### Bug Fixes
+
+- [side-nav]: add missing tree bindings for accessibility ([1039fef](https://github.com/qualcomm/qualcomm-ui/commit/1039fef))
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
 
-## 2.0.0 (2026/03/10)
+## 2.0.1
+
+Mar 12th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 2.0.0
+
+Mar 10th, 2026
 
 ### BREAKING CHANGES
 
@@ -25,7 +70,9 @@
 
 - [angular-core]: add spec for accessSignal utility ([a8219c3](https://github.com/qualcomm/qualcomm-ui/commit/a8219c3))
 
-## 1.6.0 (2026/02/24)
+## 1.6.0
+
+Feb 24th, 2026
 
 ### Features
 
@@ -35,7 +82,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.5.0 (2026/01/30)
+## 1.5.0
+
+Jan 30th, 2026
 
 ### Features
 
@@ -51,7 +100,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.4.2 (2026/01/23)
+## 1.4.2
+
+Jan 23rd, 2026
 
 ### Code Refactoring
 
@@ -63,13 +114,17 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/dom, @qualcomm-ui/utils]
 
-## 1.4.1 (2025/12/24)
+## 1.4.1
+
+Dec 24th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.4.0 (2025/12/11)
+## 1.4.0
+
+Dec 11th, 2025
 
 ### Features
 
@@ -79,31 +134,41 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.3.3 (2025/12/10)
+## 1.3.3
+
+Dec 10th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
 
-## 1.3.2 (2025/12/05)
+## 1.3.2
+
+Dec 5th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.3.1 (2025/12/04)
+## 1.3.1
+
+Dec 4th, 2025
 
 ### Miscellaneous Chores
 
 - [peer-dependencies]: loosen `@angular/*` version range restrictions
 
-## 1.3.0 (2025/12/03)
+## 1.3.0
+
+Dec 3rd, 2025
 
 ### Features
 
 - [side-nav]: add side-nav component
 
-## 1.2.0 (2025/12/01)
+## 1.2.0
+
+Dec 1st, 2025
 
 ### Features
 
@@ -122,44 +187,58 @@
 
 - **deps:** update dependencies [@qualcomm-ui/utils, @qualcomm-ui/core, @qualcomm-ui/dom]
 
-## 1.1.1 (2025/12/01)
+## 1.1.1
+
+Dec 1st, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.1.0 (2025/11/30)
+## 1.1.0
+
+Nov 30th, 2025
 
 ### Features
 
 - wire highlightMatchingText in angular combobox
 
-## 1.0.6 (2025/11/25)
+## 1.0.6
+
+Nov 25th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.0.5 (2025/11/18)
+## 1.0.5
+
+Nov 18th, 2025
 
 ### Miscellaneous Chores
 
 - [pagination]: use updated qds api
 - **deps:** update dependencies [@qualcomm-ui/core]
 
-## 1.0.4 (2025/11/17)
+## 1.0.4
+
+Nov 17th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/dom, @qualcomm-ui/core]
 
-## 1.0.3 (2025/11/15)
+## 1.0.3
+
+Nov 15th, 2025
 
 ### Build System
 
 - use fesm format
 
-## 1.0.2 (2025/11/14)
+## 1.0.2
+
+Nov 14th, 2025
 
 ### Bug Fixes
 
@@ -169,7 +248,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/dom]
 
-## 1.0.1 (2025/11/13)
+## 1.0.1
+
+Nov 13th, 2025
 
 ### Miscellaneous Chores
 

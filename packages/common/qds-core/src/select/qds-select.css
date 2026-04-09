@@ -84,8 +84,7 @@
 
   &[data-state="open"],
   &:focus,
-  &:focus-visible,
-  &:focus-within {
+  &:focus-visible {
     border-color: var(--color-utility-focus-border);
     outline: 1px solid var(--color-utility-focus-border);
   }

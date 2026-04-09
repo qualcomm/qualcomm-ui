@@ -11,7 +11,16 @@ import type {
   QdsButtonVariant,
 } from "./button.types"
 
-export interface QdsIconButtonApiProps extends QdsButtonApiProps {}
+export type QdsIconButtonShape = "square" | "rounded"
+
+export interface QdsIconButtonApiProps extends QdsButtonApiProps {
+  /**
+   * Governs the shape of the icon button.
+   *
+   * @default 'square'
+   */
+  shape?: QdsIconButtonShape
+}
 
 type ButtonClasses = typeof buttonClasses
 
@@ -21,6 +30,7 @@ export interface QdsIconButtonRootBindings {
   "data-disabled": BooleanDataAttr
   "data-part": "root"
   "data-scope": "icon-button"
+  "data-shape": QdsIconButtonShape
   "data-size": QdsButtonSize
   "data-variant": QdsButtonVariant
 }

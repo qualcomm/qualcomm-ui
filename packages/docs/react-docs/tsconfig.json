@@ -4,12 +4,15 @@
     "baseUrl": "./",
     "moduleResolution": "bundler",
     "paths": {
-      // TODO: remove this once WebStorm fixes symlinks in WSL2
-      "@qualcomm-ui/core/*": ["../../common/core/src/*/index.ts"],
-      "@qualcomm-ui/dom/*": ["../../common/dom/src/*/index.ts"],
-      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/src/*/index.ts"],
-      "@qualcomm-ui/react/*": ["../../frameworks/react/src/*/index.ts"],
-      "@qualcomm-ui/react-core/*": ["../../frameworks/react-core/src/*/index.ts"]
+      // TODO: remove when WebStorm fixes symlinks
+      "@qualcomm-ui/mdx-vite/*": ["../../frameworks/mdx-vite/src/*"],
+      "@qualcomm-ui/react/*": ["../../frameworks/react/src/*"],
+      "@qualcomm-ui/react-core/*": ["../../frameworks/react-core/src/*"],
+      "@qualcomm-ui/react-mdx/*": ["../../frameworks/react-mdx/src/*"],
+      "@qualcomm-ui/core/*": ["../../common/core/src/*"],
+      "@qualcomm-ui/dom/*": ["../../common/core/src/*"],
+      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/src/*"],
+      "@qualcomm-ui/utils/*": ["../../common/utils/src/*"]
     }
   },
   "include": ["./src"],

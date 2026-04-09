@@ -239,15 +239,23 @@ export class FigmaTokenBuilder {
               removeUnusedBrandTokens: (dictionary) => {
                 switch (brand) {
                   case "qualcomm":
+                    delete dictionary.arduino
                     delete dictionary.dw
                     delete dictionary.sd
                     break
                   case "dragonwing":
+                    delete dictionary.arduino
                     delete dictionary.qc
                     delete dictionary.sd
                     break
                   case "snapdragon":
+                    delete dictionary.arduino
                     delete dictionary.qc
+                    delete dictionary.dw
+                    break
+                  case "arduino":
+                    delete dictionary.qc
+                    delete dictionary.sd
                     delete dictionary.dw
                     break
                 }

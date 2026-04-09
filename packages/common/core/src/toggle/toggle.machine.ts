@@ -53,10 +53,12 @@ const toggleMachineBase = {
 
 export const toggleMachine: MachineConfig<ToggleSchema> =
   createNarrowedMachine<ToggleSchema>()(toggleMachineBase, {
-    setPressed({context, event}) {
-      context.set("pressed", event.value || false)
-    },
-    togglePressed({context}) {
-      context.set("pressed", !context.get("pressed"))
+    actions: {
+      setPressed({context, event}) {
+        context.set("pressed", event.value || false)
+      },
+      togglePressed({context}) {
+        context.set("pressed", !context.get("pressed"))
+      },
     },
   })

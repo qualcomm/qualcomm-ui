@@ -25,11 +25,19 @@ export function createQdsAlertBannerApi(
   const emphasis = props.emphasis || "info"
   const variant = props.variant || "strong"
 
+  const closeButtonEmphasis =
+    variant === "strong"
+      ? emphasis === "warning"
+        ? "black-persistent"
+        : "inverse"
+      : "neutral"
+
   const commonBindings: QdsAlertBannerCommonBindings = {
     "data-scope": "alert-banner",
   }
 
   return {
+    closeButtonEmphasis,
     emphasis,
     variant,
 

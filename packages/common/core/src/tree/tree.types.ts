@@ -537,6 +537,7 @@ export interface TreeBranchIndicatorBindings extends TreeCommonBindings {
 }
 
 export interface TreeBranchTriggerBindings extends TreeCommonBindings {
+  "aria-label": "Collapse" | "Expand"
   "data-disabled": BooleanDataAttr
   "data-loading": BooleanDataAttr
   "data-part": "branch-trigger"

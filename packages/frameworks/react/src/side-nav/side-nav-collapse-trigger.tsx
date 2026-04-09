@@ -35,9 +35,9 @@ export function SideNavCollapseTrigger({
           render={render}
           size="md"
           variant="ghost"
-          {...mergedProps}
         />
       }
+      {...mergedProps}
     />
   )
 }

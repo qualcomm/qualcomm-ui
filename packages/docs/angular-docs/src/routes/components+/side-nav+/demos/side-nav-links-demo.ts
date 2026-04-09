@@ -52,18 +52,18 @@ const collection = createTreeCollection<SideNavItem>({
   selector: "side-nav-links-demo",
   template: `
     <div class="flex justify-center">
-      <nav
+      <div
         q-side-nav-root
         [collection]="collection"
         [defaultExpandedValue]="['components']"
         [selectedValue]="selectedValue"
       >
-        <header q-side-nav-header>
+        <div q-side-nav-header>
           <div q-side-nav-header-logo>
             <q-logo />
           </div>
           <div q-side-nav-header-title>Qualcomm</div>
-        </header>
+        </div>
 
         @for (
           node of collection.rootNode.nodes;
@@ -100,7 +100,7 @@ const collection = createTreeCollection<SideNavItem>({
             </ng-template>
           </q-side-nav-nodes>
         }
-      </nav>
+      </div>
     </div>
   `,
 })

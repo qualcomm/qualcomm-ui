@@ -14,7 +14,7 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <!-- preview -->
       Initials
       <div q-avatar>
-        <div q-avatar-content>OK</div>
+        <div q-avatar-content>O</div>
       </div>
       Icon
       <div q-avatar>
@@ -25,7 +25,7 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       Fallback
       <div q-avatar>
         <img alt="John Doe" q-avatar-image src="https://example.invalid" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       <!-- preview -->
     </div>

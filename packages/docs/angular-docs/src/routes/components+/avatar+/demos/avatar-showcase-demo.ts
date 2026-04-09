@@ -9,7 +9,7 @@ import {AvatarModule} from "@qualcomm-ui/angular/avatar"
     <!-- preview -->
     <div q-avatar status="active">
       <img alt="John Doe" q-avatar-image src="/images/avatar-man.png" />
-      <div q-avatar-content>JD</div>
+      <div q-avatar-content>J</div>
       <div q-avatar-status></div>
     </div>
     <!-- preview -->

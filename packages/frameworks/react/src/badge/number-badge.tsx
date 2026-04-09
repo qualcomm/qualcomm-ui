@@ -48,7 +48,7 @@ export function NumberBadge({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      {children ?? qdsApi.displayValue}
+      <span>{children ?? qdsApi.displayValue}</span>
     </PolymorphicElement>
   )
 }

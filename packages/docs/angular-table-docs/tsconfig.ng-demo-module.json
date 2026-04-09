@@ -20,7 +20,10 @@
     "paths": {
       "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
       "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
-      "@qualcomm-ui/core/*": ["../../common/core/dist/*/index.d.ts"]
+      "@qualcomm-ui/core/*": ["../../common/core/dist/*/index.d.ts"],
+      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/dist/*/index.d.ts"],
+      "@qualcomm-ui/utils/*": ["../../common/utils/dist/*/index.d.ts"],
+      "@qualcomm-ui/dom/*": ["../../common/dom/dist/*/index.d.ts"]
     }
   },
   "files": ["angular-demo-module/main.ts", "angular-demo-module/stub.ts"],

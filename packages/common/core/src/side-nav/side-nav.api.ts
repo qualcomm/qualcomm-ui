@@ -12,6 +12,7 @@ import {domIds} from "./internal"
 import type {
   SideNavApi,
   SideNavCommonBindings,
+  SideNavFilterInputBindings,
   SideNavHeaderActionBindings,
   SideNavHeaderBindings,
   SideNavHeaderLogoBindings,
@@ -48,6 +49,13 @@ export function createSideNavApi(
       send({type: nextOpen ? "open" : "close"})
     },
     // group: bindings
+    getFilterInputBindings(): SideNavFilterInputBindings {
+      return normalize.element({
+        ...commonBindings,
+        "data-part": "filter-input",
+        role: "treeitem",
+      })
+    },
     getHeaderActionBindings(): SideNavHeaderActionBindings {
       return normalize.element({
         ...commonBindings,
@@ -93,6 +101,7 @@ export function createSideNavApi(
         ...commonBindings,
         "aria-controls": domIds.root(scope),
         "aria-expanded": booleanAriaAttr(visible),
+        "aria-label": open ? "Collapse" : "Expand",
         "data-disabled": booleanDataAttr(disabled),
         "data-part": "trigger",
         "data-state": open ? "open" : "closed",
@@ -106,7 +115,7 @@ export function createSideNavApi(
           }
           send({type: open ? "close" : "open"})
         },
-        type: "button",
+        role: "treeitem",
       })
     },
   }

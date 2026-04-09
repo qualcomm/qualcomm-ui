@@ -90,7 +90,7 @@ export function createAccordionApi(
 
       return normalize.element({
         ...commonProps,
-        "aria-hidden": booleanAriaAttr(!state.open, undefined),
+        "aria-hidden": booleanAriaAttr(!state.open, null),
         "aria-labelledby": domIds.trigger(scope, state.value)!,
         "data-disabled": booleanDataAttr(state.disabled),
         "data-expanded": booleanDataAttr(state.open),

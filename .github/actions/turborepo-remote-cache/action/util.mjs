@@ -5,16 +5,24 @@ import * as path from "node:path"
 const supportedArches = ["arm64", "x64"]
 
 /**
- * Get the binary name from the current OS Arch.
- * We only support Linux `arm64` and `amd64` for the moment.
+ * Get the binary name from the current OS platform and architecture.
+ * Supports Linux (arm64, x64) and macOS (universal2).
  */
 export function getBinaryName() {
-  const arch = supportedArches.includes(os.arch())
-  if (!arch) {
-    throw new Error(`This action does not support this arch='${os.arch}'`)
+  const platform = os.platform()
+
+  if (platform === "darwin") {
+    return "decay-darwin-universal"
   }
 
-  return `decay-${os.arch}`
+  if (platform === "linux") {
+    if (!supportedArches.includes(os.arch())) {
+      throw new Error(`This action does not support Linux arch='${os.arch()}'`)
+    }
+    return `decay-${os.arch()}`
+  }
+
+  throw new Error(`This action does not support platform='${platform}'`)
 }
 
 /**
@@ -65,6 +73,58 @@ export function isProcessRunning(pid) {
  */
 export function sleep(timeInMills) {
   return new Promise((resolve) => setTimeout(resolve, timeInMills))
+}
+
+/**
+ * Check if the server is healthy by polling the health endpoint
+ * @param {string} host - The host to check
+ * @param {string} port - The port to check
+ * @param {number} retries - Maximum number of retry attempts
+ * @returns {Promise<boolean>} true if health check passes, false otherwise
+ */
+export async function checkHealth(host, port, retries = 20) {
+  const url = `http://${host}:${port}/management/health`
+  let attempt = 0
+  let backoff = 100 // Start with 100ms
+
+  while (attempt < retries) {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        signal: AbortSignal.timeout(2000), // 2s timeout per request
+      })
+
+      if (response.ok) {
+        return true
+      }
+    } catch (error) {
+      // Connection refused, timeout, etc - server not ready yet
+      // Continue to next attempt
+    }
+
+    await sleep(backoff)
+    backoff = Math.min(backoff * 2, 2000) // Cap at 2s
+    attempt++
+  }
+
+  return false
+}
+
+export function colorString(color, msg) {
+  return `${color}${msg}${consoleColor.Reset}`
+}
+
+export const consoleColor = {
+  FgBlack: "\x1b[30m",
+  FgBlue: "\x1b[34m",
+  FgCyan: "\x1b[36m",
+  FgGray: "\x1b[90m",
+  FgGreen: "\x1b[32m",
+  FgMagenta: "\x1b[35m",
+  FgRed: "\x1b[31m",
+  FgWhite: "\x1b[37m",
+  FgYellow: "\x1b[33m",
+  Reset: "\x1b[0m",
 }
 
 export const LOGS_DIR = path.resolve(os.tmpdir(), "decay_logs")

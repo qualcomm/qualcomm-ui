@@ -72,7 +72,7 @@ export function Tag(props: TagProps): ReactElement {
       {startIcon ? (
         <IconOrNode icon={startIcon} {...qdsApi.getStartIconBindings()} />
       ) : null}
-      {children}
+      <span>{children}</span>
       {variant === "dismissable" ? (
         <button
           {...mergeProps(

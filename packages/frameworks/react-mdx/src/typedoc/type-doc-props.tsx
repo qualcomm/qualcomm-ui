@@ -181,6 +181,10 @@ export function TypeDocProps({
       }
     }
 
+    if (__QUI_DEV___ && missing.length) {
+      console.error("Missing prop types:", missing.join(","))
+    }
+
     return {
       existingNames: existing,
       firstValidPropTypes: firstValid,

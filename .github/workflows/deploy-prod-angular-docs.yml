@@ -1,0 +1,12 @@
+name: Deploy Angular Docs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-test:
+    uses: ./.github/workflows/reusable-docs-deploy-prod.yml
+    with:
+      dockerfile: dockerfiles/dockerfile-angular-docs
+      ecr-repository-name: angular-docs
+    secrets: inherit

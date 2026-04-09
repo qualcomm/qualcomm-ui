@@ -5,7 +5,7 @@ import type {ReactElement, ReactNode} from "react"
 
 import {X} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -34,16 +34,16 @@ export function AlertBannerCloseButton({
     props,
   )
 
-  const emphasis =
-    context.variant === "strong"
-      ? context.emphasis === "warning"
-        ? "persistent-black"
-        : "persistent-white"
-      : undefined
-
   return (
-    <InlineIconButton emphasis={emphasis} icon={X} size="md" {...mergedProps}>
+    <IconButton
+      density="compact"
+      emphasis={context.closeButtonEmphasis}
+      icon={X}
+      size="md"
+      variant="ghost"
+      {...mergedProps}
+    >
       {children}
-    </InlineIconButton>
+    </IconButton>
   )
 }

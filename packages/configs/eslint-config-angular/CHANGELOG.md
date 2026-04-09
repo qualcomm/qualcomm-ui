@@ -1,6 +1,8 @@
 # @qualcomm-ui/eslint-config-angular Changelog
 
-## 1.1.0 (2025/11/21)
+## 1.1.0
+
+Nov 21st, 2025
 
 ### Features
 
@@ -10,7 +12,9 @@
 
 - use correct types from @eslint/core for exported configs
 
-## 1.0.1 (2025/11/12)
+## 1.0.1
+
+Nov 12th, 2025
 
 ### Miscellaneous Chores
 

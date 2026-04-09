@@ -183,7 +183,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
       const nodeState = getNodeState(props)
       return normalize.element({
         ...commonBindings,
-        "aria-busy": booleanAriaAttr(nodeState.loading, undefined),
+        "aria-busy": booleanAriaAttr(nodeState.loading, null),
         "aria-disabled": booleanAriaAttr(nodeState.disabled),
         "aria-expanded": booleanAriaAttr(nodeState.expanded),
         "aria-level": nodeState.depth,
@@ -246,7 +246,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
       const nodeState = getNodeState(props)
       return normalize.element({
         ...commonBindings,
-        "aria-busy": booleanAriaAttr(nodeState.loading, undefined),
+        "aria-busy": booleanAriaAttr(nodeState.loading, null),
         "data-depth": nodeState.depth,
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-focus": booleanDataAttr(nodeState.focused),
@@ -287,6 +287,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
       const nodeState = getNodeState(props)
       return normalize.element({
         ...commonBindings,
+        "aria-label": nodeState.expanded ? "Collapse" : "Expand",
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-loading": booleanDataAttr(nodeState.loading),
         "data-part": "branch-trigger",

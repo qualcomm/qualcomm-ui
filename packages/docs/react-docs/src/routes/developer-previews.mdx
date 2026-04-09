@@ -1,0 +1,25 @@
+---
+title: Developer Previews
+---
+
+import {Badge} from "@qualcomm-ui/react/badge"
+
+# {frontmatter.title}
+
+Some components are released in an experimental state. These components are typically ready for production use, but their APIs and behavior may change outside our normal Semver guarantees.
+
+Look for the <Badge size="sm" emphasis="warning">Developer Preview</Badge> badge on the component's documentation page next to the title.
+
+## Semver Guarantees
+
+This library follows [Semantic Versioning](https://semver.org/) (`MAJOR.Minor.Patch`).
+
+- **Patch** releases contain bug fixes. No public API changes are introduced.
+- **Minor** releases add new features and backwards-compatible changes. Existing APIs continue to work without modification.
+- **Major** releases may contain breaking changes to public APIs. These are documented in the release notes with migration guidance.
+
+### Developer Preview Components
+
+Developer Preview components are exempt from the guarantees above. Their APIs can introduce breaking changes in any **Minor** release. Consumers of these components should expect API churn between minor versions and review the changelog when upgrading.
+
+Once a component graduates from Developer Preview, it follows the standard semver guarantees described above.

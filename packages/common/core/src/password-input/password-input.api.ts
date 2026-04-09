@@ -82,6 +82,7 @@ export function createPasswordInputApi(
           }
           send({type: "VALUE.SET", value: ""})
         },
+        type: "button",
       })
     },
 

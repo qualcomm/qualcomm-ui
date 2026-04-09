@@ -39,14 +39,17 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <button emphasis="teal" q-tag startIcon="Smile" variant="selectable">
         teal
       </button>
+      <button emphasis="lime" q-tag startIcon="Smile" variant="selectable">
+        lime
+      </button>
       <button emphasis="green" q-tag startIcon="Smile" variant="selectable">
         green
       </button>
-      <button emphasis="kiwi" q-tag startIcon="Smile" variant="selectable">
-        kiwi
-      </button>
       <button emphasis="yellow" q-tag startIcon="Smile" variant="selectable">
         yellow
+      </button>
+      <button emphasis="amber" q-tag startIcon="Smile" variant="selectable">
+        amber
       </button>
       <button emphasis="orange" q-tag startIcon="Smile" variant="selectable">
         orange
@@ -56,6 +59,9 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       </button>
       <button emphasis="magenta" q-tag startIcon="Smile" variant="selectable">
         magenta
+      </button>
+      <button emphasis="violet" q-tag startIcon="Smile" variant="selectable">
+        violet
       </button>
       <button emphasis="purple" q-tag startIcon="Smile" variant="selectable">
         purple

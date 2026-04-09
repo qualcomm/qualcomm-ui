@@ -46,6 +46,9 @@ const navConfig: NavConfig[] = [
     id: "patterns",
     title: "Patterns & Best Practices",
   },
+  {
+    id: "developer-previews",
+  },
   {separator: true},
   {
     sectionTitle: "Composition",

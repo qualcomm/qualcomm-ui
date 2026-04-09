@@ -7,14 +7,6 @@ export interface ColorData {
 }
 
 const text: ColorData[] = [
-  {
-    tailwindClass: "text-brand-accent-01",
-    variable: "--color-text-brand-accent-01",
-  },
-  {
-    tailwindClass: "text-brand-accent-02",
-    variable: "--color-text-brand-accent-02",
-  },
   {tailwindClass: "text-brand-primary", variable: "--color-text-brand-primary"},
   {
     tailwindClass: "text-neutral-inverse",
@@ -32,17 +24,17 @@ const text: ColorData[] = [
     tailwindClass: "text-support-danger",
     variable: "--color-text-support-danger",
   },
+  {
+    tailwindClass: "text-support-info",
+    variable: "--color-text-support-info",
+  },
+  {
+    tailwindClass: "text-support-success",
+    variable: "--color-text-support-success",
+  },
 ]
 
 const icon: ColorData[] = [
-  {
-    tailwindClass: "text-icon-brand-accent-01",
-    variable: "--color-icon-brand-accent-01",
-  },
-  {
-    tailwindClass: "text-icon-brand-accent-02",
-    variable: "--color-icon-brand-accent-02",
-  },
   {
     tailwindClass: "text-icon-brand-primary",
     variable: "--color-icon-brand-primary",
@@ -83,14 +75,6 @@ const icon: ColorData[] = [
 
 const background: ColorData[] = [
   {
-    tailwindClass: "bg-brand-accent-01",
-    variable: "--color-background-brand-accent-01",
-  },
-  {
-    tailwindClass: "bg-brand-accent-02",
-    variable: "--color-background-brand-accent-02",
-  },
-  {
     tailwindClass: "bg-brand-primary-strong",
     variable: "--color-background-brand-primary-strong",
   },
@@ -106,7 +90,6 @@ const background: ColorData[] = [
   {tailwindClass: "bg-neutral-01", variable: "--color-background-neutral-01"},
   {tailwindClass: "bg-neutral-02", variable: "--color-background-neutral-02"},
   {tailwindClass: "bg-neutral-03", variable: "--color-background-neutral-03"},
-  {tailwindClass: "bg-neutral-04", variable: "--color-background-neutral-04"},
   {tailwindClass: "bg-neutral-10", variable: "--color-background-neutral-10"},
   {
     tailwindClass: "bg-support-danger-medium",
@@ -179,14 +162,6 @@ const surface: ColorData[] = [
 
 const border: ColorData[] = [
   {
-    tailwindClass: "border-brand-accent-01",
-    variable: "--color-border-brand-accent-01",
-  },
-  {
-    tailwindClass: "border-brand-accent-02",
-    variable: "--color-border-brand-accent-02",
-  },
-  {
     tailwindClass: "border-brand-primary-subtle",
     variable: "--color-border-brand-primary-subtle",
   },
@@ -200,20 +175,40 @@ const border: ColorData[] = [
   {tailwindClass: "border-neutral-03", variable: "--color-border-neutral-03"},
   {tailwindClass: "border-neutral-10", variable: "--color-border-neutral-10"},
   {
+    tailwindClass: "border-support-danger-medium",
+    variable: "--color-border-support-danger-medium",
+  },
+  {
     tailwindClass: "border-support-danger",
     variable: "--color-border-support-danger",
+  },
+  {
+    tailwindClass: "border-support-info-medium",
+    variable: "--color-border-support-info-medium",
   },
   {
     tailwindClass: "border-support-info",
     variable: "--color-border-support-info",
   },
   {
+    tailwindClass: "border-support-neutral-medium",
+    variable: "--color-border-support-neutral-medium",
+  },
+  {
     tailwindClass: "border-support-neutral",
     variable: "--color-border-support-neutral",
   },
   {
+    tailwindClass: "border-support-success-medium",
+    variable: "--color-border-support-success-medium",
+  },
+  {
     tailwindClass: "border-support-success",
     variable: "--color-border-support-success",
+  },
+  {
+    tailwindClass: "border-support-warning-medium",
+    variable: "--color-border-support-warning-medium",
   },
   {
     tailwindClass: "border-support-warning",
@@ -226,16 +221,18 @@ const border: ColorData[] = [
 ]
 
 const categories: string[] = [
+  "amber",
   "blue",
   "cyan",
-  "teal",
   "green",
-  "kiwi",
-  "yellow",
-  "orange",
-  "red",
+  "lime",
   "magenta",
+  "orange",
   "purple",
+  "red",
+  "teal",
+  "violet",
+  "yellow",
 ]
 
 const category: ColorData[] = categories

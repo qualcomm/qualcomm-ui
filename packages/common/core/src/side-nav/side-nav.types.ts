@@ -104,12 +104,18 @@ export interface SideNavHeaderActionBindings extends SideNavCommonBindings {
 export interface SideNavTriggerBindings extends SideNavCommonBindings {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
+  "aria-label": "Collapse" | "Expand"
   "data-disabled": BooleanDataAttr
   "data-part": "trigger"
   "data-state": SideNavState
   id: string
   onClick: JSX.MouseEventHandler
-  type: "button"
+  role: "treeitem"
+}
+
+export interface SideNavFilterInputBindings extends SideNavCommonBindings {
+  "data-part": "filter-input"
+  role: "treeitem"
 }
 
 export interface SideNavApi {
@@ -129,6 +135,7 @@ export interface SideNavApi {
   setOpen: (open: boolean) => void
 
   // group: element bindings
+  getFilterInputBindings: () => SideNavFilterInputBindings
   getHeaderActionBindings: () => SideNavHeaderActionBindings
   getHeaderBindings: () => SideNavHeaderBindings
   getHeaderLogoBindings: () => SideNavHeaderLogoBindings

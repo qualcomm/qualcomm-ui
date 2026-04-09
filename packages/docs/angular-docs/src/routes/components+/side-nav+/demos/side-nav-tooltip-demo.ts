@@ -69,7 +69,7 @@ const collection = createTreeCollection<SideNavItem>({
   selector: "side-nav-tooltip-demo",
   template: `
     <div class="flex justify-center">
-      <nav q-side-nav-root [collection]="collection" [open]="false">
+      <div q-side-nav-root [collection]="collection" [open]="false">
         @for (
           node of collection.rootNode.nodes;
           let i = $index;
@@ -112,7 +112,7 @@ const collection = createTreeCollection<SideNavItem>({
             </ng-template>
           </q-side-nav-nodes>
         }
-      </nav>
+      </div>
     </div>
   `,
 })

@@ -37,7 +37,7 @@ export function SideNavCollapsedDemo() {
                   indexPath={indexPath}
                   node={node}
                   renderBranch={({node}) => (
-                    <SideNav.BranchNode>
+                    <SideNav.BranchNode aria-label={node.text}>
                       <SideNav.NodeIndicator />
                       {node.icon ? <SideNav.NodeIcon icon={node.icon} /> : null}
                       <SideNav.NodeText>{node.text}</SideNav.NodeText>
@@ -45,7 +45,7 @@ export function SideNavCollapsedDemo() {
                     </SideNav.BranchNode>
                   )}
                   renderLeaf={({node}) => (
-                    <SideNav.LeafNode>
+                    <SideNav.LeafNode aria-label={node.text}>
                       <SideNav.NodeIndicator />
                       {node.icon ? <SideNav.NodeIcon icon={node.icon} /> : null}
                       <SideNav.NodeText>{node.text}</SideNav.NodeText>

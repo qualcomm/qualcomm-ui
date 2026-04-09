@@ -40,6 +40,9 @@ const navConfig: NavConfig[] = [
     id: "pitfalls",
   },
   {
+    id: "developer-previews",
+  },
+  {
     separator: true,
   },
   {

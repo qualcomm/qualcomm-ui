@@ -1,14 +1,11 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist",
-    "moduleResolution": "Bundler",
     "paths": {
+      // fixes WebStorm usage detection, not used otherwise
       "@qualcomm-ui/react-mdx/*": ["./src/*/index.ts"],
     }
   },
-  "include": ["./src"],
   "references": [
     {
       "path": "./tsconfig.lib.json"
@@ -18,6 +15,30 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/typedoc-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../react/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-core/tsconfig.lib.json"
     }
   ]
 }

@@ -40,6 +40,7 @@ export default defineConfig(
       "**/frameworks/react-internal/files/component-list.md",
       "packages/docs/*/knowledge/**",
       "**/generated/**",
+      "packages/**/qui-env.d.ts",
     ],
   },
   {

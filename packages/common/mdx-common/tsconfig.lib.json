@@ -9,5 +9,10 @@
     "tsBuildInfoFile": "dist/tsbuildinfo"
   },
   "include": ["./src"],
-  "exclude": ["./src/tests"]
+  "exclude": ["./src/**/*.spec.ts"],
+  "references": [
+    {
+      "path": "../typedoc-common/tsconfig.lib.json"
+    }
+  ]
 }

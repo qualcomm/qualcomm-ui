@@ -8,15 +8,15 @@ export function AvatarEmphasisDemo(): ReactElement {
       {/* preview */}
       Neutral
       <Avatar.Root emphasis="neutral">
-        <Avatar.Content>OK</Avatar.Content>
+        <Avatar.Content>O</Avatar.Content>
       </Avatar.Root>
       High Contrast
       <Avatar.Root emphasis="contrast">
-        <Avatar.Content>OK</Avatar.Content>
+        <Avatar.Content>O</Avatar.Content>
       </Avatar.Root>
       Brand
       <Avatar.Root emphasis="brand">
-        <Avatar.Content>OK</Avatar.Content>
+        <Avatar.Content>O</Avatar.Content>
       </Avatar.Root>
       {/* preview */}
     </div>

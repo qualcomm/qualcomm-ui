@@ -153,6 +153,12 @@ export interface PageSection extends PageFrontmatter {
   contentSections?: PageSectionContent[]
 
   /**
+   * Raw frontmatter for this page. Can be used to retrieve fields that aren't
+   * documented.
+   */
+  data: Record<string, unknown>
+
+  /**
    * Text content of the {@link content}'s closest heading.
    */
   heading?: string

@@ -14,7 +14,7 @@ import type {
   DimensionRawValue,
   DimensionValue,
 } from "./token-types"
-import {rgbaToOklch, toCssVar} from "./utils"
+import {rgbaToHex, toCssVar} from "./utils"
 
 function isMeasurementAlias(value: unknown): value is string {
   return typeof value === "string" && value.includes("{measurements")
@@ -49,6 +49,10 @@ function formatUnitValue<T>(obj: T): string | number | T {
   return value === 0 || value === "0" ? value : `${value}${unit}`
 }
 
+function formatFontFamilyValue(value: any): string {
+  return value.replaceAll("'", '"')
+}
+
 export function registerCustomTransformsForDtcg({
   measurements,
 }: {
@@ -71,7 +75,7 @@ export function registerCustomTransformsForDtcg({
       const [red, green, blue] = components
       if (red !== undefined && green !== undefined && blue !== undefined) {
         // TODO: remove cast
-        return rgbaToOklch({a: alpha, b: blue, g: green, r: red} as RGBA)
+        return rgbaToHex({a: alpha, b: blue, g: green, r: red} as RGBA)
       }
     }
     return value
@@ -108,9 +112,9 @@ export function registerCustomTransformsForDtcg({
       const {$value} = token
       if (typeof $value === "string") {
         if ($value.includes("Mono")) {
-          return `${$value}, monospace`
+          return `${formatFontFamilyValue($value)}, monospace`
         } else {
-          return `${$value}, sans-serif`
+          return `${formatFontFamilyValue($value)}, sans-serif`
         }
       }
       return $value
@@ -263,8 +267,6 @@ export function registerCustomTransformsForDtcg({
       const typographyCssShorthand = `${resolvedFontWeight ? `${resolvedFontWeight} ` : ""}${
         flatFontSize ? `${flatFontSize} ` : `${getBasePxFontSize(platform)}px `
       }${flatLineHeight ? `/ ${flatLineHeight} ` : " "}${resolvedFontFamily}`
-
-      // console.debug(typographyCssShorthand)
 
       return typographyCssShorthand
     },

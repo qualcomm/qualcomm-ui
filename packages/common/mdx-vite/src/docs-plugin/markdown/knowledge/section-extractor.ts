@@ -68,6 +68,35 @@ export interface ExtractionResult {
 }
 
 /**
+ * Convert links to inline code. URLs are not relevant for text embeddings
+ * and will muddy the vector storage.
+ */
+function transformLinks(): Plugin {
+  return () => (tree) => {
+    visit(tree, "link", (node: Link) => {
+      let text = ""
+      visit(node, "text", (textNode: Text) => {
+        text += textNode.value
+      })
+
+      Object.assign(node, {
+        children: undefined,
+        type: "inlineCode",
+        url: undefined,
+        value: text,
+      })
+    })
+  }
+}
+
+const rawProcessor = unified().use(remarkGfm).use(remarkStringify)
+
+const contentProcessor = unified()
+  .use(remarkGfm)
+  .use(transformLinks())
+  .use(remarkStringify)
+
+/**
  * Extracts sections from processed markdown content, organized by headers.
  */
 export class SectionExtractor {
@@ -327,42 +356,15 @@ export class SectionExtractor {
       .filter((line) => line && line !== ":::")
   }
 
-  /**
-   * Convert links to inline code. URLs are not relevant for text embeddings
-   * and will muddy the vector storage.
-   */
-  private transformLinks(): Plugin {
-    return () => (tree) => {
-      visit(tree, "link", (node: Link) => {
-        let text = ""
-        visit(node, "text", (textNode: Text) => {
-          text += textNode.value
-        })
-
-        Object.assign(node, {
-          children: undefined,
-          type: "inlineCode",
-          url: undefined,
-          value: text,
-        })
-      })
-    }
-  }
-
   private nodesToRawContent(nodes: RootContent[]): string {
     const tree: Root = {children: nodes, type: "root"}
-    const processor = unified().use(remarkGfm).use(remarkStringify)
-    return processor.stringify(tree)
+    return rawProcessor.stringify(tree)
   }
 
   private nodesToContent(nodes: RootContent[]): string {
     const tree: Root = {children: structuredClone(nodes), type: "root"}
-    const processor = unified()
-      .use(remarkGfm)
-      .use(this.transformLinks())
-      .use(remarkStringify)
-    const transformed = processor.runSync(tree) as Root
-    return processor.stringify(transformed)
+    const transformed = contentProcessor.runSync(tree) as Root
+    return contentProcessor.stringify(transformed)
   }
 
   private generateSectionId(headerPath: string[]): string {

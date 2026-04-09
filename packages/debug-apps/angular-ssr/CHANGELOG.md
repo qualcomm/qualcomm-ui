@@ -1,6 +1,8 @@
 # angular-ssr
 
-## 0.0.2 (2025/11/13)
+## 0.0.2
+
+Nov 13th, 2025
 
 ### Miscellaneous Chores
 

@@ -49,27 +49,16 @@
     "test:unit:ci": "turbo run test:unit:ci --concurrency 2",
     "check-updates": "ncu -c 2 -w",
     "doc-gen": "turbo run build:typedoc",
-    "publish:all": "run-s changeset-publish publish-angular",
-    "publish-angular": "pnpm -r run publish-angular-package",
-    "changeset-publish": "pnpm changeset publish",
-    "changeset-generate": "node --import=tsx scripts/changeset-conventional-commits/main.ts",
-    "prep-release": "node --import=tsx scripts/changeset-conventional-commits/cli.ts --include-commit-links",
-    "prep-release-from-tags": "pnpm prep-release --from-release-tags"
+    "publish:all": "pnpm changeset publish && pnpm -r run publish-angular-package",
+    "bump": "pnpm qui-changesets prep-release --include-commit-links"
   },
   "devDependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/github": "^6.0.1",
-    "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.7",
-    "@changesets/get-github-info": "^0.6.0",
-    "@changesets/read": "^0.6.5",
-    "@changesets/types": "^6.1.0",
-    "@changesets/write": "^0.4.0",
     "@clack/prompts": "1.0.0-alpha.6",
     "@commander-js/extra-typings": "^14.0.0",
     "@eslint/js": "catalog:",
     "@manypkg/get-packages": "^3.1.0",
-    "@octokit/rest": "^22.0.1",
+    "@qualcomm-ui/changesets-cli": "1.0.1",
     "@qualcomm-ui/eslint-config-angular": "workspace:*",
     "@qualcomm-ui/eslint-config-mdx": "workspace:*",
     "@qualcomm-ui/eslint-config-react": "workspace:*",
@@ -103,10 +92,10 @@
     "syncpack": "14.0.0-alpha.32",
     "tailwindcss": "^4.1.17",
     "tsx": "catalog:",
-    "turbo": "^2.7.6",
+    "turbo": "^2.9.3",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",
-    "yaml": "^2.8.2"
+    "yaml": "^2.8.3"
   },
   "resolutions": {
     "eslint": "catalog:",

@@ -21,12 +21,12 @@ jobs:
     outputs:
       should-publish: ${{ steps.check.outputs.should-publish }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
     - id: check
-      run: pnpm tsx scripts/release/check-versions.ts
+      run: pnpm qui-changesets check-versions
 
   publish:
     needs: check
@@ -37,7 +37,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -60,6 +60,6 @@ jobs:
       run: pnpm publish:all
 
     - name: create releases
-      run: pnpm tsx scripts/release/create-github-releases.ts
+      run: pnpm qui-changesets create-github-releases --token $TOKEN
       env:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -45,7 +45,7 @@ export function Badge({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      {children}
+      <span>{children}</span>
     </PolymorphicElement>
   )
 }

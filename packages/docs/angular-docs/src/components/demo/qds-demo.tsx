@@ -7,8 +7,8 @@ import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {useGlobalConfigContext} from "@qualcomm-ui/react-internal/layout"
 import {
-  QdsAngularDemoRunner,
-  type QdsAngularDemoRunnerProps,
+  AngularDemoRunner,
+  type AngularDemoRunnerProps,
 } from "@qualcomm-ui/react-mdx/code-demo"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
@@ -24,7 +24,7 @@ declare global {
 }
 
 export interface QdsDemoProps
-  extends Pick<QdsAngularDemoRunnerProps, "expanded" | "wrapperProps"> {
+  extends Pick<AngularDemoRunnerProps, "expanded" | "wrapperProps"> {
   className?: string
   hideDemoBrandSwitcher?: boolean
   hideDemoControls?: boolean
@@ -209,12 +209,16 @@ function QdsDemoImpl({
   )
 
   if (hideDemoControls) {
-    return <div ref={demoRef}>{demoContent}</div>
+    return (
+      <div ref={demoRef} className="w-full">
+        {demoContent}
+      </div>
+    )
   }
 
   return (
     <>
-      <QdsAngularDemoRunner
+      <AngularDemoRunner
         ref={demoRef}
         className={className}
         colorScheme={theme === Theme.LIGHT ? "light" : "dark"}
@@ -239,7 +243,7 @@ function QdsDemoImpl({
         {...props}
       >
         {demoContent}
-      </QdsAngularDemoRunner>
+      </AngularDemoRunner>
     </>
   )
 }

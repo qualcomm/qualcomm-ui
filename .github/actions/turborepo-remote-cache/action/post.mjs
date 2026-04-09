@@ -20,20 +20,42 @@ pid = parseInt(pid)
 
 console.log(`Turbo Cache Server will be stopped on pid: ${pid}`)
 
-process.kill(pid, "SIGTERM")
+if (!isProcessRunning(pid)) {
+  console.log(`Process ${pid} is not running. It may have already exited.`)
+  // Continue to read logs anyway
+} else {
+  try {
+    process.kill(pid, "SIGTERM")
 
-const maxProcessCheckAttempts = 20
-const sleepTimeInMills = 500
-let killCounter = 0
-while (isProcessRunning(pid)) {
-  if (killCounter >= maxProcessCheckAttempts) {
-    console.error("Taking too long to stop. Killing it directly")
-    process.kill(pid, "SIGKILL")
-    break
+    const maxProcessCheckAttempts = 20
+    const sleepTimeInMills = 500
+    let killCounter = 0
+    while (isProcessRunning(pid)) {
+      if (killCounter >= maxProcessCheckAttempts) {
+        console.error("Taking too long to stop. Killing it directly")
+        process.kill(pid, "SIGKILL")
+        break
+      }
+      console.log(`Server is shutting down. Waiting ${sleepTimeInMills}ms...`)
+      await sleep(sleepTimeInMills)
+      killCounter = killCounter + 1
+    }
+  } catch (err) {
+    switch (err.code) {
+      case "ESRCH": {
+        console.log(`Process ${pid} no longer exists. Skipping kill.`)
+        break
+      }
+      case "EPERM": {
+        console.error(`Permission denied to kill process ${pid}.`)
+        break
+      }
+      default: {
+        console.error("Error not mapped", err)
+        throw err
+      }
+    }
   }
-  console.log(`Server is shutting down. Waiting ${sleepTimeInMills}ms...`)
-  await sleep(sleepTimeInMills)
-  killCounter = killCounter + 1
 }
 
 // Read logs and output it as-is so we can debug

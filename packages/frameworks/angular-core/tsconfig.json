@@ -21,6 +21,18 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/tailwind-plugin/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
     }
   ]
 }

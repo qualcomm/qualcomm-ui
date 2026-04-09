@@ -86,4 +86,5 @@ export interface InputClearTriggerBindings {
   "data-part": "clear-trigger"
   disabled: boolean | undefined
   onClick: JSX.MouseEventHandler
+  type: "button"
 }

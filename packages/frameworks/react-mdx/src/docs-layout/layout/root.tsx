@@ -137,6 +137,7 @@ export function Root({
       mainContentElement,
       navItems,
       pageExport,
+      pageFrontmatter: pageData?.data ?? {},
       pageMap,
       pageProps,
       pathname,

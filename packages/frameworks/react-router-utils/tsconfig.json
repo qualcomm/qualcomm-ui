@@ -1,8 +1,6 @@
 {
-  "files": [],
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist"
   },
   "references": [
     {

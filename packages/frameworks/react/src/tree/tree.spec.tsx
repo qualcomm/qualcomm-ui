@@ -213,7 +213,7 @@ describe("Tree", () => {
 
     await expect.element(page.getByText("Document 1.pdf")).not.toBeVisible()
 
-    await page.getByRole("button", {name: "Expand Documents"}).click()
+    await page.getByRole("treeitem", {name: "Expand Documents"}).click()
     await expect.element(page.getByText("Document 1.pdf")).toBeVisible()
   })
 

@@ -1,4 +1,8 @@
 .qui-badge__root[data-scope="text-badge"] {
+  > span {
+    text-box: cap alphabetic;
+  }
+
   background: var(--badge-background);
   border: solid var(--border-size, 0) var(--badge-border);
   color: var(--badge-text);
@@ -6,18 +10,24 @@
   &[data-size="sm"] {
     border-radius: var(--border-radius-xs);
     font: var(--font-static-body-xs-default);
-    padding: var(--spacing-10) var(--spacing-40);
+    min-height: var(--sizing-80);
+    min-width: var(--sizing-80);
+    padding: var(--spacing-0) var(--spacing-50);
   }
 
   &[data-size="md"] {
     border-radius: var(--border-radius-sm);
     font: var(--font-static-body-sm-default);
-    padding: var(--spacing-20) var(--spacing-50);
+    min-height: var(--sizing-90);
+    min-width: var(--sizing-90);
+    padding: var(--spacing-0) var(--spacing-70);
   }
 
   &[data-size="lg"] {
     border-radius: var(--border-radius-sm);
     font: var(--font-static-body-md-default);
-    padding: var(--spacing-40) var(--spacing-70);
+    min-height: var(--sizing-120);
+    min-width: var(--sizing-120);
+    padding: var(--spacing-0) var(--spacing-70);
   }
 }

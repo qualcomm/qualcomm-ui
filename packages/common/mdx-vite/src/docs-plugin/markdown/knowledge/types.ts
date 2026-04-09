@@ -3,6 +3,7 @@
 
 import type {Root} from "mdast"
 
+import type {PageEntry, SectionEntry} from "@qualcomm-ui/mdx-common"
 import type {QuiComment} from "@qualcomm-ui/typedoc-common"
 
 export interface ImportedModule {
@@ -50,3 +51,12 @@ export interface MdxFlowExpression {
   type: "mdxFlowExpression"
   value: string
 }
+
+export interface KnowledgePageCacheEntry {
+  contentHash: string
+  pageEntry: PageEntry | null
+  processedPage: ProcessedPage
+  sections: SectionEntry[]
+}
+
+export type KnowledgePageCache = Map<string, KnowledgePageCacheEntry>

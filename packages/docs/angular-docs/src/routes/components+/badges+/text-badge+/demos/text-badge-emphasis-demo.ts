@@ -18,14 +18,16 @@ import {BadgeDirective} from "@qualcomm-ui/angular/badge"
       <div class="flex flex-wrap items-center gap-2">
         <span emphasis="blue" q-badge>blue</span>
         <span emphasis="cyan" q-badge>cyan</span>
-        <span emphasis="green" q-badge>green</span>
-        <span emphasis="kiwi" q-badge>kiwi</span>
-        <span emphasis="magenta" q-badge>magenta</span>
-        <span emphasis="orange" q-badge>orange</span>
-        <span emphasis="purple" q-badge>purple</span>
-        <span emphasis="red" q-badge>red</span>
         <span emphasis="teal" q-badge>teal</span>
+        <span emphasis="lime" q-badge>lime</span>
+        <span emphasis="green" q-badge>green</span>
         <span emphasis="yellow" q-badge>yellow</span>
+        <span emphasis="amber" q-badge>amber</span>
+        <span emphasis="orange" q-badge>orange</span>
+        <span emphasis="red" q-badge>red</span>
+        <span emphasis="magenta" q-badge>magenta</span>
+        <span emphasis="violet" q-badge>violet</span>
+        <span emphasis="purple" q-badge>purple</span>
       </div>
     </div>
   `,

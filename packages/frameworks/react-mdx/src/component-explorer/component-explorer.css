@@ -2,7 +2,7 @@
   border: solid var(--border-width-sm) var(--color-border-neutral-02);
   border-radius: var(--border-radius-md);
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr 260px;
   margin-top: var(--spacing-120);
   overflow: hidden;
 }

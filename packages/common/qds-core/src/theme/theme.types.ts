@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 export const QdsBrand = {
+  ARDUINO: "arduino",
   DRAGONWING: "dragonwing",
   QUALCOMM: "qualcomm",
   SNAPDRAGON: "snapdragon",

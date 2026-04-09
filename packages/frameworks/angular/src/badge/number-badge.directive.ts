@@ -26,7 +26,9 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 @Component({
   selector: "[q-number-badge]",
   template: `
-    <ng-content>{{ displayValue() }}</ng-content>
+    <span>
+      <ng-content>{{ displayValue() }}</ng-content>
+    </span>
   `,
 })
 export class NumberBadgeDirective

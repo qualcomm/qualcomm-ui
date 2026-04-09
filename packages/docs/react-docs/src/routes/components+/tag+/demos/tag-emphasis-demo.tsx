@@ -26,14 +26,17 @@ export function TagEmphasisDemo(): ReactElement {
       <Tag emphasis="teal" startIcon={Smile} variant="selectable">
         teal
       </Tag>
+      <Tag emphasis="lime" startIcon={Smile} variant="selectable">
+        lime
+      </Tag>
       <Tag emphasis="green" startIcon={Smile} variant="selectable">
         green
       </Tag>
-      <Tag emphasis="kiwi" startIcon={Smile} variant="selectable">
-        kiwi
-      </Tag>
       <Tag emphasis="yellow" startIcon={Smile} variant="selectable">
         yellow
+      </Tag>
+      <Tag emphasis="amber" startIcon={Smile} variant="selectable">
+        amber
       </Tag>
       <Tag emphasis="orange" startIcon={Smile} variant="selectable">
         orange
@@ -43,6 +46,9 @@ export function TagEmphasisDemo(): ReactElement {
       </Tag>
       <Tag emphasis="magenta" startIcon={Smile} variant="selectable">
         magenta
+      </Tag>
+      <Tag emphasis="violet" startIcon={Smile} variant="selectable">
+        violet
       </Tag>
       <Tag emphasis="purple" startIcon={Smile} variant="selectable">
         purple

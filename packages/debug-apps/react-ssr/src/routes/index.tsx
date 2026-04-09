@@ -30,6 +30,7 @@ const components = [
   "select",
   "side-nav",
   "slider",
+  "stepper",
   "switch",
   "tabs",
   "tag",

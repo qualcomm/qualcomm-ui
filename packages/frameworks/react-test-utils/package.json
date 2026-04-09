@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/react-test-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
@@ -27,11 +27,11 @@
     "@qualcomm-ui/qds-core": "workspace:*",
     "@qualcomm-ui/tailwind-plugin": "workspace:*",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@tailwindcss/vite": "^4.1.11",
+    "@tailwindcss/vite": "^4.2.2",
     "@types/lodash-es": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "^5.1.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "@vitest/browser": "catalog:",
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-v8": "catalog:",
@@ -43,8 +43,8 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "shx": "^0.4.0",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vite": "npm:rolldown-vite@7.3.1",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vite": "catalog:",
     "vitest": "catalog:",
     "vitest-browser-react": "^2.0.2"
   }

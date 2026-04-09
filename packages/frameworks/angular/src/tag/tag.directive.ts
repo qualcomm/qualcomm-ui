@@ -43,6 +43,7 @@ import {
   type QdsTagApiProps,
   type QdsTagEmphasis,
   type QdsTagRadius,
+  type QdsTagShape,
   type QdsTagSize,
 } from "@qualcomm-ui/qds-core/tag"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
@@ -90,7 +91,7 @@ import {provideTagContext, TagContextService} from "./tag-context.service"
       },
     },
   ],
-  selector: "span[q-tag], button[q-tag]",
+  selector: "span[q-tag], button[q-tag], div[q-tag]",
   template: `
     <ng-content select="[q-start-icon]">
       @if (startIcon()) {
@@ -98,7 +99,7 @@ import {provideTagContext, TagContextService} from "./tag-context.service"
       }
     </ng-content>
 
-    <ng-content />
+    <span><ng-content /></span>
 
     @if (variant() === "dismissable") {
       <button type="button" [q-bind]="dismissButtonBindings()">
@@ -169,11 +170,22 @@ export class TagDirective
   readonly emphasis = input<QdsTagEmphasis>()
 
   /**
+   * @deprecated in {@link https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1160 v1.16.0}, migrate to {@link shape}
+   *
    * Governs the shape of the tag.
    *
    * @default 'square'
    */
   readonly radius = input<QdsTagRadius>()
+
+  /**
+   * Governs the shape of the tag.
+   *
+   * @since 1.16.0
+   *
+   * @default 'square'
+   */
+  readonly shape = input<QdsTagShape>()
 
   /**
    * Governs the size of the text, icons, spacing, and padding.
@@ -258,6 +270,8 @@ export class TagDirective
           {
             emphasis: this.emphasis(),
             radius: this.radius(),
+            selected: this.selected(),
+            shape: this.shape(),
             size: this.size(),
             variant: this.variant(),
           } satisfies Explicit<QdsTagApiProps> & {

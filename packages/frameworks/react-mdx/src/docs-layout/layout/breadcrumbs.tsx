@@ -14,6 +14,7 @@ import {
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
+import {PageActions} from "./page-actions"
 import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
 
 export interface BreadcrumbsProps extends ElementRenderProp<"div"> {
@@ -33,7 +34,7 @@ export function DocsBreadcrumbs({
   ...props
 }: BreadcrumbsProps): ReactNode {
   const {renderLink: Link} = useMdxDocsContext()
-  const {pageMap, pathname} = useMdxDocsLayoutContext()
+  const {pageMap, pathname, showToc} = useMdxDocsLayoutContext()
 
   const items: DocsBreadcrumb[] = useMemo(() => {
     const pageMapEntry = pageMap[pathname]
@@ -87,6 +88,7 @@ export function DocsBreadcrumbs({
           ))}
         </Breadcrumbs.List>
       </Breadcrumbs.Root>
+      {!showToc && <PageActions />}
     </PolymorphicElement>
   )
 }

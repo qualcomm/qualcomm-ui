@@ -217,7 +217,7 @@ describe("SideNav", () => {
 
     await expect.element(page.getByText("Profile")).not.toBeVisible()
 
-    await page.getByRole("button", {name: "Expand Settings"}).click()
+    await page.getByRole("treeitem", {name: "Expand Settings"}).click()
     await expect.element(page.getByText("Profile")).toBeVisible()
     await expect.element(page.getByText("Account")).toBeVisible()
   })
@@ -486,7 +486,7 @@ describe("SideNav", () => {
     const root = page.getByRole("tree")
     await expect.element(root).toHaveAttribute("data-state", "open")
 
-    const collapseTrigger = page.getByRole("button", {name: "Toggle sidebar"})
+    const collapseTrigger = page.getByRole("treeitem", {name: "Toggle sidebar"})
     await collapseTrigger.click()
 
     await expect.element(root).toHaveAttribute("data-state", "closed")

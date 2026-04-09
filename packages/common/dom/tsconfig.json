@@ -1,21 +1,21 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist",
     "paths": {
       "@qualcomm-ui/dom/*": ["./src/*/index.ts"],
       // TODO: remove this once WebStorm fixes symlinks in WSL2
       "@qualcomm-ui/utils/*": ["../utils/src/*/index.ts"]
     }
   },
-  "include": ["./src"],
   "references": [
     {
       "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json"
     }
   ]
 }

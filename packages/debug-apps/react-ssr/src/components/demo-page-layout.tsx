@@ -1,5 +1,6 @@
 import type {ComponentPropsWithRef, ReactNode} from "react"
 
+import {kebabCase} from "lodash-es"
 import {Link} from "react-router"
 
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -23,7 +24,7 @@ export function DemoPageLayout({
   return (
     <div {...mergedProps}>
       {demos.map(({component: Demo, title}) => {
-        const demoSlug = title.toLowerCase().replace(/\s+/g, "-")
+        const demoSlug = kebabCase(title)
         return (
           <div className="section" key={title}>
             <h2 className="section-title">

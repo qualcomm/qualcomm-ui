@@ -71,6 +71,16 @@ This demo displays all combinations of variants and emphasis options, including 
   component={demos.IconButtonVariantCombinationsDemo}
 />
 
+### Shape
+
+::: terms
+pill
+:::
+
+Control the shape of the icon button with the [shape](./#shape) prop. The default shape is `square`.
+
+<Demo name="IconButtonShapeDemo" component={demos.IconButtonShapeDemo} />
+
 ### Contrast Colors
 
 Use `white-persistent` emphasis on dark backgrounds and `black-persistent` emphasis on light backgrounds. These colors remain constant regardless of the active theme.
@@ -83,6 +93,12 @@ inverted
 :::
 
 <Demo name="IconButtonContrastDemo" component={demos.IconButtonContrastDemo} />
+
+### Inverse Contrast
+
+To flip contrast against the active theme, set [emphasis](./#emphasis) to `inverse`.
+
+<Demo name="IconButtonInverseDemo" component={demos.IconButtonInverseDemo} />
 
 ## API
 

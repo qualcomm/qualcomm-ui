@@ -1,0 +1,60 @@
+name: Reusable Docs Deploy
+
+on:
+  workflow_call:
+    inputs:
+      dockerfile:
+        required: true
+        type: string
+      ecr-repository-name:
+        required: true
+        type: string
+      aws-region:
+        type: string
+        default: us-west-2
+    secrets:
+      QUI_DOCS_AWS_ECR_ACCESS_KEY:
+        required: true
+      QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY:
+        required: true
+      QUI_DOCS_ECR_REGISTRY_URL:
+        required: true
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0 # full history for docs site builds
+
+    - name: Log in to ECR
+      run: |
+        aws ecr get-login-password --region "$AWS_REGION" | \
+          docker login --username AWS --password-stdin "$ECR_REGISTRY_URL"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.aws-region }}
+        ECR_REGISTRY_URL: ${{ secrets.QUI_DOCS_ECR_REGISTRY_URL }}
+
+    - name: Build and push
+      run: |
+        docker build \
+          --network=host \
+          --platform=linux/amd64 \
+          --progress=plain \
+          --no-cache \
+          -t "$ECR_REGISTRY_URL/$ECR_REPOSITORY_NAME:$COMMIT_SHA" \
+          -f "$DOCKERFILE" .
+        docker push \
+          "$ECR_REGISTRY_URL/$ECR_REPOSITORY_NAME" \
+          --all-tags
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+        ECR_REGISTRY_URL: ${{ secrets.QUI_DOCS_ECR_REGISTRY_URL }}
+        ECR_REPOSITORY_NAME: ${{ inputs.ecr-repository-name }}
+        COMMIT_SHA: ${{ github.sha }}
+        DOCKERFILE: ${{ inputs.dockerfile }}

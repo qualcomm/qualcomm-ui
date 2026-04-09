@@ -199,14 +199,14 @@
   }
 
   &[data-disabled] {
-    background: var(--color-utility-disabled-background);
+    background: transparent;
     border-inline-end-color: var(--color-utility-disabled-border);
     color: var(--color-utility-disabled-text);
     cursor: not-allowed;
   }
 
   &[data-readonly] {
-    background: var(--color-background-neutral-02);
+    background: transparent;
     cursor: default;
   }
 

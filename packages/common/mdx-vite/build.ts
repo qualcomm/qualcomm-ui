@@ -4,7 +4,7 @@ import {glob} from "glob"
 import {cp, mkdir, writeFile} from "node:fs/promises"
 import {resolve} from "node:path"
 
-import {buildOrWatch, hasArg, logPlugin} from "@qualcomm-ui/esbuild"
+import {buildOrWatch, getArg, hasArg, logPlugin} from "@qualcomm-ui/esbuild"
 
 import pkgJson from "./package.json"
 
@@ -39,9 +39,13 @@ async function copyVirtualModules(watch: boolean) {
 
 async function main(argv: string[]) {
   const IS_WATCH = hasArg(argv, "--watch")
+  const mode = getArg(argv, "--mode")
 
   const buildOpts: BuildOptions = {
     bundle: true,
+    define: {
+      __QUI_DEV___: mode === "production" ? "false" : "true",
+    },
     external: [
       ...Object.keys(pkgJson.dependencies ?? {}),
       ...Object.keys(pkgJson.devDependencies ?? {}),

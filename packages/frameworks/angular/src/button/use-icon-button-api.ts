@@ -16,6 +16,7 @@ export function useIconButtonApi({
   density,
   disabled,
   emphasis,
+  shape,
   size,
   variant,
 }: Partial<MaybeSignalInput<QdsIconButtonApiProps>>): Signal<QdsIconButtonApi> {
@@ -25,6 +26,7 @@ export function useIconButtonApi({
         density: isSignal(density) ? density() : density,
         disabled: isSignal(disabled) ? disabled() : disabled,
         emphasis: isSignal(emphasis) ? emphasis() : emphasis,
+        shape: isSignal(shape) ? shape() : shape,
         size: isSignal(size) ? size() : size,
         variant: isSignal(variant) ? variant() : variant,
       } satisfies Explicit<QdsIconButtonApiProps>,

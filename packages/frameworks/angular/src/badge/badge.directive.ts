@@ -27,7 +27,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 @Component({
   selector: "[q-badge]",
   template: `
-    <ng-content />
+    <span><ng-content /></span>
   `,
 })
 export class BadgeDirective

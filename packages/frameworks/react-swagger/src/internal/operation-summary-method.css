@@ -17,11 +17,11 @@
     }
   }
 
-  &.q-kiwi {
-    background-color: var(--color-category-kiwi-medium);
+  &.q-lime {
+    background-color: var(--color-category-lime-medium);
     &:hover {
       transition: background-color 161ms ease;
-      background-color: var(--color-category-kiwi-strong);
+      background-color: var(--color-category-lime-strong);
     }
   }
 

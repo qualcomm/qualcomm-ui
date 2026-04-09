@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm"
 import remarkMdx from "remark-mdx"
 import remarkParse from "remark-parse"
 import remarkStringify from "remark-stringify"
-import {type PluggableList, type Processor, unified} from "unified"
+import {type PluggableList, unified} from "unified"
 
 import type {PageFrontmatter} from "@qualcomm-ui/mdx-common"
 
@@ -51,9 +51,7 @@ export interface RemarkPipelineOptions {
  * Creates a configured unified remark processor. The caller can further extend
  * the returned processor with `.use()` (e.g. to add remarkRehype for HTML output).
  */
-export function createRemarkProcessor(
-  options: RemarkPipelineOptions = {},
-): Processor<any> {
+export function createRemarkProcessor(options: RemarkPipelineOptions = {}) {
   const processor = unified().use(remarkParse)
 
   if (options.mdx) {

@@ -5,6 +5,9 @@
       "B",
       "B Test"
     ],
+    "data": {
+      "title": "B Test"
+    },
     "id": "/routes/test.b.test._index.mdx",
     "pathname": "/test/b/test",
     "pathSegments": [
@@ -20,6 +23,9 @@
       "a",
       "A Test"
     ],
+    "data": {
+      "title": "A Test"
+    },
     "id": "/routes/test.a.test._index.mdx",
     "pathname": "/test/a/test",
     "pathSegments": [
@@ -34,6 +40,9 @@
       "Getting Started",
       "Log In"
     ],
+    "data": {
+      "title": "Log In"
+    },
     "id": "/routes/getting-started.log-in._index.mdx",
     "pathname": "/getting-started/log-in",
     "pathSegments": [
@@ -47,6 +56,9 @@
       "Getting Started",
       "Home"
     ],
+    "data": {
+      "title": "Home"
+    },
     "id": "/routes/getting-started.home._index.mdx",
     "pathname": "/getting-started/home",
     "pathSegments": [
@@ -60,6 +72,9 @@
       "Getting Started",
       "Dedicated Devices"
     ],
+    "data": {
+      "title": "Dedicated Devices"
+    },
     "id": "/routes/getting-started.dedicated-devices._index.mdx",
     "pathname": "/getting-started/dedicated-devices",
     "pathSegments": [
@@ -72,6 +87,9 @@
     "categories": [
       "Getting Started"
     ],
+    "data": {
+      "title": "Getting Started"
+    },
     "id": "/routes/getting-started._index.mdx",
     "pathname": "/getting-started",
     "pathSegments": [
@@ -84,6 +102,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/routes/best-practices.choosing-dependencies._index.mdx",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [
@@ -122,6 +143,11 @@
     "categories": [
       "Introduction"
     ],
+    "data": {
+      "hideBreadcrumbs": true,
+      "id": "_index",
+      "title": "Introduction"
+    },
     "hideBreadcrumbs": true,
     "id": "/routes/_index.mdx",
     "pathname": "/",
@@ -133,6 +159,9 @@
       "Getting Started",
       "Sign Up"
     ],
+    "data": {
+      "title": "Sign Up"
+    },
     "id": "/routes/getting-started.sign-up._index/route.mdx",
     "pathname": "/getting-started/sign-up",
     "pathSegments": [

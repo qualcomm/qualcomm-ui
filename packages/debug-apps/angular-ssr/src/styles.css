@@ -20,7 +20,7 @@
 }
 
 html {
-  background-color: var(--color-background-neutral-01);
+  background-color: var(--color-background-neutral-00);
   color: var(--color-text-neutral-primary);
   height: 100%;
   margin: 0;

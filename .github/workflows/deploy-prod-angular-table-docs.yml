@@ -1,0 +1,12 @@
+name: Deploy Angular Table Docs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/reusable-docs-deploy-prod.yml
+    with:
+      dockerfile: dockerfiles/dockerfile-angular-table-docs
+      ecr-repository-name: angular-table-docs
+    secrets: inherit

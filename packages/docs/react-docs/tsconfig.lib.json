@@ -30,6 +30,9 @@
       "path": "../../frameworks/react/tsconfig.lib.json"
     },
     {
+      "path": "../../frameworks/react-mdx/tsconfig.lib.json"
+    },
+    {
       "path": "../../common/mdx-vite/tsconfig.lib.json"
     }
   ]

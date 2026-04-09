@@ -73,6 +73,7 @@ export function createTextInputApi(
           send({type: "VALUE.SET", value: ""})
           send({type: "INPUT.FOCUS"})
         },
+        type: "button",
       })
     },
 
