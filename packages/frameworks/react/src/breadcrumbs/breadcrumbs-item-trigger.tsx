@@ -11,14 +11,17 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context"
 
-export interface BreadcrumbsItemTriggerProps
-  extends ElementRenderProp<"button"> {}
+export interface BreadcrumbsItemTriggerProps extends ElementRenderProp<"a"> {}
 
-export function BreadcrumbsItemTrigger(
-  props: BreadcrumbsItemTriggerProps,
-): ReactElement {
+export function BreadcrumbsItemTrigger({
+  href = "",
+  ...props
+}: BreadcrumbsItemTriggerProps): ReactElement {
   const qdsContext = useQdsBreadcrumbsContext()
-  const mergedProps = mergeProps(qdsContext.getItemTriggerBindings(), props)
+  const mergedProps = mergeProps(qdsContext.getItemTriggerBindings(), {
+    href,
+    ...props,
+  })
 
-  return <PolymorphicElement as="button" {...mergedProps} />
+  return <PolymorphicElement as="a" {...mergedProps} />
 }

@@ -50,7 +50,7 @@ export function createQdsBreadcrumbsApi(
       })
     },
     getItemTriggerBindings(): QdsBreadcrumbsItemTriggerBindings {
-      return normalize.button({
+      return normalize.element({
         className: breadcrumbsClasses.itemTrigger,
         "data-emphasis": emphasis,
         "data-size": size,

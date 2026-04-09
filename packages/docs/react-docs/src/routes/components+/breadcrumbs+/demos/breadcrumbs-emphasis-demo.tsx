@@ -10,16 +10,20 @@ export function BreadcrumbsEmphasisDemo(): ReactElement {
       {/* preview */}
       <Breadcrumbs.Root aria-label="Breadcrumbs">
         <Breadcrumbs.List>
-          <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
-          <Breadcrumbs.Item>Components</Breadcrumbs.Item>
+          <Breadcrumbs.Item href="/" icon={Home}>
+            Home
+          </Breadcrumbs.Item>
+          <Breadcrumbs.Item href="/components">Components</Breadcrumbs.Item>
           <Breadcrumbs.Item aria-current="page">Breadcrumbs</Breadcrumbs.Item>
         </Breadcrumbs.List>
       </Breadcrumbs.Root>
 
       <Breadcrumbs.Root aria-label="Breadcrumbs" emphasis="neutral">
         <Breadcrumbs.List>
-          <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
-          <Breadcrumbs.Item>Components</Breadcrumbs.Item>
+          <Breadcrumbs.Item href="/" icon={Home}>
+            Home
+          </Breadcrumbs.Item>
+          <Breadcrumbs.Item href="/components">Components</Breadcrumbs.Item>
           <Breadcrumbs.Item aria-current="page">Breadcrumbs</Breadcrumbs.Item>
         </Breadcrumbs.List>
       </Breadcrumbs.Root>

@@ -36,6 +36,11 @@ export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
   children?: ReactNode
 
   /**
+   * URL the breadcrumb item links to.
+   */
+  href?: string
+
+  /**
    * The icon to display next to the item trigger.
    */
   icon?: LucideIconOrElement
@@ -53,8 +58,8 @@ export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
   itemTriggerProps?: BreadcrumbsItemTriggerProps
 
   /**
-   * Allows you to replace the component's HTML element with a different tag, or
-   * compose it with another component. {@link https://react-next.qui.qualcomm.com/polymorphic-components Learn more}
+   * Replaces the trigger element (e.g., with a router Link).
+   * {@link https://react-next.qui.qualcomm.com/polymorphic-components Learn more}
    */
   render?: BindingRenderProp<object>
 
@@ -74,6 +79,7 @@ export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
 export function BreadcrumbsItem({
   "aria-current": ariaCurrent,
   children,
+  href,
   icon,
   itemIconProps,
   itemTriggerProps,
@@ -86,6 +92,7 @@ export function BreadcrumbsItem({
     <BreadcrumbsItemRoot {...props}>
       <BreadcrumbsItemTrigger
         aria-current={ariaCurrent}
+        href={href}
         render={render}
         {...itemTriggerProps}
       >
