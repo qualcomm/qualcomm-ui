@@ -1,0 +1,278 @@
+---
+title: Vite / Other
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+This library requires React 19+
+
+There are four steps to installation:
+
+1. Install the npm packages
+2. Import the CSS
+3. Configure fonts
+4. Configure the theme provider
+
+This guide assumes you've already installed React. If not, run this command and follow the prompts to create your project:
+
+```shell
+npx create-vite@latest
+```
+
+::: steps h2
+
+## Install the npm packages
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/react-vscode",
+    "@qualcomm-ui/react-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/qds-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+    "@tanstack/react-virtual",
+    "lucide-react",
+  ]}
+/>
+
+## Import the CSS
+
+In your global CSS file (default `app/app.css`), import the QUI styles.
+
+```css tabs="css-import" label="Default"
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+```css tabs="css-import" label="Tailwind"
+@import "tailwindcss";
+
+/* Recommended: install and import @qualcomm-ui/tailwind-plugin */
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+/* Important: always order these imports after the tailwindcss import */
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+```
+
+> [!note/Multi Theme]
+> If you only intend to support a single theme, you may omit the other import.
+
+## Configure fonts
+
+QUI components are designed with the Roboto Flex and Roboto Mono font families.
+
+Add the links to your application's `<head>` element:
+
+```html
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link href="https://fonts.gstatic.com" rel="preconnect" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="https://use.typekit.net/nhs4wvu.css" />
+```
+
+## Configure the theme provider
+
+QUI components support both light and dark modes. Choose one of the following approaches for your site:
+
+- [Single theme (static)](./#single-theme-static): lock to one theme
+- [Theme switching (dynamic)](./#theme-switching-dynamic): support both light and dark modes and persist the user's choice to browser storage
+
+::: /steps
+
+### Single theme (static)
+
+If you only intend to support one theme, apply the theme attribute to your app's index.html:
+
+```html
+// [!code word:data-theme="dark"]
+<html data-theme="dark" data-brand="qualcomm" style="color-scheme: dark">
+  <!-- ... -->
+</html>
+```
+
+### Theme switching (dynamic)
+
+Follow this step to configure your application for theme switching. The user's preferred theme will be restored when they return to the site.
+
+> [!note]
+> This approach won't work with SSR due to its reliance on `window.localStorage`. If your app is rendered on the server, you should use a cookie-based approach instead like in our [react-router](/setup/react-router) guide.
+
+```tsx
+// theme-provider.tsx
+import {
+  createContext,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+} from "react"
+import {QdsBrand, QdsTheme} from "@qualcomm-ui/qds-core/theme"
+
+export const appThemeKey = "my-qui-app-theme-key"
+export const appBrandKey = "my-qui-app-brand-key"
+
+export interface ThemeContextValue {
+  brand: QdsBrand
+  setBrand: Dispatch<SetStateAction<QdsBrand>>
+  theme: QdsTheme
+  setTheme: Dispatch<SetStateAction<QdsTheme>>
+  toggleTheme(): void
+}
+
+const ThemeContext = createContext<ThemeContextValue | null>(null)
+
+interface ThemeProviderProps {
+  children: ReactNode
+}
+
+export function ThemeProvider({children}: ThemeProviderProps) {
+  const [theme, setTheme] = useState<QdsTheme>(() =>
+    localStorage.getItem(appThemeKey) === QdsTheme.LIGHT
+      ? QdsTheme.LIGHT
+      : QdsTheme.DARK,
+  )
+
+  const htmlElement = document.documentElement
+
+  if (htmlElement.getAttribute("data-theme") !== theme) {
+    htmlElement.setAttribute("data-theme", theme)
+    localStorage.setItem(appThemeKey, theme)
+  }
+
+  if (htmlElement.getAttribute("data-brand") !== brand) {
+    htmlElement.setAttribute("data-brand", brand)
+    localStorage.setItem(appBrandKey, brand)
+  }
+
+  const toggleTheme = () => {
+    setTheme((prev) =>
+      prev === QdsTheme.DARK ? QdsTheme.LIGHT : QdsTheme.DARK,
+    )
+  }
+
+  const context: ThemeContextValue = {
+    setTheme,
+    theme,
+    toggleTheme,
+  }
+
+  return (
+    <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>
+  )
+}
+
+/* Optional: export a helper hook. */
+export function useThemeContext() {
+  const themeContext = useContext(ThemeContext)
+
+  if (!themeContext) {
+    throw new Error(
+      "All calls to useThemeContext() can only be performed from a child of a <ThemeProvider>",
+    )
+  }
+
+  return themeContext
+}
+```
+
+Finally, wrap your root element with the `<ThemeProvider>` to enable theme switching:
+
+```tsx
+import {StrictMode} from "react"
+import {createRoot} from "react-dom/client"
+import {ThemeProvider} from "./theme-provider"
+import "./index.css"
+import App from "./App.tsx"
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </StrictMode>,
+)
+```
+
+## Next steps
+
+- Learn more about theming in our [theming documentation](/theming/overview).
+- Use the navigation menu on the left to view component documentation and examples.
+
+## Troubleshooting
+
+### Styles aren't loading
+
+If `@qualcomm-ui/react` components are appearing without styles, check the following:
+
+- Ensure that you've [imported the CSS](./#import-the-css) from step 2.
+- Verify that you've [configured the html attributes](./#configure-the-theme-provider) from step 4.
+
+If styles still aren't appearing, inspect the DOM of your application in your browser's dev tools. Your application's `<html>` element should have at least two attributes:
+
+- `data-brand`: the QDS brand (either `qualcomm`, `snapdragon`, or `dragonwing`)
+- `data-theme`: the QDS theme (either `light` or `dark`)
+
+Your `<html>` element should look something like this:
+
+```html
+<html
+  data-brand="qualcomm"
+  data-theme="light"
+  style="color-scheme: light"
+></html>
+```
+
+Note that you need to import the corresponding CSS for the brand you've selected:
+
+```css tabs="css-brand" label="Qualcomm"
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+```css tabs="css-brand" label="Snapdragon"
+@import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css";
+@import "@qualcomm-ui/qds-core/themes/snapdragon-light.css";
+```
+
+```css tabs="css-brand" label="Dragonwing"
+@import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css";
+@import "@qualcomm-ui/qds-core/themes/dragonwing-light.css";
+```
+
+> [!tip/Component Styles]
+> Always import component styles, regardless of the chosen brand.
+
+```css
+@import "@qualcomm-ui/qds-core/styles/components.css";
+```
+
+### Migrating from legacy QUI
+
+NextGen is independent of the legacy `@qui/react` package. Both can be installed and used in the same project without conflicts.
+
+```css
+/* this is fine */
+@import "@qui/styles/dist/all.min.css";
+@import "@qui/base/dist/all.min.css";
+
+@import "@qualcomm-ui/qds-core/styles/components.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+```
+
+> [!note]
+> We're working on a codemod script to automate the migration process. Check back regularly for updates!

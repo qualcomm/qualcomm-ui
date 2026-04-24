@@ -1,0 +1,53 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo",
+    "types": [
+      "node",
+      "vite/client",
+      "@qualcomm-ui/mdx-vite/docs-plugin",
+      "@qualcomm-ui/mdx-vite/react-demo-plugin",
+    ],
+    "paths": {
+      "~assets/*": ["./src/assets/*"],
+      "~components/*": ["./src/components/*"],
+      "~utils/*": ["./src/utils/*"],
+    }
+  },
+  "include": [
+    "./src"
+  ],
+  "references": [
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-vite/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-mdx/tsconfig.lib.json"
+    }
+  ]
+}

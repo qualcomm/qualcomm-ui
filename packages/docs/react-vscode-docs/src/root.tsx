@@ -1,0 +1,316 @@
+import "./globals.css"
+
+import {useEffect, useMemo, useRef, useState} from "react"
+
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
+import {Provider} from "jotai"
+import {
+  isRouteErrorResponse,
+  Links,
+  type LoaderFunctionArgs,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  useLocation,
+  useRouteError,
+} from "react-router"
+
+import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
+import type {SiteData} from "@qualcomm-ui/mdx-common"
+import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
+import {
+  isQdsBrand,
+  type QdsBrand,
+  QdsThemeContextProvider,
+  type QdsThemeContextValue,
+  useQdsThemeContext,
+} from "@qualcomm-ui/react/qds-theme"
+import {
+  type DemoSettings,
+  type PackageManager,
+  type RouteDemoState,
+  SiteContextProvider,
+} from "@qualcomm-ui/react-mdx/context"
+import {
+  type DocPropsLayout,
+  PropsLayoutProvider,
+  type PropsLayoutState,
+} from "@qualcomm-ui/react-mdx/typedoc"
+import {
+  isTheme,
+  PreventFlashOnWrongTheme,
+  Theme,
+  ThemeProvider,
+  updateDemoState,
+  updateSiteState,
+  useTheme,
+} from "@qualcomm-ui/react-router-utils/client"
+
+import {AppDocsLayout} from "./components"
+import {
+  demoStateCookie,
+  qdsBrandCookie,
+  siteStateCookie,
+  themeCookie,
+} from "./sessions.server"
+
+const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
+
+interface RootLoaderData {
+  demoSettings: DemoSettings
+  demoState: RouteDemoState
+  hideDemoBrandSwitcher: boolean
+  packageManager: PackageManager
+  qdsBrand: QdsBrand
+  ssrUserAgent: string | null
+  theme: Theme
+}
+
+// Return the theme from the session storage using the loader
+export async function loader({
+  request,
+}: LoaderFunctionArgs): Promise<RootLoaderData> {
+  const cookie = request.headers.get("cookie")
+
+  const cookieTheme = await themeCookie.parse(cookie)
+  const siteState = await siteStateCookie.parse(cookie)
+  const qdsBrand = await qdsBrandCookie.parse(cookie)
+  const demoState = await demoStateCookie.parse(cookie)
+
+  return {
+    demoSettings:
+      siteState?.demoSettings ??
+      ({transformTailwindClasses: false} satisfies DemoSettings),
+    demoState: demoState ?? {},
+    hideDemoBrandSwitcher: siteState?.hideDemoBrandSwitcher || false,
+    packageManager: siteState?.packageManager || "npm",
+    qdsBrand: isQdsBrand(qdsBrand) ? qdsBrand : ("qualcomm" satisfies QdsBrand),
+    ssrUserAgent: request.headers.get("user-agent"),
+    theme: isTheme(cookieTheme) ? cookieTheme : Theme.DARK,
+  }
+}
+
+function App() {
+  const [queryClient] = useState(new QueryClient())
+  const data = useLoaderData<RootLoaderData>()
+
+  const [theme] = useTheme()
+  const {brand} = useQdsThemeContext()
+
+  const location = useLocation()
+  const pageData = siteData.pageMap[location.pathname]
+  const title = pageData?.title || ""
+  const description = pageData?.description || ""
+  const appTitle = title ? `${title} | QUI` : "QUI React"
+  const portalContainerRef = useRef<HTMLDivElement>(null)
+
+  return (
+    <html
+      data-brand="qualcomm"
+      data-theme={theme}
+      lang="en"
+      style={{colorScheme: theme || "dark"}}
+    >
+      <head>
+        <meta charSet="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <title>{appTitle}</title>
+        {description ? <meta content={description} name="description" /> : null}
+        <meta content="QUI React Documentation" name="application-name"></meta>
+        <Links />
+        <link
+          href="/favicon/favicon-96x96.png"
+          rel="icon"
+          sizes="96x96"
+          type="image/png"
+        />
+        <link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link href="/favicon/favicon.ico" rel="shortcut icon" />
+        <link
+          href="/favicon/apple-touch-icon.png"
+          rel="apple-touch-icon"
+          sizes="180x180"
+        />
+        <link href="/favicon/site.webmanifest" rel="manifest" />
+
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
+
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link href="https://fonts.gstatic.com" rel="preconnect" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..500;1,400..500&display=swap"
+          rel="stylesheet"
+        />
+        <link href="https://use.typekit.net/nhs4wvu.css" rel="stylesheet" />
+      </head>
+      <body>
+        <QueryClientProvider client={queryClient}>
+          <AppDocsLayout
+            demoSettings={data.demoSettings}
+            demoState={data.demoState}
+            onDemoSettingsChange={(nextValue) => {
+              void updateSiteState("/action/set-site-state", {
+                demoSettings: nextValue,
+              })
+            }}
+            onDemoStateChange={(nextValue) => {
+              void updateDemoState("/action/set-demo-state", nextValue)
+            }}
+            onPackageManagerChange={(nextValue) =>
+              void updateSiteState("/action/set-site-state", {
+                packageManager: nextValue,
+              })
+            }
+            packageManager={data.packageManager}
+            portalContainerRef={portalContainerRef}
+            ssrUserAgent={data.ssrUserAgent}
+          >
+            <Outlet />
+          </AppDocsLayout>
+        </QueryClientProvider>
+        <ScrollRestoration />
+        <Scripts />
+        <div
+          ref={portalContainerRef}
+          data-brand={brand}
+          data-theme={theme}
+        ></div>
+      </body>
+    </html>
+  )
+}
+
+export default function AppWithProviders() {
+  const data = useLoaderData<{qdsBrand: QdsBrand; theme: Theme | null}>()
+
+  const [propsLayout, setPropsLayout] = useState<DocPropsLayout>("table")
+  const [brand, setBrand] = useState<QdsBrand | null>(data.qdsBrand)
+  const [docsSiteData, setDocsSiteData] = useState<SiteData>(
+    siteData ?? siteDataFallback,
+  )
+
+  const propsLayoutContext: PropsLayoutState = useMemo(
+    () => ({
+      propsLayout,
+      setPropsLayout,
+    }),
+    [propsLayout],
+  )
+
+  const qdsThemeContext: QdsThemeContextValue = useMemo(
+    () => ({
+      brand,
+      setBrand: (valueOrUpdater) => {
+        const nextBrand =
+          typeof valueOrUpdater === "function"
+            ? valueOrUpdater(brand)
+            : valueOrUpdater
+
+        void fetch("/action/set-qds-brand", {
+          body: nextBrand || "qualcomm",
+          method: "POST",
+        })
+
+        setBrand(nextBrand)
+      },
+    }),
+    [brand],
+  )
+
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      console.debug(siteData)
+    }
+    if (import.meta.hot) {
+      import.meta.hot.on("qui-docs-plugin:refresh-site-data", setDocsSiteData)
+      return () => {
+        import.meta.hot?.off(
+          "qui-docs-plugin:refresh-site-data",
+          setDocsSiteData,
+        )
+      }
+    }
+  }, [])
+
+  const siteContext = useMemo(() => {
+    return {
+      ...docsSiteData,
+      getPages,
+    }
+  }, [docsSiteData])
+
+  return (
+    <SiteContextProvider value={siteContext}>
+      <PropsLayoutProvider value={propsLayoutContext}>
+        <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
+          <QdsThemeContextProvider value={qdsThemeContext}>
+            <Provider>
+              <App />
+            </Provider>
+          </QdsThemeContextProvider>
+        </ThemeProvider>
+      </PropsLayoutProvider>
+    </SiteContextProvider>
+  )
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError()
+  let jsx
+  if (isRouteErrorResponse(error)) {
+    jsx = (
+      <>
+        <h1
+          style={{
+            color: "var(--color-text-neutral-primary)",
+            font: "var(--font-static-body-lg-bold)",
+          }}
+        >
+          {error.status} {error.statusText}
+        </h1>
+        <p>{error.data}</p>
+      </>
+    )
+  } else if (error instanceof Error) {
+    jsx = (
+      <div style={{color: "var(--color-text-neutral-primary)"}}>
+        <h1
+          style={{
+            font: "var(--font-static-body-lg-bold)",
+          }}
+        >
+          Error
+        </h1>
+        <p>{error.message}</p>
+        <p>The stack trace is:</p>
+        <pre>{error.stack}</pre>
+      </div>
+    )
+  } else {
+    jsx = (
+      <h1
+        style={{
+          color: "var(--color-text-neutral-primary)",
+          font: "var(--font-static-body-lg-bold)",
+        }}
+      >
+        Unknown Error
+      </h1>
+    )
+  }
+
+  return (
+    <div data-brand="qualcomm" data-theme="dark">
+      <div className="bg-2 h-full w-full">{jsx}</div>
+    </div>
+  )
+}
