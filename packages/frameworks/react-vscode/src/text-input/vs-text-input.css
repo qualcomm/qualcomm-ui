@@ -1,0 +1,65 @@
+.vs-text-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vs-text-input__label {
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  font-weight: 500;
+}
+
+.vs-text-input__input-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vs-text-input__input {
+  background: var(--vscode-input-background);
+  border: 1px solid transparent;
+  color: var(--vscode-input-foreground);
+  font-size: var(--vscode-font-size);
+  font-weight: 500;
+  min-height: 24px;
+  outline: none;
+  padding: 0 4px;
+  flex: 1;
+
+  &:focus-visible {
+    border: 1px solid var(--vscode-focusBorder);
+  }
+
+  &::placeholder {
+    color: var(--vscode-input-placeholderForeground);
+  }
+}
+
+.vs-text-input__hint {
+  color: var(--vscode-descriptionForeground);
+  font-size: var(--vscode-font-size);
+}
+
+.vs-text-input__error-text {
+  color: var(--vscode-errorForeground);
+  font-size: var(--vscode-font-size);
+}
+
+.vs-text-input__error-indicator {
+  color: var(--vscode-errorForeground);
+  display: inline-flex;
+}
+
+.vs-text-input__clear-trigger {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--vscode-input-foreground);
+  opacity: 0.6;
+  padding: 2px;
+
+  &:hover {
+    opacity: 1;
+  }
+}

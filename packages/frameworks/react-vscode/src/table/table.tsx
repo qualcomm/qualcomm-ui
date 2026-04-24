@@ -1,42 +1,24 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
-export type TableProps<C extends As = "table"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      /**
-       * The component used for the root node. It can be a React component or
-       * element.
-       *
-       * @default 'table'
-       */
-      as?: C
+export interface TableProps extends ElementRenderProp<"table"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+}
 
-      /**
-       * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
-       */
-      children?: ReactNode
-    }
-  >
+export function Table({children, ...props}: TableProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-table"}, props)
 
-export function Table<C extends As = "table">({
-  as,
-  children,
-  className,
-  ref,
-  ...props
-}: TableProps<C>): ReactElement {
-  const Element = as || "table"
   return (
-    <Element ref={ref} className={clsx("vs-table", className)} {...props}>
+    <PolymorphicElement as="table" {...mergedProps}>
       {children}
-    </Element>
+    </PolymorphicElement>
   )
 }

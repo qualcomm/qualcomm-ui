@@ -4,7 +4,7 @@ import {
   CoreCollapsible,
   type CoreCollapsibleTriggerProps,
 } from "@qualcomm-ui/react-core/collapsible"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -15,14 +15,12 @@ export type DisclosureHeaderProps = CoreCollapsibleTriggerProps & {
 
 export function DisclosureHeader({
   children,
-  className,
   ...props
 }: DisclosureHeaderProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-disclosure__header"}, props)
+
   return (
-    <CoreCollapsible.Trigger
-      className={clsx("vs-disclosure--header", className)}
-      {...props}
-    >
+    <CoreCollapsible.Trigger {...mergedProps}>
       {children}
     </CoreCollapsible.Trigger>
   )

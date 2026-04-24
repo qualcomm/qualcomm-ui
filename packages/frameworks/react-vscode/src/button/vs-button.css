@@ -1,6 +1,7 @@
-.vs-button {
+.vs-button__root {
   align-items: center;
   background-color: var(--vscode-button-background);
+  border: none;
   border-radius: 2px;
   box-sizing: border-box;
   color: var(--vscode-button-foreground);
@@ -12,7 +13,7 @@
   user-select: none;
 }
 
-.vs-button.kind-text {
+.vs-button__root[data-kind="text"] {
   font-family: var(--vscode-font-family);
   font-size: 13px;
   font-weight: 500;
@@ -33,11 +34,11 @@
   }
 }
 
-.vs-button.kind-icon {
+.vs-button__root[data-kind="icon"] {
   padding: 3px;
 }
 
-.vs-button {
+.vs-button__root {
   &:focus,
   &:active {
     outline: none;
@@ -45,7 +46,7 @@
 
   &:hover {
     background-color: var(--vscode-button-hoverBackground);
-    &.state-disabled {
+    &[data-disabled] {
       background-color: var(--vscode-button-background);
     }
   }
@@ -54,45 +55,45 @@
     outline: 1px solid var(--vscode-focusBorder);
     outline-offset: 2px;
 
-    &.state-disabled {
+    &[data-disabled] {
       background-color: var(--vscode-button-background);
       outline: 0;
     }
   }
 }
 
-.vs-button[data-variant="secondary"] {
+.vs-button__root[data-variant="secondary"] {
   background-color: var(--vscode-button-secondaryBackground);
   color: var(--vscode-button-secondaryForeground);
 
   &:focus {
-    &.state-disabled {
+    &[data-disabled] {
       background-color: var(--vscode-button-secondaryBackground);
     }
   }
 
   &:hover {
     background-color: var(--vscode-button-secondaryHoverBackground);
-    &.state-disabled {
+    &[data-disabled] {
       background-color: var(--vscode-button-secondaryBackground);
     }
   }
 }
 
-.vs-button[data-variant="outline"] {
+.vs-button__root[data-variant="outline"] {
   background-color: var(--vscode-tab-activeBackground);
   border: solid 1px var(--vscode-button-secondaryBackground);
   color: var(--vscode-tab-activeForeground);
 
   &:hover {
     background-color: var(--vscode-button-secondaryHoverBackground);
-    &.state-disabled {
+    &[data-disabled] {
       background-color: var(--vscode-button-secondaryBackground);
     }
   }
 }
 
-.vs-button--icon {
+.vs-button__icon {
   &[data-start] {
     margin-right: 4px;
   }

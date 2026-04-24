@@ -5,7 +5,7 @@ import {Icon} from "@qualcomm-ui/react-vscode/icon"
 export function IconActionDemo(): ReactNode {
   return (
     <div className="text-foreground">
-      <Icon as="button" icon="account" size={24} />
+      <Icon icon="account" render={<button />} size={24} />
     </div>
   )
 }

@@ -4,7 +4,7 @@ import {
   CoreStepper,
   type CoreStepperIndicatorProps,
 } from "@qualcomm-ui/react-core/stepper"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -15,15 +15,11 @@ export type StepIndicatorProps = CoreStepperIndicatorProps & {
 
 export function StepIndicator({
   children,
-  className,
   ...props
 }: StepIndicatorProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-steps__indicator"}, props)
+
   return (
-    <CoreStepper.Indicator
-      className={clsx("vs-steps--indicator", className)}
-      {...props}
-    >
-      {children}
-    </CoreStepper.Indicator>
+    <CoreStepper.Indicator {...mergedProps}>{children}</CoreStepper.Indicator>
   )
 }

@@ -5,8 +5,8 @@
     "../../common/dom/dist",
     "../../common/qds-core/src",
     "../../common/utils/src",
-    "../../frameworks/react/src",
-    "../../frameworks/react-core/src"
+    "../../frameworks/react-core/src",
+    "../../frameworks/react-vscode/dist"
   ],
   "exclude": [
     "../../frameworks/react/src/**/*.figma.*",

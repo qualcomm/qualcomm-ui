@@ -4,7 +4,7 @@ import {
   CoreCollapsible,
   type CoreCollapsibleRootProps,
 } from "@qualcomm-ui/react-core/collapsible"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -15,15 +15,11 @@ export type DisclosureRootProps = Omit<CoreCollapsibleRootProps, "children"> & {
 
 export function DisclosureRoot({
   children,
-  className,
   ...props
 }: DisclosureRootProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-disclosure"}, props)
+
   return (
-    <CoreCollapsible.Root
-      className={clsx("vs-disclosure", className)}
-      {...props}
-    >
-      {children}
-    </CoreCollapsible.Root>
+    <CoreCollapsible.Root {...mergedProps}>{children}</CoreCollapsible.Root>
   )
 }

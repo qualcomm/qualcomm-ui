@@ -1,31 +1,24 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
-export type CatalogCardActionsProps<C extends As = "div"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      as?: C
-      children?: ReactNode
-    }
-  >
+export interface CatalogCardActionsProps extends ElementRenderProp<"div"> {
+  children?: ReactNode
+}
 
-export function CatalogCardActions<C extends As = "div">({
-  as,
+export function CatalogCardActions({
   children,
-  className,
   ...props
-}: CatalogCardActionsProps<C>): ReactElement {
-  const Element = as || "div"
+}: CatalogCardActionsProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-catalog-card__actions"}, props)
+
   return (
-    <Element className={clsx("vs-catalog-card--actions", className)} {...props}>
+    <PolymorphicElement as="div" {...mergedProps}>
       {children}
-    </Element>
+    </PolymorphicElement>
   )
 }

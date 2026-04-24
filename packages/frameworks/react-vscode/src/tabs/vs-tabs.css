@@ -1,4 +1,4 @@
-:root {
+.vs-tabs__root {
   --panel-tab-active-border: var(--vscode-panelTitle-activeBorder, #e7e7e7);
   --panel-tab-active-foreground: var(
     --vscode-panelTitle-activeForeground,
@@ -12,7 +12,7 @@
   --panel-view-border: var(--vscode-panel-border, #80808059);
 }
 
-.vs-tabs--tab-list {
+.vs-tabs__list {
   border-bottom: 1px solid
     var(--vscode-dropdown-border, var(--vscode-tab-border));
   display: flex;
@@ -21,21 +21,20 @@
   position: relative;
 }
 
-.vs-tabs--bar {
+.vs-tabs__indicator {
   background-color: var(--panel-tab-active-border);
   bottom: -1px;
   height: 1px;
   position: absolute;
-  width: 100%;
-  &[data-alignment="start"] {
-    left: 0;
-  }
-  &[data-alignment="end"] {
-    right: 0;
+  width: var(--width);
+
+  &[data-orientation="vertical"] {
+    height: var(--height);
+    width: 1px;
   }
 }
 
-.vs-tabs--tab {
+.vs-tabs__tab {
   border-bottom: solid 1px transparent;
   color: var(--panel-tab-foreground);
   font-size: 11px;
@@ -50,13 +49,34 @@
   &[data-active] {
     color: var(--panel-tab-active-foreground);
   }
+}
+
+.vs-tabs__tab-button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
 
   &:focus-visible {
     outline: solid 1px var(--vscode-focusBorder);
   }
 }
 
-.vs-tabs--tab-panel {
+.vs-tabs__tab-dismiss-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 2px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.vs-tabs__panel {
   color: var(--vscode-foreground);
   font-size: var(--vscode-font-size);
   line-height: normal;

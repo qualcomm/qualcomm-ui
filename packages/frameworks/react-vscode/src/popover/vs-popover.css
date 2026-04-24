@@ -1,0 +1,38 @@
+.vs-popover {
+  background-clip: border-box;
+  background-color: var(
+    --vscode-editorWidget-background,
+    var(--vscode-menu-background)
+  );
+  box-shadow: var(--vscode-widget-shadow);
+  color: var(--vscode-editorWidget-foreground, var(--vscode-foreground));
+  display: block;
+  outline: none;
+  --arrow-background: var(
+    --vscode-editorWidget-background,
+    var(--vscode-menu-background)
+  );
+  --arrow-size: 8px;
+}
+
+.vs-popover__arrow {
+  /* State machine sets width/height/position inline. */
+}
+
+.vs-popover__arrow-tip {
+  background: var(--arrow-background);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.vs-popover__label {
+  color: var(--vscode-editorWidget-foreground, var(--vscode-foreground));
+  font-size: var(--vscode-font-size);
+  font-weight: 600;
+  padding: 4px 8px;
+}
+
+.vs-popover__description {
+  color: var(--vscode-descriptionForeground);
+  font-size: var(--vscode-font-size);
+  padding: 4px 8px;
+}

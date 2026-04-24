@@ -10,7 +10,7 @@ export const siteStateCookie = createCookie("site-state", {
   maxAge: 31449600,
 })
 
-export const qdsBrandCookie = createCookie("qds-brand", {
+export const vscodeThemeCookie = createCookie("vscode-theme", {
   // one year
   maxAge: 31449600,
 })

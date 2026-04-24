@@ -1,6 +1,5 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
 import {FieldContextProvider, useField} from "@qualcomm-ui/react-core/field"
 import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
@@ -20,9 +19,11 @@ export function Field({
   ...props
 }: FieldProps): ReactElement {
   const fieldContext = useField(props)
-  const mergedProps = mergeProps(fieldContext.getRootBindings(), {
-    className: clsx("vs-field", className),
-  })
+  const mergedProps = mergeProps(
+    fieldContext.getRootBindings(),
+    {className: "vs-field"},
+    {className},
+  )
 
   return (
     <FieldContextProvider value={fieldContext}>

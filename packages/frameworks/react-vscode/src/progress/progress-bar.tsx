@@ -4,19 +4,12 @@ import {
   CoreProgress,
   type CoreProgressBarProps,
 } from "@qualcomm-ui/react-core/progress"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
 export type ProgressBarProps = CoreProgressBarProps
 
-export function ProgressBar({
-  className,
-  ...props
-}: ProgressBarProps): ReactElement {
-  return (
-    <CoreProgress.Bar className={clsx("vs-progress--bar", className)} {...props} />
-  )
+export function ProgressBar(props: ProgressBarProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-progress__bar"}, props)
+
+  return <CoreProgress.Bar {...mergedProps} />
 }

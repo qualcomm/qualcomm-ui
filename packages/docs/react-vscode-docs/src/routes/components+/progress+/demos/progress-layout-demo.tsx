@@ -10,7 +10,7 @@ export function ProgressLayoutDemo(): ReactElement {
         <Progress.Track>
           <Progress.Bar />
         </Progress.Track>
-        <Progress.Value>50%</Progress.Value>
+        <Progress.ValueText>50%</Progress.ValueText>
       </div>
     </Progress.Root>
   )

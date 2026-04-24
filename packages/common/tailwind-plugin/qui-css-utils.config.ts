@@ -19,6 +19,10 @@ export default {
       cssFiles: ["src/qui-legacy.css"],
       outFileName: "qui-legacy.css",
     },
+    {
+      cssFiles: ["src/qui-vscode.css"],
+      outFileName: "qui-vscode.css",
+    },
   ],
   outDir: resolve(__dirname, "dist"),
   watchOptions: {

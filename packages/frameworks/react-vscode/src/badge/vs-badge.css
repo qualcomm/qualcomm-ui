@@ -1,36 +1,36 @@
-.vs-badge {
-    display: flex;
-    align-items: center;
-    justify-self: flex-start;
-    align-self: flex-start;
+.vs-badge__root {
+  align-items: center;
+  align-self: flex-start;
+  border-radius: 20px;
+  display: flex;
 
-    min-height: 16px;
-    border-radius: 20px;
-    gap: 10px;
+  font-size: 9px;
+  font-stretch: 110%;
+  font-style: normal;
+  font-weight: 700;
+  gap: 10px;
+  justify-self: flex-start;
+  letter-spacing: 0.03em;
+  line-height: normal;
 
-    font-size: 9px;
-    font-style: normal;
-    font-stretch: 110%;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    line-height: normal;
+  min-height: 16px;
 
-    &.primary {
-        color: var(--vscode-activityBarBadge-foreground);
-        background: var(--vscode-activityBarBadge-background);
-    }
-    &.secondary {
-        color: var(--vscode-badge-foreground);
-        background: var(--vscode-badge-background);
-    }
+  &[data-variant="primary"] {
+    background: var(--vscode-activityBarBadge-background);
+    color: var(--vscode-activityBarBadge-foreground);
+  }
+  &[data-variant="secondary"] {
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+  }
 
-    &[data-size='xs'] {
-        padding: 2px 4px 3px 4px;
-    }
-    &[data-size='sm'] {
-        padding: 2px 5px;
-    }
-    &[data-size='md'] {
-        padding: 2px 6px 3px 6px;
-    }
+  &[data-size="xs"] {
+    padding: 2px 4px 3px 4px;
+  }
+  &[data-size="sm"] {
+    padding: 2px 5px;
+  }
+  &[data-size="md"] {
+    padding: 2px 6px 3px 6px;
+  }
 }

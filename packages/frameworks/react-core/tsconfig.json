@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "composite": true,
     "paths": {
-      // fixes WebStorm usage detection, not used otherwise
       "@qualcomm-ui/react-core/*": ["./src/*/index.ts"],
     }
   },

@@ -1,83 +1,112 @@
-.vs-dialog {
-  max-width: 536px;
-  width: 100%;
-  z-index: 2600;
-}
-
-.vs-dialog--backdrop {
+.vs-dialog__backdrop {
   background: rgba(0, 0, 0, 0.2);
-  display: grid;
   height: 100vh;
-  left: 0;
+  inset: 0;
   overflow: hidden;
-  place-items: center;
   position: fixed;
-  top: 0;
   width: 100vw;
   z-index: 2600;
 
-  &.state-hidden {
-    background: transparent;
+  &[data-state="closed"],
+  &[data-hidden] {
+    display: none !important;
   }
 }
 
-.vs-dialog--header {
-  color: var(--vscode-editorWidget-foreground, var(--vscode-foreground));
-  font-size: 18px;
-  font-weight: 500;
-  grid-row: 1;
-  letter-spacing: -0.36px;
+.vs-dialog__positioner {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  height: 100vh;
+  inset: 0;
+  justify-content: center;
+  position: fixed;
+  width: 100vw;
+  z-index: 2600;
 }
 
-.vs-dialog--body {
-  color: var(--vscode-editorWidget-foreground, var(--vscode-foreground));
-  font-size: 13px;
-  font-weight: 500;
-  grid-row: 2;
-  margin-top: 12px;
-}
-
-.vs-dialog--content {
+.vs-dialog__content {
   background: var(--vscode-editorWidget-background);
   box-shadow: 0 0 8px 2px var(--vscode-widget-shadow);
-  display: grid;
-  grid-column-gap: 24px;
-  grid-template-columns: auto;
-  grid-template-rows: auto auto auto;
-  padding: 24px;
+  box-sizing: border-box;
+  color: var(--vscode-editorWidget-foreground, var(--vscode-foreground));
+  display: flex;
+  flex-direction: column;
+  max-width: 536px;
   position: relative;
   width: 100%;
 
-  &:has(.vs-dialog--status) {
-    grid-template-columns: min-content auto;
+  &[hidden] {
+    display: none !important;
+  }
+}
+
+.vs-dialog__body {
+  display: grid;
+  grid-template-columns: auto;
+  padding: 24px;
+  row-gap: 12px;
+
+  .vs-dialog__heading {
+    grid-column: 1;
+    grid-row: 1;
   }
 
-  &:has(.vs-dialog--close-button) {
-    .vs-dialog--header {
-      padding-right: 32px;
+  .vs-dialog__description {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  &:has(.vs-dialog__indicator-icon) {
+    column-gap: 24px;
+    grid-template-columns: min-content auto;
+
+    .vs-dialog__heading,
+    .vs-dialog__description {
+      grid-column: 2;
+    }
+
+    .vs-dialog__indicator-icon {
+      grid-column: 1;
+      grid-row: 1 / span 2;
     }
   }
+
+  &:has(+ :not(.vs-dialog__footer), :only-child) {
+    padding-bottom: 24px;
+  }
 }
 
-.vs-dialog--status {
-  grid-column: 1;
-  grid-row: 1 / span 3;
+.vs-dialog__heading {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  margin: 0;
+
+  .vs-dialog__content:has(.vs-dialog__close-button) & {
+    padding-right: 32px;
+  }
 }
 
-.vs-dialog--footer {
+.vs-dialog__description {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.vs-dialog__footer {
+  box-sizing: border-box;
   display: flex;
   gap: 12px;
-  grid-row: 3;
   justify-content: flex-end;
-  margin-top: 32px;
+  padding: 0 24px 24px;
   width: 100%;
 }
 
-.vs-dialog--close-button {
+.vs-dialog__close-button {
   align-self: flex-start;
   color: var(--vscode-icon-foreground);
-  grid-row: 1;
   position: absolute;
   right: 24px;
-  top: 0;
+  top: 24px;
 }

@@ -3,27 +3,15 @@ import {type ReactNode, useEffect, useState} from "react"
 import {getDemo} from "virtual:qui-demo-scope/auto"
 
 import type {ReactDemoData} from "@qualcomm-ui/mdx-common"
-import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
-import {useGlobalConfigContext} from "@qualcomm-ui/react-internal/layout"
-import {
-  ReactDemoRunner,
-  type ReactDemoRunnerProps,
-} from "@qualcomm-ui/react-mdx/code-demo"
+import {ReactDemo, type ReactDemoProps} from "@qualcomm-ui/react-mdx/code-demo"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
-interface Props extends Omit<
-  ReactDemoRunnerProps,
-  "qdsBrand" | "setQdsBrand" | "demo"
-> {}
+import {VscodeThemeMenu} from "./vscode-theme-menu"
 
-export function Demo({
-  component,
-  hideBrandSwitcher: hideBrandSwitcherProp = false,
-  ...props
-}: Props): ReactNode {
+interface Props extends Omit<ReactDemoProps, "demo"> {}
+
+export function Demo({component, ...props}: Props): ReactNode {
   const [theme] = useTheme()
-  const {brand, setBrand} = useQdsThemeContext()
-  const {hideDemoBrandSwitcher} = useGlobalConfigContext()
   const [demo, setDemo] = useState<ReactDemoData>(getDemo(props.name))
 
   useEffect(() => {
@@ -42,13 +30,11 @@ export function Demo({
   }, [props.name])
 
   return (
-    <ReactDemoRunner
+    <ReactDemo
+      actions={<VscodeThemeMenu />}
       colorScheme={theme === Theme.LIGHT ? "light" : "dark"}
       component={component}
       demo={demo}
-      hideBrandSwitcher={hideDemoBrandSwitcher || hideBrandSwitcherProp}
-      qdsBrand={brand || "qualcomm"}
-      setQdsBrand={setBrand}
       suppressHydrationWarning
       {...props}
     />

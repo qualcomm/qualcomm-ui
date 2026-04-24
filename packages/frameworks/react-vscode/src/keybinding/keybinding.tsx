@@ -1,41 +1,27 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
-export type KeybindingProps<C extends As = "span"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      /**
-       * The component used for the root node. It can be a React component or
-       * element.
-       *
-       * @default 'span'
-       */
-      as?: C
+export interface KeybindingProps extends ElementRenderProp<"span"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+}
 
-      /**
-       * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
-       */
-      children?: ReactNode
-    }
-  >
-
-export function Keybinding<C extends As = "span">({
-  as,
+export function Keybinding({
   children,
-  className,
   ...props
-}: KeybindingProps<C>): ReactElement {
-  const Element = as || "span"
+}: KeybindingProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-keybinding"}, props)
+
   return (
-    <Element className={clsx("vs-keybinding", className)} {...props}>
+    <PolymorphicElement as="span" {...mergedProps}>
       {children}
-    </Element>
+    </PolymorphicElement>
   )
 }

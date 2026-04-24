@@ -20,11 +20,9 @@ import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
-  isQdsBrand,
   type QdsBrand,
   QdsThemeContextProvider,
   type QdsThemeContextValue,
-  useQdsThemeContext,
 } from "@qualcomm-ui/react/qds-theme"
 import {
   type DemoSettings,
@@ -47,12 +45,19 @@ import {
   useTheme,
 } from "@qualcomm-ui/react-router-utils/client"
 
+import {
+  useVscodeThemeContext,
+  type VscodeTheme,
+  VscodeThemeContextProvider,
+  type VscodeThemeContextValue,
+} from "~components/demo/vscode-theme-context"
+
 import {AppDocsLayout} from "./components"
 import {
   demoStateCookie,
-  qdsBrandCookie,
   siteStateCookie,
   themeCookie,
+  vscodeThemeCookie,
 } from "./sessions.server"
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
@@ -62,9 +67,9 @@ interface RootLoaderData {
   demoState: RouteDemoState
   hideDemoBrandSwitcher: boolean
   packageManager: PackageManager
-  qdsBrand: QdsBrand
   ssrUserAgent: string | null
   theme: Theme
+  vscodeTheme: string
 }
 
 // Return the theme from the session storage using the loader
@@ -75,7 +80,7 @@ export async function loader({
 
   const cookieTheme = await themeCookie.parse(cookie)
   const siteState = await siteStateCookie.parse(cookie)
-  const qdsBrand = await qdsBrandCookie.parse(cookie)
+  const vscodeTheme = (await vscodeThemeCookie.parse(cookie)) ?? "dark-modern"
   const demoState = await demoStateCookie.parse(cookie)
 
   return {
@@ -85,9 +90,9 @@ export async function loader({
     demoState: demoState ?? {},
     hideDemoBrandSwitcher: siteState?.hideDemoBrandSwitcher || false,
     packageManager: siteState?.packageManager || "npm",
-    qdsBrand: isQdsBrand(qdsBrand) ? qdsBrand : ("qualcomm" satisfies QdsBrand),
     ssrUserAgent: request.headers.get("user-agent"),
     theme: isTheme(cookieTheme) ? cookieTheme : Theme.DARK,
+    vscodeTheme,
   }
 }
 
@@ -96,7 +101,6 @@ function App() {
   const data = useLoaderData<RootLoaderData>()
 
   const [theme] = useTheme()
-  const {brand} = useQdsThemeContext()
 
   const location = useLocation()
   const pageData = siteData.pageMap[location.pathname]
@@ -104,11 +108,13 @@ function App() {
   const description = pageData?.description || ""
   const appTitle = title ? `${title} | QUI` : "QUI React"
   const portalContainerRef = useRef<HTMLDivElement>(null)
+  const {theme: vscodeTheme} = useVscodeThemeContext()
 
   return (
     <html
       data-brand="qualcomm"
       data-theme={theme}
+      data-vscode-theme={vscodeTheme}
       lang="en"
       style={{colorScheme: theme || "dark"}}
     >
@@ -181,8 +187,9 @@ function App() {
         <Scripts />
         <div
           ref={portalContainerRef}
-          data-brand={brand}
+          data-brand="qualcomm"
           data-theme={theme}
+          data-vscode-theme={vscodeTheme}
         ></div>
       </body>
     </html>
@@ -190,8 +197,15 @@ function App() {
 }
 
 export default function AppWithProviders() {
-  const data = useLoaderData<{qdsBrand: QdsBrand; theme: Theme | null}>()
+  const data = useLoaderData<{
+    qdsBrand: QdsBrand
+    theme: Theme | null
+    vscodeTheme: VscodeTheme
+  }>()
 
+  const [vscodeTheme, setVscodeTheme] = useState<VscodeTheme | null>(
+    data.vscodeTheme,
+  )
   const [propsLayout, setPropsLayout] = useState<DocPropsLayout>("table")
   const [brand, setBrand] = useState<QdsBrand | null>(data.qdsBrand)
   const [docsSiteData, setDocsSiteData] = useState<SiteData>(
@@ -248,16 +262,26 @@ export default function AppWithProviders() {
     }
   }, [docsSiteData])
 
+  const vscodeThemeContext: VscodeThemeContextValue = useMemo(
+    () => ({
+      setTheme: setVscodeTheme,
+      theme: vscodeTheme,
+    }),
+    [vscodeTheme],
+  )
+
   return (
     <SiteContextProvider value={siteContext}>
       <PropsLayoutProvider value={propsLayoutContext}>
-        <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
-          <QdsThemeContextProvider value={qdsThemeContext}>
-            <Provider>
-              <App />
-            </Provider>
-          </QdsThemeContextProvider>
-        </ThemeProvider>
+        <VscodeThemeContextProvider value={vscodeThemeContext}>
+          <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
+            <QdsThemeContextProvider value={qdsThemeContext}>
+              <Provider>
+                <App />
+              </Provider>
+            </QdsThemeContextProvider>
+          </ThemeProvider>
+        </VscodeThemeContextProvider>
       </PropsLayoutProvider>
     </SiteContextProvider>
   )

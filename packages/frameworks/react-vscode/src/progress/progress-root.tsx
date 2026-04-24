@@ -4,24 +4,17 @@ import {
   CoreProgress,
   type CoreProgressRootProps,
 } from "@qualcomm-ui/react-core/progress"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
 export type ProgressRootProps = Omit<CoreProgressRootProps, "children"> & {
   children?: ReactNode
 }
 
 export function ProgressRoot({
   children,
-  className,
   ...props
 }: ProgressRootProps): ReactElement {
-  return (
-    <CoreProgress.Root className={clsx("vs-progress", className)} {...props}>
-      {children}
-    </CoreProgress.Root>
-  )
+  const mergedProps = mergeProps({className: "vs-progress"}, props)
+
+  return <CoreProgress.Root {...mergedProps}>{children}</CoreProgress.Root>
 }

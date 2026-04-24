@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-.vs-progress--label {
+.vs-progress__label {
   color: var(--vscode-editor-foreground);
   display: flex;
   font-size: 11px;
@@ -15,7 +15,7 @@
   line-height: normal;
 }
 
-.vs-progress--value {
+.vs-progress__value-text {
   color: var(--vscode-debugView-stateLabelForeground);
   display: flex;
   font-size: 11px;
@@ -27,7 +27,7 @@
   line-height: normal;
 }
 
-.vs-progress--track {
+.vs-progress__track {
   align-items: baseline;
   align-self: center;
   background: var(--vscode-welcomePage-progress\.background);
@@ -40,7 +40,7 @@
   width: 100%;
 }
 
-.vs-progress--bar {
+.vs-progress__bar {
   background: currentColor;
   border-radius: 360px;
   color: var(--vscode-welcomePage-progress\.foreground);
@@ -54,7 +54,7 @@
 
   &[data-state="indeterminate"] {
     &:before {
-      animation: vs-progress--indeterminate-animation-1 2.2s
+      animation: vs-progress__indeterminate-animation-1 2.2s
         cubic-bezier(0.65, 0.815, 0.735, 0.395) 0s infinite normal none running;
       background: currentColor;
       bottom: 0;
@@ -67,7 +67,7 @@
       width: auto;
     }
     &:after {
-      animation: vs-progress--indeterminate-animation-2 2.2s
+      animation: vs-progress__indeterminate-animation-2 2.2s
         cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite normal none running;
       background: currentColor;
       bottom: 0;
@@ -82,7 +82,7 @@
   }
 }
 
-@keyframes vs-progress--indeterminate-animation-1 {
+@keyframes vs-progress__indeterminate-animation-1 {
   0% {
     left: -35%;
     right: 100%;
@@ -99,7 +99,7 @@
   }
 }
 
-@keyframes vs-progress--indeterminate-animation-2 {
+@keyframes vs-progress__indeterminate-animation-2 {
   0% {
     left: -200%;
     right: 100%;
@@ -114,4 +114,16 @@
     left: 107%;
     right: -8%;
   }
+}
+
+.vs-progress__hint {
+  color: var(--vscode-descriptionForeground);
+  font-size: var(--vscode-font-size);
+  margin-top: 4px;
+}
+
+.vs-progress__error-text {
+  color: var(--vscode-errorForeground);
+  font-size: var(--vscode-font-size);
+  margin-top: 4px;
 }

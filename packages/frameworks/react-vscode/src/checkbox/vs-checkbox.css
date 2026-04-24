@@ -1,4 +1,4 @@
-.vs-checkbox {
+.vs-checkbox__root {
   cursor: pointer;
   display: inline-flex;
   font-size: var(--vscode-font-size);
@@ -15,20 +15,20 @@
   &:focus-visible,
   &:focus-within,
   &:active {
-    .vs-checkbox-icon {
+    .vs-checkbox__icon {
       outline: 1px solid var(--vscode-focusBorder);
       outline-offset: -1px;
     }
   }
 
-  &:has(.vs-checkbox--label) {
-    .vs-checkbox--icon {
+  &:has(.vs-checkbox__label) {
+    .vs-checkbox__icon {
       margin-right: 9px;
     }
   }
 }
 
-.vs-checkbox--icon {
+.vs-checkbox__icon {
   align-items: center;
   background-color: var(--vscode-settings-checkboxBackground);
   background-size: 16px;
@@ -44,7 +44,19 @@
   width: 18px;
 }
 
-.vs-checkbox--label {
+.vs-checkbox__indicator {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.vs-checkbox__label {
   color: var(--vscode-checkbox-foreground);
   cursor: pointer;
   display: block;
@@ -53,9 +65,21 @@
   min-width: 18px;
 }
 
-.vs-checkbox--indeterminate-icon {
+.vs-checkbox__indeterminate-icon {
   background-color: currentColor;
   height: 1px;
   position: absolute;
   width: 12px;
+}
+
+.vs-checkbox__hint {
+  color: var(--vscode-descriptionForeground);
+  font-size: var(--vscode-font-size);
+  margin-top: 4px;
+}
+
+.vs-checkbox__error-text {
+  color: var(--vscode-errorForeground);
+  font-size: var(--vscode-font-size);
+  margin-top: 4px;
 }

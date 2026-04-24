@@ -4,7 +4,7 @@
   gap: 4px;
 }
 
-.vs-keybinding--icon {
+.vs-keybinding__icon {
   align-items: center;
   background: var(--vscode-keybindingLabel-background);
   border-radius: 2px;

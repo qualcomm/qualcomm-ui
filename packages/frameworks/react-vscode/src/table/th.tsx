@@ -1,40 +1,24 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
-export type ThProps<C extends As = "th"> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * The component used for the root node. It can be a React component or element.
-     *
-     * @default 'th'
-     */
-    as?: C
+export interface ThProps extends ElementRenderProp<"th"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+}
 
-    /**
-     * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
-     */
-    children?: ReactNode
-  }
->
+export function Th({children, ...props}: ThProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-th"}, props)
 
-export function Th<C extends As = "th">({
-  as,
-  children,
-  className,
-  ref,
-  ...props
-}: ThProps<C>): ReactElement {
-  const Element = as || "th"
   return (
-    <Element ref={ref} className={clsx("vs-th", className)} {...props}>
+    <PolymorphicElement as="th" {...mergedProps}>
       {children}
-    </Element>
+    </PolymorphicElement>
   )
 }

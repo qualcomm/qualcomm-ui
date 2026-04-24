@@ -8,6 +8,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "private": true,
   "type": "module",
   "sideEffects": false,
   "files": [

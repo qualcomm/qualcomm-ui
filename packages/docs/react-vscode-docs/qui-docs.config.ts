@@ -20,8 +20,8 @@ const navConfig: NavConfig[] = [
     id: "setup",
   },
   {
-    id: "integrations",
-    title: "Integrations & Configs",
+    children: [{id: "overview"}],
+    id: "theming",
   },
   {separator: true},
   {

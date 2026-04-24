@@ -1,34 +1,35 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {useTooltipContent, useTooltipPositioner} from "@qualcomm-ui/react-core/tooltip"
-import {Portal} from "@qualcomm-ui/react-core/portal"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {
+  type ElementRenderProp,
+  type IdProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {useTooltipContent} from "@qualcomm-ui/react-core/tooltip"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- */
-export interface TooltipContentProps {
-  children: ReactNode
-  className?: string
+export interface TooltipContentProps extends IdProp, ElementRenderProp<"div"> {
+  children?: ReactNode
 }
 
+/**
+ * The content of the tooltip which is displayed relative to the trigger.
+ * Renders a `<div>` element by default.
+ */
 export function TooltipContent({
   children,
-  className,
+  id,
+  ...props
 }: TooltipContentProps): ReactElement {
-  const positionerBindings = useTooltipPositioner({})
-  const contentBindings = useTooltipContent({})
-
+  const contextProps = useTooltipContent({id})
+  const mergedProps = mergeProps(
+    contextProps,
+    {className: "vs-tooltip__content"},
+    props,
+  )
   return (
-    <Portal>
-      <div {...positionerBindings}>
-        <div
-          className={clsx("vs-tooltip", className)}
-          {...contentBindings}
-        >
-          {children}
-        </div>
-      </div>
-    </Portal>
+    <PolymorphicElement as="div" {...mergedProps}>
+      {children}
+    </PolymorphicElement>
   )
 }

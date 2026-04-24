@@ -1,0 +1,34 @@
+import type {ReactElement, ReactNode} from "react"
+
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+
+import {useVsProgressCircleContext} from "./vs-progress-circle-context"
+
+export interface ProgressCircleCircleContainerProps extends ElementRenderProp<"div"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+}
+
+/**
+ * Container element that wraps the circle and value text. Renders a `<div>`
+ * element by default.
+ */
+export function ProgressCircleCircleContainer({
+  children,
+  ...props
+}: ProgressCircleCircleContainerProps): ReactElement {
+  const context = useVsProgressCircleContext()
+  const mergedProps = mergeProps(context.getCircleContainerBindings(), props)
+
+  return (
+    <PolymorphicElement as="div" {...mergedProps}>
+      {children}
+    </PolymorphicElement>
+  )
+}

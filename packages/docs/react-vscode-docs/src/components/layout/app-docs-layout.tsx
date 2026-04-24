@@ -96,7 +96,6 @@ export function AppDocsLayout({
             <HeaderBar.ActionBar>
               <SiteSearch />
               <HeaderRepositoryLink />
-              <GlobalConfig />
               <HeaderAiLink />
               <ThemeToggle />
             </HeaderBar.ActionBar>

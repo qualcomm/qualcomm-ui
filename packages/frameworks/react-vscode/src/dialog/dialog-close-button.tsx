@@ -1,33 +1,41 @@
 import type {ReactElement} from "react"
 
 import {CoreDialog} from "@qualcomm-ui/react-core/dialog"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {Icon} from "../icon"
-import type {As} from "@qualcomm-ui/react-core/system"
+import {type Codicon, Icon} from "../icon"
 
 /**
  * @public
  */
-export interface DialogCloseButtonProps {
-  className?: string
+export interface DialogCloseButtonProps
+  extends IdProp, ElementRenderProp<"button"> {
+  /**
+   * @default 'close'
+   */
+  icon?: Codicon
 }
 
+/**
+ * A button that closes the dialog. Renders a `<button>` element by default.
+ */
 export function DialogCloseButton({
-  className,
+  icon,
+  ...props
 }: DialogCloseButtonProps): ReactElement {
   return (
     <CoreDialog.CloseTrigger>
-      {(bindings) => (
-        <Icon<As>
-          as="button"
-          className={clsx("vs-dialog--close-button", className)}
-          icon="close"
-          isAction
-          style={{color: "var(--vscode-icon-foreground)"}}
-          {...bindings}
-        />
-      )}
+      {(bindings) => {
+        const mergedProps = mergeProps(
+          {className: "vs-dialog__close-button"},
+          bindings,
+          props,
+        )
+        return (
+          <Icon icon={icon || "close"} render={<button />} {...mergedProps} />
+        )
+      }}
     </CoreDialog.CloseTrigger>
   )
 }

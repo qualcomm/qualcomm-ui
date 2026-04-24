@@ -4,7 +4,7 @@ import {
   CoreStepper,
   type CoreStepperTriggerProps,
 } from "@qualcomm-ui/react-core/stepper"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -15,15 +15,9 @@ export type StepTriggerProps = CoreStepperTriggerProps & {
 
 export function StepTrigger({
   children,
-  className,
   ...props
 }: StepTriggerProps): ReactElement {
-  return (
-    <CoreStepper.Trigger
-      className={clsx("vs-steps--trigger", className)}
-      {...props}
-    >
-      {children}
-    </CoreStepper.Trigger>
-  )
+  const mergedProps = mergeProps({className: "vs-steps__trigger"}, props)
+
+  return <CoreStepper.Trigger {...mergedProps}>{children}</CoreStepper.Trigger>
 }

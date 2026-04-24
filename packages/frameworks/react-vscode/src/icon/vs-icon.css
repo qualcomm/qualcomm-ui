@@ -1,4 +1,4 @@
-.vs-icon.codicon[class*="codicon-"] {
+.vs-icon__root.codicon[class*="codicon-"] {
   animation-duration: var(--spin-duration) !important;
   display: inline;
   font-size: var(--vs-icon-size);
@@ -7,11 +7,12 @@
 a,
 button,
 .action {
-  &.vs-icon {
+  &.vs-icon__root {
     border-color: transparent;
     border-radius: 2px;
     border-style: solid;
     border-width: 1px;
+    box-sizing: border-box;
     color: currentColor;
     cursor: pointer;
     padding: 2px;
@@ -31,10 +32,10 @@ button,
     }
   }
 
-  &.vs-icon:hover {
+  &.vs-icon__root:hover {
     background-color: var(--vscode-toolbar-hoverBackground);
   }
-  &.vs-icon:active {
+  &.vs-icon__root:active {
     background-color: var(--vscode-toolbar-activeBackground);
   }
 }

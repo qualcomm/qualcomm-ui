@@ -4,27 +4,17 @@ import {
   CoreProgress,
   type CoreProgressLabelProps,
 } from "@qualcomm-ui/react-core/progress"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
 export type ProgressLabelProps = CoreProgressLabelProps & {
   children?: ReactNode
 }
 
 export function ProgressLabel({
   children,
-  className,
   ...props
 }: ProgressLabelProps): ReactElement {
-  return (
-    <CoreProgress.Label
-      className={clsx("vs-progress--label", className)}
-      {...props}
-    >
-      {children}
-    </CoreProgress.Label>
-  )
+  const mergedProps = mergeProps({className: "vs-progress__label"}, props)
+
+  return <CoreProgress.Label {...mergedProps}>{children}</CoreProgress.Label>
 }

@@ -4,7 +4,7 @@ import {
   CoreCollapsible,
   type CoreCollapsibleContentProps,
 } from "@qualcomm-ui/react-core/collapsible"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -15,14 +15,12 @@ export type DisclosureBodyProps = CoreCollapsibleContentProps & {
 
 export function DisclosureBody({
   children,
-  className,
   ...props
 }: DisclosureBodyProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-disclosure__body"}, props)
+
   return (
-    <CoreCollapsible.Content
-      className={clsx("vs-disclosure--body", className)}
-      {...props}
-    >
+    <CoreCollapsible.Content {...mergedProps}>
       {children}
     </CoreCollapsible.Content>
   )

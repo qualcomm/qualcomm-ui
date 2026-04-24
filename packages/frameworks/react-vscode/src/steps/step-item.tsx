@@ -4,7 +4,7 @@ import {
   CoreStepper,
   type CoreStepperItemProps,
 } from "@qualcomm-ui/react-core/stepper"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -13,14 +13,8 @@ export type StepItemProps = CoreStepperItemProps & {
   children?: ReactNode
 }
 
-export function StepItem({
-  children,
-  className,
-  ...props
-}: StepItemProps): ReactElement {
-  return (
-    <CoreStepper.Item className={clsx("vs-steps--item", className)} {...props}>
-      {children}
-    </CoreStepper.Item>
-  )
+export function StepItem({children, ...props}: StepItemProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-steps__item"}, props)
+
+  return <CoreStepper.Item {...mergedProps}>{children}</CoreStepper.Item>
 }

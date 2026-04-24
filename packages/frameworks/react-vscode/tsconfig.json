@@ -1,9 +1,14 @@
 {
-  "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "composite": false,
-    "noEmit": true
+    "composite": true,
   },
   "include": ["./src"],
-  "exclude": []
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

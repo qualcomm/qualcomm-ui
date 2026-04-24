@@ -1,8 +1,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {useEffect, useRef, useState} from "react"
+import {useRef, useState} from "react"
 
+import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import type {BindableId} from "@qualcomm-ui/utils/machine"
 
 interface SetOpts {
@@ -30,7 +31,7 @@ export function useBindableId(
 
   const pendingValueRef = useRef<string | undefined>(valueFromIdsProp)
 
-  useEffect(() => {
+  useSafeLayoutEffect(() => {
     isMountedRef.current = true
     setValue(pendingValueRef.current)
     return () => {

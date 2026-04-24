@@ -1,6 +1,6 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -12,9 +12,9 @@ export interface DisclosureLabelProps {
 
 export function DisclosureLabel({
   children,
-  className,
+  ...props
 }: DisclosureLabelProps): ReactElement {
-  return (
-    <span className={clsx("vs-disclosure--label", className)}>{children}</span>
-  )
+  const mergedProps = mergeProps({className: "vs-disclosure__label"}, props)
+
+  return <span {...mergedProps}>{children}</span>
 }

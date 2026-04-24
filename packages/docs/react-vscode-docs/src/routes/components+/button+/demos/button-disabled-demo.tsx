@@ -5,6 +5,7 @@ import {Button} from "@qualcomm-ui/react-vscode/button"
 export function ButtonDisabledDemo(): ReactElement {
   return (
     <div className="flex flex-col items-center gap-4">
+      {/* preview */}
       <Button disabled>Button</Button>
       <Button disabled variant="secondary">
         Secondary
@@ -12,6 +13,7 @@ export function ButtonDisabledDemo(): ReactElement {
       <Button disabled variant="outline">
         Outline
       </Button>
+      {/* preview */}
     </div>
   )
 }

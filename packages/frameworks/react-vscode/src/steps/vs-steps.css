@@ -4,14 +4,14 @@
   gap: 16px;
 }
 
-.vs-steps--list {
+.vs-steps__list {
   align-items: center;
   display: flex;
   flex: 1 1 0;
   gap: 8px;
 }
 
-.vs-steps--item {
+.vs-steps__item {
   align-items: center;
   display: flex;
   flex: 1 1 0;
@@ -21,7 +21,7 @@
   }
 }
 
-.vs-steps--trigger {
+.vs-steps__trigger {
   align-items: center;
   color: var(--vscode-descriptionForeground);
   display: flex;
@@ -35,7 +35,7 @@
   }
 }
 
-.vs-steps--indicator {
+.vs-steps__indicator {
   align-items: center;
   border: solid 1px var(--vscode-descriptionForeground);
   border-radius: 2px;
@@ -55,7 +55,7 @@
   }
 }
 
-.vs-steps--separator {
+.vs-steps__separator {
   background: var(--vscode-descriptionForeground);
   flex: 1 1 0;
   height: 1px;
@@ -65,4 +65,48 @@
   &[data-last] {
     display: none;
   }
+}
+
+.vs-steps__label {
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  font-weight: 500;
+}
+
+.vs-steps__indicator-icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.vs-steps__content {
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  padding: 8px 0;
+}
+
+.vs-steps__completed-content {
+  color: var(--vscode-foreground);
+  font-size: var(--vscode-font-size);
+  padding: 8px 0;
+}
+
+.vs-steps__next-trigger,
+.vs-steps__prev-trigger {
+  background: transparent;
+  border: 1px solid var(--vscode-button-border, transparent);
+  color: var(--vscode-button-foreground);
+  cursor: pointer;
+  font-size: var(--vscode-font-size);
+  padding: 4px 8px;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.4;
+  }
+}
+
+.vs-steps__hint {
+  color: var(--vscode-descriptionForeground);
+  font-size: var(--vscode-font-size);
 }

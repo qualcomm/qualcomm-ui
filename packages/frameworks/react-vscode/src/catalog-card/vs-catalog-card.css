@@ -7,19 +7,19 @@
   grid-template-columns: repeat(var(--child-count), auto);
   padding: 12px 20px;
 
-  &:has(.vs-catalog-card--details[data-first]) {
+  &:has(.vs-catalog-card__details[data-first]) {
     grid-template-columns: min-content repeat(
         calc(var(--child-count) - 1),
         auto
       );
   }
 
-  &:has(.vs-catalog-card--actions[data-first]) {
+  &:has(.vs-catalog-card__actions[data-first]) {
     grid-template-columns: min-content repeat(
         calc(var(--child-count) - 1),
         auto
       );
-    &:has(.vs-catalog-card--details[data-group-index="1"]) {
+    &:has(.vs-catalog-card__details[data-group-index="1"]) {
       grid-template-columns: min-content min-content repeat(
           calc(var(--child-count) - 2),
           auto
@@ -28,7 +28,7 @@
   }
 }
 
-.vs-catalog-card--actions {
+.vs-catalog-card__actions {
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -40,30 +40,30 @@
   }
 }
 
-.vs-catalog-card--details {
+.vs-catalog-card__details {
   align-items: center;
   display: grid;
   /* 5th column is defined to give the description space to expand without distorting label, tag, and badge */
   grid-template-columns: min-content min-content min-content min-content auto;
   grid-template-rows: auto;
 
-  &:has(.vs-catalog-card--description) {
+  &:has(.vs-catalog-card__description) {
     grid-template-rows: auto auto;
 
-    .vs-catalog-card--logo {
+    .vs-catalog-card__logo {
       grid-row: 1 / span 2;
     }
   }
 }
 
-.vs-catalog-card--logo {
+.vs-catalog-card__logo {
   align-self: center;
   grid-column: 1;
   grid-row: 1;
   margin-right: 20px;
 }
 
-.vs-catalog-card--label {
+.vs-catalog-card__label {
   color: var(--vscode-editor-foreground);
   font-size: 14px;
   font-weight: 500;
@@ -73,7 +73,7 @@
   white-space: nowrap;
 }
 
-.vs-catalog-card--tag {
+.vs-catalog-card__tag {
   color: var(--vscode-editor-foreground);
   font-size: 11px;
   font-weight: 500;
@@ -85,14 +85,14 @@
   white-space: nowrap;
 }
 
-.vs-catalog-card--badge {
+.vs-catalog-card__badge {
   grid-column: 4;
   grid-row: 1;
   padding-left: 8px;
   white-space: nowrap;
 }
 
-.vs-catalog-card--description {
+.vs-catalog-card__description {
   color: var(--vscode-editor-foreground);
   display: flex;
   font-size: 11px;

@@ -1,24 +1,22 @@
-import type {ReactElement, ReactNode} from "react"
+import type {ReactElement} from "react"
 
 import {
   CoreDialog,
   type CoreDialogFooterProps,
 } from "@qualcomm-ui/react-core/dialog"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
  */
-export type DialogFooterProps = CoreDialogFooterProps
+export interface DialogFooterProps extends CoreDialogFooterProps {}
 
-export function DialogFooter({
-  className,
-  ...props
-}: DialogFooterProps): ReactElement {
-  return (
-    <CoreDialog.Footer
-      className={clsx("vs-dialog--footer", className)}
-      {...props}
-    />
-  )
+/**
+ * Content that appears at the bottom of the dialog, typically reserved for
+ * actions. Renders a `<div>` element by default.
+ */
+export function DialogFooter(props: DialogFooterProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-dialog__footer"}, props)
+
+  return <CoreDialog.Footer {...mergedProps} />
 }

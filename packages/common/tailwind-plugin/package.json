@@ -31,12 +31,16 @@
     "./qui-strict.css": {
       "style": "./dist/qui-strict.css",
       "default": "./dist/qui-strict.css"
+    },
+    "./qui-vscode.css": {
+      "style": "./dist/qui-vscode.css",
+      "default": "./dist/qui-vscode.css"
     }
   },
   "scripts": {
     "build": "run-s clean generate-css build:js build:ts build:css",
     "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
-    "generate-css": "tsx scripts/generate-nextgen-plugin.ts",
+    "generate-css": "tsx scripts/generate-nextgen-plugin.ts && tsx scripts/generate-theme.ts",
     "build:js": "tsx build.ts",
     "build:ts": "tsc -b tsconfig.lib.json",
     "build:css": "qui-css-utils build",

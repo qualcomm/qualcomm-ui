@@ -1,64 +1,46 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import type {BadgeSize, BadgeVariant} from "./badge.types"
 
-type DefaultAs = "div"
+export interface BadgeProps extends ElementRenderProp<"div"> {
+  /**
+   * Text content of the badge.
+   */
+  children?: ReactNode
 
-/**
- * @public
- * @interface
- */
-export type BadgeProps<C extends As = DefaultAs> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      /**
-       * The component used for the root node. It can be a React component or
-       * element.
-       *
-       * @default 'div'
-       */
-      as?: C
+  /**
+   * Size of the badge.
+   */
+  size?: BadgeSize
 
-      /**
-       * Text content of the badge.
-       */
-      children?: ReactNode
+  /**
+   * The style variant of the badge.
+   */
+  variant?: BadgeVariant
+}
 
-      /**
-       * Size of the badge.
-       */
-      size?: BadgeSize
-
-      /**
-       * The style variant of the badge.
-       */
-      variant?: BadgeVariant
-    }
-  >
-
-export function Badge<C extends As = DefaultAs>({
-  as,
+export function Badge({
   children,
-  className,
-  ref,
   size = "sm",
   variant = "primary",
   ...props
-}: BadgeProps<C>): ReactElement {
-  const Element = as || "div"
+}: BadgeProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-badge__root"}, props)
 
   return (
-    <Element
-      ref={ref}
-      className={clsx("vs-badge", variant, className)}
+    <PolymorphicElement
+      as="div"
       data-size={size}
-      {...props}
+      data-variant={variant}
+      {...mergedProps}
     >
       {children}
-    </Element>
+    </PolymorphicElement>
   )
 }

@@ -1,101 +1,88 @@
 import type {ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {sharedClasses} from "../shared"
 import {type CodiconOrElement, IconOrElement} from "../icon"
 
 import type {ButtonSize, ButtonVariant} from "./button.types"
 import {getIconSizeFromButtonSize} from "./internal"
 
-/**
- * @public
- * @interface
- */
-export type ButtonProps<C extends As = "button"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      /**
-       * The component used for the root node. It can be a React component or
-       * element.
-       *
-       * @default 'button'
-       */
-      as?: C
+export interface ButtonProps extends ElementRenderProp<"button"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
 
-      /**
-       * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
-       */
-      children?: ReactNode
+  /**
+   * If `true`, the component will not be interactive and will appear dimmed.
+   *
+   * @default false
+   */
+  disabled?: boolean
 
-      /**
-       * If `true`, the component will not be interactive and will appear dimmed.
-       *
-       * @default false
-       */
-      disabled?: boolean
+  /**
+   * Icon positioned after the children.  If supplied as a `string`, the
+   * {@link https://github.com/microsoft/vscode-codicons vscode codicon}
+   * will be applied. Supply as a `ReactElement` for additional customization.
+   */
+  endIcon?: CodiconOrElement
 
-      /**
-       * Icon positioned after the children.  If supplied as a `string`, the
-       * {@link https://github.com/microsoft/vscode-codicons vscode codicon}
-       * will be applied. Supply as a `ReactElement` for additional customization.
-       */
-      endIcon?: CodiconOrElement
+  /**
+   * The size of each button.
+   *
+   * @default 'md'
+   */
+  size?: ButtonSize
 
-      /**
-       * The size of each button.
-       *
-       * @default 'md'
-       */
-      size?: ButtonSize
+  /**
+   * Icon positioned before the children.  If supplied as a `string`, the
+   * {@link https://github.com/microsoft/vscode-codicons vscode codicon}
+   * will be applied. Supply as a `ReactElement` for additional customization.
+   */
+  startIcon?: CodiconOrElement
 
-      /**
-       * Icon positioned before the children.  If supplied as a `string`, the
-       * {@link https://github.com/microsoft/vscode-codicons vscode codicon}
-       * will be applied. Supply as a `ReactElement` for additional customization.
-       */
-      startIcon?: CodiconOrElement
+  /**
+   * The style variant of the button.
+   *
+   * @default 'primary'
+   */
+  variant?: ButtonVariant
+}
 
-      /**
-       * The style variant of the button.
-       *
-       * @default 'primary'
-       */
-      variant?: ButtonVariant
-    }
-  >
-
-export function Button<C extends As = "button">({
-  as,
+export function Button({
   children,
-  className,
   disabled,
   endIcon,
   size = "md",
   startIcon,
   variant = "primary",
   ...props
-}: ButtonProps<C>): ReactNode {
-  const Element = as || "button"
+}: ButtonProps): ReactNode {
+  const mergedProps = mergeProps(
+    {
+      className: "vs-button__root",
+    },
+    props,
+  )
   return (
-    <Element
-      className={clsx(
-        "vs-button",
-        "kind-text",
-        sharedClasses.disabled(disabled),
-        className,
-      )}
+    <PolymorphicElement
+      as="button"
+      data-disabled={booleanDataAttr(disabled)}
+      data-kind="text"
       data-size={size}
       data-variant={variant}
       disabled={disabled}
-      {...props}
+      {...mergedProps}
     >
       {startIcon ? (
         <IconOrElement
-          className="vs-button--icon"
-          data-start=""
+          className="vs-button__icon"
+          data-start
           icon={startIcon}
           size={getIconSizeFromButtonSize(size)}
         />
@@ -105,12 +92,12 @@ export function Button<C extends As = "button">({
 
       {endIcon ? (
         <IconOrElement
-          className="vs-button--icon end"
-          data-end=""
+          className="vs-button__icon end"
+          data-end
           icon={endIcon}
           size={getIconSizeFromButtonSize(size)}
         />
       ) : null}
-    </Element>
+    </PolymorphicElement>
   )
 }

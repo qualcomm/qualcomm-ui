@@ -1,39 +1,31 @@
-import type {ReactElement, ReactNode} from "react"
+import type {ReactNode} from "react"
 
-import {CoreDialog} from "@qualcomm-ui/react-core/dialog"
-import {Portal} from "@qualcomm-ui/react-core/portal"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {
+  CoreDialog,
+  type CoreDialogContentProps,
+} from "@qualcomm-ui/react-core/dialog"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
  */
-export interface DialogContentProps {
-  children?: ReactNode
-  className?: string
+export interface DialogContentProps extends CoreDialogContentProps {}
 
-  /**
-   * If `true`, the backdrop overlay is hidden.
-   */
-  hideBackdrop?: boolean
-}
+/**
+ * A container for the dialog contents. Renders a `<section>` element by
+ * default.
+ *
+ * @example
+ * ```tsx
+ * <Dialog.Root>
+ *   <Dialog.Positioner>
+ *     <Dialog.Content />
+ *   </Dialog.Positioner>
+ * </Dialog.Root>
+ * ```
+ */
+export function DialogContent(props: DialogContentProps): ReactNode {
+  const mergedProps = mergeProps({className: "vs-dialog__content"}, props)
 
-export function DialogContent({
-  children,
-  className,
-  hideBackdrop,
-}: DialogContentProps): ReactElement | null {
-  return (
-    <Portal>
-      <CoreDialog.Backdrop
-        className={clsx("vs-dialog--backdrop", {
-          "state-hidden": hideBackdrop,
-        })}
-      />
-      <CoreDialog.Positioner>
-        <CoreDialog.Content className={clsx("vs-dialog", className)}>
-          <div className="vs-dialog--content">{children}</div>
-        </CoreDialog.Content>
-      </CoreDialog.Positioner>
-    </Portal>
-  )
+  return <CoreDialog.Content {...mergedProps} />
 }

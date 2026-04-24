@@ -2,13 +2,25 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+@import "@qualcomm-ui/tailwind-plugin/qui-vscode.css";
 
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
 @import "@qualcomm-ui/react-mdx/styles.css" layer(components);
 @import "@qualcomm-ui/react-internal/styles.css" layer(components);
+@import "./themes/dark-high-contrast.css" layer(components);
+@import "./themes/dark-modern.css" layer(components);
+@import "./themes/dark-plus.css" layer(components);
+@import "./themes/light-high-contrast.css" layer(components);
+@import "./themes/light-modern.css" layer(components);
+@import "./themes/light-plus.css" layer(components);
+@import "./themes/monokai.css" layer(components);
+@import "./themes/quiet-light.css" layer(components);
+@import "./themes/solarized-dark.css" layer(components);
+@import "./themes/solarized-light.css" layer(components);
+@import "./assets/codicon/codicon.css" layer(components);
+@import "@qualcomm-ui/react-vscode/styles.css" layer(components);
 
 @source "../../../frameworks/react-internal/src";
 
@@ -16,11 +28,18 @@
   color: var(--color-text-neutral-primary);
   color-scheme: light dark;
 
+  --vscode-font-family: "Segoe UI", sans-serif;
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   --q-font-mono: "Roboto Mono", monospace;
   --qui-header-height: 48px;
   --q-font-family: "Roboto Flex", sans-serif;
+
+  [data-vscode-theme][class^="vs-"] {
+    font-family:
+      var(--vscode-font-family) "Segoe UI",
+      sans-serif !important;
+  }
 }
 
 .font-mono {

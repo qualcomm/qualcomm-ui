@@ -1,52 +1,37 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
 import {useGroupedChildren} from "@qualcomm-ui/react-core/dom"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
-export type CatalogCardProps<C extends As = "div"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      /**
-       * The component used for the root node. It can be a React component or
-       * element.
-       *
-       * @default 'div'
-       */
-      as?: C
+export interface CatalogCardProps extends ElementRenderProp<"div"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+}
 
-      /**
-       * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
-       */
-      children?: ReactNode
-    }
-  >
-
-export function CatalogCard<C extends As = "div">({
-  as,
+export function CatalogCard({
   children: childrenProp,
-  className,
   style,
   ...props
-}: CatalogCardProps<C>): ReactElement {
+}: CatalogCardProps): ReactElement {
   const {children, count} = useGroupedChildren(childrenProp)
+  const mergedProps = mergeProps({className: "vs-catalog-card"}, props)
 
-  const Element = as || "div"
   return (
-    <Element
-      className={clsx("vs-catalog-card", className)}
+    <PolymorphicElement
+      as="div"
       style={{
         ...style,
         "--child-count": count,
       }}
-      {...props}
+      {...mergedProps}
     >
       {children}
-    </Element>
+    </PolymorphicElement>
   )
 }

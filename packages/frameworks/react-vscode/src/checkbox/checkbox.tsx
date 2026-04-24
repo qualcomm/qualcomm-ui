@@ -1,137 +1,158 @@
-import type {ChangeEvent, InputHTMLAttributes, ReactElement, ReactNode, Ref} from "react"
+import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import type {CheckboxElementIds} from "@qualcomm-ui/core/checkbox"
+import {useOptionalContentId} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
-import {useControlledState} from "@qualcomm-ui/react-core/state"
 
-import {sharedClasses} from "../shared"
+import {CheckboxControl, type CheckboxControlProps} from "./checkbox-control"
+import {
+  CheckboxErrorText,
+  type CheckboxErrorTextProps,
+} from "./checkbox-error-text"
+import {
+  CheckboxHiddenInput,
+  type CheckboxHiddenInputProps,
+} from "./checkbox-hidden-input"
+import {CheckboxHint, type CheckboxHintProps} from "./checkbox-hint"
+import {
+  CheckboxIndicator,
+  type CheckboxIndicatorProps,
+} from "./checkbox-indicator"
+import {CheckboxLabel, type CheckboxLabelProps} from "./checkbox-label"
+import {CheckboxRoot, type CheckboxRootProps} from "./checkbox-root"
 
-/**
- * @public
- * @interface
- */
-export type CheckboxProps<C extends As = "div"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      as?: C
-      checked?: boolean
-      defaultChecked?: boolean
-      disabled?: boolean
-      id?: string
-      indeterminate?: boolean
-      inputProps?: InputHTMLAttributes<HTMLInputElement>
-      inputRef?: Ref<HTMLInputElement>
-      invalid?: boolean
-      label?: ReactNode
-      name?: string
-      onChange?: (
-        event: ChangeEvent<HTMLInputElement>,
-        checked: boolean,
-      ) => void
-      readOnly?: boolean
-      value?: string
-    }
-  >
+export interface CheckboxProps extends CheckboxRootProps {
+  /**
+   * {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label aria-label}
+   * attribute, forwarded to the hidden input element.
+   */
+  "aria-label"?: string | undefined
 
-export function Checkbox<C extends As = "div">({
-  as,
-  checked: checkedProp,
-  className,
-  defaultChecked,
-  disabled = false,
-  id: idProp,
-  indeterminate = false,
-  inputProps = {},
-  inputRef,
-  invalid,
+  /**
+   * {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-labelledby aria-labelledby}
+   * attribute, forwarded to the hidden input element. If you provide a {@link
+   * label}, omit this prop.
+   */
+  "aria-labelledby"?: string | undefined
+
+  /**
+   * The simple Checkbox doesn't support children.
+   */
+  children?: never
+
+  /**
+   * Props applied to the control element.
+   * @inheritDoc
+   */
+  controlProps?: CheckboxControlProps
+
+  /**
+   * Optional error that describes the element when {@link invalid} is true.
+   */
+  errorText?: ReactNode
+
+  /**
+   * Props applied to the error text element.
+   * @inheritDoc
+   */
+  errorTextProps?: CheckboxErrorTextProps
+
+  /**
+   * Props applied to the hidden input element.
+   * @inheritDoc
+   */
+  hiddenInputProps?: CheckboxHiddenInputProps
+
+  /**
+   * Optional hint text that describes the element.
+   */
+  hint?: ReactNode
+
+  /**
+   * Props applied to the hint element.
+   * @inheritDoc
+   */
+  hintProps?: CheckboxHintProps
+
+  /**
+   * Props applied to the indicator element.
+   * @inheritDoc
+   */
+  indicatorProps?: CheckboxIndicatorProps
+
+  /**
+   * Optional label describing the element. Recommended. This element is
+   * automatically associated with the component's input element for
+   * accessibility.
+   */
+  label?: ReactNode
+
+  /**
+   * Props applied to the label element.
+   * @inheritDoc
+   */
+  labelProps?: CheckboxLabelProps
+}
+
+export function Checkbox({
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  controlProps,
+  errorText,
+  errorTextProps,
+  hiddenInputProps: hiddenInputPropsProp,
+  hint,
+  hintProps,
+  indicatorProps,
   label,
-  name,
-  onChange: onChangeProp,
-  readOnly = false,
-  ref,
-  value: valueProp,
+  labelProps,
   ...props
-}: CheckboxProps<C>): ReactElement {
-  const id = useControlledId(idProp)
+}: CheckboxProps): ReactElement {
+  const labelContent = label || labelProps?.children
+  const errorTextContent = errorText || errorTextProps?.children
+  const hintContent = hint || hintProps?.children
 
-  const [value, setValue] = useControlledState({
-    controlled: checkedProp,
-    defaultValue: defaultChecked,
-    name: "VsCheckbox",
-  })
+  const hiddenInputProps = {
+    ...hiddenInputPropsProp,
+  }
 
-  const checked = value ?? false
-  const labelId = `${id}-label`
+  if (ariaLabel !== undefined) {
+    hiddenInputProps["aria-label"] = ariaLabel
+  }
+  if (ariaLabelledBy !== undefined) {
+    hiddenInputProps["aria-labelledby"] = ariaLabelledBy
+  }
 
-  const Element = as || "div"
+  const ids: Partial<CheckboxElementIds> = {
+    errorText: useOptionalContentId(errorTextContent, errorTextProps),
+    hiddenInput: useControlledId(hiddenInputProps?.id),
+    hint: useOptionalContentId(hintContent, hintProps),
+    label: useOptionalContentId(labelContent, labelProps),
+    root: useControlledId(props.id),
+    ...props.ids,
+  }
+
   return (
-    <Element
-      ref={ref}
-      className={clsx(
-        "vs-checkbox",
-        {disabled},
-        sharedClasses.disabled(disabled),
-        className,
-      )}
-      {...props}
-    >
-      <input
-        {...inputProps}
-        ref={inputRef}
-        aria-checked={checked ? true : indeterminate ? "mixed" : false}
-        aria-invalid={invalid}
-        aria-labelledby={label ? labelId : undefined}
-        checked={checked}
-        className={clsx(
-          "vs-checkbox--input",
-          sharedClasses.disabled(disabled),
-          sharedClasses.inputHiddenAccessible(disabled),
-        )}
-        disabled={disabled}
-        id={id}
-        name={name}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          if (readOnly) {
-            return
-          }
-          onChangeProp?.(event, !checked)
-          setValue(!checked)
-        }}
-        readOnly={readOnly}
-        type="checkbox"
-        value={
-          valueProp ??
-          (typeof label === "string" ? (label as string) : undefined)
-        }
-      />
-      <div className={clsx("vs-checkbox--icon", {checked, indeterminate})}>
-        {indeterminate && !checked ? (
-          <span className="vs-checkbox--indeterminate-icon"></span>
-        ) : null}
-        {checked ? (
-          <svg
-            className="check-icon"
-            fill="currentColor"
-            height="16"
-            viewBox="0 0 16 16"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              clipRule="evenodd"
-              d="M14.431 3.323l-8.47 10-.79-.036-3.35-4.77.818-.574 2.978 4.24 8.051-9.506.764.646z"
-              fillRule="evenodd"
-            />
-          </svg>
-        ) : null}
-      </div>
-      {label ? (
-        <label className="vs-checkbox--label" htmlFor={id} id={labelId}>
-          {label}
-        </label>
+    <CheckboxRoot {...props} id={ids.root} ids={ids}>
+      <CheckboxHiddenInput {...hiddenInputProps} id={ids.hiddenInput} />
+      <CheckboxControl {...controlProps}>
+        <CheckboxIndicator {...indicatorProps} />
+      </CheckboxControl>
+      {labelContent ? (
+        <CheckboxLabel {...labelProps} id={ids.label}>
+          {labelContent}
+        </CheckboxLabel>
       ) : null}
-    </Element>
+      {hintContent ? (
+        <CheckboxHint {...hintProps} id={ids.hint}>
+          {hintContent}
+        </CheckboxHint>
+      ) : null}
+      {errorTextContent ? (
+        <CheckboxErrorText {...errorTextProps} id={ids.errorText}>
+          {errorTextContent}
+        </CheckboxErrorText>
+      ) : null}
+    </CheckboxRoot>
   )
 }

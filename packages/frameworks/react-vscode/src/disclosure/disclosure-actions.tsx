@@ -1,6 +1,6 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
@@ -12,9 +12,9 @@ export interface DisclosureActionsProps {
 
 export function DisclosureActions({
   children,
-  className,
+  ...props
 }: DisclosureActionsProps): ReactElement {
-  return (
-    <div className={clsx("vs-disclosure--actions", className)}>{children}</div>
-  )
+  const mergedProps = mergeProps({className: "vs-disclosure__actions"}, props)
+
+  return <div {...mergedProps}>{children}</div>
 }

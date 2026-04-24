@@ -1,18 +1,28 @@
 import type {ReactElement} from "react"
 
-import {useTooltipTrigger} from "@qualcomm-ui/react-core/tooltip"
 import type {TooltipTriggerBindings} from "@qualcomm-ui/core/tooltip"
-import type {BindingRenderProp} from "@qualcomm-ui/react-core/system"
-import {bindingRenderProp} from "@qualcomm-ui/react-core/system"
+import {
+  type BindingRenderProp,
+  bindingRenderProp,
+  type IdProp,
+} from "@qualcomm-ui/react-core/system"
+import {useTooltipTrigger} from "@qualcomm-ui/react-core/tooltip"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- */
-export interface TooltipTriggerProps {
+export interface TooltipTriggerProps extends IdProp {
   children: BindingRenderProp<TooltipTriggerBindings>
 }
 
-export function TooltipTrigger({children}: TooltipTriggerProps): ReactElement {
-  const bindings = useTooltipTrigger({})
-  return bindingRenderProp(children, bindings)
+/**
+ * A trigger that opens the tooltip. Applies event handlers and attributes to
+ * the child element. Doesn't render anything by itself.
+ */
+export function TooltipTrigger({
+  children,
+  id,
+  ...props
+}: TooltipTriggerProps): ReactElement | null {
+  const contextProps = useTooltipTrigger({id})
+  const mergedProps = mergeProps(contextProps, props)
+  return bindingRenderProp(children, mergedProps)
 }

@@ -1,30 +1,28 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {
-  CoreProgress,
-  type CoreProgressLabelProps,
-} from "@qualcomm-ui/react-core/progress"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+  CoreProgressRing,
+  type CoreProgressRingLabelProps,
+} from "@qualcomm-ui/react-core/progress-ring"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
-export type ProgressCircleLabelProps = CoreProgressLabelProps & {
+import {useVsProgressCircleContext} from "./vs-progress-circle-context"
+
+export interface ProgressCircleLabelProps extends CoreProgressRingLabelProps {
   children?: ReactNode
 }
 
+/**
+ * Label text associated with the progress circle. Renders a `<label>` element
+ * by default.
+ */
 export function ProgressCircleLabel({
   children,
-  className,
   ...props
 }: ProgressCircleLabelProps): ReactElement {
+  const context = useVsProgressCircleContext()
+  const mergedProps = mergeProps(context.getLabelBindings(), props)
   return (
-    <CoreProgress.Label
-      className={clsx("vs-progress-circle--label", className)}
-      {...props}
-    >
-      {children}
-    </CoreProgress.Label>
+    <CoreProgressRing.Label {...mergedProps}>{children}</CoreProgressRing.Label>
   )
 }

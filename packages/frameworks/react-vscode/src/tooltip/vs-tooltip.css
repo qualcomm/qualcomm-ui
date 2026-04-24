@@ -1,4 +1,4 @@
-.vs-tooltip {
+.vs-tooltip__content {
   background: var(--vscode-menu-background);
   border: 1px solid var(--vscode-editorWidget-border);
   color: var(--vscode-editor-foreground);
@@ -6,4 +6,19 @@
   font-weight: 500;
   line-height: normal;
   padding: 4px 5px;
+  --arrow-background: var(--vscode-editorHoverWidget-background);
+  --arrow-size: 8px;
+}
+
+.vs-tooltip__positioner {
+  z-index: 100;
+}
+
+.vs-tooltip__arrow {
+  /* The state machine sets width/height/position inline. */
+}
+
+.vs-tooltip__arrow-tip {
+  background: var(--arrow-background);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }

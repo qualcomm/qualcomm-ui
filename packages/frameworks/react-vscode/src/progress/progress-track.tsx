@@ -4,27 +4,17 @@ import {
   CoreProgress,
   type CoreProgressTrackProps,
 } from "@qualcomm-ui/react-core/progress"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
 export type ProgressTrackProps = CoreProgressTrackProps & {
   children?: ReactNode
 }
 
 export function ProgressTrack({
   children,
-  className,
   ...props
 }: ProgressTrackProps): ReactElement {
-  return (
-    <CoreProgress.Track
-      className={clsx("vs-progress--track", className)}
-      {...props}
-    >
-      {children}
-    </CoreProgress.Track>
-  )
+  const mergedProps = mergeProps({className: "vs-progress__track"}, props)
+
+  return <CoreProgress.Track {...mergedProps}>{children}</CoreProgress.Track>
 }

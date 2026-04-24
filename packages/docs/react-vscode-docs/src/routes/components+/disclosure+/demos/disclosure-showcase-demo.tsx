@@ -20,7 +20,7 @@ export function DisclosureShowcaseDemo(): ReactNode {
         </DisclosureLabel>
 
         <DisclosureActions>
-          <Icon as="button" icon="new-file" />
+          <Icon icon="new-file" render={<button />} />
         </DisclosureActions>
       </DisclosureHeader>
       <DisclosureBody>

@@ -1,48 +1,48 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {type ItemProps, splitMenuItemProps} from "@qualcomm-ui/core/menu"
+import {
+  MenuItemContextProvider,
+  useMenuItem,
+} from "@qualcomm-ui/react-core/menu"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {type CodiconOrElement, IconOrElement} from "../icon"
 
-/**
- * @public
- * @interface
- */
-export type MenuItemProps<C extends As = "button"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      as?: C
-      children: ReactNode
-      disabled?: boolean
-      endIcon?: CodiconOrElement
-      startIcon?: CodiconOrElement
-    }
-  >
+export interface MenuItemProps
+  extends ItemProps, Omit<ElementRenderProp<"button">, "onSelect" | "value"> {
+  children?: ReactNode
+  endIcon?: CodiconOrElement
+  startIcon?: CodiconOrElement
+}
 
-export function MenuItem<C extends As = "button">({
-  as,
+export function MenuItem({
   children,
-  className,
-  disabled,
   endIcon,
   startIcon,
   ...props
-}: MenuItemProps<C>): ReactElement {
-  const Element = as || "button"
+}: MenuItemProps): ReactElement {
+  const [menuItemProps, localProps] = splitMenuItemProps(props)
+  const {bindings, itemContextValue} = useMenuItem(menuItemProps)
+  const mergedProps = mergeProps(
+    bindings,
+    {className: "vs-menu-item__root"},
+    localProps,
+  )
+
   return (
-    <Element
-      className={clsx("vs-menu-item", className)}
-      disabled={disabled}
-      role="menuitem"
-      {...props}
-    >
-      {startIcon ? <IconOrElement icon={startIcon} /> : <span />}
-      {children}
-      {endIcon ? (
-        <IconOrElement className="vs-menu-item--end-icon" icon={endIcon} />
-      ) : null}
-    </Element>
+    <MenuItemContextProvider value={itemContextValue}>
+      <PolymorphicElement as="button" {...mergedProps}>
+        {startIcon ? <IconOrElement icon={startIcon} /> : <span />}
+        {children}
+        {endIcon ? (
+          <IconOrElement className="vs-menu-item__end-icon" icon={endIcon} />
+        ) : null}
+      </PolymorphicElement>
+    </MenuItemContextProvider>
   )
 }

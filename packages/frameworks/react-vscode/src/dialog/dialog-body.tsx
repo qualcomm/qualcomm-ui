@@ -1,23 +1,23 @@
-import type {ReactElement, ReactNode} from "react"
+import type {ReactElement} from "react"
 
-import {CoreDialog, type CoreDialogBodyProps} from "@qualcomm-ui/react-core/dialog"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {
+  CoreDialog,
+  type CoreDialogBodyProps,
+} from "@qualcomm-ui/react-core/dialog"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
  * @public
  */
-export type DialogBodyProps = CoreDialogBodyProps & {
-  children?: ReactNode
-}
+export interface DialogBodyProps extends CoreDialogBodyProps {}
 
-export function DialogBody({
-  children,
-  className,
-  ...props
-}: DialogBodyProps): ReactElement {
-  return (
-    <CoreDialog.Body className={clsx("vs-dialog--body", className)} {...props}>
-      {children}
-    </CoreDialog.Body>
-  )
+/**
+ * The main content of the dialog. Container for the heading, description,
+ * indicator icon, and primary content of the dialog. Renders a `<div>` element
+ * by default.
+ */
+export function DialogBody(props: DialogBodyProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-dialog__body"}, props)
+
+  return <CoreDialog.Body {...mergedProps} />
 }

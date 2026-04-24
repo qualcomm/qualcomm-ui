@@ -1,31 +1,21 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {clsx} from "@qualcomm-ui/utils/clsx"
-import type {As, PolymorphicComponentPropsWithRef} from "@qualcomm-ui/react-core/system"
+import {
+  type ElementRenderProp,
+  PolymorphicElement,
+} from "@qualcomm-ui/react-core/system"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-/**
- * @public
- * @interface
- */
-export type OptionProps<C extends As = "option"> =
-  PolymorphicComponentPropsWithRef<
-    C,
-    {
-      as?: C
-      children?: ReactNode
-    }
-  >
+export interface OptionProps extends ElementRenderProp<"option"> {
+  children?: ReactNode
+}
 
-export function Option<C extends As = "option">({
-  as,
-  children,
-  className,
-  ...props
-}: OptionProps<C>): ReactElement {
-  const Element = as || "option"
+export function Option({children, ...props}: OptionProps): ReactElement {
+  const mergedProps = mergeProps({className: "vs-option"}, props)
+
   return (
-    <Element className={clsx("vs-option", className)} {...props}>
+    <PolymorphicElement as="option" {...mergedProps}>
       {children}
-    </Element>
+    </PolymorphicElement>
   )
 }

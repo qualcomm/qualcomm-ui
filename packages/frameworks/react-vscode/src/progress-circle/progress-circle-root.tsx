@@ -1,24 +1,17 @@
-import {type ReactElement, type ReactNode, useMemo} from "react"
+import {type ReactElement, useMemo} from "react"
 
+import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
-  CoreProgress,
-  type CoreProgressRootProps,
-} from "@qualcomm-ui/react-core/progress"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+  CoreProgressRing,
+  type CoreProgressRingRootProps,
+} from "@qualcomm-ui/react-core/progress-ring"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {
-  ProgressCircleContextProvider,
-  type ProgressCircleContextValue,
-} from "./progress-circle-context"
 import type {ProgressCircleSize} from "./progress-circle.types"
+import {VsProgressCircleContextProvider} from "./vs-progress-circle-context"
+import {createVsProgressCircleApi} from "./vs-progress-circle.api"
 
-/**
- * @public
- * @interface
- */
-export type ProgressCircleRootProps = Omit<CoreProgressRootProps, "children"> & {
-  children?: ReactNode
-
+export interface ProgressCircleRootProps extends CoreProgressRingRootProps {
   /**
    * The width and height of the progress circle. Supply as a number for
    * fine-grained customization.
@@ -28,25 +21,23 @@ export type ProgressCircleRootProps = Omit<CoreProgressRootProps, "children"> & 
   size?: ProgressCircleSize
 }
 
+/**
+ * The root container element for the progress circle. Renders a `<div>`
+ * element by default.
+ */
 export function ProgressCircleRoot({
   children,
-  className,
-  size = "md",
+  size,
   ...props
 }: ProgressCircleRootProps): ReactElement {
-  const progressCircleContext: ProgressCircleContextValue = useMemo(
-    () => ({size}),
+  const api = useMemo(
+    () => createVsProgressCircleApi({size}, normalizeProps),
     [size],
   )
-
+  const mergedProps = mergeProps(api.getRootBindings(), props)
   return (
-    <ProgressCircleContextProvider value={progressCircleContext}>
-      <CoreProgress.Root
-        className={clsx("vs-progress-circle", className)}
-        {...props}
-      >
-        {children}
-      </CoreProgress.Root>
-    </ProgressCircleContextProvider>
+    <VsProgressCircleContextProvider value={api}>
+      <CoreProgressRing.Root {...mergedProps}>{children}</CoreProgressRing.Root>
+    </VsProgressCircleContextProvider>
   )
 }

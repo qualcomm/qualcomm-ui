@@ -3,7 +3,7 @@
   display: block;
 }
 
-.vs-disclosure--header {
+.vs-disclosure__header {
   align-items: center;
   background-color: var(--vscode-sideBarSectionHeader-background);
   cursor: pointer;
@@ -14,7 +14,7 @@
   padding: 1px 12px;
 }
 
-.vs-disclosure--header:focus {
+.vs-disclosure__header:focus {
   opacity: 1;
   outline-offset: -1px;
   outline-style: solid;
@@ -22,7 +22,7 @@
   outline-color: var(--vscode-focusBorder);
 }
 
-.vs-disclosure--label {
+.vs-disclosure__label {
   color: var(--vscode-sideBarTitle-foreground);
   display: block;
   font-family: var(--vscode-font-family);
@@ -35,7 +35,7 @@
   white-space: nowrap;
 }
 
-.vs-disclosure--description {
+.vs-disclosure__description {
   font-weight: 400;
   margin-left: 6px;
   font-size: 11px;
@@ -44,7 +44,7 @@
   opacity: 0.6;
 }
 
-.vs-disclosure--header-icon {
+.vs-disclosure__header-icon {
   color: var(--vscode-icon-foreground);
   display: block;
   flex-shrink: 0;
@@ -52,15 +52,15 @@
 }
 
 .vs-disclosure.state-open {
-  .vs-disclosure--header-icon {
+  .vs-disclosure__header-icon {
     transform: rotate(90deg);
   }
-  .vs-disclosure--body {
+  .vs-disclosure__body {
     display: block;
   }
 }
 
-.vs-disclosure--body {
+.vs-disclosure__body {
   display: none;
   overflow: hidden;
   font-family: var(--vscode-font-family);
@@ -72,7 +72,7 @@
   }
 }
 
-.vs-disclosure--actions {
+.vs-disclosure__actions {
   color: var(--vscode-sideBarTitle-foreground);
   align-items: center;
   display: flex;
