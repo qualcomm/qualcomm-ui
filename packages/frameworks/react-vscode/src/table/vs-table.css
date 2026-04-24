@@ -1,0 +1,28 @@
+.vs-table {
+  color: var(--vscode-editor-foreground);
+}
+
+.vs-thead {
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--vscode-editorWidget-border);
+}
+
+.vs-th {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  height: 40px;
+  line-height: normal;
+  padding: 0 12px;
+}
+
+.vs-td {
+  background: var(--vscode-editor-background);
+  border-top: 1px solid var(--vscode-editorWidget-border);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  height: 40px;
+  line-height: normal;
+  padding: 0 12px;
+}

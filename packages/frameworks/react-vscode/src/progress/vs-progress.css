@@ -1,0 +1,117 @@
+.vs-progress {
+  display: grid;
+  gap: 8px;
+  position: relative;
+  width: 100%;
+}
+
+.vs-progress--label {
+  color: var(--vscode-editor-foreground);
+  display: flex;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  grid-row: 1;
+  line-height: normal;
+}
+
+.vs-progress--value {
+  color: var(--vscode-debugView-stateLabelForeground);
+  display: flex;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  line-height: normal;
+}
+
+.vs-progress--track {
+  align-items: baseline;
+  align-self: center;
+  background: var(--vscode-welcomePage-progress\.background);
+  border-radius: 360px;
+  display: flex;
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.vs-progress--bar {
+  background: currentColor;
+  border-radius: 360px;
+  color: var(--vscode-welcomePage-progress\.foreground);
+  height: 4px;
+  max-height: 4px;
+  transition: width 200ms ease;
+
+  &[data-state="loading"] {
+    width: var(--percent);
+  }
+
+  &[data-state="indeterminate"] {
+    &:before {
+      animation: vs-progress--indeterminate-animation-1 2.2s
+        cubic-bezier(0.65, 0.815, 0.735, 0.395) 0s infinite normal none running;
+      background: currentColor;
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      top: 0;
+      transform-origin: left center;
+      transition: transform 0.2s linear 0s;
+      width: auto;
+    }
+    &:after {
+      animation: vs-progress--indeterminate-animation-2 2.2s
+        cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite normal none running;
+      background: currentColor;
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      top: 0;
+      transform-origin: left center;
+      transition: transform 0.2s linear 0s;
+      width: auto;
+    }
+  }
+}
+
+@keyframes vs-progress--indeterminate-animation-1 {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes vs-progress--indeterminate-animation-2 {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}

@@ -1,0 +1,82 @@
+.vs-disclosure {
+  background-color: var(--vscode-sideBar-background);
+  display: block;
+}
+
+.vs-disclosure--header {
+  align-items: center;
+  background-color: var(--vscode-sideBarSectionHeader-background);
+  cursor: pointer;
+  display: flex;
+  height: 22px;
+  line-height: 22px;
+  user-select: none;
+  padding: 1px 12px;
+}
+
+.vs-disclosure--header:focus {
+  opacity: 1;
+  outline-offset: -1px;
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: var(--vscode-focusBorder);
+}
+
+.vs-disclosure--label {
+  color: var(--vscode-sideBarTitle-foreground);
+  display: block;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  font-weight: 700;
+  margin: 0;
+  overflow: hidden;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vs-disclosure--description {
+  font-weight: 400;
+  margin-left: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  text-transform: none;
+  opacity: 0.6;
+}
+
+.vs-disclosure--header-icon {
+  color: var(--vscode-icon-foreground);
+  display: block;
+  flex-shrink: 0;
+  margin: 0 3px;
+}
+
+.vs-disclosure.state-open {
+  .vs-disclosure--header-icon {
+    transform: rotate(90deg);
+  }
+  .vs-disclosure--body {
+    display: block;
+  }
+}
+
+.vs-disclosure--body {
+  display: none;
+  overflow: hidden;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-sideBarTitle-foreground);
+
+  &.animated {
+    display: block;
+  }
+}
+
+.vs-disclosure--actions {
+  color: var(--vscode-sideBarTitle-foreground);
+  align-items: center;
+  display: flex;
+  height: 22px;
+  margin-left: auto;
+  margin-right: 4px;
+}

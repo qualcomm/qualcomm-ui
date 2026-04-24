@@ -1,0 +1,105 @@
+.vs-button {
+  align-items: center;
+  background-color: var(--vscode-button-background);
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: var(--vscode-button-foreground);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+}
+
+.vs-button.kind-text {
+  font-family: var(--vscode-font-family);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  padding: 5px 11px;
+  white-space: nowrap;
+
+  &[data-size="sm"] {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 2px 4px;
+  }
+
+  &[data-size="xs"] {
+    font-size: 11px;
+    line-height: normal;
+    padding: 0 6px;
+  }
+}
+
+.vs-button.kind-icon {
+  padding: 3px;
+}
+
+.vs-button {
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: var(--vscode-button-hoverBackground);
+    &.state-disabled {
+      background-color: var(--vscode-button-background);
+    }
+  }
+
+  &:focus {
+    outline: 1px solid var(--vscode-focusBorder);
+    outline-offset: 2px;
+
+    &.state-disabled {
+      background-color: var(--vscode-button-background);
+      outline: 0;
+    }
+  }
+}
+
+.vs-button[data-variant="secondary"] {
+  background-color: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+
+  &:focus {
+    &.state-disabled {
+      background-color: var(--vscode-button-secondaryBackground);
+    }
+  }
+
+  &:hover {
+    background-color: var(--vscode-button-secondaryHoverBackground);
+    &.state-disabled {
+      background-color: var(--vscode-button-secondaryBackground);
+    }
+  }
+}
+
+.vs-button[data-variant="outline"] {
+  background-color: var(--vscode-tab-activeBackground);
+  border: solid 1px var(--vscode-button-secondaryBackground);
+  color: var(--vscode-tab-activeForeground);
+
+  &:hover {
+    background-color: var(--vscode-button-secondaryHoverBackground);
+    &.state-disabled {
+      background-color: var(--vscode-button-secondaryBackground);
+    }
+  }
+}
+
+.vs-button--icon {
+  &[data-start] {
+    margin-right: 4px;
+  }
+  &[data-end] {
+    margin-left: 4px;
+  }
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+}

@@ -1,0 +1,36 @@
+.vs-badge {
+    display: flex;
+    align-items: center;
+    justify-self: flex-start;
+    align-self: flex-start;
+
+    min-height: 16px;
+    border-radius: 20px;
+    gap: 10px;
+
+    font-size: 9px;
+    font-style: normal;
+    font-stretch: 110%;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: normal;
+
+    &.primary {
+        color: var(--vscode-activityBarBadge-foreground);
+        background: var(--vscode-activityBarBadge-background);
+    }
+    &.secondary {
+        color: var(--vscode-badge-foreground);
+        background: var(--vscode-badge-background);
+    }
+
+    &[data-size='xs'] {
+        padding: 2px 4px 3px 4px;
+    }
+    &[data-size='sm'] {
+        padding: 2px 5px;
+    }
+    &[data-size='md'] {
+        padding: 2px 6px 3px 6px;
+    }
+}

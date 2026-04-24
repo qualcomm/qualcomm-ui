@@ -1,0 +1,89 @@
+{
+  "name": "@qualcomm-ui/react-vscode",
+  "version": "0.1.0",
+  "description": "VS Code themed React components built on @qualcomm-ui/react-core",
+  "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/stub.d.ts",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    },
+    "./styles.css": {
+      "style": "./dist/all.min.css",
+      "default": "./dist/all.min.css"
+    }
+  },
+  "scripts": {
+    "build": "run-s clean build:js build:css build:ts",
+    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
+    "build:css": "qui-css-utils build",
+    "build:js": "tsx build.ts",
+    "build:ts": "tsc -b tsconfig.lib.json",
+    "dev": "run-p watch:css watch:js watch:ts",
+    "watch:css": "qui-css-utils watch",
+    "watch:js": "tsx build.ts --watch --mode development",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "lint": "eslint --quiet",
+    "test": "vitest -c vitest.config.ts --run",
+    "test:coverage": "vitest -c vitest.config.ts --run --coverage",
+    "test:watch": "cross-env vitest -c vitest.config.ts",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@qualcomm-ui/cli": "catalog:",
+    "@qualcomm-ui/core": "workspace:^1.9.0",
+    "@qualcomm-ui/css-utils": "catalog:",
+    "@qualcomm-ui/esbuild": "catalog:",
+    "@qualcomm-ui/react-core": "workspace:^1.4.3",
+    "@qualcomm-ui/react-test-utils": "workspace:^1.0.1",
+    "@qualcomm-ui/tsconfig": "catalog:",
+    "@qualcomm-ui/utils": "workspace:^1.2.3",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/babel__core": "^7.20.5",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/browser": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "esbuild": "catalog:",
+    "lucide-react": "0.569.0",
+    "playwright": "1.56.1",
+    "quick-lru": "^7.2.0",
+    "react": "catalog:",
+    "react-compiler-runtime": "^1.0.0",
+    "react-dom": "catalog:",
+    "shx": "^0.4.0",
+    "tailwindcss": "^4.1.17",
+    "tsx": "catalog:",
+    "typescript-plugin-css-modules": "^5.0.1",
+    "vite": "catalog:",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "catalog:",
+    "vitest-browser-react": "^2.0.2"
+  },
+  "peerDependencies": {
+    "@qualcomm-ui/core": "^1.9.0",
+    "@qualcomm-ui/react-core": "^1.4.3",
+    "@qualcomm-ui/utils": "^1.2.3",
+    "lucide-react": ">=0.483.0 <2",
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
+  }
+}

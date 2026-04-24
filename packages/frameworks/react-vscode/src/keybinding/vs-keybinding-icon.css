@@ -1,0 +1,33 @@
+.vs-keybinding {
+  align-items: center;
+  display: inline-flex;
+  gap: 4px;
+}
+
+.vs-keybinding--icon {
+  align-items: center;
+  background: var(--vscode-keybindingLabel-background);
+  border-radius: 2px;
+  color: var(--vscode-keybindingLabel-foreground);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  padding: 2px 5px;
+  position: relative;
+
+  * > {
+    height: 12px;
+  }
+
+  &:after {
+    background: var(--vscode-keybindingLabel-bottomBorder);
+    border-radius: 0 0 2px 2px;
+    bottom: 0;
+    content: " ";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+}

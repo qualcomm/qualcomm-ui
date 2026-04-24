@@ -1,0 +1,56 @@
+.vs-menu {
+  background: var(--vscode-menu-background);
+  border: solid 1px var(--vscode-editorHoverWidget-border);
+  box-shadow: var(--vscode-widget-shadow);
+  display: block;
+  min-width: 160px;
+  outline: 0;
+  padding: 4px;
+  z-index: 3000;
+}
+
+.vs-menu-item {
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: var(--vscode-menu-foreground);
+  display: grid;
+  font-size: 13px;
+  grid-template-columns: 16px 1fr auto;
+  grid-template-rows: 1fr;
+  justify-content: space-between;
+  min-width: 110px;
+  outline: 0;
+  padding: 4px 28px 4px 12px;
+  text-align: left;
+  width: 100%;
+
+  &:hover {
+    color: var(--vscode-menu-selectionForeground);
+  }
+
+  &:hover:not(:focus-visible) {
+    background: var(--vscode-menu-selectionBackground);
+  }
+
+  &:focus-visible {
+    background: var(--vscode-menu-selectionBackground);
+    color: var(--vscode-menu-selectionForeground);
+  }
+
+  &.state-disabled {
+    cursor: default;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.vs-menu-item--end-icon {
+  margin-right: -8px;
+}
+
+.vs-menu-item[data-open] {
+  background: var(--vscode-menu-selectionBackground);
+  color: var(--vscode-menu-selectionForeground);
+}

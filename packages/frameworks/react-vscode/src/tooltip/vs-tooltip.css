@@ -1,0 +1,9 @@
+.vs-tooltip {
+  background: var(--vscode-menu-background);
+  border: 1px solid var(--vscode-editorWidget-border);
+  color: var(--vscode-editor-foreground);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: normal;
+  padding: 4px 5px;
+}

@@ -1,0 +1,40 @@
+.vs-icon.codicon[class*="codicon-"] {
+  animation-duration: var(--spin-duration) !important;
+  display: inline;
+  font-size: var(--vs-icon-size);
+}
+
+a,
+button,
+.action {
+  &.vs-icon {
+    border-color: transparent;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    color: currentColor;
+    cursor: pointer;
+    padding: 2px;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 1px solid var(--vscode-focusBorder);
+
+      &.state-disabled {
+        background-color: var(--vscode-button-background);
+        outline: 0;
+      }
+    }
+  }
+
+  &.vs-icon:hover {
+    background-color: var(--vscode-toolbar-hoverBackground);
+  }
+  &.vs-icon:active {
+    background-color: var(--vscode-toolbar-activeBackground);
+  }
+}

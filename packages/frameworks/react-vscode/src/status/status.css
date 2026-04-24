@@ -1,0 +1,14 @@
+.vs-status-info {
+  color: var(--vscode-notificationsInfoIcon-foreground);
+}
+
+.vs-status-warning {
+  color: var(--vscode-notificationsWarningIcon-foreground,);
+}
+
+.vs-status-error {
+  color: var(
+    --vscode-notificationsErrorIcon-foreground,
+    var(--vscode-errorForeground)
+  );
+}

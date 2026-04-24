@@ -1,0 +1,11 @@
+.overlay-panel {
+  background-clip: border-box;
+  background-color: var(
+    --vscode-editorWidget-background,
+    var(--vscode-menu-background)
+  );
+  box-shadow: var(--vscode-widget-shadow);
+  color: var(--q-text-1-primary);
+  display: block;
+  outline: none;
+}
