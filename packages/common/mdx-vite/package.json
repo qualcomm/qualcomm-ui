@@ -85,7 +85,7 @@
     "unist-util-find": "^3.0.0",
     "unist-util-remove": "^4.0.0",
     "unist-util-visit": "^5.0.0",
-    "uuid": "^10.0.0"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
