@@ -20,8 +20,7 @@ import {
 } from "./json-viewer-context"
 
 export interface UseJsonViewerProps
-  extends Omit<TreeApiProps<JsonNode>, "collection">,
-    JsonViewerOptions {
+  extends Omit<TreeApiProps<JsonNode>, "collection">, JsonViewerOptions {
   /**
    * The data to display in the JSON viewer. Accepts any JavaScript value.
    */

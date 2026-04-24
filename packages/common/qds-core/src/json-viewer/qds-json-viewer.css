@@ -1,22 +1,47 @@
-.qui-json-viewer__root {
-  --json-viewer-color-string: var(--color-category-green-strong);
-  --json-viewer-color-number: var(--color-category-blue-strong);
-  --json-viewer-color-boolean: var(--color-category-orange-strong);
-  --json-viewer-color-null: var(--color-text-neutral-secondary);
-  --json-viewer-color-undefined: var(--color-text-neutral-secondary);
-  --json-viewer-color-function: var(--color-category-red-strong);
-  --json-viewer-color-date: var(--color-category-blue-strong);
-  --json-viewer-color-regex: var(--color-category-red-strong);
-  --json-viewer-color-symbol: var(--color-category-purple-strong);
-  --json-viewer-color-bigint: var(--color-category-blue-strong);
-  --json-viewer-color-error: var(--color-category-red-strong);
-  --json-viewer-color-circular: var(--color-text-neutral-secondary);
-  --json-viewer-color-constructor: var(--color-text-neutral-secondary);
-  --json-viewer-color-brace: var(--color-text-neutral-secondary);
-  --json-viewer-color-preview: var(--color-text-neutral-secondary);
-  --json-viewer-color-key: var(--color-category-purple-strong);
-  --json-viewer-color-colon: var(--color-text-neutral-secondary);
+:root {
+  [data-brand][data-theme="dark"] {
+    --json-viewer-color-string: #d9b770;
+    --json-viewer-color-number: #b5cea8;
+    --json-viewer-color-boolean: #739ed6;
+    --json-viewer-color-null: #739ed6;
+    --json-viewer-color-undefined: #739ed6;
+    --json-viewer-color-function: #dcdcaa;
+    --json-viewer-color-date: #4ec9b0;
+    --json-viewer-color-regex: #d16969;
+    --json-viewer-color-symbol: #b6a9d4;
+    --json-viewer-color-bigint: #b5cea8;
+    --json-viewer-color-error: #f1735e;
+    --json-viewer-color-circular: #aaaaab;
+    --json-viewer-color-constructor: #b5cea8;
+    --json-viewer-color-brace: #babbb8;
+    --json-viewer-color-preview: #aaaaab;
+    --json-viewer-color-key: #a9b9d4;
+    --json-viewer-color-colon: #babbb8;
+  }
 
+  [data-brand][data-theme="light"] {
+    --json-viewer-color-string: #c25100;
+    --json-viewer-color-number: #1f845a;
+    --json-viewer-color-boolean: #2a2aea;
+    --json-viewer-color-null: #2a2aea;
+    --json-viewer-color-undefined: #2a2aea;
+    --json-viewer-color-function: #8f46fc;
+    --json-viewer-color-date: #02827e;
+    --json-viewer-color-regex: #9521b9;
+    --json-viewer-color-symbol: #9521b9;
+    --json-viewer-color-bigint: #1f845a;
+    --json-viewer-color-error: #c71100;
+    --json-viewer-color-circular: #636364;
+    --json-viewer-color-constructor: #02827e;
+    --json-viewer-color-brace: #636364;
+    --json-viewer-color-preview: #636364;
+    --json-viewer-color-key: #a1480e;
+    --json-viewer-color-colon: #636364;
+  }
+}
+
+
+.qui-json-viewer__root {
   font: var(--font-static-code-sm-default);
   width: 100%;
 }
@@ -26,6 +51,7 @@
   gap: var(--spacing-30);
   height: auto;
   min-height: unset;
+  font: var(--font-static-code-sm-default);
 }
 
 .qui-json-viewer__value[data-type="string"] {

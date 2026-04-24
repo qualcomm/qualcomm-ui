@@ -1301,14 +1301,14 @@ export const IterableType: JsonDataTypeOptions = dataType<any>({
   check(value) {
     return Boolean(
       value &&
-        typeof value === "object" &&
-        typeof value[Symbol.iterator] === "function" &&
-        !(value instanceof Set) &&
-        !(value instanceof Map) &&
-        !Array.isArray(value) &&
-        !(value instanceof Date) &&
-        !(value instanceof RegExp) &&
-        !(value instanceof ArrayBuffer),
+      typeof value === "object" &&
+      typeof value[Symbol.iterator] === "function" &&
+      !(value instanceof Set) &&
+      !(value instanceof Map) &&
+      !Array.isArray(value) &&
+      !(value instanceof Date) &&
+      !(value instanceof RegExp) &&
+      !(value instanceof ArrayBuffer),
     )
   },
   description: "Iterable",
