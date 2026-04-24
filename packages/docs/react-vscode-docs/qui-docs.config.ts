@@ -61,18 +61,10 @@ const extraFiles: KnowledgeExtraFile[] = [
 export default {
   appDirectory: "src",
   knowledge: {
-    baseUrl: "https://react-next.qui.qualcomm.com",
-    exclude: [
-      "**/installation+/**",
-      "index.mdx",
-      "**/components+/overview*",
-      "**/components+/overview*",
-    ],
+    baseUrl: "https://react-vscode.qui.qualcomm.com",
+    exclude: ["**/installation+/**", "index.mdx"],
     extraFiles,
     frontmatter: {exclude: ["url"], include: ["*"]},
-    integrations: {
-      openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],
-    },
   },
   navConfig,
   pageDirectory: "routes",

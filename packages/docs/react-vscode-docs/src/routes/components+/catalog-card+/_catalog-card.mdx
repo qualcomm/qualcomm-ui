@@ -1,0 +1,40 @@
+---
+title: Catalog Card
+---
+
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+```tsx
+import {
+  CatalogCard,
+  CatalogCardActions,
+  CatalogCardBadge,
+  CatalogCardDescription,
+  CatalogCardDetails,
+  CatalogCardLabel,
+  CatalogCardLogo,
+  CatalogCardTag,
+} from "@qualcomm-ui/react-vscode/catalog-card"
+```
+
+This component is a composable card in a horizontal layout.
+
+## Examples
+
+### Basic
+
+<Demo name="CatalogCardBasicDemo" component={demos.CatalogCardBasicDemo} />
+
+### Customization
+
+<Demo name="CatalogCardActionsDemo" component={demos.CatalogCardActionsDemo} />
+
+## API
+
+### CatalogCardProps
+
+<TypeDocProps name="CatalogCardProps" />

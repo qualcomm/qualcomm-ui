@@ -30,6 +30,7 @@
     "@qualcomm-ui/qds-core": "workspace:*",
     "@qualcomm-ui/react": "workspace:*",
     "@qualcomm-ui/react-core": "workspace:*",
+    "@qualcomm-ui/react-vscode": "workspace:*",
     "@qualcomm-ui/react-internal": "workspace:*",
     "@qualcomm-ui/react-mdx": "workspace:*",
     "@qualcomm-ui/react-router-utils": "workspace:*",
