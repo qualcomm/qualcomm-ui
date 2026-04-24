@@ -11,8 +11,7 @@ import {
   type CoreComboboxItemIndicatorProps,
 } from "@qualcomm-ui/react-core/combobox"
 
-export interface ComboboxItemIndicatorProps
-  extends CoreComboboxItemIndicatorProps {
+export interface ComboboxItemIndicatorProps extends CoreComboboxItemIndicatorProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    *

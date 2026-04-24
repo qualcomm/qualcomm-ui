@@ -8,6 +8,7 @@ import {
   buildEntryPoints,
   type BuildEntryPointsOptions,
   collectFolders,
+  getArg,
   hasArg,
   logPlugin,
 } from "@qualcomm-ui/esbuild"
@@ -110,11 +111,15 @@ async function collectEntryPoints(): Promise<Record<string, string>> {
 }
 
 async function build(argv: string[]) {
+  const mode = getArg(argv, "--mode")
   const buildOpts: BuildOptions = {
     banner: {
       js: `"use client";`,
     },
     bundle: true,
+    define: {
+      __QUI_DEV___: mode === "development" ? "true" : "false",
+    },
     external: [
       ...Object.keys(pkg.devDependencies ?? {}),
       ...Object.keys(pkg.peerDependencies ?? {}),

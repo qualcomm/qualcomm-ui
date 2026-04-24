@@ -40,6 +40,9 @@ const navConfig: NavConfig[] = [
     id: "pitfalls",
   },
   {
+    id: "developer-previews",
+  },
+  {
     separator: true,
   },
   {
@@ -47,21 +50,8 @@ const navConfig: NavConfig[] = [
       {
         id: "overview",
       },
-      {
-        group: "Data Display",
-        id: "badges",
-        ignoreRouteMetaOrder: true,
-      },
     ],
     expanded: true,
-    groupOrder: [
-      "Buttons",
-      "Form Controls",
-      "Data Display",
-      "Overlays",
-      "Disclosure",
-      "Feedback",
-    ],
     id: "components",
     title: "Components",
   },
@@ -115,30 +105,14 @@ export default {
    */
   hotUpdateIgnore: /angular-demo-module|public/,
   knowledge: {
-    environments: [
-      {
-        id: "qui-ai",
-        outputPath: "./knowledge/qui-ai",
-      },
-      {
-        id: "saga-ai",
-        outputPath: "./knowledge/saga-ai",
-      },
+    baseUrl: "https://angular-next.qui.qualcomm.com",
+    exclude: [
+      "index.mdx",
+      "**/components+/overview*",
+      "**/components+/all-components*",
     ],
-    global: {
-      baseUrl: "https://angular-next.qui.qualcomm.com",
-      exclude: [
-        "index.mdx",
-        "**/components+/overview*",
-        "**/components+/all-components*",
-      ],
-      exports: {
-        enabled: true,
-        exclude: ["**/components+/overview*", "**/components+/all-components*"],
-      },
-      extraFiles,
-      frontmatter: {exclude: ["title", "description", "group"], include: ["*"]},
-    },
+    extraFiles,
+    frontmatter: {exclude: ["title", "description", "group"], include: ["*"]},
     integrations: {
       openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}],
     },

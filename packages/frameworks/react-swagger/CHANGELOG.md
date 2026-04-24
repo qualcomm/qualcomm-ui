@@ -1,48 +1,210 @@
 # @qualcomm-ui/react-swagger Changelog
 
-## 1.2.8 (2026/02/27)
+## 1.3.2
 
-### Miscellaneous Chores
-
-- **deps:** update dependencies [@qualcomm-ui/react-core]
-
-## 1.2.7 (2026/02/26)
+Apr 23rd, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.2.6 (2026/02/24)
+## 1.3.1
+
+Apr 23rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.3.0
+
+Apr 21st, 2026
+
+### Features
+
+- [react-swagger]: add string enum data type for json model viewer ([4204da5](https://github.com/qualcomm/qualcomm-ui/commit/4204da5))
+- [react-swagger]: add enum type layout styling for data key pairs ([d17dfb7](https://github.com/qualcomm/qualcomm-ui/commit/d17dfb7))
+
+### Code Refactoring
+
+- [react-swagger]: replace description expand button with icon button ([2b3ef4c](https://github.com/qualcomm/qualcomm-ui/commit/2b3ef4c))
+
+## 1.2.22
+
+Apr 21st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.2.21
+
+Apr 19th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
 
-## 1.2.5 (2026/02/13)
+## 1.2.20
+
+Apr 19th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core, @qualcomm-ui/utils]
+
+## 1.2.19
+
+Apr 16th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.2.4 (2026/02/11)
+## 1.2.18
+
+Apr 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/core, @qualcomm-ui/qds-core]
+
+## 1.2.17
+
+Apr 6th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.2.3 (2026/01/30)
+## 1.2.16
+
+Apr 2nd, 2026
+
+### Miscellaneous Chores
+
+- upgrade to vite v8 and bump dependencies ([18596c5](https://github.com/qualcomm/qualcomm-ui/commit/18596c5))
+- **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core]
+
+## 1.2.15
+
+Mar 30th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.2.14
+
+Mar 25th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
 
-## 1.2.2 (2026/01/29)
+## 1.2.13
+
+Mar 24th, 2026
+
+### Bug Fixes
+
+- [styles]: replaced neutral-04 token and rename kiwi to lime ([9c9b50f](https://github.com/qualcomm/qualcomm-ui/commit/9c9b50f))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.2.12
+
+Mar 20th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.2.11
+
+Mar 12th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.2.10
+
+Mar 10th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.2.9
+
+Mar 6th, 2026
+
+### Miscellaneous Chores
+
+- update pnpm, react, and swagger-ui dependencies ([a3a87fe](https://github.com/qualcomm/qualcomm-ui/commit/a3a87fe))
+
+## 1.2.8
+
+Feb 27th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core]
+
+## 1.2.7
+
+Feb 26th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.2.6
+
+Feb 24th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
+## 1.2.5
+
+Feb 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.2.4
+
+Feb 11th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.2.3
+
+Jan 30th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.2.2
+
+Jan 29th, 2026
 
 ### Bug Fixes
 
 - [json-model-viewer]: hide description button for all object types
 
-## 1.2.1 (2026/01/29)
+## 1.2.1
+
+Jan 29th, 2026
 
 ### Bug Fixes
 
@@ -56,7 +218,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.2.0 (2026/01/28)
+## 1.2.0
+
+Jan 28th, 2026
 
 ### Features
 
@@ -71,7 +235,9 @@
 
 - [json-viewer]: update rest-spread and description styling
 
-## 1.1.0 (2026/01/28)
+## 1.1.0
+
+Jan 28th, 2026
 
 ### Features
 
@@ -95,13 +261,17 @@
 
 - handle navigation events to auto-expand models when navigating to anchors
 
-## 1.0.11 (2026/01/27)
+## 1.0.11
+
+Jan 27th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.0.10 (2026/01/23)
+## 1.0.10
+
+Jan 23rd, 2026
 
 ### Code Refactoring
 
@@ -111,7 +281,9 @@
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react-core, @qualcomm-ui/qds-core, @qualcomm-ui/utils]
 
-## 1.0.9 (2026/01/19)
+## 1.0.9
+
+Jan 19th, 2026
 
 ### Bug Fixes
 
@@ -121,49 +293,65 @@
 
 - **deps:** update dependencies [@qualcomm-ui/react-core, @qualcomm-ui/qds-core]
 
-## 1.0.8 (2026/01/17)
+## 1.0.8
+
+Jan 17th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.0.7 (2026/01/15)
+## 1.0.7
+
+Jan 15th, 2026
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.0.6 (2025/12/24)
+## 1.0.6
+
+Dec 24th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
 
-## 1.0.5 (2025/12/22)
+## 1.0.5
+
+Dec 22nd, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.0.4 (2025/12/18)
+## 1.0.4
+
+Dec 18th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.0.3 (2025/12/15)
+## 1.0.3
+
+Dec 15th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core]
 
-## 1.0.2 (2025/12/11)
+## 1.0.2
+
+Dec 11th, 2025
 
 ### Miscellaneous Chores
 
 - **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
 
-## 1.0.1 (2025/12/10)
+## 1.0.1
+
+Dec 10th, 2025
 
 ### Miscellaneous Chores
 

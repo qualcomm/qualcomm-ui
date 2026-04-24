@@ -13,8 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsDialogContext} from "./qds-dialog-context"
 
 export interface DialogCloseButtonProps
-  extends IdProp,
-    ElementRenderProp<"button"> {
+  extends IdProp, ElementRenderProp<"button"> {
   /**
    * @default X
    */

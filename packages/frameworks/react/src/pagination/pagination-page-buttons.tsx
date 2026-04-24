@@ -10,8 +10,10 @@ import {
 
 import {Pagination} from "./index"
 
-export interface PaginationPageButtonsProps
-  extends Omit<ActionGroupProps, "children"> {}
+export interface PaginationPageButtonsProps extends Omit<
+  ActionGroupProps,
+  "children"
+> {}
 
 /**
  * A shortcut for rendering the pagination page buttons. This is equivalent to:

@@ -19,12 +19,12 @@ import type {Placement} from "@qualcomm-ui/dom/floating-ui"
           [collection]="collection()"
           [(ngModel)]="placement"
         >
-          <span q-tooltip-trigger>
-            <button q-select-trigger>
+          <div q-tooltip-trigger>
+            <div q-select-control>
               <span q-select-value-text></span>
-              <span q-select-indicator></span>
-            </button>
-          </span>
+              <button q-select-indicator></button>
+            </div>
+          </div>
           <select q-select-hidden-select></select>
           <ng-template qPortal>
             <div q-select-positioner>
@@ -34,7 +34,9 @@ import type {Placement} from "@qualcomm-ui/dom/floating-ui"
             </div>
           </ng-template>
         </div>
-        <q-tooltip-floating-portal>Hello World!</q-tooltip-floating-portal>
+        <q-tooltip-floating-portal>
+          {{ placement()[0] }}
+        </q-tooltip-floating-portal>
       </div>
     </div>
   `,
@@ -45,18 +47,18 @@ export class TooltipPlacementDemo {
   readonly collection = signal(
     selectCollection({
       items: [
-        "top",
-        "bottom",
-        "right",
-        "left",
-        "top-end",
-        "bottom-end",
-        "right-end",
-        "left-end",
         "top-start",
-        "bottom-start",
+        "top",
+        "top-end",
         "right-start",
+        "right",
+        "right-end",
+        "bottom-start",
+        "bottom",
+        "bottom-end",
         "left-start",
+        "left",
+        "left-end",
       ],
     }),
   )

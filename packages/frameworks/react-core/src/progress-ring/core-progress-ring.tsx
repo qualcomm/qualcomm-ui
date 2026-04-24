@@ -25,7 +25,8 @@ import {
 } from "./progress-ring-context"
 
 export interface CoreProgressRingRootProps
-  extends ProgressApiProps,
+  extends
+    ProgressApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -53,8 +54,7 @@ export function CoreProgressRingRoot({
 }
 
 export interface CoreProgressRingLabelProps
-  extends IdProp,
-    ElementRenderProp<"label"> {
+  extends IdProp, ElementRenderProp<"label"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -79,8 +79,7 @@ export function CoreProgressRingLabel({
   )
 }
 
-export interface CoreProgressRingBarProps
-  extends ComponentPropsWithRef<"circle"> {}
+export interface CoreProgressRingBarProps extends ComponentPropsWithRef<"circle"> {}
 
 export function CoreProgressRingBar(
   props: CoreProgressRingBarProps,
@@ -91,8 +90,7 @@ export function CoreProgressRingBar(
   return <circle {...mergedProps} />
 }
 
-export interface CoreProgressRingTrackProps
-  extends ComponentPropsWithRef<"circle"> {}
+export interface CoreProgressRingTrackProps extends ComponentPropsWithRef<"circle"> {}
 
 export function CoreProgressRingTrack(
   props: CoreProgressRingTrackProps,
@@ -104,8 +102,7 @@ export function CoreProgressRingTrack(
 }
 
 export interface CoreProgressRingCircleProps
-  extends IdProp,
-    ComponentPropsWithRef<"svg"> {
+  extends IdProp, ComponentPropsWithRef<"svg"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -129,8 +126,7 @@ export function CoreProgressRingCircle({
   return <svg {...mergedProps}>{children}</svg>
 }
 
-export interface CoreProgressRingValueTextProps
-  extends ElementRenderProp<"div"> {
+export interface CoreProgressRingValueTextProps extends ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -152,8 +148,7 @@ export function CoreProgressRingValueText({
 }
 
 export interface CoreProgressRingErrorTextProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

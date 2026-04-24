@@ -14,8 +14,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsSideNavApi} from "./qds-side-nav-context"
 
 export interface SideNavRootProps<T = TreeNode>
-  extends CoreSideNavRootProps<T>,
-    QdsSideNavRootProps {}
+  extends CoreSideNavRootProps<T>, QdsSideNavRootProps {}
 
 export function SideNavRoot<T = TreeNode>({
   surface,

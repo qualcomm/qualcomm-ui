@@ -14,8 +14,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-context"
 
 export interface TableRootProps
-  extends ElementRenderProp<"div">,
-    QdsTableApiProps {}
+  extends ElementRenderProp<"div">, QdsTableApiProps {}
 
 /**
  * The root element that wraps the table. Renders a `<div>` element by default.

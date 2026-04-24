@@ -1,8 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
+import type {fieldGroupAnatomy} from "./field-group.anatomy"
 import type {fieldGroupClasses} from "./field-group.classes"
 
 export type QdsFieldGroupSize = "sm" | "md" | "lg"
@@ -35,37 +37,31 @@ export interface QdsFieldGroupApiProps {
 
 type FieldGroupClasses = typeof fieldGroupClasses
 
-interface CommonBindings {
-  "data-scope": "field-group"
-}
+type PartName = AnatomyPartName<typeof fieldGroupAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"fieldGroup", P> {}
 
-export interface QdsFieldGroupRootBindings extends CommonBindings {
+export interface QdsFieldGroupRootBindings extends Part<"root"> {
   className: FieldGroupClasses["root"]
   "data-invalid": BooleanDataAttr
-  "data-part": "root"
 }
 
-export interface QdsFieldGroupLabelBindings extends CommonBindings {
+export interface QdsFieldGroupLabelBindings extends Part<"label"> {
   className: FieldGroupClasses["label"]
-  "data-part": "label"
 }
 
-export interface QdsFieldGroupItemsBindings extends CommonBindings {
+export interface QdsFieldGroupItemsBindings extends Part<"items"> {
   className: FieldGroupClasses["items"]
   "data-indented": BooleanDataAttr
   "data-orientation": QdsFieldGroupOrientation
-  "data-part": "items"
   "data-size": QdsFieldGroupSize
 }
 
-export interface QdsFieldGroupHintBindings extends CommonBindings {
+export interface QdsFieldGroupHintBindings extends Part<"hint"> {
   className: FieldGroupClasses["hint"]
-  "data-part": "hint"
 }
 
-export interface QdsFieldGroupErrorTextBindings extends CommonBindings {
+export interface QdsFieldGroupErrorTextBindings extends Part<"errorText"> {
   className: FieldGroupClasses["errorText"]
-  "data-part": "error-text"
 }
 
 export interface QdsFieldGroupApi {

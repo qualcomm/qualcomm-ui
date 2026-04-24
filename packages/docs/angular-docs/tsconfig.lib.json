@@ -24,10 +24,19 @@
       "path": "./tsconfig.node.json"
     },
     {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
       "path": "../../common/mdx-vite/tsconfig.lib.json"
     },
     {
-      "path": "../../frameworks/react-internal/tsconfig.lib.json"
-    }
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
+    },
   ]
 }

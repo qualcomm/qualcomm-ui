@@ -9,9 +9,7 @@ import {useAccordionContext} from "./accordion-context.service"
 import {useAccordionItemContext} from "./accordion-item-context.service"
 
 @Directive()
-export abstract class CoreAccordionItemTriggerSecondaryDirective
-  implements OnInit
-{
+export abstract class CoreAccordionItemTriggerSecondaryDirective implements OnInit {
   private readonly accordionContext = useAccordionContext()
   private readonly accordionItemContext = useAccordionItemContext()
 

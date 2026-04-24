@@ -18,8 +18,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsMenuContext} from "./qds-menu-context"
 
 export interface MenuRadioItemGroupProps
-  extends Optional<RadioItemGroupContext, "id">,
-    ElementRenderProp<"div"> {
+  extends Optional<RadioItemGroupContext, "id">, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

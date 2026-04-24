@@ -15,8 +15,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface NumberBadgeProps
-  extends QdsNumberBadgeProps,
-    ElementRenderProp<"span"> {
+  extends QdsNumberBadgeProps, ElementRenderProp<"span"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    * When provided, overrides type-specific content.
@@ -48,7 +47,7 @@ export function NumberBadge({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      {children ?? qdsApi.displayValue}
+      <span>{children ?? qdsApi.displayValue}</span>
     </PolymorphicElement>
   )
 }

@@ -1,6 +1,5 @@
 ---
 title: Checkbox
-group: Form Controls
 description: Checkboxes provide a straightforward way for users to make multiple selections from a set of options, whether they're choosing preferences, confirming actions, or filtering content.
 component: Checkbox
 aliases: [check box, tick box]
@@ -145,7 +144,7 @@ The composite elements are only intended to be used as direct descendants of the
   - it makes the entire component clickable, not just the input/control.
   - it provides implicit association between the text and input element, which is ideal for screen readers.
 - Always use the associated [label](./#label) or [q-checkbox-label](./#q-checkbox-label) directive when authoring the text label. This is automatically associated with the input element.
-- If you omit the label, you must provide an [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby) attribute on the `q-checkbox-hidden-input` element:
+- If you omit the label, you must provide an [aria-label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label) or [aria-labelledby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-labelled-by) attribute on the `q-checkbox-hidden-input` element:
 
 ```angular-html
 <label q-checkbox>

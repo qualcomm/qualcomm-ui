@@ -15,8 +15,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {Icon} from "./icon"
 
-export interface IconOrNodeProps
-  extends Omit<ElementRenderProp<"span">, "children"> {
+export interface IconOrNodeProps extends Omit<
+  ElementRenderProp<"span">,
+  "children"
+> {
   /**
    * Lucide-react icon
    */

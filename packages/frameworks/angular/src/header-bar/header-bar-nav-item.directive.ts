@@ -32,7 +32,7 @@ import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
       useFactory: (): IconTokenContext => ({
         getBindings: signal({
           class: headerBarClasses.itemIcon,
-          "data-part": "start-icon",
+          "data-header-bar-part": "start-icon",
         }),
       }),
     },
@@ -41,7 +41,7 @@ import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
       useFactory: (): IconTokenContext => ({
         getBindings: signal({
           class: headerBarClasses.itemIcon,
-          "data-part": "end-icon",
+          "data-header-bar-part": "end-icon",
         }),
       }),
     },

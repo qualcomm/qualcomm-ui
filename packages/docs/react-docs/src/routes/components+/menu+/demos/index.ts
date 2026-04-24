@@ -1,5 +1,6 @@
 export * from "./menu-anchor-point-demo"
 export * from "./menu-avatar-demo"
+export * from "./menu-button-demo"
 export * from "./menu-checkbox-items-demo"
 export * from "./menu-checkbox-selection-state-demo"
 export * from "./menu-context-menu-demo"

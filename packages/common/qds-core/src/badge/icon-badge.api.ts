@@ -5,12 +5,15 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {badgeClasses} from "./badge.classes"
+import {iconBadgeAnatomy} from "./icon-badge.anatomy"
 import type {
   QdsIconBadgeApi,
   QdsIconBadgeIconBindings,
   QdsIconBadgeProps,
   QdsIconBadgeRootBindings,
 } from "./icon-badge.types"
+
+const parts = iconBadgeAnatomy.parts
 
 export function createQdsIconBadgeApi(
   props: QdsIconBadgeProps,
@@ -20,20 +23,17 @@ export function createQdsIconBadgeApi(
   return {
     getIconBindings(): QdsIconBadgeIconBindings {
       return normalize.element({
+        ...parts.icon,
         className: badgeClasses.icon,
-        "data-part": "icon",
-        "data-scope": "icon-badge",
         "data-size": size,
       })
     },
     getRootBindings(): QdsIconBadgeRootBindings {
       return normalize.element({
+        ...parts.root,
         className: badgeClasses.root,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-emphasis": props.emphasis || "neutral",
-        "data-overflow": booleanDataAttr(false),
-        "data-part": "root",
-        "data-scope": "icon-badge",
         "data-size": size,
         "data-variant": props.variant || "default",
       })

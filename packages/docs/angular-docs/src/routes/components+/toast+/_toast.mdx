@@ -1,6 +1,5 @@
 ---
 title: Toast Notification
-group: Feedback
 description: Toasts display temporary, high-visibility messages that appear briefly in the viewport to communicate system events or status changes without interrupting user interactions.
 component: Toast, Toaster
 aliases: [snackbar, notification]
@@ -38,8 +37,7 @@ import {provideToaster, ToasterService} from "@qualcomm-ui/angular/toast"
   template: `
     <div q-toaster [toaster]="toaster"></div>
     <!-- the rest of your app... -->
-
-  `
+  `,
 })
 export class AppComponent {
   protected readonly toaster = inject(ToasterService).toaster

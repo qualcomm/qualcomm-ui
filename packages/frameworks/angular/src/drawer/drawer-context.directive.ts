@@ -23,8 +23,8 @@ export class DrawerContextDirective extends ApiContextDirective<DialogApi> {
    */
   static ngTemplateContextGuard(
     dir: DrawerContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: PaginationApi} {
+    _ctx: unknown,
+  ): _ctx is {$implicit: PaginationApi} {
     return true
   }
 }

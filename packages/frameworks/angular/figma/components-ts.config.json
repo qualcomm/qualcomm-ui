@@ -1,0 +1,11 @@
+{
+  "codeConnect": {
+    "include": ["src/**/*.ts.figma.js"],
+    "label": "Angular",
+    "language": "typescript",
+    "documentUrlSubstitutions": {
+      "<FIGMA_COMPONENTS_BASE>": "https://www.figma.com/design/G6YKSbQ5Jn83xQBRvlqe6M",
+      "<FIGMA_ICONS_BASE>": "https://www.figma.com/design/fJC9KDk1b8v5KxHRttSbqS"
+    }
+  }
+}

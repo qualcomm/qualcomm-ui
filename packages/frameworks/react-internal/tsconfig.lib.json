@@ -18,6 +18,15 @@
       "path": "../../common/core/tsconfig.lib.json"
     },
     {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
+    },
+    {
       "path": "../react/tsconfig.lib.json"
     },
     {

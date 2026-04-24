@@ -1,6 +1,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {dialogAnatomy} from "@qualcomm-ui/core/dialog"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
+
 import type {dialogClasses} from "./dialog.classes"
 
 export type QdsDialogSize = "sm" | "md"
@@ -57,7 +60,10 @@ export interface QdsDialogApiProps {
 
 type DialogClasses = typeof dialogClasses
 
-export interface QdsDialogContentBindings {
+type PartName = AnatomyPartName<typeof dialogAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"dialog", P> {}
+
+export interface QdsDialogContentBindings extends Part<"content"> {
   className: DialogClasses["content"]
   "data-scroll-behavior": QdsDialogScrollBehavior
   "data-size": QdsDialogSize
@@ -69,33 +75,33 @@ export interface QdsDialogIndicatorIconBindings {
   "data-size": QdsDialogSize
 }
 
-export interface QdsDialogHeadingBindings {
+export interface QdsDialogHeadingBindings extends Part<"heading"> {
   className: DialogClasses["heading"]
   "data-size": QdsDialogSize
 }
 
-export interface QdsDialogBodyBindings {
+export interface QdsDialogBodyBindings extends Part<"body"> {
   className: DialogClasses["body"]
   "data-size": QdsDialogSize
 }
 
-export interface QdsDialogFooterBindings {
+export interface QdsDialogFooterBindings extends Part<"footer"> {
   className: DialogClasses["footer"]
   "data-size": QdsDialogSize
 }
 
-export interface QdsDialogCloseButtonBindings {
+export interface QdsDialogCloseButtonBindings extends Part<"closeTrigger"> {
   className: DialogClasses["closeButton"]
 }
 
-export interface QdsDialogPositionerBindings {
+export interface QdsDialogPositionerBindings extends Part<"positioner"> {
   className: DialogClasses["positioner"]
   "data-placement": QdsDialogPlacement
   "data-scroll-behavior": QdsDialogScrollBehavior
   "data-size": QdsDialogSize
 }
 
-export interface QdsDialogBackdropBindings {
+export interface QdsDialogBackdropBindings extends Part<"backdrop"> {
   className: DialogClasses["backdrop"]
 }
 

@@ -45,7 +45,7 @@ export function HeaderBarMenuItem({
     <button {...mergedProps}>
       {icon ? <IconOrNode icon={icon} /> : null}
       {children}
-      <Icon data-part="end-icon" icon={ChevronDown} />
+      <Icon data-header-bar-part="end-icon" icon={ChevronDown} />
     </button>
   )
 }

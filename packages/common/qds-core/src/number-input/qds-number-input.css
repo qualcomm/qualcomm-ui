@@ -28,13 +28,13 @@
     min-width: var(--sizing-160);
   }
 
-  &:has([data-part="decrement-trigger"]) {
-    &:has([data-part="increment-trigger"]) {
+  &:has([data-number-input-part="decrement-trigger"]) {
+    &:has([data-number-input-part="increment-trigger"]) {
       .qui-number-input__control {
         gap: calc((var(--spacing-40) * 2) - 1px);
       }
 
-      [data-part="decrement-trigger"]:after {
+      [data-number-input-part="decrement-trigger"]:after {
         background: var(--color-border-neutral-01);
         content: " ";
         height: var(--sizing-70);
@@ -49,7 +49,7 @@
     --icon-color: var(--color-icon-neutral-secondary);
     border-color: var(--color-interactive-border-neutral-hover);
 
-    &:has([data-part="input"]:not([data-empty])) {
+    &:has([data-number-input-part="input"]:not([data-empty])) {
       --icon-color: var(--color-text-neutral-secondary);
     }
   }
@@ -163,6 +163,7 @@
 }
 
 .qui-number-input__unit-select {
+  --gutter: 3;
   align-items: center;
   background: var(--color-background-neutral-01);
   border: none;
@@ -199,30 +200,30 @@
   }
 
   &[data-disabled] {
-    background: var(--color-utility-disabled-background);
+    background: transparent;
     border-inline-end-color: var(--color-utility-disabled-border);
     color: var(--color-utility-disabled-text);
     cursor: not-allowed;
   }
 
   &[data-readonly] {
-    background: var(--color-background-neutral-02);
+    background: transparent;
     cursor: default;
   }
 
-  [data-part="chevron"] {
+  [data-number-input-part="chevron"] {
     --icon-size: 12px;
     box-sizing: content-box;
     color: var(--color-icon-neutral-primary);
     padding: var(--spacing-70);
   }
 
-  &[data-size="sm"] [data-part="chevron"] {
+  &[data-size="sm"] [data-number-input-part="chevron"] {
     padding: var(--spacing-40);
   }
 
-  &[data-readonly] [data-part="chevron"],
-  &[data-disabled] [data-part="chevron"] {
+  &[data-readonly] [data-number-input-part="chevron"],
+  &[data-disabled] [data-number-input-part="chevron"] {
     color: var(--color-utility-disabled-icon);
   }
 }

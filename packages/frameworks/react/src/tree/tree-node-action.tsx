@@ -16,7 +16,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsTreeContext} from "./qds-tree-context"
 
 export interface TreeNodeActionProps
-  extends CoreTreeNodeActionProps,
+  extends
+    CoreTreeNodeActionProps,
     Pick<InlineIconButtonProps, "icon" | "size"> {}
 
 /**

@@ -71,7 +71,7 @@ In some cases you may need to pass data to your cells. Before you reach for cust
 
 ### Table State
 
-Our table has built-in state management for [editable data](/features/editable-data), [filters](/features/filters), [row expansion](/features/row-expansion), [sub-components](/features/row-expansion-customization), [row selection](/features/row-selection), [sorting](/features/sorting), and more. Refer to the features section for examples of these patterns.
+Our table has built-in state management for [editable data](/features/editable-data), [filters](/features/filters-client-side), [row expansion](/features/row-expansion), [sub-components](/features/row-expansion-customization), [row selection](/features/row-selection), [sorting](/features/sorting), and more. Refer to the features section for examples of these patterns.
 
 ### ColumnMeta
 
@@ -196,7 +196,10 @@ Next, create a cell component that injects the service:
     />
   `,
 })
-export class EditableStatusCell extends CellComponentContextDirective<User, string> {
+export class EditableStatusCell extends CellComponentContextDirective<
+  User,
+  string
+> {
   private readonly userDataService = inject(UserDataService)
 
   readonly value = computed(() => [this.context().getValue()])
@@ -218,7 +221,9 @@ Finally, provide the service and connect the table to the service's data:
   imports: [TableModule],
   providers: [UserDataService],
   selector: "service-cell-demo",
-  template: `<!-- table template -->`,
+  template: `
+    <!-- table template -->
+  `,
 })
 export class ServiceCellDemo {
   protected readonly data = inject(UserDataService).data

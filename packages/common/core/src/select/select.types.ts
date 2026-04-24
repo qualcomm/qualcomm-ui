@@ -4,14 +4,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {
-  InputErrorIndicatorBindings,
-  InputErrorTextBindings,
-  InputHintBindings,
-} from "@qualcomm-ui/core/input"
 import type {Placement, PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {InteractOutsideHandlers} from "@qualcomm-ui/dom/interact-outside"
 import type {TypeaheadState} from "@qualcomm-ui/dom/query"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -20,7 +16,7 @@ import type {
   CollectionItem,
   ListCollection,
 } from "@qualcomm-ui/utils/collection"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -31,6 +27,8 @@ import type {
   JSX,
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
+
+import type {selectAnatomy} from "./select.anatomy"
 
 export interface SelectValueChangeDetails<
   T extends CollectionItem = CollectionItem,
@@ -144,9 +142,7 @@ export interface SelectPositioningOptions extends PositioningOptions {
 }
 
 export interface SelectApiProps<T extends CollectionItem = CollectionItem>
-  extends DirectionProperty,
-    CommonProperties,
-    InteractOutsideHandlers {
+  extends DirectionProperty, CommonProperties, InteractOutsideHandlers {
   /**
    * Whether the select should close after an item is selected
    *
@@ -454,46 +450,55 @@ export interface SelectSchema<T extends CollectionItem = CollectionItem> {
   state: "idle" | "focused" | "open"
 }
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "select"
-}
+type PartName = AnatomyPartName<typeof selectAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"select", P> {}
 
-export interface SelectRootBindings extends CommonBindings {
+export interface SelectRootBindings extends Part<"root"> {
   "data-invalid": BooleanDataAttr
-  "data-part": "root"
   "data-readonly": BooleanDataAttr
+  dir: Direction
   id: string
 }
 
-export interface SelectHintBindings extends CommonBindings, InputHintBindings {}
+export interface SelectHintBindings extends Part<"hint"> {
+  "data-disabled": BooleanDataAttr
+  dir: Direction
+  hidden: boolean
+  id: string
+}
 
-export interface SelectErrorTextBindings
-  extends CommonBindings,
-    InputErrorTextBindings {}
+export interface SelectErrorTextBindings extends Part<"errorText"> {
+  "aria-live": "polite"
+  dir: Direction
+  hidden: boolean
+  id: string
+}
 
-export interface SelectErrorIndicatorBindings
-  extends CommonBindings,
-    InputErrorIndicatorBindings {}
+export interface SelectErrorIndicatorBindings extends Part<"errorIndicator"> {
+  "aria-label": "Error"
+  dir: Direction
+  hidden: boolean
+}
 
-export interface SelectLabelBindings extends CommonBindings {
+export interface SelectLabelBindings extends Part<"label"> {
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "label"
   "data-readonly": BooleanDataAttr
+  dir: Direction
   htmlFor: string
   id: string
   onClick: JSX.MouseEventHandler<HTMLLabelElement>
 }
 
-export interface SelectValueTextBindings extends CommonBindings {
+export interface SelectValueTextBindings extends Part<"valueText"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-multiple": BooleanDataAttr
-  "data-part": "value-text"
+  dir: Direction
 }
 
-export interface SelectControlBindings extends CommonBindings {
+export interface SelectControlBindings extends Part<"control"> {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "aria-haspopup": "listbox"
@@ -501,11 +506,11 @@ export interface SelectControlBindings extends CommonBindings {
   "aria-labelledby": string
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "control"
   "data-placeholder-shown": BooleanDataAttr
   "data-placement": Placement | undefined
   "data-readonly": BooleanDataAttr
   "data-state": "open" | "closed"
+  dir: Direction
   disabled: boolean
   id: string
   onBlur: JSX.FocusEventHandler<HTMLElement>
@@ -519,24 +524,25 @@ export interface SelectControlBindings extends CommonBindings {
 /*
  * This is the "Trigger" in Ark/Zag
  */
-export interface SelectIndicatorBindings extends CommonBindings {
+export interface SelectIndicatorBindings extends Part<"indicator"> {
   "aria-hidden": true
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "indicator"
   "data-readonly": BooleanDataAttr
   "data-state": "open" | "closed"
+  dir: Direction
+  inert: true
   tabIndex: -1
 }
 
-export interface SelectItemBindings extends CommonBindings {
+export interface SelectItemBindings extends Part<"item"> {
   "aria-disabled": BooleanAriaAttr
   "aria-selected": boolean
   "data-disabled": BooleanDataAttr
   "data-highlighted": BooleanDataAttr
-  "data-part": "item"
   "data-state": "checked" | "unchecked"
   "data-value": string
+  dir: Direction
   id: string
   onClick: JSX.MouseEventHandler<HTMLElement>
   onPointerLeave: JSX.PointerEventHandler<HTMLElement>
@@ -544,38 +550,38 @@ export interface SelectItemBindings extends CommonBindings {
   role: "option"
 }
 
-export interface SelectItemTextBindings extends CommonBindings {
+export interface SelectItemTextBindings extends Part<"itemText"> {
   "data-disabled": BooleanDataAttr
   "data-highlighted": BooleanDataAttr
-  "data-part": "item-text"
   "data-state": "checked" | "unchecked"
+  dir: Direction
 }
 
-export interface SelectItemIndicatorBindings extends CommonBindings {
+export interface SelectItemIndicatorBindings extends Part<"itemIndicator"> {
   "aria-hidden": true
-  "data-part": "item-indicator"
   "data-state": "checked" | "unchecked"
+  dir: Direction
   hidden: boolean
 }
 
-export interface SelectItemGroupLabelBindings extends CommonBindings {
-  "data-part": "item-group-label"
+export interface SelectItemGroupLabelBindings extends Part<"itemGroupLabel"> {
+  dir: Direction
   id: string
   role: "presentation"
 }
 
-export interface SelectItemGroupBindings extends CommonBindings {
+export interface SelectItemGroupBindings extends Part<"itemGroup"> {
   "aria-labelledby": string
   "data-disabled": BooleanDataAttr
-  "data-part": "item-group"
+  dir: Direction
   id: string
   role: "group"
 }
 
-export interface SelectClearTriggerBindings extends CommonBindings {
+export interface SelectClearTriggerBindings extends Part<"clearTrigger"> {
   "aria-label": "Clear value"
   "data-invalid": BooleanDataAttr
-  "data-part": "clear-trigger"
+  dir: Direction
   disabled: boolean
   hidden: boolean
   id: string
@@ -583,11 +589,11 @@ export interface SelectClearTriggerBindings extends CommonBindings {
   type: "button"
 }
 
-export interface SelectHiddenSelectBindings extends CommonBindings {
+export interface SelectHiddenSelectBindings extends Part<"hiddenSelect"> {
   "aria-hidden": true
   "aria-labelledby": string
-  "data-part": "hidden-select"
   defaultValue: string | string[]
+  dir: Direction
   disabled: boolean
   form: string | undefined
   id: string
@@ -599,21 +605,21 @@ export interface SelectHiddenSelectBindings extends CommonBindings {
   tabIndex: -1
 }
 
-export interface SelectPositionerBindings extends CommonBindings {
-  "data-part": "positioner"
+export interface SelectPositionerBindings extends Part<"positioner"> {
+  dir: Direction
   id: string
   style: JSX.CSSProperties
 }
 
-export interface SelectContentBindings extends CommonBindings {
+export interface SelectContentBindings extends Part<"content"> {
   "aria-activedescendant": string | undefined
   "aria-labelledby": string
   "aria-multiselectable": BooleanAriaAttr
   "data-activedescendant": string | undefined
   "data-focus-visible": BooleanDataAttr
-  "data-part": "content"
   "data-placement": Placement | undefined
   "data-state": "open" | "closed"
+  dir: Direction
   hidden: boolean
   id: string
   onKeyDown: JSX.KeyboardEventHandler<HTMLElement>

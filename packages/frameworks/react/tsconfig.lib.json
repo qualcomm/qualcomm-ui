@@ -21,6 +21,9 @@
       "path": "../../common/core/tsconfig.lib.json"
     },
     {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
       "path": "../../common/qds-core/tsconfig.lib.json"
     },
     {

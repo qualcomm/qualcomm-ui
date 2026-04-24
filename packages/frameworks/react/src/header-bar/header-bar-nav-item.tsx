@@ -15,7 +15,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsHeaderBarApi} from "./qds-header-bar-context"
 
 export interface HeaderBarNavItemProps
-  extends ElementRenderProp<"button">,
+  extends
+    ElementRenderProp<"button">,
     QdsHeaderBarNavItemProps,
     Pick<ButtonProps, "endIcon" | "startIcon"> {}
 

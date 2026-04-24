@@ -35,8 +35,9 @@ import {ComboboxRoot, type ComboboxRootProps} from "./combobox-root"
 import {ComboboxTrigger, type ComboboxTriggerProps} from "./combobox-trigger"
 import {ComboboxVirtualContent} from "./combobox-virtual-content"
 
-export interface ComboboxProps<T extends CollectionItem>
-  extends ComboboxRootProps<T> {
+export interface ComboboxProps<
+  T extends CollectionItem,
+> extends ComboboxRootProps<T> {
   /**
    * {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label aria-label}
    * attribute, forwarded to the input element.

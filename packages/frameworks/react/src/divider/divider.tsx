@@ -16,8 +16,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface DividerProps
-  extends QdsDividerApiProps,
-    ElementRenderProp<"div"> {}
+  extends QdsDividerApiProps, ElementRenderProp<"div"> {}
 
 /**
  * A divider that separates content with a simple line. Renders a `<div>` element by

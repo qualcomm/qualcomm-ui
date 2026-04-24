@@ -85,28 +85,12 @@ export default {
    */
   hotUpdateIgnore: /angular-demo-module|public/,
   knowledge: {
-    environments: [
-      {
-        id: "qui-ai",
-        outputPath: "./knowledge/qui-ai",
-      },
-      {
-        id: "saga-ai",
-        outputPath: "./knowledge/saga-ai",
-      },
-    ],
-    global: {
-      baseUrl: "https://angular-table-next.qui.qualcomm.com",
-      exclude: ["installation.mdx", "index/_index.mdx"],
-      exports: {
-        enabled: true,
-        exclude: [],
-      },
-      pageIdPrefix: "table",
-    },
+    baseUrl: "https://angular-table-next.qui.qualcomm.com",
+    exclude: ["installation.mdx", "index/_index.mdx"],
     integrations: {
       openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}],
     },
+    pageIdPrefix: "table",
   },
   navConfig,
   pageDirectory: "routes",

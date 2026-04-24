@@ -16,6 +16,7 @@
   gap: 4px;
   padding: 16px;
   text-decoration: inherit;
+  transition: background var(--animation-duration-faster) ease;
   width: 100%;
 
   &[data-next] {
@@ -23,10 +24,7 @@
   }
 
   &:hover {
-    .qui-link__root {
-      border-bottom-color: var(--color-interactive-text-link-default-hover);
-      color: var(--color-interactive-text-link-default-hover);
-    }
+    background: var(--color-interactive-background-ghost-hover);
   }
 }
 

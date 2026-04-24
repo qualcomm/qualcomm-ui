@@ -24,7 +24,8 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TextInputRootProps
-  extends TextInputApiProps,
+  extends
+    TextInputApiProps,
     QdsReactInputApiProps,
     Omit<ElementRenderProp<"div">, "dir" | "defaultValue"> {
   /**

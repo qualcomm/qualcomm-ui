@@ -12,8 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsNumberInputContext} from "./qds-number-input-context"
 
-export interface NumberInputDecrementTriggerProps
-  extends ElementRenderProp<"button"> {}
+export interface NumberInputDecrementTriggerProps extends ElementRenderProp<"button"> {}
 
 export function NumberInputDecrementTrigger(
   props: NumberInputDecrementTriggerProps,

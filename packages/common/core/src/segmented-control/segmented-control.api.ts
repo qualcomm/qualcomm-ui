@@ -5,10 +5,13 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {domIds} from "./internal"
+import {segmentedControlAnatomy} from "./segmented-control.anatomy"
 import type {
   SegmentedControlApi,
   SegmentedControlSchema,
 } from "./segmented-control.types"
+
+const parts = segmentedControlAnatomy.parts
 
 export function createSegmentedControlApi(
   machine: Machine<SegmentedControlSchema>,
@@ -38,11 +41,10 @@ export function createSegmentedControlApi(
     getGroupBindings(props) {
       scope.ids.register("root", props)
       return normalize.element({
+        ...parts.group,
         "aria-orientation": prop("orientation"),
         "data-disabled": booleanDataAttr(groupDisabled),
         "data-orientation": prop("orientation"),
-        "data-part": "group",
-        "data-scope": "segmented-control",
         dir: prop("dir"),
         id: props.id,
       })

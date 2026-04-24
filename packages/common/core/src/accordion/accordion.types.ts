@@ -4,6 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -17,6 +18,8 @@ import type {
   JSX,
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
+
+import type {accordionAnatomy} from "./accordion.anatomy"
 
 export interface AccordionApiProps extends DirectionProperty {
   /**
@@ -135,34 +138,31 @@ export interface AccordionSchema extends MachineSchema {
   props: RequiredBy<AccordionApiProps, "dir">
 }
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "accordion"
-}
+type PartName = AnatomyPartName<typeof accordionAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"accordion", P> {}
 
-export interface AccordionRootBindings extends CommonBindings {
-  "data-part": "root"
+export interface AccordionRootBindings extends Part<"root">, DirectionProperty {
   id: string
 }
 
-export interface AccordionItemCommonBindings extends CommonBindings {
+export interface AccordionItemCommonBindings {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-state": "open" | "closed"
 }
 
-export interface AccordionItemBindings extends AccordionItemCommonBindings {
-  "data-part": "item"
+export interface AccordionItemBindings
+  extends Part<"item">, AccordionItemCommonBindings {
   disabled?: boolean
   id: string
 }
 
 export interface AccordionItemTriggerBindings
-  extends AccordionItemCommonBindings {
+  extends Part<"itemTrigger">, AccordionItemCommonBindings {
   "aria-controls": string
   "aria-disabled": BooleanAriaAttr
   "aria-expanded": BooleanAriaAttr
   "data-ownedby": string
-  "data-part": "trigger"
   disabled?: boolean
   id: string
   onBlur: JSX.FocusEventHandler<HTMLButtonElement>
@@ -172,27 +172,22 @@ export interface AccordionItemTriggerBindings
   type: "button"
 }
 
-export interface AccordionItemTextBindings extends AccordionItemCommonBindings {
-  "data-part": "item-text"
-}
+export interface AccordionItemTextBindings
+  extends Part<"itemText">, AccordionItemCommonBindings {}
 
 export interface AccordionItemSecondaryTextBindings
-  extends AccordionItemCommonBindings {
-  "data-part": "item-secondary-text"
-}
+  extends Part<"itemSecondaryText">, AccordionItemCommonBindings {}
 
 export interface AccordionItemIndicatorBindings
-  extends AccordionItemCommonBindings {
+  extends Part<"itemIndicator">, AccordionItemCommonBindings {
   "aria-hidden": true
-  "data-part": "item-indicator"
 }
 
 export interface AccordionItemContentBindings
-  extends AccordionItemCommonBindings {
+  extends Part<"itemContent">, AccordionItemCommonBindings {
   "aria-hidden": BooleanAriaAttr
   "aria-labelledby": string
   "data-expanded": BooleanDataAttr
-  "data-part": "item-content"
   id: string
   role: "region"
 }

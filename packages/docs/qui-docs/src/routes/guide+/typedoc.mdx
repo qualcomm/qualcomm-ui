@@ -166,7 +166,7 @@ If you're specifying entryPoints in the typedoc config, you will also need to ac
 
 Types from external modules aren't compiled by default. To include external types, you'll need to do two things:
 
-##### 1. Modify your tsconfig to include the path to the external module's compiled types.
+##### 1. Modify your tsconfig to include the module's compiled types
 
 ```json
 // tsconfig.typedoc.json
@@ -178,7 +178,7 @@ Types from external modules aren't compiled by default. To include external type
 }
 ```
 
-##### 2. Enable external module parsing in the typedoc configuration:
+##### 2. Enable external module parsing in the typedoc configuration
 
 ```ts
 // qui-typedoc.config.ts

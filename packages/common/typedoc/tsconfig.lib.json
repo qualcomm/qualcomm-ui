@@ -8,5 +8,10 @@
     "rootDir": "./src",
     "tsBuildInfoFile": "dist/tsbuildinfo"
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "../typedoc-common/tsconfig.lib.json"
+    }
+  ]
 }

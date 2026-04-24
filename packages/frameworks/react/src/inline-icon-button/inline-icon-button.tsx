@@ -17,8 +17,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface InlineIconButtonProps
-  extends QdsInlineIconButtonApiProps,
-    ElementRenderProp<"button"> {
+  extends QdsInlineIconButtonApiProps, ElementRenderProp<"button"> {
   /**
    * Lucide icon to display inside the button.
    */

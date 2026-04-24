@@ -16,6 +16,7 @@ export function InternalIconButton({
   disabled,
   emphasis,
   icon,
+  shape,
   size,
   variant,
   ...props
@@ -27,12 +28,13 @@ export function InternalIconButton({
           density,
           disabled,
           emphasis,
+          shape,
           size,
           variant,
         },
         normalizeProps,
       ),
-    [density, disabled, emphasis, size, variant],
+    [density, disabled, emphasis, shape, size, variant],
   )
 
   const mergedProps = mergeProps(api.getRootBindings(), props)

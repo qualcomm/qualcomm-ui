@@ -6,8 +6,10 @@ import type {ReactElement} from "react"
 import {Checkmark, type CheckmarkProps} from "@qualcomm-ui/react/checkmark"
 import {useSelectItemContext} from "@qualcomm-ui/react-core/select"
 
-export interface SelectItemCheckboxProps
-  extends Omit<CheckmarkProps, "checked"> {}
+export interface SelectItemCheckboxProps extends Omit<
+  CheckmarkProps,
+  "checked"
+> {}
 
 /**
  * Checkbox-style indicator for select items. Always visible, showing a checkbox

@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsProgressRingContext} from "./qds-progress-ring-context"
 
-export interface ProgressRingValueTextProps
-  extends CoreProgressRingValueTextProps {}
+export interface ProgressRingValueTextProps extends CoreProgressRingValueTextProps {}
 
 /**
  * Displays the current progress value as text. Only visible when size is `lg` or

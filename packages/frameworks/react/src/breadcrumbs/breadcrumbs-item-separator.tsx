@@ -15,8 +15,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context"
 
-export interface BreadcrumbsItemSeparatorProps
-  extends Omit<ElementRenderProp<"span">, "children"> {
+export interface BreadcrumbsItemSeparatorProps extends Omit<
+  ElementRenderProp<"span">,
+  "children"
+> {
   /**
    * The separator element to render between items.
    * @default `ChevronRight`

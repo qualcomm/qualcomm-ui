@@ -73,8 +73,7 @@ export const remarkAlerts: Plugin<[], Root> = () => {
             data: {
               hProperties: {
                 class: "qui-notification__icon",
-                "data-part": "status-icon",
-                "data-scope": "inline-notification",
+                "data-inline-notification-part": "status-icon",
               },
             },
             type: "paragraph",

@@ -24,7 +24,7 @@ import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
       <svg [qIcon]="icon()!"></svg>
     }
     <ng-content />
-    <svg data-part="end-icon" qIcon="ChevronDown"></svg>
+    <svg data-header-bar-part="end-icon" qIcon="ChevronDown"></svg>
   `,
 })
 export class HeaderBarMenuItemDirective implements OnInit {

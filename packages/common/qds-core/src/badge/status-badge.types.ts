@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import type {
@@ -9,6 +10,7 @@ import type {
   QdsBadgeSemanticEmphasis,
   QdsBaseBadgeProps,
 } from "./badge.types"
+import type {statusBadgeAnatomy} from "./status-badge.anatomy"
 
 export type QdsStatusBadgeVariant = "filled" | "outlined"
 
@@ -32,12 +34,13 @@ export interface QdsStatusBadgeProps extends QdsBaseBadgeProps {
   variant?: QdsStatusBadgeVariant
 }
 
-export interface QdsStatusBadgeRootBindings {
+type PartName = AnatomyPartName<typeof statusBadgeAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"statusBadge", P> {}
+
+export interface QdsStatusBadgeRootBindings extends Part<"root"> {
   className: BadgeClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsBadgeSemanticEmphasis
-  "data-part": "root"
-  "data-scope": "status-badge"
   "data-size": QdsBadgeExtraSize
   "data-variant": QdsStatusBadgeVariant
 }

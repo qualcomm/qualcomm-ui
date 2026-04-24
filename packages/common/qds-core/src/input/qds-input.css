@@ -43,7 +43,7 @@
 
   /* password input — no endIcon, only visibility trigger */
   &:has(.qui-password-input__visibility-trigger) {
-    [data-part="end-icon"] {
+    [data-input-part="end-icon"] {
       display: none;
     }
   }
@@ -53,13 +53,18 @@
   }
 
   /* data-size is always set, we use it here to increase specificity */
-  [data-part="input"][data-size] {
+  [data-input-part="input"][data-size] {
     border: 0;
     height: 100%;
     outline: 0;
   }
 
-  &:has([data-part="input"][data-empty]) {
+  &:has(
+    [data-input-part="input"][data-empty],
+    [data-text-input-part="input"][data-empty],
+    [data-password-input-part="input"][data-empty],
+    [data-number-input-part="input"][data-empty]
+  ) {
     .qui-input__clear-trigger {
       display: none;
     }
@@ -86,7 +91,7 @@
     border-color: var(--color-interactive-border-neutral-hover);
   }
 
-  &:has([data-part="input"]:not([data-empty])) {
+  &:has([data-input-part="input"]:not([data-empty])) {
     --icon-color: var(--color-icon-neutral-primary);
   }
 
@@ -240,6 +245,6 @@
   }
 }
 
-.qui-password-input__visibility-trigger[data-part="visibility-trigger"] {
+.qui-password-input__visibility-trigger[data-password-input-part="visibility-trigger"] {
   color: var(--icon-color);
 }

@@ -1,3 +1,4 @@
+export * from "./collapsible.anatomy"
 export * from "./collapsible.api"
 export * from "./collapsible.machine"
 export * from "./collapsible.props"

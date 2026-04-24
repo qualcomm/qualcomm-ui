@@ -46,6 +46,9 @@
 }
 
 .qui-docs__breadcrumbs {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 16px;
 
   > ul.q-breadcrumb--root {
@@ -96,6 +99,19 @@
   position: sticky;
   top: var(--qui-header-height);
 
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border-neutral-02);
+    border-radius: 3px;
+  }
+
   @media screen and (min-width: 950px) {
     appearance: auto;
     display: block;
@@ -105,8 +121,31 @@
     display: block;
   }
 
+  .qui-docs-sidebar__item-badges {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-60);
+    margin-left: 4px;
+  }
+
   .qui-side-nav__root {
     height: 100%;
+  }
+
+  /* TODO: remove when the small side nav size lands */
+  .qui-side-nav__node-root {
+    height: 32px;
+    min-height: 32px;
+
+    &:has(+ .qui-side-nav__node-root),
+    &:has(+ .qui-side-nav__branch-root) {
+      margin-bottom: 1px;
+    }
+  }
+
+  .qui-side-nav__node-indicator {
+    display: none;
   }
 }
 
@@ -390,4 +429,22 @@ pre.qui-docs-code {
 .qui-docs__updated-by {
   font: var(--font-static-heading-xxs-bold);
   font-style: italic;
+}
+
+.qui-docs__page-header {
+  display: flex;
+  gap: 12px;
+
+  h1 {
+    white-space: nowrap;
+  }
+
+  .qui-docs__page-header-badge {
+    height: 20px;
+  }
+
+  a.qui-docs__page-header-badge {
+    cursor: pointer;
+    text-decoration: none;
+  }
 }

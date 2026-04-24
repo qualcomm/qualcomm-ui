@@ -11,8 +11,7 @@ import {
 } from "@qualcomm-ui/angular-core/machine"
 import type {QdsInputApi, QdsInputApiProps} from "@qualcomm-ui/qds-core/input"
 
-export interface QdsAngularInputApiProps
-  extends QdsInputApiProps<LucideIconOrString> {}
+export interface QdsAngularInputApiProps extends QdsInputApiProps<LucideIconOrString> {}
 
 export interface QdsAngularInputApi extends QdsInputApi<LucideIconOrString> {}
 

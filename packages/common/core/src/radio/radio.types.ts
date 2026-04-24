@@ -5,15 +5,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
-import type {
-  InputErrorTextBindings,
-  InputHintBindings,
-} from "@qualcomm-ui/core/input"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -24,6 +21,8 @@ import type {
   JSX,
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
+
+import type {radioAnatomy} from "./radio.anatomy"
 
 export type RadioOrientation = "horizontal" | "vertical"
 
@@ -192,10 +191,6 @@ export interface RadioSchema extends MachineSchema {
   state: "idle"
 }
 
-export interface RadioCommonBindings extends Required<DirectionProperty> {
-  "data-scope": "radio"
-}
-
 export interface RadioItemDataBindings {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
@@ -206,34 +201,35 @@ export interface RadioItemDataBindings {
   "data-state": "checked" | "unchecked"
 }
 
-export interface RadioGroupBindings extends RadioCommonBindings {
+type PartName = AnatomyPartName<typeof radioAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"radio", P> {}
+
+export interface RadioGroupBindings extends Part<"group"> {
   "aria-describedby": string | undefined
   "aria-invalid": BooleanAriaAttr
   "aria-labelledby": string | undefined
   "aria-orientation": RadioOrientation
   "data-disabled": BooleanDataAttr
   "data-orientation": RadioOrientation
-  "data-part": "group"
+  dir: Direction
   id: string
   role: "radiogroup"
 }
 
-export interface RadioGroupItemsBindings extends RadioCommonBindings {
+export interface RadioGroupItemsBindings extends Part<"items"> {
   "data-orientation": RadioOrientation
-  "data-part": "items"
+  dir: Direction
 }
 
-export interface RadioGroupLabelBindings {
+export interface RadioGroupLabelBindings extends Part<"label"> {
   "data-disabled": BooleanDataAttr
-  "data-part": "label"
+  dir: Direction
   id: string
   onClick: JSX.MouseEventHandler
 }
 
-export interface RadioItemBindings
-  extends RadioItemDataBindings,
-    RadioCommonBindings {
-  "data-part": "item"
+export interface RadioItemBindings extends Part<"item">, RadioItemDataBindings {
+  dir: Direction
   htmlFor: string
   onClick: JSX.MouseEventHandler
   onPointerDown: JSX.PointerEventHandler
@@ -243,27 +239,24 @@ export interface RadioItemBindings
 }
 
 export interface RadioItemLabelBindings
-  extends RadioItemDataBindings,
-    RadioCommonBindings {
-  "data-part": "item-label"
+  extends Part<"itemLabel">, RadioItemDataBindings {
+  dir: Direction
   id: string
 }
 
 export interface RadioItemControlBindings
-  extends RadioItemDataBindings,
-    RadioCommonBindings {
+  extends Part<"itemControl">, RadioItemDataBindings {
   "aria-hidden": true
   "data-active": BooleanDataAttr
-  "data-part": "item-control"
+  dir: Direction
 }
 
 export interface RadioItemHiddenInputBindings
-  extends RadioItemDataBindings,
-    RadioCommonBindings {
+  extends Part<"itemHiddenInput">, RadioItemDataBindings {
   "aria-labelledby": string | undefined
   "data-ownedby": string
-  "data-part": "item-hidden-input"
   defaultChecked: boolean
+  dir: Direction
   disabled: boolean
   form?: string
   name?: string
@@ -276,18 +269,23 @@ export interface RadioItemHiddenInputBindings
   value: string
 }
 
-export interface RadioGroupErrorTextBindings
-  extends RadioCommonBindings,
-    InputErrorTextBindings {}
+export interface RadioGroupErrorTextBindings extends Part<"errorText"> {
+  "aria-live": "polite"
+  dir: Direction
+  hidden: boolean
+  id: string
+}
 
-export interface RadioGroupHintBindings
-  extends RadioCommonBindings,
-    InputHintBindings {}
+export interface RadioGroupHintBindings extends Part<"hint"> {
+  "data-disabled": BooleanDataAttr
+  dir: Direction
+  hidden: boolean
+  id: string
+}
 
 export interface RadioItemHintBindings
-  extends RadioItemDataBindings,
-    RadioCommonBindings {
-  "data-part": "item-hint"
+  extends Part<"itemHint">, RadioItemDataBindings {
+  dir: Direction
   hidden: boolean
   id: string
 }

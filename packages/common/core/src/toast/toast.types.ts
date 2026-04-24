@@ -4,6 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -19,6 +20,8 @@ import type {
   Machine,
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
+
+import type {toastAnatomy} from "./toast.anatomy"
 
 export type ToastType =
   | "success"
@@ -138,8 +141,7 @@ export interface ToastOptions<T = any> {
 }
 
 export interface ToastApiProps<T = any>
-  extends Omit<CommonProperties, "id">,
-    ToastOptions<T> {
+  extends Omit<CommonProperties, "id">, ToastOptions<T> {
   /**
    * The direction of the toast
    */
@@ -452,12 +454,20 @@ export interface GroupProps {
   label?: string | undefined
 }
 
-export interface ToastGroupBindings extends ToastCommonBindings {
+export type ToastSide = "top" | "bottom"
+export type ToastAlign = "start" | "center" | "end"
+export type ToastState = "open" | "closed"
+
+type PartName = AnatomyPartName<typeof toastAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"toast", P> {}
+
+export interface ToastGroupBindings extends Part<"group"> {
   "aria-label": string
   "aria-live": "polite"
   "data-align": ToastAlign
   "data-placement": ToastPlacement
   "data-side": ToastSide
+  dir: Direction | undefined
   id: string
   onBlur: JSX.FocusEventHandler<HTMLElement>
   onFocus: JSX.FocusEventHandler<HTMLElement>
@@ -488,15 +498,7 @@ export interface ToastGroupApi<T = any> {
   getGroupBindings: (options?: GroupProps) => ToastGroupBindings
 }
 
-export interface ToastCommonBindings extends DirectionProperty {
-  "data-scope": "toast"
-}
-
-export type ToastSide = "top" | "bottom"
-export type ToastAlign = "start" | "center" | "end"
-export type ToastState = "open" | "closed"
-
-export interface ToastRootBindings {
+export interface ToastRootBindings extends Part<"root"> {
   "aria-atomic": BooleanAriaAttr
   "aria-describedby": string | undefined
   "aria-labelledby": string | undefined
@@ -511,45 +513,41 @@ export interface ToastRootBindings {
   "data-stack": BooleanDataAttr
   "data-state": ToastState
   "data-type": ToastType
+  dir: Direction | undefined
+  id: string
   onKeyDown: JSX.KeyboardEventHandler<HTMLElement>
   role: "status"
   style: JSX.CSSProperties
   tabIndex: 0
 }
 
-export interface ToastActionTriggerBindings extends ToastCommonBindings {
-  "data-part": "action-trigger"
+export interface ToastActionTriggerBindings extends Part<"actionTrigger"> {
   onClick: JSX.MouseEventHandler<HTMLElement>
   type: "button"
 }
 
-export interface ToastCloseTriggerBindings extends ToastCommonBindings {
+export interface ToastCloseTriggerBindings extends Part<"closeTrigger"> {
   "aria-label": "Dismiss notification"
-  "data-part": "close-trigger"
   id: string
   onClick: JSX.MouseEventHandler<HTMLElement>
   type: "button"
 }
 
-export interface ToastDescriptionBindings extends ToastCommonBindings {
-  "data-part": "description"
+export interface ToastDescriptionBindings extends Part<"description"> {
   id: string
 }
 
-export interface ToastGhostAfterBindings extends ToastCommonBindings {
+export interface ToastGhostAfterBindings extends Part<"ghostAfter"> {
   "data-ghost": "after"
-  "data-part": "ghost-after"
   style: JSX.CSSProperties
 }
 
-export interface ToastGhostBeforeBindings extends ToastCommonBindings {
+export interface ToastGhostBeforeBindings extends Part<"ghostBefore"> {
   "data-ghost": "before"
-  "data-part": "ghost-before"
   style: JSX.CSSProperties
 }
 
-export interface ToastLabelBindings extends ToastCommonBindings {
-  "data-part": "label"
+export interface ToastLabelBindings extends Part<"label"> {
   id: string
 }
 

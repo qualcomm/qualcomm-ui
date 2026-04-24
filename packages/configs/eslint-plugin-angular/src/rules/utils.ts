@@ -17,7 +17,9 @@ export interface TemplateInput {
 
 export interface TemplateNode {
   attributes: TemplateAttribute[]
+  children?: TemplateNode[]
   inputs: TemplateInput[]
+  name?: string
 }
 
 export function hasDirective(

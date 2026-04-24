@@ -43,7 +43,8 @@ import {
 } from "./combobox-item-group-context"
 
 export interface CoreComboboxRootProps<T extends CollectionItem>
-  extends ComboboxApiProps<T>,
+  extends
+    ComboboxApiProps<T>,
     PresenceApiProps,
     IdProp,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir" | "onSelect"> {}
@@ -80,8 +81,7 @@ export function CoreComboboxRoot<T extends CollectionItem = CollectionItem>({
 }
 
 export interface CoreComboboxClearTriggerProps
-  extends ElementRenderProp<"button">,
-    IdProp {}
+  extends ElementRenderProp<"button">, IdProp {}
 
 export function CoreComboboxClearTrigger({
   id,
@@ -100,8 +100,7 @@ export function CoreComboboxClearTrigger({
 }
 
 export interface CoreComboboxContentProps
-  extends ElementRenderProp<"div">,
-    IdProp {}
+  extends ElementRenderProp<"div">, IdProp {}
 
 export function CoreComboboxContent({
   id,
@@ -126,8 +125,7 @@ export function CoreComboboxContent({
 }
 
 export interface CoreComboboxControlProps
-  extends ElementRenderProp<"div">,
-    IdProp {}
+  extends ElementRenderProp<"div">, IdProp {}
 
 export function CoreComboboxControl({
   id,
@@ -162,8 +160,7 @@ export function CoreComboboxEmpty(
 }
 
 export interface CoreComboboxInputProps
-  extends ComponentPropsWithRef<"input">,
-    IdProp {}
+  extends ComponentPropsWithRef<"input">, IdProp {}
 
 export function CoreComboboxInput({
   id,
@@ -182,8 +179,7 @@ export function CoreComboboxInput({
 }
 
 export interface CoreComboboxItemProps<T extends CollectionItem>
-  extends ElementRenderProp<"div">,
-    ComboboxApiItemProps<T> {}
+  extends ElementRenderProp<"div">, ComboboxApiItemProps<T> {}
 
 export function CoreComboboxItem<T extends CollectionItem = CollectionItem>({
   item,
@@ -220,8 +216,7 @@ export function CoreComboboxItemText(
   return <PolymorphicElement as="span" {...mergedProps} />
 }
 
-export interface CoreComboboxItemIndicatorProps
-  extends ElementRenderProp<"span"> {}
+export interface CoreComboboxItemIndicatorProps extends ElementRenderProp<"span"> {}
 
 export function CoreComboboxItemIndicator({
   ...props
@@ -263,8 +258,7 @@ export function CoreComboboxItemGroup({
   )
 }
 
-export interface CoreComboboxItemGroupLabelProps
-  extends ElementRenderProp<"div"> {}
+export interface CoreComboboxItemGroupLabelProps extends ElementRenderProp<"div"> {}
 
 export function CoreComboboxItemGroupLabel({
   ...props
@@ -280,8 +274,7 @@ export function CoreComboboxItemGroupLabel({
 }
 
 export interface CoreComboboxLabelProps
-  extends ElementRenderProp<"label">,
-    IdProp {}
+  extends ElementRenderProp<"label">, IdProp {}
 
 export function CoreComboboxLabel({
   id,
@@ -300,8 +293,7 @@ export function CoreComboboxLabel({
 }
 
 export interface CoreComboboxPositionerProps
-  extends ElementRenderProp<"div">,
-    IdProp {}
+  extends ElementRenderProp<"div">, IdProp {}
 
 export function CoreComboboxPositioner({
   id,
@@ -325,9 +317,7 @@ export function CoreComboboxPositioner({
 }
 
 export interface CoreComboboxTriggerProps
-  extends ElementRenderProp<"button">,
-    ComboboxApiTriggerProps,
-    IdProp {}
+  extends ElementRenderProp<"button">, ComboboxApiTriggerProps, IdProp {}
 
 export function CoreComboboxTrigger({
   focusable,
@@ -348,8 +338,7 @@ export function CoreComboboxTrigger({
 }
 
 export interface CoreComboboxHintProps
-  extends ElementRenderProp<"div">,
-    IdProp {}
+  extends ElementRenderProp<"div">, IdProp {}
 
 export function CoreComboboxHint({
   id,
@@ -368,8 +357,7 @@ export function CoreComboboxHint({
 }
 
 export interface CoreComboboxErrorTextProps
-  extends ElementRenderProp<"div">,
-    IdProp {}
+  extends ElementRenderProp<"div">, IdProp {}
 
 export function CoreComboboxErrorText({
   id,
@@ -387,8 +375,7 @@ export function CoreComboboxErrorText({
   return <PolymorphicElement as="div" {...mergedProps} />
 }
 
-export interface CoreComboboxErrorIndicatorProps
-  extends ElementRenderProp<"span"> {}
+export interface CoreComboboxErrorIndicatorProps extends ElementRenderProp<"span"> {}
 
 export function CoreComboboxErrorIndicator({
   ...props

@@ -5,11 +5,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -22,10 +23,10 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
+import type {switchAnatomy} from "./switch.anatomy"
+
 export interface SwitchApiProps
-  extends FieldApiProps,
-    CommonProperties,
-    DirectionProperty {
+  extends FieldApiProps, CommonProperties, DirectionProperty {
   /**
    * The controlled checked state of the switch
    */
@@ -127,10 +128,6 @@ export interface SwitchSchema extends MachineSchema {
   state: "idle"
 }
 
-export interface SwitchScopeAttribute {
-  "data-scope": "switch"
-}
-
 export interface SwitchDataBindings {
   "data-active": BooleanDataAttr
   "data-disabled": BooleanDataAttr
@@ -142,13 +139,11 @@ export interface SwitchDataBindings {
   "data-state": "checked" | "unchecked"
 }
 
-interface CommonBindings
-  extends Required<DirectionProperty>,
-    SwitchScopeAttribute,
-    SwitchDataBindings {}
+type PartName = AnatomyPartName<typeof switchAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"switch", P> {}
 
-export interface SwitchRootBindings extends CommonBindings {
-  "data-part": "root"
+export interface SwitchRootBindings extends Part<"root">, SwitchDataBindings {
+  dir: Direction
   htmlFor: string
   id: string
   onClick: JSX.MouseEventHandler
@@ -156,38 +151,35 @@ export interface SwitchRootBindings extends CommonBindings {
   onPointerMove: JSX.PointerEventHandler
 }
 
-export interface SwitchLabelBindings extends CommonBindings {
-  "data-part": "label"
+export interface SwitchLabelBindings extends Part<"label">, SwitchDataBindings {
   id: string
 }
 
-export interface SwitchControlBindings extends CommonBindings {
+export interface SwitchControlBindings
+  extends Part<"control">, SwitchDataBindings {
   "aria-hidden": BooleanAriaAttr
-  "data-part": "control"
 }
 
-export interface SwitchThumbBindings extends CommonBindings {
+export interface SwitchThumbBindings extends Part<"thumb">, SwitchDataBindings {
   "aria-hidden": true
-  "data-part": "thumb"
 }
 
-export interface SwitchErrorTextBindings extends CommonBindings {
+export interface SwitchErrorTextBindings
+  extends Part<"errorText">, SwitchDataBindings {
   "aria-live": "polite"
-  "data-part": "error-text"
   hidden: boolean
   id: string
 }
 
-export interface SwitchHintBindings extends CommonBindings {
-  "data-part": "hint"
+export interface SwitchHintBindings extends Part<"hint">, SwitchDataBindings {
   hidden: boolean
   id: string
 }
 
-export interface SwitchHiddenInputBindings extends CommonBindings {
+export interface SwitchHiddenInputBindings
+  extends Part<"hiddenInput">, SwitchDataBindings {
   "aria-invalid": BooleanAriaAttr
   "aria-labelledby": string | undefined
-  "data-part": "hidden-input"
   defaultChecked: boolean
   disabled: boolean | undefined
   form?: string

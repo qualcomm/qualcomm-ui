@@ -16,8 +16,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsSideNavApi} from "./qds-side-nav-context"
 
 export interface SideNavNodeActionProps
-  extends CoreTreeNodeActionProps,
-    Omit<InlineIconButtonProps, "variant"> {}
+  extends CoreTreeNodeActionProps, Omit<InlineIconButtonProps, "variant"> {}
 
 /**
  * An action button within a tree node's interactive area. Renders a `<button>`

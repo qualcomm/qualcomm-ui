@@ -1,0 +1,587 @@
+{
+  "/": {
+    "categories": [
+      "Introduction"
+    ],
+    "data": {
+      "hideBreadcrumbs": true,
+      "id": "_index",
+      "title": "Introduction"
+    },
+    "hideBreadcrumbs": true,
+    "id": "/routes/index.mdx",
+    "pathname": "/",
+    "pathSegments": [],
+    "title": "Introduction"
+  },
+  "/test/b": {
+    "categories": [
+      "Test",
+      "B Test"
+    ],
+    "data": {
+      "title": "B Test"
+    },
+    "id": "/routes/test+/b+/route.mdx",
+    "pathname": "/test/b",
+    "pathSegments": [
+      "test",
+      "b"
+    ],
+    "title": "B Test"
+  },
+  "/test/a": {
+    "categories": [
+      "Test",
+      "A Test"
+    ],
+    "data": {
+      "title": "A Test"
+    },
+    "id": "/routes/test+/a+/_a.mdx",
+    "pathname": "/test/a",
+    "pathSegments": [
+      "test",
+      "a"
+    ],
+    "title": "A Test"
+  },
+  "/guide/page-setup": {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "toc": [
+      {
+        "headingLevel": 2,
+        "id": "overview",
+        "tagName": "h2",
+        "textContent": "Overview"
+      },
+      {
+        "headingLevel": 2,
+        "id": "config",
+        "tagName": "h2",
+        "textContent": "Config"
+      },
+      {
+        "headingLevel": 2,
+        "id": "add-a-page",
+        "tagName": "h2",
+        "textContent": "Add a Page"
+      },
+      {
+        "headingLevel": 3,
+        "id": "page-urls",
+        "tagName": "h3",
+        "textContent": "Page URLs"
+      },
+      {
+        "headingLevel": 3,
+        "id": "nav-config",
+        "tagName": "h3",
+        "textContent": "Nav Config"
+      },
+      {
+        "headingLevel": 4,
+        "id": "sidebar-order",
+        "tagName": "h4",
+        "textContent": "Sidebar Order"
+      },
+      {
+        "headingLevel": 4,
+        "id": "expanded-state",
+        "tagName": "h4",
+        "textContent": "Expanded State"
+      },
+      {
+        "headingLevel": 4,
+        "id": "home-page",
+        "tagName": "h4",
+        "textContent": "Home Page"
+      },
+      {
+        "headingLevel": 3,
+        "id": "react-page",
+        "tagName": "h3",
+        "textContent": "React Page"
+      },
+      {
+        "headingLevel": 2,
+        "id": "advanced",
+        "tagName": "h2",
+        "textContent": "Advanced"
+      },
+      {
+        "headingLevel": 3,
+        "id": "page-and-folder",
+        "tagName": "h3",
+        "textContent": "Page and Folder"
+      },
+      {
+        "headingLevel": 3,
+        "id": "custom-routes",
+        "tagName": "h3",
+        "textContent": "Custom Routes"
+      },
+      {
+        "headingLevel": 2,
+        "id": "next-steps",
+        "tagName": "h2",
+        "textContent": "Next Steps"
+      }
+    ]
+  },
+  "/guide/markdown": {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "toc": [
+      {
+        "headingLevel": 2,
+        "id": "mdx",
+        "tagName": "h2",
+        "textContent": "MDX"
+      },
+      {
+        "headingLevel": 3,
+        "id": "frontmatter",
+        "tagName": "h3",
+        "textContent": "Frontmatter"
+      },
+      {
+        "headingLevel": 2,
+        "id": "markdown-features",
+        "tagName": "h2",
+        "textContent": "Markdown Features"
+      },
+      {
+        "headingLevel": 3,
+        "id": "autolink-headings",
+        "tagName": "h3",
+        "textContent": "Autolink Headings"
+      },
+      {
+        "headingLevel": 3,
+        "id": "font-styles",
+        "tagName": "h3",
+        "textContent": "Font Styles"
+      },
+      {
+        "headingLevel": 3,
+        "id": "lists",
+        "tagName": "h3",
+        "textContent": "Lists"
+      },
+      {
+        "headingLevel": 4,
+        "id": "ordered-lists",
+        "tagName": "h4",
+        "textContent": "Ordered Lists"
+      },
+      {
+        "headingLevel": 4,
+        "id": "unordered-lists",
+        "tagName": "h4",
+        "textContent": "Unordered Lists"
+      },
+      {
+        "headingLevel": 3,
+        "id": "tables",
+        "tagName": "h3",
+        "textContent": "Tables"
+      },
+      {
+        "headingLevel": 3,
+        "id": "links",
+        "tagName": "h3",
+        "textContent": "Links"
+      },
+      {
+        "headingLevel": 4,
+        "id": "external-links",
+        "tagName": "h4",
+        "textContent": "External Links"
+      },
+      {
+        "headingLevel": 3,
+        "id": "alerts",
+        "tagName": "h3",
+        "textContent": "Alerts"
+      },
+      {
+        "headingLevel": 4,
+        "id": "custom-title",
+        "tagName": "h4",
+        "textContent": "Custom Title"
+      },
+      {
+        "headingLevel": 4,
+        "id": "alert-variants",
+        "tagName": "h4",
+        "textContent": "Alert Variants"
+      },
+      {
+        "headingLevel": 3,
+        "id": "spoilers",
+        "tagName": "h3",
+        "textContent": "Spoilers"
+      },
+      {
+        "headingLevel": 3,
+        "id": "steps",
+        "tagName": "h3",
+        "textContent": "Steps"
+      },
+      {
+        "headingLevel": 4,
+        "id": "example",
+        "tagName": "h4",
+        "textContent": "Example"
+      },
+      {
+        "headingLevel": 4,
+        "id": "step-1",
+        "tagName": "h4",
+        "textContent": "Step 1"
+      },
+      {
+        "headingLevel": 4,
+        "id": "step-2",
+        "tagName": "h4",
+        "textContent": "Step 2"
+      },
+      {
+        "headingLevel": 3,
+        "id": "code-blocks",
+        "tagName": "h3",
+        "textContent": "Code Blocks"
+      },
+      {
+        "headingLevel": 4,
+        "id": "diff-notation",
+        "tagName": "h4",
+        "textContent": "Diff Notation"
+      },
+      {
+        "headingLevel": 4,
+        "id": "line-highlighting",
+        "tagName": "h4",
+        "textContent": "Line Highlighting"
+      },
+      {
+        "headingLevel": 4,
+        "id": "word-highlighting",
+        "tagName": "h4",
+        "textContent": "Word Highlighting"
+      },
+      {
+        "headingLevel": 4,
+        "id": "line-focus",
+        "tagName": "h4",
+        "textContent": "Line Focus"
+      },
+      {
+        "headingLevel": 4,
+        "id": "error-levels",
+        "tagName": "h4",
+        "textContent": "Error Levels"
+      },
+      {
+        "headingLevel": 4,
+        "id": "hide-lines",
+        "tagName": "h4",
+        "textContent": "Hide lines"
+      }
+    ]
+  },
+  "/guide/ai-knowledge": {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "toc": [
+      {
+        "headingLevel": 2,
+        "id": "overview",
+        "tagName": "h2",
+        "textContent": "Overview"
+      },
+      {
+        "headingLevel": 2,
+        "id": "configuration",
+        "tagName": "h2",
+        "textContent": "Configuration"
+      },
+      {
+        "headingLevel": 3,
+        "id": "knowledge-config",
+        "tagName": "h3",
+        "textContent": "KnowledgeConfig"
+      },
+      {
+        "headingLevel": 3,
+        "id": "knowledge-extra-file",
+        "tagName": "h3",
+        "textContent": "KnowledgeExtraFile"
+      },
+      {
+        "headingLevel": 3,
+        "id": "knowledge-frontmatter-config",
+        "tagName": "h3",
+        "textContent": "KnowledgeFrontmatterConfig"
+      },
+      {
+        "headingLevel": 3,
+        "id": "section-export-config",
+        "tagName": "h3",
+        "textContent": "SectionExportConfig"
+      },
+      {
+        "headingLevel": 3,
+        "id": "pages-export-config",
+        "tagName": "h3",
+        "textContent": "PagesExportConfig"
+      },
+      {
+        "headingLevel": 2,
+        "id": "output-structure",
+        "tagName": "h2",
+        "textContent": "Output Structure"
+      },
+      {
+        "headingLevel": 3,
+        "id": "sectionsjson",
+        "tagName": "h3",
+        "textContent": "sections.json"
+      },
+      {
+        "headingLevel": 4,
+        "id": "knowledge-sections",
+        "tagName": "h4",
+        "textContent": "KnowledgeSections"
+      },
+      {
+        "headingLevel": 4,
+        "id": "section-entry",
+        "tagName": "h4",
+        "textContent": "SectionEntry"
+      },
+      {
+        "headingLevel": 3,
+        "id": "pagesjson",
+        "tagName": "h3",
+        "textContent": "pages.json"
+      },
+      {
+        "headingLevel": 4,
+        "id": "knowledge-pages",
+        "tagName": "h4",
+        "textContent": "KnowledgePages"
+      },
+      {
+        "headingLevel": 4,
+        "id": "page-entry",
+        "tagName": "h4",
+        "textContent": "PageEntry"
+      },
+      {
+        "headingLevel": 2,
+        "id": "page-header-ui",
+        "tagName": "h2",
+        "textContent": "Page Header UI"
+      },
+      {
+        "headingLevel": 2,
+        "id": "openwebui-integration",
+        "tagName": "h2",
+        "textContent": "OpenWebUI Integration"
+      },
+      {
+        "headingLevel": 3,
+        "id": "configuration-1",
+        "tagName": "h3",
+        "textContent": "Configuration"
+      },
+      {
+        "headingLevel": 3,
+        "id": "open-web-ui-integration",
+        "tagName": "h3",
+        "textContent": "OpenWebUiIntegration"
+      },
+      {
+        "headingLevel": 3,
+        "id": "credential-environment-variables",
+        "tagName": "h3",
+        "textContent": "Credential Environment Variables"
+      },
+      {
+        "headingLevel": 3,
+        "id": "upload-command",
+        "tagName": "h3",
+        "textContent": "Upload Command"
+      },
+      {
+        "headingLevel": 4,
+        "id": "cli-options",
+        "tagName": "h4",
+        "textContent": "CLI Options"
+      }
+    ]
+  },
+  "/getting-started/sign-up": {
+    "categories": [
+      "Getting Started",
+      "Sign Up"
+    ],
+    "data": {
+      "title": "Sign Up"
+    },
+    "id": "/routes/getting-started+/sign-up.mdx",
+    "pathname": "/getting-started/sign-up",
+    "pathSegments": [
+      "getting-started",
+      "sign-up"
+    ],
+    "title": "Sign Up"
+  },
+  "/getting-started/log-in": {
+    "categories": [
+      "Getting Started",
+      "Log In"
+    ],
+    "data": {
+      "title": "Log In"
+    },
+    "id": "/routes/getting-started+/log-in.mdx",
+    "pathname": "/getting-started/log-in",
+    "pathSegments": [
+      "getting-started",
+      "log-in"
+    ],
+    "title": "Log In"
+  },
+  "/getting-started": {
+    "categories": [
+      "Getting Started"
+    ],
+    "data": {
+      "title": "Getting Started"
+    },
+    "id": "/routes/getting-started+/index.mdx",
+    "pathname": "/getting-started",
+    "pathSegments": [
+      "getting-started"
+    ],
+    "title": "Getting Started"
+  },
+  "/getting-started/home": {
+    "categories": [
+      "Getting Started",
+      "Home"
+    ],
+    "data": {
+      "title": "Home"
+    },
+    "id": "/routes/getting-started+/home.mdx",
+    "pathname": "/getting-started/home",
+    "pathSegments": [
+      "getting-started",
+      "home"
+    ],
+    "title": "Home"
+  },
+  "/getting-started/dedicated-devices": {
+    "categories": [
+      "Getting Started",
+      "Dedicated Devices"
+    ],
+    "data": {
+      "title": "Dedicated Devices"
+    },
+    "id": "/routes/getting-started+/dedicated-devices.mdx",
+    "pathname": "/getting-started/dedicated-devices",
+    "pathSegments": [
+      "getting-started",
+      "dedicated-devices"
+    ],
+    "title": "Dedicated Devices"
+  },
+  "/best-practices/choosing-dependencies": {
+    "categories": [
+      "Best Practices",
+      "Choosing Dependencies"
+    ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
+    "id": "/routes/best-practices+/choosing-dependencies.mdx",
+    "pathname": "/best-practices/choosing-dependencies",
+    "pathSegments": [
+      "best-practices",
+      "choosing-dependencies"
+    ],
+    "title": "Choosing Dependencies",
+    "toc": [
+      {
+        "headingLevel": 3,
+        "id": "check-the-popularity",
+        "tagName": "h3",
+        "textContent": "Check the Popularity"
+      },
+      {
+        "headingLevel": 3,
+        "id": "check-the-open-github-issues",
+        "tagName": "h3",
+        "textContent": "Check the Open GitHub Issues"
+      },
+      {
+        "headingLevel": 3,
+        "id": "evaluate-the-code-quality",
+        "tagName": "h3",
+        "textContent": "Evaluate the Code Quality"
+      },
+      {
+        "headingLevel": 3,
+        "id": "consider-alternatives",
+        "tagName": "h3",
+        "textContent": "Consider Alternatives"
+      }
+    ]
+  }
+}

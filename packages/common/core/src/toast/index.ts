@@ -1,5 +1,6 @@
 export * from "./toast-group.api"
 export * from "./toast-group.machine"
+export * from "./toast.anatomy"
 export * from "./toast.api"
 export * from "./toast.machine"
 export * from "./toast.store"

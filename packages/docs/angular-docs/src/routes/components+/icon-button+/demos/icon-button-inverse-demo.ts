@@ -1,0 +1,39 @@
+import {Component} from "@angular/core"
+import {ExternalLink} from "lucide-angular"
+
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+
+@Component({
+  imports: [ButtonModule],
+  providers: [provideIcons({ExternalLink})],
+  selector: "icon-button-inverse-demo",
+  template: `
+    <div class="bg-neutral-10 flex gap-8 rounded-md p-3">
+      <!-- preview -->
+      <button
+        aria-label="Navigate"
+        emphasis="inverse"
+        icon="ExternalLink"
+        q-icon-button
+        variant="fill"
+      ></button>
+      <button
+        aria-label="Navigate"
+        emphasis="inverse"
+        icon="ExternalLink"
+        q-icon-button
+        variant="outline"
+      ></button>
+      <button
+        aria-label="Navigate"
+        emphasis="inverse"
+        icon="ExternalLink"
+        q-icon-button
+        variant="ghost"
+      ></button>
+      <!-- preview -->
+    </div>
+  `,
+})
+export class IconButtonInverseDemo {}

@@ -1,30 +1,40 @@
 import type {ReactElement} from "react"
 
-import {comboboxCollection} from "@qualcomm-ui/core/combobox"
+import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 import {Combobox} from "@qualcomm-ui/react/combobox"
-
-// preview
-const cityCollection = comboboxCollection({
-  itemLabel: (item) => item.name,
-  items: [
-    {name: "San Diego", value: "SD"},
-    {name: "Nashville", value: "NV"},
-    {name: "Denver", value: "DV"},
-    {name: "Miami", value: "MI"},
-    {name: "Las Vegas", value: "LV"},
-    {name: "New York City", value: "NYC"},
-    {name: "San Francisco", value: "SF"},
-  ],
-  itemValue: (item) => item.value,
-})
-// preview
+import {useListCollection} from "@qualcomm-ui/react-core/collection"
+import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 export function ComboboxItemsDemo(): ReactElement {
+  const {contains} = useFilter({sensitivity: "base"})
+
+  const {collection, filter} = useListCollection({
+    filter: contains,
+    initialItems: [
+      // preview
+      {name: "San Diego", value: "SD"},
+      {name: "Nashville", value: "NV"},
+      {name: "Denver", value: "DV"},
+      {name: "Miami", value: "MI"},
+      {name: "Las Vegas", value: "LV"},
+      {name: "New York City", value: "NYC"},
+      {name: "San Francisco", value: "SF"},
+      // preview
+    ],
+    itemLabel: (item) => item.name,
+    itemValue: (item) => item.value,
+  })
+
+  function handleInputChange(details: ComboboxInputValueChangeDetails) {
+    filter(details.inputValue)
+  }
+
   return (
     <Combobox
       className="w-48"
-      collection={cityCollection}
+      collection={collection}
       label="City"
+      onInputValueChange={handleInputChange}
       placeholder="Select a city"
     />
   )

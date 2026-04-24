@@ -61,26 +61,36 @@ export namespace JSX {
     type: string
   }
 
-  export interface SyntheticEvent<T = Element, E = Event>
-    extends BaseSyntheticEvent<E, EventTarget & T, EventTarget> {}
+  export interface SyntheticEvent<
+    T = Element,
+    E = Event,
+  > extends BaseSyntheticEvent<E, EventTarget & T, EventTarget> {}
 
-  export interface ClipboardEvent<T = Element>
-    extends SyntheticEvent<T, NativeClipboardEvent> {
+  export interface ClipboardEvent<T = Element> extends SyntheticEvent<
+    T,
+    NativeClipboardEvent
+  > {
     clipboardData: DataTransfer
   }
 
-  export interface CompositionEvent<T = Element>
-    extends SyntheticEvent<T, NativeCompositionEvent> {
+  export interface CompositionEvent<T = Element> extends SyntheticEvent<
+    T,
+    NativeCompositionEvent
+  > {
     data: string
   }
 
-  export interface DragEvent<T = Element>
-    extends MouseEvent<T, NativeDragEvent> {
+  export interface DragEvent<T = Element> extends MouseEvent<
+    T,
+    NativeDragEvent
+  > {
     dataTransfer: DataTransfer
   }
 
-  export interface PointerEvent<T = Element>
-    extends MouseEvent<T, NativePointerEvent> {
+  export interface PointerEvent<T = Element> extends MouseEvent<
+    T,
+    NativePointerEvent
+  > {
     height: number
     isPrimary: boolean
     pointerId: number
@@ -93,8 +103,10 @@ export namespace JSX {
     width: number
   }
 
-  export interface FocusEvent<Target = Element, RelatedTarget = Element>
-    extends SyntheticEvent<Target, NativeFocusEvent> {
+  export interface FocusEvent<
+    Target = Element,
+    RelatedTarget = Element,
+  > extends SyntheticEvent<Target, NativeFocusEvent> {
     relatedTarget: (EventTarget & RelatedTarget) | null
     target: EventTarget & Target
   }
@@ -109,8 +121,10 @@ export namespace JSX {
     target: EventTarget & T
   }
 
-  export interface KeyboardEvent<T = Element>
-    extends UIEvent<T, NativeKeyboardEvent> {
+  export interface KeyboardEvent<T = Element> extends UIEvent<
+    T,
+    NativeKeyboardEvent
+  > {
     altKey: boolean
     /** @deprecated */
     charCode: number
@@ -135,8 +149,10 @@ export namespace JSX {
     which: number
   }
 
-  export interface MouseEvent<T = Element, E = NativeMouseEvent>
-    extends UIEvent<T, E> {
+  export interface MouseEvent<
+    T = Element,
+    E = NativeMouseEvent,
+  > extends UIEvent<T, E> {
     altKey: boolean
     button: number
     buttons: number
@@ -158,8 +174,10 @@ export namespace JSX {
     shiftKey: boolean
   }
 
-  export interface TouchEvent<T = Element>
-    extends UIEvent<T, NativeTouchEvent> {
+  export interface TouchEvent<T = Element> extends UIEvent<
+    T,
+    NativeTouchEvent
+  > {
     altKey: boolean
     changedTouches: TouchList
     ctrlKey: boolean
@@ -178,29 +196,37 @@ export namespace JSX {
     styleMedia: StyleMedia
   }
 
-  export interface UIEvent<T = Element, E = NativeUIEvent>
-    extends SyntheticEvent<T, E> {
+  export interface UIEvent<
+    T = Element,
+    E = NativeUIEvent,
+  > extends SyntheticEvent<T, E> {
     detail: number
     view: AbstractView
   }
 
-  export interface WheelEvent<T = Element>
-    extends MouseEvent<T, NativeWheelEvent> {
+  export interface WheelEvent<T = Element> extends MouseEvent<
+    T,
+    NativeWheelEvent
+  > {
     deltaMode: number
     deltaX: number
     deltaY: number
     deltaZ: number
   }
 
-  export interface AnimationEvent<T = Element>
-    extends SyntheticEvent<T, NativeAnimationEvent> {
+  export interface AnimationEvent<T = Element> extends SyntheticEvent<
+    T,
+    NativeAnimationEvent
+  > {
     animationName: string
     elapsedTime: number
     pseudoElement: string
   }
 
-  export interface TransitionEvent<T = Element>
-    extends SyntheticEvent<T, NativeTransitionEvent> {
+  export interface TransitionEvent<T = Element> extends SyntheticEvent<
+    T,
+    NativeTransitionEvent
+  > {
     elapsedTime: number
     propertyName: string
     pseudoElement: string

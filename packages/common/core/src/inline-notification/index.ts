@@ -1,3 +1,4 @@
+export * from "./inline-notification.anatomy"
 export * from "./inline-notification.api"
 export * from "./inline-notification.machine"
 export * from "./inline-notification.props"

@@ -84,3 +84,55 @@ export const createSplitProps = <T extends Dict>(keys: (keyof T)[]) => {
     return splitProps(props, keys) as [T, Omit<Props, keyof T>]
   }
 }
+
+/**
+ * A helper function for accessing properties in a union type object.
+ *
+ * @example
+ * ```ts
+ * function handler(event: {value: string} | {type: string}) {
+ *   // return type is inferred as `string | null`
+ *   return "value" in event ? event.value : null
+ * }
+ *
+ * // or use this function, which is equivalent to the above:
+ * // type is inferred as `string | null`
+ * const value = getIn(event, "value")
+ * ```
+ *
+ * @deprecated Use {@link maybeAccess} instead which has a more suitable fallback value of undefined.
+ */
+export function getIn<T extends object, K extends string>(
+  obj: T,
+  key: K,
+): T extends Record<K, infer V> ? V : null {
+  if (key in obj) {
+    return (obj as any)[key]
+  }
+  return null as any
+}
+
+/**
+ * A helper function for accessing properties in a union type object.
+ *
+ * @example
+ * ```ts
+ * function handler(event: {value: string} | {type: string}) {
+ *   // return type is inferred as `string | null`
+ *   return "value" in event ? event.value : null
+ * }
+ *
+ * // or use this function, which is equivalent to the above:
+ * // type is inferred as `string | null`
+ * const value = getIn(event, "value")
+ * ```
+ */
+export function maybeAccess<T extends object, K extends string>(
+  obj: T,
+  key: K,
+): T extends Record<K, infer V> ? V : undefined {
+  if (key in obj) {
+    return (obj as any)[key]
+  }
+  return undefined as any
+}

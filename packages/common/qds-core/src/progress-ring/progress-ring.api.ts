@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {progressAnatomy} from "@qualcomm-ui/core/progress"
 import type {JSX, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {progressRingClasses} from "./progress-ring.classes"
@@ -61,9 +62,8 @@ export function createQdsProgressRingApi(
     },
     getCircleContainerBindings(): QdsProgressRingCircleContainerBindings {
       return normalize.element({
+        ...progressAnatomy.parts.circleContainer,
         className: progressRingClasses.circleContainer,
-        "data-part": "circle-container",
-        "data-scope": "progress",
       })
     },
     getErrorTextBindings(): QdsProgressRingErrorTextBindings {

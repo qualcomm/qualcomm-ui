@@ -1,3 +1,4 @@
+export * from "./side-nav.anatomy"
 export * from "./side-nav.api"
 export * from "./side-nav.machine"
 export * from "./side-nav.props"

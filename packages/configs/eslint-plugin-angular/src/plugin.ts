@@ -3,10 +3,11 @@
 
 import type {ESLint, Linter} from "eslint"
 
-import {accessibleName} from "./rules"
+import {accessibleName, interactiveCardElementNesting} from "./rules"
 
 export const rules = {
   "accessible-name": accessibleName,
+  "interactive-card-element-nesting": interactiveCardElementNesting,
 }
 
 export const plugin: ESLint.Plugin = {
@@ -20,6 +21,7 @@ export const config: Linter.Config[] = [
     },
     rules: {
       "@qualcomm-ui/angular/accessible-name": "error",
+      "@qualcomm-ui/angular/interactive-card-element-nesting": "error",
     },
   },
 ]

@@ -3,7 +3,6 @@
  * once the output has been stable for 2 seconds.
  */
 
-import chokidar from "chokidar"
 import {execSync} from "node:child_process"
 import {access, readdir} from "node:fs/promises"
 import {dirname, resolve} from "node:path"
@@ -12,11 +11,8 @@ import {fileURLToPath} from "node:url"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const DEBOUNCE_MS = 2000
 const ANGULAR_CORE_DIST_DIR = resolve(__dirname, "../angular-core/dist")
 const ANGULAR_CORE_SRC_DIR = resolve(__dirname, "../angular-core/src")
-
-let timeoutId: ReturnType<typeof setTimeout> | null = null
 
 // give the current angular-core dist dir time to clear its contents
 await setTimeoutPromise(2000)
@@ -41,7 +37,10 @@ async function scanForEntrypoints() {
     )
   ).filter((name): name is string => name !== null)
 
-  return entrypoints.map((name) => resolve(ANGULAR_CORE_DIST_DIR, name))
+  return entrypoints.map((name) => ({
+    fileName: name,
+    path: resolve(ANGULAR_CORE_DIST_DIR, name),
+  }))
 }
 
 /**
@@ -51,11 +50,15 @@ async function validateAngularCore() {
   const entrypoints = await scanForEntrypoints()
 
   const builtEntrypoints = await Promise.all(
-    entrypoints.map((entrypoint) =>
-      access(resolve(entrypoint, "index.d.ts"))
+    entrypoints.map((entrypoint) => {
+      const path = resolve(
+        entrypoint.path,
+        `../types/qualcomm-ui-angular-core-${entrypoint.fileName}.d.ts`,
+      )
+      return access(path)
         .then(() => true)
-        .catch(() => null),
-    ),
+        .catch(() => null)
+    }),
   )
 
   return builtEntrypoints.every(Boolean)
@@ -86,40 +89,3 @@ async function waitForAngularCore() {
 }
 
 await waitForAngularCore()
-
-// TODO: enhance with restart whenever a new entrypoint is added
-function _startWatcher() {
-  /**
-   * Closes the watcher and starts the build process in watch mode.
-   */
-  function startProcess() {
-    console.debug("@qualcomm-ui/angular-core output stable, starting build")
-    watcher.close()
-    execSync("pnpm build --watch", {stdio: "inherit"})
-  }
-
-  const watcher = chokidar.watch(ANGULAR_CORE_DIST_DIR, {
-    awaitWriteFinish: {
-      pollInterval: 100,
-      stabilityThreshold: 1000,
-    },
-    persistent: true,
-  })
-
-  watcher.on("all", () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId)
-    }
-
-    timeoutId = setTimeout(() => {
-      startProcess()
-      timeoutId = null
-    }, DEBOUNCE_MS)
-  })
-
-  watcher.on("error", (error) => {
-    console.error("Watcher error:", error)
-  })
-
-  console.log("Watching for changes...")
-}

@@ -4,6 +4,7 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {tagAnatomy} from "./tag.anatomy"
 import {tagClasses} from "./tag.classes"
 import type {
   QdsTagApi,
@@ -13,6 +14,8 @@ import type {
   QdsTagRootBindings,
   QdsTagStartIconBindings,
 } from "./tag.types"
+
+const parts = tagAnatomy.parts
 
 export function createQdsTagApi(
   props: QdsTagApiProps & {selected?: boolean | undefined},
@@ -25,13 +28,12 @@ export function createQdsTagApi(
   }
 
   const commonBindings = {
+    ...parts.root,
     className: tagClasses.root,
     "data-disabled": booleanDataAttr(props.disabled),
     "data-emphasis": props.emphasis || "outline-brand",
-    "data-part": "root" as const,
-    "data-radius": props.radius || "square",
-    "data-scope": "tag" as const,
     "data-selected": booleanDataAttr(props.selected),
+    "data-shape": props.shape || props.radius || "square",
     "data-size": size,
     "data-variant": props.variant,
   }
@@ -39,11 +41,10 @@ export function createQdsTagApi(
   return {
     getDismissButtonBindings(): QdsTagDismissButtonBindings {
       return normalize.button({
+        ...parts.dismissButton,
         "aria-label": "Dismiss",
         className: tagClasses.dismissButton,
         "data-disabled": booleanDataAttr(props.disabled),
-        "data-part": "dismiss-button",
-        "data-scope": "tag",
         "data-size": size,
         disabled: props.disabled,
         type: "button",
@@ -51,9 +52,8 @@ export function createQdsTagApi(
     },
     getEndIconBindings(): QdsTagEndIconBindings {
       return normalize.element({
+        ...parts.endIcon,
         className: tagClasses.icon,
-        "data-part": "end-icon",
-        "data-scope": "tag",
         "data-size": size,
       })
     },
@@ -64,9 +64,8 @@ export function createQdsTagApi(
     },
     getStartIconBindings(): QdsTagStartIconBindings {
       return normalize.element({
+        ...parts.startIcon,
         className: tagClasses.icon,
-        "data-part": "start-icon",
-        "data-scope": "tag",
         "data-size": size,
       })
     },

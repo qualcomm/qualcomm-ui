@@ -54,8 +54,8 @@ import {
 
 @Directive()
 export class CoreComboboxRootDirective<
-    T extends CollectionItem = CollectionItem,
-  >
+  T extends CollectionItem = CollectionItem,
+>
   extends AbstractListCollectionFormControlDirective<T>
   implements
     Omit<

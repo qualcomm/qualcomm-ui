@@ -6,6 +6,10 @@
     "noEmit": true,
     "module": "esnext",
     "target": "esnext",
+    "paths": {
+      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
+    }
   },
   "include": ["./src", "types.d.ts"],
   "exclude": ["./src/routes/**/demos/*.ts"],

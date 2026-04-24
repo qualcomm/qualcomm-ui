@@ -22,7 +22,8 @@ export interface MdxDocsLayoutContextState {
   hideSideNav: boolean
   mainContentElement: HTMLElement | null
   navItems: NavItem[]
-  pageExport: false | KnowledgePageData | undefined
+  pageExport: boolean | KnowledgePageData | undefined
+  pageFrontmatter: Record<string, unknown>
   pageMap: PageMap
   pageProps: PropsContextValue | null
   pathname: string

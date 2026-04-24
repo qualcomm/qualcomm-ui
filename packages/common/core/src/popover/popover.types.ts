@@ -9,11 +9,12 @@ import type {
   PersistentElementOptions,
 } from "@qualcomm-ui/dom/dismissable"
 import type {Placement, PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -27,8 +28,11 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
+import type {popoverAnatomy} from "./popover.anatomy"
+
 export interface PopoverApiProps
-  extends CommonProperties,
+  extends
+    CommonProperties,
     DirectionProperty,
     DismissableElementHandlers,
     PersistentElementOptions {
@@ -209,31 +213,30 @@ export interface PopoverSchema extends MachineSchema {
   state: "closed" | "open"
 }
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "popover"
+type PartName = AnatomyPartName<typeof popoverAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"popover", P> {}
+
+export interface PopoverRootBindings extends Part<"root"> {
+  dir: Direction
 }
 
-export interface PopoverArrowBindings extends CommonBindings {
-  "data-part": "arrow"
+export interface PopoverAnchorBindings extends Part<"anchor"> {
+  id: string
+}
+
+export interface PopoverArrowBindings extends Part<"arrow"> {
   id: string
   style: JSX.CSSProperties
 }
 
-export interface PopoverArrowTipBindings extends CommonBindings {
-  "data-part": "arrow-tip"
+export interface PopoverArrowTipBindings extends Part<"arrowTip"> {
   style: JSX.CSSProperties
 }
 
-export interface PopoverAnchorBindings extends CommonBindings {
-  "data-part": "anchor"
-  id: string
-}
-
-export interface PopoverTriggerBindings extends CommonBindings {
+export interface PopoverTriggerBindings extends Part<"trigger"> {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "aria-haspopup": "dialog"
-  "data-part": "trigger"
   "data-placement": Placement | undefined
   "data-state": PopoverSchema["state"]
   id: string
@@ -242,22 +245,19 @@ export interface PopoverTriggerBindings extends CommonBindings {
   type: "button"
 }
 
-export interface PopoverIndicatorBindings extends CommonBindings {
-  "data-part": "indicator"
+export interface PopoverIndicatorBindings extends Part<"indicator"> {
   "data-state": PopoverSchema["state"]
 }
 
-export interface PopoverPositionerBindings extends CommonBindings {
-  "data-part": "positioner"
+export interface PopoverPositionerBindings extends Part<"positioner"> {
   id: string
   style: JSX.CSSProperties
 }
 
-export interface PopoverContentBindings extends CommonBindings {
+export interface PopoverContentBindings extends Part<"content"> {
   "aria-describedby": string | undefined
   "aria-labelledby": string | undefined
   "data-expanded": BooleanDataAttr
-  "data-part": "content"
   "data-placement": Placement | undefined
   "data-state": PopoverSchema["state"]
   hidden: boolean | undefined
@@ -266,26 +266,19 @@ export interface PopoverContentBindings extends CommonBindings {
   tabIndex: -1
 }
 
-export interface PopoverLabelBindings extends CommonBindings {
-  "data-part": "label"
+export interface PopoverLabelBindings extends Part<"label"> {
   id: string
 }
 
-export interface PopoverDescriptionBindings extends CommonBindings {
-  "data-part": "description"
+export interface PopoverDescriptionBindings extends Part<"description"> {
   id: string
 }
 
-export interface PopoverCloseTriggerBindings extends CommonBindings {
+export interface PopoverCloseTriggerBindings extends Part<"closeTrigger"> {
   "aria-label": string
-  "data-part": "close-trigger"
   id: string
   onClick: JSX.MouseEventHandler
   type: "button"
-}
-
-export interface PopoverRootBindings extends CommonBindings {
-  "data-part": "root"
 }
 
 export interface PopoverApi {

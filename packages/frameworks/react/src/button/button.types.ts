@@ -9,8 +9,7 @@ import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 
 export interface ButtonProps
-  extends QdsButtonApiProps,
-    ElementRenderProp<"button"> {
+  extends QdsButtonApiProps, ElementRenderProp<"button"> {
   /**
    * Icon positioned after the text content.  If supplied as a
    * `LucideIcon`, the size will automatically match the {@link size} prop.
@@ -27,5 +26,4 @@ export interface ButtonProps
 }
 
 export interface ButtonGroupProps
-  extends ElementRenderProp<"div">,
-    QdsButtonGroupApiProps {}
+  extends ElementRenderProp<"div">, QdsButtonGroupApiProps {}

@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsHeaderBarApi} from "./qds-header-bar-context"
 
-export interface HeaderBarWindowControlsProps
-  extends ElementRenderProp<"div"> {}
+export interface HeaderBarWindowControlsProps extends ElementRenderProp<"div"> {}
 
 export function HeaderBarWindowControls(
   props: HeaderBarWindowControlsProps,

@@ -16,8 +16,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsPaginationContext} from "./qds-pagination-context"
 
-export interface PaginationPrevTriggerProps
-  extends ElementRenderProp<"button"> {
+export interface PaginationPrevTriggerProps extends ElementRenderProp<"button"> {
   /**
    * lucide-react icon.
    *

@@ -24,8 +24,8 @@ export class ComboboxContextDirective extends ApiContextDirective<ComboboxApi> {
    */
   static ngTemplateContextGuard(
     dir: ComboboxContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: SelectApi} {
+    _ctx: unknown,
+  ): _ctx is {$implicit: SelectApi} {
     return true
   }
 }

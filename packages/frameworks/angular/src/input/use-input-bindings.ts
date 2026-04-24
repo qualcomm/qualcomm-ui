@@ -100,12 +100,11 @@ export function useInputErrorText(): UseInputErrorTextReturn {
   }
 }
 
-export interface UseInputGroupReturn
-  extends Signal<{
-    endIcon?: LucideIconOrString
-    getBindings: () => QdsInputGroupBindings
-    startIcon?: LucideIconOrString
-  }> {}
+export interface UseInputGroupReturn extends Signal<{
+  endIcon?: LucideIconOrString
+  getBindings: () => QdsInputGroupBindings
+  startIcon?: LucideIconOrString
+}> {}
 
 /**
  * A composable function that provides bindings for implementing the input group on

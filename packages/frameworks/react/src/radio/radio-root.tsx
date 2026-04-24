@@ -23,7 +23,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsRadioContextProvider, useQdsRadioContext} from "./qds-radio-context"
 
 export interface RadioRootProps
-  extends RadioItemContext,
+  extends
+    RadioItemContext,
     IdProp,
     QdsRadioApiProps,
     ElementRenderProp<"label"> {

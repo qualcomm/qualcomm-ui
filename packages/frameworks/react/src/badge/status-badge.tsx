@@ -15,8 +15,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface StatusBadgeProps
-  extends QdsStatusBadgeProps,
-    ElementRenderProp<"span"> {}
+  extends QdsStatusBadgeProps, ElementRenderProp<"span"> {}
 
 export function StatusBadge({
   disabled,

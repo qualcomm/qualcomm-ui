@@ -10,8 +10,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsSelectContext} from "./qds-select-context"
 
 export interface SelectPositionerProps
-  extends IdProp,
-    ElementRenderProp<"div"> {}
+  extends IdProp, ElementRenderProp<"div"> {}
 
 /**
  * Positions the select menu relative to the trigger. Renders a `<div>` element by

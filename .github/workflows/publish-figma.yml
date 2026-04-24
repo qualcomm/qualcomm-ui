@@ -20,7 +20,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 

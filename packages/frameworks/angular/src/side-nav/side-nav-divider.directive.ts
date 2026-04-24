@@ -23,6 +23,7 @@ export class SideNavDividerDirective implements OnInit {
     mergeProps(
       createQdsDividerApi({}, normalizeProps).getRootBindings(),
       this.qdsContext().getDividerBindings(),
+      {"aria-orientation": undefined, role: "presentation"},
     ),
   )
 

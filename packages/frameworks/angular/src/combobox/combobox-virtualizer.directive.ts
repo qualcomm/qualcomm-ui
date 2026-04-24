@@ -25,8 +25,8 @@ export class ComboboxVirtualizerDirective implements OnInit {
 
   static ngTemplateContextGuard(
     dir: ComboboxVirtualizerDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: AngularVirtualizer<any, any>; index: number} {
+    _ctx: unknown,
+  ): _ctx is {$implicit: AngularVirtualizer<any, any>; index: number} {
     return true
   }
 

@@ -15,6 +15,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import {domIds} from "./internal"
+import {passwordInputAnatomy} from "./password-input.anatomy"
 import type {
   PasswordInputApi,
   PasswordInputClearTriggerBindings,
@@ -26,13 +27,10 @@ import type {
   PasswordInputLabelBindings,
   PasswordInputRootBindings,
   PasswordInputSchema,
-  PasswordInputScopeAttribute,
   PasswordInputVisibilityTriggerBindings,
 } from "./password-input.types"
 
-const commonBindings: PasswordInputScopeAttribute = {
-  "data-scope": "password-input",
-}
+const parts = passwordInputAnatomy.parts
 
 export function createPasswordInputApi(
   machine: Machine<PasswordInputSchema>,
@@ -70,11 +68,9 @@ export function createPasswordInputApi(
     // group: prop getters
     getClearTriggerBindings(): PasswordInputClearTriggerBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.clearTrigger,
         "aria-label": "Clear input",
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "clear-trigger",
-        dir: prop("dir"),
         disabled,
         onClick: (event) => {
           if (!interactive || event.defaultPrevented) {
@@ -82,15 +78,14 @@ export function createPasswordInputApi(
           }
           send({type: "VALUE.SET", value: ""})
         },
+        type: "button",
       })
     },
 
     getErrorIndicatorBindings(): PasswordInputErrorIndicatorBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorIndicator,
         "aria-label": "Error",
-        "data-part": "error-indicator",
-        dir: prop("dir"),
         hidden: !prop("invalid"),
       })
     },
@@ -100,10 +95,8 @@ export function createPasswordInputApi(
     ): PasswordInputErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
-        dir: prop("dir"),
         hidden: !invalid,
         id: domIds.errorText(scope),
       })
@@ -112,10 +105,8 @@ export function createPasswordInputApi(
     getHintBindings(props: IdRegistrationProps): PasswordInputHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "hint",
-        dir: prop("dir"),
         hidden: !!invalid,
         id: domIds.hint(scope),
       })
@@ -124,7 +115,7 @@ export function createPasswordInputApi(
     getInputBindings(props: IdRegistrationProps): PasswordInputInputBindings {
       scope.ids.register("input", props)
       return normalize.input({
-        ...commonBindings,
+        ...parts.input,
         "aria-describedby": ariaAttr(domIds.hint(scope)),
         "aria-invalid": booleanAriaAttr(invalid),
         "aria-labelledby": mergeAriaIds(
@@ -136,11 +127,9 @@ export function createPasswordInputApi(
         "data-empty": booleanDataAttr(!context.get("value")),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input",
         "data-readonly": booleanDataAttr(readOnly),
         "data-state": visible ? "visible" : "hidden",
         defaultValue: context.get("value"),
-        dir: prop("dir"),
         disabled,
         form: prop("form"),
         id: domIds.input(scope),
@@ -168,13 +157,11 @@ export function createPasswordInputApi(
 
     getInputGroupBindings(): PasswordInputInputGroupBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.inputGroup,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input-group",
         "data-readonly": booleanDataAttr(readOnly),
-        dir: prop("dir"),
         onClick: (event) => {
           if (event.defaultPrevented || disabled) {
             return
@@ -187,12 +174,10 @@ export function createPasswordInputApi(
     getLabelBindings(props: IdRegistrationProps): PasswordInputLabelBindings {
       scope.ids.register("label", props)
       return normalize.label({
-        ...commonBindings,
+        ...parts.label,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "label",
-        dir: prop("dir"),
         htmlFor: domIds.input(scope),
         id: domIds.label(scope),
       })
@@ -200,11 +185,10 @@ export function createPasswordInputApi(
 
     getRootBindings(): PasswordInputRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "root",
         dir: prop("dir"),
       })
     },
@@ -214,17 +198,15 @@ export function createPasswordInputApi(
     ): PasswordInputVisibilityTriggerBindings {
       scope.ids.register("visibilityTrigger", props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.visibilityTrigger,
         "aria-controls": domIds.input(scope),
         "aria-expanded": booleanAriaAttr(visible),
         "aria-label":
           prop("translations")?.visibilityTrigger?.(visible) ||
           "Toggle visibility",
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "visibility-trigger",
         "data-readonly": booleanDataAttr(readOnly),
         "data-state": visible ? "visible" : "hidden",
-        dir: prop("dir"),
         disabled,
         id: domIds.visibilityTrigger(scope),
         onPointerDown(event) {

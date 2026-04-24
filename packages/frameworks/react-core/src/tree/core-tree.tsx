@@ -33,7 +33,8 @@ import {TreeContextProvider, useTreeContext} from "./tree-context"
 import {useTreeNodePropsContext} from "./tree-node-context"
 
 export interface CoreTreeRootProps<T extends TreeNode = TreeNode>
-  extends IdProp,
+  extends
+    IdProp,
     Omit<ElementRenderProp<"div">, "dir">,
     TreeApiProps<T>,
     RenderStrategyApiProps {}
@@ -111,8 +112,7 @@ export function CoreTreeBranchNode({
   )
 }
 
-export interface CoreTreeBranchIndentGuideProps
-  extends ElementRenderProp<"div"> {}
+export interface CoreTreeBranchIndentGuideProps extends ElementRenderProp<"div"> {}
 
 export function CoreTreeBranchIndentGuide({
   children,

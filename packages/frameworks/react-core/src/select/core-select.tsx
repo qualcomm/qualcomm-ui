@@ -38,7 +38,8 @@ import {
 } from "./select-context"
 
 export interface CoreSelectRootProps
-  extends SelectApiProps,
+  extends
+    SelectApiProps,
     PresenceApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir" | "onSelect"> {}
 
@@ -71,8 +72,7 @@ export function CoreSelectRoot({
 }
 
 export interface CoreSelectContentProps
-  extends ElementRenderProp<"div">,
-    IdProp {}
+  extends ElementRenderProp<"div">, IdProp {}
 
 export function CoreSelectContent({
   children,
@@ -96,8 +96,7 @@ export function CoreSelectContent({
 }
 
 export interface CoreSelectHiddenSelectProps
-  extends ComponentPropsWithRef<"select">,
-    IdProp {}
+  extends ComponentPropsWithRef<"select">, IdProp {}
 
 export function CoreSelectHiddenSelect({
   id,
@@ -127,8 +126,7 @@ export function CoreSelectHiddenSelect({
 }
 
 export interface CoreSelectPositionerProps
-  extends ElementRenderProp<"div">,
-    IdProp {}
+  extends ElementRenderProp<"div">, IdProp {}
 
 export function CoreSelectPositioner({
   children,
@@ -157,9 +155,7 @@ export function CoreSelectPositioner({
 }
 
 export interface CoreSelectControlProps
-  extends ElementRenderProp<"div">,
-    ComponentDataAttributes,
-    IdProp {}
+  extends ElementRenderProp<"div">, ComponentDataAttributes, IdProp {}
 
 export function CoreSelectControl({
   children,
@@ -183,8 +179,7 @@ export function CoreSelectControl({
 }
 
 export interface CoreSelectItemProps
-  extends ElementRenderProp<"div">,
-    ItemProps {}
+  extends ElementRenderProp<"div">, ItemProps {}
 
 export function CoreSelectItem({
   children,
@@ -226,8 +221,7 @@ export function CoreSelectItemText({
   )
 }
 
-export interface CoreSelectItemIndicatorProps
-  extends ElementRenderProp<"span"> {}
+export interface CoreSelectItemIndicatorProps extends ElementRenderProp<"span"> {}
 
 /*
  * Note that Zag/Ark call this part the "Trigger"

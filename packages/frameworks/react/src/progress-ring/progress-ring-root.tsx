@@ -18,8 +18,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsProgressRingContextProvider} from "./qds-progress-ring-context"
 
 export interface ProgressRingRootProps
-  extends CoreProgressRingRootProps,
-    QdsProgressRingApiProps {}
+  extends CoreProgressRingRootProps, QdsProgressRingApiProps {}
 
 /**
  * The root container element for the progress ring component. Renders a `<div>`

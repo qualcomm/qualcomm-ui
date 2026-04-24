@@ -6,8 +6,7 @@ import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 
 export interface IconButtonProps
-  extends QdsIconButtonApiProps,
-    ElementRenderProp<"button"> {
+  extends QdsIconButtonApiProps, ElementRenderProp<"button"> {
   /**
    * {@link https://lucide.dev lucide-react} icon. Can be supplied as a
    * `ReactElement` for additional customization.

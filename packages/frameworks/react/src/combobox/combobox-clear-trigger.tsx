@@ -13,8 +13,7 @@ import {
 } from "@qualcomm-ui/react-core/combobox"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface ComboboxClearTriggerProps
-  extends CoreComboboxClearTriggerProps {}
+export interface ComboboxClearTriggerProps extends CoreComboboxClearTriggerProps {}
 
 /**
  * Button that clears the input value. Renders a `<button>` element by default.

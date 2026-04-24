@@ -14,8 +14,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useCopyToClipboard} from "./use-copy-to-clipboard"
 
-export interface CopyToClipboardInlineIconButtonProps
-  extends Omit<InlineIconButtonProps, "icon"> {
+export interface CopyToClipboardInlineIconButtonProps extends Omit<
+  InlineIconButtonProps,
+  "icon"
+> {
   valueOrFn: string | (() => string)
 }
 

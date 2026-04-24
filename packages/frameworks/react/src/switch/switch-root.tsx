@@ -21,7 +21,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsSwitchContextProvider} from "./qds-switch-context"
 
 export interface SwitchRootProps
-  extends SwitchApiProps,
+  extends
+    SwitchApiProps,
     QdsSwitchApiProps,
     Omit<ElementRenderProp<"label">, "dir"> {
   /**

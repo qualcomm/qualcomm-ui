@@ -12,8 +12,9 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsComboboxContext} from "./qds-combobox-context"
 
-export interface ComboboxItemProps<T extends CollectionItem>
-  extends CoreComboboxItemProps<T> {}
+export interface ComboboxItemProps<
+  T extends CollectionItem,
+> extends CoreComboboxItemProps<T> {}
 
 /**
  * Individual option within the combobox menu. Renders a `<div>` element by default.

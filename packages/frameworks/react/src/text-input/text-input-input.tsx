@@ -10,9 +10,7 @@ import type {ComponentDataAttributes} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TextInputInputProps
-  extends ComponentPropsWithRef<"input">,
-    ComponentDataAttributes,
-    IdProp {}
+  extends ComponentPropsWithRef<"input">, ComponentDataAttributes, IdProp {}
 
 /**
  * The text input element. Renders an `<input>` element.

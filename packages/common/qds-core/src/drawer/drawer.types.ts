@@ -12,8 +12,10 @@ export type QdsDrawerPlacement = "start" | "end"
 
 export type QdsDrawerSize = "sm" | "md"
 
-export interface QdsDrawerApiProps
-  extends Pick<QdsDialogApiProps, "scrollBehavior"> {
+export interface QdsDrawerApiProps extends Pick<
+  QdsDialogApiProps,
+  "scrollBehavior"
+> {
   /**
    * The horizontal placement of the drawer within the viewport.
    *

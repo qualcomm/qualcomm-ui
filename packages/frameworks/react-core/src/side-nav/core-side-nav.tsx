@@ -33,7 +33,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {SideNavContextProvider, useSideNavContext} from "./side-nav-context"
 
 export interface CoreSideNavRootProps<T = TreeNode>
-  extends SideNavApiProps,
+  extends
+    SideNavApiProps,
     Omit<
       TreeApiProps<T>,
       "checkedValue" | "defaultCheckedValue" | "onCheckedValueChange"
@@ -82,8 +83,7 @@ export function CoreSideNavRoot<T = TreeNode>({
 }
 
 export interface CoreSideNavTriggerProps
-  extends IdProp,
-    ElementRenderProp<"button"> {}
+  extends IdProp, ElementRenderProp<"button"> {}
 
 /**
  * The trigger that opens and closes the side navigation.
@@ -159,8 +159,7 @@ export function CoreSideNavHeaderTitle({
   return <PolymorphicElement as="div" {...mergedProps} />
 }
 
-export interface CoreSideNavHeaderActionProps
-  extends ElementRenderProp<"button"> {}
+export interface CoreSideNavHeaderActionProps extends ElementRenderProp<"button"> {}
 
 export function CoreSideNavHeaderAction({
   ...props

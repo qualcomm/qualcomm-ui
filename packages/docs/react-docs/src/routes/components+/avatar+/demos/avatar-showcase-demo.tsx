@@ -7,7 +7,7 @@ export function AvatarShowcaseDemo(): ReactElement {
     // preview
     <Avatar.Root status="active">
       <Avatar.Image alt="John Doe" src="/images/avatar-man.png" />
-      <Avatar.Content>JD</Avatar.Content>
+      <Avatar.Content>J</Avatar.Content>
       <Avatar.Status />
     </Avatar.Root>
     // preview

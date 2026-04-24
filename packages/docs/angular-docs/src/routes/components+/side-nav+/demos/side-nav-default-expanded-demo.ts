@@ -14,18 +14,18 @@ import {QLogoComponent} from "./q-logo.component"
   template: `
     <div class="flex justify-center">
       <!-- preview -->
-      <nav
+      <div
         q-side-nav-root
         [collection]="collection"
         [defaultExpandedValue]="['account']"
       >
         <!-- preview -->
-        <header q-side-nav-header>
+        <div q-side-nav-header>
           <div q-side-nav-header-logo>
             <q-logo />
           </div>
           <div q-side-nav-header-title>Qualcomm</div>
-        </header>
+        </div>
 
         @for (
           node of collection.rootNode.nodes;
@@ -62,7 +62,7 @@ import {QLogoComponent} from "./q-logo.component"
             </ng-template>
           </q-side-nav-nodes>
         }
-      </nav>
+      </div>
     </div>
   `,
 })

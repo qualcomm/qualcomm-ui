@@ -10,15 +10,15 @@ import {AvatarModule} from "@qualcomm-ui/angular/avatar"
       <!-- preview -->
       Neutral
       <div emphasis="neutral" q-avatar>
-        <div q-avatar-content>OK</div>
+        <div q-avatar-content>O</div>
       </div>
       High Contrast
       <div emphasis="contrast" q-avatar>
-        <div q-avatar-content>OK</div>
+        <div q-avatar-content>O</div>
       </div>
       Brand
       <div emphasis="brand" q-avatar>
-        <div q-avatar-content>OK</div>
+        <div q-avatar-content>O</div>
       </div>
       <!-- preview -->
     </div>

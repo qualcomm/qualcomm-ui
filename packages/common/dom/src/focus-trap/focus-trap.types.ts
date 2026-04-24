@@ -261,11 +261,10 @@ export interface FocusTrapState {
   tabbableGroups: ContainerGroup[]
 }
 
-export interface DeactivateOptions
-  extends Pick<
-    FocusTrapOptions,
-    "onDeactivate" | "onPostDeactivate" | "checkCanReturnFocus"
-  > {
+export interface DeactivateOptions extends Pick<
+  FocusTrapOptions,
+  "onDeactivate" | "onPostDeactivate" | "checkCanReturnFocus"
+> {
   returnFocus?: boolean | undefined
 }
 

@@ -95,8 +95,10 @@ export function formatSectionContent(
   return content
 }
 
-interface ResultWithType
-  extends Pick<Fuzzysort.Result, "indexes" | "score" | "target"> {
+interface ResultWithType extends Pick<
+  Fuzzysort.Result,
+  "indexes" | "score" | "target"
+> {
   type: SearchResultType
 }
 

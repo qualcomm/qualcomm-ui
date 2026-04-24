@@ -1,3 +1,4 @@
+export * from "./number-input.anatomy"
 export * from "./number-input.api"
 export * from "./number-input.machine"
 export * from "./number-input.props"

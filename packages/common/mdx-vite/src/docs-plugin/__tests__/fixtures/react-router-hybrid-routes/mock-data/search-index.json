@@ -1,0 +1,1360 @@
+[
+  {
+    "categories": [
+      "Introduction"
+    ],
+    "data": {
+      "hideBreadcrumbs": true,
+      "id": "_index",
+      "title": "Introduction"
+    },
+    "hideBreadcrumbs": true,
+    "id": "/routes/index.mdx-0",
+    "pathname": "/",
+    "pathSegments": [],
+    "title": "Introduction",
+    "content": "* `Log In`\n* `Home`\n\ntest\n\ntest\n\ntest",
+    "heading": "General",
+    "headingLevel": 1,
+    "href": "/"
+  },
+  {
+    "categories": [
+      "Test",
+      "B Test"
+    ],
+    "data": {
+      "title": "B Test"
+    },
+    "id": "/routes/test+/b+/route.mdx",
+    "pathname": "/test/b",
+    "pathSegments": [
+      "test",
+      "b"
+    ],
+    "title": "B Test"
+  },
+  {
+    "categories": [
+      "Test",
+      "A Test"
+    ],
+    "data": {
+      "title": "A Test"
+    },
+    "id": "/routes/test+/a+/_a.mdx",
+    "pathname": "/test/a",
+    "pathSegments": [
+      "test",
+      "a"
+    ],
+    "title": "A Test"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-0",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "The following guide is for page creation in React Router v7's `Framework Mode`.\n\nWe recommend that you follow this guide with a fresh clone of our `QUI Docs\nTemplate` for the best experience.",
+    "heading": "Page Setup",
+    "headingLevel": 1,
+    "href": "/guide/page-setup"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-1",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "* We recommend creating pages with the `remix-flat-routes` `Hybrid Routes` strategy. The QUI Docs template is already configured for this.\n* You may also use the legacy `flat routes` convention from Remix v2.\n* For complete control, you can use React Router to create your own `routes`. You'll also need to provide a function to qui-docs for nav generation. Refer to the `corresponding guide` to learn more.\n* For your page to be picked up by the search index, it must be an `mdx` page.\n\nIf it's still a bit unclear, don't worry. Let's clarify things by walking through a few scenarios.",
+    "heading": "Overview",
+    "headingLevel": 2,
+    "href": "/guide/page-setup#overview"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-2",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "QUI Docs is configured using a config file in the same directory as your app's `vite.config.ts`. Open the configuration file at `qui-docs.config.ts`, but don't edit it yet. The following is the default configuration that ships with the template:",
+    "heading": "Config",
+    "headingLevel": 2,
+    "href": "/guide/page-setup#config"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-3",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "Let's start by adding a few pages. Create a `setup.mdx` in the `routes` directory:\n\nPopulate your page with the following:\n\n> ********\n>\n> NOTE\n>\n> > We'll explain the `# {frontmatter.title}` syntax in the `Markdown` guide.\n\nAfter adding this page, your sidebar should look like this:\n\nIn your application, click this route to navigate to the page. It should take you to `/setup`. Let's explore how this works.",
+    "heading": "Add a Page",
+    "headingLevel": 2,
+    "href": "/guide/page-setup#add-a-page"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-4",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "Each page's URL is determined by its filepath relative to the `routes` directory. Nested paths are defined using folders that end with `+`. Here are a few examples:\n\n| file path                               | page url                           |\n| :-------------------------------------- | :--------------------------------- |\n| `setup.mdx`                             | `/setup`                           |\n| `help+/troubleshooting.mdx`             | `/help/troubleshooting`            |\n| `guide+/content-creation+/overview.mdx` | `/guide/content-creation/overview` |\n\nLet's create a nested route now:\n\n* Create a folder in `src/routes` named `help+`.\n* Then create a file inside this folder called `troubleshooting.mdx`.\n\nAnd populate it with the following:\n\nYour sidebar should now look something like this:\n\nBut now we have two issues:\n\n* The Setup page is one of the first pages that the user should visit, so it should probably appear before the Help page in the sidebar order.\n* The child page of the Help item isn't visible on first load.\n\nTo tackle these issues, we'll need to edit the `navConfig`.",
+    "heading": "Page URLs",
+    "headingLevel": 3,
+    "href": "/guide/page-setup#page-urls"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-5",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "For MDX pages, we define the title in the page's frontmatter. Our plugin extracts this title and incorporates it into the sidebar data. However, for path segments without associated pages (like folders), we can't do this because there is no MDX file to provide frontmatter.\n\nWe expose a `navConfig` property on the configuration object for this purpose.\n\nOpen the `qui-docs.config.ts` file from before.\n\nLet's address the issues. First, create an entry in the navConfig array for the setup page:\n\nYour sidebar will immediately update to reflect the config changes. And now Setup is ordered properly!",
+    "heading": "Nav Config",
+    "headingLevel": 3,
+    "href": "/guide/page-setup#nav-config"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-6",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "* The order of a sidebar item is determined by its array position in the navConfig.\n* Items defined in the navConfig are ordered before items that aren't defined.\n* This is why the order of the Setup item changed as soon as we added it to the config.\n\n> ********\n>\n> API\n>\n> > Refer to the `API documentation` to learn more about the available customization options.",
+    "heading": "Sidebar Order",
+    "headingLevel": 4,
+    "href": "/guide/page-setup#sidebar-order"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-7",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "Next, we'll add an entry to expand the Help folder. Folders in the sidebar are closed by default. To make the `Help` folder open automatically, set the `expanded` property to true.\n\nNow your sidebar should look something like this:\n\n> ********\n>\n> NOTE\n>\n> > If the site navigates to a nested route, the sidebar will automatically expand to show the route's item\n> > regardless of the route's `navConfig` entry.\n\nWe'll cover one more example to explain how the `id` property works for child items.\n\nLet's add another page to our application.\n\n* Create a file: `src/routes/help+/contact-us.mdx`.\n* Populate it with the following:\n\nSince routes without navConfig entries are ordered alphabetically, the `Contact Us` item appears before the `Troubleshooting` item in the sidebar. We can fix this by creating a few entries in the navConfig.\n\nSince these routes are nested under the `/help` route, we'll need to add them to the `/help` item's `children` array:\n\n> ********\n>\n> NOTE\n>\n> > For each id, we only need to match the path segment of the route at its current nesting level.\n> > The plugin walks the navConfig tree recursively to assemble the route and match against the MDX file.",
+    "heading": "Expanded State",
+    "headingLevel": 4,
+    "href": "/guide/page-setup#expanded-state"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-8",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "The home page is a reserved route and is defined by the `_index` id. The home page is located at `routes/index.mdx`, or `routes/index/_index.mdx`.\n\nThe source code for the QUI Docs Template home page is defined as follows:\n\nNote the following about the home route:\n\n* The `id` must be defined for the home route in order for the page to show up in the sidebar.\n* Since the home page starts on the `/` route, there aren't any breadcrumbs to show. We set the `hideBreadcrumbs: true` in the page's frontmatter to disable them for this route.\n* This property can also be set on the page's navConfig entry.",
+    "heading": "Home Page",
+    "headingLevel": 4,
+    "href": "/guide/page-setup#home-page"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-9",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "You may also use a `.tsx` file to render a React page, but its content will not show up in the sidebar by default. To show React pages, you must add them to the sidebar via the navConfig. Note that these pages will not be picked up by the search indexer.",
+    "heading": "React Page",
+    "headingLevel": 3,
+    "href": "/guide/page-setup#react-page"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-10",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "To define a route that is both a folder (expandable side nav entry) and a standalone page, follow these steps.\n\nLet's assume that you're creating a page at `/help`, but you also have routes at `/help/*`.\n\n* Create a folder: `routes/help+`\n* Create a file: `routes/help+/index.mdx`\n\nThe contents of `index.mdx` will render at the `/help` route. The built-in side navigation will automatically account for this when you click on the link.",
+    "heading": "Page and Folder",
+    "headingLevel": 3,
+    "href": "/guide/page-setup#page-and-folder"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-11",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "React Router's `Framework Mode` supports manually-defined route definitions. When you define custom routes, our plugin doesn't automatically resolve the nav links from those files.\n\nIn the qui-docs config, you must supply your own `routingStrategy` to map each file to its corresponding site URL. This property takes a function that receives one argument:\n\n* `filePath`: the file's path relative to the `pageDirectory`.\n\nThe function must return a `string[]` representing individual path segments (seperated by `/`) to the file. Let's walk through a quick example.\n\nAssume that we've defined the following routes:\n\nOur `routes.ts` file would look like this:\n\nIn our QUI Docs config, we'd pass a function to the routingStrategy option as follows.\n\nThe following table corresponds to the page input and expected path segments:\n\n| filePath                   | expected path segments        |\n| -------------------------- | ----------------------------- |\n| `index.mdx`                | `[]`                          |\n| `setup.mdx`                | `['setup']`                   |\n| `help/contact-us.mdx`      | `['help', 'contact-us']`      |\n| `help/troubleshooting.mdx` | `['help', 'troubleshooting']` |",
+    "heading": "Custom Routes",
+    "headingLevel": 3,
+    "href": "/guide/page-setup#custom-routes"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide+/page-setup.mdx-12",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "This concludes our page setup guide. Refer to the `NavConfig API` to learn more about page and sidebar customization, or continue on to our `Markdown` guide to learn about content authoring.",
+    "heading": "Next Steps",
+    "headingLevel": 2,
+    "href": "/guide/page-setup#next-steps"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-0",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "heading": "Markdown",
+    "headingLevel": 1,
+    "href": "/guide/markdown"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-1",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Our framework leverages MDX to offer a powerful and flexible content authoring experience. It's an advanced Markdown format with React component support.\n\nFor example, you can use and import React components inside your markdown like this:",
+    "heading": "MDX",
+    "headingLevel": 2,
+    "href": "/guide/markdown#mdx"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-2",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "`Frontmatter` is used to add metadata to Markdown files. It's placed at the top of the Markdown file enclosed in `---` lines. You can access frontmatter variables in the markdown body using the `frontmatter` keyword enclosed in brackets.\n\nFor a list of each available property, refer to the `PageFrontmatter API`.",
+    "heading": "Frontmatter",
+    "headingLevel": 3,
+    "href": "/guide/markdown#frontmatter"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-3",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "In addition to standard markdown, QUI Docs also supports GitHub Flavored Markdown (GFM). These extensions make it easier to write rich content with enhanced formatting and functionality. The following features are a mix of standard markdown, GFM, and our own enhancements.",
+    "heading": "Markdown Features",
+    "headingLevel": 2,
+    "href": "/guide/markdown#markdown-features"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-4",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Heading elements `h2`, `h3`, and `h4` create anchor links and comprise the page's Table of Contents.\n\n***",
+    "heading": "Autolink Headings",
+    "headingLevel": 3,
+    "href": "/guide/markdown#autolink-headings"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-5",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "| Syntax              | Result            |\n| :------------------ | :---------------- |\n| `**bold**`          | **bold**          |\n| `_italic_`          | *italic*          |\n| `~~strikethrough~~` | ~~strikethrough~~ |\n| \\`code\\`            | `code`            |\n\n***",
+    "heading": "Font Styles",
+    "headingLevel": 3,
+    "href": "/guide/markdown#font-styles"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-6",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Lists denote nesting with alternating list styles based on the nesting level.",
+    "heading": "Lists",
+    "headingLevel": 3,
+    "href": "/guide/markdown#lists"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-7",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "1. Parent\n   1. Child\n   2. Child\n      1. Grandchild\n      2. Grandchild\n2. Parent\n3. Parent",
+    "heading": "Ordered Lists",
+    "headingLevel": 4,
+    "href": "/guide/markdown#ordered-lists"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-8",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "* Parent\n  * Child\n  * Child\n    * Grandchild\n    * Grandchild\n* Parent\n* Parent\n\n***",
+    "heading": "Unordered Lists",
+    "headingLevel": 4,
+    "href": "/guide/markdown#unordered-lists"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-9",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "| Syntax    | Description |   Test Text |\n| :-------- | :---------: | ----------: |\n| Header    |    Title    | Here's this |\n| Paragraph |     Text    |    And more |\n\n***",
+    "heading": "Tables",
+    "headingLevel": 3,
+    "href": "/guide/markdown#tables"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-10",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "All relative Markdown links are automatically converted to Remix or React Router links. This means that the target page will be prefetched. When you click on a link, the page will be loaded on the client-side, without making a full page load (SPA routing). For example:\n\n...will compile to:",
+    "heading": "Links",
+    "headingLevel": 3,
+    "href": "/guide/markdown#links"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-11",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Similarly, all links starting with `https://` are converted to external links.\n\n...will compile to:\n\n***",
+    "heading": "External Links",
+    "headingLevel": 4,
+    "href": "/guide/markdown#external-links"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-12",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Our blockquotes are enhanced to enable inline alerts.\n\n> ********\n>\n> NOTE\n>\n> > We recommend that you use `folders` for organizing your routes.",
+    "heading": "Alerts",
+    "headingLevel": 3,
+    "href": "/guide/markdown#alerts"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-13",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Use a forward slash `/` to change the title of the alert:\n\n> ********\n>\n> Custom Title\n>\n> > Neat, a custom title",
+    "heading": "Custom Title",
+    "headingLevel": 4,
+    "href": "/guide/markdown#custom-title"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-14",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Customize the status color using `[!tip]`, `[!success]`, `[!warning]`, or `[!caution]`:\n\n> ********\n>\n> TIP\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ****\n>\n> SUCCESS\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ********\n>\n> WARNING\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ********\n>\n> CAUTION\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n***",
+    "heading": "Alert Variants",
+    "headingLevel": 4,
+    "href": "/guide/markdown#alert-variants"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-15",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Surround your content with a spoiler to hide it until the user clicks on the button:\n\n::: spoiler Click to reveal\n\nI'm a spoiler!\n\n:::\n\n***",
+    "heading": "Spoilers",
+    "headingLevel": 3,
+    "href": "/guide/markdown#spoilers"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-16",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Added in:\n\n* `@qualcomm-ui/mdx-vite@2.17.0`\n* `@qualcomm-ui/react-mdx@1.12.0`\n\nAdd a step indicator to headings using the `::: steps` directive. By default, heading levels h2-h4 are given step indicators. You can change this by supplying the heading level range on the directive:\n\n* `::: steps h2`: only h2 headings will show the step indicator\n* `::: steps h2-h3`: only h2 and h3 headings will show the step indicator",
+    "heading": "Steps",
+    "headingLevel": 3,
+    "href": "/guide/markdown#steps"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-17",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Result:\n\n::: steps",
+    "heading": "Example",
+    "headingLevel": 4,
+    "href": "/guide/markdown#example"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-18",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Prerequisites:\n\n* Node.js >= 22.19.0",
+    "heading": "Step 1",
+    "headingLevel": 4,
+    "href": "/guide/markdown#step-1"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-19",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "::: /steps\n\n***",
+    "heading": "Step 2",
+    "headingLevel": 4,
+    "href": "/guide/markdown#step-2"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-20",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Code blocks are syntax highlighted using `Shiki`. We've enabled most `common transformers` by default, detailed below:",
+    "heading": "Code Blocks",
+    "headingLevel": 3,
+    "href": "/guide/markdown#code-blocks"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-21",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Use `[!code ++]` and `[!code --]` to mark added and removed lines.\n\n***",
+    "heading": "Diff Notation",
+    "headingLevel": 4,
+    "href": "/guide/markdown#diff-notation"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-22",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Use `[!code highlight]` to highlight a line.\n\nYou can also highlight multiple lines with a single comment:\n\n***",
+    "heading": "Line Highlighting",
+    "headingLevel": 4,
+    "href": "/guide/markdown#line-highlighting"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-23",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Use `[!code word:Hello]` to highlight the word Hello in any subsequent code.\n\n***",
+    "heading": "Word Highlighting",
+    "headingLevel": 4,
+    "href": "/guide/markdown#word-highlighting"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-24",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Use `[!code focus]` to focus a line.\n\nYou can also focus multiple lines with a single comment:\n\n***",
+    "heading": "Line Focus",
+    "headingLevel": 4,
+    "href": "/guide/markdown#line-focus"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-25",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Use `[!code error]` and `[!code warning]` to mark a line with error and warning levels.\n\n***",
+    "heading": "Error Levels",
+    "headingLevel": 4,
+    "href": "/guide/markdown#error-levels"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Learn about how QUI Docs can enhance your Markdown authoring experience."
+    },
+    "description": "Learn about how QUI Docs can enhance your Markdown authoring experience.",
+    "id": "/routes/guide+/markdown.mdx-26",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Use `[!code hide]` to hide a line. Hidden lines are excluded from both the rendered output and clipboard when copied.\n\nYou can also hide multiple lines with a single comment:",
+    "heading": "Hide lines",
+    "headingLevel": 4,
+    "href": "/guide/markdown#hide-lines"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-0",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "heading": "AI Knowledge",
+    "headingLevel": 1,
+    "href": "/guide/ai-knowledge"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-1",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "The knowledge system transforms MDX documentation into two JSON exports:\n\n* **`sections.json`** — Header-scoped sections for RAG pipelines and semantic search\n* **`pages.json`** — Full page content for LLM context windows and OpenWebUI upload\n\nContent processing includes:\n\n* Replacing `<TypeDocProps />` components with JSON property documentation\n* Inlining demo source code from referenced demo files\n* Converting theme tables to JSON data\n* Resolving relative imports and links\n\nGeneration runs automatically during `buildStart` (production builds) and `configureServer` (dev server initialization). The `knowledge` field on `QuiDocsConfig` enables generation — no `enabled` flag is required.",
+    "heading": "Overview",
+    "headingLevel": 2,
+    "href": "/guide/ai-knowledge#overview"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-2",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Define the `knowledge` field in your `qui-docs.config.ts`:",
+    "heading": "Configuration",
+    "headingLevel": 2,
+    "href": "/guide/ai-knowledge#configuration"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-3",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Generated files are written to `{publicDir}/{outputPath}/`. The default output path is `exports`.",
+    "heading": "Output Structure",
+    "headingLevel": 2,
+    "href": "/guide/ai-knowledge#output-structure"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-4",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Contains header-scoped section entries extracted from each documentation page. Each section includes a breadcrumb header path, prose content, code examples, and an MD5 hash for change detection.\n\nIntended for RAG pipelines and semantic search. Sections are scoped by heading depth (default: h1, h2, h3), producing granular chunks suitable for embedding and retrieval.",
+    "heading": "sections.json",
+    "headingLevel": 3,
+    "href": "/guide/ai-knowledge#sectionsjson"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-5",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Contains the full rendered markdown content of each documentation page. Each entry includes the page title, route pathname, and an MD5 hash.\n\nUsed by the page header UI for copy/download actions and by the `upload-knowledge` CLI for OpenWebUI uploads.",
+    "heading": "pages.json",
+    "headingLevel": 3,
+    "href": "/guide/ai-knowledge#pagesjson"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-6",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "When `knowledge` is configured, each documentation page displays two actions in the page header:\n\n* **Copy Page** — Copies the page content as Markdown to the clipboard\n* **Download Page** — Downloads the page as a `.md` file\n\nBoth actions fetch content from `pages.json` at runtime. They only appear on pages that have a corresponding entry in the generated output.",
+    "heading": "Page Header UI",
+    "headingLevel": 2,
+    "href": "/guide/ai-knowledge#page-header-ui"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-7",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Upload generated knowledge to OpenWebUI instances. The upload command auto-detects `pages.json` in the output directory and uploads each page as an individual file.",
+    "heading": "OpenWebUI Integration",
+    "headingLevel": 2,
+    "href": "/guide/ai-knowledge#openwebui-integration"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-8",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Define integrations in the `knowledge.integrations.openWebUi` array:\n\nEach integration loads credentials from an env file. By convention, an integration with `id: \"production\"` loads `.env.production`. Override this with the `envFile` property.",
+    "heading": "Configuration",
+    "headingLevel": 3,
+    "href": "/guide/ai-knowledge#configuration-1"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-9",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "Required variables in each env file:\n\n| Variable                   | Fallback       | Description                |\n| :------------------------- | :------------- | :------------------------- |\n| `OPEN_WEB_UI_URL`          | `WEB_UI_URL`   | OpenWebUI instance URL     |\n| `OPEN_WEB_UI_API_KEY`      | `WEB_UI_KEY`   | API key for authentication |\n| `OPEN_WEB_UI_KNOWLEDGE_ID` | `KNOWLEDGE_ID` | Target knowledge base ID   |",
+    "heading": "Credential Environment Variables",
+    "headingLevel": 3,
+    "href": "/guide/ai-knowledge#credential-environment-variables"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-10",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "heading": "Upload Command",
+    "headingLevel": 3,
+    "href": "/guide/ai-knowledge#upload-command"
+  },
+  {
+    "categories": [
+      "Guide",
+      "AI Knowledge"
+    ],
+    "data": {
+      "title": "AI Knowledge",
+      "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines."
+    },
+    "description": "Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.",
+    "id": "/routes/guide+/ai-knowledge.mdx-11",
+    "pathname": "/guide/ai-knowledge",
+    "pathSegments": [
+      "guide",
+      "ai-knowledge"
+    ],
+    "title": "AI Knowledge",
+    "content": "| Option                      | Description                               |\n| :-------------------------- | :---------------------------------------- |\n| `-p, --path <path>`         | Override knowledge file path              |\n| `-i, --integration <names>` | Comma-separated integrations to upload to |\n| `--force`                   | Force upload even if content unchanged    |\n\nWhen no integrations are configured, the upload command falls back to credentials from `OPEN_WEB_UI_*` environment variables.",
+    "heading": "CLI Options",
+    "headingLevel": 4,
+    "href": "/guide/ai-knowledge#cli-options"
+  },
+  {
+    "categories": [
+      "Getting Started",
+      "Sign Up"
+    ],
+    "data": {
+      "title": "Sign Up"
+    },
+    "id": "/routes/getting-started+/sign-up.mdx-0",
+    "pathname": "/getting-started/sign-up",
+    "pathSegments": [
+      "getting-started",
+      "sign-up"
+    ],
+    "title": "Sign Up",
+    "content": "Sign Up Test",
+    "heading": "Sign Up",
+    "headingLevel": 1,
+    "href": "/getting-started/sign-up"
+  },
+  {
+    "categories": [
+      "Getting Started",
+      "Log In"
+    ],
+    "data": {
+      "title": "Log In"
+    },
+    "id": "/routes/getting-started+/log-in.mdx",
+    "pathname": "/getting-started/log-in",
+    "pathSegments": [
+      "getting-started",
+      "log-in"
+    ],
+    "title": "Log In"
+  },
+  {
+    "categories": [
+      "Getting Started"
+    ],
+    "data": {
+      "title": "Getting Started"
+    },
+    "id": "/routes/getting-started+/index.mdx-0",
+    "pathname": "/getting-started",
+    "pathSegments": [
+      "getting-started"
+    ],
+    "title": "Getting Started",
+    "content": "Body\n\n`test code`",
+    "heading": "Getting Started",
+    "headingLevel": 1,
+    "href": "/getting-started"
+  },
+  {
+    "categories": [
+      "Getting Started",
+      "Home"
+    ],
+    "data": {
+      "title": "Home"
+    },
+    "id": "/routes/getting-started+/home.mdx-0",
+    "pathname": "/getting-started/home",
+    "pathSegments": [
+      "getting-started",
+      "home"
+    ],
+    "title": "Home",
+    "content": "The Home screen provides a dashboard for all Qualcomm Device Cloud functions.\n\nThe following panels are available:\n\n* Welcome – Provides links to create a new Automated Job or Interactive Session.\n* FAQ – Provides help documentation for frequently asked questions.\n* Recommended devices – Displays a selection of Qualcomm Devices, including device details, minutes available, device availability status, and links to create a new Automated Job or Interactive Session.\n* Automated Jobs – Displays a history of Automated Jobs the user has run (see View Jobs).\n* Interactive Sessions – Displays a history of Interactive Sessions the user has run (see View Sessions).",
+    "heading": "Home",
+    "headingLevel": 1,
+    "href": "/getting-started/home"
+  },
+  {
+    "categories": [
+      "Getting Started",
+      "Dedicated Devices"
+    ],
+    "data": {
+      "title": "Dedicated Devices"
+    },
+    "id": "/routes/getting-started+/dedicated-devices.mdx",
+    "pathname": "/getting-started/dedicated-devices",
+    "pathSegments": [
+      "getting-started",
+      "dedicated-devices"
+    ],
+    "title": "Dedicated Devices"
+  },
+  {
+    "categories": [
+      "Best Practices",
+      "Choosing Dependencies"
+    ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
+    "id": "/routes/best-practices+/choosing-dependencies.mdx-0",
+    "pathname": "/best-practices/choosing-dependencies",
+    "pathSegments": [
+      "best-practices",
+      "choosing-dependencies"
+    ],
+    "title": "Choosing Dependencies",
+    "content": "Sometimes, you may need to add a feature to your app that you don’t have the code for. You might be tempted to search the web for an external dependency. Read these tips to learn how to filter out poor quality packages and choose the best one.",
+    "heading": "Choosing Dependencies",
+    "headingLevel": 1,
+    "href": "/best-practices/choosing-dependencies"
+  },
+  {
+    "categories": [
+      "Best Practices",
+      "Choosing Dependencies"
+    ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
+    "id": "/routes/best-practices+/choosing-dependencies.mdx-1",
+    "pathname": "/best-practices/choosing-dependencies",
+    "pathSegments": [
+      "best-practices",
+      "choosing-dependencies"
+    ],
+    "title": "Choosing Dependencies",
+    "content": "Examine the number of downloads, stars, forks, and issues on NPM and GitHub. This can give you an idea of how widely used and maintained the packages are:\n\n* In general, packages with more adoption see more maintenance because the community is larger.\n* More downloads indicate more popularity and usage of a package, which may in turn motivate the developers to maintain and update it more frequently and consistently. Another way to look at it is that more downloads reflect more demand and expectations from the users, which may increase the pressure and responsibility for the developers to maintain and improve the package. While this is not always the case, downloads are generally a good metric to keep in mind.",
+    "heading": "Check the Popularity",
+    "headingLevel": 3,
+    "href": "/best-practices/choosing-dependencies#check-the-popularity"
+  },
+  {
+    "categories": [
+      "Best Practices",
+      "Choosing Dependencies"
+    ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
+    "id": "/routes/best-practices+/choosing-dependencies.mdx-2",
+    "pathname": "/best-practices/choosing-dependencies",
+    "pathSegments": [
+      "best-practices",
+      "choosing-dependencies"
+    ],
+    "title": "Choosing Dependencies",
+    "content": "Check for the most recent issues that describe potential shortcomings or problems. This can also give you an idea of how active the maintainers are. If there is a bug, can you trust the package creators to solve it dependably? The GitHub issues will usually give you a good clue.",
+    "heading": "Check the Open GitHub Issues",
+    "headingLevel": 3,
+    "href": "/best-practices/choosing-dependencies#check-the-open-github-issues"
+  },
+  {
+    "categories": [
+      "Best Practices",
+      "Choosing Dependencies"
+    ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
+    "id": "/routes/best-practices+/choosing-dependencies.mdx-3",
+    "pathname": "/best-practices/choosing-dependencies",
+    "pathSegments": [
+      "best-practices",
+      "choosing-dependencies"
+    ],
+    "title": "Choosing Dependencies",
+    "content": "Ensure that the packages you include meet a minimum standard of code quality. I like to think of it like this:\n\n* Ask yourself if you would be content with including the package’s code as-is in your codebase. If the answer is no, then you might want to reconsider including the package at all.\n* Consider the worst-case scenario: if this package is no longer maintained in the future, but your project still depends on it, would you be able to fork the code and update it yourself?",
+    "heading": "Evaluate the Code Quality",
+    "headingLevel": 3,
+    "href": "/best-practices/choosing-dependencies#evaluate-the-code-quality"
+  },
+  {
+    "categories": [
+      "Best Practices",
+      "Choosing Dependencies"
+    ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
+    "id": "/routes/best-practices+/choosing-dependencies.mdx-4",
+    "pathname": "/best-practices/choosing-dependencies",
+    "pathSegments": [
+      "best-practices",
+      "choosing-dependencies"
+    ],
+    "title": "Choosing Dependencies",
+    "content": "Check for similar packages and see if they offer better or similar solutions to your problem.\n\nIf the package is small enough (< 200 lines of code), consider adding the source code directly to your project (assuming that it is properly licensed and approval by legal). Visit to learn more.",
+    "heading": "Consider Alternatives",
+    "headingLevel": 3,
+    "href": "/best-practices/choosing-dependencies#consider-alternatives"
+  }
+]

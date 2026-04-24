@@ -1,21 +1,51 @@
 .qui-menu__button {
   background: transparent;
-  .qui-button__icon {
-    &[data-placement="end"],
-    &[data-scope="icon-button"] {
-      transition: transform var(--animation-duration-faster) ease-out;
-    }
+  .qui-menu__indicator {
+    transition: transform var(--animation-duration-faster) ease-out;
   }
-  &[data-scope="menu"][data-part="trigger"][data-state="open"],
+  &[data-menu-part="trigger"][data-state="open"],
   &[data-state="open"][aria-haspopup="menu"] {
-    .qui-button__icon {
-      &[data-placement="end"],
-      &[data-scope="icon-button"] {
-        transform: rotate(180deg);
-      }
+    .qui-menu__indicator {
+      transform: rotate(180deg);
     }
   }
 }
+
+/* icon-only menu button stuff */
+
+.qui-menu__button .qui-menu__indicator {
+  &[data-size="sm"] {
+    --icon-size: 12px;
+  }
+  &[data-size="md"] {
+    --icon-size: 16px;
+  }
+  &[data-size="lg"] {
+    --icon-size: 20px;
+  }
+}
+
+.qui-menu__button[data-kind="icon"]:has(.qui-button__icon) {
+  gap: var(--spacing-10);
+  &[data-size="sm"] {
+    padding-inline: var(--spacing-70);
+    width: auto;
+  }
+  &[data-size="md"] {
+    padding-inline: var(--spacing-80);
+    width: auto;
+  }
+  &[data-size="lg"] {
+    padding-inline: var(--spacing-90);
+    width: auto;
+  }
+
+  .qui-menu__indicator {
+    --icon-size: 12px;
+  }
+}
+
+/* general stuff */
 
 .qui-menu__content {
   background: var(--color-surface-overlay);
@@ -90,7 +120,7 @@
     --menu-padding-y: var(--spacing-60);
   }
 
-  &:has([data-scope="menu"][data-part="description"]) {
+  &:has([data-menu-part="description"]) {
     .qui-menu-item__indicator,
     .qui-menu-item__command {
       grid-column: 3;
@@ -98,17 +128,17 @@
     }
   }
 
-  [data-scope="menu"][data-part="description"] {
+  [data-menu-part="description"] {
     grid-column: 1 / span 2;
   }
 
-  &:has([data-part="start-icon"]) {
-    [data-scope="menu"][data-part="description"] {
+  &:has([data-menu-part="start-icon"]) {
+    [data-menu-part="description"] {
       grid-column: 2;
     }
   }
 
-  &:has([data-part="start-icon"][data-part="item-control"]) {
+  &:has([data-menu-part="start-icon"]):has([data-menu-part="item-control"]) {
     grid-template-columns: auto auto 1fr repeat(3, auto);
   }
 
@@ -126,7 +156,7 @@
   }
 
   [data-state="unchecked"] {
-    [data-part="indicator-icon"] {
+    [data-checkmark-part="indicator-icon"] {
       display: none;
     }
   }
@@ -207,6 +237,6 @@
   padding-left: var(--spacing-100);
 }
 
-[data-scope="menu"][data-part="item-control"] {
+[data-menu-part="item-control"] {
   margin-right: var(--spacing-50);
 }

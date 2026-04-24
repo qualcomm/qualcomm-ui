@@ -10,8 +10,10 @@ import {
   type TypeDocAttributesProps,
 } from "./type-doc-attributes"
 
-export interface TypeDocAngularAttributesProps
-  extends Omit<TypeDocAttributesProps, "propTransformer"> {}
+export interface TypeDocAngularAttributesProps extends Omit<
+  TypeDocAttributesProps,
+  "propTransformer"
+> {}
 
 function propTransformer(prop: PagePropType) {
   return {...prop, name: prop.name === "className" ? "class" : prop.name}

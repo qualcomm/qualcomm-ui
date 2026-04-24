@@ -1,8 +1,6 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist",
     "paths": {
       "@qualcomm-ui/qds-core/*": ["./src/*/index.ts"]
     }
@@ -14,6 +12,12 @@
     },
     {
       "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "../core/tsconfig.lib.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json"
     }
   ]
 }

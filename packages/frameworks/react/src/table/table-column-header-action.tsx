@@ -10,8 +10,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context"
 
-export interface TableColumnHeaderActionProps
-  extends Omit<ElementRenderProp<"button">, "children"> {
+export interface TableColumnHeaderActionProps extends Omit<
+  ElementRenderProp<"button">,
+  "children"
+> {
   /**
    * Lucide icon to display inside the button.
    */

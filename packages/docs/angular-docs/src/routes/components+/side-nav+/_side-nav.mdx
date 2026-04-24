@@ -1,6 +1,5 @@
 ---
 title: Side Nav
-group: Disclosure
 description: The side navigation provides a consistent, easy-to-scan way for users to move through major sections of an application. It stays visible as users browse, giving them a clear understanding of where they are and what options are available.
 component: SideNav
 aliases: [sidebar, left nav, navigation menu, vertical menu]
@@ -58,11 +57,7 @@ We expose the `<q-side-nav-nodes>` shorthand for rendering nested nodes. Use the
 ```
 
 ```angular-html tabs="nodes" label="leaf"
-<ng-template
-  let-leaf
-  q-side-nav-leaf-template
-  [rootNode]="collection.rootNode"
->
+<ng-template let-leaf q-side-nav-leaf-template [rootNode]="collection.rootNode">
   <div q-side-nav-leaf-node>
     <!-- ... -->
   </div>
@@ -95,7 +90,7 @@ initially open
 pre-expanded
 :::
 
-Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) input. Or use [expandedValue](./#expandedValue) and [expandedValueChange](./#expandedValueChange) to control the expansion manually. These inputs follow our [controlled state](/patterns/controlled-state) pattern.
+Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) input. Or use [expandedValue](./#expandedValue) and [expandedValueChanged](./#expandedValueChanged) to control the expansion manually. These inputs follow our [controlled state](/patterns/controlled-state) pattern.
 
 <QdsDemo name="SideNavDefaultExpandedDemo" />
 

@@ -1,12 +1,17 @@
 import type {BuildOptions} from "esbuild"
 
-import {buildOrWatch, hasArg, logPlugin} from "@qualcomm-ui/esbuild"
+import {buildOrWatch, getArg, hasArg, logPlugin} from "@qualcomm-ui/esbuild"
 
 import pkg from "./package.json"
 
 async function main(argv: string[]) {
+  const mode = getArg(argv, "--mode")
+
   const buildOpts: BuildOptions = {
     bundle: true,
+    define: {
+      __QUI_DEV___: mode === "development" ? "true" : "false",
+    },
     external: [
       ...Object.keys(pkg.dependencies),
       ...Object.keys(pkg.devDependencies),

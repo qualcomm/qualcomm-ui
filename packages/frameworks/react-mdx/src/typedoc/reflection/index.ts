@@ -1,3 +1,6 @@
+export * from "./type-doc-function-params-list"
+export * from "./type-doc-function-params-table"
+export * from "./type-doc-function-return"
 export * from "./type-doc-parameters-table"
 export type * from "./type-doc-reflection-return"
 export * from "./type-doc-reflection"

@@ -32,6 +32,7 @@ import {
   getNodeId,
   getNodeTextId,
 } from "./internal"
+import {treeAnatomy} from "./tree.anatomy"
 import type {
   NodeProps,
   NodeState,
@@ -42,7 +43,6 @@ import type {
   TreeBranchIndicatorBindings,
   TreeBranchNodeBindings,
   TreeBranchTriggerBindings,
-  TreeCommonBindings,
   TreeLabelBindings,
   TreeLeafNodeBindings,
   TreeNodeActionBindings,
@@ -53,6 +53,8 @@ import type {
   TreeRootBindings,
   TreeSchema,
 } from "./tree.types"
+
+const parts = treeAnatomy.parts
 
 export function createTreeApi<V extends TreeNode = TreeNode>(
   machine: Machine<TreeSchema>,
@@ -95,10 +97,6 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
       value,
       valuePath: collection.getValuePath(indexPath),
     }
-  }
-
-  const commonBindings: TreeCommonBindings = {
-    "data-scope": "tree",
   }
 
   return {
@@ -182,8 +180,8 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getBranchBindings(props): TreeBranchBindings {
       const nodeState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
-        "aria-busy": booleanAriaAttr(nodeState.loading, undefined),
+        ...parts.branch,
+        "aria-busy": booleanAriaAttr(nodeState.loading, null),
         "aria-disabled": booleanAriaAttr(nodeState.disabled),
         "aria-expanded": booleanAriaAttr(nodeState.expanded),
         "aria-level": nodeState.depth,
@@ -193,12 +191,10 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-loading": booleanDataAttr(nodeState.loading),
         "data-ownedby": domIds.root(scope),
-        "data-part": "branch",
         "data-path": props.indexPath.join("/"),
         "data-selected": booleanDataAttr(nodeState.selected),
         "data-state": nodeState.expanded ? "open" : "closed",
         "data-value": nodeState.value,
-        dir: prop("dir"),
         hidden: prop("shouldHideNode")?.(nodeState),
         role: "treeitem",
         style: {
@@ -209,21 +205,18 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getBranchContentBindings(props): TreeBranchContentBindings {
       const nodeState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.branchContent,
         "data-depth": nodeState.depth,
-        "data-part": "branch-content",
         "data-path": props.indexPath.join("/"),
         "data-value": nodeState.value,
-        dir: prop("dir"),
         role: "group",
       })
     },
     getBranchIndentGuideBindings(props): TreeBranchIndentGuideBindings {
       const nodeState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.branchIndentGuide,
         "data-depth": nodeState.depth,
-        "data-part": "branch-indent-guide",
         style: {
           "--depth": nodeState.depth,
         },
@@ -232,12 +225,11 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getBranchIndicatorBindings(props): TreeBranchIndicatorBindings {
       const nodeState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.branchIndicator,
         "aria-hidden": true,
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-focus": booleanDataAttr(nodeState.focused),
         "data-loading": booleanDataAttr(nodeState.loading),
-        "data-part": "branch-indicator",
         "data-selected": booleanDataAttr(nodeState.selected),
         "data-state": nodeState.expanded ? "open" : "closed",
       })
@@ -245,18 +237,16 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getBranchNodeBindings(props): TreeBranchNodeBindings {
       const nodeState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
-        "aria-busy": booleanAriaAttr(nodeState.loading, undefined),
+        ...parts.branchNode,
+        "aria-busy": booleanAriaAttr(nodeState.loading, null),
         "data-depth": nodeState.depth,
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-focus": booleanDataAttr(nodeState.focused),
         "data-loading": booleanDataAttr(nodeState.loading),
-        "data-part": "branch-node",
         "data-path": props.indexPath.join("/"),
         "data-selected": booleanDataAttr(nodeState.selected),
         "data-state": nodeState.expanded ? "open" : "closed",
         "data-value": nodeState.value,
-        dir: prop("dir"),
         id: nodeState.id,
         onClick(event) {
           if (nodeState.disabled || nodeState.loading || !isLeftClick(event)) {
@@ -286,13 +276,12 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getBranchTriggerBindings(props): TreeBranchTriggerBindings {
       const nodeState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.branchTrigger,
+        "aria-label": nodeState.expanded ? "Collapse" : "Expand",
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-loading": booleanDataAttr(nodeState.loading),
-        "data-part": "branch-trigger",
         "data-state": nodeState.expanded ? "open" : "closed",
         "data-value": nodeState.value,
-        dir: prop("dir"),
         disabled: nodeState.loading,
         onClick(event) {
           if (nodeState.disabled || nodeState.loading) {
@@ -307,16 +296,14 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getLabelBindings(props): TreeLabelBindings {
       scope.ids.register("label", props)
       return normalize.element({
-        ...commonBindings,
-        "data-part": "label",
-        dir: prop("dir"),
+        ...parts.label,
         id: props.id,
       })
     },
     getLeafNodeBindings(props): TreeLeafNodeBindings {
       const nodeState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.leafNode,
         "aria-current": nodeState.selected ? "true" : undefined,
         "aria-disabled": booleanAriaAttr(nodeState.disabled),
         "aria-level": nodeState.depth,
@@ -325,11 +312,9 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-focus": booleanDataAttr(nodeState.focused),
         "data-ownedby": domIds.root(scope),
-        "data-part": "leaf-node",
         "data-path": props.indexPath.join("/"),
         "data-selected": booleanDataAttr(nodeState.selected),
         "data-value": nodeState.value,
-        dir: prop("dir"),
         hidden: prop("shouldHideNode")?.(nodeState),
         id: nodeState.id,
         onClick(event) {
@@ -371,10 +356,9 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getNodeActionBindings(nodeProps: NodeProps): TreeNodeActionBindings {
       const nodeState = getNodeState(nodeProps)
       return normalize.button({
-        ...commonBindings,
+        ...parts.nodeAction,
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-focus": booleanDataAttr(nodeState.focused),
-        "data-part": "node-action",
         "data-selected": booleanDataAttr(nodeState.selected),
         onClick: (event) => {
           event.stopPropagation()
@@ -386,7 +370,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
       const nodeState = getNodeState(props)
       const checkedState = nodeState.checked
       return normalize.element({
-        ...commonBindings,
+        ...parts.nodeCheckbox,
         "aria-checked":
           checkedState === true
             ? "true"
@@ -395,7 +379,6 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
               : "mixed",
         "aria-labelledby": nodeState.textId,
         "data-disabled": booleanDataAttr(nodeState.disabled),
-        "data-part": "node-checkbox",
         "data-state":
           checkedState === true
             ? "checked"
@@ -431,10 +414,9 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getNodeIconBindings(props): TreeNodeIconBindings {
       const itemState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.nodeIcon,
         "data-disabled": booleanDataAttr(itemState.disabled),
         "data-focus": booleanDataAttr(itemState.focused),
-        "data-part": "node-icon",
         "data-selected": booleanDataAttr(itemState.selected),
       })
     },
@@ -442,11 +424,10 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getNodeIndicatorBindings(props): TreeNodeIndicatorBindings {
       const itemState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.nodeIndicator,
         "aria-hidden": true,
         "data-disabled": booleanDataAttr(itemState.disabled),
         "data-focus": booleanDataAttr(itemState.focused),
-        "data-part": "node-indicator",
         "data-selected": booleanDataAttr(itemState.selected),
         hidden: !itemState.selected,
       })
@@ -457,10 +438,9 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getNodeTextBindings(props): TreeNodeTextBindings {
       const itemState = getNodeState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.nodeText,
         "data-disabled": booleanDataAttr(itemState.disabled),
         "data-focus": booleanDataAttr(itemState.focused),
-        "data-part": "node-text",
         "data-selected": booleanDataAttr(itemState.selected),
         id: itemState.textId,
       })
@@ -469,13 +449,12 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     getRootBindings(props): TreeRootBindings {
       scope.ids.register("root", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "aria-label": "Tree View",
         "aria-labelledby": domIds.label(scope),
         "aria-multiselectable":
           prop("selectionMode") === "multiple" || undefined,
-        "data-part": "root",
-        dir: prop("dir"),
+        dir: prop("dir") || "ltr",
         id: props.id,
         onKeyDown(event) {
           if (event.defaultPrevented) {
@@ -492,7 +471,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
           }
 
           const node = target?.closest<HTMLElement>(
-            "[data-part=branch-node], [data-part=leaf-node]",
+            "[data-tree-part=branch-node], [data-tree-part=leaf-node]",
           )
           if (!node) {
             return
@@ -508,7 +487,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
             return
           }
 
-          const isBranchNode = node.matches("[data-part=branch-node]")
+          const isBranchNode = node.matches("[data-tree-part=branch-node]")
 
           const keyMap: EventKeyMap = {
             "*"(event) {

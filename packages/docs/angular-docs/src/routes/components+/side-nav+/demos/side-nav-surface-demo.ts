@@ -13,13 +13,13 @@ import {QLogoComponent} from "./q-logo.component"
   selector: "side-nav-surface-demo",
   template: `
     <div class="flex justify-center">
-      <nav q-side-nav-root surface="secondary" [collection]="collection">
-        <header q-side-nav-header>
+      <div q-side-nav-root surface="secondary" [collection]="collection">
+        <div q-side-nav-header>
           <div q-side-nav-header-logo>
             <q-logo />
           </div>
           <div q-side-nav-header-title>Qualcomm</div>
-        </header>
+        </div>
 
         @for (group of groups; track group.key) {
           <div q-side-nav-group>
@@ -69,7 +69,7 @@ import {QLogoComponent} from "./q-logo.component"
             }
           </div>
         }
-      </nav>
+      </div>
     </div>
   `,
 })

@@ -13,7 +13,6 @@ import {
 } from "@qualcomm-ui/dom/query"
 import {ensureArray, first, last} from "@qualcomm-ui/utils/array"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {
   EventKeyMap,
   Machine,
@@ -21,6 +20,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 import {getPercentValue, getValuePercent} from "@qualcomm-ui/utils/number"
 
+import {sliderAnatomy} from "./slider.anatomy"
 import {domIds, getFirstThumbEl} from "./slider.dom"
 import {
   getControlStyle,
@@ -95,10 +95,7 @@ export function createSliderApi(
     )
   }
 
-  const commonProps: {"data-scope": "slider"; dir: Direction | undefined} = {
-    "data-scope": "slider",
-    dir: prop("dir"),
-  }
+  const parts = sliderAnatomy.parts
 
   return {
     decrement(index) {
@@ -150,14 +147,14 @@ export function createSliderApi(
     getControlBindings(props): SliderControlBindings {
       scope.ids.register("control", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.control,
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "control",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         id: props.id,
         max: prop("max"),
         min: prop("min"),
@@ -184,12 +181,12 @@ export function createSliderApi(
     getErrorTextBindings(props): SliderErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.label({
-        ...commonProps,
+        ...parts.errorText,
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "error-text",
+        dir: prop("dir"),
         hidden: !invalid,
         id: props.id,
       })
@@ -223,8 +220,8 @@ export function createSliderApi(
       }
 
       return normalize.input({
-        ...commonProps,
         defaultValue: sliderValue[index],
+        dir: prop("dir"),
         form: prop("form"),
         hidden: true,
         id,
@@ -235,14 +232,14 @@ export function createSliderApi(
     getHintBindings(props): SliderHintBindings {
       scope.ids.register("hint", props)
       return normalize.label({
-        ...commonProps,
+        ...parts.hint,
         "aria-live": "polite",
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "hint",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         hidden: invalid,
         id: props.id,
       })
@@ -250,14 +247,14 @@ export function createSliderApi(
     getLabelBindings(props) {
       scope.ids.register("label", props)
       return normalize.label({
-        ...commonProps,
+        ...parts.label,
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "label",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         htmlFor: scope.ids.collection("hiddenInput").get("0"),
         id: props.id,
         onClick(event) {
@@ -288,13 +285,13 @@ export function createSliderApi(
       }
 
       return normalize.element({
-        ...commonProps,
+        ...parts.marker,
         "data-disabled": booleanDataAttr(disabled),
         "data-orientation": prop("orientation"),
-        "data-part": "marker",
         "data-readonly": booleanDataAttr(readOnly),
         "data-state": markerState,
         "data-value": value,
+        dir: prop("dir"),
         id,
         role: "presentation",
         style,
@@ -303,10 +300,10 @@ export function createSliderApi(
     getMarkerGroupBindings(props): SliderMarkerGroupBindings {
       scope.ids.register("markerGroup", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.markerGroup,
         "aria-hidden": true,
         "data-orientation": prop("orientation"),
-        "data-part": "marker-group",
+        dir: prop("dir"),
         id: props.id,
         role: "presentation",
         style: getMarkerGroupStyle(),
@@ -315,12 +312,12 @@ export function createSliderApi(
     getMaxMarkerBindings(props): SliderMaxMarkerBindings {
       scope.ids.register("maxMarker", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.max,
         "data-disabled": booleanDataAttr(disabled),
         "data-orientation": prop("orientation"),
-        "data-part": "max",
         "data-readonly": booleanDataAttr(readOnly),
         "data-value": prop("max"),
+        dir: prop("dir"),
         id: props.id,
         role: "presentation",
       })
@@ -328,12 +325,12 @@ export function createSliderApi(
     getMinMarkerBindings(props): SliderMinMarkerBindings {
       scope.ids.register("minMarker", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.min,
         "data-disabled": booleanDataAttr(disabled),
         "data-orientation": prop("orientation"),
-        "data-part": "min",
         "data-readonly": booleanDataAttr(readOnly),
         "data-value": prop("min"),
+        dir: prop("dir"),
         id: props.id,
         role: "presentation",
       })
@@ -341,14 +338,14 @@ export function createSliderApi(
     getRangeBindings(props): SliderRangeBindings {
       scope.ids.register("range", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.range,
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "range",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         id: props.id,
         style: getRangeStyle(store),
       })
@@ -356,14 +353,14 @@ export function createSliderApi(
     getRootBindings(props): SliderRootBindings {
       scope.ids.register("root", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.root,
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "root",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         id: props.id,
         style: getRootStyle(store),
       })
@@ -378,7 +375,7 @@ export function createSliderApi(
       const _ariaLabelledBy = ensureArray(ariaLabelledBy)[index]
 
       return normalize.element({
-        ...commonProps,
+        ...parts.thumb,
         "aria-describedby": domIds.hint(scope),
         "aria-disabled": booleanAriaAttr(disabled),
         "aria-label": _ariaLabel,
@@ -394,8 +391,8 @@ export function createSliderApi(
         "data-index": index,
         "data-name": name,
         "data-orientation": prop("orientation"),
-        "data-part": "thumb",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         draggable: false,
         id,
         onBlur() {
@@ -507,9 +504,9 @@ export function createSliderApi(
         .collection("thumbIndicator")
         .register(index.toString(), id, onDestroy)
       return normalize.element({
-        ...commonProps,
+        ...parts.thumbIndicator,
         "data-orientation": prop("orientation"),
-        "data-part": "thumb-indicator",
+        dir: prop("dir"),
         role: "presentation",
         style: getThumbStyle(store, index),
       })
@@ -517,14 +514,14 @@ export function createSliderApi(
     getTrackBindings(props): SliderTrackBindings {
       scope.ids.register("track", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.track,
         "data-disabled": booleanDataAttr(disabled),
         "data-dragging": booleanDataAttr(dragging),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "track",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         id: props.id,
         style: {position: "relative"},
       })
@@ -532,13 +529,13 @@ export function createSliderApi(
     getValueTextBindings(props): SliderValueTextBindings {
       scope.ids.register("valueText", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.valueText,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-orientation": prop("orientation"),
-        "data-part": "value-text",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir"),
         id: props.id,
         value: sliderValue,
       })

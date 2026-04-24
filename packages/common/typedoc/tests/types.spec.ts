@@ -151,8 +151,8 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
     [
       "Class public method with parameter comment.",
       {
-        actual: findResolvedType(props.SomeClass, "testMethod").parameters?.[0]
-          ?.summary,
+        actual: findResolvedType(props.SomeClass, "testMethod")
+          .functionParameters?.[0]?.comment?.summary,
         expected: [
           {
             kind: "text",

@@ -39,7 +39,7 @@ export function getTabEl(scope: TabsScope, value: string): HTMLElement | null {
   if (!buttonEl) {
     return null
   }
-  return buttonEl.closest('[data-part="tab"]')
+  return buttonEl.closest('[data-tabs-part="tab"]')
 }
 
 export function getContentEl(ctx: TabsScope, id: string): HTMLElement {

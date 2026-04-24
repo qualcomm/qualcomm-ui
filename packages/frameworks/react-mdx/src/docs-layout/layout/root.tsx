@@ -28,7 +28,8 @@ import {
 } from "./use-mdx-docs-layout"
 
 export interface RootProps
-  extends Omit<ElementRenderProp<"div">, "children">,
+  extends
+    Omit<ElementRenderProp<"div">, "children">,
     Omit<DocsLayoutSettings, "rootBreadcrumb" | "header" | "footer"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -127,8 +128,7 @@ export function Root({
     const hidePageLinks = pageData?.hidePageLinks || false
     const hideSideNav = pageData?.hideSideNav || false
     const pageExport =
-      exports?.enabled &&
-      exports.pages.find((page) => page.pathname === pathname)
+      !!exports?.enabled && !!exports.pathnames?.includes(pathname)
 
     const pageProps = pageDocProps?.[pathname] || {}
 
@@ -138,6 +138,7 @@ export function Root({
       mainContentElement,
       navItems,
       pageExport,
+      pageFrontmatter: pageData?.data ?? {},
       pageMap,
       pageProps,
       pathname,

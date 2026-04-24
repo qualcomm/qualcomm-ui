@@ -1,14 +1,5 @@
 {
   "angular.forceStrictTemplates": true,
-  "stylelint.config": {
-    "at-rule-name-case": "lower",
-    "at-rule-name-space-after": "always-single-line",
-    "at-rule-semicolon-newline-after": "always",
-    "customSyntax": "postcss-scss",
-    "extends": [
-      "stylelint-prettier/recommended"
-    ]
-  },
   "stylelint.snippet": [
     "css",
     "less",

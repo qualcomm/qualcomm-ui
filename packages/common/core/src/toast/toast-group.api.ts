@@ -8,6 +8,7 @@ import {contains} from "@qualcomm-ui/dom/query"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {getRegionId} from "./internal"
+import {toastAnatomy} from "./toast.anatomy"
 import type {
   ToastAlign,
   ToastGroupApi,
@@ -16,6 +17,8 @@ import type {
   ToastSide,
 } from "./toast.types"
 import {getGroupPlacementStyle} from "./toast.utils"
+
+const parts = toastAnatomy.parts
 
 export function createToastGroupApi<T = string>(
   machine: Machine<ToastGroupSchema>,
@@ -46,11 +49,11 @@ export function createToastGroupApi<T = string>(
       ]
 
       return normalize.element({
+        ...parts.group,
         "aria-label": `${placement} ${label}`,
         "aria-live": "polite",
         "data-align": align,
         "data-placement": placement,
-        "data-scope": "toast",
         "data-side": side,
         dir: prop("dir"),
         id: getRegionId(placement),

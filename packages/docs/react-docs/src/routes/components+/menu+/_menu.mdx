@@ -1,6 +1,5 @@
 ---
 title: Menu
-group: Overlays
 description: The Menu component presents a structured list of actions, settings, or navigation targets within a transient surface. It supports icons, keyboard shortcuts, hint text, section titles, dividers, and submenu indicators.
 component: Menu
 aliases: [dropdown menu, context menu, popup menu]
@@ -23,10 +22,7 @@ import {Menu} from "@qualcomm-ui/react/menu"
 ### Item Customization
 
 ::: terms
-hotkeys
-keyboard shortcuts
-action list
-overflow menu
+hotkeys, keyboard shortcuts, action list, overflow menu
 :::
 
 Compose the menu to include icons and commands.
@@ -36,11 +32,20 @@ Compose the menu to include icons and commands.
   component={demos.MenuItemCustomizationDemo}
 />
 
+### Menu Button
+
+::: terms
+menu trigger, dropdown button, icon menu button
+:::
+
+Use [`<Menu.Button>`](./#menu-button-1) for a labeled trigger and [`<Menu.IconButton>`](./#menu-icon-button) for an icon-only trigger. Both automatically render a chevron indicator. Always provide an `aria-label` on `<Menu.IconButton>` to give assistive technologies an accessible name. Control the menu position with [positioning.placement](./#positioning).
+
+<Demo name="MenuButtonDemo" component={demos.MenuButtonDemo} />
+
 ### Context Menu
 
 ::: terms
-oncontextmenu
-right-click menu
+oncontextmenu, right-click menu
 :::
 
 Demonstrates how to trigger a menu on right-click or other context events.
@@ -50,21 +55,17 @@ Demonstrates how to trigger a menu on right-click or other context events.
 ### Nested Menus
 
 ::: terms
-submenu
-cascading
-hierarchical
+submenu, cascading, hierarchical
 :::
 
-Compose nested menus by nesting `<Menu.Root>` components inside each other.
+Compose nested menus by nesting [`<Menu.Root>`](./#menu-root) components inside each other.
 
 <Demo name="MenuNestedDemo" component={demos.MenuNestedDemo} />
 
 ### Links
 
 ::: terms
-anchor
-navigation
-navigation menu
+anchor, navigation, navigation menu
 :::
 
 Menu items can be links using [polymorphic composition](/polymorphic-components). Use the [render](./#render) prop on the `<Menu.Item>` to specify the element type.
@@ -73,7 +74,7 @@ Menu items can be links using [polymorphic composition](/polymorphic-components)
 
 ### Groups
 
-Use the `<Menu.ItemGroup>` component to group menu items.
+Use the [`<Menu.ItemGroup>`](./#menu-item-group) component to group menu items.
 
 ### Item Types
 
@@ -86,22 +87,20 @@ There are three item types, each corresponding to one of the three types of aria
 #### Checkbox Items
 
 ::: terms
-multi-select
-toggle
+multi-select, toggle
 :::
 
 There are two appearance options:
 
-- For a checkbox appearance, render the `<Menu.CheckboxItemControl>` element as a child of the item.
-- Render the `<Menu.ItemIndicator />` element for a simple selection indicator.
+- For a checkbox appearance, render the [`<Menu.CheckboxItemControl>`](./#menu-checkbox-item-control) element as a child of the item.
+- Render the [`<Menu.ItemIndicator />`](./#menu-item-indicator) element for a simple selection indicator.
 
 <Demo name="MenuCheckboxItemsDemo" component={demos.MenuCheckboxItemsDemo} />
 
 #### Checkbox Selection State
 
 ::: terms
-onCheckedChange
-controlled checkbox
+onCheckedChange, controlled checkbox
 :::
 
 Illustrates how to manage and reflect the checked state of checkbox menu items.
@@ -114,8 +113,7 @@ Illustrates how to manage and reflect the checked state of checkbox menu items.
 #### Radio Group
 
 ::: terms
-single-select
-exclusive selection
+single-select, exclusive selection
 :::
 
 Demonstrates how to group radio menu items so only one can be selected at a time.
@@ -124,7 +122,7 @@ Demonstrates how to group radio menu items so only one can be selected at a time
 
 ### Controlled State
 
-The menu's visibility can be controlled via the `open`, `onOpenChange`, and `defaultOpen` props.
+The menu's visibility can be controlled via the [`open`](./#open), [`onOpenChange`](./#onOpenChange), and [`defaultOpen`](./#defaultOpen) props.
 
 - Use `open` to explicitly set whether the menu is open (controlled mode).
 - Use `onOpenChange` to be notified when the menu requests to open or close.
@@ -140,8 +138,7 @@ In controlled mode, the `open` prop should be updated in response to `onOpenChan
 ### Placement
 
 ::: terms
-position
-popover placement
+position, popover placement
 :::
 
 Configure the menu's placement using the [positioning.placement](./#positioning) prop.
@@ -151,8 +148,7 @@ Configure the menu's placement using the [positioning.placement](./#positioning)
 ### Sizes
 
 ::: terms
-small
-medium
+small, medium
 :::
 
 Use the [size](./#size) prop to control the size of the menu. The default size is `md`. The demo features the small (`sm`) size.
@@ -162,8 +158,7 @@ Use the [size](./#size) prop to control the size of the menu. The default size i
 ### Anchor Point
 
 ::: terms
-getAnchorRect
-custom anchor
+getAnchorRect, custom anchor
 :::
 
 Use the [positioning.anchorPoint](./#positioning) prop to control the anchor point of the menu.
@@ -173,9 +168,7 @@ Use the [positioning.anchorPoint](./#positioning) prop to control the anchor poi
 ### Avatar
 
 ::: terms
-profile menu
-user menu
-account dropdown
+profile menu, user menu, account dropdown
 :::
 
 Here's an example that composes the `Menu` with the [Avatar](/components/avatar) component to display a user account menu.
@@ -185,20 +178,17 @@ Here's an example that composes the `Menu` with the [Avatar](/components/avatar)
 ### Within Dialog
 
 ::: terms
-modal
-overlay composition
+modal, overlay composition
 :::
 
-When using the `Menu` inside a `Dialog`, don't render the `<Menu.Positioner>` within a `<Portal>` element.
+When using the `Menu` inside a [Dialog](/components/dialog), don't render the `<Menu.Positioner>` within a `<Portal>` element.
 
 <Demo name="MenuWithinDialogDemo" component={demos.MenuWithinDialogDemo} />
 
 ### Hide When Detached
 
 ::: terms
-auto-hide
-scroll behavior
-overflow
+auto-hide, scroll behavior, overflow
 :::
 
 Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu when it's detached from the trigger.

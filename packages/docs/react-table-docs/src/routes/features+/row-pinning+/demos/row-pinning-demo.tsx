@@ -326,6 +326,7 @@ function Filter({column, table}: FilterProps) {
     <MinMaxNumberFilter column={column} table={table} />
   ) : (
     <TextInput
+      aria-label="Filter column"
       className="w-32"
       onValueChange={(value) => column.setFilterValue(value)}
       placeholder="Search..."
@@ -343,6 +344,7 @@ function MinMaxNumberFilter({column}: FilterProps) {
   return (
     <div className="flex w-32 gap-2">
       <NumberInput
+        aria-label="Minimum value"
         controlProps={{hidden: true}}
         min={0}
         onValueChange={({valueAsNumber}) =>
@@ -356,6 +358,7 @@ function MinMaxNumberFilter({column}: FilterProps) {
         value={min ? `${min}` : ""}
       />
       <NumberInput
+        aria-label="Maximum value"
         controlProps={{hidden: true}}
         max={130}
         onValueChange={({valueAsNumber}) =>

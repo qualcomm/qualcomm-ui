@@ -16,7 +16,6 @@ import {
 } from "@qualcomm-ui/dom/query"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {CollectionItem} from "@qualcomm-ui/utils/collection"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import {ensure} from "@qualcomm-ui/utils/guard"
 import type {
   EventKeyMap,
@@ -25,6 +24,7 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
+import {comboboxAnatomy} from "./combobox.anatomy"
 import type {
   ComboboxApi,
   ComboboxApiItemProps,
@@ -53,6 +53,8 @@ import {
   getItemGroupLabelId,
   getItemId,
 } from "./internal"
+
+const parts = comboboxAnatomy.parts
 
 export function createComboboxApi(
   machine: Machine<ComboboxSchema>,
@@ -96,11 +98,6 @@ export function createComboboxApi(
       selected: context.get("value").includes(value),
       value,
     }
-  }
-
-  const commonBindings: {"data-scope": "combobox"} & DirectionProperty = {
-    "data-scope": "combobox",
-    dir: prop("dir"),
   }
 
   return {
@@ -163,12 +160,10 @@ export function createComboboxApi(
     getClearTriggerBindings(props): ComboboxClearTriggerBindings {
       scope.ids.register("clearTrigger", props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.clearTrigger,
         "aria-controls": domIds.input(scope),
         "aria-label": translations.clearTriggerLabel,
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "clear-trigger",
-
         disabled,
         hidden: !context.get("value").length,
         id: props.id,
@@ -195,14 +190,13 @@ export function createComboboxApi(
     getContentBindings(props) {
       scope.ids.register("content", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.content,
         "aria-labelledby": domIds.label(scope),
         "aria-multiselectable":
           prop("multiple") && composite ? "true" : undefined,
         "data-disabled": booleanDataAttr(disabled),
         "data-empty": booleanDataAttr(collection.size === 0),
         "data-focus-visible": booleanDataAttr(isFocusVisible()),
-        "data-part": "content",
         "data-placement": context.get("currentPlacement"),
         "data-state": open ? "open" : "closed",
         hidden: !open,
@@ -222,11 +216,10 @@ export function createComboboxApi(
     getControlBindings(props): ComboboxControlBindings {
       scope.ids.register("control", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.control,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "control",
         "data-state": open ? "open" : "closed",
         id: props.id,
       })
@@ -234,8 +227,7 @@ export function createComboboxApi(
 
     getEmptyBindings(): ComboboxEmptyBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "empty",
+        ...parts.empty,
         hidden: collection.size > 0,
         role: "presentation",
       })
@@ -243,9 +235,8 @@ export function createComboboxApi(
 
     getErrorIndicatorBindings(): ComboboxErrorIndicatorBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorIndicator,
         "aria-label": "Error",
-        "data-part": "error-indicator",
         hidden: !prop("invalid"),
       })
     },
@@ -255,9 +246,8 @@ export function createComboboxApi(
     ): ComboboxErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
         hidden: !prop("invalid"),
         id: props.id,
       })
@@ -266,9 +256,8 @@ export function createComboboxApi(
     getHintBindings(props: IdRegistrationProps): ComboboxHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "hint",
         hidden: invalid,
         id: props.id,
       })
@@ -277,7 +266,7 @@ export function createComboboxApi(
     getInputBindings(props) {
       scope.ids.register("input", props)
       return normalize.input({
-        ...commonBindings,
+        ...parts.input,
         "aria-activedescendant": highlightedValue
           ? getItemId(scope, highlightedValue)
           : undefined,
@@ -290,7 +279,6 @@ export function createComboboxApi(
         autoCorrect: "off",
         "data-autofocus": booleanDataAttr(prop("autoFocus")),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input",
         "data-state": open ? "open" : "closed",
         defaultValue: context.get("inputValue"),
         disabled,
@@ -420,12 +408,11 @@ export function createComboboxApi(
       const value = itemState.value
 
       return normalize.element({
-        ...commonBindings,
+        ...parts.item,
         "aria-disabled": booleanAriaAttr(itemState.disabled),
         "aria-selected": booleanAriaAttr(itemState.highlighted),
         "data-disabled": booleanDataAttr(itemState.disabled),
         "data-highlighted": booleanDataAttr(itemState.highlighted),
-        "data-part": "item",
         "data-state": itemState.selected ? "checked" : "unchecked",
         "data-value": itemState.value,
         id: getItemId(scope, value),
@@ -475,10 +462,9 @@ export function createComboboxApi(
     getItemGroupBindings(props): ComboboxItemGroupBindings {
       const {id} = props
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemGroup,
         "aria-labelledby": getItemGroupLabelId(scope, id),
         "data-empty": booleanDataAttr(collection.size === 0),
-        "data-part": "item-group",
         id: getItemGroupId(scope, id),
         role: "group",
       })
@@ -486,8 +472,7 @@ export function createComboboxApi(
 
     getItemGroupLabelBindings(props): ComboboxItemGroupLabelBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "item-group-label",
+        ...parts.itemGroupLabel,
         id: getItemGroupLabelId(scope, props.htmlFor),
         role: "presentation",
       })
@@ -495,9 +480,8 @@ export function createComboboxApi(
 
     getItemIndicatorBindings(itemState): ComboboxItemIndicatorBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemIndicator,
         "aria-hidden": true,
-        "data-part": "item-indicator",
         "data-state": itemState.selected ? "checked" : "unchecked",
         hidden: !itemState.selected,
       })
@@ -507,10 +491,9 @@ export function createComboboxApi(
 
     getItemTextBindings(itemState): ComboboxItemTextBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemText,
         "data-disabled": booleanDataAttr(itemState.disabled),
         "data-highlighted": booleanDataAttr(itemState.highlighted),
-        "data-part": "item-text",
         "data-state": itemState.selected ? "checked" : "unchecked",
       })
     },
@@ -518,11 +501,10 @@ export function createComboboxApi(
     getLabelBindings(props): ComboboxLabelBindings {
       scope.ids.register("label", props)
       return normalize.label({
-        ...commonBindings,
+        ...parts.label,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "label",
         "data-readonly": booleanDataAttr(readOnly),
         "data-required": booleanDataAttr(required),
         htmlFor: domIds.input(scope),
@@ -540,8 +522,7 @@ export function createComboboxApi(
     getPositionerBindings(props): ComboboxPositionerBindings {
       scope.ids.register("positioner", props)
       return normalize.element({
-        ...commonBindings,
-        "data-part": "positioner",
+        ...parts.positioner,
         id: props.id,
         style: popperStyles.floating,
       })
@@ -550,10 +531,10 @@ export function createComboboxApi(
     getRootBindings(props): ComboboxRootBindings {
       scope.ids.register("root", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "root",
         "data-readonly": booleanDataAttr(readOnly),
+        dir: prop("dir") || "ltr",
         id: props.id,
         onClick: (event) => {
           if (event.target === domEls.control(scope)) {
@@ -566,7 +547,7 @@ export function createComboboxApi(
     getTriggerBindings(props): ComboboxTriggerBindings {
       scope.ids.register("trigger", props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.trigger,
         "aria-controls": open ? domIds.content(scope) : undefined,
         "aria-expanded": booleanAriaAttr(open),
         "aria-haspopup": composite ? "listbox" : "dialog",
@@ -574,7 +555,6 @@ export function createComboboxApi(
         "data-disabled": booleanDataAttr(disabled),
         "data-focusable": booleanDataAttr(props.focusable),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "trigger",
         "data-readonly": booleanDataAttr(readOnly),
         "data-state": open ? "open" : "closed",
         disabled,
@@ -595,7 +575,7 @@ export function createComboboxApi(
           if (!props.focusable) {
             return
           }
-          send({src: "trigger", type: "INPUT.FOCUS"})
+          send({src: "input-focus", type: "INPUT.FOCUS"})
         },
         onKeyDown(event) {
           if (event.defaultPrevented) {

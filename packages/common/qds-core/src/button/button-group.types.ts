@@ -1,8 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
+import type {buttonGroupAnatomy} from "./button-group.anatomy"
 import type {buttonClasses} from "./button.classes"
 import type {
   QdsButtonDensity,
@@ -70,14 +72,16 @@ export interface QdsButtonGroupApiProps {
   variant?: QdsButtonVariant
 }
 
-export interface QdsButtonGroupBindings {
+type PartName = AnatomyPartName<typeof buttonGroupAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"buttonGroup", P> {}
+
+export interface QdsButtonGroupBindings extends Part<"root"> {
   "aria-label"?: string
   "aria-labelledby"?: string
   className: (typeof buttonClasses)["group"]
   "data-disabled": BooleanDataAttr
   "data-emphasis"?: QdsButtonEmphasis
   "data-layout": QdsButtonGroupLayout
-  "data-scope": "button-group"
   "data-size"?: QdsButtonSize
   "data-variant"?: QdsButtonVariant
   role?: "group"

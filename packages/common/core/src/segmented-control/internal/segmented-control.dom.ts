@@ -15,6 +15,6 @@ export const domIds: ScopeDomIds<SegmentedControlSchema["ids"], Scope> = {
 export function getFirstCheckedItemValue(scope: Scope): string | undefined {
   const rootId = domIds.root(scope)
   const rootEl = scope.getById(rootId)
-  const selector = `[data-scope="checkbox"][data-part="hidden-input"][data-state="checked"]:not([data-disabled])`
+  const selector = `[data-checkbox-part="hidden-input"][data-state="checked"]:not([data-disabled])`
   return (query(rootEl, selector) as HTMLInputElement)?.value
 }

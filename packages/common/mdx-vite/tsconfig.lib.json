@@ -13,6 +13,15 @@
   "references": [
     {
       "path": "../mdx-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../tailwind-plugin/tsconfig.lib.json"
+    },
+    {
+      "path": "../typedoc-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json"
     }
   ]
 }

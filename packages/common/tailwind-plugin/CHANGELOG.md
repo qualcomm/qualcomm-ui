@@ -1,12 +1,24 @@
 # @qualcomm-ui/tailwind-plugin Changelog
 
-## 1.6.0 (2026/02/26)
+## 1.7.0
+
+Mar 24th, 2026
+
+### Features
+
+- [tailwind-plugin]: update utilities for new token structure ([b8da430](https://github.com/qualcomm/qualcomm-ui/commit/b8da430))
+
+## 1.6.0
+
+Feb 26th, 2026
 
 ### Features
 
 - update design tokens
 
-## 1.5.1 (2026/01/23)
+## 1.5.1
+
+Jan 23rd, 2026
 
 ### Documentation
 
@@ -16,13 +28,17 @@
 
 - improve logging and error handling
 
-## 1.5.0 (2026/01/15)
+## 1.5.0
+
+Jan 15th, 2026
 
 ### Features
 
 - [tailwind]: add qds spacing tokens to theme
 
-## 1.4.0 (2025/12/11)
+## 1.4.0
+
+Dec 11th, 2025
 
 ### Features
 
@@ -37,13 +53,17 @@
 
 - [plugin-generator]: use array instead of record for consistent processing order
 
-## 1.3.0 (2025/12/04)
+## 1.3.0
+
+Dec 4th, 2025
 
 ### Features
 
 - [theme-data]: add data structures and types for theme data
 
-## 1.2.0 (2025/12/03)
+## 1.2.0
+
+Dec 3rd, 2025
 
 ### Features
 
@@ -54,25 +74,33 @@
 
 - [code-highlighting]: simplified internal highlighted code data structures
 
-## 1.1.0 (2025/11/17)
+## 1.1.0
+
+Nov 17th, 2025
 
 ### Features
 
 - add new category colors
 
-## 1.0.3 (2025/11/13)
+## 1.0.3
+
+Nov 13th, 2025
 
 ### Bug Fixes
 
 - add stub ts files for npm ts badge
 
-## 1.0.2 (2025/11/12)
+## 1.0.2
+
+Nov 12th, 2025
 
 ### Bug Fixes
 
 - react readme url
 
-## 1.0.1 (2025/11/12)
+## 1.0.1
+
+Nov 12th, 2025
 
 ### Miscellaneous Chores
 

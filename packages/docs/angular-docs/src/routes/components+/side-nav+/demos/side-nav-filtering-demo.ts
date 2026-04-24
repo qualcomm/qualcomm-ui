@@ -29,18 +29,18 @@ import {QLogoComponent} from "./q-logo.component"
   template: `
     <div class="flex justify-center">
       <!-- preview -->
-      <nav
+      <div
         q-side-nav-root
         [collection]="collection()"
         [expandedValue]="expanded()"
         (expandedValueChanged)="expanded.set($event.expandedValue)"
       >
-        <header q-side-nav-header>
+        <div q-side-nav-header>
           <div q-side-nav-header-logo>
             <q-logo />
           </div>
           <div q-side-nav-header-title>Qualcomm</div>
-        </header>
+        </div>
 
         <hr q-side-nav-divider />
 
@@ -101,7 +101,7 @@ import {QLogoComponent} from "./q-logo.component"
             }
           </div>
         }
-      </nav>
+      </div>
       <!-- preview -->
     </div>
   `,

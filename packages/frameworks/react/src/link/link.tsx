@@ -18,8 +18,7 @@ import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface LinkProps
-  extends QdsLinkApiProps,
-    Omit<ElementRenderProp<"a">, "dir"> {
+  extends QdsLinkApiProps, Omit<ElementRenderProp<"a">, "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

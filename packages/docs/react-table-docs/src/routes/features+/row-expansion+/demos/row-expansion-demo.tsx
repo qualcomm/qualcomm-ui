@@ -47,6 +47,9 @@ export function RowExpansionDemo() {
             >
               <>
                 <Checkbox
+                  aria-label={
+                    row.getIsSelected() ? "Deselect row" : "Select row"
+                  }
                   checked={checked}
                   indeterminate={indeterminate}
                   onCheckedChange={(nextState) => row.toggleSelected(nextState)}

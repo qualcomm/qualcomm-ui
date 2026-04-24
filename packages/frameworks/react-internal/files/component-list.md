@@ -1,9 +1,9 @@
 # Component List
 
 | Component                                              | Description | Status |
-|--------------------------------------------------------|-------------|--------|
+|--------------------------------------------------------|-------------|-------|
 | [Accordion](/components/accordion)                     | Expand and collapse content sections to organize information efficiently. | |
-| [Alert Banner](/components/alert-banner)               | Displays important system-wide messages or notifications. | Planned |
+| [Alert Banner](/components/alert-banner)               | Displays important system-wide messages or notifications. | |
 | [Avatar](/components/avatar)                           | Represents a user or entity with an image or initials. | |
 | [Badge](/components/badges/icon-badge)                 | Color-coded indicators that communicate status, state, or priority at a glance. | |
 | [Breadcrumbs](/components/breadcrumbs)                 | Shows the user's current location within a site hierarchy. | |
@@ -11,6 +11,7 @@
 | [Button Group](/components/button-group)               | Combines related actions into a unified control set. | |
 | [Card](/components/card)                               | Groups related content and actions into a contained visual unit. | Planned |
 | [Checkbox](/components/checkbox)                       | Allows users to select one or more options from a set. | |
+| [Checkbox Group](/components/checkbox-group)           | Groups related checkboxes with a shared label, hint text, and validation state. | |
 | [Collapsible](/components/collapsible)                 | Toggles the visibility of content sections on demand. | |
 | [Combobox](/components/combobox)                       | Combines a text input with a dropdown list for searchable selection. | |
 | [Device Card](/components/device-card)                 | Displays device information in a structured card format. | Planned |
@@ -37,7 +38,9 @@
 | [Select](/components/select)                           | Lets users choose one option from a list. | |
 | [Side Nav](/components/side-nav)                       | Provides persistent navigation through major application sections. | |
 | [Slider](/components/slider)                           | Lets users select values by dragging along a track. | |
+| [Stepper](/components/stepper)                         | Visualizes a group of connected actions or the order of a workflow. | |
 | [Switch](/components/switch)                           | Toggles between two states, like on and off. | |
+| [Switch Group](/components/switch-group)               | Groups related switches with a shared label, hint text, and validation state. | |
 | [Table](/components/table)                             | Displays structured data with sorting, filtering, and selection features. | |
 | [Tabs](/components/tabs)                               | Organizes content into separate panels that users can switch between. | |
 | [Tag](/components/tag)                                 | Labels or categorizes content with removable keywords. | |

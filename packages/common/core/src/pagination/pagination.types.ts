@@ -4,6 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr, IdParam} from "@qualcomm-ui/utils/attributes"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
@@ -12,6 +13,8 @@ import type {
   JSX,
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
+
+import type {paginationAnatomy} from "./pagination.anatomy"
 
 export type PageItem =
   | {
@@ -204,65 +207,49 @@ export interface PaginationSchema extends MachineSchema {
   >
 }
 
-interface PaginationScope {
-  "data-scope": "pagination"
-}
+type PartName = AnatomyPartName<typeof paginationAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"pagination", P> {}
 
-export interface PaginationNextTriggerBindings extends PaginationScope {
+export interface PaginationNextTriggerBindings extends Part<"nextTrigger"> {
   "aria-label": string
   "data-disabled": BooleanDataAttr
-  "data-part": "next-trigger"
   disabled?: boolean
   onClick: JSX.MouseEventHandler
 }
 
 export type PaginationPageItemBindings =
-  | {
+  | (Part<"pageItem"> & {
       "aria-current": "page" | undefined
       "aria-label": string
       "data-active": BooleanDataAttr
       "data-page": number
-      "data-part": "page-item"
-      "data-scope": "pagination"
       "data-type": "page"
       onClick: JSX.MouseEventHandler
-    }
-  | {
-      "data-part": "page-item"
-      "data-scope": "pagination"
+    })
+  | (Part<"pageItem"> & {
       "data-type": "separator"
       disabled: true
       role: "separator"
-    }
+    })
 
-export interface PaginationPageItemsBindings extends PaginationScope {
-  "data-part": "page-items"
-}
+export interface PaginationPageItemsBindings extends Part<"pageItems"> {}
 
-export interface PaginationPageMetadataBindings extends PaginationScope {
-  "data-part": "page-metadata"
-}
+export interface PaginationPageMetadataBindings extends Part<"pageMetadata"> {}
 
-export interface PaginationPageSizeBindings extends PaginationScope {
-  "data-part": "page-size"
-}
+export interface PaginationPageSizeBindings extends Part<"pageSize"> {}
 
-export interface PaginationPageSizeLabelBindings extends PaginationScope {
-  "data-part": "page-size-label"
+export interface PaginationPageSizeLabelBindings extends Part<"pageSizeLabel"> {
   id: string
 }
 
-export interface PaginationPrevTriggerBindings extends PaginationScope {
+export interface PaginationPrevTriggerBindings extends Part<"prevTrigger"> {
   "aria-label": string
   "data-disabled": BooleanDataAttr
-  "data-part": "prev-trigger"
   disabled?: boolean
   onClick: JSX.MouseEventHandler
 }
 
-export interface PaginationRootBindings extends PaginationScope {
-  "data-part": "root"
-}
+export interface PaginationRootBindings extends Part<"root"> {}
 
 export interface PaginationApi extends Computed {
   defaultPageSize?: number

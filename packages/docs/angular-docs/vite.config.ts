@@ -9,6 +9,7 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 import {
   angularDemoPlugin,
+  frontmatterHmrPlugin,
   getRehypePlugins,
   getRemarkPlugins,
   quiDocsPlugin,
@@ -68,9 +69,12 @@ export default defineConfig({
       ],
       remarkPlugins: [...getRemarkPlugins()],
     }),
-    tsconfigPaths(),
+    tsconfigPaths({
+      projects: ["./tsconfig.lib.json"],
+    }),
     reactRouter(),
     quiDocsPlugin(),
+    frontmatterHmrPlugin(),
     angularDemoPlugin({
       demoPattern: [
         // these paths must also be accounted for in

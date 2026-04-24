@@ -46,6 +46,9 @@ const navConfig: NavConfig[] = [
     id: "patterns",
     title: "Patterns & Best Practices",
   },
+  {
+    id: "developer-previews",
+  },
   {separator: true},
   {
     sectionTitle: "Composition",
@@ -62,21 +65,8 @@ const navConfig: NavConfig[] = [
       {
         id: "overview",
       },
-      {
-        group: "Data Display",
-        id: "badges",
-        ignoreRouteMetaOrder: true,
-      },
     ],
     expanded: true,
-    groupOrder: [
-      "Buttons",
-      "Form Controls",
-      "Data Display",
-      "Overlays",
-      "Disclosure",
-      "Feedback",
-    ],
     id: "components",
     title: "Components",
   },
@@ -160,30 +150,15 @@ const extraFiles: KnowledgeExtraFile[] = [
 export default {
   appDirectory: "src",
   knowledge: {
-    environments: [
-      {
-        id: "qui-ai",
-        outputPath: "./knowledge/qui-ai",
-      },
-      {
-        id: "saga-ai",
-        outputPath: "./knowledge/saga-ai",
-      },
-      {
-        id: "saga-ai-test",
-        outputPath: "./knowledge/saga-ai-test",
-      },
+    baseUrl: "https://react-next.qui.qualcomm.com",
+    exclude: [
+      "**/installation+/**",
+      "index.mdx",
+      "**/components+/overview*",
+      "**/components+/overview*",
     ],
-    global: {
-      baseUrl: "https://react-next.qui.qualcomm.com",
-      exclude: ["**/installation+/**", "index.mdx", "**/components+/overview*"],
-      exports: {
-        enabled: true,
-        exclude: ["**/components+/overview*"],
-      },
-      extraFiles,
-      frontmatter: {exclude: ["url"], include: ["*"]},
-    },
+    extraFiles,
+    frontmatter: {exclude: ["url"], include: ["*"]},
     integrations: {
       openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],
     },

@@ -23,6 +23,7 @@ const themeOptCollection = new ListCollection<{id: QdsBrand; label: string}>({
     {id: "qualcomm", label: "Qualcomm"},
     {id: "snapdragon", label: "Snapdragon"},
     {id: "dragonwing", label: "Dragonwing"},
+    {id: "arduino", label: "Arduino"},
   ],
   itemValue: (item) => item.id,
 })

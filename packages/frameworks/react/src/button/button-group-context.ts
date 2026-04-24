@@ -8,13 +8,12 @@ import type {
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
-interface ButtonGroupContextValue
-  extends Explicit<
-    Pick<
-      QdsButtonGroupApiProps,
-      keyof QdsButtonGroupApiProps & keyof QdsButtonApiProps
-    >
-  > {}
+interface ButtonGroupContextValue extends Explicit<
+  Pick<
+    QdsButtonGroupApiProps,
+    keyof QdsButtonGroupApiProps & keyof QdsButtonApiProps
+  >
+> {}
 
 export const [ButtonGroupContextProvider, useButtonGroupContext] =
   createGuardedContext<ButtonGroupContextValue>({

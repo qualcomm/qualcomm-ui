@@ -20,7 +20,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsSliderContextProvider} from "./qds-slider-context"
 
 export interface SliderRootProps
-  extends SliderApiProps,
+  extends
+    SliderApiProps,
     QdsSliderApiProps,
     Omit<
       ElementRenderProp<"div">,

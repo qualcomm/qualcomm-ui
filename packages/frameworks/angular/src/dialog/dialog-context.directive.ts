@@ -22,8 +22,8 @@ export class DialogContextDirective extends ApiContextDirective<DialogApi> {
    */
   static ngTemplateContextGuard(
     dir: DialogContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: DialogApi} {
+    _ctx: unknown,
+  ): _ctx is {$implicit: DialogApi} {
     return true
   }
 }

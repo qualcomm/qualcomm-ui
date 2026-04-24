@@ -8,11 +8,11 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
+import {inlineNotificationAnatomy} from "./inline-notification.anatomy"
 import type {
   InlineNotificationActionBindings,
   InlineNotificationApi,
   InlineNotificationCloseTriggerBindings,
-  InlineNotificationCommonBindings,
   InlineNotificationDescriptionBindings,
   InlineNotificationIconBindings,
   InlineNotificationLabelBindings,
@@ -20,6 +20,8 @@ import type {
   InlineNotificationSchema,
 } from "./inline-notification.types"
 import {domIds} from "./internal"
+
+const parts = inlineNotificationAnatomy.parts
 
 export function createInlineNotificationApi(
   machine: Machine<InlineNotificationSchema>,
@@ -29,19 +31,13 @@ export function createInlineNotificationApi(
 
   const visible = state.matches("visible")
 
-  const commonBindings: InlineNotificationCommonBindings = {
-    "data-scope": "inline-notification",
-    dir: prop("dir"),
-  }
-
   return {
     visible,
 
     // group: bindings
     getActionBindings(): InlineNotificationActionBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "action",
+        ...parts.action,
       })
     },
     getCloseTriggerBindings(
@@ -49,9 +45,8 @@ export function createInlineNotificationApi(
     ): InlineNotificationCloseTriggerBindings {
       scope.ids.register("closeTrigger", props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.closeTrigger,
         "aria-label": "Dismiss notification",
-        "data-part": "close-trigger",
         id: props.id,
         onClick: (event) => {
           if (!event.defaultPrevented) {
@@ -66,15 +61,13 @@ export function createInlineNotificationApi(
     ): InlineNotificationDescriptionBindings {
       scope.ids.register("description", props)
       return normalize.element({
-        ...commonBindings,
-        "data-part": "description",
+        ...parts.description,
         id: props.id,
       })
     },
     getIconBindings(): InlineNotificationIconBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "status-icon",
+        ...parts.statusIcon,
       })
     },
     getLabelBindings(
@@ -82,20 +75,19 @@ export function createInlineNotificationApi(
     ): InlineNotificationLabelBindings {
       scope.ids.register("heading", props)
       return normalize.element({
-        ...commonBindings,
-        "data-part": "heading",
+        ...parts.heading,
         id: props.id,
       })
     },
     getRootBindings(props): InlineNotificationRootBindings {
       scope.ids.register("root", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "aria-describedby": ariaAttr(domIds.description(scope)),
         "aria-labelledby": ariaAttr(domIds.heading(scope)),
         "aria-live": prop("role") === "status" ? "polite" : "assertive",
-        "data-part": "root",
         "data-state": visible ? "visible" : "dismissed",
+        dir: prop("dir"),
         hidden: !visible,
         role: prop("role"),
       })

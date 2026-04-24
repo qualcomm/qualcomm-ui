@@ -13,8 +13,7 @@ import {useTooltipPositioner} from "@qualcomm-ui/react-core/tooltip"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TooltipPositionerProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

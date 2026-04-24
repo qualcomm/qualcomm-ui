@@ -14,7 +14,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-context"
 
 export interface TableColumnDragHandleProps
-  extends Omit<ElementRenderProp<"button">, "children">,
+  extends
+    Omit<ElementRenderProp<"button">, "children">,
     QdsTableColumnResizerProps {
   /**
    * Lucide icon to display inside the button.

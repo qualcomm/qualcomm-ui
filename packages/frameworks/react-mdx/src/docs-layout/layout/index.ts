@@ -1,5 +1,5 @@
 export * from "./docs-footer"
 export * from "./layout"
 export * from "./mobile-sidebar"
-export * from "./page-header"
+export * from "./page-actions"
 export * from "./use-mdx-docs-layout"

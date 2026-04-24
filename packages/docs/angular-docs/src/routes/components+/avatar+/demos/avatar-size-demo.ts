@@ -11,27 +11,27 @@ import {AvatarModule} from "@qualcomm-ui/angular/avatar"
       XSmall
       <div q-avatar size="xs">
         <img alt="Jane Doe" q-avatar-image src="/images/avatar-woman.png" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       Small
       <div q-avatar size="sm">
         <img alt="Jane Doe" q-avatar-image src="/images/avatar-woman.png" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       Medium
       <div q-avatar size="md">
         <img alt="Jane Doe" q-avatar-image src="/images/avatar-woman.png" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       Large
       <div q-avatar size="lg">
         <img alt="Jane Doe" q-avatar-image src="/images/avatar-woman.png" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       XLarge
       <div q-avatar size="xl">
         <img alt="Jane Doe" q-avatar-image src="/images/avatar-woman.png" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       <!-- preview -->
     </div>

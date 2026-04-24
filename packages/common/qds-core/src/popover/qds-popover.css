@@ -1,7 +1,9 @@
 .qui-popover__content {
   --arrow-size: 10px;
+  background: var(--color-surface-overlay);
   border-radius: 4px;
   box-shadow: var(--shadow-high);
+  color: var(--color-text-neutral-primary);
   display: flex;
   flex-direction: column;
   font: var(--font-static-body-xs-default);
@@ -12,14 +14,16 @@
   z-index: calc(var(--z-index-popover) + var(--layer-index));
 
   --arrow-background: var(--color-surface-overlay);
-  background: var(--color-surface-overlay);
-  color: var(--color-text-neutral-primary);
 
   &[data-emphasis="brand"] {
     --arrow-background: var(--color-background-brand-primary);
     background: var(--color-background-brand-primary);
     color: var(--color-utility-persistent-white);
   }
+}
+
+.qui-popover__arrow-tip {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
 
 .qui-popover__label {

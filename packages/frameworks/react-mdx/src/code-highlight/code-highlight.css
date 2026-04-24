@@ -124,6 +124,7 @@
 .qui-popover__content {
   pre.shiki-code {
     background: var(--color-surface-overlay);
+    padding: 10px;
   }
 }
 

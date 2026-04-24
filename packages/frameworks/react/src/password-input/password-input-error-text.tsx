@@ -12,8 +12,7 @@ import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputErrorTextProps
-  extends InputErrorTextProps,
-    IdProp {}
+  extends InputErrorTextProps, IdProp {}
 
 export function PasswordInputErrorText({
   children,

@@ -13,8 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-context"
 
 export interface TableRowProps
-  extends ElementRenderProp<"tr">,
-    QdsTableRowProps {}
+  extends ElementRenderProp<"tr">, QdsTableRowProps {}
 
 /**
  * A table row. Renders a `<tr>` element by default.

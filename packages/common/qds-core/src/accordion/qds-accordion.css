@@ -44,7 +44,9 @@
 /* starting indicator padding (normal & uncontained) */
 
 .qui-accordion__item:has(
-  .qui-accordion__item-trigger > [data-part="indicator"] + [data-part="title"]
+  .qui-accordion__item-trigger
+    > [data-accordion-part="indicator"]
+    + [data-accordion-part="title"]
 ) {
   .qui-accordion__root:not([data-uncontained]) & {
     --accordion-content-padding-inline-start: 48px;

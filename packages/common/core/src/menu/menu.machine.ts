@@ -206,6 +206,7 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
         }
 
         getPlacement(domEls.trigger(scope), getMenuPositionerEl, {
+          arrowSelector: "[data-menu-part=arrow]",
           ...positioning,
           defer: true,
           getAnchorRect,
@@ -478,6 +479,7 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
         context.set("currentPlacement", positioning.placement)
         const getPositionerEl = () => domEls.positioner(scope)
         return getPlacement(domEls.trigger(scope), getPositionerEl, {
+          arrowSelector: "[data-menu-part=arrow]",
           ...positioning,
           defer: true,
           onComplete(data) {
@@ -610,7 +612,6 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
           placement: "bottom-start",
           ...props.positioning,
         },
-        ...props,
       }
     },
     refs() {

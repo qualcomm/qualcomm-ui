@@ -1,3 +1,4 @@
+export * from "./switch.anatomy"
 export * from "./switch.api"
 export * from "./switch.machine"
 export * from "./switch.props"

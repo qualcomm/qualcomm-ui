@@ -8,8 +8,10 @@ import type {
 
 import type {toastClasses} from "./toast.classes"
 
-export interface QdsToastApiProps
-  extends Pick<QdsNotificationApiProps, "emphasis"> {}
+export interface QdsToastApiProps extends Pick<
+  QdsNotificationApiProps,
+  "emphasis"
+> {}
 
 type ToastClasses = typeof toastClasses
 

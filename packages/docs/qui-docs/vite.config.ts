@@ -5,6 +5,7 @@ import {defineConfig} from "vite"
 import tsconfigPaths from "vite-tsconfig-paths"
 
 import {
+  frontmatterHmrPlugin,
   getRehypePlugins,
   getRemarkPlugins,
   quiDocsPlugin,
@@ -23,8 +24,11 @@ export default defineConfig({
       remarkPlugins: [...getRemarkPlugins()],
     }),
     reactRouter(),
-    tsconfigPaths(),
+    tsconfigPaths({
+      projects: ["./tsconfig.lib.json"],
+    }),
     quiDocsPlugin(),
+    frontmatterHmrPlugin(),
     reactDemoPlugin({
       demoPattern: "./src/routes/debug+/**/demos/*.tsx",
       transformTailwindStyles: true,

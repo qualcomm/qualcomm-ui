@@ -32,29 +32,35 @@ export function TextBadgeVariantDemo(): ReactElement {
         <Badge emphasis="cyan" variant="subtle">
           cyan
         </Badge>
+        <Badge emphasis="teal" variant="subtle">
+          teal
+        </Badge>
+        <Badge emphasis="lime" variant="subtle">
+          lime
+        </Badge>
         <Badge emphasis="green" variant="subtle">
           green
         </Badge>
-        <Badge emphasis="kiwi" variant="subtle">
-          kiwi
+        <Badge emphasis="yellow" variant="subtle">
+          yellow
         </Badge>
-        <Badge emphasis="magenta" variant="subtle">
-          magenta
+        <Badge emphasis="amber" variant="subtle">
+          amber
         </Badge>
         <Badge emphasis="orange" variant="subtle">
           orange
         </Badge>
-        <Badge emphasis="purple" variant="subtle">
-          purple
-        </Badge>
         <Badge emphasis="red" variant="subtle">
           red
         </Badge>
-        <Badge emphasis="teal" variant="subtle">
-          teal
+        <Badge emphasis="magenta" variant="subtle">
+          magenta
         </Badge>
-        <Badge emphasis="yellow" variant="subtle">
-          yellow
+        <Badge emphasis="violet" variant="subtle">
+          violet
+        </Badge>
+        <Badge emphasis="purple" variant="subtle">
+          purple
         </Badge>
       </div>
     </div>

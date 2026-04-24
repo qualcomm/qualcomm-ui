@@ -45,6 +45,7 @@
 }
 
 .qui-header-bar__nav {
+  --gutter: 4;
   align-items: center;
   display: flex;
   gap: var(--spacing-110);
@@ -92,12 +93,12 @@
     --icon-color: var(--color-utility-disabled-icon);
   }
 
-  .qui-icon__root[data-part="end-icon"] {
+  .qui-icon__root[data-header-bar-part="end-icon"] {
     transition: transform var(--animation-duration-faster) ease-out;
   }
 
   &[data-state="open"] {
-    .qui-icon__root[data-part="end-icon"] {
+    .qui-icon__root[data-header-bar-part="end-icon"] {
       transform: rotate(180deg);
     }
   }

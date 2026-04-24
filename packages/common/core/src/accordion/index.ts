@@ -1,3 +1,4 @@
+export * from "./accordion.anatomy"
 export * from "./accordion.api"
 export * from "./accordion.machine"
 export * from "./accordion.props"

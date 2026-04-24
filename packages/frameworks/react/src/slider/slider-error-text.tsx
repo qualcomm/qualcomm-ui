@@ -17,8 +17,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsSliderContext} from "./qds-slider-context"
 
 export interface SliderErrorTextProps
-  extends IdProp,
-    ElementRenderProp<"span"> {
+  extends IdProp, ElementRenderProp<"span"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

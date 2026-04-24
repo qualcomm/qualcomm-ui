@@ -17,8 +17,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsBreadcrumbsContextProvider} from "./qds-breadcrumbs-context"
 
 export interface BreadcrumbsRootProps
-  extends QdsBreadcrumbsApiProps,
-    ElementRenderProp<"nav"> {}
+  extends QdsBreadcrumbsApiProps, ElementRenderProp<"nav"> {}
 
 /**
  * The root element of the breadcrumbs component. Renders a `<nav>` element by

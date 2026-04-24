@@ -1,3 +1,4 @@
+export * from "./pagination.anatomy"
 export * from "./pagination.api"
 export * from "./pagination.machine"
 export * from "./pagination.props"

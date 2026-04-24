@@ -10,8 +10,10 @@ import {
 } from "@qualcomm-ui/react-mdx/code-demo"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
-interface Props
-  extends Omit<ReactDemoRunnerProps, "qdsBrand" | "setQdsBrand" | "demo"> {}
+interface Props extends Omit<
+  ReactDemoRunnerProps,
+  "qdsBrand" | "setQdsBrand" | "demo"
+> {}
 
 export function Demo({
   component,

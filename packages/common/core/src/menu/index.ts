@@ -1,3 +1,4 @@
+export * from "./menu.anatomy"
 export * from "./menu.api"
 export * from "./menu.machine"
 export * from "./menu.props"

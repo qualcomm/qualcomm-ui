@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import type {
@@ -8,6 +9,7 @@ import type {
   QdsBadgeBasicSize,
   QdsBaseBadgeProps,
 } from "./badge.types"
+import type {numberBadgeAnatomy} from "./number-badge.anatomy"
 
 export type QdsNumberBadgeEmphasis =
   | "neutral"
@@ -46,13 +48,14 @@ export interface QdsNumberBadgeProps extends QdsBaseBadgeProps {
   value?: number
 }
 
-export interface QdsNumberBadgeRootBindings {
+type PartName = AnatomyPartName<typeof numberBadgeAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"numberBadge", P> {}
+
+export interface QdsNumberBadgeRootBindings extends Part<"root"> {
   className: BadgeClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsNumberBadgeEmphasis
   "data-overflow": BooleanDataAttr
-  "data-part": "root"
-  "data-scope": "number-badge"
   "data-size": QdsBadgeBasicSize
 }
 

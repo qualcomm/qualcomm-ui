@@ -11,8 +11,7 @@ import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {useTextInputClearTrigger} from "@qualcomm-ui/react-core/text-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface TextInputClearTriggerProps
-  extends ElementRenderProp<"button"> {}
+export interface TextInputClearTriggerProps extends ElementRenderProp<"button"> {}
 
 /**
  * Button that clears the input value. Renders a `<button>` element by default.

@@ -12,8 +12,7 @@ export class CellComponentContextDirective<
   TableData extends object,
   ColumnValue = any,
   TableColumnMeta = ColumnMeta,
-> implements CellComponentContext<TableData, ColumnValue, TableColumnMeta>
-{
+> implements CellComponentContext<TableData, ColumnValue, TableColumnMeta> {
   readonly context =
     input.required<CellContext<TableData, ColumnValue, TableColumnMeta>>()
 }

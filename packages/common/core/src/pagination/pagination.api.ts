@@ -7,6 +7,7 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {paginationAnatomy} from "./pagination.anatomy"
 import type {
   PageItem,
   PaginationApi,
@@ -21,6 +22,8 @@ import type {
   PaginationSchema,
 } from "./pagination.types"
 
+const parts = paginationAnatomy.parts
+
 export function createPaginationApi(
   store: Machine<PaginationSchema>,
   normalize: PropNormalizer,
@@ -34,10 +37,6 @@ export function createPaginationApi(
   const pageEnd = computed("pageEnd")
   const pageMetadata = computed("pageMetadata")
 
-  const elementScope: {"data-scope": "pagination"} = {
-    "data-scope": "pagination",
-  }
-
   const isFirstPage = page === 1
   const isLastPage = page === pageCount
 
@@ -45,10 +44,9 @@ export function createPaginationApi(
     getNextTriggerBindings(): PaginationNextTriggerBindings {
       const isDisabled = isLastPage
       return normalize.button({
-        ...elementScope,
+        ...parts.nextTrigger,
         "aria-label": prop("nextPageAriaLabel"),
         "data-disabled": booleanDataAttr(isDisabled),
-        "data-part": "next-trigger",
         disabled: isDisabled,
         onClick() {
           send({type: "GO_TO_NEXT_PAGE"})
@@ -59,8 +57,7 @@ export function createPaginationApi(
     getPageItemBindings(item: PageItem): PaginationPageItemBindings {
       if (item.type === "separator") {
         return normalize.element({
-          "data-part": "page-item",
-          "data-scope": "pagination",
+          ...parts.pageItem,
           "data-type": "separator",
           disabled: true,
           role: "separator",
@@ -69,12 +66,11 @@ export function createPaginationApi(
       const itemPage = item.page
       const isActive = itemPage === page
       return normalize.button({
-        ...elementScope,
+        ...parts.pageItem,
         "aria-current": isActive ? "page" : undefined,
         "aria-label": prop("pageAriaLabel")(itemPage),
         "data-active": booleanDataAttr(isActive),
         "data-page": itemPage,
-        "data-part": "page-item",
         "data-type": "page",
         onClick() {
           send({page: itemPage, type: "GO_TO_PAGE"})
@@ -84,22 +80,19 @@ export function createPaginationApi(
 
     getPageItemsBindings(): PaginationPageItemsBindings {
       return normalize.element({
-        ...elementScope,
-        "data-part": "page-items",
+        ...parts.pageItems,
       })
     },
 
     getPageMetadataBindings(): PaginationPageMetadataBindings {
       return normalize.element({
-        ...elementScope,
-        "data-part": "page-metadata",
+        ...parts.pageMetadata,
       })
     },
 
     getPageSizeBindings(): PaginationPageSizeBindings {
       return {
-        ...elementScope,
-        "data-part": "page-size",
+        ...parts.pageSize,
       }
     },
 
@@ -107,8 +100,7 @@ export function createPaginationApi(
       scope.ids.register("pageSizeLabel", id, onDestroy)
 
       return {
-        ...elementScope,
-        "data-part": "page-size-label",
+        ...parts.pageSizeLabel,
         id,
       }
     },
@@ -116,10 +108,9 @@ export function createPaginationApi(
     getPrevTriggerBindings(): PaginationPrevTriggerBindings {
       const isDisabled = isFirstPage
       return normalize.button({
-        ...elementScope,
+        ...parts.prevTrigger,
         "aria-label": prop("prevPageAriaLabel"),
         "data-disabled": booleanDataAttr(isDisabled),
-        "data-part": "prev-trigger",
         disabled: isDisabled,
         onClick(event) {
           if (event.defaultPrevented) {
@@ -132,8 +123,7 @@ export function createPaginationApi(
 
     getRootBindings(): PaginationRootBindings {
       return normalize.element({
-        ...elementScope,
-        "data-part": "root",
+        ...parts.root,
       })
     },
 

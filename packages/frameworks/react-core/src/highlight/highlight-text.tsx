@@ -18,8 +18,7 @@ const highlightProps = createProps<UseHighlightProps>()(
 const splitProps = createSplitProps<UseHighlightProps>(highlightProps)
 
 export interface HighlightTextProps
-  extends ComponentProps<"mark">,
-    UseHighlightProps {}
+  extends ComponentProps<"mark">, UseHighlightProps {}
 
 export function HighlightText(props: HighlightTextProps): ReactElement {
   if (typeof props.text !== "string") {

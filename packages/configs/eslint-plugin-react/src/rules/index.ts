@@ -4,3 +4,4 @@
 export {accessibleName} from "./accessible-name"
 export {avatarImageAlt} from "./avatar-image-alt"
 export {inputLabelAssociation} from "./input-label-association"
+export {interactiveCardElementNesting} from "./interactive-card-element-nesting"

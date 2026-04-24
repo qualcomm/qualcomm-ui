@@ -21,14 +21,16 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <div class="flex flex-wrap items-center gap-2">
         <span emphasis="blue" icon="Star" q-icon-badge></span>
         <span emphasis="cyan" icon="Star" q-icon-badge></span>
-        <span emphasis="green" icon="Star" q-icon-badge></span>
-        <span emphasis="kiwi" icon="Star" q-icon-badge></span>
-        <span emphasis="magenta" icon="Star" q-icon-badge></span>
-        <span emphasis="orange" icon="Star" q-icon-badge></span>
-        <span emphasis="purple" icon="Star" q-icon-badge></span>
-        <span emphasis="red" icon="Star" q-icon-badge></span>
         <span emphasis="teal" icon="Star" q-icon-badge></span>
+        <span emphasis="lime" icon="Star" q-icon-badge></span>
+        <span emphasis="green" icon="Star" q-icon-badge></span>
         <span emphasis="yellow" icon="Star" q-icon-badge></span>
+        <span emphasis="amber" icon="Star" q-icon-badge></span>
+        <span emphasis="orange" icon="Star" q-icon-badge></span>
+        <span emphasis="red" icon="Star" q-icon-badge></span>
+        <span emphasis="magenta" icon="Star" q-icon-badge></span>
+        <span emphasis="violet" icon="Star" q-icon-badge></span>
+        <span emphasis="purple" icon="Star" q-icon-badge></span>
       </div>
     </div>
   `,

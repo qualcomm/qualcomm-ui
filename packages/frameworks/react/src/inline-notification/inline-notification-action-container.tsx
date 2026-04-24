@@ -12,8 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsInlineNotificationContext} from "./qds-inline-notification-context"
 
-export interface InlineNotificationActionContainerProps
-  extends ElementRenderProp<"div"> {
+export interface InlineNotificationActionContainerProps extends ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

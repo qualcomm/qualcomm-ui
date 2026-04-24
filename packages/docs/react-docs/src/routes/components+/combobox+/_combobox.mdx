@@ -1,6 +1,5 @@
 ---
 title: Combobox
-group: Form Controls
 description: The Combobox consists of a label, a text-input field, and a chevron icon that indicates the control can expand. The input field contains the current value or placeholder text and is enclosed by a container that provides focus and hover states. Activating the control reveals the dropdown menu, which presents a list of options.
 component: Combobox
 aliases: [autocomplete, typeahead, autosuggest, combo box]
@@ -144,7 +143,7 @@ object array
 typed collection
 :::
 
-The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [comboboxCollection](./#ListCollection) to specify the label and value of each item.
+The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [comboboxCollection](./#list-collection) to specify the label and value of each item.
 
 <Demo name="ComboboxItemsDemo" component={demos.ComboboxItemsDemo} />
 
@@ -244,7 +243,7 @@ helper text
 description text
 :::
 
-Use the [hintText](./#hintText) prop to provide additional context or instructions below the combobox.
+Use the [hint](./#hint) prop to provide additional context or instructions below the combobox.
 
 <Demo name="ComboboxHintDemo" component={demos.ComboboxHintDemo} />
 

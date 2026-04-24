@@ -8,11 +8,19 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsSideNavApi} from "./qds-side-nav-context"
 
-export interface SideNavDividerProps
-  extends Omit<DividerProps, "orientation" | "variant"> {}
+export interface SideNavDividerProps extends Omit<
+  DividerProps,
+  "orientation" | "variant"
+> {}
 
 export function SideNavDivider(props: SideNavDividerProps): ReactElement {
   const mergedProps = mergeProps(qdsSideNavApi.getDividerBindings(), props)
 
-  return <Divider {...mergedProps} />
+  return (
+    <Divider
+      {...mergedProps}
+      aria-orientation={undefined}
+      role="presentation"
+    />
+  )
 }

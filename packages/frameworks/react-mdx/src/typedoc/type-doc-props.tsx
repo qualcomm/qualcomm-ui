@@ -23,8 +23,8 @@ import {
   JsdocComment,
   sortAndSelectProps,
   type TypeDocAngularPropConfig,
+  TypeDocFunctionContent,
 } from "./internal"
-import {TypeDocReflection} from "./reflection"
 import {TypedocPropsList} from "./typedoc-props-list"
 import {TypedocPropsTable} from "./typedoc-props-table"
 import {usePropsContext} from "./use-props-context"
@@ -181,6 +181,10 @@ export function TypeDocProps({
       }
     }
 
+    if (__QUI_DEV___ && missing.length) {
+      console.error("Missing prop types:", missing.join(","))
+    }
+
     return {
       existingNames: existing,
       firstValidPropTypes: firstValid,
@@ -290,9 +294,8 @@ export function TypeDocProps({
     if (firstValidPropTypes?.resolvedType?.type === "signature") {
       return (
         <TypeDocContextProvider value={typeDocContext}>
-          <TypeDocReflection
+          <TypeDocFunctionContent
             comment={firstValidPropTypes.comment}
-            name={firstValidPropTypes.name}
             resolvedType={firstValidPropTypes.resolvedType}
           />
         </TypeDocContextProvider>

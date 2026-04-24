@@ -36,7 +36,7 @@
     "cross-env": "^10.1.0",
     "eslint-plugin-boundaries": "^5.0.1",
     "eslint-plugin-import": "^2.31.0",
-    "vitest": "^4.0.8"
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "eslint": ">=9.37.0",

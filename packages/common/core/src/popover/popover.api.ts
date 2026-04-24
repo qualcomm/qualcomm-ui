@@ -11,10 +11,10 @@ import {
   booleanAriaAttr,
   booleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {domIds} from "./internal"
+import {popoverAnatomy} from "./popover.anatomy"
 import type {
   PopoverAnchorBindings,
   PopoverApi,
@@ -31,6 +31,8 @@ import type {
   PopoverTriggerBindings,
 } from "./popover.types"
 
+const parts = popoverAnatomy.parts
+
 export function createPopoverApi(
   machine: Machine<PopoverSchema>,
   normalize: PropNormalizer,
@@ -45,11 +47,6 @@ export function createPopoverApi(
     ...prop("positioning"),
     placement: currentPlacement,
   })
-
-  const commonProps: {"data-scope": "popover"; dir: Direction | undefined} = {
-    "data-scope": "popover",
-    dir: prop("dir"),
-  }
 
   return {
     open: state.matches("open"),
@@ -69,16 +66,14 @@ export function createPopoverApi(
     getAnchorBindings(props): PopoverAnchorBindings {
       scope.ids.register("anchor", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "anchor",
+        ...parts.anchor,
         id: domIds.anchor(scope),
       })
     },
     getArrowBindings(props): PopoverArrowBindings {
       scope.ids.register("arrow", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "arrow",
+        ...parts.arrow,
         id: props.id,
         style: popperStyles.arrow,
       })
@@ -86,8 +81,7 @@ export function createPopoverApi(
 
     getArrowTipBindings(): PopoverArrowTipBindings {
       return normalize.element({
-        ...commonProps,
-        "data-part": "arrow-tip",
+        ...parts.arrowTip,
         style: popperStyles.arrowTip,
       })
     },
@@ -95,9 +89,8 @@ export function createPopoverApi(
     getCloseTriggerBindings(props): PopoverCloseTriggerBindings {
       scope.ids.register("closeTrigger", props)
       return normalize.button({
-        ...commonProps,
+        ...parts.closeTrigger,
         "aria-label": "close",
-        "data-part": "close-trigger",
         id: props.id,
         onClick(event) {
           if (event.defaultPrevented) {
@@ -112,11 +105,10 @@ export function createPopoverApi(
     getContentBindings(props): PopoverContentBindings {
       scope.ids.register("content", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.content,
         "aria-describedby": ariaAttr(domIds.description(scope)),
         "aria-labelledby": ariaAttr(domIds.title(scope)),
         "data-expanded": booleanDataAttr(open),
-        "data-part": "content",
         "data-placement": currentPlacement,
         "data-state": state.get(),
         hidden: !open,
@@ -129,16 +121,14 @@ export function createPopoverApi(
     getDescriptionBindings(props): PopoverDescriptionBindings {
       scope.ids.register("description", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "description",
+        ...parts.description,
         id: domIds.description(scope),
       })
     },
 
     getIndicatorBindings(): PopoverIndicatorBindings {
       return normalize.element({
-        ...commonProps,
-        "data-part": "indicator",
+        ...parts.indicator,
         "data-state": state.get(),
       })
     },
@@ -146,8 +136,7 @@ export function createPopoverApi(
     getLabelBindings(props): PopoverLabelBindings {
       scope.ids.register("title", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "label",
+        ...parts.label,
         id: domIds.title(scope),
       })
     },
@@ -155,25 +144,26 @@ export function createPopoverApi(
     getPositionerBindings(props): PopoverPositionerBindings {
       scope.ids.register("positioner", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "positioner",
+        ...parts.positioner,
         id: domIds.positioner(scope),
         style: popperStyles.floating,
       })
     },
 
     getRootBindings(): PopoverRootBindings {
-      return {...commonProps, "data-part": "root"}
+      return {
+        ...parts.root,
+        dir: prop("dir") || "ltr",
+      }
     },
 
     getTriggerBindings(props): PopoverTriggerBindings {
       scope.ids.register("trigger", props)
       return normalize.button({
-        ...commonProps,
+        ...parts.trigger,
         "aria-controls": domIds.content(scope),
         "aria-expanded": booleanAriaAttr(open),
         "aria-haspopup": "dialog",
-        "data-part": "trigger",
         "data-placement": currentPlacement,
         "data-state": state.get(),
         id: domIds.trigger(scope),

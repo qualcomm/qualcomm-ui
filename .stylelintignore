@@ -1,3 +1,4 @@
 # this file doesn't seem to work in WebStorm
 dist
 packages/utilities/qds-core/src/styles/**
+packages/**/coverage

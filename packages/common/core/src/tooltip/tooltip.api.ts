@@ -6,9 +6,9 @@
 
 import {getPlacementStyles} from "@qualcomm-ui/dom/floating-ui"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {tooltipAnatomy} from "./tooltip.anatomy"
 import type {
   TooltipApi,
   TooltipArrowBindings,
@@ -19,6 +19,8 @@ import type {
   TooltipSchema,
   TooltipTriggerBindings,
 } from "./tooltip.types"
+
+const parts = tooltipAnatomy.parts
 
 export function createTooltipApi(
   store: Machine<TooltipSchema>,
@@ -33,25 +35,18 @@ export function createTooltipApi(
     placement: context.get("currentPlacement"),
   })
 
-  const commonProps: {"data-scope": "tooltip"; dir: Direction | undefined} = {
-    "data-scope": "tooltip",
-    dir: prop("dir"),
-  }
-
   return {
     getRootBindings(): TooltipRootBindings {
       return normalize.element({
-        ...commonProps,
-        "data-part": "root",
+        ...parts.root,
+        dir: prop("dir") || "ltr",
       })
     },
 
     getTooltipArrowBindings(props): TooltipArrowBindings {
       scope.ids.register("arrow", props)
       return normalize.element({
-        ...commonProps,
-        // important! the get-placement middleware relies on [data-part=arrow]
-        "data-part": "arrow",
+        ...parts.arrow,
         id: props.id,
         style: popperStyles.arrow,
       })
@@ -59,8 +54,7 @@ export function createTooltipApi(
 
     getTooltipArrowTipBindings(): TooltipArrowTipBindings {
       return normalize.element({
-        ...commonProps,
-        "data-part": "arrowTip",
+        ...parts.arrowTip,
         style: popperStyles.arrowTip,
       })
     },
@@ -68,8 +62,7 @@ export function createTooltipApi(
     getTooltipContentBindings(props): TooltipContentBindings {
       scope.ids.register("content", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "content",
+        ...parts.content,
         "data-placement": context.get("currentPlacement"),
         "data-state": open ? "open" : "closed",
         hidden: !open,
@@ -81,8 +74,7 @@ export function createTooltipApi(
     getTooltipPositionerBindings(props): TooltipPositionerBindings {
       scope.ids.register("positioner", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "positioner",
+        ...parts.positioner,
         id: props.id,
         style: popperStyles.floating,
       })
@@ -91,11 +83,9 @@ export function createTooltipApi(
     getTooltipTriggerBindings(props): TooltipTriggerBindings {
       scope.ids.register("trigger", props)
       return normalize.element({
-        ...commonProps,
+        ...parts.trigger,
         "aria-describedby": open ? scope.ids.get("content") : undefined,
         "data-expanded": booleanDataAttr(open),
-        "data-part": "trigger",
-        // TODO redundant attr: remove?
         "data-state": open ? "open" : "closed",
         id: props.id,
         onBlur(event) {

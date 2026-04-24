@@ -1,9 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 
+import type {linkAnatomy} from "./link.anatomy"
 import type {linkClasses} from "./link.classes"
 
 export type QdsLinkEmphasis =
@@ -37,30 +39,26 @@ export interface QdsLinkApiProps extends DirectionProperty {
   size?: QdsLinkSize
 }
 
-export interface QdsLinkScope extends DirectionProperty {
-  "data-scope": "link"
-}
-
 type LinkClasses = typeof linkClasses
 
-export interface QdsLinkRootBindings extends QdsLinkScope {
+type PartName = AnatomyPartName<typeof linkAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"link", P> {}
+
+export interface QdsLinkRootBindings extends Part<"root">, DirectionProperty {
   className: LinkClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsLinkEmphasis
-  "data-part": "root"
   "data-size": QdsLinkSize
 }
 
-export interface QdsLinkStartIconBindings extends QdsLinkScope {
+export interface QdsLinkStartIconBindings extends Part<"icon"> {
   className: LinkClasses["icon"]
-  "data-part": "icon"
   "data-placement": "start"
   "data-size": QdsLinkSize
 }
 
-export interface QdsLinkEndIconBindings extends QdsLinkScope {
+export interface QdsLinkEndIconBindings extends Part<"icon"> {
   className: LinkClasses["icon"]
-  "data-part": "icon"
   "data-placement": "end"
   "data-size": QdsLinkSize
 }

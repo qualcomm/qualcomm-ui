@@ -22,7 +22,7 @@ function NumberInputUnitSelectTriggerContent(): ReactElement {
 
   return (
     <Icon
-      data-part="chevron"
+      data-number-input-part="chevron"
       icon={menuContext.open ? ChevronUp : ChevronDown}
       size="sm"
     />

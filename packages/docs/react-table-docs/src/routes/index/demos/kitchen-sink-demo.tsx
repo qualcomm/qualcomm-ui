@@ -60,6 +60,7 @@ const columns: ColumnDef<User>[] = [
         >
           <>
             <Checkbox
+              aria-label={row.getIsSelected() ? "Deselect row" : "Select row"}
               checked={checked}
               hiddenInputProps={{
                 "aria-label": row.getIsSelected()
@@ -198,6 +199,7 @@ function LocalTable({data}: {data: User[]}) {
     <Table.Root className="mt-4">
       <Table.ActionBar>
         <TextInput
+          aria-label="Filter rows"
           className="w-56"
           onValueChange={setGlobalFilter}
           placeholder="Global Filter"
@@ -304,6 +306,7 @@ function Filter({
   return typeof firstValue === "number" ? (
     <div className="flex gap-2">
       <TextInput
+        aria-label="Min"
         className="w-24"
         inputProps={{min: 0, type: "number"}}
         onValueChange={(value) =>
@@ -314,6 +317,7 @@ function Filter({
         value={(columnFilterValue as [string, number])?.[0] ?? ""}
       />
       <TextInput
+        aria-label="Max"
         className="w-24"
         inputProps={{min: 0, type: "number"}}
         onValueChange={(value) =>
@@ -326,6 +330,7 @@ function Filter({
     </div>
   ) : (
     <TextInput
+      aria-label="Search"
       className="w-36"
       onValueChange={(value) => column.setFilterValue(value)}
       placeholder="Search..."

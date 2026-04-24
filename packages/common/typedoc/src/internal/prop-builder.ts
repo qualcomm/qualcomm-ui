@@ -18,8 +18,10 @@ import {formatDefault} from "./format-comment"
 import {TypeSerializer} from "./type-serializer"
 import type {KnownInterfaces, QuiDeclarationReflection} from "./types"
 
-export interface PropBuilderParams
-  extends Pick<BuildOptions, "referenceLinks"> {
+export interface PropBuilderParams extends Pick<
+  BuildOptions,
+  "referenceLinks"
+> {
   importResolver?: ImportResolverFn
   knownInterfaces?: KnownInterfaces
   printWidth?: number

@@ -4,8 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -13,6 +14,8 @@ import type {
   JSX,
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
+
+import type {progressAnatomy} from "./progress.anatomy"
 
 export type ProgressState = "indeterminate" | "complete" | "loading"
 
@@ -96,36 +99,32 @@ export interface ProgressSchema {
   props: RequiredBy<ProgressApiProps, "dir" | "max" | "min">
 }
 
-export interface ProgressCommonBindings {
-  "data-scope": "progress"
-  dir: "ltr" | "rtl"
-}
+type PartName = AnatomyPartName<typeof progressAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"progress", P> {}
 
-export interface ProgressRootBindings extends ProgressCommonBindings {
+export interface ProgressRootBindings extends Part<"root"> {
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-max": number
-  "data-part": "root"
   "data-state": ProgressState
   "data-value": number | undefined
+  dir: Direction
   style: JSX.CSSProperties
 }
 
-export interface ProgressBarBindings extends ProgressCommonBindings {
+export interface ProgressBarBindings extends Part<"bar"> {
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-max": number
-  "data-part": "bar"
   "data-state": ProgressState
   style: JSX.CSSProperties
 }
 
-export interface ProgressLabelBindings extends ProgressCommonBindings {
-  "data-part": "label"
+export interface ProgressLabelBindings extends Part<"label"> {
   id: string
 }
 
-export interface ProgressTrackBindings extends ProgressCommonBindings {
+export interface ProgressTrackBindings extends Part<"track"> {
   "aria-describedby": string | undefined
   "aria-label": string | undefined
   "aria-labelledby": string | undefined
@@ -133,51 +132,44 @@ export interface ProgressTrackBindings extends ProgressCommonBindings {
   "aria-valuemin": number
   "aria-valuenow": number | undefined
   "data-disabled": BooleanDataAttr
-  "data-part": "track"
   "data-state": ProgressState
   id: string
   role: "progressbar"
 }
 
-export interface ProgressValueTextBindings extends ProgressCommonBindings {
+export interface ProgressValueTextBindings extends Part<"valueText"> {
   "aria-live": "polite"
   "data-invalid": BooleanDataAttr
-  "data-part": "value-text"
 }
 
-export interface ProgressErrorTextBindings extends ProgressCommonBindings {
+export interface ProgressErrorTextBindings extends Part<"errorText"> {
   "aria-live": "polite"
-  "data-part": "error-text"
   hidden: boolean
   id: string
 }
 
-export interface ProgressHintBindings extends ProgressCommonBindings {
-  "data-part": "hint"
+export interface ProgressHintBindings extends Part<"hint"> {
   hidden: boolean
   id: string
 }
 
 export interface ProgressRingRootBindings extends ProgressRootBindings {}
 
-export interface ProgressRingTrackBindings extends ProgressCommonBindings {
+export interface ProgressRingTrackBindings extends Part<"circleTrack"> {
   "data-disabled": BooleanDataAttr
-  "data-part": "circle-track"
   "data-state": ProgressState
 }
 
-export interface ProgressRingBarBindings extends ProgressCommonBindings {
+export interface ProgressRingBarBindings extends Part<"circleBar"> {
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-max": number
-  "data-part": "circle-bar"
   "data-state": ProgressState
   style: JSX.CSSProperties
 }
 
 export interface ProgressRingCircleBindings
-  extends Omit<ProgressTrackBindings, "data-part"> {
-  "data-part": "circle"
+  extends Omit<ProgressTrackBindings, "data-progress-part">, Part<"circle"> {
   id: string
 }
 

@@ -1,3 +1,4 @@
+export * from "./slider.anatomy"
 export * from "./slider.machine"
 export * from "./slider.types"
 export * from "./slider.api"

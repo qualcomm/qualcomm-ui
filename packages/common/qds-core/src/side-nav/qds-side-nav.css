@@ -126,7 +126,7 @@
     outline: solid 1px var(--color-utility-focus-border);
   }
 
-  &:has([data-part="branch-trigger"]) {
+  &:has([data-tree-part="branch-trigger"]) {
     --branch-trigger-width: calc(16px + var(--spacing-50));
   }
 
@@ -136,7 +136,7 @@
     min-height: 32px;
   }
 
-  &[data-selected][data-part="leaf-node"] {
+  &[data-selected][data-tree-part="leaf-node"] {
     background: var(--color-interactive-background-ghost-hover);
   }
 
@@ -158,7 +158,7 @@
     pointer-events: none;
   }
 
-  &[data-part="branch-node"] {
+  &[data-tree-part="branch-node"] {
     .qui-side-nav__node-indicator {
       display: none;
     }
@@ -175,8 +175,8 @@
 
 /* indicate that a branch has an active leaf node */
 .qui-side-nav__branch-root {
-  &:has(.qui-side-nav__node-root[data-part="leaf-node"][data-selected]) {
-    > .qui-side-nav__node-root[data-part="branch-node"]:first-child {
+  &:has(.qui-side-nav__node-root[data-tree-part="leaf-node"][data-selected]) {
+    > .qui-side-nav__node-root[data-tree-part="branch-node"]:first-child {
       color: var(--color-text-brand-primary);
       --icon-color: var(--color-icon-brand-primary);
     }

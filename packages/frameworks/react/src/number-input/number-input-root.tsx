@@ -19,8 +19,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsNumberInputContextProvider} from "./qds-number-input-context"
 
 export interface NumberInputRootProps
-  extends CoreNumberInputRootProps,
-    QdsReactInputApiProps {}
+  extends CoreNumberInputRootProps, QdsReactInputApiProps {}
 
 export function NumberInputRoot({
   endIcon,

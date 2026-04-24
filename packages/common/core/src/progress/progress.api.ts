@@ -12,10 +12,10 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import {domIds} from "./internal"
+import {progressAnatomy} from "./progress.anatomy"
 import type {
   ProgressApi,
   ProgressBarBindings,
-  ProgressCommonBindings,
   ProgressErrorTextBindings,
   ProgressHintBindings,
   ProgressLabelBindings,
@@ -29,16 +29,13 @@ import type {
   ProgressValueTextBindings,
 } from "./progress.types"
 
+const parts = progressAnatomy.parts
+
 export function createProgressApi(
   store: Machine<ProgressSchema>,
   normalize: PropNormalizer,
 ): ProgressApi {
   const {computed, context, prop, scope, send} = store
-
-  const commonBindings: ProgressCommonBindings = {
-    "data-scope": "progress",
-    dir: prop("dir"),
-  }
 
   const value = context.get("value")
   const min = prop("min")
@@ -60,13 +57,13 @@ export function createProgressApi(
   function getRootBindings(): ProgressRootBindings {
     const value = context.get("value")
     return normalize.element({
-      ...commonBindings,
+      ...parts.root,
       "data-disabled": booleanDataAttr(prop("disabled")),
       "data-invalid": booleanDataAttr(prop("invalid")),
       "data-max": max,
-      "data-part": "root",
       "data-state": state,
       "data-value": value ?? undefined,
+      dir: prop("dir"),
       style: {
         "--percent": `${computed("valuePercent")}%`,
       },
@@ -76,7 +73,7 @@ export function createProgressApi(
   function getTrackBindings(): Omit<ProgressTrackBindings, "id"> {
     const ariaLabelledby = domIds.label(scope)
     return {
-      ...commonBindings,
+      ...parts.track,
       "aria-describedby": getAriaDescribedby(),
       "aria-label":
         typeof value === "number"
@@ -89,7 +86,6 @@ export function createProgressApi(
       "aria-valuemin": min,
       "aria-valuenow": value ?? undefined,
       "data-disabled": booleanDataAttr(prop("disabled")),
-      "data-part": "track",
       "data-state": state,
       role: "progressbar",
     }
@@ -107,11 +103,10 @@ export function createProgressApi(
     // group: bindings
     getBarBindings(): ProgressBarBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.bar,
         "data-disabled": booleanDataAttr(prop("disabled")),
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
-        "data-part": "bar",
         "data-state": state,
         style: {
           "--percent": `${computed("valuePercent")}%`,
@@ -123,9 +118,8 @@ export function createProgressApi(
     ): ProgressErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
         hidden: !prop("invalid"),
         id: domIds.errorText(scope),
       })
@@ -133,8 +127,7 @@ export function createProgressApi(
     getHintBindings(props: IdRegistrationProps): ProgressHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
-        ...commonBindings,
-        "data-part": "hint",
+        ...parts.hint,
         hidden: !!prop("invalid"),
         id: domIds.hint(scope),
       })
@@ -143,18 +136,16 @@ export function createProgressApi(
       scope.ids.register("label", props)
 
       return normalize.element({
-        ...commonBindings,
-        "data-part": "label",
+        ...parts.label,
         id: domIds.label(scope),
       })
     },
     getRingBarBindings(): ProgressRingBarBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.circleBar,
         "data-disabled": booleanDataAttr(prop("disabled")),
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
-        "data-part": "circle-bar",
         "data-state": state,
         style: {
           "--percent": `${computed("valuePercent")}%`,
@@ -168,7 +159,7 @@ export function createProgressApi(
       scope.ids.register("progress", props)
       return normalize.element({
         ...getTrackBindings(),
-        "data-part": "circle",
+        ...parts.circle,
         id: domIds.progress(scope),
       })
     },
@@ -177,9 +168,8 @@ export function createProgressApi(
     },
     getRingTrackBindings(): ProgressRingTrackBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.circleTrack,
         "data-disabled": booleanDataAttr(prop("disabled")),
-        "data-part": "circle-track",
         "data-state": state,
       })
     },
@@ -190,10 +180,9 @@ export function createProgressApi(
     },
     getValueTextBindings(): ProgressValueTextBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.valueText,
         "aria-live": "polite",
         "data-invalid": booleanDataAttr(prop("invalid")),
-        "data-part": "value-text",
       })
     },
   }

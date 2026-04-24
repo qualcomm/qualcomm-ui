@@ -50,6 +50,7 @@ export function Tag({
   endIcon,
   onDismiss,
   radius,
+  shape,
   size,
   startIcon,
   variant,
@@ -58,7 +59,7 @@ export function Tag({
   const [selected, setSelected] = useState<boolean>(false)
 
   const qdsApi = createQdsTagApi(
-    {disabled, emphasis, radius, selected, size, variant},
+    {disabled, emphasis, radius, selected, shape, size, variant},
     normalizeProps,
   )
 
@@ -80,7 +81,7 @@ export function Tag({
       {startIcon ? (
         <IconOrNode icon={startIcon} {...qdsApi.getStartIconBindings()} />
       ) : null}
-      {children}
+      <span>{children}</span>
       {variant === "dismissable" ? (
         <button {...qdsApi.getDismissButtonBindings()} onClick={onDismiss}>
           <IconOrNode icon={X} {...qdsApi.getEndIconBindings()} />

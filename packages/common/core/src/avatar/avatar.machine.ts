@@ -38,9 +38,7 @@ export const avatarMachine: MachineConfig<AvatarSchema> =
             const removed = removedNodes.find(
               (node) =>
                 node.nodeType === Node.ELEMENT_NODE &&
-                (node as Element).matches(
-                  "[data-scope=avatar][data-part=image]",
-                ),
+                (node as Element).matches("[data-avatar-part=image]"),
             )
             if (removed) {
               send({type: "IMG.UNMOUNT"})

@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "build:prod": "./scripts/build-prod.sh",
-    "build": "run-s build:typedoc generate-llms-txt build:web",
+    "build": "run-s build:typedoc build:web",
     "build:web": "run-s build:angular copy-build build:site",
     "build:angular": "ng build",
     "build:site": "react-router build",
@@ -28,10 +28,7 @@
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "generate-page-map": "qui-mdx-vite generate-page-map -o ./scripts/temp/site-data.json",
     "build-demo-html": "tsx scripts/build-demo-html.ts",
-    "generate-llms-txt": "qui-mdx-vite generate-llms-txt --clean --output-mode aggregated -o public/llms-full.txt --name 'QUI Angular Documentation'",
-    "generate-knowledge": "qui-mdx-vite generate-llms-txt --clean --output-mode per-page",
-    "upload-knowledge": "qui-mdx-vite upload-knowledge",
-    "update-knowledge": "run-s generate-knowledge upload-knowledge"
+    "upload-knowledge": "qui-mdx-vite upload-knowledge"
   },
   "dependencies": {
     "@angular/animations": "catalog:",
@@ -85,8 +82,8 @@
     "isbot": "^4.1.0",
     "jotai": "^2.7.1",
     "lodash-es": "catalog:",
-    "lucide-angular": "0.525.0",
-    "lucide-react": "0.525.0",
+    "lucide-angular": "0.569.0",
+    "lucide-react": "0.569.0",
     "morgan": "^1.10.0",
     "playwright": "1.56.1",
     "react": "catalog:",
@@ -106,7 +103,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "catalog:",
     "@angular/cli": "catalog:",
     "@angular/compiler-cli": "catalog:",
     "@commander-js/extra-typings": "^14.0.0",
@@ -116,14 +112,14 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@react-router/dev": "catalog:",
     "@shikijs/rehype": "^3.13.0",
-    "@tailwindcss/vite": "^4.1.11",
+    "@tailwindcss/vite": "^4.2.2",
     "@types/lodash-es": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "autoprefixer": "^10.4.21",
     "chalk": "^5.6.2",
-    "chokidar": "^4.0.3",
-    "esbuild": "^0.25.8",
+    "chokidar": "^5.0.0",
+    "esbuild": "catalog:",
     "execa": "^9.6.0",
     "glob": "catalog:",
     "hast-util-to-text": "^4.0.2",
@@ -142,11 +138,11 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",
-    "tsx": "^4.20.6",
+    "tsx": "catalog:",
     "typescript": "catalog:",
     "unified": "^11.0.5",
-    "vite": "npm:rolldown-vite@7.2.10",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite": "catalog:",
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "engines": {
     "node": ">=20"

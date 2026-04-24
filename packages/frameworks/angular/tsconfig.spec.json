@@ -4,21 +4,20 @@
     "tsBuildInfoFile": "dist/tsbuildinfo",
     "composite": true,
     "baseUrl": "./",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "emitDeclarationOnly": false,
     "strictPropertyInitialization": false,
-    "moduleResolution": "Bundler",
-    "types": [
-      "vitest",
-      "@vitest/browser/matchers",
-      "@testing-library/angular"
-    ],
-    "target": "ES2023",
+    "moduleResolution": "bundler",
     "paths": {
       "~test-utils": ["./test/index.ts"],
       // this is only for dev intellisense and test compilation
       "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
-      "@qualcomm-ui/angular-core": ["../angular-core/src"],
-      "@qualcomm-ui/angular-core/*": ["../angular-core/src/*"]
+      "@qualcomm-ui/angular-core/*": ["../angular-core/src/*"],
+      "@qualcomm-ui/core/*": ["../../common/core/dist/*"],
+      "@qualcomm-ui/dom/*": ["../../common/core/dist/*"],
+      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/dist/*"],
+      "@qualcomm-ui/utils/*": ["../../common/utils/dist/*"]
     }
   },
   "include": [
@@ -27,7 +26,22 @@
   ],
   "references": [
     {
+      "path": "../angular-core/tsconfig.angular-lib.json"
+    },
+    {
       "path": "./tsconfig.angular-lib.json"
+    },
+    {
+      "path": "./tsconfig.figma.json"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
     }
   ]
 }

@@ -10,8 +10,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsTextAreaContext} from "./qds-text-area-context"
 
 export interface TextAreaInputProps
-  extends ComponentPropsWithRef<"textarea">,
-    IdProp {}
+  extends ComponentPropsWithRef<"textarea">, IdProp {}
 
 /**
  * The text area element. Renders a `<textarea>` element.

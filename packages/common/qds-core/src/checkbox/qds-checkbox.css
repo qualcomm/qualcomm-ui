@@ -19,8 +19,8 @@
     user-select: none;
   }
 
-  [data-part="hint"],
-  [data-part="error-text"] {
+  [data-checkbox-part="hint"],
+  [data-checkbox-part="error-text"] {
     grid-column: 1 / -1;
     width: fit-content;
   }
@@ -119,7 +119,7 @@
     display: none;
   }
 
-  [data-part="indicator-icon"] {
+  [data-checkmark-part="indicator-icon"] {
     vertical-align: middle;
   }
 }

@@ -2,15 +2,15 @@ import {Component} from "@angular/core"
 
 import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {useCheckboxGroup} from "@qualcomm-ui/angular-core/checkbox"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
-  imports: [MenuModule, PortalComponent],
+  imports: [MenuModule, PortalDirective],
   selector: "menu-checkbox-state-demo",
   template: `
     <q-menu>
       <button emphasis="primary" q-menu-button variant="fill">Show Menu</button>
-      <q-portal>
+      <ng-container *qPortal>
         <div q-menu-positioner>
           <div q-menu-content>
             <!-- preview -->
@@ -31,7 +31,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
             <!-- preview -->
           </div>
         </div>
-      </q-portal>
+      </ng-container>
     </q-menu>
   `,
 })

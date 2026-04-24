@@ -4,17 +4,14 @@
 import {NgModule} from "@angular/core"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
-import {
-  EndIconDirective,
-  IconDirective,
-  StartIconDirective,
-} from "@qualcomm-ui/angular/icon"
+import {IconDirective, StartIconDirective} from "@qualcomm-ui/angular/icon"
 import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 
 import {MenuButtonComponent} from "./menu-button.component"
 import {MenuCheckboxItemDirective} from "./menu-checkbox-item.directive"
 import {MenuContentDirective} from "./menu-content.directive"
 import {MenuContextTriggerDirective} from "./menu-context-trigger.directive"
+import {MenuIconButtonComponent} from "./menu-icon-button.component"
 import {MenuItemCommandDirective} from "./menu-item-command.directive"
 import {MenuItemGroupLabelDirective} from "./menu-item-group-label.directive"
 import {MenuItemGroupDirective} from "./menu-item-group.directive"
@@ -49,6 +46,7 @@ import {MenuComponent} from "./menu.component"
     MenuItemGroupLabelDirective,
     MenuItemIndicatorComponent,
     MenuButtonComponent,
+    MenuIconButtonComponent,
     MenuCheckboxItemDirective,
     MenuRadioItemGroupDirective,
     MenuItemLabelDirective,
@@ -70,16 +68,11 @@ import {MenuComponent} from "./menu.component"
     MenuItemGroupLabelDirective,
     MenuItemIndicatorComponent,
     MenuButtonComponent,
+    MenuIconButtonComponent,
     MenuCheckboxItemDirective,
     MenuRadioItemGroupDirective,
     MenuItemLabelDirective,
   ],
-  imports: [
-    QBindDirective,
-    IconDirective,
-    ButtonModule,
-    StartIconDirective,
-    EndIconDirective,
-  ],
+  imports: [QBindDirective, IconDirective, ButtonModule, StartIconDirective],
 })
 export class MenuModule {}

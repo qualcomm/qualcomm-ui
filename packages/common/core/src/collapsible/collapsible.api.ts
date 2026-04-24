@@ -7,9 +7,9 @@
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {collapsibleAnatomy} from "./collapsible.anatomy"
 import type {
   CollapsibleApi,
-  CollapsibleCommonBindings,
   CollapsibleContentBindings,
   CollapsibleRootBindings,
   CollapsibleSchema,
@@ -17,16 +17,13 @@ import type {
 } from "./collapsible.types"
 import {domIds} from "./internal"
 
+const parts = collapsibleAnatomy.parts
+
 export function createCollapsibleApi(
   machine: Machine<CollapsibleSchema>,
   normalize: PropNormalizer,
 ): CollapsibleApi {
   const {context, prop, scope, send, state} = machine
-
-  const commonBindings: CollapsibleCommonBindings = {
-    "data-scope": "collapsible",
-    dir: prop("dir") || "ltr",
-  }
 
   const visible = state.matches("open") || state.matches("closing")
   const open = state.matches("open")
@@ -53,10 +50,9 @@ export function createCollapsibleApi(
       scope.ids.register("content", props)
       const skip = !context.get("initial") && open
       return normalize.element({
-        ...commonBindings,
+        ...parts.content,
         "data-collapsible": booleanDataAttr(true),
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "content",
         "data-ssr": booleanDataAttr(context.get("ssr")),
         "data-state": skip ? undefined : open ? "open" : "closed",
         hidden: !visible,
@@ -69,19 +65,18 @@ export function createCollapsibleApi(
     },
     getRootBindings(): CollapsibleRootBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "root",
+        ...parts.root,
         "data-state": open ? "open" : "closed",
+        dir: prop("dir") || "ltr",
       })
     },
     getTriggerBindings(props): CollapsibleTriggerBindings {
       scope.ids.register("trigger", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.trigger,
         "aria-controls": domIds.content(scope),
         "aria-expanded": booleanAriaAttr(visible),
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "trigger",
         "data-state": open ? "open" : "closed",
         id: props.id,
         onClick(event) {

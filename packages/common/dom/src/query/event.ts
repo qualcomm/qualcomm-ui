@@ -216,9 +216,7 @@ export function getEventPoint(
 }
 
 interface DOMEventMap
-  extends DocumentEventMap,
-    WindowEventMap,
-    HTMLElementEventMap {}
+  extends DocumentEventMap, WindowEventMap, HTMLElementEventMap {}
 
 export const addDomEvent = <K extends keyof DOMEventMap>(
   target: MaybeFn<EventTarget | null>,

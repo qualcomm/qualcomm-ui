@@ -24,14 +24,14 @@ export function AppContent({
   className,
   ...props
 }: AppContentProps): ReactElement {
-  const {hideSideNav, pageExport, showToc} = useMdxDocsLayoutContext()
+  const {hideSideNav, showToc} = useMdxDocsLayoutContext()
 
   return (
     <PolymorphicElement
       as="div"
       className={clsx("qui-docs__app-content", className)}
       data-hide-side-nav={booleanDataAttr(hideSideNav)}
-      data-hide-toc={booleanDataAttr(!showToc && !pageExport)}
+      data-hide-toc={booleanDataAttr(!showToc)}
       {...props}
     >
       {children}

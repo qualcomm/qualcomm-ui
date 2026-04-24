@@ -7,8 +7,10 @@ import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 import {QdsDemo} from "./qds-demo"
 
-interface ComponentExplorerProps
-  extends Omit<ComponentExplorerBaseProps, "children"> {
+interface ComponentExplorerProps extends Omit<
+  ComponentExplorerBaseProps,
+  "children"
+> {
   name: string
 }
 
@@ -19,9 +21,12 @@ export function ComponentExplorer({name, ...props}: ComponentExplorerProps) {
 
   return (
     <ComponentExplorerBase {...props}>
-      <div data-brand={brand || "qualcomm"} data-theme={scheme}>
-        <QdsDemo hideDemoControls name={name} />
-      </div>
+      <QdsDemo
+        data-brand={brand || "qualcomm"}
+        data-theme={scheme}
+        hideDemoControls
+        name={name}
+      />
     </ComponentExplorerBase>
   )
 }

@@ -7,8 +7,7 @@ import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface PasswordInputInputProps
-  extends ComponentPropsWithRef<"input"> {}
+export interface PasswordInputInputProps extends ComponentPropsWithRef<"input"> {}
 
 export function PasswordInputInput({
   id,

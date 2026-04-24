@@ -1,16 +1,16 @@
 import {Component} from "@angular/core"
 
 import {MenuModule} from "@qualcomm-ui/angular/menu"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
-  imports: [MenuModule, PortalComponent],
+  imports: [MenuModule, PortalDirective],
   selector: "menu-nested-demo",
   template: `
     <!-- preview -->
     <q-menu>
       <button emphasis="primary" q-menu-button variant="fill">Show Menu</button>
-      <q-portal>
+      <ng-container *qPortal>
         <div q-menu-positioner>
           <div q-menu-content>
             <button q-menu-item value="new-text-file">New Text File</button>
@@ -20,7 +20,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
                 Open Recents
               </button>
 
-              <q-portal>
+              <ng-container *qPortal>
                 <div q-menu-positioner>
                   <div q-menu-content>
                     <button q-menu-item value="file-1">File 1</button>
@@ -28,11 +28,11 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
                     <button q-menu-item value="file-3">File 3</button>
                   </div>
                 </div>
-              </q-portal>
+              </ng-container>
             </q-menu>
           </div>
         </div>
-      </q-portal>
+      </ng-container>
     </q-menu>
     <!-- preview -->
   `,

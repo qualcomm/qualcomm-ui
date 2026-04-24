@@ -9,7 +9,6 @@ import {
   provideQdsButtonContext,
 } from "@qualcomm-ui/angular/button"
 import {
-  END_ICON_CONTEXT_TOKEN,
   type IconTokenContext,
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
@@ -38,17 +37,6 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
         }
       },
     },
-    {
-      provide: END_ICON_CONTEXT_TOKEN,
-      useFactory: (): IconTokenContext => {
-        const button = inject(MenuButtonComponent)
-        return {
-          getBindings: computed(() =>
-            button.buttonService.context().getEndIconBindings(),
-          ),
-        }
-      },
-    },
   ],
   selector: "[q-menu-button]",
   standalone: false,
@@ -58,14 +46,20 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
       <svg q-start-icon [qIcon]="startIcon()!" [size]="size()"></svg>
     }
     <ng-content />
-
-    <ng-content select="[q-end-icon]">
-      <svg q-end-icon qIcon="ChevronDown" [size]="size()"></svg>
-    </ng-content>
+    <svg
+      qIcon="ChevronDown"
+      [q-bind]="indicatorBindings()"
+      [size]="size()"
+    ></svg>
   `,
 })
 export class MenuButtonComponent extends BaseButtonDirective {
   protected qdsMenuContext = useQdsMenuContext()
+
+  readonly indicatorBindings = computed(() =>
+    this.qdsMenuContext().getIndicatorBindings(),
+  )
+
   constructor() {
     super()
     this.trackBindings.extendWith(

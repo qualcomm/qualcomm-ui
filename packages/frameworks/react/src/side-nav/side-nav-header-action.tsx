@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsSideNavApi} from "./qds-side-nav-context"
 
-export interface SideNavHeaderActionProps
-  extends CoreSideNavHeaderActionProps {}
+export interface SideNavHeaderActionProps extends CoreSideNavHeaderActionProps {}
 
 export function SideNavHeaderAction({
   ...props

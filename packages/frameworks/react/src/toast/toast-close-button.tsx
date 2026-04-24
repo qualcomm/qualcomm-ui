@@ -14,8 +14,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsToastContext} from "./qds-toast-context"
 
-export interface ToastCloseButtonProps
-  extends Omit<CoreToastCloseTriggerProps, "children"> {
+export interface ToastCloseButtonProps extends Omit<
+  CoreToastCloseTriggerProps,
+  "children"
+> {
   /**
    * @default X
    */

@@ -13,6 +13,7 @@
   overflow-y: auto;
   padding-top: 16px;
   position: sticky;
+  scrollbar-width: none;
   top: 49px;
 }
 
@@ -29,6 +30,7 @@
   font-size: 13px;
   padding: 4px 0;
   position: relative;
+  --root-indent-left-offset: 13px;
 
   a {
     color: inherit;
@@ -44,7 +46,7 @@
 .qui-toc__link-indent-guide {
   background: var(--color-border-neutral-01);
   height: 100%;
-  left: 12px;
+  left: calc(var(--root-indent-left-offset) * var(--indent-depth, 1));
   position: absolute;
   top: 0;
   width: 1px;

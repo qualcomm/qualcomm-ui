@@ -16,9 +16,23 @@
   overflow-x: auto;
   position: relative;
 
+  &[data-function-table] {
+    border: none;
+    border-right: solid 1px var(--color-border-neutral-01);
+    overflow-x: clip;
+
+    tr.qui-table__row[data-sub-row] {
+      background: color-mix(
+        var(--color-background-neutral-00),
+        var(--color-background-neutral-01)
+      );
+    }
+  }
+
   table {
     border-collapse: collapse;
     border-color: inherit;
+    position: relative;
   }
 
   * {
@@ -40,6 +54,10 @@
     &:hover {
       color: var(--color-interactive-text-link-default-hover);
     }
+  }
+
+  .qui-table__root[data-size] {
+    --cell-min-height: unset;
   }
 
   table {
@@ -85,7 +103,8 @@
         background: var(--color-background-neutral-01);
       }
     }
-    th {
+    th,
+    th.qui-table__header-cell {
       font: var(--font-static-heading-xxs-bold);
       padding: 12px 20px 12px 12px;
       text-align: start;
@@ -103,6 +122,13 @@
 
 pre.qui-docs-code {
   margin: 0;
+}
+
+.doc-function__signature {
+  pre.shiki-code {
+    background: var(--qui-docs-code-background);
+    padding: 8px 12px;
+  }
 }
 
 .typedoc-props__table-wrapper {
@@ -174,6 +200,7 @@ pre.qui-docs-code {
   font: var(--font-static-code-sm-bold);
   justify-content: flex-start;
   padding: 2px 6px;
+  position: relative;
 
   .qui-link__root {
     font: var(--font-static-code-sm-bold);
@@ -204,14 +231,9 @@ pre.qui-docs-code {
 .doc-props-table__name-cell {
   border: 0 solid;
   box-sizing: border-box;
+  height: 100%;
   line-height: 1.5;
   position: relative;
-}
-
-.doc-props-table__row-anchor {
-  position: absolute;
-  /* We hack the scroll offset to account for the sticky header */
-  top: calc(0px - var(--qui-header-height));
 }
 
 .doc-props-item__description {
@@ -225,6 +247,10 @@ pre.qui-docs-code {
   color: var(--color-text-neutral-primary);
   font: var(--font-static-body-sm-default);
   min-width: 250px;
+
+  &[data-function-param] {
+    padding-left: 8px;
+  }
 
   a {
     cursor: pointer;
@@ -518,6 +544,152 @@ pre.qui-docs-code {
   margin-top: var(--qui-mdx-margin-default);
 }
 
+.doc-function__root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  &:has(.doc-function__description) {
+    padding-top: 16px;
+  }
+
+  .docs-table__wrapper {
+    .typedoc-props__table-wrapper {
+      margin-top: 0;
+    }
+  }
+}
+
+.doc-function__description {
+  &.doc-props__top-level-jsdoc-comment {
+    margin-top: 0;
+  }
+}
+
+.doc-function__params {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.doc-function__param {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.doc-function__param-header {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.doc-function__param-name {
+  background: var(--qui-docs-code-background);
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-code-sm-bold);
+  padding: 2px 6px;
+}
+
+.doc-function__param-type {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-code-sm-default);
+}
+
+.doc-function__optional-badge {
+  border: solid 1px var(--color-border-neutral-01);
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+  padding: 1px 6px;
+}
+
+.doc-function__param-separator {
+  color: var(--color-text-neutral-tertiary);
+  font: var(--font-static-code-sm-default);
+}
+
+.doc-function__param-default {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-code-sm-default);
+}
+
+.doc-function__param-desc {
+  padding-left: 16px;
+}
+
+.doc-function__nested-row {
+  td:first-child {
+    padding-left: 32px;
+  }
+  td {
+    background: var(--color-background-neutral-01);
+  }
+}
+
+.doc-function__nested-list-item {
+  border-left: solid 2px var(--color-border-neutral-01);
+  margin-left: 16px;
+  padding-left: 16px;
+}
+
+.doc-function__returns {
+  align-items: baseline;
+  border-top: solid 1px var(--color-border-neutral-01);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  pre.shiki-code {
+    padding: 4px 6px;
+  }
+}
+
+.docs-table__wrapper {
+  .doc-function__returns {
+    padding: 8px 16px;
+  }
+}
+
+.doc-function__returns-label {
+  font: var(--font-static-body-sm-bold);
+}
+
+.doc-function__returns-type {
+  font: var(--font-static-code-sm-default);
+}
+
+.doc-function__returns-desc {
+  &.doc-props-description__root {
+    min-width: 0;
+  }
+}
+
+.doc-function__signature {
+  .mdx-spoiler__root {
+    border: solid 1px transparent;
+    margin-top: 0;
+  }
+  .mdx-spoiler__trigger {
+    font: var(--font-static-body-sm-bold);
+    gap: 8px;
+    height: 32px;
+  }
+  .mdx-spoiler__content-body {
+    padding: 8px 0 0 0;
+  }
+}
+
+.doc-function__examples {
+  margin-top: 0;
+}
+
 .doc-props-description__returns-tag-root {
   display: flex;
   flex-direction: column;
@@ -530,4 +702,9 @@ pre.qui-docs-code {
 
 .doc-props-description__returns-tag-content {
   padding-left: 16px;
+}
+
+.doc-props-table__row-anchor {
+  scroll-margin-top: calc(var(--qui-header-height) + 6px);
+  visibility: hidden;
 }

@@ -1,3 +1,4 @@
+export * from "./avatar.anatomy"
 export * from "./avatar.api"
 export * from "./avatar.machine"
 export * from "./avatar.props"

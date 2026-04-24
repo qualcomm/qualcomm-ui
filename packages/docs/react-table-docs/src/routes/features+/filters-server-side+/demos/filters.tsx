@@ -124,6 +124,7 @@ export function MinMaxNumberFilter({
       {filterLabel ? <InputLabel>{filterLabel}</InputLabel> : null}
       <div className="flex w-32 gap-2">
         <NumberInput
+          aria-label={filterLabel ? `${filterLabel} min range` : "Min range"}
           controlProps={{hidden: true}}
           inputProps={{
             "aria-label": filterLabel
@@ -144,6 +145,7 @@ export function MinMaxNumberFilter({
           value={min ? `${min}` : ""}
         />
         <NumberInput
+          aria-label={filterLabel ? `${filterLabel} max range` : "Max range"}
           controlProps={{hidden: true}}
           inputProps={{
             "aria-label": filterLabel

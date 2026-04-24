@@ -11,15 +11,14 @@ import {Icon} from "@qualcomm-ui/react/icon"
 import {TypeDocProps, type TypeDocPropsProps} from "./type-doc-props"
 import type {ColumnNames} from "./use-typedoc-context"
 
-export interface TypeDocAttributesProps
-  extends Omit<
-    TypeDocPropsProps,
-    | "columnNames"
-    | "partial"
-    | "hideDefaultColumn"
-    | "showComponentJsdoc"
-    | "sortRequiredPropsFirst"
-  > {}
+export interface TypeDocAttributesProps extends Omit<
+  TypeDocPropsProps,
+  | "columnNames"
+  | "partial"
+  | "hideDefaultColumn"
+  | "showComponentJsdoc"
+  | "sortRequiredPropsFirst"
+> {}
 
 const cols: ColumnNames = {
   description: "Description",

@@ -15,8 +15,7 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import type {Optional} from "@qualcomm-ui/utils/guard"
 
 export interface UsePresenceProps
-  extends Optional<PresenceApiProps, "present">,
-    RenderStrategyApiProps {
+  extends Optional<PresenceApiProps, "present">, RenderStrategyApiProps {
   /**
    * Whether to allow the initial presence animation.
    *

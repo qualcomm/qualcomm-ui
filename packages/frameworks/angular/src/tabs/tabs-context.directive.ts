@@ -34,8 +34,8 @@ export class TabsContextDirective extends ApiContextDirective<TabsApi> {
    */
   static ngTemplateContextGuard(
     dir: TabsContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: TabsApi} {
+    _ctx: unknown,
+  ): _ctx is {$implicit: TabsApi} {
     return true
   }
 }

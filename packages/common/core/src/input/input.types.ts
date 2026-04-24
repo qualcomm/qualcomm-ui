@@ -1,74 +1,72 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
 import type {JSX} from "@qualcomm-ui/utils/machine"
 
-export interface InputRootBindings {
+import type {inputAnatomy} from "./input.anatomy"
+
+type PartName = AnatomyPartName<typeof inputAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"input", P> {}
+
+export interface InputRootBindings extends Part<"root"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "root"
 }
 
-export interface InputLabelBindings {
+export interface InputLabelBindings extends Part<"label"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "label"
   htmlFor: string
   id: string
 }
 
-export interface InputCounterBindings {
+export interface InputCounterBindings extends Part<"counter"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-max": number | undefined
-  "data-part": "counter"
   id: string
 }
 
-export interface InputErrorTextBindings {
+export interface InputErrorTextBindings extends Part<"errorText"> {
   "aria-live": "polite"
-  "data-part": "error-text"
   hidden: boolean
   id: string
 }
 
-export interface InputHintBindings {
+export interface InputHintBindings extends Part<"hint"> {
   "data-disabled": BooleanDataAttr
-  "data-part": "hint"
   hidden: boolean
   id: string
 }
 
-export interface InputInputGroupBindings {
+export interface InputInputGroupBindings extends Part<"inputGroup"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "input-group"
   "data-readonly": BooleanDataAttr
   onClick: JSX.MouseEventHandler<HTMLElement>
 }
 
-export interface InputErrorIndicatorBindings {
+export interface InputErrorIndicatorBindings extends Part<"errorIndicator"> {
   "aria-label": "Error"
-  "data-part": "error-indicator"
   hidden: boolean
 }
 
-export interface InputInputBindings {
+export interface InputInputBindings extends Part<"input"> {
   "aria-describedby": string | undefined
   "aria-invalid": BooleanAriaAttr
   "aria-labelledby": string | undefined
   "data-empty": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "input"
   defaultValue: string
   disabled: boolean | undefined
   form?: string
@@ -80,10 +78,10 @@ export interface InputInputBindings {
   required?: boolean
 }
 
-export interface InputClearTriggerBindings {
+export interface InputClearTriggerBindings extends Part<"clearTrigger"> {
   "aria-label": "Clear input"
   "data-disabled": BooleanDataAttr
-  "data-part": "clear-trigger"
   disabled: boolean | undefined
   onClick: JSX.MouseEventHandler
+  type: "button"
 }

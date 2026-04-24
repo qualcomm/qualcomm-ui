@@ -138,7 +138,8 @@ export const remarkSteps: Plugin<[], Root> = () => {
           child.data = {
             ...child.data,
             hProperties: {
-              ...(child.data?.hProperties as Record<string, unknown>),
+              ...(child.data as {hProperties?: Record<string, unknown>})
+                ?.hProperties,
               "data-step": "",
             },
           }

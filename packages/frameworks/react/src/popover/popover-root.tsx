@@ -26,9 +26,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsPopoverContextProvider} from "./qds-popover-context"
 
 export interface PopoverRootProps
-  extends PopoverApiProps,
-    PresenceApiProps,
-    QdsPopoverApiProps {
+  extends PopoverApiProps, PresenceApiProps, QdsPopoverApiProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

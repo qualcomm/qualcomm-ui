@@ -64,8 +64,7 @@ export function CoreDialogRoot(props: CoreDialogRootProps): ReactElement {
 }
 
 export interface CoreDialogContentProps
-  extends IdProp,
-    ElementRenderProp<"section"> {
+  extends IdProp, ElementRenderProp<"section"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -131,8 +130,7 @@ export function CoreDialogCloseTrigger({
 }
 
 export interface CoreDialogBackdropProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -207,8 +205,7 @@ export function CoreDialogFooter(props: CoreDialogFooterProps): ReactElement {
 }
 
 export interface CoreDialogHeadingProps
-  extends IdProp,
-    ElementRenderProp<"h2"> {
+  extends IdProp, ElementRenderProp<"h2"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -238,8 +235,7 @@ export function CoreDialogHeading({
 }
 
 export interface CoreDialogPositionerProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -297,8 +293,7 @@ export function CoreDialogTrigger({
 }
 
 export interface CoreDialogDescriptionProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

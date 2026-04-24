@@ -12,8 +12,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context"
 
-export interface TableColumnSortActionProps
-  extends Omit<ElementRenderProp<"button">, "children"> {
+export interface TableColumnSortActionProps extends Omit<
+  ElementRenderProp<"button">,
+  "children"
+> {
   header: Header<any>
 }
 

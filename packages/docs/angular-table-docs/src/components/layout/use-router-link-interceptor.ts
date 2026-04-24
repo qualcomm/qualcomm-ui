@@ -12,7 +12,7 @@ function getUrl(element: HTMLAnchorElement) {
 }
 
 const querySelectors: string[] = [
-  "a[data-scope='menu']",
+  "a[data-menu-part]",
   "a.qui-breadcrumbs__item-trigger",
 ]
 

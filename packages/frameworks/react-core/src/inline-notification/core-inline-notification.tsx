@@ -25,7 +25,8 @@ import {
 } from "./inline-notification-context"
 
 export interface CoreInlineNotificationRootProps
-  extends InlineNotificationApiProps,
+  extends
+    InlineNotificationApiProps,
     IdProp,
     Omit<ElementRenderProp<"div">, "dir" | "role"> {
   /**
@@ -60,8 +61,7 @@ export function CoreInlineNotificationRoot({
   )
 }
 
-export interface CoreInlineNotificationLabelProps
-  extends ElementRenderProp<"div"> {
+export interface CoreInlineNotificationLabelProps extends ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -91,8 +91,7 @@ export function CoreInlineNotificationLabel({
 }
 
 export interface CoreInlineNotificationDescriptionProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

@@ -17,7 +17,7 @@ import {
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {AnchorHeader, CodeTabs, ShikiPre} from "./internal"
+import {AnchorHeader, CodeTabs, PageHeader, ShikiPre} from "./internal"
 
 interface Props {
   /**
@@ -164,6 +164,7 @@ export function MdxProvider({children, components}: Props): ReactNode {
           p: ({className, ...props}) => (
             <p className={clsx(className, "mdx")} {...props} />
           ),
+          PageHeader,
           pre: ({children, ...props}) => {
             return <ShikiPre {...props}>{children}</ShikiPre>
           },

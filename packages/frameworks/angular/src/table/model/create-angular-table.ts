@@ -16,8 +16,7 @@ import {lazyInit} from "./lazy-signal-initializer"
 import {proxifyTable} from "./proxify-table"
 
 export interface AngularTable<TData extends RowData>
-  extends TableInstance<TData>,
-    Signal<TableInstance<TData>> {}
+  extends TableInstance<TData>, Signal<TableInstance<TData>> {}
 
 export function createAngularTable<TData extends RowData>(
   options: () => TableOptions<TData>,

@@ -10,8 +10,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsRadioContext} from "./qds-radio-context"
 
 export interface RadioHiddenInputProps
-  extends ComponentPropsWithRef<"input">,
-    IdProp {}
+  extends ComponentPropsWithRef<"input">, IdProp {}
 
 export function RadioHiddenInput({
   id,

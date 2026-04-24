@@ -8,11 +8,10 @@ export interface FormattedContent {
   highlight?: boolean
 }
 
-export interface SearchResultFields
-  extends Pick<
-    PageSection,
-    "heading" | "title" | "categories" | "id" | "isDocProp"
-  > {
+export interface SearchResultFields extends Pick<
+  PageSection,
+  "heading" | "title" | "categories" | "id" | "isDocProp"
+> {
   content?: FormattedContent[]
   headingLevel?: number
   href: string

@@ -1,3 +1,4 @@
+export * from "./combobox.anatomy"
 export * from "./combobox.api"
 export * from "./combobox.collection"
 export * from "./combobox.machine"

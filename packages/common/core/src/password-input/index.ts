@@ -1,3 +1,4 @@
+export * from "./password-input.anatomy"
 export * from "./password-input.api"
 export * from "./password-input.machine"
 export * from "./password-input.props"

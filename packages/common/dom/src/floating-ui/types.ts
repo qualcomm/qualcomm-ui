@@ -96,6 +96,13 @@ export interface PositioningOptions {
   arrowPadding?: number | undefined
 
   /**
+   * CSS selector used to locate the arrow element within the floating element.
+   * Components override this with their own anatomy-namespaced selector
+   * (e.g. `[data-menu-part=arrow]`).
+   */
+  arrowSelector?: string | undefined
+
+  /**
    * The overflow boundary of the reference element
    */
   boundary?: (() => PositioningBoundary) | undefined

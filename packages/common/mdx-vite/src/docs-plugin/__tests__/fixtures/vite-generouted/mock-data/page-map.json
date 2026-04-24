@@ -3,6 +3,11 @@
     "categories": [
       "Introduction"
     ],
+    "data": {
+      "hideBreadcrumbs": true,
+      "id": "_index",
+      "title": "Introduction"
+    },
     "hideBreadcrumbs": true,
     "id": "/pages/index.mdx",
     "pathname": "/",
@@ -14,6 +19,9 @@
       "Test",
       "B Test"
     ],
+    "data": {
+      "title": "B Test"
+    },
     "id": "/pages/test/b/index.mdx",
     "pathname": "/test/b",
     "pathSegments": [
@@ -27,6 +35,9 @@
       "Test",
       "A Test"
     ],
+    "data": {
+      "title": "A Test"
+    },
     "id": "/pages/test/a/index.mdx",
     "pathname": "/test/a",
     "pathSegments": [
@@ -40,6 +51,9 @@
       "Getting Started",
       "Sign Up"
     ],
+    "data": {
+      "title": "Sign Up"
+    },
     "id": "/pages/getting-started/sign-up.mdx",
     "pathname": "/getting-started/sign-up",
     "pathSegments": [
@@ -53,6 +67,9 @@
       "Getting Started",
       "Log In"
     ],
+    "data": {
+      "title": "Log In"
+    },
     "id": "/pages/getting-started/log-in.mdx",
     "pathname": "/getting-started/log-in",
     "pathSegments": [
@@ -65,6 +82,9 @@
     "categories": [
       "Getting Started"
     ],
+    "data": {
+      "title": "Getting Started"
+    },
     "id": "/pages/getting-started/index.mdx",
     "pathname": "/getting-started",
     "pathSegments": [
@@ -77,6 +97,9 @@
       "Getting Started",
       "Home"
     ],
+    "data": {
+      "title": "Home"
+    },
     "id": "/pages/getting-started/home.mdx",
     "pathname": "/getting-started/home",
     "pathSegments": [
@@ -90,6 +113,9 @@
       "Getting Started",
       "Dedicated Devices"
     ],
+    "data": {
+      "title": "Dedicated Devices"
+    },
     "id": "/pages/getting-started/dedicated-devices.mdx",
     "pathname": "/getting-started/dedicated-devices",
     "pathSegments": [
@@ -103,6 +129,9 @@
       "Best Practices",
       "Choosing Dependencies"
     ],
+    "data": {
+      "title": "Choosing Dependencies"
+    },
     "id": "/pages/best-practices/choosing-dependencies.mdx",
     "pathname": "/best-practices/choosing-dependencies",
     "pathSegments": [

@@ -10,12 +10,12 @@ import {AvatarModule} from "@qualcomm-ui/angular/avatar"
       <!-- preview -->
       <div q-avatar (stateChanged)="currentStateValid.set($event.state)">
         <img alt="John Doe" q-avatar-image src="/images/avatar-man.png" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       <output>current state: {{ currentStateValid() }}</output>
       <div q-avatar (stateChanged)="currentStateInvalid.set($event.state)">
         <img alt="John Doe" q-avatar-image src="https://example.invalid" />
-        <div q-avatar-content>JD</div>
+        <div q-avatar-content>J</div>
       </div>
       <output>current state: {{ currentStateInvalid() }}</output>
       <!-- preview -->

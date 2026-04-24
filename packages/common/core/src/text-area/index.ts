@@ -1,3 +1,4 @@
+export * from "./text-area.anatomy"
 export * from "./text-area.api"
 export * from "./text-area.machine"
 export * from "./text-area.props"

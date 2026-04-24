@@ -83,6 +83,16 @@ const TOKEN_MAPPINGS: TokenMapping[] = [
     themeKey: "icon-stroke",
   },
   {
+    nameTransform: (name) => name.replace(/^canvas-/, ""),
+    pattern: "canvas-width",
+    themeKey: "canvas",
+  },
+  {
+    ignore: true,
+    pattern: "component-*",
+    themeKey: "component",
+  },
+  {
     ignore: true,
     pattern: "scrim-*",
     themeKey: "scrim",
@@ -96,6 +106,11 @@ const TOKEN_MAPPINGS: TokenMapping[] = [
     ignore: true,
     pattern: "sizing-*",
     themeKey: "sizing",
+  },
+  {
+    ignore: true,
+    pattern: "track-*",
+    themeKey: "track",
   },
   {
     nameTransform: (name) => name.replace("spacing", "qds"),
@@ -115,6 +130,18 @@ const TOKEN_MAPPINGS: TokenMapping[] = [
   {
     pattern: "type-static-body-*",
     themeKey: "text-body",
+  },
+  {
+    pattern: "type-static-code-*",
+    themeKey: "text-code",
+  },
+  {
+    pattern: "type-static-eyebrow-*",
+    themeKey: "text-eyebrow",
+  },
+  {
+    pattern: "type-static-heading-*",
+    themeKey: "text-heading",
   },
 ]
 
@@ -246,7 +273,7 @@ function generateThemeVariables(
   variables: Record<string, TokenMapping>,
 ): string {
   const themeVars: string[] = []
-  const textBodyGroups = new Map<string, string[]>()
+  const textSizeGroups = new Map<string, string[]>()
 
   const bodyToTailwindMap: Record<string, string> = {
     lg: "lg",
@@ -261,39 +288,52 @@ function generateThemeVariables(
     if (
       !mapping.utilities &&
       mapping.themeKey !== "type" &&
-      mapping.themeKey !== "text-body"
+      !mapping.themeKey.startsWith("text-")
     ) {
       const utilityName = extractUtilityName(varName, mapping)
       themeVars.push(
         `  --${mapping.themeKey}-${utilityName}: var(--${varName});`,
       )
-    } else if (mapping.themeKey === "text-body") {
-      const match = varName.match(
-        /^type-static-body-(\w+)-(font-size|line-height)$/,
+    } else if (mapping.themeKey.startsWith("text-")) {
+      const category = mapping.themeKey.slice(5)
+      const regex = new RegExp(
+        `^type-static-${category}-(\\w+)-(font-size|line-height)$`,
       )
+      const match = varName.match(regex)
       if (match) {
         const [, size, prop] = match
-        if (!textBodyGroups.has(size)) {
-          textBodyGroups.set(size, [])
+        const key = `${category}/${size}`
+        if (!textSizeGroups.has(key)) {
+          textSizeGroups.set(key, [])
         }
-        textBodyGroups.get(size)!.push(`${prop}:${varName}`)
+        textSizeGroups.get(key)!.push(`${prop}:${varName}`)
       }
     }
   }
 
-  for (const [size, props] of textBodyGroups) {
-    const tailwindSize = bodyToTailwindMap[size]
-    if (!tailwindSize) {
-      continue
+  for (const [key, props] of textSizeGroups) {
+    const [category, size] = key.split("/")
+
+    let themeVarName: string
+    if (category === "body") {
+      const tailwindSize = bodyToTailwindMap[size]
+      if (!tailwindSize) {
+        continue
+      }
+      themeVarName = tailwindSize
+    } else if (category === "eyebrow" && size === "type") {
+      themeVarName = "eyebrow"
+    } else {
+      themeVarName = `${category}-${size}`
     }
 
     for (const propEntry of props) {
       const [prop, varName] = propEntry.split(":")
       if (prop === "font-size") {
-        themeVars.push(`  --text-${tailwindSize}: var(--${varName});`)
+        themeVars.push(`  --text-${themeVarName}: var(--${varName});`)
       } else if (prop === "line-height") {
         themeVars.push(
-          `  --text-${tailwindSize}--line-height: var(--${varName});`,
+          `  --text-${themeVarName}--line-height: var(--${varName});`,
         )
       }
     }

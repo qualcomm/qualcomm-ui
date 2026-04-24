@@ -37,8 +37,8 @@ export class SideNavBranchTemplateDirective<T extends TreeNode> {
 
   static ngTemplateContextGuard<T extends TreeNode>(
     dir: SideNavBranchTemplateDirective<T>,
-    ctx: unknown,
-  ): ctx is SideNavNodeTemplateContext<T> {
+    _ctx: unknown,
+  ): _ctx is SideNavNodeTemplateContext<T> {
     return true
   }
 }

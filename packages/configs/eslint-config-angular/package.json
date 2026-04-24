@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-angular",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "QUI ESLint config for consistent Angular code formatting",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -33,10 +33,10 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
-    "angular-eslint": "^20.6.0",
+    "angular-eslint": "^21.3.1",
     "eslint": "catalog:",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "typescript-eslint": "catalog:"
   },
   "peerDependencies": {
@@ -46,7 +46,7 @@
     "eslint-plugin-prettier": ">=5.3.1",
     "prettier": ">=3.0.0",
     "typescript": ">=5.5.4",
-    "typescript-eslint": ">=8.31.1"
+    "typescript-eslint": ">=8.58.2"
   },
   "keywords": [
     "eslint",

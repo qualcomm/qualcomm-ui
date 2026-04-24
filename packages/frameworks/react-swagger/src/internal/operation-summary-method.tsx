@@ -28,7 +28,7 @@ const propsMap: Record<string, Partial<ButtonProps>> = {
     emphasis: "primary",
   },
   options: {
-    className: "q-kiwi",
+    className: "q-lime",
     emphasis: "primary",
   },
   patch: {

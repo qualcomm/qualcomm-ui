@@ -4,5 +4,6 @@
 export const menuClasses = {
   button: "qui-menu__button",
   content: "qui-menu__content",
+  indicator: "qui-menu__indicator",
   separator: "qui-menu__separator",
 } as const

@@ -19,7 +19,7 @@ export function GithubChangelogLink(
 ): ReactElement {
   return (
     <Link
-      className="hidden md:inline-flex"
+      className="mb-[-2px] hidden md:inline-flex"
       emphasis="neutral"
       render={<a href={props.href} rel="noreferrer" target="_blank" />}
       size="xs"

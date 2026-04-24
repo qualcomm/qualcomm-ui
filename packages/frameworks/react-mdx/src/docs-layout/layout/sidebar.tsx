@@ -13,7 +13,8 @@ import {
 } from "react"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
-import type {NavItem} from "@qualcomm-ui/mdx-common"
+import type {NavBadge, NavItem} from "@qualcomm-ui/mdx-common"
+import {Badge} from "@qualcomm-ui/react/badge"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
@@ -311,6 +312,13 @@ export function Sidebar({
                 >
                   <SideNav.NodeIndicator />
                   <SideNav.NodeText>{node.title}</SideNav.NodeText>
+                  {node.badges ? (
+                    <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">
+                      {node.badges.map((badge) => (
+                        <SidebarBadge key={badge.id} badge={badge} />
+                      ))}
+                    </SideNav.NodeAccessory>
+                  ) : null}
                 </SideNav.LeafNode>
               )
             }}
@@ -341,4 +349,22 @@ function getExpandedItems(items: NavItem[], pathname: string): string[] {
     }
     return [...acc, ...expandedChildren]
   }, [])
+}
+
+function SidebarBadge({badge}: {badge: NavBadge}): ReactElement | null {
+  if (badge.id === "developerPreview") {
+    return (
+      <Badge emphasis="purple" size="sm" variant="subtle">
+        Dev Preview
+      </Badge>
+    )
+  } else if (badge.id === "since") {
+    return null
+  }
+
+  return (
+    <Badge key={badge.id} size="sm" variant="subtle">
+      {badge.label}
+    </Badge>
+  )
 }

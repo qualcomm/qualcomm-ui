@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr, IdParam} from "@qualcomm-ui/utils/attributes"
 import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
@@ -11,6 +12,12 @@ import type {
   JSX,
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
+
+import type {segmentedControlAnatomy} from "./segmented-control.anatomy"
+
+type PartName = AnatomyPartName<typeof segmentedControlAnatomy>
+
+interface Part<P extends PartName> extends AnatomyPart<"segmentedControl", P> {}
 
 export type SegmentedControlOrientation = "horizontal" | "vertical"
 
@@ -106,12 +113,11 @@ export interface SegmentedControlSchema extends MachineSchema {
   state: "idle"
 }
 
-export interface SegmentedControlGroupBindings extends DirectionProperty {
+export interface SegmentedControlGroupBindings
+  extends DirectionProperty, Part<"group"> {
   "aria-orientation": SegmentedControlOrientation
   "data-disabled": BooleanDataAttr
   "data-orientation": SegmentedControlOrientation
-  "data-part": "group"
-  "data-scope": "segmented-control"
   id: string
 }
 

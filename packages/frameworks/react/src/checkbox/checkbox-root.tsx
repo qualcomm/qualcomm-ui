@@ -28,7 +28,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsCheckboxContextProvider} from "./qds-checkbox-context"
 
 export interface CheckboxRootProps
-  extends IdProp,
+  extends
+    IdProp,
     CheckboxApiProps,
     QdsCheckboxApiProps,
     Omit<ElementRenderProp<"label">, "dir"> {

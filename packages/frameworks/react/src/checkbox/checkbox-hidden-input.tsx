@@ -10,8 +10,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsCheckboxContext} from "./qds-checkbox-context"
 
 export interface CheckboxHiddenInputProps
-  extends IdProp,
-    ComponentPropsWithRef<"input"> {}
+  extends IdProp, ComponentPropsWithRef<"input"> {}
 
 /**
  * Hidden input element used for accessibility and form submissions. Renders an

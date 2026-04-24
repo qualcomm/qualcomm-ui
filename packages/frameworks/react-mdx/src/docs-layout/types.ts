@@ -5,6 +5,10 @@ import type {HTMLAttributes, ReactNode} from "react"
 
 import type {useMDXComponents} from "@mdx-js/react"
 
+import type {
+  QdsBadgeCategoryEmphasis,
+  QdsBadgeSemanticEmphasis,
+} from "@qualcomm-ui/qds-core/badge"
 import type {BreadcrumbsItemProps} from "@qualcomm-ui/react/breadcrumbs"
 import type {
   DemoSettings,
@@ -37,11 +41,10 @@ export interface DocPropsSettings {
 /**
  * @public
  */
-export interface DocsLayoutSettings
-  extends Pick<
-    MdxDocsContextValue,
-    "demoSettings" | "packageManager" | "ssrUserAgent"
-  > {
+export interface DocsLayoutSettings extends Pick<
+  MdxDocsContextValue,
+  "demoSettings" | "packageManager" | "ssrUserAgent"
+> {
   /**
    * Demo state for each route, typically persisted via localStorage or a session
    * cookie (SSR). This preserves the expand/collapse state of each demo on reload.
@@ -118,4 +121,44 @@ export interface DocsLayoutSettings
    * @default 'nearest'
    */
   tocHighlightStrategy?: TocHighlightStrategy
+}
+
+/**
+ * Interface for a badge property in a page's frontmatter. Used internally to
+ * display badges next to the page title.
+ */
+export interface FrontmatterBadge {
+  /**
+   * Badge emphasis.
+   */
+  emphasis?: QdsBadgeSemanticEmphasis | QdsBadgeCategoryEmphasis
+
+  /**
+   * Unique key for the badge.
+   */
+  id: string
+
+  /**
+   * Text rendered inside the badge.
+   */
+  label: string
+
+  /**
+   * Optional HTML title attribute to show on hover.
+   */
+  title?: string
+
+  /**
+   * Optional URL that the badge links to. To link to a local path, start the pathname with `/`. To link to an external URL, start the url with `https://`
+   *
+   * @example
+   * ```js
+   * // local path
+   * /guides/developer-preview
+   *
+   * // external
+   * https://github.com/qualcomm/qualcomm-ui
+   * ```
+   */
+  url?: string
 }

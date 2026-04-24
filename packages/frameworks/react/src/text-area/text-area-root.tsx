@@ -25,7 +25,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsTextAreaContextProvider} from "./qds-text-area-context"
 
 export interface TextAreaRootProps
-  extends TextAreaApiProps,
+  extends
+    TextAreaApiProps,
     QdsTextAreaApiProps,
     Omit<ElementRenderProp<"div">, "dir" | "defaultValue"> {
   /**

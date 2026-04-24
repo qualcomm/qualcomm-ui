@@ -32,6 +32,7 @@ export const popoverMachine: MachineConfig<PopoverSchema> =
         const anchorEl = domEls.anchor(scope) ?? domEls.trigger(scope)
         const getPositionerEl = () => domEls.positioner(scope)
         getPlacement(anchorEl, getPositionerEl, {
+          arrowSelector: "[data-popover-part=arrow]",
           ...prop("positioning"),
           ...event.options,
           defer: true,
@@ -158,6 +159,7 @@ export const popoverMachine: MachineConfig<PopoverSchema> =
         const getAnchorEl = () => domEls.anchor(scope)
         const getPositionerEl = () => domEls.positioner(scope)
         return getPlacement(getAnchorEl, getPositionerEl, {
+          arrowSelector: "[data-popover-part=arrow]",
           ...prop("positioning"),
           defer: true,
           onComplete(data) {

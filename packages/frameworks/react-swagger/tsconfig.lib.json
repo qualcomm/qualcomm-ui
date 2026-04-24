@@ -13,7 +13,13 @@
   "exclude": ["./src/**/*.spec.tsx"],
   "references": [
     {
+      "path": "../react/tsconfig.lib.json"
+    },
+    {
       "path": "../react-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-mdx/tsconfig.lib.json"
     },
     {
       "path": "../../common/core/tsconfig.lib.json"
@@ -22,10 +28,7 @@
       "path": "../../common/qds-core/tsconfig.lib.json"
     },
     {
-      "path": "../react/tsconfig.lib.json"
-    },
-    {
-      "path": "../react-core/tsconfig.lib.json"
+      "path": "../../common/utils/tsconfig.lib.json"
     }
   ]
 }

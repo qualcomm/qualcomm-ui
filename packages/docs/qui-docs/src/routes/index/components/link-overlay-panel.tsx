@@ -8,8 +8,7 @@ import {clsx} from "@qualcomm-ui/utils/clsx"
 
 LinkOverlayPanel.displayName = "LinkOverlayPanel"
 
-export interface LinkOverlayPanelProps
-  extends HTMLAttributes<HTMLAnchorElement> {
+export interface LinkOverlayPanelProps extends HTMLAttributes<HTMLAnchorElement> {
   href: string
   target?: string
 }

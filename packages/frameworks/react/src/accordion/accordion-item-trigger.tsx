@@ -16,8 +16,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface AccordionItemTriggerProps
-  extends IdProp,
-    ElementRenderProp<"button"> {
+  extends IdProp, ElementRenderProp<"button"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

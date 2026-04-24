@@ -4,10 +4,10 @@ import {LogOut, Settings, User} from "lucide-angular"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
-  imports: [AvatarModule, MenuModule, PortalComponent],
+  imports: [AvatarModule, MenuModule, PortalDirective],
   providers: [provideIcons({LogOut, Settings, User})],
   selector: "menu-avatar-demo",
   template: `
@@ -17,7 +17,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
         <div q-avatar-content>JD</div>
         <div q-avatar-status></div>
       </button>
-      <q-portal>
+      <ng-container *qPortal>
         <div q-menu-positioner>
           <div q-menu-content>
             <button q-menu-item value="account">
@@ -34,7 +34,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
             </button>
           </div>
         </div>
-      </q-portal>
+      </ng-container>
     </q-menu>
   `,
 })

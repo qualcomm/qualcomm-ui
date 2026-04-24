@@ -31,9 +31,7 @@ import {
 } from "./accordion-item-trigger"
 
 export interface AccordionItemProps
-  extends AccordionItemApiProps,
-    IdProp,
-    ElementRenderProp<"div"> {
+  extends AccordionItemApiProps, IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    * This is the content body of the item.

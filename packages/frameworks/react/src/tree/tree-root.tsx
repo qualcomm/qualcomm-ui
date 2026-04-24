@@ -15,8 +15,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsTreeContextProvider} from "./qds-tree-context"
 
 export interface TreeRootProps<T extends TreeNode = TreeNode>
-  extends CoreTreeRootProps<T>,
-    QdsTreeApiProps {}
+  extends CoreTreeRootProps<T>, QdsTreeApiProps {}
 
 /**
  * Groups all parts of the tree. Renders a `<div>` element by default.

@@ -4,7 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -12,6 +13,8 @@ import type {
   IdRegistrationProps,
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
+
+import type {avatarAnatomy} from "./avatar.anatomy"
 
 export interface AvatarApiProps extends DirectionProperty {
   onStateChange?: (event: {state: string | null}) => void
@@ -40,31 +43,33 @@ type Actions = ActionSchema<
   "checkImageStatus" | "invokeOnError" | "invokeOnLoad"
 >
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "avatar"
+type PartName = AnatomyPartName<typeof avatarAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"avatar", P> {}
+
+export interface AvatarRootBindings extends Part<"root"> {
+  dir: Direction | undefined
   id: string
 }
 
-export interface AvatarRootBindings extends CommonBindings {
-  "data-part": "root"
-}
-
-export interface AvatarImageBindings extends CommonBindings {
-  "data-part": "image"
+export interface AvatarImageBindings extends Part<"image"> {
   "data-state": "hidden" | "visible"
+  dir: Direction | undefined
   hidden: boolean
+  id: string
   onError: () => void
   onLoad: () => void
 }
 
-export interface AvatarContentBindings extends CommonBindings {
-  "data-part": "content"
+export interface AvatarContentBindings extends Part<"content"> {
   "data-state": "hidden" | "visible"
+  dir: Direction | undefined
   hidden: boolean
+  id: string
 }
 
-export interface AvatarStatusBindings extends CommonBindings {
-  "data-part": "status"
+export interface AvatarStatusBindings extends Part<"status"> {
+  dir: Direction | undefined
+  id: string
 }
 
 export interface AvatarApi {

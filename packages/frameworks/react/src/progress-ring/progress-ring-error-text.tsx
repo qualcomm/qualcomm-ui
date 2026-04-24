@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsProgressRingContext} from "./qds-progress-ring-context"
 
-export interface ProgressRingErrorTextProps
-  extends CoreProgressRingErrorTextProps {}
+export interface ProgressRingErrorTextProps extends CoreProgressRingErrorTextProps {}
 
 /**
  * Error message displayed when the progress ring is in an invalid state. Renders a

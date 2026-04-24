@@ -3,6 +3,10 @@ title: Number Badge
 description: The Number Badge component displays numerical indicators that help users track quantities, updates, or notifications at a glance.
 component: NumberBadge
 aliases: [count badge, counter, pill]
+badges:
+  - id: since
+    label: 1.4.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#140
 ---
 
 import {QdsDemo} from "~components/demo"
@@ -30,33 +34,27 @@ Use the [value](./#value-1) input for auto formatting, or use content projection
 ### Max (Auto Formatting)
 
 ::: terms
-truncate
-overflow indicator
-threshold
+truncate, overflow indicator, threshold
 :::
 
 When using the [value](./#value-1) input with [max](./#max), overflow values are automatically formatted. If value exceeds max, the badge displays "max+" and applies special styling. The default max is 99.
 
 <QdsDemo name="NumberBadgeMaxDemo" />
 
-### Variant
+### Emphasis
 
 ::: terms
-appearance
-semantic
-emphasis
+appearance, semantic
 :::
 
-Multiple color and style options are available via the [variant](./#variant-1) input: `neutral` (default), `neutral-outline`, `brand`, `brand-outline`, `info`, `success`, `warning`, `danger`, `persistent-black` and `persistent-white`.
+Multiple color and style options are available via the [emphasis](./#emphasis-1) input: `neutral` (default), `neutral-outline`, `brand`, `brand-outline`, `info`, `success`, `warning`, `danger`, `persistent-black` and `persistent-white`.
 
-<QdsDemo name="NumberBadgeVariantDemo" />
+<QdsDemo name="NumberBadgeEmphasisDemo" />
 
 ### Size
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Control dimensions using the [size](./#size-1) input. Three sizes are available: `sm`, `md` (default), and `lg`.

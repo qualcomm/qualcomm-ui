@@ -10,7 +10,7 @@ export function AvatarContentDemo(): ReactElement {
       {/* preview */}
       Initials
       <Avatar.Root>
-        <Avatar.Content>OK</Avatar.Content>
+        <Avatar.Content>O</Avatar.Content>
       </Avatar.Root>
       Icon
       <Avatar.Root>
@@ -19,7 +19,7 @@ export function AvatarContentDemo(): ReactElement {
       Fallback
       <Avatar.Root>
         <Avatar.Image alt="John Doe" src="https://example.invalid" />
-        <Avatar.Content>JD</Avatar.Content>
+        <Avatar.Content>J</Avatar.Content>
       </Avatar.Root>
       {/* preview */}
     </div>

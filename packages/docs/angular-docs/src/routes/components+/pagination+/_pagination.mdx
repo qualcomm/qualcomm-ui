@@ -1,6 +1,5 @@
 ---
 title: Pagination
-group: Disclosure
 description: Pagination provides a control for moving through large, segmented content sets by exposing page numbers, previous and next actions, and optional overflow points when space is limited.
 component: Pagination
 aliases: [pager, page selector]
@@ -79,7 +78,7 @@ current page display
 
 Show metadata about the current and total pages with the `q-pagination-page-metadata` directive.
 
-Refer to the [PageMetadata](./#pagemetadata) api below for information about each available property.
+Refer to the [PageMetadata](./#page-metadata) api below for information about each available property.
 
 <QdsDemo name="PaginationPageMetadataDemo" />
 
@@ -90,7 +89,7 @@ truncate
 visible pages
 :::
 
-You can specify how many links to display on either side of the current page with the [siblingCount](/components/pagination/directive#siblingCount) property. Use the [boundaryCount](./#boundaryCount) property to adjust the number of pages that are always visible at the start and end.
+You can specify how many links to display on either side of the current page with the [siblingCount](./#siblingCount) property. Use the [boundaryCount](./#boundaryCount) property to adjust the number of pages that are always visible at the start and end.
 
 <QdsDemo name="PaginationRangesDemo" />
 
@@ -213,18 +212,10 @@ Metadata about the current page is available on the `paginationContext` structur
 
 <TypeDocProps name="PageMetadata" />
 
-### \[q-pagination\]
+### \[q-pagination-root\]
 
-<TypeDocProps name="PaginationDirective" />
+<TypeDocProps name="PaginationRootDirective" />
 
-### \<q-pagination-page-size\>
+### \[q-pagination-page-size]>
 
-<TypeDocProps name="PaginationPageSizeDirective" />
-
-### \[q-pagination-prev-trigger\]
-
-<TypeDocProps name="PaginationPrevTriggerDirective" />
-
-### \[q-pagination-next-trigger\]
-
-<TypeDocProps name="PaginationNextTriggerComponent" />
+<TypeDocProps name="PaginationPageSizeComponent" />

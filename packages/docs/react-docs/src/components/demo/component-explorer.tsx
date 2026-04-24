@@ -7,8 +7,10 @@ import {
 } from "@qualcomm-ui/react-mdx/component-explorer"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
-interface ComponentExplorerProps
-  extends Omit<ComponentExplorerBaseProps, "children"> {
+interface ComponentExplorerProps extends Omit<
+  ComponentExplorerBaseProps,
+  "children"
+> {
   component: () => ReactNode
 }
 
@@ -21,10 +23,12 @@ export function ComponentExplorer({
   const scheme = theme === Theme.LIGHT ? "light" : "dark"
 
   return (
-    <ComponentExplorerBase {...props}>
-      <div data-brand={brand || "qualcomm"} data-theme={scheme}>
-        <Component />
-      </div>
+    <ComponentExplorerBase
+      data-brand={brand || "qualcomm"}
+      data-theme={scheme}
+      {...props}
+    >
+      <Component />
     </ComponentExplorerBase>
   )
 }

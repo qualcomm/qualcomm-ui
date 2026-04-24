@@ -5,8 +5,9 @@
     "./src/typedoc-debug.ts",
     "../../common/typedoc/dist",
     "../../common/typedoc-common/dist",
-    "../../common/mdx-common/dist",
-    "../../common/mdx-vite/dist",
-    "../../frameworks/mdx-docs/dist"
+    "../../frameworks/react-mdx/dist",
+    "../../common/mdx-common/src",
+    "../../common/mdx-vite/src/**/types.ts",
+    "../../common/mdx-vite/src/**/*.types.ts",
   ]
 }

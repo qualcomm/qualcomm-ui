@@ -97,6 +97,7 @@ export function FiltersClientSideDemo() {
       <Table.Root>
         <Table.ActionBar>
           <TextInput
+            aria-label="Search every column"
             className="w-56"
             onValueChange={setGlobalFilter}
             placeholder="Search every column..."

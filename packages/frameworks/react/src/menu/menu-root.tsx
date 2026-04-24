@@ -29,9 +29,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsMenuContextProvider, useQdsMenuContext} from "./qds-menu-context"
 
 export interface MenuRootProps
-  extends Optional<MenuApiProps, "id">,
-    PresenceApiProps,
-    QdsMenuApiProps {
+  extends Optional<MenuApiProps, "id">, PresenceApiProps, QdsMenuApiProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

@@ -12,8 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSegmentedControlContext} from "./qds-segmented-control-context"
 
-export interface SegmentedControlHiddenInputProps
-  extends ElementRenderProp<"input"> {}
+export interface SegmentedControlHiddenInputProps extends ElementRenderProp<"input"> {}
 
 /**
  * A segmented control item's hidden input. Renders as an `<input type=radio>` by

@@ -1,6 +1,5 @@
 ---
 title: Icon Button
-group: Buttons
 description: Icon buttons perform an action when clicked and visually represent the action through an icon, combining button functionality with visual symbolism.
 component: IconButton
 aliases: [toolbar button]
@@ -52,11 +51,35 @@ Customize size using the [size](./#size) property. QUI buttons come with built-i
 
 <QdsDemo name="IconButtonSizesDemo" />
 
+### Compact Density
+
+::: terms
+dense
+:::
+
+Use the [density](./#density) property to reduce the padding and height of the button. The options are `default` and `compact`.
+
+<QdsDemo name="IconButtonDensityDemo" />
+
 ### Variant Combinations
+
+This demo displays all combinations of variants and emphasis options, including the disabled state for each variant.
 
 <QdsDemo name="IconButtonVariantCombinationsDemo" />
 
+### Shape
+
+::: terms
+pill
+:::
+
+Control the shape of the icon button with the [shape](./#shape) prop. The default shape is `square`.
+
+<QdsDemo name="IconButtonShapeDemo" />
+
 ### Contrast Colors
+
+Use `white-persistent` emphasis on dark backgrounds and `black-persistent` emphasis on light backgrounds. These colors remain constant regardless of the active theme.
 
 ::: terms
 dark mode
@@ -67,8 +90,14 @@ inverted
 
 <QdsDemo name="IconButtonContrastDemo" />
 
+### Inverse Contrast
+
+To flip contrast against the active theme, set [emphasis](./#emphasis) to `inverse`.
+
+<QdsDemo name="IconButtonInverseDemo" />
+
 ## API
 
 ### q-icon-button
 
-<TypeDocProps name="IconButtonComponent" />
+<TypeDocProps name="IconButtonDirective" />

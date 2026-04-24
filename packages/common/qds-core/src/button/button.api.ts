@@ -5,19 +5,17 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {buttonAnatomy} from "./button.anatomy"
 import {buttonClasses} from "./button.classes"
 import type {
   QdsButtonApi,
   QdsButtonApiProps,
   QdsButtonEndIconBindings,
   QdsButtonRootBindings,
-  QdsButtonScope,
   QdsButtonStartIconBindings,
 } from "./button.types"
 
-const buttonScope: QdsButtonScope = {
-  "data-scope": "button",
-}
+const parts = buttonAnatomy.parts
 
 const sharedDefaults = {
   size: "md",
@@ -36,23 +34,21 @@ export function createQdsButtonApi(
   return {
     getEndIconBindings(): QdsButtonEndIconBindings {
       return normalize.element({
-        ...buttonScope,
+        ...parts.icon,
         className: buttonClasses.icon,
         "data-density": density,
-        "data-part": "icon",
         "data-placement": "end",
         "data-size": size,
       })
     },
     getRootBindings(): QdsButtonRootBindings {
       return normalize.button({
-        ...buttonScope,
+        ...parts.root,
         className: buttonClasses.root,
         "data-density": density,
         "data-disabled": booleanDataAttr(disabled),
         "data-emphasis": emphasis,
         "data-kind": "text",
-        "data-part": "root",
         "data-size": size,
         "data-variant": variant,
         disabled,
@@ -60,10 +56,9 @@ export function createQdsButtonApi(
     },
     getStartIconBindings(): QdsButtonStartIconBindings {
       return normalize.element({
-        ...buttonScope,
+        ...parts.icon,
         className: buttonClasses.icon,
         "data-density": density,
-        "data-part": "icon",
         "data-placement": "start",
         "data-size": size,
       })

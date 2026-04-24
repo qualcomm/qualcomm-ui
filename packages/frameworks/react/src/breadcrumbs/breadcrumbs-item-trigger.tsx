@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context"
 
-export interface BreadcrumbsItemTriggerProps
-  extends ElementRenderProp<"button"> {}
+export interface BreadcrumbsItemTriggerProps extends ElementRenderProp<"button"> {}
 
 export function BreadcrumbsItemTrigger(
   props: BreadcrumbsItemTriggerProps,

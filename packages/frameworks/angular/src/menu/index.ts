@@ -1,4 +1,5 @@
 export * from "./menu-button.component"
+export * from "./menu-icon-button.component"
 export * from "./menu-checkbox-item.directive"
 export * from "./menu-content.directive"
 export * from "./menu-context-trigger.directive"

@@ -27,7 +27,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {ToastContextProvider} from "./toast-context"
 
 export interface CoreToasterProps
-  extends Omit<ElementRenderProp<"div">, "children" | "dir">,
+  extends
+    Omit<ElementRenderProp<"div">, "children" | "dir">,
     Omit<ToastGroupProps, "store" | "id"> {
   /**
    * {@link https://react-next.qui.qualcomm.com/render-props#render-prop Render Prop}

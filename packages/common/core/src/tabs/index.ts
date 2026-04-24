@@ -1,3 +1,4 @@
+export * from "./tabs.anatomy"
 export * from "./tabs.api"
 export * from "./tabs.machine"
 export * from "./tabs.props"

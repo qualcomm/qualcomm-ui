@@ -25,7 +25,8 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputRootProps
-  extends PasswordInputApiProps,
+  extends
+    PasswordInputApiProps,
     Omit<QdsReactInputApiProps, "endIcon">,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {
   /**

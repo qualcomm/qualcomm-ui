@@ -337,6 +337,35 @@
     ]
   },
   {
+    "card": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/card+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/card+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/card"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/card"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/card"
+      }
+    ]
+  },
+  {
     "checkbox": [
       {
         "description": "angular-docs",
@@ -1534,6 +1563,50 @@
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
         "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/split-button",
         "line": "-1"
+      }
+    ]
+  },
+  {
+    "stepper": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/stepper+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/stepper+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/stepper"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/stepper"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/stepper"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/stepper"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/stepper"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/stepper"
       }
     ]
   },

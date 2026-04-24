@@ -5,8 +5,7 @@ import type {QdsInputApi, QdsInputApiProps} from "@qualcomm-ui/qds-core/input"
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 
-export interface QdsReactInputApiProps
-  extends QdsInputApiProps<LucideIconOrElement> {}
+export interface QdsReactInputApiProps extends QdsInputApiProps<LucideIconOrElement> {}
 
 export interface QdsReactInputApi extends QdsInputApi<LucideIconOrElement> {}
 

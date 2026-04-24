@@ -10,8 +10,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsSliderContext} from "./qds-slider-context"
 
 export interface SliderHiddenInputProps
-  extends IdProp,
-    ComponentPropsWithRef<"input"> {
+  extends IdProp, ComponentPropsWithRef<"input"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

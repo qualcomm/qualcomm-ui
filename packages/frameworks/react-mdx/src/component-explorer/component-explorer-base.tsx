@@ -27,13 +27,12 @@ export type ComponentPart =
        */
       link: string
       /**
-       * Part name, matching the `data-part` attribute value.
+       * Part name, matching the `data-<scope>-part` attribute value.
        */
       name: string
     }
 
-export interface ComponentExplorerBaseProps
-  extends ComponentPropsWithRef<"div"> {
+export interface ComponentExplorerBaseProps extends ComponentPropsWithRef<"div"> {
   /**
    * The component demo to explore.
    */
@@ -53,8 +52,11 @@ export interface ComponentExplorerBaseProps
   parts: ComponentPart[]
 
   /**
-   * Custom scope name for enhanced element targeting, optional.  Matches the
-   * `data-scope` attribute value.
+   * Scope name matching the component's namespaced attribute
+   * (`data-<scope>-part`). When omitted, the explorer falls back to matching
+   * any `data-*-part` attribute with the target part name — useful for demos
+   * that compose parts from multiple components (e.g. a checkbox nested in
+   * field parts).
    */
   scope?: string
 }
@@ -101,14 +103,21 @@ export function ComponentExplorerBase({
       return
     }
 
-    let partSelector = `[data-part="${hoveredPart}"]`
-    if (scope) {
-      partSelector += `[data-scope="${scope}"]`
-    }
-
-    const targetElements = Array.from(
-      previewElement.querySelectorAll<HTMLElement>(partSelector),
-    )
+    const targetElements = scope
+      ? Array.from(
+          previewElement.querySelectorAll<HTMLElement>(
+            `[data-${scope}-part="${hoveredPart}"]`,
+          ),
+        )
+      : Array.from(previewElement.querySelectorAll<HTMLElement>("*")).filter(
+          (el) =>
+            Array.from(el.attributes).some(
+              (attr) =>
+                attr.name.startsWith("data-") &&
+                attr.name.endsWith("-part") &&
+                attr.value === hoveredPart,
+            ),
+        )
 
     if (targetElements.length === 0) {
       setHighlightRects([])

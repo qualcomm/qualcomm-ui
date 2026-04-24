@@ -3,23 +3,12 @@
 
 import type {Heading, Parent, Root} from "mdast"
 import type {Plugin} from "unified"
-import {visit} from "unist-util-visit"
-
-interface MdxTextExpression {
-  type: "mdxTextExpression"
-  value: string
-}
-
-function isMdxTextExpression(node: unknown): node is MdxTextExpression {
-  const n = node as {type?: string; value?: unknown}
-  return n.type === "mdxTextExpression" && typeof n.value === "string"
-}
+import {EXIT, visit} from "unist-util-visit"
 
 /**
- * Apply data-page-title attribute to heading elements containing
- * `{frontmatter.title}`. We use this attribute to prevent the main title from
- * rendering twice, as it's organized into a separate page heading for layout
- * purposes.
+ * Replaces the first h1 heading in the document with a `PageHeader`
+ * JSX element. This allows the page title to be enhanced with extra features
+ * like a since tag or a copy markdown button.
  */
 export const remarkFrontmatterTitle: Plugin<[], Root> = () => {
   return (tree) => {
@@ -27,34 +16,20 @@ export const remarkFrontmatterTitle: Plugin<[], Root> = () => {
       tree,
       "heading",
       (node: Heading, index, parent: Parent | undefined) => {
-        if (index === undefined || !parent) {
-          return
-        }
-
-        const hasFrontmatterTitle = node.children.some(
-          (child) =>
-            isMdxTextExpression(child) &&
-            child.value.trim() === "frontmatter.title",
-        )
-
-        if (!hasFrontmatterTitle) {
+        if (index === undefined || !parent || node.depth !== 1) {
           return
         }
 
         const wrappedNode = {
-          attributes: [
-            {
-              name: "data-page-title",
-              type: "mdxJsxAttribute",
-              value: "",
-            },
-          ],
+          attributes: [],
           children: node.children,
-          name: `h${node.depth}`,
+          name: "PageHeader",
           type: "mdxJsxFlowElement",
         }
 
         parent.children[index] = wrappedNode as (typeof parent.children)[number]
+
+        return EXIT
       },
     )
   }

@@ -15,6 +15,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import {domIds} from "./internal"
+import {textAreaAnatomy} from "./text-area.anatomy"
 import type {
   TextAreaApi,
   TextAreaCounterBindings,
@@ -24,12 +25,9 @@ import type {
   TextAreaLabelBindings,
   TextAreaRootBindings,
   TextAreaSchema,
-  TextAreaScopeAttribute,
 } from "./text-area.types"
 
-const commonBindings: TextAreaScopeAttribute = {
-  "data-scope": "text-area",
-}
+const parts = textAreaAnatomy.parts
 
 export function createTextAreaApi(
   machine: Machine<TextAreaSchema>,
@@ -59,12 +57,11 @@ export function createTextAreaApi(
     getCounterBindings(props: IdRegistrationProps): TextAreaCounterBindings {
       scope.ids.register("counter", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.counter,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-max": prop("maxLength"),
-        "data-part": "counter",
         dir: prop("dir"),
         id: domIds.counter(scope),
       })
@@ -74,9 +71,8 @@ export function createTextAreaApi(
     ): TextAreaErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
         dir: prop("dir"),
         hidden: !invalid,
         id: domIds.errorText(scope),
@@ -85,9 +81,8 @@ export function createTextAreaApi(
     getHintBindings(props: IdRegistrationProps): TextAreaHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "hint",
         dir: prop("dir"),
         hidden: !!invalid,
         id: domIds.hint(scope),
@@ -101,7 +96,7 @@ export function createTextAreaApi(
     getInputBindings(props: IdRegistrationProps): TextAreaInputBindings {
       scope.ids.register("input", props)
       return normalize.textarea({
-        ...commonBindings,
+        ...parts.input,
         "aria-describedby": ariaAttr(domIds.hint(scope)),
         "aria-invalid": booleanAriaAttr(invalid),
         "aria-labelledby": mergeAriaIds(
@@ -114,7 +109,6 @@ export function createTextAreaApi(
         "data-empty": booleanDataAttr(!context.get("value")),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input",
         "data-readonly": booleanDataAttr(readOnly),
         defaultValue: context.get("value"),
         dir: prop("dir"),
@@ -151,11 +145,10 @@ export function createTextAreaApi(
     getLabelBindings(props: IdRegistrationProps): TextAreaLabelBindings {
       scope.ids.register("label", props)
       return normalize.label({
-        ...commonBindings,
+        ...parts.label,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "label",
         dir: prop("dir"),
         htmlFor: domIds.input(scope),
         id: domIds.label(scope),
@@ -163,11 +156,10 @@ export function createTextAreaApi(
     },
     getRootBindings(): TextAreaRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "root",
         dir: prop("dir"),
       })
     },

@@ -3,9 +3,14 @@
 
 import type {checkboxClasses} from "@qualcomm-ui/qds-core/checkbox"
 import type {radioClasses} from "@qualcomm-ui/qds-core/radio"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 
 import type {menuItemClasses} from "./menu-item.classes"
+import type {qdsMenuAnatomy} from "./menu.anatomy"
 import type {menuClasses} from "./menu.classes"
+
+type PartName = AnatomyPartName<typeof qdsMenuAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"menu", P> {}
 
 type MenuItemClasses = typeof menuItemClasses
 type MenuClasses = typeof menuClasses
@@ -31,9 +36,8 @@ export interface QdsMenuItemCommandBindings {
   "data-size": QdsMenuSize
 }
 
-export interface QdsMenuItemStartIconBindings {
+export interface QdsMenuItemStartIconBindings extends Part<"startIcon"> {
   className: MenuItemClasses["startIcon"]
-  "data-part": "start-icon"
   "data-size": QdsMenuSize
 }
 
@@ -64,10 +68,8 @@ export interface QdsMenuItemLabelBindings {
   "data-size": QdsMenuSize
 }
 
-export interface QdsMenuDescriptionBindings {
+export interface QdsMenuDescriptionBindings extends Part<"description"> {
   className: MenuItemClasses["itemDescription"]
-  "data-part": "description"
-  "data-scope": "menu"
   "data-size": QdsMenuSize
 }
 
@@ -92,6 +94,10 @@ export interface QdsMenuButtonBindings {
   className: MenuClasses["button"]
 }
 
+export interface QdsMenuIndicatorBindings {
+  className: MenuClasses["indicator"]
+}
+
 export interface QdsMenuApi {
   size: QdsMenuSize
 
@@ -99,6 +105,7 @@ export interface QdsMenuApi {
   getButtonBindings(): QdsMenuButtonBindings
   getCheckboxItemControlBindings(): QdsMenuCheckboxItemControlBindings
   getContentBindings(): QdsMenuContentBindings
+  getIndicatorBindings(): QdsMenuIndicatorBindings
   getItemBindings(): QdsMenuItemBindings
   getItemCommandBindings(): QdsMenuItemCommandBindings
   getItemGroupBindings(): QdsMenuItemGroupBindings

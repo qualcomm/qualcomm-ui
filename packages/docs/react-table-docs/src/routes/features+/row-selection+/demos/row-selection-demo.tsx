@@ -38,6 +38,7 @@ export function RowSelectionDemo() {
           const checked = row.getIsSelected() && !indeterminate
           return (
             <Checkbox
+              aria-label="Select row"
               checked={checked}
               indeterminate={indeterminate}
               onCheckedChange={(checked) => row.toggleSelected(checked)}
@@ -47,6 +48,7 @@ export function RowSelectionDemo() {
         },
         header: ({table}) => (
           <Checkbox
+            aria-label="Select all rows"
             checked={table.getIsAllRowsSelected()}
             indeterminate={table.getIsSomeRowsSelected()}
             onCheckedChange={(checked) => table.toggleAllRowsSelected(checked)}
@@ -132,6 +134,7 @@ export function RowSelectionDemo() {
       <Table.Root>
         <Table.ActionBar>
           <TextInput
+            aria-label="Search every column"
             className="w-56"
             onValueChange={setGlobalFilter}
             placeholder="Search every column..."

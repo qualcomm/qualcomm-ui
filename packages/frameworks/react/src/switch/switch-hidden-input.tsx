@@ -10,8 +10,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsSwitchContext} from "./qds-switch-context"
 
 export interface SwitchHiddenInputProps
-  extends ComponentPropsWithRef<"input">,
-    IdProp {}
+  extends ComponentPropsWithRef<"input">, IdProp {}
 
 /**
  * Hidden input element used for accessibility and form submissions. Renders an

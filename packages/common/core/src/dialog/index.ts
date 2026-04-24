@@ -1,3 +1,4 @@
+export * from "./dialog.anatomy"
 export * from "./dialog.api"
 export * from "./dialog.machine"
 export * from "./dialog.props"

@@ -24,8 +24,10 @@ import {
 import {AlertBannerIcon, type AlertBannerIconProps} from "./alert-banner-icon"
 import {AlertBannerRoot, type AlertBannerRootProps} from "./alert-banner-root"
 
-export interface AlertBannerProps
-  extends Omit<AlertBannerRootProps, "children"> {
+export interface AlertBannerProps extends Omit<
+  AlertBannerRootProps,
+  "children"
+> {
   /**
    * The component used for the content of the action element.
    */

@@ -2,7 +2,7 @@ import {Component} from "@angular/core"
 
 import {TagEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-emphasis-demo"
 import {TagIconsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-icons-demo"
-import {TagRadiusDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-radius-demo"
+import {TagShapeDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-shape-demo"
 import {TagSizesDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-sizes-demo"
 import {TagStatesDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-states-demo"
 import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-variants-demo"
@@ -11,7 +11,7 @@ import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/
   imports: [
     TagEmphasisDemo,
     TagIconsDemo,
-    TagRadiusDemo,
+    TagShapeDemo,
     TagSizesDemo,
     TagStatesDemo,
     TagVariantsDemo,
@@ -32,9 +32,9 @@ import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/
         </div>
       </div>
       <div class="section">
-        <h2 class="section-title">Radius</h2>
+        <h2 class="section-title">Shape</h2>
         <div class="demo-container">
-          <tag-radius-demo />
+          <tag-shape-demo />
         </div>
       </div>
       <div class="section">

@@ -1,0 +1,292 @@
+---
+title: Stepper
+description: Use steppers to visualize a group of connected actions or the order of a workflow.
+aliases: [steps]
+badges:
+  - id: since
+    label: 1.18.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1180
+  - id: developerPreview
+    label: Developer Preview
+    url: /developer-previews
+---
+
+import {ComponentExplorer, Demo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {Stepper} from "@qualcomm-ui/react/stepper"
+```
+
+## Examples
+
+### Linear Mode
+
+The stepper is linear by default ([linear](./#linear) is `true`). Steps must be completed in order.
+
+- Backward navigation is always allowed
+- Previously visited steps can be re-clicked without restriction
+- Forward navigation is restricted to the immediate next step
+- [canGoToStep](./#canGoToStep) can override forward navigation decisions
+
+<Demo component={demos.StepperLinearDemo} name="StepperLinearDemo" />
+
+### Non-linear Mode
+
+Set [linear](./#linear) to `false` to allow accessing any step at any time. Use the [completed](./#completed) prop to manually track which steps are done.
+
+[canGoToStep](./#canGoToStep) applies to all navigation if provided. Otherwise, all navigation is allowed.
+
+<Demo component={demos.StepperNonlinearDemo} name="StepperNonlinearDemo" />
+
+### Icon
+
+Use the `<Stepper.IndicatorIcon>` component to use an icon for each step's indicator.
+
+<Demo name="StepperIconDemo" component={demos.StepperIconDemo} />
+
+### Hint
+
+Add a hint to provide additional context below the step label.
+
+<Demo name="StepperHintDemo" component={demos.StepperHintDemo} />
+
+### Layout & Orientation
+
+Stepper orientation and label placement are controlled through the [orientation](./#orientation) prop.
+
+#### Horizontal
+
+`horizontal` (default): The step list is centered horizontally, and the labels are stacked vertically and centered below the step indicator.
+
+<Demo component={demos.StepperHorizontalDemo} name="StepperHorizontalDemo" />
+
+#### Horizontal Inline
+
+`horizontal-inline` is a variant of `horizontal` that places the step indicator and labels inline. The step items are left-aligned and take the full width of their parent container
+
+<Demo
+  component={demos.StepperHorizontalInlineDemo}
+  name="StepperHorizontalInlineDemo"
+/>
+
+#### Horizontal Bottom Start
+
+`horizontal-bottom-start` is a variant of `horizontal` that places the labels below each step, aligned to the start. The items are left-aligned and take the full width of their parent container.
+
+<Demo
+  component={demos.StepperHorizontalBottomStartDemo}
+  name="StepperHorizontalBottomStartDemo"
+/>
+
+#### Vertical
+
+Set [orientation](./#orientation) to `vertical` to stack the steps vertically. The labels are centered relative to the step indicator.
+
+<Demo name="StepperVerticalDemo" component={demos.StepperVerticalDemo} />
+
+#### Vertical Inline
+
+Set [orientation](./#orientation) to `vertical-inline` to stack the steps vertically while aligning the labels inline with the step indicator.
+
+<Demo
+  name="StepperVerticalInlineDemo"
+  component={demos.StepperVerticalInlineDemo}
+/>
+
+### Controlled State
+
+Use [step](./#step) and [onStepChange](./#onStepChange) to control the active step externally.
+
+<Demo
+  expanded
+  name="StepperControlledDemo"
+  component={demos.StepperControlledDemo}
+/>
+
+### Manual Completion
+
+Set [linear](./#linear) to `false` and use the [completed](./#completed) prop to manually control which steps are marked as complete.
+
+<Demo
+  expanded
+  name="StepperCompletedDemo"
+  component={demos.StepperCompletedDemo}
+/>
+
+### Pending Steps
+
+Use the [pending](./#pending) prop to mark steps as pending. This is typically used to indicate that a step has been visited but not completed.
+
+<Demo component={demos.StepperPendingDemo} name="StepperPendingDemo" />
+
+### Sizes
+
+The stepper comes in two [sizes](./#size): `sm` and `lg`. The default size is `lg`.
+
+<Demo expanded name="StepperSizesDemo" component={demos.StepperSizesDemo} />
+
+### Validation Examples
+
+#### Non-linear Form
+
+Combine `linear={false}` with per-step validation to let users complete steps in any order. Use the [invalid](./#invalid) and [completed](./#completed) props to track each step's status, and [Stepper.Context](./#stepper-context) to conditionally render a submit action once all steps pass.
+
+<Demo
+  expanded
+  name="StepperNonlinearFormDemo"
+  component={demos.StepperNonlinearFormDemo}
+/>
+
+#### Skippable Steps
+
+Use [isStepSkippable](./#isStepSkippable) to mark optional steps that can be bypassed during navigation.
+
+<Demo
+  expanded
+  name="StepperSkippableStepsDemo"
+  component={demos.StepperSkippableStepsDemo}
+/>
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.StepperExplorerDemo}
+  linkPrefix="stepper"
+  parts={[
+    "root",
+    "list",
+    "item",
+    "trigger",
+    "separator",
+    "label",
+    "hint",
+    "content",
+    "completed-content",
+    "next-trigger",
+    "prev-trigger",
+  ]}
+/>
+
+## API
+
+### \<Stepper.Root\>
+
+<TypeDocProps name="StepperRootProps" />
+
+<TypeDocAttributes name={["QdsStepperRootBindings", "StepperRootBindings"]} />
+
+### \<Stepper.List\>
+
+<TypeDocProps name="StepperListProps" />
+
+<TypeDocAttributes name={["QdsStepperListBindings", "StepperListBindings"]} />
+
+### \<Stepper.Item\>
+
+<TypeDocProps name="StepperItemProps" />
+
+<TypeDocAttributes name={["QdsStepperItemBindings", "StepperItemBindings"]} />
+
+### \<Stepper.Trigger\>
+
+<TypeDocProps name="StepperTriggerProps" />
+
+<TypeDocAttributes
+  name={["QdsStepperTriggerBindings", "StepperTriggerBindings"]}
+/>
+
+### \<Stepper.Indicator\>
+
+<TypeDocProps name="StepperIndicatorProps" />
+
+<TypeDocAttributes
+  name={["QdsStepperIndicatorBindings", "StepperIndicatorBindings"]}
+/>
+
+### \<Stepper.Separator\>
+
+<TypeDocProps name="StepperSeparatorProps" />
+
+<TypeDocAttributes
+  name={["QdsStepperSeparatorBindings", "StepperSeparatorBindings"]}
+/>
+
+### \<Stepper.CompletedContent\>
+
+Content displayed when all steps are completed.
+
+<TypeDocProps name="StepperCompletedContentProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsStepperCompletedContentBindings",
+    "StepperCompletedContentBindings",
+  ]}
+/>
+
+### \<Stepper.Content\>
+
+<TypeDocProps name="StepperContentProps" />
+
+<TypeDocAttributes
+  name={["QdsStepperContentBindings", "StepperContentBindings"]}
+/>
+
+### \<Stepper.Label\>
+
+<TypeDocProps name="StepperLabelProps" />
+
+<TypeDocAttributes name={["QdsStepperLabelBindings", "StepperLabelBindings"]} />
+
+### \<Stepper.Hint\>
+
+<TypeDocProps name="StepperHintProps" />
+
+<TypeDocAttributes name={["QdsStepperHintBindings", "StepperHintBindings"]} />
+
+### \<Stepper.NextTrigger\>
+
+<TypeDocProps name="StepperNextTriggerProps" />
+
+<TypeDocAttributes
+  name={["QdsStepperNextTriggerBindings", "StepperNextTriggerBindings"]}
+/>
+
+### \<Stepper.PrevTrigger\>
+
+<TypeDocProps name="StepperPrevTriggerProps" />
+
+<TypeDocAttributes
+  name={["QdsStepperPrevTriggerBindings", "StepperPrevTriggerBindings"]}
+/>
+
+### \<Stepper.Context\>
+
+<TypeDocProps name="StepperContextProps" />
+
+### StepperApi
+
+<TypeDocProps
+  name="StepperApi"
+  omit={[
+    "getCompletedContentBindings",
+    "getContentBindings",
+    "getHintBindings",
+    "getIndicatorBindings",
+    "getItemBindings",
+    "getLabelBindings",
+    "getListBindings",
+    "getNextTriggerBindings",
+    "getPrevTriggerBindings",
+    "getRootBindings",
+    "getSeparatorBindings",
+    "getTriggerBindings",
+  ]}
+  partial
+/>

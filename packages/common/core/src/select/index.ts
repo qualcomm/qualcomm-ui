@@ -1,3 +1,4 @@
+export * from "./select.anatomy"
 export * from "./select.api"
 export * from "./select.collection"
 export * from "./select.machine"

@@ -1,6 +1,7 @@
 export * from "./button-contrast-demo"
 export * from "./button-density-demo"
 export * from "./button-emphasis-demo"
+export * from "./button-inverse-demo"
 export * from "./button-showcase-demo"
 export * from "./button-sizes-demo"
 export * from "./button-variants-demo"

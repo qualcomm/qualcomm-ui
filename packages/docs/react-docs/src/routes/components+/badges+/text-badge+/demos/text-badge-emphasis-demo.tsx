@@ -16,14 +16,16 @@ export function TextBadgeEmphasisDemo(): ReactElement {
       <div className="flex flex-wrap items-center gap-2">
         <Badge emphasis="blue">blue</Badge>
         <Badge emphasis="cyan">cyan</Badge>
-        <Badge emphasis="green">green</Badge>
-        <Badge emphasis="kiwi">kiwi</Badge>
-        <Badge emphasis="magenta">magenta</Badge>
-        <Badge emphasis="orange">orange</Badge>
-        <Badge emphasis="purple">purple</Badge>
-        <Badge emphasis="red">red</Badge>
         <Badge emphasis="teal">teal</Badge>
+        <Badge emphasis="lime">lime</Badge>
+        <Badge emphasis="green">green</Badge>
         <Badge emphasis="yellow">yellow</Badge>
+        <Badge emphasis="amber">amber</Badge>
+        <Badge emphasis="orange">orange</Badge>
+        <Badge emphasis="red">red</Badge>
+        <Badge emphasis="magenta">magenta</Badge>
+        <Badge emphasis="violet">violet</Badge>
+        <Badge emphasis="purple">purple</Badge>
       </div>
     </div>
   )

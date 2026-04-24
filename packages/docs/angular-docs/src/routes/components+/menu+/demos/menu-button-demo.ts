@@ -1,0 +1,75 @@
+import {Component} from "@angular/core"
+import {
+  Copy,
+  Ellipsis,
+  File,
+  FileText,
+  FolderOpen,
+  Pencil,
+  Trash2,
+} from "lucide-angular"
+
+import {MenuModule} from "@qualcomm-ui/angular/menu"
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
+
+@Component({
+  imports: [MenuModule, PortalComponent],
+  providers: [
+    provideIcons({Copy, Ellipsis, File, FileText, FolderOpen, Pencil, Trash2}),
+  ],
+  selector: "menu-button-demo",
+  template: `
+    <div class="flex gap-2.5">
+      <q-menu [positioning]="{placement: 'bottom-end'}">
+        <button emphasis="primary" q-menu-button startIcon="File">File</button>
+        <q-portal>
+          <div q-menu-positioner>
+            <div q-menu-content>
+              <button q-menu-item value="new-text-file">
+                <div icon="FileText" q-menu-item-start-icon></div>
+                New Text File
+              </button>
+              <button q-menu-item value="new-file">
+                <div icon="File" q-menu-item-start-icon></div>
+                New File...
+              </button>
+              <button q-menu-item value="open-file">
+                <div icon="FolderOpen" q-menu-item-start-icon></div>
+                Open File...
+              </button>
+            </div>
+          </div>
+        </q-portal>
+      </q-menu>
+
+      <q-menu>
+        <button
+          aria-label="More actions"
+          emphasis="primary"
+          icon="Ellipsis"
+          q-menu-icon-button
+        ></button>
+        <q-portal>
+          <div q-menu-positioner>
+            <div q-menu-content>
+              <button q-menu-item value="rename">
+                <div icon="Pencil" q-menu-item-start-icon></div>
+                Rename
+              </button>
+              <button q-menu-item value="duplicate">
+                <div icon="Copy" q-menu-item-start-icon></div>
+                Duplicate
+              </button>
+              <button q-menu-item value="delete">
+                <div icon="Trash2" q-menu-item-start-icon></div>
+                Delete
+              </button>
+            </div>
+          </div>
+        </q-portal>
+      </q-menu>
+    </div>
+  `,
+})
+export class MenuButtonDemo {}

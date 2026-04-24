@@ -27,6 +27,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import {domEls, domIds} from "./internal"
+import {selectAnatomy} from "./select.anatomy"
 import type {
   ItemProps,
   ItemState,
@@ -46,6 +47,8 @@ import type {
   SelectSchema,
   SelectValueTextBindings,
 } from "./select.types"
+
+const parts = selectAnatomy.parts
 
 export function createSelectApi(
   machine: Machine<SelectSchema>,
@@ -147,10 +150,9 @@ export function createSelectApi(
     getClearTriggerBindings(props): SelectClearTriggerBindings {
       scope.ids.register("clearTrigger", props)
       return normalize.button({
+        ...parts.clearTrigger,
         "aria-label": "Clear value",
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "clear-trigger",
-        "data-scope": "select",
         dir: prop("dir"),
         disabled,
         hidden: !computed("hasSelectedItems"),
@@ -172,14 +174,13 @@ export function createSelectApi(
     getContentBindings(props) {
       scope.ids.register("content", props)
       return normalize.element({
+        ...parts.content,
         "aria-activedescendant": ariaActiveDescendant,
         "aria-labelledby": domIds.label(scope),
         "aria-multiselectable": booleanAriaAttr(prop("multiple")),
         "data-activedescendant": ariaActiveDescendant,
         "data-focus-visible": booleanDataAttr(isFocusVisible()),
-        "data-part": "content",
         "data-placement": currentPlacement,
-        "data-scope": "select",
         "data-state": open ? "open" : "closed",
         dir: prop("dir"),
         hidden: !open,
@@ -250,6 +251,7 @@ export function createSelectApi(
     getControlBindings(props): SelectControlBindings {
       scope.ids.register("control", props)
       return normalize.button({
+        ...parts.control,
         "aria-controls": domIds.content(scope),
         "aria-expanded": booleanAriaAttr(open),
         "aria-haspopup": "listbox",
@@ -257,13 +259,11 @@ export function createSelectApi(
         "aria-labelledby": domIds.label(scope),
         "data-disabled": booleanDataAttr(disabled),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "control",
         "data-placeholder-shown": booleanDataAttr(
           !computed("hasSelectedItems"),
         ),
         "data-placement": currentPlacement,
         "data-readonly": booleanDataAttr(readOnly),
-        "data-scope": "select",
         "data-state": open ? "open" : "closed",
         dir: prop("dir"),
         disabled,
@@ -288,6 +288,9 @@ export function createSelectApi(
             return
           }
           if (!interactive) {
+            return
+          }
+          if (event.target !== event.currentTarget) {
             return
           }
 
@@ -352,9 +355,8 @@ export function createSelectApi(
 
     getErrorIndicatorBindings(): SelectErrorIndicatorBindings {
       return normalize.element({
+        ...parts.errorIndicator,
         "aria-label": "Error",
-        "data-part": "error-indicator",
-        "data-scope": "select",
         dir: prop("dir"),
         hidden: !prop("invalid"),
       })
@@ -363,9 +365,8 @@ export function createSelectApi(
     getErrorTextBindings(props: IdRegistrationProps): SelectErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
-        "data-scope": "select",
         dir: prop("dir"),
         hidden: !invalid,
         id: domIds.errorText(scope),
@@ -377,10 +378,9 @@ export function createSelectApi(
       const value = context.get("value")
       const defaultValue = prop("multiple") ? value : value?.[0]
       return normalize.select({
+        ...parts.hiddenSelect,
         "aria-hidden": true,
         "aria-labelledby": domIds.label(scope),
-        "data-part": "hidden-select",
-        "data-scope": "select",
         defaultValue,
         dir: prop("dir"),
         disabled,
@@ -402,9 +402,8 @@ export function createSelectApi(
     getHintBindings(props: IdRegistrationProps): SelectHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
+        ...parts.hint,
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "hint",
-        "data-scope": "select",
         dir: prop("dir"),
         hidden: !!invalid,
         id: domIds.hint(scope),
@@ -413,26 +412,25 @@ export function createSelectApi(
 
     getIndicatorBindings(): SelectIndicatorBindings {
       return normalize.element({
+        ...parts.indicator,
         "aria-hidden": true,
         "data-disabled": booleanDataAttr(disabled),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "indicator",
         "data-readonly": booleanDataAttr(readOnly),
-        "data-scope": "select",
         "data-state": open ? "open" : "closed",
         dir: prop("dir"),
+        inert: true,
         tabIndex: -1,
       })
     },
 
     getItemBindings(props: ItemState): SelectItemBindings {
       return normalize.element({
+        ...parts.item,
         "aria-disabled": booleanAriaAttr(props.disabled),
         "aria-selected": props.selected,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-highlighted": booleanDataAttr(props.highlighted),
-        "data-part": "item",
-        "data-scope": "select",
         "data-state": props.selected ? "checked" : "unchecked",
         "data-value": props.value,
         dir: prop("dir"),
@@ -480,10 +478,9 @@ export function createSelectApi(
 
     getItemGroupBindings({id}): SelectItemGroupBindings {
       return normalize.element({
+        ...parts.itemGroup,
         "aria-labelledby": domIds.itemGroupLabel(scope, id),
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "item-group",
-        "data-scope": "select",
         dir: prop("dir"),
         id: domIds.itemGroup(scope, id),
         role: "group",
@@ -492,8 +489,7 @@ export function createSelectApi(
 
     getItemGroupLabelBindings({htmlFor}) {
       return normalize.element({
-        "data-part": "item-group-label",
-        "data-scope": "select",
+        ...parts.itemGroupLabel,
         dir: prop("dir"),
         id: domIds.itemGroupLabel(scope, htmlFor),
         role: "presentation",
@@ -502,9 +498,8 @@ export function createSelectApi(
 
     getItemIndicatorBindings(props: ItemState): SelectItemIndicatorBindings {
       return normalize.element({
+        ...parts.itemIndicator,
         "aria-hidden": true,
-        "data-part": "item-indicator",
-        "data-scope": "select",
         "data-state": props.selected ? "checked" : "unchecked",
         dir: prop("dir"),
         hidden: !props.selected,
@@ -513,10 +508,9 @@ export function createSelectApi(
 
     getItemTextBindings(props: ItemState): SelectItemTextBindings {
       return normalize.element({
+        ...parts.itemText,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-highlighted": booleanDataAttr(props.highlighted),
-        "data-part": "item-text",
-        "data-scope": "select",
         "data-state": props.selected ? "checked" : "unchecked",
         dir: prop("dir"),
       })
@@ -525,11 +519,10 @@ export function createSelectApi(
     getLabelBindings(props) {
       scope.ids.register("label", props)
       return normalize.label({
+        ...parts.label,
         "data-disabled": booleanDataAttr(disabled),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "label",
         "data-readonly": booleanDataAttr(readOnly),
-        "data-scope": "select",
         dir: prop("dir"),
         /**
          * the content element will not have rendered on SSR when this first
@@ -553,8 +546,7 @@ export function createSelectApi(
     getPositionerBindings(props) {
       scope.ids.register("positioner", props)
       return normalize.element({
-        "data-part": "positioner",
-        "data-scope": "select",
+        ...parts.positioner,
         dir: prop("dir"),
         id: domIds.positioner(scope),
         style: popperStyles.floating,
@@ -564,10 +556,9 @@ export function createSelectApi(
     getRootBindings(props): SelectRootBindings {
       scope.ids.register("root", props)
       return normalize.element({
+        ...parts.root,
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "root",
         "data-readonly": booleanDataAttr(readOnly),
-        "data-scope": "select",
         dir: prop("dir"),
         id: domIds.root(scope),
       })
@@ -575,12 +566,11 @@ export function createSelectApi(
 
     getValueTextBindings(): SelectValueTextBindings {
       return normalize.element({
+        ...parts.valueText,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
         "data-multiple": booleanDataAttr(prop("multiple")),
-        "data-part": "value-text",
-        "data-scope": "select",
         dir: prop("dir"),
       })
     },

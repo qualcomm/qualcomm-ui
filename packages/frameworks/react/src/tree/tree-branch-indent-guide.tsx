@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsTreeContext} from "./qds-tree-context"
 
-export interface TreeBranchIndentGuideProps
-  extends CoreTreeBranchIndentGuideProps {}
+export interface TreeBranchIndentGuideProps extends CoreTreeBranchIndentGuideProps {}
 
 /**
  * Provides a visual guide to the indentation level of the branch's children.

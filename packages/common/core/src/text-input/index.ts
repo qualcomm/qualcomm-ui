@@ -1,3 +1,4 @@
+export * from "./text-input.anatomy"
 export * from "./text-input.api"
 export * from "./text-input.machine"
 export * from "./text-input.props"

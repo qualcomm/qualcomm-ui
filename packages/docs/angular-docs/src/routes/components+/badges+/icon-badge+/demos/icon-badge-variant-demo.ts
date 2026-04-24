@@ -41,8 +41,23 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <div class="flex flex-wrap items-center gap-2">
         <span emphasis="blue" icon="Star" q-icon-badge variant="subtle"></span>
         <span emphasis="cyan" icon="Star" q-icon-badge variant="subtle"></span>
+        <span emphasis="teal" icon="Star" q-icon-badge variant="subtle"></span>
+        <span emphasis="lime" icon="Star" q-icon-badge variant="subtle"></span>
         <span emphasis="green" icon="Star" q-icon-badge variant="subtle"></span>
-        <span emphasis="kiwi" icon="Star" q-icon-badge variant="subtle"></span>
+        <span
+          emphasis="yellow"
+          icon="Star"
+          q-icon-badge
+          variant="subtle"
+        ></span>
+        <span emphasis="amber" icon="Star" q-icon-badge variant="subtle"></span>
+        <span
+          emphasis="orange"
+          icon="Star"
+          q-icon-badge
+          variant="subtle"
+        ></span>
+        <span emphasis="red" icon="Star" q-icon-badge variant="subtle"></span>
         <span
           emphasis="magenta"
           icon="Star"
@@ -50,21 +65,13 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
           variant="subtle"
         ></span>
         <span
-          emphasis="orange"
+          emphasis="violet"
           icon="Star"
           q-icon-badge
           variant="subtle"
         ></span>
         <span
           emphasis="purple"
-          icon="Star"
-          q-icon-badge
-          variant="subtle"
-        ></span>
-        <span emphasis="red" icon="Star" q-icon-badge variant="subtle"></span>
-        <span emphasis="teal" icon="Star" q-icon-badge variant="subtle"></span>
-        <span
-          emphasis="yellow"
           icon="Star"
           q-icon-badge
           variant="subtle"

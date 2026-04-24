@@ -17,8 +17,10 @@ import {
   type SideNavNodeProviderProps,
 } from "./side-nav-node-provider"
 
-export interface SideNavNodesProps<T>
-  extends Omit<SideNavNodeProviderProps<T>, "children"> {
+export interface SideNavNodesProps<T> extends Omit<
+  SideNavNodeProviderProps<T>,
+  "children"
+> {
   groupBy?: (node: T, index: number) => PropertyKey | undefined
 
   /**

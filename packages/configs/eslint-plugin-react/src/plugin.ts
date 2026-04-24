@@ -3,12 +3,18 @@
 
 import type {ESLint, Linter} from "eslint"
 
-import {accessibleName, avatarImageAlt, inputLabelAssociation} from "./rules"
+import {
+  accessibleName,
+  avatarImageAlt,
+  inputLabelAssociation,
+  interactiveCardElementNesting,
+} from "./rules"
 
 export const rules = {
   "accessible-name": accessibleName,
   "avatar-image-alt": avatarImageAlt,
   "input-label-association": inputLabelAssociation,
+  "interactive-card-element-nesting": interactiveCardElementNesting,
 }
 
 export const plugin: ESLint.Plugin = {
@@ -26,6 +32,7 @@ export const config: Linter.Config[] = [
       "@qualcomm-ui/react/accessible-name": "error",
       "@qualcomm-ui/react/avatar-image-alt": "error",
       "@qualcomm-ui/react/input-label-association": "error",
+      "@qualcomm-ui/react/interactive-card-element-nesting": "error",
     },
   },
 ]

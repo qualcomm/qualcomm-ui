@@ -1,6 +1,5 @@
 ---
 title: Tree
-group: Disclosure
 description: Tree components display hierarchical data in a collapsible structure, allowing users to explore nested relationships while keeping the interface organized and navigable.
 component: Tree
 aliases: [treeview, file browser, hierarchical, nested]
@@ -77,7 +76,7 @@ expandable
 collapsible
 :::
 
-Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedChange](./#onExpandedChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedValueChange](./#onExpandedValueChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 <Demo
   name="TreeDefaultExpandedDemo"
@@ -91,7 +90,7 @@ multi-select
 selectable
 :::
 
-Use the `Tree.NodeCheckbox` to add a checkbox to each node. The checked state of the tree can be controlled using the [checkedValue](./#checkedValue), [onCheckedChange](./#onCheckedChange), and [defaultCheckedValue](./#defaultCheckedValue) props, which follow our [controlled state](/patterns/controlled-state) pattern.
+Use the `Tree.NodeCheckbox` to add a checkbox to each node. The checked state of the tree can be controlled using the [checkedValue](./#checkedValue), [onCheckedValueChange](./#onCheckedValueChange), and [defaultCheckedValue](./#defaultCheckedValue) props, which follow our [controlled state](/patterns/controlled-state) pattern.
 
 <Demo name="TreeCheckboxDemo" component={demos.TreeCheckboxDemo} />
 

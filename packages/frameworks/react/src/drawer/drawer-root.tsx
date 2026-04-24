@@ -18,8 +18,7 @@ import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {QdsDrawerContextProvider} from "./qds-drawer-context"
 
 export interface DrawerRootProps
-  extends CoreDialogRootProps,
-    QdsDrawerApiProps {
+  extends CoreDialogRootProps, QdsDrawerApiProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

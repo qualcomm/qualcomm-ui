@@ -23,6 +23,7 @@ async function build(argv: string[]) {
   const buildOpts: BuildOptions = {
     bundle: true,
     external: [
+      "@qualcomm-ui/core/*",
       "@qualcomm-ui/utils/*",
       "@qualcomm-ui/dom/*",
       "@qualcomm-ui/qds-core/*",

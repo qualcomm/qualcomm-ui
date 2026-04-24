@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/tailwind-plugin",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Qualcomm UI Tailwind Plugin",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -54,10 +54,10 @@
     "@qualcomm-ui/css-utils": "catalog:",
     "@qualcomm-ui/esbuild": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "esbuild": "^0.25.8",
+    "esbuild": "catalog:",
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.17",
-    "tsx": "^4.20.6",
+    "tsx": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {

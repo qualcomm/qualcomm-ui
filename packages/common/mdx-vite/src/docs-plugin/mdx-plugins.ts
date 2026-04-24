@@ -24,7 +24,7 @@ import {
   remarkMdxFrontmatter,
 } from "../exports"
 
-import {ConfigLoader, type ConfigLoaderOptions} from "./internal"
+import {ConfigLoader, type ConfigLoaderOptions} from "./config"
 import {rehypeSectionize, rehypeSlug, type RehypeSlugOptions} from "./rehype"
 import {
   remarkAlerts,
@@ -36,11 +36,6 @@ import {
 } from "./remark"
 import {remarkExtractMeta} from "./remark/remark-extract-meta"
 import {transformerCodeAttribute, transformerNotationHidden} from "./shiki"
-
-/**
- * @deprecated migrate to the {@link getRehypePlugins} function
- */
-export const quiRehypePlugins: PluggableList = [rehypeSectionize, rehypeSlug]
 
 export interface QuiRehypePluginOptions extends ConfigLoaderOptions {
   rehypeShikiOptions?: Partial<RehypeShikiOptions>
@@ -91,11 +86,6 @@ export function getRehypePlugins(
     ],
   ]
 }
-
-/**
- * @deprecated migrate to the {@link getRemarkPlugins} function
- */
-export const quiRemarkPlugins: PluggableList = [remarkAlerts, remarkCodeTabs]
 
 /**
  * @returns every remark plugin needed for QUI Docs MDX.

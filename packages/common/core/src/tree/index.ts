@@ -1,3 +1,4 @@
+export * from "./tree.anatomy"
 export * from "./tree.api"
 export * from "./tree.collection"
 export * from "./tree.machine"

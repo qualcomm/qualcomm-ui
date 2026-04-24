@@ -30,8 +30,10 @@ import {
   type InlineNotificationRootProps,
 } from "./inline-notification-root"
 
-export interface InlineNotificationProps
-  extends Omit<InlineNotificationRootProps, "children"> {
+export interface InlineNotificationProps extends Omit<
+  InlineNotificationRootProps,
+  "children"
+> {
   /**
    * The component used for the content of the action element.
    */

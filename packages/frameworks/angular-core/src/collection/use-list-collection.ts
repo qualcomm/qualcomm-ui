@@ -16,8 +16,10 @@ import {
 } from "@qualcomm-ui/utils/collection"
 import type {FilterReturn} from "@qualcomm-ui/utils/i18n"
 
-export interface UseListCollectionProps<T>
-  extends Omit<ListCollectionOptions<T>, "items"> {
+export interface UseListCollectionProps<T> extends Omit<
+  ListCollectionOptions<T>,
+  "items"
+> {
   /**
    * Filter strategy for the items. Use one of the predefined options, or pass as a
    * function for full control.

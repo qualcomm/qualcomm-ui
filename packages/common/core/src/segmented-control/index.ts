@@ -1,3 +1,4 @@
+export * from "./segmented-control.anatomy"
 export * from "./segmented-control.api"
 export * from "./segmented-control.machine"
 export * from "./segmented-control.props"

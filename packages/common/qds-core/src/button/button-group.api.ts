@@ -5,11 +5,14 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {buttonGroupAnatomy} from "./button-group.anatomy"
 import type {
   QdsButtonGroupApiProps,
   QdsButtonGroupBindings,
 } from "./button-group.types"
 import {buttonClasses} from "./button.classes"
+
+const parts = buttonGroupAnatomy.parts
 
 export function getQdsButtonGroupBindings(
   {
@@ -27,6 +30,7 @@ export function getQdsButtonGroupBindings(
   const hasAriaLabel = !!(ariaLabel || ariaLabelledby)
 
   return normalize.element({
+    ...parts.root,
     "aria-label": ariaLabel || undefined,
     "aria-labelledby": ariaLabelledby || undefined,
     className: buttonClasses.group,
@@ -34,7 +38,6 @@ export function getQdsButtonGroupBindings(
     "data-disabled": booleanDataAttr(disabled),
     "data-emphasis": emphasis || undefined,
     "data-layout": layout || "hug",
-    "data-scope": "button-group",
     "data-size": size || "md",
     "data-variant": variant || undefined,
     ...(hasAriaLabel && {role: "group"}),

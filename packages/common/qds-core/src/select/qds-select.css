@@ -84,23 +84,19 @@
 
   &[data-state="open"],
   &:focus,
-  &:focus-visible,
-  &:focus-within {
+  &:focus-visible {
     border-color: var(--color-utility-focus-border);
     outline: 1px solid var(--color-utility-focus-border);
   }
 
   &:disabled,
   &[data-disabled] {
+    --icon-color: var(--color-utility-disabled-icon);
     background: var(--color-utility-disabled-background);
     border-color: var(--color-utility-disabled-border);
     color: var(--color-utility-disabled-text);
     cursor: default;
     pointer-events: none;
-
-    .qui-select__trigger-icon {
-      color: var(--color-utility-disabled-icon);
-    }
   }
 
   .qui-select__indicator {
@@ -130,7 +126,7 @@
   }
 }
 
-.qui-select__trigger-icon {
+.qui-select__icon {
   color: var(--icon-color);
   &[data-size="sm"] {
     margin-right: calc(var(--spacing-50) - var(--select-trigger-gap));

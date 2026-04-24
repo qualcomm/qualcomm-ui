@@ -16,6 +16,7 @@ import {
   useRouteError,
 } from "react-router"
 
+import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
@@ -154,6 +155,10 @@ function App() {
           href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..500;1,400..500&display=swap"
+          rel="stylesheet"
+        />
         <link href="https://use.typekit.net/nhs4wvu.css" rel="stylesheet" />
       </head>
       <body>
@@ -260,8 +265,15 @@ export default function AppWithProviders() {
     }
   }, [])
 
+  const siteContext = useMemo(() => {
+    return {
+      ...docsSiteData,
+      getPages,
+    }
+  }, [docsSiteData])
+
   return (
-    <SiteContextProvider value={docsSiteData}>
+    <SiteContextProvider value={siteContext}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
           <QdsThemeContextProvider value={qdsThemeContext}>

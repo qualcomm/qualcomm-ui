@@ -6,6 +6,7 @@ import type {ReactElement, ReactNode} from "react"
 import {ChevronDown} from "lucide-react"
 
 import {Button, type ButtonProps} from "@qualcomm-ui/react/button"
+import {Icon} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsMenuContext} from "./qds-menu-context"
@@ -17,8 +18,21 @@ export interface MenuButtonProps extends Omit<ButtonProps, "endIcon"> {
   children?: ReactNode
 }
 
-export function MenuButton(props: MenuButtonProps): ReactElement {
+export function MenuButton({
+  children,
+  size,
+  ...props
+}: MenuButtonProps): ReactElement {
   const qdsMenuContext = useQdsMenuContext()
   const mergedProps = mergeProps(qdsMenuContext.getButtonBindings(), props)
-  return <Button {...mergedProps} endIcon={ChevronDown} />
+  return (
+    <Button {...mergedProps} size={size}>
+      {children}
+      <Icon
+        {...qdsMenuContext.getIndicatorBindings()}
+        icon={ChevronDown}
+        size={size}
+      />
+    </Button>
+  )
 }

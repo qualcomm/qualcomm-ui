@@ -10,14 +10,12 @@ import * as demos from "./demos"
 # {frontmatter.title}
 
 ::: terms
-windowed rows
-large dataset performance
-getTotalSize
+windowed rows, large dataset performance, getTotalSize
 :::
 
 Row virtualization renders only the visible rows to the DOM, improving performance when displaying large datasets. This example uses [TanStack Virtual](https://tanstack.com/virtual/latest) with `useVirtualizer` to display 30,000 rows with dynamic row height measurement and sorting.
 
-Row virtualization is not ideal from a UX standpoint. We recommend using [Pagination](/features/pagination-controlled) combined with [Filtering](/features/filters) instead.
+Row virtualization is not ideal from a UX standpoint. We recommend using [Pagination](/features/pagination-server-side) combined with [Filtering](/features/filters-server-side) instead.
 
 <Demo
   expanded

@@ -32,7 +32,7 @@ A layer is a top-level directory and the first level of application decompositio
 
 These layers help organize the codebase and promote modular, maintainable, and scalable architecture.
 
-##### Risk of Change
+#### Risk of Change
 
 - **Higher layers**: Changes here impact the entire system. They require thorough testing and validation.
 - **Lower layers**: Changes can ripple upward. Modifying a lower layer may affect multiple higher layers. Therefore, altering lower layers involves more risk.
@@ -43,12 +43,12 @@ In summary, **higher layers** bear more responsibility and knowledge, while **lo
 
 **Slices** represent a way to organize code within a **layer**. They group together files that implement specific functionality related to the business logic.
 
-##### Purpose and Scope
+#### Purpose and Scope
 
 - **Functionality**: Slices focus on a particular aspect of the application's functionality. For example, you might have slices for user authentication, data processing, or reporting.
 - **Project Context**: The impact of slices depends on the specific project. Some projects may have many slices, while others might have only a few.
 
-##### Implementation
+#### Implementation
 
 - **Folder Structure**: Slices are typically organized as folders or directories. Each slice contains related files, such as controllers, models, and views.
 - **Module Isolation**: By grouping related files together, slices promote modularity and maintainability. Changes within a slice should have no impact on other slices in the same layer.
@@ -63,7 +63,7 @@ In summary, **higher layers** bear more responsibility and knowledge, while **lo
 - `ui/` – ui components, responsible for displaying data.
 - `index.ts` – barrel file. This is the public entrypoint for the slice. Any code within the slice that is intended to be used by higher layers must be exported here.
 
-##### Characteristics
+#### Characteristics
 
 - **Independent Units**: Each segment is responsible for a distinct part of the module's technical implementation.
 - **Focused Scope**: Segments handle specific tasks, such as data processing (model), data display (ui), or communication with external services (api).
@@ -100,7 +100,7 @@ Example: City and Product are entities, whereas SearchByCity and BuyProduct are 
 
 Let's consider a few examples:
 
-##### 1. Social Network Application
+#### 1. Social Network Application
 
 In a social network application, the features could be `SendComment`, `LikePost`, and `JoinGroup`. The `SendComment` feature might involve operations like creating a new comment, updating a comment, or deleting a comment. Similarly, the `LikePost` feature might involve operations like liking a post, unliking a post, etc.
 
@@ -122,7 +122,7 @@ Each slice in this layer contains some or all of the following:
 
 Let's consider a few examples:
 
-##### 1. Social Network Application
+#### 1. Social Network Application
 
 In a social network application, the entities could be `User`, `Post`, and `Group`. The `User` entity might contain functionality like creating a new user, updating user information, or deleting a user. Similarly, the `Post` entity might include functionality related to creating, updating, or deleting a post.
 

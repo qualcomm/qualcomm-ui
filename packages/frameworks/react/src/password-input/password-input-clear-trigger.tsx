@@ -11,8 +11,7 @@ import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface PasswordInputClearTriggerProps
-  extends ElementRenderProp<"button"> {}
+export interface PasswordInputClearTriggerProps extends ElementRenderProp<"button"> {}
 
 export function PasswordInputClearTrigger(
   props: PasswordInputClearTriggerProps,

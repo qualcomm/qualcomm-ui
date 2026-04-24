@@ -4,16 +4,16 @@ import {ExternalLink} from "lucide-angular"
 
 import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
-  imports: [MenuModule, PortalComponent, RouterLink],
+  imports: [MenuModule, PortalDirective, RouterLink],
   providers: [provideIcons({ExternalLink})],
   selector: "menu-links-demo",
   template: `
     <q-menu>
       <button emphasis="primary" q-menu-button variant="fill">Show Menu</button>
-      <q-portal>
+      <ng-container *qPortal>
         <div q-menu-positioner>
           <!-- preview -->
           <div q-menu-content>
@@ -37,7 +37,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
           </div>
           <!-- preview -->
         </div>
-      </q-portal>
+      </ng-container>
     </q-menu>
   `,
 })

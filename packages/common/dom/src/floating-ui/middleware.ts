@@ -44,6 +44,7 @@ export const cssVars: Record<
   | "arrowHeight"
   | "arrowWidth"
   | "arrowSizeHalf"
+  | "gutter"
   | "referenceWidth"
   | "transformOrigin",
   CssVar
@@ -54,6 +55,7 @@ export const cssVars: Record<
   arrowSize: toVar("--arrow-size"),
   arrowSizeHalf: toVar("--arrow-size-half"),
   arrowWidth: toVar("--arrow-width", "--arrow-size"),
+  gutter: toVar("--gutter"),
   referenceWidth: toVar("--reference-width"),
   transformOrigin: toVar("--transform-origin"),
 } as const

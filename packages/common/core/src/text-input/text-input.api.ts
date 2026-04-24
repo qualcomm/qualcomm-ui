@@ -15,6 +15,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import {domIds} from "./internal"
+import {textInputAnatomy} from "./text-input.anatomy"
 import type {
   TextInputApi,
   TextInputClearTriggerBindings,
@@ -26,12 +27,9 @@ import type {
   TextInputLabelBindings,
   TextInputRootBindings,
   TextInputSchema,
-  TextInputScopeAttribute,
 } from "./text-input.types"
 
-const commonBindings: TextInputScopeAttribute = {
-  "data-scope": "text-input",
-}
+const parts = textInputAnatomy.parts
 
 export function createTextInputApi(
   machine: Machine<TextInputSchema>,
@@ -60,11 +58,9 @@ export function createTextInputApi(
     // group: prop getters
     getClearTriggerBindings(): TextInputClearTriggerBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.clearTrigger,
         "aria-label": "Clear input",
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "clear-trigger",
-        dir: prop("dir"),
         disabled,
         onClick: (event) => {
           if (!interactive || event.defaultPrevented) {
@@ -73,15 +69,14 @@ export function createTextInputApi(
           send({type: "VALUE.SET", value: ""})
           send({type: "INPUT.FOCUS"})
         },
+        type: "button",
       })
     },
 
     getErrorIndicatorBindings(): TextInputErrorIndicatorBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorIndicator,
         "aria-label": "Error",
-        "data-part": "error-indicator",
-        dir: prop("dir"),
         hidden: !prop("invalid"),
       })
     },
@@ -91,10 +86,8 @@ export function createTextInputApi(
     ): TextInputErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
-        dir: prop("dir"),
         hidden: !invalid,
         id: domIds.errorText(scope),
       })
@@ -103,10 +96,8 @@ export function createTextInputApi(
     getHintBindings(props: IdRegistrationProps): TextInputHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "hint",
-        dir: prop("dir"),
         hidden: !!invalid,
         id: domIds.hint(scope),
       })
@@ -115,7 +106,7 @@ export function createTextInputApi(
     getInputBindings(props: IdRegistrationProps): TextInputInputBindings {
       scope.ids.register("input", props)
       return normalize.input({
-        ...commonBindings,
+        ...parts.input,
         "aria-describedby": ariaAttr(domIds.hint(scope)),
         "aria-invalid": booleanAriaAttr(invalid),
         "aria-labelledby": mergeAriaIds(
@@ -127,10 +118,8 @@ export function createTextInputApi(
         "data-empty": booleanDataAttr(!context.get("value")),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input",
         "data-readonly": booleanDataAttr(readOnly),
         defaultValue: context.get("value"),
-        dir: prop("dir"),
         disabled,
         form: prop("form"),
         id: domIds.input(scope),
@@ -157,13 +146,11 @@ export function createTextInputApi(
     },
     getInputGroupBindings(): TextInputInputGroupBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.inputGroup,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input-group",
         "data-readonly": booleanDataAttr(readOnly),
-        dir: prop("dir"),
         onClick: (event) => {
           if (event.defaultPrevented || disabled) {
             return
@@ -175,12 +162,10 @@ export function createTextInputApi(
     getLabelBindings(props: IdRegistrationProps): TextInputLabelBindings {
       scope.ids.register("label", props)
       return normalize.label({
-        ...commonBindings,
+        ...parts.label,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "label",
-        dir: prop("dir"),
         htmlFor: domIds.input(scope),
         id: domIds.label(scope),
       })
@@ -188,11 +173,10 @@ export function createTextInputApi(
 
     getRootBindings(): TextInputRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "root",
         dir: prop("dir"),
       })
     },

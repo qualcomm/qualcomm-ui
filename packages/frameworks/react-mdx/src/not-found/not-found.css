@@ -4,3 +4,8 @@
   gap: 24px;
   margin-top: 16px;
 }
+
+.qui-docs__not-found-url {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-body-lg-default);
+}

@@ -7,7 +7,7 @@ vi.mock("node:child_process", () => ({
   execSync: () => "",
 }))
 
-import {SearchIndexer} from "../internal"
+import {SearchIndexer} from "../search-indexer"
 
 import {readJsonSync, writeJsonSync} from "./utils"
 

@@ -21,7 +21,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsAvatarContextProvider} from "./qds-avatar-context"
 
 export interface AvatarRootProps
-  extends AvatarApiProps,
+  extends
+    AvatarApiProps,
     QdsAvatarApiProps,
     IdProp,
     Omit<ElementRenderProp<"div">, "dir"> {

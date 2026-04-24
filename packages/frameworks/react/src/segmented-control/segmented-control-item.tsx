@@ -10,8 +10,7 @@ import {
 } from "./segmented-control-item-root"
 import {SegmentedControlItemText} from "./segmented-control-item-text"
 
-export interface SegmentedControlItemProps
-  extends SegmentedControlItemRootProps {
+export interface SegmentedControlItemProps extends SegmentedControlItemRootProps {
   /**
    * The simple component doesn't support children.
    */

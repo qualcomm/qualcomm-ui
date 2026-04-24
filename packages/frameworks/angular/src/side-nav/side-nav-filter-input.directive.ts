@@ -4,6 +4,8 @@
 import {Directive, type OnInit} from "@angular/core"
 
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {useSideNavContext} from "@qualcomm-ui/angular-core/side-nav"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSideNavContext} from "./qds-side-nav-context.service"
 
@@ -12,10 +14,14 @@ import {useQdsSideNavContext} from "./qds-side-nav-context.service"
   standalone: false,
 })
 export class SideNavFilterInputDirective implements OnInit {
+  protected readonly sideNavContext = useSideNavContext()
   protected readonly qdsContext = useQdsSideNavContext()
 
   protected readonly trackBindings = useTrackBindings(() =>
-    this.qdsContext().getFilterInputBindings(),
+    mergeProps(
+      this.sideNavContext().getFilterInputBindings(),
+      this.qdsContext().getFilterInputBindings(),
+    ),
   )
 
   ngOnInit() {

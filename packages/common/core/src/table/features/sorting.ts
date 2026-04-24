@@ -214,8 +214,7 @@ type ResolvedSortingFns = keyof SortingFns extends never
     }
 
 export interface SortingOptions<_TData extends RowData>
-  extends SortingOptionsBase,
-    ResolvedSortingFns {}
+  extends SortingOptionsBase, ResolvedSortingFns {}
 
 export interface SortingInstance<TData extends RowData> {
   /** @internal */

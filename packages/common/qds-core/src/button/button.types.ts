@@ -1,8 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
+import type {buttonAnatomy} from "./button.anatomy"
 import type {buttonClasses} from "./button.classes"
 
 /**
@@ -19,6 +21,7 @@ export type QdsButtonEmphasis =
   | "danger"
   | "white-persistent"
   | "black-persistent"
+  | "inverse"
 
 export type QdsButtonSize = "sm" | "md" | "lg"
 
@@ -38,7 +41,7 @@ export interface QdsButtonApiProps {
    *
    * @default false
    */
-  disabled?: boolean
+  disabled?: boolean | undefined
 
   /**
    * The style variant of the button. Governs colors.
@@ -64,32 +67,28 @@ export interface QdsButtonApiProps {
 
 type ButtonClasses = typeof buttonClasses
 
-export interface QdsButtonScope extends QdsButtonApiProps {
-  "data-scope": "button"
-}
+type PartName = AnatomyPartName<typeof buttonAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"button", P> {}
 
-export interface QdsButtonRootBindings extends QdsButtonScope {
+export interface QdsButtonRootBindings extends Part<"root"> {
   className: ButtonClasses["root"]
   "data-density": QdsButtonDensity
   "data-disabled": BooleanDataAttr
   "data-kind": "text"
-  "data-part": "root"
   "data-size": QdsButtonSize
   "data-variant": QdsButtonVariant
 }
 
-export interface QdsButtonStartIconBindings extends QdsButtonScope {
+export interface QdsButtonStartIconBindings extends Part<"icon"> {
   className: ButtonClasses["icon"]
   "data-density": QdsButtonDensity
-  "data-part": "icon"
   "data-placement": "start"
   "data-size": QdsButtonSize
 }
 
-export interface QdsButtonEndIconBindings extends QdsButtonScope {
+export interface QdsButtonEndIconBindings extends Part<"icon"> {
   className: ButtonClasses["icon"]
   "data-density": QdsButtonDensity
-  "data-part": "icon"
   "data-placement": "end"
   "data-size": QdsButtonSize
 }

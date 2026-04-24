@@ -6,7 +6,7 @@
 
 import {trackDismissableElement} from "@qualcomm-ui/dom/dismissable"
 import {getPlacement, type Placement} from "@qualcomm-ui/dom/floating-ui"
-import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
+import {isFocusVisible, trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {
   getByTypeahead,
   getInitialFocus,
@@ -290,7 +290,7 @@ export const selectMachine: MachineConfig<SelectSchema> =
           const element = getInitialFocus({
             root: domEls.content(scope),
           })
-          element?.focus({preventScroll: true})
+          element?.focus({focusVisible: isFocusVisible(), preventScroll: true})
         })
       },
 
@@ -351,8 +351,11 @@ export const selectMachine: MachineConfig<SelectSchema> =
           return
         }
 
-        for (const option of selectEl.options) {
-          option.selected = context.get("value").includes(option.value)
+        for (let i = 0; i < selectEl.options.length; i++) {
+          const option = selectEl.options.item(i)
+          if (option) {
+            option.selected = context.get("value").includes(option.value)
+          }
         }
       },
 
@@ -623,7 +626,6 @@ export const selectMachine: MachineConfig<SelectSchema> =
         ...props,
         collection: props.collection ?? emptyCollection(),
         positioning: {
-          gutter: 2,
           placement: "bottom-start",
           sameWidth: true,
           ...props.positioning,

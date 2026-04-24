@@ -13,7 +13,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-context"
 
 export interface TableColumnDropIndicatorProps
-  extends Omit<ElementRenderProp<"div">, "children">,
+  extends
+    Omit<ElementRenderProp<"div">, "children">,
     QdsTableColumnDropIndicatorProps {}
 
 /**

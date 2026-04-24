@@ -102,11 +102,10 @@ export interface RenderStrategyApi {
   unmountOnExit: boolean | undefined
 }
 
-export interface PresenceApi
-  extends Pick<
-    PresenceApiProps,
-    "lazyMount" | "skipAnimationOnMount" | "unmountOnExit"
-  > {
+export interface PresenceApi extends Pick<
+  PresenceApiProps,
+  "lazyMount" | "skipAnimationOnMount" | "unmountOnExit"
+> {
   /**
    * Whether the node is present in the DOM.
    */

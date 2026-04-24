@@ -65,6 +65,7 @@ export const tooltipMachine: MachineConfig<TooltipSchema> =
         const triggerEl = scope.getById(scope.ids.get("trigger"))
         const getPositionerEl = () => scope.getById(scope.ids.get("positioner"))
         return getPlacement(triggerEl, getPositionerEl, {
+          arrowSelector: "[data-tooltip-part=arrow]",
           ...prop("positioning"),
           defer: true,
           onComplete(data) {

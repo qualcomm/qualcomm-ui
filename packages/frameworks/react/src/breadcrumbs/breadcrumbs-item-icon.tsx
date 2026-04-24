@@ -10,8 +10,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context"
 
-export interface BreadcrumbsItemIconProps
-  extends Omit<ElementRenderProp<"span">, "children"> {
+export interface BreadcrumbsItemIconProps extends Omit<
+  ElementRenderProp<"span">,
+  "children"
+> {
   /**
    * The icon or element to render before the item.
    */

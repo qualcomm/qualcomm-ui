@@ -41,8 +41,8 @@ import {initInputFormControl} from "./input-form-control-provider"
 
 @Directive()
 export abstract class AbstractBaseListCollectionFormControlDirective<
-    T extends CollectionItem,
-  >
+  T extends CollectionItem,
+>
   implements ControlValueAccessor, OnInit
 {
   /**

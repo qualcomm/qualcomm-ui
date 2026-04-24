@@ -17,8 +17,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsProgressContextProvider} from "./qds-progress-context"
 
 export interface ProgressRootProps
-  extends CoreProgressRootProps,
-    QdsProgressApiProps {}
+  extends CoreProgressRootProps, QdsProgressApiProps {}
 
 /**
  * Root container for a progress indicator. Renders a `<div>` element by default.

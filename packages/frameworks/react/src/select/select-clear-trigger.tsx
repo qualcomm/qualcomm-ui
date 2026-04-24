@@ -13,8 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsSelectContext} from "./qds-select-context"
 
 export interface SelectClearTriggerProps
-  extends IdProp,
-    ElementRenderProp<"button"> {}
+  extends IdProp, ElementRenderProp<"button"> {}
 
 /**
  * Button that clears the selected value. Renders a `<button>` element by default.

@@ -7,8 +7,7 @@ import {useTheme} from "@qualcomm-ui/react-router-utils/client"
 import {Swagger, SwaggerProps, SwaggerUIProps} from "@qualcomm-ui/react-swagger"
 
 export interface DocSwaggerProps
-  extends SwaggerUIProps,
-    Pick<SwaggerProps, "hideTitleSection"> {}
+  extends SwaggerUIProps, Pick<SwaggerProps, "hideTitleSection"> {}
 
 export function DocSwagger({...props}: DocSwaggerProps): ReactNode {
   const [theme] = useTheme()

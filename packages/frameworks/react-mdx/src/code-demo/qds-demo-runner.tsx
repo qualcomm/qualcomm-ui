@@ -15,7 +15,8 @@ import {QdsDemoThemeSelector} from "./internal"
 import {QdsReactDemo, type QdsReactDemoProps} from "./qds-react-demo"
 
 export interface QdsDemoRunnerProps
-  extends ComponentPropsWithRef<"div">,
+  extends
+    ComponentPropsWithRef<"div">,
     Pick<QdsReactDemoProps, "name" | "updating" | "onDemoRendered"> {
   className?: string
 

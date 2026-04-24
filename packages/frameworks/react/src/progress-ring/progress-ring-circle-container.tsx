@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsProgressRingContext} from "./qds-progress-ring-context"
 
-export interface ProgressRingCircleContainerProps
-  extends ElementRenderProp<"div"> {
+export interface ProgressRingCircleContainerProps extends ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

@@ -1,2 +1,0 @@
-- Add DocProps test to validate parsing.
-- Reduce the number of times that the file is parsed with unified. Ideally, this should happen once per file.

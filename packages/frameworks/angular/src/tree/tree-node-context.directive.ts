@@ -28,8 +28,8 @@ export class TreeNodeContextDirective<
 
   static ngTemplateContextGuard<T extends TreeNode>(
     dir: TreeNodeContextDirective<T>,
-    ctx: unknown,
-  ): ctx is {$implicit: NodeState<T>} {
+    _ctx: unknown,
+  ): _ctx is {$implicit: NodeState<T>} {
     return true
   }
 }

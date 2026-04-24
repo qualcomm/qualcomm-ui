@@ -10,7 +10,8 @@ import {
 } from "@qualcomm-ui/react-core/system"
 
 export interface HeaderBarActionButtonProps
-  extends ElementRenderProp<"button">,
+  extends
+    ElementRenderProp<"button">,
     Pick<ButtonProps, "startIcon" | "endIcon"> {}
 
 export function HeaderBarActionButton({

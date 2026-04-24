@@ -21,12 +21,12 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import {getTabButtonEl, tabsDomIds} from "./internal"
+import {tabsAnatomy} from "./tabs.anatomy"
 import type {
   PanelProps,
   TabDismissButtonApiProps,
   TabProps,
   TabsApi,
-  TabsCommonBindings,
   TabsIndicatorBindings,
   TabsListBindings,
   TabsPanelBindings,
@@ -37,6 +37,8 @@ import type {
   TabsTabDismissButtonBindings,
   TabState,
 } from "./tabs.types"
+
+const parts = tabsAnatomy.parts
 
 export function createTabsApi(
   machine: Machine<TabsSchema>,
@@ -50,11 +52,6 @@ export function createTabsApi(
   const isVertical = prop("orientation") === "vertical"
   const isHorizontal = prop("orientation") === "horizontal"
   const composite = prop("composite")
-
-  const commonBindings: TabsCommonBindings = {
-    "data-scope": "tabs",
-    dir: prop("dir"),
-  }
 
   function getTabState(props: TabProps): TabState {
     return {
@@ -96,11 +93,10 @@ export function createTabsApi(
       const indicatorTransition = context.get("indicatorTransition")
 
       return normalize.element({
-        ...commonBindings,
+        ...parts.indicator,
         "data-focus": booleanDataAttr(!!context.get("focusedValue")),
         "data-focus-visible": booleanDataAttr(context.get("focusVisible")),
         "data-orientation": prop("orientation"),
-        "data-part": "indicator",
         id: props.id,
         style: {
           "--height": indicatorRect.height,
@@ -124,12 +120,11 @@ export function createTabsApi(
     getListBindings(props): TabsListBindings {
       scope.ids.register("list", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.list,
         "aria-label": translations?.listLabel,
         "aria-orientation": prop("orientation"),
         "data-focus": booleanDataAttr(focused),
         "data-orientation": prop("orientation"),
-        "data-part": "list",
         id: props.id,
         onKeyDown(event) {
           if (event.defaultPrevented) {
@@ -204,11 +199,10 @@ export function createTabsApi(
 
       const selected = context.get("value") === value
       return normalize.element({
-        ...commonBindings,
+        ...parts.panel,
         "aria-labelledby": tabsDomIds.tabButton(scope, value)!,
         "data-orientation": prop("orientation"),
         "data-ownedby": tabsDomIds.list(scope),
-        "data-part": "panel",
         "data-selected": booleanDataAttr(selected),
         hidden: !selected,
         id,
@@ -218,17 +212,16 @@ export function createTabsApi(
     },
     getRootBindings(): TabsRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-focus": booleanDataAttr(focused),
         "data-orientation": prop("orientation"),
-        "data-part": "root",
+        dir: prop("dir"),
       })
     },
     getTabBindings(): TabsTabBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.tab,
         "data-orientation": prop("orientation"),
-        "data-part": "tab",
       })
     },
     getTabButtonBindings(
@@ -238,7 +231,7 @@ export function createTabsApi(
       scope.ids.collection("tabButton").register(value, id, onDestroy)
       const tabState = getTabState(props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.tabButton,
         "aria-controls": tabState.selected
           ? tabsDomIds.panel(scope, value)
           : undefined,
@@ -252,7 +245,6 @@ export function createTabsApi(
         ),
         "data-orientation": prop("orientation"),
         "data-ownedby": tabsDomIds.list(scope),
-        "data-part": "tab-button",
         "data-selected": booleanDataAttr(tabState.selected),
         "data-value": value,
         disabled,
@@ -293,9 +285,8 @@ export function createTabsApi(
       props: TabDismissButtonApiProps = {},
     ): TabsTabDismissButtonBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.tabDismissButton,
         "aria-label": props["aria-label"] || "Close",
-        "data-part": "tab-dismiss-button",
         onClick(event) {
           event.stopPropagation()
         },
@@ -305,8 +296,7 @@ export function createTabsApi(
     },
     getTabIconBindings() {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "tab-icon",
+        ...parts.tabIcon,
       })
     },
   }

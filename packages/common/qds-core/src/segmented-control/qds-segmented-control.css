@@ -62,7 +62,7 @@
     font: var(--font-static-body-xs-bold);
     gap: var(--spacing-50);
     padding-inline: var(--spacing-80);
-    &:has([data-part="item-label"]) {
+    &:has([data-checkbox-part="label"]) {
       padding-inline: var(--spacing-90);
     }
     --divider-height: var(--sizing-60);
@@ -75,7 +75,7 @@
     font: var(--font-static-body-sm-bold);
     gap: var(--spacing-70);
     padding-inline: var(--spacing-90);
-    &:has([data-part="item-label"]) {
+    &:has([data-checkbox-part="label"]) {
       padding-inline: var(--spacing-100);
     }
     --divider-height: var(--sizing-70);
@@ -88,7 +88,7 @@
     font: var(--font-static-body-lg-bold);
     gap: var(--spacing-90);
     padding-inline: 14px; /* no CSS variable for this one */
-    &:has([data-part="item-label"]) {
+    &:has([data-checkbox-part="label"]) {
       padding-inline: var(--spacing-110);
     }
     --divider-height: var(--sizing-80);

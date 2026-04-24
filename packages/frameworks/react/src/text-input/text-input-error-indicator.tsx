@@ -10,8 +10,7 @@ import {
 import {useTextInputContext} from "@qualcomm-ui/react-core/text-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface TextInputErrorIndicatorProps
-  extends InputErrorIndicatorProps {}
+export interface TextInputErrorIndicatorProps extends InputErrorIndicatorProps {}
 
 /**
  * Visual indicator displayed when the input is invalid. Renders a `<div>` element

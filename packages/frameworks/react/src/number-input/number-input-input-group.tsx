@@ -16,8 +16,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsNumberInputContext} from "./qds-number-input-context"
 
-export interface NumberInputInputGroupProps
-  extends CoreNumberInputInputGroupProps {}
+export interface NumberInputInputGroupProps extends CoreNumberInputInputGroupProps {}
 
 export function NumberInputInputGroup({
   children,

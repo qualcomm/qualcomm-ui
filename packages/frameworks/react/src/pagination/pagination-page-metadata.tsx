@@ -15,8 +15,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsPaginationContext} from "./qds-pagination-context"
 
-export interface PaginationPageMetadataProps
-  extends Omit<ElementRenderProp<"div">, "children"> {
+export interface PaginationPageMetadataProps extends Omit<
+  ElementRenderProp<"div">,
+  "children"
+> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

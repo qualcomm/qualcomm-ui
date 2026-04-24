@@ -1,11 +1,7 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist",
-    "jsx": "preserve"
   },
-  "include": ["./src"],
   "references": [
     {
       "path": "./tsconfig.lib.json"
@@ -15,6 +11,9 @@
     },
     {
       "path": "./tsconfig.test.json"
+    },
+    {
+      "path": "../typedoc-common/tsconfig.lib.json"
     }
   ]
 }

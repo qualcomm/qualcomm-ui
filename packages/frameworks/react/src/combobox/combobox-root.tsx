@@ -24,8 +24,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsComboboxContextProvider} from "./qds-combobox-context"
 
 export interface ComboboxRootProps<T extends CollectionItem>
-  extends CoreComboboxRootProps<T>,
-    QdsSelectApiProps {
+  extends CoreComboboxRootProps<T>, QdsSelectApiProps {
   /**
    * {@link https://lucide.dev lucide} icon, positioned at the start of the
    * input field.

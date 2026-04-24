@@ -1,5 +1,6 @@
 export type * from "./demo-plugin.types"
 export type * from "./docs-plugin.types"
+export * from "./docs-plugin.utils"
 export * from "./id-service"
 export * from "./search"
 export * from "./shiki-themes"

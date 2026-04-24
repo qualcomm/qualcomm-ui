@@ -5,8 +5,9 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {Placement, PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {
   ActionSchema,
   EffectSchema,
@@ -14,6 +15,8 @@ import type {
   IdRegistrationProps,
   JSX,
 } from "@qualcomm-ui/utils/machine"
+
+import type {tooltipAnatomy} from "./tooltip.anatomy"
 
 export interface TooltipApiProps extends DirectionProperty {
   /**
@@ -103,27 +106,23 @@ export interface TooltipSchema {
   props: TooltipApiProps
 }
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "tooltip"
+type PartName = AnatomyPartName<typeof tooltipAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"tooltip", P> {}
+
+export interface TooltipRootBindings extends Part<"root"> {
+  dir: Direction
 }
 
-export interface TooltipArrowBindings extends CommonBindings {
-  "data-part": "arrow"
+export interface TooltipArrowBindings extends Part<"arrow"> {
   id: string
   style: JSX.CSSProperties
 }
 
-export interface TooltipArrowTipBindings extends CommonBindings {
-  "data-part": "arrowTip"
+export interface TooltipArrowTipBindings extends Part<"arrowTip"> {
   style: JSX.CSSProperties
 }
 
-export interface TooltipRootBindings {
-  "data-part": "root"
-}
-
-export interface TooltipContentBindings extends CommonBindings {
-  "data-part": "content"
+export interface TooltipContentBindings extends Part<"content"> {
   "data-placement": Placement | undefined
   "data-state": "open" | "closed"
   hidden: boolean
@@ -131,16 +130,14 @@ export interface TooltipContentBindings extends CommonBindings {
   role: "tooltip"
 }
 
-export interface TooltipPositionerBindings extends CommonBindings {
-  "data-part": "positioner"
+export interface TooltipPositionerBindings extends Part<"positioner"> {
   id: string
   style: JSX.CSSProperties
 }
 
-export interface TooltipTriggerBindings extends CommonBindings {
+export interface TooltipTriggerBindings extends Part<"trigger"> {
   "aria-describedby": string | undefined
   "data-expanded": BooleanDataAttr
-  "data-part": "trigger"
   "data-state": "open" | "closed"
   id: string
   onBlur: JSX.FocusEventHandler

@@ -3,14 +3,15 @@
 
 import {useCallback, useMemo, useState} from "react"
 
-import type {
-  FieldApiProps,
-  FieldControlBindings,
-  FieldErrorTextBindings,
-  FieldHintBindings,
-  FieldLabelBindings,
-  FieldRequiredIndicatorBindings,
-  FieldRootBindings,
+import {
+  fieldAnatomy,
+  type FieldApiProps,
+  type FieldControlBindings,
+  type FieldErrorTextBindings,
+  type FieldHintBindings,
+  type FieldLabelBindings,
+  type FieldRequiredIndicatorBindings,
+  type FieldRootBindings,
 } from "@qualcomm-ui/core/field"
 import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
@@ -20,9 +21,7 @@ import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {type FieldContextValue, useFieldContext} from "./field-context"
 import {useFieldsetContext} from "./fieldset-context"
 
-const scope: {"data-scope": "field"} = {
-  "data-scope": "field",
-}
+const parts = fieldAnatomy.parts
 
 export function useField(props: FieldApiProps): FieldContextValue {
   const fieldsetDisabled = useFieldsetContext()?.disabled
@@ -52,10 +51,9 @@ export function useField(props: FieldApiProps): FieldContextValue {
 
   const getRootBindings = useCallback<() => FieldRootBindings>(
     () => ({
-      ...scope,
+      ...parts.root,
       "data-disabled": booleanDataAttr(disabled),
       "data-invalid": booleanDataAttr(invalid),
-      "data-part": "root",
       "data-readonly": booleanDataAttr(readOnly),
       dir,
       role: "group",
@@ -65,69 +63,59 @@ export function useField(props: FieldApiProps): FieldContextValue {
 
   const getLabelBindings = useCallback<() => FieldLabelBindings>(
     () => ({
-      ...scope,
+      ...parts.label,
       "data-disabled": booleanDataAttr(disabled),
       "data-invalid": booleanDataAttr(invalid),
-      "data-part": "label",
       "data-required": booleanDataAttr(required),
-      dir,
       htmlFor: controlId,
       id: labelId!,
     }),
-    [controlId, dir, disabled, invalid, labelId, required],
+    [controlId, disabled, invalid, labelId, required],
   )
 
   const getControlBindings = useCallback<() => FieldControlBindings>(
     () => ({
-      ...scope,
+      ...parts.control,
       "aria-describedby": labelIds,
       "aria-invalid": booleanAriaAttr(invalid),
       "data-disabled": booleanDataAttr(disabled),
       "data-invalid": booleanDataAttr(invalid),
-      "data-part": "control",
       "data-required": booleanDataAttr(required),
-      dir,
       disabled,
       id: controlId,
       readOnly,
       required: booleanDataAttr(required),
     }),
-    [dir, labelIds, invalid, disabled, required, controlId, readOnly],
+    [labelIds, invalid, disabled, required, controlId, readOnly],
   )
 
   const getHintBindings = useCallback<() => FieldHintBindings>(
     () => ({
-      ...scope,
+      ...parts.hint,
       "data-disabled": booleanDataAttr(disabled),
-      "data-part": "hint",
-      dir,
       id: hintId!,
     }),
-    [dir, disabled, hintId],
+    [disabled, hintId],
   )
 
   const getErrorTextBindings = useCallback<() => FieldErrorTextBindings>(
     () => ({
-      ...scope,
+      ...parts.errorText,
       "aria-live": "polite",
       "data-disabled": booleanDataAttr(disabled),
-      "data-part": "error-text",
-      dir,
       id: errorTextId!,
     }),
-    [dir, disabled, errorTextId],
+    [disabled, errorTextId],
   )
 
   const getRequiredIndicatorBindings = useCallback<
     () => FieldRequiredIndicatorBindings
   >(
     () => ({
-      ...scope,
+      ...parts.requiredIndicator,
       "aria-hidden": "true",
-      "data-part": "required-indicator",
-      dir,
     }),
-    [dir],
+    [],
   )
 
   return useMemo<FieldContextValue>(

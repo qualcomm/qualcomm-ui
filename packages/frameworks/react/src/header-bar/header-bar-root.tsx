@@ -13,8 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsHeaderBarApi} from "./qds-header-bar-context"
 
 export interface HeaderBarRootProps
-  extends ElementRenderProp<"div">,
-    QdsHeaderBarRootProps {}
+  extends ElementRenderProp<"div">, QdsHeaderBarRootProps {}
 
 export function HeaderBarRoot({
   padding,

@@ -17,8 +17,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {CheckmarkIcon} from "./checkmark-icon"
 
 export interface CheckmarkProps
-  extends ElementRenderProp<"div">,
-    QdsCheckmarkApiProps {}
+  extends ElementRenderProp<"div">, QdsCheckmarkApiProps {}
 
 export function Checkmark({
   checked,

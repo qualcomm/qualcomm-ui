@@ -29,8 +29,7 @@ interface QdsBreadcrumbsCommonBindings {
   "data-size": QdsBreadcrumbsSize
 }
 
-export interface QdsBreadcrumbsRootBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsRootBindings extends QdsBreadcrumbsCommonBindings {
   className: BreadcrumbsClasses["root"]
 }
 
@@ -43,21 +42,18 @@ export interface QdsBreadcrumbsItemBindings {
   "data-disabled": BooleanDataAttr
 }
 
-export interface QdsBreadcrumbsItemSeparatorBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsItemSeparatorBindings extends QdsBreadcrumbsCommonBindings {
   "aria-hidden": true
   className: BreadcrumbsClasses["separator"]
   "data-size": QdsBreadcrumbsSize
 }
 
-export interface QdsBreadcrumbsItemIconBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsItemIconBindings extends QdsBreadcrumbsCommonBindings {
   className: BreadcrumbsClasses["itemIcon"]
   "data-emphasis": QdsBreadcrumbsEmphasis
 }
 
-export interface QdsBreadcrumbsItemTriggerBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsItemTriggerBindings extends QdsBreadcrumbsCommonBindings {
   className: BreadcrumbsClasses["itemTrigger"]
   "data-emphasis": QdsBreadcrumbsEmphasis
 }

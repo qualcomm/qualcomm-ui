@@ -13,11 +13,10 @@ import type {
   QdsButtonGroupApiProps,
 } from "@qualcomm-ui/qds-core/button"
 
-export interface ButtonGroupContextValue
-  extends Pick<
-    QdsButtonGroupApiProps,
-    keyof QdsButtonGroupApiProps & keyof QdsButtonApiProps
-  > {}
+export interface ButtonGroupContextValue extends Pick<
+  QdsButtonGroupApiProps,
+  keyof QdsButtonGroupApiProps & keyof QdsButtonApiProps
+> {}
 
 @Injectable()
 export class QdsButtonGroupContextService extends BaseApiContextService<ButtonGroupContextValue> {}

@@ -1,4 +1,5 @@
 import {defineConfig} from "eslint/config"
+import {join} from "node:path"
 import tseslint from "typescript-eslint"
 
 import quiEslintAngular from "@qualcomm-ui/eslint-config-angular"
@@ -40,6 +41,7 @@ export default defineConfig(
       "**/frameworks/react-internal/files/component-list.md",
       "packages/docs/*/knowledge/**",
       "**/generated/**",
+      "packages/**/qui-env.d.ts",
     ],
   },
   {
@@ -148,7 +150,7 @@ export default defineConfig(
       quiEslintPluginReact.config,
     ],
     files: [
-      "packages/*/{qui-site,react-docs,qui-docs,react-vscode-docs}/**/*.{ts,tsx}",
+      "packages/*/{qui-site,react-docs,qui-docs,react-table-docs,react-vscode-docs}/**/*.{ts,tsx}",
     ],
     languageOptions,
   },
@@ -232,5 +234,14 @@ export default defineConfig(
   {
     extends: [quiEslintMdx.configs.recommended],
     files: ["{packages,scripts}/**/*.{md,mdx}", "*.md"],
+    ignores: ["**/CHANGELOG.md", "**/__tests__/**"],
+    languageOptions: {
+      parserOptions: {
+        remarkConfigPath: join(
+          import.meta.dirname,
+          "node_modules/@qualcomm-ui/eslint-config-mdx/.remarkrc",
+        ),
+      },
+    },
   },
 )

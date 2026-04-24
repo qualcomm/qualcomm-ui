@@ -12,8 +12,9 @@ import {
 
 export interface ToasterInstance extends ToastStore<ReactElement | string> {}
 
-export interface ToastCreateOptions
-  extends ToastOptions<ReactElement | string> {}
+export interface ToastCreateOptions extends ToastOptions<
+  ReactElement | string
+> {}
 
 export function createToaster(options: ToasterCreateOptions): ToasterInstance {
   return createToastStore<ReactElement | string>(options)

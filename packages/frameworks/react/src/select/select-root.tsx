@@ -24,8 +24,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsSelectContextProvider} from "./qds-select-context"
 
 export interface SelectRootProps
-  extends CoreSelectRootProps,
-    QdsSelectApiProps {
+  extends CoreSelectRootProps, QdsSelectApiProps {
   /**
    * {@link https://lucide.dev lucide} icon, positioned at the start of the
    * input field.

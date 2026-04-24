@@ -11,8 +11,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsSideNavApi} from "./qds-side-nav-context"
 
-export interface SideNavBranchIndentGuideProps
-  extends CoreTreeBranchIndentGuideProps {}
+export interface SideNavBranchIndentGuideProps extends CoreTreeBranchIndentGuideProps {}
 
 /**
  * Provides a visual guide to the indentation level of the branch's children.

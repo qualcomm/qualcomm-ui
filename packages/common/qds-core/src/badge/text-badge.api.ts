@@ -5,11 +5,14 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {badgeClasses} from "./badge.classes"
+import {textBadgeAnatomy} from "./text-badge.anatomy"
 import type {
   QdsTextBadgeApi,
   QdsTextBadgeProps,
   QdsTextBadgeRootBindings,
 } from "./text-badge.types"
+
+const parts = textBadgeAnatomy.parts
 
 export function createQdsTextBadgeApi(
   props: QdsTextBadgeProps,
@@ -18,11 +21,10 @@ export function createQdsTextBadgeApi(
   return {
     getRootBindings(): QdsTextBadgeRootBindings {
       return normalize.element({
+        ...parts.root,
         className: badgeClasses.root,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-emphasis": props.emphasis || "neutral",
-        "data-part": "root",
-        "data-scope": "text-badge",
         "data-size": props.size || "md",
         "data-variant": props.variant || "default",
       })

@@ -1,12 +1,9 @@
 {
   "codeConnect": {
-    "include": ["src/**/*"],
-    "exclude": ["src/**/*.spec.ts"],
-    "parser": "html",
+    "include": ["src/**/*.figma.js"],
+    "exclude": ["src/**/*.ts.figma.js"],
     "label": "Angular",
-    "paths": {
-      "@qualcomm-ui/angular/*": ["./src/*/index.ts"]
-    },
+    "language": "html",
     "documentUrlSubstitutions": {
       "<FIGMA_COMPONENTS_BASE>": "https://www.figma.com/design/G6YKSbQ5Jn83xQBRvlqe6M",
       "<FIGMA_ICONS_BASE>": "https://www.figma.com/design/fJC9KDk1b8v5KxHRttSbqS"

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/core",
-  "version": "1.4.0",
+  "version": "1.9.0",
   "description": "core components",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
@@ -43,22 +43,22 @@
     "@internationalized/number": "^3.6.4",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/css-utils": "catalog:",
-    "@qualcomm-ui/dom": "workspace:^1.0.7",
+    "@qualcomm-ui/dom": "workspace:^1.1.0",
     "@qualcomm-ui/esbuild": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/utils": "workspace:^1.1.0",
+    "@qualcomm-ui/utils": "workspace:^1.2.3",
     "@types/node": "~24.9.2",
-    "@vitest/coverage-v8": "^4.0.8",
-    "@vitest/ui": "^4.0.8",
-    "esbuild": "^0.25.8",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "esbuild": "catalog:",
     "shx": "^0.4.0",
-    "tsx": "^4.20.6",
+    "tsx": "catalog:",
     "typescript": "catalog:",
-    "vitest": "^4.0.8"
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "@internationalized/number": ">=3.6.4",
-    "@qualcomm-ui/dom": "workspace:^1.0.7",
-    "@qualcomm-ui/utils": "workspace:^1.1.0"
+    "@qualcomm-ui/dom": "workspace:^1.1.0",
+    "@qualcomm-ui/utils": "workspace:^1.2.3"
   }
 }

@@ -32,6 +32,14 @@ export default {
       outFileName: "snapdragon-light.min.css",
     },
     {
+      cssFiles: ["src/styles/arduino-dark.css"],
+      outFileName: "arduino-dark.min.css",
+    },
+    {
+      cssFiles: ["src/styles/arduino-light.css"],
+      outFileName: "arduino-light.min.css",
+    },
+    {
       cssFiles: ["src/**/qds-*.css"],
       emitIndividualCssFiles: true,
       ignore: ["src/styles/**/*"],

@@ -45,7 +45,7 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
     <button q-menu-trigger [q-bind]="unitSelectBindings()">
       <span>{{ selectedLabel() }}</span>
       <svg
-        data-part="chevron"
+        data-number-input-part="chevron"
         size="sm"
         [qIcon]="menuContext().open ? 'ChevronUp' : 'ChevronDown'"
       ></svg>

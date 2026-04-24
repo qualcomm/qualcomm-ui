@@ -192,8 +192,7 @@ type ResolvedAggregationFns = keyof AggregationFns extends never
     }
 
 export interface GroupingOptions
-  extends GroupingOptionsBase,
-    ResolvedAggregationFns {}
+  extends GroupingOptionsBase, ResolvedAggregationFns {}
 
 export type GroupingColumnMode = false | "reorder" | "remove"
 

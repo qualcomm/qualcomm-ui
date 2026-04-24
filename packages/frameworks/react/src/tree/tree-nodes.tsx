@@ -17,8 +17,10 @@ import {
   type TreeNodeProviderProps,
 } from "./tree-node-provider"
 
-export interface TreeNodesProps<T>
-  extends Omit<TreeNodeProviderProps<T>, "children"> {
+export interface TreeNodesProps<T> extends Omit<
+  TreeNodeProviderProps<T>,
+  "children"
+> {
   /**
    * Props passed to the branch indent guide component. Only applicable when {@link
    * showIndentGuide} is true.

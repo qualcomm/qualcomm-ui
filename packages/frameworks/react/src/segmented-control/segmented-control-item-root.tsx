@@ -18,8 +18,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsSegmentedControlContext} from "./qds-segmented-control-context"
 
 export interface SegmentedControlItemRootProps
-  extends SegmentedControlItemApiProps,
-    ElementRenderProp<"label"> {
+  extends SegmentedControlItemApiProps, ElementRenderProp<"label"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

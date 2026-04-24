@@ -1,6 +1,5 @@
 ---
 title: Combobox
-group: Form Controls
 description: The Combobox consists of a label, a text-input field, and a chevron icon that indicates the control can expand. The input field contains the current value or placeholder text and is enclosed by a container that provides focus and hover states. Activating the control reveals the dropdown menu, which presents a list of options.
 component: Combobox
 aliases: [autocomplete, typeahead, autosuggest, combo box]
@@ -22,7 +21,7 @@ import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 
 ## Overview
 
-- Each combobox uses the `comboboxCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](#list-collection).
+- Each combobox uses the `comboboxCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](./#list-collection).
 
 ## Examples
 
@@ -139,7 +138,7 @@ object array
 typed collection
 :::
 
-The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [comboboxCollection](./#ListCollection) to specify the label and value of each item.
+The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [comboboxCollection](./#list-collection) to specify the label and value of each item.
 
 <QdsDemo name="ComboboxItemsDemo" />
 
@@ -227,7 +226,7 @@ two-way binding
 output
 :::
 
-Set the initial value using the [defaultValue](./#defaultValue) prop, or use [value](./#value) and [valueChanged](./#valueChanged) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+Set the initial value using the [defaultValue](./#defaultValue) prop. Use [valueChanged](./#valueChanged) to listen to value changes. For fine-grained control, refer to the [Forms](./#forms) section below.
 
 <QdsDemo name="ComboboxControlledStateDemo" />
 
@@ -266,7 +265,7 @@ helper text
 description text
 :::
 
-Use the [hintText](./#hintText) prop to provide additional context or instructions below the combobox.
+Use the [hint](./#hint) prop to provide additional context or instructions below the combobox.
 
 <QdsDemo name="ComboboxHintDemo" />
 

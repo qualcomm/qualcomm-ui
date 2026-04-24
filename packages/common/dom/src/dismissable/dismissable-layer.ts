@@ -58,8 +58,7 @@ export interface PersistentElementOptions {
 }
 
 export interface DismissableElementOptions
-  extends DismissableElementHandlers,
-    PersistentElementOptions {
+  extends DismissableElementHandlers, PersistentElementOptions {
   /**
    * Whether to log debug information
    */

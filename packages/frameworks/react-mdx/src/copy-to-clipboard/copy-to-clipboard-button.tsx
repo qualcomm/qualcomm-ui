@@ -9,8 +9,10 @@ import {Button, type ButtonProps} from "@qualcomm-ui/react/button"
 import {useCopyToClipboard} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-export interface CopyButtonProps
-  extends Pick<ButtonProps, "size" | "variant" | "emphasis"> {
+export interface CopyButtonProps extends Pick<
+  ButtonProps,
+  "size" | "variant" | "emphasis"
+> {
   code: string | (() => string) | (() => Promise<string>)
 }
 

@@ -121,8 +121,11 @@ export function reactDemoPlugin({
         return []
       }
 
+      const updatedDemoNames: string[] = []
+
       if (isDemoFile(file)) {
         await handleDemoAdditionOrUpdate({filePath: file})
+        updatedDemoNames.push(createDemoName(file))
       } else {
         const normalizedFile = resolve(file)
         const dependentDemos = relativeImportDependents.get(normalizedFile)
@@ -135,6 +138,7 @@ export function reactDemoPlugin({
             await handleDemoAdditionOrUpdate({
               filePath: demo.filePath,
             })
+            updatedDemoNames.push(demoName)
           }
         }
       }
@@ -144,8 +148,19 @@ export function reactDemoPlugin({
       )
       if (autoModule) {
         server.moduleGraph.invalidateModule(autoModule)
-        await server.reloadModule(autoModule)
       }
+
+      for (const demoName of updatedDemoNames) {
+        const demo = demoRegistry.get(demoName)
+        if (demo) {
+          server.ws.send({
+            data: demo,
+            event: "qui-demo:update",
+            type: "custom",
+          })
+        }
+      }
+
       return []
     },
 
@@ -318,11 +333,27 @@ export function reactDemoPlugin({
 
   function generateAutoScopeModule(): string {
     const registryCode = generateDemoRegistry(demoRegistry)
-    return [
-      "// Auto-generated demo scope resolver (PROD MODE)",
+    const parts = [
+      "// Auto-generated demo scope resolver",
       registryCode,
       generateExportedFunctions(),
-    ].join("\n\n")
+    ]
+
+    if (process.env.NODE_ENV === "development") {
+      parts.push(generateHmrHandler())
+    }
+
+    return parts.join("\n\n")
+  }
+
+  function generateHmrHandler(): string {
+    return dedent`
+    if (import.meta.hot) {
+      import.meta.hot.on("qui-demo:update", (data) => {
+        demoRegistry.set(data.demoName, data)
+      })
+    }
+  `
   }
 
   function transformLines(code: string): string {

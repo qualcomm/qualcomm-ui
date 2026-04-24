@@ -4,6 +4,10 @@
       "Snapdragon Guardian",
       "Snapdragon Guardian APIs"
     ],
+    "data": {
+      "title": "Snapdragon Guardian APIs",
+      "sideNavTitle": "Reference"
+    },
     "id": "/routes/snapdragon-guardian+/try-it-out.mdx",
     "pathname": "/snapdragon-guardian/try-it-out",
     "pathSegments": [
@@ -17,6 +21,10 @@
       "Snapdragon Guardian",
       "Snapdragon Guardian API Guide"
     ],
+    "data": {
+      "title": "Snapdragon Guardian API Guide",
+      "sideNavTitle": "Getting Started"
+    },
     "id": "/routes/snapdragon-guardian+/documentation.mdx",
     "pathname": "/snapdragon-guardian/documentation",
     "pathSegments": [

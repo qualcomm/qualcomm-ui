@@ -18,14 +18,16 @@ export function IconBadgeEmphasisDemo(): ReactElement {
       <div className="flex flex-wrap items-center gap-2">
         <IconBadge emphasis="blue" icon={Star} />
         <IconBadge emphasis="cyan" icon={Star} />
-        <IconBadge emphasis="green" icon={Star} />
-        <IconBadge emphasis="kiwi" icon={Star} />
-        <IconBadge emphasis="magenta" icon={Star} />
-        <IconBadge emphasis="orange" icon={Star} />
-        <IconBadge emphasis="purple" icon={Star} />
-        <IconBadge emphasis="red" icon={Star} />
         <IconBadge emphasis="teal" icon={Star} />
+        <IconBadge emphasis="lime" icon={Star} />
+        <IconBadge emphasis="green" icon={Star} />
         <IconBadge emphasis="yellow" icon={Star} />
+        <IconBadge emphasis="amber" icon={Star} />
+        <IconBadge emphasis="orange" icon={Star} />
+        <IconBadge emphasis="red" icon={Star} />
+        <IconBadge emphasis="magenta" icon={Star} />
+        <IconBadge emphasis="violet" icon={Star} />
+        <IconBadge emphasis="purple" icon={Star} />
       </div>
     </div>
   )

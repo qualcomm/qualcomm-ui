@@ -20,7 +20,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsRadioContextProvider} from "../qds-radio-context"
 
 export interface RadioGroupRootProps
-  extends RadioApiProps,
+  extends
+    RadioApiProps,
     QdsRadioApiProps,
     Omit<ElementRenderProp<"fieldset">, "defaultValue" | "dir"> {
   /**

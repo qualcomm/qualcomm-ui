@@ -40,7 +40,7 @@
     outline: solid 1px var(--color-utility-focus-border);
   }
 
-  &:has([data-part="branch-trigger"]) {
+  &:has([data-tree-part="branch-trigger"]) {
     --branch-trigger-width: calc(16px + var(--spacing-50));
   }
 

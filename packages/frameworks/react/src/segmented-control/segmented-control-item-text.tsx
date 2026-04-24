@@ -12,8 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSegmentedControlContext} from "./qds-segmented-control-context"
 
-export interface SegmentedControlItemTextProps
-  extends ElementRenderProp<"span"> {
+export interface SegmentedControlItemTextProps extends ElementRenderProp<"span"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

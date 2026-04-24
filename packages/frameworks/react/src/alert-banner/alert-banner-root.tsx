@@ -20,8 +20,7 @@ import {
 } from "./qds-alert-banner-context"
 
 export interface AlertBannerRootProps
-  extends QdsAlertBannerApiProps,
-    Omit<ElementRenderProp<"div">, "dir"> {
+  extends QdsAlertBannerApiProps, Omit<ElementRenderProp<"div">, "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

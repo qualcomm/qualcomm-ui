@@ -26,10 +26,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {QdsSegmentedControlContextProvider} from "./qds-segmented-control-context"
 
 export interface SegmentedControlRootProps
-  extends Omit<
-      ElementRenderProp<"fieldset">,
-      "defaultValue" | "dir" | "disabled"
-    >,
+  extends
+    Omit<ElementRenderProp<"fieldset">, "defaultValue" | "dir" | "disabled">,
     SegmentedControlApiProps,
     QdsSegmentedControlApiProps {
   /**

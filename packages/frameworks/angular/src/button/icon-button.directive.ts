@@ -26,6 +26,7 @@ import {
   type QdsButtonSize,
   type QdsButtonVariant,
   type QdsIconButtonApiProps,
+  type QdsIconButtonShape,
 } from "@qualcomm-ui/qds-core/button"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
@@ -86,6 +87,13 @@ export class IconButtonDirective
   readonly icon = input<LucideIconOrString>()
 
   /**
+   * Governs the shape of the icon button.
+   *
+   * @default 'square'
+   */
+  readonly shape = input<QdsIconButtonShape>()
+
+  /**
    * The variant of the button.
    *
    * @default 'fill'
@@ -115,6 +123,7 @@ export class IconButtonDirective
           density: this.density(),
           disabled: this.disabled(),
           emphasis: this.emphasis(),
+          shape: this.shape(),
           size: this.size(),
           variant: this.variant(),
         },

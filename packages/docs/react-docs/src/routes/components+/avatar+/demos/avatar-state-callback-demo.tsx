@@ -14,14 +14,14 @@ export function AvatarStateCallbackDemo(): ReactElement {
       {/* preview */}
       <Avatar.Root onStateChange={(event) => setCurrentStateValid(event.state)}>
         <Avatar.Image alt="John Doe" src="/images/avatar-man.png" />
-        <Avatar.Content>JD</Avatar.Content>
+        <Avatar.Content>J</Avatar.Content>
       </Avatar.Root>
       <output>current state: {currentStateValid}</output>
       <Avatar.Root
         onStateChange={(event) => setCurrentStateInvalid(event.state)}
       >
         <Avatar.Image alt="John Doe" src="https://example.invalid" />
-        <Avatar.Content>JD</Avatar.Content>
+        <Avatar.Content>J</Avatar.Content>
       </Avatar.Root>
       <output>current state: {currentStateInvalid}</output>
       {/* preview */}

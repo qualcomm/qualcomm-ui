@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, type OnInit} from "@angular/core"
+import {computed, Directive} from "@angular/core"
 
 import {
   CoreMenuItemRootDirective,
@@ -15,15 +15,13 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
   selector: "[q-menu-item]",
   standalone: false,
 })
-export class MenuItemDirective
-  extends CoreMenuItemRootDirective
-  implements OnInit
-{
+export class MenuItemDirective extends CoreMenuItemRootDirective {
   protected readonly qdsMenuContext = useQdsMenuContext()
 
-  override ngOnInit() {
-    this.trackBindings({
-      extraBindings: computed(() => this.qdsMenuContext().getItemBindings()),
-    })
+  constructor() {
+    super()
+    this.trackBindings.extendWith(
+      computed(() => this.qdsMenuContext().getItemBindings()),
+    )
   }
 }

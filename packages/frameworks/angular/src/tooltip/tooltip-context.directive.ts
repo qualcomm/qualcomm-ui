@@ -22,8 +22,8 @@ export class TooltipContextDirective extends ApiContextDirective<TooltipApi> {
    */
   static ngTemplateContextGuard(
     dir: TooltipContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: TooltipApi} {
+    _ctx: unknown,
+  ): _ctx is {$implicit: TooltipApi} {
     return true
   }
 }

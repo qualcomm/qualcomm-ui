@@ -6,6 +6,7 @@ import type {ReactElement} from "react"
 import {Search} from "lucide-react"
 
 import {TextInput, type TextInputProps} from "@qualcomm-ui/react/text-input"
+import {useSideNavContext} from "@qualcomm-ui/react-core/side-nav"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsSideNavApi} from "./qds-side-nav-context"
@@ -18,7 +19,12 @@ export function SideNavFilterInput({
   startIcon = Search,
   ...props
 }: SideNavFilterInputProps): ReactElement {
-  const mergedProps = mergeProps(qdsSideNavApi.getFilterInputBindings(), props)
+  const api = useSideNavContext()
+  const mergedProps = mergeProps(
+    api.getFilterInputBindings(),
+    qdsSideNavApi.getFilterInputBindings(),
+    props,
+  )
 
   return (
     <TextInput

@@ -13,8 +13,7 @@ import {
 } from "@qualcomm-ui/react-core/combobox"
 
 export interface ComboboxErrorTextProps
-  extends CoreComboboxErrorTextProps,
-    InputErrorTextProps {}
+  extends CoreComboboxErrorTextProps, InputErrorTextProps {}
 
 /**
  * Error message displayed when the input is invalid. Renders a `<div>` element by

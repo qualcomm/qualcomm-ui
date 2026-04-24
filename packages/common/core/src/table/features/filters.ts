@@ -302,8 +302,7 @@ type ResolvedFilterFns = keyof FilterFns extends never
     }
 
 export interface FiltersOptions<TData extends RowData>
-  extends FiltersOptionsBase<TData>,
-    ResolvedFilterFns {}
+  extends FiltersOptionsBase<TData>, ResolvedFilterFns {}
 
 export interface FiltersInstance<TData extends RowData> {
   /** @internal */

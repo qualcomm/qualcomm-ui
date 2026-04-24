@@ -5,11 +5,14 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {badgeClasses} from "./badge.classes"
+import {numberBadgeAnatomy} from "./number-badge.anatomy"
 import type {
   QdsNumberBadgeApi,
   QdsNumberBadgeProps,
   QdsNumberBadgeRootBindings,
 } from "./number-badge.types"
+
+const parts = numberBadgeAnatomy.parts
 
 export function createQdsNumberBadgeApi(
   props: QdsNumberBadgeProps,
@@ -28,12 +31,11 @@ export function createQdsNumberBadgeApi(
     displayValue,
     getRootBindings(): QdsNumberBadgeRootBindings {
       return normalize.element({
+        ...parts.root,
         className: badgeClasses.root,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-emphasis": props.emphasis || "neutral",
         "data-overflow": booleanDataAttr(overflow),
-        "data-part": "root",
-        "data-scope": "number-badge",
         "data-size": props.size || "md",
       })
     },

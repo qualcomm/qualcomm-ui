@@ -13,8 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-context"
 
 export interface TableRowExpandButtonProps
-  extends ElementRenderProp<"button">,
-    QdsTableRowExpandButtonProps {}
+  extends ElementRenderProp<"button">, QdsTableRowExpandButtonProps {}
 
 /**
  * A button for expanding and collapsing nested rows. Automatically displays the
