@@ -29,7 +29,7 @@ export function PopoverContent({
       id: useControlledId(id),
       onDestroy: useOnDestroyWhen(presence.unmounted),
     }),
-    {className: "vs-popover"},
+    {className: "vs-popover__content"},
     props,
   )
 

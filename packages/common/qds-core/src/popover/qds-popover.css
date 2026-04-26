@@ -20,6 +20,10 @@
     background: var(--color-background-brand-primary);
     color: var(--color-utility-persistent-white);
   }
+
+  &[hidden] {
+    display: none;
+  }
 }
 
 .qui-popover__arrow-tip {

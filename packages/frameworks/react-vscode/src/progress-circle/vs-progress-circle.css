@@ -13,7 +13,7 @@
 
 .vs-progress-circle__circle {
   --size: var(--size-override, var(--circle-size));
-  --thickness: 7px;
+  --thickness: 4px;
   --stroke-width: var(--thickness);
   --radius: calc(var(--size) / 2 - var(--stroke-width) / 2);
   --circumference: calc(2 * 3.14159 * var(--radius));
@@ -25,15 +25,15 @@
 
   &[data-size="sm"] {
     --circle-size: 20px;
-    --thickness: 7px;
+    --thickness: 4px;
   }
   &[data-size="md"] {
     --circle-size: 32px;
-    --thickness: 7px;
+    --thickness: 4px;
   }
   &[data-size="lg"] {
     --circle-size: 48px;
-    --thickness: 6px;
+    --thickness: 5px;
   }
 
   &[data-state="indeterminate"]:not([data-disabled]) {
@@ -93,24 +93,27 @@
   margin-top: 4px;
 }
 
-@keyframes vs-progress-circle__indeterminate-rotate {
-  from {
-    transform: rotate(-90deg);
-  }
-  to {
-    transform: rotate(270deg);
-  }
-}
-
 @keyframes vs-progress-circle__indeterminate-circle {
   0% {
     stroke-dasharray: 0 var(--circumference);
+    transform: rotate(0deg);
   }
   50% {
-    stroke-dasharray: calc(var(--circumference) * 0.5)
-      calc(var(--circumference) * 0.5);
+    stroke-dasharray: calc(var(--circumference) / 2)
+    calc(var(--circumference) / 2);
+    transform: rotate(360deg);
   }
   100% {
     stroke-dasharray: 0 var(--circumference);
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes vs-progress-circle__indeterminate-rotate {
+  0% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(270deg);
   }
 }

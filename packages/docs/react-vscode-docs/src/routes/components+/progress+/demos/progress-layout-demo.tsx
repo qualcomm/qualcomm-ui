@@ -4,7 +4,8 @@ import {Progress} from "@qualcomm-ui/react-vscode/progress"
 
 export function ProgressLayoutDemo(): ReactElement {
   return (
-    <Progress.Root className="w-[240px]" defaultValue={50}>
+    // preview
+    <Progress.Root className="w-60" defaultValue={50}>
       <div className="flex gap-4">
         <Progress.Label>Label</Progress.Label>
         <Progress.Track>
@@ -13,5 +14,6 @@ export function ProgressLayoutDemo(): ReactElement {
         <Progress.ValueText>50%</Progress.ValueText>
       </div>
     </Progress.Root>
+    // preview
   )
 }

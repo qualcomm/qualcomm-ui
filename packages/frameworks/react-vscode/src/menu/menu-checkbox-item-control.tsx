@@ -20,7 +20,7 @@ export function MenuCheckboxItemControl({
   const contextProps = useMenuOptionItemControl()
   const mergedProps = mergeProps(
     contextProps,
-    {className: "vs-menu-item__control"},
+    {className: "vs-menu-item__indicator"},
     props,
   )
 

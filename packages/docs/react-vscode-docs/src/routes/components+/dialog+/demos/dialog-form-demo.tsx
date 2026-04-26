@@ -4,8 +4,8 @@ import {selectCollection} from "@qualcomm-ui/core/select"
 import {Button} from "@qualcomm-ui/react-vscode/button"
 import {Dialog} from "@qualcomm-ui/react-vscode/dialog"
 import {Field} from "@qualcomm-ui/react-vscode/field"
-import {Input} from "@qualcomm-ui/react-vscode/text-input"
 import {Select} from "@qualcomm-ui/react-vscode/select"
+import {Input} from "@qualcomm-ui/react-vscode/text-input"
 
 const templateCollection = selectCollection({
   items: [
@@ -68,9 +68,17 @@ export function DialogFormDemo(): ReactElement {
           </Dialog.Description>
         </Dialog.Body>
         <Dialog.Footer>
-          <Button variant="secondary">Cancel</Button>
-          <Button variant="secondary">Back</Button>
-          <Button>Add</Button>
+          <Dialog.Context>
+            {(api) => (
+              <>
+                <Button onClick={() => api.setOpen(false)} variant="secondary">
+                  Cancel
+                </Button>
+                <Button variant="secondary">Back</Button>
+                <Button>Add</Button>
+              </>
+            )}
+          </Dialog.Context>
         </Dialog.Footer>
       </Dialog.FloatingPortal>
     </Dialog.Root>

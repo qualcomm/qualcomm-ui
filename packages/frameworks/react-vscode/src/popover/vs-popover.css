@@ -1,4 +1,4 @@
-.vs-popover {
+.vs-popover__content {
   background-clip: border-box;
   background-color: var(
     --vscode-editorWidget-background,
@@ -6,17 +6,14 @@
   );
   box-shadow: var(--vscode-widget-shadow);
   color: var(--vscode-editorWidget-foreground, var(--vscode-foreground));
-  display: block;
+  display: flex;
+  flex-direction: column;
   outline: none;
   --arrow-background: var(
     --vscode-editorWidget-background,
     var(--vscode-menu-background)
   );
   --arrow-size: 8px;
-}
-
-.vs-popover__arrow {
-  /* State machine sets width/height/position inline. */
 }
 
 .vs-popover__arrow-tip {

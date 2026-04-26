@@ -19,7 +19,7 @@ export function MenuShowcaseDemo(): ReactNode {
                 <Menu.CheckboxItemControl />
                 <Menu.ItemLabel>Word Wrap</Menu.ItemLabel>
               </Menu.CheckboxItem>
-              <Menu.CheckboxItem checked value="minimap">
+              <Menu.CheckboxItem value="minimap">
                 <Menu.CheckboxItemControl />
                 <Menu.ItemLabel>Show Minimap</Menu.ItemLabel>
               </Menu.CheckboxItem>
