@@ -17,7 +17,7 @@ export function DialogShowcaseDemo(): ReactNode {
           </Dialog.Heading>
           <Dialog.CloseButton />
           <Dialog.Description>
-            Your changes will be lost if you don't save them.
+            Your changes will be lost if you don&#39;t save them.
           </Dialog.Description>
         </Dialog.Body>
         <Dialog.Footer>

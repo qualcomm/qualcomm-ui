@@ -1561,7 +1561,7 @@ Registered in `src/vs/workbench/common/theme.ts`: "Notification links foreground
 
 ---
 
-#### Domain: notificationsErrorIcon / notificationsWarningIcon / notificationsInfoIcon
+#### Domain: notification icons
 
 Registered in `src/vs/workbench/common/theme.ts`.
 
