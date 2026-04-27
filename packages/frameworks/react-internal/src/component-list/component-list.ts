@@ -252,8 +252,8 @@ export const componentList: UiComponent[] = [
   {
     description:
       "Provides persistent navigation through major application sections.",
-    name: "Side Nav",
     fileName: "side-nav.svg",
+    name: "Side Nav",
     url: "/components/side-nav",
   },
   {

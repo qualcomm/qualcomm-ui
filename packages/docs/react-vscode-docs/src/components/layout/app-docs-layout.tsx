@@ -12,7 +12,6 @@ import {PortalContextProvider} from "@qualcomm-ui/react-core/portal"
 import {
   DocLink,
   Footer,
-  GlobalConfig,
   HeaderAiLink,
   HeaderLogo,
   HeaderRepositoryLink,

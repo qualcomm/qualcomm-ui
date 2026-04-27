@@ -1,8 +1,6 @@
-import type {ReactNode} from "react"
-import {Fragment} from "react"
+import {Fragment, type ReactNode} from "react"
 
-import type {BadgeSize} from "@qualcomm-ui/react-vscode/badge"
-import {Badge} from "@qualcomm-ui/react-vscode/badge"
+import {Badge, type BadgeSize} from "@qualcomm-ui/react-vscode/badge"
 
 const sizes: BadgeSize[] = ["xs", "sm", "md"]
 
