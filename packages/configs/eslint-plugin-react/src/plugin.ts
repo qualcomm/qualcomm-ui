@@ -8,6 +8,7 @@ import {
   avatarImageAlt,
   inputLabelAssociation,
   interactiveCardElementNesting,
+  noButtonInHeaderBar,
 } from "./rules"
 
 export const rules = {
@@ -15,6 +16,7 @@ export const rules = {
   "avatar-image-alt": avatarImageAlt,
   "input-label-association": inputLabelAssociation,
   "interactive-card-element-nesting": interactiveCardElementNesting,
+  "no-button-in-header-bar": noButtonInHeaderBar,
 }
 
 export const plugin: ESLint.Plugin = {
@@ -33,6 +35,7 @@ export const config: Linter.Config[] = [
       "@qualcomm-ui/react/avatar-image-alt": "error",
       "@qualcomm-ui/react/input-label-association": "error",
       "@qualcomm-ui/react/interactive-card-element-nesting": "error",
+      "@qualcomm-ui/react/no-button-in-header-bar": "error",
     },
   },
 ]

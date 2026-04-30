@@ -3,6 +3,40 @@ title: Header Bar
 description: The header bar provides a consistent, high-level control surface for the application. It features a logo that reinforces brand identity, navigation items for accessing primary sections, and an action bar that contains important tools and utilities.
 component: HeaderBar
 aliases: [app bar, navbar, toolbar]
+qui:
+  rules:
+    - id: no-button-in-header-bar
+      title: Use HeaderBar.ActionButton inside HeaderBar
+      category: composition
+      severity: error
+      since: 1.0.0
+      eslintAvailable: true
+      description: >
+        A plain Button rendered inside HeaderBar (or a wrapper that renders HeaderBar)
+        misses the HeaderBar-specific size, density, and divider wiring. Use
+        HeaderBar.ActionButton instead.
+      rationale: >
+        HeaderBar.ActionButton presets variant and density to match the header surface,
+        wires focus-ring and divider defaults, and ensures consistent action-bar spacing.
+        Generic Button lacks these defaults and produces visually inconsistent header actions.
+      examples:
+        incorrect: |
+          import {Button} from "@qualcomm-ui/react/button"
+          import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+
+          const App = () => (
+            <HeaderBar>
+              <Button onClick={save}>Save</Button>
+            </HeaderBar>
+          )
+        correct: |
+          import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+
+          const App = () => (
+            <HeaderBar>
+              <HeaderBar.ActionButton onClick={save}>Save</HeaderBar.ActionButton>
+            </HeaderBar>
+          )
 ---
 
 import {Demo} from "~components/demo"

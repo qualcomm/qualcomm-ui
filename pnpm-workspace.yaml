@@ -4,6 +4,7 @@ packages:
   - packages/debug-apps/*
   - packages/docs/*
   - packages/frameworks/*
+  - packages/tooling/*
 
 autoInstallPeers: true
 

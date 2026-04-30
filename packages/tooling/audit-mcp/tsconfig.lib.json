@@ -1,0 +1,11 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "paths": {
+      "@qualcomm-ui/audit-mcp/*": ["./src/*/index.ts"]
+    }
+  },
+  "include": ["./src"]
+}

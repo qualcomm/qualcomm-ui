@@ -226,7 +226,7 @@ export default defineConfig(
   {
     extends: [quiPathAlias.configs.recommended],
     files: [
-      "packages/*/{angular-core,angular,core,dom,react-mdx,qds-core,react,react-core,utils}/**/*.{ts,tsx}",
+      "packages/*/{angular-core,angular,audit-mcp,core,dom,react-mdx,qds-core,react,react-core,utils}/**/*.{ts,tsx}",
     ],
     languageOptions,
   },

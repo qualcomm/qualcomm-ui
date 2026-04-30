@@ -1,0 +1,72 @@
+{
+  "name": "@qualcomm-ui/audit-mcp",
+  "version": "0.1.0",
+  "description": "QUI React audit engine and MCP server. Statically detects @qualcomm-ui/react composition, accessibility, and state-management anti-patterns via ts-morph.",
+  "author": "Ryan Bower",
+  "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist/"
+  ],
+  "bin": {
+    "qui-audit-mcp": "./dist/bin/qui-audit-mcp.js"
+  },
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./rules": {
+      "types": "./dist/rules/index.d.ts",
+      "import": "./dist/rules/index.js",
+      "default": "./dist/rules/index.js"
+    }
+  },
+  "scripts": {
+    "build": "run-s clean build:js build:types",
+    "build:js": "tsx build.ts",
+    "build:types": "tsc -p tsconfig.lib.json",
+    "build:watch": "run-p watch:js watch:types",
+    "watch:js": "tsx build.ts --watch",
+    "watch:types": "tsc -p tsconfig.lib.json -w --preserveWatchOutput",
+    "clean": "shx rm -rf dist",
+    "lint": "eslint --quiet",
+    "test": "pnpm build && vitest -c vitest.config.ts --run",
+    "test:unit:ci": "pnpm build && cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads --no-file-parallelism",
+    "check-parity": "tsx scripts/check-parity.ts",
+    "prepublishOnly": "pnpm build && qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "dependencies": {
+    "ts-morph": "^24.0.0"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "catalog:",
+    "@qualcomm-ui/esbuild": "catalog:",
+    "@qualcomm-ui/tsconfig": "catalog:",
+    "esbuild": "catalog:",
+    "npm-run-all2": "^8.0.4",
+    "shx": "^0.4.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "qualcomm-ui",
+    "qui",
+    "react",
+    "audit",
+    "lint",
+    "mcp"
+  ]
+}

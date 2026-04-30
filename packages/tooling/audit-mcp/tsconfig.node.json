@@ -1,0 +1,12 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "tsBuildInfoFile": "node_modules/.tsbuildinfo-node",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "composite": true,
+  },
+  "include": ["*.ts", "scripts/**/*.ts"]
+}
