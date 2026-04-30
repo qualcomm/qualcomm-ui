@@ -85,7 +85,7 @@
     "figma-api": "^2.0.2-beta",
     "json5": "^2.2.3",
     "lodash-es": "catalog:",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.10",
     "postcss-nested": "^7.0.2",
     "postcss-selector-parser": "^7.1.1",
     "shx": "^0.4.0",

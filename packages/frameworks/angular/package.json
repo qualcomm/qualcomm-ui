@@ -82,7 +82,7 @@
     "lucide-angular": "0.569.0",
     "ng-packagr": "catalog:",
     "playwright": "1.56.1",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.10",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~7.8.0",
     "shx": "^0.4.0",
