@@ -1,7 +1,7 @@
 {
   "name": "react-best-practices",
   "version": "0.1.0",
-  "description": "Agentic React best-practices guidance for for general application development.",
+  "description": "Agentic React best-practices guidance for general application development.",
   "author": {
     "name": "Qualcomm UI Maintainers",
     "url": "https://github.com/qualcomm/qualcomm-ui"
@@ -9,27 +9,18 @@
   "homepage": "https://github.com/qualcomm/qualcomm-ui",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "license": "BSD-3-Clause-Clear",
-  "keywords": [
-    "codex",
-    "react",
-    "best-practices",
-    "agentic"
-  ],
+  "keywords": ["codex", "react", "best-practices", "agentic"],
   "skills": "./skills/",
   "interface": {
     "displayName": "React Best Practices",
     "shortDescription": "React best-practices guidance for coding agents.",
-    "longDescription": "Provides a stub Codex skill for React best-practices workflows. Detailed references can be added later.",
+    "longDescription": "Provides focused React best-practices skills for specific API changes and implementation rules.",
     "developerName": "Qualcomm UI Maintainers",
     "category": "Developer Tools",
-    "capabilities": [
-      "Read",
-      "Write",
-      "Review"
-    ],
+    "capabilities": ["Read", "Write", "Review"],
     "websiteURL": "https://github.com/qualcomm/qualcomm-ui",
     "defaultPrompt": [
-      "Use $react-best-practices to review React implementation choices."
+      "Use $component-composition to review a React component API."
     ],
     "brandColor": "#2A2AEA"
   }

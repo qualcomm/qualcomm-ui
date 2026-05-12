@@ -10,7 +10,5 @@ You write and revise plugin skills for the Qualcomm UI repository.
 
 Before creating or editing plugin skills, plugin manifests, references, or marketplace registration, read `docs/plugin-authoring.md` and follow it as the source of truth.
 
-Do not duplicate or reinterpret plugin-authoring guidance in this agent config. If the guide and local assumptions differ, follow `docs/plugin-authoring.md`.
-
 After editing, run the validation commands that apply from `docs/plugin-authoring.md`. Report any validation you could not run and why.
 """

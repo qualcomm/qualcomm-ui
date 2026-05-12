@@ -2,11 +2,11 @@
 
 Use this guide when creating best-practice plugins such as `react-best-practices`, `typescript-best-practices`, or similar agentic guidance bundles.
 
-The goal is targeted agent behavior: agents should load a skill implicitly when a task contains concrete signals for that concern, then load deeper references only when needed.
+The goal is targeted agent behavior without overloading the skill registry: agents should load one family-level router skill for a broad practice area, then load only the narrow rule references that match the current code and chat context.
 
 ## Core Model
 
-Use one plugin per practice family and one skill per activation concern.
+Use one plugin per practice family and one router skill per practice family. Put specific rules, migrations, examples, and checks in references owned by that router skill.
 
 ```text
 plugins/<family>-best-practices/
@@ -14,107 +14,147 @@ plugins/<family>-best-practices/
     plugin.json
   .claude-plugin/
     plugin.json
-  references/
-    <shared-topic>.md
   skills/
-    <family>-<concern>/
+    <family>-best-practices/
       SKILL.md
       agents/
         openai.yaml
       references/
-        <specific-topic>.md
+        <specific-rule>.md
 ```
 
-Use plugin-root `references/` for guidance shared by multiple skills. Use
-`skills/<skill-name>/references/` for guidance that belongs to one skill only.
+Use skill-local references by default. Use plugin-root `references/` only for guidance shared by multiple skills in the same plugin.
 
-Examples:
+Example:
 
 ```text
 plugins/react-best-practices/
   skills/
-    react-effects/
-    react-rendering-performance/
-    react-component-api-design/
-    react-data-fetching/
-    react-accessibility/
+    react-best-practices/
+      SKILL.md
+      agents/
+        openai.yaml
+      references/
+        react-19-api-changes.md
+        effect-dependencies.md
+        context-value-stability.md
+        derived-state.md
+        composition-slot-apis.md
 ```
 
-Do not create a single broad skill such as `react-best-practices` for dozens of topics. Broad skills force one description to cover unrelated triggers and make implicit activation noisy.
+Do not create dozens of granular skills such as `react-effects`, `react-context`, and `react-component-composition` unless they represent truly separate activation domains. For best-practice plugins, broad activation plus strict reference filtering is usually better than many tiny implicit skills.
 
 ## Activation Strategy
 
-Default each concern skill to implicit activation, but make the `description` narrow and concrete.
+Default the router skill to implicit activation, but make the `description` concrete enough to activate for the family and avoid unrelated tasks.
 
-`SKILL.md` frontmatter is the primary activation surface. The description must answer: should this skill load for this exact task?
+`SKILL.md` frontmatter is the primary activation surface. The description must answer: should this family router load for this broad class of work?
 
-Good descriptions:
-
-```yaml
----
-name: react-effects
-description: Use when React code involves useEffect, useLayoutEffect, dependency arrays, stale closures, subscriptions, timers, event listeners, or effect-driven state synchronization.
----
-```
+Good router description:
 
 ```yaml
 ---
-name: react-rendering-performance
-description: Use when React code has unnecessary rerenders, expensive render work, unstable object or function props, React.memo, useMemo, useCallback, or context provider value identity.
+name: react-best-practices
+description: Use when writing, editing, reviewing, or refactoring React components, hooks, context, refs, effects, rendering performance, data fetching, accessibility, or React version migrations.
 ---
 ```
 
 Avoid descriptions like:
 
 ```yaml
-description: Use when writing good React code.
-description: React best practices for better applications.
-description: Helps review React components for quality.
+description: Helps make React code better.
+description: General React advice.
+description: Improves application quality.
 ```
 
-Those are too broad for implicit loading.
+Those are too vague to activate predictably.
+
+The router skill should activate broadly, then filter hard after inspecting the task and code. References do not control activation; the router decides which references to read.
 
 ## Skill Body
 
-Keep each `SKILL.md` short. Put activation terms in frontmatter, not in a "when to use" section that only appears after activation.
+Keep the router `SKILL.md` short. It is a routing procedure, not the rulebook.
 
 Recommended shape:
 
 ```md
 ---
-name: <family>-<concern>
-description: Use when <specific task signals>.
+name: <family>-best-practices
+description: Use when <broad family task signals>.
 ---
 
 # <Readable Skill Name>
 
-## Scope Check
+## Routing Workflow
 
-Use this skill only for `<concern>`.
-
-## Workflow
-
-1. Inspect the relevant code path before making recommendations.
-2. Identify the specific concern: `<subtopic examples>`.
-3. Load only the references needed for that concern.
-4. Apply the guidance in the smallest code change that addresses the issue.
-5. Verify with the narrowest relevant test, lint, build, or runtime check.
+1. Inspect the user request and the touched files before loading references.
+2. Identify matching rule references by trigger terms, imports, APIs, file paths, framework version, and changed behavior.
+3. Read only the matching `references/*.md` files.
+4. Apply only rules whose guard conditions match. Skip rules whose version, framework, or code-shape guard does not match.
+5. Report which rules were applied or intentionally skipped when that affects the recommendation or code change.
 
 ## References
 
-- Read `references/<topic>.md` when `<specific condition>`.
-- Read `references/<other-topic>.md` when `<specific condition>`.
+- Read `references/<rule>.md` when `<specific trigger>`.
+- Read `references/<other-rule>.md` when `<specific trigger>`.
 
 ## Output
 
-Call out tradeoffs only when the guidance changes API shape, runtime behavior, accessibility, or performance characteristics.
+Keep recommendations tied to loaded rules. Do not apply broad taste preferences that are not represented by a matching rule.
 ```
 
-The scope check matters. It gives the agent permission to stop using the skill when implicit activation was close but wrong.
+The router's first job is to avoid false positives. It must be allowed to load, inspect, and then do nothing if no reference applies.
 
-## References
+## Rule References
 
-Use references for depth after a skill activates. References do not control activation.
+References are where the narrow guidance lives. Prefer one reference per concrete rule, migration, or review check.
+
+Reference files should be compact and operational:
+
+````md
+---
+title: React 19 API Changes
+impact: MEDIUM
+impactDescription: cleaner component definitions and context usage
+tags:
+  - react19
+  - refs
+  - context
+  - hooks
+---
+
+# React 19 API Changes
+
+> **React 19+ only.** Skip this for React 18 or earlier.
+
+## Trigger
+
+Use only for React 19+ code touching `forwardRef`, `ref`, `useContext`, or `use`.
+
+## Incorrect
+
+\```tsx
+const value = useContext(MyContext)
+\```
+
+## Correct
+
+\```tsx
+const value = use(MyContext)
+\```
+
+## Skip When
+
+- The package supports React 18.
+- The touched code is unrelated to refs or context reads.
+
+## Verify
+
+- Remove unused imports.
+- Run the narrowest relevant typecheck, lint, or test.
+````
+
+Use frontmatter metadata for indexing and UI display if useful, but keep it schema-valid. For example, `tags` must be a YAML array, not comma-separated text.
 
 There are two valid reference locations:
 
@@ -123,13 +163,13 @@ There are two valid reference locations:
 
 Prefer plugin-root references when two or more skills must apply the same rules, principles, examples, or rejection criteria. Prefer skill-local references when the guidance is specific to one activation concern.
 
-Prefer one reference per concern or sub-concern:
+For best-practice router skills, prefer skill-local references:
 
 ```text
-skills/react-effects/references/
-  dependencies.md
-  cleanup.md
-  stale-closures.md
+skills/react-best-practices/references/
+  effect-dependencies.md
+  react-19-api-changes.md
+  context-value-stability.md
 ```
 
 For shared references:
@@ -202,7 +242,7 @@ Minimal shape:
     "category": "Developer Tools",
     "capabilities": ["Read", "Write", "Review"],
     "websiteURL": "https://github.com/qualcomm/qualcomm-ui",
-    "defaultPrompt": ["Use $<skill-name> to review <specific concern>."],
+    "defaultPrompt": ["Use $<family>-best-practices to review <family> code."],
     "brandColor": "#2A2AEA"
   }
 }
@@ -214,13 +254,13 @@ Each skill should include `agents/openai.yaml`:
 interface:
   display_name: "<Skill Display Name>"
   short_description: "<25-64 character UI description>"
-  default_prompt: "Use $<skill-name> to review <specific concern>."
+  default_prompt: "Use $<family>-best-practices to review <family> code."
 
 policy:
   allow_implicit_invocation: true
 ```
 
-Set `allow_implicit_invocation: false` only for subjective or broad advisory skills where automatic loading would be distracting.
+Set `allow_implicit_invocation: true` for the router skill. Set it to `false` only for secondary skills that should never load unless named explicitly.
 
 Add the plugin to `.agents/plugins/marketplace.json` for Codex marketplace availability:
 
@@ -310,13 +350,14 @@ Plugin names:
 
 Skill names:
 
-- Prefix with the family when the name could collide globally: `react-effects`, `typescript-type-design`.
-- Name the concern, not the quality goal: `react-effects` is better than `better-effects`.
-- Avoid catch-all names: `react-quality`, `react-clean-code`, `react-best-practices`.
+- The primary router skill should usually match the plugin name: `react-best-practices`, `typescript-best-practices`.
+- Add secondary skills only for truly separate activation domains, not for every rule.
+- If a secondary skill is needed, prefix it with the family when the name could collide globally.
 
 Reference names:
 
-- Name the sub-concern: `dependencies.md`, `stale-closures.md`, `context-rerenders.md`.
+- Name the concrete rule, migration, or check: `react-19-api-changes.md`, `effect-dependencies.md`, `context-value-stability.md`.
+- Avoid catch-all references such as `quality.md`, `clean-code.md`, or `components.md`.
 
 ## Authoring Checklist
 
@@ -330,19 +371,20 @@ For each plugin:
 
 For each skill:
 
-- Use a narrow `description` that starts with `Use when`.
-- Include concrete symptoms, APIs, file types, or task phrases in the description.
+- Use a router `description` that starts with `Use when`.
+- Include enough concrete APIs, file types, task phrases, or framework concerns to activate for the family without activating for unrelated work.
 - Set `policy.allow_implicit_invocation: true` in `agents/openai.yaml`.
-- Add a scope check.
-- Keep `SKILL.md` short and procedural.
-- Move detailed rules, examples, and checklists into plugin-root or skill-local `references/`.
+- Add a routing workflow that inspects code before loading references.
+- Keep `SKILL.md` short and procedural; it should route, not teach every rule.
+- Move detailed rules, examples, migrations, and checklists into plugin-root or skill-local `references/`.
 - Explicitly state whether referenced files are plugin-root or skill-local.
 
 For each reference:
 
-- State when to read it.
-- Provide actionable rules and checks.
-- Include one focused example only when it materially improves agent behavior.
+- State the exact trigger and any version or framework guard.
+- Provide actionable rules, skip criteria, and verification checks.
+- Include incorrect/correct examples when they materially improve agent behavior.
+- Keep frontmatter schema-valid; array fields such as `tags` must be YAML arrays.
 - Avoid narrative history, broad essays, and duplicated content.
 - Keep shared references at the plugin root only when multiple skills link to them or when they define plugin-wide policy.
 
@@ -371,8 +413,9 @@ git diff --check
 
 Review activation quality manually with representative prompts:
 
-- A prompt that should activate the skill.
-- A neighboring prompt that should activate a different skill.
-- A generic implementation prompt that should not activate unrelated skills.
+- A broad prompt that should activate the router skill.
+- A rule-specific prompt that should cause the router to read a specific reference.
+- A neighboring prompt where the router may activate but should skip all references after inspection.
+- A generic implementation prompt that should not activate unrelated plugin skills.
 
-If a description activates too often, make it more concrete. If it misses obvious cases, add the missing symptom or API name.
+If a router activates too often, make its description more concrete. If the router activates correctly but applies too many rules, tighten reference triggers and skip criteria.
