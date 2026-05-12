@@ -50,6 +50,7 @@
     "lint:ci": "turbo run lint --concurrency 6",
     "test:unit:ci": "turbo run test:unit:ci --concurrency 2",
     "check-updates": "ncu -c 2 -w",
+    "check-plugin-releases": "node --import=tsx scripts/check-plugin-releases.ts",
     "doc-gen": "turbo run build:typedoc",
     "publish:all": "pnpm changeset publish && pnpm -r run publish-angular-package",
     "bump": "pnpm qui-changesets prep-release --include-commit-links"

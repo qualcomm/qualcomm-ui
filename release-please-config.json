@@ -1,0 +1,96 @@
+{
+  "release-type": "simple",
+  "include-component-in-tag": true,
+  "include-v-in-tag": true,
+  "tag-separator": "-",
+  "bootstrap-sha": "b80a441b71c66db69aafd37b1b0cce79cc4c7c1a",
+  "group-pull-request-title-pattern": "chore: release plugins",
+  "changelog-sections": [
+    {
+      "section": "Features",
+      "type": "feat"
+    },
+    {
+      "section": "Features",
+      "type": "feature"
+    },
+    {
+      "section": "Bug Fixes",
+      "type": "fix"
+    },
+    {
+      "section": "Performance Improvements",
+      "type": "perf"
+    },
+    {
+      "section": "Reverts",
+      "type": "revert"
+    },
+    {
+      "section": "Documentation",
+      "type": "docs"
+    },
+    {
+      "section": "Styles",
+      "type": "style"
+    },
+    {
+      "section": "Styles",
+      "type": "styles"
+    },
+    {
+      "section": "Miscellaneous Chores",
+      "type": "chore"
+    },
+    {
+      "section": "Code Refactoring",
+      "type": "refactor"
+    },
+    {
+      "section": "Tests",
+      "type": "test"
+    },
+    {
+      "section": "Build System",
+      "type": "build"
+    },
+    {
+      "section": "Continuous Integration",
+      "type": "ci"
+    }
+  ],
+  "packages": {
+    "plugins/qui-docs": {
+      "component": "qui-docs",
+      "exclude-paths": ["plugins/qui-docs/version.txt"],
+      "extra-files": [
+        {
+          "jsonpath": "$.version",
+          "path": ".codex-plugin/plugin.json",
+          "type": "json"
+        },
+        {
+          "jsonpath": "$.version",
+          "path": ".claude-plugin/plugin.json",
+          "type": "json"
+        }
+      ]
+    },
+    "plugins/react-best-practices": {
+      "component": "react-best-practices",
+      "exclude-paths": ["plugins/react-best-practices/version.txt"],
+      "extra-files": [
+        {
+          "jsonpath": "$.version",
+          "path": ".codex-plugin/plugin.json",
+          "type": "json"
+        },
+        {
+          "jsonpath": "$.version",
+          "path": ".claude-plugin/plugin.json",
+          "type": "json"
+        }
+      ]
+    }
+  }
+}

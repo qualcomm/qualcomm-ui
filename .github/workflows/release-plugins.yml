@@ -1,0 +1,51 @@
+name: "Release Plugins"
+env:
+  IS_CI: true
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main, dev]
+    paths:
+      - ".github/workflows/release-plugins.yml"
+      - ".release-please-manifest.json"
+      - "plugins/**"
+      - "release-please-config.json"
+      - "scripts/check-plugin-releases.ts"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release-plugins.yml"
+      - ".release-please-manifest.json"
+      - "plugins/**"
+      - "release-please-config.json"
+      - "scripts/check-plugin-releases.ts"
+
+permissions: {}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/init-node-and-install
+
+      - name: check plugin release config
+        run: pnpm check-plugin-releases
+
+  release:
+    needs: validate
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: googleapis/release-please-action@v5
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
