@@ -2,7 +2,7 @@
 
 ## Overview
 
-![Architecture Diagram](./assets/qui-architecture.webp)
+![Architecture Diagram](./qui-architecture.webp)
 
 This is a multi-layer component architecture with a framework-agnostic headless layer:
 
