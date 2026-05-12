@@ -15,10 +15,20 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Documentation",
-      "interface": {
-        "displayName": "QUI Documentation Authoring"
-      }
+      "category": "Documentation"
+    },
+    {
+      "name": "react-best-practices",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "./plugins/react-best-practices"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
     }
   ]
 }

@@ -16,6 +16,17 @@
       "description": "QUI Docs workflows for documentation contributors.",
       "category": "Documentation",
       "keywords": ["claude-code", "documentation", "mdx", "qui-docs"]
+    },
+    {
+      "name": "react-best-practices",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "plugins/react-best-practices"
+      },
+      "description": "React best-practices guidance for developers.",
+      "category": "Productivity",
+      "keywords": ["claude-code", "react", "best practices"]
     }
   ]
 }
