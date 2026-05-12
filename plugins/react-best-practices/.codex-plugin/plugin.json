@@ -14,7 +14,7 @@
   "interface": {
     "displayName": "React Best Practices",
     "shortDescription": "React best-practices guidance for coding agents.",
-    "longDescription": "Provides focused React best-practices skills for specific API changes and implementation rules.",
+    "longDescription": "Provides focused React best-practices skills that load guideline references based on code context.",
     "developerName": "Qualcomm UI Maintainers",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write", "Review"],

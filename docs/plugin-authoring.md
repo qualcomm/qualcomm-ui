@@ -90,13 +90,13 @@ description: Use when <broad family task signals>.
 1. Inspect the user request and the touched files before loading references.
 2. Identify matching rule references by trigger terms, imports, APIs, file paths, framework version, and changed behavior.
 3. Read only the matching `references/*.md` files.
-4. Apply only rules whose guard conditions match. Skip rules whose version, framework, or code-shape guard does not match.
-5. Report which rules were applied or intentionally skipped when that affects the recommendation or code change.
+4. Apply only rules whose version, framework, or code-shape constraints match.
+5. Mention an applied rule only when it materially affects the recommendation or code change.
 
 ## References
 
-- Read `references/<rule>.md` when `<specific trigger>`.
-- Read `references/<other-rule>.md` when `<specific trigger>`.
+- `references/<rule>.md`: `<brief trigger, scope, or description>`
+- `references/<other-rule>.md`: `<brief trigger, scope, or description>`
 
 ## Output
 
@@ -109,7 +109,7 @@ The router's first job is to avoid false positives. It must be allowed to load, 
 
 References are where the narrow guidance lives. Prefer one reference per concrete rule, migration, or review check.
 
-Reference files should be compact and operational:
+Reference files should be compact and operational. Do not repeat router trigger text, routine skip criteria, or generic verification steps in every reference. The router decides when to load a reference; the normal agent workflow handles typecheck, lint, and tests.
 
 ````md
 ---
@@ -127,10 +127,6 @@ tags:
 
 > **React 19+ only.** Skip this for React 18 or earlier.
 
-## Trigger
-
-Use only for React 19+ code touching `forwardRef`, `ref`, `useContext`, or `use`.
-
 ## Incorrect
 
 \```tsx
@@ -142,19 +138,11 @@ const value = useContext(MyContext)
 \```tsx
 const value = use(MyContext)
 \```
-
-## Skip When
-
-- The package supports React 18.
-- The touched code is unrelated to refs or context reads.
-
-## Verify
-
-- Remove unused imports.
-- Run the narrowest relevant typecheck, lint, or test.
 ````
 
 Use frontmatter metadata for indexing and UI display if useful, but keep it schema-valid. For example, `tags` must be a YAML array, not comma-separated text.
+
+Only add extra sections when they carry rule-specific information that is not already covered by the router. Avoid boilerplate sections such as `Trigger`, `Skip When`, and `Verify` when they only restate when the reference was loaded or repeat normal engineering hygiene.
 
 There are two valid reference locations:
 
@@ -193,17 +181,10 @@ Reference files should be compact and operational:
 ```md
 # Effect Dependencies
 
-Use this reference when reviewing dependency arrays, stale closures, or values captured by effects.
-
 ## Rules
 
 - Prefer deriving values during render before synchronizing them in an effect.
 - Include every reactive value read by the effect unless the value is intentionally stable.
-
-## Checks
-
-- Does the effect subscribe, schedule, fetch, or synchronize with an external system?
-- Can the effect be deleted by deriving the value during render?
 
 ## Example
 

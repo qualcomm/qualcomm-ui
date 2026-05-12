@@ -1,0 +1,7 @@
+interface:
+  display_name: "Component Composition"
+  short_description: "Route React composition work to rules"
+  default_prompt: "Use $component-composition to review a React component API."
+
+policy:
+  allow_implicit_invocation: true
