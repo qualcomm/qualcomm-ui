@@ -1,6 +1,6 @@
 ---
 name: sync-demos
-description: Sync a documentation site's demos with its corresponding debug apps. Detects new, removed, or renamed demos and updates debug app component pages, barrel exports, routes, and home pages accordingly.
+description: "Sync documentation demos with debug apps across React and Angular frameworks. Detects new, removed, or renamed demos and updates component pages, barrel exports, routes, and home pages. Use when demos have been added, removed, or renamed in docs, when debug apps are out of sync, or after creating new component documentation."
 argument-hint: <react|angular> [component-name]
 allowed-tools: Read Edit Write Glob Grep Bash
 ---
@@ -98,12 +98,9 @@ export default function ComponentDemos() {
 ```
 
 Rules:
-- Import each demo from its full module path (not from the barrel `index.ts`).
 - Alias imports by stripping the component prefix: `ComponentFeatureDemo as FeatureDemo`.
-- The `DemoPageLayout` import goes after all demo imports, separated by a blank line.
-- The `demos` array entries are sorted alphabetically by title.
-- The title is derived from the feature slug: convert kebab-case to Title Case (e.g., `controlled-state` becomes `"Controlled State"`).
-- The default export function is named `{PascalComponent}Demos` (e.g., `ButtonDemos`).
+- Sort the `demos` array alphabetically by title.
+- Derive titles from the feature slug by converting kebab-case to Title Case (e.g., `controlled-state` becomes `"Controlled State"`).
 
 #### Angular (`angular-ssr` and `angular-csr`)
 
@@ -134,13 +131,9 @@ export class {PascalComponent}Page {}
 ```
 
 Rules:
-- Import `Component` from `@angular/core`. Only import `ViewEncapsulation` if the existing file already uses it.
-- Demo imports are sorted alphabetically by import name.
-- The `imports` array in `@Component` lists demos alphabetically.
-- Template sections are sorted alphabetically by title.
-- The selector is `app-{component}`.
-- The element tag in the template is `<{component}-{feature}-demo />` (the demo's selector, derived from the filename).
-- The exported class is `{PascalComponent}Page`.
+- Only import `ViewEncapsulation` if the existing file already uses it.
+- Sort demo imports, the `imports` array, and template sections alphabetically.
+- The element tag in the template uses the demo's selector, derived from the filename: `<{component}-{feature}-demo />`.
 - Both `angular-ssr` and `angular-csr` get the same file. If `angular-csr` previously had a subset of demos, bring it to parity with the docs.
 
 ### Phase 6: Update registrations (Angular only)
@@ -161,6 +154,15 @@ For **new components**:
 
 No barrel export or route file changes are needed for React, since it uses file-based routing.
 
-### Phase 8: Print summary
+### Phase 8: Validate changes
 
-Print the list of files that were created or modified.
+For each created or modified file, verify:
+- Imports resolve to existing demo files (glob the demos directory to confirm)
+- No duplicate entries in arrays, routes, or barrel exports
+- Alphabetical ordering is consistent across imports, template sections, and registration entries
+
+If validation fails, fix the issue before proceeding.
+
+### Phase 9: Print summary
+
+Print the list of files that were created or modified, grouped by action (created vs. updated).
