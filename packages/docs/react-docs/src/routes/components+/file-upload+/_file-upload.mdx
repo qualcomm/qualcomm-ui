@@ -1,0 +1,183 @@
+---
+title: File Upload
+group: Form Controls
+description: The File Upload component provides an accessible interface for selecting and uploading files, with support for drag-and-drop, file validation, and preview functionality.
+component: FileUpload
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```typescript
+import {FileUpload} from "@qualcomm-ui/react/file-upload"
+```
+
+## Overview
+
+The File Upload component supports both click-to-browse and drag-and-drop interactions. It provides file validation, size limits, and customizable UI for displaying accepted and rejected files.
+
+## Examples
+
+### Simple
+
+The simple API provides a standalone component with built-in layout.
+
+<Demo name="FileUploadSimpleDemo" component={demos.FileUploadSimpleDemo} />
+
+### Composite
+
+Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
+
+<Demo
+  name="FileUploadCompositeDemo"
+  component={demos.FileUploadCompositeDemo}
+/>
+
+### Sizes
+
+The File Upload component supports three size variants: `sm`, `md` (default), and `lg`. Each size adjusts the dropzone height, padding, and spacing accordingly.
+
+<Demo name="FileUploadSizesDemo" component={demos.FileUploadSizesDemo} />
+
+### Errors
+
+The File Upload component displays component-level error messages when the `invalid` property is `true`. Per-file validation errors are shown automatically for rejected files. The example below passes error text as children to `FileUpload.ErrorText`, but a simple string may also be passed as a prop.
+
+<Demo name="FileUploadErrorsDemo" component={demos.FileUploadErrorsDemo} />
+
+### Disabled
+
+The File Upload component can be disabled using the `disabled` prop. This prevents all interactions including clicking and drag-and-drop. Use this when upload functionality should be conditionally available based on other form state.
+
+<Demo name="FileUploadDisabledDemo" component={demos.FileUploadDisabledDemo} />
+
+## API
+
+### \<FileUpload\>
+
+The simple file upload extends [FileUpload.Root](./#fileupload-root) with the following properties:
+
+<TypeDocProps name="FileUploadProps" omitFrom="FileUploadRootProps" />
+
+## Composite API
+
+This section describes the components available in the File Upload composite API.
+
+### FileUpload.Root
+
+The root component provides context and state for all child components.
+
+<TypeDocProps name="FileUploadRootProps" />
+
+### FileUpload.Label
+
+A label for the file input.
+
+<TypeDocProps name="FileUploadLabelProps" />
+
+### FileUpload.Trigger
+
+A button that opens the file picker when activated.
+
+<TypeDocProps name="FileUploadTriggerProps" />
+
+### FileUpload.HiddenInput
+
+The hidden file input element.
+
+<TypeDocProps name="FileUploadHiddenInputProps" />
+
+### FileUpload.Dropzone
+
+A drop target for drag-and-drop file uploads.
+
+<TypeDocProps name="FileUploadDropzoneProps" />
+
+### FileUpload.DropzoneTextGroup
+
+Container for dropzone text content.
+
+<TypeDocProps name="FileUploadDropzoneTextGroupProps" />
+
+### FileUpload.DropzoneTextLine
+
+Container for the dropzone text line.
+
+<TypeDocProps name="FileUploadDropzoneTextLineProps" />
+
+### FileUpload.DropzoneText
+
+The main dropzone text content.
+
+<TypeDocProps name="FileUploadDropzoneTextProps" />
+
+### FileUpload.DropzoneHint
+
+Hint text displayed below the dropzone instructions.
+
+<TypeDocProps name="FileUploadDropzoneHintProps" />
+
+### FileUpload.ErrorText
+
+Error text displayed when the file upload is invalid.
+
+<TypeDocProps name="FileUploadErrorTextProps" />
+
+### FileUpload.ItemGroup
+
+A container for the list of file items.
+
+<TypeDocProps name="FileUploadItemGroupProps" />
+
+### FileUpload.Item
+
+A container for each individual file.
+
+<TypeDocProps name="FileUploadItemProps" />
+
+### FileUpload.ItemContent
+
+Container for file item text content (name and size).
+
+<TypeDocProps name="FileUploadItemContentProps" />
+
+### FileUpload.ItemName
+
+Displays the file name.
+
+<TypeDocProps name="FileUploadItemNameProps" />
+
+### FileUpload.ItemSizeText
+
+Displays the formatted file size.
+
+<TypeDocProps name="FileUploadItemSizeTextProps" />
+
+### FileUpload.ItemPreview
+
+A container for file preview.
+
+<TypeDocProps name="FileUploadItemPreviewProps" />
+
+### FileUpload.ItemPreviewImage
+
+Displays an image preview for image files.
+
+<TypeDocProps name="FileUploadItemPreviewImageProps" />
+
+### FileUpload.ItemDeleteTrigger
+
+A button to remove a specific file.
+
+<TypeDocProps name="FileUploadItemDeleteTriggerProps" />
+
+### FileUpload.ClearTrigger
+
+A button to clear all files.
+
+<TypeDocProps name="FileUploadClearTriggerProps" />
