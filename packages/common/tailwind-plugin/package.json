@@ -4,6 +4,10 @@
   "description": "Qualcomm UI Tailwind Plugin",
   "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "homepage": "https://github.com/qualcomm/qualcomm-ui#readme",
+  "bugs": {
+    "url": "https://github.com/qualcomm/qualcomm-ui/issues"
+  },
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "publishConfig": {
     "access": "public"
