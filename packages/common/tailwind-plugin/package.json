@@ -62,5 +62,9 @@
   },
   "peerDependencies": {
     "tailwindcss": ">=4"
+  },
+  "homepage": "https://github.com/qualcomm/qualcomm-ui#readme",
+  "bugs": {
+    "url": "https://github.com/qualcomm/qualcomm-ui/issues"
   }
 }
