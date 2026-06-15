@@ -32,7 +32,7 @@ catalog:
   "@angular/cdk": ~21.2.12
   "@angular/cdk-experimental": ~21.2.12
   "@angular/cli": ~21.2.12
-  "@angular/common": ~21.2.14
+  "@angular/common": ~21.2.17
   "@angular/compiler": ~21.2.14
   "@angular/compiler-cli": ~21.2.14
   "@angular/core": ~21.2.14
