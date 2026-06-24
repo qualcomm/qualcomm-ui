@@ -17,7 +17,7 @@ jobs:
       run: pnpm tsx scripts/lint/profile-lint.ts
 
     - name: Cache timing data
-      uses: actions/cache/save@v5
+      uses: actions/cache/save@v6
       with:
         path: .lint-cache
         key: lint-timings-v1
