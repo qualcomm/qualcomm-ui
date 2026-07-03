@@ -14,9 +14,9 @@
   transition:
     opacity 130ms ease-in-out,
     display 130ms ease-in-out allow-discrete;
+  z-index: calc(var(--z-index-tooltip) + var(--layer-index, 0));
   --arrow-background: var(--color-background-neutral-10);
   --arrow-size: 10px;
-  --z-index: calc(var(--z-index-tooltip) + var(--layer-index, 0));
 
   @starting-style {
     opacity: 0;
