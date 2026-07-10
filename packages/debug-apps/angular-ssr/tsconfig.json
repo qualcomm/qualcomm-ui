@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "rootDir": "./src",
+    "rootDir": "../..",
     "strict": false,
     "strictPropertyInitialization": false,
     "skipLibCheck": true,

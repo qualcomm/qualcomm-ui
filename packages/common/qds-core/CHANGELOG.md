@@ -1,5 +1,21 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.30.4
+
+Jul 10th, 2026
+
+### Bug Fixes
+
+- [combobox/select]: allow mouse wheel scrolling in virtual content ([4166c7d](https://github.com/qualcomm/qualcomm-ui/commit/4166c7d))
+
+## 1.30.3
+
+Jul 7th, 2026
+
+### Bug Fixes
+
+- [select]: use updated label size from figma ([277ee34](https://github.com/qualcomm/qualcomm-ui/commit/277ee34))
+
 ## 1.30.2
 
 Jul 2nd, 2026

@@ -1,5 +1,25 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.9.12
+
+Jul 10th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.4]
+
+## 2.9.11
+
+Jul 7th, 2026
+
+### Bug Fixes
+
+- [shiki]: override user agent monospace with design system mono font ([6862340](https://github.com/qualcomm/qualcomm-ui/commit/6862340))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.3]
+
 ## 2.9.10
 
 Jul 2nd, 2026

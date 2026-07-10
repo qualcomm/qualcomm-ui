@@ -13,7 +13,7 @@
   color: var(--color-text-neutral-secondary);
   /* this is for margin to work on built-ins that are inline by default */
   display: inline-block;
-  font: var(--font-static-body-sm-default);
+  font: var(--font-static-body-xs-default);
 
   &[data-disabled] {
     color: var(--color-utility-disabled-text);
@@ -185,6 +185,7 @@
     min-height: 42px;
     min-width: var(--reference-width);
     overflow: hidden;
+    overscroll-behavior: unset;
   }
 
   &[data-focus-visible]:not([data-disabled]) {
