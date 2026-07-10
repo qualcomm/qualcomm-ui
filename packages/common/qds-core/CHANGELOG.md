@@ -1,5 +1,13 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.30.4
+
+Jul 10th, 2026
+
+### Bug Fixes
+
+- [combobox/select]: allow mouse wheel scrolling in virtual content ([4166c7d](https://github.com/qualcomm/qualcomm-ui/commit/4166c7d))
+
 ## 1.30.3
 
 Jul 7th, 2026
