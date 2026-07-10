@@ -1,0 +1,229 @@
+---
+title: Internationalization Labels
+description: Store visible copy and accessibility labels in a shared message registry.
+---
+
+# {frontmatter.title}
+
+Use this guide to keep visible text, accessibility labels, form copy, and status messages in one predictable place before an application needs full translation infrastructure.
+
+This pattern fits applications that need consistent English copy now and a clear path to more locales later. Use a dedicated internationalization library when the application needs plural rules, date formatting, number formatting, translation extraction, runtime locale negotiation, or translator workflows.
+
+## Prerequisites
+
+- The application already has a stable place for shared constants, such as `src/i18n` or `src/labels`.
+- Components receive the active locale or active label set from application state, route data, or framework context.
+- The label registry owns user-facing text. Components still own layout, state, and behavior.
+
+## Create a Label Registry
+
+Start with a default locale object. Group labels by surface or feature instead of keeping one flat object.
+
+```ts
+const enLabels = {
+  common: {
+    cancel: "Cancel",
+    closeDialogAriaLabel: "Close dialog",
+    loading: "Loading...",
+    save: "Save",
+  },
+  navigation: {
+    closeMenuAriaLabel: "Close navigation menu",
+    home: "Home",
+    openMenuAriaLabel: "Open navigation menu",
+    profile: "Profile",
+    settings: "Settings",
+  },
+  auth: {
+    emailLabel: "Email address",
+    invalidCredentialsError: "The email or password is incorrect.",
+    passwordLabel: "Password",
+    signInTitle: "Sign in",
+    submitButton: "Sign in",
+  },
+  dashboard: {
+    createProjectButton: "Create project",
+    emptyStateDescription: "Create your first project to get started.",
+    emptyStateTitle: "No projects yet",
+    welcomeText: "Welcome to our app",
+  },
+} as const
+
+export const appLabels = {
+  en: enLabels,
+} satisfies Record<string, typeof enLabels>
+
+export type AppLocale = keyof typeof appLabels
+export type AppLabels = (typeof appLabels)[AppLocale]
+```
+
+The `as const` assertion keeps the object structure available to TypeScript without maintaining a separate manual type for every string. The `satisfies` check makes every locale match the default locale shape.
+
+## Use Labels in Components
+
+Pass labels into components or read labels from the application context. Avoid importing a global locale directly into every component unless the application already uses that pattern.
+
+```tsx
+import type {AppLabels} from "../i18n/app-labels"
+
+type NavigationMenuButtonProps = {
+  labels: AppLabels
+  menuOpen: boolean
+  onToggleMenu: () => void
+}
+
+export function NavigationMenuButton({
+  labels,
+  menuOpen,
+  onToggleMenu,
+}: NavigationMenuButtonProps) {
+  return (
+    <button
+      aria-label={
+        menuOpen
+          ? labels.navigation.closeMenuAriaLabel
+          : labels.navigation.openMenuAriaLabel
+      }
+      aria-expanded={menuOpen}
+      type="button"
+      onClick={onToggleMenu}
+    >
+      <svg aria-hidden="true" viewBox="0 0 16 16">
+        <path d="M2 4h12M2 8h12M2 12h12" />
+      </svg>
+    </button>
+  )
+}
+```
+
+Use the same label object for visible text and assistive text.
+
+```tsx
+import type {AppLabels} from "../i18n/app-labels"
+
+type DashboardEmptyStateProps = {
+  labels: AppLabels
+}
+
+export function DashboardEmptyState({labels}: DashboardEmptyStateProps) {
+  return (
+    <section aria-labelledby="dashboard-empty-state-title">
+      <h2 id="dashboard-empty-state-title">
+        {labels.dashboard.emptyStateTitle}
+      </h2>
+      <p>{labels.dashboard.emptyStateDescription}</p>
+      <button type="button">{labels.dashboard.createProjectButton}</button>
+    </section>
+  )
+}
+```
+
+## Split Labels by Feature
+
+Split a growing registry into smaller files when one file becomes hard to review. Keep the assembled object locale-keyed so application code still has one entry point.
+
+```ts
+export const commonLabels = {
+  cancel: "Cancel",
+  closeDialogAriaLabel: "Close dialog",
+  loading: "Loading...",
+  save: "Save",
+} as const
+
+export const authLabels = {
+  emailLabel: "Email address",
+  invalidCredentialsError: "The email or password is incorrect.",
+  passwordLabel: "Password",
+  signInTitle: "Sign in",
+  submitButton: "Sign in",
+} as const
+```
+
+```ts
+import {authLabels} from "./auth-labels"
+import {commonLabels} from "./common-labels"
+
+export const appLabels = {
+  en: {
+    auth: authLabels,
+    common: commonLabels,
+  },
+} as const
+```
+
+Feature grouping keeps names short without losing context. Prefer `labels.auth.signInTitle` or `labels.dashboard.emptyStateTitle` over global keys such as `title`, `description`, or `submit`.
+
+## Decide What Belongs in Labels
+
+Move any string into the registry when a person can see it, hear it from a screen reader, or use it to understand the interface.
+
+| String type         | Example key                              |
+| :------------------ | :--------------------------------------- |
+| Visible text        | `labels.dashboard.welcomeText`           |
+| Button text         | `labels.auth.submitButton`               |
+| Form labels         | `labels.auth.emailLabel`                 |
+| Error messages      | `labels.auth.invalidCredentialsError`    |
+| Empty states        | `labels.dashboard.emptyStateTitle`       |
+| Tooltip text        | `labels.common.saveTooltip`              |
+| `aria-label` values | `labels.navigation.openMenuAriaLabel`    |
+| Helper text         | `labels.profile.avatarHelpText`          |
+| Screen-reader text  | `labels.common.loadingScreenReaderLabel` |
+
+Do not move internal constants, analytics event names, API field names, or CSS class names into the label registry unless they are also shown to the reader.
+
+## Review for Hardcoded Copy
+
+Treat hardcoded user-facing strings as review findings. The fix is to add the label to the registry and reference it from the component.
+
+```tsx
+<button aria-label="Close modal" type="button">
+  <svg aria-hidden="true" viewBox="0 0 16 16">
+    <path d="M4 4l8 8M12 4l-8 8" />
+  </svg>
+</button>
+```
+
+```tsx
+<button aria-label={labels.common.closeDialogAriaLabel} type="button">
+  <svg aria-hidden="true" viewBox="0 0 16 16">
+    <path d="M4 4l8 8M12 4l-8 8" />
+  </svg>
+</button>
+```
+
+Allow hardcoded strings in tests when the test is asserting a specific accessible name or visible label. Keep test strings aligned with the registry so copy changes fail in one obvious place.
+
+## Add Another Locale
+
+When the application adds a locale, copy the complete `en` shape and translate values without changing keys.
+
+```ts
+const enLabels = {
+  common: {
+    cancel: "Cancel",
+    save: "Save",
+  },
+} as const
+
+export const appLabels = {
+  en: enLabels,
+  fr: {
+    common: {
+      cancel: "Annuler",
+      save: "Enregistrer",
+    },
+  },
+} satisfies Record<string, typeof enLabels>
+```
+
+Keep each locale structurally identical. A missing key should fail during development instead of falling back silently in production.
+
+## Verify the Registry
+
+Check these points before merging a label registry change:
+
+- New visible text, accessible names, helper text, and error messages come from the registry.
+- Label keys include enough context to make review clear.
+- Feature files export labels, not component behavior.
+- Components can receive a different label set without changing their internal logic.
+- Additional locales keep the same object shape as `en`.

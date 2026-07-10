@@ -17,6 +17,7 @@ const navConfig: NavConfig[] = [
   {sectionTitle: "Authoring", separator: true},
   {id: "pages"},
   {id: "markdown"},
+  {id: "i18n"},
   {id: "typedoc"},
   {id: "configuration"},
   {sectionTitle: "Content Guidelines", separator: true},
