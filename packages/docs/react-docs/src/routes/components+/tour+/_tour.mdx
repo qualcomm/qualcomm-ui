@@ -1,0 +1,276 @@
+---
+title: Tour
+description: Tour guides users through product features with a sequence of contextual steps.
+component: Tour
+aliases: [onboarding, walkthrough, product tour, coach marks]
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description} Use it for short onboarding flows or to introduce a
+workflow after a meaningful product change. This API guide covers step routing,
+composition, lifecycle control, wait effects, and accessibility behavior.
+
+```tsx
+import {Tour, type TourStepDetails} from "@qualcomm-ui/react/tour"
+```
+
+## Prerequisites
+
+Define every target element in the document before starting its step. A target
+callback may temporarily return `null` while an element mounts; Tour observes
+the document for up to three seconds before ending with a `not-found` status.
+
+Every step needs a unique `id`, a `heading`, a `description`, and either a
+`target` or an explicit `type`. Duplicate IDs and steps without a target or type
+produce runtime errors.
+
+## Start a tour
+
+Use the convenience API when the standard heading, description, progress,
+actions, and close button meet the workflow's needs. Call `start()` through
+`Tour.Context`; Tour does not add a trigger automatically.
+
+<Demo name="TourBasicDemo" component={demos.TourBasicDemo} />
+
+The example starts with a centered dialog, highlights the Dashboard target with
+a tooltip, and finishes with a floating notification step. The visible status
+confirms whether the tour started, completed, was skipped, or was dismissed.
+
+## Compose custom content
+
+Use the compound API to control the active step markup. `Tour.Root` owns the
+state machine, while `Tour.FloatingPortal` supplies the backdrop, spotlight,
+positioner, content surface, and optional arrow. Render headings, descriptions,
+progress, actions, and the close button from `Tour.Context`.
+
+<Demo name="TourCompoundDemo" component={demos.TourCompoundDemo} />
+
+Keep `Tour.Heading` and `Tour.Description` in custom layouts. Tour uses their IDs
+to name and describe the active `alertdialog`.
+
+## Choose step behavior
+
+Set `type` to control how each step appears or waits:
+
+| Type | Use |
+| --- | --- |
+| `tooltip` | Highlight a target and position the content next to it. |
+| `dialog` | Center content without requiring a target. |
+| `floating` | Position lightweight content near a target without an arrow or backdrop by default. |
+| `wait` | Pause routing while an effect waits for an application event. Wait steps do not count toward visible progress. |
+
+A step with a target defaults to `tooltip`. A step without a target defaults to
+`dialog`. Declare the type when the distinction matters to the workflow.
+
+## Configure actions
+
+Add `next`, `prev`, `dismiss`, or `skip` actions to a step. `next` and `prev`
+disable automatically when navigation is unavailable. Dismissing the last step
+emits `completed` after `dismissed`; skipping emits `skipped`.
+
+For application-specific routing, pass a function as `action`. It receives
+`next`, `prev`, `goto`, `dismiss`, and `skip` functions:
+
+```tsx
+{
+  label: "Open review",
+  action: ({goto}) => goto("review"),
+}
+```
+
+## Control step state
+
+Pass `stepId` with `onStepChange` when application state owns the active step.
+Store the callback's `stepId` value and pass that value back to `Tour` so
+internal actions and external state stay synchronized.
+
+Use `onStepsChange` when calling `addStep`, `removeStep`, `updateStep`, or
+`setSteps` through `Tour.Context`. Use `onStatusChange` to observe `started`,
+`completed`, `dismissed`, `skipped`, and `not-found` outcomes.
+
+## Target and place content
+
+Return the current target from `target` instead of storing an element captured
+during render. Set `placement` to a floating placement such as `bottom-start` or
+`top`. Use `offset` for per-step distance adjustments.
+
+Targeted steps mark the active element with `data-tour-highlighted`, scroll it
+into view, and calculate the spotlight from its bounding rectangle. Configure
+the shared cutout with `spotlightOffset` and `spotlightRadius`. Set `backdrop`
+and `arrow` on individual steps when their defaults do not fit the workflow.
+
+## Wait for application work
+
+Wait steps run an `effect` while the overlay is closed. Call `next()`, `goto()`,
+or `dismiss()` when the application reaches the required state, and return a
+cleanup function for listeners, observers, or requests.
+
+<Demo name="TourWaitStepDemo" component={demos.TourWaitStepDemo} />
+
+The example uses `waitForElementValue` to continue only after the approval code
+matches. `waitForElement`, `waitForElementValue`, and `waitForPromise` return a
+promise and a cleanup function. Handle rejected promises so timeouts and
+aborted effects do not become unhandled errors.
+
+Use `show()` in an effect when the effect must display its own step before it
+finishes. Use `update()` to revise that step's details without replacing the
+entire step collection.
+
+## Configure dismissal and interaction
+
+Escape and outside interaction dismiss the tour by default. Set
+`closeOnEscape={false}` or `closeOnInteractOutside={false}` when the workflow
+must remain active. Outside-interaction callbacks can also call
+`event.preventDefault()` to keep a specific interaction from dismissing it.
+
+Left and right arrow keys navigate visible steps. Set
+`keyboardNavigation={false}` to disable that behavior. Navigation follows
+`dir`, including reversed arrow behavior in RTL layouts. Set
+`preventInteraction` to make the highlighted target inert while its step is
+active.
+
+## Accessibility
+
+- Tour content uses `role="alertdialog"`, `aria-modal="true"`, and a polite live region.
+- `Tour.Heading` and `Tour.Description` provide the accessible name and description.
+- Focus is trapped between the tour content and its target, then cleaned up when the step closes.
+- `Tour.CloseButton` uses the translated close label.
+- Progress and action labels can be localized with `translations`.
+
+Do not use Tour for required tasks that users must complete every time. Keep
+steps brief, provide a close or skip path when the workflow is optional, and
+ensure the underlying feature remains discoverable without the tour.
+
+## API
+
+### \<Tour>
+
+The convenience component extends `Tour.Root` and renders the standard floating
+portal and content.
+
+<TypeDocProps name="TourProps" omitFrom="TourRootProps" />
+
+### \<Tour.Root>
+
+<TypeDocProps name="TourRootProps" />
+
+### \<Tour.Context>
+
+<TypeDocProps name="TourContextProps" />
+
+### \<Tour.FloatingPortal>
+
+<TypeDocProps name="TourFloatingPortalProps" />
+
+### \<Tour.Backdrop>
+
+<TypeDocProps name="TourBackdropProps" />
+
+<TypeDocAttributes
+  name={["TourBackdropBindings", "QdsTourBackdropBindings"]}
+/>
+
+### \<Tour.Spotlight>
+
+<TypeDocProps name="TourSpotlightProps" />
+
+<TypeDocAttributes
+  name={["TourSpotlightBindings", "QdsTourSpotlightBindings"]}
+/>
+
+### \<Tour.Positioner>
+
+<TypeDocProps name="TourPositionerProps" />
+
+<TypeDocAttributes
+  name={["TourPositionerBindings", "QdsTourPositionerBindings"]}
+/>
+
+### \<Tour.Content>
+
+<TypeDocProps name="TourContentProps" />
+
+<TypeDocAttributes
+  name={["TourContentBindings", "QdsTourContentBindings"]}
+/>
+
+### \<Tour.Arrow>
+
+<TypeDocProps name="TourArrowProps" />
+
+<TypeDocAttributes name={["TourArrowBindings", "QdsTourArrowBindings"]} />
+
+### \<Tour.ArrowTip>
+
+<TypeDocProps name="TourArrowTipProps" />
+
+<TypeDocAttributes
+  name={["TourArrowTipBindings", "QdsTourArrowTipBindings"]}
+/>
+
+### \<Tour.Heading>
+
+<TypeDocProps name="TourHeadingProps" />
+
+<TypeDocAttributes
+  name={["TourHeadingBindings", "QdsTourHeadingBindings"]}
+/>
+
+### \<Tour.Description>
+
+<TypeDocProps name="TourDescriptionProps" />
+
+<TypeDocAttributes
+  name={["TourDescriptionBindings", "QdsTourDescriptionBindings"]}
+/>
+
+### \<Tour.ProgressText>
+
+<TypeDocProps name="TourProgressTextProps" />
+
+<TypeDocAttributes
+  name={["TourProgressTextBindings", "QdsTourProgressTextBindings"]}
+/>
+
+### \<Tour.ActionTrigger>
+
+<TypeDocProps name="TourActionTriggerProps" />
+
+<TypeDocAttributes
+  name={["TourActionTriggerBindings", "QdsTourActionTriggerBindings"]}
+/>
+
+### \<Tour.CloseButton>
+
+<TypeDocProps name="TourCloseButtonProps" />
+
+<TypeDocAttributes
+  name={["TourCloseTriggerBindings", "QdsTourCloseButtonBindings"]}
+/>
+
+## Data structures
+
+### TourStepDetails
+
+<TypeDocProps name="TourStepDetails" />
+
+### TourStepAction
+
+<TypeDocProps name="TourStepAction" />
+
+### TourStepEffectArgs
+
+<TypeDocProps name="TourStepEffectArgs" />
+
+### TourTranslations
+
+<TypeDocProps name="TourTranslations" />
+
+### TourWaitOptions
+
+<TypeDocProps name="TourWaitOptions" />

@@ -48,4 +48,5 @@
 | [Text Input](/components/text-input)                   | Allows users to enter a single line of text. | |
 | [Toast Notification](/components/toast)                | Delivers temporary messages that appear and disappear automatically. | |
 | [Tooltip](/components/tooltip)                         | Shows additional information when users hover over an element. | |
+| [Tour](/components/tour)                               | Guides users through product features with a sequence of contextual steps. | |
 | [Tree](/components/tree)                               | Displays hierarchical data in expandable nested levels. | |

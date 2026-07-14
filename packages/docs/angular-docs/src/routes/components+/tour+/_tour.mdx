@@ -1,0 +1,271 @@
+---
+title: Tour
+description: Tour guides users through product features with a sequence of contextual steps.
+component: Tour
+aliases: [onboarding, walkthrough, product tour, coach marks]
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description} Use it for short onboarding flows or to introduce a
+workflow after a meaningful product change. This API guide covers step routing,
+composition, lifecycle control, wait effects, and accessibility behavior.
+
+```ts
+import {TourModule, type TourStepDetails} from "@qualcomm-ui/angular/tour"
+```
+
+Add `TourModule` to the component's `imports` before using the Tour directives.
+
+## Prerequisites
+
+Define every target element in the document before starting its step. A target
+callback may temporarily return `null` while an element mounts; Tour observes
+the document for up to three seconds before ending with a `not-found` status.
+
+Every step needs a unique `id`, a `heading`, a `description`, and either a
+`target` or an explicit `type`. Duplicate IDs and steps without a target or type
+produce runtime errors.
+
+## Start a tour
+
+Use `q-tour` when the standard heading, description, progress, actions, and
+close button meet the workflow's needs. Call `start()` through the
+`*tourContext` directive; Tour does not add a trigger automatically.
+
+<QdsDemo name="TourBasicDemo" />
+
+The example starts with a centered dialog, highlights the Dashboard target with
+a tooltip, and finishes with a floating notification step. The visible status
+confirms whether the tour started, completed, was skipped, or was dismissed.
+
+## Compose custom content
+
+Use `q-tour-root` to control the active step markup.
+`q-tour-floating-portal` supplies the backdrop, spotlight, positioner, content
+surface, and optional arrow. Render headings, descriptions, progress, actions,
+and the close button from `*tourContext`.
+
+<QdsDemo name="TourCompoundDemo" />
+
+Keep `q-tour-heading` and `q-tour-description` in custom layouts. Tour uses their
+IDs to name and describe the active `alertdialog`.
+
+## Choose step behavior
+
+Set `type` to control how each step appears or waits:
+
+| Type | Use |
+| --- | --- |
+| `tooltip` | Highlight a target and position the content next to it. |
+| `dialog` | Center content without requiring a target. |
+| `floating` | Position lightweight content near a target without an arrow or backdrop by default. |
+| `wait` | Pause routing while an effect waits for an application event. Wait steps do not count toward visible progress. |
+
+A step with a target defaults to `tooltip`. A step without a target defaults to
+`dialog`. Declare the type when the distinction matters to the workflow.
+
+## Configure actions
+
+Add `next`, `prev`, `dismiss`, or `skip` actions to a step. `next` and `prev`
+disable automatically when navigation is unavailable. Dismissing the last step
+emits `completed` after `dismissed`; skipping emits `skipped`.
+
+For application-specific routing, pass a function as `action`. It receives
+`next`, `prev`, `goto`, `dismiss`, and `skip` functions.
+
+## Control step state
+
+Bind `[stepId]` when application state owns the active step, and update that
+state from `(stepChanged)`. Handle `(stepsChanged)` when calling `addStep`,
+`removeStep`, `updateStep`, or `setSteps` through `*tourContext`.
+
+Use `(statusChanged)` to observe `started`, `completed`, `dismissed`, `skipped`,
+and `not-found` outcomes. The `(focusOutside)`, `(pointerDownOutside)`, and
+`(interactOutside)` outputs expose dismissable-layer events when an application
+needs to prevent or respond to an outside interaction.
+
+## Target and place content
+
+Return the current target from `target` instead of storing an element captured
+during component initialization. Inject `DOCUMENT` when target lookup must work
+with Angular's document abstraction. Set `placement` to a floating placement
+such as `bottom-start` or `top`, and use `offset` for per-step distance
+adjustments.
+
+Targeted steps mark the active element with `data-tour-highlighted`, scroll it
+into view, and calculate the spotlight from its bounding rectangle. Configure
+the shared cutout with `[spotlightOffset]` and `[spotlightRadius]`. Set
+`backdrop` and `arrow` on individual steps when their defaults do not fit the
+workflow.
+
+## Wait for application work
+
+Wait steps run an `effect` while the overlay is closed. Call `next()`, `goto()`,
+or `dismiss()` when the application reaches the required state, and return a
+cleanup function for listeners, observers, or requests.
+
+<QdsDemo name="TourWaitStepDemo" />
+
+The example listens for the required approval code, removes the listener during
+cleanup, and advances when the value matches. Use `show()` in an effect when the
+effect must display its own step before it finishes. Use `update()` to revise
+that step's details without replacing the entire step collection.
+
+## Configure dismissal and interaction
+
+Escape and outside interaction dismiss the tour by default. Set
+`[closeOnEscape]="false"` or `[closeOnInteractOutside]="false"` when the workflow
+must remain active. An outside-interaction output can also call
+`event.preventDefault()` to keep a specific interaction from dismissing it.
+
+Left and right arrow keys navigate visible steps. Set
+`[keyboardNavigation]="false"` to disable that behavior. Navigation follows
+`dir`, including reversed arrow behavior in RTL layouts. Set
+`[preventInteraction]="true"` to make the highlighted target inert while its
+step is active.
+
+## Accessibility
+
+- Tour content uses `role="alertdialog"`, `aria-modal="true"`, and a polite live region.
+- `q-tour-heading` and `q-tour-description` provide the accessible name and description.
+- Focus is trapped between the tour content and its target, then cleaned up when the step closes.
+- `q-tour-close-button` uses the translated close label.
+- Progress and action labels can be localized with `[translations]`.
+
+Do not use Tour for required tasks that users must complete every time. Keep
+steps brief, provide a close or skip path when the workflow is optional, and
+ensure the underlying feature remains discoverable without the tour.
+
+## API
+
+### q-tour
+
+The convenience component extends `q-tour-root` and renders the standard
+floating portal and content.
+
+<TypeDocProps name="TourDirective" omitFrom="TourRootDirective" />
+
+### q-tour-root
+
+<TypeDocProps name="TourRootDirective" />
+
+### tourContext
+
+<TypeDocProps name="TourContextDirective" />
+
+### q-tour-floating-portal
+
+<TypeDocProps name="TourFloatingPortalComponent" />
+
+### q-tour-backdrop
+
+<TypeDocProps name="TourBackdropDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourBackdropBindings", "QdsTourBackdropBindings"]}
+/>
+
+### q-tour-spotlight
+
+<TypeDocProps name="TourSpotlightDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourSpotlightBindings", "QdsTourSpotlightBindings"]}
+/>
+
+### q-tour-positioner
+
+<TypeDocProps name="TourPositionerDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourPositionerBindings", "QdsTourPositionerBindings"]}
+/>
+
+### q-tour-content
+
+<TypeDocProps name="TourContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourContentBindings", "QdsTourContentBindings"]}
+/>
+
+### q-tour-arrow
+
+<TypeDocProps name="TourArrowDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourArrowBindings", "QdsTourArrowBindings"]}
+/>
+
+### q-tour-arrow-tip
+
+<TypeDocProps name="TourArrowTipDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourArrowTipBindings", "QdsTourArrowTipBindings"]}
+/>
+
+### q-tour-heading
+
+<TypeDocProps name="TourHeadingDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourHeadingBindings", "QdsTourHeadingBindings"]}
+/>
+
+### q-tour-description
+
+<TypeDocProps name="TourDescriptionDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourDescriptionBindings", "QdsTourDescriptionBindings"]}
+/>
+
+### q-tour-progress-text
+
+<TypeDocProps name="TourProgressTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourProgressTextBindings", "QdsTourProgressTextBindings"]}
+/>
+
+### q-tour-action-trigger
+
+<TypeDocProps name="TourActionTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["TourActionTriggerBindings", "QdsTourActionTriggerBindings"]}
+/>
+
+### q-tour-close-button
+
+<TypeDocProps name="TourCloseButtonComponent" />
+
+<TypeDocAngularAttributes
+  name={["TourCloseTriggerBindings", "QdsTourCloseButtonBindings"]}
+/>
+
+## Data structures
+
+### TourStepDetails
+
+<TypeDocProps name="TourStepDetails" />
+
+### TourStepAction
+
+<TypeDocProps name="TourStepAction" />
+
+### TourStepEffectArgs
+
+<TypeDocProps name="TourStepEffectArgs" />
+
+### TourTranslations
+
+<TypeDocProps name="TourTranslations" />

@@ -309,6 +309,12 @@ export const componentList: UiComponent[] = [
   },
   {
     description:
+      "Guides users through product features with a sequence of contextual steps.",
+    name: "Tour",
+    url: "/components/tour",
+  },
+  {
+    description:
       "A tree displays hierarchical data in expandable nested levels.",
     fileName: "tree.svg",
     name: "Tree",
