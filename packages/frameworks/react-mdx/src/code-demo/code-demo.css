@@ -83,7 +83,8 @@
 .qui-demo-runner__tabs {
   pre.shiki-code,
   pre.shiki {
-    span {
+    span,
+    code {
       font: var(--font-static-code-sm-default);
     }
     max-height: 700px;

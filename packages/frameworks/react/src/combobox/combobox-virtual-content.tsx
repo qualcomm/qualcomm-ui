@@ -138,6 +138,9 @@ export function ComboboxVirtualContent<
       }
     }
     setScrollToIndexFn(handleScrollToIndexFn)
+    return () => {
+      clearTimeout(timerRef.current)
+    }
   }, [setScrollToIndexFn, virtualizer])
 
   const virtualItems = useNoMemo(() => virtualizer.getVirtualItems())

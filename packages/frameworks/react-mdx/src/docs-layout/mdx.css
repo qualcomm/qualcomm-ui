@@ -105,6 +105,10 @@ pre.mdx {
 
 pre.mdx.shiki {
   overflow-x: auto;
+
+  code {
+    font: var(--font-static-code-sm-default);
+  }
 }
 
 p.mdx {
