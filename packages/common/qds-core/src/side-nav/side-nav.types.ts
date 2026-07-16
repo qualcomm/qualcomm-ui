@@ -5,7 +5,18 @@ import type {sideNavClasses} from "./side-nav.classes.js"
 
 export type QdsSideNavSurface = "primary" | "secondary"
 
+export type QdsSideNavSize = "sm" | "md"
+
 export interface QdsSideNavRootProps {
+  /**
+   * Governs item padding, height, spacing, font size, and icon size.
+   *
+   * @since next-release
+   *
+   * @default 'md'
+   */
+  size?: QdsSideNavSize
+
   /**
    * The background color of the side navigation.
    *
@@ -18,6 +29,7 @@ type SideNavClasses = typeof sideNavClasses
 
 export interface QdsSideNavRootBindings {
   className: SideNavClasses["root"]
+  "data-size": QdsSideNavSize
   "data-surface": QdsSideNavSurface
 }
 
