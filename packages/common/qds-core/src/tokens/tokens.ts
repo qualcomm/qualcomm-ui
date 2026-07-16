@@ -1661,6 +1661,16 @@ export const tokens: TokenWithComment[] = [
     "value": "var(--type-font-weight-body-default) 16px / 24px var(--type-font-family-secondary)"
   },
   {
+    "name": "font-static-body-sm-compact-bold",
+    "type": "typography",
+    "value": "var(--type-font-weight-body-bold) 13px / 20px var(--type-font-family-secondary)"
+  },
+  {
+    "name": "font-static-body-sm-compact-default",
+    "type": "typography",
+    "value": "var(--type-font-weight-body-default) 13px / 20px var(--type-font-family-secondary)"
+  },
+  {
     "name": "font-static-body-sm-bold",
     "type": "typography",
     "value": "var(--type-font-weight-body-bold) 14px / 20px var(--type-font-family-secondary)"
@@ -2279,6 +2289,16 @@ export const tokens: TokenWithComment[] = [
     "name": "type-static-body-md-line-height",
     "type": "number",
     "value": "24px"
+  },
+  {
+    "name": "type-static-body-sm-compact-font-size",
+    "type": "number",
+    "value": "13px"
+  },
+  {
+    "name": "type-static-body-sm-compact-line-height",
+    "type": "number",
+    "value": "20px"
   },
   {
     "name": "type-static-body-sm-font-size",

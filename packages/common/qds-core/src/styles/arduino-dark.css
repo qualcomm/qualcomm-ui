@@ -288,6 +288,8 @@
   --font-static-body-md-bold: var(--type-font-weight-body-bold) 16px / 24px var(--type-font-family-secondary);
   --font-static-body-md-default: var(--type-font-weight-body-default) 16px / 24px var(--type-font-family-secondary);
   --font-static-body-sm-bold: var(--type-font-weight-body-bold) 14px / 20px var(--type-font-family-secondary);
+  --font-static-body-sm-compact-bold: var(--type-font-weight-body-bold) 13px / 20px var(--type-font-family-secondary);
+  --font-static-body-sm-compact-default: var(--type-font-weight-body-default) 13px / 20px var(--type-font-family-secondary);
   --font-static-body-sm-default: var(--type-font-weight-body-default) 14px / 20px var(--type-font-family-secondary);
   --font-static-body-xl-bold: var(--type-font-weight-body-bold) 19px / 28px var(--type-font-family-secondary);
   --font-static-body-xl-default: var(--type-font-weight-body-default) 19px / 28px var(--type-font-family-secondary);
@@ -401,6 +403,8 @@
   --type-static-body-lg-line-height: 26px;
   --type-static-body-md-font-size: 16px;
   --type-static-body-md-line-height: 24px;
+  --type-static-body-sm-compact-font-size: 13px;
+  --type-static-body-sm-compact-line-height: 20px;
   --type-static-body-sm-font-size: 14px;
   --type-static-body-sm-line-height: 20px;
   --type-static-body-xl-font-size: 19px;
