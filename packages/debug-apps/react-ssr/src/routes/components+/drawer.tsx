@@ -1,17 +1,13 @@
-import {DrawerControlledStateDemo as ControlledStateDemo} from "@qualcomm-ui/react-docs/components+/drawer+/demos/drawer-controlled-state-demo"
-import {DrawerCustomContainerDemo as CustomContainerDemo} from "@qualcomm-ui/react-docs/components+/drawer+/demos/drawer-custom-container-demo"
-import {DrawerPlacementDemo as PlacementDemo} from "@qualcomm-ui/react-docs/components+/drawer+/demos/drawer-placement-demo"
-import {DrawerPlacementStartDemo as PlacementStartDemo} from "@qualcomm-ui/react-docs/components+/drawer+/demos/drawer-placement-start-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: ControlledStateDemo, title: "Controlled State"},
-  {component: CustomContainerDemo, title: "Custom Container"},
-  {component: PlacementDemo, title: "Placement"},
-  {component: PlacementStartDemo, title: "Placement Start"},
-]
+const componentName = "drawer"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/drawer+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function DrawerDemos() {
-  return <DemoPageLayout componentName="drawer" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }
