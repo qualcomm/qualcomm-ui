@@ -1,5 +1,17 @@
 # @qualcomm-ui/angular Changelog
 
+## 2.13.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.32.0, @qualcomm-ui/angular-core@2.4.6]
+
 ## 2.12.5
 
 Jul 13th, 2026

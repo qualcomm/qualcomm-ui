@@ -41,7 +41,7 @@ export class SideNavRootDirective
   /**
    * Governs item padding, height, spacing, font size, and icon size.
    *
-   * @since next-release
+   * @since 2.13.0
    *
    * @default 'md'
    */

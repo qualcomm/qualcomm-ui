@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.10.0
+
+Jul 16th, 2026
+
+### Features
+
+- [docs-layout]: match sidebar size to navigation density ([68e7229](https://github.com/qualcomm/qualcomm-ui/commit/68e7229))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.26.0, @qualcomm-ui/react-core@1.5.8]
+
 ## 2.9.13
 
 Jul 13th, 2026

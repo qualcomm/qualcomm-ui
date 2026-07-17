@@ -48,7 +48,7 @@
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/core": "workspace:^1.11.6",
     "@qualcomm-ui/dom": "workspace:^1.1.5",
-    "@qualcomm-ui/react-test-utils": "workspace:^1.0.4",
+    "@qualcomm-ui/react-test-utils": "workspace:^1.0.5",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/utils": "workspace:^1.3.2",
     "@qualcomm-ui/vite": "catalog:",

@@ -1,5 +1,13 @@
 # @qualcomm-ui/tailwind-plugin Changelog
 
+## 1.9.0
+
+Jul 16th, 2026
+
+### Features
+
+- [qds-next-gen]: support new compact body font ([aabbc9e](https://github.com/qualcomm/qualcomm-ui/commit/aabbc9e))
+
 ## 1.8.0
 
 Jul 13th, 2026

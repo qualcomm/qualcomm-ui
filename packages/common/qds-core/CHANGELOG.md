@@ -1,5 +1,22 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.32.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+- [tokens]: add compact small body typography ([2050eb3](https://github.com/qualcomm/qualcomm-ui/commit/2050eb3))
+
+### Styles
+
+- [drawer]: improve background contrast in dark mode ([c58c00c](https://github.com/qualcomm/qualcomm-ui/commit/c58c00c))
+
+### Bug Fixes
+
+- [tree]: trim node text box to cap height ([ea51430](https://github.com/qualcomm/qualcomm-ui/commit/ea51430))
+
 ## 1.31.0
 
 Jul 13th, 2026

@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-test-utils
 
+## 1.0.5
+
+Jul 16th, 2026
+
+### Bug Fixes
+
+- add type declarations for css imports in tests ([f0ad5fc](https://github.com/qualcomm/qualcomm-ui/commit/f0ad5fc))
+
 ## 1.0.4
 
 Jun 10th, 2026

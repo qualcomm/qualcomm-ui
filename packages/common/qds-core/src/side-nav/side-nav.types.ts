@@ -11,7 +11,7 @@ export interface QdsSideNavRootProps {
   /**
    * Governs item padding, height, spacing, font size, and icon size.
    *
-   * @since next-release
+   * @since 1.32.0
    *
    * @default 'md'
    */
