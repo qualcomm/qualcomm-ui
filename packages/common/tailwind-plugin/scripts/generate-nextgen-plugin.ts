@@ -606,6 +606,8 @@ const FONT_GROUPS = [
   {key: "display", pattern: /^--font-static-display-(\w+)$/},
   {key: "heading", pattern: /^--font-static-heading-(\w+)(?:-default)?$/},
   {key: "headingBold", pattern: /^--font-static-heading-(\w+)-bold$/},
+  {key: "bodyCompact", pattern: /^--font-static-body-(\w+)-compact-default/},
+  {key: "bodyCompactBold", pattern: /^--font-static-body-(\w+)-compact-bold$/},
   {key: "body", pattern: /^--font-static-body-(\w+)-default$/},
   {key: "bodyBold", pattern: /^--font-static-body-(\w+)-bold$/},
   {key: "eyebrow", pattern: /^--font-static-eyebrow-(\w+)-default$/},
@@ -647,6 +649,8 @@ function generateThemeFonts(
   const fonts: Record<FontGroup, FontData[]> = {
     body: [],
     bodyBold: [],
+    bodyCompact: [],
+    bodyCompactBold: [],
     code: [],
     codeBold: [],
     display: [],
@@ -671,6 +675,7 @@ function generateThemeFonts(
 
     const group = FONT_GROUPS.find(({pattern}) => pattern.test(variable))
     const match = group?.pattern.exec(variable)
+
     if (!group || !match) {
       throw new Error(`Unmatched font utility: ${variable}`)
     }

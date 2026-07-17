@@ -79,6 +79,20 @@ const headingBold: FontData[] = [
   },
 ]
 
+const bodyCompact: FontData[] = [
+  {
+    tailwindClasses: ["font-body-sm-compact"],
+    variable: "--font-static-body-sm-compact-default",
+  },
+]
+
+const bodyCompactBold: FontData[] = [
+  {
+    tailwindClasses: ["font-body-sm-compact-bold"],
+    variable: "--font-static-body-sm-compact-bold",
+  },
+]
+
 const body: FontData[] = [
   {
     tailwindClasses: ["font-body-xxl"],
@@ -242,6 +256,8 @@ export const themeFonts: {
   display: FontData[]
   heading: FontData[]
   headingBold: FontData[]
+  bodyCompact: FontData[]
+  bodyCompactBold: FontData[]
   body: FontData[]
   bodyBold: FontData[]
   eyebrow: FontData[]
@@ -255,6 +271,8 @@ export const themeFonts: {
   display,
   heading,
   headingBold,
+  bodyCompact,
+  bodyCompactBold,
   body,
   bodyBold,
   eyebrow,
