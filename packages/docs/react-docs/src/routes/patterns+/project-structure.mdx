@@ -12,6 +12,9 @@ Use this project structure to separate application composition, business workflo
 > [!tip/Disclaimer]
 > These recommendations were developed for internal Qualcomm use and are now available for general reference. They reflect our experience and may not be applicable to every situation.
 
+> [!note]
+> This guide was updated in 2026 to reflect changing industry standards. Barrel files are no longer recommended, and segment rules have been loosened for better DX.
+
 The FSD methodology is based on three levels of abstraction:
 
 <Fsd />
@@ -25,7 +28,7 @@ A layer is a top-level directory and the first level of application decompositio
 - **app**: This is where the application logic is initialized. Providers, routers, global styles, etc. are defined here. It serves as the entry point of the application.
 - **pages**: This layer includes the application's pages.
 - **widgets**: These are standalone UI components used on pages.
-- **features**: This layer implements user-facing actions and workflows that carry business value, such as liking a post, writing a review, or rating a product.
+- **features**: This layer groups code for cohesive business capabilities and workflow-specific responsibilities. A feature may coordinate entities, data operations, UI state, and business rules when the application needs that boundary.
 - **entities**: This layer represents domain concepts such as users, reviews, and comments.
 - **data**: This layer organizes access to external data by business domain.
 - **shared**: This layer contains reusable components, transport infrastructure, configuration, and utilities that are not tied to specific business logic.
@@ -55,14 +58,16 @@ In summary, **higher layers** bear more responsibility and knowledge, while **lo
 
 ### 3. Segments
 
-**Segments** are divisions within a slice. Each segment is responsible for a distinct part of the slice's functionality:
+**Segments** are divisions within a slice. They aren't always required, particularly if your slice only contains a few files. Each segment is responsible for a distinct part of the slice's functionality:
 
 - `assets/` – media assets like images and videos.
 - `model/` – local state, business rules, and presentation types.
 - `ui/` – UI components responsible for displaying data.
-- `index.ts` – barrel file. This is the public entrypoint for the slice. Any code within the slice that is intended to be used by higher layers must be exported here.
 
 Data slices can also contain an `api/` segment for API methods, queries, mutations, external interfaces, and validation schemas.
+
+> [!note]
+> If a slice is small enough, you can omit segments entirely. Use segments when the slice is large enough to warrant separation.
 
 #### Characteristics
 
@@ -77,36 +82,27 @@ The App layer contains the overall initialization logic of the application – v
 
 ### Pages
 
-Pages represent the individual routes or screens within the application. Each page should maintain a minimalist structure, delegating the business logic to the underlying layers. As such, a page is a composition of widgets and/or features, which groups related operations.
+Pages represent the individual routes or screens within the application. Each page should maintain a minimalist structure, delegating the business logic to the underlying layers. As such, a page groups related operations through a composition of widgets, features, and entities.
 
 ### Widgets
 
-Widgets are independent and full-featured blocks of pages with specific actions. It consists of self-sufficient UI blocks that emerge from the composition of lower-level units like entities and features.
+Widgets are independent and full-featured blocks of pages with specific actions. It consists of self-sufficient UI blocks that emerge from the composition of lower-level units like entities and features. It may also be used as an organizational layer to satisfy layer constraints.
 
-Entities define domain models and Features define user-facing actions. Widgets bring them together to form cohesive, reusable modules. This layer avoids duplicating UI blocks that recur on different pages of the same application.
-
-However, it's important to note that the Widgets layer is a compositional layer and **does not typically contain business logic**.
+However, it's important to note that the Widgets layer is a compositional layer and **does not typically contain business logic** on its own. Business logic is typically organized in features and entities.
 
 ### Features
 
-Features are parts of the application's functionality. They combine entities, data-layer operations, and business rules into user-facing actions and workflows. The distinction between Features and Entities can be clarified as follows:
+Treat the Features layer as a responsibility boundary for business capabilities and workflows. A feature slice groups code that belongs together in a specific business context. Depending on the context, it may combine entities, data operations, UI state, and business rules, but it does not need to contain all of them.
 
-- an `entity` is a real-life concept, such as a **Product** or **User**.
-- A `feature` is functionality that provides business value, like **CreateProduct** or **FindUser**.
+Use these distinctions as guidelines:
 
-Example: City and Product are entities, whereas SearchByCity and BuyProduct are features.
+- An entity represents a reusable domain concept, such as a **Product** or **User**, together with state, rules, types, or presentation.
+- A feature represents behavior or state that belongs to a business capability or workflow, such as **CommentComposer**, **ProductComparison**, or **CheckoutEligibility**.
+- A widget composes entities and features into a substantial page block without becoming the default owner of their business rules.
 
-Let's consider a few examples:
+Features often support user-facing actions, but they do not need to be directly user-triggered. For example, a `CommentComposer` might own draft state, validation, and submission, while a `ProductComparison` feature might group selected products and comparison rules without performing a mutation.
 
-#### 1. Social Network Application
-
-In a social network application, the features could be `SendComment`, `LikePost`, and `JoinGroup`. The `SendComment` feature coordinates the form state and business rules for submitting a comment, then uses a comment mutation exported by the data layer.
-
-#### 2. E-commerce Application
-
-In an e-commerce application, the features could be `AddToCart`, `PlaceOrder`, and `UpdateCustomerDetails`. The `AddToCart` feature coordinates product selection and quantity rules, then uses a cart mutation exported by the data layer.
-
-Features are the actions that build the application's workflows. They use the domain concepts defined by Entities and the external data operations exposed by Data.
+Choose the boundary that keeps a responsibility cohesive. Keep concept-specific behavior in Entities, workflow-specific behavior in Features, and page-block composition in Widgets.
 
 ### Entities
 
@@ -114,19 +110,13 @@ Entities are the components related to the representation of business entities, 
 
 Each slice in this layer contains some or all of the following:
 
-- static UI elements
-- local domain and presentation types
+- simple UI elements
+- state and business rules, like jotai atoms and their selectors
 - domain-specific calculations and state transformations
 
-Let's consider a few examples:
+Note that models and state for a particular domain may also be in the Data layer.
 
-#### 1. Social Network Application
-
-In a social network application, the entities could be `User`, `Post`, and `Group`. The `User` entity might format a display name and provide an avatar or profile summary. The `Post` entity might provide presentation models and UI for post content.
-
-#### 2. E-commerce Application
-
-In an e-commerce application, the entities could be `Product`, `Order`, and `Customer`. The `Product` entity might format prices, derive availability labels, and provide a product summary or card.
+Consider the following example:
 
 #### Segments
 
@@ -139,17 +129,79 @@ When designing UI components in the **entities** layer, keep their interfaces sh
 
 A feature, widget, or page can use the data layer and map the result to an entity component's properties. The component remains focused on rendering the domain concept regardless of where the data originated.
 
-#### Product UI Example
-
-- A `Product` UI component displays product information such as a name, price, and description.
-- The component accepts properties that map to those fields, such as `productName`, `productPrice`, and `productDescription`.
-- A feature, widget, or page obtains the product through the data layer and passes the mapped values to the component.
-
 #### Benefits of Shallow UI Components
 
 - **Flexibility**: You can easily swap out the data source (e.g., switch from an API to a local database) without modifying the UI component.
 - **Testability**: Shallow components are simpler to test because they focus solely on rendering and don't contain complex logic.
 - **Reusability**: A well-defined `Product` component can be reused across different features or screens.
+
+#### Example: E-commerce Application
+
+In an e-commerce application, the entities could be `Product` and `Order`. The `Product` entity might render a product name, derive availability labels, and provide a product summary or card.
+
+If product selection is shared across workflows, the Product entity can own that state. Both `ProductSearch` and `OrderCheckout` import the atom from the entity layer, so the feature slices remain isolated from each other.
+
+`entities/product/model/selected-product.ts`:
+
+```ts
+import {atom} from "jotai"
+
+export interface Product {
+  id: string
+  name: string
+}
+
+export const selectedProductAtom = atom<Product | null>(null)
+```
+
+`features/product-search/product-search.tsx`:
+
+```tsx
+import {useSetAtom} from "jotai"
+
+import {
+  selectedProductAtom,
+  type Product,
+} from "~entities/product/model/selected-product"
+
+interface ProductSearchProps {
+  results: Product[]
+}
+
+export function ProductSearch({results}: ProductSearchProps) {
+  const selectProduct = useSetAtom(selectedProductAtom)
+
+  return (
+    <ul>
+      {results.map((product) => (
+        <li key={product.id}>
+          <button onClick={() => selectProduct(product)} type="button">
+            Select {product.name}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+`features/order-checkout/order-checkout.tsx`:
+
+```tsx
+import {useAtomValue} from "jotai"
+
+import {selectedProductAtom} from "~entities/product/model/selected-product"
+
+export function OrderCheckout() {
+  const selectedProduct = useAtomValue(selectedProductAtom)
+
+  if (!selectedProduct) {
+    return <p>Select a product before checking out.</p>
+  }
+
+  return <button type="button">Checkout {selectedProduct.name}</button>
+}
+```
 
 ### Data
 
@@ -159,7 +211,7 @@ All external data operations and their contracts live in the Data layer. This in
 
 ### Shared
 
-Shared contains business-agnostic primitives. Name shared modules by their technical responsibility, such as UI, configuration, formatting, or transport, rather than by a business entity or workflow.
+Shared contains business-agnostic primitives. Name shared modules by their technical responsibility, such as `table-filters`, `config`, or `auth`, rather than by a business entity or workflow.
 
 Generic transport infrastructure, such as an HTTP client, request serialization, and common error handling, belongs in Shared. Data-layer slices use that infrastructure to implement domain-specific API methods.
 
@@ -190,17 +242,3 @@ Slices are simply subfolders of a layer. Each slice represents a specific thing,
 
 - Slices of the same layer cannot use each other directly.
   - The `data` and `shared` layers are exempt from this restriction.
-- In most cases, avoid nesting folders in slices.
-
-Consider an example entity, the `User`.
-
-`User` has two distinct classifications, varying just enough to warrant separation into multiple slices:
-
-- `Internal User`
-- `External User`
-
-While you could technically nest both of these classifications under the same slice, it's cleaner to separate them into multiple slices, like so:
-
-<SliceIsolationTree />
-
-This helps to keep each slice self-contained.
