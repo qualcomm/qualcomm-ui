@@ -1,8 +1,15 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
     "composite": true,
     "jsx": "preserve",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "module": "esnext",
+    "emitDeclarationOnly": false,
+    // eslint-plugin-boundaries uses a legacy approach and doesn't work with NodeNext
+    "moduleResolution": "bundler",
+    "tsBuildInfoFile": "node_modules/.tmp/tsconfig.lib.tsbuildinfo"
   },
-  "include": ["index.d.ts"],
+  "include": ["./src"],
 }
