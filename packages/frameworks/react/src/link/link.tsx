@@ -32,6 +32,13 @@ export interface LinkProps
   endIcon?: LucideIconOrElement
 
   /**
+   * Controls whether the link inherits font size from its parent element.
+   *
+   * @since 1.22.0
+   */
+  inheritFontSize?: boolean | undefined
+
+  /**
    * Icon positioned before the text content.  If supplied as a `LucideIcon`,
    * the size will automatically match the {@link size} prop. Supply as a
    * `ReactElement` for additional customization.

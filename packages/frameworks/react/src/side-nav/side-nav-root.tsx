@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import type {QdsSideNavRootProps} from "@qualcomm-ui/qds-core/side-nav"
+import type {
+  QdsSideNavRootProps,
+  QdsSideNavSize,
+} from "@qualcomm-ui/qds-core/side-nav"
 import {
   CoreSideNav,
   type CoreSideNavRootProps,
@@ -15,7 +18,16 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsSideNavApi} from "./qds-side-nav-context.js"
 
 export interface SideNavRootProps<T = TreeNode>
-  extends CoreSideNavRootProps<T>, QdsSideNavRootProps {}
+  extends CoreSideNavRootProps<T>, QdsSideNavRootProps {
+  /**
+   * Governs item padding, height, spacing, font size, and icon size.
+   *
+   * @since 1.26.0
+   *
+   * @default 'md'
+   */
+  size?: QdsSideNavSize
+}
 
 export function SideNavRoot<T = TreeNode>({
   size,
