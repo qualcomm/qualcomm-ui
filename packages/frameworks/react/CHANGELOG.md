@@ -1,5 +1,13 @@
 # @qualcomm-ui/react Changelog
 
+## 1.26.1
+
+Jul 17th, 2026
+
+### Bug Fixes
+
+- [docs]: use correct since tag for prop extends ([93004b9](https://github.com/qualcomm/qualcomm-ui/commit/93004b9))
+
 ## 1.26.0
 
 Jul 16th, 2026

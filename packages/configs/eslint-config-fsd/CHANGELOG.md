@@ -1,5 +1,13 @@
 # @qualcomm-ui/eslint-config-fsd Changelog
 
+## 2.0.0
+
+Jul 17th, 2026
+
+### BREAKING CHANGES
+
+- [boundaries]: update dependencies and overhaul plugin ([e1d6f82](https://github.com/qualcomm/qualcomm-ui/commit/e1d6f82))
+
 ## 1.0.3
 
 Jun 10th, 2026
