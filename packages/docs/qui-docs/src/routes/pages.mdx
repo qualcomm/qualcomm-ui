@@ -26,6 +26,7 @@ npx tiged https://github.com/qualcomm/qualcomm-ui-templates/templates/react-qui-
 ## Related Guides
 
 - [Configuration](/configuration): the full configuration reference for `qui-docs.config.ts`.
+- [Routing Conventions](/routing-conventions): how filenames and folders map to URLs and layouts.
 - [Routing Guidelines](/routing): the operational contract for production docs pages, navigation, search, moves, and verification.
 - [Markdown](/markdown): Markdown authoring conventions and extended features.
 
@@ -35,9 +36,9 @@ The following guide assumes that you're using the file-based routing configurati
 
 - QUI Docs reads pages from the configured [appDirectory](/api/qui-docs-config#appDirectory) and [pageDirectory](/api/qui-docs-config#pageDirectory). The template uses this configuration: `src/routes`.
 - An `.mdx` file under `src/routes` creates a docs page and is included in search by default.
-- A page's URL comes from its file path relative to `src/routes`. Folders ending in `+` create nested URL segments.
-  - By default, plain folders do not create nested URL groups. See [routingStrategy](/configuration#routingstrategy) for the `"react-router-directory-groups"` mode.
-- If you define routes manually with React Router, see [Custom Routing](/custom-routing).
+- A page's URL comes from its file path relative to `src/routes`. Under the default strategy, folders ending in `+` organize regular page files into nested URL segments.
+- The `"react-router-directory-groups"` strategy also discovers regular page files in plain folders. See [Routing Conventions](/routing-conventions) for the complete comparison.
+- If you define routes manually with React Router, see [Custom Routing](/routing-conventions#custom-file-based-routing).
 
 ## URL Mapping
 
@@ -51,6 +52,8 @@ Each page URL is derived from the file path relative to `pageDirectory`.
 | `guide+/content-creation+/overview.mdx` | `/guide/content-creation/overview` |
 
 The `.mdx` file extension is removed from the URL. A folder ending in `+` contributes a URL segment without the `+` character.
+
+See [Routing Conventions](/routing-conventions) for index routes, layouts, parameters, parent overrides, and private folders.
 
 ## Nested Pages
 
@@ -253,7 +256,7 @@ Use `.tsx` routes sparingly. TSX pages can appear in navigation when configured,
 
 React Router's [Framework Mode](https://reactrouter.com/home#react-router-as-a-framework) supports manually defined route definitions. When you define routes manually, add a [routingStrategy](/api/qui-docs-config#routingStrategy) so QUI Docs can map each discovered page file to its site URL.
 
-See [Custom Routing](/custom-routing) for the full setup.
+See [Custom Routing](/routing-conventions#custom-file-based-routing) for the full setup.
 
 ## Next Steps
 

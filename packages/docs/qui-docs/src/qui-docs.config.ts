@@ -16,6 +16,7 @@ const navConfig: NavConfig[] = [
   {id: "integrations"},
   {sectionTitle: "Authoring", separator: true},
   {id: "pages"},
+  {id: "routing-conventions"},
   {id: "markdown"},
   {id: "typedoc"},
   {id: "configuration"},
@@ -25,7 +26,6 @@ const navConfig: NavConfig[] = [
   {id: "rules"},
   {sectionTitle: "Advanced", separator: true},
   {id: "ai-knowledge"},
-  {id: "custom-routing"},
   {separator: true},
   {
     id: "api",
