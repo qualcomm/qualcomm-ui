@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.11.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.0]
+
 ## 2.10.1
 
 Jul 17th, 2026

@@ -17,7 +17,7 @@
   --color-background-support-danger: #c71100;
   --color-background-support-info-medium: #99b3fd;
   --color-background-support-info-subtle: #f2f5fc;
-  --color-background-support-info: #4664df;
+  --color-background-support-info: #3b56c8;
   --color-background-support-neutral-medium: #b9b9ba;
   --color-background-support-neutral-subtle: #efeff0;
   --color-background-support-neutral: #49494a;
@@ -85,9 +85,9 @@
   --color-icon-neutral-primary: #0a0a0a;
   --color-icon-neutral-secondary: #636364;
   --color-icon-support-danger: #c71100;
-  --color-icon-support-info: #4664df;
+  --color-icon-support-info: #3b56c8;
   --color-icon-support-neutral: #787878;
-  --color-icon-support-success: #007a00;
+  --color-icon-support-success: #007200;
   --color-icon-support-warning: #d9a500;
   --color-interactive-background-danger-hover: #a50000;
   --color-interactive-background-danger-idle: #c71100;
@@ -189,8 +189,8 @@
   --color-text-neutral-primary: #0a0a0a;
   --color-text-neutral-secondary: #636364;
   --color-text-support-danger: #c71100;
-  --color-text-support-info: #4664df;
-  --color-text-support-success: #007a00;
+  --color-text-support-info: #3b56c8;
+  --color-text-support-success: #007200;
   --color-utility-disabled-background-solid: #b9b9ba;
   --color-utility-disabled-background: #00000014;
   --color-utility-disabled-border: #0000001f;

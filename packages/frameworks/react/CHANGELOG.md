@@ -1,5 +1,17 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.0]
+
 ## 1.26.1
 
 Jul 17th, 2026
