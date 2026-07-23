@@ -245,21 +245,31 @@ export class FigmaTokenBuilder {
                     delete dictionary.arduino
                     delete dictionary.dw
                     delete dictionary.sd
+                    delete dictionary.df
                     break
                   case "dragonwing":
                     delete dictionary.arduino
                     delete dictionary.qc
                     delete dictionary.sd
+                    delete dictionary.df
                     break
                   case "snapdragon":
                     delete dictionary.arduino
                     delete dictionary.qc
+                    delete dictionary.dw
+                    delete dictionary.df
+                    break
+                  case "dragonfly":
+                    delete dictionary.arduino
+                    delete dictionary.qc
+                    delete dictionary.sd
                     delete dictionary.dw
                     break
                   case "arduino":
                     delete dictionary.qc
                     delete dictionary.sd
                     delete dictionary.dw
+                    delete dictionary.df
                     break
                 }
                 return dictionary
