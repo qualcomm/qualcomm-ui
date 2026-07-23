@@ -1,5 +1,13 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.33.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
 ## 1.32.0
 
 Jul 16th, 2026
