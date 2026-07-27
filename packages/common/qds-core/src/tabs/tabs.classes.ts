@@ -10,6 +10,7 @@ export const tabsClasses = {
 
 export const tabClasses = {
   button: "qui-tab__button",
+  buttonText: "qui-tab__button-text",
   dismissButton: "qui-tab__dismiss-button",
   icon: "qui-tab__icon",
   root: "qui-tab__root",

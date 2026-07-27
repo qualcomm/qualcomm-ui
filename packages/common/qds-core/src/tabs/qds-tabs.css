@@ -1,3 +1,11 @@
+/* Unregistered custom properties are opaque strings, so browsers cannot interpolate them.
+@property gives the value a numeric type, enabling transitions. */
+@property --tab-text-mask-alpha {
+  inherits: true;
+  initial-value: 1;
+  syntax: "<number>";
+}
+
 .qui-tabs__root {
   display: flex;
   flex-direction: column;
@@ -62,6 +70,8 @@
   font: var(--font-static-body-xs-bold);
   position: relative;
   --dismiss-spacing-offset: 0px;
+  --dismiss-mask-width: calc(var(--sizing-80) + var(--spacing-70));
+  --tab-text-mask-alpha: 1;
 
   &[data-variant="contained"] {
     &:not(:last-child) {
@@ -69,8 +79,29 @@
     }
   }
 
-  &:has(.qui-tab__dismiss-button) {
-    --dismiss-spacing-offset: calc(var(--sizing-80) + var(--spacing-50));
+  &[data-variant="line"] {
+    &:has(.qui-tab__dismiss-button) {
+      --dismiss-spacing-offset: calc(var(--sizing-80) + var(--spacing-50));
+    }
+  }
+
+  &[data-variant="contained"] {
+    &:has(.qui-tab__dismiss-button) {
+      &:hover {
+        --tab-text-mask-alpha: 0;
+      }
+    }
+    .qui-tab__dismiss-button {
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+    &:hover {
+      .qui-tab__dismiss-button {
+        opacity: 1;
+        position: absolute;
+        right: var(--tab-initial-spacing-x);
+      }
+    }
   }
 
   &[data-size="sm"] {
@@ -96,9 +127,20 @@
   }
 }
 
+.qui-tab__button-text {
+  mask-image: linear-gradient(
+    to right,
+    black 0,
+    black 12px,
+    rgb(0 0 0 / var(--tab-text-mask-alpha)) calc(100% - var(--sizing-60)),
+    rgb(0 0 0 / var(--tab-text-mask-alpha)) 100%
+  );
+  transition: --tab-text-mask-alpha 0.2s ease-in-out;
+}
+
 .qui-tab__dismiss-button {
   position: absolute;
-  right: var(--tab-initial-spacing-x);
+  right: calc(var(--tab-initial-spacing-x) - 1px);
 }
 
 .qui-tab__button {
@@ -174,12 +216,13 @@
   }
 
   &[data-variant="contained"] {
+    background: var(--color-interactive-background-ghost-idle);
     &:hover {
-      background: var(--color-background-neutral-01);
+      background: var(--color-interactive-background-ghost-hover);
     }
 
     &[data-selected] {
-      background: var(--color-background-neutral-01);
+      background: var(--color-interactive-background-ghost-pressed);
     }
 
     &[data-focus][data-focus-visible] {

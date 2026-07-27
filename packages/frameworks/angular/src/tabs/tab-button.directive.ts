@@ -50,7 +50,9 @@ import {useQdsTabsContext} from "./qds-tabs-context.service"
       }
     </ng-content>
 
-    <ng-content />
+    <span [q-bind]="qdsContext().getTabButtonTextBindings()">
+      <ng-content />
+    </span>
 
     <ng-content select="[q-end-icon]">
       @if (endIcon()) {

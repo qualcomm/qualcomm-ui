@@ -15,6 +15,7 @@ import type {
   QdsTabsRootBindings,
   QdsTabsTabBindings,
   QdsTabsTabButtonBindings,
+  QdsTabsTabButtonTextBindings,
   QdsTabsTabDismissButtonBindings,
   QdsTabsTabEndIconBindings,
   QdsTabsTabStartIconBindings,
@@ -73,6 +74,11 @@ export function createQdsTabsApi(
         className: tabClasses.button,
         "data-size": size,
         "data-variant": variant,
+      })
+    },
+    getTabButtonTextBindings(): QdsTabsTabButtonTextBindings {
+      return normalize.element({
+        className: tabClasses.buttonText,
       })
     },
     getTabDismissButtonBindings(): QdsTabsTabDismissButtonBindings {
