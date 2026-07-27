@@ -1,5 +1,17 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.1]
+
 ## 1.27.0
 
 Jul 23rd, 2026
