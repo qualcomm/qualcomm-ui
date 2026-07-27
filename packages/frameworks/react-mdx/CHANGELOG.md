@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.11.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [demos]: account for new bottom border in tab list ([ad9771a](https://github.com/qualcomm/qualcomm-ui/commit/ad9771a))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.1]
+
 ## 2.11.0
 
 Jul 23rd, 2026

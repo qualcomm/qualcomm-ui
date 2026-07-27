@@ -12,13 +12,13 @@ interface Item {
 }
 
 const items: Item[] = [
-  {content: "Tab Content", id: "1", title: "Tab"},
-  {content: "Tab Content", id: "2", title: "Tab"},
-  {content: "Tab Content", id: "3", title: "Tab"},
-  {content: "Tab Content", id: "4", title: "Tab"},
+  {content: "Tab Content", id: "1", title: "Tab label"},
+  {content: "Tab Content", id: "2", title: "Tab label"},
+  {content: "Tab Content", id: "3", title: "Tab label"},
+  {content: "Tab Content", id: "4", title: "Tab label"},
 ]
 
-export function TabsAddRemoveDemo(): ReactElement {
+export function TabsAddRemoveContainedDemo(): ReactElement {
   const [tabs, setTabs] = useState<Item[]>(items)
   const [selectedTab, setSelectedTab] = useState<string | null>(items[0].id)
 
@@ -51,6 +51,7 @@ export function TabsAddRemoveDemo(): ReactElement {
       onValueChange={setSelectedTab}
       size="sm"
       value={selectedTab}
+      variant="contained"
     >
       <Tabs.List>
         <Tabs.Indicator />

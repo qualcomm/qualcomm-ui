@@ -1,5 +1,14 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.33.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+- [tabs]: add line tab bottom border ([4f6caef](https://github.com/qualcomm/qualcomm-ui/commit/4f6caef))
+
 ## 1.33.0
 
 Jul 23rd, 2026
