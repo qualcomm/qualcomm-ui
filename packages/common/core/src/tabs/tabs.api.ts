@@ -95,7 +95,9 @@ export function createTabsApi(
       return normalize.element({
         ...parts.indicator,
         "data-focus": booleanDataAttr(!!context.get("focusedValue")),
-        "data-focus-visible": booleanDataAttr(context.get("focusVisible")),
+        "data-focus-visible": booleanDataAttr(
+          context.get("focusVisible") || isFocusVisible(),
+        ),
         "data-orientation": prop("orientation"),
         id: props.id,
         style: {
@@ -240,7 +242,9 @@ export function createTabsApi(
         "aria-selected": booleanAriaAttr(tabState.selected),
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(tabState.focused),
-        "data-focus-visible": booleanDataAttr(context.get("focusVisible")),
+        "data-focus-visible": booleanDataAttr(
+          context.get("focusVisible") || isFocusVisible(),
+        ),
         "data-indicator-rendered": booleanDataAttr(
           context.get("indicatorRendered"),
         ),

@@ -141,7 +141,8 @@ export interface TabsSchema extends MachineSchema {
     indicatorTransition: boolean
     value: string | null
   }
-  effects: EffectSchema<"trackTabListElement">
+  effects: EffectSchema<"trackFocusVisible" | "trackTabListElement">
+  // TODO: migrate to new machine creation approach
   event: any
   guards: GuardSchema<"isIndicatorRendered" | "selectOnFocus">
   ids: TabsElementIds
