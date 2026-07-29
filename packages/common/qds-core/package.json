@@ -78,7 +78,7 @@
     "postcss-nested": "^7.0.2",
     "postcss-selector-parser": "^7.1.1",
     "shx": "catalog:",
-    "style-dictionary": "^5.1.1",
+    "style-dictionary": "^5.4.4",
     "style-dictionary-utils": "~4.1.1",
     "tsx": "catalog:",
     "typescript": "catalog:",
