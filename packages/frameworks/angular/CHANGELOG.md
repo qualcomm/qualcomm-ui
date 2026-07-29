@@ -1,5 +1,17 @@
 # @qualcomm-ui/angular Changelog
 
+## 2.14.2
+
+Jul 28th, 2026
+
+### Tests
+
+- [tabs]: improve focus state test coverage ([b388a69](https://github.com/qualcomm/qualcomm-ui/commit/b388a69))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/angular-core@2.4.7]
+
 ## 2.14.1
 
 Jul 27th, 2026
