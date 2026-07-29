@@ -256,7 +256,11 @@ export function createTabsApi(
         id,
         onBlur(event) {
           const target = event.relatedTarget as HTMLElement | null
-          if (target?.getAttribute("role") !== "tab") {
+          if (
+            !target ||
+            target.getAttribute("role") !== "tab" ||
+            target.getAttribute("data-ownedby") !== tabsDomIds.list(scope)
+          ) {
             send({type: "TAB_BLUR"})
           }
         },
