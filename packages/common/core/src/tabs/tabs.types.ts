@@ -252,6 +252,7 @@ export interface TabsTabDismissButtonBindings extends Part<"tabDismissButton"> {
   "aria-label": string
   onClick: JSX.MouseEventHandler
   role: "button"
+  tabIndex: -1
   type: "button"
 }
 

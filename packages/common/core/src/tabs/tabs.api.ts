@@ -300,6 +300,7 @@ export function createTabsApi(
           event.stopPropagation()
         },
         role: "button",
+        tabIndex: -1,
         type: "button",
       })
     },
