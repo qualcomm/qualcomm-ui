@@ -1,5 +1,15 @@
 # @qualcomm-ui/core Changelog
 
+## 1.11.7
+
+Jul 28th, 2026
+
+### Bug Fixes
+
+- [tabs]: apply focus-visible state on the first tab event into the tab list ([ddadab3](https://github.com/qualcomm/qualcomm-ui/commit/ddadab3))
+- [tabs]: remove dismiss buttons from tab order ([f3ece00](https://github.com/qualcomm/qualcomm-ui/commit/f3ece00))
+- [tabs]: clear focus when leaving the tab list and focusing another tab list ([7ab71c0](https://github.com/qualcomm/qualcomm-ui/commit/7ab71c0))
+
 ## 1.11.6
 
 Jul 1st, 2026

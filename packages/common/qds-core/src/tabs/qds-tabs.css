@@ -192,6 +192,22 @@
     }
   }
 
+  &[data-variant="line"]:not([data-selected]) {
+    color: var(--color-text-neutral-secondary);
+
+    &:hover {
+      color: var(--color-interactive-text-neutral-hover);
+    }
+
+    &:active {
+      color: var(--color-interactive-text-neutral-pressed);
+    }
+
+    &[data-disabled] {
+      color: var(--color-utility-disabled-text);
+    }
+  }
+
   &:hover {
     background: var(--color-interactive-background-ghost-hover);
     color: var(--color-interactive-text-neutral-hover);

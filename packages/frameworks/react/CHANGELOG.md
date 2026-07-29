@@ -1,5 +1,17 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.2
+
+Jul 28th, 2026
+
+### Tests
+
+- [tabs]: improve focus state test coverage ([b388a69](https://github.com/qualcomm/qualcomm-ui/commit/b388a69))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/react-core@1.5.9]
+
 ## 1.27.1
 
 Jul 27th, 2026

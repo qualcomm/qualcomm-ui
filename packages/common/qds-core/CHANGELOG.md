@@ -1,5 +1,17 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.33.2
+
+Jul 28th, 2026
+
+### Styles
+
+- [tabs]: use secondary text color for inactive line tab variant ([7d01476](https://github.com/qualcomm/qualcomm-ui/commit/7d01476))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
 ## 1.33.1
 
 Jul 27th, 2026
