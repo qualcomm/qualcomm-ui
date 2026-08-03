@@ -13,12 +13,20 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context.js"
 
-export interface SelectValueTextProps extends ElementRenderProp<"span"> {}
+export interface SelectValueTextProps extends ElementRenderProp<"span"> {
+  /**
+   * Returns the accessible label for a selected item's remove button.
+   *
+   * @default (itemText) => `Remove ${itemText}`
+   */
+  dismissLabel?: (itemText: string) => string
+}
 
 /**
  * Displays the currently selected value(s). Renders a `<span>` element by default.
  */
 export function SelectValueText({
+  dismissLabel = (itemText) => `Remove ${itemText}`,
   ...props
 }: SelectValueTextProps): ReactElement {
   const {getValueTextBindings, multiple, placeholder, valueAsString} =
@@ -33,12 +41,20 @@ export function SelectValueText({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      {!multiple ? valueAsString || placeholder : <SelectTags />}
+      {!multiple ? (
+        valueAsString || placeholder
+      ) : (
+        <SelectTags dismissLabel={dismissLabel} />
+      )}
     </PolymorphicElement>
   )
 }
 
-function SelectTags() {
+function SelectTags({
+  dismissLabel,
+}: {
+  dismissLabel: (itemText: string) => string
+}) {
   const {collection, placeholder, selectValue, value} = useSelectContext()
 
   if (!value.length) {
@@ -47,19 +63,23 @@ function SelectTags() {
 
   return (
     <>
-      {value.map((item) => (
-        <Tag
-          key={item}
-          emphasis="neutral"
-          onClick={(event) => {
-            event.stopPropagation()
-            selectValue(item)
-          }}
-          variant="dismissable"
-        >
-          {collection.stringifyItem(item)}
-        </Tag>
-      ))}
+      {value.map((item) => {
+        const label = collection.stringifyItem(item) ?? ""
+        return (
+          <Tag
+            key={item}
+            dismissLabel={dismissLabel(label)}
+            emphasis="neutral"
+            onClick={(event) => {
+              event.stopPropagation()
+              selectValue(item)
+            }}
+            variant="dismissable"
+          >
+            {label}
+          </Tag>
+        )
+      })}
     </>
   )
 }
