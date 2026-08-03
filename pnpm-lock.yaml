@@ -950,6 +950,9 @@ importers:
 
   packages/common/utils:
     devDependencies:
+      '@internationalized/date':
+        specifier: ^3.6.4
+        version: 3.12.3
       '@qualcomm-ui/cli':
         specifier: 'catalog:'
         version: 1.0.7
@@ -6947,6 +6950,9 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
+
+  '@internationalized/date@3.12.3':
+    resolution: {integrity: sha512-fuLX+3ZKLsxI73y8b01EG/WjHb6gE6weCqlfawPO27kBWGMh9G1yH6Csv1uU7/cac9H2GHmOMt6CjmuQ1aia4Q==}
 
   '@internationalized/number@3.6.7':
     resolution: {integrity: sha512-3ji1fcrT+FPAK86UqEhB/psHixYo6niWPJtt7+qRaYFynt/BaJG8GhAPimtWUpEiVSTq8ZM8L5psMxGquiB/Vg==}
@@ -20516,6 +20522,10 @@ snapshots:
   '@inquirer/type@4.0.7(@types/node@26.2.0)':
     optionalDependencies:
       '@types/node': 26.2.0
+
+  '@internationalized/date@3.12.3':
+    dependencies:
+      '@swc/helpers': 0.5.23
 
   '@internationalized/number@3.6.7':
     dependencies:

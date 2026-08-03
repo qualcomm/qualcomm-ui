@@ -38,6 +38,7 @@
     "test:unit:ci": "cross-env NODE_OPTIONS='' vitest --run --pool=threads"
   },
   "devDependencies": {
+    "@internationalized/date": "^3.6.4",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/vite": "catalog:",
@@ -51,5 +52,8 @@
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@internationalized/date": ">=3.6.4"
   }
 }
