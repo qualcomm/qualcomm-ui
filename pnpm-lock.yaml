@@ -386,6 +386,9 @@ importers:
       '@faker-js/faker':
         specifier: ~9.6.0
         version: 9.6.0
+      '@internationalized/date':
+        specifier: ^3.6.4
+        version: 3.12.2
       '@internationalized/number':
         specifier: ^3.6.4
         version: 3.6.7

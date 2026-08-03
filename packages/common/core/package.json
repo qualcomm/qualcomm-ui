@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "~9.6.0",
+    "@internationalized/date": "^3.6.4",
     "@internationalized/number": "^3.6.4",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/css-utils": "catalog:",
@@ -57,6 +58,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
+    "@internationalized/date": ">=3.6.4",
     "@internationalized/number": ">=3.6.4",
     "@qualcomm-ui/dom": "workspace:^1.2.0",
     "@qualcomm-ui/utils": "workspace:^1.4.0"
