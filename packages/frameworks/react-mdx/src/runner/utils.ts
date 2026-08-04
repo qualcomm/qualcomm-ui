@@ -5,8 +5,8 @@ import {createElement, isValidElement, type ReactElement} from "react"
 // eslint-disable-next-line no-restricted-imports
 import * as React from "react"
 
-import {normalizeCode, transform} from "./transform"
-import type {RunnerOptions, Scope} from "./types"
+import {normalizeCode, transform} from "./transform.js"
+import type {RunnerOptions, Scope} from "./types.js"
 
 function evalCode(code: string, scope: Scope) {
   // `default` is not allowed in `new Function`

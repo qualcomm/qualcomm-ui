@@ -1,6 +1,10 @@
+import {useState} from "react"
+
 import {describe, expect, test, vi} from "vitest"
-import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
+
+import {Accordion} from "@qualcomm-ui/react/accordion"
 
 import {items, TestAccordion, testIds} from "./test-accordion"
 
@@ -23,6 +27,39 @@ describe("Accordion", () => {
         .element(page.getByTestId(testIds.accordionContent + items[i].value))
         .not.toBeVisible()
     }
+  })
+
+  test("Item renders indicator and secondary text", async () => {
+    await render(
+      <Accordion.Root>
+        <Accordion.Item
+          contentProps={{"data-test-id": "accordion-item-content"}}
+          indicatorProps={{
+            "data-test-id": "accordion-item-indicator",
+            icon: <span>Toggle</span>,
+          }}
+          secondaryText="Updated yesterday"
+          text="Account details"
+          value="account-details"
+        >
+          Account content
+        </Accordion.Item>
+      </Accordion.Root>,
+    )
+
+    const trigger = page.getByRole("button", {name: /Account details/})
+    const indicator = page.getByTestId("accordion-item-indicator")
+    const content = page.getByTestId("accordion-item-content")
+
+    await expect.element(page.getByText("Updated yesterday")).toBeVisible()
+    await expect.element(page.getByText("Toggle")).toBeVisible()
+    await expect.element(indicator).toHaveAttribute("data-state", "closed")
+    await expect.element(content).not.toBeVisible()
+
+    await trigger.click()
+
+    await expect.element(indicator).toHaveAttribute("data-state", "open")
+    await expect.element(content).toBeVisible()
   })
 
   test("single mode (default) should allow only open one item at a time", async () => {
@@ -146,5 +183,69 @@ describe("Accordion", () => {
     expect(triggerC).toHaveFocus()
     await userEvent.keyboard("{ArrowDown}")
     expect(triggerA).toHaveFocus()
+  })
+
+  test("controlled value state (single mode)", async () => {
+    function Component() {
+      const [value, setValue] = useState<string[]>([])
+      return <TestAccordion onValueChange={setValue} value={value} />
+    }
+    await render(<Component />)
+    await expect.element(contentA).not.toBeVisible()
+    await triggerA.click()
+    await expect.element(contentA).toBeVisible()
+    await triggerB.click()
+    await expect.element(contentA).not.toBeVisible()
+    await expect.element(contentB).toBeVisible()
+  })
+
+  test("controlled value state (multiple mode)", async () => {
+    function Component() {
+      const [value, setValue] = useState<string[]>([])
+      return <TestAccordion multiple onValueChange={setValue} value={value} />
+    }
+    await render(<Component />)
+    await expect.element(contentA).not.toBeVisible()
+    await triggerA.click()
+    await expect.element(contentA).toBeVisible()
+    await triggerC.click()
+    await expect.element(contentA).toBeVisible()
+    await expect.element(contentC).toBeVisible()
+  })
+
+  test("`disabled` on a single item prevents it from opening without affecting others", async () => {
+    await render(<TestAccordion disabledValues={[items[1].value]} />)
+    await expect.element(triggerB).toBeDisabled()
+    await expect.element(contentB).not.toBeVisible()
+    // sibling items remain interactive
+    await expect.element(triggerA).not.toBeDisabled()
+    await triggerA.click()
+    await expect.element(contentA).toBeVisible()
+    await expect.element(contentB).not.toBeVisible()
+    await expect.element(triggerC).not.toBeDisabled()
+    await triggerC.click()
+    await expect.element(contentC).toBeVisible()
+    await expect.element(contentB).not.toBeVisible()
+  })
+
+  test("`defaultValue` with multiple values in multiple mode expands all specified items", async () => {
+    await render(
+      <TestAccordion
+        defaultValue={[items[0].value, items[2].value]}
+        multiple
+      />,
+    )
+    await expect.element(contentA).toBeVisible()
+    await expect.element(contentB).not.toBeVisible()
+    await expect.element(contentC).toBeVisible()
+  })
+
+  test("`collapsible` fires `onValueChange` with an empty array when closing the open item", async () => {
+    const onValueChange = vi.fn()
+    await render(<TestAccordion collapsible onValueChange={onValueChange} />)
+    await triggerA.click()
+    expect(onValueChange).toHaveBeenLastCalledWith([items[0].value])
+    await triggerA.click()
+    expect(onValueChange).toHaveBeenLastCalledWith([])
   })
 })

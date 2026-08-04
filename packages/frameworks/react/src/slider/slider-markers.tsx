@@ -7,11 +7,11 @@ import {useSliderContext} from "@qualcomm-ui/react-core/slider"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {SliderMarker, type SliderMarkerProps} from "./slider-marker"
 import {
   SliderMarkerGroup,
   type SliderMarkerGroupProps,
-} from "./slider-marker-group"
+} from "./slider-marker-group.js"
+import {SliderMarker, type SliderMarkerProps} from "./slider-marker.js"
 
 export interface SliderMarkersProps extends IdProp {
   /**

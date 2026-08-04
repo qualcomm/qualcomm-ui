@@ -38,7 +38,8 @@ import {
   getItemId,
   isTargetDisabled,
   itemSelectEvent,
-} from "./internal"
+} from "./internal/index.js"
+import {menuAnatomy} from "./menu.anatomy.js"
 import type {
   GetOptionItemPropsReturn,
   ItemProps,
@@ -46,7 +47,6 @@ import type {
   MenuApi,
   MenuArrowBindings,
   MenuArrowTipBindings,
-  MenuCommonBindings,
   MenuContentBindings,
   MenuContextTriggerBindings,
   MenuItemBindings,
@@ -63,7 +63,7 @@ import type {
   MenuTriggerItemBindings,
   OptionItemProps,
   OptionItemState,
-} from "./menu.types"
+} from "./menu.types.js"
 
 export function createMenuApi(
   machine: Machine<MenuSchema>,
@@ -71,10 +71,7 @@ export function createMenuApi(
 ): MenuApi {
   const {computed, context, prop, scope, send, state} = machine
 
-  const commonBindings: MenuCommonBindings = {
-    "data-scope": "menu",
-    dir: prop("dir"),
-  }
+  const parts = menuAnatomy.parts
 
   const open = state.hasTag("open")
 
@@ -117,7 +114,7 @@ export function createMenuApi(
     const itemState = getItemState(props)
     const id = getItemId(scope, value)
     return normalize.element({
-      ...commonBindings,
+      ...parts.item,
       "aria-disabled": booleanAriaAttr(itemState.disabled),
       "data-disabled": booleanDataAttr(itemState.disabled),
       "data-focus-visible": booleanDataAttr(
@@ -125,9 +122,9 @@ export function createMenuApi(
       ),
       "data-highlighted": booleanDataAttr(itemState.highlighted),
       "data-ownedby": domIds.content(scope),
-      "data-part": "item",
       "data-value": value,
       "data-valuetext": valueText,
+      dir: prop("dir"),
       id,
       onClick(event) {
         if (isDownloadingEvent(event)) {
@@ -226,16 +223,16 @@ export function createMenuApi(
     // group: prop getters
     getArrowBindings(): MenuArrowBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "arrow",
+        ...parts.arrow,
+        dir: prop("dir"),
         style: popperStyles.arrow,
       })
     },
 
     getArrowTipBindings(): MenuArrowTipBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "arrow-tip",
+        ...parts.arrowTip,
+        dir: prop("dir"),
         style: popperStyles.arrowTip,
       })
     },
@@ -243,13 +240,13 @@ export function createMenuApi(
     getContentBindings(props): MenuContentBindings {
       scope.ids.set("content", props.id)
       return normalize.element({
-        ...commonBindings,
+        ...parts.content,
         "aria-activedescendant": computed("highlightedId") || undefined,
         "aria-labelledby": domIds.trigger(scope),
         "data-from": context.get("anchorPoint") ? "context-trigger" : "trigger",
-        "data-part": "content",
         "data-placement": currentPlacement,
         "data-state": open ? "open" : "closed",
+        dir: prop("dir"),
         hidden: !open,
         id: domIds.content(scope),
         onKeyDown(event) {
@@ -362,8 +359,8 @@ export function createMenuApi(
     getContextTriggerBindings(props): MenuContextTriggerBindings {
       scope.ids.register("contextTrigger", props)
       return normalize.element({
-        ...commonBindings,
-        "data-part": "context-trigger",
+        ...parts.contextTrigger,
+        dir: prop("dir"),
         id: props.id,
         onContextMenu(event) {
           const point = getEventPoint(event)
@@ -407,9 +404,9 @@ export function createMenuApi(
 
     getItemGroupBindings(props): MenuItemGroupBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemGroup,
         "aria-labelledby": getGroupLabelId(scope, props.id),
-        "data-part": "item-group",
+        dir: prop("dir"),
         id: getGroupId(scope, props.id),
         role: "group",
       })
@@ -417,8 +414,8 @@ export function createMenuApi(
 
     getItemGroupLabelBindings(props): MenuItemGroupLabelBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "item-group-label",
+        ...parts.itemGroupLabel,
+        dir: prop("dir"),
         id: getGroupLabelId(scope, props.htmlFor),
       })
     },
@@ -427,11 +424,11 @@ export function createMenuApi(
       const itemState = getOptionItemState(cast(props))
       const dataState = itemState.checked ? "checked" : "unchecked"
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemIndicator,
         "data-disabled": booleanDataAttr(itemState.disabled),
         "data-highlighted": booleanDataAttr(itemState.highlighted),
-        "data-part": "item-indicator",
         "data-state": hasProp(props, "checked") ? dataState : undefined,
+        dir: prop("dir"),
         hidden: hasProp(props, "checked") ? !itemState.checked : undefined,
       })
     },
@@ -440,11 +437,11 @@ export function createMenuApi(
       const itemState = getOptionItemState(cast(props))
       const dataState = itemState.checked ? "checked" : "unchecked"
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemText,
         "data-disabled": booleanDataAttr(itemState.disabled),
         "data-highlighted": booleanDataAttr(itemState.highlighted),
-        "data-part": "item-text",
         "data-state": hasProp(props, "checked") ? dataState : undefined,
+        dir: prop("dir"),
       })
     },
 
@@ -459,7 +456,7 @@ export function createMenuApi(
       return {
         ...getItemBindings(option),
         ...normalize.element({
-          ...commonBindings,
+          ...parts.item,
           "aria-checked": booleanAriaAttr(itemState.checked),
           "data-state": itemState.checked ? "checked" : "unchecked",
           "data-type": type,
@@ -497,9 +494,8 @@ export function createMenuApi(
     getOptionItemControlBindings(props): MenuOptionItemControlBindings {
       const itemState = getOptionItemState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemControl,
         "data-disabled": booleanDataAttr(itemState.disabled),
-        "data-part": "item-control",
         "data-state": itemState.checked ? "checked" : "unchecked",
       })
     },
@@ -509,8 +505,8 @@ export function createMenuApi(
     getPositionerBindings(props): MenuPositionerBindings {
       scope.ids.set("positioner", props.id)
       return normalize.element({
-        ...commonBindings,
-        "data-part": "positioner",
+        ...parts.positioner,
+        dir: prop("dir"),
         id: props.id,
         style: popperStyles.floating,
       })
@@ -518,9 +514,9 @@ export function createMenuApi(
 
     getSeparatorBindings(): MenuSeparatorBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.separator,
         "aria-orientation": "horizontal",
-        "data-part": "separator",
+        dir: prop("dir"),
         role: "separator",
       })
     },
@@ -528,14 +524,14 @@ export function createMenuApi(
     getTriggerBindings(props): MenuTriggerBindings {
       scope.ids.set("trigger", props.id)
       return normalize.button({
-        ...commonBindings,
+        ...parts.trigger,
         "aria-controls": domIds.content(scope),
         "aria-expanded": booleanAriaAttr(open),
         "aria-haspopup": composite ? "menu" : "dialog",
-        "data-part": computed("isSubmenu") ? "trigger-item" : "trigger",
         "data-placement": context.get("currentPlacement"),
         "data-state": open ? "open" : "closed",
         "data-uid": prop("id")!,
+        dir: prop("dir"),
         id: props.id,
         onBlur() {
           send({type: "TRIGGER_BLUR"})
@@ -629,7 +625,10 @@ export function createMenuApi(
 
     getTriggerItemBindings(childApi, props): MenuTriggerItemBindings {
       const triggerProps = childApi.getTriggerBindings(props)
-      return mergeProps(getItemBindings({value: triggerProps.id}), triggerProps)
+      return mergeProps(
+        getItemBindings({...props, value: triggerProps.id}),
+        triggerProps,
+      )
     },
   }
 }

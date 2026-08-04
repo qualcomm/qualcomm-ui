@@ -4,20 +4,19 @@
 import type {ReactElement} from "react"
 
 import {
+  CoreNumberInput,
+  type CoreNumberInputInputGroupProps,
+} from "@qualcomm-ui/react-core/number-input"
+import {
   InputEndIcon,
   InputStartIcon,
   useQdsInputContext,
 } from "@qualcomm-ui/react/input"
-import {
-  CoreNumberInput,
-  type CoreNumberInputInputGroupProps,
-} from "@qualcomm-ui/react-core/number-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsNumberInputContext} from "./qds-number-input-context"
+import {useQdsNumberInputContext} from "./qds-number-input-context.js"
 
-export interface NumberInputInputGroupProps
-  extends CoreNumberInputInputGroupProps {}
+export interface NumberInputInputGroupProps extends CoreNumberInputInputGroupProps {}
 
 export function NumberInputInputGroup({
   children,

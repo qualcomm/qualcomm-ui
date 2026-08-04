@@ -3,15 +3,15 @@
 
 import type {ReactElement} from "react"
 
-import {Tag} from "@qualcomm-ui/react/tag"
 import {useSelectContext} from "@qualcomm-ui/react-core/select"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {Tag} from "@qualcomm-ui/react/tag"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSelectContext} from "./qds-select-context"
+import {useQdsSelectContext} from "./qds-select-context.js"
 
 export interface SelectValueTextProps extends ElementRenderProp<"span"> {}
 

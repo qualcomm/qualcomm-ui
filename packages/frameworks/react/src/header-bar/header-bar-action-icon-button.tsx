@@ -3,15 +3,14 @@
 
 import type {ReactElement} from "react"
 
-import {IconButton, type IconButtonProps} from "@qualcomm-ui/react/button"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconButton, type IconButtonProps} from "@qualcomm-ui/react/button"
 
 export interface HeaderBarActionIconButtonProps
-  extends ElementRenderProp<"button">,
-    Pick<IconButtonProps, "icon"> {}
+  extends ElementRenderProp<"button">, Pick<IconButtonProps, "icon"> {}
 
 export function HeaderBarActionIconButton({
   icon,

@@ -5,7 +5,7 @@ import type {Cell, Header, Row, SortDirection} from "@qualcomm-ui/core/table"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {JSX} from "@qualcomm-ui/utils/machine"
 
-import type {tableClasses} from "./table.classes"
+import type {tableClasses} from "./table.classes.js"
 
 export type QdsTableSize = "sm" | "md" | "lg"
 

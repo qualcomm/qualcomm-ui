@@ -4,8 +4,8 @@
 import {Component} from "@angular/core"
 import {X} from "lucide-angular"
 
-import {DialogCloseButtonComponent} from "@qualcomm-ui/angular/dialog"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {DialogCloseButtonComponent} from "@qualcomm-ui/angular/dialog"
 
 /**
  * A button that closes the drawer.

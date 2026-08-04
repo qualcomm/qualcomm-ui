@@ -6,15 +6,18 @@ import type {ReactElement, ReactNode} from "react"
 import {useOptionalContentId} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 
-import {TextAreaCounter, type TextAreaCounterProps} from "./text-area-counter"
+import {
+  TextAreaCounter,
+  type TextAreaCounterProps,
+} from "./text-area-counter.js"
 import {
   TextAreaErrorText,
   type TextAreaErrorTextProps,
-} from "./text-area-error-text"
-import {TextAreaHint, type TextAreaHintProps} from "./text-area-hint"
-import {TextAreaInput, type TextAreaInputProps} from "./text-area-input"
-import {TextAreaLabel, type TextAreaLabelProps} from "./text-area-label"
-import {TextAreaRoot, type TextAreaRootProps} from "./text-area-root"
+} from "./text-area-error-text.js"
+import {TextAreaHint, type TextAreaHintProps} from "./text-area-hint.js"
+import {TextAreaInput, type TextAreaInputProps} from "./text-area-input.js"
+import {TextAreaLabel, type TextAreaLabelProps} from "./text-area-label.js"
+import {TextAreaRoot, type TextAreaRootProps} from "./text-area-root.js"
 
 export interface TextAreaProps extends TextAreaRootProps {
   /**

@@ -9,9 +9,9 @@ const demos = [
 export default function PaginationClientSide() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="pagination-client-side"
       demos={demos}
-      className="w-full"
     />
   )
 }

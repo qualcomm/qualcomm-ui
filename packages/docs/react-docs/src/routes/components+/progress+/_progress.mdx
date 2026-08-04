@@ -1,14 +1,13 @@
 ---
 title: Progress
-group: Feedback
 description: Progress bars provide clear visual feedback about task completion or loading states, helping users understand system status and perceived remaining time.
 component: Progress
 aliases: [progress bar, loading bar]
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -39,7 +38,10 @@ The simple API provides a standalone component with built-in layout.
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
 
-<Demo name="ProgressCompositeDemo" component={demos.ProgressCompositeDemo} />
+<Demo
+  name="ProgressCompositeDemo"
+  component={demos.ProgressCompositeDemo}
+/>
 
 ### Label Orientation
 
@@ -53,9 +55,7 @@ Use the [labelOrientation](./#labelOrientation) property to change the positioni
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Progress bars support three sizes: `sm`, `md`, and `lg`.
@@ -83,7 +83,10 @@ Error messages are displayed using two props:
 
 The error text will only render when `invalid` is true.
 
-<Demo name="ProgressErrorTextDemo" component={demos.ProgressErrorTextDemo} />
+<Demo
+  name="ProgressErrorTextDemo"
+  component={demos.ProgressErrorTextDemo}
+/>
 
 ## Shortcuts
 
@@ -106,20 +109,27 @@ is equivalent to
 ## Accessibility
 
 ::: terms
-a11y
-screen reader
-wcag
+a11y, screen reader, wcag
 :::
 
 - When the value is supplied, the component automatically provides the corresponding `aria-value*` attributes to the element.
-- The progress element is automatically marked with `role="progressbar"`.
-- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the `aria-label` of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+- The progress element is automatically marked with [`role="progressbar"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles).
+- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.ProgressExplorerDemo}
+  linkPrefix="progress"
+  parts={["root", "label", "track", "bar", "value-text", "hint"]}
+  scope="progress"
+/>
 
 ## API
 
-### \<Progress\>
+### \<Progress>
 
-The `Progress` component supports all props from [Progress.Root](./#progressroot), plus the additional props listed below.
+The `Progress` component supports all props from [Progress.Root](./#progress-root), plus the additional props listed below.
 
 <TypeDocProps name="ProgressProps" omitFrom="ProgressRootProps" />
 
@@ -141,30 +151,58 @@ Learn more about this pattern: [Render Props](/render-props)
 
 ## Composite API
 
-### \<Progress.Root\>
+### \<Progress.Root>
 
 <TypeDocProps name="ProgressRootProps" />
 
-### \<Progress.Label\>
+<TypeDocAttributes
+  name={["ProgressRootBindings", "QdsProgressRootBindings"]}
+/>
+
+### \<Progress.Label>
 
 <TypeDocProps name="ProgressLabelProps" />
 
-### \<Progress.ErrorText\>
+<TypeDocAttributes
+  name={["ProgressLabelBindings", "QdsProgressLabelBindings"]}
+/>
+
+### \<Progress.ErrorText>
 
 <TypeDocProps name="ProgressErrorTextProps" />
 
-### \<Progress.Hint\>
+<TypeDocAttributes
+  name={["ProgressErrorTextBindings", "QdsProgressErrorTextBindings"]}
+/>
+
+### \<Progress.Hint>
 
 <TypeDocProps name="ProgressHintProps" />
 
-### \<Progress.ValueText\>
+<TypeDocAttributes
+  name={["ProgressHintBindings", "QdsProgressHintBindings"]}
+/>
+
+### \<Progress.ValueText>
 
 <TypeDocProps name="ProgressValueTextProps" />
 
-### \<Progress.Track\>
+<TypeDocAttributes
+  name={["ProgressValueTextBindings", "QdsProgressValueTextBindings"]}
+/>
+
+### \<Progress.Track>
 
 <TypeDocProps name="ProgressTrackProps" />
 
-### \<Progress.Bar\>
+<TypeDocAttributes
+  name={["ProgressTrackBindings", "QdsProgressTrackBindings"]}
+/>
+
+### \<Progress.Bar>
 
 <TypeDocProps name="ProgressBarProps" />
+
+<TypeDocAttributes
+  name={["ProgressBarBindings", "QdsProgressBarBindings"]}
+/>

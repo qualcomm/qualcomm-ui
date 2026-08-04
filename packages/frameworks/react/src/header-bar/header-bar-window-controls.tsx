@@ -9,10 +9,9 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsHeaderBarApi} from "./qds-header-bar-context"
+import {qdsHeaderBarApi} from "./qds-header-bar-context.js"
 
-export interface HeaderBarWindowControlsProps
-  extends ElementRenderProp<"div"> {}
+export interface HeaderBarWindowControlsProps extends ElementRenderProp<"div"> {}
 
 export function HeaderBarWindowControls(
   props: HeaderBarWindowControlsProps,

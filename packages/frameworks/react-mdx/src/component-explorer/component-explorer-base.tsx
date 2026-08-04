@@ -5,11 +5,11 @@ import {
   type ComponentPropsWithRef,
   type ReactElement,
   type ReactNode,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react"
 
+import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 
 interface HighlightRect {
@@ -27,13 +27,12 @@ export type ComponentPart =
        */
       link: string
       /**
-       * Part name, matching the `data-part` attribute value.
+       * Part name, matching the `data-<scope>-part` attribute value.
        */
       name: string
     }
 
-export interface ComponentExplorerBaseProps
-  extends ComponentPropsWithRef<"div"> {
+export interface ComponentExplorerBaseProps extends ComponentPropsWithRef<"div"> {
   /**
    * The component demo to explore.
    */
@@ -53,8 +52,16 @@ export interface ComponentExplorerBaseProps
   parts: ComponentPart[]
 
   /**
-   * Custom scope name for enhanced element targeting, optional.  Matches the
-   * `data-scope` attribute value.
+   * Additional CSS class name for the preview container.
+   */
+  previewClassName?: string
+
+  /**
+   * Scope name matching the component's namespaced attribute
+   * (`data-<scope>-part`). When omitted, the explorer falls back to matching
+   * any `data-*-part` attribute with the target part name — useful for demos
+   * that compose parts from multiple components (e.g. a checkbox nested in
+   * field parts).
    */
   scope?: string
 }
@@ -84,6 +91,7 @@ export function ComponentExplorerBase({
   children,
   linkPrefix,
   parts,
+  previewClassName,
   scope,
   ...props
 }: ComponentExplorerBaseProps): ReactElement {
@@ -92,23 +100,29 @@ export function ComponentExplorerBase({
   const [hoveredPart, setHoveredPart] = useState<string | null>(null)
   const [highlightRects, setHighlightRects] = useState<HighlightRect[]>([])
 
-  useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     const previewElement = previewRef.current
 
     if (!previewElement || !hoveredPart) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- DOM measurement requires post-render setState
       setHighlightRects([])
       return
     }
 
-    let partSelector = `[data-part="${hoveredPart}"]`
-    if (scope) {
-      partSelector += `[data-scope="${scope}"]`
-    }
-
-    const targetElements = Array.from(
-      previewElement.querySelectorAll<HTMLElement>(partSelector),
-    )
+    const targetElements = scope
+      ? Array.from(
+          previewElement.querySelectorAll<HTMLElement>(
+            `[data-${scope}-part="${hoveredPart}"]`,
+          ),
+        )
+      : Array.from(previewElement.querySelectorAll<HTMLElement>("*")).filter(
+          (el) =>
+            Array.from(el.attributes).some(
+              (attr) =>
+                attr.name.startsWith("data-") &&
+                attr.name.endsWith("-part") &&
+                attr.value === hoveredPart,
+            ),
+        )
 
     if (targetElements.length === 0) {
       setHighlightRects([])
@@ -132,7 +146,14 @@ export function ComponentExplorerBase({
 
   return (
     <div {...props} className="qui-component-explorer__root">
-      <div ref={previewRef} className="qui-component-explorer__preview">
+      <div
+        ref={previewRef}
+        className={
+          previewClassName
+            ? `qui-component-explorer__preview ${previewClassName}`
+            : "qui-component-explorer__preview"
+        }
+      >
         {children}
         {highlightRects.map((rect, index) => (
           <div

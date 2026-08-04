@@ -6,9 +6,9 @@
 
 import {getEventKey, isSafari} from "@qualcomm-ui/dom/query"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {accordionAnatomy} from "./accordion.anatomy.js"
 import type {
   AccordionApi,
   AccordionItemApiProps,
@@ -21,8 +21,10 @@ import type {
   AccordionItemTriggerBindings,
   AccordionRootBindings,
   AccordionSchema,
-} from "./accordion.types"
-import {domIds} from "./internal"
+} from "./accordion.types.js"
+import {domIds} from "./internal/index.js"
+
+const parts = accordionAnatomy.parts
 
 export function createAccordionApi(
   machine: Machine<AccordionSchema>,
@@ -33,11 +35,6 @@ export function createAccordionApi(
   const focusedValue = context.get("focusedValue")
   const value = context.get("value")
   const multiple = prop("multiple")
-
-  const commonProps: {"data-scope": "accordion"; dir: Direction | undefined} = {
-    "data-scope": "accordion",
-    dir: prop("dir"),
-  }
 
   function setValue(value: string[]) {
     send({
@@ -70,10 +67,9 @@ export function createAccordionApi(
       const state = getAccordionItemState(itemProps)
       scope.ids.collection("item").register(state.value, id, onDestroy)
       return normalize.element({
-        ...commonProps,
+        ...parts.item,
         "data-disabled": booleanDataAttr(state.disabled),
         "data-focus": booleanDataAttr(focusedValue === state.value),
-        "data-part": "item",
         "data-state": state.open ? "open" : "closed",
         disabled: state.disabled,
         id,
@@ -89,13 +85,12 @@ export function createAccordionApi(
       scope.ids.collection("content").register(state.value, id, onDestroy)
 
       return normalize.element({
-        ...commonProps,
+        ...parts.itemContent,
         "aria-hidden": booleanAriaAttr(!state.open, null),
         "aria-labelledby": domIds.trigger(scope, state.value)!,
         "data-disabled": booleanDataAttr(state.disabled),
         "data-expanded": booleanDataAttr(state.open),
         "data-focus": booleanDataAttr(focusedValue === state.value),
-        "data-part": "item-content",
         "data-state": state.open ? "open" : "closed",
         id,
         role: "region",
@@ -107,11 +102,10 @@ export function createAccordionApi(
     ): AccordionItemIndicatorBindings {
       const state = getAccordionItemState(itemContext)
       return normalize.element({
-        ...commonProps,
+        ...parts.itemIndicator,
         "aria-hidden": true,
         "data-disabled": booleanDataAttr(state.disabled),
         "data-focus": booleanDataAttr(focusedValue === state.value),
-        "data-part": "item-indicator",
         "data-state": state.open ? "open" : "closed",
       })
     },
@@ -122,10 +116,9 @@ export function createAccordionApi(
       const state = getAccordionItemState(itemContext)
 
       return normalize.element({
-        ...commonProps,
+        ...parts.itemSecondaryText,
         "data-disabled": booleanDataAttr(state.disabled),
         "data-focus": booleanDataAttr(focusedValue === state.value),
-        "data-part": "item-secondary-text",
         "data-state": state.open ? "open" : "closed",
       })
     },
@@ -135,10 +128,9 @@ export function createAccordionApi(
     getAccordionItemTextBindings(itemContext): AccordionItemTextBindings {
       const state = getAccordionItemState(itemContext)
       return normalize.element({
-        ...commonProps,
+        ...parts.itemText,
         "data-disabled": booleanDataAttr(state.disabled),
         "data-focus": booleanDataAttr(focusedValue === state.value),
-        "data-part": "item-text",
         "data-state": state.open ? "open" : "closed",
       })
     },
@@ -151,14 +143,13 @@ export function createAccordionApi(
       const state = getAccordionItemState(itemProps)
       scope.ids.collection("trigger").register(state.value, id, onDestroy)
       return normalize.element({
-        ...commonProps,
+        ...parts.itemTrigger,
         "aria-controls": domIds.content(scope, state.value)!,
         "aria-disabled": booleanAriaAttr(state.disabled),
         "aria-expanded": booleanAriaAttr(state.open),
         "data-disabled": booleanDataAttr(state.disabled),
         "data-focus": booleanDataAttr(focusedValue === state.value),
         "data-ownedby": domIds.root(scope),
-        "data-part": "trigger",
         "data-state": state.open ? "open" : "closed",
         disabled: state.disabled,
         id,
@@ -237,8 +228,8 @@ export function createAccordionApi(
     getRootBindings({id, onDestroy}): AccordionRootBindings {
       scope.ids.register("root", id, onDestroy)
       return normalize.element({
-        ...commonProps,
-        "data-part": "root",
+        ...parts.root,
+        dir: prop("dir"),
         id,
       })
     },

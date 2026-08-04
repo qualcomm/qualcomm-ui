@@ -22,7 +22,7 @@ export function ShikiPre({
     <div className="shiki-wrapper mdx">
       <pre
         ref={preRef}
-        className={clsx("mdx", className)}
+        className={clsx("mdx qui-docs__mdx-scrollbar", className)}
         {...props}
         tabIndex={-1}
       >

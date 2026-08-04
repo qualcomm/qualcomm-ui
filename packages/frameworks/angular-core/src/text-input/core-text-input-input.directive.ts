@@ -12,13 +12,39 @@ import {useTextInputContext} from "./text-input-context.service"
 export class CoreTextInputInputDirective implements OnInit {
   readonly id = input<string>()
 
+  /**
+   * ARIA label applied to the input. Use this instead of `[attr.aria-label]`
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the input.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   protected readonly textInputContext = useTextInputContext()
 
   protected readonly trackBindings = useTrackBindings(() => {
-    return this.textInputContext().getInputBindings({
+    const bindings = this.textInputContext().getInputBindings({
       id: this.hostId(),
       onDestroy: this.onDestroy,
     })
+    const ariaLabel = this.ariaLabel() ?? undefined
+    const ariaLabelledby = this.ariaLabelledby() ?? bindings["aria-labelledby"]
+
+    return {
+      ...bindings,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+    }
   })
 
   private readonly hostId = computed(() => useId(this, this.id()))

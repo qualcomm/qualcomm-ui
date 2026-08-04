@@ -6,7 +6,7 @@ import type {ReactElement} from "react"
 import {CoreTree, type CoreTreeLabelProps} from "@qualcomm-ui/react-core/tree"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsTreeContext} from "./qds-tree-context"
+import {useQdsTreeContext} from "./qds-tree-context.js"
 
 export interface TreeLabelProps extends CoreTreeLabelProps {}
 

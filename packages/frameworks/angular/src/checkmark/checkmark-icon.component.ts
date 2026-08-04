@@ -22,7 +22,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
     @if (indeterminate()) {
       @if (size() === "sm") {
         <svg
-          data-part="indicator-icon"
+          data-checkmark-part="indicator-icon"
           height="2"
           viewBox="0 0 8 2"
           width="8"
@@ -32,7 +32,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
         </svg>
       } @else if (size() === "lg") {
         <svg
-          data-part="indicator-icon"
+          data-checkmark-part="indicator-icon"
           height="4"
           viewBox="0 0 10 4"
           width="10"
@@ -42,7 +42,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
         </svg>
       } @else {
         <svg
-          data-part="indicator-icon"
+          data-checkmark-part="indicator-icon"
           height="2"
           viewBox="0 0 10 2"
           width="10"
@@ -54,7 +54,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
     } @else {
       @if (size() === "sm") {
         <svg
-          data-part="indicator-icon"
+          data-checkmark-part="indicator-icon"
           height="8"
           viewBox="0 0 10 8"
           width="10"
@@ -67,7 +67,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
         </svg>
       } @else if (size() === "lg") {
         <svg
-          data-part="indicator-icon"
+          data-checkmark-part="indicator-icon"
           height="10"
           viewBox="0 0 12 10"
           width="12"
@@ -80,7 +80,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
         </svg>
       } @else {
         <svg
-          data-part="indicator-icon"
+          data-checkmark-part="indicator-icon"
           height="8"
           viewBox="0 0 10 8"
           width="10"

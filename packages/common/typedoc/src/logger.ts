@@ -8,26 +8,26 @@ export class TimeLogger {
 
   constructor(public enabled: boolean | undefined) {}
 
-  get elapsedTime() {
+  get elapsedTime(): string {
     return chalk.magenta.bold(
       `${((Date.now() - this.startTime) / 1000).toFixed(2)}s`,
     )
   }
 
-  start(text?: string) {
+  start(text?: string): void {
     this.startTime = Date.now()
     if (this.enabled && text) {
       console.log(text)
     }
   }
 
-  succeed(text: string) {
+  succeed(text: string): void {
     if (this.enabled) {
       console.log(`${chalk.green("✔")} ${text}`)
     }
   }
 
-  failed(text: string) {
+  failed(text: string): void {
     if (this.enabled) {
       console.log(`${chalk.red("✖")} ${text}`)
     }

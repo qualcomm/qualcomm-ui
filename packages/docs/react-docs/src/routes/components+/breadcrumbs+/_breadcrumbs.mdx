@@ -1,6 +1,5 @@
 ---
 title: Breadcrumbs
-group: Disclosure
 description: Breadcrumbs help users understand their current location within a website or application hierarchy and provide a quick way to navigate back to parent pages.
 component: Breadcrumbs
 aliases: [breadcrumb trail, navigation path]
@@ -21,26 +20,30 @@ import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 ## Overview
 
 ::: terms
-a11y
-WCAG
-site hierarchy
-wayfinding
-location indicator
+a11y, WCAG, site hierarchy, wayfinding, location indicator
 :::
 
 - The root component should be labeled with `aria-label="Breadcrumbs"` to indicate that it's a breadcrumb navigation.
 - The first breadcrumb item is always the root item, and is typically reserved for the home page or base route of your application.
-- The last breadcrumb item is always the active item.
-- The last breadcrumb item should always be annotated with the `aria-current="page"` attribute.
+- The last breadcrumb item represents the current page. Mark it with [`aria-current="page"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current).
+- By default, `Breadcrumbs.Item` renders a `<span>` (non-link content). Pass the `render` prop when an item should navigate.
 
 ## Examples
+
+### Links
+
+::: terms
+polymorphic, router, anchor
+:::
+
+[`Breadcrumbs.Item`](./#breadcrumbs-item) renders a non-link `<span>` by default, which is appropriate for the current page item. Use the [render](./#render-2) prop to make an item navigable. In most cases this will be your router's link component. Fall back to a plain `<a href>` if you don't use a router. The following example uses React Router:
+
+<Demo name="BreadcrumbsLinksDemo" component={demos.BreadcrumbsLinksDemo} />
 
 ### Emphasis (color)
 
 ::: terms
-neutral
-muted
-subdued
+neutral, muted, subdued
 :::
 
 Use the [emphasis](./#emphasis) prop to change the color of the breadcrumbs.
@@ -53,30 +56,17 @@ Use the [emphasis](./#emphasis) prop to change the color of the breadcrumbs.
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. The default size is `md`.
 
 <Demo name="BreadcrumbsSizesDemo" component={demos.BreadcrumbsSizesDemo} />
 
-### Links
-
-::: terms
-polymorphic
-:::
-
-Use the [render](./#render-1) prop on the `<Breadcrumbs.Item>` component to change the root element to your framework's link component. The following example uses React Router:
-
-<Demo name="BreadcrumbsLinksDemo" component={demos.BreadcrumbsLinksDemo} />
-
 ### Disabled Item
 
 ::: terms
-inactive
-non-clickable
+inactive, non-clickable
 :::
 
 Use the [disabled](./#disabled) prop to disable a breadcrumb item.
@@ -86,60 +76,116 @@ Use the [disabled](./#disabled) prop to disable a breadcrumb item.
   component={demos.BreadcrumbsDisabledDemo}
 />
 
+### Overflow
+
+::: terms
+overflow, collapsed, ellipsis, truncated
+:::
+
+Use the [`Breadcrumbs.OverflowItem`](./#breadcrumbs-overflow-item) component to collapse intermediate breadcrumb items into a [menu](/components/menu). The overflow trigger displays an ellipsis by default. Use the [icon](./#icon) prop to add an icon, or provide your own trigger via [`Breadcrumbs.OverflowTrigger`](./#breadcrumbs-overflow-trigger).
+
+<Demo
+  name="BreadcrumbsOverflowDemo"
+  component={demos.BreadcrumbsOverflowDemo}
+/>
+
+### Tooltip
+
+::: terms
+tooltip, hover hint, title, description
+:::
+
+To provide additional context on hover, make [`Breadcrumbs.ItemTrigger`](./#breadcrumbs-item-trigger) a [Tooltip](/components/tooltip) trigger using the composite API.
+
+<Demo
+  name="BreadcrumbsTooltipDemo"
+  component={demos.BreadcrumbsTooltipDemo}
+/>
+
 ## Shortcuts
 
 ### Item
 
-The `Breadcrumbs.Item` component is a convenient shorthand for rendering each part of the breadcrumb item. It's equivalent to the following:
+The [`Breadcrumbs.Item`](./#breadcrumbs-item) component is a convenient shorthand for rendering each part of the breadcrumb item. The trigger renders a `<span>` by default; pass the `render` prop to swap it for an anchor or a router link component.
 
 ```tsx
-<Breadcrumbs.ItemRoot {...props}>
-  <Breadcrumbs.ItemTrigger
-    aria-current={ariaCurrent}
-    render={render}
-    {...itemTriggerProps}
-  >
-    {icon ? <Breadcrumbs.ItemIcon icon={icon} {...itemIconProps} /> : null}
+<Breadcrumbs.ItemRoot>
+  <Breadcrumbs.ItemTrigger aria-current={ariaCurrent} render={render}>
+    <Breadcrumbs.ItemIcon icon={icon} />
     {children}
   </Breadcrumbs.ItemTrigger>
-  <Breadcrumbs.ItemSeparator icon={separator} {...separatorProps} />
+  <Breadcrumbs.ItemSeparator />
 </Breadcrumbs.ItemRoot>
+```
+
+### OverflowItem
+
+The `Breadcrumbs.OverflowItem` component is a convenient shorthand that composes a menu trigger with the overflow ellipsis. It's equivalent to the following:
+
+```tsx
+<Breadcrumbs.OverflowItemRoot {...props}>
+  <Menu.Root size={menuSize}>
+    <Menu.Trigger>
+      <Breadcrumbs.OverflowTrigger
+        aria-label={ariaLabel}
+        icon={icon}
+        {...overflowTriggerProps}
+      />
+    </Menu.Trigger>
+    <Portal>
+      <Menu.Positioner>
+        <Menu.Content>{children}</Menu.Content>
+      </Menu.Positioner>
+    </Portal>
+  </Menu.Root>
+  <Breadcrumbs.ItemSeparator icon={separator} {...separatorProps} />
+</Breadcrumbs.OverflowItemRoot>
 ```
 
 ## API
 
-### \<Breadcrumbs.Root\>
+### \<Breadcrumbs.Root>
 
 <TypeDocProps name="BreadcrumbsRootProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsRootBindings" />
 
-### \<Breadcrumbs.List\>
+### \<Breadcrumbs.List>
 
 <TypeDocProps name="BreadcrumbsListProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsListBindings" />
 
-### \<Breadcrumbs.Item\>
+### \<Breadcrumbs.Item>
 
 <TypeDocProps name="BreadcrumbsItemProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsItemBindings" />
 
-### \<Breadcrumbs.ItemIcon\>
+### \<Breadcrumbs.ItemIcon>
 
 <TypeDocProps name="BreadcrumbsItemIconProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsItemIconBindings" />
 
-### \<Breadcrumbs.ItemTrigger\>
+### \<Breadcrumbs.ItemTrigger>
 
 <TypeDocProps name="BreadcrumbsItemTriggerProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsItemTriggerBindings" />
 
-### \<Breadcrumbs.ItemSeparator\>
+### \<Breadcrumbs.ItemSeparator>
 
 <TypeDocProps name="BreadcrumbsItemSeparatorProps" />
 
 <TypeDocAttributes name="QdsBreadcrumbsItemSeparatorBindings" />
+
+### \<Breadcrumbs.OverflowItem>
+
+<TypeDocProps name="BreadcrumbsOverflowItemProps" />
+
+### \<Breadcrumbs.OverflowTrigger>
+
+<TypeDocProps name="BreadcrumbsOverflowTriggerProps" />
+
+<TypeDocAttributes name="QdsBreadcrumbsOverflowTriggerBindings" />

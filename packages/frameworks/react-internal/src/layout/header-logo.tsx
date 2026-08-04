@@ -5,8 +5,8 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Link as ReactRouterLink} from "react-router"
 
-import {HeaderBar, type HeaderBarLogoProps} from "@qualcomm-ui/react/header-bar"
 import {MobileSidebar} from "@qualcomm-ui/react-mdx/docs-layout"
+import {HeaderBar, type HeaderBarLogoProps} from "@qualcomm-ui/react/header-bar"
 
 import {GithubChangelogLink} from "./github-changelog-link"
 import {QuiLogo} from "./qui-logo"

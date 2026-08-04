@@ -1,0 +1,297 @@
+---
+title: State, Identity, and Workflows
+---
+
+# {frontmatter.title}
+
+Table state and domain workflow state often meet in the same UI, but they should not be modeled as the same thing. Use table state for table features. Use domain state, query state, mutation state, or local workflow state for product behavior.
+
+## Keep Domain Workflow State Outside the Table
+
+### Concern
+
+Some state is table state: sorting, filtering, selection, expansion, visibility, and other features exposed by the table. Other state is domain workflow state: pending mutations, modal state, validation errors, draft workflows, permission checks, current user context, or query-specific filters.
+
+It is common for table interactions to drive an external data source. Sorting may map to backend field names, filters may map to query parameters, and row actions may map to mutation state. That does not mean the table should own the entire data workflow.
+
+### Pitfall
+
+Controlled column filter state is valid when it represents actual column filters. The pitfall is using `ColumnFiltersState` as a generic query parameter bag for values that are not table column filters.
+
+```angular-ts
+readonly columnFilters = signal<ColumnFiltersState>([
+  {id: "status", value: "open"},
+  {id: "includeArchived", value: false},
+  {id: "mineOnly", value: true},
+])
+```
+
+This makes non-column concerns look like column filters. `status` may be a real column filter, but `includeArchived` and `mineOnly` are product query state unless they map to filterable columns in the table.
+
+When a wrapper treats every backend query option as table state, it creates a second state model on top of the table. The wrapper has to synchronize query mapping, fetching, loading, toolbar behavior, row actions, and rendering with table feature state. That wrapper usually grows because each backend and product workflow is slightly different.
+
+### Preferred Pattern
+
+Use built-in table state for table features. Use route, component, query, mutation, or domain state for workflow concerns that do not map cleanly to table features.
+
+```angular-ts
+export class TicketsTable {
+  readonly columnFilters = signal<ColumnFiltersState>([
+    {id: "status", value: "open"},
+  ])
+  readonly sorting = signal<SortingState>([])
+  readonly includeArchived = signal(false)
+  readonly mineOnly = signal(true)
+
+  private readonly ticketApi = inject(TicketApi)
+
+  readonly queryParams = computed(() =>
+    ticketTableQuery({
+      columnFilters: this.columnFilters(),
+      sorting: this.sorting(),
+      includeArchived: this.includeArchived(),
+      mineOnly: this.mineOnly(),
+    }),
+  )
+
+  readonly query = injectQuery(() => ({
+    queryKey: ["tickets", this.queryParams()],
+    queryFn: () => this.ticketApi.search(this.queryParams()),
+  }))
+
+  readonly table = createAngularTable(() => ({
+    columns,
+    data: this.query.data() ?? [],
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+    manualFiltering: true,
+    manualSorting: true,
+    state: {
+      columnFilters: this.columnFilters(),
+      sorting: this.sorting(),
+    },
+    onColumnFiltersChange: (updater) => {
+      if (typeof updater === "function") {
+        this.columnFilters.update(updater)
+      } else {
+        this.columnFilters.set(updater)
+      }
+    },
+    onSortingChange: (updater) => {
+      if (typeof updater === "function") {
+        this.sorting.update(updater)
+      } else {
+        this.sorting.set(updater)
+      }
+    },
+  }))
+}
+```
+
+The reusable part is the translator between table/domain state and the backend contract:
+
+```angular-ts
+function ticketTableQuery({
+  columnFilters,
+  sorting,
+  includeArchived,
+  mineOnly,
+}: {
+  columnFilters: ColumnFiltersState
+  sorting: SortingState
+  includeArchived: boolean
+  mineOnly: boolean
+}) {
+  return {
+    filters: columnFilters.map(toTicketFilter),
+    sort: sorting.map(toTicketSort),
+    includeArchived,
+    mineOnly,
+  }
+}
+```
+
+For frequently changing row or cell workflow state, use typed cell components that read from a domain service provided by the table component:
+
+```angular-ts
+@Injectable()
+export class TicketActionsService {
+  readonly pendingTicketIds = signal<ReadonlySet<string>>(new Set())
+
+  isPending(ticketId: string) {
+    return this.pendingTicketIds().has(ticketId)
+  }
+
+  close(ticketId: string) {
+    // start mutation, update pendingTicketIds, and call the API
+  }
+}
+```
+
+```angular-ts
+const columns: ColumnDef<Ticket>[] = [
+  columnHelper.display({
+    id: "actions",
+    cell: () => TicketActionsCell,
+  }),
+]
+
+@Component({
+  imports: [TableModule],
+  providers: [TicketActionsService],
+  selector: "tickets-table",
+  template: `<!-- rendered table -->`,
+})
+export class TicketsTable {
+  readonly table = createAngularTable(() => ({
+    columns,
+    data: this.tickets(),
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  }))
+}
+```
+
+```angular-ts
+@Component({
+  imports: [TicketActions],
+  selector: "ticket-actions-cell",
+  template: `
+    <app-ticket-actions
+      [disabled]="isPending()"
+      [ticket]="ticket()"
+      (close)="actions.close(rowId())"
+    />
+  `,
+})
+export class TicketActionsCell extends CellComponentContextDirective<Ticket> {
+  readonly actions = inject(TicketActionsService)
+
+  readonly ticket = computed(() => this.context().row.original)
+  readonly rowId = computed(() => this.context().row.id)
+  readonly isPending = computed(() => this.actions.isPending(this.rowId()))
+}
+```
+
+Use `table.options.meta` mainly for stable callbacks or adapters. Do not put frequently changing row or cell values in `meta` just because cells need them.
+
+## Keep Row Identity Stable
+
+### Concern
+
+Row index is always available and can look sufficient in static examples. It is tempting to use `row.index` for edit maps, pending rows, selection side effects, or action state because the value is already present in the cell context.
+
+### Pitfall
+
+`row.index` is not stable identity. Index-keyed state can attach to the wrong record after sorting, filtering, refetching, insertion, deletion, grouping, expansion, or editing.
+
+```angular-ts
+export class UsersTable {
+  readonly editedValues = signal<Record<number, Partial<User>>>({})
+
+  readonly columns: ColumnDef<User>[] = [
+    columnHelper.accessor("status", {
+      header: "Status",
+      cell: ({getValue, row}) =>
+        this.editedValues()[row.index]?.status ?? getValue(),
+    }),
+  ]
+}
+```
+
+### Preferred Pattern
+
+Use durable domain IDs through `getRowId`, then key external row state by `row.id`. This should map to a unique identifier in your `data` objects.
+
+Keep the column definition static. Pass stable row identity and the current cell value through the cell context, then let a typed cell component read and update edit workflow state through dependency injection.
+
+```angular-ts
+type EditedUserValues = Record<string, Partial<User>>
+
+@Injectable()
+export class UserEditService {
+  readonly editedValues = signal<EditedUserValues>({})
+
+  updateStatus(rowId: string, status: User["status"]) {
+    this.editedValues.update((values) => ({
+      ...values,
+      [rowId]: {...values[rowId], status},
+    }))
+  }
+}
+```
+
+```angular-ts
+const columns = [
+  columnHelper.accessor("status", {
+    header: "Status",
+    cell: () => EditableStatusCell,
+  }),
+] satisfies ColumnDef<User>[]
+```
+
+```angular-ts
+@Component({
+  imports: [TableModule],
+  providers: [UserEditService],
+  selector: "users-table",
+  template: `<!-- rendered table -->`,
+})
+export class UsersTable {
+  readonly table = createAngularTable(() => ({
+    columns,
+    data: this.data(),
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  }))
+}
+```
+
+```angular-ts
+@Component({
+  imports: [FormsModule, SelectModule],
+  selector: "editable-status-cell",
+  template: `
+    <q-select
+      clearable="false"
+      size="sm"
+      [collection]="collection"
+      [ngModel]="status()"
+      (ngModelChange)="setStatus($event)"
+    />
+  `,
+})
+export class EditableStatusCell extends CellComponentContextDirective<
+  User,
+  User["status"]
+> {
+  private readonly editService = inject(UserEditService)
+
+  readonly rowId = computed(() => this.context().row.id)
+
+  readonly status = computed(() => [
+    this.editService.editedValues()[this.rowId()]?.status ??
+      this.context().getValue(),
+  ])
+
+  readonly collection = selectCollection({
+    items: ["active", "suspended", "pending"],
+  })
+
+  setStatus(value: User["status"][]) {
+    this.editService.updateStatus(this.rowId(), value[0])
+  }
+}
+```
+
+In this example, `editedValues` belongs to the edit workflow service and is keyed by `row.id`. It is not an input to `columns`.
+
+Use `row.index` only when position itself is the displayed value. For grouped or expanded rows, be explicit about whether state belongs to the generated row or the original domain record.
+
+## Related Guides
+
+- [Rows](/guides/rows)
+- [Table State](/guides/table-state)
+- [Sorting](/feature-guides/sorting)
+- [Column Filtering](/feature-guides/column-filtering)
+- [Row Selection](/feature-guides/row-selection)

@@ -6,7 +6,7 @@
 
 import type {Scope} from "@qualcomm-ui/utils/machine"
 
-import type {ToastPlacement} from "../toast.types"
+import type {ToastPlacement} from "../toast.types.js"
 
 export function getRegionId(placement: ToastPlacement): string {
   return `toast-group:${placement}`

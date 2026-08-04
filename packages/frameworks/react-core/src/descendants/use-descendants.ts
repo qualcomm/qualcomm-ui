@@ -27,7 +27,8 @@ function useDescendants<
 >(): UseDescendantsReturn<T, K> {
   const descendants = useRef(new DescendantsManager<T, K>())
   useSafeLayoutEffect(() => {
-    return () => descendants.current.destroy()
+    const current = descendants.current
+    return () => current.destroy()
   })
   return descendants.current
 }
@@ -57,16 +58,19 @@ function useDescendant<
   const onUnregisterRef = useRef(options?.onUnregister)
 
   useSafeLayoutEffect(() => {
+    const current = ref.current
+    const onUnregisterCurrent = onUnregisterRef.current
     return () => {
-      if (!ref.current) {
+      if (!current) {
         return
       }
-      const dataIndex = Number(ref.current.dataset["index"])
+      const dataIndex = Number(current.dataset["index"])
       if (!Number.isNaN(dataIndex)) {
-        onUnregisterRef.current?.(dataIndex)
+        onUnregisterCurrent?.(dataIndex)
       }
-      descendants.unregister(ref.current)
+      descendants.unregister(current)
     }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useSafeLayoutEffect(() => {
@@ -77,7 +81,8 @@ function useDescendant<
     if (index !== dataIndex && !Number.isNaN(dataIndex)) {
       setIndex(dataIndex)
     }
-  })
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const refCallback = options
     ? cast<RefCallback<T>>(descendants?.register(options))

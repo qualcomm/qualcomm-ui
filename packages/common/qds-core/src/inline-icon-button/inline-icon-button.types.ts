@@ -1,7 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {inlineIconButtonClasses} from "./inline-icon-button.classes"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
+
+import type {inlineIconButtonAnatomy} from "./inline-icon-button.anatomy.js"
+import type {inlineIconButtonClasses} from "./inline-icon-button.classes.js"
 
 export type QdsInlineIconButtonSize = "sm" | "md" | "lg"
 export type QdsInlineIconButtonEmphasis =
@@ -39,25 +42,20 @@ export interface QdsInlineIconButtonApiProps {
 
 type IconButtonClasses = typeof inlineIconButtonClasses
 
-export interface QdsInlineIconButtonCommonBindings {
-  "data-scope": "inline-icon-button"
-}
+type PartName = AnatomyPartName<typeof inlineIconButtonAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"inlineIconButton", P> {}
 
-export interface QdsInlineIconButtonRootBindings
-  extends QdsInlineIconButtonCommonBindings {
+export interface QdsInlineIconButtonRootBindings extends Part<"root"> {
   className: IconButtonClasses["root"]
   "data-emphasis": QdsInlineIconButtonEmphasis
-  "data-scope": "inline-icon-button"
   "data-size": QdsInlineIconButtonSize
   "data-variant": QdsInlineIconButtonVariant
 }
 
-export interface QdsInlineIconButtonIconBindings
-  extends QdsInlineIconButtonCommonBindings {
+export interface QdsInlineIconButtonIconBindings extends Part<"icon"> {
   className: IconButtonClasses["icon"]
   "data-emphasis": QdsInlineIconButtonEmphasis
-  "data-part": "icon"
-  "data-scope": "inline-icon-button"
+  "data-size": QdsInlineIconButtonSize
   "data-variant": QdsInlineIconButtonVariant
 }
 

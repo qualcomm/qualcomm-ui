@@ -1,6 +1,5 @@
 ---
 title: Dialog
-group: Overlays
 description: A dialog is a focused, overlay-based container used to present critical information or request user input that requires immediate attention. It appears above the application content, blocks underlying interaction, and guides the user toward a required decision or acknowledgement.
 component: Dialog
 aliases: [modal, popup, lightbox, overlay]
@@ -43,8 +42,7 @@ The dialog component has two sizes: `sm` and `md`. Size governs the width of the
 ### Indicator Emphasis
 
 ::: terms
-status
-severity
+status, severity
 :::
 
 Use the [emphasis](./#emphasis) prop to change the intent and color of the dialog's indicator icon.
@@ -54,8 +52,7 @@ Use the [emphasis](./#emphasis) prop to change the intent and color of the dialo
 ### Custom Indicator
 
 ::: terms
-replace icon
-remove icon
+replace icon, remove icon
 :::
 
 Set a custom indicator icon by providing the `q-dialog-indicator-icon` directive within the `q-dialog-body` directive. Or hide it entirely using the [hideIndicatorIcon](./#hideIndicatorIcon) property on the `q-dialog-body` directive.
@@ -65,11 +62,7 @@ Set a custom indicator icon by providing the `q-dialog-indicator-icon` directive
 ### Placement
 
 ::: terms
-position
-alignment
-top
-center
-bottom
+position, alignment, top, center, bottom
 :::
 
 Use the [placement](./#placement) prop to change the placement of the dialog.
@@ -79,14 +72,10 @@ Use the [placement](./#placement) prop to change the placement of the dialog.
 ### Controlled State
 
 ::: terms
-show
-hide
-programmatic
-signal
-two-way binding
+show, hide, programmatic, signal, two-way binding
 :::
 
-Dialog visibility can be controlled using the [open](./#open), [openChanged](./#onOpenChange) and [defaultOpen](./#defaultOpen) properties. These properties follow our [controlled state](/patterns/controlled-state) pattern.
+Dialog visibility can be controlled using the [open](./#open), [openChanged](./#openChanged) and [defaultOpen](./#defaultOpen) properties. These properties follow our [controlled state](/patterns/controlled-state) pattern.
 
 <QdsDemo name="DialogControlledStateDemo" />
 
@@ -113,10 +102,7 @@ Set the [scrollBehavior](./#scrollBehavior) prop to `inside` to create an intern
 ### Alert Dialog
 
 ::: terms
-confirmation
-confirm prompt
-delete
-destructive
+confirmation, confirm prompt, delete, destructive
 :::
 
 Set the [role](./#role) prop to `alertdialog` to change the dialog component to an [alert dialog](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role). This is recommended for situations where the dialog is used to notify users of urgent information that demands their immediate attention.
@@ -151,7 +137,7 @@ components. This shortcut is equivalent to:
 
 ### q-dialog-backdrop
 
-<TypeDocProps name="DialogBackdropComponent" />
+<TypeDocProps name="DialogBackdropDirective" />
 
 <TypeDocAngularAttributes
   name={["QdsDialogBackdropBindings", "DialogBackdropBindings"]}

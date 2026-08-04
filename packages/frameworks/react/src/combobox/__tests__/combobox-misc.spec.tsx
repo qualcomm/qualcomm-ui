@@ -1,11 +1,11 @@
 import {Star} from "lucide-react"
 import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {comboboxCollection} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Combobox} from "@qualcomm-ui/react/combobox"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
@@ -82,7 +82,7 @@ const tests: MultiComponentTestCase[] = [
             page
               .getByRole("combobox")
               .element()
-              .closest("[data-part='control']")
+              .closest("[data-combobox-part='control']")
               ?.querySelector("[data-test-id='qui-icon']"),
           )
           .toBeInTheDocument()

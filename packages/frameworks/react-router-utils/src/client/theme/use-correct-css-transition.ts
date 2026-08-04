@@ -40,7 +40,10 @@ function withoutTransition(callback: VoidFunction) {
 
 export function useCorrectCssTransition({
   disableTransitions = false,
-}: {disableTransitions?: boolean} = {}) {
+}: {disableTransitions?: boolean} = {}): (
+  callback: VoidFunction,
+  event?: MouseEvent,
+) => void {
   return useCallback(
     (callback: VoidFunction, event?: MouseEvent) => {
       if (disableTransitions) {

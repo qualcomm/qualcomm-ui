@@ -14,12 +14,10 @@ import {
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 
-import {usePresence} from "./use-presence"
+import {usePresence} from "./use-presence.js"
 
 export interface PresenceProps
-  extends PresenceApiProps,
-    RenderStrategyApiProps,
-    ElementRenderProp<"div"> {
+  extends PresenceApiProps, RenderStrategyApiProps, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

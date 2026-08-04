@@ -10,11 +10,10 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableHeaderCellProps
-  extends ElementRenderProp<"th">,
-    QdsTableHeaderCellProps {
+  extends ElementRenderProp<"th">, QdsTableHeaderCellProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

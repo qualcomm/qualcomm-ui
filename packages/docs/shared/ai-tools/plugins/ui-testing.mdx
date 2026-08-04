@@ -1,0 +1,29 @@
+---
+title: UI Testing
+---
+
+# {frontmatter.title}
+
+Use the Behavior Testing plugin to write, refactor, or review React and Angular tests around public behavior instead of implementation details. The plugin helps the agent focus on accessible queries, user interactions, callback payloads, form behavior, route behavior, and visible outcomes.
+
+The plugin provides five testing skills:
+
+- **react-testing**: guidelines for React application, hook, route, state, and integration tests
+- **react-component-testing**: guidelines for React component tests
+- **angular-testing**: guidelines for Angular application, service, route, form, pipe, and integration tests
+- **angular-component-testing**: guidelines for Angular component and directive tests
+- **vitest-browser-testing**: guidelines for tests that run in Vitest Browser Mode
+
+## Installation
+
+- Enable the QUI plugin marketplace for your agent
+  - [Claude Code](/ai-tools/claude-code)
+  - [Codex](/ai-tools/codex)
+- Browse the agent's plugin repository and enable **behavior-testing**.
+- Start a fresh session after enabling **behavior-testing** so the skills load into the conversation.
+
+Refer to the [plugin source code](https://github.com/qualcomm/qualcomm-ui/tree/main/plugins/behavior-testing/references) to learn more.
+
+## Troubleshoot plugin usage
+
+If the agent does not load a `behavior-testing:*` skill, confirm that **behavior-testing** is enabled in the agent's plugin repository. Then start a fresh session.

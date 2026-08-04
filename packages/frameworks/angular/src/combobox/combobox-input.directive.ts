@@ -3,8 +3,8 @@
 
 import {Directive} from "@angular/core"
 
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {CoreComboboxInputDirective} from "@qualcomm-ui/angular-core/combobox"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "[q-combobox-input]",

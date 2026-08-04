@@ -6,7 +6,7 @@
 
 import type {ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {ProgressElementIds, ProgressScope} from "../progress.types"
+import type {ProgressElementIds, ProgressScope} from "../progress.types.js"
 
 export const domIds: ScopeDomIds<ProgressElementIds, ProgressScope> = {
   errorText: (scope) => scope.ids.get("errorText"),

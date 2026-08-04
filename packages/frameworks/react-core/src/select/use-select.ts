@@ -5,7 +5,7 @@ import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useSelectContext} from "./select-context"
+import {useSelectContext} from "./select-context.js"
 
 export function useSelectClearTrigger(props: IdProp) {
   const context = useSelectContext()

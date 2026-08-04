@@ -1,13 +1,15 @@
 ---
 title: Breadcrumbs
-group: Disclosure
 description: Breadcrumbs help users understand their current location within a website or application hierarchy and provide a quick way to navigate back to parent pages.
 component: Breadcrumbs
 aliases: [breadcrumb trail, navigation path]
 ---
 
 import {QdsDemo} from "~components/demo"
-import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -20,43 +22,16 @@ import {BreadcrumbsModule} from "@qualcomm-ui/angular/breadcrumbs"
 ## Overview
 
 ::: terms
-a11y
-WCAG
-site hierarchy
-wayfinding
-location indicator
+a11y, WCAG, site hierarchy, wayfinding, location indicator
 :::
 
 - The root element should be labeled with `aria-label="Breadcrumbs"` to indicate that it's a breadcrumb navigation.
 - The first breadcrumb item is always the root item, and is typically reserved for the home page or base route of your application.
-- The last breadcrumb item is always the active item.
-- The last breadcrumb item should always be annotated with the `aria-current="page"` attribute.
+- The last breadcrumb item represents the current page.
+- If the current page item is a link, apply [`aria-current`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current)`="page"` to the `<a q-breadcrumb-item-trigger>`.
+- If the current page item should not navigate, omit the link trigger and apply [`aria-current`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current)`="page"` to the breadcrumb item.
 
 ## Examples
-
-### Emphasis (color)
-
-::: terms
-neutral
-muted
-subdued
-:::
-
-Use the [emphasis](./#emphasis) prop to change the color of the breadcrumbs.
-
-<QdsDemo name="BreadcrumbsEmphasisDemo" />
-
-### Sizes
-
-::: terms
-small
-medium
-large
-:::
-
-Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. The default size is `md`.
-
-<QdsDemo name="BreadcrumbsSizesDemo" />
 
 ### Links
 
@@ -64,20 +39,59 @@ Three sizes are available via the [size](./#size) prop: `sm`, `md`, and `lg`. Th
 polymorphic
 :::
 
-Apply the `routerLink` directive to a breadcrumb item's trigger to make it a link.
+Each item renders non-link content by default. For navigable items, provide an explicit [`<a q-breadcrumb-item-trigger>`](./#q-breadcrumb-item-trigger) with `href` or `routerLink`. Leaving the trigger non-link is appropriate for the current page item.
 
 <QdsDemo name="BreadcrumbsLinksDemo" />
+
+### Emphasis (color)
+
+::: terms
+neutral, muted, subdued
+:::
+
+Use the [emphasis](./#emphasis) input to change the color of the breadcrumbs.
+
+<QdsDemo name="BreadcrumbsEmphasisDemo" />
+
+### Sizes
+
+::: terms
+small, medium, large
+:::
+
+Three sizes are available via the [size](./#size) input: `sm`, `md`, and `lg`. The default size is `md`.
+
+<QdsDemo name="BreadcrumbsSizesDemo" />
 
 ### Disabled Item
 
 ::: terms
-inactive
-non-clickable
+inactive, non-clickable
 :::
 
-Use the [disabled](./#disabled) prop to disable a breadcrumb item.
+Use the [disabled](./#disabled) input to disable a breadcrumb item.
 
 <QdsDemo name="BreadcrumbsDisabledDemo" />
+
+### Overflow
+
+::: terms
+overflow, collapsed, ellipsis, truncated
+:::
+
+Use the [`q-breadcrumb-overflow-item`](./#q-breadcrumb-overflow-item) component to collapse intermediate breadcrumb items into a [menu](/components/menu). The overflow trigger displays an ellipsis by default. Use the [icon](./#icon) input to add an icon, or provide your own trigger via [`q-breadcrumb-overflow-trigger`](./#q-breadcrumb-overflow-trigger).
+
+<QdsDemo name="BreadcrumbsOverflowDemo" />
+
+### Tooltip
+
+::: terms
+tooltip, hover hint, title, description
+:::
+
+To provide additional context on hover, add a tooltip to a breadcrumb item by wrapping its trigger with a [Tooltip](/components/tooltip) and apply `q-tooltip-trigger` to it.
+
+<QdsDemo name="BreadcrumbsTooltipDemo" />
 
 ## API
 
@@ -85,34 +99,44 @@ Use the [disabled](./#disabled) prop to disable a breadcrumb item.
 
 <TypeDocProps name="BreadcrumbsRootDirective" />
 
-<TypeDocAttributes name="QdsBreadcrumbsRootBindings" />
+<TypeDocAngularAttributes name="QdsBreadcrumbsRootBindings" />
 
 ### q-breadcrumbs-list
 
 <TypeDocProps name="BreadcrumbsListDirective" />
 
-<TypeDocAttributes name="QdsBreadcrumbsListBindings" />
+<TypeDocAngularAttributes name="QdsBreadcrumbsListBindings" />
 
 ### q-breadcrumb-item
 
 <TypeDocProps name="BreadcrumbItemDirective" />
 
-<TypeDocAttributes name="QdsBreadcrumbsItemBindings" />
+<TypeDocAngularAttributes name="QdsBreadcrumbsItemBindings" />
 
 ### q-breadcrumb-item-icon
 
 <TypeDocProps name="BreadcrumbItemIconDirective" />
 
-<TypeDocAttributes name="QdsBreadcrumbsItemIconBindings" />
+<TypeDocAngularAttributes name="QdsBreadcrumbsItemIconBindings" />
 
 ### q-breadcrumb-item-trigger
 
 <TypeDocProps name="BreadcrumbItemTriggerDirective" />
 
-<TypeDocAttributes name="QdsBreadcrumbsItemTriggerBindings" />
+<TypeDocAngularAttributes name="QdsBreadcrumbsItemTriggerBindings" />
 
 ### q-breadcrumb-item-separator
 
 <TypeDocProps name="BreadcrumbItemSeparatorDirective" />
 
-<TypeDocAttributes name="QdsBreadcrumbsItemSeparatorBindings" />
+<TypeDocAngularAttributes name="QdsBreadcrumbsItemSeparatorBindings" />
+
+### q-breadcrumb-overflow-item
+
+<TypeDocProps name="BreadcrumbOverflowItemComponent" />
+
+### q-breadcrumb-overflow-trigger
+
+<TypeDocProps name="BreadcrumbOverflowTriggerDirective" />
+
+<TypeDocAngularAttributes name="QdsBreadcrumbsOverflowTriggerBindings" />

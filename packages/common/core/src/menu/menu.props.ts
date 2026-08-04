@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {ItemProps, MenuApiProps, OptionItemProps} from "./menu.types"
+import type {ItemProps, MenuApiProps, OptionItemProps} from "./menu.types.js"
 
 export const menuProps: (keyof MenuApiProps)[] = createProps<MenuApiProps>()(
   "anchorPoint",

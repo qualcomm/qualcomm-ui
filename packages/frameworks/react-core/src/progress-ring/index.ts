@@ -13,9 +13,9 @@ import {
   type CoreProgressRingTrackProps,
   CoreProgressRingValueText,
   type CoreProgressRingValueTextProps,
-} from "./core-progress-ring"
+} from "./core-progress-ring.js"
 
-export * from "./progress-ring-context"
+export * from "./progress-ring-context.js"
 
 export type {
   CoreProgressRingRootProps,

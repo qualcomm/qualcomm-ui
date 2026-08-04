@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {progressClasses} from "./progress.classes"
+import type {progressClasses} from "./progress.classes.js"
 
 export type QdsProgressSize = "sm" | "md" | "lg"
 export type QdsProgressEmphasis = "primary" | "neutral"

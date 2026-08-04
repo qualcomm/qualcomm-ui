@@ -1,13 +1,12 @@
 ---
 title: Select
-group: Form Controls
 description: The select component provides a streamlined way for users to pick a single option from a collapsible list of choices. It conserves screen space while offering clear visual feedback and maintaining accessibility standards.
 component: Select
 aliases: [dropdown, picker, listbox, choice]
 ---
 
 import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
@@ -20,7 +19,7 @@ import {Select} from "@qualcomm-ui/react/select"
 
 ## Overview
 
-- Each select uses the `selectCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](#list-collection).
+- Each select uses the `selectCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](./#list-collection).
 
 ## Examples
 
@@ -43,10 +42,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### ARIA Label
 
 ::: terms
-a11y
-screen reader
-labelless
-hidden label
+a11y, screen reader, labelless, hidden label
 :::
 
 The Select's label is automatically associated with the input element for accessibility. If you omit the label, you should provide an aria-label to the control to give your select an accessible name.
@@ -56,10 +52,7 @@ The Select's label is automatically associated with the input element for access
 ### Content Width
 
 ::: terms
-dropdown width
-popup width
-listbox width
-auto width
+dropdown width, popup width, listbox width, auto width
 :::
 
 The [positioning.sameWidth](./#sameWidth) property controls whether the width of the select content matches the width of the trigger element. The default is `true`.
@@ -69,9 +62,7 @@ The [positioning.sameWidth](./#sameWidth) property controls whether the width of
 ### Trigger Icon
 
 ::: terms
-leading icon
-prefix icon
-start icon
+leading icon, prefix icon, start icon
 :::
 
 Use the [icon](./#icon) prop to add an icon to the start of the trigger element.
@@ -81,21 +72,17 @@ Use the [icon](./#icon) prop to add an icon to the start of the trigger element.
 ### Items as Objects
 
 ::: terms
-custom items
-typed items
-structured data
+custom items, typed items, structured data
 :::
 
-The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [selectCollection](./#ListCollection) to specify the label and value of each item.
+The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [selectCollection](./#list-collection) to specify the label and value of each item.
 
 <Demo name="SelectItemsDemo" component={demos.SelectItemsDemo} />
 
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 This component supports three [size](./#size) options to accommodate different layout densities and design requirements.
@@ -107,9 +94,7 @@ The available sizes are `sm`, `md`, and `lg`. The default size is `md`.
 ### Content Height
 
 ::: terms
-maxHeight
-scrollable
-overflow
+maxHeight, scrollable, overflow
 :::
 
 Change the height of the item container by adjusting the style of the Content element.
@@ -119,9 +104,7 @@ Change the height of the item container by adjusting the style of the Content el
 ### Multiple Selection
 
 ::: terms
-multiselect
-multi-select
-multi select
+multiselect, multi-select, multi select
 :::
 
 Use the [multiple](./#multiple) prop to allow multiple selections.
@@ -136,9 +119,7 @@ The [selectionIndicator](./#selectionIndicator) prop controls how selected items
 ### Controlled State
 
 ::: terms
-external state
-react state
-useState
+external state, react state, useState
 :::
 
 Set the initial value using the [defaultValue](./#defaultValue) prop, or use [value](./#value) and [onValueChange](./#onValueChange) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
@@ -151,11 +132,7 @@ Set the initial value using the [defaultValue](./#defaultValue) prop, or use [va
 ### States
 
 ::: terms
-disabled state
-read-only
-readonly
-invalid state
-form states
+disabled state, read-only, readonly, invalid state, form states
 :::
 
 The following shows how the Select component appears in each interactive state.
@@ -165,10 +142,7 @@ The following shows how the Select component appears in each interactive state.
 ### Error Text and Indicator
 
 ::: terms
-validation error
-form validation
-error message
-invalid field
+validation error, form validation, error message, invalid field
 :::
 
 Error messages are displayed using two props:
@@ -183,24 +157,23 @@ The error text and indicator will only render when [invalid](./#invalid) is true
 ### Within Dialog
 
 ::: terms
-modal
-portalProps
-disable portal
+modal, portalProps, disable portal
 :::
 
-To use the Select within a Dialog, you need to avoid portalling the `Select.Positioner` to the document's body. To do this using the simple API, set `portalProps.disabled` to `true`:
+To use the Select within a [Dialog](/components/dialog), you need to avoid portalling the `Select.Positioner` to the document's body. To do this using the simple API, set `portalProps.disabled` to `true`:
 
-<Demo name="SelectWithinDialogDemo" component={demos.SelectWithinDialogDemo} />
+<Demo
+  name="SelectWithinDialogDemo"
+  component={demos.SelectWithinDialogDemo}
+/>
 
 ### Within Popover
 
 ::: terms
-modal
-portalProps
-disable portal
+modal, portalProps, disable portal
 :::
 
-Like with the Dialog, you need to avoid portalling the `Select.Positioner` to the document's body:
+Like with the [Dialog](/components/dialog), you need to avoid portalling the `Select.Positioner` to the document's body:
 
 <Demo
   name="SelectWithinPopoverDemo"
@@ -219,13 +192,16 @@ rhf
 
 Use [React Hook Form](https://react-hook-form.com/) to handle the input state and validation. [ArkType](https://arktype.io/) works great for schema validation if you need it.
 
-<Demo expanded name="SelectHookFormDemo" component={demos.SelectHookFormDemo} />
+<Demo
+  expanded
+  name="SelectHookFormDemo"
+  component={demos.SelectHookFormDemo}
+/>
 
 ### Tanstack Form
 
 ::: terms
-tanstack
-tsform
+tanstack, tsform
 :::
 
 [Tanstack Form](https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts) handles validation with its built-in validators.
@@ -238,9 +214,30 @@ tsform
 
 Tanstack form also supports [ArkType](https://tanstack.com/form/latest/docs/framework/react/guides/validation#validation-through-schema-libraries).
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.SelectExplorerDemo}
+  linkPrefix="select"
+  parts={[
+    "root",
+    "label",
+    "control",
+    "value-text",
+    "clear-trigger",
+    "indicator",
+    "content",
+    "item",
+    "item-text",
+    "item-indicator",
+    "hint",
+  ]}
+  scope="select"
+/>
+
 ## API
 
-### \<Select\>
+### \<Select>
 
 The simple select extends the [Select.Root](./#select-root) component with the following props:
 
@@ -250,17 +247,19 @@ The simple select extends the [Select.Root](./#select-root) component with the f
 
 This section describes the elements of the Select's composite API.
 
-### \<Select.Root\>
+### \<Select.Root>
 
 <TypeDocProps name="SelectRootProps" />
 
-### \<Select.Label\>
+### \<Select.Label>
 
 <TypeDocProps name="SelectLabelProps" />
 
-<TypeDocAttributes name={["QdsSelectLabelBindings", "SelectLabelBindings"]} />
+<TypeDocAttributes
+  name={["QdsSelectLabelBindings", "SelectLabelBindings"]}
+/>
 
-### \<Select.Control\>
+### \<Select.Control>
 
 <TypeDocProps name="SelectControlProps" />
 
@@ -268,7 +267,7 @@ This section describes the elements of the Select's composite API.
   name={["QdsSelectControlBindings", "SelectControlBindings"]}
 />
 
-### \<Select.Indicator\>
+### \<Select.Indicator>
 
 <TypeDocProps name="SelectIndicatorProps" />
 
@@ -276,7 +275,7 @@ This section describes the elements of the Select's composite API.
   name={["QdsSelectIndicatorBindings", "SelectIndicatorBindings"]}
 />
 
-### \<Select.ValueText\>
+### \<Select.ValueText>
 
 <TypeDocProps name="SelectValueTextProps" />
 
@@ -284,7 +283,7 @@ This section describes the elements of the Select's composite API.
   name={["QdsSelectValueTextBindings", "SelectValueTextBindings"]}
 />
 
-### \<Select.ClearTrigger\>
+### \<Select.ClearTrigger>
 
 <TypeDocProps name="SelectClearTriggerProps" />
 
@@ -292,7 +291,7 @@ This section describes the elements of the Select's composite API.
   name={["QdsSelectClearTriggerBindings", "SelectClearTriggerBindings"]}
 />
 
-### \<Select.Positioner\>
+### \<Select.Positioner>
 
 <TypeDocProps name="SelectPositionerProps" />
 
@@ -300,7 +299,7 @@ This section describes the elements of the Select's composite API.
   name={["QdsSelectPositionerBindings", "SelectPositionerBindings"]}
 />
 
-### \<Select.Content\>
+### \<Select.Content>
 
 <TypeDocProps name="SelectContentProps" />
 
@@ -308,25 +307,25 @@ This section describes the elements of the Select's composite API.
   name={["QdsSelectContentBindings", "SelectContentBindings"]}
 />
 
-### \<Select.Item\>
+### \<Select.Item>
 
 <TypeDocProps name="SelectItemProps" />
 
 <TypeDocAttributes name={["QdsSelectItemBindings", "SelectItemBindings"]} />
 
-### \<Select.ItemCheckbox\>
+### \<Select.ItemCheckbox>
 
 Checkbox-style indicator for select items. Use this instead of `Select.ItemIndicator` when `selectionIndicator="checkbox"` is set on the root. The checkbox is always visible and fills when the item is selected.
 
 <TypeDocProps name="SelectItemCheckboxProps" />
 
-### \<Select.ItemIndicator\>
+### \<Select.ItemIndicator>
 
 <TypeDocProps name="SelectItemIndicatorProps" />
 
 <TypeDocAttributes name="SelectItemIndicatorBindings" />
 
-### \<Select.ItemText\>
+### \<Select.ItemText>
 
 <TypeDocProps name="SelectItemTextProps" />
 
@@ -334,7 +333,7 @@ Checkbox-style indicator for select items. Use this instead of `Select.ItemIndic
   name={["SelectItemTextBindings", "QdsSelectItemTextBindings"]}
 />
 
-### \<Select.HiddenSelect\>
+### \<Select.HiddenSelect>
 
 <TypeDocProps name="SelectHiddenSelectProps" />
 
@@ -342,13 +341,13 @@ Checkbox-style indicator for select items. Use this instead of `Select.ItemIndic
   name={["QdsSelectHiddenSelectBindings", "SelectHiddenSelectBindings"]}
 />
 
-### \<Select.Hint\>
+### \<Select.Hint>
 
 <TypeDocProps name="SelectHintProps" />
 
 <TypeDocAttributes name={["QdsInputHintBindings", "SelectHintBindings"]} />
 
-### \<Select.ErrorText\>
+### \<Select.ErrorText>
 
 <TypeDocProps name="SelectErrorTextProps" />
 
@@ -356,7 +355,7 @@ Checkbox-style indicator for select items. Use this instead of `Select.ItemIndic
   name={["QdsInputErrorTextBindings", "SelectErrorTextBindings"]}
 />
 
-### \<Select.ErrorIndicator\>
+### \<Select.ErrorIndicator>
 
 <TypeDocProps name="SelectErrorIndicatorProps" />
 

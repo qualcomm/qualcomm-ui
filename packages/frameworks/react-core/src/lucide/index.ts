@@ -1,1 +1,1 @@
-export type * from "./icon.types"
+export type * from "./icon.types.js"

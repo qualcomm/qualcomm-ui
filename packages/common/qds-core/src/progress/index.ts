@@ -1,3 +1,3 @@
-export * from "./progress.api"
-export * from "./progress.classes"
-export type * from "./progress.types"
+export * from "./progress.api.js"
+export * from "./progress.classes.js"
+export type * from "./progress.types.js"

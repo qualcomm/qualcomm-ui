@@ -12,8 +12,8 @@ import {preventBodyScroll} from "@qualcomm-ui/dom/remove-scroll"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import type {DialogApiProps, DialogSchema} from "./dialog.types"
-import {domEls} from "./internal"
+import type {DialogApiProps, DialogSchema} from "./dialog.types.js"
+import {domEls} from "./internal/dialog.dom.js"
 
 export const dialogMachine: MachineConfig<DialogSchema> =
   createMachine<DialogSchema>({
@@ -33,9 +33,9 @@ export const dialogMachine: MachineConfig<DialogSchema> =
 
           const styles = getComputedStyle?.(contentEl)
           const elems = [domEls.positioner(scope), domEls.backdrop(scope)]
-          elems.forEach((node) => {
+          for (const node of elems) {
             node?.style.setProperty("--z-index", styles.zIndex)
-          })
+          }
         })
       },
       toggleVisibility: ({prop, send}) => {

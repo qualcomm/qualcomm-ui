@@ -1,1 +1,1 @@
-export * from "./accordion.dom"
+export * from "./accordion.dom.js"

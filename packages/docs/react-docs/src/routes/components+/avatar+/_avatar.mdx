@@ -1,13 +1,12 @@
 ---
 title: Avatar
-group: Data Display
 description: Avatars provide visual representation of users, accounts, or entities. They support multiple content types including icons, initials, and images, with optional status indicators to communicate presence or state information.
 component: Avatar
 aliases: [profile picture, user photo, profile image]
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
@@ -42,8 +41,7 @@ Here's a typical usage example:
 ### Content
 
 ::: terms
-placeholder
-broken image
+placeholder, broken image
 :::
 
 The `Avatar.Content` component displays alternative content within the avatar. Use it by itself to show a single character or an icon, or together with `Avatar.Image` to provide fallback content if the image cannot be loaded.
@@ -53,11 +51,7 @@ The `Avatar.Content` component displays alternative content within the avatar. U
 ### Sizes
 
 ::: terms
-extra small
-small
-medium
-large
-extra large
+extra small, small, medium, large, extra large
 :::
 
 Use the [size](./#size) prop to set the size of the avatar. The available sizes are `xs`, `sm`, `md` (default), `lg`, and `xl`.
@@ -67,19 +61,17 @@ Use the [size](./#size) prop to set the size of the avatar. The available sizes 
 ### Emphasis
 
 ::: terms
-high contrast
-color scheme
+high contrast, color scheme
 :::
 
-When displaying initials or an icon, use the [emphasis](./#emphasis) prop to set the avatar's color. Available values are `neutral` (default), `contrast`, and `brand`.
+When displaying initials or an icon, use the [emphasis](./#emphasis-1) prop to set the avatar's color. Available values are `neutral` (default), `contrast`, and `brand`.
 
 <Demo name="AvatarEmphasisDemo" component={demos.AvatarEmphasisDemo} />
 
 ### Status
 
 ::: terms
-presence indicator
-online
+presence indicator, online
 :::
 
 To indicate the status of the user or entity, use the `Avatar.Status` component and set its [status](./#status-1) prop to one of: `active`, `offline` (default), `away`, or `busy`.
@@ -89,9 +81,7 @@ To indicate the status of the user or entity, use the `Avatar.Status` component 
 ### State Callback
 
 ::: terms
-loading state
-image loaded
-image error
+loading state, image loaded, image error
 :::
 
 You can listen for changes to the avatar's state by using the [onStateChange](./#onStateChange) prop.
@@ -102,21 +92,30 @@ You can listen for changes to the avatar's state by using the [onStateChange](./
   component={demos.AvatarStateCallbackDemo}
 />
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.AvatarExplorerDemo}
+  linkPrefix="avatar"
+  parts={["root", "image", "status"]}
+  scope="avatar"
+/>
+
 ## API
 
-### \<Avatar.Root\>
+### \<Avatar.Root>
 
 <TypeDocProps name="AvatarRootProps" />
 
 <TypeDocAttributes name={["AvatarRootBindings", "QdsAvatarRootBindings"]} />
 
-### \<Avatar.Image\>
+### \<Avatar.Image>
 
 <TypeDocProps name="AvatarImageProps" />
 
 <TypeDocAttributes name="AvatarImageBindings" />
 
-### \<Avatar.Content\>
+### \<Avatar.Content>
 
 <TypeDocProps name="AvatarContentProps" />
 
@@ -124,8 +123,10 @@ You can listen for changes to the avatar's state by using the [onStateChange](./
   name={["AvatarContentBindings", "QdsAvatarContentBindings"]}
 />
 
-### \<Avatar.Status\>
+### \<Avatar.Status>
 
 <TypeDocProps name="AvatarStatusProps" />
 
-<TypeDocAttributes name={["AvatarStatusBindings", "QdsAvatarStatusBindings"]} />
+<TypeDocAttributes
+  name={["AvatarStatusBindings", "QdsAvatarStatusBindings"]}
+/>

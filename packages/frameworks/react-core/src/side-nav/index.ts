@@ -13,9 +13,9 @@ import {
   type CoreSideNavRootProps,
   CoreSideNavTrigger,
   type CoreSideNavTriggerProps,
-} from "./core-side-nav"
+} from "./core-side-nav.js"
 
-export * from "./side-nav-context"
+export * from "./side-nav-context.js"
 
 export type {
   CoreSideNavRootProps,

@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {ExternalLink} from "lucide-angular"
 
-import {LinkDirective} from "@qualcomm-ui/angular/link"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {LinkDirective} from "@qualcomm-ui/angular/link"
 
 @Component({
   imports: [LinkDirective],

@@ -13,7 +13,7 @@
   color: var(--color-text-neutral-secondary);
   /* this is for margin to work on built-ins that are inline by default */
   display: inline-block;
-  font: var(--font-static-body-sm-default);
+  font: var(--font-static-body-xs-default);
 
   &[data-disabled] {
     color: var(--color-utility-disabled-text);
@@ -91,15 +91,12 @@
 
   &:disabled,
   &[data-disabled] {
+    --icon-color: var(--color-utility-disabled-icon);
     background: var(--color-utility-disabled-background);
     border-color: var(--color-utility-disabled-border);
     color: var(--color-utility-disabled-text);
     cursor: default;
     pointer-events: none;
-
-    .qui-select__trigger-icon {
-      color: var(--color-utility-disabled-icon);
-    }
   }
 
   .qui-select__indicator {
@@ -129,7 +126,7 @@
   }
 }
 
-.qui-select__trigger-icon {
+.qui-select__icon {
   color: var(--icon-color);
   &[data-size="sm"] {
     margin-right: calc(var(--spacing-50) - var(--select-trigger-gap));
@@ -171,7 +168,10 @@
   padding: var(--spacing-40) 0;
   position: relative;
   width: 100%;
-  z-index: calc(var(--z-index-dropdown) + var(--layer-index));
+  z-index: max(
+    calc(var(--z-index-dropdown) + var(--layer-index)),
+    calc(var(--layer-z-floor, 0) + 1)
+  );
 
   &[data-virtual] {
     &[data-empty] {
@@ -185,6 +185,7 @@
     min-height: 42px;
     min-width: var(--reference-width);
     overflow: hidden;
+    overscroll-behavior: unset;
   }
 
   &[data-focus-visible]:not([data-disabled]) {

@@ -4,9 +4,9 @@
 import {Component, computed} from "@angular/core"
 import {X} from "lucide-angular"
 
-import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 import {CoreComboboxClearTriggerDirective} from "@qualcomm-ui/angular-core/combobox"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.service"

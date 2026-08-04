@@ -1,1 +1,1 @@
-export * from "./unique-id-service"
+export * from "./unique-id-service.js"

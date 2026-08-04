@@ -8,8 +8,8 @@ import {
   input,
 } from "@angular/core"
 
-import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 import {provideSelectContext} from "@qualcomm-ui/angular-core/select"
+import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 import {
@@ -20,6 +20,10 @@ import {SelectRootDirective} from "./select-root.directive"
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    "[attr.aria-label]": "undefined",
+    "[attr.aria-labelledby]": "undefined",
+  },
   providers: [
     provideSelectContext(),
     provideQdsSelectContext(),
@@ -35,7 +39,11 @@ import {SelectRootDirective} from "./select-root.directive"
     </ng-content>
 
     <ng-content select="[q-select-control]">
-      <div q-select-control [attr.aria-label]="ariaLabel()">
+      <div
+        q-select-control
+        [aria-label]="ariaLabel()"
+        [aria-labelledby]="ariaLabelledby()"
+      >
         <ng-content select="[q-select-value-text]">
           <span q-select-value-text></span>
         </ng-content>
@@ -107,9 +115,20 @@ export class SelectComponent extends SelectRootDirective {
   /**
    * ARIA label applied to the control element. Use this if you omit the {@link
    * label}
+   *
+   * @since 2.9.0
    */
   readonly ariaLabel = input<string | undefined>(undefined, {
     alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the control element.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
   })
 
   /**

@@ -43,7 +43,6 @@ import type {Point} from "@qualcomm-ui/dom/rect-utils"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 import {type Explicit, isDefined} from "@qualcomm-ui/utils/guard"
-import type {IdRegistrationProps} from "@qualcomm-ui/utils/machine"
 
 import {MenuContextService, useMenuContext} from "./menu-context.service"
 import {
@@ -289,7 +288,7 @@ export class CoreMenuRootDirective
 
     this.menuTriggerService.init(
       computed(() => {
-        return (params: IdRegistrationProps) => {
+        return (params) => {
           return this.parentMenuContext?.()?.getTriggerItemBindings?.(
             menuApi(),
             params,

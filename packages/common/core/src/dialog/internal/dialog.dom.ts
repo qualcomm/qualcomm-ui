@@ -6,7 +6,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {DialogElementIds, DialogScope} from "../dialog.types"
+import type {DialogElementIds, DialogScope} from "../dialog.types.js"
 
 export const domIds: ScopeDomIds<DialogElementIds, DialogScope> = {
   backdrop: (scope) => scope.ids.get("backdrop"),

@@ -1,25 +1,15 @@
 ---
 title: Alert Banner
-group: Feedback
 description: A prominent notification component for displaying important information or system status messages. Alert banners span the full width of their container and use distinctive colors to indicate message severity.
 component: AlertBanner
-keywords:
-  [
-    page banner,
-    system message,
-    global alert,
-    site notification,
-    top banner,
-    status banner,
-    announcement,
-  ]
+aliases: page banner, system message, global alert, site notification, top banner, status banner, announcement
 badges:
   - id: since
     label: 1.12.0
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1120
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
@@ -37,7 +27,10 @@ import {AlertBanner} from "@qualcomm-ui/react/alert-banner"
 
 Use the simple API to create a banner using minimal markup.
 
-<Demo name="AlertBannerSimpleDemo" component={demos.AlertBannerSimpleDemo} />
+<Demo
+  name="AlertBannerSimpleDemo"
+  component={demos.AlertBannerSimpleDemo}
+/>
 
 ### Composite
 
@@ -50,8 +43,8 @@ The composite API provides individual sub-components for custom layouts or when 
 
 ### Emphasis
 
-::: meta
-keywords: [severity, notification type, error banner, success banner, alert level]
+::: terms
+severity, notification type, error banner, success banner, alert level
 :::
 
 The [emphasis](./#emphasis-1) prop controls the banner's color scheme. The default is `info`. Each emphasis also determines the default icon.
@@ -63,18 +56,21 @@ The [emphasis](./#emphasis-1) prop controls the banner's color scheme. The defau
 
 ### Variant
 
-::: meta
-keywords: [strong banner, subtle banner, banner style, visual weight]
+::: terms
+strong banner, subtle banner, banner style, visual weight
 :::
 
 The [variant](./#variant-1) prop controls visual prominence. The default `strong` variant uses solid backgrounds for high visibility. The `subtle` variant uses muted backgrounds with borders.
 
-<Demo name="AlertBannerVariantDemo" component={demos.AlertBannerVariantDemo} />
+<Demo
+  name="AlertBannerVariantDemo"
+  component={demos.AlertBannerVariantDemo}
+/>
 
 ### Dismissable
 
-::: meta
-keywords: [closeable, close banner, remove banner, hide banner]
+::: terms
+closeable, close banner, remove banner, hide banner
 :::
 
 The banner is a controlled component. Set [dismissable](./#dismissable-1) to render a close button, then handle visibility state via the [onClose](./#onClose) callback. With the composite API, use [`<AlertBanner.CloseButton />`](./#alert-banner-close-button).
@@ -86,17 +82,38 @@ The banner is a controlled component. Set [dismissable](./#dismissable-1) to ren
 
 ### Action
 
-::: meta
-keywords: [banner button, banner cta, call to action]
+::: terms
+banner button, banner cta, call to action
 :::
 
-Pass a button to the [action](./#action-1) prop. Use `size="sm"` with `emphasis="white-persistent"` for strong banners, or `emphasis="neutral"` for subtle banners.
+The `<AlertBanner.Button>` was added in [v1.21.0](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1210) and should be used instead of the `<AlertBanner.ActionContainer>` component.
 
-<Demo name="AlertBannerActionDemo" component={demos.AlertBannerActionDemo} />
+Pass an `<AlertBanner.Button>` instance to the [action](./#action-1) prop.
+
+<Demo
+  name="AlertBannerActionDemo"
+  component={demos.AlertBannerActionDemo}
+/>
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.AlertBannerExplorerDemo}
+  linkPrefix="alert-banner"
+  parts={[
+    "root",
+    {name: "status-icon", link: "#alert-banner-icon"},
+    "heading",
+    "description",
+    {name: "action", link: "#alert-banner-action-container"},
+    "close-button",
+  ]}
+  scope="alert-banner"
+/>
 
 ## API
 
-### \<AlertBanner\>
+### \<AlertBanner>
 
 The `AlertBanner` component supports every property from the [AlertBanner.Root](./#alert-banner-root) component, plus the props listed below.
 
@@ -104,35 +121,43 @@ The `AlertBanner` component supports every property from the [AlertBanner.Root](
 
 ## Composite API
 
-### \<AlertBanner.Root\>
+### \<AlertBanner.Root>
 
 <TypeDocProps name="AlertBannerRootProps" />
 
-### \<AlertBanner.Icon\>
+### \<AlertBanner.Icon>
 
 <TypeDocProps name="AlertBannerIconProps" />
 
 <TypeDocAttributes name="QdsAlertBannerIconBindings" />
 
-### \<AlertBanner.Heading\>
+### \<AlertBanner.Heading>
 
 <TypeDocProps name="AlertBannerHeadingProps" />
 
 <TypeDocAttributes name="QdsAlertBannerHeadingBindings" />
 
-### \<AlertBanner.Description\>
+### \<AlertBanner.Description>
 
 <TypeDocProps name="AlertBannerDescriptionProps" />
 
 <TypeDocAttributes name="QdsAlertBannerDescriptionBindings" />
 
-### \<AlertBanner.CloseButton\>
+### \<AlertBanner.CloseButton>
 
 <TypeDocProps name="AlertBannerCloseButtonProps" />
 
 <TypeDocAttributes name="QdsAlertBannerCloseButtonBindings" />
 
-### \<AlertBanner.ActionContainer\>
+### \<AlertBanner.Button>
+
+<TypeDocProps name="AlertBannerButtonProps" />
+
+<TypeDocAttributes
+  name={["QdsButtonRootBindings", "QdsAlertBannerActionBindings"]}
+/>
+
+### \<AlertBanner.ActionContainer>
 
 <TypeDocProps name="AlertBannerActionContainerProps" />
 

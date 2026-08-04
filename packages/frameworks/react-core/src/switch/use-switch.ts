@@ -15,7 +15,7 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useSwitchContext} from "./switch-context"
+import {useSwitchContext} from "./switch-context.js"
 
 export function useSwitch(props: SwitchApiProps): SwitchApi {
   const machine = useMachine(switchMachine, props)

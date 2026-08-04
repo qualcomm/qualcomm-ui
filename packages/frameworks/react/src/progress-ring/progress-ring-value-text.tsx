@@ -9,10 +9,9 @@ import {
 } from "@qualcomm-ui/react-core/progress-ring"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsProgressRingContext} from "./qds-progress-ring-context"
+import {useQdsProgressRingContext} from "./qds-progress-ring-context.js"
 
-export interface ProgressRingValueTextProps
-  extends CoreProgressRingValueTextProps {}
+export interface ProgressRingValueTextProps extends CoreProgressRingValueTextProps {}
 
 /**
  * Displays the current progress value as text. Only visible when size is `lg` or

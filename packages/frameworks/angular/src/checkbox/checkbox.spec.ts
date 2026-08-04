@@ -3,7 +3,7 @@ import {
   FormControl,
   FormGroup,
   FormsModule,
-  NgForm,
+  type NgForm,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms"
@@ -16,6 +16,8 @@ import {CheckboxModule} from "@qualcomm-ui/angular/checkbox"
 import {type MultiComponentTest, runTests} from "~test-utils"
 
 const demoLabel = "Demo Label"
+const demoHint = "Demo Hint"
+const demoError = "Demo Error"
 
 const testCases: MultiComponentTest[] = [
   {
@@ -54,6 +56,103 @@ const testCases: MultiComponentTest[] = [
         expect(page.getByLabelText(demoLabel)).toBeChecked()
         await userEvent.click(page.getByText(demoLabel))
         expect(page.getByLabelText(demoLabel)).not.toBeChecked()
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [CheckboxModule],
+        template: `
+          <label q-checkbox-root>
+            <input q-checkbox-hidden-input />
+            <div q-checkbox-control></div>
+            <span q-checkbox-label>{{ demoLabel }}</span>
+            <span q-checkbox-hint>{{ demoHint }}</span>
+          </label>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly demoLabel = demoLabel
+        protected readonly demoHint = demoHint
+      }
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [CheckboxModule],
+        template: `
+          <label hint="${demoHint}" label="${demoLabel}" q-checkbox></label>
+        `,
+      })
+      class SimpleComponent {}
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`hint text describes the checkbox while valid — ${component.name}`, async () => {
+        await render(component)
+
+        await expect.element(page.getByText(demoHint)).toBeVisible()
+        await expect
+          .element(page.getByText(demoHint))
+          .not.toHaveAttribute("hidden")
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [CheckboxModule, ReactiveFormsModule],
+        template: `
+          <label q-checkbox-root [formControl]="formControl">
+            <input q-checkbox-hidden-input />
+            <div q-checkbox-control></div>
+            <span q-checkbox-label>{{ demoLabel }}</span>
+            <span q-checkbox-hint>{{ demoHint }}</span>
+            <span q-checkbox-error-text>{{ demoError }}</span>
+          </label>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly demoLabel = demoLabel
+        protected readonly demoHint = demoHint
+        protected readonly demoError = demoError
+        formControl = new FormControl(true, Validators.requiredTrue)
+      }
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [CheckboxModule, ReactiveFormsModule],
+        template: `
+          <label
+            errorText="${demoError}"
+            hint="${demoHint}"
+            label="${demoLabel}"
+            q-checkbox
+            [formControl]="formControl"
+          ></label>
+        `,
+      })
+      class SimpleComponent {
+        formControl = new FormControl(true, Validators.requiredTrue)
+      }
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`error text replaces hint while invalid — ${component.name}`, async () => {
+        await render(component)
+
+        await expect.element(page.getByText(demoHint)).toBeVisible()
+        await expect.element(page.getByText(demoError)).not.toBeVisible()
+
+        await userEvent.click(page.getByText(demoLabel))
+
+        await expect.element(page.getByText(demoError)).toBeVisible()
+        await expect.element(page.getByText(demoHint)).not.toBeVisible()
+        await expect
+          .element(page.getByLabelText(demoLabel))
+          .toHaveAttribute("aria-invalid", "true")
       })
     },
   },
@@ -1230,4 +1329,115 @@ const testCases: MultiComponentTest[] = [
 
 describe("checkbox", () => {
   runTests(testCases)
+
+  test("simple component forwards a static native aria-label to the generated input", async () => {
+    @Component({
+      imports: [CheckboxModule],
+      template: `
+        <label
+          aria-label="Subscribe to updates"
+          aria-labelledby="unused-label"
+          q-checkbox
+        ></label>
+      `,
+    })
+    class SimpleAriaLabelComponent {}
+
+    const {fixture} = await render(SimpleAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Subscribe to updates"}))
+      .toBeVisible()
+
+    const host = fixture.nativeElement.querySelector("[q-checkbox]")
+    expect(host).not.toHaveAttribute("aria-label")
+    expect(host).not.toHaveAttribute("aria-labelledby")
+  })
+
+  test("simple component forwards a dynamic native aria-labelledby to the generated input", async () => {
+    @Component({
+      imports: [CheckboxModule],
+      template: `
+        <span id="external-label">External label</span>
+        <span id="updated-label">Updated label</span>
+        <label
+          label="Internal label"
+          q-checkbox
+          [aria-labelledby]="labelId()"
+        ></label>
+        <button type="button" (click)="labelId.set('updated-label')">
+          Update label
+        </button>
+      `,
+    })
+    class SimpleAriaLabelledbyComponent {
+      protected readonly labelId = signal("external-label")
+    }
+
+    const {fixture} = await render(SimpleAriaLabelledbyComponent)
+
+    const checkbox = page.getByRole("checkbox", {name: "External label"})
+    await expect.element(checkbox).not.toHaveAttribute("aria-label")
+    await expect
+      .element(checkbox)
+      .toHaveAttribute("aria-labelledby", "external-label")
+
+    const host = fixture.nativeElement.querySelector("[q-checkbox]")
+    expect(host).not.toHaveAttribute("aria-labelledby")
+
+    await userEvent.click(page.getByRole("button", {name: "Update label"}))
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Updated label"}))
+      .toHaveAttribute("aria-labelledby", "updated-label")
+  })
+
+  test("hidden input uses a static native aria-label", async () => {
+    @Component({
+      imports: [CheckboxModule],
+      template: `
+        <label q-checkbox-root>
+          <input aria-label="External label" q-checkbox-hidden-input />
+          <div q-checkbox-control></div>
+        </label>
+      `,
+    })
+    class StaticHiddenInputAriaLabelComponent {}
+
+    await render(StaticHiddenInputAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "External label"}))
+      .toBeVisible()
+  })
+
+  test("hidden input updates a dynamic native aria-label", async () => {
+    @Component({
+      imports: [CheckboxModule],
+      template: `
+        <label q-checkbox-root>
+          <input q-checkbox-hidden-input [aria-label]="label()" />
+          <div q-checkbox-control></div>
+        </label>
+        <button type="button" (click)="label.set('Updated label')">
+          Update label
+        </button>
+      `,
+    })
+    class DynamicHiddenInputAriaLabelComponent {
+      protected readonly label = signal("External label")
+    }
+
+    await render(DynamicHiddenInputAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "External label"}))
+      .toBeVisible()
+
+    await userEvent.click(page.getByRole("button", {name: "Update label"}))
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Updated label"}))
+      .toBeVisible()
+  })
 })

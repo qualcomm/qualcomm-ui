@@ -1,24 +1,27 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-docs.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "moduleResolution": "bundler",
-    "module": "ESNext",
     "composite": true,
+    "rootDir": "./src",
     "paths": {
-      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*"],
-      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*"],
+      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": [
+        "../../frameworks/angular-core/src/*/index.ts"
+      ],
+      "@qualcomm-ui/core/*": ["../../common/core/dist/*/index.d.ts"],
+      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/dist/*/index.d.ts"],
+      "@qualcomm-ui/utils/*": ["../../common/utils/dist/*/index.d.ts"],
+      "@qualcomm-ui/dom/*": ["../../common/dom/dist/*/index.d.ts"]
     }
   },
-  "include": [
-    "./src/routes/**/demos/**/*.ts"
-  ],
+  "include": ["./src/routes/**/*/demos"],
   "references": [
     {
-      "path": "../../frameworks/angular/tsconfig.angular-lib.json"
+      "path": "../../frameworks/angular/tsconfig.lib.json"
     },
     {
-      "path": "../../frameworks/angular-core/tsconfig.angular-lib.json"
+      "path": "../../frameworks/angular-core/tsconfig.lib.json"
     },
     {
       "path": "../../common/core/tsconfig.lib.json"

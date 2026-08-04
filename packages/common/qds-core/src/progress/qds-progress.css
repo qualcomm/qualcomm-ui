@@ -106,7 +106,7 @@
 .qui-progress__track {
   align-items: baseline;
   align-self: center;
-  background: var(--track-default);
+  background: var(--cross-component-track-default);
   border-radius: 360px;
   display: flex;
   grid-column: var(--bar-start-column) / var(--bar-column-end);
@@ -140,7 +140,7 @@
   }
 
   &[data-disabled] {
-    --progress-color: var(--color-utility-disabled-track-fill);
+    --progress-color: var(--color-utility-disabled-background-solid);
   }
 
   &[data-state="loading"],

@@ -9,8 +9,10 @@ import {
   type ListCollectionOptions,
 } from "@qualcomm-ui/utils/collection"
 
-export interface UseListCollectionProps<T>
-  extends Omit<ListCollectionOptions<T>, "items"> {
+export interface UseListCollectionProps<T> extends Omit<
+  ListCollectionOptions<T>,
+  "items"
+> {
   /**
    * The filter function to use to filter the items.
    */

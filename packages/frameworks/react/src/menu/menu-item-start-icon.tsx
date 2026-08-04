@@ -3,12 +3,12 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsMenuContext} from "./qds-menu-context"
+import {useQdsMenuContext} from "./qds-menu-context.js"
 
 export interface MenuItemStartIconProps extends ElementRenderProp<"span"> {
   /**

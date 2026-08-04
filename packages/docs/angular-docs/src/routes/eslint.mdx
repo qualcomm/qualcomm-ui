@@ -1,0 +1,503 @@
+---
+title: ESLint
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+## Plugin
+
+We provide an ESLint plugin that enforces best-practices for accessibility and component consumption. This guide assumes you've already set up and configured ESLint. If not, we recommend starting with the [configs](./#configs) section below.
+
+> [!note/In Development]
+> This plugin is currently in development. New rules will be added over time. Refer to the [changelog](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/configs/eslint-plugin-angular/CHANGELOG.md) for updates.
+
+### Installation
+
+Our configs are provided in ESM format. You will need `"type": "module"` in your project's package.json to consume them.
+
+<NpmInstallTabs packages={["@qualcomm-ui/eslint-plugin-angular"]} dev />
+
+### Setup
+
+Add the plugin to your ESLint configuration:
+
+```js
+import angularEslint from "angular-eslint"
+import {defineConfig} from "eslint/config"
+
+import angularPlugin from "@qualcomm-ui/eslint-plugin-angular"
+
+export default defineConfig([
+  // ...the rest of your config
+  {
+    // your component files
+    files: ["**/*.ts"],
+    extends: [...angularEslint.configs.tsRecommended, angularPlugin.config],
+    plugins: {"@angular-eslint": angularEslint.tsPlugin},
+    processor: angularEslint.processInlineTemplates,
+  },
+  {
+    // your component html files
+    files: ["**/*.html"],
+    extends: [angularEslint.configs.templateRecommended, angularPlugin.config],
+  },
+])
+```
+
+### Rules
+
+#### `accessible-name`
+
+Enforces that certain QUI components have an `aria-label` or `aria-labelledby` attribute for accessibility.
+
+**Affected directives:**
+
+- `q-icon-button`
+- `q-inline-icon-button`
+- `q-header-bar-action-icon-button`
+
+```html
+<!-- Invalid -->
+<button q-icon-button icon="close"></button>
+
+<!-- Valid -->
+<button q-icon-button icon="close" aria-label="Close dialog"></button>
+<button q-icon-button icon="close" aria-labelledby="close-label"></button>
+<button q-icon-button icon="close" [attr.aria-label]="closeLabel"></button>
+```
+
+#### `avatar-image-alt`
+
+Enforces that `q-avatar-image` has an `alt` attribute for accessibility.
+
+```html
+<!-- Invalid -->
+<img q-avatar-image src="/user.jpg" />
+
+<!-- Valid -->
+<img q-avatar-image alt="John Doe" src="/user.jpg" />
+<img q-avatar-image [alt]="userName" src="/user.jpg" />
+```
+
+#### `input-label-association`
+
+Enforces that form input components have proper label association for accessibility. Supports both simple and compound component patterns.
+
+**Affected components and directives:**
+
+| Component            | Compound Label            | Labeled Control                                  |
+| -------------------- | ------------------------- | ------------------------------------------------ |
+| `q-text-input`       | `q-text-input-label`      | `q-text-input-input`                            |
+| `q-number-input`     | `q-number-input-label`    | `q-number-input-input`                          |
+| `q-password-input`   | `q-password-input-label`  | `q-password-input-input`                        |
+| `q-combobox`         | `q-combobox-label`        | `q-combobox-input`                              |
+| `q-select`           | `q-select-label`          | `q-select-control` or `q-select-hidden-select` |
+| `q-switch`           | `q-switch-label`          | `q-switch-hidden-input`                         |
+| `q-checkbox`         | `q-checkbox-label`        | `q-checkbox-hidden-input`                       |
+| `q-radio`            | `q-radio-label`           | `q-radio-hidden-input`                          |
+
+**Simple component usage:**
+
+```html
+<!-- Invalid -->
+<q-text-input placeholder="Enter name"></q-text-input>
+
+<!-- Valid -->
+<q-text-input label="Full name" placeholder="Enter name"></q-text-input>
+<q-text-input aria-label="Full name" placeholder="Enter name"></q-text-input>
+<q-text-input [aria-label]="nameLabel" placeholder="Enter name"></q-text-input>
+<q-combobox aria-label="Country"></q-combobox>
+<q-combobox [aria-label]="countryLabel"></q-combobox>
+<label q-switch aria-label="Enable notifications"></label>
+
+<!-- Valid - projected label -->
+<q-text-input>
+  <label q-text-input-label>Full name</label>
+</q-text-input>
+```
+
+**Compound component usage:**
+
+```html
+<!-- Invalid -->
+<div q-text-input-root>
+  <input q-text-input-input placeholder="Enter name" />
+</div>
+
+<!-- Valid -->
+<div q-text-input-root>
+  <label q-text-input-label>Full name</label>
+  <input q-text-input-input placeholder="Enter name" />
+</div>
+
+<label q-switch-root>
+  <input q-switch-hidden-input aria-label="Enable notifications" />
+  <div q-switch-control></div>
+</label>
+```
+
+Projected controls on simple components can also provide the accessible name:
+
+```html
+<q-select>
+  <button q-select-control aria-label="Country"></button>
+</q-select>
+
+<label q-checkbox>
+  <input q-checkbox-hidden-input aria-label="Accept terms" />
+</label>
+```
+
+#### `interactive-card-element-nesting`
+
+Disallows interactive elements inside `q-card` when the card itself is interactive.
+
+```html
+<!-- Invalid -->
+<button q-card interactive>
+  <button q-button>Open</button>
+</button>
+
+<!-- Valid -->
+<button q-card interactive>
+  <div q-card-heading>Open</div>
+</button>
+```
+
+#### `prefer-alert-banner-button`
+
+Enforces `q-alert-banner-button` for alert banner actions.
+
+```html
+<!-- Invalid -->
+<div q-alert-banner>
+  <button q-button>Retry</button>
+</div>
+
+<!-- Valid -->
+<div q-alert-banner>
+  <button q-alert-banner-button>Retry</button>
+</div>
+```
+
+#### `prefer-card-actions`
+
+Enforces `q-card-button` and `q-card-link` for direct QUI actions rendered inside `q-card`.
+
+```html
+<!-- Invalid -->
+<div q-card>
+  <button q-button>Confirm</button>
+  <a q-link href="/details">Details</a>
+</div>
+
+<!-- Valid -->
+<div q-card>
+  <button q-card-button>Confirm</button>
+  <a q-card-link href="/details">Details</a>
+</div>
+```
+
+#### `prefer-header-bar-actions`
+
+Enforces `q-header-bar-action-button` and `q-header-bar-action-icon-button` inside `q-header-bar-action-bar`.
+
+```html
+<!-- Invalid -->
+<div q-header-bar-action-bar>
+  <button q-button>Apps</button>
+  <button q-icon-button aria-label="Settings"></button>
+</div>
+
+<!-- Valid -->
+<div q-header-bar-action-bar>
+  <button q-header-bar-action-button>Apps</button>
+  <button q-header-bar-action-icon-button aria-label="Settings"></button>
+</div>
+```
+
+#### `prefer-menu-trigger-buttons`
+
+Enforces menu-specific trigger button components inside `q-menu-trigger`.
+
+```html
+<!-- Invalid -->
+<div q-menu-trigger>
+  <button q-button>Open</button>
+</div>
+
+<!-- Valid -->
+<div q-menu-trigger>
+  <button q-menu-button>Open</button>
+</div>
+```
+
+#### `prefer-select-item-checkbox`
+
+Enforces `q-select-item-checkbox` when `q-select-root` statically sets `selectionIndicator="checkbox"`.
+
+```html
+<!-- Invalid -->
+<div q-select-root selectionIndicator="checkbox">
+  <span q-select-item-indicator></span>
+</div>
+
+<!-- Valid -->
+<div q-select-root selectionIndicator="checkbox">
+  <span q-select-item-checkbox></span>
+</div>
+```
+
+These contextual component usage rules target direct QUI Angular selectors. Custom wrapper components are ignored.
+
+## Configs
+
+We provide shared ESLint configurations to enforce consistent code style and quality across our internal projects. These packages wrap popular open source plugins and provide a common baseline that makes it easier for developers to move between codebases.
+
+### Overview
+
+Two packages are available for Angular projects:
+
+- `@qualcomm-ui/eslint-config-typescript` - TypeScript rules
+- `@qualcomm-ui/eslint-config-angular` - Angular-specific rules
+
+Both packages use ESLint's flat config format.
+
+### Installation
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/eslint-config-typescript",
+    "@qualcomm-ui/eslint-config-angular",
+    "eslint",
+    "globals",
+    "typescript-eslint",
+  ]}
+  dev
+/>
+
+An example project featuring the complete configuration is available at https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/angular-ssr
+
+Skip ahead to the [Example Configuration](./#example-configuration) section for a complete setup, or continue reading to learn more about the individual configs.
+
+### Migrate from v2 to v3
+
+Version 3 removes public base and split Angular configs. Each public config now includes the plugin, parser, processor, or formatting setup it needs.
+
+- Replace split Angular TypeScript configs with `typescriptRecommended`, and remove the array spread from `@qualcomm-ui/eslint-config-typescript`.
+- Replace split Angular template configs with `templateRecommended`:
+
+```js
+import quiEslintAngular from "@qualcomm-ui/eslint-config-angular"
+import quiEslintTs from "@qualcomm-ui/eslint-config-typescript"
+
+export default defineConfig(
+  // typescript
+  {
+    extends: [
+      ...quiEslintTs.configs.recommended, // [!code --]
+      quiEslintAngular.configs.baseTypescript, // [!code --]
+      quiEslintAngular.configs.typescript, // [!code --]
+      quiEslintTs.configs.recommended, // [!code ++]
+      quiEslintAngular.configs.typescriptRecommended, // [!code ++]
+    ],
+    // ...
+  },
+
+  // template
+  {
+    extends: [
+      quiEslintAngular.configs.baseTemplate, // [!code --]
+      quiEslintAngular.configs.templatePrettier, // [!code --]
+      quiEslintAngular.configs.templateAttributeOrder, // [!code --]
+      quiEslintAngular.configs.templateSelfClosingTags, // [!code --]
+      quiEslintAngular.configs.templateRecommended, // [!code ++]
+    ],
+    // ...
+  },
+)
+```
+
+### Config Deep Dive
+
+#### TypeScript Configs
+
+The `@qualcomm-ui/eslint-config-typescript` package exports the following configurations:
+
+- `recommended`: Recommended TypeScript rules. Composes each of the following:
+  - `styleGuide`: Code style enforcement
+  - `sortKeys`: Object key ordering
+  - `typeChecks`: Type-aware linting rules
+  - `namingConventions`: Identifier naming patterns
+- `strictExports`: Export restrictions
+- `jsdoc`: JSDoc comment validation
+
+Each config can be consumed individually. The following example targets JS files.
+
+```js
+import quiEslintTs from "@qualcomm-ui/eslint-config-typescript"
+
+export default defineConfig({
+  extends: [
+    quiEslintTs.configs.styleGuide,
+    quiEslintTs.configs.sortKeys,
+    quiEslintTs.configs.namingConventions,
+  ],
+  files: ["**/*.{js,cjs,mjs}"],
+  // ...
+})
+```
+
+#### Angular Configs
+
+The `@qualcomm-ui/eslint-config-angular` package exports the following configurations:
+
+| Config                  | Description                                      |
+| ----------------------- | ------------------------------------------------ |
+| `typescriptRecommended` | Angular TypeScript rules with inline templates   |
+| `templateRecommended`   | Template formatting, ordering, and closing rules |
+
+#### Type-Aware Rules
+
+The TypeScript configs and Angular TypeScript config include type-aware rules that require type information. Files matched by your ESLint config's `files` patterns must be included in the nearest `tsconfig.json` (or referenced project if you're using project references).
+
+If ESLint errors with "file not found in any configured project," ensure the file is included in your tsconfig's `files` or `include` patterns.
+
+#### TypeScript Rules
+
+The `typescriptRecommended` config enforces these conventions:
+
+- `@angular-eslint/prefer-signals` - Require Angular signals for reactive state
+- `@angular-eslint/no-input-rename` - Warn when renaming inputs
+- `no-restricted-globals` - Bans browser globals (`window`, `document`, `navigator`, `location`, `localStorage`, `sessionStorage`) for SSR compatibility
+
+The following rules are disabled to allow flexibility:
+
+- `@angular-eslint/component-class-suffix` - Component class naming not enforced
+- `@angular-eslint/directive-class-suffix` - Directive class naming not enforced
+- `@angular-eslint/no-host-metadata-property` - Host bindings in metadata allowed
+
+##### Template Attribute Order
+
+The `templateRecommended` config enforces this order for template attributes:
+
+```html
+<!-- 1. Structural directives -->
+*ngIf="condition"
+
+<!-- 2. Template references -->
+#templateRef
+
+<!-- 3. Attribute bindings -->
+[attr.role]="role"
+
+<!-- 4. Input bindings -->
+[value]="value"
+
+<!-- 5. Two-way bindings -->
+[(ngModel)]="model"
+
+<!-- 6. Output bindings -->
+(click)="onClick()"
+```
+
+Attributes within each group are sorted alphabetically.
+
+##### Self-Closing Tags
+
+The `templateRecommended` config requires self-closing syntax for components without content:
+
+```html
+<!-- Disallowed -->
+<q-text-input></q-text-input>
+
+<!-- Required -->
+<q-text-input />
+```
+
+### Example Configuration
+
+> [!note/Type-aware rules]
+> This configuration uses type-aware linting. Learn more [here](./#type-aware-rules) about potential pitfalls.
+
+Create an `eslint.config.js` file in your project root:
+
+```js
+import {defineConfig} from "eslint/config"
+import globals from "globals"
+import * as tseslint from "typescript-eslint"
+
+import quiEslintAngular from "@qualcomm-ui/eslint-config-angular"
+import quiEslintTs from "@qualcomm-ui/eslint-config-typescript"
+import quiEslintPluginAngular from "@qualcomm-ui/eslint-plugin-angular"
+
+const tsLanguageOptions = {
+  globals: globals.browser,
+  parser: tseslint.parser,
+  parserOptions: {
+    projectService: true,
+  },
+}
+
+export default defineConfig([
+  {
+    ignores: [
+      "**/.angular/",
+      "**/dist/",
+      "**/node_modules/",
+      "**/build/",
+      "**/coverage/",
+      "**/.turbo/",
+      "**/out/",
+      "**/out-tsc/",
+      "**/temp/",
+      "**/vite.config.ts.timestamp*",
+    ],
+  },
+  {
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+    },
+  },
+  // JS
+  {
+    extends: [quiEslintTs.configs.sortKeys, quiEslintTs.configs.styleGuide],
+    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    languageOptions: {globals: globals.browser},
+  },
+  // TS
+  {
+    extends: [
+      quiEslintTs.configs.recommended,
+      quiEslintTs.configs.strictExports,
+    ],
+    // recommendation: scope these to your source files in your package(s).
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: tsLanguageOptions,
+  },
+  // Angular
+  {
+    extends: [
+      quiEslintTs.configs.recommended,
+      quiEslintAngular.configs.typescriptRecommended,
+      // optional: include the plugin as well
+      quiEslintPluginAngular.config,
+    ],
+    // recommendation: scope these to your source files in your package(s).
+    files: ["**/*.ts"],
+    languageOptions: tsLanguageOptions,
+  },
+  {
+    extends: [
+      quiEslintAngular.configs.templateRecommended,
+      // optional: include the plugin as well
+      quiEslintPluginAngular.config,
+    ],
+    // recommendation: scope these to your source files in your package(s).
+    files: ["**/*.html"],
+  },
+])
+```

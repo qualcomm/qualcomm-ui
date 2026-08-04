@@ -1,2 +1,2 @@
-export * from "./tooltip.classes"
-export type * from "./tooltip.types"
+export * from "./tooltip.classes.js"
+export type * from "./tooltip.types.js"

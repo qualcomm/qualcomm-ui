@@ -12,7 +12,7 @@ import {
   providePresenceContext,
   provideRenderStrategyContext,
 } from "@qualcomm-ui/angular-core/presence"
-import {type DialogApi} from "@qualcomm-ui/core/dialog"
+import type {DialogApi} from "@qualcomm-ui/core/dialog"
 
 @Injectable()
 export class DialogContextService extends BaseApiContextService<DialogApi> {}

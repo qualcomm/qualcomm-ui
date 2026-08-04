@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {Code, Cpu, FileText, Smartphone} from "lucide-angular"
 
-import {TabsModule} from "@qualcomm-ui/angular/tabs"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {TabsModule} from "@qualcomm-ui/angular/tabs"
 import type {QdsTabsSize} from "@qualcomm-ui/qds-core/tabs"
 
 @Component({

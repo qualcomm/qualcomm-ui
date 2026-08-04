@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {createRect} from "./rect"
-import type {Point, Rect, RectInset, SymmetricRectInset} from "./types"
+import {createRect} from "./rect.js"
+import type {Point, Rect, RectInset, SymmetricRectInset} from "./types.js"
 
 export function isSymmetric(v: any): v is SymmetricRectInset {
   return "dx" in v || "dy" in v

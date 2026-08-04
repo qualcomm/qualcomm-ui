@@ -8,14 +8,9 @@
  * Callback details
  * ----------------------------------------------------------------------------- */
 
-import type {
-  InputErrorIndicatorBindings,
-  InputErrorTextBindings,
-  InputHintBindings,
-  InputLabelBindings,
-} from "@qualcomm-ui/core/input"
 import type {Placement, PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {InteractOutsideHandlers} from "@qualcomm-ui/dom/interact-outside"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -24,7 +19,7 @@ import type {
   CollectionItem,
   ListCollection,
 } from "@qualcomm-ui/utils/collection"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -35,6 +30,8 @@ import type {
   JSX,
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
+
+import type {comboboxAnatomy} from "./combobox.anatomy.js"
 
 export interface ComboboxValueChangeDetails<
   T extends CollectionItem = CollectionItem,
@@ -112,9 +109,7 @@ export interface IntlTranslations {
 }
 
 export interface ComboboxApiProps<T extends CollectionItem = CollectionItem>
-  extends DirectionProperty,
-    CommonProperties,
-    InteractOutsideHandlers {
+  extends DirectionProperty, CommonProperties, InteractOutsideHandlers {
   /**
    * Whether to allow typing custom values in the input
    */
@@ -587,8 +582,7 @@ export interface ComboboxItemState {
 }
 
 export interface ComboboxItemContext
-  extends ComboboxApiItemProps<CollectionItem>,
-    ComboboxItemState {}
+  extends ComboboxApiItemProps<CollectionItem>, ComboboxItemState {}
 
 export interface ComboboxApiItemGroupProps {
   id: string
@@ -765,23 +759,21 @@ export interface ComboboxApi<T extends CollectionItem = CollectionItem> {
   ) => ComboboxTriggerBindings
 }
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "combobox"
-}
+type PartName = AnatomyPartName<typeof comboboxAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"combobox", P> {}
 
-export interface ComboboxRootBindings extends CommonBindings {
+export interface ComboboxRootBindings extends Part<"root"> {
   "data-invalid": BooleanDataAttr
-  "data-part": "root"
   "data-readonly": BooleanDataAttr
+  dir: Direction
   id: string
   onClick: JSX.MouseEventHandler
 }
 
-export interface ComboboxClearTriggerBindings extends CommonBindings {
+export interface ComboboxClearTriggerBindings extends Part<"clearTrigger"> {
   "aria-controls": string
   "aria-label": string | undefined
   "data-invalid": BooleanDataAttr
-  "data-part": "clear-trigger"
   disabled: boolean | undefined
   hidden: boolean
   id: string
@@ -791,13 +783,12 @@ export interface ComboboxClearTriggerBindings extends CommonBindings {
   type: "button"
 }
 
-export interface ComboboxContentBindings extends CommonBindings {
+export interface ComboboxContentBindings extends Part<"content"> {
   "aria-labelledby": string | undefined
   "aria-multiselectable": "true" | undefined
   "data-disabled": BooleanDataAttr
   "data-empty": BooleanDataAttr
   "data-focus-visible": BooleanDataAttr
-  "data-part": "content"
   "data-placement": Placement | undefined
   "data-state": "open" | "closed"
   hidden: boolean
@@ -807,33 +798,34 @@ export interface ComboboxContentBindings extends CommonBindings {
   tabIndex: -1
 }
 
-export interface ComboboxControlBindings extends CommonBindings {
+export interface ComboboxControlBindings extends Part<"control"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "control"
   "data-state": "open" | "closed"
   id: string
 }
 
-export interface ComboboxEmptyBindings extends CommonBindings {
-  "data-part": "empty"
+export interface ComboboxEmptyBindings extends Part<"empty"> {
   hidden: boolean
   role: "presentation"
 }
 
-export interface ComboboxInputBindings extends CommonBindings {
+export interface ComboboxInputBindings extends Part<"input"> {
   "aria-activedescendant": string | undefined
   "aria-autocomplete": "both" | "list"
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "aria-invalid": BooleanAriaAttr
+  /**
+   * @since 1.11.0
+   */
+  "aria-labelledby": string | undefined
   autoCapitalize: "none"
   autoComplete: "off"
   autoCorrect: "off"
   "data-autofocus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "input"
   "data-state": "open" | "closed"
   defaultValue: string
   disabled: boolean | undefined
@@ -853,12 +845,11 @@ export interface ComboboxInputBindings extends CommonBindings {
   type: "text"
 }
 
-export interface ComboboxItemBindings extends CommonBindings {
+export interface ComboboxItemBindings extends Part<"item"> {
   "aria-disabled": BooleanAriaAttr
   "aria-selected": BooleanAriaAttr
   "data-disabled": BooleanDataAttr
   "data-highlighted": BooleanDataAttr
-  "data-part": "item"
   "data-state": "checked" | "unchecked"
   "data-value": string
   id: string
@@ -869,41 +860,34 @@ export interface ComboboxItemBindings extends CommonBindings {
   tabIndex: -1
 }
 
-export interface ComboboxItemGroupBindings extends CommonBindings {
+export interface ComboboxItemGroupBindings extends Part<"itemGroup"> {
   "aria-labelledby": string
   "data-empty": BooleanDataAttr
-  "data-part": "item-group"
   id: string
   role: "group"
 }
 
-export interface ComboboxItemGroupLabelBindings extends CommonBindings {
-  "data-part": "item-group-label"
+export interface ComboboxItemGroupLabelBindings extends Part<"itemGroupLabel"> {
   id: string
   role: "presentation"
 }
 
-export interface ComboboxItemIndicatorBindings extends CommonBindings {
+export interface ComboboxItemIndicatorBindings extends Part<"itemIndicator"> {
   "aria-hidden": true
-  "data-part": "item-indicator"
   "data-state": "checked" | "unchecked"
   hidden: boolean
 }
 
-export interface ComboboxItemTextBindings extends CommonBindings {
+export interface ComboboxItemTextBindings extends Part<"itemText"> {
   "data-disabled": BooleanDataAttr
   "data-highlighted": BooleanDataAttr
-  "data-part": "item-text"
   "data-state": "checked" | "unchecked"
 }
 
-export interface ComboboxLabelBindings
-  extends CommonBindings,
-    InputLabelBindings {
+export interface ComboboxLabelBindings extends Part<"label"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "label"
   "data-readonly": BooleanDataAttr
   "data-required": BooleanDataAttr
   htmlFor: string
@@ -911,25 +895,29 @@ export interface ComboboxLabelBindings
   onClick: JSX.MouseEventHandler
 }
 
-export interface ComboboxHintBindings
-  extends CommonBindings,
-    InputHintBindings {}
+export interface ComboboxHintBindings extends Part<"hint"> {
+  "data-disabled": BooleanDataAttr
+  hidden: boolean
+  id: string
+}
 
-export interface ComboboxErrorTextBindings
-  extends CommonBindings,
-    InputErrorTextBindings {}
+export interface ComboboxErrorTextBindings extends Part<"errorText"> {
+  "aria-live": "polite"
+  hidden: boolean
+  id: string
+}
 
-export interface ComboboxErrorIndicatorBindings
-  extends CommonBindings,
-    InputErrorIndicatorBindings {}
+export interface ComboboxErrorIndicatorBindings extends Part<"errorIndicator"> {
+  "aria-label": "Error"
+  hidden: boolean
+}
 
-export interface ComboboxPositionerBindings extends CommonBindings {
-  "data-part": "positioner"
+export interface ComboboxPositionerBindings extends Part<"positioner"> {
   id: string
   style: JSX.CSSProperties
 }
 
-export interface ComboboxTriggerBindings extends CommonBindings {
+export interface ComboboxTriggerBindings extends Part<"trigger"> {
   "aria-controls": string | undefined
   "aria-expanded": BooleanAriaAttr
   "aria-haspopup": "listbox" | "dialog"
@@ -937,7 +925,6 @@ export interface ComboboxTriggerBindings extends CommonBindings {
   "data-disabled": BooleanDataAttr
   "data-focusable": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "trigger"
   "data-readonly": BooleanDataAttr
   "data-state": "open" | "closed"
   disabled: boolean | undefined

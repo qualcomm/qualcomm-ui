@@ -10,13 +10,13 @@ import {
   type MachineConfig,
 } from "@qualcomm-ui/utils/machine"
 
-import type {AccordionSchema} from "./accordion.types"
+import type {AccordionSchema} from "./accordion.types.js"
 import {
   getFirstTriggerEl,
   getLastTriggerEl,
   getNextTriggerEl,
   getPrevTriggerEl,
-} from "./internal"
+} from "./internal/index.js"
 
 const {and, not} = createGuards<AccordionSchema>()
 

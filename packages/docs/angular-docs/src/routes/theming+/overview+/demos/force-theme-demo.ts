@@ -12,7 +12,7 @@ import {QdsThemeService} from "@qualcomm-ui/angular/theme"
       <!-- preview -->
       <div class="dark" data-brand="qualcomm" data-theme="dark">
         <div
-          class="border-neutral-03 bg-neutral-01 flex w-full rounded-sm border px-3 py-2"
+          class="border-neutral-03 bg-neutral-01 box-border flex w-full rounded-sm border px-3 py-2"
         >
           <span class="text-neutral-primary">
             This section will always feature the dark theme regardless of the

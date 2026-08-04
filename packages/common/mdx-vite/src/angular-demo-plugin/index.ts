@@ -1,1 +1,1 @@
-export * from "./angular-demo-plugin"
+export * from "./angular-demo-plugin.js"

@@ -7,9 +7,9 @@ const demos = [{component: EditableDataDemo, title: "Editable Data"}]
 export default function EditableData() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="editable-data"
       demos={demos}
-      className="w-full"
     />
   )
 }

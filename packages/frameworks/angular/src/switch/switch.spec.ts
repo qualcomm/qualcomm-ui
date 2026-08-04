@@ -3,7 +3,7 @@ import {
   FormControl,
   FormGroup,
   FormsModule,
-  NgForm,
+  type NgForm,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms"
@@ -1149,4 +1149,99 @@ const testCases: MultiComponentTest[] = [
 
 describe("checkbox", () => {
   runTests(testCases)
+
+  test("simple component forwards static native aria-label to the generated input", async () => {
+    @Component({
+      imports: [SwitchModule],
+      template: `
+        <label aria-label="Airplane mode" q-switch></label>
+      `,
+    })
+    class SimpleAriaLabelComponent {}
+
+    const {container} = await render(SimpleAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Airplane mode"}))
+      .toBeVisible()
+    expect(container.querySelector("[q-switch]")).not.toHaveAttribute(
+      "aria-label",
+    )
+  })
+
+  test("simple component forwards native aria-labelledby instead of the generated label reference", async () => {
+    @Component({
+      imports: [SwitchModule],
+      template: `
+        <span id="external-label">External label</span>
+        <label
+          aria-labelledby="external-label"
+          label="Internal label"
+          q-switch
+        ></label>
+      `,
+    })
+    class SimpleAriaLabelledbyComponent {}
+
+    const {container} = await render(SimpleAriaLabelledbyComponent)
+
+    const checkbox = page.getByRole("checkbox", {name: "External label"})
+    await expect.element(checkbox).not.toHaveAttribute("aria-label")
+    await expect
+      .element(checkbox)
+      .toHaveAttribute("aria-labelledby", "external-label")
+    expect(container.querySelector("[q-switch]")).not.toHaveAttribute(
+      "aria-labelledby",
+    )
+  })
+
+  test("simple component forwards dynamic native aria-label to the generated input", async () => {
+    @Component({
+      imports: [SwitchModule],
+      template: `
+        <button (click)="label.set('Updated mode')">Update label</button>
+        <label q-switch [aria-label]="label()"></label>
+      `,
+    })
+    class DynamicAriaLabelComponent {
+      readonly label = signal("Airplane mode")
+    }
+
+    const {container} = await render(DynamicAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Airplane mode"}))
+      .toHaveAttribute("aria-label", "Airplane mode")
+    expect(container.querySelector("[q-switch]")).not.toHaveAttribute(
+      "aria-label",
+    )
+
+    await page.getByRole("button", {name: "Update label"}).click()
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Updated mode"}))
+      .toHaveAttribute("aria-label", "Updated mode")
+    expect(container.querySelector("[q-switch]")).not.toHaveAttribute(
+      "aria-label",
+    )
+  })
+
+  test("hidden input uses native aria-label input", async () => {
+    @Component({
+      imports: [SwitchModule],
+      template: `
+        <label q-switch-root>
+          <input aria-label="External label" q-switch-hidden-input />
+          <div q-switch-control></div>
+        </label>
+      `,
+    })
+    class StaticHiddenInputAriaLabelComponent {}
+
+    await render(StaticHiddenInputAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "External label"}))
+      .toBeVisible()
+  })
 })

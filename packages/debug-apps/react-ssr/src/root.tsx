@@ -1,20 +1,18 @@
-import "./globals.css"
-
 import {useState} from "react"
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
 import {Links, Meta, Outlet, Scripts, ScrollRestoration} from "react-router"
 
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
+import "./globals.css"
 
 export default function App() {
   const [queryClient] = useState(new QueryClient())
 
   return (
     <html
-      lang="en"
-      data-theme="dark"
       data-brand="qualcomm"
+      data-theme="dark"
+      lang="en"
       style={{colorScheme: "dark"}}
     >
       <head>
@@ -27,11 +25,11 @@ export default function App() {
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link href="https://fonts.gstatic.com" rel="preconnect" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,110,400;8..144,110,560;8..144,114,400;8..144,114,500;8..144,114,520;8..144,114,660;8..144,114,680&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap"
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=fallback"
+          href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
           rel="stylesheet"
         />
         <link
@@ -42,9 +40,7 @@ export default function App() {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <QuiRoot>
-            <Outlet />
-          </QuiRoot>
+          <Outlet />
         </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />

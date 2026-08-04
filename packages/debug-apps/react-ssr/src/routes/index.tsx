@@ -12,6 +12,7 @@ const components = [
   "dialog",
   "divider",
   "drawer",
+  "file-input",
   "header-bar",
   "icon",
   "icon-button",
@@ -83,8 +84,8 @@ export default function HomePage() {
             {components.map((component) => (
               <li key={component}>
                 <Link
-                  to={`/components/${component}`}
                   className="text-primary hover:underline"
+                  to={`/components/${component}`}
                 >
                   {kebabToTitle(component)}
                 </Link>
@@ -98,8 +99,8 @@ export default function HomePage() {
             {tableFeatures.map((feature) => (
               <li key={feature}>
                 <Link
-                  to={`/table/features/${feature}`}
                   className="text-primary hover:underline"
+                  to={`/table/features/${feature}`}
                 >
                   {kebabToTitle(feature)}
                 </Link>

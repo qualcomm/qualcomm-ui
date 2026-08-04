@@ -1,11 +1,10 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.node.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": "./src",
+    "composite": true,
     "outDir": "dist",
-    "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib"
   },
-  "include": ["src/**/*.ts"]
+  "include": ["./src"]
 }

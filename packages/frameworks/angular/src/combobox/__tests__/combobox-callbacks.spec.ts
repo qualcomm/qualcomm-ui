@@ -3,8 +3,8 @@ import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
-import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {comboboxCollection} from "@qualcomm-ui/core/combobox"
 
 import {type MultiComponentTest, runTests} from "~test-utils"

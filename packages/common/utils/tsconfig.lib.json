@@ -2,10 +2,11 @@
   "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
     "incremental": true,
     "outDir": "./dist",
     "rootDir": "./src",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "tsBuildInfoFile": "dist/tsbuildinfo",
     "paths": {
       "@qualcomm-ui/utils/*": ["./src/*/index.ts"]

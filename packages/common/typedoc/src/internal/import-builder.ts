@@ -3,8 +3,8 @@
 
 import type {JSONOutput} from "typedoc"
 
-import {isInputSignal, isReferenceType} from "../guards"
-import type {ImportResolverFn} from "../types"
+import {isInputSignal, isReferenceType} from "../guards.js"
+import type {ImportResolverFn} from "../types.js"
 
 export class ImportBuilder {
   readonly symbolMap: Record<number, JSONOutput.ReflectionSymbolId>

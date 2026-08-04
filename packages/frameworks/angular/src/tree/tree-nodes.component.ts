@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {
+  booleanAttribute,
   Component,
   computed,
   contentChild,
@@ -9,7 +10,7 @@ import {
   Injector,
   input,
   type OnInit,
-  TemplateRef,
+  type TemplateRef,
 } from "@angular/core"
 
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
@@ -21,6 +22,7 @@ import {
   useTreeContext,
 } from "@qualcomm-ui/angular-core/tree"
 import type {NodeProps} from "@qualcomm-ui/core/tree"
+import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import type {TreeNode} from "@qualcomm-ui/utils/collection"
 
 import type {TreeNodeTemplateContext} from "./qds-tree-context.service"
@@ -48,6 +50,9 @@ import {TreeLeafTemplateDirective} from "./tree-leaf-template.directive"
         />
 
         <div q-tree-branch-content>
+          @if (showIndentGuide()) {
+            <div q-tree-branch-indent-guide></div>
+          }
           @for (
             child of childNodes();
             let i = $index;
@@ -58,6 +63,7 @@ import {TreeLeafTemplateDirective} from "./tree-leaf-template.directive"
               [node]="child"
               [renderBranch]="branchTemplate()"
               [renderLeaf]="leafTemplate()"
+              [showIndentGuide]="showIndentGuide()"
             />
           }
         </div>
@@ -89,6 +95,15 @@ export class TreeNodesComponent<T extends TreeNode>
   readonly renderBranch = input<TemplateRef<TreeBranchTemplateDirective<T>>>()
 
   readonly renderLeaf = input<TemplateRef<TreeLeafTemplateDirective<T>>>()
+
+  /**
+   * Whether to render the indent guide for branch child nodes.
+   *
+   * @default false
+   */
+  readonly showIndentGuide = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
 
   readonly treeBranchContentChild = contentChild<
     TreeBranchTemplateDirective<T>

@@ -3,14 +3,14 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {RadioControl, type RadioControlProps} from "./radio-control"
+import {RadioControl, type RadioControlProps} from "./radio-control.js"
 import {
   RadioHiddenInput,
   type RadioHiddenInputProps,
-} from "./radio-hidden-input"
-import {RadioHint, type RadioHintProps} from "./radio-hint"
-import {RadioLabel, type RadioLabelProps} from "./radio-label"
-import {RadioRoot, type RadioRootProps} from "./radio-root"
+} from "./radio-hidden-input.js"
+import {RadioHint, type RadioHintProps} from "./radio-hint.js"
+import {RadioLabel, type RadioLabelProps} from "./radio-label.js"
+import {RadioRoot, type RadioRootProps} from "./radio-root.js"
 
 export interface RadioProps extends RadioRootProps {
   /**

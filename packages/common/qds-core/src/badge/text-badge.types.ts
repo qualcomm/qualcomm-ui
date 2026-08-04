@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import type {
@@ -9,7 +10,8 @@ import type {
   QdsBadgeCategoryEmphasis,
   QdsBadgeSemanticEmphasis,
   QdsBaseBadgeProps,
-} from "./badge.types"
+} from "./badge.types.js"
+import type {textBadgeAnatomy} from "./text-badge.anatomy.js"
 
 export type QdsTextBadgeVariant = "default" | "subtle"
 
@@ -33,12 +35,13 @@ export interface QdsTextBadgeProps extends QdsBaseBadgeProps {
   variant?: QdsTextBadgeVariant
 }
 
-export interface QdsTextBadgeRootBindings {
+type PartName = AnatomyPartName<typeof textBadgeAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"textBadge", P> {}
+
+export interface QdsTextBadgeRootBindings extends Part<"root"> {
   className: BadgeClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsBadgeSemanticEmphasis | QdsBadgeCategoryEmphasis
-  "data-part": "root"
-  "data-scope": "text-badge"
   "data-size": QdsBadgeBasicSize
   "data-variant": QdsTextBadgeVariant
 }

@@ -1,1 +1,1 @@
-export * from "./switch.dom"
+export * from "./switch.dom.js"

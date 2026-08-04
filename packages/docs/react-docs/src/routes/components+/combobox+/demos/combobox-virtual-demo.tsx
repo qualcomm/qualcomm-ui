@@ -1,9 +1,9 @@
 import {useState} from "react"
 
-import {Combobox} from "@qualcomm-ui/react/combobox"
-import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {useAsyncListCollection} from "@qualcomm-ui/react-core/collection"
 import {useFilter} from "@qualcomm-ui/react-core/locale"
+import {Combobox} from "@qualcomm-ui/react/combobox"
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 
 import {useMockUsers} from "./use-mock-users"
 

@@ -1,0 +1,131 @@
+---
+title: File Input
+description: The File Input component renders a single-file form field with QDS input styling and file validation support.
+component: FileInput
+aliases: [file field, file picker, upload field, file select]
+badges:
+  - id: since
+    label: 1.22.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1220
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {FileInput} from "@qualcomm-ui/react/file-input"
+```
+
+## Overview
+
+The File Input component supports both click-to-browse and drag-and-drop interactions for a single file input. An advanced file upload component is currently in development and will support multi-file lists, async uploads, previews, and rejected-file workflows.
+
+## Examples
+
+### Simple
+
+The simple `<FileInput>` bundles all subcomponents together into a single component.
+
+<Demo name="FileInputSimpleDemo" component={demos.FileInputSimpleDemo} />
+
+### Composite
+
+Use the composite API for explicit control over layout or part props.
+
+<Demo
+  name="FileInputCompositeDemo"
+  component={demos.FileInputCompositeDemo}
+/>
+
+### Sizes
+
+The File Input component supports three [size](./#size) variants: `sm`, `md` (default), and `lg`.
+
+<Demo name="FileInputSizesDemo" component={demos.FileInputSizesDemo} />
+
+### Errors
+
+Set `invalid` and `errorText` for field-level validation messages. File validation is configured with props such as `accept`, `maxFileSize`, and `validate`.
+
+<Demo name="FileInputErrorsDemo" component={demos.FileInputErrorsDemo} />
+
+### Disabled
+
+Set `disabled` on the root or simple component.
+
+<Demo
+  name="FileInputDisabledDemo"
+  component={demos.FileInputDisabledDemo}
+/>
+
+## API
+
+### \<FileInput />
+
+The `FileInput` extends [FileInput.Root](./#file-input-root) with the following props:
+
+<TypeDocProps name="FileInputProps" omitFrom="FileInputRootProps" />
+
+## Composite API
+
+### \<FileInput.Root>
+
+<TypeDocProps name="FileInputRootProps" />
+
+<TypeDocAttributes
+  name={["FileUploadRootBindings", "QdsInputRootBindings"]}
+/>
+
+### \<FileInput.Label>
+
+<TypeDocProps name="FileInputLabelProps" />
+
+<TypeDocAttributes
+  name={["FileUploadLabelBindings", "QdsInputLabelBindings"]}
+/>
+
+### \<FileInput.Control>
+
+<TypeDocProps name="FileInputControlProps" />
+
+<TypeDocAttributes
+  name={["FileUploadDropzoneBindings", "QdsInputGroupBindings"]}
+/>
+
+### \<FileInput.ClearTrigger>
+
+<TypeDocProps name="FileInputClearTriggerProps" />
+
+<TypeDocAttributes
+  name={["FileUploadClearTriggerBindings", "QdsInputClearTriggerBindings"]}
+/>
+
+### \<FileInput.Display>
+
+<TypeDocProps name="FileInputDisplayProps" />
+
+<TypeDocAttributes
+  name={["QdsFileUploadInputDisplayBindings", "QdsInputInputBindings"]}
+/>
+
+### \<FileInput.HiddenInput>
+
+<TypeDocProps name="FileInputHiddenInputProps" />
+
+<TypeDocAttributes name="FileUploadHiddenInputBindings" />
+
+### \<FileInput.ErrorText>
+
+<TypeDocProps name="FileInputErrorTextProps" />
+
+<TypeDocAttributes
+  name={["FileUploadErrorTextBindings", "QdsInputErrorTextBindings"]}
+/>

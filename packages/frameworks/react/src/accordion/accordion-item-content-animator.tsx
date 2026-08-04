@@ -4,14 +4,13 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {accordionClasses} from "@qualcomm-ui/qds-core/accordion"
-import {Collapsible} from "@qualcomm-ui/react/collapsible"
 import {useAccordionItemContent} from "@qualcomm-ui/react-core/accordion"
 import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
+import {Collapsible} from "@qualcomm-ui/react/collapsible"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface AccordionItemContentAnimatorProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

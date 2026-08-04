@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {avatarAnatomy} from "./avatar.anatomy.js"
 import type {
   AvatarApi,
   AvatarContentBindings,
@@ -14,7 +14,9 @@ import type {
   AvatarRootBindings,
   AvatarSchema,
   AvatarStatusBindings,
-} from "./avatar.types"
+} from "./avatar.types.js"
+
+const parts = avatarAnatomy.parts
 
 export function createAvatarApi(
   machine: Machine<AvatarSchema>,
@@ -24,31 +26,26 @@ export function createAvatarApi(
 
   const loaded = state.matches("loaded")
 
-  const commonProps: {"data-scope": "avatar"; dir: Direction | undefined} = {
-    "data-scope": "avatar",
-    dir: prop("dir"),
-  }
-
   return {
     getContentBindings(props): AvatarContentBindings {
       scope.ids.register("content", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "content",
+        ...parts.content,
         "data-state": loaded ? "hidden" : "visible",
+        dir: prop("dir"),
         hidden: loaded,
-        id: props.id,
+        id: scope.ids.get("content"),
       })
     },
 
     getImageBindings(props): AvatarImageBindings {
       scope.ids.register("image", props)
       return normalize.img({
-        ...commonProps,
-        "data-part": "image",
+        ...parts.image,
         "data-state": loaded ? "visible" : "hidden",
+        dir: prop("dir"),
         hidden: !loaded,
-        id: props.id,
+        id: scope.ids.get("image"),
         onError() {
           send({type: "IMG.ERROR"})
         },
@@ -61,18 +58,18 @@ export function createAvatarApi(
     getRootBindings(props): AvatarRootBindings {
       scope.ids.register("root", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "root",
-        id: props.id,
+        ...parts.root,
+        dir: prop("dir"),
+        id: scope.ids.get("root"),
       })
     },
 
     getStatusBindings(props): AvatarStatusBindings {
       scope.ids.register("status", props)
       return normalize.element({
-        ...commonProps,
-        "data-part": "status",
-        id: props.id,
+        ...parts.status,
+        dir: prop("dir"),
+        id: scope.ids.get("status"),
       })
     },
   }

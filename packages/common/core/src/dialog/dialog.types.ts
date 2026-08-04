@@ -9,8 +9,9 @@ import type {
   PersistentElementOptions,
 } from "@qualcomm-ui/dom/dismissable"
 import type {MaybeElement} from "@qualcomm-ui/dom/interact-outside"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanAriaAttr} from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -24,8 +25,11 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
+import type {dialogAnatomy} from "./dialog.anatomy.js"
+
 export interface DialogApiProps
-  extends DirectionProperty,
+  extends
+    DirectionProperty,
     CommonProperties,
     DismissableElementHandlers,
     PersistentElementOptions {
@@ -168,40 +172,36 @@ export interface DialogSchema extends MachineSchema {
   state: "open" | "closed"
 }
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "dialog"
-}
+type PartName = AnatomyPartName<typeof dialogAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"dialog", P> {}
 
-export interface DialogTriggerBindings extends CommonBindings {
+export interface DialogTriggerBindings extends Part<"trigger"> {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "aria-haspopup": "dialog"
-  "data-part": "trigger"
   "data-state": "open" | "closed"
   id: string
   onClick: JSX.MouseEventHandler
   type: "button"
 }
 
-export interface DialogBackdropBindings extends CommonBindings {
-  "data-part": "backdrop"
+export interface DialogBackdropBindings extends Part<"backdrop"> {
   "data-state": DialogSchema["state"]
   hidden: boolean
   id: string
 }
 
-export interface DialogPositionerBindings extends CommonBindings {
-  "data-part": "positioner"
+export interface DialogPositionerBindings extends Part<"positioner"> {
+  dir: Direction
   id: string
   style: JSX.CSSProperties
 }
 
-export interface DialogContentBindings extends CommonBindings {
+export interface DialogContentBindings extends Part<"content"> {
   "aria-describedby": string | undefined
   "aria-label": string | undefined
   "aria-labelledby": string | undefined
   "aria-modal": boolean
-  "data-part": "content"
   "data-state": "open" | "closed"
   hidden: boolean
   id: string
@@ -209,30 +209,23 @@ export interface DialogContentBindings extends CommonBindings {
   tabIndex: -1
 }
 
-export interface DialogHeadingBindings extends CommonBindings {
-  "data-part": "heading"
+export interface DialogHeadingBindings extends Part<"heading"> {
   id: string
 }
 
-export interface DialogDescriptionBindings extends CommonBindings {
-  "data-part": "description"
+export interface DialogDescriptionBindings extends Part<"description"> {
   id: string
 }
 
-export interface DialogBodyBindings extends CommonBindings {
-  "data-part": "body"
-}
+export interface DialogBodyBindings extends Part<"body"> {}
 
-export interface DialogCloseTriggerBindings extends CommonBindings {
-  "data-part": "close-trigger"
+export interface DialogCloseTriggerBindings extends Part<"closeTrigger"> {
   id: string
   onClick: JSX.MouseEventHandler
   type: "button"
 }
 
-export interface DialogFooterBindings extends CommonBindings {
-  "data-part": "footer"
-}
+export interface DialogFooterBindings extends Part<"footer"> {}
 
 export interface DialogApi {
   open: boolean

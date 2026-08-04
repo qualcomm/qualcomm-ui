@@ -1,1 +1,1 @@
-export * from "./knowledge-exporter"
+export * from "./knowledge-exporter.js"

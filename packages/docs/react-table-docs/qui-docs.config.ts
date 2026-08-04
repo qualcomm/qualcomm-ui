@@ -48,6 +48,25 @@ const navConfig: NavConfig[] = [
     title: "Guides",
   },
   {
+    children: [
+      {
+        id: "table-composition",
+      },
+      {
+        id: "reusable-columns",
+      },
+      {
+        id: "state-and-workflows",
+      },
+      {
+        id: "loading-and-empty-states",
+      },
+    ],
+    expanded: true,
+    id: "best-practices",
+    title: "Best Practices",
+  },
+  {
     expanded: false,
     id: "feature-guides",
     title: "Feature Guides",

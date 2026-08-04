@@ -155,9 +155,11 @@ QUI Table maintains a `columnSizingInfo` state object for rendering column resiz
 ```angular-html
 <div
   class="resize-indicator"
-  [style.transform]="header.column.getIsResizing()
-    ? 'translateX(' + table.getState().columnSizingInfo.deltaOffset + 'px)'
-    : ''"
+  [style.transform]="
+    header.column.getIsResizing()
+      ? 'translateX(' + table.getState().columnSizingInfo.deltaOffset + 'px)'
+      : ''
+  "
 ></div>
 ```
 

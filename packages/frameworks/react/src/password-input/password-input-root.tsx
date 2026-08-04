@@ -8,11 +8,6 @@ import {
   splitPasswordInputProps,
 } from "@qualcomm-ui/core/password-input"
 import {createQdsInputApi} from "@qualcomm-ui/qds-core/input"
-import {
-  QdsInputContextProvider,
-  type QdsReactInputApi,
-  type QdsReactInputApiProps,
-} from "@qualcomm-ui/react/input"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   CorePasswordInput,
@@ -22,10 +17,16 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {
+  QdsInputContextProvider,
+  type QdsReactInputApi,
+  type QdsReactInputApiProps,
+} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputRootProps
-  extends PasswordInputApiProps,
+  extends
+    PasswordInputApiProps,
     Omit<QdsReactInputApiProps, "endIcon">,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {
   /**

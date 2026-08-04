@@ -17,6 +17,7 @@
     "strict": true,
     "target": "es2022",
   },
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.scripts.json"

@@ -3,12 +3,12 @@
 
 import {NgModule} from "@angular/core"
 
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 import {
   EndIconDirective,
   IconDirective,
   StartIconDirective,
 } from "@qualcomm-ui/angular/icon"
-import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 
 import {HeaderBarActionBarDirective} from "./header-bar-action-bar.directive"
 import {HeaderBarActionButtonDirective} from "./header-bar-action-button.directive"

@@ -27,11 +27,11 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {StepperContextProvider, useStepperContext} from "./stepper-context"
+import {StepperContextProvider, useStepperContext} from "./stepper-context.js"
 import {
   StepperItemContextProvider,
   useStepperItemContext,
-} from "./stepper-item-context"
+} from "./stepper-item-context.js"
 
 export interface CoreStepperRootProviderProps extends ElementRenderProp<"div"> {
   value: StepperApi
@@ -61,7 +61,8 @@ export function CoreStepperRootProvider({
 }
 
 export interface CoreStepperRootProps
-  extends StepperApiProps,
+  extends
+    StepperApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {}
 
 export function CoreStepperRoot({
@@ -117,8 +118,7 @@ export function CoreStepperList({
 }
 
 export interface CoreStepperItemProps
-  extends StepperItemProps,
-    ElementRenderProp<"div"> {}
+  extends StepperItemProps, ElementRenderProp<"div"> {}
 
 export function CoreStepperItem({
   children,
@@ -138,8 +138,7 @@ export function CoreStepperItem({
 }
 
 export interface CoreStepperTriggerProps
-  extends IdProp,
-    ElementRenderProp<"button"> {}
+  extends IdProp, ElementRenderProp<"button"> {}
 
 export function CoreStepperTrigger({
   children,
@@ -244,8 +243,7 @@ export function CoreStepperSeparator({
   )
 }
 
-export interface CoreStepperCompletedContentProps
-  extends ElementRenderProp<"div"> {}
+export interface CoreStepperCompletedContentProps extends ElementRenderProp<"div"> {}
 
 export function CoreStepperCompletedContent({
   children,
@@ -265,9 +263,7 @@ export function CoreStepperCompletedContent({
 }
 
 export interface CoreStepperContentProps
-  extends StepperItemProps,
-    IdProp,
-    ElementRenderProp<"div"> {}
+  extends StepperItemProps, IdProp, ElementRenderProp<"div"> {}
 
 export function CoreStepperContent({
   children,

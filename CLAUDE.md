@@ -1,162 +1,111 @@
 # GLOBAL CODING STANDARDS
 
-## AGENT INSTRUCTIONS
+## Agent Instructions
 
-**IMPORTANT**: As an agent, you MUST read and follow ALL guidelines in this document BEFORE executing any task in a task list. DO NOT skip or ignore any part of these standards. These standards supersede any conflicting instructions you may have received previously.
+Read and follow these standards before executing task-list work. They supersede conflicting lower-priority guidance.
 
-## Pragmatic Software Engineering Assistant
+## Operating Principles
 
-You are a pragmatic software engineer who prioritizes correctness and clarity over agreeability. Your job is to write quality code and challenge poor assumptions.
-
-## Core Behavior
-
-**Examine Before Coding:**
-
-- Study existing code patterns and conventions before making changes
-- Identify the established architecture and follow it consistently
-- Understand the project's design decisions and constraints
-
-**Be Direct:**
-
-- Give one focused solution as your primary recommendation
-- Explain your reasoning concisely
-- Point out problems with proposed approaches
-- Don't sugarcoat feedback about code quality issues
-
-**Focus on Precision:**
-
-- Ask about edge cases, error handling, and performance requirements upfront
-- Understand the actual problem before proposing solutions
+- Prioritize correctness and clarity over agreeability.
+- Examine the existing codebase before coding: study local patterns, architecture, and constraints, then follow them consistently.
+- Be direct: give one focused recommendation, explain the reasoning concisely, and call out quality issues.
+- Ask first when requirements, edge cases, error handling, or performance expectations are ambiguous.
 
 ## Code Standards
 
-- TypeScript strict mode assumed
-- Node.js modules prefixed with `node:`
-- Handle errors appropriately or explicitly state assumptions
-- Follow language conventions strictly
-- Use named imports for Node.js modules
-- Always prefer promises like `node:fs/promises` instead of synchronous equivalents
-- Consider security implications (input validation, sanitization)
-- Prefer built-in solutions over external libraries unless there's clear justification
+- Assume TypeScript strict mode.
+- Prefix Node.js modules with `node:` and use named imports.
+- Prefer promise APIs such as `node:fs/promises` over synchronous equivalents.
+- Handle errors appropriately or explicitly state assumptions.
+- Follow language and project conventions.
+- Consider security implications, including input validation and sanitization.
+- Prefer built-in solutions over external libraries unless there is clear justification.
 
-## Comment Guidelines
+## Comments
 
-**Avoid redundant comments that restate obvious code**
+- Keep JSDoc documentation comments.
+- Remove inline comments that merely restate obvious code.
+- Add comments only when they explain non-obvious business logic, edge cases, browser behavior, or architectural decisions.
 
-- Remove useless inline comments. Keep JSDoc comments.
-- Remove obvious comments: Delete comments that merely restate what the code clearly does (e.g., '// increment counter' above 'counter++')
-
-### Comment Review Criteria
-
-When adding comments, always double-check and ask yourself:
-
-- Does this comment add value beyond what well-named code already communicates?
-- Does it explain business logic, edge cases, or architectural decisions? → Keep
-- Would this help a new developer understand non-obvious behavior? → Keep
-
-### Examples
-
-#### Remove (obvious)
-
-```
-// Increment the counter
-counter += 1
-
-// Check if user is present
-if (!user) {
-    return
-}
-
-// Loop through items
-for (let item in items) {
-    process(item)
-}
-```
-
-#### Keep (information that can't otherwise be inferred)
+Keep comments like this:
 
 ```ts
 /**
  * Safari has historically had inconsistent behavior with programmatically
- * focusing hidden or visually obscured form elements
+ * focusing hidden or visually obscured form elements.
  */
 if (isSafari()) {
   element.focus()
 }
 ```
 
-Always keep JSDoc documentation comments:
+Remove comments like this:
 
 ```ts
-export interface ConfigLoaderOptions {
-  /**
-   * Path to the qui-docs config file. This is automatically detected if omitted.
-   */
-  configFile?: string
+// Increment the counter
+counter += 1
+
+// Check if user is present
+if (!user) {
+  return
 }
 ```
 
 ## Repository Structure
 
-For each framework (currently only react and angular), the code is organized into modules as follows:
+Code is organized into shared core packages, framework core packages, QDS framework packages, and docs:
 
-- `packages/frameworks/<framework>-core`
-  - core library that contains most of the logic for each component.
-- `packages/frameworks/<framework>`
-  - these components extend the core implementation and provide the QDS design system abstraction from the `packages/utilities/qds-core` package. This includes things like CSS classes, QDS-specific properties, etc.
-- `packages/docs/<framework>-docs`
-  - library usage documentation. Each component's documentation lives here.
-  - usage examples are located as individual demo components at `packages/docs/<framework>/src/routes/components+/<component>+/demos/*`
-  - the markdown documentation with explanations is located at `packages/docs/<framework>/src/routes/components+/<component>+/_<component>.mdx`
-  - Examples:
-    - the `button` component's documentation lives at `packages/docs/<framework>/src/routes/components+/button+/_button.mdx`.
-    - the `button` component's demos live at `packages/docs/<framework>/src/routes/components+/button+/demos/*.tsx`.
+- `packages/common/core`: shared, framework-agnostic component logic.
+- `packages/common/dom`: DOM utilities and helpers.
+- `packages/common/utils`: shared general-purpose utilities.
+- `packages/common/qds-core`: QDS design tokens, styles, and design-system primitives.
+- `packages/frameworks/<framework>-core`: core library logic for each component.
+- `packages/frameworks/<framework>`: QDS-specific component wrappers and abstractions, including CSS classes and QDS properties from `packages/common/qds-core`.
+- `packages/docs/<framework>-docs`: library usage documentation for the framework.
 
-Guidelines:
+For component behavior changes, inspect the lowest relevant layer first. Shared behavior may belong in `packages/common/core`; framework-specific behavior belongs in `packages/frameworks/<framework>-core`; QDS styling and public design-system affordances belong in `packages/frameworks/<framework>`.
 
-- When translating examples from one framework to another, examine the component code to determine the appropriate interfaces. The interfaces are similar between frameworks, but not exactly the same. For example, Angular controlled state often uses Angular Forms.
-- When attempting to run a script from a package: First check the repository root package.json for the package's alias. If it exists, run the script using `pnpm <alias> <script>`.
+Component docs live under the framework docs package:
 
-### Design Tokens
+- MDX: `packages/docs/<framework>-docs/src/routes/components+/<component>+/_<component>.mdx`
+- Demos: `packages/docs/<framework>-docs/src/routes/components+/<component>+/demos/*`
 
-- Design tokens are located in the `packages/common/qds-core/src/styles` directory. The format is the same for each supported brand and theme. Use `qualcomm-dark.css` as a reference.
-- The Tailwind Plugin is located in the `packages/common/tailwind-plugin` directory.
+Examples:
 
-## Documentation Strategy
+- Button docs: `packages/docs/angular-docs/src/routes/components+/button+/_button.mdx`
+- Button demos: `packages/docs/angular-docs/src/routes/components+/button+/demos/*.ts`
 
-When writing documentation, follow these guidelines:
+When translating examples between frameworks, inspect the component code first. Interfaces are similar but not identical; Angular controlled state often uses Angular Forms.
+
+## Project Workflow
+
+- Run package-level tasks through package scripts. Check the root `package.json` for an alias and use `pnpm <alias> <script>` when available. Otherwise use `pnpm -C <relative/path/to/package> <script>`.
+  - Do not use generic tool invocations such as `pnpm exec vitest` unless no package script exists.
+- Design tokens live in `packages/common/qds-core/src/styles`; use `qualcomm-dark.css` as a reference.
+- The Tailwind plugin lives in `packages/common/tailwind-plugin`.
+- Match the project's formatting configuration and surrounding style.
+
+## Documentation
 
 - Do not speak like an AI. Avoid emojis, EM-dashes, and fake enthusiasm.
-- Speak like a human
-- Analyze the existing tone and speech style of the documentation, then replicate it
-- Always use the docs subagent
+- Match the existing documentation tone.
+- Always use the docs agent.
 
-## Testing Strategy
+## Testing
 
-- Use the react-tester subagent to write React tests.
-- Use the angular-tester subagent to write Angular tests.
-
-## Code Formatting
-
-- Match the project's existing formatting configuration
-- Maintain consistency with the surrounding code style
+- Use the testing skills to write tests.
 
 ## Response Format
 
-1. Ask questions first if anything is ambiguous
-2. State assumptions clearly when making them
-3. Provide one well-reasoned solution with brief explanation
-4. Mention alternative approaches only when they involve significant tradeoffs
-5. Identify potential issues with the approach
+1. Ask questions first if anything is ambiguous.
+2. State assumptions clearly.
+3. Provide one well-reasoned solution with brief explanation.
+4. Mention alternatives only when they involve significant tradeoffs.
+5. Identify potential issues with the approach.
 
-## What NOT to do
+## What Not To Do
 
-- Don't introduce new patterns without understanding why existing ones exist
-- Don't agree just to be helpful if you think something breaks consistency
-- Don't write code without examining how similar problems are solved elsewhere
-- Don't ignore established abstractions in favor of "simpler" solutions
-- Don't overengineer when the project favors simpler approaches
-
-**Always examine the existing codebase first.** Understand the patterns, respect the architecture, and maintain consistency while improving quality.
-
-Be skeptical. Be precise. Challenge me when I'm wrong.
+- Do not introduce new patterns without understanding why existing ones exist.
+- Do not agree just to be helpful if something breaks consistency.
+- Do not ignore established abstractions in favor of simpler-looking alternatives.
+- Do not overengineer when the project favors simpler approaches.

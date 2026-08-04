@@ -1,10 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {dialogAnatomy} from "@qualcomm-ui/core/dialog"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {dialogClasses} from "./dialog.classes"
+import {dialogClasses} from "./dialog.classes.js"
 import type {
   QdsDialogApi,
   QdsDialogApiProps,
@@ -16,7 +17,9 @@ import type {
   QdsDialogHeadingBindings,
   QdsDialogIndicatorIconBindings,
   QdsDialogPositionerBindings,
-} from "./dialog.types"
+} from "./dialog.types.js"
+
+const parts = dialogAnatomy.parts
 
 export function createQdsDialogApi(
   props: Explicit<QdsDialogApiProps>,
@@ -33,22 +36,26 @@ export function createQdsDialogApi(
     // group: bindings
     getBackdropBindings(): QdsDialogBackdropBindings {
       return normalize.element({
+        ...parts.backdrop,
         className: dialogClasses.backdrop,
       })
     },
     getBodyBindings(): QdsDialogBodyBindings {
       return normalize.element({
+        ...parts.body,
         className: dialogClasses.body,
         "data-size": size,
       })
     },
     getCloseButtonBindings(): QdsDialogCloseButtonBindings {
       return normalize.button({
+        ...parts.closeTrigger,
         className: dialogClasses.closeButton,
       })
     },
     getContentBindings(): QdsDialogContentBindings {
       return normalize.element({
+        ...parts.content,
         className: dialogClasses.content,
         "data-scroll-behavior": scrollBehavior,
         "data-size": size,
@@ -56,12 +63,14 @@ export function createQdsDialogApi(
     },
     getFooterBindings(): QdsDialogFooterBindings {
       return normalize.element({
+        ...parts.footer,
         className: dialogClasses.footer,
         "data-size": size,
       })
     },
     getHeadingBindings(): QdsDialogHeadingBindings {
       return normalize.element({
+        ...parts.heading,
         className: dialogClasses.heading,
         "data-size": size,
       })
@@ -75,6 +84,7 @@ export function createQdsDialogApi(
     },
     getPositionerBindings(): QdsDialogPositionerBindings {
       return normalize.element({
+        ...parts.positioner,
         className: dialogClasses.positioner,
         "data-placement": props.placement || "top",
         "data-scroll-behavior": scrollBehavior,

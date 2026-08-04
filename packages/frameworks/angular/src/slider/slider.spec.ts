@@ -4,11 +4,26 @@ import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
 import {SliderModule} from "@qualcomm-ui/angular/slider"
+import type {
+  FocusChangeDetails,
+  ValueTextDetails,
+} from "@qualcomm-ui/core/slider"
 
 import {type MultiComponentTest, runTests} from "~test-utils"
 
 async function clickFocusTarget() {
   return page.getByText("Focus target").click()
+}
+
+async function focusSliderThumb(index = 0) {
+  await clickFocusTarget()
+  for (let i = 0; i <= index; i++) {
+    await userEvent.tab()
+  }
+
+  const thumb = page.getByRole("slider").nth(index)
+  await expect.element(thumb).toHaveFocus()
+  return thumb
 }
 
 const testIds = {
@@ -41,6 +56,7 @@ const testIds = {
       [defaultValue]="defaultValue()"
       [dir]="dir()"
       [disabled]="disabled()"
+      [display]="display()"
       [errorText]="errorText()"
       [getAriaValueText]="getAriaValueText()"
       [hint]="hint()"
@@ -56,6 +72,8 @@ const testIds = {
       [readOnly]="readOnly()"
       [sideMarkers]="sideMarkers()"
       [step]="step()"
+      [tooltip]="tooltip()"
+      (focusChanged)="focusChanged.emit($event)"
       (valueChanged)="valueChanged.emit($event)"
       (valueChangedEnd)="valueChangedEnd.emit($event)"
     />
@@ -70,7 +88,7 @@ class SimpleSliderComponent {
   readonly step = input<number | undefined>(undefined)
   readonly minStepsBetweenThumbs = input<number | undefined>(undefined)
   readonly orientation = input<"vertical" | "horizontal" | undefined>(undefined)
-  readonly ariaLabel = input<string | undefined>(undefined)
+  readonly ariaLabel = input<string | string[] | undefined>(undefined)
   readonly disabled = input<boolean | undefined>(undefined)
   readonly invalid = input<boolean | undefined>(undefined)
   readonly readOnly = input<boolean | undefined>(undefined)
@@ -81,11 +99,14 @@ class SimpleSliderComponent {
   readonly markers = input<number[] | undefined>(undefined)
   readonly sideMarkers = input<boolean | undefined>(undefined)
   readonly name = input<string | string[] | undefined>(undefined)
+  readonly tooltip = input<boolean | undefined>(undefined)
+  readonly display = input<string | ((value: number[]) => string) | undefined>()
   readonly getAriaValueText = input<
-    ((details: {value: number}) => string) | undefined
+    ((details: ValueTextDetails) => string) | undefined
   >(undefined)
   readonly origin = input<"start" | "center" | "end" | undefined>(undefined)
 
+  readonly focusChanged = output<FocusChangeDetails>()
   readonly valueChanged = output<{value: number[]}>()
   readonly valueChangedEnd = output<{value: number[]}>()
 }
@@ -113,6 +134,7 @@ class SimpleSliderComponent {
       [origin]="origin()"
       [readOnly]="readOnly()"
       [step]="step()"
+      (focusChanged)="focusChanged.emit($event)"
       (valueChanged)="valueChanged.emit($event)"
       (valueChangedEnd)="valueChangedEnd.emit($event)"
     >
@@ -124,6 +146,7 @@ class SimpleSliderComponent {
       <div
         q-slider-value-text
         [attr.data-test-id]="testIds.sliderValueText"
+        [display]="display()"
       ></div>
 
       @if (sideMarkers()) {
@@ -200,7 +223,7 @@ class CompositeSliderComponent {
   readonly step = input<number | undefined>(undefined)
   readonly minStepsBetweenThumbs = input<number | undefined>(undefined)
   readonly orientation = input<"vertical" | "horizontal" | undefined>(undefined)
-  readonly ariaLabel = input<string | undefined>(undefined)
+  readonly ariaLabel = input<string | string[] | undefined>(undefined)
   readonly disabled = input<boolean | undefined>(undefined)
   readonly invalid = input<boolean | undefined>(undefined)
   readonly readOnly = input<boolean | undefined>(undefined)
@@ -211,11 +234,13 @@ class CompositeSliderComponent {
   readonly markers = input<number[] | undefined>(undefined)
   readonly sideMarkers = input<boolean | undefined>(undefined)
   readonly name = input<string | string[] | undefined>(undefined)
+  readonly display = input<string | ((value: number[]) => string) | undefined>()
   readonly getAriaValueText = input<
-    ((details: {value: number}) => string) | undefined
+    ((details: ValueTextDetails) => string) | undefined
   >(undefined)
   readonly origin = input<"start" | "center" | "end" | undefined>(undefined)
 
+  readonly focusChanged = output<FocusChangeDetails>()
   readonly valueChanged = output<{value: number[]}>()
   readonly valueChangedEnd = output<{value: number[]}>()
 
@@ -244,7 +269,7 @@ const testCases: MultiComponentTest[] = [
 
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
 
         await expect.element(valueText).toHaveTextContent("50")
@@ -262,7 +287,7 @@ const testCases: MultiComponentTest[] = [
 
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
         const input0 =
           component === SimpleSliderComponent
@@ -294,7 +319,7 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(thumb).toHaveAttribute("aria-valuemin", "20")
@@ -317,11 +342,11 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
         const root =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="root"]')
+            ? container.querySelector('[data-slider-part="root"]')
             : page.getByTestId(testIds.sliderRoot)
 
         await expect.element(thumb).toHaveAttribute("aria-disabled", "true")
@@ -361,11 +386,11 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
 
         await expect.element(thumb).toHaveFocus()
@@ -394,11 +419,11 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
 
         await userEvent.keyboard("{PageUp}")
@@ -407,6 +432,56 @@ const testCases: MultiComponentTest[] = [
 
         await userEvent.keyboard("{PageDown}")
         await expect.element(valueText).toHaveTextContent("50")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`vertical keyboard navigation uses up/down arrows — ${component.name}`, async () => {
+        const {container} = await render(component, {
+          inputs: {
+            defaultValue: [50],
+            orientation: "vertical",
+          },
+        })
+
+        const thumb = await focusSliderThumb()
+        const valueText =
+          component === SimpleSliderComponent
+            ? container.querySelector('[data-slider-part="value-text"]')
+            : page.getByTestId(testIds.sliderValueText)
+
+        await userEvent.keyboard("{ArrowRight}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+
+        await userEvent.keyboard("{ArrowUp}")
+        await expect.element(valueText).toHaveTextContent("51")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "51")
+
+        await userEvent.keyboard("{ArrowDown}")
+        await expect.element(valueText).toHaveTextContent("50")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`horizontal keyboard navigation ignores up/down arrows — ${component.name}`, async () => {
+        await render(component, {
+          inputs: {defaultValue: [50]},
+        })
+
+        const thumb = await focusSliderThumb()
+
+        await userEvent.keyboard("{ArrowUp}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+
+        await userEvent.keyboard("{ArrowDown}")
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
       })
     },
@@ -429,11 +504,11 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
 
         await userEvent.keyboard("{End}")
@@ -464,7 +539,7 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "0")
@@ -489,7 +564,7 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "100")
@@ -512,11 +587,11 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
 
         await expect.element(valueText).toHaveTextContent("55")
@@ -545,10 +620,39 @@ const testCases: MultiComponentTest[] = [
 
         const firstThumb =
           component === SimpleSliderComponent
-            ? container.querySelectorAll('[data-part="thumb"]')[0]
+            ? container.querySelectorAll('[data-slider-part="thumb"]')[0]
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(firstThumb).toHaveAttribute("aria-valuenow", "60")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`range slider constrains the second thumb against the first thumb — ${component.name}`, async () => {
+        const {container} = await render(component, {
+          inputs: {
+            defaultValue: [30, 50],
+            minStepsBetweenThumbs: 10,
+          },
+        })
+
+        const secondThumb = await focusSliderThumb(1)
+
+        for (let i = 0; i < 20; i++) {
+          await userEvent.keyboard("{ArrowLeft}")
+        }
+
+        const valueText =
+          component === SimpleSliderComponent
+            ? container.querySelector('[data-slider-part="value-text"]')
+            : page.getByTestId(testIds.sliderValueText)
+
+        await expect.element(valueText).toHaveTextContent("30 - 40")
+        await expect.element(secondThumb).toHaveAttribute("aria-valuemin", "40")
+        await expect.element(secondThumb).toHaveAttribute("aria-valuenow", "40")
       })
     },
   },
@@ -566,11 +670,11 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
         const root =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="root"]')
+            ? container.querySelector('[data-slider-part="root"]')
             : page.getByTestId(testIds.sliderRoot)
 
         await expect
@@ -596,12 +700,33 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect
           .element(thumb)
           .toHaveAttribute("aria-label", "Volume control")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`supports separate accessible names for each thumb — ${component.name}`, async () => {
+        await render(component, {
+          inputs: {
+            ariaLabel: ["Minimum volume", "Maximum volume"],
+            defaultValue: [25, 75],
+          },
+        })
+
+        await expect
+          .element(page.getByRole("slider", {name: "Minimum volume"}))
+          .toHaveAttribute("aria-valuenow", "25")
+        await expect
+          .element(page.getByRole("slider", {name: "Maximum volume"}))
+          .toHaveAttribute("aria-valuenow", "75")
       })
     },
   },
@@ -619,16 +744,46 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
         const root =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="root"]')
+            ? container.querySelector('[data-slider-part="root"]')
             : page.getByTestId(testIds.sliderRoot)
 
         await expect.element(thumb).toHaveFocus()
         await expect.element(thumb).toHaveAttribute("data-focus")
         await expect.element(root).toHaveAttribute("data-focus")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`calls focusChanged with the focused thumb and clears it on blur — ${component.name}`, async () => {
+        const focusChangedSpy = vi.fn()
+        await render(component, {
+          inputs: {defaultValue: [50]},
+          on: {
+            focusChanged: (event) => {
+              focusChangedSpy(event)
+            },
+          },
+        })
+
+        await focusSliderThumb()
+        await expect
+          .poll(() => focusChangedSpy.mock.calls.map(([details]) => details))
+          .toEqual([{focusedIndex: 0, value: [50]}])
+
+        await clickFocusTarget()
+        await expect
+          .poll(() => focusChangedSpy.mock.calls.map(([details]) => details))
+          .toEqual([
+            {focusedIndex: 0, value: [50]},
+            {focusedIndex: -1, value: [50]},
+          ])
       })
     },
   },
@@ -646,7 +801,7 @@ const testCases: MultiComponentTest[] = [
 
         const label =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="label"]')
+            ? container.querySelector('[data-slider-part="label"]')
             : page.getByTestId(testIds.sliderLabel)
 
         await expect.element(label).toBeVisible()
@@ -667,9 +822,9 @@ const testCases: MultiComponentTest[] = [
         })
 
         if (component === SimpleSliderComponent) {
-          const label = container.querySelector('[data-part="label"]')
+          const label = container.querySelector('[data-slider-part="label"]')
           const labelId = label?.getAttribute("id")
-          const thumb = container.querySelector('[data-part="thumb"]')
+          const thumb = container.querySelector('[data-slider-part="thumb"]')
           expect(thumb).toHaveAttribute("aria-labelledby", labelId!)
         } else {
           const labelId = page
@@ -698,7 +853,7 @@ const testCases: MultiComponentTest[] = [
 
         const hint =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="hint"]')
+            ? container.querySelector('[data-slider-part="hint"]')
             : page.getByTestId(testIds.sliderHint)
 
         await expect.element(hint).toBeVisible()
@@ -723,7 +878,7 @@ const testCases: MultiComponentTest[] = [
 
         const hint =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="hint"]')
+            ? container.querySelector('[data-slider-part="hint"]')
             : page.getByTestId(testIds.sliderHint)
 
         await expect.element(hint).not.toBeVisible()
@@ -745,7 +900,7 @@ const testCases: MultiComponentTest[] = [
 
         const errorText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="error-text"]')
+            ? container.querySelector('[data-slider-part="error-text"]')
             : page.getByTestId(testIds.sliderErrorText)
 
         await expect.element(errorText).toBeVisible()
@@ -769,7 +924,7 @@ const testCases: MultiComponentTest[] = [
 
         const errorText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="error-text"]')
+            ? container.querySelector('[data-slider-part="error-text"]')
             : page.getByTestId(testIds.sliderErrorText)
 
         await expect.element(errorText).not.toBeVisible()
@@ -789,7 +944,9 @@ const testCases: MultiComponentTest[] = [
         })
 
         if (component === SimpleSliderComponent) {
-          const markers = container.querySelectorAll('[data-part="marker"]')
+          const markers = container.querySelectorAll(
+            '[data-slider-part="marker"]',
+          )
           expect(markers.length).toBe(5)
           const markerValues = Array.from(markers).map((m) => m.textContent)
           expect(markerValues).toEqual(["0", "25", "50", "75", "100"])
@@ -824,15 +981,15 @@ const testCases: MultiComponentTest[] = [
 
         const marker25 =
           component === SimpleSliderComponent
-            ? container.querySelectorAll('[data-part="marker"]')[0]
+            ? container.querySelectorAll('[data-slider-part="marker"]')[0]
             : page.getByTestId(`${testIds.sliderMarker}-25`)
         const marker50 =
           component === SimpleSliderComponent
-            ? container.querySelectorAll('[data-part="marker"]')[1]
+            ? container.querySelectorAll('[data-slider-part="marker"]')[1]
             : page.getByTestId(`${testIds.sliderMarker}-50`)
         const marker75 =
           component === SimpleSliderComponent
-            ? container.querySelectorAll('[data-part="marker"]')[2]
+            ? container.querySelectorAll('[data-slider-part="marker"]')[2]
             : page.getByTestId(`${testIds.sliderMarker}-75`)
 
         await expect
@@ -859,11 +1016,11 @@ const testCases: MultiComponentTest[] = [
 
         const min =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="min"]')
+            ? container.querySelector('[data-slider-part="min"]')
             : page.getByTestId(testIds.sliderMin)
         const max =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="max"]')
+            ? container.querySelector('[data-slider-part="max"]')
             : page.getByTestId(testIds.sliderMax)
 
         await expect.element(min).toBeVisible()
@@ -889,11 +1046,11 @@ const testCases: MultiComponentTest[] = [
 
         const min =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="min"]')
+            ? container.querySelector('[data-slider-part="min"]')
             : page.getByTestId(testIds.sliderMin)
         const max =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="max"]')
+            ? container.querySelector('[data-slider-part="max"]')
             : page.getByTestId(testIds.sliderMax)
 
         await expect.element(min).toHaveTextContent("10")
@@ -917,11 +1074,11 @@ const testCases: MultiComponentTest[] = [
 
         const min =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="min"]')
+            ? container.querySelector('[data-slider-part="min"]')
             : page.getByTestId(testIds.sliderMin)
         const max =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="max"]')
+            ? container.querySelector('[data-slider-part="max"]')
             : page.getByTestId(testIds.sliderMax)
 
         await expect.element(min).toHaveAttribute("data-value", "10")
@@ -1089,7 +1246,7 @@ const testCases: MultiComponentTest[] = [
 
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
 
         await expect.element(valueText).toHaveTextContent("51")
@@ -1117,7 +1274,7 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "5.1")
@@ -1143,7 +1300,7 @@ const testCases: MultiComponentTest[] = [
 
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
 
         await expect.element(valueText).toHaveTextContent("75")
@@ -1169,15 +1326,40 @@ const testCases: MultiComponentTest[] = [
 
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(valueText).toHaveTextContent("50")
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`does not call valueChanged for readOnly keyboard input — ${component.name}`, async () => {
+        const valueChangedSpy = vi.fn()
+        await render(component, {
+          inputs: {
+            defaultValue: [50],
+            readOnly: true,
+          },
+          on: {
+            valueChanged: (event) => {
+              valueChangedSpy(event)
+            },
+          },
+        })
+
+        await focusSliderThumb()
+        await userEvent.keyboard("{ArrowRight}")
+
+        expect(valueChangedSpy).not.toHaveBeenCalled()
       })
     },
   },
@@ -1192,11 +1374,11 @@ const testCases: MultiComponentTest[] = [
 
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(valueText).toHaveTextContent("0")
@@ -1215,11 +1397,11 @@ const testCases: MultiComponentTest[] = [
 
         const valueText =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="value-text"]')
+            ? container.querySelector('[data-slider-part="value-text"]')
             : page.getByTestId(testIds.sliderValueText)
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(valueText).toHaveTextContent("100")
@@ -1247,7 +1429,9 @@ const testCases: MultiComponentTest[] = [
         }
 
         if (component === SimpleSliderComponent) {
-          const thumbs = container.querySelectorAll('[data-part="thumb"]')
+          const thumbs = container.querySelectorAll(
+            '[data-slider-part="thumb"]',
+          )
           const firstValue = Number(thumbs[0]?.getAttribute("aria-valuenow"))
           expect(firstValue).toBeLessThanOrEqual(55)
         } else {
@@ -1272,7 +1456,7 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "0")
@@ -1290,7 +1474,7 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "100")
@@ -1314,12 +1498,60 @@ const testCases: MultiComponentTest[] = [
 
         const thumb =
           component === SimpleSliderComponent
-            ? container.querySelector('[data-part="thumb"]')
+            ? container.querySelector('[data-slider-part="thumb"]')
             : page.getByTestId(testIds.sliderThumb0)
 
         await expect
           .element(thumb)
           .toHaveAttribute("aria-valuetext", "50 percent")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`customizes aria-valuetext for each range thumb — ${component.name}`, async () => {
+        const getAriaValueText = (details: ValueTextDetails) =>
+          `${details.index === 0 ? "Minimum" : "Maximum"} ${details.value} percent`
+
+        await render(component, {
+          inputs: {
+            defaultValue: [25, 75],
+            getAriaValueText,
+          },
+        })
+
+        await expect
+          .element(page.getByRole("slider").nth(0))
+          .toHaveAttribute("aria-valuetext", "Minimum 25 percent")
+        await expect
+          .element(page.getByRole("slider").nth(1))
+          .toHaveAttribute("aria-valuetext", "Maximum 75 percent")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`formats value text through the public display API — ${component.name}`, async () => {
+        const {container} = await render(component, {
+          inputs: {
+            defaultValue: [25, 75],
+            display: (value: number[]) =>
+              `Selected ${value[0]} through ${value[1]}`,
+          },
+        })
+
+        const valueText =
+          component === SimpleSliderComponent
+            ? container.querySelector('[data-slider-part="value-text"]')
+            : page.getByTestId(testIds.sliderValueText)
+
+        await expect
+          .element(valueText)
+          .toHaveTextContent("Selected 25 through 75")
       })
     },
   },

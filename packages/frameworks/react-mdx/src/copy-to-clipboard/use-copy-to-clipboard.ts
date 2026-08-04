@@ -3,7 +3,7 @@
 
 import {useCallback, useEffect, useState} from "react"
 
-import {useCopyToClipboardContext} from "./copy-to-clipboard-context"
+import {useCopyToClipboardContext} from "./copy-to-clipboard-context.js"
 
 export interface UseCopyToClipboardProps {
   valueOrFn: (() => Promise<string>) | (() => string) | string

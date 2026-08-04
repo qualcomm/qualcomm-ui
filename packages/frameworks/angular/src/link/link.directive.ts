@@ -10,6 +10,12 @@ import {
   type OnInit,
 } from "@angular/core"
 
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {
+  normalizeProps,
+  useTrackBindings,
+} from "@qualcomm-ui/angular-core/machine"
+import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   END_ICON_CONTEXT_TOKEN,
   EndIconDirective,
@@ -18,12 +24,6 @@ import {
   StartIconDirective,
 } from "@qualcomm-ui/angular/icon"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
-import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
-import {
-  normalizeProps,
-  useTrackBindings,
-} from "@qualcomm-ui/angular-core/machine"
-import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   createQdsLinkApi,
   type QdsLinkApiProps,
@@ -113,6 +113,15 @@ export class LinkDirective implements SignalifyInput<QdsLinkApiProps>, OnInit {
   readonly endIcon = input<LucideIconOrString>()
 
   /**
+   * Controls whether the link inherits font size from its parent element.
+   *
+   * @since 2.8.0
+   */
+  readonly inheritFontSize = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
+  /**
    * The size of the link and its elements. Governs properties like font size,
    * item padding, and icon sizes.
    *
@@ -137,6 +146,7 @@ export class LinkDirective implements SignalifyInput<QdsLinkApiProps>, OnInit {
         dir: this.dir(),
         disabled: this.disabled(),
         emphasis: this.emphasis(),
+        inheritFontSize: this.inheritFontSize(),
         size: this.size(),
       } satisfies Explicit<QdsLinkApiProps>,
       normalizeProps,

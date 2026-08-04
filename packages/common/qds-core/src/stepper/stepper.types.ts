@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {stepperClasses} from "./stepper.classes"
+import type {stepperClasses} from "./stepper.classes.js"
 
 export type QdsStepperSize = "sm" | "lg"
 

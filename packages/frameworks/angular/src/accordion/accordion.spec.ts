@@ -1,4 +1,4 @@
-import {Component, input, output} from "@angular/core"
+import {Component, input, output, signal} from "@angular/core"
 import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
@@ -11,19 +11,19 @@ const LoremIpsum =
 const items = [
   {
     content: LoremIpsum,
-    secondary: "Secondary text",
+    secondary: "Secondary text 1",
     title: "Accordion Header 1",
     value: "a",
   },
   {
     content: LoremIpsum,
-    secondary: "Secondary text",
+    secondary: "Secondary text 2",
     title: "Accordion Header 2",
     value: "b",
   },
   {
     content: LoremIpsum,
-    secondary: "Secondary text",
+    secondary: "Secondary text 3",
     title: "Accordion Header 3",
     value: "c",
   },
@@ -31,6 +31,7 @@ const items = [
 
 const testIds = {
   accordionContent: "accordion-content-",
+  accordionIndicator: "accordion-indicator-",
   accordionItem: "accordion-item-",
   accordionRoot: "accordion-root",
   accordionTrigger: "accordion-trigger-",
@@ -47,6 +48,7 @@ const testIds = {
       [defaultValue]="defaultValue()"
       [disabled]="disabled()"
       [multiple]="multiple()"
+      [value]="value()"
       (focusChanged)="focusChanged.emit($event)"
       (valueChanged)="valueChanged.emit($event)"
     >
@@ -54,6 +56,7 @@ const testIds = {
         <div
           q-accordion-item-root
           [attr.data-test-id]="testIds.accordionItem + item.value"
+          [disabled]="disabledValues().includes(item.value)"
           [value]="item.value"
         >
           <button
@@ -61,7 +64,10 @@ const testIds = {
             [attr.data-test-id]="testIds.accordionTrigger + item.value"
           >
             {{ item.title }}
-            <q-accordion-item-indicator />
+            <span q-accordion-item-secondary-text>{{ item.secondary }}</span>
+            <q-accordion-item-indicator
+              [attr.data-test-id]="testIds.accordionIndicator + item.value"
+            />
           </button>
           <div
             q-accordion-item-content
@@ -81,8 +87,46 @@ class TestAccordionComponent {
   readonly multiple = input(false)
   readonly defaultValue = input<string[]>([])
   readonly disabled = input(false)
+  readonly disabledValues = input<string[]>([])
+  readonly value = input<string[] | undefined>()
   readonly valueChanged = output<string[]>()
   readonly focusChanged = output<string | null>()
+}
+
+@Component({
+  imports: [AccordionModule],
+  standalone: true,
+  template: `
+    <div
+      q-accordion
+      [multiple]="multiple()"
+      [value]="value()"
+      (valueChanged)="value.set($event)"
+    >
+      @for (item of items; track item.value) {
+        <div q-accordion-item-root [value]="item.value">
+          <button
+            q-accordion-item-trigger
+            [attr.data-test-id]="testIds.accordionTrigger + item.value"
+          >
+            {{ item.title }}
+          </button>
+          <div
+            q-accordion-item-content
+            [attr.data-test-id]="testIds.accordionContent + item.value"
+          >
+            {{ item.content }}
+          </div>
+        </div>
+      }
+    </div>
+  `,
+})
+class ControlledAccordionComponent {
+  readonly items = items
+  readonly testIds = testIds
+  readonly multiple = input(false)
+  readonly value = signal<string[]>([])
 }
 
 describe("accordion", () => {
@@ -98,6 +142,8 @@ describe("accordion", () => {
     page.getByTestId(testIds.accordionContent + items[1].value)
   const contentC = () =>
     page.getByTestId(testIds.accordionContent + items[2].value)
+  const indicatorA = () =>
+    page.getByTestId(testIds.accordionIndicator + items[0].value)
 
   test("renders all items closed by default", async () => {
     await render(TestAccordionComponent)
@@ -110,6 +156,21 @@ describe("accordion", () => {
         .element(page.getByTestId(testIds.accordionContent + items[i].value))
         .not.toBeVisible()
     }
+  })
+
+  test("item renders indicator and secondary text state", async () => {
+    await render(TestAccordionComponent)
+
+    await expect.element(page.getByText(items[0].secondary)).toBeVisible()
+    await expect.element(indicatorA()).toHaveAttribute("data-state", "closed")
+    await expect.element(contentA()).toHaveAttribute("data-state", "closed")
+    await expect.element(contentA()).not.toBeVisible()
+
+    await triggerA().click()
+
+    await expect.element(indicatorA()).toHaveAttribute("data-state", "open")
+    await expect.element(contentA()).toHaveAttribute("data-state", "open")
+    await expect.element(contentA()).toBeVisible()
   })
 
   test("single mode (default) should allow only open one item at a time", async () => {
@@ -143,6 +204,26 @@ describe("accordion", () => {
     await expect.element(contentA()).not.toBeVisible()
   })
 
+  test("`collapsible` should emit an empty value when closing an open item", async () => {
+    const valueChangedSpy = vi.fn()
+    await render(TestAccordionComponent, {
+      inputs: {
+        collapsible: true,
+      },
+      on: {
+        valueChanged: (event): void => {
+          valueChangedSpy(event)
+        },
+      },
+    })
+
+    await triggerA().click()
+    expect(valueChangedSpy).toHaveBeenLastCalledWith([items[0].value])
+
+    await triggerA().click()
+    expect(valueChangedSpy).toHaveBeenLastCalledWith([])
+  })
+
   test("`multiple` should allow multiple items to be open", async () => {
     await render(TestAccordionComponent, {
       inputs: {
@@ -164,6 +245,19 @@ describe("accordion", () => {
     await expect.element(contentB()).toBeVisible()
   })
 
+  test("`defaultValue` should open multiple items in multiple mode", async () => {
+    await render(TestAccordionComponent, {
+      inputs: {
+        defaultValue: [items[0].value, items[2].value],
+        multiple: true,
+      },
+    })
+
+    await expect.element(contentA()).toBeVisible()
+    await expect.element(contentB()).not.toBeVisible()
+    await expect.element(contentC()).toBeVisible()
+  })
+
   test("`disabled` should prevent opening any item", async () => {
     await render(TestAccordionComponent, {
       inputs: {
@@ -180,6 +274,28 @@ describe("accordion", () => {
     expect(triggerC()).toBeDisabled()
     expect(triggerC()).toHaveAttribute("aria-disabled", "true")
     expect(contentC()).not.toBeVisible()
+  })
+
+  test("`disabled` on an item should prevent opening it without affecting others", async () => {
+    await render(TestAccordionComponent, {
+      inputs: {
+        disabledValues: [items[1].value],
+      },
+    })
+
+    await expect.element(triggerB()).toBeDisabled()
+    await triggerB().click({force: true})
+    await expect.element(contentB()).not.toBeVisible()
+
+    await expect.element(triggerA()).not.toBeDisabled()
+    await triggerA().click()
+    await expect.element(contentA()).toBeVisible()
+    await expect.element(contentB()).not.toBeVisible()
+
+    await expect.element(triggerC()).not.toBeDisabled()
+    await triggerC().click()
+    await expect.element(contentC()).toBeVisible()
+    await expect.element(contentB()).not.toBeVisible()
   })
 
   test("items should have the proper aria attributes", async () => {
@@ -252,6 +368,34 @@ describe("accordion", () => {
     await expect
       .poll(() => focusChangedSpy)
       .toHaveBeenCalledWith(items[2].value)
+  })
+
+  test("controlled value state in single mode", async () => {
+    await render(ControlledAccordionComponent)
+
+    await expect.element(contentA()).not.toBeVisible()
+    await triggerA().click()
+    await expect.element(contentA()).toBeVisible()
+
+    await triggerB().click()
+    await expect.element(contentA()).not.toBeVisible()
+    await expect.element(contentB()).toBeVisible()
+  })
+
+  test("controlled value state in multiple mode", async () => {
+    await render(ControlledAccordionComponent, {
+      inputs: {
+        multiple: true,
+      },
+    })
+
+    await expect.element(contentA()).not.toBeVisible()
+    await triggerA().click()
+    await expect.element(contentA()).toBeVisible()
+
+    await triggerC().click()
+    await expect.element(contentA()).toBeVisible()
+    await expect.element(contentC()).toBeVisible()
   })
 
   test("keyboard navigation", async () => {

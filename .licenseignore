@@ -4,6 +4,7 @@
 **/dist/**
 **/build/**
 **/out/**
+**/.tmp/**
 
 # configuration files
 **/*.config.js

@@ -3,6 +3,7 @@
     "include": ["src/**/*"],
     "exclude": ["src/**/*.spec.tsx"],
     "parser": "react",
+    "label": "React",
     "paths": {
       "@qualcomm-ui/react/*": ["./src/*/index.ts"]
     },

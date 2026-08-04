@@ -1,13 +1,15 @@
 ---
 title: Switch
-group: Form Controls
 description: Switches enable users to instantly activate or deactivate features, settings, or options with immediate visual confirmation. The component features a sliding thumb that moves along a track to communicate the current state.
 component: Switch
 aliases: [toggle, toggle switch]
 ---
 
-import {QdsDemo} from "~components/demo"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -34,8 +36,7 @@ Provide child directives to customize specific elements while keeping the simple
 ### Composite
 
 ::: terms
-composed
-subcomponents
+composed, subcomponents
 :::
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
@@ -45,10 +46,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### States
 
 ::: terms
-on
-off
-true
-false
+on, off, true, false
 :::
 
 Based on the inputs, the switch will render as checked or unchecked.
@@ -58,20 +56,17 @@ Based on the inputs, the switch will render as checked or unchecked.
 ### Disabled
 
 ::: terms
-inactive
-read-only
+inactive, read-only
 :::
 
-When [disabled](./#disabled) is true, the switch becomes non-interactive and is typically rendered with reduced opacity to indicate its unavailable state.
+When [disabled](./#disabled-1) is true, the switch becomes non-interactive and is typically rendered with reduced opacity to indicate its unavailable state.
 
 <QdsDemo name="SwitchDisabledDemo" />
 
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Use the [size](./#size) input to change the size of the switch. The default size is `md`.
@@ -81,9 +76,7 @@ Use the [size](./#size) input to change the size of the switch. The default size
 ### Hint
 
 ::: terms
-helper text
-description
-supporting text
+helper text, description, supporting text
 :::
 
 Add a hint to provide additional context below the switch.
@@ -93,8 +86,7 @@ Add a hint to provide additional context below the switch.
 ### Group
 
 ::: terms
-switch group
-field group
+switch group, field group
 :::
 
 Use [SwitchGroup](/components/switch-group) to group related switches with a shared label, hint text, and validation state.
@@ -104,8 +96,7 @@ Use [SwitchGroup](/components/switch-group) to group related switches with a sha
 ### Template Forms
 
 ::: terms
-ngModel
-template-driven
+ngModel, template-driven
 :::
 
 - When using template-driven forms, add the [required](./#required) attribute to enable validation
@@ -116,9 +107,7 @@ template-driven
 ### Reactive Forms
 
 ::: terms
-formControl
-formGroup
-model-driven
+formControl, formGroup, model-driven
 :::
 
 Use Reactive Forms for better control over form state and validation.
@@ -128,8 +117,7 @@ Use Reactive Forms for better control over form state and validation.
 ### Multi-Field Validation
 
 ::: terms
-cross-field validation
-dependent fields
+cross-field validation, dependent fields
 :::
 
 Reactive forms let you validate across multiple fields simultaneously, perfect for complex business rules like date ranges or dependent field relationships.
@@ -174,7 +162,18 @@ The composite elements are only intended to be used as direct descendants of the
   - it makes the entire component clickable, not just the input/control.
   - it provides implicit association between the text and input element, which is ideal for screen readers.
 - Always use the associated [label](./#label) or [q-switch-label](./#q-switch-label) directive when authoring the text label. This is automatically associated with the input element.
-- If you omit the label, you must provide an [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby) attribute on the `q-switch-hidden-input` element.
+- If you omit the visible label, give the switch an accessible name with [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby) on the simple `q-switch` or `q-switch-hidden-input` element. Avoid `[attr.aria-label]` and `[attr.aria-labelledby]`; use `[aria-label]` or `[aria-labelledby]` for dynamic values.
+
+<QdsDemo name="SwitchAriaLabelDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-switch"
+  name="SwitchExplorerDemo"
+  parts={["root", "label", "control", "thumb", "hint"]}
+  scope="switch"
+/>
 
 ## API
 
@@ -190,18 +189,54 @@ The [q-switch](./#q-switch) directive extends the [q-switch-root](./#q-switch-ro
 
 <TypeDocProps name="SwitchRootDirective" />
 
+<TypeDocAngularAttributes
+  name={["QdsSwitchRootBindings", "SwitchRootBindings"]}
+/>
+
 ### q-switch-label
 
 <TypeDocProps name="SwitchLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSwitchLabelBindings", "SwitchLabelBindings"]}
+/>
 
 ### q-switch-hidden-input
 
 <TypeDocProps name="SwitchHiddenInputDirective" />
 
+<TypeDocAngularAttributes
+  name={["QdsSwitchHiddenInputBindings", "SwitchHiddenInputBindings"]}
+/>
+
 ### q-switch-control
 
 <TypeDocProps name="SwitchControlComponent" />
 
+<TypeDocAngularAttributes
+  name={["QdsSwitchControlBindings", "SwitchControlBindings"]}
+/>
+
+### q-switch-thumb
+
+<TypeDocProps name="SwitchThumbDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSwitchThumbBindings", "SwitchThumbBindings"]}
+/>
+
+### q-switch-hint
+
+<TypeDocProps name="SwitchHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSwitchHintBindings", "SwitchHintBindings"]}
+/>
+
 ### q-switch-error-text
 
 <TypeDocProps name="SwitchErrorTextComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsSwitchErrorTextBindings", "SwitchErrorTextBindings"]}
+/>

@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {createRow} from "../core/row"
-import type {Row, RowData, RowModel, TableInstance} from "../types"
-import {memo} from "../utils"
+import {createRow} from "../core/row.js"
+import type {Row, RowData, RowModel, TableInstance} from "../types.js"
+import {memo} from "../utils.js"
 
 export function getCoreRowModel<TData extends RowData>(): (
   table: TableInstance<TData>,
@@ -34,7 +34,8 @@ export function getCoreRowModel<TData extends RowData>(): (
         ): Row<TData>[] => {
           const rows = [] as Row<TData>[]
 
-          originalRows.forEach((originalRow, i) => {
+          for (let i = 0; i < originalRows.length; i++) {
+            const originalRow = originalRows[i]
             // Make the row
             const row = createRow(
               table,
@@ -62,7 +63,7 @@ export function getCoreRowModel<TData extends RowData>(): (
                 row.subRows = accessRows(row.originalSubRows, depth + 1, row)
               }
             }
-          })
+          }
 
           return rows
         }

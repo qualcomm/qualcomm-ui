@@ -26,9 +26,9 @@ import {
   type QdsButtonVariant,
 } from "@qualcomm-ui/qds-core/button"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
-import type {Explicit} from "@qualcomm-ui/utils/guard"
 
 import {
+  type ButtonGroupContextValue,
   provideQdsButtonGroupContext,
   QdsButtonGroupContextService,
 } from "./qds-button-group-context.service"
@@ -119,13 +119,10 @@ export class ButtonGroupDirective
 
   ngOnInit() {
     this.qdsButtonGroupService.init(
-      computed<
-        Explicit<Omit<QdsButtonGroupApiProps, "aria-label" | "aria-labelledby">>
-      >(() => ({
+      computed<ButtonGroupContextValue>(() => ({
         density: this.density(),
         disabled: this.disabled(),
         emphasis: this.emphasis(),
-        layout: this.layout(),
         size: this.size(),
         variant: this.variant(),
       })),

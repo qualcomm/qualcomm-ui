@@ -1,3 +1,3 @@
-export * from "./popover.api"
-export * from "./popover.classes"
-export type * from "./popover.types"
+export * from "./popover.api.js"
+export * from "./popover.classes.js"
+export type * from "./popover.types.js"

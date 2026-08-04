@@ -4,9 +4,9 @@
 import {Component, input} from "@angular/core"
 import {CircleAlert} from "lucide-angular"
 
-import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CorePasswordInputErrorIndicatorDirective} from "@qualcomm-ui/angular-core/password-input"
+import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 
 @Component({
   selector: "[q-password-input-error-indicator]",

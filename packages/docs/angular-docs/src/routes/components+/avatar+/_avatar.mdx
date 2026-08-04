@@ -1,13 +1,15 @@
 ---
 title: Avatar
-group: Data Display
 description: Avatars provide visual representation of users, accounts, or entities. They support multiple content types including icons, initials, and images, with optional status indicators to communicate presence or state information.
 component: Avatar
 aliases: [profile picture, user photo, profile image]
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 
 # {frontmatter.title}
 
@@ -41,8 +43,7 @@ Here's a typical usage example:
 ### Content
 
 ::: terms
-placeholder
-broken image
+placeholder, broken image
 :::
 
 The `q-avatar-content` directive displays alternative content within the avatar. Use it by itself to show a single character or an icon, or together with `q-avatar-image` to provide fallback content if the image cannot be loaded.
@@ -52,11 +53,7 @@ The `q-avatar-content` directive displays alternative content within the avatar.
 ### Sizes
 
 ::: terms
-extra small
-small
-medium
-large
-extra large
+extra small, small, medium, large, extra large
 :::
 
 Use the [size](./#size) input to set the size of the avatar. The available sizes are `xs`, `sm`, `md` (default), `lg`, and `xl`.
@@ -66,19 +63,17 @@ Use the [size](./#size) input to set the size of the avatar. The available sizes
 ### Emphasis
 
 ::: terms
-high contrast
-color scheme
+high contrast, color scheme
 :::
 
-When displaying initials or an icon, use the [emphasis](./#emphasis) input to set the avatar's color. Available values are `neutral` (default), `contrast`, and `brand`.
+When displaying initials or an icon, use the [emphasis](./#emphasis-1) input to set the avatar's color. Available values are `neutral` (default), `contrast`, and `brand`.
 
 <QdsDemo name="AvatarEmphasisDemo" className="bg-neutral-03" />
 
 ### Status
 
 ::: terms
-presence indicator
-online
+presence indicator, online
 :::
 
 To indicate the status of the user or entity, use the `q-avatar-status` directive and set its [status](./#status-1) input to one of: `active`, `offline` (default), `away`, or `busy`.
@@ -88,14 +83,21 @@ To indicate the status of the user or entity, use the `q-avatar-status` directiv
 ### State Callback
 
 ::: terms
-loading state
-image loaded
-image error
+loading state, image loaded, image error
 :::
 
 You can listen for changes to the avatar's state by using the [stateChanged](./#stateChanged) output.
 
 <QdsDemo name="AvatarStateCallbackDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-avatar"
+  name="AvatarExplorerDemo"
+  parts={[{name: "root", link: "#q-avatar"}, "image", "status"]}
+  scope="avatar"
+/>
 
 ## API
 
@@ -103,14 +105,30 @@ You can listen for changes to the avatar's state by using the [stateChanged](./#
 
 <TypeDocProps name="AvatarDirective" />
 
+<TypeDocAngularAttributes
+  name={["QdsAvatarRootBindings", "AvatarRootBindings"]}
+/>
+
 ### q-avatar-image
 
 <TypeDocProps name="AvatarImageDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsAvatarImageBindings", "AvatarImageBindings"]}
+/>
 
 ### q-avatar-content
 
 <TypeDocProps name="AvatarContentDirective" />
 
+<TypeDocAngularAttributes
+  name={["QdsAvatarContentBindings", "AvatarContentBindings"]}
+/>
+
 ### q-avatar-status
 
 <TypeDocProps name="AvatarStatusDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsAvatarStatusBindings", "AvatarStatusBindings"]}
+/>

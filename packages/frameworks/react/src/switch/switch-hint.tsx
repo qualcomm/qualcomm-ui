@@ -3,12 +3,12 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 import {useSwitchHint} from "@qualcomm-ui/react-core/switch"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
+import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSwitchContext} from "./qds-switch-context"
+import {useQdsSwitchContext} from "./qds-switch-context.js"
 
 export interface SwitchHintProps extends IdProp, InputHintProps {
   /**

@@ -19,6 +19,7 @@ The `columnVisibility` state is a map of column IDs to boolean values. A column 
 
 ```ts
 import {signal} from "@angular/core"
+
 import type {VisibilityState} from "@qualcomm-ui/core/table"
 
 // ...
@@ -137,7 +138,9 @@ When rendering header, body, and footer cells, use the "visible" variants of tab
         @for (cell of row.getVisibleCells(); track cell.id) {
           <!-- takes column visibility into account -->
           <td q-table-cell>
-            <ng-container *renderCell="cell; let value">{{ value }}</ng-container>
+            <ng-container *renderCell="cell; let value">
+              {{ value }}
+            </ng-container>
           </td>
         }
       </tr>

@@ -9,10 +9,10 @@ import {
   type CoreToastLabelProps,
   CoreToastRoot,
   type CoreToastRootProps,
-} from "./core-toast"
+} from "./core-toast.js"
 
-export * from "./toast-context"
-export * from "./toaster"
+export * from "./toast-context.js"
+export * from "./toaster.js"
 
 export type {
   CoreToastRootProps,

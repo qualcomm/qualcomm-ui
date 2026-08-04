@@ -4,7 +4,6 @@
 import type {ReactElement, ReactNode} from "react"
 
 import type {SegmentedControlItemApiProps} from "@qualcomm-ui/core/segmented-control"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {CheckboxContextProvider} from "@qualcomm-ui/react-core/checkbox"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {useSegmentedControlItem} from "@qualcomm-ui/react-core/segmented-control"
@@ -13,13 +12,13 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSegmentedControlContext} from "./qds-segmented-control-context"
+import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.js"
 
 export interface SegmentedControlItemRootProps
-  extends SegmentedControlItemApiProps,
-    ElementRenderProp<"label"> {
+  extends SegmentedControlItemApiProps, ElementRenderProp<"label"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

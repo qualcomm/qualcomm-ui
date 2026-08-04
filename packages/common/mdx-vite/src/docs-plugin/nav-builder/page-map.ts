@@ -5,10 +5,10 @@ import {join} from "node:path"
 
 import {capitalCase} from "@qualcomm-ui/utils/change-case"
 
-import type {RoutingStrategy} from "../config"
+import type {RoutingStrategy} from "../config/index.js"
 
-import {getRouteMeta} from "./get-route-meta"
-import type {RouteMetaInternal} from "./types"
+import {getRouteMeta} from "./get-route-meta.js"
+import type {RouteMetaInternal} from "./types.js"
 
 export function getPathnameFromPathSegments(segments: string[]) {
   return `/${segments.join("/")}`
@@ -70,11 +70,27 @@ function isPathSeparator(char: string) {
 const indexRouteRegex =
   /((^|[.]|[+]\/)(index|_index))(\/[^\/]+)?$|(\/_?index\/)/
 
+interface FlatRoutesSegmentsOptions {
+  /**
+   * When true, plain `/` folders are flattened the same way `+/` folders are.
+   * Mirrors the `"react-router-directory-groups"` routing strategy.
+   */
+  directoryMode?: boolean
+  paramPrefixChar?: string
+}
+
 function getRemixFlatRoutesSegments(
   name: string,
   index: boolean,
-  paramPrefixChar: string = "$",
+  paramPrefixCharOrOptions: FlatRoutesSegmentsOptions | string = "$",
 ) {
+  const options: FlatRoutesSegmentsOptions =
+    typeof paramPrefixCharOrOptions === "string"
+      ? {paramPrefixChar: paramPrefixCharOrOptions}
+      : paramPrefixCharOrOptions
+  const paramPrefixChar = options.paramPrefixChar ?? "$"
+  const directoryMode = options.directoryMode ?? false
+
   let routeSegments: string[] = []
   let i = 0
   let routeSegment = ""
@@ -106,6 +122,24 @@ function getRemixFlatRoutesSegments(
     name = name.replace(/\+\//g, ".")
     hasPlus = true
   }
+
+  if (directoryMode && /\//.test(name)) {
+    /**
+     * In directory mode, plain folders flatten the same way `+` folders do.
+     * Preserve trailing `.route` so route-directory naming still works.
+     */
+    if (name.endsWith(".route")) {
+      const lastSlash = name.lastIndexOf("/")
+      if (lastSlash >= 0) {
+        const head = name.substring(0, lastSlash).replace(/\//g, ".")
+        name = `${head}/${name.substring(lastSlash + 1)}`
+      }
+    } else {
+      name = name.replace(/\//g, ".")
+    }
+    hasPlus = true
+  }
+
   const hasFolder = /\//.test(name)
   // if name has plus folder, but we still have regular folders
   // then treat ending route as flat-folders
@@ -206,6 +240,41 @@ function getRemixHybridRoutesPathSegments(filePath: string): string[] {
   )
 }
 
+/**
+ * `"react-router-directory-groups"` routing strategy behavior: plain folders
+ * flatten just like `+` folders, and any non-final folder segment starting
+ * with `_` excludes the file from the page map entirely.
+ */
+function getRemixHybridDirectoryRoutesPathSegments(filePath: string): string[] {
+  const routeWithoutExtension = filePath.substring(0, filePath.lastIndexOf("."))
+
+  if (hasPrivateFolderSegment(routeWithoutExtension)) {
+    return []
+  }
+
+  return getRemixFlatRoutesSegments(
+    routeWithoutExtension,
+    indexRouteRegex.test(routeWithoutExtension),
+    {directoryMode: true},
+  )
+}
+
+/**
+ * Returns true when any non-final path segment (i.e. a folder) starts with
+ * `_`. The filename itself is allowed to start with `_` because underscore
+ * route files keep their pathless/layout meaning in directory mode.
+ */
+function hasPrivateFolderSegment(routeWithoutExtension: string): boolean {
+  const segments = routeWithoutExtension.split("/")
+  for (let i = 0; i < segments.length - 1; i++) {
+    const segment = segments[i]
+    if (segment.startsWith("_") && !segment.includes("+")) {
+      return true
+    }
+  }
+  return false
+}
+
 export function getPathSegmentsFromFileName(
   filePath: string,
   pageDirectory: string,
@@ -220,6 +289,10 @@ export function getPathSegmentsFromFileName(
   switch (strategy) {
     case "vite-generouted":
       return getGeneroutedPathSegments(filePathWithoutPageDirectory)
+    case "react-router-directory-groups":
+      return getRemixHybridDirectoryRoutesPathSegments(
+        filePathWithoutPageDirectory,
+      )
     default:
       return getRemixHybridRoutesPathSegments(filePathWithoutPageDirectory)
   }
@@ -256,5 +329,33 @@ export function filterFileGlob(
         .map((file) => join(srcDir, file))
     )
   }
+  if (
+    typeof router === "string" &&
+    router === "react-router-directory-groups"
+  ) {
+    return fileGlob.filter(
+      (file) =>
+        file.endsWith(ext) &&
+        !file.includes("$") &&
+        !hasPrivateFolderInRelativePath(file, srcDir),
+    )
+  }
   return fileGlob.filter((file) => file.endsWith(ext) && !file.includes("$"))
+}
+
+/**
+ * Returns true when the file's path (relative to `srcDir`) contains a folder
+ * segment starting with `_`. The filename itself is excluded from this check
+ * — underscore route files keep their pathless/layout meaning.
+ */
+function hasPrivateFolderInRelativePath(file: string, srcDir: string): boolean {
+  const relative = file.startsWith(srcDir) ? file.slice(srcDir.length) : file
+  const segments = relative.split("/").filter(Boolean)
+  for (let i = 0; i < segments.length - 1; i++) {
+    const segment = segments[i]
+    if (segment.startsWith("_") && !segment.includes("+")) {
+      return true
+    }
+  }
+  return false
 }

@@ -5,7 +5,7 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {defined, type Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {tabClasses, tabsClasses} from "./tabs.classes"
+import {tabClasses, tabsClasses} from "./tabs.classes.js"
 import type {
   QdsTabsApi,
   QdsTabsApiProps,
@@ -15,10 +15,11 @@ import type {
   QdsTabsRootBindings,
   QdsTabsTabBindings,
   QdsTabsTabButtonBindings,
+  QdsTabsTabButtonTextBindings,
   QdsTabsTabDismissButtonBindings,
   QdsTabsTabEndIconBindings,
   QdsTabsTabStartIconBindings,
-} from "./tabs.types"
+} from "./tabs.types.js"
 
 export function createQdsTabsApi(
   props: Explicit<QdsTabsApiProps>,
@@ -73,6 +74,11 @@ export function createQdsTabsApi(
         className: tabClasses.button,
         "data-size": size,
         "data-variant": variant,
+      })
+    },
+    getTabButtonTextBindings(): QdsTabsTabButtonTextBindings {
+      return normalize.element({
+        className: tabClasses.buttonText,
       })
     },
     getTabDismissButtonBindings(): QdsTabsTabDismissButtonBindings {

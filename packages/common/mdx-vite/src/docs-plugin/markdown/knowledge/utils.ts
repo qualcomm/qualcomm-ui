@@ -2,11 +2,9 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {createHash} from "node:crypto"
-import {access, readFile} from "node:fs/promises"
+import {access} from "node:fs/promises"
 import {dirname, join, resolve} from "node:path"
 import ts from "typescript"
-
-import type {ImportedModule} from "./types"
 
 export async function exists(dirPath: string): Promise<boolean> {
   return access(dirPath)
@@ -33,7 +31,10 @@ export function removePreviewLines(code: string): string {
     .join("\n")
 }
 
-export function getIntroLines(projectName?: string, description?: string) {
+export function getIntroLines(
+  projectName?: string,
+  description?: string,
+): string {
   const lines: string[] = []
 
   if (projectName) {
@@ -94,54 +95,4 @@ export async function resolveModulePath(
     }
   }
   return null
-}
-
-export function extractMetadata(
-  metadata: Record<string, string> | undefined,
-): [string, string][] {
-  return Object.entries(metadata ?? {})
-}
-
-export async function collectRelativeImports(
-  filePath: string,
-  visited: Set<string> = new Set(),
-  verbose?: boolean,
-): Promise<ImportedModule[]> {
-  const normalizedPath = resolve(filePath)
-  if (visited.has(normalizedPath)) {
-    return []
-  }
-  visited.add(normalizedPath)
-  const modules: ImportedModule[] = []
-  try {
-    const content = await readFile(normalizedPath, "utf-8")
-    const relativeImports = extractRelativeImports(content)
-    for (const importPath of relativeImports) {
-      const resolvedPath = await resolveModulePath(importPath, normalizedPath)
-      if (!resolvedPath) {
-        if (verbose) {
-          console.log(
-            `  Could not resolve import: ${importPath} from ${normalizedPath}`,
-          )
-        }
-        continue
-      }
-      const importContent = await readFile(resolvedPath, "utf-8")
-      modules.push({
-        content: importContent,
-        path: resolvedPath,
-      })
-      const nestedModules = await collectRelativeImports(
-        resolvedPath,
-        visited,
-        verbose,
-      )
-      modules.push(...nestedModules)
-    }
-  } catch (error) {
-    if (verbose) {
-      console.log(`Error processing ${normalizedPath}`, error)
-    }
-  }
-  return modules
 }

@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {collapsibleClasses} from "./collapsible.classes"
+import type {collapsibleClasses} from "./collapsible.classes.js"
 
 type CollapsibleClasses = typeof collapsibleClasses
 

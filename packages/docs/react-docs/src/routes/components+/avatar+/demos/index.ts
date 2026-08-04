@@ -1,4 +1,5 @@
 export * from "./avatar-content-demo"
+export * from "./avatar-explorer-demo"
 export * from "./avatar-emphasis-demo"
 export * from "./avatar-showcase-demo"
 export * from "./avatar-size-demo"

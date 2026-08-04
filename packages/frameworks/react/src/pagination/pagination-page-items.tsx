@@ -10,9 +10,9 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {PaginationContext} from "./pagination-context"
-import {PaginationPageItem} from "./pagination-page-item"
-import {useQdsPaginationContext} from "./qds-pagination-context"
+import {PaginationContext} from "./pagination-context.js"
+import {PaginationPageItem} from "./pagination-page-item.js"
+import {useQdsPaginationContext} from "./qds-pagination-context.js"
 
 export interface PaginationPageItemsProps {
   /**

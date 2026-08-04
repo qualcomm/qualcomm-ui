@@ -5,16 +5,15 @@ import type {ReactElement} from "react"
 
 import {X} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
-import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {
   CoreCombobox,
   type CoreComboboxClearTriggerProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface ComboboxClearTriggerProps
-  extends CoreComboboxClearTriggerProps {}
+export interface ComboboxClearTriggerProps extends CoreComboboxClearTriggerProps {}
 
 /**
  * Button that clears the input value. Renders a `<button>` element by default.

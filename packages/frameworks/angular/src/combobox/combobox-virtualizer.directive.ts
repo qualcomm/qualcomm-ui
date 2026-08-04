@@ -24,9 +24,9 @@ export class ComboboxVirtualizerDirective implements OnInit {
   private virtualizer = inject(ANGULAR_VIRTUALIZER_INSTANCE_TOKEN)
 
   static ngTemplateContextGuard(
-    dir: ComboboxVirtualizerDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: AngularVirtualizer<any, any>; index: number} {
+    _dir: ComboboxVirtualizerDirective,
+    _ctx: unknown,
+  ): _ctx is {$implicit: AngularVirtualizer<any, any>; index: number} {
     return true
   }
 

@@ -1,5 +1,6 @@
+import babel from "@rolldown/plugin-babel"
 import tailwindcss from "@tailwindcss/vite"
-import react from "@vitejs/plugin-react"
+import react, {reactCompilerPreset} from "@vitejs/plugin-react"
 import {defineConfig} from "vitest/config"
 
 import {getReactTestConfig} from "@qualcomm-ui/react-test-utils"
@@ -8,13 +9,13 @@ import {getReactTestConfig} from "@qualcomm-ui/react-test-utils"
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    react({
-      babel: {
-        plugins: ["babel-plugin-react-compiler"],
-      },
-    }) as any,
+    react(),
+    babel({
+      presets: [reactCompilerPreset()],
+    }),
   ],
-  test: getReactTestConfig({
-    include: "src/**/*.spec.tsx",
-  }),
+  resolve: {
+    tsconfigPaths: true,
+  },
+  test: getReactTestConfig(),
 })

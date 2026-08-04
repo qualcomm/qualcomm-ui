@@ -1,7 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {inputClasses} from "./input.classes"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
+
+import type {qdsInputAnatomy} from "./input.anatomy.js"
+import type {inputClasses} from "./input.classes.js"
 
 export type QdsInputSize = "sm" | "md" | "lg"
 
@@ -28,6 +31,9 @@ export interface QdsInputApiProps<IconType> {
 }
 
 type InputClasses = typeof inputClasses
+
+type PartName = AnatomyPartName<typeof qdsInputAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"input", P> {}
 
 export interface QdsInputInputBindings {
   className: InputClasses["input"]
@@ -62,15 +68,13 @@ export interface QdsInputClearTriggerBindings {
   "data-size": QdsInputSize
 }
 
-export interface QdsInputStartIconBindings {
+export interface QdsInputStartIconBindings extends Part<"startIcon"> {
   className: InputClasses["icon"]
-  "data-part": "start-icon"
   "data-size": QdsInputSize
 }
 
-export interface QdsInputEndIconBindings {
+export interface QdsInputEndIconBindings extends Part<"endIcon"> {
   className: InputClasses["icon"]
-  "data-part": "end-icon"
   "data-size": QdsInputSize
 }
 

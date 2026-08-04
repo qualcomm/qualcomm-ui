@@ -3,11 +3,11 @@
 
 import type {ReactElement} from "react"
 
+import {useSelectContext} from "@qualcomm-ui/react-core/select"
 import {
   InputErrorIndicator,
   type InputErrorIndicatorProps,
 } from "@qualcomm-ui/react/input"
-import {useSelectContext} from "@qualcomm-ui/react-core/select"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface SelectErrorIndicatorProps extends InputErrorIndicatorProps {}

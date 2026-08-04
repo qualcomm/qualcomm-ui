@@ -6,7 +6,7 @@ import {useMemo} from "react"
 import type {SearchResult} from "@qualcomm-ui/mdx-common"
 import {useSiteContext} from "@qualcomm-ui/react-mdx/context"
 
-import {useSiteSearch} from "./use-site-search"
+import {useSiteSearch} from "./use-site-search.js"
 
 export interface GroupedSearchResult {
   categoryId: string

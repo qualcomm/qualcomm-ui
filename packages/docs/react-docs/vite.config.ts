@@ -1,8 +1,9 @@
 import mdx from "@mdx-js/rollup"
 import {reactRouter} from "@react-router/dev/vite"
 import tailwindcss from "@tailwindcss/vite"
-import {defineConfig} from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
+import {dirname, resolve} from "node:path"
+import {fileURLToPath} from "node:url"
+import {defineConfig, type Plugin} from "vite"
 
 import {
   frontmatterHmrPlugin,
@@ -11,6 +12,30 @@ import {
   quiDocsPlugin,
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+function preserveRouteMdxSymlinks(): Plugin {
+  return {
+    enforce: "pre",
+    name: "preserve-route-mdx-symlinks",
+    resolveId(source) {
+      const [id, query] = source.split("?")
+      if (!id.includes("/src/routes/") || !id.endsWith(".mdx")) {
+        return
+      }
+
+      // React Router tracks route chunks by the symlinked route path.
+      // Preserve only route MDX symlinks so pnpm package symlinks still resolve
+      // normally.
+      const routeId = id.startsWith("/src/routes/")
+        ? resolve(__dirname, `.${id}`)
+        : id
+
+      return query ? `${routeId}?${query}` : routeId
+    },
+  }
+}
 
 export default defineConfig({
   clearScreen: false,
@@ -46,6 +71,7 @@ export default defineConfig({
     ],
   },
   plugins: [
+    preserveRouteMdxSymlinks(),
     tailwindcss(),
     mdx({
       providerImportSource: "@mdx-js/react",
@@ -53,9 +79,6 @@ export default defineConfig({
       remarkPlugins: [...getRemarkPlugins()],
     }),
     reactRouter(),
-    tsconfigPaths({
-      projects: ["./tsconfig.lib.json"],
-    }),
     quiDocsPlugin(),
     frontmatterHmrPlugin(),
     reactDemoPlugin({
@@ -81,10 +104,25 @@ export default defineConfig({
       transformTailwindStyles: true,
     }),
   ],
+  resolve: {
+    alias: {
+      // Shared MDX resolves provider imports from packages/docs/shared.
+      // Use this docs app's MDX runtime while preserving route symlinks above.
+      "@mdx-js/react": resolve(__dirname, "./node_modules/@mdx-js/react"),
+      "~components": resolve(__dirname, "./src/components"),
+      "~utils": resolve(__dirname, "./src/utils"),
+    },
+    tsconfigPaths: true,
+  },
   server: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 3100,
     warmup: {
-      clientFiles: ["./src/root.tsx", "./src/components/**/*.tsx"],
+      clientFiles: [
+        "./src/root.tsx",
+        "./src/components/**/*.tsx",
+        "./src/routes/**/demos/**/*.tsx",
+        "./src/routes/**/*.ts",
+      ],
     },
   },
 })

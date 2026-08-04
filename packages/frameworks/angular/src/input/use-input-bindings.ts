@@ -3,8 +3,8 @@
 
 import {computed, type Signal} from "@angular/core"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {
   QdsInlineIconButtonIconBindings,
   QdsInlineIconButtonRootBindings,
@@ -100,12 +100,11 @@ export function useInputErrorText(): UseInputErrorTextReturn {
   }
 }
 
-export interface UseInputGroupReturn
-  extends Signal<{
-    endIcon?: LucideIconOrString
-    getBindings: () => QdsInputGroupBindings
-    startIcon?: LucideIconOrString
-  }> {}
+export interface UseInputGroupReturn extends Signal<{
+  endIcon?: LucideIconOrString
+  getBindings: () => QdsInputGroupBindings
+  startIcon?: LucideIconOrString
+}> {}
 
 /**
  * A composable function that provides bindings for implementing the input group on

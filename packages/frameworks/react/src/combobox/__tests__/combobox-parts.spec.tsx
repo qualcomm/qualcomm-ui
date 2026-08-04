@@ -1,10 +1,10 @@
 import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {comboboxCollection} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Combobox} from "@qualcomm-ui/react/combobox"
 import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
@@ -253,4 +253,36 @@ const tests: MultiComponentTestCase[] = [
 
 describe("Combobox - Parts", () => {
   runTests(tests)
+
+  test("context render prop exposes live combobox state", async () => {
+    await render(
+      <Combobox.Root collection={stringCollection}>
+        <Combobox.Label>Context Label</Combobox.Label>
+        <Combobox.Context>
+          {(context) => (
+            <div data-test-id="combobox-context-state">
+              {context.open ? "open" : "closed"}
+            </div>
+          )}
+        </Combobox.Context>
+        <Combobox.Control>
+          <Combobox.Input />
+          <Combobox.Trigger />
+        </Combobox.Control>
+        <Portal>
+          <Combobox.Positioner>
+            <Combobox.Content>
+              <Combobox.Items />
+            </Combobox.Content>
+          </Combobox.Positioner>
+        </Portal>
+      </Combobox.Root>,
+    )
+
+    const contextState = page.getByTestId("combobox-context-state")
+    await expect.element(contextState).toHaveTextContent("closed")
+
+    await page.getByRole("button", {name: /toggle suggestions/i}).click()
+    await expect.element(contextState).toHaveTextContent("open")
+  })
 })

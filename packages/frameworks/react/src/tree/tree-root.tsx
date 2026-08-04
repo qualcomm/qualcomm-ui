@@ -12,11 +12,10 @@ import {CoreTree, type CoreTreeRootProps} from "@qualcomm-ui/react-core/tree"
 import type {TreeNode} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsTreeContextProvider} from "./qds-tree-context"
+import {QdsTreeContextProvider} from "./qds-tree-context.js"
 
 export interface TreeRootProps<T extends TreeNode = TreeNode>
-  extends CoreTreeRootProps<T>,
-    QdsTreeApiProps {}
+  extends CoreTreeRootProps<T>, QdsTreeApiProps {}
 
 /**
  * Groups all parts of the tree. Renders a `<div>` element by default.

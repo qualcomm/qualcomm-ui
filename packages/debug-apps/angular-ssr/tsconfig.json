@@ -1,31 +1,27 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "outDir": "./out-tsc/app",
+    "rootDir": "../..",
+    "strict": false,
+    "strictPropertyInitialization": false,
     "skipLibCheck": true,
-    "isolatedModules": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "paths": {
+      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
+      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
+      "@qualcomm-ui/angular-docs/*": ["../../docs/angular-docs/src/routes/*"]
+    }
   },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "typeCheckHostBindings": true,
-    "strictTemplates": true
-  },
-  "files": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "../../frameworks/angular/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/angular-core/tsconfig.lib.json"
     }
-  ]
+  ],
+  "include": [
+    "src/**/*.ts"
+  ],
 }

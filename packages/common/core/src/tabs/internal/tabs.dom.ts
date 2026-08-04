@@ -8,7 +8,7 @@ import {itemById, nextById, prevById, queryAll} from "@qualcomm-ui/dom/query"
 import {first, last} from "@qualcomm-ui/utils/array"
 import type {BindableIds, Scope, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {TabsElementIds, TabsSchema} from "../tabs.types"
+import type {TabsElementIds, TabsSchema} from "../tabs.types.js"
 
 interface TabsScope extends Scope {
   ids: BindableIds<TabsSchema>
@@ -39,7 +39,7 @@ export function getTabEl(scope: TabsScope, value: string): HTMLElement | null {
   if (!buttonEl) {
     return null
   }
-  return buttonEl.closest('[data-part="tab"]')
+  return buttonEl.closest('[data-tabs-part="tab"]')
 }
 
 export function getContentEl(ctx: TabsScope, id: string): HTMLElement {

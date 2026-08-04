@@ -14,8 +14,7 @@ export function isPlainObject(value: any): boolean {
     return true
   }
 
-  const Ctor =
-    Object.hasOwnProperty.call(proto, "constructor") && proto.constructor
+  const Ctor = Object.hasOwn(proto, "constructor") && proto.constructor
   if (Ctor === Object) {
     return true
   }
@@ -231,17 +230,18 @@ export function defineDataType<ValueType = unknown>({
    */
   Component: ComponentType<DataItemProps<ValueType>>
   /**
-   * Converts a string representation of a value back to a value of this data type.
+   * Converts a string representation of a value back to a value of this data
+   * type.
    *
-   * Throws an error if the input is invalid, in which case the editor will ignore
-   * the change.
+   * Throws an error if the input is invalid, in which case the editor will
+   * ignore the change.
    */
   deserialize?: (value: string) => ValueType
   /**
    * An optional custom editor component for editing values of this data type.
    *
-   * You must also provide a `serialize` and `deserialize` function to enable this
-   * feature.
+   * You must also provide a `serialize` and `deserialize` function to enable
+   * this feature.
    */
   Editor?: ComponentType<EditorProps<string>>
   /**
@@ -347,13 +347,15 @@ export function segmentArray<T>(arr: T[], size: number): T[][] {
 }
 
 /**
- * A safe version of `JSON.stringify` that handles circular references and BigInts.
+ * A safe version of `JSON.stringify` that handles circular references and
+ * BigInts.
  *
- * This function might be changed in the future to support more types. Use it with
- * caution.*
+ * This function might be changed in the future to support more types. Use it
+ * with caution.*
  *
  * @param obj A JavaScript value, usually an object or array, to be converted.
- * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
+ * @param space Adds indentation, white space, and line break characters to the
+ *   return-value JSON text to make it easier to read.
  * @returns
  */
 export function safeStringify(obj: any, space?: string | number) {
@@ -455,5 +457,5 @@ export async function copyString(value: string) {
   }
 
   // fallback to copy-to-clipboard when navigator.clipboard is not available
-  copyToClipboard(value)
+  void copyToClipboard(value)
 }

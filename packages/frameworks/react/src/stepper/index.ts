@@ -1,31 +1,37 @@
 import {
   StepperCompletedContent,
   type StepperCompletedContentProps,
-} from "./stepper-completed-content"
-import {StepperContent, type StepperContentProps} from "./stepper-content"
-import {StepperContext, type StepperContextProps} from "./stepper-context"
-import {StepperHint, type StepperHintProps} from "./stepper-hint"
-import {StepperIndicator, type StepperIndicatorProps} from "./stepper-indicator"
+} from "./stepper-completed-content.js"
+import {StepperContent, type StepperContentProps} from "./stepper-content.js"
+import {StepperContext, type StepperContextProps} from "./stepper-context.js"
+import {StepperHint, type StepperHintProps} from "./stepper-hint.js"
 import {
   StepperIndicatorIcon,
   type StepperIndicatorIconProps,
-} from "./stepper-indicator-icon"
-import {StepperItem, type StepperItemProps} from "./stepper-item"
-import {StepperLabel, type StepperLabelProps} from "./stepper-label"
-import {StepperList, type StepperListProps} from "./stepper-list"
+} from "./stepper-indicator-icon.js"
+import {
+  StepperIndicator,
+  type StepperIndicatorProps,
+} from "./stepper-indicator.js"
+import {StepperItem, type StepperItemProps} from "./stepper-item.js"
+import {StepperLabel, type StepperLabelProps} from "./stepper-label.js"
+import {StepperList, type StepperListProps} from "./stepper-list.js"
 import {
   StepperNextTrigger,
   type StepperNextTriggerProps,
-} from "./stepper-next-trigger"
+} from "./stepper-next-trigger.js"
 import {
   StepperPrevTrigger,
   type StepperPrevTriggerProps,
-} from "./stepper-prev-trigger"
-import {StepperRoot, type StepperRootProps} from "./stepper-root"
-import {StepperSeparator, type StepperSeparatorProps} from "./stepper-separator"
-import {StepperTrigger, type StepperTriggerProps} from "./stepper-trigger"
+} from "./stepper-prev-trigger.js"
+import {StepperRoot, type StepperRootProps} from "./stepper-root.js"
+import {
+  StepperSeparator,
+  type StepperSeparatorProps,
+} from "./stepper-separator.js"
+import {StepperTrigger, type StepperTriggerProps} from "./stepper-trigger.js"
 
-export * from "./qds-stepper-context"
+export * from "./qds-stepper-context.js"
 export type {
   StepperPrevTriggerProps,
   StepperIndicatorProps,

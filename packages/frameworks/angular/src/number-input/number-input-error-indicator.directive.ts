@@ -4,9 +4,9 @@
 import {Component, computed, input} from "@angular/core"
 import {CircleAlert} from "lucide-angular"
 
-import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreNumberInputErrorIndicatorDirective} from "@qualcomm-ui/angular-core/number-input"
+import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsNumberInputContext} from "./qds-number-input-context.service"

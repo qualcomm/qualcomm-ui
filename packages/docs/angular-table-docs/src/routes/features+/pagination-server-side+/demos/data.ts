@@ -127,7 +127,7 @@ export async function fetchData(options: FetchOptions): Promise<FetchResult> {
   }
 
   // Simulate some network latency
-  await new Promise((r) => setTimeout(r, 500))
+  await new Promise((resolve) => setTimeout(resolve, 500))
 
   return {
     pageCount: Math.ceil(totalCount / options.pageSize),

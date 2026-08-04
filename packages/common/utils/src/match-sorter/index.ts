@@ -1,3 +1,4 @@
-export * from "./match-sorter"
-export * from "./table-match-sorter"
-export {Rankings} from "./utils"
+export * from "./match-sorter.js"
+export * from "./remove-accents.js"
+export * from "./table-match-sorter.js"
+export * from "./utils.js"

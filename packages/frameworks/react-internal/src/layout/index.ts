@@ -1,3 +1,4 @@
+export * from "./badges"
 export * from "./doc-link"
 export * from "./footer"
 export * from "./github-changelog-link"

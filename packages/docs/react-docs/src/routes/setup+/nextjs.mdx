@@ -78,10 +78,12 @@ QUI components are designed with the Roboto Flex and Roboto Mono font families.
 In Next.js, configure fonts using `next/font/google` and set up the theme provider in your root layout:
 
 ```tsx
+import {type ReactNode} from "react"
+
 import type {Metadata} from "next"
 import {Roboto_Flex, Roboto_Mono} from "next/font/google"
+
 import "./globals.css"
-import {type ReactNode} from "react"
 
 const sansFont = Roboto_Flex({
   variable: "--font-roboto-flex",
@@ -121,8 +123,8 @@ export default function RootLayout({
 
 QUI styles support both light and dark modes. Choose the approach that matches your rendering strategy:
 
-- [SSR](./#SSR): for server-rendered apps. Uses cookies for flash-free theme persistence.
-- [SSG](./#SSG): for static exports (`output: "export"`). Uses `localStorage` with an inline script to prevent theme flash.
+- [SSR](./#ssr): for server-rendered apps. Uses cookies for flash-free theme persistence.
+- [SSG](./#ssg): for static exports (`output: "export"`). Uses `localStorage` with an inline script to prevent theme flash.
 
 ### SSR
 
@@ -193,7 +195,6 @@ export function ThemeProvider({
 Update your `app/layout.tsx` to read the theme cookie server-side and pass it to the provider:
 
 ```tsx
-import "./globals.css"
 import type {ReactNode} from "react"
 
 import type {Metadata} from "next"
@@ -203,6 +204,8 @@ import {cookies} from "next/headers"
 import {QdsTheme} from "@qualcomm-ui/qds-core/theme"
 
 import {ThemeProvider} from "./components/theme-provider"
+
+import "./globals.css"
 
 const sansFont = Roboto_Flex({
   subsets: ["latin"],
@@ -340,13 +343,14 @@ export function ThemeProvider({children}: ThemeProviderProps): ReactNode {
 Update your `app/layout.tsx`. An inline `<script>` in `<head>` reads `localStorage` before paint to prevent a flash of the wrong theme:
 
 ```tsx
-import "./globals.css"
 import type {ReactNode} from "react"
 
 import type {Metadata} from "next"
 import {Roboto_Flex, Roboto_Mono} from "next/font/google"
 
 import {ThemeProvider} from "./components/theme-provider"
+
+import "./globals.css"
 
 const sansFont = Roboto_Flex({
   subsets: ["latin"],
@@ -522,3 +526,7 @@ NextGen is independent of the legacy `@qui/react` package. Both can be installed
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 ```
+
+#### AI Migration
+
+You can use QUI MCP to migrate from legacy `@qui/react`. Follow the [setup guide](https://qui-ai.qualcomm.com/docs/mcp/setup), then create two separate MCP entries in your agent configuration: one for QUI React NextGen, and another for QUI React Legacy. Then prompt the LLM to migrate. For optimal results, only migrate a few components at a time.

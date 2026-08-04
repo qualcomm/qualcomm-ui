@@ -28,7 +28,7 @@ import type {User} from "./data"
       >
         <input
           q-checkbox-hidden-input
-          [attr.aria-label]="'Toggle ' + context().column.id + ' expanded'"
+          [aria-label]="'Toggle ' + context().column.id + ' expanded'"
         />
       </label>
 

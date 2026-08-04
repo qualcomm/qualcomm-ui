@@ -1,13 +1,12 @@
 ---
 title: Accordion
-group: Disclosure
 description: Accordions organize content into collapsible sections, allowing users to expand and view information progressively without overwhelming the interface.
 component: Accordion
 aliases: [disclosure, collapsible, faq]
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {Demo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
@@ -39,14 +38,15 @@ Here's a typical usage example that uses the shorthand syntax for the item.
 
 The following example is equivalent to the previous example, but uses the composite approach.
 
-<Demo name="AccordionCompositeDemo" component={demos.AccordionCompositeDemo} />
+<Demo
+  name="AccordionCompositeDemo"
+  component={demos.AccordionCompositeDemo}
+/>
 
 ### Composite Layout
 
 ::: terms
-chevron position
-arrow position
-caret position
+chevron position, arrow position, caret position
 :::
 
 Use the composite form only when the simple approach can't achieve your desired layout or behavior. The following example demonstrates how to display the expand/collapse indicator at the start of the trigger by changing its DOM position.
@@ -59,20 +59,20 @@ Use the composite form only when the simple approach can't achieve your desired 
 ### Multiple
 
 ::: terms
-expand all
-multi-expand
-open several
+expand all, multi-expand, open several
 :::
 
 By default, only a single accordion section can be open at a time. Setting [multiple](./#multiple-1) allows multiple sections to be open or closed simultaneously.
 
-<Demo name="AccordionMultipleDemo" component={demos.AccordionMultipleDemo} />
+<Demo
+  name="AccordionMultipleDemo"
+  component={demos.AccordionMultipleDemo}
+/>
 
 ### Collapsible
 
 ::: terms
-toggle closed
-re-collapse
+toggle closed, re-collapse
 :::
 
 When [multiple](./#multiple-1) is not set, enabling [collapsible](./#collapsible-1) lets the user close an open accordion item by clicking it again.
@@ -85,8 +85,7 @@ When [multiple](./#multiple-1) is not set, enabling [collapsible](./#collapsible
 ### Default Value
 
 ::: terms
-pre-expanded
-start expanded
+pre-expanded, start expanded
 :::
 
 The [defaultValue](./#defaultValue) prop allows you to set the initial state for the accordion by specifying which accordion item or items (if [multiple](./#multiple-1) is set) should be open by default.
@@ -106,13 +105,15 @@ inactive, greyed out, grayed out
 You can disable accordion items by setting their [disabled](./#disabled-2) prop. This prevents the item from being interacted with.
 You can disable the entire accordion by setting the [disabled](./#disabled-1) prop on `Accordion.Root`.
 
-<Demo name="AccordionDisabledDemo" component={demos.AccordionDisabledDemo} />
+<Demo
+  name="AccordionDisabledDemo"
+  component={demos.AccordionDisabledDemo}
+/>
 
 ### Uncontained
 
 ::: terms
-borderless
-edge-to-edge
+borderless, edge-to-edge
 :::
 
 Set the [uncontained](./#uncontained-1) prop when the accordion is not placed inside a container and needs to align flush with adjacent layout elements—such as when positioned directly below a paragraph of text.
@@ -126,9 +127,7 @@ This prop removes the default horizontal padding from accordion items, allowing 
 ### Size
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Use the [size](./#size-1) prop to control the size of the accordion items. The available sizes are `sm`, `md` (default), and `lg`.
@@ -138,8 +137,7 @@ Use the [size](./#size-1) prop to control the size of the accordion items. The a
 ### Secondary Text
 
 ::: terms
-subtitle
-helper text
+subtitle, helper text
 :::
 
 Use the `Accordion.ItemSecondaryText` component to display additional text opposite the trigger title.
@@ -152,8 +150,7 @@ Use the `Accordion.ItemSecondaryText` component to display additional text oppos
 ### Icon
 
 ::: terms
-leading icon
-prefix icon
+leading icon, prefix icon
 :::
 
 Pass an icon to the [icon](./#icon-1) prop on the `Accordion.ItemTrigger` element to display it next to the trigger title.
@@ -161,7 +158,7 @@ Pass an icon to the [icon](./#icon-1) prop on the `Accordion.ItemTrigger` elemen
 <Demo name="AccordionIconDemo" component={demos.AccordionIconDemo} />
 
 > [!warning/UX considerations]
-> In order to prevent visual confusion, only one icon can appear next to the trigger title. If you place the indicator at the start, the [icon prop](#icon) will be ignored.
+> In order to prevent visual confusion, only one icon can appear next to the trigger title. If you place the indicator at the start, the [icon prop](./#icon-1) will be ignored.
 
 ### Controlled State
 
@@ -224,40 +221,71 @@ The `Accordion.Item` component is a shortcut for the following:
 </Accordion.ItemRoot>
 ```
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.AccordionExplorerDemo}
+  linkPrefix="accordion"
+  parts={[
+    "root",
+    "item",
+    "item-trigger",
+    "item-text",
+    "item-secondary-text",
+    "item-indicator",
+    "item-content",
+  ]}
+  scope="accordion"
+/>
+
 ## API
 
-### \<Accordion.Root\>
+### \<Accordion.Root>
 
 <TypeDocProps name="AccordionRootProps" />
 
-### \<Accordion.Item\>
+<TypeDocAttributes name="AccordionRootBindings" />
+
+### \<Accordion.Item>
 
 <TypeDocProps name="AccordionItemProps" />
 
-### \<Accordion.ItemTrigger\>
+<TypeDocAttributes name="AccordionItemBindings" />
+
+### \<Accordion.ItemTrigger>
 
 <TypeDocProps name="AccordionItemTriggerProps" />
 
-### \<Accordion.ItemText\>
+<TypeDocAttributes name="AccordionItemTriggerBindings" />
+
+### \<Accordion.ItemText>
 
 <TypeDocProps name="AccordionItemTextProps" />
 
-### \<Accordion.ItemSecondaryText\>
+<TypeDocAttributes name="AccordionItemTextBindings" />
+
+### \<Accordion.ItemSecondaryText>
 
 <TypeDocProps name="AccordionItemSecondaryTextProps" />
 
-### \<Accordion.ItemIndicator\>
+<TypeDocAttributes name="AccordionItemSecondaryTextBindings" />
+
+### \<Accordion.ItemIndicator>
 
 <TypeDocProps name="AccordionItemIndicatorProps" />
 
-### \<Accordion.ItemContent\>
+<TypeDocAttributes name="AccordionItemIndicatorBindings" />
+
+### \<Accordion.ItemContent>
 
 <TypeDocProps name="AccordionItemContentProps" />
 
-### \<Accordion.ItemContentAnimator\>
+<TypeDocAttributes name="AccordionItemContentBindings" />
+
+### \<Accordion.ItemContentAnimator>
 
 <TypeDocProps name="AccordionItemContentAnimatorProps" />
 
-### \<Accordion.ItemContentBody\>
+### \<Accordion.ItemContentBody>
 
 <TypeDocProps name="AccordionItemContentBodyProps" />

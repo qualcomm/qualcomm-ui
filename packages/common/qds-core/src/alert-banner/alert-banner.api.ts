@@ -1,21 +1,26 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {alertBannerClasses} from "./alert-banner.classes"
+import {alertBannerAnatomy} from "./alert-banner.anatomy.js"
+import {alertBannerClasses} from "./alert-banner.classes.js"
 import type {
   QdsAlertBannerActionBindings,
   QdsAlertBannerApi,
   QdsAlertBannerApiProps,
   QdsAlertBannerCloseButtonBindings,
-  QdsAlertBannerCommonBindings,
   QdsAlertBannerDescriptionBindings,
+  QdsAlertBannerEmphasis,
   QdsAlertBannerHeadingBindings,
   QdsAlertBannerIconBindings,
   QdsAlertBannerRootBindings,
-} from "./alert-banner.types"
+  QdsAlertBannerVariant,
+} from "./alert-banner.types.js"
+
+const parts = alertBannerAnatomy.parts
 
 export function createQdsAlertBannerApi(
   props: Explicit<QdsAlertBannerApiProps>,
@@ -32,10 +37,6 @@ export function createQdsAlertBannerApi(
         : "inverse"
       : "neutral"
 
-  const commonBindings: QdsAlertBannerCommonBindings = {
-    "data-scope": "alert-banner",
-  }
-
   return {
     closeButtonEmphasis,
     emphasis,
@@ -44,55 +45,68 @@ export function createQdsAlertBannerApi(
     // group: bindings
     getActionBindings(): QdsAlertBannerActionBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.action,
         className: alertBannerClasses.action,
-        "data-part": "action",
       })
     },
 
     getCloseButtonBindings(): QdsAlertBannerCloseButtonBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.closeButton,
         "aria-label": closeButtonAriaLabel,
         className: alertBannerClasses.closeButton,
-        "data-part": "close-button",
       })
     },
 
     getDescriptionBindings(): QdsAlertBannerDescriptionBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.description,
         className: alertBannerClasses.description,
-        "data-part": "description",
       })
     },
 
     getHeadingBindings(): QdsAlertBannerHeadingBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.heading,
         className: alertBannerClasses.heading,
-        "data-part": "heading",
       })
     },
 
     getIconBindings(): QdsAlertBannerIconBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.statusIcon,
         className: alertBannerClasses.icon,
-        "data-part": "status-icon",
       })
     },
 
     getRootBindings(): QdsAlertBannerRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         className: alertBannerClasses.root,
         "data-emphasis": emphasis,
-        "data-part": "root",
         "data-variant": variant,
         dir: props.dir || "ltr",
         role: emphasis === "danger" ? "alert" : "status",
       })
     },
+  }
+}
+
+export function resolveAlertBannerButtonProps({
+  emphasis,
+  variant,
+}: {
+  emphasis: QdsAlertBannerEmphasis
+  variant: QdsAlertBannerVariant
+}): QdsButtonApiProps {
+  return {
+    emphasis:
+      variant === "strong" && emphasis === "warning"
+        ? "black-persistent"
+        : variant === "strong"
+          ? "inverse"
+          : "neutral",
+    size: "sm",
+    variant: "outline",
   }
 }

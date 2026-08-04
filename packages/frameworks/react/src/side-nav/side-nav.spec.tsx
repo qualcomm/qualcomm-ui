@@ -1,9 +1,9 @@
 import {type HTMLAttributes, useState} from "react"
 
-import {FileText, FolderIcon} from "lucide-react"
+import {FileText, FolderIcon, MoreHorizontal} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
-import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
@@ -550,6 +550,144 @@ describe("SideNav", () => {
 
     await page.getByRole("button", {name: "Open Sidebar"}).click()
     await expect.element(root).toHaveAttribute("data-state", "open")
+  })
+
+  test("filter input can drive visible navigation results", async () => {
+    const collection = createTestCollection()
+
+    function FilterableSideNav() {
+      const [query, setQuery] = useState("")
+      const visibleNodes =
+        collection.rootNode.nodes?.filter((node) =>
+          node.text.toLowerCase().includes(query.toLowerCase()),
+        ) ?? []
+
+      return (
+        <SideNav.Root collection={collection}>
+          <SideNav.FilterInput onValueChange={setQuery} value={query} />
+          {visibleNodes.map((node, index) => (
+            <SideNav.Nodes
+              key={node.id}
+              indexPath={[index]}
+              node={node}
+              renderBranch={({node}) => (
+                <SideNav.BranchNode>
+                  <SideNav.BranchTrigger />
+                  <SideNav.NodeText>{node.text}</SideNav.NodeText>
+                </SideNav.BranchNode>
+              )}
+              renderLeaf={({node}) => (
+                <SideNav.LeafNode>
+                  <SideNav.NodeText>{node.text}</SideNav.NodeText>
+                </SideNav.LeafNode>
+              )}
+            />
+          ))}
+        </SideNav.Root>
+      )
+    }
+
+    await render(<FilterableSideNav />)
+
+    const searchInput = page.getByLabelText("Search")
+    await expect.element(searchInput).toHaveAttribute("placeholder", "Search")
+
+    await searchInput.fill("settings")
+    await expect.element(searchInput).toHaveValue("settings")
+    await expect.element(page.getByText("Settings")).toBeVisible()
+    await expect.element(page.getByText("Home")).not.toBeInTheDocument()
+    await expect.element(page.getByText("Documents")).not.toBeInTheDocument()
+  })
+
+  test("renders grouped sections with labels and dividers", async () => {
+    const collection = createTestCollection()
+    const homeNode = testSideNavData[0]
+
+    await render(
+      <SideNav.Root collection={collection}>
+        <SideNav.Group>
+          <SideNav.GroupLabel>Main menu</SideNav.GroupLabel>
+          <SideNav.Divider />
+          <SideNav.Nodes
+            indexPath={[0]}
+            node={homeNode}
+            renderBranch={({node}) => (
+              <SideNav.BranchNode>
+                <SideNav.BranchTrigger />
+                <SideNav.NodeText>{node.text}</SideNav.NodeText>
+              </SideNav.BranchNode>
+            )}
+            renderLeaf={({node}) => (
+              <SideNav.LeafNode>
+                <SideNav.NodeText>{node.text}</SideNav.NodeText>
+              </SideNav.LeafNode>
+            )}
+          />
+        </SideNav.Group>
+      </SideNav.Root>,
+    )
+
+    await expect.element(page.getByText("Main menu")).toBeVisible()
+    await expect.element(page.getByText("Home")).toBeVisible()
+    await expect.element(page.getByRole("presentation")).toBeInTheDocument()
+  })
+
+  test("node action does not select a node while accessory and indicator reflect node state", async () => {
+    const collection = createTestCollection()
+    const onNodeAction = vi.fn()
+    const onSelectionChange = vi.fn()
+
+    await render(
+      <SideNav.Root
+        collection={collection}
+        onSelectedValueChange={onSelectionChange}
+      >
+        {collection.rootNode.nodes?.map((node, index) => (
+          <SideNav.Nodes
+            key={node.id}
+            indexPath={[index]}
+            node={node}
+            renderBranch={({node}) => (
+              <SideNav.BranchNode>
+                <SideNav.BranchTrigger />
+                <SideNav.NodeText>{node.text}</SideNav.NodeText>
+              </SideNav.BranchNode>
+            )}
+            renderLeaf={({node}) => (
+              <SideNav.LeafNode>
+                <SideNav.NodeIndicator>
+                  {node.id === "home" ? "Current" : null}
+                </SideNav.NodeIndicator>
+                <SideNav.NodeText>{node.text}</SideNav.NodeText>
+                {node.id === "home" ? (
+                  <>
+                    <SideNav.NodeAccessory>2 unread</SideNav.NodeAccessory>
+                    <SideNav.NodeAction
+                      aria-label="Open Home actions"
+                      icon={MoreHorizontal}
+                      onClick={onNodeAction}
+                    />
+                  </>
+                ) : null}
+              </SideNav.LeafNode>
+            )}
+          />
+        ))}
+      </SideNav.Root>,
+    )
+
+    await expect.element(page.getByText("2 unread")).toBeVisible()
+    await expect.element(page.getByText("Current")).not.toBeVisible()
+
+    await page.getByRole("button", {name: "Open Home actions"}).click()
+    expect(onNodeAction).toHaveBeenCalledTimes(1)
+    expect(onSelectionChange).not.toHaveBeenCalled()
+
+    await page.getByText("Home").click()
+    expect(onSelectionChange).toHaveBeenCalledWith(
+      expect.objectContaining({selectedValue: ["home"]}),
+    )
+    await expect.element(page.getByText("Current")).toBeVisible()
   })
 
   test("nested branch expansion", async () => {

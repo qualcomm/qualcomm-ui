@@ -3,11 +3,11 @@ import {render} from "@testing-library/angular"
 import {describe, expect, test} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
-import {ButtonModule} from "@qualcomm-ui/angular/button"
-import {provideQdsDialogContext} from "@qualcomm-ui/angular/dialog"
 import {provideDialogContext} from "@qualcomm-ui/angular-core/dialog"
 import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
 import {providePresenceContext} from "@qualcomm-ui/angular-core/presence"
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {provideQdsDialogContext} from "@qualcomm-ui/angular/dialog"
 
 import {DrawerRootDirective} from "./drawer-root.component"
 import {DrawerModule} from "./drawer.module"

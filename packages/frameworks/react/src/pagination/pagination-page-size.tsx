@@ -3,16 +3,16 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {Menu} from "@qualcomm-ui/react/menu"
 import {usePaginationContext} from "@qualcomm-ui/react-core/pagination"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {Menu} from "@qualcomm-ui/react/menu"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsPaginationContext} from "./qds-pagination-context"
+import {useQdsPaginationContext} from "./qds-pagination-context.js"
 
 export interface PaginationPageSizeProps extends ElementRenderProp<"div"> {
   /**
@@ -37,7 +37,11 @@ export function PaginationPageSize({
   const setPageSize = context.setPageSize
   const pageSizeLabelId = context.pageSizeLabelId
 
-  const mergedProps = mergeProps(qdsContext.getPageSizeBindings(), props)
+  const mergedProps = mergeProps(
+    context.getPageSizeBindings(),
+    qdsContext.getPageSizeBindings(),
+    props,
+  )
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>

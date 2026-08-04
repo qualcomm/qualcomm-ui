@@ -4,16 +4,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {ColumnSizing} from "../features/column-sizing"
-import {Expanding} from "../features/expanding"
-import {Filters} from "../features/filters"
-import {Grouping} from "../features/grouping"
-import {Ordering} from "../features/ordering"
-import {Pagination} from "../features/pagination"
-import {Pinning} from "../features/pinning"
-import {RowSelection} from "../features/row-selection"
-import {Sorting} from "../features/sorting"
-import {Visibility} from "../features/visibility"
+import {ColumnSizing} from "../features/column-sizing.js"
+import {Expanding} from "../features/expanding.js"
+import {Filters} from "../features/filters.js"
+import {Grouping} from "../features/grouping.js"
+import {Ordering} from "../features/ordering.js"
+import {Pagination} from "../features/pagination.js"
+import {Pinning} from "../features/pinning.js"
+import {RowSelection} from "../features/row-selection.js"
+import {Sorting} from "../features/sorting.js"
+import {Visibility} from "../features/visibility.js"
 import type {
   Column,
   ColumnDef,
@@ -29,11 +29,11 @@ import type {
   TableOptionsResolved,
   TableState,
   Updater,
-} from "../types"
-import {functionalUpdate, memo, type RequiredKeys} from "../utils"
+} from "../types.js"
+import {functionalUpdate, memo, type RequiredKeys} from "../utils.js"
 
-import {createColumn} from "./column"
-import {Headers} from "./headers"
+import {createColumn} from "./column.js"
+import {Headers} from "./headers.js"
 
 export interface TableFeature {
   createCell?: (cell: any, column: any, row: any, table: any) => any
@@ -358,9 +358,9 @@ export function createTable<TData extends RowData>(
     ...(options.initialState ?? {}),
   } as TableState
 
-  table._features.forEach((feature) => {
+  for (const feature of table._features) {
     initialState = feature.getInitialState?.(initialState) ?? initialState
-  })
+  }
 
   const queued: (() => void)[] = []
   let queuedTimeout = false

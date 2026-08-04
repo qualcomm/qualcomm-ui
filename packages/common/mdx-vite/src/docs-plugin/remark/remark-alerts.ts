@@ -38,15 +38,16 @@ export const remarkAlerts: Plugin<[], Root> = () => {
 
             if (!text.includes("\n")) {
               const itemChild: PhrasingContent[] = []
-              item.children.forEach((item: any, idx: number) => {
-                if (idx === 0) {
-                  return
+              for (let i = 0; i < item.children.length; i++) {
+                const item1 = item.children[i]
+                if (i === 0) {
+                  continue
                 }
-                if (idx === 1 && item.type === "break") {
-                  return
+                if (i === 1 && item1.type === "break") {
+                  continue
                 }
-                itemChild.push(item)
-              })
+                itemChild.push(item1)
+              }
               item.children = [...itemChild]
             }
           }
@@ -56,7 +57,7 @@ export const remarkAlerts: Plugin<[], Root> = () => {
 
       title = title.replace(/^\//, "")
 
-      if (!!alertType) {
+      if (alertType) {
         node.data = {
           hName: "div",
           hProperties: {
@@ -73,8 +74,7 @@ export const remarkAlerts: Plugin<[], Root> = () => {
             data: {
               hProperties: {
                 class: "qui-notification__icon",
-                "data-part": "status-icon",
-                "data-scope": "inline-notification",
+                "data-inline-notification-part": "status-icon",
               },
             },
             type: "paragraph",

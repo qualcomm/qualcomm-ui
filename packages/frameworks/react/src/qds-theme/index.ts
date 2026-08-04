@@ -1,1 +1,1 @@
-export * from "./qds-theme-context"
+export * from "./qds-theme-context.js"

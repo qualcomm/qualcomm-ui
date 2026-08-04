@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {addDomEvent, getEventPoint} from "./event"
-import {disableTextSelection} from "./text-selection"
-import type {Point} from "./types"
+import {addDomEvent, getEventPoint} from "./event.js"
+import {disableTextSelection} from "./text-selection.js"
+import type {Point} from "./types.js"
 
 export interface PointerMoveDetails {
   /**
@@ -64,6 +64,8 @@ export function trackPointerMove(
   ]
 
   return (): void => {
-    cleanups.forEach((cleanup) => cleanup())
+    for (const cleanup of cleanups) {
+      cleanup()
+    }
   }
 }

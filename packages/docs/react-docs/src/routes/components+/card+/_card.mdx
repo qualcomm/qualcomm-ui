@@ -1,0 +1,207 @@
+---
+title: Card
+description: Cards group related content and actions into a contained, scannable unit. They support media, headers, body text, and footers for flexible content layouts.
+component: Card
+aliases: [tile, panel, content card, media card, container]
+badges:
+  - id: since
+    label: 1.19.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1190
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```typescript
+import {Card} from "@qualcomm-ui/react/card"
+```
+
+## Examples
+
+### Showcase
+
+All card parts are optional. Combine them to fit the content you need to display.
+
+<Demo name="CardShowcaseDemo" component={demos.CardShowcaseDemo} />
+
+### Variants
+
+::: terms
+outline, outline-elevated, elevated, style, appearance
+:::
+
+The [variant](./#variant) prop controls border and shadow styles.
+
+<Demo name="CardVariantsDemo" component={demos.CardVariantsDemo} />
+
+### Actions
+
+Two types of actions are supported in cards: `Card.Button` and `Card.Link`.
+
+<Demo component={demos.CardActionsDemo} name="CardActionsDemo" />
+
+### Interactive
+
+::: terms
+interactive, hover, press, clickable, selectable
+:::
+
+Set [interactive](./#interactive-1) on `Card.Root` to enable hover and pressed visual states on the content area. Use the [render](./#render) prop to make the root element to a `<button>` so screen readers know that the element is interactive.
+
+> [!warning]
+> Interactive cards must not contain buttons, links, or input fields. React will yell at you if you nest interactive elements. Install the [QUI React ESLint Plugin](/eslint#plugin) to enforce this in your project.
+
+<Demo name="CardInteractiveDemo" component={demos.CardInteractiveDemo} />
+
+### Media
+
+::: terms
+media, image, photo, thumbnail, cover
+:::
+
+Use `Card.Media` to display an image or other visual content at the top of the card.
+
+<Demo name="CardMediaDemo" component={demos.CardMediaDemo} />
+
+### Badge
+
+Use `Card.Badge` to place a badge within the card.
+
+<Demo name="CardBadgeDemo" component={demos.CardBadgeDemo} />
+
+### Alignment
+
+::: terms
+alignment, start, center, centered, justify
+:::
+
+Set [alignment](./#alignment-1) on `Card.Root` to control horizontal positioning of heading and footer content. Defaults to `start`.
+
+<Demo name="CardAlignmentDemo" component={demos.CardAlignmentDemo} />
+
+### Sizes
+
+::: terms
+size, small, medium, large, spacing, typography, scale
+:::
+
+Cards support `sm`, `md`, and `lg` sizes that control internal spacing and typography.
+
+<Demo name="CardSizesDemo" component={demos.CardSizesDemo} />
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.CardExplorerDemo}
+  linkPrefix="card"
+  parts={[
+    "root",
+    "media",
+    "avatar",
+    "badge",
+    "content",
+    "heading",
+    "eyebrow-text",
+    "heading-text",
+    "subheading-text",
+    "paragraph-text",
+    "footer",
+    "link",
+    "button",
+  ]}
+  scope="card"
+/>
+
+## API
+
+### \<Card.Root\>
+
+<TypeDocProps name="CardRootProps" />
+
+<TypeDocAttributes name={["QdsCardRootBindings"]} />
+
+### \<Card.Media\>
+
+<TypeDocProps name="CardMediaProps" />
+
+<TypeDocAttributes name={["QdsCardMediaBindings"]} />
+
+### \<Card.Avatar\>
+
+<TypeDocProps name="CardAvatarProps" />
+
+<TypeDocAttributes name={["QdsCardAvatarBindings"]} />
+
+### \<Card.Badge\>
+
+<TypeDocProps name="CardBadgeProps" />
+
+<TypeDocAttributes name={["QdsCardBadgeBindings"]} />
+
+### \<Card.Content\>
+
+<TypeDocProps name="CardContentProps" />
+
+<TypeDocAttributes name={["QdsCardContentBindings"]} />
+
+### \<Card.Heading\>
+
+<TypeDocProps name="CardHeadingProps" />
+
+<TypeDocAttributes name={["QdsCardHeadingBindings"]} />
+
+### \<Card.EyebrowText\>
+
+<TypeDocProps name="CardEyebrowTextProps" />
+
+<TypeDocAttributes name={["QdsCardEyebrowTextBindings"]} />
+
+### \<Card.HeadingText\>
+
+<TypeDocProps name="CardHeadingTextProps" />
+
+<TypeDocAttributes name={["QdsCardHeadingTextBindings"]} />
+
+### \<Card.MenuTrigger\>
+
+<TypeDocProps name="CardMenuTriggerProps" />
+
+<TypeDocAttributes name={["QdsCardMenuTriggerBindings"]} />
+
+### \<Card.SubheadingText\>
+
+<TypeDocProps name="CardSubheadingTextProps" />
+
+<TypeDocAttributes name={["QdsCardSubheadingTextBindings"]} />
+
+### \<Card.ParagraphText\>
+
+<TypeDocProps name="CardParagraphTextProps" />
+
+<TypeDocAttributes name={["QdsCardParagraphTextBindings"]} />
+
+### \<Card.Footer\>
+
+<TypeDocProps name="CardFooterProps" />
+
+<TypeDocAttributes name={["QdsCardFooterBindings"]} />
+
+### \<Card.Button\>
+
+<TypeDocProps name="CardButtonProps" />
+
+<TypeDocAttributes name={["QdsCardButtonBindings"]} />
+
+### \<Card.Link\>
+
+<TypeDocProps name="CardLinkProps" />
+
+<TypeDocAttributes name={["QdsCardLinkBindings"]} />

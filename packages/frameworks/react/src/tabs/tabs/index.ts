@@ -1,8 +1,8 @@
-import {TabsContext, type TabsContextProps} from "./tabs-context"
-import {TabsIndicator, type TabsIndicatorProps} from "./tabs-indicator"
-import {TabsList, type TabsListProps} from "./tabs-list"
-import {TabsPanel, type TabsPanelProps} from "./tabs-panel"
-import {TabsRoot, type TabsRootProps} from "./tabs-root"
+import {TabsContext, type TabsContextProps} from "./tabs-context.js"
+import {TabsIndicator, type TabsIndicatorProps} from "./tabs-indicator.js"
+import {TabsList, type TabsListProps} from "./tabs-list.js"
+import {TabsPanel, type TabsPanelProps} from "./tabs-panel.js"
+import {TabsRoot, type TabsRootProps} from "./tabs-root.js"
 
 export type {
   TabsContextProps,

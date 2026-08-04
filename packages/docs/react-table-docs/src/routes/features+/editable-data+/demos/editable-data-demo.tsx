@@ -49,6 +49,7 @@ function Cell({
 
   return (
     <TextInput
+      aria-label="Cell value"
       className="w-full"
       clearable={false}
       onBlur={onBlur}

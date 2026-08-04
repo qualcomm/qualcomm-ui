@@ -3,11 +3,11 @@
 
 import {NgModule} from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {TagDirective} from "@qualcomm-ui/angular/tag"
 import {HighlightDirective} from "@qualcomm-ui/angular-core/highlight"
 import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {TagDirective} from "@qualcomm-ui/angular/tag"
 
 import {ComboboxClearTriggerDirective} from "./combobox-clear-trigger.directive"
 import {ComboboxContentDirective} from "./combobox-content.directive"

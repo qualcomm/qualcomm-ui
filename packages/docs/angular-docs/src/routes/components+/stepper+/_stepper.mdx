@@ -1,15 +1,14 @@
 ---
 title: Stepper
 description: Use steppers to visualize a group of connected actions or the order of a workflow.
-group: Disclosure
 aliases: [steps]
 badges:
   - id: since
     label: 2.3.0
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#230
-  - id: developerPreview
-    label: Developer Preview
-    url: /developer-previews
+  - id: beta
+    label: Beta
+    url: /versioning#beta
 ---
 
 import {QdsDemo, ComponentExplorer} from "~components/demo"
@@ -121,7 +120,7 @@ The stepper comes in two [sizes](./#size): `sm` and `lg`. The default size is `l
 
 #### Non-linear Form
 
-Combine `linear={false}` with per-step validation to let users complete steps in any order. Use the [invalid](./#invalid) and [completed](./#completed) props to track each step's status, and [stepperContext](./#stepper-context) to conditionally render a submit action once all steps pass.
+Combine `linear={false}` with per-step validation to let users complete steps in any order. Use the [invalid](./#invalid) and [completed](./#completed) props to track each step's status, and [stepperContext](./#steppercontext) to conditionally render a submit action once all steps pass.
 
 <QdsDemo expanded name="StepperNonlinearFormDemo" />
 
@@ -135,7 +134,7 @@ Use [isStepSkippable](./#isStepSkippable) to mark optional steps that can be byp
 
 <ComponentExplorer
   name="StepperExplorerDemo"
-  linkPrefix="stepper"
+  linkPrefix="q-stepper"
   parts={[
     "root",
     "list",

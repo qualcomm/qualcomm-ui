@@ -21,7 +21,7 @@
 
 .qui-docs-demo-container__root {
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: 4px;
+  border-radius: var(--border-radius-md);
   box-sizing: border-box;
   container-name: qui-docs-demo-container;
   container-type: inline-size;
@@ -81,9 +81,15 @@
 }
 
 .qui-demo-runner__tabs {
+  .qui-tabs__list {
+    &::before {
+      display: none;
+    }
+  }
   pre.shiki-code,
   pre.shiki {
-    span {
+    span,
+    code {
       font: var(--font-static-code-sm-default);
     }
     max-height: 700px;
@@ -179,7 +185,7 @@ pre.shiki {
 
 pre.shiki.mdx {
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: 4px;
+  border-radius: var(--border-radius-md);
 }
 
 .qui-demo-runner__wrapper {

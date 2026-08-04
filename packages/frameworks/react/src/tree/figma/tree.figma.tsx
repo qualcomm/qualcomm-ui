@@ -8,6 +8,9 @@ import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import type {QdsTreeSize} from "@qualcomm-ui/qds-core/tree"
 import {Tree} from "@qualcomm-ui/react/tree"
 
+// Tree Branch / Leaf are mapped via raw templates in
+// ./tree-branch.figma.js and ./tree-leaf.figma.js
+
 interface Node {
   id: string
   name: string
@@ -30,7 +33,6 @@ const collection = createTreeCollection<Node>({
   },
 })
 
-/** Tree Root - Shared Props */
 const sharedRootProps = {
   size: figma.enum<QdsTreeSize>("size", {
     sm: "sm",
@@ -131,71 +133,7 @@ figma.connect(Tree.Root, "<FIGMA_COMPONENTS_BASE>?node-id=9077-12455", {
   variant: {variant: "checkbox"},
 })
 
-/** Branch Node (_Node) */
-
-// Branch Node - icon variant
-figma.connect(Tree.Branch, "<FIGMA_COMPONENTS_BASE>?node-id=8859-749", {
-  example: () => (
-    <Tree.Branch>
-      <Tree.BranchNode>
-        <Tree.NodeIndicator />
-        <Tree.BranchTrigger />
-        <Tree.NodeIcon icon={FolderIcon} />
-        <Tree.NodeText>Folder name</Tree.NodeText>
-      </Tree.BranchNode>
-      <Tree.BranchContent>
-        <Tree.BranchIndentGuide />
-        {/* Child nodes */}
-      </Tree.BranchContent>
-    </Tree.Branch>
-  ),
-  variant: {variant: "icon"},
-})
-
-// Branch Node - checkbox variant
-figma.connect(Tree.Branch, "<FIGMA_COMPONENTS_BASE>?node-id=8859-749", {
-  example: () => (
-    <Tree.Branch>
-      <Tree.BranchNode>
-        <Tree.BranchTrigger />
-        <Tree.NodeCheckbox />
-        <Tree.NodeText>Branch name</Tree.NodeText>
-      </Tree.BranchNode>
-      <Tree.BranchContent>
-        <Tree.BranchIndentGuide />
-        {/* Child nodes */}
-      </Tree.BranchContent>
-    </Tree.Branch>
-  ),
-  variant: {variant: "checkbox"},
-})
-
-/** Leaf Node (_Leaf) */
-
-// Leaf Node - icon variant
-figma.connect(Tree.LeafNode, "<FIGMA_COMPONENTS_BASE>?node-id=8859-910", {
-  example: () => (
-    <Tree.LeafNode>
-      <Tree.NodeIndicator />
-      <Tree.NodeIcon icon={FileText} />
-      <Tree.NodeText>File name</Tree.NodeText>
-    </Tree.LeafNode>
-  ),
-  variant: {variant: "icon"},
-})
-
-// Leaf Node - checkbox variant
-figma.connect(Tree.LeafNode, "<FIGMA_COMPONENTS_BASE>?node-id=8859-910", {
-  example: () => (
-    <Tree.LeafNode>
-      <Tree.NodeCheckbox />
-      <Tree.NodeText>Leaf name</Tree.NodeText>
-    </Tree.LeafNode>
-  ),
-  variant: {variant: "checkbox"},
-})
-
-/** Tree Item Checkbox */
+// Tree Item Checkbox
 figma.connect(
   Tree.NodeCheckbox,
   "<FIGMA_COMPONENTS_BASE>?node-id=10294-352983",

@@ -1,11 +1,11 @@
 import {Component, inject} from "@angular/core"
 import {ArrowDown, ArrowUp, X} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   CellComponentContextDirective,
   TableModule,
 } from "@qualcomm-ui/angular/table"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 import type {User} from "./data"
 import {RowPinningService} from "./row-pinning.service"

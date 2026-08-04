@@ -3,9 +3,9 @@
 
 import type {ComponentPropsWithRef, ReactElement} from "react"
 
-import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {Menu} from "@qualcomm-ui/react/menu"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface DemoStyleToggleProps extends ComponentPropsWithRef<"div"> {

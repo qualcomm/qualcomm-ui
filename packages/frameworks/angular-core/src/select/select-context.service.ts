@@ -8,9 +8,9 @@ import {
   BaseApiContextService,
   createApiContext,
 } from "@qualcomm-ui/angular-core/machine"
-import {
-  type SelectApi,
-  type SelectValueChangeDetails,
+import type {
+  SelectApi,
+  SelectValueChangeDetails,
 } from "@qualcomm-ui/core/select"
 
 export interface SelectValueChangeEvent<T> extends SelectValueChangeDetails<T> {

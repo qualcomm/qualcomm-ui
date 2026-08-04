@@ -5,12 +5,12 @@ import type {ReactElement, ReactNode} from "react"
 
 import {ChevronDown, type LucideIcon} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {useSelectIndicator} from "@qualcomm-ui/react-core/select"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSelectContext} from "./qds-select-context"
+import {useQdsSelectContext} from "./qds-select-context.js"
 
 export interface SelectIndicatorProps extends ElementRenderProp<"button"> {
   /**

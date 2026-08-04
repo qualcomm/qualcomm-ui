@@ -1,2 +1,2 @@
-export * from "./segmented-control-context"
-export * from "./use-segmented-control"
+export * from "./segmented-control-context.js"
+export * from "./use-segmented-control.js"

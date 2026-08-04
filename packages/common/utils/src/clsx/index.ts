@@ -1,1 +1,1 @@
-export * from "./clsx"
+export * from "./clsx.js"

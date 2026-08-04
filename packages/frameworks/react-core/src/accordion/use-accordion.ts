@@ -19,7 +19,10 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useAccordionContext, useAccordionItemContext} from "./accordion-context"
+import {
+  useAccordionContext,
+  useAccordionItemContext,
+} from "./accordion-context.js"
 
 export function useAccordion(props: AccordionApiProps): AccordionApi {
   const machine = useMachine(accordionMachine, props)

@@ -3,8 +3,8 @@
 
 import {Directive} from "@angular/core"
 
-import {DialogBackdropDirective} from "@qualcomm-ui/angular/dialog"
 import {providePresenceContext} from "@qualcomm-ui/angular-core/presence"
+import {DialogBackdropDirective} from "@qualcomm-ui/angular/dialog"
 
 /**
  * The backdrop that overlays the content behind the drawer.

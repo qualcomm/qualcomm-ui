@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {SelectModule} from "@qualcomm-ui/angular/select"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {SelectModule} from "@qualcomm-ui/angular/select"
 import {selectCollection} from "@qualcomm-ui/core/select"
 
 @Component({

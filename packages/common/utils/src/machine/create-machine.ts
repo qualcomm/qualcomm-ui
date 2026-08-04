@@ -13,7 +13,7 @@ import type {
   NarrowedGuardsProperty,
   Params,
   Transition,
-} from "./machine.types"
+} from "./machine.types.js"
 
 export const INIT_STATE = "__init__"
 

@@ -3,7 +3,7 @@
 
 import type {ESLint, Linter} from "eslint"
 
-import {config, plugin, rules} from "./plugin"
+import {config, plugin, rules} from "./plugin.js"
 
 interface QuiEslintPluginReact {
   config: Linter.Config[]

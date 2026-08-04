@@ -4,10 +4,10 @@
 import {Component, computed, input, type OnInit} from "@angular/core"
 import {ChevronDown} from "lucide-angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {useSelectContext} from "@qualcomm-ui/angular-core/select"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context.service"

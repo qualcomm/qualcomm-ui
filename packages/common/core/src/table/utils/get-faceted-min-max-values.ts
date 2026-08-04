@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {RowData, TableInstance} from "../types"
-import {memo} from "../utils"
+import type {RowData, TableInstance} from "../types.js"
+import {memo} from "../utils.js"
 
 export function getFacetedMinMaxValues<TData extends RowData>(): (
   table: TableInstance<TData>,
@@ -19,14 +19,7 @@ export function getFacetedMinMaxValues<TData extends RowData>(): (
           return undefined
         }
 
-        const firstValue =
-          facetedRowModel.flatRows[0]?.getUniqueValues(columnId)
-
-        if (typeof firstValue === "undefined") {
-          return undefined
-        }
-
-        const facetedMinMaxValues: [any, any] = [firstValue, firstValue]
+        let facetedMinMaxValues: [number, number] | undefined
 
         for (let i = 0; i < facetedRowModel.flatRows.length; i++) {
           const values =
@@ -34,6 +27,15 @@ export function getFacetedMinMaxValues<TData extends RowData>(): (
 
           for (let j = 0; j < values.length; j++) {
             const value = values[j]
+
+            if (typeof value !== "number" || Number.isNaN(value)) {
+              continue
+            }
+
+            if (!facetedMinMaxValues) {
+              facetedMinMaxValues = [value, value]
+              continue
+            }
 
             if (value < facetedMinMaxValues[0]) {
               facetedMinMaxValues[0] = value

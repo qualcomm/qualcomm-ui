@@ -10,10 +10,11 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableRowDropIndicatorProps
-  extends Omit<ElementRenderProp<"div">, "children">,
+  extends
+    Omit<ElementRenderProp<"div">, "children">,
     QdsTableRowDropIndicatorProps {}
 
 /**

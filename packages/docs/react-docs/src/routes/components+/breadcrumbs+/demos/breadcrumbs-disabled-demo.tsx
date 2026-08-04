@@ -1,6 +1,7 @@
 import type {ReactElement} from "react"
 
 import {Home} from "lucide-react"
+import {Link} from "react-router"
 
 import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 
@@ -8,7 +9,9 @@ export function BreadcrumbsDisabledDemo(): ReactElement {
   return (
     <Breadcrumbs.Root aria-label="Breadcrumbs">
       <Breadcrumbs.List>
-        <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
+        <Breadcrumbs.Item icon={Home} render={<Link to="/" />}>
+          Home
+        </Breadcrumbs.Item>
         {/* preview */}
         <Breadcrumbs.Item disabled>Components</Breadcrumbs.Item>
         {/* preview */}

@@ -8,6 +8,8 @@ import {unified} from "unified"
 import {describe, expect, test} from "vitest"
 
 import {SectionExtractor} from "../markdown/knowledge/section-extractor"
+import {createRemarkProcessor} from "../markdown/remark-pipeline"
+import {remarkSerializeJsxKnowledge} from "../remark"
 
 function parseMarkdown(markdown: string): Root {
   return unified().use(remarkParse).parse(markdown)
@@ -684,5 +686,45 @@ Choose the library that fits your needs\u2014we've built examples.
       expect(sections[0].codeExamples?.[0]?.code).toContain("\u274C")
       expect(sections[0].codeExamples?.[0]?.code).toContain("\u2705")
     })
+  })
+})
+
+const searchPageInfo = {
+  frontmatter: {},
+  id: "test-page",
+  pathname: "/test-page",
+  title: "Test Page",
+  url: "https://docs.example.com/test-page",
+}
+
+describe("serialize-jsx directive in the search-index pipeline", () => {
+  function processForSearch(mdx: string): Root {
+    const processor = createRemarkProcessor({
+      mdx: true,
+      plugins: [remarkSerializeJsxKnowledge],
+      removeJsx: true,
+    })
+    return processor.runSync(processor.parse(mdx)) as Root
+  }
+
+  test("keeps prose and strips JSX and markers", () => {
+    const mdx = `## Section\n\n::: serialize-jsx\n\nThe demo shows reordering by array position.\n\n<NestedRouteOrderDemo />\n\n:::`
+    const tree = processForSearch(mdx)
+    const extractor = new SectionExtractor()
+    const {sections} = extractor.extract(tree, searchPageInfo)
+
+    expect(sections[0].content).toContain("The demo shows reordering")
+    expect(sections[0].content).not.toContain("::: serialize-jsx")
+    expect(sections[0].content).not.toContain("<NestedRouteOrderDemo")
+  })
+
+  test("leaves no marker text in rawContent", () => {
+    const mdx = `## Section\n\n::: serialize-jsx\n\nSome description.\n\n<SomeDemo />\n\n:::`
+    const tree = processForSearch(mdx)
+    const extractor = new SectionExtractor()
+    const {sections} = extractor.extract(tree, searchPageInfo)
+
+    expect(sections[0].rawContent).not.toContain("::: serialize-jsx")
+    expect(sections[0].rawContent).not.toContain(":::")
   })
 })

@@ -40,8 +40,8 @@ function atLeastOneSelectedValidator(): ValidatorFn {
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
     >
-      <fieldset>
-        <legend class="text-neutral-primary font-heading-xxs mb-3">
+      <fieldset class="m-0 border-0 p-0">
+        <legend class="text-neutral-primary font-heading-xxs mb-3 p-0">
           Select your interests (at least one required):
         </legend>
 

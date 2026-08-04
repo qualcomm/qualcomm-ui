@@ -14,11 +14,10 @@ import {
 } from "@qualcomm-ui/react-core/progress"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsProgressContextProvider} from "./qds-progress-context"
+import {QdsProgressContextProvider} from "./qds-progress-context.js"
 
 export interface ProgressRootProps
-  extends CoreProgressRootProps,
-    QdsProgressApiProps {}
+  extends CoreProgressRootProps, QdsProgressApiProps {}
 
 /**
  * Root container for a progress indicator. Renders a `<div>` element by default.

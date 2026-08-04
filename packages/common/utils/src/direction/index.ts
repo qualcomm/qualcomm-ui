@@ -1,1 +1,1 @@
-export type * from "./direction"
+export type * from "./direction.js"

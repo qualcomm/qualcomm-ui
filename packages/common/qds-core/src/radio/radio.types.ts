@@ -4,7 +4,7 @@
 import type {inputClasses} from "@qualcomm-ui/qds-core/input"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {radioClasses} from "./radio.classes"
+import type {radioClasses} from "./radio.classes.js"
 
 export type QdsRadioSize = "sm" | "md" | "lg"
 

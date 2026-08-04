@@ -1,3 +1,3 @@
-export * from "./text-area.api"
-export * from "./text-area.classes"
-export type * from "./text-area.types"
+export * from "./text-area.api.js"
+export * from "./text-area.classes.js"
+export type * from "./text-area.types.js"

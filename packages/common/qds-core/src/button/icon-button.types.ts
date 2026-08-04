@@ -1,15 +1,17 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {buttonClasses} from "./button.classes"
+import type {buttonClasses} from "./button.classes.js"
 import type {
   QdsButtonApiProps,
   QdsButtonDensity,
   QdsButtonSize,
   QdsButtonVariant,
-} from "./button.types"
+} from "./button.types.js"
+import type {iconButtonAnatomy} from "./icon-button.anatomy.js"
 
 export type QdsIconButtonShape = "square" | "rounded"
 
@@ -24,22 +26,21 @@ export interface QdsIconButtonApiProps extends QdsButtonApiProps {
 
 type ButtonClasses = typeof buttonClasses
 
-export interface QdsIconButtonRootBindings {
+type PartName = AnatomyPartName<typeof iconButtonAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"iconButton", P> {}
+
+export interface QdsIconButtonRootBindings extends Part<"root"> {
   className: ButtonClasses["root"]
   "data-density": QdsButtonDensity
   "data-disabled": BooleanDataAttr
-  "data-part": "root"
-  "data-scope": "icon-button"
   "data-shape": QdsIconButtonShape
   "data-size": QdsButtonSize
   "data-variant": QdsButtonVariant
 }
 
-export interface QdsIconButtonIconBindings {
+export interface QdsIconButtonIconBindings extends Part<"icon"> {
   className: ButtonClasses["icon"]
   "data-density": QdsButtonDensity
-  "data-part": "icon"
-  "data-scope": "icon-button"
   "data-size": QdsButtonSize
 }
 

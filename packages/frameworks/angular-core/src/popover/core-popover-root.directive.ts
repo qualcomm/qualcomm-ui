@@ -70,7 +70,9 @@ export class CorePopoverRootDirective
    * The initial open state of the popover when rendered.
    * Use when you don't need to control the open state of the popover.
    */
-  readonly defaultOpen = input<boolean | undefined>()
+  readonly defaultOpen = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
 
   /**
    * The document's text/writing direction.

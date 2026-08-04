@@ -1,28 +1,29 @@
 {
   "name": "@qualcomm-ui/eslint-config-angular",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "QUI ESLint config for consistent Angular code formatting",
-  "author": "Ryan Bower",
+  "keywords": [
+    "config",
+    "eslint",
+    "react"
+  ],
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "index.d.ts",
     "index.js",
-    "base-template.js",
-    "base-typescript.js",
-    "template-attribute-order.js",
-    "template-prettier.js",
-    "template-self-closing-tags.js",
-    "typescript.js"
+    "template-recommended.js",
+    "typescript-recommended.js"
   ],
+  "type": "module",
+  "sideEffects": false,
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
@@ -33,24 +34,17 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
-    "angular-eslint": "^21.3.0",
+    "angular-eslint": "^22.0.0",
     "eslint": "catalog:",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-plugin-oxfmt": "0.9.0",
     "typescript-eslint": "catalog:"
   },
   "peerDependencies": {
-    "angular-eslint": ">=20.3.0",
+    "angular-eslint": ">=22.0.0",
     "eslint": ">=9.37.0",
-    "eslint-config-prettier": ">=10.1.2",
-    "eslint-plugin-prettier": ">=5.3.1",
-    "prettier": ">=3.0.0",
+    "eslint-plugin-oxfmt": ">=0.9.0",
+    "oxfmt": ">=0.54.0",
     "typescript": ">=5.5.4",
-    "typescript-eslint": ">=8.31.1"
-  },
-  "keywords": [
-    "eslint",
-    "config",
-    "react"
-  ]
+    "typescript-eslint": ">=8.58.2"
+  }
 }

@@ -24,11 +24,11 @@ import {usePresenceContext} from "@qualcomm-ui/react-core/presence"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 import type {Optional} from "@qualcomm-ui/utils/guard"
-import type {IdRegistrationProps, Machine} from "@qualcomm-ui/utils/machine"
+import type {Machine} from "@qualcomm-ui/utils/machine"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useMenuContext} from "./menu-context"
-import {useMenuMachineContext} from "./menu-machine-context"
+import {useMenuContext} from "./menu-context.js"
+import {useMenuMachineContext} from "./menu-machine-context.js"
 
 export interface UseMenuReturn {
   api: MenuApi
@@ -57,8 +57,7 @@ export function useMenu(props: Optional<MenuApiProps, "id">): UseMenuReturn {
   })
 
   const triggerItemContext: MenuTriggerContextValue = useCallback(
-    (params: IdRegistrationProps) =>
-      parentApi?.getTriggerItemBindings(api, params),
+    (params) => parentApi?.getTriggerItemBindings(api, params),
     [api, parentApi],
   )
 

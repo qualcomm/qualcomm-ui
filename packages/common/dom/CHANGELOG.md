@@ -1,5 +1,80 @@
 # @qualcomm-ui/dom Changelog
 
+## 1.1.5
+
+Jul 1st, 2026
+
+### Bug Fixes
+
+- nested overlay z-index and unit selector position ([7d800e7](https://github.com/qualcomm/qualcomm-ui/commit/7d800e7))
+
+## 1.1.4
+
+Jun 10th, 2026
+
+### Styles
+
+- apply lint updates ([277ab8d](https://github.com/qualcomm/qualcomm-ui/commit/277ab8d))
+
+### Code Refactoring
+
+- support nodenext resolution ([8cf0690](https://github.com/qualcomm/qualcomm-ui/commit/8cf0690))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.2]
+
+## 1.1.3
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
+## 1.1.2
+
+May 14th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
+## 1.1.1
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
+## 1.1.0
+
+Apr 19th, 2026
+
+### Features
+
+- [floating-ui]: read gutter from CSS --gutter custom property ([0db5e35](https://github.com/qualcomm/qualcomm-ui/commit/0db5e35))
+
+### Code Refactoring
+
+- [floating-ui]: replace arrow rotation with clip-path diamond ([7717aa9](https://github.com/qualcomm/qualcomm-ui/commit/7717aa9))
+
+## 1.0.12
+
+Apr 19th, 2026
+
+### Bug Fixes
+
+- [floating-ui]: parameterize arrow selector for namespaced anatomies ([2176a41](https://github.com/qualcomm/qualcomm-ui/commit/2176a41))
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
 ## 1.0.11
 
 Apr 2nd, 2026

@@ -9,14 +9,14 @@ import {
   signal,
 } from "@angular/core"
 
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   END_ICON_CONTEXT_TOKEN,
   type IconTokenContext,
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
-import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
-import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
-import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   headerBarClasses,
   type QdsHeaderBarNavItemProps,
@@ -32,7 +32,7 @@ import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
       useFactory: (): IconTokenContext => ({
         getBindings: signal({
           class: headerBarClasses.itemIcon,
-          "data-part": "start-icon",
+          "data-header-bar-part": "start-icon",
         }),
       }),
     },
@@ -41,7 +41,7 @@ import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
       useFactory: (): IconTokenContext => ({
         getBindings: signal({
           class: headerBarClasses.itemIcon,
-          "data-part": "end-icon",
+          "data-header-bar-part": "end-icon",
         }),
       }),
     },

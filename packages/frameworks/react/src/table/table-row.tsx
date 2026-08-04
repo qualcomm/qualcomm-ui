@@ -10,11 +10,10 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableRowProps
-  extends ElementRenderProp<"tr">,
-    QdsTableRowProps {}
+  extends ElementRenderProp<"tr">, QdsTableRowProps {}
 
 /**
  * A table row. Renders a `<tr>` element by default.

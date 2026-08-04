@@ -1,0 +1,33 @@
+---
+title: Versioning
+---
+
+import {Badge} from "@qualcomm-ui/react/badge"
+
+# {frontmatter.title}
+
+This library follows [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`). Read more about the guarantees below.
+
+## Semver Guarantees
+
+- **Patch** releases contain bug fixes. No public API changes are introduced.
+- **Minor** releases add new features and backwards-compatible changes. Existing APIs continue to work without modification.
+- **Major** releases may contain breaking changes to public APIs. These are documented in the release notes with migration guidance.
+
+## Pre-Release Components
+
+Pre-Release components are exempt from the guarantees above. Their APIs can introduce breaking changes in any **Minor** release. Consumers of these components should expect API churn between minor versions and review the changelog when upgrading.
+
+### Alpha
+
+Occasionally we'll release a component in <Badge size="sm" emphasis="orange">Alpha</Badge>. These components are still under active development and will likely undergo breaking changes from version to version. For these components, expect frequent and undocumented changes with minimal migration support.
+
+### Beta
+
+Some components are released in <Badge size="sm" emphasis="purple">Beta</Badge>. These components are typically ready for production use, but their APIs and behavior may change slightly outside our normal Semver guarantees.
+
+Once a component graduates from Beta, it follows the standard semver guarantees described above.
+
+## Release Versions
+
+If a component was added after 1.0.0, it will have a version indicator badge next to its page title. [QUI MCP](https://qui-ai.qualcomm.com/docs/mcp) also provides component and prop version information.

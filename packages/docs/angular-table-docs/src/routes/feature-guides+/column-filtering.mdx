@@ -6,7 +6,7 @@ title: Column Filtering Guide
 
 ## Examples & API
 
-- [Column Filtering](/features/filters)
+- [Column Filtering](/features/filters-client-side)
 - [Column Filtering API](/api/features/filters)
 
 ## Guide
@@ -111,6 +111,7 @@ Control the column filter state with the `state.columnFilters` and `onColumnFilt
 
 ```ts
 import {signal} from "@angular/core"
+
 import type {ColumnFiltersState} from "@qualcomm-ui/core/table"
 
 columnFilters = signal<ColumnFiltersState>([]) // can set initial column filter state here
@@ -338,14 +339,19 @@ table = createAngularTable(() => ({
 Multiple Column and Table APIs interact with column filter state:
 
 - `table.setColumnFilters` - Overwrites the entire column filter state
+
 - `table.resetColumnFilters` - Resets all filters
 
 - **`column.getFilterValue`** - Gets the current filter value for an input
+
 - **`column.setFilterValue`** - Connects filter inputs to `onChange` or `onBlur` handlers
 
 - `column.getCanFilter` - Returns whether filtering is enabled for the column
+
 - `column.getIsFiltered` - Returns whether the column is currently filtered
+
 - `column.getFilterIndex` - Returns the order in which the filter is applied
 
 - `column.getAutoFilterFn` - Returns the automatically determined filter function
+
 - `column.getFilterFn` - Returns the currently used filter function

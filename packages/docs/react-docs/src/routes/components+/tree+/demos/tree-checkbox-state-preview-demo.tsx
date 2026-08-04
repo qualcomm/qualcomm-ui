@@ -1,8 +1,8 @@
 import type {ReactElement} from "react"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
-import {Tree} from "@qualcomm-ui/react/tree"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
+import {Tree} from "@qualcomm-ui/react/tree"
 
 interface Node {
   id: string

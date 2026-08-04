@@ -6,6 +6,6 @@ const demos = [{component: RowDndDemo, title: "Row Dnd"}]
 
 export default function RowDnd() {
   return (
-    <DemoPageLayout componentName="row-dnd" demos={demos} className="w-full" />
+    <DemoPageLayout className="w-full" componentName="row-dnd" demos={demos} />
   )
 }

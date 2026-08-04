@@ -1,1 +1,1 @@
-export * from "./inline-icon-button"
+export * from "./inline-icon-button.js"

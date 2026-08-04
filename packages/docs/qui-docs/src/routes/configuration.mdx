@@ -1,0 +1,104 @@
+---
+title: Configuration
+---
+
+# {frontmatter.title}
+
+The `qui-docs.config.ts` file controls how QUI Docs discovers pages, builds navigation, and exports content.
+
+## File Discovery
+
+The config file is loaded by the `@qualcomm-ui/mdx-vite` Vite plugin at build and dev time. The plugin locates it in one of two ways:
+
+- **Auto-detection**: when no `configFile` is passed, the plugin searches upward from `process.cwd()` until it finds a matching `qui-docs.config.ts`.
+- **Explicit path**: you can pass `configFile` directly in `vite.config.ts`, which loads the file at that exact path without searching.
+
+```ts
+// vite.config.ts
+import mdx from "@mdx-js/rollup"
+import {defineConfig} from "vite"
+
+import {
+  frontmatterHmrPlugin,
+  getRehypePlugins,
+  getRemarkPlugins,
+  quiDocsPlugin,
+  reactDemoPlugin,
+} from "@qualcomm-ui/mdx-vite"
+
+export default defineConfig({
+  // ...
+
+  plugins: [
+    // ...
+    mdx({
+      providerImportSource: "@mdx-js/react",
+      rehypePlugins: [...getRehypePlugins({configFile: quiDocsConfigFile})],
+      remarkPlugins: [...getRemarkPlugins()],
+    }),
+    quiDocsPlugin(),
+  ],
+})
+```
+
+The standard config file shape:
+
+```typescript
+// qui-docs.config.ts
+import type {QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
+
+export default {
+  appDirectory: "src",
+  pageDirectory: "routes",
+  navConfig: [{id: "_index", title: "Home"}],
+} satisfies QuiDocsConfig
+```
+
+## Route Discovery
+
+### appDirectory and pageDirectory
+
+- `appDirectory`: the root app directory name, relative to `process.cwd()`. Default: `"src"`.
+- `pageDirectory`: the name of the pages directory, relative to `appDirectory`. Default: `"routes"`.
+
+Combined, pages live at `<process.cwd()>/<appDirectory>/<pageDirectory>`. With defaults, that is `src/routes`.
+
+### routingStrategy
+
+Controls how file paths map to URL segments. This is explored in detail on the [Routing Conventions](/routing-conventions) page.
+
+## Navigation
+
+The `navConfig` array controls sidebar order, section groupings, initial expanded state, and per-route display properties. For how to define and nest `navConfig` entries, see [Page Configuration](/pages#nav-config). For the full option reference, see [NavConfig](/api/nav-config).
+
+## Content and Validation
+
+### validatePageLinks
+
+Validates internal MDX links and fragment references after the page map is built. Reports broken links to the build console. Default: `true`. Disable only when prototyping against an incomplete page set.
+
+### headings
+
+Controls which heading depths are included in the in-page table of contents and the search index. Default: `['h2', 'h3', 'h4']`.
+
+### typeDocProps
+
+Relative path to the generated `doc-props.json` file. Required for the `<TypeDocProps />` component to render property documentation in MDX pages. See [TypeDoc](/typedoc) for the full setup. Ignore if you aren't using the `<TypeDocProps />` component.
+
+## Page Metadata
+
+`pageTimestampMetadata` controls whether per-page timestamp data is extracted from git history:
+
+- `"off"` (default): no timestamp data.
+- `"timestamp"`: populates `updatedOn` from the last git commit touching the file.
+- `"user-and-timestamp"`: populates both `updatedOn` and `updatedBy`.
+
+This data is surfaced on each page (typically in the page footer) and can be included in knowledge exports. Git history must be available at build time, and it's best to do a full repository checkout for accurate dates and timestamps.
+
+## Knowledge Export
+
+The `knowledge` field configures AI knowledge export: `pages.json` and `sections.json` files that can be uploaded to LLM integrations. Presence of this field enables export. See [AI Knowledge](/ai-knowledge) for the full setup, including `baseUrl`, `exclude` globs, `extraFiles`, and OpenWebUI integration.
+
+## Full Reference
+
+The [QuiDocsConfig API reference](/api/qui-docs-config) lists all configuration options, including advanced build knobs (`disableCache`, `throwOnError`, `hotUpdateIgnore`) and `typeDocPropsOptions`.

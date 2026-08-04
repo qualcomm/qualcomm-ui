@@ -12,7 +12,7 @@ import {
 import {PropsContextProvider} from "@qualcomm-ui/react-mdx/typedoc"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
+import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface MainContentProps extends ElementRenderProp<"article"> {
   /**
@@ -42,7 +42,7 @@ export function MainContent({
     if (mainContentElement !== ref.current) {
       setMainContentElement(ref.current)
     }
-  }, [mainContentElement])
+  }, [mainContentElement, setMainContentElement])
 
   const refs = useMergedRef(refProp, ref)
 

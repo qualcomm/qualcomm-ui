@@ -8,10 +8,10 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
+import {domIds} from "./internal/index.js"
+import {sideNavAnatomy} from "./side-nav.anatomy.js"
 import type {
   SideNavApi,
-  SideNavCommonBindings,
   SideNavFilterInputBindings,
   SideNavHeaderActionBindings,
   SideNavHeaderBindings,
@@ -20,18 +20,15 @@ import type {
   SideNavRootBindings,
   SideNavSchema,
   SideNavTriggerBindings,
-} from "./side-nav.types"
+} from "./side-nav.types.js"
+
+const parts = sideNavAnatomy.parts
 
 export function createSideNavApi(
   machine: Machine<SideNavSchema>,
   normalize: PropNormalizer,
 ): SideNavApi {
   const {prop, scope, send, state} = machine
-
-  const commonBindings: SideNavCommonBindings = {
-    "data-scope": "side-nav",
-    dir: prop("dir") || "ltr",
-  }
 
   const visible = state.matches("open") || state.matches("closing")
   const open = state.matches("open")
@@ -51,46 +48,40 @@ export function createSideNavApi(
     // group: bindings
     getFilterInputBindings(): SideNavFilterInputBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "filter-input",
+        ...parts.filterInput,
         role: "treeitem",
       })
     },
     getHeaderActionBindings(): SideNavHeaderActionBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "header-action",
+        ...parts.headerAction,
         "data-state": open ? "open" : "closed",
       })
     },
     getHeaderBindings(): SideNavHeaderBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "header",
+        ...parts.header,
         "data-state": open ? "open" : "closed",
       })
     },
     getHeaderLogoBindings(): SideNavHeaderLogoBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "header-logo",
+        ...parts.headerLogo,
         hidden: !open,
       })
     },
     getHeaderTitleBindings(): SideNavHeaderTitleBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "header-title",
+        ...parts.headerTitle,
         hidden: !open,
       })
     },
     getRootBindings(props: IdRegistrationProps): SideNavRootBindings {
       scope.ids.register("root", props.id)
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-collapsible": booleanDataAttr(disabled ? !open : true),
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "root",
         "data-state": open ? "open" : "closed",
         id: props.id,
       })
@@ -98,12 +89,11 @@ export function createSideNavApi(
     getTriggerBindings(props): SideNavTriggerBindings {
       scope.ids.register("trigger", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.trigger,
         "aria-controls": domIds.root(scope),
         "aria-expanded": booleanAriaAttr(visible),
         "aria-label": open ? "Collapse" : "Expand",
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "trigger",
         "data-state": open ? "open" : "closed",
         id: props.id,
         onClick(event) {

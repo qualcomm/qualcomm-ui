@@ -4,19 +4,19 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {RowModel} from ".."
-import type {TableFeature} from "../core/table"
-import {type BuiltInFilterFn, filterFns} from "../filter-fns"
+import type {TableFeature} from "../core/table.js"
+import {type BuiltInFilterFn, filterFns} from "../filter-fns.js"
 import type {
   Column,
   FilterFns,
   OnChangeFn,
   Row,
   RowData,
+  RowModel,
   TableInstance,
   Updater,
-} from "../types"
-import {functionalUpdate, isFunction, makeStateUpdater} from "../utils"
+} from "../types.js"
+import {functionalUpdate, isFunction, makeStateUpdater} from "../utils.js"
 
 export interface FiltersTableState {
   columnFilters: ColumnFiltersState
@@ -302,8 +302,7 @@ type ResolvedFilterFns = keyof FilterFns extends never
     }
 
 export interface FiltersOptions<TData extends RowData>
-  extends FiltersOptionsBase<TData>,
-    ResolvedFilterFns {}
+  extends FiltersOptionsBase<TData>, ResolvedFilterFns {}
 
 export interface FiltersInstance<TData extends RowData> {
   /** @internal */
@@ -408,8 +407,7 @@ export const Filters: TableFeature = {
         ? column.columnDef.filterFn
         : column.columnDef.filterFn === "auto"
           ? column.getAutoFilterFn()
-          : // @ts-ignore
-            (table.options.filterFns?.[column.columnDef.filterFn as string] ??
+          : (table.options.filterFns?.[column.columnDef.filterFn as string] ??
             filterFns[column.columnDef.filterFn as BuiltInFilterFn])
     }
     column.getCanFilter = () => {
@@ -524,14 +522,13 @@ export const Filters: TableFeature = {
     }
 
     table.getGlobalFilterFn = () => {
-      const {globalFilterFn: globalFilterFn} = table.options
+      const {globalFilterFn} = table.options
 
       return isFunction(globalFilterFn)
         ? globalFilterFn
         : globalFilterFn === "auto"
           ? table.getGlobalAutoFilterFn()
-          : // @ts-ignore
-            (table.options.filterFns?.[globalFilterFn as string] ??
+          : (table.options.filterFns?.[globalFilterFn as string] ??
             filterFns[globalFilterFn as BuiltInFilterFn])
     }
 

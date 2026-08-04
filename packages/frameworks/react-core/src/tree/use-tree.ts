@@ -8,11 +8,11 @@ import type {
 import type {CoreCollapsibleRootProps} from "@qualcomm-ui/react-core/collapsible"
 import {useRenderStrategyPropsContext} from "@qualcomm-ui/react-core/presence"
 
-import {useTreeContext} from "./tree-context"
+import {useTreeContext} from "./tree-context.js"
 import {
   useTreeNodePropsContext,
   useTreeNodeStateContext,
-} from "./tree-node-context"
+} from "./tree-node-context.js"
 
 export function useTreeBranch(): CoreCollapsibleRootProps & TreeBranchBindings {
   const treeContext = useTreeContext()

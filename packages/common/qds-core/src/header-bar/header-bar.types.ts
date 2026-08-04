@@ -1,9 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {headerBarClasses} from "./header-bar.classes"
+import type {headerBarAnatomy} from "./header-bar.anatomy.js"
+import type {headerBarClasses} from "./header-bar.classes.js"
 
 export type QdsHeaderBarSize = "sm" | "lg"
 
@@ -35,34 +37,37 @@ export interface QdsHeaderBarRootProps {
 
 type HeaderBarClasses = typeof headerBarClasses
 
-export interface QdsHeaderBarRootBindings {
+type PartName = AnatomyPartName<typeof headerBarAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"headerBar", P> {}
+
+export interface QdsHeaderBarRootBindings extends Part<"root"> {
   className: HeaderBarClasses["root"]
   "data-padding": QdsHeaderBarPadding
   "data-size": QdsHeaderBarSize
   "data-surface": QdsHeaderSurface
 }
 
-export interface QdsHeaderBarLogoBindings {
+export interface QdsHeaderBarLogoBindings extends Part<"logo"> {
   className: HeaderBarClasses["logo"]
 }
 
-export interface QdsHeaderBarActionBarBindings {
+export interface QdsHeaderBarActionBarBindings extends Part<"actionBar"> {
   className: HeaderBarClasses["actionBar"]
 }
 
-export interface QdsHeaderBarAppTitleBindings {
+export interface QdsHeaderBarAppTitleBindings extends Part<"appTitle"> {
   className: HeaderBarClasses["appTitle"]
 }
 
-export interface QdsHeaderBarDividerBindings {
+export interface QdsHeaderBarDividerBindings extends Part<"divider"> {
   className: HeaderBarClasses["divider"]
 }
 
-export interface QdsHeaderBarNavBindings {
+export interface QdsHeaderBarNavBindings extends Part<"nav"> {
   className: HeaderBarClasses["nav"]
 }
 
-export interface QdsHeaderBarNavItemBindings {
+export interface QdsHeaderBarNavItemBindings extends Part<"navItem"> {
   "aria-current": "page" | undefined
   className: HeaderBarClasses["navItem"]
   "data-active": BooleanDataAttr
@@ -75,7 +80,7 @@ export interface QdsHeaderBarNavItemProps {
   active?: boolean | undefined
 }
 
-export interface QdsHeaderBarWindowControlsBindings {
+export interface QdsHeaderBarWindowControlsBindings extends Part<"windowControls"> {
   className: HeaderBarClasses["windowControls"]
 }
 

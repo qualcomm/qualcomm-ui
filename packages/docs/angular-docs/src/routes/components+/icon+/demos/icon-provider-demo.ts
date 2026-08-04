@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {ExternalLink, MonitorSpeaker, SatelliteDish} from "lucide-angular"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [IconDirective],

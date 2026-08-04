@@ -11,7 +11,7 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {usePasswordInputContext} from "./password-input-context"
+import {usePasswordInputContext} from "./password-input-context.js"
 
 export function usePasswordInput(props: PasswordInputApiProps) {
   const machine = useMachine(passwordInputMachine, props)

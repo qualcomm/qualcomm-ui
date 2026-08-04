@@ -4,15 +4,15 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {
-  InputEndIcon,
-  InputStartIcon,
-  useQdsInputContext,
-} from "@qualcomm-ui/react/input"
-import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {useTextInputInputGroup} from "@qualcomm-ui/react-core/text-input"
+import {
+  InputEndIcon,
+  InputStartIcon,
+  useQdsInputContext,
+} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TextInputInputGroupProps extends ElementRenderProp<"div"> {

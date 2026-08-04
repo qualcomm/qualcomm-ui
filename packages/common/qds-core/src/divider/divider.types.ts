@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {dividerClasses} from "./divider.classes"
+import type {dividerClasses} from "./divider.classes.js"
 
 export type QdsDividerOrientation = "horizontal" | "vertical"
 

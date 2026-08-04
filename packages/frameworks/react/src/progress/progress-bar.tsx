@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/progress"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsProgressContext} from "./qds-progress-context"
+import {useQdsProgressContext} from "./qds-progress-context.js"
 
 export interface ProgressBarProps extends CoreProgressBarProps {}
 

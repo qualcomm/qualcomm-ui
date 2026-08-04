@@ -18,7 +18,6 @@ const emphasis = instance.getEnum("emphasis", {
 const icon = instance.getEnum("icon", {
   end: "end",
   none: "none",
-  only: "only",
   start: "start",
 })
 const label = instance.getString("label") || "Button"
@@ -31,42 +30,32 @@ const variant = instance.getEnum("variant", {
   outline: "outline",
 })
 
+const figmaSize = instance.getString("size")
+const swapPropName =
+  figmaSize === "small"
+    ? "iconXxs"
+    : figmaSize === "medium"
+      ? "iconXs"
+      : "iconSm"
+
+const iconInstance =
+  icon === "start" || icon === "end"
+    ? instance.getInstanceSwap(swapPropName)
+    : undefined
+
+const iconName = iconInstance ? toLucideName(iconInstance.name) : "Star"
+const needsIcon = icon === "start" || icon === "end"
+
 const disabledAttr = disabled ? " disabled" : ""
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 const sizeAttr = size ? ` size="${size}"` : ""
 const variantAttr = variant ? ` variant="${variant}"` : ""
+const startIconEl =
+  icon === "start" ? `<svg q-start-icon qIcon="${iconName}"></svg>` : ""
+const endIconEl =
+  icon === "end" ? `<svg q-end-icon qIcon="${iconName}"></svg>` : ""
 
-const needsIcon = icon === "start" || icon === "end" || icon === "only"
-
-let example
-
-// icon-only button
-if (icon === "only") {
-  example = figma.code`<button${disabledAttr}${emphasisAttr} icon="Star" q-icon-button${sizeAttr}${variantAttr}></button>`
-}
-
-// button with start icon
-if (icon === "start") {
-  example = figma.code`
-    <button${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>
-      <svg q-start-icon qIcon="Star"></svg>
-      ${label}
-    </button>`
-}
-
-// button with end icon
-if (icon === "end") {
-  example = figma.code`
-    <button${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>
-      ${label}
-      <svg q-end-icon qIcon="Star"></svg>
-    </button>`
-}
-
-// button without icon
-if (icon === "none") {
-  example = figma.code`<button${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>${label}</button>`
-}
+const example = figma.code`<button${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>${startIconEl}${label}${endIconEl}</button>`
 
 export default {
   example,
@@ -76,9 +65,17 @@ export default {
     ...(needsIcon
       ? [
           `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {Star} from "lucide-angular"`,
+          `import {${iconName}} from "lucide-angular"`,
         ]
       : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

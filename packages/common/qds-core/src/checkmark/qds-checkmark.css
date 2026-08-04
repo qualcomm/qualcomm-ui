@@ -1,4 +1,4 @@
-.qui-checkmark__root[data-scope="tree"] {
+.qui-checkmark__root[data-tree-part="root"] {
   background: var(--color-interactive-background-ghost-idle);
   cursor: pointer;
 

@@ -5,15 +5,15 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Check} from "lucide-react"
 
-import {Icon} from "@qualcomm-ui/react/icon"
 import {useMenuItemIndicator} from "@qualcomm-ui/react-core/menu"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {Icon} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsMenuContext} from "./qds-menu-context"
+import {useQdsMenuContext} from "./qds-menu-context.js"
 
 export interface MenuItemIndicatorProps extends ElementRenderProp<"div"> {
   /**

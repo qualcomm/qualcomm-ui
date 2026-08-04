@@ -1,4 +1,4 @@
-import {Job} from "../model" // pass
+import type {Job} from "../model" // pass
 import {jobUi} from "../ui" // fail
 
 export function getJob(job: Job) {

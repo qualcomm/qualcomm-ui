@@ -8,9 +8,9 @@ import {useSliderContext} from "@qualcomm-ui/react-core/slider"
 import {
   SliderHiddenInput,
   type SliderHiddenInputProps,
-} from "./slider-hidden-input"
-import {SliderThumb, type SliderThumbProps} from "./slider-thumb"
-import {SliderThumbIndicator} from "./slider-thumb-indicator"
+} from "./slider-hidden-input.js"
+import {SliderThumbIndicator} from "./slider-thumb-indicator.js"
+import {SliderThumb, type SliderThumbProps} from "./slider-thumb.js"
 
 export interface SliderThumbsProps {
   /**

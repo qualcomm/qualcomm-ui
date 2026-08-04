@@ -1,3 +1,4 @@
+export * from "./tag-controlled-demo"
 export * from "./tag-emphasis-demo"
 export * from "./tag-icons-demo"
 export * from "./tag-shape-demo"

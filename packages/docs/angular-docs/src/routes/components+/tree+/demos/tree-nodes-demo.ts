@@ -1,8 +1,6 @@
 import {Component, computed, inject, input, type OnInit} from "@angular/core"
 import {FileText, FolderIcon} from "lucide-angular"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   provideTreeNodePropsContext,
@@ -11,6 +9,8 @@ import {
   TreeNodeStateContextService,
   useTreeContext,
 } from "@qualcomm-ui/angular-core/tree"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {createTreeCollection, type NodeProps} from "@qualcomm-ui/core/tree"
 
 interface FileNode {

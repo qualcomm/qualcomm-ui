@@ -11,14 +11,14 @@ import {
   type OnInit,
 } from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {
   createQdsIconButtonApi,
   type QdsButtonDensity,
@@ -27,9 +27,11 @@ import {
   type QdsButtonVariant,
   type QdsIconButtonApiProps,
   type QdsIconButtonShape,
+  resolveButtonPropsWithGroup,
 } from "@qualcomm-ui/qds-core/button"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
+import {useQdsButtonGroupContext} from "./qds-button-group-context.service"
 import {
   provideQdsIconButtonContext,
   QdsIconButtonContextService,
@@ -113,23 +115,31 @@ export class IconButtonDirective
   )
 
   protected readonly iconButtonContext = inject(QdsIconButtonContextService)
+  protected readonly buttonGroupContext = useQdsButtonGroupContext({
+    optional: true,
+  })
+
+  /**
+   * Effective size (subclasses may override this based on context).
+   */
+  protected readonly resolvedSize = computed(() => this.size())
 
   readonly iconChild = contentChild(IconDirective)
 
   ngOnInit() {
-    const buttonApi = computed(() => {
-      return createQdsIconButtonApi(
-        {
+    const buttonApi = computed(() =>
+      createQdsIconButtonApi(
+        resolveButtonPropsWithGroup(this.buttonGroupContext?.(), {
           density: this.density(),
           disabled: this.disabled(),
           emphasis: this.emphasis(),
           shape: this.shape(),
-          size: this.size(),
+          size: this.resolvedSize(),
           variant: this.variant(),
-        },
+        }),
         normalizeProps,
-      )
-    })
+      ),
+    )
 
     this.iconButtonContext.init(buttonApi)
 

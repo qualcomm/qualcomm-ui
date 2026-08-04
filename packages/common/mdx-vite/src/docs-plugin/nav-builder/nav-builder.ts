@@ -4,16 +4,22 @@
 import {sortBy} from "lodash-es"
 import {v4 as uuidv4} from "uuid"
 
-import type {
-  NavItem,
-  PageFrontmatter,
-  PageSection,
+import {
+  isNavBadge,
+  type NavBadge,
+  type NavItem,
+  type PageFrontmatter,
+  type PageSection,
 } from "@qualcomm-ui/mdx-common"
 import {capitalCase} from "@qualcomm-ui/utils/change-case"
 import {defined} from "@qualcomm-ui/utils/guard"
 
-import {getRouteMeta} from "./get-route-meta"
-import type {NavMeta, RouteMetaEntryInternal, RouteMetaInternal} from "./types"
+import {getRouteMeta} from "./get-route-meta.js"
+import type {
+  NavMeta,
+  RouteMetaEntryInternal,
+  RouteMetaInternal,
+} from "./types.js"
 
 interface InitialRoute {
   pageFrontmatter: Partial<PageFrontmatter>
@@ -152,7 +158,6 @@ export class NavBuilder {
         ),
       })
     }
-
     pathSegments.forEach((segment, index) => {
       const depth = index + 1
 
@@ -175,6 +180,7 @@ export class NavBuilder {
           ) ?? {}
 
         this.flatNavItems.push({
+          badges: isPage ? this.extractBadges(pageFrontmatter) : undefined,
           depth,
           expanded: routeMeta?.expanded || false,
           group: isPage
@@ -261,8 +267,7 @@ export class NavBuilder {
   ) {
     const segment = pathSegments[0]
     const parentItem = items.find(
-      (parent) =>
-        parent.pathSegments[parent.pathSegments.length - 1] === segment,
+      (parent) => parent.pathSegments.at(-1) === segment,
     )
     if (parentItem) {
       this.nestedInsert(item, pathSegments.slice(1), parentItem.items ?? [])
@@ -286,12 +291,12 @@ export class NavBuilder {
 
   private sortNestedNavItems(items: NavItem[], groupOrder?: string[]) {
     items.sort((a, b) => this.navItemSort(a, b, groupOrder))
-    items.forEach((item) => {
+    for (const item of items) {
       if (item.items?.length) {
         const meta = getRouteMeta(item.pathSegments, this.metaJson)
         this.sortNestedNavItems(item.items, meta?.groupOrder)
       }
-    })
+    }
   }
 
   /**
@@ -312,7 +317,7 @@ export class NavBuilder {
     this.sortNestedNavItems(this.navItems, rootMeta?.groupOrder)
 
     if (this.navMeta) {
-      Object.entries(this.navMeta).forEach(([index, value]) => {
+      for (const [index, value] of Object.entries(this.navMeta)) {
         this._navItems.splice(parseInt(index), 0, {
           depth: 1,
           id: uuidv4(),
@@ -321,7 +326,7 @@ export class NavBuilder {
           separator: value.separator,
           title: "",
         })
-      })
+      }
     }
 
     this._navItems = this.groupNavItems(this.navItems)
@@ -387,5 +392,17 @@ export class NavBuilder {
     }
 
     return results
+  }
+
+  private extractBadges(
+    pageFrontmatter: Partial<PageFrontmatter>,
+  ): NavBadge[] | undefined {
+    const badges = (
+      pageFrontmatter as Partial<PageFrontmatter> & Record<string, unknown>
+    ).badges
+    if (badges && typeof badges === "object" && Array.isArray(badges)) {
+      return badges.filter((badge) => isNavBadge(badge) && !badge.hideFromNav)
+    }
+    return undefined
   }
 }

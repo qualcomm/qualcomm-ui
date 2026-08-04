@@ -5,15 +5,15 @@ import {Fragment, type ReactNode} from "react"
 
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
-import {PropDefault} from "./prop-default"
+import {PropDefault} from "./prop-default.js"
 import {
   getHasExtraDetails,
   PropDescription,
   PropDescriptionExtraDetails,
-} from "./prop-description"
-import {PropName} from "./prop-name"
-import {PropType} from "./prop-types"
-import {useTypeDocContext} from "./use-typedoc-context"
+} from "./prop-description/index.js"
+import {PropName} from "./prop-name.js"
+import {PropType} from "./prop-types/index.js"
+import {useTypeDocContext} from "./use-typedoc-context.js"
 
 export interface TypedocPropsTableProps {
   changelogPathname?: string | null
@@ -34,7 +34,10 @@ export function TypedocPropsTable({
   }
 
   return (
-    <div className="typedoc-props__table-wrapper" suppressHydrationWarning>
+    <div
+      className="typedoc-props__table-wrapper qui-docs__mdx-scrollbar"
+      suppressHydrationWarning
+    >
       <table>
         <thead>
           <tr>

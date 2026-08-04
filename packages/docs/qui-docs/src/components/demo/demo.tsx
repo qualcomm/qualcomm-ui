@@ -2,16 +2,18 @@ import type {ReactNode} from "react"
 
 import {getDemo} from "virtual:qui-demo-scope/auto"
 
-import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {useGlobalConfigContext} from "@qualcomm-ui/react-internal/layout"
 import {
   ReactDemoRunner,
   type ReactDemoRunnerProps,
 } from "@qualcomm-ui/react-mdx/code-demo"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
+import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 
-interface Props
-  extends Omit<ReactDemoRunnerProps, "qdsBrand" | "setQdsBrand" | "demo"> {}
+interface Props extends Omit<
+  ReactDemoRunnerProps,
+  "qdsBrand" | "setQdsBrand" | "demo"
+> {}
 
 export function Demo({
   component,

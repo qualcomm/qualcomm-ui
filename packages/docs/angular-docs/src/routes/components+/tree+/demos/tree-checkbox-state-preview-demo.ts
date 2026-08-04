@@ -1,8 +1,8 @@
 import {JsonPipe} from "@angular/common"
 import {Component} from "@angular/core"
 
-import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {useTreeContext} from "@qualcomm-ui/angular-core/tree"
+import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 interface Node {

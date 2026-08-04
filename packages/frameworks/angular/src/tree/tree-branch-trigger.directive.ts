@@ -4,7 +4,7 @@
 import {Component, computed, input} from "@angular/core"
 import {ChevronRight} from "lucide-angular"
 
-import {type LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTreeBranchTriggerDirective} from "@qualcomm-ui/angular-core/tree"
 
 import {useQdsTreeContext} from "./qds-tree-context.service"

@@ -1,0 +1,127 @@
+---
+title: File Input
+description: The File Input component renders a single-file form field with QDS input styling and file validation support.
+component: FileInput
+aliases: [file field, file picker, upload field, file select]
+badges:
+  - id: since
+    label: 2.8.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#280
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```ts
+import {FileInputModule} from "@qualcomm-ui/angular/file-input"
+```
+
+## Overview
+
+The File Input component supports both click-to-browse and drag-and-drop interactions for a single file input. An advanced file upload component is currently in development and will support multi-file lists, async uploads, previews, and rejected-file workflows.
+
+## Examples
+
+### Simple
+
+The simple `<q-file-input>` component bundles the label, input-like control, display text, clear trigger, hidden input, and error text into one component.
+
+<QdsDemo name="FileInputSimpleDemo" />
+
+### Composite
+
+Use the composite API when layout or individual parts need explicit control.
+
+<QdsDemo name="FileInputCompositeDemo" />
+
+### Sizes
+
+The File Input component supports three [size](./#size) variants: `sm`, `md` (default), and `lg`.
+
+<QdsDemo name="FileInputSizesDemo" />
+
+### Errors
+
+Set [invalid](./#invalid) and [errorText](./#errorText) for field-level validation messages. Configure file validation with properties such as [accept](./#accept), [maxFileSize](./#maxFileSize), and [validate](./#validate).
+
+<QdsDemo name="FileInputErrorsDemo" />
+
+### Disabled
+
+Set [disabled](./#disabled) on the simple component or root directive to prevent file selection and clearing.
+
+<QdsDemo name="FileInputDisabledDemo" />
+
+## API
+
+### \<q-file-input\>
+
+The `<q-file-input>` component extends the [q-file-input-root](./#q-file-input-root) directive with the following properties:
+
+<TypeDocProps name="FileInputComponent" omitFrom="FileInputRootDirective" />
+
+## Composite API
+
+### q-file-input-root
+
+<TypeDocProps name="FileInputRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["FileUploadRootBindings", "QdsInputRootBindings"]}
+/>
+
+### q-file-input-label
+
+<TypeDocProps name="FileInputLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["FileUploadLabelBindings", "QdsInputLabelBindings"]}
+/>
+
+### q-file-input-control
+
+<TypeDocProps name="FileInputControlDirective" />
+
+<TypeDocAngularAttributes
+  name={["FileUploadDropzoneBindings", "QdsInputGroupBindings"]}
+/>
+
+### q-file-input-display
+
+<TypeDocProps name="FileInputDisplayDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsFileUploadInputDisplayBindings", "QdsInputInputBindings"]}
+/>
+
+### q-file-input-clear-trigger
+
+<TypeDocProps name="FileInputClearTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["FileUploadClearTriggerBindings", "QdsInputClearTriggerBindings"]}
+/>
+
+### q-file-input-hidden-input
+
+<TypeDocProps name="FileInputHiddenInputDirective" />
+
+<TypeDocAngularAttributes name="FileUploadHiddenInputBindings" />
+
+### q-file-input-error-text
+
+<TypeDocProps name="FileInputErrorTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["FileUploadErrorTextBindings", "QdsInputErrorTextBindings"]}
+/>

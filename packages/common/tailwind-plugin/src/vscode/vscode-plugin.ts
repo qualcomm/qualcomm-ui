@@ -5,7 +5,7 @@
 
 import plugin from "tailwindcss/plugin"
 
-export const vscodePlugin = plugin(function () {}, {
+export const vscodePlugin: ReturnType<typeof plugin> = plugin(function () {}, {
   theme: {
     fontFamily: {
       sans: "var(--vscode-font-family)",

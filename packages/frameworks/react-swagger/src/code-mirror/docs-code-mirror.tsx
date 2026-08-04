@@ -12,9 +12,9 @@ import CodeMirror, {type ReactCodeMirrorProps} from "@uiw/react-codemirror"
 import {DownloadIcon} from "lucide-react"
 
 import type {QdsTheme} from "@qualcomm-ui/qds-core/theme"
+import {CopyToClipboardIconButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {IconButton} from "@qualcomm-ui/react/button"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import {CopyToClipboardIconButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 
 DocsCodeMirror.displayName = "DocsCodeMirror"
 

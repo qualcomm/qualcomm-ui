@@ -8,8 +8,8 @@ import {trackEscapeKeydown} from "@qualcomm-ui/dom/dismissable"
 import {getPlacement, type Placement} from "@qualcomm-ui/dom/floating-ui"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {store} from "./tooltip.store"
-import type {TooltipSchema} from "./tooltip.types"
+import {store} from "./tooltip.store.js"
+import type {TooltipSchema} from "./tooltip.types.js"
 
 export const tooltipMachine: MachineConfig<TooltipSchema> =
   createMachine<TooltipSchema>({
@@ -65,6 +65,7 @@ export const tooltipMachine: MachineConfig<TooltipSchema> =
         const triggerEl = scope.getById(scope.ids.get("trigger"))
         const getPositionerEl = () => scope.getById(scope.ids.get("positioner"))
         return getPlacement(triggerEl, getPositionerEl, {
+          arrowSelector: "[data-tooltip-part=arrow]",
           ...prop("positioning"),
           defer: true,
           onComplete(data) {

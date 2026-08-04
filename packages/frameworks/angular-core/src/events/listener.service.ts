@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {DOCUMENT} from "@angular/common"
-import {ElementRef, inject, Injectable, Renderer2} from "@angular/core"
+import {type ElementRef, inject, Injectable, Renderer2} from "@angular/core"
 
 export type ListenerTrigger = "hover" | "focus" | "click" | "manual"
 
@@ -42,7 +42,9 @@ export class ListenerService {
   }
 
   clearDomListeners() {
-    this.rendererListeners.forEach((unsub) => unsub?.())
+    for (const unsub of this.rendererListeners) {
+      unsub?.()
+    }
     this.rendererListeners.fill(undefined)
     this.rendererListeners = []
   }
@@ -111,13 +113,9 @@ export class ListenerService {
   }
 
   clearListeners(): void {
-    this.listeners.forEach((unListen) => {
-      unListen()
-    })
-    this.listeners.forEach((unlisten, key) => {
-      // @ts-ignore
-      this.listeners.set(key, null)
-    })
+    for (const unlisten of this.listeners.values()) {
+      unlisten()
+    }
     this.listeners.clear()
   }
 }

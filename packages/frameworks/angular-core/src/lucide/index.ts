@@ -1,2 +1,2 @@
-export * from "./lucide.types"
+export type * from "./lucide.types"
 export * from "./provide-icons"

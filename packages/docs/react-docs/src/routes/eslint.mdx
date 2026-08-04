@@ -1,0 +1,502 @@
+---
+title: ESLint
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+## Plugin
+
+We provide an ESLint plugin that enforces best-practices for accessibility and component consumption. This guide assumes you've already set up and configured ESLint. If not, we recommend starting with the [configs](./#configs) section below.
+
+> [!note/In Development]
+> This plugin is currently in development. New rules will be added over time. Refer to the [changelog](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/configs/eslint-plugin-react/CHANGELOG.md) for updates.
+
+### Installation
+
+This plugin is provided in ESM format. You will need `"type": "module"` in your project's package.json to consume them.
+
+<NpmInstallTabs packages={["@qualcomm-ui/eslint-plugin-react"]} dev />
+
+### Setup
+
+Add the plugin to your ESLint configuration:
+
+```js
+import {defineConfig} from "eslint/config"
+
+import quiEslintPluginReact from "@qualcomm-ui/eslint-plugin-react"
+
+export default defineConfig([
+  // ...the rest of your config
+  {
+    files: ["**/*.{jsx,tsx}"],
+    extends: [quiEslintPluginReact.config],
+  },
+])
+```
+
+### Rules
+
+#### `accessible-name`
+
+Enforces that certain QUI components have an `aria-label` or `aria-labelledby` attribute for accessibility.
+
+**Affected components:**
+
+- `IconButton`
+- `InlineIconButton`
+- `HeaderBarActionIconButton`
+
+```tsx
+// Invalid
+<IconButton icon={/*...*/} />
+
+// Valid
+<IconButton icon={/*...*/} aria-label="Close dialog" />
+<IconButton icon={/*...*/} aria-labelledby="close-label" />
+```
+
+#### `avatar-image-alt`
+
+Enforces that `Avatar.Image` components have an `alt` attribute for accessibility.
+
+```jsx
+// Invalid - no alt
+<Avatar.Root>
+  <Avatar.Image src="/user.jpg" />
+</Avatar.Root>
+
+// Valid
+<Avatar.Root>
+  <Avatar.Image alt="John Doe" src="/user.jpg" />
+  <Avatar.Content>JD</Avatar.Content>
+</Avatar.Root>
+```
+
+#### `input-label-association`
+
+Enforces that form input components have proper label association for accessibility. Supports both simple and compound component patterns.
+
+**Affected components:**
+
+| Component       | Composite Element | Composite Props    |
+| --------------- | ----------------- | ------------------ |
+| `TextInput`     | `Input`           | `inputProps`       |
+| `NumberInput`   | `Input`           | `inputProps`       |
+| `PasswordInput` | `Input`           | `inputProps`       |
+| `Combobox`      | `Control`         | `inputProps`       |
+| `Select`        | `Control`         | `controlProps`     |
+| `Switch`        | `HiddenInput`     | `hiddenInputProps` |
+| `Checkbox`      | `HiddenInput`     | `hiddenInputProps` |
+| `Radio`         | `HiddenInput`     | `hiddenInputProps` |
+
+**Simple component usage:**
+
+```tsx
+// Invalid - no label
+<TextInput placeholder="Enter name" />
+
+// Valid - label prop
+<TextInput label="Full name" placeholder="Enter name" />
+
+// Valid - direct aria-label (these are forwarded to the internal input element)
+<TextInput aria-label="Full name" placeholder="Enter name" />
+
+// Valid - aria-label in composite props
+<TextInput inputProps={{"aria-label": "Full name"}} placeholder="Enter name" />
+<Switch hiddenInputProps={{"aria-label": "Enable notifications"}} />
+```
+
+**Compound component usage:**
+
+```jsx
+// Invalid - no label
+<TextInput.Root>
+  <TextInput.Input placeholder="Enter name" />
+</TextInput.Root>
+
+// Valid - Label child
+<TextInput.Root>
+  <TextInput.Label>Full name</TextInput.Label>
+  <TextInput.Input placeholder="Enter name" />
+</TextInput.Root>
+
+// Valid - aria-label on composite element
+<Switch.Root>
+  <Switch.HiddenInput aria-label="Enable notifications" />
+  <Switch.Control />
+</Switch.Root>
+```
+
+#### `interactive-card-element-nesting`
+
+Disallows interactive elements inside `Card.Root` when the card itself is
+interactive.
+
+```tsx
+// Invalid
+<Card.Root interactive>
+  <Button>Open</Button>
+</Card.Root>
+
+// Valid
+<Card.Root interactive>
+  <Card.Heading>Open</Card.Heading>
+</Card.Root>
+```
+
+#### `prefer-alert-banner-button`
+
+Enforces `AlertBanner.Button` for alert banner actions.
+
+```tsx
+// Invalid
+<AlertBanner action={<Button>Retry</Button>} />
+
+// Valid
+<AlertBanner action={<AlertBanner.Button>Retry</AlertBanner.Button>} />
+```
+
+#### `prefer-card-actions`
+
+Enforces `Card.Button` and `Card.Link` for direct QUI actions rendered inside
+`Card.Root`.
+
+```tsx
+// Invalid
+<Card.Root>
+  <Button>Confirm</Button>
+  <Link href="/details">Details</Link>
+</Card.Root>
+
+// Valid
+<Card.Root>
+  <Card.Button>Confirm</Card.Button>
+  <Card.Link href="/details">Details</Card.Link>
+</Card.Root>
+```
+
+#### `prefer-header-bar-actions`
+
+Enforces `HeaderBar.ActionButton` and `HeaderBar.ActionIconButton` inside
+`HeaderBar.ActionBar`.
+
+```tsx
+// Invalid
+<HeaderBar.ActionBar>
+  <Button>Apps</Button>
+  <IconButton aria-label="Settings" icon={Settings} />
+</HeaderBar.ActionBar>
+
+// Valid
+<HeaderBar.ActionBar>
+  <HeaderBar.ActionButton>Apps</HeaderBar.ActionButton>
+  <HeaderBar.ActionIconButton aria-label="Settings" icon={Settings} />
+</HeaderBar.ActionBar>
+```
+
+#### `prefer-menu-trigger-buttons`
+
+Enforces menu-specific trigger button components inside `Menu.Trigger`.
+
+```tsx
+// Invalid
+<Menu.Trigger>
+  <Button>Open</Button>
+</Menu.Trigger>
+
+// Valid
+<Menu.Trigger>
+  <Menu.Button>Open</Menu.Button>
+</Menu.Trigger>
+```
+
+#### `prefer-select-item-checkbox`
+
+Enforces `Select.ItemCheckbox` when `Select.Root` statically sets
+`selectionIndicator="checkbox"`.
+
+```tsx
+// Invalid
+<Select.Root selectionIndicator="checkbox">
+  <Select.ItemIndicator />
+</Select.Root>
+
+// Valid
+<Select.Root selectionIndicator="checkbox">
+  <Select.ItemCheckbox />
+</Select.Root>
+```
+
+These contextual component usage rules only target direct QUI imports from
+`@qualcomm-ui/react/*` and `@qualcomm-ui/react-internal/*`, including aliases and
+namespace imports. Custom wrapper components are ignored.
+
+## Configs
+
+We provide shared ESLint configurations to enforce consistent code style and quality across our internal projects. These packages wrap popular open source plugins and provide a common baseline that makes it easier for developers to move between codebases.
+
+### Overview
+
+Our configs are provided in ESM format. You will need `"type": "module"` in your project's package.json to consume them.
+
+Two packages are available for React projects:
+
+- `@qualcomm-ui/eslint-config-typescript` - TypeScript rules
+- `@qualcomm-ui/eslint-config-react` - React-specific rules
+
+Both packages use ESLint's flat config format.
+
+### Installation
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/eslint-config-typescript",
+    "@qualcomm-ui/eslint-config-react",
+  ]}
+  dev
+/>
+
+Skip ahead to the [Example Configuration](./#example-configuration) section for a complete setup, or continue reading to learn more about the individual configs.
+
+### Migrate from v1 to v2
+
+Version 2 removes public `base` configs. Each public config now includes the plugin, settings, or parser setup it needs.
+
+Remove `base` entries from `extends` arrays:
+
+```js
+import quiEslintReact from "@qualcomm-ui/eslint-config-react"
+import quiEslintTs from "@qualcomm-ui/eslint-config-typescript"
+
+export default defineConfig(
+  // @qualcomm-ui/eslint-config-react v1 -> v2
+  {
+    extends: [
+      quiEslintReact.configs.base, // [!code --]
+      quiEslintReact.configs.recommended,
+    ],
+    // ...
+  },
+  // @qualcomm-ui/eslint-config-typescript v2 -> v3
+  {
+    extends: [
+      ...quiEslintTs.configs.recommended, // [!code --]
+      quiEslintTs.configs.recommended, // [!code ++]
+    ],
+    // ...
+  },
+)
+```
+
+### TypeScript Configs
+
+The `@qualcomm-ui/eslint-config-typescript` package exports the following configurations:
+
+- `recommended`: Recommended TypeScript rules. Composes each of the following:
+  - `styleGuide`: Code style enforcement
+  - `sortKeys`: Object key ordering
+  - `typeChecks`: Type-aware linting rules
+  - `namingConventions`: Identifier naming patterns
+- `strictExports`: Export restrictions
+- `jsdoc`: JSDoc comment validation
+
+Each config can be consumed individually. The following example targets JS files.
+
+```js
+import quiEslintTs from "@qualcomm-ui/eslint-config-typescript"
+
+export default defineConfig({
+  extends: [
+    quiEslintTs.configs.styleGuide,
+    quiEslintTs.configs.sortKeys,
+    quiEslintTs.configs.namingConventions,
+  ],
+  files: ["**/*.{js,cjs,mjs}"],
+  // ...
+})
+```
+
+#### Style Guide Rules
+
+The `styleGuide` config enforces these conventions, and more:
+
+- `curly` - Require braces for all control statements
+- `eqeqeq` - Require `===` and `!==` (except for `null` comparisons)
+- `@stylistic/spaced-comment` - Balanced spacing in comments
+- `@typescript-eslint/explicit-member-accessibility` - Require explicit visibility modifiers, but omit `public`
+- `comment-length/*` - Maximum 85 characters per comment line
+- `object-shorthand` - Require shorthand syntax for object properties
+- `prefer-template` - Require template literals over string concatenation
+- `prefer-const` - Require `const` for variables that are never reassigned
+- `no-var` - Disallow `var` declarations
+
+#### Import Rules
+
+The style guide enforces import organization with lines between groups:
+
+```ts
+import React from "react"
+
+// 1. Built-in and external packages
+import {readFile} from "node:fs/promises"
+
+// 2. Internal imports
+import {utils} from "~/lib/utils"
+
+// 3. Parent imports
+import {parent} from "../parent"
+
+// 4. Sibling imports
+import {sibling} from "./sibling"
+```
+
+Additional import rules:
+
+- `import/no-duplicates` - Merge duplicate imports with inline type specifiers
+- `unused-imports/*` - Auto-remove unused imports (variables prefixed with `_` are ignored)
+
+#### Private Fields
+
+The `no-restricted-syntax` rule bans the `#` private field syntax:
+
+```ts
+// Disallowed
+class Foo {
+  // [!code warning]
+  #bar = 1
+}
+
+// Use TypeScript access modifiers instead
+class Foo {
+  private bar = 1
+}
+```
+
+### React Configs
+
+The `@qualcomm-ui/eslint-config-react` package exports the following configurations:
+
+| Config        | Description                                  |
+| ------------- | -------------------------------------------- |
+| `recommended` | React plugin setup plus hooks and JSX rules  |
+| `strict`      | Additional React Compiler rules              |
+
+#### Recommended Rules
+
+The `recommended` config includes:
+
+- `react-hooks/rules-of-hooks` - Enforce Rules of Hooks
+- `react-hooks/exhaustive-deps` - Verify effect dependencies (with autofix)
+- `react/jsx-sort-props` - Sort JSX props (key and ref first)
+- `react/jsx-boolean-value` - Omit redundant `={true}` for boolean props
+- `react/self-closing-comp` - Require self-closing tags for components without children
+
+The config also blocks the default React import:
+
+```ts
+// Disallowed
+// [!code warning]
+import React from "react"
+// Use named imports
+import {useState, useEffect} from "react"
+```
+
+#### Strict Rules (React Compiler)
+
+The `strict` config adds React Compiler rules for optimization:
+
+- `react-hooks/purity` - Enforce pure render functions
+- `react-hooks/immutability` - Enforce immutable data patterns
+- `react-hooks/use-memo` - Validate useMemo usage
+- `react-hooks/preserve-manual-memoization` - Respect manual memoization
+- `react-hooks/static-components` - Identify static components
+
+Use the `strict` config when using the React Compiler:
+
+```js
+import reactConfigs from "@qualcomm-ui/eslint-config-react"
+import tsConfigs from "@qualcomm-ui/eslint-config-typescript"
+
+export default [
+  tsConfigs.configs.recommended,
+  reactConfigs.configs.recommended,
+  reactConfigs.configs.strict,
+]
+```
+
+### Type-Aware Rules
+
+The TypeScript configs include type-aware rules that require type information. Files matched by your ESLint config's `files` patterns must be included in the nearest `tsconfig.json`.
+
+If ESLint errors with "file not found in any configured project," ensure the file is included in your tsconfig's `files` or `include` patterns.
+
+### Example Configuration
+
+> [!note/Type-aware rules]
+> This configuration uses type-aware linting. Learn more [here](./#type-aware-rules) about potential pitfalls.
+
+Create an `eslint.config.js` file in your project root:
+
+```js
+import {defineConfig} from "eslint/config"
+import * as tseslint from "typescript-eslint"
+
+import quiEslintReact from "@qualcomm-ui/eslint-config-react"
+import quiEslintTs from "@qualcomm-ui/eslint-config-typescript"
+import quiEslintPluginReact from "@qualcomm-ui/eslint-plugin-react"
+
+const tsLanguageOptions = {
+  parser: tseslint.parser,
+  parserOptions: {
+    projectService: true,
+  },
+}
+
+const eslintConfig = defineConfig([
+  {
+    ignores: [
+      "**/dist/",
+      "**/node_modules/",
+      "**/build/",
+      "**/coverage/",
+      "**/.turbo/",
+      "**/out/",
+      "**/out-tsc/",
+      "**/temp/",
+    ],
+  },
+  // JS
+  {
+    extends: [quiEslintTs.configs.sortKeys, quiEslintTs.configs.styleGuide],
+    // recommendation: scope these to your source files in your package(s).
+    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+  },
+  // TS
+  {
+    extends: [
+      quiEslintTs.configs.recommended,
+      quiEslintTs.configs.strictExports,
+    ],
+    // recommendation: scope these to your source files in your package(s).
+    files: ["**/*.ts"],
+    languageOptions: tsLanguageOptions,
+  },
+  // React
+  {
+    extends: [
+      quiEslintTs.configs.recommended,
+      quiEslintReact.configs.recommended,
+      // optional: include the plugin as well
+      quiEslintPluginReact.config,
+    ],
+    // recommendation: scope these to your source files in your package(s).
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: tsLanguageOptions,
+  },
+])
+
+export default eslintConfig
+```

@@ -6,14 +6,16 @@ import type {ReactElement} from "react"
 import {ArrowDownUp, ArrowUp} from "lucide-react"
 
 import type {Header} from "@qualcomm-ui/core/table"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
-export interface TableColumnSortActionProps
-  extends Omit<ElementRenderProp<"button">, "children"> {
+export interface TableColumnSortActionProps extends Omit<
+  ElementRenderProp<"button">,
+  "children"
+> {
   header: Header<any>
 }
 

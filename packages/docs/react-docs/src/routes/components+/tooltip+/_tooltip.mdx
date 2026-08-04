@@ -1,6 +1,5 @@
 ---
 title: Tooltip
-group: Overlays
 description: Tooltips appear on demand to explain UI elements, clarify functionality, or provide helpful context without permanently occupying screen space. They automatically position themselves relative to their trigger element.
 component: Tooltip
 aliases: [info tip, hover text, help text]
@@ -40,8 +39,7 @@ In general, tooltips should be used sparingly and only contain succinct informat
 ### Simple
 
 ::: terms
-basic
-quick start
+basic, quick start
 :::
 
 The simple API provides a standalone component with built-in layout. The trigger is supplied as a [prop](./#trigger), and the content of the tooltip is the children.
@@ -51,10 +49,7 @@ The simple API provides a standalone component with built-in layout. The trigger
 ### Composite
 
 ::: terms
-compound
-parts
-anatomy
-subcomponents
+compound, parts, anatomy, subcomponents
 :::
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
@@ -64,12 +59,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### Placement
 
 ::: terms
-alignment
-left
-right
-bottom
-start
-end
+alignment, left, right, bottom, start, end
 :::
 
 The tooltip's position, relative to the trigger element, can be set using the `placement` option of the [positioning](./#positioning) prop. Its default value is `top`.
@@ -84,24 +74,23 @@ Change the values in the example below and hover over the select to see the tool
 ### Close On Click / Escape
 
 ::: terms
-dismiss
-persist
+dismiss, persist
 :::
 
 By default, the tooltip will close when the `Escape` key is pressed or a click is detected. You can customize this behavior by using the [closeOnClick](./#closeOnClick) and [closeOnEscape](./#closeOnEscape) props.
 
-<Demo name="TooltipCloseEventsDemo" component={demos.TooltipCloseEventsDemo} />
+<Demo
+  name="TooltipCloseEventsDemo"
+  component={demos.TooltipCloseEventsDemo}
+/>
 
 ### Controlled Visibility
 
 ::: terms
-programmatic
-show hide
-toggle
-manual
+programmatic, show hide, toggle, manual
 :::
 
-Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use [open](./#open) and [onOpenChange](./#onOpenChange) to control the visibility manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+Use [open](./#open) and [onOpenChange](./#onOpenChange) to control the component's visibility manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 <Demo
   expanded
@@ -112,9 +101,7 @@ Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use 
 ### Disabled
 
 ::: terms
-inactive
-prevent
-turn off
+inactive, prevent, turn off
 :::
 
 You can disable the tooltip by using the [disabled](./#disabled-1) prop.
@@ -145,7 +132,7 @@ If you don't wish to customize the arrow tip, you can omit it and `Tooltip.Arrow
 
 ## API
 
-### \<Tooltip\>
+### \<Tooltip>
 
 The simple tooltip extends the [Tooltip.Root](./#tooltip-root) component with the following props:
 
@@ -153,17 +140,17 @@ The simple tooltip extends the [Tooltip.Root](./#tooltip-root) component with th
 
 ## Composite API
 
-### \<Tooltip.Root\>
+### \<Tooltip.Root>
 
 <TypeDocProps name="TooltipRootProps" />
 
-### \<Tooltip.Trigger\>
+### \<Tooltip.Trigger>
 
 <TypeDocProps name="TooltipTriggerProps" />
 
 <TypeDocAttributes name={["TooltipTriggerBindings"]} />
 
-### \<Tooltip.Positioner\>
+### \<Tooltip.Positioner>
 
 <TypeDocProps name="TooltipPositionerProps" />
 
@@ -171,7 +158,7 @@ The simple tooltip extends the [Tooltip.Root](./#tooltip-root) component with th
   name={["TooltipPositionerBindings", "QdsTooltipPositionerBindings"]}
 />
 
-### \<Tooltip.Content\>
+### \<Tooltip.Content>
 
 <TypeDocProps name="TooltipContentProps" />
 
@@ -179,13 +166,15 @@ The simple tooltip extends the [Tooltip.Root](./#tooltip-root) component with th
   name={["TooltipContentBindings", "QdsTooltipContentBindings"]}
 />
 
-### \<Tooltip.Arrow\>
+### \<Tooltip.Arrow>
 
 <TypeDocProps name="TooltipArrowProps" />
 
-<TypeDocAttributes name={["TooltipArrowBindings", "QdsTooltipArrowBindings"]} />
+<TypeDocAttributes
+  name={["TooltipArrowBindings", "QdsTooltipArrowBindings"]}
+/>
 
-### \<Tooltip.ArrowTip\>
+### \<Tooltip.ArrowTip>
 
 <TypeDocProps name="TooltipArrowTipProps" />
 

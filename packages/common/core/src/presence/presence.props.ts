@@ -6,7 +6,10 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {PresenceApiProps, RenderStrategyApiProps} from "./presence.types"
+import type {
+  PresenceApiProps,
+  RenderStrategyApiProps,
+} from "./presence.types.js"
 
 export const presenceProps: (keyof PresenceApiProps)[] =
   createProps<PresenceApiProps>()(

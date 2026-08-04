@@ -12,7 +12,7 @@ function getUrl(element: HTMLAnchorElement) {
 }
 
 const querySelectors: string[] = [
-  "a[data-scope='menu']",
+  "a[data-menu-part]",
   "a.qui-breadcrumbs__item-trigger",
 ]
 
@@ -29,7 +29,7 @@ export function useRouterLinkInterceptor() {
     function listener(event: MouseEvent) {
       const href = getUrl(event.currentTarget as HTMLAnchorElement)
       if (href) {
-        navigate(href)
+        void navigate(href)
       }
     }
 
@@ -48,9 +48,9 @@ export function useRouterLinkInterceptor() {
     }, 1000)
 
     return () => {
-      linkElements?.forEach((element) => {
+      for (const element of linkElements ?? []) {
         cast<HTMLAnchorElement>(element).removeEventListener("click", listener)
-      })
+      }
     }
   }, [pathname])
 

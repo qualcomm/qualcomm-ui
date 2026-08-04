@@ -4,9 +4,9 @@
 import {Component, computed} from "@angular/core"
 import {Asterisk} from "lucide-angular"
 
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreSelectLabelDirective} from "@qualcomm-ui/angular-core/select"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 import {useQdsSelectContext} from "./qds-select-context.service"
 

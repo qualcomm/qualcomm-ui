@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import {QuiLogo} from "./qui-logo"
+import {QuiLogo} from "./qui-logo.js"
 
 export interface QuiEcosystemEntry {
   description: string

@@ -6,7 +6,7 @@
 
 import {levenshteinDistance} from "@qualcomm-ui/utils/search"
 
-import {i18nCache} from "./cache"
+import {i18nCache} from "./cache.js"
 
 export interface FilterReturn {
   /**

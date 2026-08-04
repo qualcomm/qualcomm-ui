@@ -1,1 +1,1 @@
-export * from "./tabs.dom"
+export * from "./tabs.dom.js"

@@ -1,16 +1,16 @@
 import dotenv from "dotenv"
 import * as Figma from "figma-api"
-import {mkdir, writeFile} from "node:fs/promises"
-import {dirname, resolve} from "node:path"
+import {mkdir, readFile, writeFile} from "node:fs/promises"
+import {dirname, join, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import type {Dictionary, TransformedToken} from "style-dictionary"
+import {StyleDictionary} from "style-dictionary-utils"
 import {
   logBrokenReferenceLevels,
   propertyFormatNames,
 } from "style-dictionary/enums"
 import type {FormatFnArguments} from "style-dictionary/types"
 import {formattedVariables} from "style-dictionary/utils"
-import {StyleDictionary} from "style-dictionary-utils"
 
 import {dedent} from "@qualcomm-ui/utils/dedent"
 
@@ -120,6 +120,9 @@ export class FigmaTokenBuilder {
     const formattedVariableOutput = formattedVariables({
       dictionary,
       format: propertyFormatNames.css,
+      formatting: {
+        commentStyle: "none",
+      },
       outputReferences,
       usesDtcg: true,
     })
@@ -242,21 +245,31 @@ export class FigmaTokenBuilder {
                     delete dictionary.arduino
                     delete dictionary.dw
                     delete dictionary.sd
+                    delete dictionary.df
                     break
                   case "dragonwing":
                     delete dictionary.arduino
                     delete dictionary.qc
                     delete dictionary.sd
+                    delete dictionary.df
                     break
                   case "snapdragon":
                     delete dictionary.arduino
                     delete dictionary.qc
+                    delete dictionary.dw
+                    delete dictionary.df
+                    break
+                  case "dragonfly":
+                    delete dictionary.arduino
+                    delete dictionary.qc
+                    delete dictionary.sd
                     delete dictionary.dw
                     break
                   case "arduino":
                     delete dictionary.qc
                     delete dictionary.sd
                     delete dictionary.dw
+                    delete dictionary.df
                     break
                 }
                 return dictionary
@@ -313,9 +326,45 @@ export class FigmaTokenBuilder {
   }
 }
 
+async function buildTokenComments() {
+  const tokenJsonDir = join(__dirname, "./temp/qualcomm-dark-token-map.json")
+  const tokens = JSON.parse(await readFile(tokenJsonDir, "utf-8")) as Record<
+    string,
+    TransformedToken
+  >
+  const entries = Object.entries(tokens)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, value]) => ({
+      comment: value.$description,
+      name: value.name,
+      type: value.$type,
+      value: value.$value,
+    }))
+  await writeFile(
+    join(__dirname, "../src/tokens/tokens.ts"),
+    dedent`
+    /* eslint-disable */
+    // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+    // SPDX-License-Identifier: BSD-3-Clause-Clear
+
+    /** This file was generated automatically. Do not edit it directly. */
+    
+    export interface TokenWithComment {
+      comment?: string
+      name: string
+      type?: string
+      value: string | number
+    }
+    
+    export const tokens: TokenWithComment[] = ${JSON.stringify(entries, null, 2)}
+    `,
+  )
+}
+
 async function main() {
   const parser = FigmaTokenBuilder.fromEnv()
   await parser.parseAndSave()
+  await buildTokenComments()
 }
 
 void main()

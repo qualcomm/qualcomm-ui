@@ -8,10 +8,12 @@ import type {PagePropType} from "@qualcomm-ui/mdx-common"
 import {
   TypeDocAttributes,
   type TypeDocAttributesProps,
-} from "./type-doc-attributes"
+} from "./type-doc-attributes.js"
 
-export interface TypeDocAngularAttributesProps
-  extends Omit<TypeDocAttributesProps, "propTransformer"> {}
+export interface TypeDocAngularAttributesProps extends Omit<
+  TypeDocAttributesProps,
+  "propTransformer"
+> {}
 
 function propTransformer(prop: PagePropType) {
   return {...prop, name: prop.name === "className" ? "class" : prop.name}

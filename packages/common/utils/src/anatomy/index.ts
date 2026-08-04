@@ -1,1 +1,1 @@
-export * from "./anatomy"
+export * from "./anatomy.js"

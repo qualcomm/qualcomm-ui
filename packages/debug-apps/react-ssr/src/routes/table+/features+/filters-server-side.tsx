@@ -7,9 +7,9 @@ const demos = [{component: FiltersServerSideDemo, title: "Filters Server Side"}]
 export default function FiltersServerSide() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="filters-server-side"
       demos={demos}
-      className="w-full"
     />
   )
 }

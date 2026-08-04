@@ -3,11 +3,6 @@
 
 import {computed, Directive, inject, input, type OnInit} from "@angular/core"
 
-import {
-  provideQdsInputContext,
-  type QdsAngularInputApiProps,
-  QdsInputContextService,
-} from "@qualcomm-ui/angular/input"
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
@@ -18,6 +13,11 @@ import {
   CoreTextInputRootDirective,
   provideTextInputContext,
 } from "@qualcomm-ui/angular-core/text-input"
+import {
+  provideQdsInputContext,
+  type QdsAngularInputApiProps,
+  QdsInputContextService,
+} from "@qualcomm-ui/angular/input"
 import {createQdsInputApi, type QdsInputSize} from "@qualcomm-ui/qds-core/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {RouteMetaEntryInternal, RouteMetaInternal} from "./types"
+import type {RouteMetaEntryInternal, RouteMetaInternal} from "./types.js"
 
 /**
  * Retrieves the route metadata for a given path based on its path segments.

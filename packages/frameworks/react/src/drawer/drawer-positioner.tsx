@@ -3,11 +3,11 @@
 
 import type {ReactNode} from "react"
 
-import type {DialogPositionerProps} from "@qualcomm-ui/react/dialog"
 import {CoreDialog} from "@qualcomm-ui/react-core/dialog"
+import type {DialogPositionerProps} from "@qualcomm-ui/react/dialog"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsDrawerContext} from "./qds-drawer-context"
+import {useQdsDrawerContext} from "./qds-drawer-context.js"
 
 export interface DrawerPositionerProps extends DialogPositionerProps {}
 

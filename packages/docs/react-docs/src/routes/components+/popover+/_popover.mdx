@@ -1,13 +1,12 @@
 ---
 title: Popover
-group: Overlays
 description: Popover displays contextual information or actions in a floating container that appears relative to a trigger element. Unlike dialogs, popovers are non-modal and allow users to continue interacting with the background content.
 component: Popover
 aliases: [popup, floating panel, flyout, callout, bubble]
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {Demo} from "~components/demo"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
@@ -49,17 +48,33 @@ a11y
 :::
 
 - The anchor element is automatically associated with the popover:
-- When the popover is visible, the anchor element receives the `aria-controls` and `aria-expanded` attributes.
-- The anchor element's `aria-haspopup` is always set to `'true'`.
-- When the `Popover.Label` component is supplied, the overlay panel's `aria-labelledby` attribute is set to the id of the label.
-- When the `Popover.Description` component is supplied, the overlay panel's `aria-describedby` attribute is set to the id of the label.
+- When the popover is visible, the anchor element receives the [`aria-controls`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls) and [`aria-expanded`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded) attributes.
+- The anchor element's [`aria-haspopup`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup) is always set to `'true'`.
+- When the [`Popover.Label`](./#popover-label) component is supplied, the overlay panel's [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby) attribute is set to the id of the label.
+- When the [`Popover.Description`](./#popover-description) component is supplied, the overlay panel's [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby) attribute is set to the id of the label.
 
 > [!note]
 > Don't worry about supplying id's to the label, description or popover. If these aren't provided, they'll be generated automatically.
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.PopoverExplorerDemo}
+  linkPrefix="popover"
+  parts={[
+    "trigger",
+    "positioner",
+    "content",
+    "arrow",
+    "label",
+    "description",
+  ]}
+  scope="popover"
+/>
+
 ## API
 
-### \<Popover\>
+### \<Popover>
 
 The `Popover` extends the [Popover.Root](./#popover-root) with the following props:
 
@@ -67,15 +82,53 @@ The `Popover` extends the [Popover.Root](./#popover-root) with the following pro
 
 ## Composite API
 
-### \<Popover.Root\>
+### \<Popover.Root>
 
 <TypeDocProps name="PopoverRootProps" />
 
+<TypeDocAttributes name="PopoverRootBindings" />
+
 This section describes the elements of the Popover's composite API.
 
-### \<Popover.Label\>
+### \<Popover.Trigger>
+
+<TypeDocProps name="PopoverTriggerProps" />
+
+<TypeDocAttributes name="PopoverTriggerBindings" />
+
+### \<Popover.Positioner>
+
+<TypeDocProps name="PopoverPositionerProps" />
+
+<TypeDocAttributes name="PopoverPositionerBindings" />
+
+### \<Popover.Content>
+
+<TypeDocProps name="PopoverContentProps" />
+
+<TypeDocAttributes
+  name={["PopoverContentBindings", "QdsPopoverContentBindings"]}
+/>
+
+### \<Popover.Arrow>
+
+<TypeDocProps name="PopoverArrowProps" />
+
+<TypeDocAttributes
+  name={["PopoverArrowBindings", "QdsPopoverArrowBindings"]}
+/>
+
+### \<Popover.Label>
 
 <TypeDocProps name="PopoverLabelProps" />
+
+<TypeDocAttributes name="PopoverLabelBindings" />
+
+### \<Popover.Description>
+
+<TypeDocProps name="PopoverDescriptionProps" />
+
+<TypeDocAttributes name="PopoverDescriptionBindings" />
 
 ## Data Structures
 

@@ -5,9 +5,9 @@ import type {ReactElement} from "react"
 
 import {ExternalLink} from "lucide-react"
 
-import {Link} from "@qualcomm-ui/react/link"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {useMdxDocsLayoutContext} from "@qualcomm-ui/react-mdx/docs-layout"
+import {Link} from "@qualcomm-ui/react/link"
 import type {QuiInlineTagDisplayPart} from "@qualcomm-ui/typedoc-common"
 
 export interface PropDescriptionLinkProps {

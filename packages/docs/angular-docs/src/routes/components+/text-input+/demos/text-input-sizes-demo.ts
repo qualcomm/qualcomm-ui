@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {Search} from "lucide-angular"
 
-import {TextInputModule} from "@qualcomm-ui/angular/text-input"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {TextInputModule} from "@qualcomm-ui/angular/text-input"
 
 @Component({
   imports: [TextInputModule],
@@ -12,18 +12,21 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
     <div class="flex flex-col items-start gap-4">
       <!-- preview -->
       <q-text-input
+        aria-label="sm"
         class="w-56"
         defaultValue="sm"
         size="sm"
         startIcon="Search"
       />
       <q-text-input
+        aria-label="md"
         class="w-60"
         defaultValue="md"
         size="md"
         startIcon="Search"
       />
       <q-text-input
+        aria-label="lg"
         class="w-64"
         defaultValue="lg"
         size="lg"

@@ -1,4 +1,4 @@
-.qui-badge__root[data-scope="number-badge"] {
+.qui-badge__root[data-number-badge-part="root"] {
   > span {
     text-box: cap alphabetic;
   }

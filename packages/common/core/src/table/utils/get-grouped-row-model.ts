@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {createRow} from "../core/row"
-import type {Row, RowData, RowModel, TableInstance} from "../types"
-import {flattenBy, memo} from "../utils"
+import {createRow} from "../core/row.js"
+import type {Row, RowData, RowModel, TableInstance} from "../types.js"
+import {flattenBy, memo} from "../utils.js"
 
 export function getGroupedRowModel<TData extends RowData>(): (
   table: TableInstance<TData>,
@@ -123,17 +123,10 @@ export function getGroupedRowModel<TData extends RowData>(): (
                 subRows,
               })
 
-              subRows.forEach((subRow) => {
+              for (const subRow of subRows) {
                 groupedFlatRows.push(subRow)
                 groupedRowsById[subRow.id] = subRow
-                // if (subRow.getIsGrouped?.()) {
-                //   onlyGroupedFlatRows.push(subRow);
-                //   onlyGroupedRowsById[subRow.id] = subRow;
-                // } else {
-                //   nonGroupedFlatRows.push(subRow);
-                //   nonGroupedRowsById[subRow.id] = subRow;
-                // }
-              })
+              }
 
               return row
             },
@@ -144,17 +137,10 @@ export function getGroupedRowModel<TData extends RowData>(): (
 
         const groupedRows = groupUpRecursively(rowModel.rows, 0)
 
-        groupedRows.forEach((subRow) => {
+        for (const subRow of groupedRows) {
           groupedFlatRows.push(subRow)
           groupedRowsById[subRow.id] = subRow
-          // if (subRow.getIsGrouped?.()) {
-          //   onlyGroupedFlatRows.push(subRow);
-          //   onlyGroupedRowsById[subRow.id] = subRow;
-          // } else {
-          //   nonGroupedFlatRows.push(subRow);
-          //   nonGroupedRowsById[subRow.id] = subRow;
-          // }
-        })
+        }
 
         return {
           flatRows: groupedFlatRows,

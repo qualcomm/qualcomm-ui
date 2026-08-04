@@ -21,28 +21,28 @@ import {
 
 import {getWindow, raf} from "@qualcomm-ui/dom/query"
 import {noop, runIfFn} from "@qualcomm-ui/utils/functions"
-import {isNull} from "@qualcomm-ui/utils/guard"
 import {compact} from "@qualcomm-ui/utils/object"
 
-import {getAnchorElement} from "./get-anchor"
+import {getAnchorElement} from "./get-anchor.js"
 import {
+  cssVars,
   rectMiddleware,
   shiftArrowMiddleware,
   transformOriginMiddleware,
-} from "./middleware"
-import {getPlacementDetails} from "./placement"
+} from "./middleware.js"
+import {getPlacementDetails} from "./placement.js"
 import type {
   MaybeElement,
   MaybeFn,
   MaybeRectElement,
   PositioningOptions,
-} from "./types"
+} from "./types.js"
 
 const defaultOptions: PositioningOptions = {
   arrowPadding: 4,
+  arrowSelector: "[data-part=arrow]",
   fitViewport: false,
   flip: true,
-  gutter: 8,
   listeners: true,
   overflowPadding: 8,
   overlap: false,
@@ -57,21 +57,20 @@ type RequiredBy<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>
 }
 
-interface Options
-  extends RequiredBy<
-    PositioningOptions,
-    | "strategy"
-    | "placement"
-    | "listeners"
-    | "gutter"
-    | "flip"
-    | "slide"
-    | "overlap"
-    | "sameWidth"
-    | "fitViewport"
-    | "overflowPadding"
-    | "arrowPadding"
-  > {}
+interface Options extends RequiredBy<
+  PositioningOptions,
+  | "strategy"
+  | "placement"
+  | "listeners"
+  | "flip"
+  | "slide"
+  | "overlap"
+  | "sameWidth"
+  | "fitViewport"
+  | "overflowPadding"
+  | "arrowPadding"
+  | "arrowSelector"
+> {}
 
 function roundByDpr(win: Window, value: number) {
   const dpr = win.devicePixelRatio || 1
@@ -92,18 +91,25 @@ function getArrowMiddleware(arrowElement: HTMLElement | null, opts: Options) {
   })
 }
 
-function getOffsetMiddleware(arrowElement: HTMLElement | null, opts: Options) {
-  if (isNull(opts.offset ?? opts.gutter)) {
-    return
+function getOffsetMiddleware(
+  arrowElement: HTMLElement | null,
+  opts: Options,
+  contextEl?: Element | null,
+) {
+  let cssGutter: number | undefined
+  if (contextEl) {
+    const parsed = parseFloat(
+      getComputedStyle(contextEl).getPropertyValue(cssVars.gutter.variable),
+    )
+    if (!Number.isNaN(parsed)) {
+      cssGutter = parsed
+    }
   }
+
   return offset(({placement}) => {
     const arrowOffset = (arrowElement?.clientHeight || 0) / 2
-
-    const gutter = opts.offset?.mainAxis ?? opts.gutter
-    const mainAxis =
-      typeof gutter === "number"
-        ? gutter + arrowOffset
-        : (gutter ?? arrowOffset)
+    const gutter = opts.offset?.mainAxis ?? opts.gutter ?? cssGutter ?? 2
+    const mainAxis = gutter + arrowOffset
 
     const {hasAlign} = getPlacementDetails(placement)
     const shift = !hasAlign ? opts.shift : undefined
@@ -202,10 +208,10 @@ function getPlacementImpl(
    * The middleware stack
    * ----------------------------------------------------------------------------- */
 
-  const arrowEl = floating.querySelector<HTMLElement>("[data-part=arrow]")
+  const arrowEl = floating.querySelector<HTMLElement>(options.arrowSelector)
 
   const middleware: (Middleware | undefined)[] = [
-    getOffsetMiddleware(arrowEl, options),
+    getOffsetMiddleware(arrowEl, options, reference.contextElement),
     getFlipMiddleware(options),
     getShiftMiddleware(options),
     getArrowMiddleware(arrowEl, options),
@@ -308,6 +314,8 @@ export function getPlacement(
     }),
   )
   return () => {
-    cleanups.forEach((fn) => fn?.())
+    for (const fn of cleanups) {
+      fn?.()
+    }
   }
 }

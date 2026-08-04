@@ -1,4 +1,5 @@
 export * from "./text-input-clear-trigger-demo"
+export * from "./text-input-explorer-demo"
 export * from "./text-input-composite-demo"
 export * from "./text-input-composite-layout-demo"
 export * from "./text-input-controlled-state-demo"

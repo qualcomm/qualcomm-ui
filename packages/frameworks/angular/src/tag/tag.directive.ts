@@ -9,18 +9,9 @@ import {
   input,
   type OnInit,
   output,
-  signal,
 } from "@angular/core"
 import {X} from "lucide-angular"
 
-import {
-  END_ICON_CONTEXT_TOKEN,
-  EndIconDirective,
-  IconDirective,
-  type IconTokenContext,
-  START_ICON_CONTEXT_TOKEN,
-  StartIconDirective,
-} from "@qualcomm-ui/angular/icon"
 import {
   type LucideIconOrString,
   provideIcons,
@@ -31,6 +22,15 @@ import {
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {useControlledState} from "@qualcomm-ui/angular-core/state"
+import {
+  END_ICON_CONTEXT_TOKEN,
+  EndIconDirective,
+  IconDirective,
+  type IconTokenContext,
+  START_ICON_CONTEXT_TOKEN,
+  StartIconDirective,
+} from "@qualcomm-ui/angular/icon"
 import {
   createQdsTagApi,
   type QdsTagApiProps,
@@ -79,7 +79,7 @@ import {QdsTagContextService} from "./qds-tag-context.service"
       },
     },
   ],
-  selector: "span[q-tag], button[q-tag], div[q-tag]",
+  selector: "span[q-tag], button[q-tag], a[q-tag], div[q-tag]",
   template: `
     <ng-content select="[q-start-icon]">
       @if (startIcon()) {
@@ -108,10 +108,48 @@ import {QdsTagContextService} from "./qds-tag-context.service"
 })
 export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
   /**
-   * Emits when the dismiss button is clicked. Only applicable when
-   * {@link variant} is `dismissable`.
+   * Emits when the dismiss button is clicked.
+   * Only applicable when {@link variant} is `dismissable`.
    */
   readonly dismiss = output<void>()
+
+  /**
+   * Emits when the selected state changes. Fires in both controlled and
+   * uncontrolled modes.
+   * Only applicable when {@link variant} is `selectable`.
+   *
+   * @since 2.11.0
+   *
+   * @remarks
+   * Pair with {@link selected} to enable two-way binding via `[(selected)]`.
+   */
+  readonly selectedChange = output<boolean>()
+
+  /**
+   * Applies the active style to a link tag. Honored only on an `<a q-tag>` host.
+   * This is purely visual; set {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current aria-current}
+   * on the anchor for accessibility.
+   *
+   * @since 2.12.0
+   *
+   * @default false
+   */
+  readonly active = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
+  /**
+   * Initial selected state when the component is uncontrolled.
+   * Only applicable when {@link variant} is `selectable`.
+   * Ignored when {@link selected} is provided.
+   *
+   * @since 2.11.0
+   *
+   * @default false
+   */
+  readonly defaultSelected = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
 
   /**
    * Controls the component's interactivity. If `true`, the component becomes
@@ -123,8 +161,8 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
 
   /**
    * {@link https://lucide.dev/icons lucide-angular} icon, positioned after the label.
-   * Note that this property is ignored if {@link variant} is `dismissable`, as it
-   * is reserved for the dismiss icon.
+   * Ignored when {@link variant} is `dismissable`, as it is reserved for the
+   * dismiss icon.
    *
    * @remarks
    * To customize the element, provide it using the directive instead:
@@ -159,6 +197,16 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
   readonly shape = input<QdsTagShape>()
 
   /**
+   * Controls the selected state. Pair with {@link selectedChange} (or use
+   * `[(selected)]` for two-way binding) for a fully controlled component.
+   * When omitted, the tag manages its own selected state internally.
+   * Only applicable when {@link variant} is `selectable`.
+   */
+  readonly selected = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
+  /**
    * Governs the size of the text, icons, spacing, and padding.
    * @default 'md'
    */
@@ -180,13 +228,20 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
    */
   readonly variant = input<QdsTagVariant>()
 
-  protected readonly selected = signal<boolean>(false)
+  private readonly selectedState = useControlledState<boolean>({
+    defaultValue: this.defaultSelected,
+    onChange: (value) => this.selectedChange.emit(value),
+    value: this.selected,
+  })
 
   protected readonly trackBindings = useTrackBindings(() =>
     mergeProps(this.qdsTagApi.context().getRootBindings(), {
+      // remove `disabled` from the host to avoid invalid HTML
+      disabled: undefined,
       onclick: () => {
-        if (this.variant() === "selectable") {
-          this.selected.update((prev) => !prev)
+        if (this.variant() === "selectable" && !this.disabled()) {
+          const state = this.selectedState()
+          state.setValue(!state.value())
         }
       },
     }),
@@ -199,14 +254,16 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
       computed(() =>
         createQdsTagApi(
           {
+            active: this.active(),
             disabled: this.disabled(),
             emphasis: this.emphasis(),
             radius: this.radius(),
-            selected: this.selected(),
+            selected: this.selectedState().value(),
             shape: this.shape(),
             size: this.size(),
             variant: this.variant(),
           } satisfies Explicit<QdsTagApiProps> & {
+            active?: boolean | undefined
             selected?: boolean | undefined
           },
           normalizeProps,

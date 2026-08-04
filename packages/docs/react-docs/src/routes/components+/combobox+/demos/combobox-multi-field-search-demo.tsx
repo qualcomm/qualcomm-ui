@@ -1,7 +1,7 @@
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
 import {useListCollection} from "@qualcomm-ui/react-core/collection"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Combobox} from "@qualcomm-ui/react/combobox"
 
 import {people, type Person} from "./people-list"
 

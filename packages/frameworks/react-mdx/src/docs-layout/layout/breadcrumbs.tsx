@@ -4,18 +4,18 @@
 import {type ReactNode, useMemo} from "react"
 
 import {
-  Breadcrumbs,
-  type BreadcrumbsItemProps,
-} from "@qualcomm-ui/react/breadcrumbs"
-import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  Breadcrumbs,
+  type BreadcrumbsItemProps,
+} from "@qualcomm-ui/react/breadcrumbs"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
-import {PageActions} from "./page-actions"
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
+import {PageActions} from "./page-actions.js"
+import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface BreadcrumbsProps extends ElementRenderProp<"div"> {
   /**
@@ -56,11 +56,11 @@ export function DocsBreadcrumbs({
         acc.push({
           children: pageTitle,
           id: route?.pathname ?? route?.id ?? pageTitle,
-          render: route?.pathname ? (
-            <Link href={route.pathname} />
-          ) : (
-            <button style={{pointerEvents: "none"}} />
-          ),
+          ...(route?.pathname
+            ? {
+                render: <Link href={route.pathname} />,
+              }
+            : {}),
         })
 
         return acc

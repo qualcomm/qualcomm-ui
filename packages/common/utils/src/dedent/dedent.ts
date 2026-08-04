@@ -14,10 +14,7 @@ export function dedent(
   let strings = Array.from(typeof templ === "string" ? [templ] : templ)
 
   // 1. Remove trailing whitespace.
-  strings[strings.length - 1] = strings[strings.length - 1].replace(
-    /\r?\n([\t ]*)$/,
-    "",
-  )
+  strings[strings.length - 1] = strings.at(-1)!.replace(/\r?\n([\t ]*)$/, "")
 
   // 2. Find all line breaks to determine the highest common indentation level.
   const indentLengths = strings.reduce((arr: number[], str) => {
@@ -43,9 +40,10 @@ export function dedent(
   // 5. Perform interpolation.
   let string = strings[0]
 
-  values.forEach((value, i) => {
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i]
     string += (value as string) + strings[i + 1]
-  })
+  }
 
   return string
 }

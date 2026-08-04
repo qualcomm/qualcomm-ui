@@ -5,14 +5,13 @@ import type {ReactElement} from "react"
 
 import {X} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
-import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface PasswordInputClearTriggerProps
-  extends ElementRenderProp<"button"> {}
+export interface PasswordInputClearTriggerProps extends ElementRenderProp<"button"> {}
 
 export function PasswordInputClearTrigger(
   props: PasswordInputClearTriggerProps,

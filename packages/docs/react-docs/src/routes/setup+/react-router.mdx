@@ -13,7 +13,7 @@ There are four steps to installation:
 1. Install the npm packages
 2. Import the CSS
 3. Configure fonts
-4. Configure theme provider
+4. Configure the theme provider
 
 This guide assumes you've already installed React and React Router in framework mode (v7 and up). If not, run this command and follow the prompts to create your project:
 
@@ -93,7 +93,7 @@ Add the links to your application's `<head>` element:
 </html>
 ```
 
-## Configure theme provider
+## Configure the theme provider
 
 QUI components support both light and dark modes. Choose one of the following approaches for your site:
 
@@ -137,6 +137,7 @@ First we'll read the cookie. Create a [loader function](https://reactrouter.com/
 
 ```tsx
 import {type LoaderFunctionArgs, useLoaderData} from "react-router"
+
 import {
   isTheme,
   PreventFlashOnWrongTheme,
@@ -231,8 +232,8 @@ import {
 
 import {MoonIcon, SunIcon} from "lucide-react"
 
-import {IconButton} from "@qualcomm-ui/react/button"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
+import {IconButton} from "@qualcomm-ui/react/button"
 
 export function ThemeToggle(): ReactNode {
   const [theme, setTheme] = useTheme()
@@ -323,5 +324,6 @@ NextGen is independent of the legacy `@qui/react` package. Both can be installed
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 ```
 
-> [!note]
-> We're working on a codemod script to automate the migration process. Check back regularly for updates!
+#### AI Migration
+
+You can use QUI MCP to migrate from legacy `@qui/react`. Follow the [setup guide](https://qui-ai.qualcomm.com/docs/mcp/setup), then create two separate MCP entries in your agent configuration: one for QUI React NextGen, and another for QUI React Legacy. Then prompt the LLM to migrate. For optimal results, only migrate a few components at a time.

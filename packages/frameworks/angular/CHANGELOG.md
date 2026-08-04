@@ -1,5 +1,367 @@
 # @qualcomm-ui/angular Changelog
 
+## 2.14.2
+
+Jul 28th, 2026
+
+### Tests
+
+- [tabs]: improve focus state test coverage ([b388a69](https://github.com/qualcomm/qualcomm-ui/commit/b388a69))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/angular-core@2.4.7]
+
+## 2.14.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.1]
+
+## 2.14.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.0]
+
+## 2.13.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.32.0, @qualcomm-ui/angular-core@2.4.6]
+
+## 2.12.5
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.31.0, @qualcomm-ui/angular-core@2.4.6]
+
+## 2.12.4
+
+Jul 10th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.4]
+
+## 2.12.3
+
+Jul 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.3]
+
+## 2.12.2
+
+Jul 2nd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.2]
+
+## 2.12.1
+
+Jul 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.1, @qualcomm-ui/core@1.11.6, @qualcomm-ui/angular-core@2.4.6]
+
+## 2.12.0
+
+Jun 29th, 2026
+
+### Features
+
+- [tag]: support anchor navigation with active and disabled states ([841b3b6](https://github.com/qualcomm/qualcomm-ui/commit/841b3b6))
+
+### Miscellaneous Chores
+
+- [code-connect]: update tag link and dismissible mappings ([700e036](https://github.com/qualcomm/qualcomm-ui/commit/700e036))
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.0]
+
+### Tests
+
+- [tag]: cover anchor navigation and disabled states ([ac75267](https://github.com/qualcomm/qualcomm-ui/commit/ac75267))
+
+## 2.11.3
+
+Jun 10th, 2026
+
+### Styles
+
+- apply lint updates ([ef3e6bc](https://github.com/qualcomm/qualcomm-ui/commit/ef3e6bc))
+
+### Miscellaneous Chores
+
+- lint ([7c04412](https://github.com/qualcomm/qualcomm-ui/commit/7c04412))
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.2, @qualcomm-ui/angular-core@2.4.5, @qualcomm-ui/qds-core@1.29.3, @qualcomm-ui/core@1.11.5]
+
+## 2.11.2
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.4, @qualcomm-ui/qds-core@1.29.2, @qualcomm-ui/angular-core@2.4.4]
+
+## 2.11.1
+
+Jun 4th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.29.1]
+
+## 2.11.0
+
+Jun 4th, 2026
+
+### Features
+
+- [tag]: support controlled selected state ([f2b0d0c](https://github.com/qualcomm/qualcomm-ui/commit/f2b0d0c))
+- [menu]: add split button ([527d33e](https://github.com/qualcomm/qualcomm-ui/commit/527d33e))
+- [tag]: add aria-pressed to selectable tag ([81a24a3](https://github.com/qualcomm/qualcomm-ui/commit/81a24a3))
+
+### Code Refactoring
+
+- [button]: consolidate button-group prop resolution ([3922878](https://github.com/qualcomm/qualcomm-ui/commit/3922878))
+
+### Tests
+
+- [button]: cover button-group prop precedence ([3d8a0ef](https://github.com/qualcomm/qualcomm-ui/commit/3d8a0ef))
+- [menu]: cover split button behavior ([bca46f7](https://github.com/qualcomm/qualcomm-ui/commit/bca46f7))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 2.10.1
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/utils, @qualcomm-ui/angular-core]
+
+## 2.10.0
+
+Jun 1st, 2026
+
+### Features
+
+- [menu]: inherit trigger size from the menu size ([6fc9966](https://github.com/qualcomm/qualcomm-ui/commit/6fc9966))
+
+### Tests
+
+- [menu]: cover trigger size inheritance ([dccdd60](https://github.com/qualcomm/qualcomm-ui/commit/dccdd60))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 2.9.1
+
+May 29th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 2.9.0
+
+May 22nd, 2026
+
+### Features
+
+- [text-input]: support aria labels ([cc0b8b6](https://github.com/qualcomm/qualcomm-ui/commit/cc0b8b6))
+- [checkbox]: support aria labels ([c2e484c](https://github.com/qualcomm/qualcomm-ui/commit/c2e484c))
+- [password-input]: support aria labels ([3fb240c](https://github.com/qualcomm/qualcomm-ui/commit/3fb240c))
+- [number-input]: support aria labels ([cf182d6](https://github.com/qualcomm/qualcomm-ui/commit/cf182d6))
+- [switch]: support aria labels ([0eb172a](https://github.com/qualcomm/qualcomm-ui/commit/0eb172a))
+- [radio]: support aria labels ([b603e42](https://github.com/qualcomm/qualcomm-ui/commit/b603e42))
+- [select]: support aria labels ([e6f41e1](https://github.com/qualcomm/qualcomm-ui/commit/e6f41e1))
+- [combobox]: support aria labels ([cfaa97b](https://github.com/qualcomm/qualcomm-ui/commit/cfaa97b))
+
+### Tests
+
+- cover angular form control aria labels ([bd77c55](https://github.com/qualcomm/qualcomm-ui/commit/bd77c55))
+
+### Miscellaneous Chores
+
+- update pnpm and test dependencies ([b175d6a](https://github.com/qualcomm/qualcomm-ui/commit/b175d6a))
+- **deps:** update dependencies [@qualcomm-ui/angular-core, @qualcomm-ui/core, @qualcomm-ui/qds-core]
+
+## 2.8.0
+
+May 14th, 2026
+
+### Features
+
+- [link]: allow links to inherit font size ([7ef35d6](https://github.com/qualcomm/qualcomm-ui/commit/7ef35d6))
+- [file-input]: add angular and react components ([83900b7](https://github.com/qualcomm/qualcomm-ui/commit/83900b7))
+- [file-upload]: add angular component surface ([2ba7482](https://github.com/qualcomm/qualcomm-ui/commit/2ba7482))
+
+### Tests
+
+- [file-input]: cover file input behavior ([ae8199d](https://github.com/qualcomm/qualcomm-ui/commit/ae8199d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/utils, @qualcomm-ui/angular-core]
+
+## 2.7.2
+
+May 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 2.7.1
+
+May 1st, 2026
+
+### Tests
+
+- improve test coverage ([e255457](https://github.com/qualcomm/qualcomm-ui/commit/e255457))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core, @qualcomm-ui/angular-core]
+
+## 2.7.0
+
+May 1st, 2026
+
+### Features
+
+- [angular/menu]: add item-description + checkbox/radio item-control directives ([94a59a2](https://github.com/qualcomm/qualcomm-ui/commit/94a59a2))
+- [angular/tree]: add showIndentGuide input to q-tree-nodes ([625c51a](https://github.com/qualcomm/qualcomm-ui/commit/625c51a))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/angular-core, @qualcomm-ui/core]
+
+## 2.6.0
+
+Apr 29th, 2026
+
+### Features
+
+- [alert-banner]: implement button api and template ([47d0882](https://github.com/qualcomm/qualcomm-ui/commit/47d0882))
+- [breadcrumbs]: support tooltip composition ([ab3604b](https://github.com/qualcomm/qualcomm-ui/commit/ab3604b))
+- [alert-banner]: fix styles, add dedicated button directive ([8be8404](https://github.com/qualcomm/qualcomm-ui/commit/8be8404))
+- [breadcrumbs]: add overflow component ([603c6e5](https://github.com/qualcomm/qualcomm-ui/commit/603c6e5))
+
+### Code Refactoring
+
+- [breadcrumbs]: change default item trigger to anchor element ([f08b622](https://github.com/qualcomm/qualcomm-ui/commit/f08b622))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core]
+
+## 2.5.3
+
+Apr 23rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 2.5.2
+
+Apr 23rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 2.5.1
+
+Apr 21st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 2.5.0
+
+Apr 19th, 2026
+
+### Features
+
+- [menu]: menu button & icon menu button ([0508c4d](https://github.com/qualcomm/qualcomm-ui/commit/0508c4d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/angular-core]
+
+## 2.4.1
+
+Apr 19th, 2026
+
+### Code Refactoring
+
+- [checkmark]: update anatomy attributes ([ad9b1a1](https://github.com/qualcomm/qualcomm-ui/commit/ad9b1a1))
+- [number-input]: update anatomy attributes ([1219ea2](https://github.com/qualcomm/qualcomm-ui/commit/1219ea2))
+- [slider]: update anatomy attributes ([8531c67](https://github.com/qualcomm/qualcomm-ui/commit/8531c67))
+- [text-area]: update anatomy attributes ([328cc2e](https://github.com/qualcomm/qualcomm-ui/commit/328cc2e))
+- [combobox]: update angular misc spec control selector ([d4376fb](https://github.com/qualcomm/qualcomm-ui/commit/d4376fb))
+- [header-bar]: update anatomy attributes ([f3398c9](https://github.com/qualcomm/qualcomm-ui/commit/f3398c9))
+- [combobox]: update anatomy attributes ([c429e3a](https://github.com/qualcomm/qualcomm-ui/commit/c429e3a))
+
+### Bug Fixes
+
+- [menu-item]: fix menu-item context initialization ([44d49ec](https://github.com/qualcomm/qualcomm-ui/commit/44d49ec))
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/utils, @qualcomm-ui/angular-core]
+
+## 2.4.0
+
+Apr 16th, 2026
+
+### Features
+
+- [card]: add angular card component ([e5dac7c](https://github.com/qualcomm/qualcomm-ui/commit/e5dac7c))
+
+### Bug Fixes
+
+- [avatar]: sort exports and expose context service ([279bf5e](https://github.com/qualcomm/qualcomm-ui/commit/279bf5e))
+
+### Code Refactoring
+
+- [button]: use accessSignal utility ([97dccd4](https://github.com/qualcomm/qualcomm-ui/commit/97dccd4))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
 ## 2.3.0
 
 Apr 7th, 2026

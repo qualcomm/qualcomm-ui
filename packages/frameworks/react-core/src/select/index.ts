@@ -15,10 +15,10 @@ import {
   type CoreSelectPositionerProps,
   CoreSelectRoot,
   type CoreSelectRootProps,
-} from "./core-select"
+} from "./core-select.js"
 
-export * from "./select-context"
-export * from "./use-select"
+export * from "./select-context.js"
+export * from "./use-select.js"
 
 export type {
   CoreSelectRootProps,

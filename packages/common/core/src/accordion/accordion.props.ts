@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {AccordionApiProps} from "./accordion.types"
+import type {AccordionApiProps} from "./accordion.types.js"
 
 const accordionProps: (keyof AccordionApiProps)[] =
   createProps<AccordionApiProps>()(

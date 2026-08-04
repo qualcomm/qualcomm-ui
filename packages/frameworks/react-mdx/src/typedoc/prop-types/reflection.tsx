@@ -12,9 +12,9 @@ import {useMdxDocsLayoutContext} from "@qualcomm-ui/react-mdx/docs-layout"
 import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
-import {usePropsContext} from "../use-props-context"
+import {usePropsContext} from "../use-props-context.js"
 
-import {TypeInfoPopup} from "./type-info-popup"
+import {TypeInfoPopup} from "./type-info-popup.js"
 
 export interface ReflectionProps {
   prop: QuiPropDeclaration

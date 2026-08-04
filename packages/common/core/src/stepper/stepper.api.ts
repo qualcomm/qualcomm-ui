@@ -5,7 +5,8 @@ import {fromLength} from "@qualcomm-ui/utils/array"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {domIds, isValidStepNavigation} from "./internal"
+import {domIds, isValidStepNavigation} from "./internal/index.js"
+import {stepperAnatomy} from "./stepper.anatomy.js"
 import type {
   StepperApi,
   StepperCompletedContentBindings,
@@ -23,7 +24,7 @@ import type {
   StepperSchema,
   StepperSeparatorBindings,
   StepperTriggerBindings,
-} from "./stepper.types"
+} from "./stepper.types.js"
 
 export function createStepperApi(
   machine: Machine<StepperSchema>,
@@ -79,10 +80,7 @@ export function createStepperApi(
     send({src: "api.setValue", type: "STEP.SET", value})
   }
 
-  const commonBindings = {
-    dir: prop("dir"),
-    scope: "stepper",
-  } as const
+  const parts = stepperAnatomy.parts
 
   return {
     count,
@@ -99,8 +97,8 @@ export function createStepperApi(
     // group: bindings
     getCompletedContentBindings(): StepperCompletedContentBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "completed-content",
+        ...parts.completedContent,
+        dir: prop("dir"),
         hidden: computed("hasNextStep"),
       })
     },
@@ -111,11 +109,11 @@ export function createStepperApi(
         .register(`${props.index}`, props.id, props.onDestroy)
       const itemState = getItemState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.content,
         "aria-labelledby": itemState.triggerId,
         "data-orientation": prop("orientation"),
-        "data-part": "content",
         "data-state": itemState.current ? "open" : "closed",
+        dir: prop("dir"),
         hidden: !itemState.current,
         id: itemState.contentId,
         role: "tabpanel",
@@ -126,25 +124,25 @@ export function createStepperApi(
     getHintBindings(props): StepperHintBindings {
       const itemState = getItemState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         "data-complete": booleanDataAttr(itemState.completed),
         "data-current": booleanDataAttr(itemState.current),
         "data-incomplete": booleanDataAttr(itemState.incomplete),
         "data-orientation": prop("orientation"),
-        "data-part": "hint",
+        dir: prop("dir"),
       })
     },
 
     getIndicatorBindings(props): StepperIndicatorBindings {
       const itemState = getItemState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.indicator,
         "aria-hidden": true,
         "data-complete": booleanDataAttr(itemState.completed),
         "data-current": booleanDataAttr(itemState.current),
         "data-incomplete": booleanDataAttr(itemState.incomplete),
         "data-orientation": prop("orientation"),
-        "data-part": "indicator",
+        dir: prop("dir"),
         style: {
           "--anchor-name": `--indicator-${props.index}`,
         },
@@ -154,14 +152,14 @@ export function createStepperApi(
     getItemBindings(props): StepperItemBindings {
       const itemState = getItemState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.item,
         "data-current": booleanDataAttr(itemState.current),
         "data-first": booleanDataAttr(itemState.first),
         "data-last": booleanDataAttr(itemState.last),
         "data-orientation": prop("orientation"),
-        "data-part": "item",
         "data-previous": booleanDataAttr(itemState.previous),
         "data-skippable": booleanDataAttr(itemState.skippable),
+        dir: prop("dir"),
         role: "none",
       })
     },
@@ -169,12 +167,12 @@ export function createStepperApi(
     getLabelBindings(props): StepperLabelBindings {
       const itemState = getItemState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.label,
         "data-complete": booleanDataAttr(itemState.completed),
         "data-current": booleanDataAttr(itemState.current),
         "data-incomplete": booleanDataAttr(itemState.incomplete),
         "data-orientation": prop("orientation"),
-        "data-part": "label",
+        dir: prop("dir"),
       })
     },
 
@@ -185,13 +183,13 @@ export function createStepperApi(
         domIds.trigger(scope, `${index}`),
       )
       return normalize.element({
-        ...commonBindings,
+        ...parts.list,
         "aria-orientation": prop("orientation").split?.("-")[0] as
           | "horizontal"
           | "vertical",
         "aria-owns": triggerIds.join(" "),
         "data-orientation": prop("orientation"),
-        "data-part": "list",
+        dir: prop("dir"),
         id: domIds.list(scope),
         role: "tablist",
       })
@@ -199,9 +197,9 @@ export function createStepperApi(
 
     getNextTriggerBindings(): StepperNextTriggerBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.nextTrigger,
         "data-disabled": booleanDataAttr(!hasNextStep),
-        "data-part": "next-trigger",
+        dir: prop("dir"),
         disabled: !hasNextStep,
         onClick(event) {
           if (event.defaultPrevented) {
@@ -215,9 +213,9 @@ export function createStepperApi(
 
     getPrevTriggerBindings(): StepperPrevTriggerBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.prevTrigger,
         "data-disabled": booleanDataAttr(!hasPrevStep),
-        "data-part": "prev-trigger",
+        dir: prop("dir"),
         disabled: !hasPrevStep,
         onClick(event) {
           if (event.defaultPrevented) {
@@ -232,9 +230,9 @@ export function createStepperApi(
     getRootBindings(params): StepperRootBindings {
       scope.ids.register("root", params)
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-orientation": prop("orientation"),
-        "data-part": "root",
+        dir: prop("dir"),
         id: domIds.root(scope),
       })
     },
@@ -242,11 +240,11 @@ export function createStepperApi(
     getSeparatorBindings(props): StepperSeparatorBindings {
       const itemState = getItemState(props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.separator,
         "data-complete": booleanDataAttr(itemState.completed),
         "data-incomplete": booleanDataAttr(itemState.incomplete),
         "data-orientation": prop("orientation"),
-        "data-part": "separator",
+        dir: prop("dir"),
         style: {
           "--current-indicator": `--indicator-${props.index}`,
           "--next-indicator": `--indicator-${props.index + 1}`,
@@ -260,7 +258,7 @@ export function createStepperApi(
         .register(`${props.index}`, props.id, props.onDestroy)
       const itemState = getItemState(props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.trigger,
         "aria-controls": itemState.contentId,
         "aria-current": itemState.current ? "step" : undefined,
         "aria-disabled": booleanAriaAttr(
@@ -281,9 +279,9 @@ export function createStepperApi(
         "data-invalid": booleanDataAttr(itemState.invalid),
         "data-last": booleanDataAttr(itemState.last),
         "data-orientation": prop("orientation"),
-        "data-part": "trigger",
         "data-pending": booleanDataAttr(itemState.pending),
         "data-state": itemState.current ? "open" : "closed",
+        dir: prop("dir"),
         id: itemState.triggerId,
         onClick(event) {
           if (event.defaultPrevented) {

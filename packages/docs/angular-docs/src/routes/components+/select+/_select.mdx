@@ -1,12 +1,11 @@
 ---
 title: Select
-group: Form Controls
 description: The select component provides a streamlined way for users to pick a single option from a collapsible list of choices. It conserves screen space while offering clear visual feedback and maintaining accessibility standards.
 component: Select
 aliases: [dropdown, picker, listbox, choice]
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -16,13 +15,13 @@ import {
 
 {frontmatter.description}
 
-```tsx
-import {Select} from "@qualcomm-ui/react/select"
+```typescript
+import {SelectModule} from "@qualcomm-ui/angular/select"
 ```
 
 ## Overview
 
-- Each select uses the `selectCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](#list-collection).
+- Each select uses the `selectCollection` helper to manage the list of options. This creates a `ListCollection` instance, [documented below](./#list-collection).
 
 ## Examples
 
@@ -45,26 +44,20 @@ Build with the composite API for granular control. This API requires you to prov
 ### ARIA Label
 
 ::: terms
-a11y
-screen reader
-labelless
-hidden label
+a11y, screen reader, labelless, hidden label
 :::
 
-The Select's label is automatically associated with the input element for accessibility. If you omit the label, you should provide the [aria-label](./#aria-label) prop to give your select an accessible name.
+The Select's label is automatically associated with the control for accessibility. If you omit the label, give the control an accessible name with [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby).
 
 <QdsDemo name="SelectAriaLabelDemo" />
 
 > [!note]
-> If you're using the composite API, provide the `aria-label` attribute to the `q-select-trigger` element instead.
+> Use `aria-label` or `aria-labelledby` on the simple `<q-select>` to forward an accessible name to the internal control. The `q-select` host removes those attributes after forwarding them. If you use the composite API, provide `aria-label` or `aria-labelledby` on the `q-select-control` element. For dynamic label references, use `[aria-labelledby]` instead of `[attr.aria-labelledby]` so the control can treat the value as a consumer-provided override.
 
 ### Content Width
 
 ::: terms
-dropdown width
-popup width
-listbox width
-auto width
+dropdown width, popup width, listbox width, auto width
 :::
 
 The [positioning.sameWidth](./#sameWidth) property controls whether the width of the select content matches the width of the trigger element. The default is `true`.
@@ -74,9 +67,7 @@ The [positioning.sameWidth](./#sameWidth) property controls whether the width of
 ### Trigger Icon
 
 ::: terms
-leading icon
-prefix icon
-start icon
+leading icon, prefix icon, start icon
 :::
 
 Use the [icon](./#icon) prop to add an icon to the start of the trigger element. View our [Icon](/components/icon) documentation to learn more about using icons in QUI.
@@ -86,21 +77,17 @@ Use the [icon](./#icon) prop to add an icon to the start of the trigger element.
 ### Items as Objects
 
 ::: terms
-custom items
-typed items
-structured data
+custom items, typed items, structured data
 :::
 
-The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [selectCollection](./#ListCollection) to specify the label and value of each item.
+The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) and [itemValue](./#itemValue) properties on the [selectCollection](./#list-collection) to specify the label and value of each item.
 
 <QdsDemo name="SelectItemsDemo" />
 
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 This component supports three [size](./#size) options to accommodate different layout densities and design requirements.
@@ -112,9 +99,7 @@ The available sizes are `sm`, `md`, and `lg`. The default size is `md`.
 ### Content Height
 
 ::: terms
-maxHeight
-scrollable
-overflow
+maxHeight, scrollable, overflow
 :::
 
 Change the height of the item container by adjusting the style of the Content element.
@@ -124,9 +109,7 @@ Change the height of the item container by adjusting the style of the Content el
 ### Multiple Selection
 
 ::: terms
-multiselect
-multi-select
-multi select
+multiselect, multi-select, multi select
 :::
 
 Use the [multiple](./#multiple) prop to allow multiple selections.
@@ -141,10 +124,7 @@ The [selectionIndicator](./#selectionIndicator) prop controls how selected items
 ### Controlled Dropdown Visibility
 
 ::: terms
-open state
-signal
-toggle dropdown
-programmatic open
+open state, signal, toggle dropdown, programmatic open
 :::
 
 Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use [open](./#open) and [openChanged](./#openChanged) to control the dropdown visibility manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
@@ -154,10 +134,7 @@ Set the initial visibility using the [defaultOpen](./#defaultOpen) prop, or use 
 ### Error Text and Indicator
 
 ::: terms
-validation error
-form validation
-error message
-invalid field
+validation error, form validation, error message, invalid field
 :::
 
 Error messages are displayed using two props:
@@ -172,9 +149,7 @@ The error text and indicator will only render when [invalid](./#invalid) is true
 ### Item Customization
 
 ::: terms
-custom option
-item template
-custom renderer
+custom option, item template, custom renderer
 :::
 
 When using the simple API, provide the `q-select-content` directive as a child of the `<q-select>` component to override the default item renderer. The following example demonstrates how to add a custom icon to each item:
@@ -184,22 +159,20 @@ When using the simple API, provide the `q-select-content` directive as a child o
 ### Within Dialog
 
 ::: terms
-modal
-disable portal
+modal, disable portal
 :::
 
-To use the Select within a Dialog, you need to avoid portalling the item dropdown. To do this using the simple API, set [disablePortal](./#disablePortal) property to `true`:
+To use the Select within a [Dialog](/components/dialog), you need to avoid portalling the item dropdown. To do this using the simple API, set [disablePortal](./#disablePortal) property to `true`:
 
 <QdsDemo name="SelectWithinDialogDemo" />
 
 ### Within Popover
 
 ::: terms
-modal
-disable portal
+modal, disable portal
 :::
 
-Like with the Dialog, you need to avoid portalling the `q-select-positioner`:
+Like with the [Dialog](/components/dialog), you need to avoid portalling the `q-select-positioner`:
 
 <QdsDemo name="SelectWithinPopoverDemo" />
 
@@ -211,10 +184,7 @@ Like with the Dialog, you need to avoid portalling the `q-select-positioner`:
 ### Template Forms
 
 ::: terms
-ngModel
-template-driven
-FormsModule
-two-way binding
+ngModel, template-driven, FormsModule, two-way binding
 :::
 
 #### Strings
@@ -233,16 +203,14 @@ When using template forms, the [disabled](./#disabled), [readOnly](./#readOnly),
 
 #### Required
 
-When using template forms, pass the [required](./#required) property to the form control. This applies the [RequiredValidator](https://angular.dev/api/forms/RequiredValidator) and [MinLengthValidator](https://angular.dev/api/forms/MinLengthValidator) to the form control.
+When using template forms, pass the [required](./#required-1) property to the form control. This applies the [RequiredValidator](https://angular.dev/api/forms/RequiredValidator) and [MinLengthValidator](https://angular.dev/api/forms/MinLengthValidator) to the form control.
 
 <QdsDemo name="SelectRequiredTemplateFormsDemo" />
 
 ### Reactive Forms
 
 ::: terms
-FormControl
-FormGroup
-ReactiveFormsModule
+FormControl, FormGroup, ReactiveFormsModule
 :::
 
 #### Strings
@@ -256,13 +224,33 @@ ReactiveFormsModule
 #### State Guidelines
 
 ::: terms
-form control state
-Validators
+form control state, Validators
 :::
 
-The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required-1) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
 
 <QdsDemo name="SelectReactiveFormStatesDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-select"
+  name="SelectExplorerDemo"
+  parts={[
+    "root",
+    "label",
+    {name: "control", link: "#q-select-control"},
+    "value-text",
+    "clear-trigger",
+    "indicator",
+    "content",
+    "item",
+    "item-text",
+    "item-indicator",
+    "hint",
+  ]}
+  scope="select"
+/>
 
 ## API
 
@@ -286,12 +274,12 @@ The simple select extends the [q-select-root](./#q-select-root) directive with t
   name={["QdsSelectLabelBindings", "SelectLabelBindings"]}
 />
 
-### q-select-trigger
+### q-select-control
 
-<TypeDocProps name="SelectTriggerDirective" />
+<TypeDocProps name="SelectControlDirective" />
 
 <TypeDocAngularAttributes
-  name={["QdsSelectTriggerBindings", "SelectTriggerBindings"]}
+  name={["QdsSelectControlBindings", "SelectControlBindings"]}
 />
 
 ### q-select-indicator

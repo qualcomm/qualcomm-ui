@@ -3,8 +3,8 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 import {CoreCombobox} from "@qualcomm-ui/react-core/combobox"
+import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 
 export interface ComboboxHintProps extends InputHintProps {
   /**

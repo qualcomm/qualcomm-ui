@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {type ReactNode, type RefObject, useRef} from "react"
-
-import {ChevronDown, ChevronUp} from "lucide-react"
 import {flushSync} from "react-dom"
 
+import {ChevronDown, ChevronUp} from "lucide-react"
+
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import {DemoStyleToggle} from "./demo-style-toggle"
+import {DemoStyleToggle} from "./demo-style-toggle.js"
 
 export interface DemoCodePanelProps {
   /**

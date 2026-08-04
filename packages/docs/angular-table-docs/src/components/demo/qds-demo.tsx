@@ -3,7 +3,6 @@ import {Fragment, useEffect, useId, useMemo, useRef, useState} from "react"
 import {getAngularDemoInfo} from "virtual:angular-demo-registry"
 
 import type {AngularDemoInfo} from "@qualcomm-ui/mdx-common"
-import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {useGlobalConfigContext} from "@qualcomm-ui/react-internal/layout"
 import {
@@ -11,6 +10,7 @@ import {
   type QdsAngularDemoRunnerProps,
 } from "@qualcomm-ui/react-mdx/code-demo"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
+import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -23,8 +23,10 @@ declare global {
   }
 }
 
-export interface QdsDemoProps
-  extends Pick<QdsAngularDemoRunnerProps, "expanded" | "wrapperProps"> {
+export interface QdsDemoProps extends Pick<
+  QdsAngularDemoRunnerProps,
+  "expanded" | "wrapperProps"
+> {
   className?: string
   hideDemoBrandSwitcher?: boolean
   name: string
@@ -108,7 +110,7 @@ function QdsDemoImpl({
       })
       document.body.appendChild(script)
     }
-  }, [])
+  })
 
   useSafeLayoutEffect(() => {
     if (

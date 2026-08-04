@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 export interface BasicThemeData {
-  tailwindClass?: string
+  description?: string
+  tailwindClasses: string[]
   variable: string
 }

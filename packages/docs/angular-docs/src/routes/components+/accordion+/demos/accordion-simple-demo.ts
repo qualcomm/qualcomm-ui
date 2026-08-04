@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {AccordionModule} from "@qualcomm-ui/angular/accordion"
 import {LoremIpsumDirective} from "@qualcomm-ui/angular-core/lorem-ipsum"
+import {AccordionModule} from "@qualcomm-ui/angular/accordion"
 
 @Component({
   imports: [AccordionModule, LoremIpsumDirective],

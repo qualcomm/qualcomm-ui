@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {FileChartColumn} from "lucide-angular"
 
-import {AccordionModule} from "@qualcomm-ui/angular/accordion"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {AccordionModule} from "@qualcomm-ui/angular/accordion"
 
 import {items} from "./accordion-example-data"
 

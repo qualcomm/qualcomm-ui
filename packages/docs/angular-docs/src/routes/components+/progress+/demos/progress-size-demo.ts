@@ -1,7 +1,7 @@
 import {Component, type OnInit, signal} from "@angular/core"
 
-import {ProgressModule} from "@qualcomm-ui/angular/progress"
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
+import {ProgressModule} from "@qualcomm-ui/angular/progress"
 
 @Component({
   imports: [ProgressModule],

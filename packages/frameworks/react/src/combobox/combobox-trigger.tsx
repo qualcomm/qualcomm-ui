@@ -5,14 +5,14 @@ import type {ReactElement, ReactNode} from "react"
 
 import {ChevronDown, type LucideIcon} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {
   CoreCombobox,
   type CoreComboboxTriggerProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsComboboxContext} from "./qds-combobox-context"
+import {useQdsComboboxContext} from "./qds-combobox-context.js"
 
 export interface ComboboxTriggerProps extends CoreComboboxTriggerProps {
   /**

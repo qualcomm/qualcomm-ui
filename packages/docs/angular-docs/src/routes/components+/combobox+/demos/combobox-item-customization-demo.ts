@@ -2,10 +2,10 @@ import {Component, computed, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 import {Apple, Banana, Grape, Hamburger, IceCream, Salad} from "lucide-angular"
 
-import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 interface Food {

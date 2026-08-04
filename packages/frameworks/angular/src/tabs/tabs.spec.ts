@@ -4,8 +4,8 @@ import {Code, FileText} from "lucide-angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
-import {TabsModule} from "@qualcomm-ui/angular/tabs"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {TabsModule} from "@qualcomm-ui/angular/tabs"
 
 const tabItems = [
   {content: "Documents content", title: "Documents", value: "documents"},
@@ -246,8 +246,10 @@ describe("tabs", () => {
 
     await userEvent.tab()
     expect(documentsTab).toHaveFocus()
+    await expect.element(documentsTab).toHaveAttribute("data-focus-visible")
 
     await userEvent.keyboard("{ArrowRight}")
+    await expect.element(documentsTab).not.toHaveFocus()
     expect(productsTab).toHaveFocus()
 
     await userEvent.keyboard("{ArrowRight}")

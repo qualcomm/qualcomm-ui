@@ -1,12 +1,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {Root} from "mdast"
 import remarkFrontmatter from "remark-frontmatter"
 import remarkGfm from "remark-gfm"
 import remarkMdx from "remark-mdx"
 import remarkParse from "remark-parse"
 import remarkStringify from "remark-stringify"
-import {type PluggableList, unified} from "unified"
+import {type PluggableList, type Processor, unified} from "unified"
 
 import type {PageFrontmatter} from "@qualcomm-ui/mdx-common"
 
@@ -16,7 +17,7 @@ import {
   remarkFrontmatterInterpolation,
   remarkRemoveJsx,
   remarkRemoveMermaidCodeBlocks,
-} from "../remark"
+} from "../remark/index.js"
 
 export interface RemarkPipelineOptions {
   /** GitHub-style alert blocks. */
@@ -51,7 +52,9 @@ export interface RemarkPipelineOptions {
  * Creates a configured unified remark processor. The caller can further extend
  * the returned processor with `.use()` (e.g. to add remarkRehype for HTML output).
  */
-export function createRemarkProcessor(options: RemarkPipelineOptions = {}) {
+export function createRemarkProcessor(
+  options: RemarkPipelineOptions = {},
+): Processor<Root, undefined, undefined, undefined, undefined> {
   const processor = unified().use(remarkParse)
 
   if (options.mdx) {

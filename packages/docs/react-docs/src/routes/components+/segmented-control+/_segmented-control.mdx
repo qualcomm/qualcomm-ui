@@ -1,6 +1,5 @@
 ---
 title: Segmented Control
-group: Data Display
 description: A segmented control presents a linear set of selectable segments, supporting both single- and multi-select interactions. It offers immediate visual feedback and maintains coherence across related options.
 component: SegmentedControl
 aliases: [toggle group, segment picker, pill selector]
@@ -186,15 +185,18 @@ Pick meaningful icons and use the `aria-label` attribute to describe their purpo
 
 ## API
 
-### \<SegmentedControl.Root\>
+### \<SegmentedControl.Root>
 
 <TypeDocProps name="SegmentedControlRootProps" />
 
 <TypeDocAttributes
-  name={["QdsSegmentedControlGroupBindings", "SegmentedControlGroupBindings"]}
+  name={[
+    "QdsSegmentedControlGroupBindings",
+    "SegmentedControlGroupBindings",
+  ]}
 />
 
-### \<SegmentedControl.Item\>
+### \<SegmentedControl.Item>
 
 The `SegmentedControl.Item` extends the [SegmentedControl.ItemRoot](./#segmented-control-item-root) with the following props:
 
@@ -205,7 +207,7 @@ The `SegmentedControl.Item` extends the [SegmentedControl.ItemRoot](./#segmented
 
 ## Composite API
 
-### \<SegmentedControl.ItemRoot\>
+### \<SegmentedControl.ItemRoot>
 
 <TypeDocProps name="SegmentedControlItemRootProps" />
 
@@ -217,7 +219,7 @@ The `SegmentedControl.Item` extends the [SegmentedControl.ItemRoot](./#segmented
   ]}
 />
 
-### \<SegmentedControl.ItemText\>
+### \<SegmentedControl.ItemText>
 
 <TypeDocProps name="SegmentedControlItemTextProps" />
 
@@ -225,7 +227,7 @@ The `SegmentedControl.Item` extends the [SegmentedControl.ItemRoot](./#segmented
   name={["QdsSegmentedControlItemTextBindings", "CheckboxLabelBindings"]}
 />
 
-### \<SegmentedControl.HiddenInput\>
+### \<SegmentedControl.HiddenInput>
 
 <TypeDocProps name="SegmentedControlHiddenInputProps" />
 

@@ -4,10 +4,10 @@
 import type {RGBA} from "@figma/rest-api-spec"
 import JSON5 from "json5"
 import {readFile} from "node:fs/promises"
+import {StyleDictionary} from "style-dictionary-utils"
 import {transformTypes} from "style-dictionary/enums"
 import type {PlatformConfig} from "style-dictionary/types"
 import {resolveReferences, usesReferences} from "style-dictionary/utils"
-import {StyleDictionary} from "style-dictionary-utils"
 
 import type {
   ColorRawValue,

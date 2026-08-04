@@ -9,13 +9,13 @@ import {
 } from "@qualcomm-ui/react-core/stepper"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsStepperContext} from "./qds-stepper-context"
+import {useQdsStepperContext} from "./qds-stepper-context.js"
 
-export interface StepperCompletedContentProps
-  extends CoreStepperCompletedContentProps {}
+export interface StepperCompletedContentProps extends CoreStepperCompletedContentProps {}
 
 /**
- * Content area displayed when all steps are completed. Renders a `<div>` element by default.
+ * Content area displayed when all steps are completed. Renders a `<div>` element by
+ * default.
  */
 export function StepperCompletedContent(
   props: StepperCompletedContentProps,

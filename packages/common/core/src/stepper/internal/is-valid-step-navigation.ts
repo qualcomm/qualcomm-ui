@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {CanGoToStepDetails} from "../stepper.types"
+import type {CanGoToStepDetails} from "../stepper.types.js"
 
 export interface StepNavigationParams {
   canGoToStep?:

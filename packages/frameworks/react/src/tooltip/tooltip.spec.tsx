@@ -1,8 +1,8 @@
 import {type ComponentPropsWithoutRef, useState} from "react"
 
 import {describe, expect, test} from "vitest"
-import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
 
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 
@@ -621,6 +621,7 @@ const tests: MultiComponentTestCase[] = [
         const trigger = page.getByText(triggerText)
         await expect.element(trigger).not.toHaveAttribute("aria-describedby")
         await trigger.hover()
+        await expect.element(page.getByText(tooltipContent)).toBeVisible()
         await expect.element(trigger).toHaveAttribute("aria-describedby")
       })
     },

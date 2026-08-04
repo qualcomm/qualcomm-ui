@@ -1,21 +1,69 @@
 .qui-menu__button {
-  background: transparent;
-  .qui-button__icon {
-    &[data-placement="end"],
-    &[data-scope="icon-button"] {
-      transition: transform var(--animation-duration-faster) ease-out;
-    }
+  .qui-menu__indicator {
+    transition: transform var(--animation-duration-faster) ease-out;
   }
-  &[data-scope="menu"][data-part="trigger"][data-state="open"],
+  &[data-menu-part="trigger"][data-state="open"],
   &[data-state="open"][aria-haspopup="menu"] {
-    .qui-button__icon {
-      &[data-placement="end"],
-      &[data-scope="icon-button"] {
-        transform: rotate(180deg);
-      }
+    .qui-menu__indicator {
+      transform: rotate(180deg);
     }
   }
 }
+
+/* bare triggers only (e.g. header bar menu items) */
+.qui-menu__button:not(.qui-button__root) {
+  background: transparent;
+}
+
+/* icon-only menu button stuff */
+
+.qui-menu__button .qui-menu__indicator {
+  &[data-size="sm"] {
+    --icon-size: var(--sizing-60);
+  }
+  &[data-size="md"] {
+    --icon-size: var(--sizing-70);
+  }
+  &[data-size="lg"] {
+    --icon-size: var(--sizing-80);
+  }
+}
+
+.qui-menu__button[data-density="compact"] .qui-menu__indicator {
+  --icon-size: var(--sizing-60);
+}
+
+.qui-menu__button[data-kind="icon"]:has(.qui-button__icon) {
+  gap: var(--spacing-10);
+  &[data-size="sm"] {
+    padding-inline: var(--spacing-70);
+    width: auto;
+  }
+  &[data-size="md"] {
+    padding-inline: var(--spacing-80);
+    width: auto;
+  }
+  &[data-size="lg"] {
+    padding-inline: var(--spacing-90);
+    width: auto;
+  }
+
+  /* compact overrides the square display and uses the inline padding above */
+  &[data-density="compact"] {
+    gap: var(--spacing-20);
+    &[data-size="sm"],
+    &[data-size="md"],
+    &[data-size="lg"] {
+      width: auto;
+    }
+  }
+
+  .qui-menu__indicator {
+    --icon-size: var(--sizing-60);
+  }
+}
+
+/* general stuff */
 
 .qui-menu__content {
   background: var(--color-surface-overlay);
@@ -27,7 +75,10 @@
   outline: none;
   padding: var(--spacing-40) 0;
   transform-origin: var(--transform-origin);
-  z-index: calc(var(--z-index-dropdown) + var(--layer-index));
+  z-index: max(
+    calc(var(--z-index-dropdown) + var(--layer-index)),
+    calc(var(--layer-z-floor, 0) + 1)
+  );
 
   &[data-state="open"] {
     animation-duration: var(--animation-duration-fast);
@@ -90,7 +141,7 @@
     --menu-padding-y: var(--spacing-60);
   }
 
-  &:has([data-scope="menu"][data-part="description"]) {
+  &:has([data-menu-part="description"]) {
     .qui-menu-item__indicator,
     .qui-menu-item__command {
       grid-column: 3;
@@ -98,25 +149,40 @@
     }
   }
 
-  [data-scope="menu"][data-part="description"] {
+  [data-menu-part="description"] {
     grid-column: 1 / span 2;
   }
 
-  &:has([data-part="start-icon"]) {
-    [data-scope="menu"][data-part="description"] {
+  &:has([data-menu-part="start-icon"]) {
+    [data-menu-part="description"] {
       grid-column: 2;
     }
   }
 
-  &:has([data-part="start-icon"][data-part="item-control"]) {
+  &:has([data-menu-part="start-icon"]):has([data-menu-part="item-control"]) {
     grid-template-columns: auto auto 1fr repeat(3, auto);
   }
 
-  &:hover {
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+    --icon-color: var(--color-utility-disabled-icon);
+    pointer-events: none;
+
+    .qui-menu-item__command,
+    .qui-menu-item__indicator,
+    .qui-menu-item__description {
+      color: var(--color-utility-disabled-text);
+      .qui-icon__root {
+        color: var(--icon-color);
+      }
+    }
+  }
+
+  &:hover:not([data-disabled]) {
     background: var(--color-interactive-background-ghost-hover);
   }
 
-  &:active {
+  &:active:not([data-disabled]) {
     background: var(--color-interactive-background-ghost-pressed);
   }
 
@@ -126,13 +192,14 @@
   }
 
   [data-state="unchecked"] {
-    [data-part="indicator-icon"] {
+    [data-checkmark-part="indicator-icon"] {
       display: none;
     }
   }
 }
 
 .qui-menu-item__start-icon {
+  color: var(--icon-color, currentColor);
   margin-right: var(--spacing-50);
 }
 
@@ -180,9 +247,10 @@
 }
 
 .qui-menu__separator {
-  border-color: var(--color-border-neutral-01);
-  margin-top: var(--spacing-40);
-  padding-bottom: var(--spacing-40);
+  border: none;
+  border-top: solid 1px var(--color-border-neutral-01);
+  height: auto;
+  margin-block: var(--spacing-40);
   width: 100%;
 }
 
@@ -207,6 +275,84 @@
   padding-left: var(--spacing-100);
 }
 
-[data-scope="menu"][data-part="item-control"] {
+[data-menu-part="item-control"] {
   margin-right: var(--spacing-50);
+}
+
+.qui-menu__split-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: var(--spacing-10);
+  width: fit-content;
+
+  & > .qui-button__root {
+    --button-radius: var(--component-button-global-border-radius);
+  }
+
+  & > :first-child {
+    border-end-end-radius: 0;
+    border-start-end-radius: 0;
+  }
+
+  & > :last-child {
+    border-end-start-radius: 0;
+    border-start-start-radius: 0;
+  }
+
+  &[data-variant="ghost"] {
+    --split-separator-height: var(--sizing-70);
+
+    &[data-size="sm"] {
+      --split-separator-height: var(--sizing-60);
+    }
+    &[data-size="lg"] {
+      --split-separator-height: var(--sizing-80);
+    }
+
+    & > .qui-button__root:first-child::after {
+      background: var(--color-interactive-border-neutral-idle);
+      content: "";
+      height: var(--split-separator-height);
+      position: absolute;
+      right: calc(-1 * var(--sizing-10));
+      top: 50%;
+      transform: translateY(-50%);
+      width: var(--sizing-10);
+    }
+
+    &:has(> .qui-button__root:is(:hover, :active, :focus-visible))
+      > .qui-button__root:first-child::after {
+      display: none;
+    }
+  }
+
+  /* outline split-button: adjacent buttons share a border, so:
+   - every button except the first has no inline-start border
+   - each button's inline-end border mirrors its next sibling's hover/active state
+   - on focus, a ::before fills in the missing inline-start edge
+   */
+  &[data-variant="outline"] {
+    gap: 0;
+
+    & > .qui-button__root:not(:first-child) {
+      border-inline-start-width: 0;
+    }
+
+    & > .qui-button__root:has(+ .qui-button__root:hover) {
+      border-inline-end-color: var(--outline-border-hover);
+    }
+
+    & > .qui-button__root:has(+ .qui-button__root:active) {
+      border-inline-end-color: var(--outline-border-pressed);
+    }
+
+    & > .qui-button__root:not(:first-child):focus-visible::before {
+      background: var(--color-utility-focus-border);
+      content: "";
+      inline-size: var(--component-button-variant-outline-border-width);
+      inset-block: 0;
+      inset-inline-start: 0;
+      position: absolute;
+    }
+  }
 }

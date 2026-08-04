@@ -1,14 +1,13 @@
 ---
 title: Menu
-group: Overlays
 description: The Menu component presents a structured list of actions, settings, or navigation targets within a transient surface. It supports icons, keyboard shortcuts, hint text, section titles, dividers, and submenu indicators.
 component: Menu
 aliases: [dropdown menu, context menu, popup menu]
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -23,10 +22,7 @@ import {Menu} from "@qualcomm-ui/react/menu"
 ### Item Customization
 
 ::: terms
-hotkeys
-keyboard shortcuts
-action list
-overflow menu
+hotkeys, keyboard shortcuts, action list, overflow menu
 :::
 
 Compose the menu to include icons and commands.
@@ -36,11 +32,30 @@ Compose the menu to include icons and commands.
   component={demos.MenuItemCustomizationDemo}
 />
 
+### Menu Button
+
+::: terms
+menu trigger, dropdown button, icon menu button
+:::
+
+Use [`<Menu.Button>`](./#menu-button-1) for a labeled trigger and [`<Menu.IconButton>`](./#menu-icon-button) for an icon-only trigger. Both automatically render a chevron indicator. Always provide an [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) on `<Menu.IconButton>` to give assistive technologies an accessible name. Control the menu position with [positioning.placement](./#positioning).
+
+<Demo name="MenuButtonDemo" component={demos.MenuButtonDemo} />
+
+### Split Button
+
+::: terms
+split action, dropdown button, secondary actions
+:::
+
+Use [`<Menu.SplitButton>`](./#menu-split-button) for a split button trigger. The icon-only trigger provides a default "More options" `aria-label`; use [`triggerProps`](./#triggerProps) to override it. Optionally add an `aria-label` on the group when both halves share an accessible name. Control the menu position with [positioning.placement](./#positioning) on the parent [`<Menu.Root>`](./#menu-root).
+
+<Demo name="MenuSplitButtonDemo" component={demos.MenuSplitButtonDemo} />
+
 ### Context Menu
 
 ::: terms
-oncontextmenu
-right-click menu
+oncontextmenu, right-click menu
 :::
 
 Demonstrates how to trigger a menu on right-click or other context events.
@@ -50,21 +65,17 @@ Demonstrates how to trigger a menu on right-click or other context events.
 ### Nested Menus
 
 ::: terms
-submenu
-cascading
-hierarchical
+submenu, cascading, hierarchical
 :::
 
-Compose nested menus by nesting `<Menu.Root>` components inside each other.
+Compose nested menus by nesting [`<Menu.Root>`](./#menu-root) components inside each other.
 
 <Demo name="MenuNestedDemo" component={demos.MenuNestedDemo} />
 
 ### Links
 
 ::: terms
-anchor
-navigation
-navigation menu
+anchor, navigation, navigation menu
 :::
 
 Menu items can be links using [polymorphic composition](/polymorphic-components). Use the [render](./#render) prop on the `<Menu.Item>` to specify the element type.
@@ -73,7 +84,7 @@ Menu items can be links using [polymorphic composition](/polymorphic-components)
 
 ### Groups
 
-Use the `<Menu.ItemGroup>` component to group menu items.
+Use the [`<Menu.ItemGroup>`](./#menu-item-group) component to group menu items.
 
 ### Item Types
 
@@ -86,22 +97,23 @@ There are three item types, each corresponding to one of the three types of aria
 #### Checkbox Items
 
 ::: terms
-multi-select
-toggle
+multi-select, toggle
 :::
 
 There are two appearance options:
 
-- For a checkbox appearance, render the `<Menu.CheckboxItemControl>` element as a child of the item.
-- Render the `<Menu.ItemIndicator />` element for a simple selection indicator.
+- For a checkbox appearance, render the [`<Menu.CheckboxItemControl>`](./#menu-checkbox-item-control) element as a child of the item.
+- Render the [`<Menu.ItemIndicator />`](./#menu-item-indicator) element for a simple selection indicator.
 
-<Demo name="MenuCheckboxItemsDemo" component={demos.MenuCheckboxItemsDemo} />
+<Demo
+  name="MenuCheckboxItemsDemo"
+  component={demos.MenuCheckboxItemsDemo}
+/>
 
 #### Checkbox Selection State
 
 ::: terms
-onCheckedChange
-controlled checkbox
+onCheckedChange, controlled checkbox
 :::
 
 Illustrates how to manage and reflect the checked state of checkbox menu items.
@@ -114,8 +126,7 @@ Illustrates how to manage and reflect the checked state of checkbox menu items.
 #### Radio Group
 
 ::: terms
-single-select
-exclusive selection
+single-select, exclusive selection
 :::
 
 Demonstrates how to group radio menu items so only one can be selected at a time.
@@ -124,7 +135,7 @@ Demonstrates how to group radio menu items so only one can be selected at a time
 
 ### Controlled State
 
-The menu's visibility can be controlled via the `open`, `onOpenChange`, and `defaultOpen` props.
+The menu's visibility can be controlled via the [`open`](./#open), [`onOpenChange`](./#onOpenChange), and [`defaultOpen`](./#defaultOpen) props.
 
 - Use `open` to explicitly set whether the menu is open (controlled mode).
 - Use `onOpenChange` to be notified when the menu requests to open or close.
@@ -140,8 +151,7 @@ In controlled mode, the `open` prop should be updated in response to `onOpenChan
 ### Placement
 
 ::: terms
-position
-popover placement
+position, popover placement
 :::
 
 Configure the menu's placement using the [positioning.placement](./#positioning) prop.
@@ -151,19 +161,21 @@ Configure the menu's placement using the [positioning.placement](./#positioning)
 ### Sizes
 
 ::: terms
-small
-medium
+small, medium
 :::
 
-Use the [size](./#size) prop to control the size of the menu. The default size is `md`. The demo features the small (`sm`) size.
+Use the [size](./#size) prop on `<Menu.Root>` to control the size of the menu. The default size is `md`. The demo features the small (`sm`) size.
+
+The `<Menu.Button>` and `<Menu.IconButton>` triggers inherit the menu's size, so the trigger and menu match by default. Such a trigger can run larger than its menu: set [size](./#size) on it to override the inherited value. An `md` menu pairs with an `md` or `lg` trigger. A compact trigger should always pair with an `sm` menu. When a trigger uses `density="compact"`, set `size="sm"` on `<Menu.Root>`.
+
+Other trigger content does not inherit the menu size. A link, an avatar, or a custom element placed in the trigger must be sized directly.
 
 <Demo name="MenuSizesDemo" component={demos.MenuSizesDemo} />
 
 ### Anchor Point
 
 ::: terms
-getAnchorRect
-custom anchor
+getAnchorRect, custom anchor
 :::
 
 Use the [positioning.anchorPoint](./#positioning) prop to control the anchor point of the menu.
@@ -173,9 +185,7 @@ Use the [positioning.anchorPoint](./#positioning) prop to control the anchor poi
 ### Avatar
 
 ::: terms
-profile menu
-user menu
-account dropdown
+profile menu, user menu, account dropdown
 :::
 
 Here's an example that composes the `Menu` with the [Avatar](/components/avatar) component to display a user account menu.
@@ -185,20 +195,17 @@ Here's an example that composes the `Menu` with the [Avatar](/components/avatar)
 ### Within Dialog
 
 ::: terms
-modal
-overlay composition
+modal, overlay composition
 :::
 
-When using the `Menu` inside a `Dialog`, don't render the `<Menu.Positioner>` within a `<Portal>` element.
+When using the `Menu` inside a [Dialog](/components/dialog), don't render the `<Menu.Positioner>` within a `<Portal>` element.
 
 <Demo name="MenuWithinDialogDemo" component={demos.MenuWithinDialogDemo} />
 
 ### Hide When Detached
 
 ::: terms
-auto-hide
-scroll behavior
-overflow
+auto-hide, scroll behavior, overflow
 :::
 
 Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu when it's detached from the trigger.
@@ -208,9 +215,31 @@ Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu whe
   component={demos.MenuHideWhenDetachedDemo}
 />
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.MenuExplorerDemo}
+  linkPrefix="menu"
+  parts={[
+    "trigger",
+    "content",
+    "item-group",
+    "item-group-label",
+    "item",
+    {name: "start-icon", link: "#menu-item-start-icon"},
+    {name: "item-text", link: "#menu-item-label"},
+    {name: "description", link: "#menu-item-description"},
+    {name: "item-control", link: "#menu-checkbox-item-control"},
+    "item-indicator",
+    "separator",
+  ]}
+  previewClassName="items-start mt-6"
+  scope="menu"
+/>
+
 ## API
 
-### \<Menu.Root\>
+### \<Menu.Root>
 
 <TypeDocProps name="MenuRootProps" />
 
@@ -224,86 +253,132 @@ The [positioning](./#positioning) prop accepts an object with the following shap
 
 The following describes the individual subcomponents of the `Menu` component.
 
-### \<Menu.Button\>
+### \<Menu.Button>
 
 <TypeDocProps name="MenuButtonProps" />
 
-### \<Menu.IconButton\>
+<TypeDocAttributes name="QdsMenuButtonBindings" />
+
+### \<Menu.IconButton>
 
 <TypeDocProps name="MenuIconButtonProps" />
 
-### \<Menu.Content\>
+### \<Menu.SplitButton\>
+
+<TypeDocProps name="MenuSplitButtonProps" />
+
+### \<Menu.Content>
 
 <TypeDocProps name="MenuContentProps" />
 
-### \<Menu.Trigger\>
+<TypeDocAttributes
+  name={["MenuContentBindings", "QdsMenuContentBindings"]}
+/>
+
+### \<Menu.Trigger>
 
 <TypeDocProps name="MenuTriggerProps" />
 
-### \<Menu.Item\>
+<TypeDocAttributes name="MenuTriggerBindings" />
+
+### \<Menu.Item>
 
 <TypeDocProps name="MenuItemProps" />
 
-### \<Menu.ItemAccessory\>
+<TypeDocAttributes name={["MenuItemBindings", "QdsMenuItemBindings"]} />
+
+### \<Menu.ItemAccessory>
 
 <TypeDocProps name="MenuItemAccessoryProps" />
 
-### \<Menu.ItemCommand\>
+<TypeDocAttributes name="QdsMenuItemAccessoryBindings" />
+
+### \<Menu.ItemCommand>
 
 <TypeDocProps name="MenuItemCommandProps" />
 
-### \<Menu.ItemLabel\>
+<TypeDocAttributes name="QdsMenuItemCommandBindings" />
+
+### \<Menu.ItemLabel>
 
 <TypeDocProps name="MenuItemLabelProps" />
 
-### \<Menu.ItemDescription\>
+<TypeDocAttributes
+  name={["MenuItemLabelBindings", "QdsMenuItemLabelBindings"]}
+/>
+
+### \<Menu.ItemDescription>
 
 <TypeDocProps name="MenuItemDescriptionProps" />
 
-### \<Menu.ItemControl\>
+<TypeDocAttributes name="QdsMenuDescriptionBindings" />
 
-<TypeDocProps name="MenuItemControlProps" />
-
-### \<Menu.ItemGroup\>
+### \<Menu.ItemGroup>
 
 <TypeDocProps name="MenuItemGroupProps" />
 
-### \<Menu.ItemGroupLabel\>
+<TypeDocAttributes
+  name={["MenuItemGroupBindings", "QdsMenuItemGroupBindings"]}
+/>
+
+### \<Menu.ItemGroupLabel>
 
 <TypeDocProps name="MenuItemGroupLabelProps" />
 
-### \<Menu.ItemStartIcon\>
+<TypeDocAttributes
+  name={["MenuItemGroupLabelBindings", "QdsMenuItemGroupLabelBindings"]}
+/>
+
+### \<Menu.ItemStartIcon>
 
 <TypeDocProps name="MenuItemStartIconProps" />
 
-### \<Menu.ItemIndicator\>
+<TypeDocAttributes name="QdsMenuItemStartIconBindings" />
+
+### \<Menu.ItemIndicator>
 
 <TypeDocProps name="MenuItemIndicatorProps" />
 
-### \<Menu.CheckboxItem\>
+<TypeDocAttributes
+  name={["MenuItemIndicatorBindings", "QdsMenuItemIndicatorBindings"]}
+/>
+
+### \<Menu.CheckboxItem>
 
 <TypeDocProps name="MenuCheckboxItemProps" />
 
-### \<Menu.CheckboxItemControl\>
+### \<Menu.CheckboxItemControl>
 
 <TypeDocProps name="MenuCheckboxItemControlProps" />
 
-### \<Menu.RadioItem\>
+<TypeDocAttributes name="QdsMenuCheckboxItemControlBindings" />
+
+### \<Menu.RadioItem>
 
 <TypeDocProps name="MenuRadioItemProps" />
 
-### \<Menu.RadioItemControl\>
+<TypeDocAttributes name="QdsMenuRadioItemBindings" />
+
+### \<Menu.RadioItemControl>
 
 <TypeDocProps name="MenuRadioItemControlProps" />
 
-### \<Menu.RadioItemGroup\>
+<TypeDocAttributes name="QdsMenuRadioItemControlBindings" />
+
+### \<Menu.RadioItemGroup>
 
 <TypeDocProps name="MenuRadioItemGroupProps" />
 
-### \<Menu.Separator\>
+### \<Menu.Separator>
 
 <TypeDocProps name="MenuSeparatorProps" />
 
-### \<Menu.TriggerItem\>
+<TypeDocAttributes
+  name={["MenuSeparatorBindings", "QdsMenuSeparatorBindings"]}
+/>
+
+### \<Menu.TriggerItem>
 
 <TypeDocProps name="MenuTriggerItemProps" />
+
+<TypeDocAttributes name="MenuTriggerItemBindings" />

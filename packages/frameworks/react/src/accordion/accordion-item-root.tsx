@@ -17,9 +17,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface AccordionItemRootProps
-  extends IdProp,
-    ElementRenderProp<"div">,
-    AccordionItemApiProps {
+  extends IdProp, ElementRenderProp<"div">, AccordionItemApiProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

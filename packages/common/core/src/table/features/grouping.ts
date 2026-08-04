@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {CellContext, RowModel} from ".."
-import {aggregationFns, type BuiltInAggregationFn} from "../aggregation-fns"
-import type {TableFeature} from "../core/table"
+import {aggregationFns, type BuiltInAggregationFn} from "../aggregation-fns.js"
+import type {CellContext} from "../core/cell.js"
+import type {TableFeature} from "../core/table.js"
 import type {
   AggregationFns,
   Cell,
@@ -16,10 +16,11 @@ import type {
   OnChangeFn,
   Row,
   RowData,
+  RowModel,
   TableInstance,
   Updater,
-} from "../types"
-import {isFunction, makeStateUpdater} from "../utils"
+} from "../types.js"
+import {isFunction, makeStateUpdater} from "../utils.js"
 
 export type GroupingState = string[]
 
@@ -192,8 +193,7 @@ type ResolvedAggregationFns = keyof AggregationFns extends never
     }
 
 export interface GroupingOptions
-  extends GroupingOptionsBase,
-    ResolvedAggregationFns {}
+  extends GroupingOptionsBase, ResolvedAggregationFns {}
 
 export type GroupingColumnMode = false | "reorder" | "remove"
 

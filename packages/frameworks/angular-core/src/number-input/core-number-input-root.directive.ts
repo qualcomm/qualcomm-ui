@@ -32,7 +32,7 @@ import {
 } from "@qualcomm-ui/core/number-input"
 import type {Booleanish, NumberInput} from "@qualcomm-ui/utils/coercion"
 import type {Direction} from "@qualcomm-ui/utils/direction"
-import {type Explicit} from "@qualcomm-ui/utils/guard"
+import type {Explicit} from "@qualcomm-ui/utils/guard"
 
 import {AbstractNumberInputFormControlDirective} from "./abstract-number-input-form-control.directive"
 import {NumberInputContextService} from "./number-input-context.service"

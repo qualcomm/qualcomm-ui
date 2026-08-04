@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {MapPin} from "lucide-angular"
 
-import {SelectModule} from "@qualcomm-ui/angular/select"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {SelectModule} from "@qualcomm-ui/angular/select"
 import {selectCollection} from "@qualcomm-ui/core/select"
 
 @Component({

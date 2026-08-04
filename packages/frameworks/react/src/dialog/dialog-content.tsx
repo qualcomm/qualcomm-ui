@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/dialog"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsDialogContext} from "./qds-dialog-context"
+import {useQdsDialogContext} from "./qds-dialog-context.js"
 
 export interface DialogContentProps extends CoreDialogContentProps {}
 

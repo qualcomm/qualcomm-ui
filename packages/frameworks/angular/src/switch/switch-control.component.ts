@@ -3,8 +3,8 @@
 
 import {Component, computed} from "@angular/core"
 
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {CoreSwitchControlDirective} from "@qualcomm-ui/angular-core/switch"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 
 import {useQdsSwitchContext} from "./qds-switch-context.service"
 

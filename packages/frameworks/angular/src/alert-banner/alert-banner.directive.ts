@@ -30,6 +30,7 @@ import {provideQdsAlertBannerContext} from "./qds-alert-banner-context.service"
     </ng-content>
 
     <ng-content select="[q-alert-banner-action]" />
+    <ng-content select="[q-alert-banner-button]" />
 
     <ng-content select="[q-alert-banner-close-button]">
       @if (dismissable()) {

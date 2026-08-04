@@ -17,11 +17,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   AlertBannerContextProvider,
   type AlertBannerContextValue,
-} from "./qds-alert-banner-context"
+} from "./qds-alert-banner-context.js"
 
 export interface AlertBannerRootProps
-  extends QdsAlertBannerApiProps,
-    Omit<ElementRenderProp<"div">, "dir"> {
+  extends QdsAlertBannerApiProps, Omit<ElementRenderProp<"div">, "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

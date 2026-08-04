@@ -4,11 +4,12 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -19,6 +20,8 @@ import type {
   JSX,
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
+
+import type {tabsAnatomy} from "./tabs.anatomy.js"
 
 export interface IntlTranslations {
   listLabel?: string | undefined
@@ -138,7 +141,8 @@ export interface TabsSchema extends MachineSchema {
     indicatorTransition: boolean
     value: string | null
   }
-  effects: EffectSchema<"trackTabListElement">
+  effects: EffectSchema<"trackFocusVisible" | "trackTabListElement">
+  // TODO: migrate to new machine creation approach
   event: any
   guards: GuardSchema<"isIndicatorRendered" | "selectOnFocus">
   ids: TabsElementIds
@@ -186,44 +190,41 @@ export interface PanelProps {
   value: string
 }
 
-export interface TabsCommonBindings extends DirectionProperty {
-  "data-scope": "tabs"
-}
+type PartName = AnatomyPartName<typeof tabsAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"tabs", P> {}
 
-export interface TabsRootBindings extends TabsCommonBindings {
+export interface TabsRootBindings extends Part<"root"> {
   "data-focus": BooleanDataAttr
   "data-orientation": TabsOrientation
-  "data-part": "root"
+  dir: Direction
 }
 
-export interface TabsPanelBindings extends TabsCommonBindings {
+export interface TabsPanelBindings extends Part<"panel"> {
   "aria-labelledby": string
   "data-orientation": TabsOrientation
   "data-ownedby": string
-  "data-part": "panel"
   "data-selected": BooleanDataAttr
   hidden: boolean
   role: "tabpanel"
+  style: {display: "none"} | undefined
   tabIndex: 0 | -1
 }
 
-export interface TabsListBindings extends TabsCommonBindings {
+export interface TabsListBindings extends Part<"list"> {
   "aria-label": string | undefined
   "aria-orientation": TabsOrientation
   "data-focus": BooleanDataAttr
   "data-orientation": TabsOrientation
-  "data-part": "list"
   id: string
   onKeyDown: JSX.KeyboardEventHandler<HTMLElement>
   role: "tablist"
 }
 
-export interface TabsTabBindings extends TabsCommonBindings {
+export interface TabsTabBindings extends Part<"tab"> {
   "data-orientation": TabsOrientation
-  "data-part": "tab"
 }
 
-export interface TabsTabButtonBindings extends TabsCommonBindings {
+export interface TabsTabButtonBindings extends Part<"tabButton"> {
   "aria-controls": string | undefined
   "aria-disabled": BooleanAriaAttr
   "aria-selected": BooleanAriaAttr
@@ -233,7 +234,6 @@ export interface TabsTabButtonBindings extends TabsCommonBindings {
   "data-indicator-rendered": BooleanDataAttr
   "data-orientation": TabsOrientation
   "data-ownedby": string
-  "data-part": "tab-button"
   "data-selected": BooleanDataAttr
   "data-value": string
   disabled: boolean | undefined
@@ -248,11 +248,11 @@ export interface TabsTabButtonBindings extends TabsCommonBindings {
   type: "button"
 }
 
-export interface TabsTabDismissButtonBindings extends TabsCommonBindings {
+export interface TabsTabDismissButtonBindings extends Part<"tabDismissButton"> {
   "aria-label": string
-  "data-part": "tab-dismiss-button"
   onClick: JSX.MouseEventHandler
   role: "button"
+  tabIndex: -1
   type: "button"
 }
 
@@ -263,17 +263,14 @@ export interface TabDismissButtonApiProps {
   "aria-label"?: string | null | undefined
 }
 
-export interface TabsTabIconBindings extends TabsCommonBindings {
-  "data-part": "tab-icon"
-}
+export interface TabsTabIconBindings extends Part<"tabIcon"> {}
 
-export interface TabsIndicatorBindings extends TabsCommonBindings {
+export interface TabsIndicatorBindings extends Part<"indicator"> {
   /** Whether any tab has the simulated focus state. */
   "data-focus": BooleanDataAttr
   /** Whether any tab has the simulated focus-visible state. */
   "data-focus-visible": BooleanDataAttr
   "data-orientation": TabsOrientation
-  "data-part": "indicator"
   id: string
   style: JSX.CSSProperties
 }

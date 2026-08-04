@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {progressClasses} from "./progress.classes"
+import {progressClasses} from "./progress.classes.js"
 import type {
   QdsProgressApi,
   QdsProgressApiProps,
@@ -14,7 +14,7 @@ import type {
   QdsProgressRootBindings,
   QdsProgressTrackBindings,
   QdsProgressValueTextBindings,
-} from "./progress.types"
+} from "./progress.types.js"
 
 export function createQdsProgressApi(
   props: QdsProgressApiProps,

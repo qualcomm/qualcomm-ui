@@ -7,13 +7,13 @@ import type {ToastOptions} from "@qualcomm-ui/core/toast"
 import type {FunctionRenderProp} from "@qualcomm-ui/react-core/system"
 import {CoreToaster, type CoreToasterProps} from "@qualcomm-ui/react-core/toast"
 
-import type {ToasterInstance} from "./create-toaster"
-import {ToastActionButton} from "./toast-action-button"
-import {ToastCloseButton} from "./toast-close-button"
-import {ToastDescription} from "./toast-description"
-import {ToastIcon} from "./toast-icon"
-import {ToastLabel} from "./toast-label"
-import {ToastRoot} from "./toast-root"
+import type {ToasterInstance} from "./create-toaster.js"
+import {ToastActionButton} from "./toast-action-button.js"
+import {ToastCloseButton} from "./toast-close-button.js"
+import {ToastDescription} from "./toast-description.js"
+import {ToastIcon} from "./toast-icon.js"
+import {ToastLabel} from "./toast-label.js"
+import {ToastRoot} from "./toast-root.js"
 
 export interface ToasterProps extends Omit<CoreToasterProps, "children"> {
   /**

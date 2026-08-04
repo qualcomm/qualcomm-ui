@@ -1,4 +1,5 @@
 export * from "./radio-composite-demo"
+export * from "./radio-explorer-demo"
 export * from "./radio-composite-layout-demo"
 export * from "./radio-controlled-demo"
 export * from "./radio-disabled-demo"

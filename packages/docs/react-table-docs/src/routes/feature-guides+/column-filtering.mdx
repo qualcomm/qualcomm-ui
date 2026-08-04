@@ -6,7 +6,7 @@ title: Column Filtering Guide
 
 ## Examples & API
 
-- [Column Filtering](/features/filters)
+- [Column Filtering](/features/filters-client-side)
 - [Column Filtering API](/api/features/filters)
 
 ## Guide
@@ -34,8 +34,8 @@ Consider these constraints:
 Client-side filtering requires passing a `getFilteredRowModel` function to the table options. Import the default function or provide a custom implementation.
 
 ```tsx
-import {useReactTable} from "@qualcomm-ui/react/table"
 import {getFilteredRowModel} from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
 
 const table = useReactTable({
   data,
@@ -322,14 +322,19 @@ const table = useReactTable({
 Multiple Column and Table APIs interact with column filter state:
 
 - `table.setColumnFilters` - Overwrites the entire column filter state
+
 - `table.resetColumnFilters` - Resets all filters
 
 - **`column.getFilterValue`** - Gets the current filter value for an input
+
 - **`column.setFilterValue`** - Connects filter inputs to `onChange` or `onBlur` handlers
 
 - `column.getCanFilter` - Returns whether filtering is enabled for the column
+
 - `column.getIsFiltered` - Returns whether the column is currently filtered
+
 - `column.getFilterIndex` - Returns the order in which the filter is applied
 
 - `column.getAutoFilterFn` - Returns the automatically determined filter function
+
 - `column.getFilterFn` - Returns the currently used filter function

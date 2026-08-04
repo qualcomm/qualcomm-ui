@@ -6,19 +6,21 @@ import type {ReactElement} from "react"
 import {renderProp, type RenderProp} from "@qualcomm-ui/react-core/system"
 import {useTreeContext} from "@qualcomm-ui/react-core/tree"
 
-import {SideNavBranch} from "./side-nav-branch"
-import {SideNavBranchContent} from "./side-nav-branch-content"
+import {SideNavBranchContent} from "./side-nav-branch-content.js"
 import {
   SideNavBranchIndentGuide,
   type SideNavBranchIndentGuideProps,
-} from "./side-nav-branch-indent-guide"
+} from "./side-nav-branch-indent-guide.js"
+import {SideNavBranch} from "./side-nav-branch.js"
 import {
   SideNavNodeProvider,
   type SideNavNodeProviderProps,
-} from "./side-nav-node-provider"
+} from "./side-nav-node-provider.js"
 
-export interface SideNavNodesProps<T>
-  extends Omit<SideNavNodeProviderProps<T>, "children"> {
+export interface SideNavNodesProps<T> extends Omit<
+  SideNavNodeProviderProps<T>,
+  "children"
+> {
   groupBy?: (node: T, index: number) => PropertyKey | undefined
 
   /**

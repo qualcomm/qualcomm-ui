@@ -1,6 +1,5 @@
 ---
 title: Button
-group: Buttons
 description: Buttons let users perform actions instantly, such as submitting forms, navigating pages, or triggering app functions. Built with comprehensive state management and semantic color coding, they communicate purpose and priority while maintaining consistent behavior across desktop and mobile environments.
 component: Button
 aliases: [cta, call to action]
@@ -96,6 +95,22 @@ Use `white-persistent` for buttons on dark backgrounds and `black-persistent` fo
 To flip contrast against the active theme, set [emphasis](./#emphasis) to `inverse`.
 
 <Demo component={demos.ButtonInverseDemo} name="ButtonInverseDemo" />
+
+### Menu Button
+
+::: terms
+menu trigger, dropdown button, icon menu button
+:::
+
+For a button that opens a dropdown, use [`Menu.Button`](/components/menu#menu-button) for a labeled trigger or [`Menu.IconButton`](/components/menu#menu-button) for an icon-only trigger.
+
+### Split Button
+
+::: terms
+split action, dropdown button, secondary actions
+:::
+
+For a button that pairs a primary action with a dropdown of related actions, use [`Menu.SplitButton`](/components/menu#split-button).
 
 ## API
 

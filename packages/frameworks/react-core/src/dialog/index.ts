@@ -19,9 +19,9 @@ import {
   type CoreDialogRootProps,
   CoreDialogTrigger,
   type CoreDialogTriggerProps,
-} from "./core-dialog"
+} from "./core-dialog.js"
 
-export * from "./dialog-context"
+export * from "./dialog-context.js"
 
 export type {
   CoreDialogRootProps,

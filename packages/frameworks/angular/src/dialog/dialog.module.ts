@@ -4,9 +4,9 @@
 import {NgTemplateOutlet} from "@angular/common"
 import {NgModule} from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 import {DialogBackdropDirective} from "./dialog-backdrop.directive"
 import {DialogBodyComponent} from "./dialog-body.component"

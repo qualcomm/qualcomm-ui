@@ -1,1 +1,1 @@
-export * from "./merge-props"
+export * from "./merge-props.js"

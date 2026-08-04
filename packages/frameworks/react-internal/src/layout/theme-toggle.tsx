@@ -11,8 +11,8 @@ import {
 
 import {MoonIcon, SunIcon} from "lucide-react"
 
-import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 
 export function ThemeToggle(): ReactNode {
   const [theme, setTheme] = useTheme()

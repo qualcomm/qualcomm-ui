@@ -8,6 +8,7 @@
   color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-xs-default);
   margin-block-end: var(--spacing-70);
+  padding: 0;
 }
 
 .qui-field-group__items {

@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {sliderClasses} from "./slider.classes"
+import {sliderClasses} from "./slider.classes.js"
 import type {
   QdsSliderApi,
   QdsSliderApiProps,
@@ -21,7 +21,7 @@ import type {
   QdsSliderThumbIndicatorBindings,
   QdsSliderTrackBindings,
   QdsSliderValueTextBindings,
-} from "./slider.types"
+} from "./slider.types.js"
 
 export function createQdsSliderApi(
   props: QdsSliderApiProps,

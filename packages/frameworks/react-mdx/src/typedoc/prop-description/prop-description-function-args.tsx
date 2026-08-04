@@ -8,7 +8,7 @@ import type {
   SerializedParameters,
 } from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionSummary} from "./prop-description-summary"
+import {PropDescriptionSummary} from "./prop-description-summary.js"
 
 interface Props {
   functionArgs: SerializedParameters[]

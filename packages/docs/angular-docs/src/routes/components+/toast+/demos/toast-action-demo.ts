@@ -1,12 +1,12 @@
 import {Component, inject} from "@angular/core"
 
+import {WINDOW} from "@qualcomm-ui/angular-core/dom"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {
   provideToaster,
   ToasterService,
   ToastModule,
 } from "@qualcomm-ui/angular/toast"
-import {WINDOW} from "@qualcomm-ui/angular-core/dom"
 
 @Component({
   imports: [ToastModule, ButtonModule],

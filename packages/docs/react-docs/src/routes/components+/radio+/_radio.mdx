@@ -1,14 +1,13 @@
 ---
 title: Radio
-group: Form Controls
 description: Radio buttons are essential form controls that present users with a clear set of options where only one selection is possible at a time.
 component: Radio
 aliases: [option button, radio button]
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -29,8 +28,7 @@ Basic radio with label using the simple API.
 ### Composite
 
 ::: terms
-compound component
-parts
+compound component, parts
 :::
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
@@ -40,9 +38,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### Layout
 
 ::: terms
-reorder
-label position
-custom layout
+reorder, label position, custom layout
 :::
 
 Use the composite API when you need to modify the layout of the radio buttons.
@@ -61,9 +57,7 @@ When [disabled](./#disabled) is true, the radio group becomes non-interactive an
 ### Controlled State
 
 ::: terms
-useState
-programmatic
-two-way binding
+useState, programmatic, two-way binding
 :::
 
 Set the initial value using the [defaultValue](./#defaultValue) prop, or use [value](./#value) and [onValueChange](./#onValueChange) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
@@ -77,10 +71,7 @@ Set the initial value using the [defaultValue](./#defaultValue) prop, or use [va
 ### Orientation
 
 ::: terms
-horizontal
-vertical
-row
-column
+horizontal, vertical, row, column
 :::
 
 Controls the layout direction of radio buttons within the group.
@@ -90,9 +81,7 @@ Controls the layout direction of radio buttons within the group.
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 The radio supports three [sizes](./#size): `sm`, `md` (default), and `lg`.
@@ -108,8 +97,7 @@ Use the [indented](./#indented-1) prop to indent the radio items.
 ### Hint
 
 ::: terms
-helper text
-description
+helper text, description
 :::
 
 Add a hint to provide additional context for the radio group.
@@ -178,22 +166,102 @@ The Radio's composite components are only intended to be used as direct descenda
 </Radio.Root>
 ```
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.RadioExplorerDemo}
+  parts={[
+    {name: "group", link: "#radio-group-root"},
+    {name: "label", link: "#radio-group-label"},
+    {name: "items", link: "#radio-group-items"},
+    {name: "item", link: "#radio-root"},
+    {name: "item-control", link: "#radio-control"},
+    {name: "item-label", link: "#radio-label"},
+    {name: "hint", link: "#radio-group-hint"},
+  ]}
+  scope="radio"
+/>
+
 ## API
 
 ### \<RadioGroup.Root\>
 
 <TypeDocProps name="RadioGroupRootProps" />
 
+<TypeDocAttributes name={["QdsRadioGroupBindings", "RadioGroupBindings"]} />
+
+### \<RadioGroup.Label\>
+
+<TypeDocProps name="RadioGroupLabelProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioGroupLabelBindings", "RadioGroupLabelBindings"]}
+/>
+
+### \<RadioGroup.Items\>
+
+<TypeDocProps name="RadioGroupItemsProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioGroupItemsBindings", "RadioGroupItemsBindings"]}
+/>
+
 ### \<RadioGroup.Hint\>
 
 <TypeDocProps name="RadioGroupHintProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioGroupHintBindings", "RadioGroupHintBindings"]}
+/>
+
+### \<RadioGroup.ErrorText\>
+
+<TypeDocProps name="RadioGroupErrorTextProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioGroupErrorTextBindings", "RadioGroupErrorTextBindings"]}
+/>
+
+### \<Radio\>
+
+The `Radio` component supports all props from [Radio.Root](./#radio-root), plus the additional props listed below.
+
+<TypeDocProps name="RadioProps" omitFrom="RadioRootProps" />
 
 ### \<Radio.Root\>
 
 <TypeDocProps name="RadioRootProps" />
 
-### \<Radio\>
+<TypeDocAttributes name={["QdsRadioItemBindings", "RadioItemBindings"]} />
 
-The `Radio` component supports all props from [Radio.Root](./#radioroot), plus the additional props listed below.
+### \<Radio.Label\>
 
-<TypeDocProps name="RadioProps" omitFrom="RadioRootProps" />
+<TypeDocProps name="RadioLabelProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioItemLabelBindings", "RadioItemLabelBindings"]}
+/>
+
+### \<Radio.Control\>
+
+<TypeDocProps name="RadioControlProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioItemControlBindings", "RadioItemControlBindings"]}
+/>
+
+### \<Radio.HiddenInput\>
+
+<TypeDocProps name="RadioHiddenInputProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioItemHiddenInputBindings", "RadioItemHiddenInputBindings"]}
+/>
+
+### \<Radio.Hint\>
+
+<TypeDocProps name="RadioHintProps" />
+
+<TypeDocAttributes
+  name={["QdsRadioItemHintBindings", "RadioItemHintBindings"]}
+/>

@@ -22,9 +22,9 @@ export class SelectContextDirective extends ApiContextDirective<SelectApi> {
    * template.
    */
   static ngTemplateContextGuard(
-    dir: SelectContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: SelectApi} {
+    _dir: SelectContextDirective,
+    _ctx: unknown,
+  ): _ctx is {$implicit: SelectApi} {
     return true
   }
 }

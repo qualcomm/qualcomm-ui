@@ -1,3 +1,3 @@
-export * from "./avatar.classes"
-export * from "./avatar.api"
-export type * from "./avatar.types"
+export * from "./avatar.classes.js"
+export * from "./avatar.api.js"
+export type * from "./avatar.types.js"

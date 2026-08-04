@@ -6,7 +6,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {SelectElementIds, SelectScope} from "../select.types"
+import type {SelectElementIds, SelectScope} from "../select.types.js"
 
 export const domIds: ScopeDomIds<SelectElementIds, SelectScope> & {
   itemGroup: (scope: SelectScope, id: string | number) => string

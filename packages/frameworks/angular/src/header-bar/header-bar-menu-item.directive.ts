@@ -4,13 +4,13 @@
 import {Component, input, type OnInit} from "@angular/core"
 import {ChevronDown} from "lucide-angular"
 
-import {useQdsMenuContext} from "@qualcomm-ui/angular/menu"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {useMenuContext} from "@qualcomm-ui/angular-core/menu"
+import {useQdsMenuContext} from "@qualcomm-ui/angular/menu"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
@@ -24,7 +24,7 @@ import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
       <svg [qIcon]="icon()!"></svg>
     }
     <ng-content />
-    <svg data-part="end-icon" qIcon="ChevronDown"></svg>
+    <svg data-header-bar-part="end-icon" qIcon="ChevronDown"></svg>
   `,
 })
 export class HeaderBarMenuItemDirective implements OnInit {

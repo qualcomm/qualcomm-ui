@@ -1,30 +1,30 @@
-import {InlineNotification as SimpleInlineNotification} from "./inline-notification"
 import {
   InlineNotificationActionContainer,
   type InlineNotificationActionContainerProps,
-} from "./inline-notification-action-container"
+} from "./inline-notification-action-container.js"
 import {
   InlineNotificationCloseButton,
   type InlineNotificationCloseButtonProps,
-} from "./inline-notification-close-button"
+} from "./inline-notification-close-button.js"
 import {
   InlineNotificationDescription,
   type InlineNotificationDescriptionProps,
-} from "./inline-notification-description"
+} from "./inline-notification-description.js"
 import {
   InlineNotificationIcon,
   type InlineNotificationIconProps,
-} from "./inline-notification-icon"
+} from "./inline-notification-icon.js"
 import {
   InlineNotificationLabel,
   type InlineNotificationLabelProps,
-} from "./inline-notification-label"
+} from "./inline-notification-label.js"
 import {
   InlineNotificationRoot,
   type InlineNotificationRootProps,
-} from "./inline-notification-root"
+} from "./inline-notification-root.js"
+import {InlineNotification as SimpleInlineNotification} from "./inline-notification.js"
 
-export * from "./qds-inline-notification-context"
+export * from "./qds-inline-notification-context.js"
 
 export type {
   InlineNotificationActionContainerProps,

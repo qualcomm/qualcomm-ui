@@ -105,6 +105,10 @@ pre.mdx {
 
 pre.mdx.shiki {
   overflow-x: auto;
+
+  code {
+    font: var(--font-static-code-sm-default);
+  }
 }
 
 p.mdx {
@@ -128,6 +132,10 @@ li.mdx {
 
 li.mdx {
   font: var(--font-static-body-md-default);
+}
+
+li.mdx:has(.shiki-wrapper.mdx:last-child) + li.mdx {
+  margin-top: var(--qui-mdx-margin-default);
 }
 
 ol.mdx {
@@ -234,7 +242,7 @@ ul.mdx {
 .q-link--text {
   > code.mdx {
     background: inherit;
-    border-radius: 4px;
+    border-radius: var(--border-radius-md);
     color: inherit;
     display: inline-block;
     font: var(--font-static-code-sm-default);
@@ -255,7 +263,7 @@ code.mdx {
 code.mdx:not(pre > code.mdx):not(.q-link--text > code.mdx) {
   background: var(--qui-docs-code-background);
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: 4px;
+  border-radius: var(--border-radius-md);
   box-sizing: border-box;
   color: var(--qui-docs-code-color);
   display: inline-block;
@@ -268,13 +276,19 @@ code.mdx:not(pre > code.mdx):not(.q-link--text > code.mdx) {
 }
 
 blockquote.mdx {
-  border-inline-start-color: var(--color-border-brand-primary);
-  border-inline-start-width: 0.25rem;
+  background-color: var(--color-background-support-info-subtle);
+  border: solid var(--border-width-sm) var(--color-border-support-info-medium);
+  border-radius: var(--border-radius-md);
+  box-sizing: border-box;
   margin-top: var(--qui-mdx-margin-default);
-  padding: 4px 12px;
+  padding: var(--spacing-90) var(--spacing-100);
 
   > p.mdx {
     margin-top: 0;
+  }
+
+  p.mdx + p.mdx {
+    margin-top: var(--spacing-90);
   }
 }
 
@@ -438,18 +452,32 @@ hr.mdx {
   padding-left: 10px;
 }
 
-.qui-docs__page-actions-buttons {
-  align-items: center;
-  display: flex;
-  gap: 1px;
+.qui-docs__theme-table-scroll-container {
+  overflow-x: auto;
 }
 
-.qui-docs__page-actions-copy-button[data-size] {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
+.qui-docs__mdx-scrollbar {
+  &::-webkit-scrollbar {
+    height: 6px;
+    opacity: 0;
+    width: 6px;
+  }
 
-.qui-docs__page-actions-menu-button[data-size] {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border-neutral-02);
+    border-radius: var(--border-radius-sm);
+    opacity: 0;
+
+    &:hover {
+      background: var(--color-border-neutral-03);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    height: 4px;
+  }
 }

@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 @import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
@@ -8,6 +10,8 @@
 @import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/dragonwing-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/dragonfly-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/dragonfly-dark.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/arduino-light.css" layer(components);
 @import "@qualcomm-ui/qds-core/themes/arduino-dark.css" layer(components);
 @import "@qualcomm-ui/react-mdx/styles.css" layer(components);
@@ -20,6 +24,7 @@
   color-scheme: light dark;
 
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   --q-font-mono: "Roboto Mono", monospace;
   --qui-header-height: 48px;

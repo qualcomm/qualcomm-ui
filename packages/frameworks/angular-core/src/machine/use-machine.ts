@@ -250,7 +250,11 @@ export function useMachine<T extends MachineSchema>(
         cleanups.push(cleanup)
       }
     }
-    return () => cleanups.forEach((fn) => fn?.())
+    return () => {
+      for (const fn of cleanups) {
+        fn?.()
+      }
+    }
   }
 
   const state = bindable(() => ({
@@ -378,7 +382,9 @@ export function useMachine<T extends MachineSchema>(
 
         status = MachineStatus.STOPPED
 
-        effectsRef.forEach((fn) => fn())
+        for (const fn of effectsRef.values()) {
+          fn()
+        }
 
         effectsRef = new Map()
         transitionRef = null

@@ -6,7 +6,7 @@
 
 import {isEqual} from "@qualcomm-ui/utils/equal"
 
-import type {ListCollection} from "./list-collection"
+import type {ListCollection} from "./list-collection.js"
 
 /**
  * The mode of the selection.

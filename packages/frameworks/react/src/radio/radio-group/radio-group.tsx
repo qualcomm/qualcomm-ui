@@ -3,12 +3,15 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {RadioGroupItems, type RadioGroupItemsProps} from "./radio-group-items"
-import {RadioGroupLabel, type RadioGroupLabelProps} from "./radio-group-label"
 import {
-  RadioGroupRoot,
-  type RadioGroupRootProps as RadioGroupRootProps,
-} from "./radio-group-root"
+  RadioGroupItems,
+  type RadioGroupItemsProps,
+} from "./radio-group-items.js"
+import {
+  RadioGroupLabel,
+  type RadioGroupLabelProps,
+} from "./radio-group-label.js"
+import {RadioGroupRoot, type RadioGroupRootProps} from "./radio-group-root.js"
 
 export interface RadioGroupProps extends RadioGroupRootProps {
   /**

@@ -16,7 +16,7 @@ const emphasis = instance.getEnum("emphasis", {
   danger: "danger",
   green: "green",
   info: "info",
-  kiwi: "kiwi",
+  lime: "lime",
   magenta: "magenta",
   orange: "orange",
   purple: "purple",

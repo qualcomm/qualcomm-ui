@@ -81,9 +81,9 @@ export class RenderCellDirective implements OnDestroy {
           ...this.renderCellComponentInput(),
           context: cell.getContext(),
         }
-        Object.entries(inputs).forEach(([key, value]) => {
+        for (const [key, value] of Object.entries(inputs)) {
           componentRef.setInput(key, value)
-        })
+        }
       } else {
         this.viewContainerRef.createEmbeddedView(this.templateRef, {
           $implicit: result,

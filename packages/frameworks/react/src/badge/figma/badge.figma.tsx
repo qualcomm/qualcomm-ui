@@ -6,20 +6,15 @@ import figma from "@figma/code-connect"
 import type {
   QdsBadgeBasicSize,
   QdsBadgeCategoryEmphasis,
-  QdsBadgeExtendedSize,
   QdsBadgeExtraSize,
   QdsBadgeSemanticEmphasis,
-  QdsIconBadgeVariant,
   QdsNumberBadgeEmphasis,
   QdsStatusBadgeVariant,
   QdsTextBadgeVariant,
 } from "@qualcomm-ui/qds-core/badge"
-import {
-  Badge,
-  IconBadge,
-  NumberBadge,
-  StatusBadge,
-} from "@qualcomm-ui/react/badge"
+import {Badge, NumberBadge, StatusBadge} from "@qualcomm-ui/react/badge"
+
+// IconBadge is mapped via the raw template in ./icon-badge.figma.js
 
 // Number Badge (Badge count in Figma)
 figma.connect(NumberBadge, "<FIGMA_COMPONENTS_BASE>?node-id=13390-5460", {
@@ -86,60 +81,6 @@ figma.connect(StatusBadge, "<FIGMA_COMPONENTS_BASE>?node-id=13426-472", {
     variant: figma.enum<QdsStatusBadgeVariant>("variant", {
       filled: "filled",
       outline: "outlined",
-    }),
-  },
-})
-
-// Icon Badge
-figma.connect(IconBadge, "<FIGMA_COMPONENTS_BASE>?node-id=10951-1155", {
-  example: ({disabled, emphasis, size, variant}) => (
-    <IconBadge
-      disabled={disabled}
-      emphasis={emphasis}
-      icon={Icon}
-      size={size}
-      variant={variant}
-    />
-  ),
-  imports: [
-    'import {IconBadge} from "@qualcomm-ui/react/badge"',
-    'import {Icon} from "lucide-react"',
-  ],
-  props: {
-    disabled: figma.enum("disabled", {
-      yes: true,
-    }),
-    emphasis: figma.enum<QdsBadgeSemanticEmphasis | QdsBadgeCategoryEmphasis>(
-      "emphasis",
-      {
-        blue: "blue",
-        brand: "brand",
-        cyan: "cyan",
-        danger: "danger",
-        green: "green",
-        info: "info",
-        lime: "lime",
-        magenta: "magenta",
-        neutral: "neutral",
-        orange: "orange",
-        purple: "purple",
-        red: "red",
-        success: "success",
-        teal: "teal",
-        warning: "warning",
-        yellow: "yellow",
-      },
-    ),
-    size: figma.enum<QdsBadgeExtendedSize>("size", {
-      lg: "lg",
-      sm: "sm",
-      xl: "xl",
-      xs: "xs",
-      xxs: "xxs",
-    }),
-    variant: figma.enum<QdsIconBadgeVariant>("variant", {
-      default: "default",
-      subtle: "subtle",
     }),
   },
 })

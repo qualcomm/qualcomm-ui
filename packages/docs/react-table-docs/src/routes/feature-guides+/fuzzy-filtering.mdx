@@ -6,7 +6,7 @@ title: Fuzzy Filtering Guide
 
 ## Examples & API
 
-- [Fuzzy Filtering Example](/features/fuzzy-filtering)
+- [Fuzzy Filtering Example](/feature-guides/fuzzy-filtering)
 - [Filters API](/api/features/filters)
 
 ## Guide
@@ -28,6 +28,7 @@ Here's an example of a custom fuzzy filter function using fuzzysort:
 
 ```tsx
 import Fuzzysort from "fuzzysort"
+
 import type {FilterFn} from "@qualcomm-ui/core/table"
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -52,12 +53,12 @@ In this function, we're using the `Fuzzysort.single` function from the fuzzysort
 To use fuzzy filtering with global filtering, you can specify the fuzzy filter function in the globalFilterFn option of the table instance:
 
 ```tsx
-import {useReactTable} from "@qualcomm-ui/react/table"
 import {
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
 } from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
 
 const table = useReactTable({
   columns,

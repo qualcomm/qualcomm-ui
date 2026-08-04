@@ -1,8 +1,8 @@
 import type {ReactNode} from "react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Button} from "@qualcomm-ui/react/button"
 import {Popover} from "@qualcomm-ui/react/popover"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 export function PopoverCompositeDemo(): ReactNode {
   return (

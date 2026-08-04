@@ -1,16 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import path from "path"
-import {format, type Options} from "prettier"
+import path from "node:path"
+import {format, type FormatConfig} from "oxfmt"
 import type {JSONOutput} from "typedoc"
 
 import type {FormattedType} from "@qualcomm-ui/typedoc-common"
 
-import {isTypeOverride} from "../guards"
+import {formatObjectPropertyName, isTypeOverride} from "../guards.js"
 
-import {dedent} from "./dedent"
-import type {KnownInterfaces, QuiDeclarationReflection} from "./types"
+import {dedent} from "./dedent.js"
+import type {KnownInterfaces, QuiDeclarationReflection} from "./types.js"
 
 /**
  * TypeDoc expands default generics, which is not desirable.
@@ -21,7 +21,7 @@ const knownGenerics =
 
 export function getName(
   decl: QuiDeclarationReflection | JSONOutput.SignatureReflection,
-) {
+): string {
   return decl.name === "default"
     ? path.parse(getFileName(decl) || "default").name
     : decl.name
@@ -63,7 +63,9 @@ export function extractDocLink(
   return docLinkTag.content[0].text
 }
 
-export function getInheritDoc(comment: JSONOutput.Comment | undefined) {
+export function getInheritDoc(
+  comment: JSONOutput.Comment | undefined,
+): JSONOutput.CommentTag | undefined {
   return (comment ?? {blockTags: []}).blockTags?.find(
     (tag) => tag.tag === "@inheritDoc",
   )
@@ -80,24 +82,24 @@ export function getFileGitUrl(
   return src.url
 }
 
-export function escape(src: string) {
+export function escape(src: string): string {
   return src
     .replace(/\[/g, "\\[")
-    .replace(/\</g, "\\<")
+    .replace(/</g, "\\<")
     .replace(/\*/g, "\\*")
-    .replace(/\-/g, "\\-")
+    .replace(/-/g, "\\-")
     .replace(/\|/g, "\\|")
-    .replace(/\`/g, "\\`")
+    .replace(/`/g, "\\`")
     .replace(/\{/g, "\\{")
 }
 
 export const defaultPrintWidth = 30
 
-const prettierOpts: Options = {
+const formatConfig: FormatConfig = {
   bracketSpacing: false,
-  endOfLine: "auto",
+  endOfLine: "lf",
+  insertFinalNewline: false,
   jsxSingleQuote: true,
-  parser: "typescript",
   printWidth: defaultPrintWidth,
   semi: false,
   singleQuote: true,
@@ -106,7 +108,10 @@ const prettierOpts: Options = {
 
 const prettierCache: Record<string, string> = {}
 
-export async function prettyType(type: string, printWidth: number) {
+export async function prettyType(
+  type: string,
+  printWidth: number,
+): Promise<string> {
   // optimization: prettier is expensive, so skip it if it's unnecessary. This
   // bail-out results in a 50% speed increase.
   if (!type.includes(" ") && type.length <= printWidth) {
@@ -118,14 +123,14 @@ export async function prettyType(type: string, printWidth: number) {
   try {
     // we need valid typescript for prettier to work.
     const dummyType = `type ___DUMMY = ${type}`
-    const result = await format(dummyType, {
-      ...prettierOpts,
+    const result = await format("file.tsx", dummyType, {
+      ...formatConfig,
       printWidth,
     })
-    const formatted = dedent(result.replace("type ___DUMMY =", " ").trim())
+    const formatted = dedent(result.code.replace("type ___DUMMY =", " ").trim())
     prettierCache[type] = formatted
     return formatted
-  } catch (e) {
+  } catch {
     return type
   }
 }
@@ -135,9 +140,11 @@ export async function prettyImportStatement(str: string): Promise<string> {
     return prettierCache[str]
   }
   try {
-    prettierCache[str] = (await format(str, prettierOpts)).trim()
+    prettierCache[str] = (
+      await format("file.tsx", str, formatConfig)
+    ).code.trim()
     return prettierCache[str]
-  } catch (e) {
+  } catch {
     return str
   }
 }
@@ -182,7 +189,7 @@ export class TypeFormatter {
   formatSignature(
     signatures: JSONOutput.SignatureReflection[],
     opts: ParseTypeOpts,
-  ) {
+  ): string {
     const s = signatures[0]
 
     const typeOverride = isTypeOverride(s.comment)
@@ -211,9 +218,9 @@ export class TypeFormatter {
           }`
         }
       }
-      const name = `${p.flags.isRest ? "..." : ""}${
-        p.name.includes("-") ? `"${p.name}"` : p.name
-      }`
+      const name = `${p.flags.isRest ? "..." : ""}${formatObjectPropertyName(
+        p.name,
+      )}`
       return `${name}${p.flags?.isOptional ? "?" : ""}: ${replaceType(
         p.type
           ? this.formatType(p.type as JSONOutput.SomeType, opts)
@@ -358,9 +365,9 @@ export class TypeFormatter {
         const {children, signatures} = t.declaration
 
         if (children && children.length > 0) {
-          children.forEach((child) => {
+          for (const child of children) {
             obj.push({
-              name: child.name.includes("-") ? `"${child.name}"` : child.name,
+              name: formatObjectPropertyName(child.name),
               optional: child.flags?.isOptional,
               type:
                 // exported variable with methods
@@ -368,7 +375,7 @@ export class TypeFormatter {
                   ? this.formatSignature(child.signatures, opts)
                   : this.formatType(child.type as JSONOutput.SomeType, opts),
             })
-          })
+          }
 
           return `{ ${obj
             .map((param) => {

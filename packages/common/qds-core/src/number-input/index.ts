@@ -1,3 +1,3 @@
-export * from "./number-input.api"
-export * from "./number-input.classes"
-export type * from "./number-input.types"
+export * from "./number-input.api.js"
+export * from "./number-input.classes.js"
+export type * from "./number-input.types.js"

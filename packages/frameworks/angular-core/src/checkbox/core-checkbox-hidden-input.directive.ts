@@ -16,14 +16,40 @@ export class CoreCheckboxHiddenInputDirective implements OnInit {
    */
   readonly id = input<string>()
 
+  /**
+   * ARIA label applied to the hidden input.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the hidden input.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   protected readonly checkboxContext = useCheckboxContext()
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.checkboxContext().getHiddenInputBindings({
+  protected readonly trackBindings = useTrackBindings(() => {
+    const bindings = this.checkboxContext().getHiddenInputBindings({
       id: this.hostId(),
       onDestroy: this.onDestroy,
-    }),
-  )
+    })
+    const ariaLabel = this.ariaLabel() ?? undefined
+    const ariaLabelledby = this.ariaLabelledby() ?? undefined
+
+    return {
+      ...bindings,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby ?? bindings["aria-labelledby"],
+    }
+  })
 
   private readonly hostId = computed(() => useId(this, this.id()))
 

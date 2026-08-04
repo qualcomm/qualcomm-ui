@@ -5,15 +5,15 @@ import type {ReactElement} from "react"
 
 import {PanelLeftClose, PanelLeftOpen} from "lucide-react"
 
-import {IconButton} from "@qualcomm-ui/react/button"
 import {
   CoreSideNav,
   type CoreSideNavTriggerProps,
   useSideNavContext,
 } from "@qualcomm-ui/react-core/side-nav"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsSideNavApi} from "./qds-side-nav-context"
+import {qdsSideNavApi} from "./qds-side-nav-context.js"
 
 export interface SideNavCollapseTriggerProps extends CoreSideNavTriggerProps {}
 

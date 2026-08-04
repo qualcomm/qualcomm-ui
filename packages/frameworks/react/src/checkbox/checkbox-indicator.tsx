@@ -3,15 +3,15 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {CheckmarkIcon} from "@qualcomm-ui/react/checkmark"
 import {useCheckboxIndicator} from "@qualcomm-ui/react-core/checkbox"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {CheckmarkIcon} from "@qualcomm-ui/react/checkmark"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsCheckboxContext} from "./qds-checkbox-context"
+import {useQdsCheckboxContext} from "./qds-checkbox-context.js"
 
 export interface CheckboxIndicatorProps extends ElementRenderProp<"div"> {
   /**

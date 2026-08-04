@@ -1,5 +1,3 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compilerOptions": {
     "outDir": "./out-tsc/app",
@@ -27,12 +25,5 @@
     }
   },
   "files": ["angular-demo-module/main.ts", "angular-demo-module/stub.ts"],
-  "include": ["./src/routes/**/demos/**/*.ts"],
-  "exclude": ["./src/**/*.mdx"],
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+  "include": ["./src/routes/**/*/demos"]
 }

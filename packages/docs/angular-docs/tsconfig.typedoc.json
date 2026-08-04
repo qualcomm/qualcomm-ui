@@ -19,6 +19,7 @@
     "../../frameworks/angular/src/**/*.figma.ts",
     "../../frameworks/angular-core/src/**/*.spec.ts",
     "../../common/core/src/table",
-    "../../**/*internal*/**"
+    "../../**/*internal*/**",
+    "../../**/*.spec.ts"
   ]
 }

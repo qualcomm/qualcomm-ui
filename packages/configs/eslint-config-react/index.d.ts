@@ -3,12 +3,6 @@ import type {ConfigObject} from "@eslint/core"
 interface ReactConfigExport {
   configs: {
     /**
-     * Base React configuration with plugins and settings.
-     * Required for the {@link recommended} and {@link strict} configs to work.
-     */
-    base: ConfigObject
-
-    /**
      * Recommended settings that every React project should use.
      * Includes base setup and recommended rules.
      *
@@ -23,13 +17,13 @@ interface ReactConfigExport {
      * })
      * ```
      */
-    recommended: ConfigObject
+    recommended: ConfigObject[]
 
     /**
      * Strict settings for React compiler compatibility and enforcement of React
-     * best practices. Use alongside `recommended`.
+     * best practices. Use alongside {@link recommended}.
      */
-    strict: ConfigObject
+    strict: ConfigObject[]
   }
 }
 

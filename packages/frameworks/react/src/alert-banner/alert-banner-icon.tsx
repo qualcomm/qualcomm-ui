@@ -12,12 +12,12 @@ import {
 } from "lucide-react"
 
 import type {QdsAlertBannerEmphasis} from "@qualcomm-ui/qds-core/alert-banner"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useAlertBannerContext} from "./qds-alert-banner-context"
+import {useAlertBannerContext} from "./qds-alert-banner-context.js"
 
 export interface AlertBannerIconProps extends ElementRenderProp<"span"> {
   /**

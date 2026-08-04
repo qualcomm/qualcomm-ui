@@ -19,7 +19,7 @@ export function CollapsibleControlledStateDemo(): ReactElement {
         Toggle
       </Collapsible.Trigger>
       <Collapsible.Content>
-        <div className="border-neutral-01 grid h-48 w-72 gap-4 rounded-sm border p-4">
+        <div className="border-neutral-01 box-border grid h-48 w-72 gap-4 rounded-sm border p-4">
           Content
           <Button onClick={() => setOpen(false)}>Close</Button>
         </div>

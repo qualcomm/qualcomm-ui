@@ -27,6 +27,7 @@ Here's an example of a custom fuzzy filter function using fuzzysort:
 
 ```ts
 import Fuzzysort from "fuzzysort"
+
 import type {FilterFn} from "@qualcomm-ui/core/table"
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {

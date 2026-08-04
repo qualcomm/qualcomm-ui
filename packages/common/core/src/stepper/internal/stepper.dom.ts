@@ -3,7 +3,7 @@
 
 import type {ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {StepperElementIds, StepperScope} from "../stepper.types"
+import type {StepperElementIds, StepperScope} from "../stepper.types.js"
 
 export const domIds: ScopeDomIds<StepperElementIds, StepperScope> = {
   content: (scope, itemKey) => scope.ids.collection("content").get(itemKey),

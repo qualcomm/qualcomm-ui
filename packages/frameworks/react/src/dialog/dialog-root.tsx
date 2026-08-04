@@ -13,11 +13,10 @@ import {
 } from "@qualcomm-ui/react-core/dialog"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 
-import {QdsDialogContextProvider} from "./qds-dialog-context"
+import {QdsDialogContextProvider} from "./qds-dialog-context.js"
 
 export interface DialogRootProps
-  extends CoreDialogRootProps,
-    QdsDialogApiProps {
+  extends CoreDialogRootProps, QdsDialogApiProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

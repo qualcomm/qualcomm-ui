@@ -2,16 +2,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
-  InputCounterBindings,
-  InputErrorTextBindings,
-  InputHintBindings,
-  InputInputBindings,
-  InputLabelBindings,
-  InputRootBindings,
-} from "@qualcomm-ui/core/input"
-import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -23,6 +19,8 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
+import type {textAreaAnatomy} from "./text-area.anatomy.js"
+
 export interface TextAreaElementIds {
   counter: string
   errorText: string
@@ -32,9 +30,7 @@ export interface TextAreaElementIds {
 }
 
 export interface TextAreaApiProps
-  extends FieldApiProps,
-    CommonProperties,
-    DirectionProperty {
+  extends FieldApiProps, CommonProperties, DirectionProperty {
   /**
    * The initial value of the input when rendered.
    * Use when you don't need to control the value of the input.
@@ -112,46 +108,72 @@ export interface TextAreaSchema extends MachineSchema {
   state: "idle"
 }
 
-export interface TextAreaScopeAttribute {
-  "data-scope": "text-area"
+type PartName = AnatomyPartName<typeof textAreaAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"textArea", P> {}
+
+export interface TextAreaRootBindings extends Part<"root"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  dir: Direction
 }
 
-interface CommonBindings
-  extends Required<DirectionProperty>,
-    TextAreaScopeAttribute {}
+export interface TextAreaLabelBindings extends Part<"label"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  dir: Direction
+  htmlFor: string
+  id: string
+}
 
-export interface TextAreaRootBindings
-  extends CommonBindings,
-    InputRootBindings {}
+export interface TextAreaCounterBindings extends Part<"counter"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  "data-max": number | undefined
+  dir: Direction
+  id: string
+}
 
-export interface TextAreaLabelBindings
-  extends CommonBindings,
-    InputLabelBindings {}
-
-export interface TextAreaCounterBindings
-  extends CommonBindings,
-    InputCounterBindings {}
-
-export interface TextAreaErrorTextBindings
-  extends CommonBindings,
-    InputErrorTextBindings {}
-
-export interface TextAreaHintBindings
-  extends CommonBindings,
-    InputHintBindings {
+export interface TextAreaErrorTextBindings extends Part<"errorText"> {
+  "aria-live": "polite"
+  dir: Direction
   hidden: boolean
+  id: string
 }
 
-export interface TextAreaInputBindings
-  extends CommonBindings,
-    Omit<InputInputBindings, "onChange"> {
+export interface TextAreaHintBindings extends Part<"hint"> {
+  "data-disabled": BooleanDataAttr
+  dir: Direction
+  hidden: boolean
+  id: string
+}
+
+export interface TextAreaInputBindings extends Part<"input"> {
+  "aria-describedby": string | undefined
+  "aria-invalid": BooleanAriaAttr
+  "aria-labelledby": string | undefined
   autoComplete: "off"
   autoCorrect: "off"
   "data-disabled": BooleanDataAttr
+  "data-empty": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
   "data-readonly": BooleanDataAttr
+  defaultValue: string
+  dir: Direction
+  disabled: boolean | undefined
+  form?: string
+  id: string
+  maxLength?: number | undefined
+  name?: string
+  onBlur: JSX.FocusEventHandler
   onChange: JSX.ChangeEventHandler<HTMLTextAreaElement>
   onClick: JSX.MouseEventHandler<HTMLElement>
+  onFocus: JSX.FocusEventHandler
   readOnly: boolean | undefined
+  required?: boolean
   spellCheck: "false"
 }
 

@@ -1,17 +1,32 @@
-import type {FormEvent} from "react"
+import {type FormEvent, useState} from "react"
 
 import {describe, expect, test, vi} from "vitest"
-import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
 
 import type {MultiComponentTestCase} from "@qualcomm-ui/react-test-utils"
+import {Slider} from "@qualcomm-ui/react/slider"
 
 import {
   clickFocusTarget,
   CompositeSlider,
   SimpleSlider,
   testIds,
+  TestSlider,
 } from "./test-slider"
+
+const thumbIndicatorTestId = "slider-thumb-indicator"
+
+async function focusSliderThumb(index = 0) {
+  await clickFocusTarget()
+  for (let i = 0; i <= index; i++) {
+    await userEvent.tab()
+  }
+
+  const thumb = page.getByRole("slider").nth(index)
+  await expect.element(thumb).toHaveFocus()
+  return thumb
+}
 
 const tests: MultiComponentTestCase[] = [
   {
@@ -283,6 +298,51 @@ const tests: MultiComponentTestCase[] = [
   },
   {
     composite: () => (
+      <CompositeSlider defaultValue={[50]} orientation="vertical" />
+    ),
+    simple: () => <SimpleSlider defaultValue={[50]} orientation="vertical" />,
+    testCase(component) {
+      test(`vertical keyboard navigation uses up/down arrows — ${component.name}`, async () => {
+        await render(component())
+
+        const thumb = await focusSliderThumb()
+
+        await userEvent.keyboard("{ArrowRight}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+
+        await userEvent.keyboard("{ArrowUp}")
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("51")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "51")
+
+        await userEvent.keyboard("{ArrowDown}")
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("50")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: () => <CompositeSlider defaultValue={[50]} />,
+    simple: () => <SimpleSlider defaultValue={[50]} />,
+    testCase(component) {
+      test(`horizontal keyboard navigation ignores up/down arrows — ${component.name}`, async () => {
+        await render(component())
+
+        const thumb = await focusSliderThumb()
+
+        await userEvent.keyboard("{ArrowUp}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+
+        await userEvent.keyboard("{ArrowDown}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: () => (
       <CompositeSlider aria-label="Volume control" defaultValue={[50]} />
     ),
     simple: () => (
@@ -296,6 +356,32 @@ const tests: MultiComponentTestCase[] = [
         await expect
           .element(thumb)
           .toHaveAttribute("aria-label", "Volume control")
+      })
+    },
+  },
+  {
+    composite: () => (
+      <CompositeSlider
+        aria-label={["Minimum volume", "Maximum volume"]}
+        defaultValue={[25, 75]}
+      />
+    ),
+    simple: () => (
+      <SimpleSlider
+        aria-label={["Minimum volume", "Maximum volume"]}
+        defaultValue={[25, 75]}
+      />
+    ),
+    testCase(component) {
+      test(`supports separate accessible names for each thumb — ${component.name}`, async () => {
+        await render(component())
+
+        await expect
+          .element(page.getByRole("slider", {name: "Minimum volume"}))
+          .toHaveAttribute("aria-valuenow", "25")
+        await expect
+          .element(page.getByRole("slider", {name: "Maximum volume"}))
+          .toHaveAttribute("aria-valuenow", "75")
       })
     },
   },
@@ -319,6 +405,34 @@ const tests: MultiComponentTestCase[] = [
     },
   },
   {
+    composite: ({onFocusChange}) => (
+      <CompositeSlider defaultValue={[50]} onFocusChange={onFocusChange} />
+    ),
+    simple: ({onFocusChange}) => (
+      <SimpleSlider defaultValue={[50]} onFocusChange={onFocusChange} />
+    ),
+    testCase(component) {
+      test(`calls onFocusChange with the focused thumb and clears it on blur — ${component.name}`, async () => {
+        const onFocusChange = vi.fn()
+
+        await render(component({onFocusChange}))
+
+        await focusSliderThumb()
+        await expect
+          .poll(() => onFocusChange.mock.calls.map(([details]) => details))
+          .toEqual([{focusedIndex: 0, value: [50]}])
+
+        await clickFocusTarget()
+        await expect
+          .poll(() => onFocusChange.mock.calls.map(([details]) => details))
+          .toEqual([
+            {focusedIndex: 0, value: [50]},
+            {focusedIndex: -1, value: [50]},
+          ])
+      })
+    },
+  },
+  {
     composite: () => <CompositeSlider defaultValue={[50]} readOnly />,
     simple: () => <SimpleSlider defaultValue={[50]} readOnly />,
     testCase(component) {
@@ -336,6 +450,64 @@ const tests: MultiComponentTestCase[] = [
           .element(page.getByTestId(testIds.sliderValueText))
           .toHaveTextContent("50")
         await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: ({onValueChange}) => (
+      <CompositeSlider
+        defaultValue={[50]}
+        onValueChange={onValueChange}
+        readOnly
+      />
+    ),
+    simple: ({onValueChange}) => (
+      <SimpleSlider
+        defaultValue={[50]}
+        onValueChange={onValueChange}
+        readOnly
+      />
+    ),
+    testCase(component) {
+      test(`does not call onValueChange for readOnly keyboard input — ${component.name}`, async () => {
+        const onValueChange = vi.fn()
+
+        await render(component({onValueChange}))
+
+        await focusSliderThumb()
+        await userEvent.keyboard("{ArrowRight}")
+
+        expect(onValueChange).not.toHaveBeenCalled()
+      })
+    },
+  },
+  {
+    composite: ({onValueChange}) => (
+      <CompositeSlider defaultValue={[50]} onValueChange={onValueChange} />
+    ),
+    simple: ({onValueChange}) => (
+      <SimpleSlider defaultValue={[50]} onValueChange={onValueChange} />
+    ),
+    testCase(component) {
+      test(`inherits disabled state from a disabled fieldset — ${component.name}`, async () => {
+        const onValueChange = vi.fn()
+
+        await render(
+          <fieldset disabled>
+            {component({onValueChange})}
+            <button type="button">After slider</button>
+          </fieldset>,
+        )
+
+        const thumb = page.getByRole("slider").first()
+        await expect.element(thumb).toHaveAttribute("aria-disabled", "true")
+
+        await userEvent.tab()
+        await expect.element(thumb).not.toHaveFocus()
+        await userEvent.keyboard("{ArrowRight}")
+
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+        expect(onValueChange).not.toHaveBeenCalled()
       })
     },
   },
@@ -395,6 +567,31 @@ const tests: MultiComponentTestCase[] = [
           firstThumb.element().getAttribute("aria-valuenow"),
         )
         expect(firstValue).toBeLessThanOrEqual(55)
+      })
+    },
+  },
+  {
+    composite: () => (
+      <CompositeSlider defaultValue={[30, 50]} minStepsBetweenThumbs={10} />
+    ),
+    simple: () => (
+      <SimpleSlider defaultValue={[30, 50]} minStepsBetweenThumbs={10} />
+    ),
+    testCase(component) {
+      test(`range slider constrains the second thumb against the first thumb — ${component.name}`, async () => {
+        await render(component())
+
+        const secondThumb = await focusSliderThumb(1)
+
+        for (let i = 0; i < 20; i++) {
+          await userEvent.keyboard("{ArrowLeft}")
+        }
+
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("30 - 40")
+        await expect.element(secondThumb).toHaveAttribute("aria-valuemin", "40")
+        await expect.element(secondThumb).toHaveAttribute("aria-valuenow", "40")
       })
     },
   },
@@ -493,6 +690,46 @@ const tests: MultiComponentTestCase[] = [
         await expect
           .element(page.getByTestId(testIds.sliderValueText))
           .toHaveTextContent("51")
+      })
+    },
+  },
+  {
+    composite: ({onValueChange, value}) => (
+      <CompositeSlider onValueChange={onValueChange} value={value} />
+    ),
+    simple: ({onValueChange, value}) => (
+      <SimpleSlider onValueChange={onValueChange} value={value} />
+    ),
+    testCase(component) {
+      test(`controlled slider updates when onValueChange commits the next value — ${component.name}`, async () => {
+        const onValueChange = vi.fn()
+
+        function ControlledSlider() {
+          const [value, setValue] = useState([40])
+
+          return (
+            <>
+              {component({
+                onValueChange(details: {value: number[]}) {
+                  onValueChange(details)
+                  setValue(details.value)
+                },
+                value,
+              })}
+            </>
+          )
+        }
+
+        await render(<ControlledSlider />)
+
+        const thumb = await focusSliderThumb()
+        await userEvent.keyboard("{ArrowRight}")
+
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("41")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "41")
+        expect(onValueChange).toHaveBeenCalledWith({value: [41]})
       })
     },
   },
@@ -612,6 +849,36 @@ const tests: MultiComponentTestCase[] = [
         await expect
           .element(page.getByTestId(testIds.sliderThumb0))
           .toHaveAttribute("aria-valuetext", "50 percent")
+      })
+    },
+  },
+  {
+    composite: () => (
+      <CompositeSlider
+        defaultValue={[25, 75]}
+        getAriaValueText={({index, value}) =>
+          `${index === 0 ? "Minimum" : "Maximum"} ${value} percent`
+        }
+      />
+    ),
+    simple: () => (
+      <SimpleSlider
+        defaultValue={[25, 75]}
+        getAriaValueText={({index, value}) =>
+          `${index === 0 ? "Minimum" : "Maximum"} ${value} percent`
+        }
+      />
+    ),
+    testCase(component) {
+      test(`customizes aria-valuetext for each range thumb — ${component.name}`, async () => {
+        await render(component())
+
+        await expect
+          .element(page.getByRole("slider").nth(0))
+          .toHaveAttribute("aria-valuetext", "Minimum 25 percent")
+        await expect
+          .element(page.getByRole("slider").nth(1))
+          .toHaveAttribute("aria-valuetext", "Maximum 75 percent")
       })
     },
   },
@@ -744,6 +1011,34 @@ const tests: MultiComponentTestCase[] = [
   },
   {
     composite: () => (
+      <Slider.Root defaultValue={[50]}>
+        <Slider.ValueText data-test-id={testIds.sliderValueText} />
+        <Slider.Control>
+          <Slider.Track>
+            <Slider.Range />
+          </Slider.Track>
+          <Slider.Thumb index={0}>
+            <Slider.HiddenInput />
+          </Slider.Thumb>
+        </Slider.Control>
+        <Slider.Markers
+          markerGroupProps={{"data-test-id": testIds.sliderMarkerGroup}}
+        />
+      </Slider.Root>
+    ),
+    simple: () => <SimpleSlider defaultValue={[50]} />,
+    testCase(component) {
+      test(`renders generated marker labels when marks are omitted — ${component.name}`, async () => {
+        await render(component())
+
+        await expect
+          .element(page.getByTestId(testIds.sliderMarkerGroup))
+          .toHaveTextContent("0102030405060708090100")
+      })
+    },
+  },
+  {
+    composite: () => (
       <CompositeSlider defaultValue={[50]} markers={[0, 25, 50, 75, 100]} />
     ),
     simple: () => (
@@ -755,42 +1050,7 @@ const tests: MultiComponentTestCase[] = [
 
         const markerGroup = page.getByTestId(testIds.sliderMarkerGroup)
         await expect.element(markerGroup).toBeVisible()
-
-        for (const value of [0, 25, 50, 75, 100]) {
-          const markerElement = markerGroup
-            .element()
-            .querySelector(`[data-value="${value}"]`)
-          expect(markerElement).toBeTruthy()
-          expect(markerElement?.textContent).toBe(String(value))
-        }
-      })
-    },
-  },
-  {
-    composite: () => (
-      <CompositeSlider defaultValue={[50]} markers={[25, 50, 75]} />
-    ),
-    simple: () => <SimpleSlider defaultValue={[50]} markers={[25, 50, 75]} />,
-    testCase(component) {
-      test(`markers have correct data-state based on value — ${component.name}`, async () => {
-        await render(component())
-
-        const markerGroup = page.getByTestId(testIds.sliderMarkerGroup)
-        await expect.element(markerGroup).toBeVisible()
-
-        const marker25 = markerGroup
-          .element()
-          .querySelector('[data-value="25"]')
-        const marker50 = markerGroup
-          .element()
-          .querySelector('[data-value="50"]')
-        const marker75 = markerGroup
-          .element()
-          .querySelector('[data-value="75"]')
-
-        expect(marker25?.getAttribute("data-state")).toBe("under-value")
-        expect(marker50?.getAttribute("data-state")).toBe("at-value")
-        expect(marker75?.getAttribute("data-state")).toBe("over-value")
+        await expect.element(markerGroup).toHaveTextContent("0255075100")
       })
     },
   },
@@ -833,23 +1093,193 @@ const tests: MultiComponentTestCase[] = [
       })
     },
   },
+]
+
+const thumbIndicatorTests: MultiComponentTestCase[] = [
   {
-    composite: () => (
-      <CompositeSlider defaultValue={[30]} max={50} min={10} sideMarkers />
-    ),
-    simple: () => (
-      <SimpleSlider defaultValue={[30]} max={50} min={10} sideMarkers />
-    ),
+    simple: () => <Slider defaultValue={[41]} label="Volume" tooltip />,
     testCase(component) {
-      test(`min and max have data-value attributes — ${component.name}`, async () => {
+      test(`keeps the current value on the slider when tooltip is enabled - ${component.name}`, async () => {
         await render(component())
 
         await expect
-          .element(page.getByTestId(testIds.sliderMin))
-          .toHaveAttribute("data-value", "10")
+          .element(page.getByRole("slider", {name: "Volume"}))
+          .toHaveAttribute("aria-valuenow", "41")
+      })
+    },
+  },
+  {
+    composite: () => (
+      <div>
+        <button type="button">Focus target</button>
+        <Slider.Root defaultValue={[25]}>
+          <Slider.Label>Volume</Slider.Label>
+          <Slider.Control>
+            <Slider.Track>
+              <Slider.Range />
+            </Slider.Track>
+            <Slider.Thumb index={0}>
+              <Slider.HiddenInput />
+              <Slider.ThumbIndicator
+                data-test-id={thumbIndicatorTestId}
+                display={(value) => `${value}% selected`}
+              />
+            </Slider.Thumb>
+          </Slider.Control>
+        </Slider.Root>
+      </div>
+    ),
+    testCase(component) {
+      test(`formats thumb tooltip content with a display function - ${component.name}`, async () => {
+        await render(component())
+
         await expect
-          .element(page.getByTestId(testIds.sliderMax))
-          .toHaveAttribute("data-value", "50")
+          .element(page.getByTestId(thumbIndicatorTestId))
+          .toHaveTextContent("25% selected")
+
+        await clickFocusTarget()
+        await userEvent.tab()
+        await userEvent.keyboard("{ArrowRight}")
+
+        await expect
+          .element(page.getByTestId(thumbIndicatorTestId))
+          .toHaveTextContent("26% selected")
+      })
+    },
+  },
+  {
+    composite: () => (
+      <Slider.Root defaultValue={[25]}>
+        <Slider.Label>Volume</Slider.Label>
+        <Slider.Control>
+          <Slider.Track>
+            <Slider.Range />
+          </Slider.Track>
+          <Slider.Thumb index={0}>
+            <Slider.HiddenInput />
+            <Slider.ThumbIndicator data-test-id={thumbIndicatorTestId}>
+              Current volume
+            </Slider.ThumbIndicator>
+          </Slider.Thumb>
+        </Slider.Control>
+      </Slider.Root>
+    ),
+    testCase(component) {
+      test(`renders thumb tooltip children instead of the numeric value - ${component.name}`, async () => {
+        await render(component())
+
+        await expect
+          .element(page.getByTestId(thumbIndicatorTestId))
+          .toHaveTextContent("Current volume")
+      })
+    },
+  },
+  {
+    composite: () => <TestSlider defaultValue={[50]} />,
+    testCase(component) {
+      test(`renders a baseline slider value - ${component.name}`, async () => {
+        await render(component())
+
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("50")
+      })
+    },
+  },
+]
+
+const directApiTests: MultiComponentTestCase[] = [
+  {
+    composite: () => (
+      <Slider.Root defaultValue={[25, 75]}>
+        <Slider.ValueText
+          data-test-id={testIds.sliderValueText}
+          display={(value) => `Selected ${value[0]} through ${value[1]}`}
+        />
+        <Slider.Control>
+          <Slider.Track>
+            <Slider.Range />
+          </Slider.Track>
+          <Slider.Thumb index={0}>
+            <Slider.HiddenInput />
+          </Slider.Thumb>
+          <Slider.Thumb index={1}>
+            <Slider.HiddenInput />
+          </Slider.Thumb>
+        </Slider.Control>
+      </Slider.Root>
+    ),
+    simple: () => (
+      <Slider
+        data-test-id={testIds.sliderRoot}
+        defaultValue={[25, 75]}
+        display={(value) => `Selected ${value[0]} through ${value[1]}`}
+        valueTextProps={{"data-test-id": testIds.sliderValueText}}
+      />
+    ),
+    testCase(component) {
+      test(`formats value text through the public display API - ${component.name}`, async () => {
+        await render(component())
+
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("Selected 25 through 75")
+      })
+    },
+  },
+  {
+    composite: ({onValueChangeEnd}) => (
+      <Slider.Root
+        defaultValue={[0]}
+        max={100}
+        onValueChangeEnd={onValueChangeEnd}
+      >
+        <Slider.ValueText data-test-id={testIds.sliderValueText} />
+        <Slider.Control
+          data-test-id={testIds.sliderControl}
+          style={{height: 20, width: 200}}
+        >
+          <Slider.Track>
+            <Slider.Range />
+          </Slider.Track>
+          <Slider.Thumb index={0} style={{height: 10, width: 10}}>
+            <Slider.HiddenInput />
+          </Slider.Thumb>
+        </Slider.Control>
+      </Slider.Root>
+    ),
+    simple: ({onValueChangeEnd}) => (
+      <Slider
+        controlProps={{
+          "data-test-id": testIds.sliderControl,
+          style: {height: 20, width: 200},
+        }}
+        defaultValue={[0]}
+        max={100}
+        onValueChangeEnd={onValueChangeEnd}
+        thumbProps={{style: {height: 10, width: 10}}}
+        valueTextProps={{"data-test-id": testIds.sliderValueText}}
+      />
+    ),
+    testCase(component) {
+      test(`sets the closest slider value from a track click - ${component.name}`, async () => {
+        const onValueChangeEnd = vi.fn()
+
+        await render(component({onValueChangeEnd}))
+
+        await page
+          .getByTestId(testIds.sliderControl)
+          .click({position: {x: 150, y: 10}})
+
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("75")
+        await expect
+          .element(page.getByRole("slider").first())
+          .toHaveAttribute("aria-valuenow", "75")
+        await expect
+          .poll(() => onValueChangeEnd.mock.calls.at(-1)?.[0])
+          .toEqual({value: [75]})
       })
     },
   },
@@ -922,10 +1352,58 @@ const formTests: MultiComponentTestCase[] = [
       })
     },
   },
+  {
+    composite: () => <CompositeSlider defaultValue={[60]} name="volume" />,
+    simple: () => <SimpleSlider defaultValue={[60]} name="volume" />,
+    testCase(component) {
+      test(`form: reset restores the initial slider value — ${component.name}`, async () => {
+        await render(
+          <form data-test-id="form" onSubmit={handleFormSubmit}>
+            {component()}
+            <button type="reset">Reset</button>
+            <button type="submit">Submit</button>
+          </form>,
+        )
+
+        await focusSliderThumb()
+        await userEvent.keyboard("{ArrowRight}")
+        await userEvent.keyboard("{ArrowRight}")
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("62")
+
+        await page.getByText("Reset").click()
+        await expect
+          .element(page.getByTestId(testIds.sliderValueText))
+          .toHaveTextContent("60")
+
+        await page.getByText("Submit").click()
+        expect(formSubmittedData).toEqual({volume: "60"})
+      })
+    },
+  },
 ]
 
 describe("Slider", () => {
   for (const {composite, simple, testCase} of tests) {
+    if (composite) {
+      testCase(composite)
+    }
+    if (simple) {
+      testCase(simple)
+    }
+  }
+
+  for (const {composite, simple, testCase} of thumbIndicatorTests) {
+    if (composite) {
+      testCase(composite)
+    }
+    if (simple) {
+      testCase(simple)
+    }
+  }
+
+  for (const {composite, simple, testCase} of directApiTests) {
     if (composite) {
       testCase(composite)
     }

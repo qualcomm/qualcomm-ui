@@ -26,7 +26,7 @@ const children = items.reduce(
 
 export default {
   example: figma.code`
-    <div q-accordion${sizeAttr}${uncontainedAttr} [defaultValue]="['a']">
+    <div q-accordion${sizeAttr}${uncontainedAttr}>
       ${children}
     </div>`,
   id: "AccordionGroup",

@@ -5,13 +5,13 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Menu, PanelLeftClose} from "lucide-react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {IconButton} from "@qualcomm-ui/react/button"
 import {Drawer, type DrawerRootProps} from "@qualcomm-ui/react/drawer"
 import {Icon} from "@qualcomm-ui/react/icon"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
-import {Sidebar} from "./sidebar"
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
+import {Sidebar} from "./sidebar.js"
+import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface MobileSidebarProps extends Omit<DrawerRootProps, "children"> {
   /**

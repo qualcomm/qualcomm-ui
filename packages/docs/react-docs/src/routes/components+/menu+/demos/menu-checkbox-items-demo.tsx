@@ -1,7 +1,7 @@
 import type {ReactElement} from "react"
 
-import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Menu} from "@qualcomm-ui/react/menu"
 
 export function MenuCheckboxItemsDemo(): ReactElement {
   return (

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review Docs"
+  short_description: "Review QUI Docs pages against authoring rules"
+  default_prompt: "Use $review-docs to review a QUI Docs page before a PR."
+
+policy:
+  allow_implicit_invocation: true

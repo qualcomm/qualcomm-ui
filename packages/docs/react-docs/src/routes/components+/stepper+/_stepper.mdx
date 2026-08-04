@@ -1,15 +1,14 @@
 ---
 title: Stepper
 description: Use steppers to visualize a group of connected actions or the order of a workflow.
-group: Disclosure
 aliases: [steps]
 badges:
   - id: since
     label: 1.18.0
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1180
-  - id: developerPreview
-    label: Developer Preview
-    url: /developer-previews
+  - id: beta
+    label: Beta
+    url: /versioning#beta
 ---
 
 import {ComponentExplorer, Demo} from "~components/demo"
@@ -43,7 +42,7 @@ Set [linear](./#linear) to `false` to allow accessing any step at any time. Use 
 
 [canGoToStep](./#canGoToStep) applies to all navigation if provided. Otherwise, all navigation is allowed.
 
-<Demo component={demos.StepperNonlinearDemo} name="StepperNonLinearDemo" />
+<Demo component={demos.StepperNonlinearDemo} name="StepperNonlinearDemo" />
 
 ### Icon
 
@@ -65,7 +64,10 @@ Stepper orientation and label placement are controlled through the [orientation]
 
 `horizontal` (default): The step list is centered horizontally, and the labels are stacked vertically and centered below the step indicator.
 
-<Demo component={demos.StepperHorizontalDemo} name="StepperHorizontalDemo" />
+<Demo
+  component={demos.StepperHorizontalDemo}
+  name="StepperHorizontalDemo"
+/>
 
 #### Horizontal Inline
 
@@ -176,25 +178,31 @@ Use [isStepSkippable](./#isStepSkippable) to mark optional steps that can be byp
 
 ## API
 
-### \<Stepper.Root\>
+### \<Stepper.Root>
 
 <TypeDocProps name="StepperRootProps" />
 
-<TypeDocAttributes name={["QdsStepperRootBindings", "StepperRootBindings"]} />
+<TypeDocAttributes
+  name={["QdsStepperRootBindings", "StepperRootBindings"]}
+/>
 
-### \<Stepper.List\>
+### \<Stepper.List>
 
 <TypeDocProps name="StepperListProps" />
 
-<TypeDocAttributes name={["QdsStepperListBindings", "StepperListBindings"]} />
+<TypeDocAttributes
+  name={["QdsStepperListBindings", "StepperListBindings"]}
+/>
 
-### \<Stepper.Item\>
+### \<Stepper.Item>
 
 <TypeDocProps name="StepperItemProps" />
 
-<TypeDocAttributes name={["QdsStepperItemBindings", "StepperItemBindings"]} />
+<TypeDocAttributes
+  name={["QdsStepperItemBindings", "StepperItemBindings"]}
+/>
 
-### \<Stepper.Trigger\>
+### \<Stepper.Trigger>
 
 <TypeDocProps name="StepperTriggerProps" />
 
@@ -202,7 +210,7 @@ Use [isStepSkippable](./#isStepSkippable) to mark optional steps that can be byp
   name={["QdsStepperTriggerBindings", "StepperTriggerBindings"]}
 />
 
-### \<Stepper.Indicator\>
+### \<Stepper.Indicator>
 
 <TypeDocProps name="StepperIndicatorProps" />
 
@@ -210,7 +218,7 @@ Use [isStepSkippable](./#isStepSkippable) to mark optional steps that can be byp
   name={["QdsStepperIndicatorBindings", "StepperIndicatorBindings"]}
 />
 
-### \<Stepper.Separator\>
+### \<Stepper.Separator>
 
 <TypeDocProps name="StepperSeparatorProps" />
 
@@ -218,7 +226,7 @@ Use [isStepSkippable](./#isStepSkippable) to mark optional steps that can be byp
   name={["QdsStepperSeparatorBindings", "StepperSeparatorBindings"]}
 />
 
-### \<Stepper.CompletedContent\>
+### \<Stepper.CompletedContent>
 
 Content displayed when all steps are completed.
 
@@ -231,7 +239,7 @@ Content displayed when all steps are completed.
   ]}
 />
 
-### \<Stepper.Content\>
+### \<Stepper.Content>
 
 <TypeDocProps name="StepperContentProps" />
 
@@ -239,19 +247,23 @@ Content displayed when all steps are completed.
   name={["QdsStepperContentBindings", "StepperContentBindings"]}
 />
 
-### \<Stepper.Label\>
+### \<Stepper.Label>
 
 <TypeDocProps name="StepperLabelProps" />
 
-<TypeDocAttributes name={["QdsStepperLabelBindings", "StepperLabelBindings"]} />
+<TypeDocAttributes
+  name={["QdsStepperLabelBindings", "StepperLabelBindings"]}
+/>
 
-### \<Stepper.Hint\>
+### \<Stepper.Hint>
 
 <TypeDocProps name="StepperHintProps" />
 
-<TypeDocAttributes name={["QdsStepperHintBindings", "StepperHintBindings"]} />
+<TypeDocAttributes
+  name={["QdsStepperHintBindings", "StepperHintBindings"]}
+/>
 
-### \<Stepper.NextTrigger\>
+### \<Stepper.NextTrigger>
 
 <TypeDocProps name="StepperNextTriggerProps" />
 
@@ -259,7 +271,7 @@ Content displayed when all steps are completed.
   name={["QdsStepperNextTriggerBindings", "StepperNextTriggerBindings"]}
 />
 
-### \<Stepper.PrevTrigger\>
+### \<Stepper.PrevTrigger>
 
 <TypeDocProps name="StepperPrevTriggerProps" />
 
@@ -267,7 +279,7 @@ Content displayed when all steps are completed.
   name={["QdsStepperPrevTriggerBindings", "StepperPrevTriggerBindings"]}
 />
 
-### \<Stepper.Context\>
+### \<Stepper.Context>
 
 <TypeDocProps name="StepperContextProps" />
 

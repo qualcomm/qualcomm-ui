@@ -3,8 +3,8 @@
 
 import {Component, computed} from "@angular/core"
 
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {CoreComboboxControlDirective} from "@qualcomm-ui/angular-core/combobox"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
 

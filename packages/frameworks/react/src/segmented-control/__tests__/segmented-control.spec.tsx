@@ -1,6 +1,8 @@
+import {useState} from "react"
+
 import {describe, expect, test, vi} from "vitest"
-import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
 
 import type {MultiComponentTestCase} from "@qualcomm-ui/react-test-utils"
 
@@ -157,6 +159,123 @@ const tests: MultiComponentTestCase[] = [
           globalItems[1],
           globalItems[0],
         ])
+      })
+    },
+  },
+  {
+    composite: ({onValueChange}) => (
+      <CompositeComponent disabled onValueChange={onValueChange} />
+    ),
+    simple: ({onValueChange}) => (
+      <SimpleComponent disabled onValueChange={onValueChange} />
+    ),
+    testCase(component) {
+      test(`'disabled' at root level: clicks do not fire onValueChange — ${component.name}`, async () => {
+        const onValueChange = vi.fn()
+        await render(component({onValueChange}))
+
+        await item1.click({force: true})
+        await item2.click({force: true})
+        await item3.click({force: true})
+
+        expect(onValueChange).not.toHaveBeenCalled()
+      })
+    },
+  },
+  {
+    composite: ({onValueChange}) => (
+      <CompositeComponent
+        itemProps={{[globalItems[1]]: {disabled: true}}}
+        onValueChange={onValueChange}
+      />
+    ),
+    simple: ({onValueChange}) => (
+      <SimpleComponent
+        itemProps={{[globalItems[1]]: {disabled: true}}}
+        onValueChange={onValueChange}
+      />
+    ),
+    testCase(component) {
+      test(`'disabled' at item level: only the disabled item is inert — ${component.name}`, async () => {
+        const onValueChange = vi.fn()
+        await render(component({onValueChange}))
+
+        await item2.click({force: true})
+        expect(onValueChange).not.toHaveBeenCalled()
+
+        await item1.click()
+        expect(onValueChange).toHaveBeenLastCalledWith([globalItems[0]])
+
+        await item3.click()
+        expect(onValueChange).toHaveBeenLastCalledWith([globalItems[2]])
+      })
+    },
+  },
+  {
+    composite: ({onValueChange}) => (
+      <CompositeComponent
+        defaultValue={[globalItems[1]]}
+        onValueChange={onValueChange}
+      />
+    ),
+    simple: ({onValueChange}) => (
+      <SimpleComponent
+        defaultValue={[globalItems[1]]}
+        onValueChange={onValueChange}
+      />
+    ),
+    testCase(component) {
+      test(`'defaultValue' seeds initial selection — ${component.name}`, async () => {
+        const onValueChange = vi.fn()
+        await render(component({onValueChange}))
+
+        // defaultValue is initial state — no callback yet
+        expect(onValueChange).not.toHaveBeenCalled()
+
+        // selecting a new item transitions from the initial item
+        await item3.click()
+        expect(onValueChange).toHaveBeenLastCalledWith([globalItems[2]])
+      })
+    },
+  },
+  {
+    composite() {
+      function Controlled() {
+        const [value, setValue] = useState<string[] | null | undefined>([
+          globalItems[0],
+        ])
+        return <CompositeComponent onValueChange={setValue} value={value} />
+      }
+      return <Controlled />
+    },
+    simple() {
+      function Controlled() {
+        const [value, setValue] = useState<string[] | null | undefined>([
+          globalItems[0],
+        ])
+        return <SimpleComponent onValueChange={setValue} value={value} />
+      }
+      return <Controlled />
+    },
+    testCase(component) {
+      test(`controlled value state reflects external updates — ${component.name}`, async () => {
+        await render(component())
+
+        const input1 = page.getByLabelText(globalItems[0])
+        const input2 = page.getByLabelText(globalItems[1])
+        const input3 = page.getByLabelText(globalItems[2])
+
+        await expect.element(input1).toBeChecked()
+        await expect.element(input2).not.toBeChecked()
+        await expect.element(input3).not.toBeChecked()
+
+        await item3.click()
+        await expect.element(input3).toBeChecked()
+        await expect.element(input1).not.toBeChecked()
+
+        await item2.click()
+        await expect.element(input2).toBeChecked()
+        await expect.element(input3).not.toBeChecked()
       })
     },
   },

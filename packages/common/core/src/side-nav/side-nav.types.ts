@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -16,6 +17,8 @@ import type {
   MachineSchema,
   Scope,
 } from "@qualcomm-ui/utils/machine"
+
+import type {sideNavAnatomy} from "./side-nav.anatomy.js"
 
 export interface SideNavApiProps extends CommonProperties, DirectionProperty {
   /**
@@ -69,52 +72,44 @@ export interface SideNavSchema extends MachineSchema {
   state: SideNavState
 }
 
-export interface SideNavCommonBindings extends DirectionProperty {
-  "data-scope": "side-nav"
-}
+type PartName = AnatomyPartName<typeof sideNavAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"sideNav", P> {}
 
-export interface SideNavRootBindings extends SideNavCommonBindings {
+export interface SideNavRootBindings extends Part<"root"> {
   "data-collapsible": BooleanDataAttr
   "data-disabled": BooleanDataAttr
-  "data-part": "root"
   "data-state": SideNavState
   id: string
 }
 
-export interface SideNavHeaderBindings extends SideNavCommonBindings {
-  "data-part": "header"
+export interface SideNavHeaderBindings extends Part<"header"> {
   "data-state": SideNavState
 }
 
-export interface SideNavHeaderLogoBindings extends SideNavCommonBindings {
-  "data-part": "header-logo"
+export interface SideNavHeaderLogoBindings extends Part<"headerLogo"> {
   hidden: boolean
 }
 
-export interface SideNavHeaderTitleBindings extends SideNavCommonBindings {
-  "data-part": "header-title"
+export interface SideNavHeaderTitleBindings extends Part<"headerTitle"> {
   hidden: boolean
 }
 
-export interface SideNavHeaderActionBindings extends SideNavCommonBindings {
-  "data-part": "header-action"
+export interface SideNavHeaderActionBindings extends Part<"headerAction"> {
   "data-state": SideNavState
 }
 
-export interface SideNavTriggerBindings extends SideNavCommonBindings {
+export interface SideNavTriggerBindings extends Part<"trigger"> {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "aria-label": "Collapse" | "Expand"
   "data-disabled": BooleanDataAttr
-  "data-part": "trigger"
   "data-state": SideNavState
   id: string
   onClick: JSX.MouseEventHandler
   role: "treeitem"
 }
 
-export interface SideNavFilterInputBindings extends SideNavCommonBindings {
-  "data-part": "filter-input"
+export interface SideNavFilterInputBindings extends Part<"filterInput"> {
   role: "treeitem"
 }
 

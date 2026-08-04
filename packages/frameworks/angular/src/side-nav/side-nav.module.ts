@@ -4,8 +4,8 @@
 import {NgTemplateOutlet} from "@angular/common"
 import {NgModule} from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 import {SideNavBranchContentDirective} from "./side-nav-branch-content.directive"
 import {SideNavBranchIndentGuideDirective} from "./side-nav-branch-indent-guide.directive"

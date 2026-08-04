@@ -15,9 +15,9 @@ export class ToastContextDirective {
    * template.
    */
   static ngTemplateContextGuard(
-    dir: ToastContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: ToastApi<string>} {
+    _dir: ToastContextDirective,
+    _ctx: unknown,
+  ): _ctx is {$implicit: ToastApi<string>} {
     return true
   }
 }

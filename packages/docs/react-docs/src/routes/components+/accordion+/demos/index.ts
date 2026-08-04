@@ -1,4 +1,5 @@
 export * from "./accordion-collapsible-demo"
+export * from "./accordion-explorer-demo"
 export * from "./accordion-composite-demo"
 export * from "./accordion-composite-layout-demo"
 export * from "./accordion-controlled-state-demo"

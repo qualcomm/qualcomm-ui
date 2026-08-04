@@ -5,6 +5,7 @@ import type {ReactElement} from "react"
 
 import {AlertCircle, Settings} from "lucide-react"
 
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Popover} from "@qualcomm-ui/react/popover"
@@ -12,7 +13,6 @@ import {type QdsBrand, useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {Select} from "@qualcomm-ui/react/select"
 import {Switch} from "@qualcomm-ui/react/switch"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 import {useGlobalConfigContext} from "./global-config-context"

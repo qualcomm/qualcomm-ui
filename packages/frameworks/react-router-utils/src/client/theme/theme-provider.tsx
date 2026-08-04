@@ -4,6 +4,7 @@
 import {
   createContext,
   type MouseEvent,
+  type ReactElement,
   type ReactNode,
   type SetStateAction,
   useCallback,
@@ -13,8 +14,8 @@ import {
   useState,
 } from "react"
 
-import {useBroadcastChannel} from "./use-broadcast-channel"
-import {useCorrectCssTransition} from "./use-correct-css-transition"
+import {useBroadcastChannel} from "./use-broadcast-channel.js"
+import {useCorrectCssTransition} from "./use-correct-css-transition.js"
 
 export const Theme = {
   DARK: "dark",
@@ -43,7 +44,7 @@ const prefersLightMediaQuery = "(prefers-color-scheme: light)"
 const getPreferredTheme = () =>
   window.matchMedia(prefersLightMediaQuery).matches ? Theme.LIGHT : Theme.DARK
 
-export const mediaQuery =
+export const mediaQuery: MediaQueryList | null =
   typeof window !== "undefined"
     ? window.matchMedia(prefersLightMediaQuery)
     : null
@@ -74,7 +75,7 @@ export function ThemeProvider({
   specifiedTheme,
   theme: themeProp,
   themeAction,
-}: ThemeProviderProps) {
+}: ThemeProviderProps): ReactElement {
   const ensureCorrectTransition = useCorrectCssTransition({
     disableTransitions: disableTransitionOnThemeChange,
   })
@@ -214,7 +215,7 @@ type PreventFlashOnWrongThemeProps = {
 export function PreventFlashOnWrongTheme({
   nonce,
   ssrTheme,
-}: PreventFlashOnWrongThemeProps) {
+}: PreventFlashOnWrongThemeProps): ReactElement {
   const [theme] = useTheme()
 
   return (
@@ -246,7 +247,7 @@ export function PreventFlashOnWrongTheme({
   )
 }
 
-export function useTheme() {
+export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext)
   if (context === undefined) {
     throw new Error("useTheme must be used within a ThemeProvider")

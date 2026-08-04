@@ -7,9 +7,9 @@ const demos = [{component: RowPinningDemo, title: "Row Pinning"}]
 export default function RowPinning() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="row-pinning"
       demos={demos}
-      className="w-full"
     />
   )
 }

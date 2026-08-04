@@ -6,7 +6,7 @@ import type {MdxJsxAttribute, MdxJsxFlowElement} from "mdast-util-mdx-jsx"
 import type {Plugin} from "unified"
 import {visit} from "unist-util-visit"
 
-import {extractNamesFromAttribute} from "../../mdx-utils"
+import {extractNamesFromAttribute} from "../../mdx-utils.js"
 
 export const formatNpmInstallTabs: Plugin = () => {
   return (tree, _file, done) => {

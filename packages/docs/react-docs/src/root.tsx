@@ -1,5 +1,3 @@
-import "./globals.css"
-
 import {useEffect, useMemo, useRef, useState} from "react"
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
@@ -19,13 +17,6 @@ import {
 import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
-import {
-  isQdsBrand,
-  type QdsBrand,
-  QdsThemeContextProvider,
-  type QdsThemeContextValue,
-  useQdsThemeContext,
-} from "@qualcomm-ui/react/qds-theme"
 import {
   GlobalConfigContextProvider,
   type GlobalConfigContextValue,
@@ -50,14 +41,23 @@ import {
   updateSiteState,
   useTheme,
 } from "@qualcomm-ui/react-router-utils/client"
+import {
+  isQdsBrand,
+  type QdsBrand,
+  QdsThemeContextProvider,
+  type QdsThemeContextValue,
+  useQdsThemeContext,
+} from "@qualcomm-ui/react/qds-theme"
 
-import {AppDocsLayout} from "./components"
+import {MdxLayout} from "./components"
 import {
   demoStateCookie,
   qdsBrandCookie,
   siteStateCookie,
   themeCookie,
 } from "./sessions.server"
+
+import "./globals.css"
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 
@@ -174,7 +174,7 @@ function App() {
       <body>
         <GlobalConfigContextProvider value={globalConfigContext}>
           <QueryClientProvider client={queryClient}>
-            <AppDocsLayout
+            <MdxLayout
               demoSettings={data.demoSettings}
               demoState={data.demoState}
               onDemoSettingsChange={(nextValue) => {
@@ -195,7 +195,7 @@ function App() {
               ssrUserAgent={data.ssrUserAgent}
             >
               <Outlet />
-            </AppDocsLayout>
+            </MdxLayout>
           </QueryClientProvider>
         </GlobalConfigContextProvider>
         <ScrollRestoration />

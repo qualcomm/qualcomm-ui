@@ -3,20 +3,19 @@
 
 import {useCallback, useMemo, useState} from "react"
 
-import type {
-  FieldsetApiProps,
-  FieldsetErrorTextBindings,
-  FieldsetHintBindings,
-  FieldsetLegendBindings,
-  FieldsetRootBindings,
+import {
+  fieldsetAnatomy,
+  type FieldsetApiProps,
+  type FieldsetErrorTextBindings,
+  type FieldsetHintBindings,
+  type FieldsetLegendBindings,
+  type FieldsetRootBindings,
 } from "@qualcomm-ui/core/fieldset"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {FieldsetContextValue} from "./fieldset-context"
+import type {FieldsetContextValue} from "./fieldset-context.js"
 
-const scope: Pick<FieldsetRootBindings, "data-scope"> = {
-  "data-scope": "fieldset",
-}
+const parts = fieldsetAnatomy.parts
 
 export function useFieldset(props: FieldsetApiProps): FieldsetContextValue {
   const {disabled = false, invalid = false} = props
@@ -36,7 +35,7 @@ export function useFieldset(props: FieldsetApiProps): FieldsetContextValue {
 
   const getRootBindings = useCallback<() => FieldsetRootBindings>(
     () => ({
-      ...scope,
+      ...parts.root,
       "aria-describedby": labelIds,
       "data-disabled": booleanDataAttr(disabled),
       "data-invalid": booleanDataAttr(invalid),
@@ -48,20 +47,18 @@ export function useFieldset(props: FieldsetApiProps): FieldsetContextValue {
 
   const getLegendBindings = useCallback<() => FieldsetLegendBindings>(
     () => ({
-      ...scope,
+      ...parts.legend,
       "data-disabled": booleanDataAttr(disabled),
       "data-invalid": booleanDataAttr(invalid),
-      "data-part": "legend",
     }),
     [disabled, invalid],
   )
 
   const getErrorTextBindings = useCallback<() => FieldsetErrorTextBindings>(
     () => ({
-      ...scope,
+      ...parts.errorText,
       "aria-live": "polite",
       "data-disabled": booleanDataAttr(disabled),
-      "data-part": "error-text",
       id: errorTextId,
     }),
     [disabled, errorTextId],
@@ -69,9 +66,8 @@ export function useFieldset(props: FieldsetApiProps): FieldsetContextValue {
 
   const getHintBindings = useCallback<() => FieldsetHintBindings>(
     () => ({
-      ...scope,
+      ...parts.hint,
       "data-disabled": booleanDataAttr(disabled),
-      "data-part": "hint",
       id: hintId!,
     }),
     [disabled, hintId],

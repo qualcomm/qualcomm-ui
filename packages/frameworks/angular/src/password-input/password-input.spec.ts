@@ -84,6 +84,27 @@ const testCases: MultiComponentTest[] = [
       })
     },
   },
+  {
+    simple() {
+      @Component({
+        imports: [PasswordInputModule],
+        template: `
+          <q-password-input aria-label="Account password" />
+        `,
+      })
+      class SimpleComponent {}
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`simple component applies aria-label to the input — ${component.name}`, async () => {
+        await render(component)
+
+        await expect
+          .element(page.getByLabelText("Account password"))
+          .toHaveAttribute("type", "password")
+      })
+    },
+  },
   () => {
     const errorText = "Password is required"
     return {

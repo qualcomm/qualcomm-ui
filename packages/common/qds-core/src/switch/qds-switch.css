@@ -21,8 +21,8 @@
     user-select: none;
   }
 
-  [data-part="hint"],
-  [data-part="error-text"] {
+  [data-switch-part="hint"],
+  [data-switch-part="error-text"] {
     grid-column: 1 / -1;
     width: fit-content;
   }

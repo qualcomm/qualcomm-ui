@@ -11,8 +11,8 @@ import type {
   GroupColumnDef,
   IdentifiedColumnDef,
   RowData,
-} from "./types"
-import type {DeepKeys, DeepValue} from "./utils"
+} from "./types.js"
+import type {DeepKeys, DeepValue} from "./utils.js"
 
 export type ColumnHelper<TData extends RowData> = {
   accessor: <

@@ -1,0 +1,263 @@
+---
+title: Pages
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+import {
+  ExpandedStateDemo,
+  FolderTitlesDemo,
+  GroupsDemo,
+  NestedRouteOrderDemo,
+  NestedRoutesDemo,
+  SidebarOrderDemo,
+} from "./_demos/nav-demos"
+
+# {frontmatter.title}
+
+Use this guide when you need to choose a page filename, create a nested URL, or understand why a page appears at a specific route.
+
+We recommend that you follow this guide with a fresh clone of our [QUI Docs
+Template](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-qui-docs) for the best experience. You'll need [Node.js](https://nodejs.org/en/download) installed to run the site. Clone the template using the following command:
+
+```shell
+npx tiged https://github.com/qualcomm/qualcomm-ui-templates/templates/react-qui-docs my-docs-app
+```
+
+## Related Guides
+
+- [Configuration](/configuration): the full configuration reference for `qui-docs.config.ts`.
+- [Routing Conventions](/routing-conventions): how filenames and folders map to URLs and layouts.
+- [Routing Guidelines](/routing): the operational contract for production docs pages, navigation, search, moves, and verification.
+- [Markdown](/markdown): Markdown authoring conventions and extended features.
+
+## Overview
+
+The following guide assumes that you're using the file-based routing configuration for QUI Docs. This is the configuration used by the template.
+
+- QUI Docs reads pages from the configured [appDirectory](/api/qui-docs-config#appDirectory) and [pageDirectory](/api/qui-docs-config#pageDirectory). The template uses this configuration: `src/routes`.
+- An `.mdx` file under `src/routes` creates a docs page and is included in search by default.
+- A page's URL comes from its file path relative to `src/routes`. Under the default strategy, folders ending in `+` organize regular page files into nested URL segments.
+- The `"react-router-directory-groups"` strategy also discovers regular page files in plain folders. See [Routing Conventions](/routing-conventions) for the complete comparison.
+- If you define routes manually with React Router, see [Custom Routing](/routing-conventions#custom-file-based-routing).
+
+## URL Mapping
+
+Each page URL is derived from the file path relative to `pageDirectory`.
+
+| File path                               | Page URL                           |
+| :-------------------------------------- | :--------------------------------- |
+| `index.mdx`                             | `/`                                |
+| `setup.mdx`                             | `/setup`                           |
+| `help+/troubleshooting.mdx`             | `/help/troubleshooting`            |
+| `guide+/content-creation+/overview.mdx` | `/guide/content-creation/overview` |
+
+The `.mdx` file extension is removed from the URL. A folder ending in `+` contributes a URL segment without the `+` character.
+
+See [Routing Conventions](/routing-conventions) for index routes, layouts, parameters, parent overrides, and private folders.
+
+## Nested Pages
+
+Use folders ending in `+` when a page should live under a nested URL segment. For example, this file tree creates `/help/troubleshooting`:
+
+<FileTree
+  className="mt-4"
+  expandedValue={["routes", "help+"]}
+  onExpandedValueChange={() => {}}
+  items={[
+    {
+      name: "routes",
+      items: [
+        {
+          name: "help+",
+          items: [{name: "troubleshooting.mdx"}],
+        },
+      ],
+    },
+  ]}
+/>
+
+This convention lets related pages share a folder without repeating the full route path in every filename.
+
+## Nav Config
+
+For MDX pages, we define the title in the page's frontmatter. Our plugin extracts this title and incorporates it into the sidebar data. However, for path segments without associated pages (like folders), we can't do this because there is no MDX file to provide frontmatter.
+
+We expose a [navConfig](/api/qui-docs-config#navConfig) property on the configuration object for this purpose. The following example demonstrate how to customize this config.
+
+### Sidebar Order
+
+- The order of a sidebar item is determined by its array position in the navConfig.
+- Items defined in the navConfig are ordered before items that aren't defined. The rest are sorted alphabetically.
+
+To reorder items, change their position in the array. In the example below, "Setup" appears before "Help" because its entry comes first.
+
+::: serialize-jsx
+
+```ts
+export default {
+  navConfig: [
+    {id: "_index", title: "Introduction"},
+    {id: "setup"},
+    {id: "help"},
+  ],
+} satisfies QuiDocsConfig
+```
+
+<SidebarOrderDemo />
+
+:::
+
+### Nested Routes
+
+Use the `children` array to represent a folder's nested pages in the sidebar. The `id` at each level must match the path segment at that level — not the full route path.
+
+For a file at `help+/troubleshooting.mdx` (URL `/help/troubleshooting`), the `navConfig` entry is:
+
+::: serialize-jsx
+
+```ts
+export default {
+  navConfig: [
+    {id: "_index", title: "Introduction"},
+    {
+      id: "help",
+      children: [{id: "troubleshooting"}],
+    },
+  ],
+} satisfies QuiDocsConfig
+```
+
+<NestedRoutesDemo />
+
+:::
+
+Section titles and separators (`NavMeta` entries) are top-level only and are not supported inside `children`.
+
+#### Nested Route Order
+
+To reorder nested pages, change their position in the `children` array. In the example below, "Overview" appears before "Troubleshooting" because its entry comes first.
+
+::: serialize-jsx
+
+```ts
+export default {
+  navConfig: [
+    {id: "_index", title: "Introduction"},
+    {
+      id: "help",
+      children: [{id: "overview"}, {id: "troubleshooting"}],
+    },
+  ],
+} satisfies QuiDocsConfig
+```
+
+<NestedRouteOrderDemo />
+
+:::
+
+### Folder Titles
+
+Folders don't have an MDX file to provide a title, so QUI Docs falls back to formatting the folder name. To set an explicit sidebar label for a folder, add a `title` to its `navConfig` entry.
+
+::: serialize-jsx
+
+<FolderTitlesDemo />
+
+:::
+
+The `title` property works on leaf pages too. Use it when the sidebar label should differ from the page's frontmatter `title`, or use `sideNavTitle` in the page's frontmatter to change only the sidebar label without affecting the page heading.
+
+### Groups
+
+Use `sectionTitle` and `separator` to divide top-level nav items into labeled sections. These properties belong to `NavMeta` entries: items with no `id` that act as visual dividers rather than links.
+
+::: serialize-jsx
+
+```ts
+export default {
+  navConfig: [
+    {id: "_index", title: "Introduction"},
+    {sectionTitle: "Setup", separator: true},
+    {id: "installation"},
+    {id: "configuration"},
+    {sectionTitle: "Reference", separator: true},
+    {id: "api"},
+  ],
+} satisfies QuiDocsConfig
+```
+
+<GroupsDemo />
+
+:::
+
+`sectionTitle` renders a label above the group. `separator` renders a horizontal rule before the label. Both are optional and can be used independently.
+
+Group entries are top-level only and are not supported inside `children`.
+
+### Expanded State
+
+Folders in the sidebar are closed by default. To open a folder by default, set the [expanded](/api/nav-config#expanded) property to true.
+
+::: serialize-jsx
+
+```ts
+export default {
+  navConfig: [
+    {id: "setup"},
+    {
+      expanded: true,
+      id: "help",
+      children: [{id: "troubleshooting"}],
+    },
+  ],
+} satisfies QuiDocsConfig
+```
+
+<ExpandedStateDemo />
+
+:::
+
+> [!note]
+> The `expanded` key only controls the default state of the nav item. If the site navigates to a nested route, the side nav will automatically expand and show the route's associated nav item.
+
+## Home Page
+
+The home page is a reserved route and is defined by the `_index` id. The home page is located at `routes/index.mdx`, or `routes/index/_index.mdx`.
+
+The source code for the QUI Docs Template home page is defined as follows:
+
+```markdown
+---
+hideBreadcrumbs: true
+id: _index
+title: Introduction
+---
+
+# {frontmatter.title}
+```
+
+Note the following about the home route:
+
+- The `id` must be defined for the home route in order for the page to show up in the sidebar.
+- Since the home page starts on the `/` route, there aren't any breadcrumbs to show. We set the `hideBreadcrumbs: true` in the page's frontmatter to disable them for this route.
+  - This property can also be set on the page's navConfig entry.
+
+## React Pages
+
+You may also use a `.tsx` file to render a React page, but its content will not show up in the sidebar by default. To show React pages, you must add them to the sidebar via the navConfig. Note that these pages will not be picked up by the search indexer.
+
+## MDX and TSX Routes
+
+Use `.mdx` for documentation pages. MDX pages are included in the sidebar, page map, and search index by default.
+
+Use `.tsx` routes sparingly. TSX pages can appear in navigation when configured, but their rendered content is not indexed for search by default. MDX allows you to use React components in your pages, so prefer `.mdx` routes even for pages with more complex content.
+
+## Custom Routes
+
+React Router's [Framework Mode](https://reactrouter.com/home#react-router-as-a-framework) supports manually defined route definitions. When you define routes manually, add a [routingStrategy](/api/qui-docs-config#routingStrategy) so QUI Docs can map each discovered page file to its site URL.
+
+See [Custom Routing](/routing-conventions#custom-file-based-routing) for the full setup.
+
+## Next Steps
+
+Refer to the [Markdown](/markdown) page to learn more about authoring content.

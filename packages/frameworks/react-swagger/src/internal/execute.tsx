@@ -62,9 +62,9 @@ export function Execute(props: ExecuteProps) {
     if (!missingRequiredKeys || missingRequiredKeys.length < 1) {
       return true
     }
-    missingRequiredKeys.forEach((missingKey) => {
+    for (const missingKey of missingRequiredKeys) {
       validationErrors.missingRequiredKeys.push(missingKey)
-    })
+    }
     oas3Actions.setRequestBodyValidateError({method, path, validationErrors})
     return false
   }

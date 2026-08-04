@@ -8,10 +8,12 @@ import {
   type ActionGroupProps,
 } from "@qualcomm-ui/react/action-group"
 
-import {Pagination} from "./index"
+import {Pagination} from "./index.js"
 
-export interface PaginationPageButtonsProps
-  extends Omit<ActionGroupProps, "children"> {}
+export interface PaginationPageButtonsProps extends Omit<
+  ActionGroupProps,
+  "children"
+> {}
 
 /**
  * A shortcut for rendering the pagination page buttons. This is equivalent to:

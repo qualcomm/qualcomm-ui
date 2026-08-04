@@ -11,7 +11,7 @@ import {
   isHTMLElement,
   isRootElement,
   isVisualViewport,
-} from "./node"
+} from "./node.js"
 
 export type OverflowAncestor = Array<
   VisualViewport | Window | HTMLElement | null

@@ -197,7 +197,7 @@ export async function fetchData(options: FetchOptions): Promise<FetchResult> {
   }
 
   // Simulate network latency
-  await new Promise((r) => setTimeout(r, 500))
+  await new Promise((resolve) => setTimeout(resolve, 500))
 
   // Apply filters
   let filteredData = cache

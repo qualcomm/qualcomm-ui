@@ -1,6 +1,5 @@
 ---
 title: Side Nav
-group: Disclosure
 description: The side navigation provides a consistent, easy-to-scan way for users to move through major sections of an application. It stays visible as users browse, giving them a clear understanding of where they are and what options are available.
 component: SideNav
 aliases: [sidebar, left nav, navigation menu, vertical menu]
@@ -60,13 +59,23 @@ Group nodes using the collection's [groupChildren](./#groupChildren) method. Thi
 
 <Demo name="SideNavGroupsDemo" component={demos.SideNavGroupsDemo} />
 
+### Sizes
+
+::: terms
+compact, density, small, medium
+:::
+
+Use the [size](./#size) prop on `<SideNav.Root>` to control item padding, height, spacing, font size, and icon size. The available sizes are `sm` and `md` (default).
+
+<Demo name="SideNavSizeDemo" component={demos.SideNavSizeDemo} />
+
 ### Default Expanded
 
 ::: terms
 initially open, pre-expanded
 :::
 
-Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedChange](./#onExpandedChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) prop. Or use [expandedValue](./#expandedValue) and [onExpandedValueChange](./#onExpandedValueChange) to control the expansion manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 <Demo
   name="SideNavDefaultExpandedDemo"
@@ -130,13 +139,13 @@ Consider wrapping collapsed nodes with the [Tooltip](/components/tooltip) compon
 
 ## API
 
-### \<SideNav.Root\>
+### \<SideNav.Root>
 
 <TypeDocProps name="SideNavRootProps" />
 
 <TypeDocAttributes name={["TreeRootBindings", "QdsSideNavRootBindings"]} />
 
-### \<SideNav.Nodes\>
+### \<SideNav.Nodes>
 
 <TypeDocProps name="TreeNodesProps" />
 
@@ -154,55 +163,57 @@ The constructor of the TreeCollection class accepts the following options:
 
 ## Element API
 
-### \<SideNav.Group\>
+### \<SideNav.Group>
 
 <TypeDocProps name="SideNavGroupProps" />
 
 <TypeDocAttributes name={["QdsSideNavGroupBindings"]} />
 
-### \<SideNav.GroupLabel\>
+### \<SideNav.GroupLabel>
 
 <TypeDocProps name="SideNavGroupLabelProps" />
 
 <TypeDocAttributes name={["QdsSideNavGroupLabelBindings"]} />
 
-### \<SideNav.Divider\>
+### \<SideNav.Divider>
 
 <TypeDocProps name="SideNavDividerProps" />
 
 <TypeDocAttributes name={["QdsSideNavDividerBindings"]} />
 
-### \<SideNav.Header\>
+### \<SideNav.Header>
 
 <TypeDocProps name="SideNavHeaderProps" />
 
 <TypeDocAttributes name={["QdsSideNavHeaderBindings"]} />
 
-### \<SideNav.HeaderLogo\>
+### \<SideNav.HeaderLogo>
 
 <TypeDocProps name="SideNavHeaderLogoProps" />
 
 <TypeDocAttributes name={["QdsSideNavHeaderLogoBindings"]} />
 
-### \<SideNav.HeaderTitle\>
+### \<SideNav.HeaderTitle>
 
 <TypeDocProps name="SideNavHeaderTitleProps" />
 
 <TypeDocAttributes name={["QdsSideNavHeaderTitleBindings"]} />
 
-### \<SideNav.HeaderAction\>
+### \<SideNav.HeaderAction>
 
 <TypeDocProps name="SideNavHeaderActionProps" />
 
 <TypeDocAttributes name={["QdsSideNavHeaderActionBindings"]} />
 
-### \<SideNav.Branch\>
+### \<SideNav.Branch>
 
 <TypeDocProps name="SideNavBranchProps" />
 
-<TypeDocAttributes name={["TreeBranchBindings", "QdsSideNavBranchBindings"]} />
+<TypeDocAttributes
+  name={["TreeBranchBindings", "QdsSideNavBranchBindings"]}
+/>
 
-### \<SideNav.BranchNode\>
+### \<SideNav.BranchNode>
 
 <TypeDocProps name="SideNavBranchNodeProps" />
 
@@ -210,7 +221,7 @@ The constructor of the TreeCollection class accepts the following options:
   name={["TreeBranchNodeBindings", "QdsSideNavBranchNodeBindings"]}
 />
 
-### \<SideNav.BranchTrigger\>
+### \<SideNav.BranchTrigger>
 
 <TypeDocProps name="SideNavBranchTriggerProps" />
 
@@ -218,7 +229,7 @@ The constructor of the TreeCollection class accepts the following options:
   name={["TreeBranchTriggerBindings", "QdsSideNavBranchTriggerBindings"]}
 />
 
-### \<SideNav.BranchContent\>
+### \<SideNav.BranchContent>
 
 <TypeDocProps name="SideNavBranchContentProps" />
 
@@ -226,15 +237,18 @@ The constructor of the TreeCollection class accepts the following options:
   name={["TreeBranchContentBindings", "QdsSideNavBranchContentBindings"]}
 />
 
-### \<SideNav.BranchIndentGuide\>
+### \<SideNav.BranchIndentGuide>
 
 <TypeDocProps name="SideNavBranchIndentGuideProps" />
 
 <TypeDocAttributes
-  name={["TreeBranchIndentGuideBindings", "QdsTreeBranchIndentGuideBindings"]}
+  name={[
+    "TreeBranchIndentGuideBindings",
+    "QdsTreeBranchIndentGuideBindings",
+  ]}
 />
 
-### \<SideNav.LeafNode\>
+### \<SideNav.LeafNode>
 
 <TypeDocProps name="SideNavLeafNodeProps" />
 
@@ -242,7 +256,7 @@ The constructor of the TreeCollection class accepts the following options:
   name={["TreeLeafNodeBindings", "QdsSideNavLeafNodeBindings"]}
 />
 
-### \<SideNav.NodeAction\>
+### \<SideNav.NodeAction>
 
 <TypeDocProps name="SideNavNodeActionProps" />
 
@@ -250,7 +264,7 @@ The constructor of the TreeCollection class accepts the following options:
   name={["TreeNodeActionBindings", "QdsSideNavNodeActionBindings"]}
 />
 
-### \<SideNav.NodeIndicator\>
+### \<SideNav.NodeIndicator>
 
 <TypeDocProps name="SideNavNodeIndicatorProps" />
 
@@ -258,7 +272,7 @@ The constructor of the TreeCollection class accepts the following options:
   name={["TreeNodeIndicatorBindings", "QdsSideNavNodeIndicatorBindings"]}
 />
 
-### \<SideNav.NodeIcon\>
+### \<SideNav.NodeIcon>
 
 <TypeDocProps name="SideNavNodeIconProps" />
 
@@ -266,11 +280,11 @@ The constructor of the TreeCollection class accepts the following options:
   name={["TreeNodeIconBindings", "QdsSideNavNodeIconBindings"]}
 />
 
-### \<SideNav.NodeProvider\>
+### \<SideNav.NodeProvider>
 
 <TypeDocProps name="SideNavNodeProviderProps" />
 
-### \<SideNav.NodeText\>
+### \<SideNav.NodeText>
 
 <TypeDocProps name="SideNavNodeTextProps" />
 

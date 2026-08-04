@@ -12,9 +12,9 @@ import {
 import {ExternalLink} from "lucide-react"
 
 import type {PagePropType, PagePropTypes} from "@qualcomm-ui/mdx-common"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 import {Link} from "@qualcomm-ui/react/link"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {ensureArray} from "@qualcomm-ui/utils/array"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -23,17 +23,17 @@ import {
   JsdocComment,
   sortAndSelectProps,
   type TypeDocAngularPropConfig,
-} from "./internal"
-import {TypeDocReflection} from "./reflection"
-import {TypedocPropsList} from "./typedoc-props-list"
-import {TypedocPropsTable} from "./typedoc-props-table"
-import {usePropsContext} from "./use-props-context"
-import {usePropsLayoutContext} from "./use-props-layout-context"
+  TypeDocFunctionContent,
+} from "./internal/index.js"
+import {TypedocPropsList} from "./typedoc-props-list.js"
+import {TypedocPropsTable} from "./typedoc-props-table.js"
+import {usePropsContext} from "./use-props-context.js"
+import {usePropsLayoutContext} from "./use-props-layout-context.js"
 import {
   type ColumnNames,
   TypeDocContextProvider,
   type TypeDocContextValue,
-} from "./use-typedoc-context"
+} from "./use-typedoc-context.js"
 
 export type TypeDocPropsProps = Omit<
   ComponentPropsWithRef<"div">,
@@ -294,9 +294,8 @@ export function TypeDocProps({
     if (firstValidPropTypes?.resolvedType?.type === "signature") {
       return (
         <TypeDocContextProvider value={typeDocContext}>
-          <TypeDocReflection
+          <TypeDocFunctionContent
             comment={firstValidPropTypes.comment}
-            name={firstValidPropTypes.name}
             resolvedType={firstValidPropTypes.resolvedType}
           />
         </TypeDocContextProvider>

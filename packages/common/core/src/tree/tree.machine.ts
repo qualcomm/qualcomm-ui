@@ -28,8 +28,8 @@ import {
   focusNode,
   skipFn,
   toggleBranchChecked,
-} from "./internal"
-import type {TreeLoadingStatusMap, TreeSchema} from "./tree.types"
+} from "./internal/index.js"
+import type {TreeLoadingStatusMap, TreeSchema} from "./tree.types.js"
 
 const {and} = createGuards<TreeSchema>()
 
@@ -47,7 +47,9 @@ export const treeMachine: MachineConfig<TreeSchema> = createMachine<TreeSchema>(
       },
       clearPendingAborts({refs}) {
         const aborts = refs.get("pendingAborts")
-        aborts.forEach((abort) => abort.abort())
+        for (const abort of aborts.values()) {
+          abort.abort()
+        }
         aborts.clear()
       },
       clearSelected({context}) {
@@ -179,7 +181,7 @@ export const treeMachine: MachineConfig<TreeSchema> = createMachine<TreeSchema>(
 
         let hits = 0
         const visibleNodes = computed("visibleNodes")
-        visibleNodes.forEach(({node}) => {
+        for (const {node} of visibleNodes) {
           const nodeValue = collection.getNodeValue(node)
           if (hits === 1) {
             values.push(nodeValue)
@@ -187,7 +189,7 @@ export const treeMachine: MachineConfig<TreeSchema> = createMachine<TreeSchema>(
           if (nodeValue === anchorValue || nodeValue === targetValue) {
             hits++
           }
-        })
+        }
         context.set("selectedValue", uniq(values))
       },
       extendSelectionToPrevNode(params) {

@@ -10,13 +10,13 @@ import {visit} from "unist-util-visit"
 
 import {kebabCase} from "@qualcomm-ui/utils/change-case"
 
-import type {ImportedModule} from "../types"
+import type {ImportedModule} from "../types.js"
 import {
   exists,
   extractRelativeImports,
   removePreviewLines,
   resolveModulePath,
-} from "../utils"
+} from "../utils.js"
 
 async function collectDemoImports(
   demoCode: string,

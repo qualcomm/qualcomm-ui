@@ -19,7 +19,7 @@ function getSpoilerEndMatch(text: string) {
   return text.trim() === ":::"
 }
 
-export function isSpoilerBlock(text: string) {
+export function isSpoilerBlock(text: string): boolean {
   return !!getSpoilerStartMatch(text) || getSpoilerEndMatch(text)
 }
 

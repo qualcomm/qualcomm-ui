@@ -7,18 +7,17 @@ import {
   createQdsInlineIconButtonApi,
   type QdsInlineIconButtonApiProps,
 } from "@qualcomm-ui/qds-core/inline-icon-button"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface InlineIconButtonProps
-  extends QdsInlineIconButtonApiProps,
-    ElementRenderProp<"button"> {
+  extends QdsInlineIconButtonApiProps, ElementRenderProp<"button"> {
   /**
    * Lucide icon to display inside the button.
    */

@@ -5,11 +5,10 @@ import type {ComponentPropsWithRef, ReactElement} from "react"
 
 import type {QdsCheckboxSize} from "@qualcomm-ui/qds-core/checkbox"
 
-import {CheckmarkCheckedIcon} from "./checkmark-checked-icon"
-import {CheckmarkIndeterminateIcon} from "./checkmark-indeterminate-icon"
+import {CheckmarkCheckedIcon} from "./checkmark-checked-icon.js"
+import {CheckmarkIndeterminateIcon} from "./checkmark-indeterminate-icon.js"
 
-export interface CheckboxIndicatorIconProps
-  extends ComponentPropsWithRef<"svg"> {
+export interface CheckboxIndicatorIconProps extends ComponentPropsWithRef<"svg"> {
   indeterminate: boolean | undefined
   size?: QdsCheckboxSize
 }

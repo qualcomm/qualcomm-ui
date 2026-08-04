@@ -24,8 +24,8 @@ Expanding is a feature that allows you to show and hide additional rows of data 
 To use the client-side expanding features, you need to import and call the `getExpandedRowModel` function in your table options. This function is responsible for returning the expanded row model.
 
 ```tsx
-import {useReactTable} from "@qualcomm-ui/react/table"
 import {getExpandedRowModel} from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
 
 const table = useReactTable({
   // other options...
@@ -71,8 +71,8 @@ const data: Person[] = [
 Set `getSubRows` to return the children array from each row:
 
 ```tsx
-import {useReactTable} from "@qualcomm-ui/react/table"
 import {getCoreRowModel, getExpandedRowModel} from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
 
 const table = useReactTable({
   // other options...
@@ -82,7 +82,7 @@ const table = useReactTable({
 })
 ```
 
-> [note!]
+> [!note]
 > `getSubRows` executes for every row and sub-row. It must be synchronous, and should be performant.
 
 ### Custom Expanding UI
@@ -92,8 +92,8 @@ Expanded rows can display additional details that may or may not exist in your t
 ```tsx
 import React from "react"
 
-import {useReactTable, flexRender} from "@qualcomm-ui/react/table"
 import {getCoreRowModel, getExpandedRowModel} from "@qualcomm-ui/core/table"
+import {useReactTable, flexRender} from "@qualcomm-ui/react/table"
 
 function Component() {
   const table = useReactTable({
@@ -141,9 +141,10 @@ function Component() {
 If you need to control the expanded state of the rows in your table, you can do so by using the expanded state and the `onExpandedChange` option. This allows you to manage the expanded state according to your requirements.
 
 ```tsx
-import {useReactTable} from "@qualcomm-ui/react/table"
-import type {ExpandedState} from "@qualcomm-ui/core/table"
 import {useState} from "react"
+
+import type {ExpandedState} from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
 
 const [expanded, setExpanded] = useState<ExpandedState>({})
 
@@ -201,12 +202,12 @@ Set `filterFromLeafRows` to filter from leaf rows up. Parents are included if an
 Set `maxLeafRowFilterDepth` to specify the maximum depth of child rows to filter. Set to 0 to filter only parent rows.
 
 ```tsx
-import {useReactTable} from "@qualcomm-ui/react/table"
 import {
   getCoreRowModel,
   getExpandedRowModel,
   getFilteredRowModel,
 } from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
 
 const table = useReactTable({
   // other options...
@@ -225,7 +226,7 @@ By default, expanded rows are paginated with the rest of the table and may span 
 
 ::: spoiler Show visualization
 
-```
+```txt
 paginateExpandedRows: true          paginateExpandedRows: false
 ┌─────────────────┐                 ┌─────────────────┐
 │ Page 1 (size:5) │                 │ Page 1 (size:5) │
@@ -254,10 +255,6 @@ const table = useReactTable({
   paginateExpandedRows: false,
 })
 ```
-
-### Pinning Expanded Rows
-
-Pinning expanded rows works the same way as pinning regular rows. You can pin expanded rows to the top or bottom of the table. Please refer to the [Pinning Guide](../pinning.md) for more information on row pinning.
 
 ### Sorting Expanded Rows
 

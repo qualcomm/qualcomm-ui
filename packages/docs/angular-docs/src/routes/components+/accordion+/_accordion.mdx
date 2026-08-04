@@ -1,13 +1,15 @@
 ---
 title: Accordion
-group: Disclosure
 description: Accordions organize content into collapsible sections, allowing users to expand and view information progressively without overwhelming the interface.
 component: Accordion
 aliases: [disclosure, collapsible, faq]
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 
 # {frontmatter.title}
 
@@ -37,8 +39,7 @@ The simple API bundles the accordion item's subcomponents together into a single
 ### Simple & Directives
 
 ::: terms
-directive override
-partial composite
+directive override, partial composite
 :::
 
 Provide child directives to customize specific elements while keeping the simple API's default structure.
@@ -54,9 +55,7 @@ Use the `q-accordion-item-root` directive for full control over each part of the
 ### Starting Indicator
 
 ::: terms
-chevron position
-arrow position
-caret position
+chevron position, arrow position, caret position
 :::
 
 To display the expand/collapse indicator at the start of the trigger, make it the first child of the `q-accordion-item-trigger` element.
@@ -68,9 +67,7 @@ The padding of the item's content will automatically adjust.
 ### Multiple
 
 ::: terms
-expand all
-multi-expand
-open several
+expand all, multi-expand, open several
 :::
 
 By default, only a single accordion section can be open at a time. Setting [multiple](./#multiple-1) allows multiple sections to be open or closed simultaneously.
@@ -80,8 +77,7 @@ By default, only a single accordion section can be open at a time. Setting [mult
 ### Collapsible
 
 ::: terms
-toggle closed
-re-collapse
+toggle closed, re-collapse
 :::
 
 When [multiple](./#multiple-1) is not set, enabling [collapsible](./#collapsible-1) lets the user close an open accordion item by clicking it again.
@@ -91,8 +87,7 @@ When [multiple](./#multiple-1) is not set, enabling [collapsible](./#collapsible
 ### Default Value
 
 ::: terms
-pre-expanded
-start expanded
+pre-expanded, start expanded
 :::
 
 The [defaultValue](./#defaultValue) input allows you to set the initial state for the accordion by specifying which accordion item or items (if [multiple](./#multiple-1) is set) should be open by default.
@@ -103,9 +98,7 @@ It expects an array of values that should match those passed to each accordion i
 ### Disabled
 
 ::: terms
-inactive
-greyed out
-grayed out
+inactive, greyed out, grayed out
 :::
 
 You can disable accordion items by setting their [disabled](./#disabled-2) input. This prevents the item from being interacted with.
@@ -116,8 +109,7 @@ You can disable the entire accordion by setting the [disabled](./#disabled-1) in
 ### Uncontained
 
 ::: terms
-borderless
-edge-to-edge
+borderless, edge-to-edge
 :::
 
 Set the [uncontained](./#uncontained-1) input when the accordion is not placed inside a container and needs to align flush with adjacent layout elements—such as when positioned directly below a paragraph of text.
@@ -128,9 +120,7 @@ This input removes the default horizontal padding from accordion items, allowing
 ### Size
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Use the [size](./#size-1) input to control the size of the accordion items. The available sizes are `sm`, `md` (default), and `lg`.
@@ -140,8 +130,7 @@ Use the [size](./#size-1) input to control the size of the accordion items. The 
 ### Secondary Text
 
 ::: terms
-subtitle
-helper text
+subtitle, helper text
 :::
 
 Use the `q-accordion-item-trigger-secondary` directive to display additional text opposite the trigger title.
@@ -151,8 +140,7 @@ Use the `q-accordion-item-trigger-secondary` directive to display additional tex
 ### Icon
 
 ::: terms
-leading icon
-prefix icon
+leading icon, prefix icon
 :::
 
 Pass an icon to the [icon](./#icon-1) input on the `q-accordion-item-trigger` element to display it next to the trigger title.
@@ -160,13 +148,12 @@ Pass an icon to the [icon](./#icon-1) input on the `q-accordion-item-trigger` el
 <QdsDemo name="AccordionIconDemo" />
 
 > [!warning/UX considerations]
-> In order to prevent visual confusion, only one icon can appear next to the trigger title. If you place the indicator at the start, the [icon input](#icon) will be ignored.
+> In order to prevent visual confusion, only one icon can appear next to the trigger title. If you place the indicator at the start, the [icon input](./#icon-1) will be ignored.
 
 ### Change Callback
 
 ::: terms
-programmatic control
-event emitter
+programmatic control, event emitter
 :::
 
 The [valueChanged](./#valueChanged) output allows you to listen for changes in the accordion's value.
@@ -197,16 +184,31 @@ The `q-accordion-item-content` directive is a shortcut for the following:
 </div>
 ```
 
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-accordion"
+  name="AccordionExplorerDemo"
+  parts={[{name: "root", link: "#q-accordion"}, "item", "item-trigger"]}
+  scope="accordion"
+/>
+
 ## API
 
 ### q-accordion
 
 <TypeDocProps name="AccordionComponent" />
 
+<TypeDocAngularAttributes name="AccordionRootBindings" />
+
 ### q-accordion-item
 
 <TypeDocProps name="AccordionItemComponent" />
 
+<TypeDocAngularAttributes name="AccordionItemBindings" />
+
 ### q-accordion-item-trigger
 
 <TypeDocProps name="AccordionItemTriggerComponent" />
+
+<TypeDocAngularAttributes name="AccordionItemTriggerBindings" />

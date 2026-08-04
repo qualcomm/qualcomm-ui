@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {TabsApiProps} from "./tabs.types"
+import type {TabsApiProps} from "./tabs.types.js"
 
 export const tabsProps: (keyof TabsApiProps)[] = createProps<TabsApiProps>()(
   "activationMode",

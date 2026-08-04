@@ -1,14 +1,12 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.vitest.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
-    "moduleResolution": "bundler",
-    "types": [
-      "vitest",
-      "@vitest/browser/providers/playwright"
-    ],
+    "outDir": "node_modules/.tmp/spec-out-tsc",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec",
+    "types": ["vitest"],
     "paths": {
+      "@qualcomm-ui/react/*": ["./src/*/index.ts"],
       "~test-utils/runner": ["./test-utils/runner.ts"]
     }
   },

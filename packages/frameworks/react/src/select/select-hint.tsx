@@ -3,8 +3,8 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 import {useSelectHint} from "@qualcomm-ui/react-core/select"
+import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface SelectHintProps extends InputHintProps {

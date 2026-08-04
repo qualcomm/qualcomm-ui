@@ -1,13 +1,13 @@
-import {IconShowcaseDemo as ShowcaseDemo} from "@qualcomm-ui/react-docs/components+/icon+/demos/icon-showcase-demo"
-import {IconSizesDemo as SizesDemo} from "@qualcomm-ui/react-docs/components+/icon+/demos/icon-sizes-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: ShowcaseDemo, title: "Showcase"},
-  {component: SizesDemo, title: "Sizes"},
-]
+const componentName = "icon"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/icon+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function IconDemos() {
-  return <DemoPageLayout componentName="icon" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

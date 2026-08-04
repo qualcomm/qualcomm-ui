@@ -10,7 +10,7 @@ import {
   ViewContainerRef,
 } from "@angular/core"
 
-import {BaseApiContextService} from "./api-context.service"
+import type {BaseApiContextService} from "./api-context.service"
 
 /**
  * Base directive for creating context-aware directives that render content

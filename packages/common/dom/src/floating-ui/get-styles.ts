@@ -6,19 +6,12 @@
 
 import type {Placement} from "@floating-ui/dom"
 
-import {cssVars} from "./middleware"
-import type {PlacementSide, PositioningOptions} from "./types"
+import {cssVars} from "./middleware.js"
+import type {PositioningOptions} from "./types.js"
 
 export interface GetPlacementStylesOptions {
   placement?: Placement | undefined
 }
-
-const ARROW_FLOATING_STYLE: Record<PlacementSide, string> = {
-  bottom: "rotate(45deg)",
-  left: "rotate(135deg)",
-  right: "rotate(315deg)",
-  top: "rotate(225deg)",
-} as const
 
 interface ArrowPlacementStyle {
   [p: string]: string
@@ -33,7 +26,6 @@ interface ArrowTipPlacementStyle {
   left: "0"
   position: "absolute"
   top: "0"
-  transform: any
   width: "100%"
   zIndex: "inherit"
 }
@@ -83,9 +75,6 @@ export function getPlacementStyles(
       left: "0",
       position: "absolute",
       top: "0",
-      transform: placement
-        ? ARROW_FLOATING_STYLE[placement.split("-")[0] as PlacementSide]
-        : undefined,
       width: "100%",
       zIndex: "inherit",
     } as const,

@@ -4,7 +4,7 @@
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {toastClasses} from "./toast.classes"
+import {toastClasses} from "./toast.classes.js"
 import type {
   QdsToastActionBindings,
   QdsToastApi,
@@ -14,7 +14,7 @@ import type {
   QdsToastIconBindings,
   QdsToastLabelBindings,
   QdsToastRootBindings,
-} from "./toast.types"
+} from "./toast.types.js"
 
 export function createQdsToastApi(
   props: Explicit<QdsToastApiProps>,

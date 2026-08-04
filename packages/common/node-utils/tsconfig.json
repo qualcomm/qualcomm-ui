@@ -1,20 +1,11 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist",
-    "paths": {
-      "@qualcomm-ui/node-utils/*": ["./src/*/index.ts"]
-    },
-  },
-  /* required for Webstorm monorepo intellisense */
-  "include": ["./src"],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
     },
     {
       "path": "./tsconfig.spec.json"

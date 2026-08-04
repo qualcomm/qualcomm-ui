@@ -6,15 +6,15 @@ import type {ReactElement, ReactNode} from "react"
 import {Asterisk} from "lucide-react"
 
 import {createQdsInputApi, inputClasses} from "@qualcomm-ui/qds-core/input"
-import {Icon} from "@qualcomm-ui/react/icon"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {Icon} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsInputContext} from "./qds-input-context"
+import {useQdsInputContext} from "./qds-input-context.js"
 
 export interface InputLabelProps extends ElementRenderProp<any> {
   /**

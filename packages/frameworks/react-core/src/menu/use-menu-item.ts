@@ -26,13 +26,16 @@ import {
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 import type {Optional} from "@qualcomm-ui/utils/guard"
 
-import {useMenuContext} from "./menu-context"
-import {useMenuItemContext, useMenuOptionItemContext} from "./menu-item-context"
+import {useMenuContext} from "./menu-context.js"
+import {
+  useMenuItemContext,
+  useMenuOptionItemContext,
+} from "./menu-item-context.js"
 import {
   useMenuItemGroupContext,
   useMenuRadioItemGroupContext,
-} from "./menu-item-group-context"
-import {useMenuTriggerContext} from "./menu-trigger-context"
+} from "./menu-item-group-context.js"
+import {useMenuTriggerContext} from "./menu-trigger-context.js"
 
 export interface UseMenuItemReturn {
   bindings: MenuItemBindings
@@ -69,6 +72,7 @@ export function useMenuTriggerItem(
   const menuTriggerContext = useMenuTriggerContext()
   return {
     bindings: menuTriggerContext({
+      ...props,
       id: useControlledId(props.id),
       onDestroy: useOnDestroy(),
     }),

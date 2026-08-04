@@ -9,7 +9,7 @@ import {
   type FilterReturn,
 } from "@qualcomm-ui/utils/i18n"
 
-import {useLocaleContext} from "./locale-context"
+import {useLocaleContext} from "./locale-context.js"
 
 export interface UseFilterProps extends FilterOptions {}
 

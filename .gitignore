@@ -34,6 +34,7 @@ packages/docs/*/knowledge/
 packages/docs/*/public/exports
 .wireit
 .lint-cache
+.pnpm-store
 
 ###############################################################################
 # Framework-specific outputs
@@ -100,13 +101,15 @@ tsconfig.*.tsbuildinfo
 .react-router/
 **/*\wsl.*
 **/coverage
+packages/**/.vitest-attachments
 
 ###############################################################################
 # OS / editor / IDE files
 ###############################################################################
 .DS_Store
 .fleet/
-.idea/
+.idea/*
+!.idea/externalDependencies.xml
 .webstorm/backup
 .ai
 
@@ -114,7 +117,6 @@ tsconfig.*.tsbuildinfo
 # Keep-tracked placeholder
 ###############################################################################
 !generated/.gitkeep
-!.idea/bookmarks.json
 !.aider.conf.yml
 
 .angular

@@ -10,14 +10,19 @@ import {
   isSafari,
   visuallyHiddenStyle,
 } from "@qualcomm-ui/dom/query"
-import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import {
+  booleanAriaAttr,
+  booleanDataAttr,
+  mergeAriaIds,
+} from "@qualcomm-ui/utils/attributes"
 import type {
   IdRegistrationProps,
   Machine,
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domEls, domIds} from "./internal"
+import {domEls, domIds} from "./internal/index.js"
+import {switchAnatomy} from "./switch.anatomy.js"
 import type {
   SwitchApi,
   SwitchControlBindings,
@@ -28,9 +33,10 @@ import type {
   SwitchLabelBindings,
   SwitchRootBindings,
   SwitchSchema,
-  SwitchScopeAttribute,
   SwitchThumbBindings,
-} from "./switch.types"
+} from "./switch.types.js"
+
+const parts = switchAnatomy.parts
 
 export function createSwitchApi(
   machine: Machine<SwitchSchema>,
@@ -46,7 +52,7 @@ export function createSwitchApi(
 
   const checked = context.get("checked")
 
-  const commonAttrs: SwitchDataBindings & SwitchScopeAttribute = {
+  const commonAttrs: SwitchDataBindings = {
     "data-active": booleanDataAttr(context.get("active")),
     "data-disabled": booleanDataAttr(disabled),
     "data-focus": booleanDataAttr(focused),
@@ -54,7 +60,6 @@ export function createSwitchApi(
     "data-hover": booleanDataAttr(context.get("hovered")),
     "data-invalid": booleanDataAttr(invalid),
     "data-readonly": booleanDataAttr(readOnly),
-    "data-scope": "switch",
     "data-state": checked ? "checked" : "unchecked",
   }
 
@@ -73,19 +78,17 @@ export function createSwitchApi(
     // group: element attr getters
     getControlBindings(): SwitchControlBindings {
       return normalize.element({
+        ...parts.control,
         ...commonAttrs,
         "aria-hidden": "true",
-        "data-part": "control",
-        dir: prop("dir"),
       })
     },
     getErrorTextBindings(props: IdRegistrationProps): SwitchErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
+        ...parts.errorText,
         ...commonAttrs,
         "aria-live": "polite",
-        "data-part": "error-text",
-        dir: prop("dir"),
         hidden: !invalid,
         id: domIds.errorText(scope),
       })
@@ -96,17 +99,14 @@ export function createSwitchApi(
       scope.ids.register("hiddenInput", props)
 
       return normalize.input({
+        ...parts.hiddenInput,
         ...commonAttrs,
         "aria-invalid": booleanAriaAttr(invalid),
-        "aria-labelledby": [
-          domIds.label(scope) || undefined,
-          invalid ? domIds.errorText(scope) || undefined : undefined,
-        ]
-          .filter(Boolean)
-          .join(" "),
-        "data-part": "hidden-input",
+        "aria-labelledby": mergeAriaIds(
+          domIds.label(scope),
+          invalid ? domIds.errorText(scope) : undefined,
+        ),
         defaultChecked: checked,
-        dir: prop("dir"),
         disabled,
         form: prop("form"),
         id: domIds.hiddenInput(scope),
@@ -140,9 +140,8 @@ export function createSwitchApi(
     getHintBindings(props: IdRegistrationProps): SwitchHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
+        ...parts.hint,
         ...commonAttrs,
-        "data-part": "hint",
-        dir: prop("dir"),
         hidden: !!invalid,
         id: domIds.hint(scope),
       })
@@ -150,17 +149,16 @@ export function createSwitchApi(
     getLabelBindings(props: IdRegistrationProps): SwitchLabelBindings {
       scope.ids.register("label", props)
       return normalize.element({
+        ...parts.label,
         ...commonAttrs,
-        "data-part": "label",
-        dir: prop("dir"),
         id: domIds.label(scope),
       })
     },
     getRootBindings(props: IdRegistrationProps): SwitchRootBindings {
       scope.ids.register("root", props)
       return normalize.label({
+        ...parts.root,
         ...commonAttrs,
-        "data-part": "root",
         dir: prop("dir"),
         htmlFor: domIds.hiddenInput(scope),
         id: domIds.root(scope),
@@ -193,10 +191,9 @@ export function createSwitchApi(
     },
     getThumbBindings(): SwitchThumbBindings {
       return normalize.element({
+        ...parts.thumb,
         ...commonAttrs,
         "aria-hidden": true,
-        "data-part": "thumb",
-        dir: prop("dir"),
       })
     },
   }

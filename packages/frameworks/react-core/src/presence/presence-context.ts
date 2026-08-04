@@ -3,7 +3,7 @@
 
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 
-import type {UsePresenceReturn} from "./use-presence"
+import type {UsePresenceReturn} from "./use-presence.js"
 
 export const [PresenceContextProvider, usePresenceContext] =
   createGuardedContext<UsePresenceReturn>({

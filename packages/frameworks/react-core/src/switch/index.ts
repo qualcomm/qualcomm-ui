@@ -1,2 +1,2 @@
-export * from "./switch-context"
-export * from "./use-switch"
+export * from "./switch-context.js"
+export * from "./use-switch.js"

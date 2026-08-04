@@ -9,7 +9,6 @@ import {
   type OnInit,
 } from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {
   type LucideIconOrString,
   provideIcons,
@@ -20,6 +19,7 @@ import {
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {
   createQdsIconBadgeApi,
   type QdsBadgeCategoryEmphasis,

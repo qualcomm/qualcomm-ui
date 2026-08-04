@@ -1,21 +1,21 @@
-import {Checkbox as SimpleCheckbox} from "./checkbox"
-import {CheckboxContext, type CheckboxContextProps} from "./checkbox-context"
-import {CheckboxControl, type CheckboxControlProps} from "./checkbox-control"
+import {CheckboxContext, type CheckboxContextProps} from "./checkbox-context.js"
+import {CheckboxControl, type CheckboxControlProps} from "./checkbox-control.js"
 import {
   CheckboxErrorText,
   type CheckboxErrorTextProps,
-} from "./checkbox-error-text"
+} from "./checkbox-error-text.js"
 import {
   CheckboxHiddenInput,
   type CheckboxHiddenInputProps,
-} from "./checkbox-hidden-input"
-import {CheckboxHint, type CheckboxHintProps} from "./checkbox-hint"
+} from "./checkbox-hidden-input.js"
+import {CheckboxHint, type CheckboxHintProps} from "./checkbox-hint.js"
 import {
   CheckboxIndicator,
   type CheckboxIndicatorProps,
-} from "./checkbox-indicator"
-import {CheckboxLabel, type CheckboxLabelProps} from "./checkbox-label"
-import {CheckboxRoot, type CheckboxRootProps} from "./checkbox-root"
+} from "./checkbox-indicator.js"
+import {CheckboxLabel, type CheckboxLabelProps} from "./checkbox-label.js"
+import {CheckboxRoot, type CheckboxRootProps} from "./checkbox-root.js"
+import {Checkbox as SimpleCheckbox} from "./checkbox.js"
 
 export type {
   CheckboxContextProps,

@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {SwitchApiProps} from "./switch.types"
+import type {SwitchApiProps} from "./switch.types.js"
 
 export const switchProps: (keyof SwitchApiProps)[] =
   createProps<SwitchApiProps>()(

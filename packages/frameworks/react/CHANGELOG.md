@@ -1,5 +1,374 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.2
+
+Jul 28th, 2026
+
+### Tests
+
+- [tabs]: improve focus state test coverage ([b388a69](https://github.com/qualcomm/qualcomm-ui/commit/b388a69))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/react-core@1.5.9]
+
+## 1.27.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.1]
+
+## 1.27.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.0]
+
+## 1.26.1
+
+Jul 17th, 2026
+
+### Bug Fixes
+
+- [docs]: use correct since tags for component interfaces that extend from another package ([1fc6c24](https://github.com/qualcomm/qualcomm-ui/commit/1fc6c24))
+
+## 1.26.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.32.0, @qualcomm-ui/react-core@1.5.8]
+
+## 1.25.5
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.31.0]
+
+## 1.25.4
+
+Jul 10th, 2026
+
+### Bug Fixes
+
+- [combobox]: reset scroll timeout on unmount ([6ab034d](https://github.com/qualcomm/qualcomm-ui/commit/6ab034d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.4]
+
+## 1.25.3
+
+Jul 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.3]
+
+## 1.25.2
+
+Jul 2nd, 2026
+
+### Bug Fixes
+
+- [button]: icon sizes ([e0994ba](https://github.com/qualcomm/qualcomm-ui/commit/e0994ba))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.2]
+
+## 1.25.1
+
+Jul 1st, 2026
+
+### Bug Fixes
+
+- nested overlay z-index and unit selector position ([7d800e7](https://github.com/qualcomm/qualcomm-ui/commit/7d800e7))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.1, @qualcomm-ui/core@1.11.6, @qualcomm-ui/react-core@1.5.8]
+
+## 1.25.0
+
+Jun 29th, 2026
+
+### Features
+
+- [tag]: support anchor navigation with active and disabled states ([841b3b6](https://github.com/qualcomm/qualcomm-ui/commit/841b3b6))
+
+### Miscellaneous Chores
+
+- [code-connect]: update tag link and dismissible mappings ([700e036](https://github.com/qualcomm/qualcomm-ui/commit/700e036))
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.30.0]
+
+### Tests
+
+- [tag]: cover anchor navigation and disabled states ([ac75267](https://github.com/qualcomm/qualcomm-ui/commit/ac75267))
+
+## 1.24.4
+
+Jun 10th, 2026
+
+### Code Refactoring
+
+- support nodenext resolution ([a81a991](https://github.com/qualcomm/qualcomm-ui/commit/a81a991))
+
+### Styles
+
+- apply lint updates ([40c2768](https://github.com/qualcomm/qualcomm-ui/commit/40c2768))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core@1.5.7, @qualcomm-ui/utils@1.3.2, @qualcomm-ui/qds-core@1.29.3, @qualcomm-ui/core@1.11.5]
+
+## 1.24.3
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core@1.5.6]
+
+## 1.24.2
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.4, @qualcomm-ui/qds-core@1.29.2, @qualcomm-ui/react-core@1.5.5]
+
+## 1.24.1
+
+Jun 4th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.29.1]
+
+## 1.24.0
+
+Jun 4th, 2026
+
+### Features
+
+- [tag]: support controlled selected state ([f2b0d0c](https://github.com/qualcomm/qualcomm-ui/commit/f2b0d0c))
+- [menu]: add split button ([527d33e](https://github.com/qualcomm/qualcomm-ui/commit/527d33e))
+- [tag]: add aria-pressed to selectable tag ([81a24a3](https://github.com/qualcomm/qualcomm-ui/commit/81a24a3))
+
+### Code Refactoring
+
+- [button]: consolidate button-group prop resolution ([3922878](https://github.com/qualcomm/qualcomm-ui/commit/3922878))
+
+### Tests
+
+- [button]: cover button-group prop precedence ([3d8a0ef](https://github.com/qualcomm/qualcomm-ui/commit/3d8a0ef))
+- [menu]: cover split button behavior ([bca46f7](https://github.com/qualcomm/qualcomm-ui/commit/bca46f7))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.23.1
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/utils, @qualcomm-ui/react-core]
+
+## 1.23.0
+
+Jun 1st, 2026
+
+### Features
+
+- [menu]: inherit trigger size from the menu size ([6fc9966](https://github.com/qualcomm/qualcomm-ui/commit/6fc9966))
+
+### Tests
+
+- [menu]: cover trigger size inheritance ([dccdd60](https://github.com/qualcomm/qualcomm-ui/commit/dccdd60))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.22.2
+
+May 29th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.22.1
+
+May 22nd, 2026
+
+### Miscellaneous Chores
+
+- update pnpm and test dependencies ([b175d6a](https://github.com/qualcomm/qualcomm-ui/commit/b175d6a))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react-core, @qualcomm-ui/qds-core]
+
+## 1.22.0
+
+May 14th, 2026
+
+### Features
+
+- [link]: allow links to inherit font size ([7ef35d6](https://github.com/qualcomm/qualcomm-ui/commit/7ef35d6))
+- [file-input]: add angular and react components ([83900b7](https://github.com/qualcomm/qualcomm-ui/commit/83900b7))
+- [file-upload]: add react component surface ([2a1b934](https://github.com/qualcomm/qualcomm-ui/commit/2a1b934))
+
+### Tests
+
+- [file-input]: cover file input behavior ([ae8199d](https://github.com/qualcomm/qualcomm-ui/commit/ae8199d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/utils, @qualcomm-ui/react-core]
+
+## 1.21.3
+
+May 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react-core, @qualcomm-ui/qds-core]
+
+## 1.21.2
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.21.1
+
+May 1st, 2026
+
+### Bug Fixes
+
+- [react/pagination]: merge core bindings so page-size emits data-part ([8c5f45b](https://github.com/qualcomm/qualcomm-ui/commit/8c5f45b))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
+## 1.21.0
+
+Apr 29th, 2026
+
+### Features
+
+- [alert-banner]: add @since tag to AlertBannerButtonProps ([c6a44bf](https://github.com/qualcomm/qualcomm-ui/commit/c6a44bf))
+- [alert-banner]: fix styles, add dedicated button component ([8ddea37](https://github.com/qualcomm/qualcomm-ui/commit/8ddea37))
+- [breadcrumbs]: add overflow component ([603c6e5](https://github.com/qualcomm/qualcomm-ui/commit/603c6e5))
+
+### Documentation
+
+- [alert-banner]: add jsdoc comment ([52c2a46](https://github.com/qualcomm/qualcomm-ui/commit/52c2a46))
+
+### Code Refactoring
+
+- [breadcrumbs]: change default item trigger to anchor element ([f08b622](https://github.com/qualcomm/qualcomm-ui/commit/f08b622))
+- [breadcrumbs]: default item trigger to <span> ([b36b903](https://github.com/qualcomm/qualcomm-ui/commit/b36b903))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
+## 1.20.3
+
+Apr 23rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.20.2
+
+Apr 23rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/react-core]
+
+## 1.20.1
+
+Apr 21st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
+## 1.20.0
+
+Apr 19th, 2026
+
+### Features
+
+- [menu]: menu button & icon menu button ([0508c4d](https://github.com/qualcomm/qualcomm-ui/commit/0508c4d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
+## 1.19.1
+
+Apr 19th, 2026
+
+### Code Refactoring
+
+- [checkmark]: update anatomy attributes ([ad9b1a1](https://github.com/qualcomm/qualcomm-ui/commit/ad9b1a1))
+- [number-input]: update anatomy attributes ([1219ea2](https://github.com/qualcomm/qualcomm-ui/commit/1219ea2))
+- [header-bar]: update anatomy attributes ([f3398c9](https://github.com/qualcomm/qualcomm-ui/commit/f3398c9))
+- [combobox]: update anatomy attributes ([c429e3a](https://github.com/qualcomm/qualcomm-ui/commit/c429e3a))
+- [combobox]: update positioner and control selectors ([f313e96](https://github.com/qualcomm/qualcomm-ui/commit/f313e96))
+
+### Bug Fixes
+
+- [card]: omit dir from CardAvatarProps for Avatar compatibility ([16fb057](https://github.com/qualcomm/qualcomm-ui/commit/16fb057))
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/qds-core, @qualcomm-ui/react-core, @qualcomm-ui/utils]
+
+## 1.19.0
+
+Apr 16th, 2026
+
+### Features
+
+- [card]: add react card component ([766a934](https://github.com/qualcomm/qualcomm-ui/commit/766a934))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core]
+
 ## 1.18.0
 
 Apr 7th, 2026

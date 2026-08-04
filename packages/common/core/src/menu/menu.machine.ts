@@ -49,8 +49,8 @@ import {
   getNextEl,
   getPrevEl,
   isTriggerItem,
-} from "./internal"
-import type {MenuSchema, MenuScope} from "./menu.types"
+} from "./internal/index.js"
+import type {MenuSchema, MenuScope} from "./menu.types.js"
 
 const {and, not, or} = createGuards<MenuSchema>()
 
@@ -206,6 +206,7 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
         }
 
         getPlacement(domEls.trigger(scope), getMenuPositionerEl, {
+          arrowSelector: "[data-menu-part=arrow]",
           ...positioning,
           defer: true,
           getAnchorRect,
@@ -410,7 +411,7 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
             if (contains(domEls.content(scope), event.currentTarget)) {
               // fix for angular nested portal behavior
               event.preventDefault()
-              domEls.content(scope)?.focus()
+              domEls.content(scope)?.focus({preventScroll: true})
             }
             prop("onFocusOutside")?.(event)
 
@@ -468,7 +469,7 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
         })
       },
       trackPositioning({context, prop, refs, scope}) {
-        if (!!domEls.contextTrigger(scope)) {
+        if (domEls.contextTrigger(scope)) {
           return
         }
         const positioning = {
@@ -478,6 +479,7 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
         context.set("currentPlacement", positioning.placement)
         const getPositionerEl = () => domEls.positioner(scope)
         return getPlacement(domEls.trigger(scope), getPositionerEl, {
+          arrowSelector: "[data-menu-part=arrow]",
           ...positioning,
           defer: true,
           onComplete(data) {
@@ -606,11 +608,9 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
         typeahead: true,
         ...props,
         positioning: {
-          gutter: 5,
           placement: "bottom-start",
           ...props.positioning,
         },
-        ...props,
       }
     },
     refs() {

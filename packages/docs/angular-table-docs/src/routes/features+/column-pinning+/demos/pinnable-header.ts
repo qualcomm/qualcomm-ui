@@ -2,8 +2,8 @@ import {NgTemplateOutlet} from "@angular/common"
 import {Component, computed, input} from "@angular/core"
 import {ChevronLeft, ChevronRight, X} from "lucide-angular"
 
-import {TableModule} from "@qualcomm-ui/angular/table"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {TableModule} from "@qualcomm-ui/angular/table"
 import type {Header} from "@qualcomm-ui/core/table"
 
 import type {User} from "./data"

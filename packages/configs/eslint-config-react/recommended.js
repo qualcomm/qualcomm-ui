@@ -1,11 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {defineConfig} from "eslint/config"
 import reactPlugin from "eslint-plugin-react"
+import {defineConfig} from "eslint/config"
+
+import {reactPlugins, reactSettings} from "./base.js"
 
 export default defineConfig({
   name: "qui-react-recommended",
+  plugins: {
+    ...reactPlugins,
+  },
   rules: {
     ...reactPlugin.configs.recommended.rules,
     "no-prototype-builtins": "off",
@@ -22,7 +27,6 @@ export default defineConfig({
         ],
       },
     ],
-    "prettier/prettier": "error",
     "react-hooks/exhaustive-deps": [
       "error",
       {
@@ -45,4 +49,5 @@ export default defineConfig({
     "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": ["error", {component: true, html: false}],
   },
+  settings: {...reactSettings},
 })

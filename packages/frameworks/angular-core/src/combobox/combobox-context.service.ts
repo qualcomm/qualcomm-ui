@@ -13,8 +13,9 @@ import type {
   ComboboxValueChangeDetails,
 } from "@qualcomm-ui/core/combobox"
 
-export interface ComboboxValueChangeEvent<T>
-  extends ComboboxValueChangeDetails<T> {
+export interface ComboboxValueChangeEvent<
+  T,
+> extends ComboboxValueChangeDetails<T> {
   value: string[]
 }
 

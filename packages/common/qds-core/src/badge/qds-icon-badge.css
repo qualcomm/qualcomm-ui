@@ -1,4 +1,4 @@
-.qui-badge__root[data-scope="icon-badge"] {
+.qui-badge__root[data-icon-badge-part="root"] {
   &[data-size="xxs"] {
     --icon-radius: var(--border-radius-xs);
     --icon-size: var(--sizing-60);
@@ -48,12 +48,12 @@
   }
 }
 
-.qui-badge__icon[data-scope="icon-badge"] {
+.qui-badge__icon[data-icon-badge-part="icon"] {
   color: var(--icon-color, inherit);
   --icon-size: inherit;
 }
 
-.qui-badge__root[data-scope="icon-badge"] > svg {
+.qui-badge__root[data-icon-badge-part="root"] > svg {
   block-size: var(--icon-size);
   inline-size: var(--icon-size);
 }

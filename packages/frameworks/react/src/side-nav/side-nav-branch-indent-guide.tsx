@@ -9,10 +9,9 @@ import {
 } from "@qualcomm-ui/react-core/tree"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsSideNavApi} from "./qds-side-nav-context"
+import {qdsSideNavApi} from "./qds-side-nav-context.js"
 
-export interface SideNavBranchIndentGuideProps
-  extends CoreTreeBranchIndentGuideProps {}
+export interface SideNavBranchIndentGuideProps extends CoreTreeBranchIndentGuideProps {}
 
 /**
  * Provides a visual guide to the indentation level of the branch's children.

@@ -7,7 +7,7 @@ import {toString} from "hast-util-to-string"
 import type {Plugin} from "unified"
 import {visit} from "unist-util-visit"
 
-import {SlugGenerator} from "../markdown/create-slug"
+import {SlugGenerator} from "../markdown/create-slug.js"
 
 export interface RehypeSlugOptions {
   /**

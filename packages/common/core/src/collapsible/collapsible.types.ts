@@ -4,11 +4,12 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -22,9 +23,10 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
+import type {collapsibleAnatomy} from "./collapsible.anatomy.js"
+
 export interface CollapsibleApiProps
-  extends CommonProperties,
-    DirectionProperty {
+  extends CommonProperties, DirectionProperty {
   /**
    * The initial open state of the collapsible when rendered.
    * Use when you don't need to control the open state of the collapsible.
@@ -106,19 +108,17 @@ export interface CollapsibleSchema extends MachineSchema {
   state: CollapsibleState
 }
 
-export interface CollapsibleCommonBindings extends DirectionProperty {
-  "data-scope": "collapsible"
-}
+type PartName = AnatomyPartName<typeof collapsibleAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"collapsible", P> {}
 
-export interface CollapsibleRootBindings extends CollapsibleCommonBindings {
-  "data-part": "root"
+export interface CollapsibleRootBindings extends Part<"root"> {
   "data-state": CollapsibleState
+  dir: Direction
 }
 
-export interface CollapsibleContentBindings extends CollapsibleCommonBindings {
+export interface CollapsibleContentBindings extends Part<"content"> {
   "data-collapsible": BooleanDataAttr
   "data-disabled": BooleanDataAttr
-  "data-part": "content"
   "data-ssr": BooleanDataAttr
   "data-state": CollapsibleState | undefined
   hidden: boolean
@@ -126,11 +126,10 @@ export interface CollapsibleContentBindings extends CollapsibleCommonBindings {
   style: JSX.CSSProperties
 }
 
-export interface CollapsibleTriggerBindings extends CollapsibleCommonBindings {
+export interface CollapsibleTriggerBindings extends Part<"trigger"> {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "data-disabled": BooleanDataAttr
-  "data-part": "trigger"
   "data-state": CollapsibleState
   id: string
   onClick: JSX.MouseEventHandler

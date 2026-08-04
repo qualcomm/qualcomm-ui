@@ -12,7 +12,6 @@
   border-right: solid var(--border-width-sm) var(--color-border-neutral-02);
   display: flex;
   justify-content: center;
-  min-height: 300px;
   padding: var(--spacing-120);
   position: relative;
 }
@@ -80,6 +79,7 @@ a.qui-component-explorer__part {
 }
 
 .qui-component-explorer__highlight {
+  animation: marching-ants 1s linear infinite;
   background-color: color-mix(
     in srgb,
     var(--color-interactive-border-danger-idle) 10%,
@@ -106,20 +106,20 @@ a.qui-component-explorer__part {
       var(--color-interactive-border-danger-idle) 50%,
       transparent 50%
     );
+  background-position:
+    0 0,
+    100% 100%,
+    0 100%,
+    100% 0;
   background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-size:
     8px var(--border-width-sm),
     8px var(--border-width-sm),
     var(--border-width-sm) 8px,
     var(--border-width-sm) 8px;
-  background-position:
-    0 0,
-    100% 100%,
-    0 100%,
-    100% 0;
   pointer-events: none;
   position: absolute;
-  animation: marching-ants 1s linear infinite;
+  z-index: 2147483647;
 }
 
 @keyframes marching-ants {

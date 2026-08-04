@@ -14,11 +14,10 @@ import {
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsInlineNotificationContextProvider} from "./qds-inline-notification-context"
+import {QdsInlineNotificationContextProvider} from "./qds-inline-notification-context.js"
 
 export interface InlineNotificationRootProps
-  extends CoreInlineNotificationRootProps,
-    QdsNotificationApiProps {}
+  extends CoreInlineNotificationRootProps, QdsNotificationApiProps {}
 
 /**
  * Groups all parts of the notification. Renders a `<div>` element by default.

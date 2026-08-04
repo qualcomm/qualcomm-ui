@@ -1,3 +1,3 @@
-export * from "./select.api"
-export * from "./select.classes"
-export type * from "./select.types"
+export * from "./select.api.js"
+export * from "./select.classes.js"
+export type * from "./select.types.js"

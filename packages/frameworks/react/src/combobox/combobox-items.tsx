@@ -9,9 +9,9 @@ import {type RenderFunction, renderProp} from "@qualcomm-ui/react-core/system"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {CollectionItem} from "@qualcomm-ui/utils/collection"
 
-import {ComboboxItem, type ComboboxItemProps} from "./combobox-item"
-import {ComboboxItemIndicator} from "./combobox-item-indicator"
-import {ComboboxItemText} from "./combobox-item-text"
+import {ComboboxItemIndicator} from "./combobox-item-indicator.js"
+import {ComboboxItemText} from "./combobox-item-text.js"
+import {ComboboxItem, type ComboboxItemProps} from "./combobox-item.js"
 
 export type ComboboxItemRenderProp<T extends CollectionItem> = RenderFunction<
   Omit<ComboboxItemProps<T>, "persistFocus"> & {

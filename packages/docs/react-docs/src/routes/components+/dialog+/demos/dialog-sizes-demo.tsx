@@ -1,8 +1,8 @@
 import type {ReactElement} from "react"
 
+import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 import {Button} from "@qualcomm-ui/react/button"
 import {Dialog, useQdsDialogContext} from "@qualcomm-ui/react/dialog"
-import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 
 export function DialogSizesDemo(): ReactElement {
   return (

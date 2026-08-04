@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Point, RectInit, Size} from "./types"
+import type {Point, RectInit, Size} from "./types.js"
 
 export function isSizeEqual(a: Size, b: Size | undefined): boolean {
   return a.width === b?.width && a.height === b?.height

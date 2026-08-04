@@ -1,9 +1,18 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "types": ["vite/client"],
     "paths": {
+      "@qualcomm-ui/react/table": ["./src/shims/react-table.ts"],
+      "@qualcomm-ui/react-table-original": [
+        "../../frameworks/react/src/table/index.ts"
+      ],
+      "@qualcomm-ui/react/pagination": [
+        "../../frameworks/react/src/pagination/index.ts"
+      ],
+      "@qualcomm-ui/react/inline-icon-button": [
+        "../../frameworks/react/src/inline-icon-button/index.ts"
+      ],
       "@qualcomm-ui/react-docs/*": ["../../docs/react-docs/src/routes/*"],
       "@qualcomm-ui/react-docs-utils/*": ["../../docs/react-docs/src/utils/*"],
       "@qualcomm-ui/react-table-docs/*": ["../../docs/react-table-docs/src/routes/*"],
@@ -16,7 +25,7 @@
   ],
   "references": [
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
     }
   ]
 }

@@ -8,18 +8,17 @@ import {ChevronRight} from "lucide-react"
 import {Collapsible} from "@qualcomm-ui/react/collapsible"
 import {Icon} from "@qualcomm-ui/react/icon"
 
-import {TypeDocProps, type TypeDocPropsProps} from "./type-doc-props"
-import type {ColumnNames} from "./use-typedoc-context"
+import {TypeDocProps, type TypeDocPropsProps} from "./type-doc-props.js"
+import type {ColumnNames} from "./use-typedoc-context.js"
 
-export interface TypeDocAttributesProps
-  extends Omit<
-    TypeDocPropsProps,
-    | "columnNames"
-    | "partial"
-    | "hideDefaultColumn"
-    | "showComponentJsdoc"
-    | "sortRequiredPropsFirst"
-  > {}
+export interface TypeDocAttributesProps extends Omit<
+  TypeDocPropsProps,
+  | "columnNames"
+  | "partial"
+  | "hideDefaultColumn"
+  | "showComponentJsdoc"
+  | "sortRequiredPropsFirst"
+> {}
 
 const cols: ColumnNames = {
   description: "Description",

@@ -43,7 +43,7 @@ decayProcess.stderr?.on("data", (data) => {
 let processExited = false
 let exitCode = null
 
-decayProcess.on("exit", (code, signal) => {
+decayProcess.on("exit", (code, _signal) => {
   processExited = true
   exitCode = code
 })
@@ -82,7 +82,7 @@ if (!isHealthy) {
   if (!processExited && isProcessRunning(pid)) {
     try {
       process.kill(pid, "SIGKILL")
-    } catch (err) {
+    } catch {
       // Ignore kill errors
     }
   }

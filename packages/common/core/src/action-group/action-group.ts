@@ -1,20 +1,21 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart} from "@qualcomm-ui/utils/anatomy"
+
+import {actionGroupAnatomy} from "./action-group.anatomy.js"
+
 /**
  * @deprecated
  */
-export interface ActionGroupRootBindings {
-  "data-part": "root"
-  "data-scope": "action-group"
-}
+export interface ActionGroupRootBindings extends AnatomyPart<
+  "actionGroup",
+  "root"
+> {}
 
 /**
  * @deprecated
  */
 export function getActionGroupRootBindings(): ActionGroupRootBindings {
-  return {
-    "data-part": "root",
-    "data-scope": "action-group",
-  }
+  return actionGroupAnatomy.parts.root
 }

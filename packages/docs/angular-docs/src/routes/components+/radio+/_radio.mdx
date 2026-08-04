@@ -1,13 +1,15 @@
 ---
 title: Radio
-group: Form Controls
 description: Radio buttons are essential form controls that present users with a clear set of options where only one selection is possible at a time.
 component: Radio
 aliases: [option button, radio button]
 ---
 
-import {QdsDemo} from "~components/demo"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -44,9 +46,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### Layout
 
 ::: terms
-reorder
-label position
-custom layout
+reorder, label position, custom layout
 :::
 
 Use the composite API when you need to modify the layout of the radio buttons.
@@ -55,17 +55,14 @@ Use the composite API when you need to modify the layout of the radio buttons.
 
 ### Disabled
 
-When [disabled](./#disabled) is true, the radio group becomes non-interactive and is rendered with reduced opacity to indicate its unavailable state.
+When [disabled](./#disabled-1) is true, the radio group becomes non-interactive and is rendered with reduced opacity to indicate its unavailable state.
 
 <QdsDemo name="RadioDisabledDemo" />
 
 ### Orientation
 
 ::: terms
-horizontal
-vertical
-row
-column
+horizontal, vertical, row, column
 :::
 
 Controls the layout direction of radio buttons within the group.
@@ -75,9 +72,7 @@ Controls the layout direction of radio buttons within the group.
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 The radio supports three [sizes](./#size): `sm`, `md` (default), and `lg`.
@@ -93,8 +88,7 @@ Use [indented](./#indented-1) to indent the radio items.
 ### Hint
 
 ::: terms
-helper text
-description
+helper text, description
 :::
 
 Add a hint to provide additional context for the radio group.
@@ -106,10 +100,7 @@ Add a hint to provide additional context for the radio group.
 ### Template Forms
 
 ::: terms
-ngModel
-template-driven
-FormsModule
-two-way binding
+ngModel, template-driven, FormsModule, two-way binding
 :::
 
 When using template-driven forms with `ngModel`, enable validation by adding the [required](./#required) attribute directly to the template:
@@ -127,9 +118,7 @@ Full example:
 ### Reactive Forms
 
 ::: terms
-FormControl
-FormGroup
-ReactiveFormsModule
+FormControl, FormGroup, ReactiveFormsModule
 :::
 
 Use Reactive Forms instead of Template-driven Forms for better control over form state and validation.
@@ -172,11 +161,70 @@ The Radio's composite components are only intended to be used as direct descenda
 </label>
 ```
 
+## Accessibility
+
+- Always use the associated [label](./#label) or [q-radio-label](./#q-radio-label) directive when authoring each radio item's text label. This is automatically associated with the input element.
+- If you omit a visible item label, give the radio item an accessible name with [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby) on the simple `q-radio`. If you use the composite API, provide `aria-label` or `aria-labelledby` on the `q-radio-hidden-input` element. Avoid `[attr.aria-label]` and `[attr.aria-labelledby]`; use `[aria-label]` or `[aria-labelledby]` for dynamic values.
+
+<QdsDemo name="RadioAriaLabelDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  name="RadioExplorerDemo"
+  parts={[
+    {name: "group", link: "#q-radio-group"},
+    {name: "label", link: "#q-radio-group-label"},
+    {name: "items", link: "#q-radio-group-items"},
+    {name: "item", link: "#q-radio"},
+    {name: "item-control", link: "#q-radio-control"},
+    {name: "item-label", link: "#q-radio-label"},
+    {name: "hint", link: "#q-radio-group-hint"},
+  ]}
+  scope="radio"
+/>
+
 ## API
 
 ### q-radio-group
 
 <TypeDocProps name="RadioGroupDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioGroupBindings", "RadioGroupBindings"]}
+/>
+
+### q-radio-group-label
+
+<TypeDocProps name="RadioGroupLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioGroupLabelBindings", "RadioGroupLabelBindings"]}
+/>
+
+### q-radio-group-items
+
+<TypeDocProps name="RadioGroupItemsDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioGroupItemsBindings", "RadioGroupItemsBindings"]}
+/>
+
+### q-radio-group-hint
+
+<TypeDocProps name="RadioGroupHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioGroupHintBindings", "RadioGroupHintBindings"]}
+/>
+
+### q-radio-group-error-text
+
+<TypeDocProps name="RadioGroupErrorTextComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioGroupErrorTextBindings", "RadioGroupErrorTextBindings"]}
+/>
 
 ### q-radio
 
@@ -189,3 +237,39 @@ The `q-radio` directive supports all props from [q-radio-root](./#q-radio-root) 
 ### q-radio-root
 
 <TypeDocProps name="RadioRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioItemBindings", "RadioItemBindings"]}
+/>
+
+### q-radio-label
+
+<TypeDocProps name="RadioLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioItemLabelBindings", "RadioItemLabelBindings"]}
+/>
+
+### q-radio-control
+
+<TypeDocProps name="RadioControlDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioItemControlBindings", "RadioItemControlBindings"]}
+/>
+
+### q-radio-hidden-input
+
+<TypeDocProps name="RadioHiddenInputDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioItemHiddenInputBindings", "RadioItemHiddenInputBindings"]}
+/>
+
+### q-radio-hint
+
+<TypeDocProps name="RadioHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsRadioItemHintBindings", "RadioItemHintBindings"]}
+/>

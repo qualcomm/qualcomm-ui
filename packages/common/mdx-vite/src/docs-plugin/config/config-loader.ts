@@ -3,10 +3,10 @@
 
 import {type Config, type CosmiconfigResult, cosmiconfigSync} from "cosmiconfig"
 
-import {removeTrailingSlash} from "../path-utils"
+import {removeTrailingSlash} from "../path-utils.js"
 
-import {configSchema} from "./config-schema"
-import type {ResolvedQuiDocsConfig} from "./types"
+import {parseSchema} from "./config-schema.js"
+import type {ResolvedQuiDocsConfig} from "./types.js"
 
 interface LoadedCosmicConfig {
   config: Config
@@ -48,7 +48,7 @@ export class ConfigLoader {
   private resolveConfigFromCosmiconfig(
     config: CosmiconfigResult,
   ): ResolvedQuiDocsConfig {
-    const parsed = configSchema.safeParse(config!.config)
+    const parsed = parseSchema(config!.config)
     if (!parsed.success) {
       console.dir(parsed.error.issues, {depth: 10})
       throw new Error("Failed to parse config file.")
@@ -61,6 +61,7 @@ export class ConfigLoader {
       pageDirectory: conf.pageDirectory
         ? removeTrailingSlash(conf.pageDirectory)
         : "routes",
+      validatePageLinks: conf.validatePageLinks ?? true,
     }
   }
 

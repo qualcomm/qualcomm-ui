@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {PaginationApiProps} from "./pagination.types"
+import type {PaginationApiProps} from "./pagination.types.js"
 
 const paginationProps: (keyof PaginationApiProps)[] =
   createProps<PaginationApiProps>()(

@@ -3,7 +3,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {StepperApiProps} from "./stepper.types"
+import type {StepperApiProps} from "./stepper.types.js"
 
 const stepperProps: (keyof StepperApiProps)[] = createProps<StepperApiProps>()(
   "canGoToStep",

@@ -3,7 +3,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {InlineNotificationApiProps} from "./inline-notification.types"
+import type {InlineNotificationApiProps} from "./inline-notification.types.js"
 
 export const inlineNotificationProps: (keyof InlineNotificationApiProps)[] =
   createProps<InlineNotificationApiProps>()(

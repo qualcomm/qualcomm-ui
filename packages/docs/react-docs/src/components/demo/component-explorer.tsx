@@ -1,14 +1,16 @@
 import type {ReactNode} from "react"
 
-import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {
   ComponentExplorerBase,
   type ComponentExplorerBaseProps,
 } from "@qualcomm-ui/react-mdx/component-explorer"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
+import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 
-interface ComponentExplorerProps
-  extends Omit<ComponentExplorerBaseProps, "children"> {
+interface ComponentExplorerProps extends Omit<
+  ComponentExplorerBaseProps,
+  "children"
+> {
   component: () => ReactNode
 }
 

@@ -1,2 +1,2 @@
-export * from "./shiki-highlighter"
-export * from "./shiki-instance"
+export * from "./shiki-highlighter.js"
+export * from "./shiki-instance.js"

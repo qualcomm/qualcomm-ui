@@ -4,18 +4,19 @@
 import type {ReactElement} from "react"
 
 import type {QdsHeaderBarNavItemProps} from "@qualcomm-ui/qds-core/header-bar"
-import type {ButtonProps} from "@qualcomm-ui/react/button"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import type {ButtonProps} from "@qualcomm-ui/react/button"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsHeaderBarApi} from "./qds-header-bar-context"
+import {qdsHeaderBarApi} from "./qds-header-bar-context.js"
 
 export interface HeaderBarNavItemProps
-  extends ElementRenderProp<"button">,
+  extends
+    ElementRenderProp<"button">,
     QdsHeaderBarNavItemProps,
     Pick<ButtonProps, "endIcon" | "startIcon"> {}
 

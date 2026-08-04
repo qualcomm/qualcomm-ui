@@ -1,12 +1,15 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {IdRegistrationProps} from "@qualcomm-ui/utils/machine"
+
+import type {fieldAnatomy} from "./field.anatomy.js"
 
 /**
  * The field is primarily used to wire up accessibility for its elements.
@@ -37,39 +40,35 @@ export interface FieldApiProps extends DirectionProperty {
   required?: boolean | undefined
 }
 
-interface CommonBindings extends Required<DirectionProperty> {
-  "data-scope": "field"
-}
+type PartName = AnatomyPartName<typeof fieldAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"field", P> {}
 
-export interface FieldRootBindings extends CommonBindings {
+export interface FieldRootBindings extends Part<"root"> {
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "root"
   "data-readonly": BooleanDataAttr
+  dir: Direction
   role: "group"
 }
 
-export interface FieldLabelBindings extends CommonBindings {
+export interface FieldLabelBindings extends Part<"label"> {
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "label"
   "data-required": BooleanDataAttr
   htmlFor: string
   id: string
 }
 
-export interface FieldHintBindings extends CommonBindings {
+export interface FieldHintBindings extends Part<"hint"> {
   "data-disabled": BooleanDataAttr
-  "data-part": "hint"
   id: string
 }
 
-export interface FieldControlBindings extends CommonBindings {
+export interface FieldControlBindings extends Part<"control"> {
   "aria-describedby": string | undefined
   "aria-invalid": BooleanAriaAttr
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "control"
   "data-required": BooleanDataAttr
   disabled: boolean
   id: string
@@ -77,16 +76,14 @@ export interface FieldControlBindings extends CommonBindings {
   required: BooleanDataAttr
 }
 
-export interface FieldErrorTextBindings extends CommonBindings {
+export interface FieldErrorTextBindings extends Part<"errorText"> {
   "aria-live": "polite"
   "data-disabled": BooleanDataAttr
-  "data-part": "error-text"
   id: string
 }
 
-export interface FieldRequiredIndicatorBindings extends CommonBindings {
+export interface FieldRequiredIndicatorBindings extends Part<"requiredIndicator"> {
   "aria-hidden": BooleanAriaAttr
-  "data-part": "required-indicator"
 }
 
 export interface FieldApi {

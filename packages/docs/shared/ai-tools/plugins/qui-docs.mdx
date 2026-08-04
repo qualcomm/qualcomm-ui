@@ -1,0 +1,24 @@
+---
+title: QUI Docs
+---
+
+# {frontmatter.title}
+
+Use the QUI Documentation Authoring plugin to draft, revise, or review QUI Docs pages with the repository's documentation rules loaded into the agent. The plugin provides two documentation-specific skills:
+
+- **write-docs**: guidelines for creating or revising MDX pages
+- **review-docs**: guidelines for reviewing MDX pages
+
+## Installation
+
+- Enable the QUI plugin marketplace for your agent
+  - [Claude Code](/ai-tools/claude-code)
+  - [Codex](/ai-tools/codex)
+- Browse the agent's plugin repository and enable **qui-docs**.
+- Start a fresh session after enabling **qui-docs** so the skills load into the conversation.
+
+Refer to the [plugin source code](https://github.com/qualcomm/qualcomm-ui/tree/main/plugins/qui-docs/references) to learn more.
+
+## Troubleshoot plugin usage
+
+If the agent does not load a `qui-docs:*` skill, confirm that **qui-docs** is enabled in the agent's plugin repository. Then start a fresh session.

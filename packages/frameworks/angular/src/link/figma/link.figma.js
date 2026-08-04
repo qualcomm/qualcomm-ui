@@ -14,6 +14,7 @@ const emphasis = instance.getEnum("emphasis", {
   neutral: "neutral",
   "white-persistent": "white-persistent",
 })
+const label = instance.getString("label") || "Action"
 const size = instance.getEnum("size", {
   lg: "lg",
   md: "md",
@@ -24,24 +25,58 @@ const size = instance.getEnum("size", {
 const startIcon = instance.getBoolean("startIcon")
 const endIcon = instance.getBoolean("endIcon")
 
+const figmaSize = instance.getString("size")
+const swapSize =
+  figmaSize === "xs" || figmaSize === "sm"
+    ? "Xs"
+    : figmaSize === "xxl"
+      ? "Md"
+      : "Sm"
+
+const startIconInstance = startIcon
+  ? instance.getInstanceSwap(`startIcon${swapSize}`)
+  : undefined
+const endIconInstance = endIcon
+  ? instance.getInstanceSwap(`endIcon${swapSize}`)
+  : undefined
+
+const startIconName = startIconInstance
+  ? toLucideName(startIconInstance.name)
+  : "File"
+const endIconName = endIconInstance
+  ? toLucideName(endIconInstance.name)
+  : "ChevronRight"
+
 const disabledAttr = disabled ? " disabled" : ""
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 const sizeAttr = size ? ` size="${size}"` : ""
-const startIconAttr = startIcon ? ` startIcon="File"` : ""
-const endIconAttr = endIcon ? ` endIcon="ChevronRight"` : ""
+const startIconAttr = startIcon ? ` startIcon="${startIconName}"` : ""
+const endIconAttr = endIcon ? ` endIcon="${endIconName}"` : ""
 
-const example = figma.code`<a${disabledAttr}${emphasisAttr}${endIconAttr} href="#" q-link${sizeAttr}${startIconAttr}>Action</a>`
+const icons = [
+  ...new Set(
+    [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
+  ),
+]
+
+const example = figma.code`<a${disabledAttr}${emphasisAttr}${endIconAttr} href="#" q-link${sizeAttr}${startIconAttr}>${label}</a>`
 
 export default {
   example,
   id: "Link",
   imports: [
     `import {LinkDirective} from "@qualcomm-ui/angular/link"`,
-    ...(startIcon || endIcon
-      ? [
-          `import {${[startIcon && "File", endIcon && "ChevronRight"].filter(Boolean).join(", ")}} from "lucide-angular"`,
-        ]
+    ...(icons.length > 0
+      ? [`import {${icons.join(", ")}} from "lucide-angular"`]
       : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

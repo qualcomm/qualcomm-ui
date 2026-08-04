@@ -4,10 +4,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Cell, Row, RowData, TableInstance} from "../types"
-import {flattenBy, memo} from "../utils"
+import type {Cell, Row, RowData, TableInstance} from "../types.js"
+import {flattenBy, memo} from "../utils.js"
 
-import {createCell} from "./cell"
+import {createCell} from "./cell.js"
 
 export interface CoreRow<TData extends RowData> {
   /** @internal */

@@ -1,14 +1,11 @@
 {
   "name": "@qualcomm-ui/angular-core",
-  "version": "2.1.0",
-  "description": "Design-agnostic Angular building blocks and utilities.",
-  "author": "Ryan Bower",
-  "license": "BSD-3-Clause-Clear",
-  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "version": "2.4.7",
   "private": true,
-  "publishConfig": {
-    "access": "public"
-  },
+  "description": "Design-agnostic Angular building blocks and utilities.",
+  "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "sideEffects": false,
   "exports": {
@@ -18,9 +15,12 @@
       "default": "./dist/fesm2022/qualcomm-ui-angular-core-*.mjs"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "ng": "ng",
-    "build": "ng-packagr -p src/ng-package.json -c tsconfig.lib.json",
+    "build": "ng build",
     "dev": "pnpm build --watch",
     "lint": "eslint --quiet",
     "test": "vitest --run --pool=forks",
@@ -36,11 +36,11 @@
     "@analogjs/platform": "catalog:",
     "@analogjs/vite-plugin-angular": "catalog:",
     "@analogjs/vitest-angular": "catalog:",
-    "@angular/animations": "catalog:",
-    "@angular/build": "catalog:",
     "@angular-devkit/architect": "catalog:",
     "@angular-devkit/build-angular": "catalog:",
     "@angular-devkit/core": "catalog:",
+    "@angular/animations": "catalog:",
+    "@angular/build": "catalog:",
     "@angular/cdk": "catalog:",
     "@angular/cdk-experimental": "catalog:",
     "@angular/cli": "catalog:",
@@ -58,13 +58,13 @@
     "@floating-ui/dom": "^1.7.0",
     "@jsdevtools/coverage-istanbul-loader": "~3.0.5",
     "@module-federation/enhanced": "0.21.2",
-    "@qualcomm-ui/core": "workspace:^1.7.0",
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/dom": "workspace:^1.0.11",
-    "@qualcomm-ui/tailwind-plugin": "workspace:^1.7.0",
+    "@qualcomm-ui/core": "workspace:^1.11.7",
+    "@qualcomm-ui/dom": "workspace:^1.1.5",
+    "@qualcomm-ui/tailwind-plugin": "workspace:^1.9.0",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/utils": "workspace:^1.2.2",
-    "@tailwindcss/vite": "^4.2.2",
+    "@qualcomm-ui/utils": "workspace:^1.3.2",
+    "@tailwindcss/vite": "catalog:",
     "@tanstack/virtual-core": "^3.13.12",
     "@testing-library/angular": "^19.1.0",
     "@types/mocha": "^10.0.10",
@@ -72,20 +72,19 @@
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
-    "execa": "^9.6.0",
+    "execa": "catalog:",
     "lucide-angular": "0.569.0",
     "ng-packagr": "catalog:",
-    "playwright": "1.56.1",
+    "playwright": "^1.60.0",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~7.8.0",
-    "shx": "^0.4.0",
-    "tailwindcss": "^4.1.17",
+    "shx": "catalog:",
+    "tailwindcss": "catalog:",
     "ts-node": "^10.9.2",
     "tslib": "~2.5.3",
     "tsx": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "catalog:"
   },
   "peerDependencies": {
@@ -96,23 +95,23 @@
     "@angular/forms": ">=21.2 <23",
     "@angular/platform-browser": ">=21.2 <23",
     "@angular/platform-browser-dynamic": ">=21.2 <23",
-    "@qualcomm-ui/core": "workspace:^1.7.0",
-    "@qualcomm-ui/dom": "workspace:^1.0.11",
-    "@qualcomm-ui/utils": "workspace:^1.2.2",
+    "@qualcomm-ui/core": "workspace:^1.11.7",
+    "@qualcomm-ui/dom": "workspace:^1.1.5",
+    "@qualcomm-ui/utils": "workspace:^1.3.2",
     "@tanstack/virtual-core": ">=3.13.12",
     "lucide-angular": ">=0.569.0 <1",
     "typescript": ">=5.9.3 <7"
   },
   "nyc": {
-    "reporter": [
-      "cobertura",
-      "html"
-    ],
     "extension": [
       ".js",
       ".cjs",
       ".mjs",
       ".ts"
+    ],
+    "reporter": [
+      "cobertura",
+      "html"
     ]
   }
 }

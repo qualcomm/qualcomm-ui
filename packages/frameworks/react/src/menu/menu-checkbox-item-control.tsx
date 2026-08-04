@@ -3,15 +3,15 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {CheckmarkIcon} from "@qualcomm-ui/react/checkmark"
 import {useMenuOptionItemControl} from "@qualcomm-ui/react-core/menu"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {CheckmarkIcon} from "@qualcomm-ui/react/checkmark"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsMenuContext} from "./qds-menu-context"
+import {useQdsMenuContext} from "./qds-menu-context.js"
 
 export interface MenuCheckboxItemControlProps extends ElementRenderProp<"div"> {
   /**

@@ -2,9 +2,9 @@ import {type ReactNode, useCallback, useEffect, useRef} from "react"
 
 import {MoonIcon, SunIcon} from "lucide-react"
 
+import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 import {IconButton} from "@qualcomm-ui/react/button"
 import {Icon} from "@qualcomm-ui/react/icon"
-import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 export function ThemeToggle(): ReactNode {
   const [theme, setTheme] = useTheme()

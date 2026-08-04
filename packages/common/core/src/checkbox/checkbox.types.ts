@@ -5,11 +5,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -22,10 +23,10 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
+import type {checkboxAnatomy} from "./checkbox.anatomy.js"
+
 export interface CheckboxApiProps
-  extends FieldApiProps,
-    CommonProperties,
-    DirectionProperty {
+  extends FieldApiProps, CommonProperties, DirectionProperty {
   /**
    * The controlled checked state of the checkbox
    */
@@ -134,10 +135,6 @@ export interface CheckboxSchema extends MachineSchema {
   state: "idle"
 }
 
-export interface CheckboxScopeAttribute {
-  "data-scope": "checkbox"
-}
-
 export interface CheckboxDataBindings {
   "data-active": BooleanDataAttr
   "data-disabled": BooleanDataAttr
@@ -149,13 +146,12 @@ export interface CheckboxDataBindings {
   "data-state": "checked" | "indeterminate" | "unchecked"
 }
 
-interface CommonBindings
-  extends Required<DirectionProperty>,
-    CheckboxScopeAttribute,
-    CheckboxDataBindings {}
+type PartName = AnatomyPartName<typeof checkboxAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"checkbox", P> {}
 
-export interface CheckboxRootBindings extends CommonBindings {
-  "data-part": "root"
+export interface CheckboxRootBindings
+  extends Part<"root">, CheckboxDataBindings {
+  dir: Direction
   htmlFor: string | undefined
   id: string
   onClick: JSX.MouseEventHandler
@@ -163,39 +159,39 @@ export interface CheckboxRootBindings extends CommonBindings {
   onPointerMove: JSX.PointerEventHandler
 }
 
-export interface CheckboxLabelBindings extends CommonBindings {
-  "data-part": "label"
+export interface CheckboxLabelBindings
+  extends Part<"label">, CheckboxDataBindings {
   id: string
 }
 
-export interface CheckboxControlBindings extends CommonBindings {
+export interface CheckboxControlBindings
+  extends Part<"control">, CheckboxDataBindings {
   "aria-hidden": BooleanAriaAttr
-  "data-part": "control"
   id: string
 }
 
-export interface CheckboxIndicatorBindings extends CommonBindings {
-  "data-part": "indicator"
+export interface CheckboxIndicatorBindings
+  extends Part<"indicator">, CheckboxDataBindings {
   hidden: boolean
 }
 
-export interface CheckboxErrorTextBindings extends CommonBindings {
+export interface CheckboxErrorTextBindings
+  extends Part<"errorText">, CheckboxDataBindings {
   "aria-live": "polite"
-  "data-part": "error-text"
   hidden: boolean
   id: string
 }
 
-export interface CheckboxHintBindings extends CommonBindings {
-  "data-part": "hint"
+export interface CheckboxHintBindings
+  extends Part<"hint">, CheckboxDataBindings {
   hidden: boolean
   id: string
 }
 
-export interface CheckboxHiddenInputBindings extends CommonBindings {
+export interface CheckboxHiddenInputBindings
+  extends Part<"hiddenInput">, CheckboxDataBindings {
   "aria-invalid": BooleanAriaAttr
   "aria-labelledby": string | undefined
-  "data-part": "hidden-input"
   defaultChecked: boolean
   disabled: boolean | undefined
   form?: string

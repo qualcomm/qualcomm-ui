@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {afterAll, beforeAll} from "vitest"
+
 import "./react-styles.css"
 
 const originalError = console.error

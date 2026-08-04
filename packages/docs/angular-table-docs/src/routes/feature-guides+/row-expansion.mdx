@@ -89,7 +89,7 @@ export class ExampleComponent {
 }
 ```
 
-> [note!]
+> [!note]
 > `getSubRows` executes for every row and sub-row. It must be synchronous, and should be performant.
 
 ### Custom Expanding UI
@@ -142,6 +142,7 @@ If you need to control the expanded state of the rows in your table, you can do 
 
 ```ts
 import {signal} from "@angular/core"
+
 import {createAngularTable} from "@qualcomm-ui/angular/table"
 import type {ExpandedState} from "@qualcomm-ui/core/table"
 
@@ -184,12 +185,7 @@ Use the QUI `ButtonModule` to render an expand/collapse button:
 
 ```angular-html
 @if (row.getCanExpand()) {
-  <button
-    q-button
-    variant="ghost"
-    size="sm"
-    (click)="row.toggleExpanded()"
-  >
+  <button q-button variant="ghost" size="sm" (click)="row.toggleExpanded()">
     @if (row.getIsExpanded()) {
       <lucide-icon name="ChevronDown" />
     } @else {
@@ -254,7 +250,7 @@ By default, expanded rows are paginated with the rest of the table and may span 
 
 ::: spoiler Show visualization
 
-```
+```txt
 paginateExpandedRows: true          paginateExpandedRows: false
 ┌─────────────────┐                 ┌─────────────────┐
 │ Page 1 (size:5) │                 │ Page 1 (size:5) │
@@ -289,7 +285,7 @@ export class ExampleComponent {
 
 ### Pinning Expanded Rows
 
-Pinning expanded rows works the same way as pinning regular rows. You can pin expanded rows to the top or bottom of the table. Please refer to the [Pinning Guide](../pinning.md) for more information on row pinning.
+Pinning expanded rows works the same way as pinning regular rows. You can pin expanded rows to the top or bottom of the table. Please refer to the [Pinning Guide](/feature-guides/column-pinning) for more information on row pinning.
 
 ### Sorting Expanded Rows
 

@@ -1,0 +1,43 @@
+{
+  "name": "@qualcomm-ui/oxfmt-config",
+  "version": "1.0.1",
+  "description": "QUI Oxfmt config for consistent code formatting",
+  "keywords": [
+    "config",
+    "formatter",
+    "oxfmt"
+  ],
+  "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "files": [
+    "index.d.ts",
+    "index.js"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "catalog:",
+    "@qualcomm-ui/tsconfig": "catalog:",
+    "oxfmt": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "oxfmt": ">=0.51.0"
+  }
+}

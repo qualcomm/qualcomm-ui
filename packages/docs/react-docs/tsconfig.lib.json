@@ -1,7 +1,6 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -16,24 +15,37 @@
       "@qualcomm-ui/mdx-vite/react-demo-plugin",
     ],
     "paths": {
-      // fixes WebStorm usage detection, not used otherwise
-      "~assets/*": ["./src/assets/*"],
       "~components/*": ["./src/components/*"],
       "~utils/*": ["./src/utils/*"],
     }
   },
   "include": [
-    "./src"
+    "./src",
   ],
   "references": [
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-vite/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
+    },
     {
       "path": "../../frameworks/react/tsconfig.lib.json"
     },
     {
-      "path": "../../frameworks/react-mdx/tsconfig.lib.json"
+      "path": "../../frameworks/react-core/tsconfig.lib.json"
     },
     {
-      "path": "../../common/mdx-vite/tsconfig.lib.json"
+      "path": "../../frameworks/react-mdx/tsconfig.lib.json"
     }
   ]
 }

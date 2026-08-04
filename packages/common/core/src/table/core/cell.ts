@@ -11,8 +11,8 @@ import type {
   Row,
   RowData,
   TableInstance,
-} from "../types"
-import {type Getter, memo} from "../utils"
+} from "../types.js"
+import {type Getter, memo} from "../utils.js"
 
 export interface CellContext<
   TData extends RowData,
@@ -101,9 +101,9 @@ export function createCell<TData extends RowData, TValue>(
     row,
   }
 
-  table._features.forEach((feature) => {
+  for (const feature of table._features) {
     feature.createCell?.(cell as Cell<TData, TValue>, column, row, table)
-  }, {})
+  }
 
   return cell as Cell<TData, TValue>
 }

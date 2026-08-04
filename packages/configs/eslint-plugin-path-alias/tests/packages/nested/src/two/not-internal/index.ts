@@ -1,1 +1,1 @@
-export * from "./file"
+export type * from "./file"

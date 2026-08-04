@@ -43,7 +43,7 @@ function getStepEndMatch(text: string) {
   return text.match(/^:::\s*\/steps\s*$/)
 }
 
-export function isStepBlock(text: string) {
+export function isStepBlock(text: string): boolean {
   return !!(getStepStartMatch(text) || getStepEndMatch(text))
 }
 

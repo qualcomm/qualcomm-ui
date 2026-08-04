@@ -1,18 +1,17 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {PageSection} from "../docs-plugin.types"
+import type {PageSection} from "../docs-plugin.types.js"
 
 export interface FormattedContent {
   content: string
   highlight?: boolean
 }
 
-export interface SearchResultFields
-  extends Pick<
-    PageSection,
-    "heading" | "title" | "categories" | "id" | "isDocProp"
-  > {
+export interface SearchResultFields extends Pick<
+  PageSection,
+  "heading" | "title" | "categories" | "id" | "isDocProp"
+> {
   content?: FormattedContent[]
   headingLevel?: number
   href: string

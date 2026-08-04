@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {SideNavModule} from "@qualcomm-ui/angular/side-nav"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 import {collection, icons} from "./items"
 import {QLogoComponent} from "./q-logo.component"

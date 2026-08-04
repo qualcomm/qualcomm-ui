@@ -5,6 +5,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {Point} from "@qualcomm-ui/dom/rect-utils"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -19,6 +20,8 @@ import type {
   IdRegistrationProps,
   JSX,
 } from "@qualcomm-ui/utils/machine"
+
+import type {sliderAnatomy} from "./slider.anatomy.js"
 
 export interface SliderElementIds {
   control: string
@@ -290,17 +293,17 @@ export interface ThumbProps {
 
 type Orientation = "vertical" | "horizontal"
 
-interface CommonBindings extends DirectionProperty {
-  "data-scope": "slider"
-}
+type PartName = AnatomyPartName<typeof sliderAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"slider", P> {}
 
-export interface SliderControlBindings extends CommonBindings {
+export interface SliderControlBindings
+  extends Part<"control">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-dragging": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "control"
+  "data-readonly": BooleanDataAttr
   id: string
   max: number
   min: number
@@ -308,24 +311,24 @@ export interface SliderControlBindings extends CommonBindings {
   style: JSX.CSSProperties
 }
 
-export interface SliderThumbIndicatorBindings extends CommonBindings {
+export interface SliderThumbIndicatorBindings
+  extends Part<"thumbIndicator">, DirectionProperty {
   "data-orientation": Orientation | undefined
-  "data-part": "thumb-indicator"
   role: "presentation"
   style: JSX.CSSProperties
 }
 
-export interface SliderErrorTextBindings extends CommonBindings {
+export interface SliderErrorTextBindings
+  extends Part<"errorText">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-dragging": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "error-text"
   hidden: boolean
   id: string
 }
 
-export interface SliderHiddenInputBindings extends CommonBindings {
+export interface SliderHiddenInputBindings extends DirectionProperty {
   defaultValue: number
   form: string | undefined
   hidden: boolean
@@ -334,33 +337,34 @@ export interface SliderHiddenInputBindings extends CommonBindings {
   type: "text"
 }
 
-export interface SliderHintBindings extends CommonBindings {
+export interface SliderHintBindings extends Part<"hint">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-dragging": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "hint"
+  "data-readonly": BooleanDataAttr
   hidden: boolean
   id: string
 }
 
-export interface SliderLabelBindings extends CommonBindings {
+export interface SliderLabelBindings extends Part<"label">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-dragging": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "label"
+  "data-readonly": BooleanDataAttr
   htmlFor: string | undefined
   id: string
   onClick: JSX.MouseEventHandler
   style: JSX.CSSProperties
 }
 
-export interface SliderMarkerBindings extends CommonBindings {
+export interface SliderMarkerBindings
+  extends Part<"marker">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "marker"
+  "data-readonly": BooleanDataAttr
   "data-state": "over-value" | "under-value" | "at-value"
   "data-value": number
   id: string
@@ -368,37 +372,37 @@ export interface SliderMarkerBindings extends CommonBindings {
   style: JSX.CSSProperties
 }
 
-export interface SliderMarkerGroupBindings extends CommonBindings {
+export interface SliderMarkerGroupBindings
+  extends Part<"markerGroup">, DirectionProperty {
   "aria-hidden": true
   "data-orientation": Orientation | undefined
-  "data-part": "marker-group"
   role: "presentation"
   style: JSX.CSSProperties
 }
 
-export interface SliderRangeBindings extends CommonBindings {
+export interface SliderRangeBindings extends Part<"range">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-dragging": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "range"
+  "data-readonly": BooleanDataAttr
   id: string
   style: JSX.CSSProperties
 }
 
-export interface SliderRootBindings extends CommonBindings {
+export interface SliderRootBindings extends Part<"root">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-dragging": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "root"
+  "data-readonly": BooleanDataAttr
   id: string
   style: JSX.CSSProperties
 }
 
-export interface SliderThumbBindings extends CommonBindings {
+export interface SliderThumbBindings extends Part<"thumb">, DirectionProperty {
   "aria-describedby": string | undefined
   "aria-disabled": BooleanAriaAttr
   "aria-label": string | undefined
@@ -414,7 +418,7 @@ export interface SliderThumbBindings extends CommonBindings {
   "data-index": number
   "data-name": string | undefined
   "data-orientation": Orientation | undefined
-  "data-part": "thumb"
+  "data-readonly": BooleanDataAttr
   draggable: boolean
   id: string
   onBlur: JSX.FocusEventHandler
@@ -426,40 +430,43 @@ export interface SliderThumbBindings extends CommonBindings {
   tabIndex: number | undefined
 }
 
-export interface SliderTrackBindings extends CommonBindings {
+export interface SliderTrackBindings extends Part<"track">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-dragging": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "track"
+  "data-readonly": BooleanDataAttr
   id: string
   style: JSX.CSSProperties
 }
 
-export interface SliderValueTextBindings extends CommonBindings {
+export interface SliderValueTextBindings
+  extends Part<"valueText">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "value-text"
+  "data-readonly": BooleanDataAttr
   id: string
   value: number[]
 }
 
-export interface SliderMinMarkerBindings extends CommonBindings {
+export interface SliderMinMarkerBindings
+  extends Part<"min">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "min"
+  "data-readonly": BooleanDataAttr
   "data-value": number
   id: string
   role: "presentation"
 }
 
-export interface SliderMaxMarkerBindings extends CommonBindings {
+export interface SliderMaxMarkerBindings
+  extends Part<"max">, DirectionProperty {
   "data-disabled": BooleanDataAttr
   "data-orientation": Orientation | undefined
-  "data-part": "max"
+  "data-readonly": BooleanDataAttr
   "data-value": number
   id: string
   role: "presentation"

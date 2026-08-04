@@ -33,11 +33,11 @@ import {
   type CoreComboboxRootProps,
   CoreComboboxTrigger,
   type CoreComboboxTriggerProps,
-} from "./core-combobox"
+} from "./core-combobox.js"
 
-export * from "./combobox-context"
-export * from "./combobox-item-context"
-export * from "./combobox-item-group-context"
+export * from "./combobox-context.js"
+export * from "./combobox-item-context.js"
+export * from "./combobox-item-group-context.js"
 
 export type {
   CoreComboboxRootProps,

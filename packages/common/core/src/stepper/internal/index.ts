@@ -1,2 +1,2 @@
-export * from "./is-valid-step-navigation"
-export * from "./stepper.dom"
+export * from "./is-valid-step-navigation.js"
+export * from "./stepper.dom.js"

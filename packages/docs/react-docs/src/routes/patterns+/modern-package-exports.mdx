@@ -55,10 +55,8 @@ Consider the following scenario which uses lazy loading to load different routes
 ```typescript
 // RouteA.tsx
 import {Button} from "@qualcomm-ui/react"
-
 // RouteB.tsx
 import {Dialog} from "@qualcomm-ui/react"
-
 // RouteC.tsx
 import {Input} from "@qualcomm-ui/react"
 ```
@@ -70,10 +68,8 @@ The problem with this is that modern bundlers see that multiple lazy routes impo
 ```typescript
 // RouteA.tsx
 import {Button} from "@qualcomm-ui/react/button" // only loads button module
-
 // RouteB.tsx
 import {Dialog} from "@qualcomm-ui/react/dialog" // only loads dialog module
-
 // RouteC.tsx
 import {Input} from "@qualcomm-ui/react/input" // only loads input module
 ```

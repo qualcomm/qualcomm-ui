@@ -1,2 +1,2 @@
-export * from "./create-fallback-route-loader"
-export * from "./hybrid-routes"
+export * from "./create-fallback-route-loader.js"
+export * from "./hybrid-routes.js"

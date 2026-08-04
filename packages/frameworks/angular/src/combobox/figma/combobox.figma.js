@@ -32,10 +32,13 @@ const size = instance.getEnum("size", {
   sm: "sm",
 })
 
+const iconInstance = startIcon ? instance.getInstanceSwap("iconXs") : undefined
+const iconName = iconInstance ? toLucideName(iconInstance.name) : "Layers"
+
 const disabledAttr = disabled ? " disabled" : ""
 const errorTextAttr = invalid ? ` errorText="Error message"` : ""
 const hintAttr = hint ? ` hint="${hint}"` : ""
-const iconAttr = startIcon ? ` icon="Layers"` : ""
+const iconAttr = startIcon ? ` icon="${iconName}"` : ""
 const invalidAttr = invalid ? " invalid" : ""
 const labelAttr = label ? ` label="${label}"` : ` aria-label="Select an option"`
 const readOnlyAttr = readOnly ? " readOnly" : ""
@@ -51,7 +54,15 @@ export default {
   id: "Combobox",
   imports: [
     `import {ComboboxModule} from "@qualcomm-ui/angular/combobox"`,
-    ...(startIcon ? [`import {Layers} from "lucide-angular"`] : []),
+    ...(startIcon ? [`import {${iconName}} from "lucide-angular"`] : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

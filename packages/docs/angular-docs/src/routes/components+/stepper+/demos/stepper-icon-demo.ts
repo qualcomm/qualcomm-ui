@@ -7,10 +7,10 @@ import {
   User,
 } from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {StepperModule} from "@qualcomm-ui/angular/stepper"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [StepperModule, ButtonModule, IconDirective],

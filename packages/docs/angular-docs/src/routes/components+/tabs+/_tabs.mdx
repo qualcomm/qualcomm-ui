@@ -1,12 +1,11 @@
 ---
 title: Tabs
-group: Disclosure
 description: Tabs provide top-level navigation for switching between related views or sections within the same context. They use a minimal, low-chrome visual treatment defined primarily by a selection indicator beneath the active tab.
 component: Tabs
 aliases: [tabbed interface, tab panel]
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -35,8 +34,7 @@ The default [orientation](./#orientation) is horizontal. The left and right arro
 ### Vertical
 
 ::: terms
-stacked tabs
-sidebar tabs
+stacked tabs, sidebar tabs
 :::
 
 In vertical [orientation](./#orientation), the up and down arrow keys are used instead.
@@ -51,7 +49,7 @@ Tabs support start and end icons. Customize the variant with the [iconVariant](.
 
 ### Controlled Value
 
-The tab's active value can be controlled via the [value](./#value), [onValueChange](./#onValueChange), and [defaultValue](./#defaultValue) properties. These props follow our [controlled state](/patterns/controlled-state) pattern.
+The tab's active value can be controlled via the [value](./#value), [valueChanged](./#valueChanged), and [defaultValue](./#defaultValue) properties. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 <QdsDemo name="TabsControlledValueDemo" />
 
@@ -60,11 +58,7 @@ The tab's active value can be controlled via the [value](./#value), [onValueChan
 #### Line
 
 ::: terms
-underline tabs
-small
-medium
-large
-extra large
+underline tabs, small, medium, large, extra large
 :::
 
 The line [variant](./#variant) supports four [sizes](./#size): `sm`, `md`, `lg`, and `xl`
@@ -74,10 +68,7 @@ The line [variant](./#variant) supports four [sizes](./#size): `sm`, `md`, `lg`,
 #### Contained
 
 ::: terms
-pill tabs
-segmented control
-small
-medium
+pill tabs, segmented control, small, medium
 :::
 
 The contained [variant](./#variant) supports only two sizes: `sm` and `md`
@@ -91,14 +82,15 @@ The contained [variant](./#variant) supports only two sizes: `sm` and `md`
 
 Disable specific tabs with the [disabled](./#disabled-1) prop on the `<Tab.Root>` component.
 
-<QdsDemo wrapperProps={{className: "bg-neutral-02"}} name="TabsDisabledDemo" />
+<QdsDemo
+  wrapperProps={{className: "bg-neutral-02"}}
+  name="TabsDisabledDemo"
+/>
 
 ### URL Search Parameters
 
 ::: terms
-deep linking
-shareable URL
-query string
+deep linking, shareable URL, query string
 :::
 
 The following example demonstrates how to render tabs that sync with the Angular router's query parameters.
@@ -108,26 +100,45 @@ The following example demonstrates how to render tabs that sync with the Angular
 ### Context
 
 ::: terms
-programmatic tab selection
-imperative API
-setValue
+programmatic tab selection, imperative API, setValue
 :::
 
 Use the `tabsContext` structural directive to access the tabs API from the template.
 
 <QdsDemo name="TabsContextDemo" />
 
-### Add and Remove Tabs
+### Dismissable Tabs
 
 ::: terms
-closable tabs
-close button
-dismissible
+closable tabs, close button, dismissible
 :::
 
 Use the `q-tab-dismiss-button` directive to make tabs removable. Combine with component state to create a dynamic tab interface where users can add and close tabs.
 
 <QdsDemo name="TabsAddRemoveDemo" />
+
+### Dismissable Tabs (Contained)
+
+When using the `contained` tab [variant](./#variant), the dismiss icon only shows on hover.
+
+<QdsDemo name="TabsAddRemoveContainedDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-tabs"
+  name="TabsExplorerDemo"
+  parts={[
+    "root",
+    "list",
+    {name: "tab", link: "#q-tab-root"},
+    {name: "tab-button", link: "#q-tab-button"},
+    {name: "tab-dismiss-button", link: "#q-tab-dismiss-button"},
+    "indicator",
+    "panel",
+  ]}
+  scope="tabs"
+/>
 
 ## API
 
@@ -137,13 +148,17 @@ Use the `q-tab-dismiss-button` directive to make tabs removable. Combine with co
 
 <TypeDocProps name="TabsRootDirective" />
 
-<TypeDocAngularAttributes name={["QdsTabsRootBindings", "TabsRootBindings"]} />
+<TypeDocAngularAttributes
+  name={["QdsTabsRootBindings", "TabsRootBindings"]}
+/>
 
 #### q-tabs-list
 
 <TypeDocProps name="TabsListDirective" />
 
-<TypeDocAngularAttributes name={["QdsTabsListBindings", "TabsListBindings"]} />
+<TypeDocAngularAttributes
+  name={["QdsTabsListBindings", "TabsListBindings"]}
+/>
 
 #### q-tabs-indicator
 
@@ -177,7 +192,9 @@ This directive is automatically rendered by the `q-tabs-list` directive. It can 
 
 <TypeDocProps name="TabRootDirective" />
 
-<TypeDocAngularAttributes name={["QdsTabsTabBindings", "TabsTabBindings"]} />
+<TypeDocAngularAttributes
+  name={["QdsTabsTabBindings", "TabsTabBindings"]}
+/>
 
 #### q-tab-button
 

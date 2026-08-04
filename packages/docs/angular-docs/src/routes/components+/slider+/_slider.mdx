@@ -1,6 +1,5 @@
 ---
 title: Slider
-group: Form Controls
 description: A slider is an input control that allows users to adjust a single value or a value range along a defined linear scale. It provides a draggable handle mapped to a continuous or discrete interval.
 component: Slider
 aliases: [range slider, range picker]
@@ -45,8 +44,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### Min/Max/Step
 
 ::: terms
-scale
-interval
+scale, interval
 :::
 
 Use [min](./#min), [max](./#max), and [step](./#step) to control the slider's value range and increments:
@@ -63,7 +61,7 @@ Use [min](./#min), [max](./#max), and [step](./#step) to control the slider's va
 fill direction
 :::
 
-Use [origin](./#origin) to control where the track is filled from for single-value sliders:
+Use [origin](./#origin-1) to control where the track is filled from for single-value sliders:
 
 - `start`: Fills from the start of the track to the thumb. Useful when the value represents an absolute value (default).
 - `center`: Fills from the center of the track to the thumb. Useful when the value represents an offset or relative value.
@@ -74,8 +72,7 @@ Use [origin](./#origin) to control where the track is filled from for single-val
 ### Tooltip
 
 ::: terms
-value indicator
-thumb label
+value indicator, thumb label
 :::
 
 Use [tooltip](./#tooltip-1) to display the slider's value in a tooltip rather than above the component.
@@ -84,7 +81,7 @@ Use [tooltip](./#tooltip-1) to display the slider's value in a tooltip rather th
 
 #### Display
 
-You can customize the tooltip's content by using the [composite API](./#thumbs-with-tooltips) and passing a function to [display](./#display-5) on the `q-slider-thumb-indicator` component.
+You can customize the tooltip's content by using the [composite API](./#thumbs-with-tooltips) and passing a function to [display](./#display-4) on the `q-slider-thumb-indicator` component.
 
 <QdsDemo name="SliderTooltipDisplayDemo" />
 
@@ -114,8 +111,7 @@ For more compact designs, you can display the `min` and `max` markers at the end
 ### Range
 
 ::: terms
-dual thumb
-two handles
+dual thumb, two handles
 :::
 
 Set [value](./#value) or [defaultValue](./#defaultValue) with two values to create a range slider.
@@ -179,10 +175,7 @@ Use [valueChanged](./#valueChanged) or [valueChangedEnd](./#valueChangedEnd) to 
 ### Template Forms
 
 ::: terms
-ngModel
-template-driven
-FormsModule
-two-way binding
+ngModel, template-driven, FormsModule, two-way binding
 :::
 
 #### States
@@ -191,7 +184,7 @@ two-way binding
 form control state
 :::
 
-When using template forms, the [disabled](./#disabled), [readOnly](./#readOnly), and [invalid](./#invalid) properties govern the interactive state of the control.
+When using template forms, the [disabled](./#disabled-1), [readOnly](./#readOnly), and [invalid](./#invalid) properties govern the interactive state of the control.
 
 <QdsDemo name="SliderTemplateFormStateDemo" />
 
@@ -204,19 +197,16 @@ This example shows a range slider where values must be at least 30 units apart.
 ### Reactive Forms
 
 ::: terms
-FormControl
-FormGroup
-ReactiveFormsModule
+FormControl, FormGroup, ReactiveFormsModule
 :::
 
 #### State Guidelines
 
 ::: terms
-form control state
-Validators
+form control state, Validators
 :::
 
-The [disabled](./#disabled) and [invalid](./#invalid) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+The [disabled](./#disabled-1) and [invalid](./#invalid) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
 
 <QdsDemo name="SliderReactiveFormStatesDemo" />
 

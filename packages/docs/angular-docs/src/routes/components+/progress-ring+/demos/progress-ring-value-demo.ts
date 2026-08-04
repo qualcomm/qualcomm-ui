@@ -1,9 +1,9 @@
 import {Component, signal} from "@angular/core"
 import {Minus, Plus} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [ProgressRingModule, ButtonModule],

@@ -3,7 +3,7 @@
 
 import type {ShikiTransformer} from "shiki"
 
-import {removeCodeAnnotations} from "./utils"
+import {removeCodeAnnotations} from "./utils.js"
 
 export interface TransformerCodeAttributeOptions {
   /**

@@ -23,7 +23,7 @@ export interface JsonSchemaProps {
   fn?: any
   getComponent: GetComponent
   keyName: any
-  onChange?: Function
+  onChange?: (value: any, item2?: any) => void
   required: boolean
   schema: any
   value: any

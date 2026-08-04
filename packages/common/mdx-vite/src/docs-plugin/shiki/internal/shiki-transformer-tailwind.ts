@@ -72,9 +72,7 @@ export function extractClasses(source: string): string[] {
     }
   })
 
-  return classes
-    .values()
-    .toArray()
+  return Array.from(classes)
     .map((value) => value.split(" "))
     .flat()
 }

@@ -1,3 +1,3 @@
-export * from "./drawer.api"
-export * from "./drawer.classes"
-export type * from "./drawer.types"
+export * from "./drawer.api.js"
+export * from "./drawer.classes.js"
+export type * from "./drawer.types.js"

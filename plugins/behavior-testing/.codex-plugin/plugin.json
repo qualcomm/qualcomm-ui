@@ -1,0 +1,42 @@
+{
+  "name": "behavior-testing",
+  "version": "1.0.0",
+  "description": "Behavior testing workflows for React and Angular contributors.",
+  "author": {
+    "name": "Qualcomm UI Maintainers",
+    "url": "https://github.com/qualcomm/qualcomm-ui"
+  },
+  "homepage": "https://github.com/qualcomm/qualcomm-ui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "license": "BSD-3-Clause-Clear",
+  "keywords": [
+    "codex",
+    "testing",
+    "react",
+    "angular",
+    "components",
+    "vitest",
+    "browser-mode",
+    "behavior-testing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Behavior Testing",
+    "shortDescription": "Write and review tests around public behavior.",
+    "longDescription": "Provides skills for React and Angular tests, including component-focused variants, that assert public behavior, accessible contracts, forms, callbacks, and user interactions instead of implementation details.",
+    "developerName": "Qualcomm UI Maintainers",
+    "category": "Development",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Review"
+    ],
+    "websiteURL": "https://github.com/qualcomm/qualcomm-ui",
+    "defaultPrompt": [
+      "Use $react-testing or $angular-testing for framework tests.",
+      "Use component testing skills for React or Angular components.",
+      "Use $vitest-browser-testing for Vitest Browser tests."
+    ],
+    "brandColor": "#2A2AEA"
+  }
+}

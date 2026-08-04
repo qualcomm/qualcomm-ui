@@ -1,1 +1,1 @@
-export * from "./combobox.dom"
+export * from "./combobox.dom.js"

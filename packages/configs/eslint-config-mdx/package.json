@@ -1,47 +1,114 @@
 {
   "name": "@qualcomm-ui/eslint-config-mdx",
-  "version": "1.1.0",
+  "version": "3.0.3",
   "description": "QUI ESLint config for consistent MDX code",
-  "author": "Ryan Bower",
+  "keywords": [
+    "config",
+    "eslint",
+    "react"
+  ],
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "files": [
+    "dist/",
+    ".remarkrc"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./remarkrc": {
+      "types": "./dist/remarkrc.d.ts",
+      "import": "./dist/remarkrc.js",
+      "default": "./dist/remarkrc.js"
+    },
+    "./remark-lint-code-format": {
+      "types": "./dist/remark-lint-code-format.d.ts",
+      "import": "./dist/remark-lint-code-format.js",
+      "default": "./dist/remark-lint-code-format.js"
+    },
+    "./remark-lint-mdx-jsx-format": {
+      "types": "./dist/remark-lint-mdx-jsx-format.d.ts",
+      "import": "./dist/remark-lint-mdx-jsx-format.js",
+      "default": "./dist/remark-lint-mdx-jsx-format.js"
+    },
+    "./remark-preserve-alert-markers": {
+      "types": "./dist/remark-preserve-alert-markers.d.ts",
+      "import": "./dist/remark-preserve-alert-markers.js",
+      "default": "./dist/remark-preserve-alert-markers.js"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
-  "sideEffects": false,
-  "files": [
-    "index.d.ts",
-    "index.js",
-    "recommended.js"
-  ],
-  "main": "index.js",
-  "module": "index.js",
-  "types": "index.d.ts",
   "scripts": {
-    "prepublishOnly": "qui-cli pre-publish",
+    "build": "run-s clean build:js build:types",
+    "build:js": "vite build",
+    "build:types": "tsc -p tsconfig.lib.json",
+    "build:watch": "run-p watch:js watch:types",
+    "watch:js": "vite build -w",
+    "watch:types": "tsc -p tsconfig.lib.json -w --preserveWatchOutput",
+    "clean": "shx rm -rf dist node_modules/.tmp",
+    "lint": "eslint --quiet",
+    "test": "turbo build --filter @qualcomm-ui/eslint-config-mdx && vitest -c vitest.config.ts --run",
+    "test:unit:ci": "pnpm build && cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads --no-file-parallelism",
+    "prepublishOnly": "pnpm build && qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
     "@eslint/core": "^1.0.0",
     "@qualcomm-ui/cli": "catalog:",
-    "eslint-mdx": "^3.4.1",
-    "eslint-plugin-mdx": "^3.4.1",
-    "eslint-plugin-prettier": "^5.4.0",
-    "eslint-plugin-react": "^7.37.5"
+    "@qualcomm-ui/tsconfig": "catalog:",
+    "@qualcomm-ui/vite": "catalog:",
+    "cross-env": "^10.1.0",
+    "eslint-mdx": "^3.7.0",
+    "eslint-plugin-mdx": "^3.7.0",
+    "eslint-plugin-react": "^7.37.5",
+    "npm-run-all2": "catalog:",
+    "oxfmt": "catalog:",
+    "remark-frontmatter": "^5.0.0",
+    "remark-lint-fenced-code-flag": "^4.2.0",
+    "remark-lint-final-newline": "^3.0.1",
+    "remark-lint-heading-increment": "^4.0.1",
+    "remark-lint-list-item-content-indent": "^4.0.1",
+    "remark-lint-list-item-indent": "^4.0.1",
+    "remark-lint-maximum-heading-length": "^4.1.1",
+    "remark-lint-no-consecutive-blank-lines": "^5.0.1",
+    "remark-lint-no-duplicate-headings-in-section": "^4.0.1",
+    "remark-lint-no-heading-punctuation": "^4.0.1",
+    "remark-lint-unordered-list-marker-style": "^4.0.1",
+    "shx": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "unified": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "eslint": ">=9.37.0",
-    "eslint-mdx": ">=3.4.1",
-    "eslint-plugin-mdx": ">=3.4.1",
-    "eslint-plugin-prettier": ">=5.2.6",
+    "eslint-mdx": ">=3.7.0",
+    "eslint-plugin-mdx": ">=3.7.0",
     "eslint-plugin-react": ">=7.37.5",
-    "typescript": ">=5.0.0",
-    "typescript-eslint": ">=8.31.1"
-  },
-  "keywords": [
-    "eslint",
-    "config",
-    "react"
-  ]
+    "oxfmt": ">=0.51.0",
+    "remark-frontmatter": ">=5.0.0",
+    "remark-lint-fenced-code-flag": ">=4.2.0",
+    "remark-lint-final-newline": ">=3.0.1",
+    "remark-lint-heading-increment": ">=4.0.1",
+    "remark-lint-list-item-content-indent": ">=4.0.1",
+    "remark-lint-list-item-indent": ">=4.0.1",
+    "remark-lint-maximum-heading-length": ">=4.1.1",
+    "remark-lint-no-consecutive-blank-lines": ">=5.0.1",
+    "remark-lint-no-duplicate-headings-in-section": ">=4.0.1",
+    "remark-lint-no-heading-punctuation": ">=4.0.1",
+    "remark-lint-unordered-list-marker-style": ">=4.0.1",
+    "typescript": ">=5.9.3",
+    "typescript-eslint": ">=8.31.1",
+    "unified": ">=11"
+  }
 }

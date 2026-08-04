@@ -35,11 +35,14 @@ const size = instance.getEnum("size", {
 const errorText = invalid ? instance.getString("errorText") : undefined
 const inputText = selected ? instance.getString("inputText") : undefined
 
+const iconInstance = startIcon ? instance.getInstanceSwap("iconXs") : undefined
+const iconName = iconInstance ? toLucideName(iconInstance.name) : "Layers"
+
 const defaultValueAttr = inputText ? ` [defaultValue]="['${inputText}']"` : ""
 const disabledAttr = disabled ? " disabled" : ""
 const errorTextAttr = errorText ? ` errorText="${errorText}"` : ""
 const hintAttr = hint ? ` hint="${hint}"` : ""
-const iconAttr = startIcon ? ` icon="Layers"` : ""
+const iconAttr = startIcon ? ` icon="${iconName}"` : ""
 const invalidAttr = invalid ? " invalid" : ""
 const labelAttr = label ? ` label="${label}"` : ` aria-label="Select an option"`
 const readOnlyAttr = readOnly ? " readOnly" : ""
@@ -55,7 +58,15 @@ export default {
   id: "Select",
   imports: [
     `import {SelectModule} from "@qualcomm-ui/angular/select"`,
-    ...(startIcon ? [`import {Layers} from "lucide-angular"`] : []),
+    ...(startIcon ? [`import {${iconName}} from "lucide-angular"`] : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

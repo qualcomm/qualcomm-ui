@@ -1,13 +1,19 @@
-import {RadioContext, type RadioContextProps} from "./radio-context"
-import {RadioGroup as SimpleRadioGroup} from "./radio-group"
+import {RadioContext, type RadioContextProps} from "./radio-context.js"
 import {
   RadioGroupErrorText,
   type RadioGroupErrorTextProps,
-} from "./radio-group-error-text"
-import {RadioGroupHint, type RadioGroupHintProps} from "./radio-group-hint"
-import {RadioGroupItems, type RadioGroupItemsProps} from "./radio-group-items"
-import {RadioGroupLabel, type RadioGroupLabelProps} from "./radio-group-label"
-import {RadioGroupRoot, type RadioGroupRootProps} from "./radio-group-root"
+} from "./radio-group-error-text.js"
+import {RadioGroupHint, type RadioGroupHintProps} from "./radio-group-hint.js"
+import {
+  RadioGroupItems,
+  type RadioGroupItemsProps,
+} from "./radio-group-items.js"
+import {
+  RadioGroupLabel,
+  type RadioGroupLabelProps,
+} from "./radio-group-label.js"
+import {RadioGroupRoot, type RadioGroupRootProps} from "./radio-group-root.js"
+import {RadioGroup as SimpleRadioGroup} from "./radio-group.js"
 
 export type {
   RadioContextProps,

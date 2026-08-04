@@ -1,4 +1,8 @@
-import {Avatar, type AvatarImageProps} from "@qualcomm-ui/react/avatar"
+import {
+  Avatar,
+  type AvatarImageProps,
+  type AvatarRootProps,
+} from "@qualcomm-ui/react/avatar"
 
 export const testIds = {
   avatarContent: "avatar-content",
@@ -7,9 +11,17 @@ export const testIds = {
   avatarStatus: "avatar-status",
 } as const
 
-export function TestAvatar({src}: AvatarImageProps) {
+export interface TestAvatarProps
+  extends
+    Pick<AvatarImageProps, "src">,
+    Pick<AvatarRootProps, "onStateChange"> {}
+
+export function TestAvatar({onStateChange, src}: TestAvatarProps) {
   return (
-    <Avatar.Root data-test-id={testIds.avatarRoot}>
+    <Avatar.Root
+      data-test-id={testIds.avatarRoot}
+      onStateChange={onStateChange}
+    >
       <Avatar.Image
         alt="John Doe"
         data-test-id={testIds.avatarImage}

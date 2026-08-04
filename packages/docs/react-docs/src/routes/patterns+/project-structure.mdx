@@ -7,10 +7,13 @@ import {SliceIsolationTree} from "./demos/slice-isolation-tree"
 
 # {frontmatter.title}
 
+Use this project structure to separate application composition, business workflows, domain concepts, and external data access. The recommendations are adapted from [Feature-Sliced Design](https://feature-sliced.design/).
+
 > [!tip/Disclaimer]
 > These recommendations were developed for internal Qualcomm use and are now available for general reference. They reflect our experience and may not be applicable to every situation.
 
-Our recommended project structure is adapted from [Feature-Sliced Design](https://feature-sliced.design/).
+> [!note]
+> This guide was updated in 2026 to reflect changing industry standards. Barrel files are no longer recommended, and segment rules have been loosened for better DX.
 
 The FSD methodology is based on three levels of abstraction:
 
@@ -20,19 +23,19 @@ The FSD methodology is based on three levels of abstraction:
 
 ### 1. Layers
 
-A layer is a top-level directory and the first level of application decomposition. In FSD, there are 6 layers:
+A layer is a top-level directory and the first level of application decomposition. This structure uses seven layers:
 
 - **app**: This is where the application logic is initialized. Providers, routers, global styles, etc. are defined here. It serves as the entry point of the application.
 - **pages**: This layer includes the application's pages.
 - **widgets**: These are standalone UI components used on pages.
-- **features**: This layer deals with user scenarios and functionality that carries business value. For example, likes, writing reviews, rating products, etc.
-- **entities**: This layer represents business entities. These entities can include users, reviews, comments, etc.
-- **data**: The majority of your application's API calls and external data contracts should live at this layer.
-- **shared**: This layer contains reusable components and utilities that are not tied to specific business logic. It includes UI kit, axios configuration, application configuration, and helpers that are not bound to business logic, etc.
+- **features**: This layer groups code for cohesive business capabilities and workflow-specific responsibilities. A feature may coordinate entities, data operations, UI state, and business rules when the application needs that boundary.
+- **entities**: This layer represents domain concepts such as users, reviews, and comments.
+- **data**: This layer organizes access to external data by business domain.
+- **shared**: This layer contains reusable components, transport infrastructure, configuration, and utilities that are not tied to specific business logic.
 
 These layers help organize the codebase and promote modular, maintainable, and scalable architecture.
 
-##### Risk of Change
+#### Risk of Change
 
 - **Higher layers**: Changes here impact the entire system. They require thorough testing and validation.
 - **Lower layers**: Changes can ripple upward. Modifying a lower layer may affect multiple higher layers. Therefore, altering lower layers involves more risk.
@@ -43,30 +46,33 @@ In summary, **higher layers** bear more responsibility and knowledge, while **lo
 
 **Slices** represent a way to organize code within a **layer**. They group together files that implement specific functionality related to the business logic.
 
-##### Purpose and Scope
+#### Purpose and Scope
 
 - **Functionality**: Slices focus on a particular aspect of the application's functionality. For example, you might have slices for user authentication, data processing, or reporting.
 - **Project Context**: The impact of slices depends on the specific project. Some projects may have many slices, while others might have only a few.
 
-##### Implementation
+#### Implementation
 
 - **Folder Structure**: Slices are typically organized as folders or directories. Each slice contains related files, such as controllers, models, and views.
 - **Module Isolation**: By grouping related files together, slices promote modularity and maintainability. Changes within a slice should have no impact on other slices in the same layer.
 
 ### 3. Segments
 
-**Segments** are divisions within a slice. Each segment is responsible for a distinct part of the slice's functionality:
+**Segments** are divisions within a slice. They aren't always required, particularly if your slice only contains a few files. Each segment is responsible for a distinct part of the slice's functionality:
 
-- `api/` – This is where API services are defined for communicating with external services.
-- `assets/` - media assets like images and videos.
-- `model/` – type definitions and services, contains the majority of the slice's business logic.
-- `ui/` – ui components, responsible for displaying data.
-- `index.ts` – barrel file. This is the public entrypoint for the slice. Any code within the slice that is intended to be used by higher layers must be exported here.
+- `assets/` – media assets like images and videos.
+- `model/` – local state, business rules, and presentation types.
+- `ui/` – UI components responsible for displaying data.
 
-##### Characteristics
+Data slices can also contain an `api/` segment for API methods, queries, mutations, external interfaces, and validation schemas.
+
+> [!note]
+> If a slice is small enough, you can omit segments entirely. Use segments when the slice is large enough to warrant separation.
+
+#### Characteristics
 
 - **Independent Units**: Each segment is responsible for a distinct part of the module's technical implementation.
-- **Focused Scope**: Segments handle specific tasks, such as data processing (model), data display (ui), or communication with external services (api).
+- **Focused Scope**: Segments handle specific tasks, such as data processing (`model`), data display (`ui`), or, within Data, communication with external services (`api`).
 
 ## Layer Guidelines
 
@@ -76,39 +82,27 @@ The App layer contains the overall initialization logic of the application – v
 
 ### Pages
 
-Pages represent the individual routes or screens within the application. Each page should maintain a minimalist structure, delegating the business logic to the underlying layers. As such, a page is a composition of widgets and/or features, which groups related operations.
+Pages represent the individual routes or screens within the application. Each page should maintain a minimalist structure, delegating the business logic to the underlying layers. As such, a page groups related operations through a composition of widgets, features, and entities.
 
 ### Widgets
 
-Widgets are independent and full-featured blocks of pages with specific actions. It consists of self-sufficient UI blocks that emerge from the composition of lower-level units like entities and features.
+Widgets are independent and full-featured blocks of pages with specific actions. It consists of self-sufficient UI blocks that emerge from the composition of lower-level units like entities and features. It may also be used as an organizational layer to satisfy layer constraints.
 
-So, while Entities and Features define individual models and operations, Widgets bring them all together to form cohesive, reusable modules. This layer provides a way to avoid duplicating implementation of parts that often tend to re-occur on different pages of the same application.
-
-However, it's important to note that the Widgets layer is a compositional layer and **does not typically contain business logic**.
+However, it's important to note that the Widgets layer is a compositional layer and **does not typically contain business logic** on its own. Business logic is typically organized in features and entities.
 
 ### Features
 
-Features are parts of the application's functionality. This layer acts upon the entities and is responsible for tasks such as creating, reading, updating, and deleting them (commonly known as CRUD operations). The distinction between Features and Entities might seem ambiguous, but it can be clarified as follows:
+Treat the Features layer as a responsibility boundary for business capabilities and workflows. A feature slice groups code that belongs together in a specific business context. Depending on the context, it may combine entities, data operations, UI state, and business rules, but it does not need to contain all of them.
 
-- an `entity` is a real-life concept, such as a **Product** or **User**.
-- A `feature` is functionality that provides business value, like **CreateProduct** or **FindUser**.
+Use these distinctions as guidelines:
 
-Example: City and Product are entities, whereas SearchByCity and BuyProduct are features.
+- An entity represents a reusable domain concept, such as a **Product** or **User**, together with state, rules, types, or presentation.
+- A feature represents behavior or state that belongs to a business capability or workflow, such as **CommentComposer**, **ProductComparison**, or **CheckoutEligibility**.
+- A widget composes entities and features into a substantial page block without becoming the default owner of their business rules.
 
-> [!Note]
-> Try to keep the bulk of your business and API logic in the Features and Entities layers. API logic should be separated granularly for maximum flexibility.
+Features often support user-facing actions, but they do not need to be directly user-triggered. For example, a `CommentComposer` might own draft state, validation, and submission, while a `ProductComparison` feature might group selected products and comparison rules without performing a mutation.
 
-Let's consider a few examples:
-
-##### 1. Social Network Application
-
-In a social network application, the features could be `SendComment`, `LikePost`, and `JoinGroup`. The `SendComment` feature might involve operations like creating a new comment, updating a comment, or deleting a comment. Similarly, the `LikePost` feature might involve operations like liking a post, unliking a post, etc.
-
-##### 2. E-commerce Application
-
-In an e-commerce application, the features could be `AddToCart`, `PlaceOrder`, and `UpdateCustomerDetails`. The `AddToCart` feature might involve operations like adding a product to the cart, updating the quantity of a product in the cart, or removing a product from the cart.
-
-Remember, features are the "actions" that are used to build the business logic of your application. They encapsulate the most critical business rules that operate on the data. The Features layer is implemented together with the Entities layer, which contains the application-specific business logic.
+Choose the boundary that keeps a responsibility cohesive. Keep concept-specific behavior in Entities, workflow-specific behavior in Features, and page-block composition in Widgets.
 
 ### Entities
 
@@ -116,61 +110,110 @@ Entities are the components related to the representation of business entities, 
 
 Each slice in this layer contains some or all of the following:
 
-- static UI elements
-- type definitions
-- CRUD (Create, Read, Update, Delete) operations.
+- simple UI elements
+- state and business rules, like jotai atoms and their selectors
+- domain-specific calculations and state transformations
 
-Let's consider a few examples:
+Note that models and state for a particular domain may also be in the Data layer.
 
-##### 1. Social Network Application
-
-In a social network application, the entities could be `User`, `Post`, and `Group`. The `User` entity might contain functionality like creating a new user, updating user information, or deleting a user. Similarly, the `Post` entity might include functionality related to creating, updating, or deleting a post.
-
-##### 2. E-commerce Application
-
-In an e-commerce application, the entities could be `Product`, `Order`, and `Customer`. The `Product` entity might contain functionality like adding a new product, updating product details, or removing a product from the catalog.
+Consider the following example:
 
 #### Segments
 
-- `api/`: If external data is tightly coupled to a particular entity, then CRUD operations can be defined here.
-  - Examples: retrieving posts from an API endpoint.
-- `model/`: Type definitions within entities should correspond to the data being fed into the UI components or acted on by related features.
-- `ui/`: UI components within entities should be simple templates with Input properties for content and Output properties to emit events, if necessary.
+- `model/`: Entity state, computed values, and the input and output types used by related UI and features.
+- `ui/`: UI components within entities accept props for content and callback props for interactions.
 
-When designing UI components in the **entities** layer, it's essential to avoid tightly coupling them to specific API services.
+When designing UI components in the **entities** layer, keep their interfaces shallow and focused on the domain data they present.
 
-##### 1. Tight Coupling Limits Flexibility
+#### Pass Data Through Props
 
-If a UI component directly depends on a specific API service, any changes to that service can ripple through the entire UI layer. This makes your UI components less flexible and harder to maintain.
+A feature, widget, or page can use the data layer and map the result to an entity component's properties. The component remains focused on rendering the domain concept regardless of where the data originated.
 
-Instead of tightly binding UI components to API services, keep them decoupled. This way, you can switch data sources or services without affecting the UI components.
-
-##### 2. Example: a Product UI Component
-
-- Imagine you have a `Product` UI component that displays product information (e.g., name, price, description).
-- **Don't**: Embed API calls or data-fetching logic directly within the `Product` component. Avoid making HTTP requests or database queries here.
-- **Do**: Keep the `Product` component shallow and focused on rendering. It should accept **input properties** (props) that map to the product's data fields (e.g., `productName`, `productPrice`, `productDescription`).
-- By doing this, any feature or part of your application can use the `Product` component, regardless of where the product data comes from (API, local storage, etc.).
-
-##### 3. Benefits of Shallow UI Components
+#### Benefits of Shallow UI Components
 
 - **Flexibility**: You can easily swap out the data source (e.g., switch from an API to a local database) without modifying the UI component.
 - **Testability**: Shallow components are simpler to test because they focus solely on rendering and don't contain complex logic.
 - **Reusability**: A well-defined `Product` component can be reused across different features or screens.
 
-Remember, keeping your UI components decoupled from specific data services promotes a more modular and maintainable architecture.
+#### Example: E-commerce Application
+
+In an e-commerce application, the entities could be `Product` and `Order`. The `Product` entity might render a product name, derive availability labels, and provide a product summary or card.
+
+If product selection is shared across workflows, the Product entity can own that state. Both `ProductSearch` and `OrderCheckout` import the atom from the entity layer, so the feature slices remain isolated from each other.
+
+`entities/product/model/selected-product.ts`:
+
+```ts
+import {atom} from "jotai"
+
+export interface Product {
+  id: string
+  name: string
+}
+
+export const selectedProductAtom = atom<Product | null>(null)
+```
+
+`features/product-search/product-search.tsx`:
+
+```tsx
+import {useSetAtom} from "jotai"
+
+import {
+  selectedProductAtom,
+  type Product,
+} from "~entities/product/model/selected-product"
+
+interface ProductSearchProps {
+  results: Product[]
+}
+
+export function ProductSearch({results}: ProductSearchProps) {
+  const selectProduct = useSetAtom(selectedProductAtom)
+
+  return (
+    <ul>
+      {results.map((product) => (
+        <li key={product.id}>
+          <button onClick={() => selectProduct(product)} type="button">
+            Select {product.name}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+`features/order-checkout/order-checkout.tsx`:
+
+```tsx
+import {useAtomValue} from "jotai"
+
+import {selectedProductAtom} from "~entities/product/model/selected-product"
+
+export function OrderCheckout() {
+  const selectedProduct = useAtomValue(selectedProductAtom)
+
+  if (!selectedProduct) {
+    return <p>Select a product before checking out.</p>
+  }
+
+  return <button type="button">Checkout {selectedProduct.name}</button>
+}
+```
 
 ### Data
 
 The default FSD structure does not include a data layer, but we have added one for clarity. While FSD recommends placing API logic in the shared layer, this approach complicates the separation by business entity. The constructs in the shared layer are designed to be agnostic and not tied to any specific business entity.
 
-The majority of your application's API calls should live at this layer.
+All external data operations and their contracts live in the Data layer. This includes interfaces for external payloads, validation schemas, API methods, queries, and mutations. Organize data slices by business domain and expose their supported operations and validated results through each slice's public entrypoint.
 
 ### Shared
 
-When creating a slice, you have to assess whether business entities are going to be used in the module. If not, the module should be named in the most abstract way possible and placed in Shared. Otherwise, be specific in the module's name, indicating the business entity or feature it implements, and place it into the Entities or Features layer. Smart, sensible naming plays an important role in this methodology.
+Shared contains business-agnostic primitives. Name shared modules by their technical responsibility, such as `table-filters`, `config`, or `auth`, rather than by a business entity or workflow.
 
-The Shared layer is a great spot for base API services. Since this layer should remain free of specific business logic, its services are meant to provide a connection to the API endpoints that can be consumed by other layers.
+Generic transport infrastructure, such as an HTTP client, request serialization, and common error handling, belongs in Shared. Data-layer slices use that infrastructure to implement domain-specific API methods.
 
 ## Rules
 
@@ -191,7 +234,7 @@ FSD organizes code based on its responsibility and dependencies. It achieves thi
 | data     | shared                                           | app, pages, widgets, features, entities       |
 | shared   |                                                  | app, pages, widgets, features, entities, data |
 
-The lower a slice is in the hierarchy, the riskier it is to refactor. For example, changing an API connector in the `shared` layer can significantly impact the entire application.
+The lower a slice is in the hierarchy, the riskier it is to refactor. For example, changing transport infrastructure in the `shared` layer can significantly impact the entire application.
 
 ### Slice Isolation
 
@@ -199,17 +242,3 @@ Slices are simply subfolders of a layer. Each slice represents a specific thing,
 
 - Slices of the same layer cannot use each other directly.
   - The `data` and `shared` layers are exempt from this restriction.
-- In most cases, avoid nesting folders in slices.
-
-Consider an example entity, the `User`.
-
-`User` has two distinct classifications, varying just enough to warrant separation into multiple slices:
-
-- `Internal User`
-- `External User`
-
-While you could technically nest both of these classifications under the same slice, it's cleaner to separate them into multiple slices, like so:
-
-<SliceIsolationTree />
-
-This helps to keep each slice self-contained.

@@ -6,10 +6,12 @@ import type {
   QdsNotificationEmphasis,
 } from "@qualcomm-ui/qds-core/inline-notification"
 
-import type {toastClasses} from "./toast.classes"
+import type {toastClasses} from "./toast.classes.js"
 
-export interface QdsToastApiProps
-  extends Pick<QdsNotificationApiProps, "emphasis"> {}
+export interface QdsToastApiProps extends Pick<
+  QdsNotificationApiProps,
+  "emphasis"
+> {}
 
 type ToastClasses = typeof toastClasses
 

@@ -11,7 +11,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsCheckboxContext} from "./qds-checkbox-context"
+import {useQdsCheckboxContext} from "./qds-checkbox-context.js"
 
 export interface CheckboxLabelProps extends IdProp, ElementRenderProp<"span"> {
   /**

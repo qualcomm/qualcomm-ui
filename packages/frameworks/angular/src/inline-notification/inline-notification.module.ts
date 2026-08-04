@@ -3,9 +3,9 @@
 
 import {NgModule} from "@angular/core"
 
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
-import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 
 import {InlineNotificationActionDirective} from "./inline-notification-action.directive"
 import {InlineNotificationCloseButtonDirective} from "./inline-notification-close-button.directive"

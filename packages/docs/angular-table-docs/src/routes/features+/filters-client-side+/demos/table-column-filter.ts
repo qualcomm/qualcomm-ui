@@ -22,6 +22,7 @@ import {MinMaxNumberFilter} from "./min-max-number-filter"
       <app-min-max-number-filter [column]="column()" />
     } @else {
       <q-text-input
+        aria-label="Search"
         class="w-32"
         placeholder="Search..."
         size="sm"

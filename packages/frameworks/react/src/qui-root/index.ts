@@ -1,1 +1,1 @@
-export * from "./qui-root"
+export * from "./qui-root.js"

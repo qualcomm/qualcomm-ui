@@ -4,9 +4,9 @@
 import {Component, computed} from "@angular/core"
 import {X} from "lucide-angular"
 
-import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CorePasswordInputClearTriggerDirective} from "@qualcomm-ui/angular-core/password-input"
+import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 
 @Component({
   providers: [provideIcons({X})],

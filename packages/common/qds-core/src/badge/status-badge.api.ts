@@ -4,12 +4,15 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {badgeClasses} from "./badge.classes"
+import {badgeClasses} from "./badge.classes.js"
+import {statusBadgeAnatomy} from "./status-badge.anatomy.js"
 import type {
   QdsStatusBadgeApi,
   QdsStatusBadgeProps,
   QdsStatusBadgeRootBindings,
-} from "./status-badge.types"
+} from "./status-badge.types.js"
+
+const parts = statusBadgeAnatomy.parts
 
 export function createQdsStatusBadgeApi(
   props: QdsStatusBadgeProps,
@@ -18,12 +21,10 @@ export function createQdsStatusBadgeApi(
   return {
     getRootBindings(): QdsStatusBadgeRootBindings {
       return normalize.element({
+        ...parts.root,
         className: badgeClasses.root,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-emphasis": props.emphasis || "neutral",
-        "data-overflow": booleanDataAttr(false),
-        "data-part": "root",
-        "data-scope": "status-badge",
         "data-size": props.size || "md",
         "data-variant": props.variant || "filled",
       })

@@ -3,7 +3,7 @@
 
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import type {SideNavSchema} from "./side-nav.types"
+import type {SideNavSchema} from "./side-nav.types.js"
 
 export const sideNavMachine: MachineConfig<SideNavSchema> =
   createMachine<SideNavSchema>({

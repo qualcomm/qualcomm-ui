@@ -30,7 +30,9 @@ export function useOnDestroyWhen(
         console.debug("onDestroyWhen", debugOpts.current.debugName)
       }
 
-      cleanupCallbacks.current.forEach((callback) => callback())
+      for (const callback of cleanupCallbacks.current) {
+        callback()
+      }
       cleanupCallbacks.current = []
     }
   }, [shouldDestroy])
@@ -41,7 +43,9 @@ export function useOnDestroyWhen(
       if (debugOpts.current?.debugName) {
         console.debug("onDestroy", debugOpts.current.debugName)
       }
-      cleanupCallbacks.current.forEach((callback) => callback())
+      for (const callback of cleanupCallbacks.current) {
+        callback()
+      }
       cleanupCallbacks.current = [] // Clear the callbacks after executing them
     }
   }, [])

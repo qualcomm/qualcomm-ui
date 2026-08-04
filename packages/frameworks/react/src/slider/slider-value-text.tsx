@@ -11,11 +11,10 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSliderContext} from "./qds-slider-context"
+import {useQdsSliderContext} from "./qds-slider-context.js"
 
 export interface SliderValueTextProps
-  extends IdProp,
-    ElementRenderProp<"output"> {
+  extends IdProp, ElementRenderProp<"output"> {
   /**
    * How to display range values: a separator string or a function that receives the
    * value array and returns a React node.

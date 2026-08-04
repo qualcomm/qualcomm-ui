@@ -3,15 +3,14 @@
 
 import type {ReactElement} from "react"
 
+import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
 import {
   InputErrorIndicator,
   type InputErrorIndicatorProps,
 } from "@qualcomm-ui/react/input"
-import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface PasswordInputErrorIndicatorProps
-  extends InputErrorIndicatorProps {}
+export interface PasswordInputErrorIndicatorProps extends InputErrorIndicatorProps {}
 
 export function PasswordInputErrorIndicator(
   props: PasswordInputErrorIndicatorProps,

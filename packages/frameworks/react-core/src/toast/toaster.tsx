@@ -24,10 +24,11 @@ import {
 import type {Machine} from "@qualcomm-ui/utils/machine"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ToastContextProvider} from "./toast-context"
+import {ToastContextProvider} from "./toast-context.js"
 
 export interface CoreToasterProps
-  extends Omit<ElementRenderProp<"div">, "children" | "dir">,
+  extends
+    Omit<ElementRenderProp<"div">, "children" | "dir">,
     Omit<ToastGroupProps, "store" | "id"> {
   /**
    * {@link https://react-next.qui.qualcomm.com/render-props#render-prop Render Prop}

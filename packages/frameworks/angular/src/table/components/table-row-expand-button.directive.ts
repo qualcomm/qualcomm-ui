@@ -4,13 +4,13 @@
 import {booleanAttribute, Component, input, type OnInit} from "@angular/core"
 import {ChevronRight} from "lucide-angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {Row} from "@qualcomm-ui/core/table"
 import type {QdsTableRowExpandButtonProps} from "@qualcomm-ui/qds-core/table"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"

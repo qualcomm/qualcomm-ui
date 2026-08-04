@@ -1,24 +1,5 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "module": "esnext",
-    "target": "esnext",
-    "paths": {
-      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
-      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
-      // TODO: remove when WebStorm fixes symlinks
-      "@qualcomm-ui/mdx-vite/*": ["../../frameworks/mdx-vite/src/*"],
-      "@qualcomm-ui/core/*": ["../../common/core/src/*"],
-      "@qualcomm-ui/dom/*": ["../../common/core/src/*"],
-      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/src/*"],
-      "@qualcomm-ui/utils/*": ["../../common/utils/src/*"]
-    }
-  },
-  "include": ["./src", "types.d.ts"],
-  "exclude": ["./src/routes/**/demos/*.ts"],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
@@ -27,7 +8,7 @@
       "path": "./tsconfig.ng-demos.json"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
     }
   ]
 }

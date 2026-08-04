@@ -3,9 +3,9 @@
 
 import {Component, input} from "@angular/core"
 
-import {useInputErrorText} from "@qualcomm-ui/angular/input"
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {CoreSelectErrorTextDirective} from "@qualcomm-ui/angular-core/select"
+import {useInputErrorText} from "@qualcomm-ui/angular/input"
 
 @Component({
   selector: "[q-select-error-text]",

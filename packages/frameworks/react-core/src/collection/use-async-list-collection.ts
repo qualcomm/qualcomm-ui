@@ -8,8 +8,10 @@ import {
   type ListCollectionOptions,
 } from "@qualcomm-ui/utils/collection"
 
-export interface UseAsyncListCollectionProps<T>
-  extends Omit<ListCollectionOptions<T>, "items"> {
+export interface UseAsyncListCollectionProps<T> extends Omit<
+  ListCollectionOptions<T>,
+  "items"
+> {
   /**
    * Filter function to determine which items match the filter text. This is
    * typically one of the functions returned from the `useFilter` hook.

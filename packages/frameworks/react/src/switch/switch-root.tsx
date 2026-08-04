@@ -8,7 +8,6 @@ import {
   createQdsSwitchApi,
   type QdsSwitchApiProps,
 } from "@qualcomm-ui/qds-core/switch"
-import {useQdsFieldGroupContext} from "@qualcomm-ui/react/field-group"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {SwitchContextProvider, useSwitch} from "@qualcomm-ui/react-core/switch"
@@ -16,12 +15,14 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {useQdsFieldGroupContext} from "@qualcomm-ui/react/field-group"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsSwitchContextProvider} from "./qds-switch-context"
+import {QdsSwitchContextProvider} from "./qds-switch-context.js"
 
 export interface SwitchRootProps
-  extends SwitchApiProps,
+  extends
+    SwitchApiProps,
     QdsSwitchApiProps,
     Omit<ElementRenderProp<"label">, "dir"> {
   /**

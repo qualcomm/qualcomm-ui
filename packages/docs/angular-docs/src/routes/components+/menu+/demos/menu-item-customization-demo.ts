@@ -1,20 +1,20 @@
 import {Component} from "@angular/core"
 import {Command, File, FileText, FolderOpen, ImageDown} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
-  imports: [MenuModule, ButtonModule, PortalComponent, IconDirective],
+  imports: [MenuModule, ButtonModule, PortalDirective, IconDirective],
   providers: [provideIcons({Command, File, FileText, FolderOpen, ImageDown})],
   selector: "menu-item-customization-demo",
   template: `
     <q-menu>
       <button emphasis="primary" q-menu-button variant="fill">Show Menu</button>
-      <q-portal>
+      <ng-container *qPortal>
         <div q-menu-positioner>
           <div q-menu-content>
             <button q-menu-item value="new-text-file">
@@ -51,7 +51,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
             </button>
           </div>
         </div>
-      </q-portal>
+      </ng-container>
     </q-menu>
   `,
 })

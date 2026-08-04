@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {DialogApiProps} from "./dialog.types"
+import type {DialogApiProps} from "./dialog.types.js"
 
 export const dialogProps: (keyof DialogApiProps)[] =
   createProps<DialogApiProps>()(

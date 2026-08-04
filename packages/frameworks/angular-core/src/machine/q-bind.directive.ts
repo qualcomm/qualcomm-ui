@@ -73,7 +73,9 @@ export class QBindDirective implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.listeners.forEach((unlisten) => unlisten())
+    for (const unlisten of this.listeners.values()) {
+      unlisten()
+    }
     this.listeners.clear()
   }
 

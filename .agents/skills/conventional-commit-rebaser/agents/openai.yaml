@@ -1,0 +1,7 @@
+interface:
+  display_name: "Conventional Commit Rebaser"
+  short_description: "Rebase the current branch into clean conventional commits with proper author attribution"
+  default_prompt: "Use $conventional-commit-rebaser to rebase the current branch into conventional commits."
+
+policy:
+  allow_implicit_invocation: false

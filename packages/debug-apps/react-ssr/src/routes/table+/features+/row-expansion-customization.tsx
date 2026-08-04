@@ -12,9 +12,9 @@ const demos = [
 export default function RowExpansionCustomization() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="row-expansion-customization"
       demos={demos}
-      className="w-full"
     />
   )
 }

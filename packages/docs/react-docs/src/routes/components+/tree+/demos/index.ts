@@ -1,4 +1,5 @@
 export * from "./tree-add-remove-demo"
+export * from "./tree-explorer-demo"
 export * from "./tree-checkbox-demo"
 export * from "./tree-checkbox-state-preview-demo"
 export * from "./tree-default-expanded-demo"

@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {FilterFn} from "./features/filters"
+import type {FilterFn} from "./features/filters.js"
 
 const includesString: FilterFn<any> = (
   row,

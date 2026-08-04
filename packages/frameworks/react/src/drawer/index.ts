@@ -1,34 +1,37 @@
-import {DrawerBackdrop, type DrawerBackdropProps} from "./drawer-backdrop"
-import {DrawerBody, type DrawerBodyProps} from "./drawer-body"
+import {DrawerBackdrop, type DrawerBackdropProps} from "./drawer-backdrop.js"
+import {DrawerBody, type DrawerBodyProps} from "./drawer-body.js"
 import {
   DrawerCloseButton,
   type DrawerCloseButtonProps,
-} from "./drawer-close-button"
+} from "./drawer-close-button.js"
 import {
   DrawerCloseTrigger,
   type DrawerCloseTriggerProps,
-} from "./drawer-close-trigger"
-import {DrawerContent, type DrawerContentProps} from "./drawer-content"
-import {DrawerContext, type DrawerContextProps} from "./drawer-context"
+} from "./drawer-close-trigger.js"
+import {DrawerContent, type DrawerContentProps} from "./drawer-content.js"
+import {DrawerContext, type DrawerContextProps} from "./drawer-context.js"
 import {
   DrawerDescription,
   type DrawerDescriptionProps,
-} from "./drawer-description"
+} from "./drawer-description.js"
 import {
   DrawerFloatingPortal,
   type DrawerFloatingPortalProps,
-} from "./drawer-floating-portal"
-import {DrawerFooter, type DrawerFooterProps} from "./drawer-footer"
-import {DrawerHeading, type DrawerHeadingProps} from "./drawer-heading"
+} from "./drawer-floating-portal.js"
+import {DrawerFooter, type DrawerFooterProps} from "./drawer-footer.js"
+import {DrawerHeading, type DrawerHeadingProps} from "./drawer-heading.js"
 import {
   DrawerIndicatorIcon,
   type DrawerIndicatorIconProps,
-} from "./drawer-indicator-icon"
-import {DrawerPositioner, type DrawerPositionerProps} from "./drawer-positioner"
-import {DrawerRoot, type DrawerRootProps} from "./drawer-root"
-import {DrawerTrigger, type DrawerTriggerProps} from "./drawer-trigger"
+} from "./drawer-indicator-icon.js"
+import {
+  DrawerPositioner,
+  type DrawerPositionerProps,
+} from "./drawer-positioner.js"
+import {DrawerRoot, type DrawerRootProps} from "./drawer-root.js"
+import {DrawerTrigger, type DrawerTriggerProps} from "./drawer-trigger.js"
 
-export * from "./qds-drawer-context"
+export * from "./qds-drawer-context.js"
 
 export type {
   DrawerBackdropProps,

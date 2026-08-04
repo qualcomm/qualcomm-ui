@@ -1,9 +1,9 @@
 import type {ReactElement} from "react"
 
 import type {QdsPopoverEmphasis} from "@qualcomm-ui/qds-core/popover"
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Button} from "@qualcomm-ui/react/button"
 import {Popover} from "@qualcomm-ui/react/popover"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 const emphasisOptions: QdsPopoverEmphasis[] = ["neutral", "brand"]
 

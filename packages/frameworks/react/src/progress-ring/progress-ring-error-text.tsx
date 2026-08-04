@@ -9,10 +9,9 @@ import {
 } from "@qualcomm-ui/react-core/progress-ring"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsProgressRingContext} from "./qds-progress-ring-context"
+import {useQdsProgressRingContext} from "./qds-progress-ring-context.js"
 
-export interface ProgressRingErrorTextProps
-  extends CoreProgressRingErrorTextProps {}
+export interface ProgressRingErrorTextProps extends CoreProgressRingErrorTextProps {}
 
 /**
  * Error message displayed when the progress ring is in an invalid state. Renders a

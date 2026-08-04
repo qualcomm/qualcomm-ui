@@ -1,0 +1,208 @@
+---
+title: Card
+description: Cards group related content and actions into a contained, scannable unit. They support media, headers, body text, and footers for flexible content layouts.
+component: Card
+aliases: [tile, panel, content card, media card, container]
+badges:
+  - id: since
+    label: 2.4.0
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```typescript
+import {CardModule} from "@qualcomm-ui/angular/card"
+```
+
+## Examples
+
+### Showcase
+
+All card parts are optional. Combine them to fit the content you need to display.
+
+<QdsDemo name="CardShowcaseDemo" />
+
+### Variants
+
+::: terms
+outline, outline-elevated, elevated, style, appearance
+:::
+
+The [variant](./#variant) input controls border and shadow styles.
+
+<QdsDemo name="CardVariantsDemo" />
+
+### Actions
+
+Two types of actions are supported in cards: `q-card-button` and `q-card-link`.
+
+<QdsDemo name="CardActionsDemo" />
+
+### Interactive
+
+::: terms
+interactive, hover, press, clickable, selectable
+:::
+
+Set [interactive](./#interactive-1) on `q-card` to enable hover and pressed visual states on the content area. Place the directive on a `<button>` element so screen readers know that the element is interactive.
+
+> [!warning]
+> Interactive cards must not contain buttons, links, or input fields. Nesting interactive elements produces invalid HTML and breaks assistive technology.
+
+<QdsDemo name="CardInteractiveDemo" />
+
+### Media
+
+::: terms
+media, image, photo, thumbnail, cover
+:::
+
+Use `q-card-media` to display an image or other visual content at the top of the card.
+
+<QdsDemo name="CardMediaDemo" />
+
+### Badge
+
+Use the `q-card-badge` directive to position a badge within the card.
+
+<QdsDemo name="CardBadgeDemo" />
+
+### Alignment
+
+::: terms
+alignment, start, center, centered, justify
+:::
+
+Set [alignment](./#alignment-1) on `q-card` to control horizontal positioning of heading and footer content. Defaults to `start`.
+
+<QdsDemo name="CardAlignmentDemo" />
+
+### Sizes
+
+::: terms
+size, small, medium, large, spacing, typography, scale
+:::
+
+Cards support `sm`, `md`, and `lg` sizes that control internal spacing and typography.
+
+<QdsDemo name="CardSizesDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-card"
+  name="CardExplorerDemo"
+  parts={[
+    {name: "root", link: "#q-card"},
+    "badge",
+    "media",
+    "avatar",
+    "content",
+    "heading",
+    "eyebrow-text",
+    "heading-text",
+    "subheading-text",
+    "paragraph-text",
+    "footer",
+    "link",
+    "button",
+  ]}
+  scope="card"
+/>
+
+## API
+
+### q-card
+
+<TypeDocProps name="CardRootDirective" />
+
+<TypeDocAngularAttributes name="QdsCardRootBindings" />
+
+### q-card-media
+
+<TypeDocProps name="CardMediaDirective" />
+
+<TypeDocAngularAttributes name="QdsCardMediaBindings" />
+
+### q-card-avatar
+
+<TypeDocProps name="CardAvatarDirective" />
+
+<TypeDocAngularAttributes name="QdsCardAvatarBindings" />
+
+### q-card-badge
+
+<TypeDocProps name="CardBadgeDirective" />
+
+<TypeDocAngularAttributes name="QdsCardBadgeBindings" />
+
+### q-card-content
+
+<TypeDocProps name="CardContentDirective" />
+
+<TypeDocAngularAttributes name="QdsCardContentBindings" />
+
+### q-card-heading
+
+<TypeDocProps name="CardHeadingDirective" />
+
+<TypeDocAngularAttributes name="QdsCardHeadingBindings" />
+
+### q-card-eyebrow-text
+
+<TypeDocProps name="CardEyebrowTextDirective" />
+
+<TypeDocAngularAttributes name="QdsCardEyebrowTextBindings" />
+
+### q-card-heading-text
+
+<TypeDocProps name="CardHeadingTextDirective" />
+
+<TypeDocAngularAttributes name="QdsCardHeadingTextBindings" />
+
+### q-card-menu-trigger
+
+<TypeDocProps name="CardMenuTriggerDirective" />
+
+<TypeDocAngularAttributes name="QdsCardMenuTriggerBindings" />
+
+### q-card-subheading-text
+
+<TypeDocProps name="CardSubheadingTextDirective" />
+
+<TypeDocAngularAttributes name="QdsCardSubheadingTextBindings" />
+
+### q-card-paragraph-text
+
+<TypeDocProps name="CardParagraphTextDirective" />
+
+<TypeDocAngularAttributes name="QdsCardParagraphTextBindings" />
+
+### q-card-footer
+
+<TypeDocProps name="CardFooterDirective" />
+
+<TypeDocAngularAttributes name="QdsCardFooterBindings" />
+
+### q-card-button
+
+<TypeDocProps name="CardButtonDirective" />
+
+<TypeDocAngularAttributes name="QdsCardButtonBindings" />
+
+### q-card-link
+
+<TypeDocProps name="CardLinkDirective" />
+
+<TypeDocAngularAttributes name="QdsCardLinkBindings" />

@@ -3,15 +3,15 @@
 
 import type {ReactElement} from "react"
 
-import {InputLabel} from "@qualcomm-ui/react/input"
 import {
   CoreCombobox,
   type CoreComboboxLabelProps,
   useComboboxContext,
 } from "@qualcomm-ui/react-core/combobox"
+import {InputLabel} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsComboboxContext} from "./qds-combobox-context"
+import {useQdsComboboxContext} from "./qds-combobox-context.js"
 
 export interface ComboboxLabelProps extends CoreComboboxLabelProps {}
 

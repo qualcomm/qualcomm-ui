@@ -1,3 +1,3 @@
-export * from "./progress-ring.api"
-export * from "./progress-ring.classes"
-export type * from "./progress-ring.types"
+export * from "./progress-ring.api.js"
+export * from "./progress-ring.classes.js"
+export type * from "./progress-ring.types.js"

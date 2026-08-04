@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-// url=<FIGMA_COMPONENTS_BASE>?node-id=16548-1775
+// url=<FIGMA_COMPONENTS_BASE>?node-id=22926-18170
 // component=Button compact
 
 const figma = require("figma")
@@ -18,7 +18,6 @@ const emphasis = instance.getEnum("emphasis", {
 const icon = instance.getEnum("icon", {
   end: "end",
   none: "none",
-  only: "only",
   start: "start",
 })
 const label = instance.getString("label") || "Button"
@@ -31,43 +30,24 @@ const variant = instance.getEnum("variant", {
   outline: "outline",
 })
 
-const densityAttr = ` density="compact"`
+const iconInstance =
+  icon === "start" || icon === "end"
+    ? instance.getInstanceSwap("iconXxs")
+    : undefined
+
+const iconName = iconInstance ? toLucideName(iconInstance.name) : "Star"
+const needsIcon = icon === "start" || icon === "end"
+
 const disabledAttr = disabled ? " disabled" : ""
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 const sizeAttr = size ? ` size="${size}"` : ""
 const variantAttr = variant ? ` variant="${variant}"` : ""
+const startIconEl =
+  icon === "start" ? `<svg q-start-icon qIcon="${iconName}"></svg>` : ""
+const endIconEl =
+  icon === "end" ? `<svg q-end-icon qIcon="${iconName}"></svg>` : ""
 
-const needsIcon = icon === "start" || icon === "end" || icon === "only"
-
-let example
-
-// icon-only compact button
-if (icon === "only") {
-  example = figma.code`<button${densityAttr}${disabledAttr}${emphasisAttr} icon="Star" q-icon-button${sizeAttr}${variantAttr}></button>`
-}
-
-// compact button with start icon
-if (icon === "start") {
-  example = figma.code`
-    <button${densityAttr}${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>
-      <svg q-start-icon qIcon="Star"></svg>
-      ${label}
-    </button>`
-}
-
-// compact button with end icon
-if (icon === "end") {
-  example = figma.code`
-    <button${densityAttr}${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>
-      ${label}
-      <svg q-end-icon qIcon="Star"></svg>
-    </button>`
-}
-
-// compact button without icon
-if (icon === "none") {
-  example = figma.code`<button${densityAttr}${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>${label}</button>`
-}
+const example = figma.code`<button density="compact"${disabledAttr}${emphasisAttr} q-button${sizeAttr}${variantAttr}>${startIconEl}${label}${endIconEl}</button>`
 
 export default {
   example,
@@ -77,9 +57,17 @@ export default {
     ...(needsIcon
       ? [
           `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {Star} from "lucide-angular"`,
+          `import {${iconName}} from "lucide-angular"`,
         ]
       : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {NumberInputApiProps} from "./number-input.types"
+import type {NumberInputApiProps} from "./number-input.types.js"
 
 export const numberInputProps: (keyof NumberInputApiProps)[] =
   createProps<NumberInputApiProps>()(

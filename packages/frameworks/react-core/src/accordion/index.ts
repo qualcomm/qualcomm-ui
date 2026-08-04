@@ -1,2 +1,2 @@
-export * from "./accordion-context"
-export * from "./use-accordion"
+export * from "./accordion-context.js"
+export * from "./use-accordion.js"

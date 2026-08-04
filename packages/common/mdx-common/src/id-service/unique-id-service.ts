@@ -5,7 +5,7 @@ export class UniqueIdService {
   pathname: string = ""
   private idMap: Record<string, string> = {}
 
-  reset() {
+  reset(): void {
     this.idMap = {}
   }
 

@@ -7,9 +7,9 @@ const demos = [{component: VirtualizedRowsDemo, title: "Virtualized Rows"}]
 export default function VirtualizedRows() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="virtualized-rows"
       demos={demos}
-      className="w-full"
     />
   )
 }

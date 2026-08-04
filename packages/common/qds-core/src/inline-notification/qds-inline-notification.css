@@ -48,7 +48,7 @@
 
 /* Orientation */
 .qui-notification__root {
-  &:has([data-part="status-icon"]) {
+  &:has([data-inline-notification-part="status-icon"]) {
     --icon-col: 1;
   }
 

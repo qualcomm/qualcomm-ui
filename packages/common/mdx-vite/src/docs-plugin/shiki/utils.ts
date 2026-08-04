@@ -3,6 +3,7 @@
 
 export function removeCodeAnnotations(code: string): string {
   const hideAnnotationRegex = /\/\/\s*\[!code\s+hide(?::\d+)?\]/
+  const removedDiffAnnotationRegex = /\/\/\s*\[!code\s+--\]/
   const lineAnnotationRegex = /\/\/\s*\[!code\s*(?:\S.*)?\]/
   const jsxBlockAnnotationRegex = /\{\s*\/\*\s*\[!code(?:\s+\S+)?\]\s*\*\/\s*\}/
   const htmlAnnotationRegex = /<!--\s*\[!code(?:\s+\S+)?\]\s*-->/
@@ -17,6 +18,7 @@ export function removeCodeAnnotations(code: string): string {
     let processed = line
     let touched = false
     const hasHideAnnotation = hideAnnotationRegex.test(line)
+    const hasRemovedDiffAnnotation = removedDiffAnnotationRegex.test(line)
 
     const patterns = [
       inlineIncrementRegex,
@@ -34,7 +36,11 @@ export function removeCodeAnnotations(code: string): string {
       }
     }
 
-    return {hasHideAnnotation, processed, touched}
+    return {
+      hasHideAnnotation: hasHideAnnotation || hasRemovedDiffAnnotation,
+      processed,
+      touched,
+    }
   }
 
   return code

@@ -4,9 +4,9 @@
 import {Component, computed} from "@angular/core"
 import {X} from "lucide-angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {CoreDialogCloseTriggerDirective} from "@qualcomm-ui/angular-core/dialog"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsDialogContext} from "./qds-dialog-context.service"

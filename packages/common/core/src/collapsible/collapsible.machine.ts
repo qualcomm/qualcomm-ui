@@ -8,8 +8,8 @@ import {getEventTarget, nextTick, raf, setStyle} from "@qualcomm-ui/dom/query"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import type {CollapsibleSchema} from "./collapsible.types"
-import {domEls} from "./internal"
+import type {CollapsibleSchema} from "./collapsible.types.js"
+import {domEls} from "./internal/collapsible.dom.js"
 
 export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
   createMachine<CollapsibleSchema>({

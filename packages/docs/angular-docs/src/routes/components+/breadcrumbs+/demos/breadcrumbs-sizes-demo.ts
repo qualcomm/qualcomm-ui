@@ -1,9 +1,9 @@
 import {Component} from "@angular/core"
 import {Home} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {BreadcrumbsModule} from "@qualcomm-ui/angular/breadcrumbs"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [BreadcrumbsModule, IconDirective],
@@ -14,34 +14,34 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <nav aria-label="Breadcrumbs" q-breadcrumbs-root size="sm">
         <ol q-breadcrumbs-list>
           <li q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>
+            <a href="/" q-breadcrumb-item-trigger>
               <svg q-breadcrumb-item-icon qIcon="Home"></svg>
               Home
             </a>
           </li>
           <li q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>Components</a>
+            <a href="/components/overview" q-breadcrumb-item-trigger>
+              Components
+            </a>
           </li>
-          <li aria-current="page" q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>Breadcrumbs</a>
-          </li>
+          <li aria-current="page" q-breadcrumb-item>Breadcrumbs</li>
         </ol>
       </nav>
 
       <nav aria-label="Breadcrumbs" q-breadcrumbs-root size="md">
         <ol q-breadcrumbs-list>
           <li q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>
+            <a href="/" q-breadcrumb-item-trigger>
               <svg q-breadcrumb-item-icon qIcon="Home"></svg>
               Home
             </a>
           </li>
           <li q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>Components</a>
+            <a href="/components/overview" q-breadcrumb-item-trigger>
+              Components
+            </a>
           </li>
-          <li aria-current="page" q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>Breadcrumbs</a>
-          </li>
+          <li aria-current="page" q-breadcrumb-item>Breadcrumbs</li>
         </ol>
       </nav>
 
@@ -49,17 +49,17 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <nav aria-label="Breadcrumbs" q-breadcrumbs-root size="lg">
         <ol q-breadcrumbs-list>
           <li q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>
+            <a href="/" q-breadcrumb-item-trigger>
               <svg q-breadcrumb-item-icon qIcon="Home"></svg>
               Home
             </a>
           </li>
           <li q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>Components</a>
+            <a href="/components/overview" q-breadcrumb-item-trigger>
+              Components
+            </a>
           </li>
-          <li aria-current="page" q-breadcrumb-item>
-            <a q-breadcrumb-item-trigger>Breadcrumbs</a>
-          </li>
+          <li aria-current="page" q-breadcrumb-item>Breadcrumbs</li>
         </ol>
       </nav>
       <!-- preview -->

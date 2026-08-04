@@ -11,31 +11,41 @@ const instance = figma.selectedInstance
 const disabled = instance.getEnum("state", {disabled: true})
 const emphasis = instance.getString("emphasis")
 const label = instance.getString("label") || "Label"
-const radius = instance.getEnum("radius", {rounded: "rounded"})
-const size = instance.getEnum("size", {large: "lg", small: "sm"})
+const shape = instance.getEnum("shape", {rounded: "rounded"})
+const size = instance.getString("size")
 const startIcon = instance.getBoolean("startIcon")
 const endIcon = instance.getBoolean("endIcon")
 
+const startSwap = size === "sm" ? "iconXxsStart" : "iconXsStart"
+const endSwap = size === "sm" ? "iconXxsEnd" : "iconXsEnd"
+
+const startIconInstance = startIcon
+  ? instance.getInstanceSwap(startSwap)
+  : undefined
+const endIconInstance = endIcon ? instance.getInstanceSwap(endSwap) : undefined
+
+const startIconName = startIconInstance
+  ? toLucideName(startIconInstance.name)
+  : "Smile"
+const endIconName = endIconInstance
+  ? toLucideName(endIconInstance.name)
+  : "Smile"
+
 const disabledAttr = disabled ? " disabled" : ""
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
-const radiusAttr = radius ? ` radius="${radius}"` : ""
-const sizeAttr = size ? ` size="${size}"` : ""
-const startIconAttr = startIcon ? ` startIcon="Smile"` : ""
-const endIconAttr = endIcon ? ` endIcon="ChevronRight"` : ""
+const shapeAttr = shape ? ` shape="${shape}"` : ""
+const sizeAttr = size === "md" ? "" : ` size="${size}"`
+const startIconAttr = startIcon ? ` startIcon="${startIconName}"` : ""
+const endIconAttr = endIcon ? ` endIcon="${endIconName}"` : ""
 
-const icons = [startIcon && "Smile", endIcon && "ChevronRight"].filter(Boolean)
+const icons = [
+  ...new Set(
+    [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
+  ),
+]
 const needsIcon = icons.length > 0
 
-let example
-
-if (needsIcon) {
-  example = figma.code`
-    <button${disabledAttr}${emphasisAttr} q-tag${radiusAttr}${sizeAttr}${startIconAttr}${endIconAttr} variant="link">
-      ${label}
-    </button>`
-} else {
-  example = figma.code`<button${disabledAttr}${emphasisAttr} q-tag${radiusAttr}${sizeAttr} variant="link">${label}</button>`
-}
+const example = figma.code`<a${disabledAttr}${emphasisAttr} q-tag${shapeAttr}${sizeAttr}${startIconAttr}${endIconAttr} href="#">${label}</a>`
 
 export default {
   example,
@@ -50,4 +60,12 @@ export default {
       : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

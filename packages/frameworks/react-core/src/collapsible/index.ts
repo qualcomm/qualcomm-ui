@@ -9,9 +9,9 @@ import {
   type CoreCollapsibleRootProviderProps,
   CoreCollapsibleTrigger,
   type CoreCollapsibleTriggerProps,
-} from "./core-collapsible"
+} from "./core-collapsible.js"
 
-export * from "./collapsible-context"
+export * from "./collapsible-context.js"
 
 export type {
   CoreCollapsibleRootProviderProps,

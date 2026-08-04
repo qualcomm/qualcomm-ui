@@ -1,8 +1,8 @@
 import type {ReactElement} from "react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Button} from "@qualcomm-ui/react/button"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 export function TooltipCompositeDemo(): ReactElement {
   return (

@@ -1,9 +1,9 @@
-import {TabButton, type TabButtonProps} from "./tab-button"
+import {TabButton, type TabButtonProps} from "./tab-button.js"
 import {
   TabDismissButton,
   type TabDismissButtonProps,
-} from "./tab-dismiss-button"
-import {TabRoot, type TabRootProps} from "./tab-root"
+} from "./tab-dismiss-button.js"
+import {TabRoot, type TabRootProps} from "./tab-root.js"
 
 export type {TabButtonProps, TabDismissButtonProps, TabRootProps}
 

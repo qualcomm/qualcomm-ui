@@ -4,10 +4,10 @@
 import {NgTemplateOutlet} from "@angular/common"
 import {NgModule} from "@angular/core"
 
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
-import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 
 import {ToastActionDirective} from "./toast-action.directive"
 import {ToastCloseButtonDirective} from "./toast-close-button.directive"

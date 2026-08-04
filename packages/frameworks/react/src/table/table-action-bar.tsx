@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableActionBarProps extends ElementRenderProp<"div"> {
   /**

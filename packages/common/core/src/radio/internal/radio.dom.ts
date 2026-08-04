@@ -11,7 +11,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {RadioElementIds, RadioSchema} from "../radio.types"
+import type {RadioElementIds, RadioSchema} from "../radio.types.js"
 
 type Scope = ScopeWithIds<RadioSchema>
 

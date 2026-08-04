@@ -25,6 +25,7 @@ export class CoreMenuTriggerItemDirective
   protected readonly trackBindings = useTrackBindings(() => {
     return (
       this.menuTriggerContext()({
+        ...this.itemProps(),
         id: this.hostId(),
         onDestroy: this.onDestroy,
       }) ?? {}

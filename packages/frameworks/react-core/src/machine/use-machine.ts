@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {type RefObject, useMemo, useRef, useState} from "react"
-
 import {flushSync} from "react-dom"
 
 import {createScope} from "@qualcomm-ui/dom/query"
@@ -35,11 +34,11 @@ import {
 } from "@qualcomm-ui/utils/machine"
 import {compact} from "@qualcomm-ui/utils/object"
 
-import {useBindable} from "./use-bindable"
-import {useBindableId} from "./use-bindable-id"
-import {useBindableIdCollection} from "./use-bindable-id-collection"
-import {useLiveRef, useProp} from "./use-prop"
-import {useTrack} from "./use-track"
+import {useBindableIdCollection} from "./use-bindable-id-collection.js"
+import {useBindableId} from "./use-bindable-id.js"
+import {useBindable} from "./use-bindable.js"
+import {useLiveRef, useProp} from "./use-prop.js"
+import {useTrack} from "./use-track.js"
 
 export interface UseMachineOpts {
   /**
@@ -247,7 +246,11 @@ export function useMachine<T extends MachineSchema>(
         cleanups.push(cleanup)
       }
     }
-    return () => cleanups.forEach((fn) => fn?.())
+    return () => {
+      for (const fn of cleanups) {
+        fn?.()
+      }
+    }
   }
 
   const action = (keys: ActionsOrFn<T> | undefined) => {
@@ -385,13 +388,16 @@ export function useMachine<T extends MachineSchema>(
       debug("unmounting...")
       hydratedStateRef.current = currentState
       statusRef.current = MachineStatus.STOPPED
-      fns.forEach((fn) => fn?.())
+      for (const fn of fns.values()) {
+        fn?.()
+      }
       effects.current = new Map()
       transitionRef.current = null
       queueMicrotask(() => {
         action(config.onDestroy?.actions)
       })
     }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getParams = useRef(

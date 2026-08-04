@@ -1,3 +1,3 @@
-export * from "./tabs.api"
-export * from "./tabs.classes"
-export type * from "./tabs.types"
+export * from "./tabs.api.js"
+export * from "./tabs.classes.js"
+export type * from "./tabs.types.js"

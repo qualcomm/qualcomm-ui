@@ -2,10 +2,10 @@ import {Component, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 import {FileText, FolderIcon, Search} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
 import {TreeModule} from "@qualcomm-ui/angular/tree"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {matchSorter} from "@qualcomm-ui/utils/match-sorter"
@@ -84,6 +84,7 @@ const initialCollection = createTreeCollection<FileNode>({
       (expandedValueChanged)="expanded.set($event.expandedValue)"
     >
       <q-text-input
+        aria-label="Search for files"
         class="mb-1"
         placeholder="Search for files: 'react'"
         size="sm"

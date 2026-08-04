@@ -1,1 +1,1 @@
-export * from "./segmented-control.dom"
+export * from "./segmented-control.dom.js"

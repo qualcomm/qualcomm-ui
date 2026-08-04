@@ -1,0 +1,7 @@
+interface:
+  display_name: "React Testing"
+  short_description: "Write React tests around public behavior"
+  default_prompt: "Use $react-testing to write or review React tests around public behavior."
+
+policy:
+  allow_implicit_invocation: true

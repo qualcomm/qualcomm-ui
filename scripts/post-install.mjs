@@ -1,11 +1,21 @@
-import {access, mkdir, writeFile} from "node:fs/promises"
+import {execa} from "execa"
+import {access, mkdir, readdir, writeFile} from "node:fs/promises"
 import {dirname, resolve} from "node:path"
+import process from "node:process"
 import {fileURLToPath} from "node:url"
 
-const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
-const __dirname = dirname(__filename) // get the name of the directory
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const cwd = resolve(__dirname, "../")
+
+/**
+ * Turbo runs package build scripts through pnpm. During postinstall, those
+ * nested pnpm calls can re-enter the root postinstall script before running the
+ * package build. This guard lets the nested invocation complete lightweight
+ * setup while preventing it from launching another Turbo build recursively.
+ */
+const postinstallRunningEnvVar = "QUI_POSTINSTALL_RUNNING"
+const isNestedPostinstall = process.env[postinstallRunningEnvVar] === "1"
 
 /**
  * async version of the fs.exists module.
@@ -16,19 +26,66 @@ async function exists(path, mode) {
     .catch(() => false)
 }
 
-// set up typedoc files if not yet initialized
-await Promise.all(
-  // TODO: add back once docs sites are moved over
-  // ["react-docs", "react-mdx-docs", "react-table-docs", "angular-docs"].map(
-  [].map(async (pkg) => {
-    const pkgPath = resolve(cwd, "packages/docs", pkg)
-    const typedocPath = resolve(pkgPath, ".typedoc")
-    const docPropsPath = resolve(pkgPath, ".typedoc/doc-props.json")
+async function initTypeDocFiles() {
+  const pkgPath = resolve(cwd, "packages/docs")
+  const docsPackages = (await readdir(pkgPath, {withFileTypes: true})).filter(
+    (dirent) => dirent.isDirectory(),
+  )
+  await Promise.all(
+    docsPackages.map(async (dirent) => {
+      const path = resolve(cwd, pkgPath, dirent.name)
+      const typedocPath = resolve(path, ".typedoc")
+      const docPropsPath = resolve(path, ".typedoc/doc-props.json")
 
-    await mkdir(typedocPath, {recursive: true})
+      if (
+        !(await exists(docPropsPath)) &&
+        (await exists(resolve(pkgPath, "package.json")))
+      ) {
+        await mkdir(typedocPath, {recursive: true})
+        await writeFile(docPropsPath, JSON.stringify({props: {}}), "utf-8")
+      }
+    }),
+  )
+}
 
-    if (!(await exists(docPropsPath))) {
-      await writeFile(docPropsPath, JSON.stringify({props: {}}), "utf-8")
-    }
-  }),
-)
+async function runNodeScript(scriptPath, args, options = {}) {
+  await execa(process.execPath, [scriptPath, ...args], {
+    cwd,
+    env: {
+      [postinstallRunningEnvVar]: "1",
+    },
+    stdio: "inherit",
+    ...options,
+  })
+}
+
+/**
+ * Build the config packages through Turbo so postinstall benefits from Turbo's
+ * cache and dependency graph instead of rebuilding these packages every
+ * install.
+ */
+async function buildConfigsIfNeeded() {
+  const packageFolders = [
+    "eslint-config-mdx",
+    "eslint-plugin-angular",
+    "eslint-plugin-react",
+  ]
+
+  await runNodeScript("node_modules/turbo/bin/turbo", [
+    "build",
+    "--env-mode=loose",
+    ...packageFolders.map((pkg) => `--filter=@qualcomm-ui/${pkg}`),
+  ])
+}
+
+async function runPostInstall() {
+  await initTypeDocFiles()
+
+  if (isNestedPostinstall) {
+    return
+  }
+
+  await buildConfigsIfNeeded()
+}
+
+await runPostInstall()

@@ -93,8 +93,9 @@ export interface TreeCollectionAccessors<T> {
   nodeValue: keyof T | ((node: T) => string)
 }
 
-export interface TreeCollectionOptions<T>
-  extends Partial<TreeCollectionAccessors<T>> {
+export interface TreeCollectionOptions<T> extends Partial<
+  TreeCollectionAccessors<T>
+> {
   /**
    * The root node of the tree
    * @inheritDoc

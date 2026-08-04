@@ -35,9 +35,9 @@ export class TreeLeafTemplateDirective<T extends TreeNode> {
   template = inject(TemplateRef)
 
   static ngTemplateContextGuard<T extends TreeNode>(
-    dir: TreeLeafTemplateDirective<T>,
-    ctx: unknown,
-  ): ctx is TreeNodeTemplateContext<T> {
+    _dir: TreeLeafTemplateDirective<T>,
+    _ctx: unknown,
+  ): _ctx is TreeNodeTemplateContext<T> {
     return true
   }
 }

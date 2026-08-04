@@ -8,6 +8,7 @@ import type {
   QuiComment,
   QuiCommentDisplayPart,
   QuiCommentTag,
+  QuiPropDeclaration,
   SerializedParameters,
   SerializedType,
 } from "@qualcomm-ui/typedoc-common"
@@ -23,11 +24,12 @@ import {
   isTypeOverride,
   isUndefinedType,
   isUnionType,
-} from "../guards"
+} from "../guards.js"
 
-import {customTypes, ignoredTypes} from "./custom-types"
-import {ImportBuilder} from "./import-builder"
-import type {PropBuilderParams} from "./prop-builder"
+import {customTypes, ignoredTypes} from "./custom-types.js"
+import {formatDefault} from "./format-comment.js"
+import {ImportBuilder} from "./import-builder.js"
+import type {PropBuilderParams} from "./prop-builder.js"
 import {
   defaultPrintWidth,
   extractDocLink,
@@ -36,8 +38,8 @@ import {
   getName,
   prettyType,
   TypeFormatter,
-} from "./type-formatter"
-import type {KnownInterfaces, QuiDeclarationReflection} from "./types"
+} from "./type-formatter.js"
+import type {KnownInterfaces, QuiDeclarationReflection} from "./types.js"
 
 function isDeprecated(comment?: JSONOutput.Comment) {
   return comment?.blockTags?.some?.((r) => r.tag === "@deprecated") || undefined
@@ -118,7 +120,7 @@ export class TypeSerializer {
 
   resolveReflectionComment(
     prop: QuiDeclarationReflection & {type: JSONOutput.ReflectionType},
-  ) {
+  ): JSONOutput.Comment {
     const comment: JSONOutput.Comment = cloneDeep(prop.comment) ?? {
       blockTags: [],
       summary: [],
@@ -287,12 +289,27 @@ export class TypeSerializer {
       ? this.knownInterfaces[referenceType]
       : undefined
 
-    const parameters: SerializedParameters[] | undefined =
-      knownType?.details?.children?.map((item) => ({
-        name: item.name,
-        summary: item.comment?.summary,
-        type: item.type?.type || null,
-      }))
+    const parameters: SerializedParameters[] | undefined = knownType?.details
+      ?.children
+      ? await Promise.all(
+          knownType.details.children.map(async (item) => {
+            const formattedType = item.type
+              ? this.typeFormatter.formatType(item.type)
+              : null
+            return omitUnusedProperties<SerializedParameters>({
+              baseType: item.type?.type,
+              defaultValue: item.defaultValue ?? null,
+              name: item.name,
+              prettyType: formattedType
+                ? await prettyType(formattedType, this.printWidth)
+                : undefined,
+              required: !item.flags?.isOptional || undefined,
+              summary: item.comment?.summary,
+              type: formattedType,
+            })
+          }),
+        )
+      : undefined
 
     const pretty: string = await prettyType(parsedType, this.printWidth)
 
@@ -303,8 +320,74 @@ export class TypeSerializer {
       prettyType: pretty,
       referenceType,
       required: !parameter?.flags?.isOptional,
+      rest: parameter?.flags?.isRest || undefined,
       summary: parameter.comment?.summary,
       type: parsedType,
+    })
+  }
+
+  async serializeSignatureParameterAsProp(
+    parameter: JSONOutput.ParameterReflection,
+  ): Promise<QuiPropDeclaration> {
+    const parsedType = parameter.type
+      ? this.typeFormatter.formatType(parameter.type)
+      : "any"
+
+    const referenceType =
+      parameter.type?.type === "reference" ? parameter.type.name : undefined
+
+    const knownType = referenceType
+      ? this.knownInterfaces[referenceType]
+      : undefined
+
+    const args: QuiPropDeclaration[] | undefined = knownType?.details?.children
+      ? await Promise.all(
+          knownType.details.children.map(
+            async (item): Promise<QuiPropDeclaration> => {
+              const formattedType = item.type
+                ? this.typeFormatter.formatType(item.type)
+                : null
+
+              return omitUnusedProperties<QuiPropDeclaration>({
+                comment: this.transformComment(item.comment),
+                defaultValue: await formatDefault(item.comment),
+                name: item.name,
+                resolvedType: {
+                  baseType: item.type?.type,
+                  deprecated: isDeprecated(item.comment),
+                  name: item.name,
+                  prettyType: formattedType
+                    ? await prettyType(formattedType, this.printWidth)
+                    : null,
+                  required: !item.flags?.isOptional || undefined,
+                  type: formattedType,
+                  url: item.sources?.[0]?.url,
+                },
+                type: item.type?.type,
+              })
+            },
+          ),
+        )
+      : undefined
+
+    const pretty = await prettyType(parsedType, this.printWidth)
+
+    return omitUnusedProperties<QuiPropDeclaration>({
+      args,
+      comment: this.transformComment(parameter.comment),
+      defaultValue: await formatDefault(parameter.comment),
+      name: parameter.name,
+      resolvedType: {
+        baseType: parameter.type?.type,
+        deprecated: isDeprecated(parameter.comment),
+        name: parameter.name,
+        prettyType: pretty,
+        referencedType: referenceType,
+        required: !parameter?.flags?.isOptional,
+        type: parsedType,
+      },
+      rest: parameter?.flags?.isRest || undefined,
+      type: parameter.type?.type,
     })
   }
 
@@ -611,7 +694,7 @@ export class TypeSerializer {
    */
   async serializeSignature(
     signature: JSONOutput.SignatureReflection,
-    printWidth = defaultPrintWidth,
+    printWidth: number = defaultPrintWidth,
   ): Promise<SerializedType> {
     // the return type of the signature.
     const {inheritDoc, isCustomOverride, type} = this.parseType(signature)
@@ -620,22 +703,17 @@ export class TypeSerializer {
 
     const returnType = type
 
-    const parameters = await Promise.all(
+    const functionParameters = await Promise.all(
       signature.parameters?.map?.((param) =>
-        this.serializeSignatureParameter(param),
+        this.serializeSignatureParameterAsProp(param),
       ) ?? [],
     )
 
-    const parameterTypes = parameters.reduce((acc, current) => {
-      /**
-       * destructured or reference properties will have an extra name that we don't
-       * need, i.e.
-       * `getFileOptions: GetFileOptions`
-       */
-      const name = current.referenceType
+    const parameterTypes = functionParameters.reduce((acc, current) => {
+      const name = current.resolvedType.referencedType
         ? "__temp: "
-        : `${current.name}${current.required ? ": " : " "}`
-      return `${acc}${name}${current.type},`
+        : `${current.name}${current.resolvedType.required ? ": " : " "}`
+      return `${acc}${name}${current.resolvedType.type},`
     }, "")
 
     const signatureType = `(${parameterTypes}) => ${returnType}`
@@ -646,10 +724,12 @@ export class TypeSerializer {
       ...getSignatureFlags(signature),
       baseType: "reflection",
       docLink: extractDocLink(signature.comment),
+      functionParameters: functionParameters.length
+        ? functionParameters
+        : undefined,
       inheritDoc,
       isCustomOverride,
       name,
-      parameters,
       prettyType: pretty.replaceAll("__temp: ", ""),
       returnType: type,
       type: "signature",

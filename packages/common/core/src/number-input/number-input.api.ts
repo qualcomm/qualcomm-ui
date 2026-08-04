@@ -18,7 +18,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domEls, domIds} from "./internal"
+import {domEls, domIds} from "./internal/index.js"
+import {numberInputAnatomy} from "./number-input.anatomy.js"
 import type {
   NumberInputApi,
   NumberInputControlBindings,
@@ -32,14 +33,11 @@ import type {
   NumberInputLabelBindings,
   NumberInputRootBindings,
   NumberInputSchema,
-  NumberInputScopeAttribute,
   NumberInputUnitSelectBindings,
   NumberInputValueTextBindings,
-} from "./number-input.types"
+} from "./number-input.types.js"
 
-const commonBindings: NumberInputScopeAttribute = {
-  "data-scope": "number-input",
-}
+const parts = numberInputAnatomy.parts
 
 export function createNumberInputApi(
   machine: Machine<NumberInputSchema>,
@@ -107,13 +105,12 @@ export function createNumberInputApi(
     // group: prop getters
     getControlBindings(): NumberInputControlBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.control,
         "aria-disabled": booleanAriaAttr(disabled),
         "aria-invalid": booleanAriaAttr(invalid),
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "control",
         dir: prop("dir"),
         role: "group",
       })
@@ -121,11 +118,10 @@ export function createNumberInputApi(
     getDecrementTriggerBindings(props): NumberInputDecrementTriggerBindings {
       scope.ids.register("decrementTrigger", props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.decrementTrigger,
         "aria-controls": domIds.input(scope),
         "aria-label": translations.decrementLabel,
         "data-disabled": booleanDataAttr(isDecrementDisabled),
-        "data-part": "decrement-trigger",
         dir: prop("dir"),
         disabled: isDecrementDisabled,
         id: domIds.decrementTrigger(scope),
@@ -164,9 +160,8 @@ export function createNumberInputApi(
     },
     getErrorIndicatorBindings(): NumberInputErrorIndicatorBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorIndicator,
         "aria-label": "Error",
-        "data-part": "error-indicator",
         dir: prop("dir"),
         hidden: !prop("invalid"),
       })
@@ -176,9 +171,8 @@ export function createNumberInputApi(
     ): NumberInputErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
         dir: prop("dir"),
         hidden: !invalid,
         id: domIds.errorText(scope),
@@ -187,9 +181,8 @@ export function createNumberInputApi(
     getHintBindings(props: IdRegistrationProps): NumberInputHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "hint",
         dir: prop("dir"),
         hidden: !!invalid,
         id: domIds.hint(scope),
@@ -198,11 +191,10 @@ export function createNumberInputApi(
     getIncrementTriggerBindings(props): NumberInputIncrementTriggerBindings {
       scope.ids.register("incrementTrigger", props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.incrementTrigger,
         "aria-controls": domIds.input(scope),
         "aria-label": translations.incrementLabel,
         "data-disabled": booleanDataAttr(isIncrementDisabled),
-        "data-part": "increment-trigger",
         dir: prop("dir"),
         disabled: isIncrementDisabled,
         id: domIds.incrementTrigger(scope),
@@ -243,8 +235,9 @@ export function createNumberInputApi(
     getInputBindings(props): NumberInputInputBindings {
       scope.ids.register("input", props)
       return normalize.input({
-        ...commonBindings,
+        ...parts.input,
         "aria-invalid": booleanAriaAttr(invalid),
+        "aria-labelledby": domIds.label(scope),
         "aria-roledescription": "numberfield",
         "aria-valuemax": prop("max"),
         "aria-valuemin": prop("min"),
@@ -257,7 +250,6 @@ export function createNumberInputApi(
         "data-disabled": booleanDataAttr(disabled),
         "data-empty": booleanDataAttr(empty),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input",
         defaultValue: computed("formattedValue"),
         dir: prop("dir"),
         disabled,
@@ -345,11 +337,10 @@ export function createNumberInputApi(
     },
     getInputGroupBindings(): NumberInputInputGroupBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.inputGroup,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "input-group",
         "data-readonly": booleanDataAttr(readOnly),
         dir: prop("dir"),
         onClick: (event) => {
@@ -363,11 +354,10 @@ export function createNumberInputApi(
     getLabelBindings(props): NumberInputLabelBindings {
       scope.ids.register("label", props)
       return normalize.label({
-        ...commonBindings,
+        ...parts.label,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "label",
         dir: prop("dir"),
         htmlFor: domIds.input(scope),
         id: domIds.label(scope),
@@ -375,19 +365,17 @@ export function createNumberInputApi(
     },
     getRootBindings(): NumberInputRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "root",
         dir: prop("dir"),
       })
     },
     getUnitSelectBindings(): NumberInputUnitSelectBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.unitSelect,
         "data-disabled": booleanDataAttr(disabled),
-        "data-part": "unit-select",
         "data-readonly": booleanDataAttr(readOnly),
         dir: prop("dir"),
         disabled: disabled || readOnly,
@@ -396,11 +384,10 @@ export function createNumberInputApi(
     },
     getValueTextBindings(): NumberInputValueTextBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.valueText,
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(focused),
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "value-text",
         dir: prop("dir"),
       })
     },

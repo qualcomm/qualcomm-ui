@@ -12,6 +12,7 @@ export interface ImportedModule {
 }
 
 export interface ComponentProps {
+  comment?: QuiComment
   input?: PropInfo[]
   name: string
   output?: PropInfo[]

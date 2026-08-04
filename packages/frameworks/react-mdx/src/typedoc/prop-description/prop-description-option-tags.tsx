@@ -5,7 +5,7 @@ import type {ReactNode} from "react"
 
 import type {QuiCommentTag} from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionSummary} from "./prop-description-summary"
+import {PropDescriptionSummary} from "./prop-description-summary.js"
 
 interface Props {
   tags: QuiCommentTag[]

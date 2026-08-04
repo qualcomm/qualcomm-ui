@@ -1,8 +1,8 @@
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
-import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {useListCollection} from "@qualcomm-ui/react-core/collection"
 import {useFilter} from "@qualcomm-ui/react-core/locale"
+import {Combobox} from "@qualcomm-ui/react/combobox"
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 
 import {countries} from "./country-list"
 

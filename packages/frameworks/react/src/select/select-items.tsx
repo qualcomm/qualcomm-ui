@@ -5,11 +5,11 @@ import type {ReactElement} from "react"
 
 import {useSelectContext} from "@qualcomm-ui/react-core/select"
 
-import {useQdsSelectContext} from "./qds-select-context"
-import {SelectItem} from "./select-item"
-import {SelectItemCheckbox} from "./select-item-checkbox"
-import {SelectItemIndicator} from "./select-item-indicator"
-import {SelectItemText} from "./select-item-text"
+import {useQdsSelectContext} from "./qds-select-context.js"
+import {SelectItemCheckbox} from "./select-item-checkbox.js"
+import {SelectItemIndicator} from "./select-item-indicator.js"
+import {SelectItemText} from "./select-item-text.js"
+import {SelectItem} from "./select-item.js"
 
 /**
  * Shortcut for rendering a list of select items. Uses the {@link collection} to

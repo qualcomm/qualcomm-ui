@@ -62,7 +62,6 @@ export const componentList: UiComponent[] = [
     description:
       "Cards present information in a compact and visually appealing way.",
     name: "Card",
-    planned: true,
     url: "/components/card",
   },
   {
@@ -71,6 +70,29 @@ export const componentList: UiComponent[] = [
     fileName: "checkbox.svg",
     name: "Checkbox",
     url: "/components/checkbox",
+  },
+  {
+    description:
+      "Groups related checkboxes with a shared label, hint text, and validation state.",
+    name: "Checkbox Group",
+    url: "/components/checkbox-group",
+  },
+  {
+    description: "Toggles the visibility of content sections on demand.",
+    name: "Collapsible",
+    url: "/components/collapsible",
+  },
+  {
+    description:
+      "Combines a text input with a dropdown list for searchable selection.",
+    name: "Combobox",
+    url: "/components/combobox",
+  },
+  {
+    description: "Displays device information in a structured card format.",
+    name: "Device Card",
+    planned: true,
+    url: "/components/device-card",
   },
   {
     description:
@@ -84,6 +106,43 @@ export const componentList: UiComponent[] = [
     fileName: "divider.svg",
     name: "Divider",
     url: "/components/divider",
+  },
+  {
+    description:
+      "Creates an overlay panel for forms, details, or supplementary information.",
+    name: "Drawer",
+    url: "/components/drawer",
+  },
+  {
+    description:
+      "Provides consistent site-wide navigation and information at the page bottom.",
+    name: "Footer",
+    planned: true,
+    url: "/components/footer",
+  },
+  {
+    description:
+      "Provides a consistent control surface with logo, navigation, and actions.",
+    name: "Header Bar",
+    url: "/components/header-bar",
+  },
+  {
+    description:
+      "Displays visual symbols that represent functions or content types.",
+    name: "Icon",
+    url: "/components/icon",
+  },
+  {
+    description:
+      "Performs an action when clicked using an icon instead of text.",
+    name: "Icon Button",
+    url: "/components/icon-button",
+  },
+  {
+    description:
+      "Provides a compact icon-only action trigger for tight spaces.",
+    name: "Inline Icon Button",
+    url: "/components/inline-icon-button",
   },
   {
     description:
@@ -168,10 +227,22 @@ export const componentList: UiComponent[] = [
     url: "/components/search-input",
   },
   {
+    description:
+      "Presents selectable segments for single or multi-select interactions.",
+    name: "Segmented Control",
+    url: "/components/segmented-control",
+  },
+  {
     description: "A select dropdown lets users choose one option from a list.",
     fileName: "select.svg",
     name: "Select",
     url: "/components/select",
+  },
+  {
+    description:
+      "Provides persistent navigation through major application sections.",
+    name: "Side Nav",
+    url: "/components/side-nav",
   },
   {
     description: "A slider lets users select values by dragging along a track.",
@@ -180,10 +251,28 @@ export const componentList: UiComponent[] = [
     url: "/components/slider",
   },
   {
+    description:
+      "A stepper visualizes a group of connected actions or the order of a workflow.",
+    name: "Stepper",
+    url: "/components/stepper",
+  },
+  {
     description: "A switch toggles between two states, like on and off.",
     fileName: "switch.svg",
     name: "Switch",
     url: "/components/switch",
+  },
+  {
+    description:
+      "Groups related switches with a shared label, hint text, and validation state.",
+    name: "Switch Group",
+    url: "/components/switch-group",
+  },
+  {
+    description:
+      "Displays structured data with sorting, filtering, and selection features.",
+    name: "Table",
+    url: "/components/table",
   },
   {
     description:

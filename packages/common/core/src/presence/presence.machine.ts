@@ -7,7 +7,7 @@
 import {getEventTarget, nextTick, raf, setStyle} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import type {PresenceSchema} from "./presence.types"
+import type {PresenceSchema} from "./presence.types.js"
 
 export const presenceMachine: MachineConfig<PresenceSchema> =
   createMachine<PresenceSchema>({

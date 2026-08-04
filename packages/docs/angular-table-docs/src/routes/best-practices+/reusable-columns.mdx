@@ -1,0 +1,283 @@
+---
+title: Reusable Columns
+---
+
+# {frontmatter.title}
+
+Column definitions are the most useful reuse boundary in the table. A column can own its accessor, header, cell renderer, sorting/filtering configuration, metadata, and domain-specific presentation.
+
+The constraint is that columns are table configuration, so they should have stable references. Reusable columns work best when the column owns static structure and delegates changing workflow state to the table, cell components, or domain layer.
+
+## Column Modules
+
+### Concern
+
+Teams often reach for a reusable table abstraction for good reasons. Several tables may repeat the same setup: headers, cells, editable controls, row actions, loading states, and toolbar behavior. Centralizing that work can look like the fastest way to improve consistency.
+
+### Pitfall
+
+The problem appears when a generated column closes over changing Angular state: edited values, pending flags, permissions, or callbacks from the current component. The most common attempted fix is to rebuild the column definitions from a `computed` signal that reads that changing state.
+
+In this example, the table has an editable `status` column. `editedValues` stores unsaved cell drafts, and `isSaving` disables the control while a save is in flight. Assume row IDs are already stable. The problem here is the column dependency.
+
+```angular-ts
+export class UsersTable {
+  readonly editedValues = signal<Record<string, Partial<User>>>({})
+  readonly isSaving = signal(false)
+
+  readonly columns = computed<ColumnDef<User>[]>(() => [
+    {
+      accessorKey: "status",
+      cell: ({getValue, row}) =>
+        this.isSaving()
+          ? "Saving..."
+          : (this.editedValues()[row.id]?.status ?? getValue()),
+    },
+  ])
+
+  readonly table = createAngularTable(() => ({
+    columns: this.columns(),
+    data: this.data(),
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  }))
+}
+```
+
+This fixes stale reads, but it makes the column array change on every edit. Each `editedValues.update()` call creates a new object, so the `computed` signal returns new column definitions. When the column configuration changes, the entire table is recomputed.
+
+This exemplifies where reusable wrappers tend to fall apart. The entire table depends on the column definitions. Once row draft state is a column dependency, a single cell edit can cause all that table configuration work to rerun, which typically results in performance issues. But if you stop reading the signal from the column definition, the cell may render stale values. The solution is to keep frequently changing row workflow state out of column definitions.
+
+### Preferred Pattern
+
+The following example uses Angular dependency injection and signals. The table provides a scoped edit service around its implementation, while the column definition stays static.
+
+This keeps the column responsible for column structure only, and offloads the changing data concern to the inner cell component and service.
+
+```angular-ts
+import {Injectable, signal} from "@angular/core"
+
+@Injectable()
+export class UserEditService {
+  readonly drafts = signal<Record<string, Partial<User>>>({})
+  readonly savingUserIds = signal<ReadonlySet<string>>(new Set())
+
+  updateDraft(rowId: string, patch: Partial<User>) {
+    this.drafts.update((drafts) => ({
+      ...drafts,
+      [rowId]: {...drafts[rowId], ...patch},
+    }))
+  }
+
+  isSaving(rowId: string) {
+    return this.savingUserIds().has(rowId)
+  }
+}
+```
+
+```angular-ts
+@Component({
+  imports: [FormsModule, SelectModule],
+  selector: "editable-status-cell",
+  template: `
+    <q-select
+      clearable="false"
+      size="sm"
+      [collection]="collection"
+      [disabled]="isSaving()"
+      [ngModel]="value()"
+      (ngModelChange)="updateStatus($event)"
+    />
+  `,
+})
+export class EditableStatusCell extends CellComponentContextDirective<
+  User,
+  User["status"]
+> {
+  private readonly editService = inject(UserEditService)
+
+  readonly rowId = computed(() => this.context().row.id)
+
+  readonly value = computed(() => {
+    const rowId = this.rowId()
+    return [this.editService.drafts()[rowId]?.status ?? this.context().getValue()]
+  })
+
+  readonly isSaving = computed(() => this.editService.isSaving(this.rowId()))
+
+  readonly collection = selectCollection({
+    items: ["active", "suspended", "pending"],
+  })
+
+  updateStatus(value: User["status"][]) {
+    this.editService.updateDraft(this.rowId(), {status: value[0]})
+  }
+}
+```
+
+```angular-ts
+const columns: ColumnDef<User>[] = [
+  columnHelper.accessor("status", {
+    header: "Status",
+    cell: () => EditableStatusCell,
+  }),
+]
+
+@Component({
+  imports: [TableModule],
+  providers: [UserEditService],
+  selector: "users-table",
+  template: `<!-- rendered table -->`,
+})
+export class UsersTable {
+  readonly table = createAngularTable(() => ({
+    columns,
+    data: this.data(),
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  }))
+}
+```
+
+`EditableStatusCell` is now owned by the table that needs editing. It can inject that screen's service, query/mutation helpers, form state, or permission logic. The reusable column does not know about `drafts`, `savingUserIds`, or `updateDraft`.
+
+Providing `UserEditService` on the table component scopes the edit workflow to that table instance. If the same table appears twice on a page, each instance gets its own service and its own signals.
+
+This keeps the column array stable because the column structure is static. The changing edit state stays in the product table's edit workflow.
+
+When a value changes which columns exist or how static column options are configured, include it in the code that builds the columns:
+
+```angular-ts
+readonly columns = computed<ColumnDef<User>[]>(() =>
+  [
+    makeNameColumn(),
+    this.canEdit() ? makeEditableStatusColumn() : makeReadonlyStatusColumn(),
+    this.showActions() ? makeActionsColumn() : null,
+  ].filter((column): column is ColumnDef<User> => column !== null),
+)
+```
+
+Those dependencies are different from row workflow state. `canEdit` and `showActions` decide which static column definitions exist. They should not be draft values, mutation flags, or other row-level values that change as the user interacts with the table.
+
+Use dependencies for column shape and static configuration. Move frequently changing row workflow state into typed cells, component-scoped services, forms, or query/mutation state.
+
+## Cell Content
+
+### Concern
+
+Tables repeat the same cell presentations: truncated text, badges, editable controls, action buttons, links, dates, empty values, and validation states. Those pieces are worth reusing, but they should remain small and typed. The following is an example of where this falls apart.
+
+### Pitfall
+
+Centralizing all cell presentation behind one generic renderer creates another table abstraction.
+
+```angular-ts
+@Component({
+  selector: "app-cell-content",
+  template: `
+    @switch (type()) {
+      @case ("status") {
+        <app-status-badge [status]="$any(value())" />
+      }
+      @case ("editableText") {
+        <q-text-input [ngModel]="$any(value())" />
+      }
+      @case ("date") {
+        {{ formatDate(value()) }}
+      }
+      @case ("actions") {
+        <app-action-menu [actions]="$any(options().actions)" [row]="row()" />
+      }
+      @default {
+        <span class="truncate">{{ value() }}</span>
+      }
+    }
+  `,
+})
+export class CellContent {
+  readonly type = input.required<string>()
+  readonly value = input.required<unknown>()
+  readonly row = input.required<unknown>()
+  readonly options = input<Record<string, unknown>>({})
+}
+```
+
+This starts as reuse, but the switchboard weakens types, hides dependencies, and couples every new cell type to the central renderer. It also pressures callers to pass changing values through a generic `options` bag instead of more detailed alternatives like typed cell components, render context, services, or query/mutation selectors.
+
+### Preferred Pattern
+
+Prefer small, typed components that each own one presentation concern:
+
+```angular-ts
+@Component({
+  selector: "text-cell",
+  template: `<span class="truncate">{{ value() || "-" }}</span>`,
+})
+export class TextCell extends CellComponentContextDirective<
+  User,
+  string | null | undefined
+> {
+  readonly value = computed(() => this.context().getValue())
+}
+
+@Component({
+  imports: [StatusBadge],
+  selector: "status-cell",
+  template: `<app-status-badge [status]="status()" />`,
+})
+export class StatusCell extends CellComponentContextDirective<
+  User,
+  User["status"]
+> {
+  readonly status = computed(() => this.context().getValue())
+}
+
+@Component({
+  imports: [UserActionsMenu],
+  selector: "row-actions-cell",
+  template: `<app-user-actions-menu [user]="user()" />`,
+})
+export class RowActionsCell extends CellComponentContextDirective<User> {
+  readonly user = computed(() => this.context().row.original)
+}
+```
+
+Column modules compose those helpers directly from the table render context:
+
+```angular-ts
+function makeUserColumns(): ColumnDef<User>[] {
+  return [
+    columnHelper.accessor("name", {
+      header: "Name",
+      cell: () => TextCell,
+    }),
+    columnHelper.accessor("status", {
+      header: "Status",
+      cell: () => StatusCell,
+    }),
+    columnHelper.display({
+      id: "actions",
+      cell: () => RowActionsCell,
+    }),
+  ]
+}
+```
+
+The table renderer should still own the actual table cell markup:
+
+```angular-html
+<td q-table-cell>
+  <ng-container *renderCell="cell; let value">
+    {{ value }}
+  </ng-container>
+</td>
+```
+
+Use typed content components, not a single renderer for all cell types. Give each helper a real component API or cell context type instead of generic `type`, `options`, and `row: unknown` inputs.
+
+## Related Guides
+
+- [Column Definitions](/guides/column-definitions)
+- [Cell Customization](/guides/cell-customization)
+- [Cells](/guides/cells)
+- [Columns](/guides/columns)

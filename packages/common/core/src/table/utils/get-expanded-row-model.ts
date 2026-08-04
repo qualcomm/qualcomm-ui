@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Row, RowData, RowModel, TableInstance} from "../types"
-import {memo} from "../utils"
+import type {Row, RowData, RowModel, TableInstance} from "../types.js"
+import {memo} from "../utils.js"
 
 export function getExpandedRowModel<TData extends RowData>(): (
   table: TableInstance<TData>,
@@ -52,11 +52,16 @@ export function expandRows<TData extends RowData>(
     expandedRows.push(row)
 
     if (row.subRows?.length && row.getIsExpanded()) {
-      row.subRows.forEach(handleRow)
+      const subRows: Row<TData>[] = row.subRows
+      for (const row of subRows) {
+        handleRow(row)
+      }
     }
   }
 
-  rowModel.rows.forEach(handleRow)
+  for (const row of rowModel.rows) {
+    handleRow(row)
+  }
 
   return {
     flatRows: rowModel.flatRows,

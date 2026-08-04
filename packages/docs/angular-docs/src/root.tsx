@@ -1,5 +1,3 @@
-import "./globals.css"
-
 import {useEffect, useMemo, useState} from "react"
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
@@ -19,13 +17,6 @@ import {
 import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
-import {
-  isQdsBrand,
-  type QdsBrand,
-  QdsThemeContextProvider,
-  type QdsThemeContextValue,
-  useQdsThemeContext,
-} from "@qualcomm-ui/react/qds-theme"
 import {
   GlobalConfigContextProvider,
   type GlobalConfigContextValue,
@@ -48,9 +39,18 @@ import {
   updateSiteState,
   useTheme,
 } from "@qualcomm-ui/react-router-utils/client"
+import {
+  isQdsBrand,
+  type QdsBrand,
+  QdsThemeContextProvider,
+  type QdsThemeContextValue,
+  useQdsThemeContext,
+} from "@qualcomm-ui/react/qds-theme"
 
 import {AppDocsLayout} from "./components"
 import {qdsBrandCookie, siteStateCookie, themeCookie} from "./sessions.server"
+
+import "./globals.css"
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 

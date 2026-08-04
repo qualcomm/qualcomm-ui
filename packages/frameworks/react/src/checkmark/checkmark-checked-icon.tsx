@@ -4,15 +4,15 @@
 import type {ComponentPropsWithRef, ReactElement} from "react"
 
 import type {QdsCheckboxSize} from "@qualcomm-ui/qds-core/checkbox"
+import {checkmarkAnatomy} from "@qualcomm-ui/qds-core/checkmark"
 import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
 
-export interface CheckmarkCheckedIconProps
-  extends ComponentPropsWithRef<"svg"> {
+export interface CheckmarkCheckedIconProps extends ComponentPropsWithRef<"svg"> {
   size?: QdsCheckboxSize
 }
 
 const sharedProps: ComponentPropsWithRef<"svg"> & DataAttributes = {
-  "data-part": "indicator-icon",
+  ...checkmarkAnatomy.parts.indicatorIcon,
   fill: "none",
   xmlns: "http://www.w3.org/2000/svg",
 }

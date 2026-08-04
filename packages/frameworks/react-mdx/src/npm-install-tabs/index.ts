@@ -1,1 +1,1 @@
-export * from "./npm-install-tabs"
+export * from "./npm-install-tabs.js"

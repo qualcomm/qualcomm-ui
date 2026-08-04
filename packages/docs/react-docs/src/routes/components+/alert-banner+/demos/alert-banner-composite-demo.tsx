@@ -1,7 +1,6 @@
 import type {ReactElement} from "react"
 
 import {AlertBanner} from "@qualcomm-ui/react/alert-banner"
-import {Button} from "@qualcomm-ui/react/button"
 
 export function AlertBannerCompositeDemo(): ReactElement {
   return (
@@ -10,11 +9,7 @@ export function AlertBannerCompositeDemo(): ReactElement {
       <AlertBanner.Icon />
       <AlertBanner.Heading>Heading</AlertBanner.Heading>
       <AlertBanner.Description>Description</AlertBanner.Description>
-      <AlertBanner.ActionContainer>
-        <Button emphasis="white-persistent" size="sm" variant="outline">
-          Action
-        </Button>
-      </AlertBanner.ActionContainer>
+      <AlertBanner.Button>Action</AlertBanner.Button>
       <AlertBanner.CloseButton />
     </AlertBanner.Root>
     // preview

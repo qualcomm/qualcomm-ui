@@ -10,10 +10,9 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSegmentedControlContext} from "./qds-segmented-control-context"
+import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.js"
 
-export interface SegmentedControlHiddenInputProps
-  extends ElementRenderProp<"input"> {}
+export interface SegmentedControlHiddenInputProps extends ElementRenderProp<"input"> {}
 
 /**
  * A segmented control item's hidden input. Renders as an `<input type=radio>` by

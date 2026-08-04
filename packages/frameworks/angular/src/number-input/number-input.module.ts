@@ -3,14 +3,14 @@
 
 import {NgModule} from "@angular/core"
 
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {
   InputEndIconComponent,
   InputStartIconComponent,
 } from "@qualcomm-ui/angular/input"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
-import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
-import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 import {NumberInputControlDirective} from "./number-input-control.directive"
 import {NumberInputDecrementTriggerDirective} from "./number-input-decrement-trigger.directive"

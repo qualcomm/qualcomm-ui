@@ -1,1 +1,1 @@
-export * from "./two.types"
+export type * from "./two.types"

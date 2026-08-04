@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {KeyRound} from "lucide-angular"
 
-import {PasswordInputModule} from "@qualcomm-ui/angular/password-input"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {PasswordInputModule} from "@qualcomm-ui/angular/password-input"
 
 @Component({
   imports: [PasswordInputModule],

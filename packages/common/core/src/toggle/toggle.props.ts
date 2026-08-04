@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {ToggleApiProps} from "./toggle.types"
+import type {ToggleApiProps} from "./toggle.types.js"
 
 export const toggleProps: (keyof ToggleApiProps)[] =
   createProps<ToggleApiProps>()(

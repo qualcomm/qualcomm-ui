@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getWindow} from "./node"
+import {getWindow} from "./node.js"
 
 export type DataUrlType = "image/png" | "image/jpeg" | "image/svg+xml"
 

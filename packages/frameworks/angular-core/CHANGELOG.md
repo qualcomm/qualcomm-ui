@@ -1,5 +1,162 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 2.4.7
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
+## 2.4.6
+
+Jul 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/dom@1.1.5, @qualcomm-ui/core@1.11.6]
+
+## 2.4.5
+
+Jun 10th, 2026
+
+### Styles
+
+- apply lint updates ([2e1d59d](https://github.com/qualcomm/qualcomm-ui/commit/2e1d59d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.2, @qualcomm-ui/dom@1.1.4, @qualcomm-ui/core@1.11.5]
+
+## 2.4.4
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.4]
+
+## 2.4.3
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/dom, @qualcomm-ui/utils]
+
+## 2.4.2
+
+Jun 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 2.4.1
+
+May 29th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 2.4.0
+
+May 22nd, 2026
+
+### Features
+
+- [text-input]: support aria labels ([cc0b8b6](https://github.com/qualcomm/qualcomm-ui/commit/cc0b8b6))
+- [checkbox]: support aria labels ([c2e484c](https://github.com/qualcomm/qualcomm-ui/commit/c2e484c))
+- [password-input]: support aria labels ([3fb240c](https://github.com/qualcomm/qualcomm-ui/commit/3fb240c))
+- [number-input]: support aria labels ([cf182d6](https://github.com/qualcomm/qualcomm-ui/commit/cf182d6))
+- [switch]: support aria labels ([0eb172a](https://github.com/qualcomm/qualcomm-ui/commit/0eb172a))
+- [radio]: support aria labels ([b603e42](https://github.com/qualcomm/qualcomm-ui/commit/b603e42))
+- [select]: support aria labels ([e6f41e1](https://github.com/qualcomm/qualcomm-ui/commit/e6f41e1))
+- [combobox]: support aria labels ([cfaa97b](https://github.com/qualcomm/qualcomm-ui/commit/cfaa97b))
+
+### Bug Fixes
+
+- [angular-core/use-id]: hash collision ([dd06a6e](https://github.com/qualcomm/qualcomm-ui/commit/dd06a6e))
+
+### Miscellaneous Chores
+
+- update pnpm and test dependencies ([b175d6a](https://github.com/qualcomm/qualcomm-ui/commit/b175d6a))
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 2.3.0
+
+May 14th, 2026
+
+### Features
+
+- [file-upload]: add framework core bindings ([fcec116](https://github.com/qualcomm/qualcomm-ui/commit/fcec116))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 2.2.2
+
+May 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 2.2.1
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 2.2.0
+
+May 1st, 2026
+
+### Features
+
+- [angular/menu]: add item-description + checkbox/radio item-control directives ([94a59a2](https://github.com/qualcomm/qualcomm-ui/commit/94a59a2))
+
+### Bug Fixes
+
+- [angular-core/popover]: make defaultOpen a boolean attribute ([e7d7d22](https://github.com/qualcomm/qualcomm-ui/commit/e7d7d22))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 2.1.3
+
+Apr 29th, 2026
+
+### Bug Fixes
+
+- [menu]: support disabled state for all item variants ([a55faf1](https://github.com/qualcomm/qualcomm-ui/commit/a55faf1))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 2.1.2
+
+Apr 19th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/dom, @qualcomm-ui/core]
+
+## 2.1.1
+
+Apr 19th, 2026
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
 ## 2.1.0
 
 Apr 7th, 2026

@@ -1,18 +1,26 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
     "incremental": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "dist/tsbuildinfo"
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib"
   },
   "include": ["./src"],
   "exclude": ["./src/**/__tests__"],
   "references": [
     {
       "path": "../mdx-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../tailwind-plugin/tsconfig.lib.json"
+    },
+    {
+      "path": "../typedoc-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json"
     }
   ]
 }

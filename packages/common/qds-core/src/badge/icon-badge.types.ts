@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 import type {
@@ -9,7 +10,8 @@ import type {
   QdsBadgeExtendedSize,
   QdsBadgeSemanticEmphasis,
   QdsBaseBadgeProps,
-} from "./badge.types"
+} from "./badge.types.js"
+import type {iconBadgeAnatomy} from "./icon-badge.anatomy.js"
 
 export type QdsIconBadgeVariant = "default" | "subtle"
 
@@ -33,20 +35,19 @@ export interface QdsIconBadgeProps extends QdsBaseBadgeProps {
   variant?: QdsIconBadgeVariant
 }
 
-export interface QdsIconBadgeRootBindings {
+type PartName = AnatomyPartName<typeof iconBadgeAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"iconBadge", P> {}
+
+export interface QdsIconBadgeRootBindings extends Part<"root"> {
   className: BadgeClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsBadgeSemanticEmphasis | QdsBadgeCategoryEmphasis
-  "data-part": "root"
-  "data-scope": "icon-badge"
   "data-size": QdsBadgeExtendedSize
   "data-variant": QdsIconBadgeVariant
 }
 
-export interface QdsIconBadgeIconBindings {
+export interface QdsIconBadgeIconBindings extends Part<"icon"> {
   className: BadgeClasses["icon"]
-  "data-part": "icon"
-  "data-scope": "icon-badge"
   "data-size": QdsBadgeExtendedSize
 }
 

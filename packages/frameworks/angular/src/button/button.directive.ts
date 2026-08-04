@@ -3,13 +3,13 @@
 
 import {Component, computed, inject, input, type OnInit} from "@angular/core"
 
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   END_ICON_CONTEXT_TOKEN,
   type IconTokenContext,
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
-import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 
 import {BaseButtonDirective} from "./base-button.directive"
 import {provideQdsButtonContext} from "./qds-button-context.service"

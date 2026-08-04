@@ -4,15 +4,15 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {TableFeature} from "../core/table"
+import type {TableFeature} from "../core/table.js"
 import type {
   OnChangeFn,
   RowData,
   RowModel,
   TableInstance,
   Updater,
-} from "../types"
-import {functionalUpdate, makeStateUpdater, memo} from "../utils"
+} from "../types.js"
+import {functionalUpdate, makeStateUpdater, memo} from "../utils.js"
 
 export interface PaginationState {
   pageIndex: number

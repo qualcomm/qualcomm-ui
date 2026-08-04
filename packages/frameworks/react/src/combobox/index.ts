@@ -1,45 +1,45 @@
-import {Combobox as SimpleCombobox} from "./combobox"
 import {
   ComboboxClearTrigger,
   type ComboboxClearTriggerProps,
-} from "./combobox-clear-trigger"
-import {ComboboxContent, type ComboboxContentProps} from "./combobox-content"
-import {ComboboxContext, type ComboboxContextProps} from "./combobox-context"
-import {ComboboxControl, type ComboboxControlProps} from "./combobox-control"
-import {ComboboxEmpty, type ComboboxEmptyProps} from "./combobox-empty"
+} from "./combobox-clear-trigger.js"
+import {ComboboxContent, type ComboboxContentProps} from "./combobox-content.js"
+import {ComboboxContext, type ComboboxContextProps} from "./combobox-context.js"
+import {ComboboxControl, type ComboboxControlProps} from "./combobox-control.js"
+import {ComboboxEmpty, type ComboboxEmptyProps} from "./combobox-empty.js"
 import {
   ComboboxErrorIndicator,
   type ComboboxErrorIndicatorProps,
-} from "./combobox-error-indicator"
+} from "./combobox-error-indicator.js"
 import {
   ComboboxErrorText,
   type ComboboxErrorTextProps,
-} from "./combobox-error-text"
-import {ComboboxHint, type ComboboxHintProps} from "./combobox-hint"
-import {ComboboxInput, type ComboboxInputProps} from "./combobox-input"
-import {ComboboxItem, type ComboboxItemProps} from "./combobox-item"
+} from "./combobox-error-text.js"
+import {ComboboxHint, type ComboboxHintProps} from "./combobox-hint.js"
+import {ComboboxInput, type ComboboxInputProps} from "./combobox-input.js"
 import {
   ComboboxItemIndicator,
   type ComboboxItemIndicatorProps,
-} from "./combobox-item-indicator"
+} from "./combobox-item-indicator.js"
 import {
   ComboboxItemText,
   type ComboboxItemTextProps,
-} from "./combobox-item-text"
-import {ComboboxItems, type ComboboxItemsProps} from "./combobox-items"
-import {ComboboxLabel, type ComboboxLabelProps} from "./combobox-label"
+} from "./combobox-item-text.js"
+import {ComboboxItem, type ComboboxItemProps} from "./combobox-item.js"
+import {ComboboxItems, type ComboboxItemsProps} from "./combobox-items.js"
+import {ComboboxLabel, type ComboboxLabelProps} from "./combobox-label.js"
 import {
   ComboboxPositioner,
   type ComboboxPositionerProps,
-} from "./combobox-positioner"
-import {ComboboxRoot, type ComboboxRootProps} from "./combobox-root"
-import {ComboboxTrigger, type ComboboxTriggerProps} from "./combobox-trigger"
+} from "./combobox-positioner.js"
+import {ComboboxRoot, type ComboboxRootProps} from "./combobox-root.js"
+import {ComboboxTrigger, type ComboboxTriggerProps} from "./combobox-trigger.js"
 import {
   ComboboxVirtualContent,
   type ComboboxVirtualContentProps,
-} from "./combobox-virtual-content"
+} from "./combobox-virtual-content.js"
+import {Combobox as SimpleCombobox} from "./combobox.js"
 
-export * from "./qds-combobox-context"
+export * from "./qds-combobox-context.js"
 
 export type {
   ComboboxClearTriggerProps,

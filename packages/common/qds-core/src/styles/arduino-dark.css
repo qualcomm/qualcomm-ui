@@ -190,9 +190,9 @@
   --color-text-support-danger: #e58073;
   --color-text-support-info: #11a5d7;
   --color-text-support-success: #1cae8f;
+  --color-utility-disabled-background-solid: #41555d;
   --color-utility-disabled-background: #ffffff14;
   --color-utility-disabled-border: #ffffff1f;
-  --color-utility-disabled-handle: #41555d;
   --color-utility-disabled-icon: #516f79;
   --color-utility-disabled-inverse-background: #00000014;
   --color-utility-disabled-inverse-border: #0000001f;
@@ -207,7 +207,6 @@
   --color-utility-disabled-persistent-white-icon: #8eaab2;
   --color-utility-disabled-persistent-white-text: #8eaab2;
   --color-utility-disabled-text: #516f79;
-  --color-utility-disabled-track-fill: #41555d;
   --color-utility-focus-border: #11e2df;
   --color-utility-opacity-01: #ffffff05;
   --color-utility-opacity-02: #ffffff0a;
@@ -224,6 +223,7 @@
   --color-utility-persistent-white: #ffffff;
   --color-utility-placeholder-icon: #6b8c96;
   --color-utility-placeholder-text: #6b8c96;
+  --color-utility-scrim-default: #000000cc;
   --border-radius-lg: 6px;
   --border-radius-md: 4px;
   --border-radius-none: 0;
@@ -258,7 +258,6 @@
   --component-button-variant-fill-neutral-text: #ffffff;
   --component-button-variant-fill-primary-icon: #040b0f;
   --component-button-variant-fill-primary-text: #040b0f;
-  --component-button-variant-outline-border-width: 2px;
   --component-button-variant-outline-danger-border-hover: #efa69c;
   --component-button-variant-outline-danger-border-idle: #e58073;
   --component-button-variant-outline-danger-border-pressed: #f8d5d0;
@@ -270,6 +269,13 @@
   --component-button-variant-outline-primary-border-pressed: #c5fffc;
   --component-tag-selectable-neutral-selected-icon: #ffffff;
   --component-tag-selectable-neutral-selected-text: #ffffff;
+  --component-utility-icons-stroke-weight-lg: 2px;
+  --component-utility-icons-stroke-weight-md: 1.75px;
+  --component-utility-icons-stroke-weight-sm: 1.5px;
+  --component-utility-icons-stroke-weight-xl: 2.25px;
+  --component-utility-icons-stroke-weight-xs: 1.25px;
+  --component-utility-icons-stroke-weight-xxs: 1px;
+  --cross-component-track-default: #ffffff1a;
   --font-dynamic-display-lg: var(--type-font-weight-display-regular) 53px / 60px var(--type-font-family-primary);
   --font-dynamic-display-md: var(--type-font-weight-display-regular) 40px / 46px var(--type-font-family-primary);
   --font-dynamic-heading-lg-bold: var(--type-font-weight-heading-bold) 26px / 32px var(--type-font-family-secondary);
@@ -282,6 +288,8 @@
   --font-static-body-md-bold: var(--type-font-weight-body-bold) 16px / 24px var(--type-font-family-secondary);
   --font-static-body-md-default: var(--type-font-weight-body-default) 16px / 24px var(--type-font-family-secondary);
   --font-static-body-sm-bold: var(--type-font-weight-body-bold) 14px / 20px var(--type-font-family-secondary);
+  --font-static-body-sm-compact-bold: var(--type-font-weight-body-bold) 13px / 20px var(--type-font-family-secondary);
+  --font-static-body-sm-compact-default: var(--type-font-weight-body-default) 13px / 20px var(--type-font-family-secondary);
   --font-static-body-sm-default: var(--type-font-weight-body-default) 14px / 20px var(--type-font-family-secondary);
   --font-static-body-xl-bold: var(--type-font-weight-body-bold) 19px / 28px var(--type-font-family-secondary);
   --font-static-body-xl-default: var(--type-font-weight-body-default) 19px / 28px var(--type-font-family-secondary);
@@ -318,13 +326,6 @@
   --font-static-heading-xxs-bold: var(--type-font-weight-heading-bold) 14px / 18px var(--type-font-family-secondary);
   --font-static-heading-xxs-default: var(--type-font-weight-heading-default) 14px / 18px var(--type-font-family-secondary);
   --font-static-heading-xxxl: var(--type-font-weight-heading-regular) 53px / 60px var(--type-font-family-primary);
-  --icon-stroke-lg: 2px;
-  --icon-stroke-md: 1.75px;
-  --icon-stroke-sm: 1.5px;
-  --icon-stroke-xl: 2.25px;
-  --icon-stroke-xs: 1.25px;
-  --icon-stroke-xxs: 1px;
-  --scrim-default: #000000cc;
   --shadow-high: 0 7px 20px 5px #00000033;
   --shadow-highest: 0 20px 30px 15px #00000033;
   --shadow-low: 0 3px 5px 0 #00000033;
@@ -343,6 +344,7 @@
   --sizing-100: 28px;
   --sizing-110: 30px;
   --sizing-120: 32px;
+  --sizing-125: 34px;
   --sizing-130: 38px;
   --sizing-140: 40px;
   --sizing-150: 46px;
@@ -385,7 +387,6 @@
   --spacing-310: 100px;
   --spacing-320: 120px;
   --spacing-330: 132px;
-  --track-default: #ffffff1a;
   --type-font-family-primary: "Open Sans", sans-serif;
   --type-font-family-secondary: "Open Sans", sans-serif;
   --type-font-family-tertiary: "Roboto Mono", monospace;
@@ -402,6 +403,8 @@
   --type-static-body-lg-line-height: 26px;
   --type-static-body-md-font-size: 16px;
   --type-static-body-md-line-height: 24px;
+  --type-static-body-sm-compact-font-size: 13px;
+  --type-static-body-sm-compact-line-height: 20px;
   --type-static-body-sm-font-size: 14px;
   --type-static-body-sm-line-height: 20px;
   --type-static-body-xl-font-size: 19px;

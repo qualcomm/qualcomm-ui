@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "cacheDir": ".turbo-cache",
+  "cacheDir": ".turbo/cache",
   "concurrency": "30",
   "tasks": {
     "dev": {

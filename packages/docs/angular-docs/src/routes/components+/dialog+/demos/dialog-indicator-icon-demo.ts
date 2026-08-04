@@ -1,10 +1,10 @@
 import {Component} from "@angular/core"
 import {AArrowDown} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {DialogModule} from "@qualcomm-ui/angular/dialog"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [DialogModule, ButtonModule, IconDirective],

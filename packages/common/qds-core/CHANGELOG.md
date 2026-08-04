@@ -1,5 +1,382 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.33.2
+
+Jul 28th, 2026
+
+### Styles
+
+- [tabs]: use secondary text color for inactive line tab variant ([7d01476](https://github.com/qualcomm/qualcomm-ui/commit/7d01476))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
+## 1.33.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+- [tabs]: add line tab bottom border ([4f6caef](https://github.com/qualcomm/qualcomm-ui/commit/4f6caef))
+
+## 1.33.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+## 1.32.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+- [tokens]: add compact small body typography ([2050eb3](https://github.com/qualcomm/qualcomm-ui/commit/2050eb3))
+
+### Styles
+
+- [drawer]: improve background contrast in dark mode ([c58c00c](https://github.com/qualcomm/qualcomm-ui/commit/c58c00c))
+
+### Bug Fixes
+
+- [tree]: trim node text box to cap height ([ea51430](https://github.com/qualcomm/qualcomm-ui/commit/ea51430))
+
+## 1.31.0
+
+Jul 13th, 2026
+
+### Features
+
+- [tokens]: build and export design token data with comments ([31708c9](https://github.com/qualcomm/qualcomm-ui/commit/31708c9))
+
+### Styles
+
+- update design tokens ([a56caa6](https://github.com/qualcomm/qualcomm-ui/commit/a56caa6))
+
+### Build System
+
+- omit token comments from CSS output ([68c2602](https://github.com/qualcomm/qualcomm-ui/commit/68c2602))
+
+## 1.30.4
+
+Jul 10th, 2026
+
+### Bug Fixes
+
+- [combobox/select]: allow mouse wheel scrolling in virtual content ([4166c7d](https://github.com/qualcomm/qualcomm-ui/commit/4166c7d))
+- [tooltip]: account for layer stacking in z-index computation ([532e2e4](https://github.com/qualcomm/qualcomm-ui/commit/532e2e4))
+
+## 1.30.3
+
+Jul 7th, 2026
+
+### Bug Fixes
+
+- [select]: use updated label size from figma ([277ee34](https://github.com/qualcomm/qualcomm-ui/commit/277ee34))
+
+## 1.30.2
+
+Jul 2nd, 2026
+
+### Bug Fixes
+
+- [button]: icon sizes ([e0994ba](https://github.com/qualcomm/qualcomm-ui/commit/e0994ba))
+
+## 1.30.1
+
+Jul 1st, 2026
+
+### Bug Fixes
+
+- nested overlay z-index and unit selector position ([7d800e7](https://github.com/qualcomm/qualcomm-ui/commit/7d800e7))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.6]
+
+## 1.30.0
+
+Jun 29th, 2026
+
+### Features
+
+- [tag]: support anchor navigation with active and disabled states ([841b3b6](https://github.com/qualcomm/qualcomm-ui/commit/841b3b6))
+- [tag]: add xl size ([0e185b7](https://github.com/qualcomm/qualcomm-ui/commit/0e185b7))
+
+## 1.29.3
+
+Jun 10th, 2026
+
+### Styles
+
+- apply lint updates ([52b5982](https://github.com/qualcomm/qualcomm-ui/commit/52b5982))
+
+### Code Refactoring
+
+- support nodenext resolution ([42b9222](https://github.com/qualcomm/qualcomm-ui/commit/42b9222))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.2, @qualcomm-ui/core@1.11.5]
+
+## 1.29.2
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.4]
+
+## 1.29.1
+
+Jun 4th, 2026
+
+### Bug Fixes
+
+- [styles]: sort global styles last for specificity ([a24c9dc](https://github.com/qualcomm/qualcomm-ui/commit/a24c9dc))
+
+## 1.29.0
+
+Jun 4th, 2026
+
+### Features
+
+- [tag]: support controlled selected state ([f2b0d0c](https://github.com/qualcomm/qualcomm-ui/commit/f2b0d0c))
+- [menu]: add split button ([527d33e](https://github.com/qualcomm/qualcomm-ui/commit/527d33e))
+- [tag]: add aria-pressed to selectable tag ([81a24a3](https://github.com/qualcomm/qualcomm-ui/commit/81a24a3))
+
+### Code Refactoring
+
+- [button]: consolidate button-group prop resolution ([3922878](https://github.com/qualcomm/qualcomm-ui/commit/3922878))
+
+### Bug Fixes
+
+- [tag]: correct icon sizing for nested icons ([d1618e5](https://github.com/qualcomm/qualcomm-ui/commit/d1618e5))
+- [menu]: keep variant background on menu button triggers ([6892122](https://github.com/qualcomm/qualcomm-ui/commit/6892122))
+
+## 1.28.4
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils]
+
+## 1.28.3
+
+Jun 1st, 2026
+
+### Bug Fixes
+
+- correct compact button spacing and menu trigger sizing ([f0cbaac](https://github.com/qualcomm/qualcomm-ui/commit/f0cbaac))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.28.2
+
+May 29th, 2026
+
+### Bug Fixes
+
+- [segmented-control]: use own component context for size and orientation selectors ([a9cda21](https://github.com/qualcomm/qualcomm-ui/commit/a9cda21))
+- [divider]: use min-height for flex container compat in vertical orientation ([42e0286](https://github.com/qualcomm/qualcomm-ui/commit/42e0286))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.28.1
+
+May 22nd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.28.0
+
+May 14th, 2026
+
+### Features
+
+- [file-upload]: add shared file upload primitives ([c6f26f5](https://github.com/qualcomm/qualcomm-ui/commit/c6f26f5))
+- [link]: allow links to inherit font size ([7ef35d6](https://github.com/qualcomm/qualcomm-ui/commit/7ef35d6))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils]
+
+## 1.27.3
+
+May 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.27.2
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils]
+
+## 1.27.1
+
+May 1st, 2026
+
+### Bug Fixes
+
+- [qds-core]: polish disabled and hover states ([b5d481c](https://github.com/qualcomm/qualcomm-ui/commit/b5d481c))
+- [qds-core/menu]: separator css ([2035383](https://github.com/qualcomm/qualcomm-ui/commit/2035383))
+- [tabs]: hide non-selected panels and rework icon sizing ([885e7da](https://github.com/qualcomm/qualcomm-ui/commit/885e7da))
+- [docs]: scope tailwind layers and reset defaults ([af2b476](https://github.com/qualcomm/qualcomm-ui/commit/af2b476))
+
+### Styles
+
+- [tabs]: update icon size ([95a412b](https://github.com/qualcomm/qualcomm-ui/commit/95a412b))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.27.0
+
+Apr 29th, 2026
+
+### Features
+
+- [breadcrumbs]: support tooltip composition ([ab3604b](https://github.com/qualcomm/qualcomm-ui/commit/ab3604b))
+- [alert-banner]: fix styles, add dedicated button component ([8ddea37](https://github.com/qualcomm/qualcomm-ui/commit/8ddea37))
+- [breadcrumbs]: add overflow component ([603c6e5](https://github.com/qualcomm/qualcomm-ui/commit/603c6e5))
+
+### Miscellaneous Chores
+
+- update tokens ([d706b7c](https://github.com/qualcomm/qualcomm-ui/commit/d706b7c))
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+### Bug Fixes
+
+- [menu]: support disabled state for all item variants ([a55faf1](https://github.com/qualcomm/qualcomm-ui/commit/a55faf1))
+
+### Code Refactoring
+
+- [breadcrumbs]: change default item trigger to anchor element ([f08b622](https://github.com/qualcomm/qualcomm-ui/commit/f08b622))
+- [breadcrumbs]: default item trigger to <span> ([b36b903](https://github.com/qualcomm/qualcomm-ui/commit/b36b903))
+
+## 1.26.1
+
+Apr 23rd, 2026
+
+### Bug Fixes
+
+- [qds-core]: remove hardcoded cursor default from badge component ([f7c0c0e](https://github.com/qualcomm/qualcomm-ui/commit/f7c0c0e))
+
+## 1.26.0
+
+Apr 23rd, 2026
+
+### Features
+
+- add textmate json themes ([9ff374c](https://github.com/qualcomm/qualcomm-ui/commit/9ff374c))
+
+## 1.25.1
+
+Apr 21st, 2026
+
+### Bug Fixes
+
+- [qds-core]: use correct select icon styles ([347b3ca](https://github.com/qualcomm/qualcomm-ui/commit/347b3ca))
+- [qds-core]: support additional input part selectors for clear trigger visibility ([03891dd](https://github.com/qualcomm/qualcomm-ui/commit/03891dd))
+
+## 1.25.0
+
+Apr 19th, 2026
+
+### Features
+
+- [menu]: menu button & icon menu button ([0508c4d](https://github.com/qualcomm/qualcomm-ui/commit/0508c4d))
+- [floating-ui]: read gutter from CSS --gutter custom property ([0db5e35](https://github.com/qualcomm/qualcomm-ui/commit/0db5e35))
+
+### Code Refactoring
+
+- [floating-ui]: replace arrow rotation with clip-path diamond ([7717aa9](https://github.com/qualcomm/qualcomm-ui/commit/7717aa9))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.24.1
+
+Apr 19th, 2026
+
+### Code Refactoring
+
+- [password-input]: update anatomy attributes ([e75e295](https://github.com/qualcomm/qualcomm-ui/commit/e75e295))
+- [progress]: update anatomy attributes ([18f6dff](https://github.com/qualcomm/qualcomm-ui/commit/18f6dff))
+- [alert-banner]: update anatomy attributes ([9887f06](https://github.com/qualcomm/qualcomm-ui/commit/9887f06))
+- [tag]: update anatomy attributes ([16ee48d](https://github.com/qualcomm/qualcomm-ui/commit/16ee48d))
+- [accordion]: update indicator and title selectors ([c84e0f7](https://github.com/qualcomm/qualcomm-ui/commit/c84e0f7))
+- [dialog]: update anatomy attributes ([8d23993](https://github.com/qualcomm/qualcomm-ui/commit/8d23993))
+- [input]: update anatomy attributes ([c0e5817](https://github.com/qualcomm/qualcomm-ui/commit/c0e5817))
+- [checkmark]: update anatomy attributes ([ad9b1a1](https://github.com/qualcomm/qualcomm-ui/commit/ad9b1a1))
+- [segmented-control]: update anatomy attributes ([a2e96b1](https://github.com/qualcomm/qualcomm-ui/commit/a2e96b1))
+- [inline-notification]: update anatomy attributes ([cd66b21](https://github.com/qualcomm/qualcomm-ui/commit/cd66b21))
+- [menu]: update anatomy attributes ([eef3675](https://github.com/qualcomm/qualcomm-ui/commit/eef3675))
+- [toast]: replace dead status-icon selector with class-based match ([939d305](https://github.com/qualcomm/qualcomm-ui/commit/939d305))
+- [number-input]: update anatomy attributes ([1219ea2](https://github.com/qualcomm/qualcomm-ui/commit/1219ea2))
+- [card]: update anatomy attributes ([4d1b4f8](https://github.com/qualcomm/qualcomm-ui/commit/4d1b4f8))
+- [header-bar]: update anatomy attributes ([f3398c9](https://github.com/qualcomm/qualcomm-ui/commit/f3398c9))
+- [side-nav]: update anatomy attributes ([7fddcb6](https://github.com/qualcomm/qualcomm-ui/commit/7fddcb6))
+- [field-group]: update anatomy attributes ([7e51451](https://github.com/qualcomm/qualcomm-ui/commit/7e51451))
+- [button]: update anatomy attributes ([015e900](https://github.com/qualcomm/qualcomm-ui/commit/015e900))
+- [inline-icon-button]: update anatomy attributes ([fbb58d3](https://github.com/qualcomm/qualcomm-ui/commit/fbb58d3))
+- [link]: update anatomy attributes ([337d493](https://github.com/qualcomm/qualcomm-ui/commit/337d493))
+- [switch]: update anatomy attributes ([44f938e](https://github.com/qualcomm/qualcomm-ui/commit/44f938e))
+- [icon-button]: update anatomy attributes ([eccf78f](https://github.com/qualcomm/qualcomm-ui/commit/eccf78f))
+- [tree]: update anatomy attributes ([7a08d86](https://github.com/qualcomm/qualcomm-ui/commit/7a08d86))
+- [toast]: update anatomy attributes ([c1cfa1e](https://github.com/qualcomm/qualcomm-ui/commit/c1cfa1e))
+- [badge]: update anatomy attributes ([306653d](https://github.com/qualcomm/qualcomm-ui/commit/306653d))
+- [action-group]: update anatomy attributes ([799f080](https://github.com/qualcomm/qualcomm-ui/commit/799f080))
+- [checkbox]: update anatomy attributes ([8a37bbd](https://github.com/qualcomm/qualcomm-ui/commit/8a37bbd))
+- [checkmark]: fix qds-checkmark selector ([d42666a](https://github.com/qualcomm/qualcomm-ui/commit/d42666a))
+
+### Styles
+
+- [tag]: fix small and medium icon sizes ([5c116f0](https://github.com/qualcomm/qualcomm-ui/commit/5c116f0))
+- [toast]: add spacing between description and action ([fa73b20](https://github.com/qualcomm/qualcomm-ui/commit/fa73b20))
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils]
+
+### Bug Fixes
+
+- [qds-core]: mark @qualcomm-ui/core as external in bundle ([88ed56f](https://github.com/qualcomm/qualcomm-ui/commit/88ed56f))
+
+## 1.24.0
+
+Apr 16th, 2026
+
+### Features
+
+- [card]: add qds-core card API, types, and styles ([a978a71](https://github.com/qualcomm/qualcomm-ui/commit/a978a71))
+
+### Bug Fixes
+
+- [qds-core]: support older webpack versions with more lenient exports ([85cece6](https://github.com/qualcomm/qualcomm-ui/commit/85cece6))
+
 ## 1.23.0
 
 Apr 7th, 2026

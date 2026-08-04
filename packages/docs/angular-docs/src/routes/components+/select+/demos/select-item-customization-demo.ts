@@ -1,9 +1,9 @@
 import {Component, computed, signal} from "@angular/core"
 import {Apple, Banana, Grape, Hamburger, IceCream, Salad} from "lucide-angular"
 
+import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {SelectModule} from "@qualcomm-ui/angular/select"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {selectCollection} from "@qualcomm-ui/core/select"
 
 interface Food {

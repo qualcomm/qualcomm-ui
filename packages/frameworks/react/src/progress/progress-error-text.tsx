@@ -3,16 +3,16 @@
 
 import type {ReactElement} from "react"
 
-import {InputErrorText} from "@qualcomm-ui/react/input"
 import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {
   type CoreProgressErrorTextProps,
   useProgressContext,
 } from "@qualcomm-ui/react-core/progress"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
+import {InputErrorText} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsProgressContext} from "./qds-progress-context"
+import {useQdsProgressContext} from "./qds-progress-context.js"
 
 export interface ProgressErrorTextProps extends CoreProgressErrorTextProps {}
 

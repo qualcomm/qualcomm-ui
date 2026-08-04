@@ -12,13 +12,11 @@ import {
 import type {ComponentDataAttributes} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {CheckboxIndicator} from "./checkbox-indicator"
-import {useQdsCheckboxContext} from "./qds-checkbox-context"
+import {CheckboxIndicator} from "./checkbox-indicator.js"
+import {useQdsCheckboxContext} from "./qds-checkbox-context.js"
 
 export interface CheckboxControlProps
-  extends IdProp,
-    ElementRenderProp<"div">,
-    ComponentDataAttributes {
+  extends IdProp, ElementRenderProp<"div">, ComponentDataAttributes {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    *

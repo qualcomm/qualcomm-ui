@@ -1,0 +1,92 @@
+---
+title: Principles
+---
+
+# {frontmatter.title}
+
+> [!note]
+> This guide is intended for Qualcomm developers and QUI contributors.
+
+These guidelines cover the principles behind effective documentation. Use [Routing Guidelines](/routing) for the route, MDX, navigation, search, move, and verification contract. The detailed enforceable rules live in [Rules](/rules).
+
+## Effective documentation
+
+Effective documentation answers the reader's next practical question. Across page types, that usually means:
+
+- What is this and when do I use it?
+- What do I need to know or have before I start?
+- What are the exact steps, shape, or answer?
+- How do I know it worked, and what can go wrong?
+
+If the reader cannot answer those after reading, the page is not done.
+
+## Pick a page type before writing
+
+Every page is one of these. If a page does not fit one type cleanly, split it.
+
+<div className="page-type-table-prev-element"></div>
+
+| Type | Use it for |
+| --- | --- |
+| **How-to** | Walking a reader through an action — one step, many steps, or a short repeatable recipe. Examples: *submit a job*, *re-run a failed task run*, *prepare a host*, *install Launcher*. |
+| **Concept** | Building the mental model a reader needs before following tasks. Examples: *what is a taxonomy*, *how utilization is calculated*, *what is a coverage plan*. |
+| **API Guide** | Documenting an API surface — endpoints, parameters, request/response shapes, component props, fields, and states. |
+| **FAQ** | Answering questions readers ask repeatedly — errors, symptoms, edge cases, and "why does it work this way." |
+
+## Structure pages around reader value
+
+Open with what the page helps the reader do. Do not start with "This page contains..." or "The below sections...".
+
+**Weak (screen-tour opening):**
+
+```md
+This document explains the Device Status Dashboard. The below screenshots show the available filters and columns.
+```
+
+**Better (task-guide opening):**
+
+```md
+Use Device Status to investigate why a device is unavailable for job execution. Start by checking allocation state, host connection, last heartbeat, and the active job linked to the device.
+```
+
+## Omit ToC sections
+
+The docs site automatically builds a table of contents from H2-H4 headings. Do not add a manual "Table of Contents" or "Summary" that just lists the headings already on the page.
+
+## Screenshots support, they don't replace
+
+Screenshots confirm a state, clarify a dense table, or show a non-obvious control location. They are not the documentation. Every screenshot needs nearby text explaining why it matters. If removing the screenshots leaves no useful documentation, the page is not developer documentation: rewrite it as a how-to, concept, API guide, or FAQ.
+
+## Plain, direct writing
+
+Use active voice, present tense, imperative steps, and exact UI labels, field names, commands, statuses, and file names.
+
+**Weak (passive voice):**
+
+```md
+User can check task stdout and task stderr files and decide if it can be taken care of by user itself.
+```
+
+**Better (active voice):**
+
+```md
+Open the task run details and inspect `stdout` and `stderr`. If the error is caused by missing input data, fix the input and re-run the task. If the error is caused by infrastructure failure, collect the task run ID and contact the Axiom Cloud support team.
+```
+
+Avoid `below`, `above`, `here`, `please`, `user can`, `as per`, and `kindly`. Name the thing directly.
+
+## Before submitting
+
+Always do a quick check before you open the PR:
+
+- Each page should have one clear primary type, and the first paragraph states the reader value.
+- Prerequisites, steps, expected result, and failure modes are explicit.
+- Examples use realistic values, not `{"status": "string"}` placeholders.
+- Screenshots support the text instead of replacing it.
+- Terminology matches the canonical glossary (`test case` vs `Test Case` vs `Testcase`). Pick one and use the same terminology through out the docs
+
+If you cannot tick all five, the page is not ready. The creation and verification contract lives in [Routing Guidelines](/routing), and the detailed rules and reviewer checklist live in [Rules](/rules).
+
+## Agentic Workflows
+
+We provide agentic plugins that enforce these guidelines. Learn more [here](https://react.qui.qualcomm.com/ai-tools/plugins/qui-docs)

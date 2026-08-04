@@ -13,7 +13,7 @@ export function CollapsibleShowcaseDemo(): ReactElement {
         Toggle
       </Collapsible.Trigger>
       <Collapsible.Content>
-        <div className="border-neutral-01 flex h-48 w-72 flex-col rounded-sm border p-4">
+        <div className="border-neutral-01 box-border flex h-48 w-72 flex-col rounded-sm border p-4">
           Content
         </div>
       </Collapsible.Content>

@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {avatarClasses} from "./avatar.classes"
+import type {avatarClasses} from "./avatar.classes.js"
 
 export type QdsAvatarSize = "xs" | "sm" | "md" | "lg" | "xl"
 

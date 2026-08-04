@@ -9,6 +9,7 @@ import {
   getExpandedRowModel,
   getPaginationRowModel,
 } from "@qualcomm-ui/core/table"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Button} from "@qualcomm-ui/react/button"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 import {Pagination} from "@qualcomm-ui/react/pagination"
@@ -19,7 +20,6 @@ import {
   useReactTable,
   useTablePagination,
 } from "@qualcomm-ui/react/table"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {type User, useUserData} from "./use-data"
 
@@ -47,6 +47,9 @@ export function RowExpansionDemo() {
             >
               <>
                 <Checkbox
+                  aria-label={
+                    row.getIsSelected() ? "Deselect row" : "Select row"
+                  }
                   checked={checked}
                   indeterminate={indeterminate}
                   onCheckedChange={(nextState) => row.toggleSelected(nextState)}

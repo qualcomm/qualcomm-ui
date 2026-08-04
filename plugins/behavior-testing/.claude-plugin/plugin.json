@@ -1,0 +1,22 @@
+{
+  "name": "behavior-testing",
+  "description": "Behavior testing workflows for React and Angular contributors.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Qualcomm UI Maintainers",
+    "url": "https://github.com/qualcomm/qualcomm-ui"
+  },
+  "homepage": "https://github.com/qualcomm/qualcomm-ui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "license": "BSD-3-Clause-Clear",
+  "keywords": [
+    "claude-code",
+    "testing",
+    "react",
+    "angular",
+    "components",
+    "vitest",
+    "browser-mode",
+    "behavior-testing"
+  ]
+}

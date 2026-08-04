@@ -18,10 +18,11 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsMenuContext} from "./qds-menu-context"
+import {useQdsMenuContext} from "./qds-menu-context.js"
 
 export interface MenuCheckboxItemProps
-  extends CheckboxOptionItemProps,
+  extends
+    CheckboxOptionItemProps,
     Omit<ElementRenderProp<"button">, "onSelect" | "value"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.

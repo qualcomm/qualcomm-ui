@@ -1,4 +1,5 @@
 export * from "./progress-ring-composite-demo"
+export * from "./progress-ring-explorer-demo"
 export * from "./progress-ring-disabled-demo"
 export * from "./progress-ring-simple-demo"
 export * from "./progress-ring-sizes-demo"

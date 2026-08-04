@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {selectClasses} from "./select.classes"
+import {selectClasses} from "./select.classes.js"
 import type {
   QdsSelectApi,
   QdsSelectApiProps,
@@ -20,7 +20,7 @@ import type {
   QdsSelectPositionerBindings,
   QdsSelectRootBindings,
   QdsSelectValueTextBindings,
-} from "./select.types"
+} from "./select.types.js"
 
 export function createQdsSelectApi(
   props: QdsSelectApiProps,

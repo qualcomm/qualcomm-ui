@@ -6,8 +6,8 @@
 
 import type {IdParam} from "@qualcomm-ui/utils/attributes"
 
-import type {JSX} from "./jsx"
-import type {ElementCleanup} from "./prop-normalizer"
+import type {JSX} from "./jsx.js"
+import type {ElementCleanup} from "./prop-normalizer.js"
 
 export type Dict = Record<string, any>
 
@@ -101,6 +101,13 @@ export interface BindableParams<T, ChangeEvent> {
   isEqual?: (a: T, b: T | undefined) => boolean
   onChange?: (value: T, details: ChangeEvent, prevValue: T | undefined) => void
   sync?: boolean
+  /**
+   * When true, immediately updates the ref value before triggering a re-render.
+   * This ensures `ctx.get()` returns the updated value synchronously, which is
+   * useful when multiple bindables need to read each other's values in onChange
+   * callbacks.
+   */
+  syncRead?: boolean
   value?: T | undefined
 }
 

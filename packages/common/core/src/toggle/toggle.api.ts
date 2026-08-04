@@ -7,7 +7,15 @@
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import type {ToggleApi, ToggleSchema} from "./toggle.types"
+import {toggleAnatomy} from "./toggle.anatomy.js"
+import type {
+  ToggleApi,
+  ToggleIndicatorBindings,
+  ToggleRootBindings,
+  ToggleSchema,
+} from "./toggle.types.js"
+
+const parts = toggleAnatomy.parts
 
 export function createToggleApi(
   machine: Machine<ToggleSchema>,
@@ -25,24 +33,21 @@ export function createToggleApi(
     },
 
     // group: bindings
-    getIndicatorBindings() {
+    getIndicatorBindings(): ToggleIndicatorBindings {
       return normalize.element({
+        ...parts.indicator,
         "data-disabled": booleanDataAttr(prop("disabled")),
-        "data-part": "indicator",
         "data-pressed": booleanDataAttr(pressed),
-        "data-scope": "toggle",
         "data-state": pressed ? "on" : "off",
-        dir,
       })
     },
 
-    getRootBindings() {
+    getRootBindings(): ToggleRootBindings {
       return normalize.element({
+        ...parts.root,
         "aria-pressed": booleanAriaAttr(pressed),
         "data-disabled": booleanDataAttr(prop("disabled")),
-        "data-part": "root",
         "data-pressed": booleanDataAttr(pressed),
-        "data-scope": "toggle",
         "data-state": pressed ? "on" : "off",
         dir,
         disabled: prop("disabled"),

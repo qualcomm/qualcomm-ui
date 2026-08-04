@@ -8,7 +8,7 @@ import {
   type Options as BaseOptions,
   compute,
   type ScrollAction,
-} from "./compute-scroll-into-view"
+} from "./compute-scroll-into-view.js"
 
 /**
  * Only scrolls if the `node` is partially out of view:

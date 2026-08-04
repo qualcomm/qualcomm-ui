@@ -26,7 +26,7 @@ async function renderMachine<T extends MachineSchema>(
     `,
   })
   class TestComponent implements OnInit {
-    api: Machine<T>
+    api: Machine<T> = null!
 
     injector = inject(Injector)
 

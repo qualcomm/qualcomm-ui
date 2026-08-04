@@ -13,6 +13,7 @@ import {
 
 import {ChevronDown, ChevronRightIcon, ChevronUp} from "lucide-react"
 
+import {IconButton} from "@qualcomm-ui/react/button"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
@@ -22,6 +23,7 @@ import {useJsonViewerStore, useTypeComponents} from "../stores"
 import type {DataItemProps} from "../type"
 import {getValueSize} from "../utils"
 
+import {isEnum} from "./data-types"
 import {
   getRefName,
   isObject,
@@ -195,11 +197,12 @@ export function DataKeyPair(props: DataKeyPairProps) {
       className={clsx("data-key-pair", props.className)}
       data-expandable={booleanDataAttr(expandable)}
       data-has-description={booleanDataAttr(!!description)}
+      data-is-enum-type={booleanDataAttr(isEnum(props))}
       data-testid={`data-key-pair-${path.join(".")}`}
       onMouseEnter={onMouseEnter}
       style={props.style}
     >
-      <div>
+      <div className="data-key-pair-content">
         <span
           className="data-key"
           data-expandable={booleanDataAttr(expandable)}
@@ -255,17 +258,17 @@ export function DataKeyPair(props: DataKeyPairProps) {
 
         {Component ? (
           description && !isObject(value) && !isReferenceArray(value) ? (
-            <button
-              className="data-key-description-expand-button"
-              onClick={() => setShowDescription(!showDescription)}
-            >
+            <div className="data-key-description-container">
               <Component {...downstreamProps} />
-              <Icon
-                className="data-key-description-expand-icon"
+              <IconButton
+                className="data-key-description-expand-button"
+                density="compact"
                 icon={showDescription ? ChevronUp : ChevronDown}
+                onClick={() => setShowDescription(!showDescription)}
                 size="sm"
+                variant="ghost"
               />
-            </button>
+            </div>
           ) : (
             <Component {...downstreamProps} />
           )

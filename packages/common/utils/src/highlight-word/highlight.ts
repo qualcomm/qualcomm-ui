@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {highlightFirst} from "./highlight-first"
-import {highlightMultiple} from "./highlight-multiple"
-import type {HighlightChunk, HighlightWordProps} from "./types"
+import {highlightFirst} from "./highlight-first.js"
+import {highlightMultiple} from "./highlight-multiple.js"
+import type {HighlightChunk, HighlightWordProps} from "./types.js"
 
 export function highlightWord(props: HighlightWordProps): HighlightChunk[] {
   if (props.matchAll == null) {

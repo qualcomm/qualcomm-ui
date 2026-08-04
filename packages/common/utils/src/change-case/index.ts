@@ -1,1 +1,1 @@
-export * from "./change-case"
+export * from "./change-case.js"

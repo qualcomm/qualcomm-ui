@@ -4,16 +4,16 @@
 import {computed, Directive, inject, input, type OnInit} from "@angular/core"
 
 import {
-  provideQdsDialogContext,
-  QdsDialogContextService,
-} from "@qualcomm-ui/angular/dialog"
-import {
   CoreDialogRootDirective,
   provideDialogContext,
 } from "@qualcomm-ui/angular-core/dialog"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {providePresenceContext} from "@qualcomm-ui/angular-core/presence"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {
+  provideQdsDialogContext,
+  QdsDialogContextService,
+} from "@qualcomm-ui/angular/dialog"
 import {
   createQdsDialogApi,
   type QdsDialogApiProps,

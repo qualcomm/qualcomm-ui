@@ -11,7 +11,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsAvatarContext} from "./qds-avatar-context"
+import {useQdsAvatarContext} from "./qds-avatar-context.js"
 
 export interface AvatarImageProps extends IdProp, ElementRenderProp<"img"> {
   /**

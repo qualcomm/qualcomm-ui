@@ -5,9 +5,9 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Check} from "lucide-react"
 
-import {Icon} from "@qualcomm-ui/react/icon"
 import {CoreSelect} from "@qualcomm-ui/react-core/select"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {Icon} from "@qualcomm-ui/react/icon"
 
 export interface SelectItemIndicatorProps extends ElementRenderProp<"span"> {
   /**

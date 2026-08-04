@@ -1,9 +1,9 @@
 import {Component} from "@angular/core"
 import {Trash2} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {DialogModule} from "@qualcomm-ui/angular/dialog"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [DialogModule, ButtonModule],

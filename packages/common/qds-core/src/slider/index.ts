@@ -1,3 +1,3 @@
-export * from "./slider.classes"
-export * from "./slider.api"
-export type * from "./slider.types"
+export * from "./slider.classes.js"
+export * from "./slider.api.js"
+export type * from "./slider.types.js"

@@ -1,7 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+
+import type {fieldsetAnatomy} from "./fieldset.anatomy.js"
 
 export interface FieldsetApiProps {
   /**
@@ -20,33 +23,29 @@ export interface FieldsetElementIds {
   hint: string | undefined
 }
 
-interface CommonBindings {
-  "data-scope": "fieldset"
-}
+type PartName = AnatomyPartName<typeof fieldsetAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"fieldset", P> {}
 
-export interface FieldsetRootBindings extends CommonBindings {
+export interface FieldsetRootBindings extends Part<"root"> {
   "aria-describedby": string | undefined
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
   disabled: boolean | undefined
 }
 
-export interface FieldsetLegendBindings extends CommonBindings {
+export interface FieldsetLegendBindings extends Part<"legend"> {
   "data-disabled": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "legend"
 }
 
-export interface FieldsetHintBindings extends CommonBindings {
+export interface FieldsetHintBindings extends Part<"hint"> {
   "data-disabled": BooleanDataAttr
-  "data-part": "hint"
   id: string
 }
 
-export interface FieldsetErrorTextBindings extends CommonBindings {
+export interface FieldsetErrorTextBindings extends Part<"errorText"> {
   "aria-live": "polite"
   "data-disabled": BooleanDataAttr
-  "data-part": "error-text"
 }
 
 export interface FieldsetApi {

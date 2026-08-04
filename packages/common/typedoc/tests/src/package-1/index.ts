@@ -1,2 +1,2 @@
-export * from "./signatures"
-export * from "./types"
+export type * from "./signatures"
+export type * from "./types"

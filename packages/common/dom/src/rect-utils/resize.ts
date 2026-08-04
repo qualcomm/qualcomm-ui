@@ -4,13 +4,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {AffineTransform} from "./affine-transform"
+import {AffineTransform} from "./affine-transform.js"
 import {
   type CompassDirection,
   compassDirectionMap,
   oppositeDirectionMap,
-} from "./compass"
-import type {Point, Rect, RectInit, ScalingOptions} from "./types"
+} from "./compass.js"
+import type {Point, Rect, RectInit, ScalingOptions} from "./types.js"
 
 const {abs, min, sign} = Math
 

@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getRectFromPoints} from "./from-points"
-import type {Rect} from "./types"
+import {getRectFromPoints} from "./from-points.js"
+import type {Rect} from "./types.js"
 
 const {max, min} = Math
 

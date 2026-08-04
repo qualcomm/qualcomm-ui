@@ -143,7 +143,7 @@
 }
 
 .qui-stepper__separator {
-  background: var(--track-default);
+  background: var(--cross-component-track-default);
 
   &[data-size="sm"] {
     height: 2px;

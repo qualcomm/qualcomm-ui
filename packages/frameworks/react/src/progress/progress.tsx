@@ -11,20 +11,20 @@ import {
   renderProp,
 } from "@qualcomm-ui/react-core/system"
 
-import {ProgressBar, type ProgressBarProps} from "./progress-bar"
-import {ProgressContext} from "./progress-context"
+import {ProgressBar, type ProgressBarProps} from "./progress-bar.js"
+import {ProgressContext} from "./progress-context.js"
 import {
   ProgressErrorText,
   type ProgressErrorTextProps,
-} from "./progress-error-text"
-import {ProgressHint, type ProgressHintProps} from "./progress-hint"
-import {ProgressLabel, type ProgressLabelProps} from "./progress-label"
-import {ProgressRoot, type ProgressRootProps} from "./progress-root"
-import {ProgressTrack, type ProgressTrackProps} from "./progress-track"
+} from "./progress-error-text.js"
+import {ProgressHint, type ProgressHintProps} from "./progress-hint.js"
+import {ProgressLabel, type ProgressLabelProps} from "./progress-label.js"
+import {ProgressRoot, type ProgressRootProps} from "./progress-root.js"
+import {ProgressTrack, type ProgressTrackProps} from "./progress-track.js"
 import {
   ProgressValueText,
   type ProgressValueTextProps,
-} from "./progress-value-text"
+} from "./progress-value-text.js"
 
 /**
  * A styled progress indicator. Renders a `<div>` element by default.

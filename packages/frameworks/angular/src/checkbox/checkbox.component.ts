@@ -9,12 +9,20 @@ import {CheckboxRootDirective} from "./checkbox-root.directive"
 import {provideQdsCheckboxContext} from "./qds-checkbox-context.service"
 
 @Component({
+  host: {
+    "[attr.aria-label]": "undefined",
+    "[attr.aria-labelledby]": "undefined",
+  },
   providers: [provideCheckboxContext(), provideQdsCheckboxContext()],
   selector: "[q-checkbox]",
   standalone: false,
   template: `
     <ng-content select="[q-checkbox-hidden-input]">
-      <input q-checkbox-hidden-input />
+      <input
+        q-checkbox-hidden-input
+        [aria-label]="ariaLabel()"
+        [aria-labelledby]="ariaLabelledby()"
+      />
     </ng-content>
 
     <ng-content select="[q-checkbox-control]">
@@ -46,6 +54,25 @@ import {provideQdsCheckboxContext} from "./qds-checkbox-context.service"
   `,
 })
 export class CheckboxComponent extends CheckboxRootDirective {
+  /**
+   * Accessible label applied to the generated hidden input when no visible label
+   * is provided.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the generated hidden input.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   /**
    * Optional error that describes the checkbox when the field is invalid. This
    * element is automatically associated with the checkbox for accessibility.

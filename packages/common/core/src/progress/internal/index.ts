@@ -1,1 +1,1 @@
-export * from "./progress.dom"
+export * from "./progress.dom.js"

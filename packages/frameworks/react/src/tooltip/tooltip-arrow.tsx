@@ -11,7 +11,7 @@ import {
 import {useTooltipArrow} from "@qualcomm-ui/react-core/tooltip"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {TooltipArrowTip} from "./tooltip-arrow-tip"
+import {TooltipArrowTip} from "./tooltip-arrow-tip.js"
 
 export interface TooltipArrowProps extends ElementRenderProp<"div"> {
   /**

@@ -10,10 +10,11 @@ import {
 import type {CollectionItem} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsComboboxContext} from "./qds-combobox-context"
+import {useQdsComboboxContext} from "./qds-combobox-context.js"
 
-export interface ComboboxItemProps<T extends CollectionItem>
-  extends CoreComboboxItemProps<T> {}
+export interface ComboboxItemProps<
+  T extends CollectionItem,
+> extends CoreComboboxItemProps<T> {}
 
 /**
  * Individual option within the combobox menu. Renders a `<div>` element by default.

@@ -6,8 +6,8 @@
 
 import {getDocument, raf} from "@qualcomm-ui/dom/query"
 
-import {FocusTrap} from "./focus-trap"
-import type {FocusTrapOptions} from "./focus-trap.types"
+import {FocusTrap} from "./focus-trap.js"
+import type {FocusTrapOptions} from "./focus-trap.types.js"
 
 type ElementOrGetter = HTMLElement | null | (() => HTMLElement | null)
 

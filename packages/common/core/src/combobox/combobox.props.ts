@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {ComboboxApiProps} from "./combobox.types"
+import type {ComboboxApiProps} from "./combobox.types.js"
 
 export const comboboxProps: (keyof ComboboxApiProps)[] =
   createProps<ComboboxApiProps>()(

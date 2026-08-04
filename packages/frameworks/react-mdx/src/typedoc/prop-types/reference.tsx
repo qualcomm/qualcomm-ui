@@ -4,28 +4,35 @@
 import type {ReactNode} from "react"
 
 import type {PagePropTypes} from "@qualcomm-ui/mdx-common"
-import {Link} from "@qualcomm-ui/react/link"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {useMdxDocsLayoutContext} from "@qualcomm-ui/react-mdx/docs-layout"
 import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
+import {Link} from "@qualcomm-ui/react/link"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 import {pascalCase} from "@qualcomm-ui/utils/change-case"
 
-import {DocsExternalLink} from "../docs-external-link"
-import {usePropsContext} from "../use-props-context"
+import {DocsExternalLink} from "../docs-external-link.js"
+import {usePropsContext} from "../use-props-context.js"
 
-import {SimpleType} from "./simple-type"
+import {SimpleType} from "./simple-type.js"
 
 interface Props {
+  /**
+   * Set to true to prevent reference types from expanding. This will cause them to
+   * render as the type reference name.
+   */
+  disableReferenceExpansion?: boolean | undefined
   prop: QuiPropDeclaration
 }
 
-export function Reference({prop}: Props): ReactNode {
+export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
   // scoped to the TypeDocProps on the current page.
   const props = usePropsContext()
   const {toc} = useMdxDocsLayoutContext()
   const {renderLink: RenderLink} = useMdxDocsContext()
+
+  const restPrefix = prop.rest ? "..." : ""
 
   if (prop.resolvedType.type === "ReactNode") {
     return (
@@ -65,8 +72,10 @@ export function Reference({prop}: Props): ReactNode {
   const {
     docLink,
     inheritDoc,
+    name,
     prettyType = "",
     reference,
+    referencedType,
     referenceLink,
     type,
     typeArgs,
@@ -77,7 +86,10 @@ export function Reference({prop}: Props): ReactNode {
       return (
         <pre className="qui-docs-code font-code-demo fit">
           <Link render={<RenderLink href={referenceLink} />}>
-            {prettyType || type}
+            {restPrefix}
+            {disableReferenceExpansion
+              ? referencedType || name
+              : prettyType || type}
           </Link>
         </pre>
       )
@@ -90,7 +102,10 @@ export function Reference({prop}: Props): ReactNode {
       return (
         <pre className="qui-docs-code font-code-demo fit">
           <Link render={<RenderLink href={docLink} />}>
-            {prettyType || type}
+            {restPrefix}
+            {disableReferenceExpansion
+              ? referencedType || name
+              : prettyType || type}
           </Link>
         </pre>
       )
@@ -137,6 +152,7 @@ export function Reference({prop}: Props): ReactNode {
         return (
           <pre className="qui-docs-code font-code-demo fit">
             <Link render={<RenderLink href={`#${headingId}`} />}>
+              {restPrefix}
               {typeName || type}
             </Link>
           </pre>
@@ -146,7 +162,11 @@ export function Reference({prop}: Props): ReactNode {
   }
 
   if (prop.resolvedType.parentTypeParam) {
-    return <SimpleType content={prop.resolvedType.parentTypeParam.type} />
+    return (
+      <SimpleType
+        content={`${restPrefix}${prop.resolvedType.parentTypeParam.type}`}
+      />
+    )
   }
 
   if (!prettyType) {
@@ -158,13 +178,14 @@ export function Reference({prop}: Props): ReactNode {
       {prop.resolvedType.docLink ? (
         <pre className="qui-docs-code font-code-demo fit">
           <Link render={<RenderLink href={prop.resolvedType.docLink} />}>
+            {restPrefix}
             {prettyType}
           </Link>
         </pre>
       ) : (
         <CodeHighlight
           className="qui-docs-code fit"
-          code={`${dummyTypePrefix}${prettyType}`}
+          code={`${dummyTypePrefix}${restPrefix}${disableReferenceExpansion ? referencedType || name : prettyType}`}
           disableCopy
           language="tsx"
         />

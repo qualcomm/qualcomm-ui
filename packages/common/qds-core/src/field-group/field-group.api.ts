@@ -5,7 +5,8 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {fieldGroupClasses} from "./field-group.classes"
+import {fieldGroupAnatomy} from "./field-group.anatomy.js"
+import {fieldGroupClasses} from "./field-group.classes.js"
 import type {
   QdsFieldGroupApi,
   QdsFieldGroupApiProps,
@@ -14,11 +15,9 @@ import type {
   QdsFieldGroupItemsBindings,
   QdsFieldGroupLabelBindings,
   QdsFieldGroupRootBindings,
-} from "./field-group.types"
+} from "./field-group.types.js"
 
-const commonBindings = {
-  "data-scope": "field-group",
-} as const
+const parts = fieldGroupAnatomy.parts
 
 export function createQdsFieldGroupApi(
   props: Explicit<QdsFieldGroupApiProps>,
@@ -32,41 +31,36 @@ export function createQdsFieldGroupApi(
   return {
     getErrorTextBindings(): QdsFieldGroupErrorTextBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         className: fieldGroupClasses.errorText,
-        "data-part": "error-text",
       })
     },
     getHintBindings(): QdsFieldGroupHintBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         className: fieldGroupClasses.hint,
-        "data-part": "hint",
       })
     },
     getItemsBindings(): QdsFieldGroupItemsBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.items,
         className: fieldGroupClasses.items,
         "data-indented": booleanDataAttr(indented),
         "data-orientation": orientation,
-        "data-part": "items",
         "data-size": size,
       })
     },
     getLabelBindings(): QdsFieldGroupLabelBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.label,
         className: fieldGroupClasses.label,
-        "data-part": "label",
       })
     },
     getRootBindings(): QdsFieldGroupRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         className: fieldGroupClasses.root,
         "data-invalid": booleanDataAttr(invalid),
-        "data-part": "root",
       })
     },
 

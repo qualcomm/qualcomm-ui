@@ -1,1 +1,1 @@
-export * from "./angular-logo"
+export * from "./angular-logo.js"

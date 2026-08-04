@@ -1,0 +1,7 @@
+interface:
+  display_name: "Angular Component Testing"
+  short_description: "Write Angular component behavior tests"
+  default_prompt: "Use $angular-component-testing to write or review Angular component tests around public behavior."
+
+policy:
+  allow_implicit_invocation: true

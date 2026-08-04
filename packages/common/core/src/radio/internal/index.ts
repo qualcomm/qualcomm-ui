@@ -1,1 +1,1 @@
-export * from "./radio.dom"
+export * from "./radio.dom.js"

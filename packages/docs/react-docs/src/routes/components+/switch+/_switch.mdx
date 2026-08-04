@@ -1,14 +1,13 @@
 ---
 title: Switch
-group: Form Controls
 description: Switches enable users to instantly activate or deactivate features, settings, or options with immediate visual confirmation. The component features a sliding thumb that moves along a track to communicate the current state.
 component: Switch
 aliases: [toggle, toggle switch]
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -29,9 +28,7 @@ Basic switch using the simple API with a label.
 ### Composite
 
 ::: terms
-compound component
-composed
-subcomponents
+compound component, composed, subcomponents
 :::
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
@@ -44,10 +41,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### States
 
 ::: terms
-on
-off
-true
-false
+on, off, true, false
 :::
 
 Based on the inputs, the switch will render as checked or unchecked.
@@ -57,8 +51,7 @@ Based on the inputs, the switch will render as checked or unchecked.
 ### Disabled State
 
 ::: terms
-inactive
-read-only
+inactive, read-only
 :::
 
 When [disabled](./#disabled) is true, the switch becomes non-interactive and is rendered with reduced opacity to indicate its unavailable state.
@@ -68,9 +61,7 @@ When [disabled](./#disabled) is true, the switch becomes non-interactive and is 
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Use the [size](./#size) prop to change the size of the switch. The default size is `md`.
@@ -80,9 +71,7 @@ Use the [size](./#size) prop to change the size of the switch. The default size 
 ### Hint
 
 ::: terms
-helper text
-description
-supporting text
+helper text, description, supporting text
 :::
 
 Add a hint to provide additional context below the switch.
@@ -92,8 +81,7 @@ Add a hint to provide additional context below the switch.
 ### Group
 
 ::: terms
-switch group
-field group
+switch group, field group
 :::
 
 Use [SwitchGroup](/components/switch-group) to group related switches with a shared label, hint text, and validation state.
@@ -101,9 +89,7 @@ Use [SwitchGroup](/components/switch-group) to group related switches with a sha
 ### Controlled State
 
 ::: terms
-useState
-state management
-two-way binding
+useState, state management, two-way binding
 :::
 
 Set the initial value using the [defaultChecked](./#defaultChecked) prop, or use [checked](./#checked) and [onCheckedChange](./#onCheckedChange) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
@@ -178,14 +164,73 @@ is equivalent to this:
 </Switch.Control>
 ```
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.SwitchExplorerDemo}
+  linkPrefix="switch"
+  parts={["root", "label", "control", "thumb", "hint"]}
+  scope="switch"
+/>
+
 ## API
 
-### \<Switch.Root\>
+### \<Switch>
+
+The `Switch` component supports all props from [Switch.Root](./#switch-root), plus the additional props listed below.
+
+<TypeDocProps name="SwitchProps" omitFrom="SwitchRootProps" />
+
+## Composite API
+
+### \<Switch.Root>
 
 <TypeDocProps name="SwitchRootProps" />
 
-### \<Switch\>
+<TypeDocAttributes name={["QdsSwitchRootBindings", "SwitchRootBindings"]} />
 
-The `Switch` component supports all props from [Switch.Root](./#switchroot), plus the additional props listed below.
+### \<Switch.Label>
 
-<TypeDocProps name="SwitchProps" omitFrom="SwitchRootProps" />
+<TypeDocProps name="SwitchLabelProps" />
+
+<TypeDocAttributes
+  name={["QdsSwitchLabelBindings", "SwitchLabelBindings"]}
+/>
+
+### \<Switch.Control>
+
+<TypeDocProps name="SwitchControlProps" />
+
+<TypeDocAttributes
+  name={["QdsSwitchControlBindings", "SwitchControlBindings"]}
+/>
+
+### \<Switch.Thumb>
+
+<TypeDocProps name="SwitchThumbProps" />
+
+<TypeDocAttributes
+  name={["QdsSwitchThumbBindings", "SwitchThumbBindings"]}
+/>
+
+### \<Switch.Hint>
+
+<TypeDocProps name="SwitchHintProps" />
+
+<TypeDocAttributes name={["QdsSwitchHintBindings", "SwitchHintBindings"]} />
+
+### \<Switch.ErrorText>
+
+<TypeDocProps name="SwitchErrorTextProps" />
+
+<TypeDocAttributes
+  name={["QdsSwitchErrorTextBindings", "SwitchErrorTextBindings"]}
+/>
+
+### \<Switch.HiddenInput>
+
+<TypeDocProps name="SwitchHiddenInputProps" />
+
+<TypeDocAttributes
+  name={["QdsSwitchHiddenInputBindings", "SwitchHiddenInputBindings"]}
+/>

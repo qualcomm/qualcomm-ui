@@ -1,0 +1,191 @@
+---
+title: Loading and Empty States
+---
+
+# {frontmatter.title}
+
+Loading state is part of the table experience, but not every loading state belongs inside a cell. Treat initial loading, background refetching, empty results, and row-specific pending work as different states with different surfaces.
+
+## Put Refetch Loading UI in the Action Bar
+
+### Concern
+
+Teams want users to know when table data is refreshing, and they want that loading UI to be consistent across tables. The tempting path is to make every column aware of the query state.
+
+### Pitfall
+
+Table-level fetch state should not be threaded through every column. A common implementation is to close over `query.isFetching()` inside cell renderers and rebuild the column definitions from a `computed` signal:
+
+```angular-ts
+export class UsersTable {
+  readonly query = injectQuery(() => usersQueryOptions())
+
+  readonly columns = computed<ColumnDef<User>[]>(() => [
+    columnHelper.accessor("name", {
+      header: "Name",
+      cell: ({getValue}) =>
+        this.query.isFetching() ? "Loading..." : getValue(),
+    }),
+    columnHelper.accessor("status", {
+      header: "Status",
+      cell: ({getValue}) =>
+        this.query.isFetching() ? "Refreshing..." : getValue(),
+    }),
+  ])
+
+  readonly table = createAngularTable(() => ({
+    columns: this.columns(),
+    data: this.query.data() ?? [],
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  }))
+}
+```
+
+This mixes two separate concerns. During a background refetch, the previously loaded rows are still useful. Replacing each value with a spinner, skeleton, or loading string makes the table harder to scan, may cause cells to shift, and hides the data the user was just reading.
+
+It also makes the column array change whenever fetch state changes. Every refetch toggles `query.isFetching()`, the `computed` signal returns new column definitions, and the table has to reprocess configuration that did not actually change. Avoiding the signal read would keep stale loading state in the cells. The conclusion is the same as other reusable-column cases: table-level fetch state does not belong in column definitions.
+
+### Preferred Pattern
+
+Keep loaded rows visible during refetch and place a predictable loading affordance in `q-table-action-bar`, usually next to a refresh button. Reserve body-level placeholders for the initial load, when there are no real rows to preserve.
+
+Separate those states before rendering:
+
+```angular-ts
+const columns: ColumnDef<User>[] = [
+  columnHelper.accessor("name", {
+    header: "Name",
+    cell: () => TextCell,
+  }),
+  columnHelper.accessor("status", {
+    header: "Status",
+    cell: () => StatusCell,
+  }),
+]
+
+@Component({
+  imports: [ButtonModule, ProgressRingModule, TableModule],
+  selector: "users-table",
+  template: `
+    <div q-table-root>
+      <div q-table-action-bar>
+        <button
+          q-button
+          size="sm"
+          variant="outline"
+          [disabled]="query.isFetching()"
+          (click)="query.refetch()"
+        >
+          Refresh
+        </button>
+
+        @if (isRefetching()) {
+          <div q-progress-ring size="xs"></div>
+        }
+      </div>
+
+      <div q-table-scroll-container>
+        <table q-table-table>
+          <tbody q-table-body>
+            @if (isInitialLoading()) {
+              <!-- This can be a skeleton row component or a progress bar. -->
+              <tr q-table-row>
+                <td q-table-cell [attr.colspan]="table.getAllLeafColumns().length">
+                  Loading users...
+                </td>
+              </tr>
+            } @else if (table.getRowModel().rows.length === 0) {
+              <tr q-table-row>
+                <td q-table-cell [attr.colspan]="table.getAllLeafColumns().length">
+                  No users found.
+                </td>
+              </tr>
+            } @else {
+              @for (row of table.getRowModel().rows; track row.id) {
+                <tr q-table-row>
+                  @for (cell of row.getVisibleCells(); track cell.id) {
+                    <td q-table-cell>
+                      <ng-container *renderCell="cell; let value">
+                        {{ value }}
+                      </ng-container>
+                    </td>
+                  }
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `,
+})
+export class UsersTable {
+  readonly query = injectQuery(() => usersQueryOptions())
+
+  readonly isInitialLoading = computed(
+    () => this.query.data() === undefined && this.query.isFetching(),
+  )
+
+  readonly isRefetching = computed(
+    () => this.query.data() !== undefined && this.query.isFetching(),
+  )
+
+  readonly table = createAngularTable(() => ({
+    columns,
+    data: this.query.data() ?? [],
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  }))
+}
+```
+
+In this version, the columns stay stable because cell renderers do not depend on query flags. Refetch state appears once in the action bar, and the body only switches to a loading indicator when there is no loaded data to show.
+
+Empty state is also distinct from loading state. Show the empty row after the initial load completes and the row model has no rows. Do not show an empty result while the first request is still pending.
+
+Use row-specific pending UI only for row-specific mutations, keyed by stable row IDs. That pending state belongs in the row action or editable cell, not in every column and not in table-level refetch UI.
+
+```angular-ts
+@Injectable()
+export class UserActionsService {
+  readonly deletingUserIds = signal<ReadonlySet<string>>(new Set())
+
+  isDeleting(userId: string) {
+    return this.deletingUserIds().has(userId)
+  }
+
+  deleteUser(userId: string) {
+    // start mutation and update deletingUserIds
+  }
+}
+```
+
+```angular-ts
+@Component({
+  imports: [UserActions],
+  selector: "user-actions-cell",
+  template: `
+    <app-user-actions
+      [disabled]="isDeleting()"
+      [user]="user()"
+      (delete)="actions.deleteUser(rowId())"
+    />
+  `,
+})
+export class UserActionsCell extends CellComponentContextDirective<User> {
+  readonly actions = inject(UserActionsService)
+
+  readonly user = computed(() => this.context().row.original)
+  readonly rowId = computed(() => this.context().row.id)
+  readonly isDeleting = computed(() => this.actions.isDeleting(this.rowId()))
+}
+```
+
+That keeps background refetch, first load, empty results, and row mutations from competing for the same UI surface.
+
+## Related Guides
+
+- [Cells](/guides/cells)
+- [Rows](/guides/rows)
+- [Reusable Columns](/best-practices/reusable-columns)

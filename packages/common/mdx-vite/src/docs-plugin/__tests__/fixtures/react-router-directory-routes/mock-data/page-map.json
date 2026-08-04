@@ -1,0 +1,113 @@
+{
+  "/": {
+    "categories": [
+      "Introduction"
+    ],
+    "data": {
+      "id": "_index",
+      "title": "Introduction"
+    },
+    "id": "/routes/_index.mdx",
+    "pathname": "/",
+    "pathSegments": [],
+    "title": "Introduction"
+  },
+  "/guide/page-setup": {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide/page-setup.mdx",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "toc": [
+      {
+        "headingLevel": 2,
+        "id": "nested-folders",
+        "tagName": "h2",
+        "textContent": "Nested Folders"
+      }
+    ]
+  },
+  "/guide/markdown": {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Author Markdown content in directory routes."
+    },
+    "description": "Author Markdown content in directory routes.",
+    "id": "/routes/guide/markdown.mdx",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "toc": [
+      {
+        "headingLevel": 2,
+        "id": "frontmatter",
+        "tagName": "h2",
+        "textContent": "Frontmatter"
+      }
+    ]
+  },
+  "/guide/advanced/deep-topic": {
+    "categories": [
+      "Guide",
+      "Advanced",
+      "Deep Topic"
+    ],
+    "data": {
+      "title": "Deep Topic"
+    },
+    "id": "/routes/guide/advanced/deep-topic.mdx",
+    "pathname": "/guide/advanced/deep-topic",
+    "pathSegments": [
+      "guide",
+      "advanced",
+      "deep-topic"
+    ],
+    "title": "Deep Topic"
+  },
+  "/api/page-frontmatter": {
+    "categories": [
+      "API",
+      "Page Frontmatter"
+    ],
+    "data": {
+      "title": "Page Frontmatter"
+    },
+    "id": "/routes/api/page-frontmatter.mdx",
+    "pathname": "/api/page-frontmatter",
+    "pathSegments": [
+      "api",
+      "page-frontmatter"
+    ],
+    "title": "Page Frontmatter"
+  },
+  "/guide/redirect": {
+    "categories": [
+      "Guide",
+      "Redirect"
+    ],
+    "data": {},
+    "id": "/routes/guide/redirect.tsx",
+    "pathname": "/guide/redirect",
+    "pathSegments": [
+      "guide",
+      "redirect"
+    ],
+    "title": "Redirect"
+  }
+}

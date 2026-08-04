@@ -1,0 +1,247 @@
+---
+title: Reusable Columns
+---
+
+# {frontmatter.title}
+
+Column definitions are the most useful reuse boundary in the table. A column can own its accessor, header, cell renderer, sorting/filtering configuration, metadata, and domain-specific presentation.
+
+The constraint is that columns are table configuration, so they should have stable references. Reusable columns work best when the column owns static structure and delegates changing workflow state to the table, cell components, or domain layer.
+
+## Column Modules
+
+### Concern
+
+Teams often reach for a reusable table abstraction for good reasons. Several tables may repeat the same setup: headers, cells, editable controls, row actions, loading states, and toolbar behavior. Centralizing that work can look like the fastest way to improve consistency.
+
+### Pitfall
+
+The problem appears when a generated column closes over changing React state: edited values, pending flags, permissions, or callbacks from the current render. The most common attempted fix is to add that state to the column memo dependencies.
+
+In this example, the table has an editable `status` column. `editedValues` stores unsaved cell drafts, and `isSaving` disables the control while a save is in flight. Assume row IDs are already stable. The problem here is the column dependency.
+
+```tsx
+function UsersTable({data}: {data: User[]}) {
+  const [editedValues, setEditedValues] = useState<
+    Record<string, Partial<User>>
+  >({})
+  const [isSaving, setIsSaving] = useState(false)
+
+  const columns = useMemo<ColumnDef<User>[]>(
+    () => [
+      {
+        accessorKey: "status",
+        cell: ({getValue, row}) => (
+          <StatusSelect
+            disabled={isSaving}
+            value={editedValues[row.id]?.status ?? getValue()}
+            onValueChange={(status) =>
+              setEditedValues((values) => ({
+                ...values,
+                [row.id]: {...values[row.id], status},
+              }))
+            }
+          />
+        ),
+      },
+    ],
+    // [!code highlight]
+    [editedValues, isSaving],
+  )
+
+  // ...
+}
+```
+
+This fixes stale reads, but it makes the column array change on every edit. Each `setEditedValues` call creates a new object, so `useMemo` returns new column definitions. When the column configuration changes, the entire table is recomputed.
+
+This exemplifies where reusable wrappers tend to fall apart. The entire table depends on the column definitions. Once row draft state is a column dependency, a single cell edit can cause all that table configuration work to rerun, which typically results in performance issues. But if you omit the dependency list, the table may return stale values. The solution is to keep frequently changing row workflow state out of column definitions.
+
+### Preferred Pattern
+
+The following example shows the same boundary using Jotai. The table creates a scoped Jotai store around its implementation, while the column definition stays static.
+
+This keeps the column responsible for column structure only, and offloads the data concern to the inner cell component.
+
+```tsx
+import {atom, Provider} from "jotai"
+import {atomFamily} from "jotai-family"
+
+const userDraftAtom = atomFamily((rowId: string) => atom<Partial<User>>({}))
+
+const savingUserIdsAtom = atom<ReadonlySet<string>>(new Set())
+
+const isUserSavingAtom = atomFamily((rowId: string) =>
+  atom((get) => get(savingUserIdsAtom).has(rowId)),
+)
+
+interface StatusCellProps {
+  rowId: string
+  value: User["status"]
+}
+
+function EditableStatusCell({rowId, value}: StatusCellProps) {
+  const [draft, setDraft] = useAtom(userDraftAtom(rowId))
+  const isSaving = useAtomValue(isUserSavingAtom(rowId))
+  const status = draft.status ?? value
+
+  return (
+    <StatusSelect
+      disabled={isSaving}
+      value={status}
+      onValueChange={(nextStatus) =>
+        setDraft((current) => ({...current, status: nextStatus}))
+      }
+    />
+  )
+}
+
+function UsersTable(props: {data: User[]}) {
+  return (
+    <Provider>
+      <UsersTableInner {...props} />
+    </Provider>
+  )
+}
+
+function UsersTableInner({data}: {data: User[]}) {
+  const columns = useMemo<ColumnDef<User>[]>(
+    () => [
+      columnHelper.accessor("status", {
+        header: "Status",
+        cell: ({getValue, row}) => (
+          <EditableStatusCell rowId={row.id} value={getValue()} />
+        ),
+      }),
+    ],
+    [],
+  )
+
+  const table = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  })
+
+  // ... rendered table
+}
+```
+
+`EditableStatusCell` is now owned by the table that needs editing. It can use that screen's provider, atoms, query/mutation hooks, or form logic. The reusable column does not know about `editedValues`, `isSaving`, or `updateEditedValue`.
+
+You could repeat the same approach with [React Context](https://react.dev/learn/passing-data-deeply-with-context) instead of Jotai for the same effect.
+
+This keeps the column array memoized with an empty dependency list because the column structure is static. The changing edit state stays in the product table's edit workflow.
+
+When a value changes which columns exist or how static column options are configured, include it in the memo dependencies:
+
+```tsx
+const columns = useMemo<ColumnDef<User>[]>(
+  () =>
+    [
+      makeNameColumn(),
+      canEdit ? makeEditableStatusColumn() : makeReadonlyStatusColumn(),
+      showActions ? makeActionsColumn() : null,
+    ].filter((column): column is ColumnDef<User> => column !== null),
+  [canEdit, showActions],
+)
+```
+
+Those dependencies are different from row workflow state. `canEdit` and `showActions` decide which static column definitions exist. They should not be draft values, mutation flags, or other row-level values that change as the user interacts with the table.
+
+Use dependencies for column shape and static configuration. Move frequently changing row workflow state into typed cells, providers, forms, or query/mutation state.
+
+## Cell Content
+
+### Concern
+
+Tables repeat the same cell presentations: truncated text, badges, editable controls, action buttons, links, dates, empty values, and validation states. Those pieces are worth reusing, but they should remain small and typed. The following is an example of where this falls apart.
+
+### Pitfall
+
+Centralizing all cell presentation behind one generic renderer creates another table abstraction.
+
+```tsx
+function CellContent({
+  type,
+  value,
+  row,
+  options,
+}: {
+  type: string
+  value: unknown
+  row: unknown
+  options?: Record<string, unknown>
+}): ReactNode {
+  switch (type) {
+    case "status":
+      return <StatusBadge status={value as Status} />
+    case "editableText":
+      return <TextInput value={value as string} />
+    case "date":
+      return formatDate(value)
+    case "actions":
+      return <ActionMenu actions={options?.actions as Action[]} row={row} />
+    default:
+      return <span className="truncate">{String(value)}</span>
+  }
+}
+```
+
+This starts as reuse, but the switchboard weakens types, hides dependencies, and couples every new cell type to the central renderer. It also pressures callers to pass changing values through a generic `options` bag instead of more detailed alternatives like typed props, render context, or query/mutation selectors.
+
+### Preferred Pattern
+
+Prefer small, typed components that each own one presentation concern:
+
+```tsx
+function TextCell({value}: {value: string | null | undefined}) {
+  return <span className="truncate">{value || "-"}</span>
+}
+
+function StatusCell({status}: {status: User["status"]}) {
+  return <StatusBadge status={status} />
+}
+
+function RowActionsCell({user}: {user: User}) {
+  return <UserActionsMenu user={user} />
+}
+```
+
+Column modules compose those helpers directly from the table render context:
+
+```tsx
+function makeUserColumns(): ColumnDef<User>[] {
+  return [
+    columnHelper.accessor("name", {
+      header: "Name",
+      cell: ({getValue}) => <TextCell value={getValue()} />,
+    }),
+    columnHelper.accessor("status", {
+      header: "Status",
+      cell: ({getValue}) => <StatusCell status={getValue()} />,
+    }),
+    columnHelper.display({
+      id: "actions",
+      cell: ({row}) => <RowActionsCell user={row.original} />,
+    }),
+  ]
+}
+```
+
+The table renderer should still own the actual table cell markup:
+
+```tsx
+<Table.Cell key={cell.id}>
+  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+</Table.Cell>
+```
+
+Use typed content components, not a single renderer for all cell types. Give each helper a real component API instead of generic `type`, `options`, and `row: unknown` inputs.
+
+## Related Guides
+
+- [Column Definitions](/guides/column-definitions)
+- [Cells](/guides/cells)
+- [Columns](/guides/columns)

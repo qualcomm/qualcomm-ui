@@ -49,6 +49,7 @@ export function useEventListeners(): EventListeners {
 
   useEffect(
     () => () => {
+      // oxlint-disable-next-line unicorn/no-array-for-each
       currentListeners.forEach((value, key) => {
         remove(value.el, value.type, key, value.options)
       })

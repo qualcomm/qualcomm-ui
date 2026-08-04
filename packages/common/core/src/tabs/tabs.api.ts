@@ -20,13 +20,13 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {getTabButtonEl, tabsDomIds} from "./internal"
+import {getTabButtonEl, tabsDomIds} from "./internal/index.js"
+import {tabsAnatomy} from "./tabs.anatomy.js"
 import type {
   PanelProps,
   TabDismissButtonApiProps,
   TabProps,
   TabsApi,
-  TabsCommonBindings,
   TabsIndicatorBindings,
   TabsListBindings,
   TabsPanelBindings,
@@ -36,7 +36,9 @@ import type {
   TabsTabButtonBindings,
   TabsTabDismissButtonBindings,
   TabState,
-} from "./tabs.types"
+} from "./tabs.types.js"
+
+const parts = tabsAnatomy.parts
 
 export function createTabsApi(
   machine: Machine<TabsSchema>,
@@ -50,11 +52,6 @@ export function createTabsApi(
   const isVertical = prop("orientation") === "vertical"
   const isHorizontal = prop("orientation") === "horizontal"
   const composite = prop("composite")
-
-  const commonBindings: TabsCommonBindings = {
-    "data-scope": "tabs",
-    dir: prop("dir"),
-  }
 
   function getTabState(props: TabProps): TabState {
     return {
@@ -96,11 +93,12 @@ export function createTabsApi(
       const indicatorTransition = context.get("indicatorTransition")
 
       return normalize.element({
-        ...commonBindings,
+        ...parts.indicator,
         "data-focus": booleanDataAttr(!!context.get("focusedValue")),
-        "data-focus-visible": booleanDataAttr(context.get("focusVisible")),
+        "data-focus-visible": booleanDataAttr(
+          context.get("focusVisible") || isFocusVisible(),
+        ),
         "data-orientation": prop("orientation"),
-        "data-part": "indicator",
         id: props.id,
         style: {
           "--height": indicatorRect.height,
@@ -124,12 +122,11 @@ export function createTabsApi(
     getListBindings(props): TabsListBindings {
       scope.ids.register("list", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.list,
         "aria-label": translations?.listLabel,
         "aria-orientation": prop("orientation"),
         "data-focus": booleanDataAttr(focused),
         "data-orientation": prop("orientation"),
-        "data-part": "list",
         id: props.id,
         onKeyDown(event) {
           if (event.defaultPrevented) {
@@ -204,31 +201,30 @@ export function createTabsApi(
 
       const selected = context.get("value") === value
       return normalize.element({
-        ...commonBindings,
+        ...parts.panel,
         "aria-labelledby": tabsDomIds.tabButton(scope, value)!,
         "data-orientation": prop("orientation"),
         "data-ownedby": tabsDomIds.list(scope),
-        "data-part": "panel",
         "data-selected": booleanDataAttr(selected),
         hidden: !selected,
         id,
         role: "tabpanel",
+        style: selected ? undefined : {display: "none"},
         tabIndex: composite ? 0 : -1,
       })
     },
     getRootBindings(): TabsRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "data-focus": booleanDataAttr(focused),
         "data-orientation": prop("orientation"),
-        "data-part": "root",
+        dir: prop("dir"),
       })
     },
     getTabBindings(): TabsTabBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.tab,
         "data-orientation": prop("orientation"),
-        "data-part": "tab",
       })
     },
     getTabButtonBindings(
@@ -238,7 +234,7 @@ export function createTabsApi(
       scope.ids.collection("tabButton").register(value, id, onDestroy)
       const tabState = getTabState(props)
       return normalize.button({
-        ...commonBindings,
+        ...parts.tabButton,
         "aria-controls": tabState.selected
           ? tabsDomIds.panel(scope, value)
           : undefined,
@@ -246,20 +242,25 @@ export function createTabsApi(
         "aria-selected": booleanAriaAttr(tabState.selected),
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(tabState.focused),
-        "data-focus-visible": booleanDataAttr(context.get("focusVisible")),
+        "data-focus-visible": booleanDataAttr(
+          context.get("focusVisible") || isFocusVisible(),
+        ),
         "data-indicator-rendered": booleanDataAttr(
           context.get("indicatorRendered"),
         ),
         "data-orientation": prop("orientation"),
         "data-ownedby": tabsDomIds.list(scope),
-        "data-part": "tab-button",
         "data-selected": booleanDataAttr(tabState.selected),
         "data-value": value,
         disabled,
         id,
         onBlur(event) {
           const target = event.relatedTarget as HTMLElement | null
-          if (target?.getAttribute("role") !== "tab") {
+          if (
+            !target ||
+            target.getAttribute("role") !== "tab" ||
+            target.getAttribute("data-ownedby") !== tabsDomIds.list(scope)
+          ) {
             send({type: "TAB_BLUR"})
           }
         },
@@ -293,20 +294,19 @@ export function createTabsApi(
       props: TabDismissButtonApiProps = {},
     ): TabsTabDismissButtonBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.tabDismissButton,
         "aria-label": props["aria-label"] || "Close",
-        "data-part": "tab-dismiss-button",
         onClick(event) {
           event.stopPropagation()
         },
         role: "button",
+        tabIndex: -1,
         type: "button",
       })
     },
     getTabIconBindings() {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "tab-icon",
+        ...parts.tabIcon,
       })
     },
   }

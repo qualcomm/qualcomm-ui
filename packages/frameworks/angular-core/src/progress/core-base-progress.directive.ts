@@ -5,14 +5,14 @@ import {booleanAttribute, Directive, input, output} from "@angular/core"
 
 import {numberAttributeOrUndefined} from "@qualcomm-ui/angular-core/attributes"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {type ProgressApiProps} from "@qualcomm-ui/core/progress"
+import type {ProgressApiProps} from "@qualcomm-ui/core/progress"
 import type {Booleanish, NumberInput} from "@qualcomm-ui/utils/coercion"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 
 @Directive()
-export class CoreBaseProgressDirective
-  implements SignalifyInput<Omit<ProgressApiProps, "ids">>
-{
+export class CoreBaseProgressDirective implements SignalifyInput<
+  Omit<ProgressApiProps, "ids">
+> {
   /**
    * The initial value of the progress when it is first rendered. Use when you do
    * not need to control the state of the progress.

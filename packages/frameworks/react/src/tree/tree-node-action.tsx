@@ -4,19 +4,20 @@
 import type {ReactElement} from "react"
 
 import {
-  InlineIconButton,
-  type InlineIconButtonProps,
-} from "@qualcomm-ui/react/inline-icon-button"
-import {
   CoreTree,
   type CoreTreeNodeActionProps,
 } from "@qualcomm-ui/react-core/tree"
+import {
+  InlineIconButton,
+  type InlineIconButtonProps,
+} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsTreeContext} from "./qds-tree-context"
+import {useQdsTreeContext} from "./qds-tree-context.js"
 
 export interface TreeNodeActionProps
-  extends CoreTreeNodeActionProps,
+  extends
+    CoreTreeNodeActionProps,
     Pick<InlineIconButtonProps, "icon" | "size"> {}
 
 /**

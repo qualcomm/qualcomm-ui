@@ -7,6 +7,7 @@ import {useJsonViewerStore} from "../../stores"
 import type {DataItemProps, DataType} from "../../type"
 import {DataTypeLabel} from "../data-type-label"
 
+// oxlint-disable-next-line typescript/no-unsafe-function-type
 const functionBody = (func: Function) => {
   const funcString = func.toString()
 
@@ -26,6 +27,7 @@ const functionBody = (func: Function) => {
   return funcString.substring(funcString.indexOf("=>") + 2)
 }
 
+// oxlint-disable-next-line typescript/no-unsafe-function-type
 const functionName = (func: Function) => {
   const funcString = func.toString()
   const isUsualFunction = funcString.indexOf("function") !== -1
@@ -39,6 +41,7 @@ const functionName = (func: Function) => {
 const lb = "{"
 const rb = "}"
 
+// oxlint-disable-next-line typescript/no-unsafe-function-type
 const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
   return (
     <>
@@ -50,6 +53,7 @@ const PreFunctionType: FC<DataItemProps<Function>> = (props) => {
   )
 }
 
+// oxlint-disable-next-line typescript/no-unsafe-function-type
 const PostFunctionType: FC<DataItemProps<Function>> = () => {
   return (
     <>
@@ -58,6 +62,7 @@ const PostFunctionType: FC<DataItemProps<Function>> = () => {
   )
 }
 
+// oxlint-disable-next-line typescript/no-unsafe-function-type
 const FunctionType: FC<DataItemProps<Function>> = (props) => {
   const functionColor = useJsonViewerStore((store) => store.colorspace.base05)
   return (
@@ -85,6 +90,7 @@ const FunctionType: FC<DataItemProps<Function>> = (props) => {
   )
 }
 
+// oxlint-disable-next-line typescript/no-unsafe-function-type
 export const functionType: DataType<Function> = {
   Component: FunctionType,
   is: (value) => typeof value === "function",

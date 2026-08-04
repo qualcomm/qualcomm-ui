@@ -1,9 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
+import type {
+  BooleanAriaAttr,
+  BooleanDataAttr,
+} from "@qualcomm-ui/utils/attributes"
 
-import type {tagClasses} from "./tag.classes"
+import type {tagAnatomy} from "./tag.anatomy.js"
+import type {tagClasses} from "./tag.classes.js"
 
 /** @deprecated use "lime" */
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -34,9 +39,16 @@ export type QdsTagRadius = QdsTagShape
 
 export type QdsTagShape = "square" | "rounded"
 
-export type QdsTagSize = "sm" | "md" | "lg"
+export type QdsTagSize = "sm" | "md" | "lg" | "xl"
 
-export type QdsTagVariant = "link" | "selectable" | "dismissable"
+/** @deprecated use `render` */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsTagVariant__deprecated = "link"
+
+export type QdsTagVariant =
+  | "selectable"
+  | "dismissable"
+  | QdsTagVariant__deprecated
 
 export interface QdsTagApiProps {
   /**
@@ -83,53 +95,45 @@ export interface QdsTagApiProps {
 
 type TagClasses = typeof tagClasses
 
-export interface QdsTagSpanRootBindings {
+type PartName = AnatomyPartName<typeof tagAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"tag", P> {}
+
+export interface QdsTagCommonRootBindings extends Part<"root"> {
+  "aria-disabled"?: BooleanAriaAttr
   className: TagClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsTagEmphasis
-  "data-part": "root"
-  "data-scope": "tag"
+  "data-selected": BooleanDataAttr
   "data-shape": QdsTagShape
   "data-size": QdsTagSize
   "data-variant"?: QdsTagVariant
+  tabIndex?: -1
 }
 
-export interface QdsTagButtonRootBindings {
-  className: TagClasses["root"]
-  "data-disabled": BooleanDataAttr
-  "data-emphasis": QdsTagEmphasis
-  "data-part": "root"
-  "data-scope": "tag"
-  "data-shape": QdsTagShape
-  "data-size": QdsTagSize
-  "data-variant"?: QdsTagVariant
-  disabled: boolean | undefined
+export interface QdsTagElementRootBindings extends QdsTagCommonRootBindings {
+  "data-active"?: BooleanDataAttr
+}
+
+export interface QdsTagButtonRootBindings extends QdsTagCommonRootBindings {
+  "aria-pressed"?: BooleanAriaAttr
 }
 
 export type QdsTagRootBindings =
-  | QdsTagSpanRootBindings
+  | QdsTagElementRootBindings
   | QdsTagButtonRootBindings
 
-export interface QdsTagStartIconBindings {
+export interface QdsTagStartIconBindings extends Part<"startIcon"> {
   className: TagClasses["icon"]
-  "data-part": "start-icon"
-  "data-scope": "tag"
-  "data-size": QdsTagSize
 }
 
-export interface QdsTagEndIconBindings {
+export interface QdsTagEndIconBindings extends Part<"endIcon"> {
   className: TagClasses["icon"]
-  "data-part": "end-icon"
-  "data-scope": "tag"
-  "data-size": QdsTagSize
 }
 
-export interface QdsTagDismissButtonBindings {
+export interface QdsTagDismissButtonBindings extends Part<"dismissButton"> {
   "aria-label": string
   className: TagClasses["dismissButton"]
   "data-disabled": BooleanDataAttr
-  "data-part": "dismiss-button"
-  "data-scope": "tag"
   "data-size": QdsTagSize
   disabled: boolean | undefined
   type: "button"

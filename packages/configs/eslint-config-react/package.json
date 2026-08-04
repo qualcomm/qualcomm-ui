@@ -1,15 +1,15 @@
 {
   "name": "@qualcomm-ui/eslint-config-react",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "QUI ESLint config for consistent React code",
-  "author": "Ryan Bower",
+  "keywords": [
+    "config",
+    "eslint",
+    "react"
+  ],
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "index.d.ts",
     "index.js",
@@ -17,9 +17,14 @@
     "recommended.js",
     "strict.js"
   ],
+  "type": "module",
+  "sideEffects": false,
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
@@ -32,10 +37,8 @@
     "@typescript-eslint/parser": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^6.1.1",
-    "prettier": "^3.6.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:"
   },
@@ -44,16 +47,9 @@
     "@typescript-eslint/parser": ">=8.31.1",
     "eslint": ">=9.37.0",
     "eslint-plugin-import": ">=2.31.0",
-    "eslint-plugin-prettier": ">=5.4.0",
     "eslint-plugin-react": ">=7.37.5",
-    "eslint-plugin-react-hooks": ">=6.1.1",
-    "prettier": ">=3.5.3",
+    "eslint-plugin-react-hooks": ">=7.1.1",
     "typescript": ">=5.0.0",
     "typescript-eslint": ">=8.31.1"
-  },
-  "keywords": [
-    "eslint",
-    "config",
-    "react"
-  ]
+  }
 }

@@ -4,9 +4,9 @@
 import {Component, computed} from "@angular/core"
 import {Asterisk} from "lucide-angular"
 
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTextInputLabelDirective} from "@qualcomm-ui/angular-core/text-input"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 /**
  * An accessible label that is automatically associated with the input.

@@ -4,17 +4,17 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+    - main
     paths:
-      - packages/common/**
-      - packages/frameworks/react*/**
-      - packages/frameworks/angular*/**
-      - packages/docs/angular-docs/**
+    - packages/common/**
+    - packages/frameworks/react*/**
+    - packages/frameworks/angular*/**
+    - packages/docs/angular-docs/**
 
 jobs:
   deploy:
-    uses: ./.github/workflows/reusable-docs-deploy-test.yml
+    uses: ./.github/workflows/reusable-docs-deploy-prod.yml
     with:
       dockerfile: dockerfiles/dockerfile-angular-docs
-      ecr-repository-name: angular-next
+      ecr-repository-name: angular-docs
     secrets: inherit

@@ -8,10 +8,9 @@ runs:
     with:
       run_install: false
 
-  - uses: actions/setup-node@v4
+  - uses: actions/setup-node@v6
     with:
-      node-version: '22'
-      cache: 'pnpm'
+      node-version: '24'
 
   - run: pnpm i --frozen-lockfile
     shell: bash

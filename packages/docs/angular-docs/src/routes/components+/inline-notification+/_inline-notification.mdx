@@ -1,6 +1,5 @@
 ---
 title: Inline Notification
-group: Feedback
 description: Inline notifications provide contextual feedback without disrupting the user's workflow. They support multiple semantic types ranging from informational updates to critical warnings.
 component: InlineNotification
 aliases: [callout, alert, banner, notice, status message, feedback message]
@@ -10,11 +9,10 @@ badges:
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#101
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
-  TypeDocProps,
-  TypeDocAttributes,
   TypeDocAngularAttributes,
+  TypeDocProps,
 } from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
@@ -22,8 +20,7 @@ import {
 {frontmatter.description}
 
 ::: terms
-system notification
-user feedback
+system notification, user feedback
 :::
 
 ```ts
@@ -41,8 +38,7 @@ The simple API bundles all subcomponents together into a single directive.
 ### Child Directives
 
 ::: terms
-slots
-override
+slots, override
 :::
 
 Provide child directives to customize specific elements while keeping the simple API's default structure.
@@ -52,8 +48,7 @@ Provide child directives to customize specific elements while keeping the simple
 ### Composite
 
 ::: terms
-slots
-parts
+slots, parts
 :::
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure.
@@ -63,8 +58,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### Emphasis (color)
 
 ::: terms
-severity
-alert level
+severity, alert level
 :::
 
 Control the visual emphasis with different colors: info, success, warning, danger, and neutral. Customize these with the [emphasis](./#emphasis) prop.
@@ -74,19 +68,17 @@ Control the visual emphasis with different colors: info, success, warning, dange
 ### Dismissable
 
 ::: terms
-closeable
-closable
+closeable, closable
 :::
 
-Add dismiss functionality to the simple notification using the [dismissable](./#dismissable) prop. Use the `q-inline-notification-close-button` directive when using the composite API.
+Add dismiss functionality to the simple notification using the [dismissable](./#dismissable-1) prop. Use the `q-inline-notification-close-button` directive when using the composite API.
 
 <QdsDemo name="InlineNotificationDismissableDemo" />
 
 ### Action
 
 ::: terms
-cta
-call to action
+cta, call to action
 :::
 
 Include a link or action in notifications using the `q-inline-notification-action` directive.
@@ -96,14 +88,28 @@ Include a link or action in notifications using the `q-inline-notification-actio
 ### Layout
 
 ::: terms
-horizontal
-vertical
-orientation
+horizontal, vertical, orientation
 :::
 
-Choose between inline and stacked layouts using the [layout](./#layout) property. Stacked layout places the description and action below the content.
+Choose between inline and stacked layouts using the [orientation](./#orientation) property. Stacked layout places the description and action below the content.
 
 <QdsDemo name="InlineNotificationLayoutDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-inline-notification"
+  name="InlineNotificationExplorerDemo"
+  parts={[
+    "root",
+    {name: "status-icon", link: "#q-inline-notification-icon"},
+    {name: "heading", link: "#q-inline-notification-label"},
+    "description",
+    "action",
+    {name: "close-trigger", link: "#q-inline-notification-close-button"},
+  ]}
+  scope="inline-notification"
+/>
 
 ## API
 
@@ -165,5 +171,8 @@ The `q-inline-notification` directive extends the [q-inline-notification-root](.
 <TypeDocProps name="InlineNotificationActionDirective" />
 
 <TypeDocAngularAttributes
-  name={["InlineNotificationActionBindings", "QdsNotificationActionBindings"]}
+  name={[
+    "InlineNotificationActionBindings",
+    "QdsNotificationActionBindings",
+  ]}
 />

@@ -2,9 +2,9 @@ import {type ReactNode, useContext} from "react"
 
 import {Settings2} from "lucide-react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Menu} from "@qualcomm-ui/react/menu"
 import {Table} from "@qualcomm-ui/react/table"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 import {RowPinningContext} from "./row-pinning-context"
 

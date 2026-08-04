@@ -3,26 +3,26 @@
 
 import chalk from "chalk"
 import {lstat, readFile, writeFile} from "node:fs/promises"
-import {resolve} from "path"
+import {resolve} from "node:path"
 import {Application, type JSONOutput} from "typedoc"
 
 import {humanFileSize} from "@qualcomm-ui/typedoc-common"
 
-import {InvalidConfigError} from "./errors"
+import {InvalidConfigError} from "./errors.js"
 import {
   type ParseResult,
   parseTypes,
   resolveConfigSync,
   resolveTsconfig,
-} from "./internal"
-import {TimeLogger} from "./logger"
-import {defaultOptions} from "./options"
+} from "./internal/index.js"
+import {TimeLogger} from "./logger.js"
+import {defaultOptions} from "./options.js"
 import {
   loadDecoratorPlugin,
   loadInputSignalPlugin,
   loadStructuralDirectivePlugin,
-} from "./plugins"
-import type {BuildOptions, ResolvedBuildOptions} from "./types"
+} from "./plugins/index.js"
+import type {BuildOptions, ResolvedBuildOptions} from "./types.js"
 
 const defaultApiFile = ".typedoc/api.json"
 
@@ -151,7 +151,7 @@ export class TypeParser {
     return json
   }
 
-  async export(result: ParseResult) {
+  async export(result: ParseResult): Promise<void> {
     await writeFile(
       resolve(this.options.outputFile),
       JSON.stringify(
@@ -166,7 +166,7 @@ export class TypeParser {
     )
   }
 
-  async printFileMetrics() {
+  async printFileMetrics(): Promise<void> {
     const fileSize = await lstat(resolve(this.options.outputFile)).then((res) =>
       humanFileSize(res.size),
     )
@@ -179,7 +179,7 @@ export class TypeParser {
     )
   }
 
-  async parseTypes(json: JSONOutput.ProjectReflection) {
+  async parseTypes(json: JSONOutput.ProjectReflection): Promise<ParseResult> {
     this.logger.start()
     const result = await parseTypes(json, this.options)
 

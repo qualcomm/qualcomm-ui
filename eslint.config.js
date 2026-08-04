@@ -1,4 +1,21 @@
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+for (const pkgName of [
+  "eslint-config-mdx",
+  "eslint-plugin-angular",
+  "eslint-plugin-react",
+]) {
+  assert.ok(
+    existsSync(resolve(__dirname, `packages/configs/${pkgName}/dist/index.js`)),
+    `@qualcomm-ui/${pkgName} must be built`,
+  )
+}
+
 import {defineConfig} from "eslint/config"
+import assert from "node:assert"
+import {existsSync} from "node:fs"
+import {dirname, join, resolve} from "node:path"
+import {fileURLToPath} from "node:url"
 import tseslint from "typescript-eslint"
 
 import quiEslintAngular from "@qualcomm-ui/eslint-config-angular"
@@ -60,15 +77,11 @@ export default defineConfig(
     },
   },
   {
-    extends: [...quiEslintTs.configs.recommended],
+    extends: [quiEslintTs.configs.recommended],
     files: ["scripts/*.ts"],
   },
   {
-    extends: [
-      quiEslintTs.configs.base,
-      quiEslintTs.configs.sortKeys,
-      quiEslintTs.configs.styleGuide,
-    ],
+    extends: [quiEslintTs.configs.sortKeys, quiEslintTs.configs.styleGuide],
     files: [
       "{packages,scripts}/**/*.{jsx,js,mjs,cjs}",
       "*.{jsx,js,mjs.cjs}",
@@ -80,9 +93,8 @@ export default defineConfig(
   // angular
   {
     extends: [
-      ...quiEslintTs.configs.recommended,
-      quiEslintAngular.configs.baseTypescript,
-      quiEslintAngular.configs.typescript,
+      quiEslintTs.configs.recommended,
+      quiEslintAngular.configs.typescriptRecommended,
       quiEslintPluginAngular.config,
     ],
     files: [
@@ -97,10 +109,8 @@ export default defineConfig(
   },
   {
     extends: [
-      ...quiEslintTs.configs.recommended,
-      quiEslintTs.configs.performance,
-      quiEslintAngular.configs.baseTypescript,
-      quiEslintAngular.configs.typescript,
+      quiEslintTs.configs.recommended,
+      quiEslintAngular.configs.typescriptRecommended,
     ],
     files: ["packages/*/{angular,angular-*}/**/*.ts"],
     ignores: [
@@ -114,10 +124,7 @@ export default defineConfig(
   },
   {
     extends: [
-      quiEslintAngular.configs.baseTemplate,
-      quiEslintAngular.configs.templatePrettier,
-      quiEslintAngular.configs.templateAttributeOrder,
-      quiEslintAngular.configs.templateSelfClosingTags,
+      quiEslintAngular.configs.templateRecommended,
       quiEslintPluginAngular.config,
     ],
     files: [
@@ -126,81 +133,37 @@ export default defineConfig(
       "packages/debug-apps/angular*/src/**/*.html",
     ],
   },
-  {
-    extends: [quiEslintAngular.configs.templateSelfClosingTags],
-    files: [
-      "packages/*/{angular,angular-core,angular-table}/**/*.html",
-      "packages/docs/angular*/src/**/demos/**/*.html",
-    ],
-  },
 
-  // TODO: remove when every package is on the performance config.
+  // strict export config, enforces type-only exports
   {
-    extends: [...quiEslintTs.configs.recommended],
+    extends: [
+      quiEslintTs.configs.recommended,
+      quiEslintTs.configs.strictExports,
+    ],
     files: ["{packages,scripts}/**/*.{ts,tsx}", "*.{ts,tsx}"],
     languageOptions,
   },
 
+  // react docs and debug sites
   {
     extends: [
-      ...quiEslintTs.configs.recommended,
-      quiEslintReact.configs.base,
+      quiEslintTs.configs.recommended,
       quiEslintReact.configs.recommended,
       quiEslintPluginReact.config,
     ],
     files: [
-      "packages/*/{qui-site,react-docs,qui-docs,react-vscode-docs}/**/*.{ts,tsx}",
+      "packages/docs/qui-site/**/*.{ts,tsx}",
+      "packages/docs/qui-docs/**/*.{ts,tsx}",
+      "packages/docs/react-docs/**/*.{ts,tsx}",
+      "packages/docs/react-table-docs/**/*.{ts,tsx}",
+      "packages/debug-apps/react-ssr/**/*.{ts,tsx}",
+      "packages/docs/angular*/**/*.tsx",
     ],
     languageOptions,
   },
 
   {
-    extends: [quiEslintPluginReact.config],
-    files: ["packages/*/react-mdx/**/*.{ts,tsx}"],
-    languageOptions,
-  },
-
-  // gradually adopt strict config
-  {
-    extends: [
-      ...quiEslintTs.configs.recommended,
-      quiEslintTs.configs.performance,
-    ],
-    files: [
-      "packages/*/{charts-base,core,eslint-config-qui-boundaries,mdx-vite,typedoc}/**/*.ts",
-    ],
-    languageOptions,
-  },
-
-  // strict performance config, enforces strict type exports
-  {
-    extends: [
-      ...quiEslintTs.configs.recommended,
-      quiEslintTs.configs.performance,
-      quiEslintTs.configs.strictExports,
-    ],
-    files: [
-      "packages/*/{dom,qds-core,mdx-common,node-utils,utils,react-test-utils}/**/*.ts",
-    ],
-    languageOptions,
-  },
-
-  // gradually adopt strict config (react)
-  {
-    extends: [
-      ...quiEslintTs.configs.recommended,
-      quiEslintTs.configs.performance,
-      quiEslintReact.configs.base,
-      quiEslintReact.configs.recommended,
-    ],
-    files: [
-      "packages/*/{react-mdx,react,react-core,react-docs,react-internal,react-swagger,react-table-docs,react-router-utils,react-vscode}/**/*.{ts,tsx}",
-      "packages/docs/angular-docs/src/**/*.tsx",
-    ],
-    languageOptions,
-  },
-
-  {
+    extends: [quiEslintReact.configs.recommended],
     files: ["packages/*/react-swagger/**/*.{ts,tsx}"],
     languageOptions,
     rules: {
@@ -209,15 +172,14 @@ export default defineConfig(
     },
   },
 
-  // react compiler
   {
-    extends: [quiEslintReact.configs.strict],
-    files: ["packages/*/{react,react-core,react-mdx}/**/*.{ts,tsx}"],
-    ignores: [
-      "packages/frameworks/react-core/src/components/**/*.{ts,tsx}",
-      "packages/frameworks/react-core/src/dom/use-clickable.ts",
-      "packages/frameworks/react/src/legacy/**/*",
+    extends: [
+      quiEslintTs.configs.recommended,
+      quiEslintReact.configs.recommended,
+      quiEslintReact.configs.strict,
     ],
+    files: ["packages/frameworks/react*/**/*.{ts,tsx}"],
+    ignores: ["packages/frameworks/react-swagger/**/*.{ts,tsx}"],
     languageOptions,
   },
 
@@ -233,5 +195,14 @@ export default defineConfig(
   {
     extends: [quiEslintMdx.configs.recommended],
     files: ["{packages,scripts}/**/*.{md,mdx}", "*.md"],
+    ignores: ["**/CHANGELOG.md", "**/__tests__/**"],
+    languageOptions: {
+      parserOptions: {
+        remarkConfigPath: join(
+          import.meta.dirname,
+          "node_modules/@qualcomm-ui/eslint-config-mdx/.remarkrc",
+        ),
+      },
+    },
   },
 )

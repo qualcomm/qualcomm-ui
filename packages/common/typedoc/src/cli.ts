@@ -3,7 +3,7 @@
 
 import {program} from "@commander-js/extra-typings"
 
-import {build, init, watch} from "./internal"
+import {build, init, watch} from "./internal/index.js"
 
 const Commands = {
   BUILD: "build",
@@ -18,7 +18,7 @@ program
   .command(Commands.INIT)
   .summary("Initialize the config file")
   .action(async () => {
-    return init().catch(() => process.exit(0))
+    return await init().catch(() => process.exit(0))
   })
 
 program

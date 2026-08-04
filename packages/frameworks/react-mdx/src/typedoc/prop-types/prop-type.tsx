@@ -7,18 +7,23 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
-import {useTypeDocContext} from "../use-typedoc-context"
+import {useTypeDocContext} from "../use-typedoc-context.js"
 
-import {Reference} from "./reference"
-import {Reflection} from "./reflection"
-import {SimpleType} from "./simple-type"
-import {TypeInfoPopup} from "./type-info-popup"
+import {Reference} from "./reference.js"
+import {Reflection} from "./reflection.js"
+import {SimpleType} from "./simple-type.js"
+import {TypeInfoPopup} from "./type-info-popup.js"
 
 interface Props {
+  /**
+   * Set to true to prevent reference types from expanding. This will cause them to
+   * render as the type reference name.
+   */
+  disableReferenceExpansion?: boolean | undefined
   prop: QuiPropDeclaration
 }
 
-export function PropType({prop}: Props): ReactNode {
+export function PropType({disableReferenceExpansion, prop}: Props): ReactNode {
   const {layout} = useTypeDocContext()
   const {renderLink: Link} = useMdxDocsContext()
 
@@ -27,9 +32,11 @@ export function PropType({prop}: Props): ReactNode {
     return <></>
   }
 
+  const restPrefix = prop.rest ? "..." : ""
+
   const resolvedType = prop.resolvedType
 
-  const prettyType = resolvedType.prettyType ?? ""
+  const prettyType = `${restPrefix}${resolvedType.prettyType ?? ""}`
   switch (resolvedType.baseType ?? prop.type) {
     case "intrinsic":
       return <SimpleType content={prettyType} />
@@ -43,7 +50,10 @@ export function PropType({prop}: Props): ReactNode {
           {importStatement ? (
             <TypeInfoPopup importStatement={importStatement} />
           ) : null}
-          <Reference prop={prop} />
+          <Reference
+            disableReferenceExpansion={disableReferenceExpansion}
+            prop={prop}
+          />
         </div>
       )
 

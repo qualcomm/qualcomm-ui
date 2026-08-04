@@ -4,7 +4,7 @@
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {treeClasses} from "./tree.classes"
+import {treeClasses} from "./tree.classes.js"
 import type {
   QdsTreeApi,
   QdsTreeApiProps,
@@ -19,7 +19,7 @@ import type {
   QdsTreeNodeIconBindings,
   QdsTreeNodeIndicatorBindings,
   QdsTreeRootBindings,
-} from "./tree.types"
+} from "./tree.types.js"
 
 export function createQdsTreeApi(
   props: Explicit<QdsTreeApiProps>,

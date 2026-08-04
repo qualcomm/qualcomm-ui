@@ -57,12 +57,12 @@
   user-select: none;
   --border-radius: var(--border-radius-md);
 
-  [data-size="sm"] & {
+  &[data-size="sm"] {
     block-size: var(--sizing-120);
     font: var(--font-static-body-xs-bold);
     gap: var(--spacing-50);
     padding-inline: var(--spacing-80);
-    &:has([data-part="item-label"]) {
+    &:has([data-checkbox-part="label"]) {
       padding-inline: var(--spacing-90);
     }
     --divider-height: var(--sizing-60);
@@ -70,12 +70,12 @@
       --icon-size: var(--sizing-60);
     }
   }
-  [data-size="md"] & {
+  &[data-size="md"] {
     block-size: var(--sizing-140);
     font: var(--font-static-body-sm-bold);
     gap: var(--spacing-70);
     padding-inline: var(--spacing-90);
-    &:has([data-part="item-label"]) {
+    &:has([data-checkbox-part="label"]) {
       padding-inline: var(--spacing-100);
     }
     --divider-height: var(--sizing-70);
@@ -83,12 +83,12 @@
       --icon-size: var(--sizing-70);
     }
   }
-  [data-size="lg"] & {
+  &[data-size="lg"] {
     block-size: var(--sizing-160);
     font: var(--font-static-body-lg-bold);
     gap: var(--spacing-90);
     padding-inline: 14px; /* no CSS variable for this one */
-    &:has([data-part="item-label"]) {
+    &:has([data-checkbox-part="label"]) {
       padding-inline: var(--spacing-110);
     }
     --divider-height: var(--sizing-80);
@@ -98,21 +98,21 @@
   }
 
   &:first-of-type {
-    [data-orientation="horizontal"] & {
+    &[data-orientation="horizontal"] {
       border-end-start-radius: var(--border-radius);
       border-start-start-radius: var(--border-radius);
     }
-    [data-orientation="vertical"] & {
+    &[data-orientation="vertical"] {
       border-start-end-radius: var(--border-radius);
       border-start-start-radius: var(--border-radius);
     }
   }
   &:last-of-type {
-    [data-orientation="horizontal"] & {
+    &[data-orientation="horizontal"] {
       border-end-end-radius: var(--border-radius);
       border-start-end-radius: var(--border-radius);
     }
-    [data-orientation="vertical"] & {
+    &[data-orientation="vertical"] {
       border-end-end-radius: var(--border-radius);
       border-end-start-radius: var(--border-radius);
     }
@@ -165,7 +165,7 @@
   }
 }
 
-[data-orientation="horizontal"] .qui-segmented-control__item {
+.qui-segmented-control__item[data-orientation="horizontal"] {
   &:not(:first-of-type)::before {
     height: var(--divider-height);
     inset-inline-start: -1px;
@@ -190,7 +190,7 @@
   }
 }
 
-[data-orientation="vertical"] .qui-segmented-control__item {
+.qui-segmented-control__item[data-orientation="vertical"] {
   &:not(:first-of-type)::before {
     height: 1px;
     inset-block-start: -1px;

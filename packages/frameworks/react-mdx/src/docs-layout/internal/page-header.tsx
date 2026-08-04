@@ -3,46 +3,28 @@
 
 import type {ComponentPropsWithRef, ReactElement} from "react"
 
-import {Badge} from "@qualcomm-ui/react/badge"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useMdxDocsLayoutContext} from "../layout"
-
-import {resolveFrontmatterBadges} from "./page-header-utils"
+import {useMdxDocsLayoutContext} from "../layout/index.js"
+import type {FrontmatterBadge} from "../types.js"
 
 export interface PageHeaderProps extends ComponentPropsWithRef<"h1"> {}
 
 export function PageHeader(props: PageHeaderProps): ReactElement {
   const context = useMdxDocsLayoutContext()
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {layoutComponents} = useMdxDocsContext()
   const frontmatter = context.pageFrontmatter
 
-  const badges = resolveFrontmatterBadges(frontmatter)
+  const badges = (frontmatter.badges ?? []) as FrontmatterBadge[]
+  const BadgeComponent = layoutComponents?.PageHeaderBadges
 
   return (
     <div className="qui-docs__page-header">
       <h1 {...mergeProps({className: "mdx"}, props)} />
-      {badges.map((badge) => (
-        <Badge
-          key={badge.label}
-          className="qui-docs__page-header-badge"
-          emphasis={badge.emphasis}
-          render={
-            badge.pathname ? (
-              <RenderLink href={badge.pathname} />
-            ) : badge.href ? (
-              <a href={badge.href} rel="noreferrer" target="_blank" />
-            ) : (
-              <div />
-            )
-          }
-          size="sm"
-          title={badge.title}
-        >
-          {badge.label}
-        </Badge>
-      ))}
+      {BadgeComponent && badges.length ? (
+        <BadgeComponent badges={badges} />
+      ) : null}
     </div>
   )
 }

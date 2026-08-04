@@ -34,11 +34,15 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {TabPropsContextProvider, useTabPropsContext} from "./tab-prop-context"
-import {TabsContextProvider, useTabsContext} from "./tabs-context"
+import {
+  TabPropsContextProvider,
+  useTabPropsContext,
+} from "./tab-prop-context.js"
+import {TabsContextProvider, useTabsContext} from "./tabs-context.js"
 
 export interface CoreTabsRootProps
-  extends TabsApiProps,
+  extends
+    TabsApiProps,
     RenderStrategyApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {
   /**
@@ -97,8 +101,7 @@ export function CoreTabsList({
 }
 
 export interface CoreTabsTabButtonProps
-  extends IdProp,
-    ElementRenderProp<"button"> {
+  extends IdProp, ElementRenderProp<"button"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -129,9 +132,7 @@ export function CoreTabsTabButton({
 }
 
 export interface CoreTabsPanelProps
-  extends PanelProps,
-    IdProp,
-    ElementRenderProp<"div"> {
+  extends PanelProps, IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -173,8 +174,7 @@ export function CoreTabsPanel({
   )
 }
 
-export interface CoreTabsTabDismissButtonProps
-  extends ElementRenderProp<"button"> {
+export interface CoreTabsTabDismissButtonProps extends ElementRenderProp<"button"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -223,8 +223,7 @@ export function CoreTabsTab({
 }
 
 export interface CoreTabsIndicatorProps
-  extends IdProp,
-    ElementRenderProp<"div"> {}
+  extends IdProp, ElementRenderProp<"div"> {}
 
 export function CoreTabsIndicator({
   children,

@@ -27,15 +27,15 @@ import {
   isValueWithinRange,
 } from "@qualcomm-ui/utils/number"
 
-import {domEls, getPressedTriggerEl} from "./internal"
-import type {HintValue, NumberInputSchema} from "./number-input.types"
+import {domEls, getPressedTriggerEl} from "./internal/index.js"
+import type {HintValue, NumberInputSchema} from "./number-input.types.js"
 import {
   createFormatter,
   createParser,
   formatValue,
   getDefaultStep,
   parseValue,
-} from "./number-input.utils"
+} from "./number-input.utils.js"
 
 const {and, not} = createGuards<NumberInputSchema>()
 

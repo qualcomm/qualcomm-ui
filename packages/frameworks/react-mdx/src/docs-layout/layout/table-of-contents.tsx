@@ -18,10 +18,10 @@ import type {TocHeading} from "@qualcomm-ui/mdx-common"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import {TocLink} from "../internal"
+import {TocLink} from "../internal/index.js"
 
-import {PageActions} from "./page-actions"
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
+import {PageActions} from "./page-actions.js"
+import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 const HEADING_LEVELS: TocHeading[] = ["h2", "h3", "h4"]
 const SCROLL_DEBOUNCE_MS = 0
@@ -115,15 +115,13 @@ function useActiveHeading() {
       return
     }
 
-    contentElement
-      .querySelectorAll(
-        uniq(HEADING_LEVELS)
-          .map((level) => `${level}:not(.qui-demo-runner__wrapper ${level})`)
-          .join(","),
-      )
-      .forEach((element) => {
-        headingElements.push(element)
-      })
+    for (const element of contentElement.querySelectorAll(
+      uniq(HEADING_LEVELS)
+        .map((level) => `${level}:not(.qui-demo-runner__wrapper ${level})`)
+        .join(","),
+    )) {
+      headingElements.push(element)
+    }
 
     let activeIndex: number | null = null
 

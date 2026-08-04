@@ -8,8 +8,8 @@ import {TagDirective} from "@qualcomm-ui/angular/tag"
   template: `
     <div class="flex flex-col gap-2">
       <!-- preview -->
-      <button q-tag variant="dismissable">Label</button>
-      <button disabled q-tag variant="dismissable">Label</button>
+      <span q-tag variant="dismissable">Label</span>
+      <span disabled q-tag variant="dismissable">Label</span>
       <!-- preview -->
     </div>
   `,

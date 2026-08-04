@@ -1,17 +1,35 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist",
-    "files": ["types.d.ts"],
-  },
-  "include": ["./src"],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
+    },
+    {
+      "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../react/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-mdx/tsconfig.lib.json"
+    },
+    {
+      "path": "../react-router-utils/tsconfig.lib.json"
     }
   ]
 }

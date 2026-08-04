@@ -1,14 +1,10 @@
 {
   "name": "@qualcomm-ui/typedoc",
-  "version": "1.0.6",
+  "version": "1.1.6",
   "description": "Documentation generation utilities",
-  "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
   "bin": {
     "qui-typedoc": "./lib/cli.js"
   },
@@ -16,16 +12,20 @@
     "dist",
     "lib"
   ],
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "run-s clean build:js build:ts",
-    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
-    "build:js": "tsx build.ts",
+    "clean": "shx rm -rf node_modules/.tmp dist",
+    "build:js": "vite build",
     "build:ts": "tsc -b tsconfig.lib.json",
     "dev": "run-p watch:js watch:ts",
-    "watch:js": "tsx build.ts --watch",
+    "watch:js": "vite build -w",
     "watch:ts": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
     "lint": "eslint --quiet",
     "test": "vitest -c vitest.config.ts --run",
@@ -40,36 +40,36 @@
   "dependencies": {},
   "devDependencies": {
     "@angular/core": "catalog:",
-    "@commander-js/extra-typings": "^14.0.0",
     "@clack/prompts": "1.0.0-alpha.6",
+    "@commander-js/extra-typings": "catalog:",
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/esbuild": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.8",
+    "@types/lodash-es": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
-    "@types/lodash-es": "catalog:",
-    "chalk": "^5.6.2",
-    "chokidar": "^5.0.0",
+    "chalk": "catalog:",
+    "chokidar": "catalog:",
     "cosmiconfig": "^9.0.0",
-    "esbuild": "catalog:",
     "inquirer": "^12.1.0",
     "lodash-es": "catalog:",
-    "npm-run-all2": "^8.0.4",
-    "shx": "^0.4.0",
+    "npm-run-all2": "catalog:",
+    "oxfmt": "catalog:",
+    "shx": "catalog:",
     "terminate": "^2.6.1",
     "tsx": "catalog:",
-    "typedoc": "~0.28.13",
+    "typedoc": "~0.28.19",
     "vite": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
     "@commander-js/extra-typings": ">=13.1.0",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.0.3",
-    "prettier": ">=3 <4",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.8",
+    "@qualcomm-ui/vite": "catalog:",
+    "cosmiconfig": ">=9.0.0",
+    "oxfmt": ">=0.51.0",
     "typedoc": ">=0.28.4",
-    "typescript": ">=5.3.3",
-    "cosmiconfig": ">=9.0.0"
+    "typescript": ">=5.3.3"
   },
   "engines": {
     "node": ">=20"

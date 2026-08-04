@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {AggregationFn} from "./features/grouping"
-import {isNumberArray} from "./utils"
+import type {AggregationFn} from "./features/grouping.js"
+import {isNumberArray} from "./utils.js"
 
 const sum: AggregationFn<any> = (columnId, _leafRows, childRows) => {
   // It's faster to just add the aggregations together instead of
@@ -19,16 +19,13 @@ const sum: AggregationFn<any> = (columnId, _leafRows, childRows) => {
 const min: AggregationFn<any> = (columnId, _leafRows, childRows) => {
   let min: number | undefined
 
-  childRows.forEach((row) => {
+  for (const row of childRows) {
     const value = row.getValue<number>(columnId)
 
-    if (
-      value != null &&
-      (min! > value || (min === undefined && value >= value))
-    ) {
+    if (value != null && (min! > value || min === undefined)) {
       min = value
     }
-  })
+  }
 
   return min
 }
@@ -36,15 +33,12 @@ const min: AggregationFn<any> = (columnId, _leafRows, childRows) => {
 const max: AggregationFn<any> = (columnId, _leafRows, childRows) => {
   let max: number | undefined
 
-  childRows.forEach((row) => {
+  for (const row of childRows) {
     const value = row.getValue<number>(columnId)
-    if (
-      value != null &&
-      (max! < value || (max === undefined && value >= value))
-    ) {
+    if (value != null && (max! < value || max === undefined)) {
       max = value
     }
-  })
+  }
 
   return max
 }
@@ -53,13 +47,11 @@ const extent: AggregationFn<any> = (columnId, _leafRows, childRows) => {
   let min: number | undefined
   let max: number | undefined
 
-  childRows.forEach((row) => {
+  for (const row of childRows) {
     const value = row.getValue<number>(columnId)
     if (value != null) {
       if (min === undefined) {
-        if (value >= value) {
-          min = max = value
-        }
+        min = max = value
       } else {
         if (min > value) {
           min = value
@@ -69,7 +61,7 @@ const extent: AggregationFn<any> = (columnId, _leafRows, childRows) => {
         }
       }
     }
-  })
+  }
 
   return [min, max]
 }
@@ -78,13 +70,13 @@ const mean: AggregationFn<any> = (columnId, leafRows) => {
   let count = 0
   let sum = 0
 
-  leafRows.forEach((row) => {
+  for (const row of leafRows) {
     let value = row.getValue<number>(columnId)
     if (value != null && (value = +value) >= value) {
       ++count
       sum += value
     }
-  })
+  }
 
   if (count) {
     return sum / count

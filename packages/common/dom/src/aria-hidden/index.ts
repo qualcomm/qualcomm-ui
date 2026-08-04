@@ -1,1 +1,1 @@
-export * from "./aria-hidden"
+export * from "./aria-hidden.js"

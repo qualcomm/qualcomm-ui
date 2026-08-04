@@ -1,0 +1,65 @@
+{
+  "name": "@qualcomm-ui/oxlint-config",
+  "version": "1.0.0",
+  "description": "QUI Oxlint config for consistent TypeScript and React linting",
+  "private": true,
+  "keywords": [
+    "config",
+    "lint",
+    "oxlint"
+  ],
+  "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "shx rm -rf dist node_modules/.tmp",
+    "compile": "run-p compile:js compile:ts",
+    "build": "run-s clean compile",
+    "compile:js": "vite build",
+    "compile:ts": "tsc -b tsconfig.lib.json --force",
+    "dev": "run-p dev:js dev:ts",
+    "dev:js": "pnpm compile:js -w",
+    "dev:ts": "pnpm compile:ts -w --preserveWatchOutput",
+    "generate:rules": "node --import=tsx scripts/generate-rule-reference.ts --exclude-source jest --exclude-source nextjs --exclude-source vue",
+    "prepublishOnly": "qui-cli pre-publish",
+    "postpublish": "qui-cli post-publish"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/cli": "catalog:",
+    "@qualcomm-ui/tsconfig": "catalog:",
+    "@qualcomm-ui/utils": "workspace:*",
+    "@qualcomm-ui/vite": "catalog:",
+    "cross-env": "^10.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "oxlint-plugin-oxfmt": "^0.1.0",
+    "eslint-plugin-perfectionist": "^5.9.0",
+    "npm-run-all2": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "0.23.0",
+    "playwright": "^1.60.0",
+    "shx": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  },
+  "peerDependencies": {
+    "@qualcomm-ui/utils": ">=1",
+    "eslint-plugin-perfectionist": ">=5.9.0",
+    "oxlint": ">=1.68.0",
+    "oxlint-tsgolint": ">=0.23.0"
+  }
+}

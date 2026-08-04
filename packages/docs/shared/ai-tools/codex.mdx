@@ -1,0 +1,75 @@
+---
+title: Codex
+---
+
+# {frontmatter.title}
+
+The Qualcomm UI plugin marketplace lets Codex discover available Qualcomm UI plugins. Each plugin provides a set of skills for development assistance in problem domains like testing, QUI component best practices, and documentation authoring with MDX. These are in development and will evolve over time.
+
+Follow this guide to register the marketplace with your Codex installation.
+
+## Prerequisites
+
+- Codex CLI is installed.
+- Your Codex environment can clone from GitHub during marketplace registration.
+
+## Register the marketplace
+
+Run this command from any directory:
+
+```shell
+codex plugin marketplace add qualcomm/qualcomm-ui --sparse .agents/plugins --sparse plugins
+```
+
+The command registers the Qualcomm UI marketplace as `qualcomm-ui`. The
+`--sparse` options limit the clone to `.agents/plugins` and `plugins`, which are
+the directories Codex needs to read marketplace metadata and install plugin
+content.
+
+## Install plugins from the marketplace
+
+1. In Codex, open the plugin browser:
+
+   ```sh
+   /plugins
+   ```
+
+2. Find the Qualcomm UI marketplace.
+
+3. Choose the plugin you want to install.
+
+4. Start a new Codex thread so the plugin skills and tools are loaded for the
+   session.
+
+## Verify the marketplace
+
+Open the plugin browser and confirm that the Qualcomm UI marketplace appears in
+the available marketplace list. The marketplace should include **QUI Documentation
+Authoring** and any other Qualcomm UI plugins published under `.agents/plugins`.
+
+## Update the marketplace
+
+Upgrade the marketplace when new plugins are added or existing plugin metadata
+changes:
+
+```sh
+codex plugin marketplace upgrade qualcomm-ui
+```
+
+Start a new Codex thread after installing or updating plugins.
+
+## Troubleshoot registration issues
+
+If the marketplace does not appear, confirm that the `codex plugin marketplace add`
+command completed without an authentication or network error. Run the command
+again after fixing the issues.
+
+If plugin updates do not appear, upgrade the marketplace and reopen the plugin
+browser:
+
+```sh
+codex plugin marketplace upgrade qualcomm-ui
+```
+
+If installed plugin skills are not available in a thread, start a new Codex thread.
+Plugin capabilities are loaded when a session starts.

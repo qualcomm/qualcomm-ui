@@ -7,22 +7,22 @@ import type {CheckboxElementIds} from "@qualcomm-ui/core/checkbox"
 import {useOptionalContentId} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 
-import {CheckboxControl, type CheckboxControlProps} from "./checkbox-control"
+import {CheckboxControl, type CheckboxControlProps} from "./checkbox-control.js"
 import {
   CheckboxErrorText,
   type CheckboxErrorTextProps,
-} from "./checkbox-error-text"
+} from "./checkbox-error-text.js"
 import {
   CheckboxHiddenInput,
   type CheckboxHiddenInputProps,
-} from "./checkbox-hidden-input"
-import {CheckboxHint, type CheckboxHintProps} from "./checkbox-hint"
+} from "./checkbox-hidden-input.js"
+import {CheckboxHint, type CheckboxHintProps} from "./checkbox-hint.js"
 import {
   CheckboxIndicator,
   type CheckboxIndicatorProps,
-} from "./checkbox-indicator"
-import {CheckboxLabel, type CheckboxLabelProps} from "./checkbox-label"
-import {CheckboxRoot, type CheckboxRootProps} from "./checkbox-root"
+} from "./checkbox-indicator.js"
+import {CheckboxLabel, type CheckboxLabelProps} from "./checkbox-label.js"
+import {CheckboxRoot, type CheckboxRootProps} from "./checkbox-root.js"
 
 export interface CheckboxProps extends CheckboxRootProps {
   /**

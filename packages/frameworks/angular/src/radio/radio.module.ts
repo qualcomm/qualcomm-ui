@@ -3,8 +3,8 @@
 
 import {NgModule} from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 import {RadioControlDirective} from "./radio-control.directive"
 import {

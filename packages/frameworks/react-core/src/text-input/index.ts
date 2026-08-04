@@ -1,2 +1,2 @@
-export * from "./text-input-context"
-export * from "./use-text-input"
+export * from "./text-input-context.js"
+export * from "./use-text-input.js"

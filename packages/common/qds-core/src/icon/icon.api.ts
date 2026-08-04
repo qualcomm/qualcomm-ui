@@ -4,8 +4,12 @@
 import {coercePixelProperty} from "@qualcomm-ui/utils/coercion"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {iconClasses} from "./icon.classes"
-import type {QdsIconApiProps, QdsIconBindings, QdsIconSize} from "./icon.types"
+import {iconClasses} from "./icon.classes.js"
+import type {
+  QdsIconApiProps,
+  QdsIconBindings,
+  QdsIconSize,
+} from "./icon.types.js"
 
 const qdsIconSizes = new Set<string>(["xs", "sm", "md", "lg", "xl"])
 

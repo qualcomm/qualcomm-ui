@@ -6,6 +6,6 @@ const demos = [{component: SortingDemo, title: "Sorting"}]
 
 export default function Sorting() {
   return (
-    <DemoPageLayout componentName="sorting" demos={demos} className="w-full" />
+    <DemoPageLayout className="w-full" componentName="sorting" demos={demos} />
   )
 }

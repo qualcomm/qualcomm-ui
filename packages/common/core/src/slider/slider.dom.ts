@@ -18,7 +18,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 import {getPercentValue} from "@qualcomm-ui/utils/number"
 
-import type {SliderElementIds, SliderSchema} from "./slider.types"
+import type {SliderElementIds, SliderSchema} from "./slider.types.js"
 
 type Scope = ScopeWithIds<SliderSchema>
 
@@ -85,13 +85,14 @@ export const getPointValue = (
 }
 
 export const dispatchChangeEvent = (scope: Scope, value: number[]): void => {
-  value.forEach((value, index) => {
+  for (const value1 of value) {
+    const index = value.indexOf(value1)
     const inputEl = domEls.hiddenInput(scope, index.toString())
     if (!inputEl) {
-      return
+      continue
     }
-    dispatchInputValueEvent(inputEl as HTMLInputElement, {value})
-  })
+    dispatchInputValueEvent(inputEl as HTMLInputElement, {value: value1})
+  }
 }
 
 export const getOffsetRect = (

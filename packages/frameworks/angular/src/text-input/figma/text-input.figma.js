@@ -11,34 +11,39 @@ const instance = figma.selectedInstance
 const filled = instance.getBoolean("filled")
 const defaultValue = filled ? instance.getString("inputText") : undefined
 const placeholder = !filled ? instance.getString("holderText") : undefined
-const label = instance.getBoolean("label", {
-  true: instance.getString("labelText"),
-})
-const hint = instance.getBoolean("hint", {
-  true: instance.getString("hintText"),
-})
-const disabled = instance.getEnum("state", {
-  disabled: true,
-})
-const invalid = instance.getEnum("state", {
-  invalid: true,
-  "invalid-focus": true,
-})
+const label = instance.getBoolean("label")
+  ? instance.getString("labelText")
+  : undefined
+const hint = instance.getBoolean("hint")
+  ? instance.getString("hintText")
+  : undefined
+const state = instance.getString("state")
+const disabled = state === "disabled"
+const invalid = state === "invalid" || state === "invalid-focus"
+const readOnly = state === "read-only"
 const errorText = invalid ? instance.getString("errorText") : undefined
-const readOnly = instance.getEnum("state", {
-  "read-only": true,
-})
 const required = instance.getBoolean("required")
 const startIcon = instance.getBoolean("startIcon")
 const endIcon = instance.getBoolean("endIcon")
-const size = instance.getEnum("size", {
-  lg: "lg",
-  sm: "sm",
-})
+const size = instance.getString("size")
+const startSwap = size === "lg" ? "iconLsm" : "iconLxs"
+const endSwap = size === "lg" ? "iconRsm" : "iconRxs"
+
+const startIconInstance = startIcon
+  ? instance.getInstanceSwap(startSwap)
+  : undefined
+const endIconInstance = endIcon ? instance.getInstanceSwap(endSwap) : undefined
+
+const startIconName = startIconInstance
+  ? toLucideName(startIconInstance.name)
+  : "Search"
+const endIconName = endIconInstance
+  ? toLucideName(endIconInstance.name)
+  : "Calendar"
 
 const defaultValueAttr = defaultValue ? ` defaultValue="${defaultValue}"` : ""
 const disabledAttr = disabled ? " disabled" : ""
-const endIconAttr = endIcon ? ` endIcon="Calendar"` : ""
+const endIconAttr = endIcon ? ` endIcon="${endIconName}"` : ""
 const errorTextAttr = errorText ? ` errorText="${errorText}"` : ""
 const hintAttr = hint ? ` hint="${hint}"` : ""
 const invalidAttr = invalid ? " invalid" : ""
@@ -48,10 +53,14 @@ const placeholderAttr = placeholder
   : ` placeholder="Enter text"`
 const readOnlyAttr = readOnly ? " readOnly" : ""
 const requiredAttr = required ? " required" : ""
-const sizeAttr = size ? ` size="${size}"` : ""
-const startIconAttr = startIcon ? ` startIcon="Search"` : ""
+const sizeAttr = size === "md" ? "" : ` size="${size}"`
+const startIconAttr = startIcon ? ` startIcon="${startIconName}"` : ""
 
-const icons = [startIcon && "Search", endIcon && "Calendar"].filter(Boolean)
+const icons = [
+  ...new Set(
+    [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
+  ),
+]
 
 export default {
   example: figma.code`
@@ -60,7 +69,7 @@ export default {
   id: "TextInput",
   imports: [
     `import {TextInputModule} from "@qualcomm-ui/angular/text-input"`,
-    ...(icons.length
+    ...(icons.length > 0
       ? [
           `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
           `import {${icons.join(", ")}} from "lucide-angular"`,
@@ -68,4 +77,12 @@ export default {
       : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

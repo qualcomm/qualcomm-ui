@@ -7,9 +7,9 @@ const demos = [{component: RowExpansionDemo, title: "Row Expansion"}]
 export default function RowExpansion() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="row-expansion"
       demos={demos}
-      className="w-full"
     />
   )
 }

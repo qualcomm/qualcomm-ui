@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {AArrowDown} from "lucide-angular"
 
-import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {ButtonModule} from "@qualcomm-ui/angular/button"
 
 @Component({
   imports: [ButtonModule],

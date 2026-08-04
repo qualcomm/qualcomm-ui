@@ -7,11 +7,10 @@ import {useCheckboxHiddenInput} from "@qualcomm-ui/react-core/checkbox"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsCheckboxContext} from "./qds-checkbox-context"
+import {useQdsCheckboxContext} from "./qds-checkbox-context.js"
 
 export interface CheckboxHiddenInputProps
-  extends IdProp,
-    ComponentPropsWithRef<"input"> {}
+  extends IdProp, ComponentPropsWithRef<"input"> {}
 
 /**
  * Hidden input element used for accessibility and form submissions. Renders an

@@ -1,5 +1,6 @@
 import {Component} from "@angular/core"
 
+import {TagControlledDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-controlled-demo"
 import {TagEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-emphasis-demo"
 import {TagIconsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-icons-demo"
 import {TagShapeDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/tag-shape-demo"
@@ -9,6 +10,7 @@ import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/
 
 @Component({
   imports: [
+    TagControlledDemo,
     TagEmphasisDemo,
     TagIconsDemo,
     TagShapeDemo,
@@ -19,6 +21,12 @@ import {TagVariantsDemo} from "@qualcomm-ui/angular-docs/components+/tag+/demos/
   selector: "app-tag",
   template: `
     <div class="container">
+      <div class="section">
+        <h2 class="section-title">Controlled</h2>
+        <div class="demo-container">
+          <tag-controlled-demo />
+        </div>
+      </div>
       <div class="section">
         <h2 class="section-title">Emphasis</h2>
         <div class="demo-container">

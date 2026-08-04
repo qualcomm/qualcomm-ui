@@ -14,9 +14,10 @@ import type {
   QuiCommentDisplayPart,
 } from "@qualcomm-ui/typedoc-common"
 
-import {extractNamesFromAttribute} from "../../mdx-utils"
-import type {ComponentProps, DocProps, PropInfo} from "../types"
-import {exists} from "../utils"
+import {docPropsJsxNodes} from "../../../doc-props/index.js"
+import {extractNamesFromAttribute} from "../../mdx-utils.js"
+import type {ComponentProps, DocProps, PropInfo} from "../types.js"
+import {exists} from "../utils.js"
 
 function extractBestType(propInfo: PropInfo): string {
   const type = propInfo.resolvedType?.prettyType || propInfo.type
@@ -193,6 +194,11 @@ export class PropFormatter {
     return parts.join("\n\n")
   }
 
+  extractSinceTag(comment: QuiComment | undefined): string | undefined {
+    const sinceTag = comment?.blockTags?.find((tag) => tag?.tag === "@since")
+    return sinceTag?.content?.[0]?.text
+  }
+
   extractProps(props: ComponentProps, isPartial: boolean): SimplifiedProp[] {
     const propsInfo: SimplifiedProp[] = []
 
@@ -233,6 +239,7 @@ export class PropFormatter {
       description: this.formatComment(propInfo.comment || null),
       propType,
       required: extractRequired(propInfo, isPartial) || undefined,
+      since: this.extractSinceTag(propInfo.comment),
     }
   }
 
@@ -250,7 +257,7 @@ export class PropFormatter {
           index: number | undefined,
           parent: Parent | undefined,
         ) => {
-          if (node?.name !== "TypeDocProps") {
+          if (!node.name || !docPropsJsxNodes.includes(node.name)) {
             return
           }
           const nameAttr = node.attributes?.find(
@@ -323,7 +330,13 @@ export class PropFormatter {
           }
 
           Object.assign(node, {
-            data: {typeDocProps: {name: propsName, props: propTypes}},
+            data: {
+              typeDocProps: {
+                name: propsName,
+                props: propTypes,
+                since: this.extractSinceTag(componentProps.comment),
+              },
+            },
             lang: null,
             meta: null,
             type: "code",

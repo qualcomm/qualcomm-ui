@@ -39,12 +39,12 @@ export function doSiteSearch(
 
   for (const [, pageResults] of pageContentMap) {
     const contentResults = pageResults.filter((r) => r.type === "content")
-    const headingResults = pageResults.filter((r) => r.type !== "content")
+    const headingResult = pageResults.find((r) => r.type !== "content")
 
     if (contentResults.length > 0) {
       filtered.push(...contentResults)
-    } else {
-      filtered.push(headingResults[0])
+    } else if (headingResult) {
+      filtered.push(headingResult)
     }
   }
 

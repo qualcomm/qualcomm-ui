@@ -40,7 +40,7 @@
     outline: solid 1px var(--color-utility-focus-border);
   }
 
-  &:has([data-part="branch-trigger"]) {
+  &:has([data-tree-part="branch-trigger"]) {
     --branch-trigger-width: calc(16px + var(--spacing-50));
   }
 
@@ -110,4 +110,8 @@
   &[data-size="md"] {
     --icon-size: var(--sizing-80);
   }
+}
+
+.qui-tree__node-text {
+  text-box: cap alphabetic;
 }

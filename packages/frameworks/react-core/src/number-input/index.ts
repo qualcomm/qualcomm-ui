@@ -17,9 +17,9 @@ import {
   type CoreNumberInputLabelProps,
   CoreNumberInputRoot,
   type CoreNumberInputRootProps,
-} from "./core-number-input"
+} from "./core-number-input.js"
 
-export * from "./number-input-context"
+export * from "./number-input-context.js"
 
 export type {
   CoreNumberInputRootProps,

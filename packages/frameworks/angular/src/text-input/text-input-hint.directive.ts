@@ -3,8 +3,8 @@
 
 import {Directive} from "@angular/core"
 
-import {useInputHint} from "@qualcomm-ui/angular/input"
 import {CoreTextInputHintDirective} from "@qualcomm-ui/angular-core/text-input"
+import {useInputHint} from "@qualcomm-ui/angular/input"
 
 /**
  * Helper text displayed below the input.

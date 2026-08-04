@@ -1,6 +1,7 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
+
 @import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
@@ -36,9 +37,15 @@ body {
 }
 
 .page {
+  align-items: center;
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  width: 100%;
+
+  @media screen and (min-width: 1280px) {
+    align-items: start;
+  }
 }
 
 .section-title {

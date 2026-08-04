@@ -3,9 +3,9 @@
 
 import {Component, input, type OnInit} from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {inputClasses} from "@qualcomm-ui/qds-core/input"
 
 import {useQdsInputContext} from "./qds-input-context.service"

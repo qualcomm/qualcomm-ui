@@ -1,11 +1,11 @@
 import {Component} from "@angular/core"
 import {ChevronDown, ChevronRight} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   HeaderComponentContextDirective,
   TableModule,
 } from "@qualcomm-ui/angular/table"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [TableModule],

@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 import {Star} from "lucide-angular"
 
-import {IconBadgeDirective} from "@qualcomm-ui/angular/badge"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {IconBadgeDirective} from "@qualcomm-ui/angular/badge"
 
 @Component({
   imports: [IconBadgeDirective],

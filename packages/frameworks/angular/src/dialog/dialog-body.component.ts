@@ -19,7 +19,11 @@ import {useQdsDialogContext} from "./qds-dialog-context.service"
   template: `
     @if (!hideIndicatorIcon()) {
       <ng-content select="[q-dialog-indicator-icon]">
-        <svg q-dialog-indicator-icon [qIcon]="indicatorIcon()"></svg>
+        <svg
+          data-test-id="dialog-indicator-icon"
+          q-dialog-indicator-icon
+          [qIcon]="indicatorIcon()"
+        ></svg>
       </ng-content>
     }
     <ng-content />

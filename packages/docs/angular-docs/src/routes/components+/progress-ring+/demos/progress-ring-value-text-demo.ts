@@ -1,7 +1,7 @@
 import {Component, type OnInit, signal} from "@angular/core"
 
-import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
+import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 
 @Component({
   imports: [ProgressRingModule],

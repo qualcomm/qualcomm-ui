@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {paginationClasses} from "./pagination.classes"
+import {paginationClasses} from "./pagination.classes.js"
 import type {
   QdsPaginationApi,
   QdsPaginationApiProps,
@@ -12,7 +12,7 @@ import type {
   QdsPaginationPageSizeBindings,
   QdsPaginationPageSizeLabelBindings,
   QdsPaginationRootBindings,
-} from "./pagination.types"
+} from "./pagination.types.js"
 
 export function createQdsPaginationApi(
   props: QdsPaginationApiProps,

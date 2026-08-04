@@ -1,4 +1,4 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
-  "include": ["./scripts", "index.d.ts"]
+  "include": ["./scripts", "index.d.ts"],
 }

@@ -4,8 +4,8 @@
 import {trackFormControl} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {domIds, getFirstCheckedItemValue} from "./internal"
-import type {SegmentedControlSchema} from "./segmented-control.types"
+import {domIds, getFirstCheckedItemValue} from "./internal/index.js"
+import type {SegmentedControlSchema} from "./segmented-control.types.js"
 
 export const segmentedControlMachine: MachineConfig<SegmentedControlSchema> =
   createMachine<SegmentedControlSchema>({

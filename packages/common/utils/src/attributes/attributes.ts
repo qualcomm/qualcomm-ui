@@ -44,11 +44,6 @@ export function ariaAttr(
   return value || fallback
 }
 
-export interface PartAttributes {
-  "data-part": string
-  "data-scope": string
-}
-
 export interface IdParam {
   id: string
 }

@@ -1,39 +1,39 @@
-import {TreeBranch, type TreeBranchProps} from "./tree-branch"
 import {
   TreeBranchContent,
   type TreeBranchContentProps,
-} from "./tree-branch-content"
+} from "./tree-branch-content.js"
 import {
   TreeBranchIndentGuide,
   type TreeBranchIndentGuideProps,
-} from "./tree-branch-indent-guide"
-import {TreeBranchNode, type TreeBranchNodeProps} from "./tree-branch-node"
+} from "./tree-branch-indent-guide.js"
+import {TreeBranchNode, type TreeBranchNodeProps} from "./tree-branch-node.js"
 import {
   TreeBranchTrigger,
   type TreeBranchTriggerProps,
-} from "./tree-branch-trigger"
-import {TreeContext, type TreeContextProps} from "./tree-context"
-import {TreeLabel, type TreeLabelProps} from "./tree-label"
-import {TreeLeafNode, type TreeLeafNodeProps} from "./tree-leaf-node"
-import {TreeNodeAction, type TreeNodeActionProps} from "./tree-node-action"
+} from "./tree-branch-trigger.js"
+import {TreeBranch, type TreeBranchProps} from "./tree-branch.js"
+import {TreeContext, type TreeContextProps} from "./tree-context.js"
+import {TreeLabel, type TreeLabelProps} from "./tree-label.js"
+import {TreeLeafNode, type TreeLeafNodeProps} from "./tree-leaf-node.js"
+import {TreeNodeAction, type TreeNodeActionProps} from "./tree-node-action.js"
 import {
   TreeNodeCheckbox,
   type TreeNodeCheckboxProps,
-} from "./tree-node-checkbox"
-import {TreeNodeIcon, type TreeNodeIconProps} from "./tree-node-icon"
+} from "./tree-node-checkbox.js"
+import {TreeNodeIcon, type TreeNodeIconProps} from "./tree-node-icon.js"
 import {
   TreeNodeIndicator,
   type TreeNodeIndicatorProps,
-} from "./tree-node-indicator"
+} from "./tree-node-indicator.js"
 import {
   TreeNodeProvider,
   type TreeNodeProviderProps,
-} from "./tree-node-provider"
-import {TreeNodeText, type TreeNodeTextProps} from "./tree-node-text"
-import {TreeNodes, type TreeNodesProps} from "./tree-nodes"
-import {TreeRoot, type TreeRootProps} from "./tree-root"
+} from "./tree-node-provider.js"
+import {TreeNodeText, type TreeNodeTextProps} from "./tree-node-text.js"
+import {TreeNodes, type TreeNodesProps} from "./tree-nodes.js"
+import {TreeRoot, type TreeRootProps} from "./tree-root.js"
 
-export * from "./qds-tree-context"
+export * from "./qds-tree-context.js"
 
 export type {
   TreeBranchContentProps,

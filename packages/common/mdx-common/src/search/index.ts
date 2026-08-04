@@ -1,2 +1,2 @@
-export * from "./search-utils"
-export type * from "./search.types"
+export * from "./search-utils.js"
+export type * from "./search.types.js"

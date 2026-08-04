@@ -15,7 +15,7 @@ import type {
   ToastOptions,
   ToastPromiseOptions,
   ToastStore,
-} from "./toast.types"
+} from "./toast.types.js"
 
 let id = 0
 export function getToastUuid(): string {
@@ -57,7 +57,9 @@ export function createToastStore<V = string>(
   }
 
   const publish = (data: Partial<ToastApiProps<V>>) => {
-    subscribers.forEach((subscriber) => subscriber(data))
+    for (const subscriber of subscribers) {
+      subscriber(data)
+    }
     return data
   }
 
@@ -116,15 +118,17 @@ export function createToastStore<V = string>(
     dismissedToasts.add(id!)
 
     if (!id) {
-      toasts.forEach((toast) => {
-        subscribers.forEach((subscriber) =>
-          subscriber({dismiss: true, id: toast.id}),
-        )
-      })
+      for (const toast of toasts) {
+        for (const subscriber of subscribers) {
+          subscriber({dismiss: true, id: toast.id})
+        }
+      }
       toasts = []
       toastQueue = []
     } else {
-      subscribers.forEach((subscriber) => subscriber({dismiss: true, id}))
+      for (const subscriber of subscribers) {
+        subscriber({dismiss: true, id})
+      }
       toasts = toasts.filter((toast) => toast.id !== id)
       processQueue()
     }
@@ -173,6 +177,7 @@ export function createToastStore<V = string>(
           const successOptions = options.success?.(response)
           create({...shared, ...successOptions, id, type: "success"})
         }
+        return
       })
       .catch((error) => {
         result = ["reject", error]
@@ -181,6 +186,7 @@ export function createToastStore<V = string>(
           const errorOptions = options.error?.(error)
           create({...shared, ...errorOptions, id, type: "danger"})
         }
+        return
       })
       .finally(() => {
         if (removable) {
@@ -192,9 +198,13 @@ export function createToastStore<V = string>(
     const unwrap = () =>
       new Promise<T>((resolve, reject) => {
         void prom
-          .then(() =>
-            result[0] === "reject" ? reject(result[1]) : resolve(result[1]),
-          )
+          .then(() => {
+            if (result[0] === "reject") {
+              return reject(result[1])
+            } else {
+              return resolve(result[1])
+            }
+          })
           .catch(reject)
       })
 

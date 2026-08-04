@@ -1,6 +1,7 @@
 import {Component} from "@angular/core"
 import {Combine, Ungroup} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PaginationModule} from "@qualcomm-ui/angular/pagination"
 import {
   type AngularTable,
@@ -8,7 +9,6 @@ import {
   createTablePagination,
   TableModule,
 } from "@qualcomm-ui/angular/table"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   getCoreRowModel,
   getExpandedRowModel,

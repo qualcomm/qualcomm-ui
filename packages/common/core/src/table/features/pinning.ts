@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {TableFeature} from "../core/table"
+import type {TableFeature} from "../core/table.js"
 import type {
   Cell,
   Column,
@@ -14,8 +14,8 @@ import type {
   RowData,
   TableInstance,
   Updater,
-} from "../types"
-import {makeStateUpdater, memo} from "../utils"
+} from "../types.js"
+import {makeStateUpdater, memo} from "../utils.js"
 
 export type ColumnPinningPosition = false | "left" | "right"
 export type RowPinningPosition = false | "top" | "bottom"

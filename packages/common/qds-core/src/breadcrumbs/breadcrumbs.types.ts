@@ -3,7 +3,7 @@
 
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {breadcrumbsClasses} from "./breadcrumbs.classes"
+import type {breadcrumbsClasses} from "./breadcrumbs.classes.js"
 
 export type QdsBreadcrumbsSize = "sm" | "md" | "lg"
 
@@ -29,8 +29,7 @@ interface QdsBreadcrumbsCommonBindings {
   "data-size": QdsBreadcrumbsSize
 }
 
-export interface QdsBreadcrumbsRootBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsRootBindings extends QdsBreadcrumbsCommonBindings {
   className: BreadcrumbsClasses["root"]
 }
 
@@ -43,22 +42,24 @@ export interface QdsBreadcrumbsItemBindings {
   "data-disabled": BooleanDataAttr
 }
 
-export interface QdsBreadcrumbsItemSeparatorBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsItemSeparatorBindings extends QdsBreadcrumbsCommonBindings {
   "aria-hidden": true
   className: BreadcrumbsClasses["separator"]
   "data-size": QdsBreadcrumbsSize
 }
 
-export interface QdsBreadcrumbsItemIconBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsItemIconBindings extends QdsBreadcrumbsCommonBindings {
   className: BreadcrumbsClasses["itemIcon"]
   "data-emphasis": QdsBreadcrumbsEmphasis
 }
 
-export interface QdsBreadcrumbsItemTriggerBindings
-  extends QdsBreadcrumbsCommonBindings {
+export interface QdsBreadcrumbsItemTriggerBindings extends QdsBreadcrumbsCommonBindings {
   className: BreadcrumbsClasses["itemTrigger"]
+  "data-emphasis": QdsBreadcrumbsEmphasis
+}
+
+export interface QdsBreadcrumbsOverflowTriggerBindings extends QdsBreadcrumbsCommonBindings {
+  className: `${BreadcrumbsClasses["itemTrigger"]} ${BreadcrumbsClasses["overflowTrigger"]}`
   "data-emphasis": QdsBreadcrumbsEmphasis
 }
 
@@ -82,5 +83,6 @@ export interface QdsBreadcrumbsApi {
   getItemSeparatorBindings(): QdsBreadcrumbsItemSeparatorBindings
   getItemTriggerBindings(): QdsBreadcrumbsItemTriggerBindings
   getListBindings(): QdsBreadcrumbsListBindings
+  getOverflowTriggerBindings(): QdsBreadcrumbsOverflowTriggerBindings
   getRootBindings(): QdsBreadcrumbsRootBindings
 }

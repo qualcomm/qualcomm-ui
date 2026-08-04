@@ -12,8 +12,7 @@ export class HeaderComponentContextDirective<
   TableData extends object,
   ColumnValue = any,
   TableColumnMeta = ColumnMeta,
-> implements HeaderComponentContext<TableData, ColumnValue, TableColumnMeta>
-{
+> implements HeaderComponentContext<TableData, ColumnValue, TableColumnMeta> {
   readonly context =
     input.required<HeaderContext<TableData, ColumnValue, TableColumnMeta>>()
 }

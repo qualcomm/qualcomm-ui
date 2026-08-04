@@ -1,9 +1,9 @@
 import {Component} from "@angular/core"
 import {User} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [AvatarModule, IconDirective],

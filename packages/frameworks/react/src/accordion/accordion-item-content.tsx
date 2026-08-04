@@ -7,11 +7,11 @@ import {useAccordionItemState} from "@qualcomm-ui/react-core/accordion"
 import {CoreCollapsible} from "@qualcomm-ui/react-core/collapsible"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 
-import {AccordionItemContentAnimator} from "./accordion-item-content-animator"
+import {AccordionItemContentAnimator} from "./accordion-item-content-animator.js"
 import {
   AccordionItemContentBody,
   type AccordionItemContentBodyProps,
-} from "./accordion-item-content-body"
+} from "./accordion-item-content-body.js"
 
 export interface AccordionItemContentProps extends ElementRenderProp<"div"> {
   /**

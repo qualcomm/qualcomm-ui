@@ -1,51 +1,21 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 
-import type {buttonClasses} from "./button.classes"
 import type {
-  QdsButtonDensity,
-  QdsButtonEmphasis,
-  QdsButtonSize,
-  QdsButtonVariant,
-} from "./button.types"
+  QdsButtonGroupCommonBindings,
+  QdsButtonGroupCommonProps,
+} from "./button-group-shared.types.js"
+import type {buttonGroupAnatomy} from "./button-group.anatomy.js"
+import type {buttonClasses} from "./button.classes.js"
 
 /**
  * The button group layouts
  */
 export type QdsButtonGroupLayout = "hug" | "start" | "end" | "fill"
 
-export interface QdsButtonGroupApiProps {
-  /**
-   * Accessible name for the button group.
-   */
-  ["aria-label"]?: string
-
-  /**
-   * Id(s) of element(s) that label the button group.
-   */
-  ["aria-labelledby"]?: string
-
-  /**
-   * The density of the button. Governs padding and height.
-   *
-   * @default 'default'
-   */
-  density?: QdsButtonDensity
-
-  /**
-   * Disables all buttons within the group.
-   *
-   * @default false
-   */
-  disabled?: boolean | undefined
-
-  /**
-   * The emphasis of the buttons in the group.
-   */
-  emphasis?: QdsButtonEmphasis
-
+export interface QdsButtonGroupApiProps extends QdsButtonGroupCommonProps {
   /**
    * The layout used to display the button group.
    * - `hug`: Content-sized; width matches the buttons only (default).
@@ -56,29 +26,13 @@ export interface QdsButtonGroupApiProps {
    * @default 'hug'
    */
   layout?: QdsButtonGroupLayout
-
-  /**
-   * The size of the buttons in the group.
-   *
-   * @default 'md'
-   */
-  size?: QdsButtonSize
-
-  /**
-   * The variant of the buttons in the group.
-   */
-  variant?: QdsButtonVariant
 }
 
-export interface QdsButtonGroupBindings {
-  "aria-label"?: string
-  "aria-labelledby"?: string
+type PartName = AnatomyPartName<typeof buttonGroupAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"buttonGroup", P> {}
+
+export interface QdsButtonGroupBindings
+  extends Part<"root">, QdsButtonGroupCommonBindings {
   className: (typeof buttonClasses)["group"]
-  "data-disabled": BooleanDataAttr
-  "data-emphasis"?: QdsButtonEmphasis
   "data-layout": QdsButtonGroupLayout
-  "data-scope": "button-group"
-  "data-size"?: QdsButtonSize
-  "data-variant"?: QdsButtonVariant
-  role?: "group"
 }

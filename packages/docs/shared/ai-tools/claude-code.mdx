@@ -1,0 +1,71 @@
+---
+title: Claude Code
+---
+
+# {frontmatter.title}
+
+The Qualcomm UI plugin marketplace lets Claude Code discover available Qualcomm UI plugins. Each plugin provides a set of skills for development assistance in problem domains like testing, QUI component best practices, and documentation authoring with MDX. These are in development and will evolve over time.
+
+Follow this guide to register the marketplace with your Claude Code installation.
+
+## Prerequisites
+
+- Claude Code is installed.
+- Your Claude Code environment can clone from GitHub during marketplace
+  registration.
+
+## Register the marketplace
+
+In your shell, run the following command:
+
+```shell
+claude plugin marketplace add qualcomm/qualcomm-ui --sparse .claude-plugin --sparse plugins
+```
+
+Claude Code clones the repository and reads the marketplace manifest from
+`.claude-plugin/marketplace.json`. The marketplace registers as `qualcomm-ui`.
+
+## Install plugins from the marketplace
+
+1. In a claude session, open the plugin browser:
+
+```shell
+/plugin
+```
+
+2. Filter for `qui`.
+
+3. Select the plugin you want to install.
+
+4. Activate the plugin without restarting:
+
+```shell
+/reload-plugins
+```
+
+## Verify the marketplace
+
+Open the plugin browser and go to the **Marketplaces** tab. The **Qualcomm UI**
+marketplace appears in the list with its source and status. The plugin list
+shows **qui-docs** and any other Qualcomm UI plugins.
+
+## Update the marketplace
+
+Refresh marketplace metadata when new plugins are added or existing plugin
+metadata changes:
+
+```shell
+/plugin marketplace update qualcomm-ui
+```
+
+Run `/reload-plugins` after installing or updating plugins so new skills,
+agents, hooks, and MCP servers load into the session.
+
+## Troubleshoot registration issues
+
+If the marketplace does not appear, confirm that `/plugin marketplace add`
+completed without an authentication or network error, then rerun the command.
+
+If installed plugin skills are not available in a session, run
+`/reload-plugins`. If the skills still do not appear, start a new Claude Code
+session.

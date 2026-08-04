@@ -2,9 +2,9 @@ import {NgTemplateOutlet} from "@angular/common"
 import {Component} from "@angular/core"
 import {FileText, FolderIcon} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {TreeModule} from "@qualcomm-ui/angular/tree"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 interface FileNode {

@@ -5,7 +5,7 @@ import type {ReactElement} from "react"
 
 import {
   createQdsStatusBadgeApi,
-  type QdsStatusBadgeProps as QdsStatusBadgeProps,
+  type QdsStatusBadgeProps,
 } from "@qualcomm-ui/qds-core/badge"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
@@ -15,8 +15,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface StatusBadgeProps
-  extends QdsStatusBadgeProps,
-    ElementRenderProp<"span"> {}
+  extends QdsStatusBadgeProps, ElementRenderProp<"span"> {}
 
 export function StatusBadge({
   disabled,

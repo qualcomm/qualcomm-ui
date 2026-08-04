@@ -1,4 +1,6 @@
 .qui-divider__root {
+  border: 0 solid;
+  height: 0;
   margin: 8px 0;
   outline: none;
   position: relative;
@@ -21,9 +23,8 @@
 
   &[aria-orientation="vertical"] {
     border-left: solid 1px var(--divider-border-color);
-    height: 100%;
     margin: 0 8px;
-    min-height: 4px;
+    min-height: 100%;
     width: unset;
   }
 

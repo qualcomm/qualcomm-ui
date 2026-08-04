@@ -3,8 +3,8 @@
 
 import {computed, Directive} from "@angular/core"
 
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {CoreProgressRingBarDirective} from "@qualcomm-ui/angular-core/progress-ring"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 
 import {useQdsProgressRingContext} from "./qds-progress-ring-context.service"
 

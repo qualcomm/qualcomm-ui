@@ -1,2 +1,2 @@
-export * from "./pagination-context"
-export * from "./use-pagination"
+export * from "./pagination-context.js"
+export * from "./use-pagination.js"

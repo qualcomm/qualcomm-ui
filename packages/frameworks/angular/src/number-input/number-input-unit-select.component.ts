@@ -4,10 +4,6 @@
 import {Component, computed, inject, type OnInit} from "@angular/core"
 import {ChevronDown, ChevronUp} from "lucide-angular"
 
-import {
-  provideQdsMenuContext,
-  QdsMenuContextService,
-} from "@qualcomm-ui/angular/menu"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
@@ -19,6 +15,10 @@ import {
 } from "@qualcomm-ui/angular-core/menu"
 import {useNumberInputContext} from "@qualcomm-ui/angular-core/number-input"
 import {providePresenceContext} from "@qualcomm-ui/angular-core/presence"
+import {
+  provideQdsMenuContext,
+  QdsMenuContextService,
+} from "@qualcomm-ui/angular/menu"
 import {createQdsMenuApi} from "@qualcomm-ui/qds-core/menu"
 
 import {useQdsNumberInputContext} from "./qds-number-input-context.service"
@@ -45,7 +45,7 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
     <button q-menu-trigger [q-bind]="unitSelectBindings()">
       <span>{{ selectedLabel() }}</span>
       <svg
-        data-part="chevron"
+        data-number-input-part="chevron"
         size="sm"
         [qIcon]="menuContext().open ? 'ChevronUp' : 'ChevronDown'"
       ></svg>

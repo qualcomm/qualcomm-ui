@@ -1,5 +1,225 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.8.7
+
+Jul 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/tailwind-plugin@1.9.0]
+
+## 3.8.6
+
+Jul 13th, 2026
+
+### Code Refactoring
+
+- remove unused internal functions ([7163ecc](https://github.com/qualcomm/qualcomm-ui/commit/7163ecc))
+
+## 3.8.5
+
+Jun 15th, 2026
+
+### Bug Fixes
+
+- [types]: downgrade to ES2023 for broader compatibility ([81854ec](https://github.com/qualcomm/qualcomm-ui/commit/81854ec))
+
+## 3.8.4
+
+Jun 10th, 2026
+
+### Bug Fixes
+
+- [shiki]: remove diffed code from copyable examples ([834d30a](https://github.com/qualcomm/qualcomm-ui/commit/834d30a))
+
+### Code Refactoring
+
+- [open-web-ui]: remove unused class ([96c6399](https://github.com/qualcomm/qualcomm-ui/commit/96c6399))
+- support nodenext resolution ([bb2a702](https://github.com/qualcomm/qualcomm-ui/commit/bb2a702))
+
+### Styles
+
+- apply lint updates ([a70177d](https://github.com/qualcomm/qualcomm-ui/commit/a70177d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.0.8, @qualcomm-ui/utils@1.3.2, @qualcomm-ui/mdx-common@2.4.2]
+
+## 3.8.3
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/tailwind-plugin@1.7.3]
+
+## 3.8.2
+
+Jun 4th, 2026
+
+### Bug Fixes
+
+- [cli]: remove unused banner, fix build error ([e59ad99](https://github.com/qualcomm/qualcomm-ui/commit/e59ad99))
+- [generate-page-map]: use typeDocProps in url detection ([2a621a7](https://github.com/qualcomm/qualcomm-ui/commit/2a621a7))
+
+## 3.8.1
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/typedoc-common, @qualcomm-ui/utils]
+
+## 3.8.0
+
+May 29th, 2026
+
+### Features
+
+- [remark]: add serialize-jsx plugin ([521b200](https://github.com/qualcomm/qualcomm-ui/commit/521b200))
+- [docs-plugin]: add simplified directory routing strategy ([a7a622a](https://github.com/qualcomm/qualcomm-ui/commit/a7a622a))
+
+### Tests
+
+- [docs-plugin]: add tests for directory routes ([734463d](https://github.com/qualcomm/qualcomm-ui/commit/734463d))
+
+## 3.7.4
+
+May 14th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
+## 3.7.3
+
+May 14th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
+## 3.7.2
+
+May 10th, 2026
+
+### Bug Fixes
+
+- [docs-plugin]: trigger full reload when unloaded module is refreshed ([c45f9bb](https://github.com/qualcomm/qualcomm-ui/commit/c45f9bb))
+
+### Code Refactoring
+
+- [rehype-shiki]: add language class to code element ([d1eef70](https://github.com/qualcomm/qualcomm-ui/commit/d1eef70))
+
+## 3.7.1
+
+May 7th, 2026
+
+### Bug Fixes
+
+- [docs-plugin]: use plaintext code fallback ([2ecb4fa](https://github.com/qualcomm/qualcomm-ui/commit/2ecb4fa))
+
+## 3.7.0
+
+May 6th, 2026
+
+### Features
+
+- [docs-plugin]: support anchor IDs in link validation ([1b88e2b](https://github.com/qualcomm/qualcomm-ui/commit/1b88e2b))
+- [docs-plugin]: cache collected links in page cache for revalidation ([9868ee8](https://github.com/qualcomm/qualcomm-ui/commit/9868ee8))
+
+## 3.6.1
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
+## 3.6.0
+
+Apr 29th, 2026
+
+### Features
+
+- [knowledge]: add since field for version lookup ([ebe1d3a](https://github.com/qualcomm/qualcomm-ui/commit/ebe1d3a))
+
+### Miscellaneous Chores
+
+- update uuid ([f6e9c6c](https://github.com/qualcomm/qualcomm-ui/commit/f6e9c6c))
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
+## 3.5.0
+
+Apr 23rd, 2026
+
+### Features
+
+- [mdx-vite]: extract badges from frontmatter in nav builder ([58ecfcd](https://github.com/qualcomm/qualcomm-ui/commit/58ecfcd))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/typedoc-common]
+
+## 3.4.0
+
+Apr 23rd, 2026
+
+### Features
+
+- [mdx-vite]: add TypeDocFunction to docPropsJsxNodes and support function parameters in indexer ([79e46dc](https://github.com/qualcomm/qualcomm-ui/commit/79e46dc))
+
+### Bug Fixes
+
+- [mdx-vite]: check docProps object keys in addition to sections for hasDocProps ([2fb78ed](https://github.com/qualcomm/qualcomm-ui/commit/2fb78ed))
+
+### Code Refactoring
+
+- [mdx-vite]: use shared docPropsJsxNodes in doc-props-plugin ([2f8dfa5](https://github.com/qualcomm/qualcomm-ui/commit/2f8dfa5))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common, @qualcomm-ui/mdx-common]
+
+## 3.3.3
+
+Apr 21st, 2026
+
+### Code Refactoring
+
+- [mdx-vite]: move QuiDocsPluginOptions type to config/types module ([a74fc8a](https://github.com/qualcomm/qualcomm-ui/commit/a74fc8a))
+
+## 3.3.2
+
+Apr 19th, 2026
+
+### Code Refactoring
+
+- [remark-alerts]: update inline-notification attribute ([c4e9b91](https://github.com/qualcomm/qualcomm-ui/commit/c4e9b91))
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/utils, @qualcomm-ui/mdx-common, @qualcomm-ui/typedoc-common]
+
+## 3.3.1
+
+Apr 16th, 2026
+
+### Performance Improvements
+
+- [react-demo-plugin]: optimize HMR with targeted custom events ([fe243ec](https://github.com/qualcomm/qualcomm-ui/commit/fe243ec))
+
+## 3.3.0
+
+Apr 13th, 2026
+
+### Features
+
+- [mdx-vite]: add link-validator module for mdx link validation ([c316691](https://github.com/qualcomm/qualcomm-ui/commit/c316691))
+
 ## 3.2.2
 
 Apr 7th, 2026

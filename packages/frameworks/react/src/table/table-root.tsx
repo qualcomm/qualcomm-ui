@@ -11,11 +11,10 @@ import {
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableRootProps
-  extends ElementRenderProp<"div">,
-    QdsTableApiProps {}
+  extends ElementRenderProp<"div">, QdsTableApiProps {}
 
 /**
  * The root element that wraps the table. Renders a `<div>` element by default.

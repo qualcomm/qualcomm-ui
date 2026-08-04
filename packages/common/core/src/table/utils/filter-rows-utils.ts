@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {createRow} from "../core/row"
-import type {Row, RowData, RowModel, TableInstance} from "../types"
+import {createRow} from "../core/row.js"
+import type {Row, RowData, RowModel, TableInstance} from "../types.js"
 
 export function filterRows<TData extends RowData>(
   rows: Row<TData>[],

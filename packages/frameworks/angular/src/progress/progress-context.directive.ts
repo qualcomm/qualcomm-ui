@@ -22,9 +22,9 @@ export class ProgressContextDirective extends ApiContextDirective<ProgressApi> {
    * template.
    */
   static ngTemplateContextGuard(
-    dir: ProgressContextDirective,
-    ctx: unknown,
-  ): ctx is {$implicit: ProgressApi} {
+    _dir: ProgressContextDirective,
+    _ctx: unknown,
+  ): _ctx is {$implicit: ProgressApi} {
     return true
   }
 }

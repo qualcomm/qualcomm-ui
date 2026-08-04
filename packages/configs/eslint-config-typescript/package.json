@@ -1,30 +1,33 @@
 {
   "name": "@qualcomm-ui/eslint-config-typescript",
-  "version": "2.0.0",
+  "version": "3.0.1",
   "description": "QUI ESLint config for consistent TypeScript code",
-  "author": "Ryan Bower",
+  "keywords": [
+    "config",
+    "eslint"
+  ],
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "index.d.ts",
     "index.js",
     "base.js",
     "jsdoc.js",
-    "performance.js",
     "sort-keys.js",
     "style-guide.js",
     "naming-conventions.js",
     "type-checks.js",
     "strict-exports.js"
   ],
+  "type": "module",
+  "sideEffects": false,
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@eslint/core": "^1.0.0",
     "@qualcomm-ui/cli": "catalog:",
@@ -32,7 +35,11 @@
     "@stylistic/eslint-plugin": "5.2.0",
     "@typescript-eslint/eslint-plugin": "catalog:",
     "@typescript-eslint/parser": "catalog:",
+    "cross-env": "^10.1.0",
     "eslint-plugin-comment-length": "^2.2.1",
+    "eslint-plugin-oxfmt": "0.9.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-unicorn": "^68.0.0",
     "typescript-eslint": "catalog:"
   },
   "peerDependencies": {
@@ -41,20 +48,17 @@
     "@typescript-eslint/eslint-plugin": ">=8.31.1",
     "@typescript-eslint/parser": ">=8.31.1",
     "eslint": ">=9.37.0",
-    "eslint-config-prettier": ">=10.1.2",
     "eslint-import-resolver-typescript": ">=4.3.4",
     "eslint-plugin-comment-length": ">=2.2.1",
     "eslint-plugin-import": ">=2.31.0",
     "eslint-plugin-jsdoc": ">=50.6.11",
-    "eslint-plugin-prettier": ">=5.2.6",
+    "eslint-plugin-oxfmt": ">=0.9.0",
     "eslint-plugin-perfectionist": ">=4.12.3",
+    "eslint-plugin-promise": ">=7.2.1",
+    "eslint-plugin-unicorn": ">=68.0.0",
     "eslint-plugin-unused-imports": ">=4.1.4",
-    "prettier": ">=3.5.3",
+    "oxfmt": ">=0.54.0",
     "typescript": ">=5.7.3",
     "typescript-eslint": ">=8.31.1"
-  },
-  "keywords": [
-    "eslint",
-    "config"
-  ]
+  }
 }

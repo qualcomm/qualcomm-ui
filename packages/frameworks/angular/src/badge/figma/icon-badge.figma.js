@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 // url=<FIGMA_COMPONENTS_BASE>?node-id=10951-1155
-// component=Badge icon
+// component=IconBadge
 
 const figma = require("figma")
 
@@ -16,7 +16,7 @@ const emphasis = instance.getEnum("emphasis", {
   danger: "danger",
   green: "green",
   info: "info",
-  kiwi: "kiwi",
+  lime: "lime",
   magenta: "magenta",
   orange: "orange",
   purple: "purple",
@@ -35,19 +35,39 @@ const size = instance.getEnum("size", {
 })
 const disabled = instance.getEnum("disabled", {yes: true})
 
+const swapPropName = {
+  lg: "iconLg",
+  md: "iconMd",
+  sm: "iconSm",
+  xl: "iconXl",
+  xs: "iconXs",
+  xxs: "iconXxs",
+}[instance.getString("size")]
+
+const iconInstance = instance.getInstanceSwap(swapPropName)
+const iconName = iconInstance ? toLucideName(iconInstance.name) : "AArrowDown"
+
 const variantAttr = variant ? ` variant="${variant}"` : ""
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 const sizeAttr = size ? ` size="${size}"` : ""
 const disabledAttr = disabled ? " disabled" : ""
 
-const example = figma.code`<span${disabledAttr}${emphasisAttr} icon="Star" q-icon-badge${sizeAttr}${variantAttr}></span>`
+const example = figma.code`<span${disabledAttr}${emphasisAttr} icon="${iconName}" q-icon-badge${sizeAttr}${variantAttr}></span>`
 
 export default {
   example,
   id: "IconBadge",
   imports: [
     `import {IconBadgeDirective} from "@qualcomm-ui/angular/badge"`,
-    `import {Star} from "lucide-angular"`,
+    `import {${iconName}} from "lucide-angular"`,
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

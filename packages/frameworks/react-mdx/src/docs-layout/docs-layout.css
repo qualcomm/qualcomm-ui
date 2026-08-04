@@ -108,8 +108,29 @@
     display: block;
   }
 
+  .qui-docs-sidebar__item-badges {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-60);
+    margin-left: 4px;
+  }
+
   .qui-side-nav__root {
     height: 100%;
+  }
+
+  &[data-nav-density="compact"] {
+    /* TODO: remove when the small side nav size lands */
+    .qui-side-nav__node-root {
+      height: 32px;
+      min-height: 32px;
+
+      &:has(+ .qui-side-nav__node-root),
+      &:has(+ .qui-side-nav__branch-root) {
+        margin-bottom: 1px;
+      }
+    }
   }
 }
 
@@ -286,7 +307,7 @@
   .indicator {
     align-items: center;
     border: solid 1px var(--color-border-neutral-02);
-    border-radius: 4px;
+    border-radius: var(--border-radius-md);
     display: flex;
     font-size: 12px;
     gap: 2px;
@@ -310,7 +331,7 @@ pre.qui-docs-code {
 
   * code {
     background: var(--qui-docs-code-background);
-    border-radius: 3px;
+    border-radius: var(--border-radius-sm);
     color: var(--qui-docs-code-color);
     font-family: var(--q-font-mono), monospace;
     font-size: 14px !important;
@@ -324,7 +345,7 @@ pre.qui-docs-code {
 
 .qui-docs-code {
   background: var(--qui-docs-code-background);
-  border-radius: 3px;
+  border-radius: var(--border-radius-sm);
   color: var(--qui-docs-code-color);
   font: var(--font-static-code-sm-default);
   font-size: 14px;
@@ -353,9 +374,21 @@ pre.qui-docs-code {
   }
 
   .qui-side-nav__group-label {
+    font: var(--font-static-body-xs-default);
     margin-top: 12px;
     padding-bottom: 8px;
     padding-left: calc(var(--indent-spacing) * var(--depth));
+  }
+
+  .qui-side-nav__node-root {
+    font: var(--font-static-body-sm-bold);
+    margin-left: calc(
+      (calc(var(--depth, 1) - 1) * var(--indent-spacing)) + var(--spacing-70)
+    );
+  }
+
+  .qui-side-nav__branch-indent-guide {
+    left: calc(1px + var(--indent-spacing) * var(--depth));
   }
 
   .qui-docs-sidebar__group-separator {
@@ -403,11 +436,7 @@ pre.qui-docs-code {
     white-space: nowrap;
   }
 
-  .qui-docs__page-header-badge {
-    height: 20px;
-  }
-
-  a.qui-docs__page-header-badge {
+  a.qui-badge__root {
     cursor: pointer;
     text-decoration: none;
   }

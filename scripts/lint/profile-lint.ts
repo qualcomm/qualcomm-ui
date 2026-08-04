@@ -4,7 +4,7 @@ import {mkdir, writeFile} from "node:fs/promises"
 import {resolve} from "node:path"
 import {cwd} from "node:process"
 
-import type {PackageTiming} from "./types"
+import type {PackageTiming} from "./types.js"
 
 async function main() {
   const packages = await getPackages(cwd())

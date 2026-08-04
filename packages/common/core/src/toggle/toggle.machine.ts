@@ -10,7 +10,7 @@ import {
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
 
-import type {ToggleSchema} from "./toggle.types"
+import type {ToggleSchema} from "./toggle.types.js"
 
 const toggleMachineBase = {
   context({bindable, prop}) {

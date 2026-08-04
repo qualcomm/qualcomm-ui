@@ -10,14 +10,14 @@ import {
 } from "react"
 
 import type {ReactDemoData} from "@qualcomm-ui/mdx-common"
-import type {ColorScheme} from "@qualcomm-ui/react/qds-theme"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
+import type {ColorScheme} from "@qualcomm-ui/react/qds-theme"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {DemoCodePanel, useDemoSourceCode} from "./internal"
+import {DemoCodePanel, useDemoSourceCode} from "./internal/index.js"
 
 export interface ReactDemoProps extends ComponentPropsWithRef<"div"> {
   /**
@@ -130,7 +130,7 @@ export function ReactDemo({
     if (demo.sourceCode.every((item) => item.fileName !== activeTab)) {
       setActiveTab(demo.sourceCode[0]?.fileName)
     }
-  }, [demo.sourceCode])
+  }, [demo.sourceCode, activeTab])
 
   useSafeLayoutEffect(() => {
     if (demo?.fileName && !activeTab) {

@@ -3,17 +3,16 @@
 
 import type {ReactElement} from "react"
 
+import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
+import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {
   InputErrorText,
   type InputErrorTextProps,
 } from "@qualcomm-ui/react/input"
-import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
-import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputErrorTextProps
-  extends InputErrorTextProps,
-    IdProp {}
+  extends InputErrorTextProps, IdProp {}
 
 export function PasswordInputErrorText({
   children,

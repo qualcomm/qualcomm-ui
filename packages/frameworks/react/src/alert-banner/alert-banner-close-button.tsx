@@ -5,14 +5,13 @@ import type {ReactElement, ReactNode} from "react"
 
 import {X} from "lucide-react"
 
-import {IconButton} from "@qualcomm-ui/react/button"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useAlertBannerContext} from "./qds-alert-banner-context"
+import {useAlertBannerContext} from "./qds-alert-banner-context.js"
 
-export interface AlertBannerCloseButtonProps
-  extends ElementRenderProp<"button"> {
+export interface AlertBannerCloseButtonProps extends ElementRenderProp<"button"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

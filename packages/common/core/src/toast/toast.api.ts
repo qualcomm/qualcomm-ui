@@ -12,13 +12,13 @@ import {
   getDescriptionId,
   getRootId,
   getTitleId,
-} from "./internal"
+} from "./internal/index.js"
+import {toastAnatomy} from "./toast.anatomy.js"
 import type {
   ToastActionTriggerBindings,
   ToastAlign,
   ToastApi,
   ToastCloseTriggerBindings,
-  ToastCommonBindings,
   ToastDescriptionBindings,
   ToastGhostAfterBindings,
   ToastGhostBeforeBindings,
@@ -26,12 +26,14 @@ import type {
   ToastRootBindings,
   ToastSchema,
   ToastSide,
-} from "./toast.types"
+} from "./toast.types.js"
 import {
   getGhostAfterStyle,
   getGhostBeforeStyle,
   getPlacementStyle,
-} from "./toast.utils"
+} from "./toast.utils.js"
+
+const parts = toastAnatomy.parts
 
 export function createToastApi<T = string>(
   machine: Machine<ToastSchema>,
@@ -57,11 +59,6 @@ export function createToastApi<T = string>(
     ToastAlign,
   ]
 
-  const commonBindings: ToastCommonBindings = {
-    "data-scope": "toast",
-    dir: prop("dir"),
-  }
-
   return {
     action: prop("action"),
     closable: !!prop("closable"),
@@ -86,8 +83,7 @@ export function createToastApi<T = string>(
     // group: bindings
     getActionTriggerBindings(): ToastActionTriggerBindings {
       return normalize.button({
-        ...commonBindings,
-        "data-part": "action-trigger",
+        ...parts.actionTrigger,
         onClick(event) {
           if (event.defaultPrevented) {
             return
@@ -101,9 +97,8 @@ export function createToastApi<T = string>(
 
     getCloseTriggerBindings(): ToastCloseTriggerBindings {
       return normalize.button({
-        ...commonBindings,
+        ...parts.closeTrigger,
         "aria-label": "Dismiss notification",
-        "data-part": "close-trigger",
         id: getCloseTriggerId(scope),
         onClick(event) {
           if (event.defaultPrevented) {
@@ -117,8 +112,7 @@ export function createToastApi<T = string>(
 
     getDescriptionBindings(): ToastDescriptionBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "description",
+        ...parts.description,
         id: getDescriptionId(scope),
       })
     },
@@ -126,9 +120,8 @@ export function createToastApi<T = string>(
     /* Needed to avoid setting hover to false when in between toasts */
     getGhostAfterBindings(): ToastGhostAfterBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.ghostAfter,
         "data-ghost": "after",
-        "data-part": "ghost-after",
         style: getGhostAfterStyle(),
       })
     },
@@ -136,24 +129,22 @@ export function createToastApi<T = string>(
     /* Leave a ghost div to avoid setting hover to false when transitioning out */
     getGhostBeforeBindings(): ToastGhostBeforeBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.ghostBefore,
         "data-ghost": "before",
-        "data-part": "ghost-before",
         style: getGhostBeforeStyle(machine, visible),
       })
     },
 
     getLabelBindings(): ToastLabelBindings {
       return normalize.element({
-        ...commonBindings,
-        "data-part": "label",
+        ...parts.label,
         id: getTitleId(scope),
       })
     },
 
     getRootBindings(): ToastRootBindings {
       return normalize.element({
-        ...commonBindings,
+        ...parts.root,
         "aria-atomic": "true",
         "aria-describedby": description ? getDescriptionId(scope) : undefined,
         "aria-labelledby": title ? getTitleId(scope) : undefined,
@@ -161,7 +152,6 @@ export function createToastApi<T = string>(
         "data-first": booleanDataAttr(frontmost),
         "data-mounted": booleanDataAttr(mounted),
         "data-overlap": booleanDataAttr(!stacked),
-        "data-part": "root",
         "data-paused": booleanDataAttr(paused),
         "data-placement": placement,
         "data-sibling": booleanDataAttr(!frontmost),

@@ -1,18 +1,15 @@
 {
   "name": "@qualcomm-ui/tailwind-plugin",
-  "version": "1.7.0",
+  "version": "1.9.0",
   "description": "Qualcomm UI Tailwind Plugin",
-  "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
   "exports": {
     "./vscode": {
       "types": "./dist/vscode/index.d.ts",
@@ -33,15 +30,18 @@
       "default": "./dist/qui-strict.css"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "run-s clean generate-css build:js build:ts build:css",
-    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
+    "clean": "shx rm -rf node_modules/.tmp dist",
     "generate-css": "tsx scripts/generate-nextgen-plugin.ts",
-    "build:js": "tsx build.ts",
+    "build:js": "vite build",
     "build:ts": "tsc -b tsconfig.lib.json",
     "build:css": "qui-css-utils build",
     "dev": "run-p watch:js watch:ts watch:css",
-    "watch:js": "tsx build.ts --watch",
+    "watch:js": "vite build -w",
     "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "watch:css": "qui-css-utils watch",
     "lint": "eslint --quiet",
@@ -52,13 +52,14 @@
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/css-utils": "catalog:",
-    "@qualcomm-ui/esbuild": "catalog:",
+    "@qualcomm-ui/qds-core": "workspace:^1.33.2",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "esbuild": "catalog:",
-    "shx": "^0.4.0",
-    "tailwindcss": "^4.1.17",
+    "@qualcomm-ui/vite": "catalog:",
+    "shx": "catalog:",
+    "tailwindcss": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite": "catalog:"
   },
   "peerDependencies": {
     "tailwindcss": ">=4"

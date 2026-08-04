@@ -3,7 +3,7 @@
 
 import type {SessionStorage} from "react-router"
 
-import {isTheme, type Theme} from "./theme-provider"
+import {isTheme, type Theme} from "./theme-provider.js"
 
 type ThemeSession = {
   commit: () => Promise<string>

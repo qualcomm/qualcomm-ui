@@ -2,12 +2,12 @@ import {useState} from "react"
 
 import {Star} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
-import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
 
 import {selectCollection} from "@qualcomm-ui/core/select"
-import {Select, type SelectRootProps} from "@qualcomm-ui/react/select"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Select, type SelectRootProps} from "@qualcomm-ui/react/select"
 import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
@@ -163,6 +163,115 @@ const tests: MultiComponentTestCase[] = [
         await page.getByRole("option", {name: "Option 3"}).click()
         await expect.element(trigger).toHaveTextContent("Option 1")
         await expect.element(trigger).toHaveTextContent("Option 3")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Select.Root
+          collection={stringCollection}
+          multiple
+          selectionIndicator="checkbox"
+        >
+          <Select.Label>Select option</Select.Label>
+          <Select.Control>
+            <Select.ValueText />
+            <Select.Indicator />
+          </Select.Control>
+          <Portal>
+            <Select.Positioner>
+              <Select.Content>
+                <Select.Items />
+              </Select.Content>
+            </Select.Positioner>
+          </Portal>
+          <Select.HiddenSelect />
+        </Select.Root>
+      )
+    },
+    simple() {
+      return (
+        <Select
+          collection={stringCollection}
+          label="Select option"
+          multiple
+          selectionIndicator="checkbox"
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("multiple selection with checkbox indicators", async () => {
+        await render(getComponent())
+
+        await page.getByRole("combobox", {name: /select option/i}).click()
+
+        await expect
+          .element(page.getByRole("option", {name: "Option 1"}))
+          .toHaveAttribute("aria-selected", "false")
+        await expect
+          .element(page.getByRole("option", {name: "Option 2"}))
+          .toHaveAttribute("aria-selected", "false")
+
+        await page.getByRole("option", {name: "Option 1"}).click()
+
+        await expect
+          .element(page.getByRole("option", {name: "Option 1"}))
+          .toHaveAttribute("aria-selected", "true")
+        await expect
+          .element(page.getByRole("option", {name: "Option 2"}))
+          .toHaveAttribute("aria-selected", "false")
+        await expect.element(page.getByRole("listbox")).toBeVisible()
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Select.Root
+          collection={stringCollection}
+          defaultValue={["Option 1", "Option 3"]}
+          multiple
+        >
+          <Select.Label>Select option</Select.Label>
+          <Select.Control>
+            <Select.ValueText />
+            <Select.Indicator />
+          </Select.Control>
+          <Portal>
+            <Select.Positioner>
+              <Select.Content>
+                <Select.Items />
+              </Select.Content>
+            </Select.Positioner>
+          </Portal>
+          <Select.HiddenSelect />
+        </Select.Root>
+      )
+    },
+    simple() {
+      return (
+        <Select
+          collection={stringCollection}
+          defaultValue={["Option 1", "Option 3"]}
+          label="Select option"
+          multiple
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("removes a selected value from the trigger tag without opening the list", async () => {
+        await render(getComponent())
+
+        const trigger = page.getByRole("combobox", {name: /select option/i})
+        await expect.element(trigger).toHaveTextContent("Option 1")
+        await expect.element(trigger).toHaveTextContent("Option 3")
+
+        await trigger.getByText("Option 1").click()
+
+        await expect.element(trigger).not.toHaveTextContent("Option 1")
+        await expect.element(trigger).toHaveTextContent("Option 3")
+        await expect.element(page.getByRole("listbox")).not.toBeInTheDocument()
       })
     },
   },
@@ -700,6 +809,101 @@ const tests: MultiComponentTestCase[] = [
 
         await expect.element(page.getByTestId(testIds.positioner)).toBeVisible()
         await expect.element(page.getByTestId(testIds.content)).toBeVisible()
+      })
+    },
+  },
+  {
+    simple() {
+      return (
+        <Select
+          aria-label="City"
+          collection={stringCollection}
+          selectProps={
+            {
+              "data-test-id": testIds.hiddenSelect,
+            } as DataAttributes
+          }
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("simple select forwards aria-label to the hidden select", async () => {
+        await render(getComponent())
+
+        await expect
+          .element(page.getByTestId(testIds.hiddenSelect))
+          .toHaveAttribute("aria-label", "City")
+      })
+    },
+  },
+  {
+    simple() {
+      return (
+        <>
+          <span id="city-label">City</span>
+          <Select
+            aria-labelledby="city-label"
+            collection={stringCollection}
+            selectProps={
+              {
+                "data-test-id": testIds.hiddenSelect,
+              } as DataAttributes
+            }
+          />
+        </>
+      )
+    },
+    testCase: (getComponent) => {
+      test("simple select forwards aria-labelledby to the hidden select", async () => {
+        await render(getComponent())
+
+        await expect
+          .element(page.getByTestId(testIds.hiddenSelect))
+          .toHaveAttribute("aria-labelledby", "city-label")
+      })
+    },
+  },
+  {
+    simple() {
+      return (
+        <Select
+          clearable={false}
+          collection={stringCollection}
+          defaultValue={["Option 2"]}
+          label="Select option"
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("simple select omits the clear button when clearable is false", async () => {
+        await render(getComponent())
+
+        await expect
+          .element(page.getByRole("combobox", {name: /select option/i}))
+          .toHaveTextContent("Option 2")
+        await expect
+          .element(page.getByRole("button", {name: /clear value/i}))
+          .not.toBeInTheDocument()
+      })
+    },
+  },
+  {
+    simple() {
+      return (
+        <Select
+          collection={stringCollection}
+          labelProps={{children: "Select option"}}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("simple select uses label content supplied through labelProps", async () => {
+        await render(getComponent())
+
+        await expect.element(page.getByText("Select option")).toBeVisible()
+        await expect
+          .element(page.getByRole("combobox", {name: /select option/i}))
+          .toBeVisible()
       })
     },
   },

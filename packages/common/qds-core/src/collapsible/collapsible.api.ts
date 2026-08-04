@@ -3,8 +3,8 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {collapsibleClasses} from "./collapsible.classes"
-import type {QdsCollapsibleContentBindings} from "./collapsible.types"
+import {collapsibleClasses} from "./collapsible.classes.js"
+import type {QdsCollapsibleContentBindings} from "./collapsible.types.js"
 
 export function getQdsCollapsibleContentBindings(
   normalize: PropNormalizer,

@@ -14,9 +14,9 @@ import {
 } from "@qualcomm-ui/utils/machine"
 import {setRafTimeout} from "@qualcomm-ui/utils/timers"
 
-import {getRootEl} from "./internal"
-import type {ToastGroupSchema, ToastHeight, ToastSchema} from "./toast.types"
-import {getToastDuration} from "./toast.utils"
+import {getRootEl} from "./internal/index.js"
+import type {ToastGroupSchema, ToastHeight, ToastSchema} from "./toast.types.js"
+import {getToastDuration} from "./toast.utils.js"
 
 const {not} = createGuards<ToastSchema>()
 

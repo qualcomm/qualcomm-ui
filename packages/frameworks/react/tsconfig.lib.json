@@ -1,24 +1,28 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
     "incremental": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "dist/tsbuildinfo",
+    "isolatedDeclarations": false,
+    "jsx": "react-jsx",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib",
     "paths": {
       "@qualcomm-ui/react/*": ["./src/*/index.ts"]
     }
   },
   "include": ["./src"],
-  "exclude": ["./src/**/*.spec.tsx", "./src/**/*.figma.tsx"],
+  "exclude": ["./src/**/*.spec.tsx", "./src/**/*.figma.*"],
   "references": [
     {
       "path": "../react-core/tsconfig.lib.json"
     },
     {
       "path": "../../common/core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/dom/tsconfig.lib.json"
     },
     {
       "path": "../../common/qds-core/tsconfig.lib.json"

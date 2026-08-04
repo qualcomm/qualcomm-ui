@@ -5,7 +5,7 @@ import type {ReactElement} from "react"
 
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionBlockTags} from "./prop-description-block-tags"
+import {PropDescriptionBlockTags} from "./prop-description-block-tags.js"
 
 export interface PropDescriptionExtraDetailsProps {
   prop: QuiPropDeclaration

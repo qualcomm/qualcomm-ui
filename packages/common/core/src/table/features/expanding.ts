@@ -4,10 +4,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {RowModel} from ".."
-import type {TableFeature} from "../core/table"
-import type {OnChangeFn, Row, RowData, TableInstance, Updater} from "../types"
-import {makeStateUpdater} from "../utils"
+import type {TableFeature} from "../core/table.js"
+import type {
+  OnChangeFn,
+  Row,
+  RowData,
+  RowModel,
+  TableInstance,
+  Updater,
+} from "../types.js"
+import {makeStateUpdater} from "../utils.js"
 
 export type ExpandedStateList = Record<string, boolean>
 export type ExpandedState = true | Record<string, boolean>
@@ -161,9 +167,9 @@ export const Expanding: TableFeature = {
         let oldExpanded: ExpandedStateList = {}
 
         if (old === true) {
-          Object.keys(table.getRowModel().rowsById).forEach((rowId) => {
+          for (const rowId of Object.keys(table.getRowModel().rowsById)) {
             oldExpanded[rowId] = true
-          })
+          }
         } else {
           oldExpanded = old
         }
@@ -305,10 +311,10 @@ export const Expanding: TableFeature = {
           ? Object.keys(table.getRowModel().rowsById)
           : Object.keys(table.getState().expanded)
 
-      rowIds.forEach((id) => {
+      for (const id of rowIds) {
         const splitId = id.split(".")
         maxDepth = Math.max(maxDepth, splitId.length)
-      })
+      }
 
       return maxDepth
     }

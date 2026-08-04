@@ -20,9 +20,31 @@ const navConfig: NavConfig[] = [
     id: "setup",
   },
   {
-    id: "integrations",
-    title: "Integrations & Configs",
+    id: "versioning",
   },
+  {separator: true},
+  {sectionTitle: "Integrations"},
+  {
+    children: [
+      {id: "mcp"},
+      {id: "claude-code"},
+      {id: "codex"},
+      {
+        children: [
+          {id: "qui-docs"},
+          {id: "qui-react-development"},
+          {id: "qui-angular-development"},
+          {id: "ui-testing"},
+        ],
+        id: "plugins",
+      },
+    ],
+    id: "ai-tools",
+    title: "AI Tools",
+  },
+  {id: "eslint"},
+  {id: "tailwind"},
+
   {separator: true},
   {sectionTitle: "Theming & Patterns"},
   {
@@ -46,9 +68,6 @@ const navConfig: NavConfig[] = [
     id: "patterns",
     title: "Patterns & Best Practices",
   },
-  {
-    id: "developer-previews",
-  },
   {separator: true},
   {
     sectionTitle: "Composition",
@@ -65,21 +84,8 @@ const navConfig: NavConfig[] = [
       {
         id: "overview",
       },
-      {
-        group: "Data Display",
-        id: "badges",
-        ignoreRouteMetaOrder: true,
-      },
     ],
     expanded: true,
-    groupOrder: [
-      "Buttons",
-      "Form Controls",
-      "Data Display",
-      "Overlays",
-      "Disclosure",
-      "Feedback",
-    ],
     id: "components",
     title: "Components",
   },

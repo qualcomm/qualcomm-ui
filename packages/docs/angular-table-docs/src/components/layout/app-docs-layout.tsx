@@ -6,7 +6,6 @@ import {
   useSearchParams,
 } from "react-router"
 
-import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {
   DocLink,
   Footer,
@@ -22,6 +21,7 @@ import {
   type DocsLayoutSettings,
 } from "@qualcomm-ui/react-mdx/docs-layout"
 import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 
 import angularPkg from "../../../../../frameworks/angular/package.json"
 

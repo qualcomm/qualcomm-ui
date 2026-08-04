@@ -3,9 +3,9 @@ import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
+import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
 
 const testIds = {
   tooltipTrigger: "tooltip-trigger",

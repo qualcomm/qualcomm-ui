@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {createRect, getRectCorners} from "./rect"
-import type {Point, Rect} from "./types"
+import {createRect, getRectCorners} from "./rect.js"
+import type {Point, Rect} from "./types.js"
 
 export function toRad(d: number): number {
   return ((d % 360) * Math.PI) / 180

@@ -4,9 +4,9 @@
 import {Component, input} from "@angular/core"
 import {CircleAlert} from "lucide-angular"
 
-import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTextInputErrorIndicatorDirective} from "@qualcomm-ui/angular-core/text-input"
+import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 
 /**
  * Visual indicator displayed when the input is invalid.

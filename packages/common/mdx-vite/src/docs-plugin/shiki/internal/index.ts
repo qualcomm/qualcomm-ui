@@ -1,1 +1,1 @@
-export * from "./shiki-transformer-tailwind"
+export * from "./shiki-transformer-tailwind.js"

@@ -10,7 +10,7 @@ import {
   Injector,
   input,
   type OnInit,
-  TemplateRef,
+  type TemplateRef,
 } from "@angular/core"
 
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"

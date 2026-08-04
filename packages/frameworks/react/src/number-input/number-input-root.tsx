@@ -5,22 +5,21 @@ import {type ReactElement, useMemo} from "react"
 
 import {createQdsInputApi} from "@qualcomm-ui/qds-core/input"
 import {createQdsNumberInputApi} from "@qualcomm-ui/qds-core/number-input"
-import {
-  QdsInputContextProvider,
-  type QdsReactInputApiProps,
-} from "@qualcomm-ui/react/input"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   CoreNumberInput,
   type CoreNumberInputRootProps,
 } from "@qualcomm-ui/react-core/number-input"
+import {
+  QdsInputContextProvider,
+  type QdsReactInputApiProps,
+} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsNumberInputContextProvider} from "./qds-number-input-context"
+import {QdsNumberInputContextProvider} from "./qds-number-input-context.js"
 
 export interface NumberInputRootProps
-  extends CoreNumberInputRootProps,
-    QdsReactInputApiProps {}
+  extends CoreNumberInputRootProps, QdsReactInputApiProps {}
 
 export function NumberInputRoot({
   endIcon,

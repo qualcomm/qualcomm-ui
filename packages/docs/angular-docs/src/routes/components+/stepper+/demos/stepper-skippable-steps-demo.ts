@@ -2,10 +2,10 @@ import {Component, inject, signal} from "@angular/core"
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms"
 import {ChevronLeft, ChevronRight} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {StepperModule} from "@qualcomm-ui/angular/stepper"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import type {
   CanGoToStepDetails,
   StepInvalidDetails,

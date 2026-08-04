@@ -20,16 +20,42 @@ export class CoreRadioItemHiddenInputDirective
    */
   readonly id = input<string>()
 
+  /**
+   * ARIA label applied to the hidden input.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external item label applied to the hidden input.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   protected readonly radioContext = useRadioContext()
   protected readonly radioItemContext = useRadioItemContext()
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.radioContext().getRadioHiddenInputBindings({
+  protected readonly trackBindings = useTrackBindings(() => {
+    const bindings = this.radioContext().getRadioHiddenInputBindings({
       ...this.radioItemContext(),
       id: this.hostId(),
       onDestroy: this.onDestroy,
-    }),
-  )
+    })
+    const ariaLabel = this.ariaLabel() ?? undefined
+    const ariaLabelledby = this.ariaLabelledby() ?? bindings["aria-labelledby"]
+
+    return {
+      ...bindings,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+    }
+  })
 
   protected readonly onDestroy = useOnDestroy()
   private readonly hostId = computed(() => useId(this, this.id()))

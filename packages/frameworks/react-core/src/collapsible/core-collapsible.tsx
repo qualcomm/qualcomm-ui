@@ -25,7 +25,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   CollapsibleContextProvider,
   useCollapsibleContext,
-} from "./collapsible-context"
+} from "./collapsible-context.js"
 
 export interface CoreCollapsibleRootProviderProps extends CollapsibleApiProps {
   /**
@@ -49,8 +49,7 @@ export function CoreCollapsibleRootProvider({
 }
 
 export interface CoreCollapsibleRootProps
-  extends CollapsibleApiProps,
-    Omit<ElementRenderProp<"div">, "dir"> {
+  extends CollapsibleApiProps, Omit<ElementRenderProp<"div">, "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -78,8 +77,7 @@ export function CoreCollapsibleRoot({
 }
 
 export interface CoreCollapsibleContentProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -109,8 +107,7 @@ export function CoreCollapsibleContent({
 }
 
 export interface CoreCollapsibleTriggerProps
-  extends IdProp,
-    ElementRenderProp<"button"> {
+  extends IdProp, ElementRenderProp<"button"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

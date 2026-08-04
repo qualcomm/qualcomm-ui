@@ -1,4 +1,4 @@
-export * from "./polymorphic-as-element"
-export * from "./polymorphic-element"
-export type * from "./system.types"
-export * from "./system.utils"
+export * from "./polymorphic-as-element.js"
+export * from "./polymorphic-element.js"
+export type * from "./system.types.js"
+export * from "./system.utils.js"

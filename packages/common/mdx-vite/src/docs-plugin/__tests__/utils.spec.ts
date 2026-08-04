@@ -25,10 +25,10 @@ describe("removeCodeAnnotations", () => {
       expect(result).toBe("const added = true ")
     })
 
-    test("strips [!code --] annotation but preserves code", () => {
+    test("removes line with [!code --] annotation", () => {
       const input = "const removed = true // [!code --]"
       const result = removeCodeAnnotations(input)
-      expect(result).toBe("const removed = true ")
+      expect(result).toBe("")
     })
 
     test("strips [!code error] annotation but preserves code", () => {
@@ -71,6 +71,12 @@ describe("removeCodeAnnotations", () => {
 
     test("removes standalone [!code highlight] marker line", () => {
       const input = "// [!code highlight]\nconst visible = true"
+      const result = removeCodeAnnotations(input)
+      expect(result).toBe("const visible = true")
+    })
+
+    test("removes standalone [!code --] marker line", () => {
+      const input = "// [!code --]\nconst visible = true"
       const result = removeCodeAnnotations(input)
       expect(result).toBe("const visible = true")
     })
@@ -137,6 +143,19 @@ describe("removeCodeAnnotations", () => {
       const result = removeCodeAnnotations(input)
       expect(result).toBe(
         ["const a = 1", "const b = 2 ", "const c = 3"].join("\n"),
+      )
+    })
+
+    test("removes removed diff lines but keeps added diff lines", () => {
+      const input = [
+        "const before = false // [!code --]",
+        "const after = true // [!code ++]",
+        "const unchanged = true",
+      ].join("\n")
+
+      const result = removeCodeAnnotations(input)
+      expect(result).toBe(
+        ["const after = true ", "const unchanged = true"].join("\n"),
       )
     })
 

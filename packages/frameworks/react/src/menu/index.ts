@@ -1,115 +1,150 @@
-import {MenuButton, type MenuButtonProps} from "./menu-button"
-import {
-  MenuCheckboxItem,
-  type MenuCheckboxItemProps,
-} from "./menu-checkbox-item"
+import type {FunctionComponent} from "react"
+
+import {MenuButton, type MenuButtonProps} from "./menu-button.js"
 import {
   MenuCheckboxItemControl,
   type MenuCheckboxItemControlProps,
-} from "./menu-checkbox-item-control"
-import {MenuContent, type MenuContentProps} from "./menu-content"
+} from "./menu-checkbox-item-control.js"
+import {
+  MenuCheckboxItem,
+  type MenuCheckboxItemProps,
+} from "./menu-checkbox-item.js"
+import {MenuContent, type MenuContentProps} from "./menu-content.js"
 import {
   MenuContextTrigger,
   type MenuContextTriggerProps,
-} from "./menu-context-trigger"
-import {MenuIconButton, type MenuIconButtonProps} from "./menu-icon-button"
+} from "./menu-context-trigger.js"
+import {MenuIconButton, type MenuIconButtonProps} from "./menu-icon-button.js"
 import {
   MenuInlineIconButton,
   type MenuInlineIconButtonProps,
-} from "./menu-inline-icon-button"
-import {MenuItem, type MenuItemProps} from "./menu-item"
+} from "./menu-inline-icon-button.js"
 import {
   MenuItemAccessory,
   type MenuItemAccessoryProps,
-} from "./menu-item-accessory"
-import {MenuItemCommand, type MenuItemCommandProps} from "./menu-item-command"
+} from "./menu-item-accessory.js"
+import {
+  MenuItemCommand,
+  type MenuItemCommandProps,
+} from "./menu-item-command.js"
 import {
   MenuItemDescription,
   type MenuItemDescriptionProps,
-} from "./menu-item-description"
-import {MenuItemGroup, type MenuItemGroupProps} from "./menu-item-group"
+} from "./menu-item-description.js"
 import {
   MenuItemGroupLabel,
   type MenuItemGroupLabelProps,
-} from "./menu-item-group-label"
+} from "./menu-item-group-label.js"
+import {MenuItemGroup, type MenuItemGroupProps} from "./menu-item-group.js"
 import {
   MenuItemIndicator,
   type MenuItemIndicatorProps,
-} from "./menu-item-indicator"
-import {MenuItemLabel, type MenuItemLabelProps} from "./menu-item-label"
+} from "./menu-item-indicator.js"
+import {MenuItemLabel, type MenuItemLabelProps} from "./menu-item-label.js"
 import {
   MenuItemStartIcon,
   type MenuItemStartIconProps,
-} from "./menu-item-start-icon"
-import {MenuPositioner, type MenuPositionerProps} from "./menu-positioner"
-import {MenuRadioItem, type MenuRadioItemProps} from "./menu-radio-item"
+} from "./menu-item-start-icon.js"
+import {MenuItem, type MenuItemProps} from "./menu-item.js"
+import {MenuPositioner, type MenuPositionerProps} from "./menu-positioner.js"
 import {
   MenuRadioItemControl,
   type MenuRadioItemControlProps,
-} from "./menu-radio-item-control"
+} from "./menu-radio-item-control.js"
 import {
   MenuRadioItemGroup,
   type MenuRadioItemGroupProps,
-} from "./menu-radio-item-group"
-import {MenuRoot, type MenuRootProps} from "./menu-root"
-import {MenuSeparator, type MenuSeparatorProps} from "./menu-separator"
-import {MenuTrigger, type MenuTriggerProps} from "./menu-trigger"
-import {MenuTriggerItem, type MenuTriggerItemProps} from "./menu-trigger-item"
+} from "./menu-radio-item-group.js"
+import {MenuRadioItem, type MenuRadioItemProps} from "./menu-radio-item.js"
+import {MenuRoot, type MenuRootProps} from "./menu-root.js"
+import {MenuSeparator, type MenuSeparatorProps} from "./menu-separator.js"
+import {
+  MenuSplitButton,
+  type MenuSplitButtonProps,
+} from "./menu-split-button.js"
+import {
+  MenuTriggerItem,
+  type MenuTriggerItemProps,
+} from "./menu-trigger-item.js"
+import {MenuTrigger, type MenuTriggerProps} from "./menu-trigger.js"
 
-export * from "./qds-menu-context"
-
+export * from "./qds-menu-context.js"
 export type {
-  MenuButtonProps,
-  MenuCheckboxItemControlProps,
-  MenuCheckboxItemProps,
-  MenuContentProps,
-  MenuContextTriggerProps,
   MenuIconButtonProps,
-  MenuInlineIconButtonProps,
-  MenuItemAccessoryProps,
   MenuItemCommandProps,
-  MenuItemDescriptionProps,
-  MenuItemGroupLabelProps,
-  MenuItemGroupProps,
-  MenuItemIndicatorProps,
-  MenuItemLabelProps,
-  MenuItemStartIconProps,
-  MenuItemProps,
-  MenuPositionerProps,
+  MenuInlineIconButtonProps,
   MenuRadioItemControlProps,
-  MenuRadioItemGroupProps,
   MenuRadioItemProps,
-  MenuRootProps,
-  MenuSeparatorProps,
+  MenuButtonProps,
   MenuTriggerItemProps,
   MenuTriggerProps,
+  MenuItemProps,
+  MenuContentProps,
+  MenuRootProps,
+  MenuItemLabelProps,
+  MenuItemDescriptionProps,
+  MenuItemGroupProps,
+  MenuRadioItemGroupProps,
+  MenuCheckboxItemControlProps,
+  MenuPositionerProps,
+  MenuItemIndicatorProps,
+  MenuItemGroupLabelProps,
+  MenuContextTriggerProps,
+  MenuSeparatorProps,
+  MenuSplitButtonProps,
+  MenuItemAccessoryProps,
+  MenuCheckboxItemProps,
+  MenuItemStartIconProps,
 }
 
-type MenuComponent = {
-  Button: typeof MenuButton
-  CheckboxItem: typeof MenuCheckboxItem
-  CheckboxItemControl: typeof MenuCheckboxItemControl
-  Content: typeof MenuContent
-  ContextTrigger: typeof MenuContextTrigger
-  IconButton: typeof MenuIconButton
-  InlineIconButton: typeof MenuInlineIconButton
-  Item: typeof MenuItem
-  ItemAccessory: typeof MenuItemAccessory
-  ItemCommand: typeof MenuItemCommand
-  ItemDescription: typeof MenuItemDescription
-  ItemGroup: typeof MenuItemGroup
-  ItemGroupLabel: typeof MenuItemGroupLabel
-  ItemIndicator: typeof MenuItemIndicator
-  ItemLabel: typeof MenuItemLabel
-  ItemStartIcon: typeof MenuItemStartIcon
-  Positioner: typeof MenuPositioner
-  RadioItem: typeof MenuRadioItem
-  RadioItemControl: typeof MenuRadioItemControl
-  RadioItemGroup: typeof MenuRadioItemGroup
-  Root: typeof MenuRoot
-  Separator: typeof MenuSeparator
-  Trigger: typeof MenuTrigger
-  TriggerItem: typeof MenuTriggerItem
+interface MenuComponent {
+  Button: FunctionComponent<MenuButtonProps>
+  CheckboxItem: FunctionComponent<MenuCheckboxItemProps>
+  CheckboxItemControl: FunctionComponent<MenuCheckboxItemControlProps>
+  Content: FunctionComponent<MenuContentProps>
+  ContextTrigger: FunctionComponent<MenuContextTriggerProps>
+  IconButton: FunctionComponent<MenuIconButtonProps>
+  InlineIconButton: FunctionComponent<MenuInlineIconButtonProps>
+  Item: FunctionComponent<MenuItemProps>
+  ItemAccessory: FunctionComponent<MenuItemAccessoryProps>
+  ItemCommand: FunctionComponent<MenuItemCommandProps>
+  ItemDescription: FunctionComponent<MenuItemDescriptionProps>
+  ItemGroup: FunctionComponent<MenuItemGroupProps>
+  ItemGroupLabel: FunctionComponent<MenuItemGroupLabelProps>
+  ItemIndicator: FunctionComponent<MenuItemIndicatorProps>
+  ItemLabel: FunctionComponent<MenuItemLabelProps>
+  ItemStartIcon: FunctionComponent<MenuItemStartIconProps>
+  /**
+   * A container that positions the menu relative to its anchor element. Renders a
+   * `<div>` element by default.
+   */
+  Positioner: FunctionComponent<MenuPositionerProps>
+  RadioItem: FunctionComponent<MenuRadioItemProps>
+  RadioItemControl: FunctionComponent<MenuRadioItemControlProps>
+  RadioItemGroup: FunctionComponent<MenuRadioItemGroupProps>
+  Root: FunctionComponent<MenuRootProps>
+  Separator: FunctionComponent<MenuSeparatorProps>
+  /**
+   * @since 1.24.0
+   */
+  SplitButton: FunctionComponent<MenuSplitButtonProps>
+  /**
+   * Enhances a child element to open the menu when clicked. Requires a single child
+   * element.
+   *
+   * @example
+   * ```tsx
+   * <Menu.Trigger>
+   *   <button>Open</button>
+   * </Menu.Trigger>
+   * ```
+   */
+  Trigger: FunctionComponent<MenuTriggerProps>
+  /**
+   * A menu item that triggers a submenu on hover or click. Renders a `<button>`
+   * element by default.
+   */
+  TriggerItem: FunctionComponent<MenuTriggerItemProps>
 }
 
 export const Menu: MenuComponent = {
@@ -135,6 +170,10 @@ export const Menu: MenuComponent = {
   RadioItemGroup: MenuRadioItemGroup,
   Root: MenuRoot,
   Separator: MenuSeparator,
+  /**
+   * @since 1.24.0
+   */
+  SplitButton: MenuSplitButton,
   Trigger: MenuTrigger,
   TriggerItem: MenuTriggerItem,
 }

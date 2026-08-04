@@ -11,32 +11,33 @@ import type {CollectionItem} from "@qualcomm-ui/utils/collection"
 import {
   ComboboxClearTrigger,
   type ComboboxClearTriggerProps,
-} from "./combobox-clear-trigger"
-import {ComboboxContent, type ComboboxContentProps} from "./combobox-content"
-import {ComboboxControl, type ComboboxControlProps} from "./combobox-control"
-import {ComboboxEmpty, type ComboboxEmptyProps} from "./combobox-empty"
+} from "./combobox-clear-trigger.js"
+import {ComboboxContent, type ComboboxContentProps} from "./combobox-content.js"
+import {ComboboxControl, type ComboboxControlProps} from "./combobox-control.js"
+import {ComboboxEmpty, type ComboboxEmptyProps} from "./combobox-empty.js"
 import {
   ComboboxErrorIndicator,
   type ComboboxErrorIndicatorProps,
-} from "./combobox-error-indicator"
+} from "./combobox-error-indicator.js"
 import {
   ComboboxErrorText,
   type ComboboxErrorTextProps,
-} from "./combobox-error-text"
-import {ComboboxHint, type ComboboxHintProps} from "./combobox-hint"
-import {ComboboxInput, type ComboboxInputProps} from "./combobox-input"
-import {type ComboboxItemRenderProp, ComboboxItems} from "./combobox-items"
-import {ComboboxLabel, type ComboboxLabelProps} from "./combobox-label"
+} from "./combobox-error-text.js"
+import {ComboboxHint, type ComboboxHintProps} from "./combobox-hint.js"
+import {ComboboxInput, type ComboboxInputProps} from "./combobox-input.js"
+import {type ComboboxItemRenderProp, ComboboxItems} from "./combobox-items.js"
+import {ComboboxLabel, type ComboboxLabelProps} from "./combobox-label.js"
 import {
   ComboboxPositioner,
   type ComboboxPositionerProps,
-} from "./combobox-positioner"
-import {ComboboxRoot, type ComboboxRootProps} from "./combobox-root"
-import {ComboboxTrigger, type ComboboxTriggerProps} from "./combobox-trigger"
-import {ComboboxVirtualContent} from "./combobox-virtual-content"
+} from "./combobox-positioner.js"
+import {ComboboxRoot, type ComboboxRootProps} from "./combobox-root.js"
+import {ComboboxTrigger, type ComboboxTriggerProps} from "./combobox-trigger.js"
+import {ComboboxVirtualContent} from "./combobox-virtual-content.js"
 
-export interface ComboboxProps<T extends CollectionItem>
-  extends ComboboxRootProps<T> {
+export interface ComboboxProps<
+  T extends CollectionItem,
+> extends ComboboxRootProps<T> {
   /**
    * {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label aria-label}
    * attribute, forwarded to the input element.

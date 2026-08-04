@@ -1,0 +1,63 @@
+{
+  "name": "qualcomm-ui",
+  "description": "Plugins for contributors to the Qualcomm UI repo.",
+  "owner": {
+    "name": "Qualcomm UI Maintainers",
+    "email": "qui-maintainers@qualcomm.com"
+  },
+  "plugins": [
+    {
+      "name": "qui-docs",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "plugins/qui-docs"
+      },
+      "description": "QUI Docs workflows for documentation contributors.",
+      "category": "Documentation",
+      "keywords": ["claude-code", "documentation", "mdx", "qui-docs"]
+    },
+    {
+      "name": "qui-react-development",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "plugins/qui-react-development"
+      },
+      "description": "QUI React best-practice workflows for application developers consuming @qualcomm-ui/react.",
+      "category": "Development",
+      "keywords": ["claude-code", "react", "qualcomm-ui", "accessibility", "best-practices"]
+    },
+    {
+      "name": "qui-angular-development",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "plugins/qui-angular-development"
+      },
+      "description": "QUI Angular best-practice workflows for application developers consuming @qualcomm-ui/angular.",
+      "category": "Development",
+      "keywords": ["claude-code", "angular", "qualcomm-ui", "accessibility", "best-practices"]
+    },
+    {
+      "name": "behavior-testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "plugins/behavior-testing"
+      },
+      "description": "Behavior testing workflows for React and Angular contributors.",
+      "category": "Development",
+      "keywords": [
+        "claude-code",
+        "testing",
+        "react",
+        "angular",
+        "components",
+        "vitest",
+        "browser-mode",
+        "behavior-testing"
+      ]
+    }
+  ]
+}

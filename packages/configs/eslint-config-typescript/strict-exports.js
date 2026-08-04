@@ -3,8 +3,14 @@
 
 import {defineConfig} from "eslint/config"
 
+import {typescriptLanguageOptions, typescriptPlugins} from "./base.js"
+
 export default defineConfig({
+  languageOptions: typescriptLanguageOptions,
   name: "qui-typechecked-strict-exports",
+  plugins: {
+    ...typescriptPlugins,
+  },
   rules: {
     "@typescript-eslint/consistent-type-exports": [
       "error",

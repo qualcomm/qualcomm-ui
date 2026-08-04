@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {defaultItemToId, indexOfId, type ItemToId} from "./query"
-import {sanitize, wrap} from "./shared"
+import {defaultItemToId, indexOfId, type ItemToId} from "./query.js"
+import {sanitize, wrap} from "./shared.js"
 
 function getValueText<T extends SearchableItem>(el: T): string {
   return sanitize(el.dataset?.valuetext ?? el.textContent ?? "")

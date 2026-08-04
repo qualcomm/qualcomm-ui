@@ -6,9 +6,7 @@ import {QdsThemeService} from "@qualcomm-ui/angular/theme"
 @Component({
   imports: [RouterOutlet],
   selector: "app-root",
-  template: `
-    <router-outlet />
-  `,
+  template: `<router-outlet />`,
 })
 export class App {
   protected readonly themeService = inject(QdsThemeService)

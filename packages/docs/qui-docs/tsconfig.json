@@ -1,31 +1,11 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "moduleResolution": "bundler",
-    "module": "nodenext",
-    "paths": {
-      "~assets/*": ["./src/assets/*"],
-      "~components/*": ["./src/components/*"],
-      "~utils/*": ["./src/utils/*"],
-      // TODO: remove when WebStorm fixes symlinks
-      "@qualcomm-ui/mdx-vite/*": ["../../frameworks/mdx-vite/src/*"],
-      "@qualcomm-ui/react/*": ["../../frameworks/react/src/*"],
-      "@qualcomm-ui/react-core/*": ["../../frameworks/react-core/src/*"],
-      "@qualcomm-ui/react-mdx/*": ["../../frameworks/react-mdx/src/*"],
-      "@qualcomm-ui/core/*": ["../../common/core/src/*"],
-      "@qualcomm-ui/dom/*": ["../../common/core/src/*"],
-      "@qualcomm-ui/qds-core/*": ["../../common/qds-core/src/*"],
-      "@qualcomm-ui/utils/*": ["../../common/utils/src/*"]
-    }
-  },
-  "include": ["./src/**/*.mdx"],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
     },
   ]
 }

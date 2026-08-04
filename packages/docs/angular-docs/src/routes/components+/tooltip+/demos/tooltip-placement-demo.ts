@@ -1,9 +1,9 @@
 import {Component, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {SelectModule} from "@qualcomm-ui/angular/select"
 import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
-import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {selectCollection} from "@qualcomm-ui/core/select"
 import type {Placement} from "@qualcomm-ui/dom/floating-ui"
 
@@ -20,7 +20,7 @@ import type {Placement} from "@qualcomm-ui/dom/floating-ui"
           [(ngModel)]="placement"
         >
           <div q-tooltip-trigger>
-            <div q-select-control>
+            <div aria-label="Select placement" q-select-control>
               <span q-select-value-text></span>
               <button q-select-indicator></button>
             </div>

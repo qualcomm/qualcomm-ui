@@ -1,16 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {AppContent} from "./app-content"
-import {DocsBreadcrumbs} from "./breadcrumbs"
-import {ContentWrapper} from "./content-wrapper"
-import {DocsFooter} from "./docs-footer"
-import {MainContent} from "./main-content"
-import {PageActions} from "./page-actions"
-import {PageLinks} from "./page-links"
-import {Root} from "./root"
-import {Sidebar} from "./sidebar"
-import {TableOfContents} from "./table-of-contents"
+import {AppContent} from "./app-content.js"
+import {DocsBreadcrumbs} from "./breadcrumbs.js"
+import {ContentWrapper} from "./content-wrapper.js"
+import {DocsFooter} from "./docs-footer.js"
+import {MainContent} from "./main-content.js"
+import {PageActions} from "./page-actions.js"
+import {PageLinks} from "./page-links.js"
+import {Root} from "./root.js"
+import {Sidebar} from "./sidebar.js"
+import {TableOfContents} from "./table-of-contents.js"
 
 export const Layout: {
   AppContent: typeof AppContent

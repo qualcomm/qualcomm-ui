@@ -1,6 +1,5 @@
 ---
 title: Switch Group
-group: Form Controls
 description: Groups related switches with a shared label, hint text, and validation state.
 component: SwitchGroup
 aliases: [switch group, toggle group, field group]
@@ -10,7 +9,7 @@ badges:
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1140
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
@@ -28,9 +27,12 @@ import {SwitchGroup} from "@qualcomm-ui/react/switch-group"
 
 Use the simple API to create a switch group using minimal markup.
 
-If you omit the [label](./#label), you should provide an `aria-label` prop to keep your group accessible.
+If you omit the [label](./#label), you should provide an [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) prop to keep your group accessible.
 
-<Demo name="SwitchGroupSimpleDemo" component={demos.SwitchGroupSimpleDemo} />
+<Demo
+  name="SwitchGroupSimpleDemo"
+  component={demos.SwitchGroupSimpleDemo}
+/>
 
 ### Composite
 
@@ -44,9 +46,7 @@ Use the composite API for granular control over the group structure.
 ### Size
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 The [size](./#size-1) prop controls the size of child switches. Available sizes are `sm`, `md` (default), and `lg`.
@@ -56,10 +56,7 @@ The [size](./#size-1) prop controls the size of child switches. Available sizes 
 ### Orientation
 
 ::: terms
-vertical
-horizontal
-row
-column
+vertical, horizontal, row, column
 :::
 
 Use the [orientation](./#orientation-1) prop to control the layout direction of the group. Options include:
@@ -84,8 +81,7 @@ Set [indented](./#indented-1) to add padding at the start of the group.
 ### Hint
 
 ::: terms
-helper text
-description
+helper text, description
 :::
 
 Use [hint](./#hint-1) to add additional guidance or context to the user below the group.
@@ -95,47 +91,55 @@ Use [hint](./#hint-1) to add additional guidance or context to the user below th
 ### Error Text
 
 ::: terms
-validation
-invalid
+validation, invalid
 :::
 
 Set [invalid](./#invalid) and [errorText](./#errorText) to display validation errors. The error text replaces the hint when present.
 
 <Demo name="SwitchGroupErrorDemo" component={demos.SwitchGroupErrorDemo} />
 
+## Explorer
+
+<ComponentExplorer
+  component={demos.SwitchGroupExplorerDemo}
+  linkPrefix="switch-group"
+  parts={["root", "label", "items", "hint"]}
+  scope="field-group"
+/>
+
 ## API
 
-### \<SwitchGroup\>
+### \<SwitchGroup>
 
 <TypeDocProps name="SwitchGroupProps" />
 
 ## Composite API
 
-### \<SwitchGroup.Root\>
+### \<SwitchGroup.Root>
 
 <TypeDocProps name="FieldGroupRootProps" />
 
 <TypeDocAttributes name="QdsFieldGroupRootBindings" />
 
-### \<SwitchGroup.Label\>
+### \<SwitchGroup.Label>
 
 <TypeDocProps name="FieldGroupLabelProps" />
 
 <TypeDocAttributes name="QdsFieldGroupLabelBindings" />
 
-### \<SwitchGroup.Items\>
+### \<SwitchGroup.Items>
 
 <TypeDocProps name="FieldGroupItemsProps" />
 
 <TypeDocAttributes name="QdsFieldGroupItemsBindings" />
 
-### \<SwitchGroup.Hint\>
+### \<SwitchGroup.Hint>
 
 <TypeDocProps name="FieldGroupHintProps" />
 
 <TypeDocAttributes name="QdsFieldGroupHintBindings" />
 
-### \<SwitchGroup.ErrorText\>
+### \<SwitchGroup.ErrorText>
 
 <TypeDocProps name="FieldGroupErrorTextProps" />
 

@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {selectClasses} from "./select.classes"
+import type {selectClasses} from "./select.classes.js"
 
 export type QdsSelectSize = "sm" | "md" | "lg"
 

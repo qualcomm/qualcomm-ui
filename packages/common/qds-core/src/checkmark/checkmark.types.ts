@@ -5,9 +5,14 @@ import type {
   checkboxClasses,
   QdsCheckboxSize,
 } from "@qualcomm-ui/qds-core/checkbox"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {checkmarkClasses} from "./checkmark.classes"
+import type {checkmarkAnatomy} from "./checkmark.anatomy.js"
+import type {checkmarkClasses} from "./checkmark.classes.js"
+
+type PartName = AnatomyPartName<typeof checkmarkAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"checkmark", P> {}
 
 export interface QdsCheckmarkApiProps {
   /**
@@ -35,19 +40,22 @@ export interface QdsCheckmarkApiProps {
   size?: QdsCheckboxSize
 }
 
-export interface QdsCheckmarkRootBindings {
+export interface QdsCheckmarkRootBindings extends Part<"root"> {
   // kinda hacky, but it works for docs
   className: `${(typeof checkboxClasses)["control"]} ${(typeof checkmarkClasses)["root"]}`
   "data-disabled": BooleanDataAttr
   "data-state": "checked" | "indeterminate" | "unchecked"
 }
 
-export interface QdsCheckmarkIconBindings {
+export interface QdsCheckmarkIconBindings extends Part<"icon"> {
   className: (typeof checkmarkClasses)["icon"]
   hidden: boolean
 }
 
+export interface QdsCheckmarkIndicatorIconBindings extends Part<"indicatorIcon"> {}
+
 export interface QdsCheckmarkApi {
   getIconBindings(): QdsCheckmarkIconBindings
+  getIndicatorIconBindings(): QdsCheckmarkIndicatorIconBindings
   getRootBindings(): QdsCheckmarkRootBindings
 }

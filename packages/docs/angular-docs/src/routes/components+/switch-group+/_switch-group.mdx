@@ -1,6 +1,5 @@
 ---
 title: Switch Group
-group: Form Controls
 description: Groups related switches with a shared label, hint text, and validation state.
 component: SwitchGroup
 aliases: [switch group, toggle group, field group]
@@ -10,7 +9,7 @@ badges:
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#1190
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -30,7 +29,7 @@ import {SwitchGroupModule} from "@qualcomm-ui/angular/switch-group"
 
 Use the simple API to create a switch group using minimal markup.
 
-If you omit the [label](./#label), you should provide an `aria-label` to keep your group accessible.
+If you omit the [label](./#label), you should provide an [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) to keep your group accessible.
 
 <QdsDemo name="SwitchGroupSimpleDemo" />
 
@@ -43,25 +42,20 @@ The composite API exposes `FieldGroup` directives for granular control over the 
 ### Size
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
-The [size](./#size) input controls the size of child switches. Available sizes are `sm`, `md` (default), and `lg`.
+The [size](./#size-1) input controls the size of child switches. Available sizes are `sm`, `md` (default), and `lg`.
 
 <QdsDemo name="SwitchGroupSizeDemo" />
 
 ### Orientation
 
 ::: terms
-vertical
-horizontal
-row
-column
+vertical, horizontal, row, column
 :::
 
-Use the [orientation](./#orientation) input to control the layout direction of the group. Options include:
+Use the [orientation](./#orientation-1) input to control the layout direction of the group. Options include:
 
 - `vertical`: switches are laid out in a column (default).
 - `horizontal`: switches are laid out in a row.
@@ -70,31 +64,38 @@ Use the [orientation](./#orientation) input to control the layout direction of t
 
 ### Indented
 
-Set [indented](./#indented) to add padding at the start of the group.
+Set [indented](./#indented-1) to add padding at the start of the group.
 
 <QdsDemo name="SwitchGroupIndentedDemo" />
 
 ### Hint
 
 ::: terms
-helper text
-description
+helper text, description
 :::
 
-Use [hint](./#hint) to add additional guidance or context to the user below the group.
+Use [hint](./#hint-1) to add additional guidance or context to the user below the group.
 
 <QdsDemo name="SwitchGroupHintDemo" />
 
 ### Error Text
 
 ::: terms
-validation
-invalid
+validation, invalid
 :::
 
 Set [invalid](./#invalid) and [errorText](./#errorText) to display validation errors. The error text replaces the hint when present.
 
 <QdsDemo name="SwitchGroupErrorDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-field-group"
+  name="SwitchGroupExplorerDemo"
+  parts={["root", "label", "items", "hint"]}
+  scope="field-group"
+/>
 
 ## API
 
@@ -102,7 +103,10 @@ Set [invalid](./#invalid) and [errorText](./#errorText) to display validation er
 
 The `q-switch-group` directive extends [q-field-group-root](./#q-field-group-root) with the following inputs:
 
-<TypeDocProps name="SwitchGroupComponent" omitFrom="FieldGroupRootDirective" />
+<TypeDocProps
+  name="SwitchGroupComponent"
+  omitFrom="FieldGroupRootDirective"
+/>
 
 ## Composite API
 

@@ -9,9 +9,9 @@ import {
   User,
 } from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {SideNavModule} from "@qualcomm-ui/angular/side-nav"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 import {QLogoComponent} from "./q-logo.component"

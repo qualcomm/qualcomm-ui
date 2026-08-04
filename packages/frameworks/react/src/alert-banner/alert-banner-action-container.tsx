@@ -9,10 +9,9 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useAlertBannerContext} from "./qds-alert-banner-context"
+import {useAlertBannerContext} from "./qds-alert-banner-context.js"
 
-export interface AlertBannerActionContainerProps
-  extends ElementRenderProp<"div"> {
+export interface AlertBannerActionContainerProps extends ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

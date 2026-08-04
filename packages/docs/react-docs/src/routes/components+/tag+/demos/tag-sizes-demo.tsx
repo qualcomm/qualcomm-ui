@@ -15,6 +15,9 @@ export function TagSizesDemo(): ReactElement {
       <Tag size="lg" variant="dismissable">
         Label
       </Tag>
+      <Tag size="xl" variant="dismissable">
+        Label
+      </Tag>
       {/* preview */}
     </div>
   )

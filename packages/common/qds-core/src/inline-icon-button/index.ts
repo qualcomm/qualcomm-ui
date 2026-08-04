@@ -1,3 +1,4 @@
-export * from "./inline-icon-button.api"
-export * from "./inline-icon-button.classes"
-export type * from "./inline-icon-button.types"
+export * from "./inline-icon-button.anatomy.js"
+export * from "./inline-icon-button.api.js"
+export * from "./inline-icon-button.classes.js"
+export type * from "./inline-icon-button.types.js"

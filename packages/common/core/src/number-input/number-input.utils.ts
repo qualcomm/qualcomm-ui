@@ -8,7 +8,7 @@ import {NumberParser} from "@internationalized/number"
 
 import type {Params} from "@qualcomm-ui/utils/machine"
 
-import type {NumberInputSchema} from "./number-input.types"
+import type {NumberInputSchema} from "./number-input.types.js"
 
 export function createFormatter(
   locale: string,

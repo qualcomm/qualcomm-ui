@@ -3,9 +3,9 @@
 
 import {Component, computed, input} from "@angular/core"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTreeNodeActionDirective} from "@qualcomm-ui/angular-core/tree"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {QdsInlineIconButtonSize} from "@qualcomm-ui/qds-core/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

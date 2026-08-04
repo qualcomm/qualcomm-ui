@@ -1,0 +1,72 @@
+{
+  "name": "qualcomm-ui",
+  "interface": {
+    "displayName": "Qualcomm UI"
+  },
+  "plugins": [
+    {
+      "name": "qui-docs",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "./plugins/qui-docs"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Documentation",
+      "interface": {
+        "displayName": "QUI Documentation Authoring"
+      }
+    },
+    {
+      "name": "qui-react-development",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "./plugins/qui-react-development"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development",
+      "interface": {
+        "displayName": "QUI React Development"
+      }
+    },
+    {
+      "name": "qui-angular-development",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "./plugins/qui-angular-development"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development",
+      "interface": {
+        "displayName": "QUI Angular Development"
+      }
+    },
+    {
+      "name": "behavior-testing",
+      "source": {
+        "source": "git-subdir",
+        "url": "qualcomm/qualcomm-ui",
+        "path": "./plugins/behavior-testing"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development",
+      "interface": {
+        "displayName": "Behavior Testing"
+      }
+    }
+  ]
+}

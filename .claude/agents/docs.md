@@ -45,6 +45,14 @@ Write:
 Never write:
 - "When you have a large dataset, you may not want to load all that data into the client's browser to filter it, so in this case, you'll most likely want to implement server-side filtering."
 
+## Markdown Formatting
+
+Do not hard-wrap Markdown or MDX prose. Let the renderer or editor wrap lines visually.
+
+Never truncate Markdown content to fit columns. Preserve complete text in table cells, lists, callouts, and examples.
+
+Do not use ellipses, shortened values, or partial examples unless the source itself is intentionally abbreviated. If a Markdown table would become unreadable with full content, use a list or another structure that preserves every value.
+
 ## Headings
 
 State what the section covers. No questions, no marketing.

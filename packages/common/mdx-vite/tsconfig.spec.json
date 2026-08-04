@@ -1,9 +1,11 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.vitest.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
-    "outDir": "./dist"
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    "outDir": "node_modules/.tmp/spec-out-tsc",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec"
   },
   "include": ["./src/**/__tests__"],
   "references": [

@@ -9,19 +9,19 @@ import type {BindingRenderProp} from "@qualcomm-ui/react-core/system"
 import {
   BreadcrumbsItemIcon,
   type BreadcrumbsItemIconProps,
-} from "./breadcrumbs-item-icon"
+} from "./breadcrumbs-item-icon.js"
 import {
   BreadcrumbsItemRoot,
   type BreadcrumbsItemRootProps,
-} from "./breadcrumbs-item-root"
+} from "./breadcrumbs-item-root.js"
 import {
   BreadcrumbsItemSeparator,
   type BreadcrumbsItemSeparatorProps,
-} from "./breadcrumbs-item-separator"
+} from "./breadcrumbs-item-separator.js"
 import {
   BreadcrumbsItemTrigger,
   type BreadcrumbsItemTriggerProps,
-} from "./breadcrumbs-item-trigger"
+} from "./breadcrumbs-item-trigger.js"
 
 export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
   /**
@@ -53,8 +53,9 @@ export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
   itemTriggerProps?: BreadcrumbsItemTriggerProps
 
   /**
-   * Allows you to replace the component's HTML element with a different tag, or
-   * compose it with another component. {@link https://react-next.qui.qualcomm.com/polymorphic-components Learn more}
+   * Replaces the trigger element with an anchor, a router Link, or any other
+   * component. Omitting it renders a plain `<span>` (e.g. the current page).
+   * {@link https://react-next.qui.qualcomm.com/polymorphic-components Learn more}
    */
   render?: BindingRenderProp<object>
 

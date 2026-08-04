@@ -1,12 +1,10 @@
-import "./globals.css"
-
 import {useEffect, useMemo, useState} from "react"
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
 import {Provider} from "jotai"
 import {
   Links,
-  LoaderFunction,
+  type LoaderFunction,
   Meta,
   Outlet,
   Scripts,
@@ -15,17 +13,17 @@ import {
   useLocation,
 } from "react-router"
 
-import {SiteData} from "@qualcomm-ui/mdx-common"
+import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
   type DemoSettings,
-  PackageManager,
+  type PackageManager,
   SiteContextProvider,
 } from "@qualcomm-ui/react-mdx/context"
 import {
-  DocPropsLayout,
+  type DocPropsLayout,
   PropsLayoutProvider,
-  PropsLayoutState,
+  type PropsLayoutState,
 } from "@qualcomm-ui/react-mdx/typedoc"
 import {
   isTheme,
@@ -39,6 +37,8 @@ import {
 
 import {AppDocsLayout} from "./components"
 import {siteStateCookie, themeCookie} from "./sessions.server"
+
+import "./globals.css"
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 
@@ -99,6 +99,7 @@ function App() {
           href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=fallback"
           rel="stylesheet"
         />
+        <link href="https://use.typekit.net/nhs4wvu.css" rel="stylesheet" />
       </head>
       <body>
         <QueryClientProvider client={queryClient}>

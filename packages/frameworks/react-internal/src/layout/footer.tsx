@@ -3,11 +3,11 @@
 
 import type {ReactElement} from "react"
 
-import {Link} from "@qualcomm-ui/react/link"
 import {
   DocsFooter,
   type DocsFooterProps,
 } from "@qualcomm-ui/react-mdx/docs-layout"
+import {Link} from "@qualcomm-ui/react/link"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface FooterProps extends DocsFooterProps {}

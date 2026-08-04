@@ -1,4 +1,4 @@
-.qui-badge__root[data-scope="status-badge"] {
+.qui-badge__root[data-status-badge-part="root"] {
   &[data-size="xxs"] {
     --status-size: var(--sizing-40);
   }

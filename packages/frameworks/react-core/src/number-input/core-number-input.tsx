@@ -26,10 +26,11 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   NumberInputContextProvider,
   useNumberInputContext,
-} from "./number-input-context"
+} from "./number-input-context.js"
 
 export interface CoreNumberInputRootProps
-  extends NumberInputApiProps,
+  extends
+    NumberInputApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir" | "inputMode"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -74,8 +75,7 @@ export function CoreNumberInputControl(
 }
 
 export interface CoreNumberInputErrorTextProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -103,8 +103,7 @@ export function CoreNumberInputErrorText({
 }
 
 export interface CoreNumberInputHintProps
-  extends IdProp,
-    ElementRenderProp<"span"> {}
+  extends IdProp, ElementRenderProp<"span"> {}
 
 export function CoreNumberInputHint({
   id,
@@ -183,8 +182,7 @@ export function CoreNumberInputIncrementTrigger({
 }
 
 export interface CoreNumberInputInputProps
-  extends ComponentPropsWithRef<"input">,
-    IdProp {}
+  extends ComponentPropsWithRef<"input">, IdProp {}
 
 export function CoreNumberInputInput({
   id,

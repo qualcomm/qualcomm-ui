@@ -1,0 +1,161 @@
+---
+title: Loading and Empty States
+---
+
+# {frontmatter.title}
+
+Loading state is part of the table experience, but not every loading state belongs inside a cell. Treat initial loading, background refetching, empty results, and row-specific pending work as different states with different surfaces.
+
+## Put Refetch Loading UI in the Action Bar
+
+### Concern
+
+Teams want users to know when table data is refreshing, and they want that loading UI to be consistent across tables. The tempting path is to make every column aware of the query state.
+
+### Pitfall
+
+Table-level fetch state should not be threaded through every column. A common implementation is to close over `query.isFetching` inside cell renderers and add it to the column memo dependencies:
+
+```tsx
+function UsersTable() {
+  const query = useUsersQuery()
+
+  const columns = useMemo<ColumnDef<User>[]>(
+    () => [
+      columnHelper.accessor("name", {
+        header: "Name",
+        cell: ({getValue}) =>
+          query.isFetching ? <Skeleton className="h-4 w-32" /> : getValue(),
+      }),
+      columnHelper.accessor("status", {
+        header: "Status",
+        cell: ({getValue}) =>
+          query.isFetching ? (
+            <ProgressRing size="xs" />
+          ) : (
+            <StatusBadge status={getValue()} />
+          ),
+      }),
+    ],
+    [query.isFetching],
+  )
+
+  const table = useReactTable({
+    columns,
+    data: query.data ?? [],
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  })
+
+  return <UsersTableView table={table} />
+}
+```
+
+This mixes two separate concerns. During a background refetch, the previously loaded rows are still useful. Replacing each value with a spinner or skeleton makes the table harder to scan, may cause cells to shift, and hides the data the user was just reading.
+
+It also makes the column array change whenever fetch state changes. Every refetch toggles `query.isFetching`, `useMemo` returns new column definitions, and the table has to reprocess configuration that did not actually change. Omitting `query.isFetching` from the dependency list would keep stale loading state in the cells. The conclusion is the same as other reusable-column cases: table-level fetch state does not belong in column definitions.
+
+### Preferred Pattern
+
+Keep loaded rows visible during refetch and place a predictable loading affordance in `<Table.ActionBar>`, usually next to a refresh button. Reserve body-level placeholders for the initial load, when there are no real rows to preserve.
+
+Separate those states before rendering:
+
+```tsx
+function UsersTable() {
+  const query = useUsersQuery()
+  const data = query.data ?? []
+  const isInitialLoading = query.isLoading && query.data === undefined
+  const isRefetching = query.isFetching && !isInitialLoading
+
+  const columns = useMemo<ColumnDef<User>[]>(
+    () => [
+      columnHelper.accessor("name", {
+        header: "Name",
+        cell: ({getValue}) => <TextCell value={getValue()} />,
+      }),
+      columnHelper.accessor("status", {
+        header: "Status",
+        cell: ({getValue}) => <StatusCell status={getValue()} />,
+      }),
+    ],
+    [],
+  )
+
+  const table = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (row) => row.id,
+  })
+
+  return (
+    <Table.Root>
+      <Table.ActionBar>
+        <Button
+          disabled={query.isFetching}
+          onClick={() => void query.refetch()}
+          size="sm"
+          variant="outline"
+        >
+          Refresh
+        </Button>
+        {isRefetching ? <ProgressRing size="xs" /> : null}
+      </Table.ActionBar>
+
+      <Table.Table>
+        <Table.Body>
+          {isInitialLoading ? (
+            // Note: this component is in progress and does not exist yet.
+            // A skeleton is just one solution for this.
+            // The ProgressBar pattern works too.
+            <TableSkeletonRows
+              columns={table.getAllLeafColumns().length}
+              rows={8}
+            />
+          ) : table.getRowModel().rows.length === 0 ? (
+            <Table.Row>
+              <Table.Cell colSpan={table.getAllLeafColumns().length}>
+                No users found.
+              </Table.Cell>
+            </Table.Row>
+          ) : (
+            table.getRowModel().rows.map((row) => (
+              <Table.Row key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <Table.Cell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Table.Cell>
+                ))}
+              </Table.Row>
+            ))
+          )}
+        </Table.Body>
+      </Table.Table>
+    </Table.Root>
+  )
+}
+```
+
+In this version, the columns stay stable because cell renderers do not depend on query flags. Refetch state appears once in the action bar, and the body only switches to a loading indicator when there is no loaded data to show.
+
+Empty state is also distinct from loading state. Show the empty row after the initial load completes and the row model has no rows. Do not show an empty result while the first request is still pending.
+
+Use row-specific pending UI only for row-specific mutations, keyed by stable row IDs. That pending state belongs in the row action or editable cell, not in every column and not in table-level refetch UI.
+
+```tsx
+function UserActionsCell({user}: {user: User}) {
+  const isDeleting =
+    useIsMutating({mutationKey: ["users", user.id, "delete"]}) > 0
+
+  return <UserActions disabled={isDeleting} user={user} />
+}
+```
+
+That keeps background refetch, first load, empty results, and row mutations from competing for the same UI surface.
+
+## Related Guides
+
+- [Cells](/guides/cells)
+- [Rows](/guides/rows)
+- [Reusable Columns](/best-practices/reusable-columns)

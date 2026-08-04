@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Point} from "./types"
+import type {Point} from "./types.js"
 
 export type CompassDirection = "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "nw"
 

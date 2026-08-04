@@ -6,15 +6,14 @@ import type {ReactElement} from "react"
 import {ChevronRight} from "lucide-react"
 
 import type {QdsTableRowExpandButtonProps} from "@qualcomm-ui/qds-core/table"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableRowExpandButtonProps
-  extends ElementRenderProp<"button">,
-    QdsTableRowExpandButtonProps {}
+  extends ElementRenderProp<"button">, QdsTableRowExpandButtonProps {}
 
 /**
  * A button for expanding and collapsing nested rows. Automatically displays the

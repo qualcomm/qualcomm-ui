@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+    - main
     paths:
-      - packages/common/**
-      - packages/frameworks/react*/**
-      - packages/docs/react-docs/**
+    - packages/common/**
+    - packages/frameworks/react*/**
+    - packages/docs/react-docs/**
 
 jobs:
   deploy:
-    uses: ./.github/workflows/reusable-docs-deploy-test.yml
+    uses: ./.github/workflows/reusable-docs-deploy-prod.yml
     with:
       dockerfile: dockerfiles/dockerfile-react-docs
-      ecr-repository-name: react-next-docs
+      ecr-repository-name: react-docs
     secrets: inherit

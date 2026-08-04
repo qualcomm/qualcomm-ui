@@ -1,13 +1,15 @@
 ---
 title: Pagination
-group: Disclosure
 description: Pagination provides a control for moving through large, segmented content sets by exposing page numbers, previous and next actions, and optional overflow points when space is limited.
 component: Pagination
 aliases: [pager, page selector]
 ---
 
-import {QdsDemo} from "~components/demo"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -18,8 +20,6 @@ import {PaginationModule} from "@qualcomm-ui/angular/pagination"
 ```
 
 ## Overview
-
-- TODO: add
 
 ### Composition
 
@@ -49,9 +49,7 @@ Apart from the root element (`q-pagination`), each directive is optional. This f
 ### Showcase
 
 ::: terms
-page navigation
-data table pagination
-list pagination
+page navigation, data table pagination, list pagination
 :::
 
 The component renders the number of pages based on the [count](./#count) and [pageSize](./#pageSize) props.
@@ -61,8 +59,7 @@ The component renders the number of pages based on the [count](./#count) and [pa
 ### Page Size
 
 ::: terms
-rows per page
-results per page
+rows per page, results per page
 :::
 
 Render a dropdown via the `q-pagination-page-size` directive to adjust the number of data items per page.
@@ -72,25 +69,22 @@ Render a dropdown via the `q-pagination-page-size` directive to adjust the numbe
 ### Page Metadata
 
 ::: terms
-pagination summary
-page info
-current page display
+pagination summary, page info, current page display
 :::
 
 Show metadata about the current and total pages with the `q-pagination-page-metadata` directive.
 
-Refer to the [PageMetadata](./#pagemetadata) api below for information about each available property.
+Refer to the [PageMetadata](./#page-metadata) api below for information about each available property.
 
 <QdsDemo name="PaginationPageMetadataDemo" />
 
 ### Ranges
 
 ::: terms
-truncate
-visible pages
+truncate, visible pages
 :::
 
-You can specify how many links to display on either side of the current page with the [siblingCount](/components/pagination/directive#siblingCount) property. Use the [boundaryCount](./#boundaryCount) property to adjust the number of pages that are always visible at the start and end.
+You can specify how many links to display on either side of the current page with the [siblingCount](./#siblingCount) property. Use the [boundaryCount](./#boundaryCount) property to adjust the number of pages that are always visible at the start and end.
 
 <QdsDemo name="PaginationRangesDemo" />
 
@@ -199,6 +193,23 @@ export class PaginationPageSizeComponent extends CorePaginationPageSizeDirective
 - `q-pagination-page-size`: a select that adjusts the number of rows per page.
   - `q-pagination-page-size-label`: the select's label.
 
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-pagination"
+  name="PaginationExplorerDemo"
+  parts={[
+    "root",
+    "page-metadata",
+    "prev-trigger",
+    "page-item",
+    "next-trigger",
+    "page-size",
+    "page-size-label",
+  ]}
+  scope="pagination"
+/>
+
 ## API
 
 ### PageMetadata
@@ -213,18 +224,66 @@ Metadata about the current page is available on the `paginationContext` structur
 
 <TypeDocProps name="PageMetadata" />
 
-### \[q-pagination\]
+### q-pagination-root
 
-<TypeDocProps name="PaginationDirective" />
+<TypeDocProps name="PaginationRootDirective" />
 
-### \<q-pagination-page-size\>
+<TypeDocAngularAttributes
+  name={["QdsPaginationRootBindings", "PaginationRootBindings"]}
+/>
 
-<TypeDocProps name="PaginationPageSizeDirective" />
+### q-pagination-prev-trigger
 
-### \[q-pagination-prev-trigger\]
+<TypeDocProps name="PaginationPrevTriggerComponent" />
 
-<TypeDocProps name="PaginationPrevTriggerDirective" />
+<TypeDocAngularAttributes name="PaginationPrevTriggerBindings" />
 
-### \[q-pagination-next-trigger\]
+### q-pagination-next-trigger
 
 <TypeDocProps name="PaginationNextTriggerComponent" />
+
+<TypeDocAngularAttributes name="PaginationNextTriggerBindings" />
+
+### q-pagination-page-item
+
+<TypeDocProps name="PaginationPageItemComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsPaginationPageItemBindings", "PaginationPageItemBindings"]}
+/>
+
+### q-pagination-page-items
+
+<TypeDocProps name="PaginationPageItemsComponent" />
+
+<TypeDocAngularAttributes name="PaginationPageItemsBindings" />
+
+### q-pagination-page-metadata
+
+<TypeDocProps name="PaginationPageMetadataDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsPaginationPageMetadataBindings",
+    "PaginationPageMetadataBindings",
+  ]}
+/>
+
+### q-pagination-page-size
+
+<TypeDocProps name="PaginationPageSizeComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsPaginationPageSizeBindings", "PaginationPageSizeBindings"]}
+/>
+
+### q-pagination-page-size-label
+
+<TypeDocProps name="PaginationPageSizeLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsPaginationPageSizeLabelBindings",
+    "PaginationPageSizeLabelBindings",
+  ]}
+/>

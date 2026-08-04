@@ -20,10 +20,14 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsRadioContextProvider, useQdsRadioContext} from "./qds-radio-context"
+import {
+  QdsRadioContextProvider,
+  useQdsRadioContext,
+} from "./qds-radio-context.js"
 
 export interface RadioRootProps
-  extends RadioItemContext,
+  extends
+    RadioItemContext,
     IdProp,
     QdsRadioApiProps,
     ElementRenderProp<"label"> {

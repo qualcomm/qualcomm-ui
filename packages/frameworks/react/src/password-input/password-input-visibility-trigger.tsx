@@ -6,17 +6,16 @@ import type {ReactElement, ReactNode} from "react"
 import {Eye, EyeOff} from "lucide-react"
 
 import {passwordInputClasses} from "@qualcomm-ui/qds-core/password-input"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {
   CorePasswordInput,
   usePasswordInputContext,
 } from "@qualcomm-ui/react-core/password-input"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface PasswordInputVisibilityTriggerProps
-  extends ElementRenderProp<"button"> {
+export interface PasswordInputVisibilityTriggerProps extends ElementRenderProp<"button"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

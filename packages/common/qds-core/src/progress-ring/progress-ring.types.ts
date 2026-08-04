@@ -1,9 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart} from "@qualcomm-ui/utils/anatomy"
 import type {JSX} from "@qualcomm-ui/utils/machine"
 
-import type {progressRingClasses} from "./progress-ring.classes"
+import type {progressRingClasses} from "./progress-ring.classes.js"
 
 export type QdsProgressRingSize =
   | "xxs"
@@ -78,10 +79,11 @@ export interface QdsProgressRingErrorTextBindings {
   className: ProgressClasses["errorText"]
 }
 
-export interface QdsProgressRingCircleContainerBindings {
+export interface QdsProgressRingCircleContainerBindings extends AnatomyPart<
+  "progress",
+  "circleContainer"
+> {
   className: ProgressClasses["circleContainer"]
-  "data-part": "circle-container"
-  "data-scope": "progress"
 }
 
 export interface QdsProgressRingApi {

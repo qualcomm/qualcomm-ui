@@ -9,23 +9,22 @@ import {
   type QdsSelectApiProps,
 } from "@qualcomm-ui/qds-core/select"
 import {
-  QdsInputContextProvider,
-  type QdsReactInputApi,
-} from "@qualcomm-ui/react/input"
-import {
   CoreCombobox,
   type CoreComboboxRootProps,
 } from "@qualcomm-ui/react-core/combobox"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
+import {
+  QdsInputContextProvider,
+  type QdsReactInputApi,
+} from "@qualcomm-ui/react/input"
 import type {CollectionItem} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsComboboxContextProvider} from "./qds-combobox-context"
+import {QdsComboboxContextProvider} from "./qds-combobox-context.js"
 
 export interface ComboboxRootProps<T extends CollectionItem>
-  extends CoreComboboxRootProps<T>,
-    QdsSelectApiProps {
+  extends CoreComboboxRootProps<T>, QdsSelectApiProps {
   /**
    * {@link https://lucide.dev lucide} icon, positioned at the start of the
    * input field.

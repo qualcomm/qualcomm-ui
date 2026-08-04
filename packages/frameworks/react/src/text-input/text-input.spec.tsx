@@ -2,8 +2,8 @@ import {type HTMLAttributes, useState} from "react"
 
 import {Calendar, Search} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {TextInput} from "@qualcomm-ui/react/text-input"
 

@@ -145,7 +145,7 @@ Two-way binding creates a closed loop:
 This works until you need to intercept the update, like for validation.
 
 ```angular-ts
-value = signal('');
+value = signal("")
 // You can't validate the value before it changes.
 // The best you can do is trigger another update after the fact,
 // or break out of two-way binding entirely.

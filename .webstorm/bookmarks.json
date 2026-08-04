@@ -116,27 +116,9 @@
         "line": "-1"
       },
       {
-        "description": "angular-core",
-        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/alert-banner",
-        "line": "-1"
-      },
-      {
         "description": "react",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/alert-banner",
-        "line": "-1"
-      },
-      {
-        "description": "react-core",
-        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/alert-banner",
-        "line": "-1"
-      },
-      {
-        "description": "core",
-        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/common/core/src/alert-banner",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/alert-banner",
         "line": "-1"
       },
       {
@@ -333,6 +315,35 @@
         "description": "qds-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
         "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/button"
+      }
+    ]
+  },
+  {
+    "card": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/card+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/card+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/card"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/card"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/card"
       }
     ]
   },
@@ -604,53 +615,87 @@
     ]
   },
   {
-    "file-uploader": [
+    "file-input": [
       {
         "description": "angular-docs",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/file-uploader+",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/file-input+",
         "line": "-1"
       },
       {
         "description": "react-docs",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/file-uploader+",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/file-input+",
         "line": "-1"
       },
       {
         "description": "angular",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/file-uploader",
-        "line": "-1"
-      },
-      {
-        "description": "angular-core",
-        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/file-uploader",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/file-input",
         "line": "-1"
       },
       {
         "description": "react",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/components/file-uploader",
-        "line": "-1"
-      },
-      {
-        "description": "react-core",
-        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/file-uploader",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/file-input",
         "line": "-1"
       },
       {
         "description": "qds-core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/file-uploader",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/file-input",
+        "line": "-1"
+      }
+    ]
+  },
+  {
+    "file-upload": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/file-upload+",
+        "line": "-1"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/file-upload+",
+        "line": "-1"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/file-upload",
+        "line": "-1"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/file-upload",
+        "line": "-1"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/file-upload",
+        "line": "-1"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/file-upload",
         "line": "-1"
       },
       {
         "description": "core",
         "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
-        "url": "file://$PROJECT_DIR$/packages/common/core/src/file-uploader",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/file-upload",
+        "line": "-1"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/file-upload",
         "line": "-1"
       }
     ]

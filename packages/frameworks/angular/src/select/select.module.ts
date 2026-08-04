@@ -3,11 +3,11 @@
 
 import {NgModule} from "@angular/core"
 
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {CheckmarkIconComponent} from "@qualcomm-ui/angular/checkmark"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {TagDirective} from "@qualcomm-ui/angular/tag"
-import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
-import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 import {SelectClearTriggerDirective} from "./select-clear-trigger.directive"
 import {SelectContentDirective} from "./select-content.directive"

@@ -4,9 +4,9 @@
 import {Component, input} from "@angular/core"
 import {CircleAlert} from "lucide-angular"
 
-import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 import {CoreComboboxErrorIndicatorDirective} from "@qualcomm-ui/angular-core/combobox"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 
 @Component({
   selector: "[q-combobox-error-indicator]",

@@ -1,12 +1,11 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
     "incremental": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "dist/tsbuildinfo",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib",
     "paths": {
       "@qualcomm-ui/dom/*": ["./src/*/index.ts"]
     }

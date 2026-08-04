@@ -20,8 +20,8 @@ import {
   getFirstEnabledAndCheckedInputEl,
   getFirstEnabledInputEl,
   getInputEls,
-} from "./internal"
-import type {RadioSchema} from "./radio.types"
+} from "./internal/index.js"
+import type {RadioSchema} from "./radio.types.js"
 
 const {not} = createGuards<RadioSchema>()
 
@@ -30,13 +30,13 @@ export const radioMachine: MachineConfig<RadioSchema> =
     actions: {
       dispatchChangeEvent({context, scope}) {
         const inputEls = getInputEls(scope)
-        inputEls.forEach((inputEl) => {
+        for (const inputEl of inputEls) {
           const checked = inputEl.value === context.get("value")
           if (checked === inputEl.checked) {
-            return
+            continue
           }
           dispatchInputCheckedEvent(inputEl, {checked})
-        })
+        }
       },
       focusInput({scope}) {
         const nodeToFocus =
@@ -58,9 +58,9 @@ export const radioMachine: MachineConfig<RadioSchema> =
       },
       syncInputElements({context, scope}) {
         const inputs = getInputEls(scope)
-        inputs.forEach((input) => {
+        for (const input of inputs) {
           input.checked = input.value === context.get("value")
-        })
+        }
       },
     },
     computed: {

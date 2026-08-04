@@ -1,30 +1,13 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "./tsconfig.analog-vitest.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
-    "emitDeclarationOnly": false,
-    "strictPropertyInitialization": false,
-    "moduleResolution": "Bundler",
-    "types": [
-      "vitest/globals",
-      "node",
-      "@vitest/browser/matchers"
-    ],
-    "target": "es2020",
-    "paths": {
-      "~test-utils": ["./test/index.ts"],
-      "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"]
-    }
+    "outDir": "node_modules/.tmp/spec-out-tsc",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec"
   },
-  "files": ["./test/test-setup.ts"],
-  "include": [
-    "src/**/*.spec.ts",
-    "./test"
-  ],
   "references": [
     {
-      "path": "./tsconfig.angular-lib.json"
+      "path": "./tsconfig.lib.json"
     }
   ]
 }

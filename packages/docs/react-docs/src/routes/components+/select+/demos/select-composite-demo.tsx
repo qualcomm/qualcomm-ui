@@ -1,8 +1,8 @@
 import type {ReactElement} from "react"
 
 import {selectCollection} from "@qualcomm-ui/core/select"
-import {Select} from "@qualcomm-ui/react/select"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Select} from "@qualcomm-ui/react/select"
 
 const cityCollection = selectCollection({
   items: [

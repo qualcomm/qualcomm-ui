@@ -1,14 +1,17 @@
-import {ReactNode, useCallback} from "react"
+import {type ReactNode, useCallback} from "react"
 
 import {useLocation} from "react-router"
 
 import {DocLink} from "@qualcomm-ui/react-internal/layout"
 import {useTheme} from "@qualcomm-ui/react-router-utils/client"
-import {Swagger, SwaggerProps, SwaggerUIProps} from "@qualcomm-ui/react-swagger"
+import {
+  Swagger,
+  type SwaggerProps,
+  type SwaggerUIProps,
+} from "@qualcomm-ui/react-swagger"
 
 export interface DocSwaggerProps
-  extends SwaggerUIProps,
-    Pick<SwaggerProps, "hideTitleSection"> {}
+  extends SwaggerUIProps, Pick<SwaggerProps, "hideTitleSection"> {}
 
 export function DocSwagger({...props}: DocSwaggerProps): ReactNode {
   const [theme] = useTheme()

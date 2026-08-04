@@ -12,7 +12,9 @@ export function nextTick(fn: VoidFunction): VoidFunction {
   }
   raf(() => raf(fn))
   return function cleanup() {
-    set.forEach((fn) => fn())
+    for (const fn1 of set) {
+      fn1()
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {CheckboxApi} from "@qualcomm-ui/core/checkbox"
 import {
   createSegmentedControlApi,
   type SegmentedControlApi,
@@ -11,7 +12,7 @@ import {
 import {useCheckbox} from "@qualcomm-ui/react-core/checkbox"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 
-import {useSegmentedControlContext} from "./segmented-control-context"
+import {useSegmentedControlContext} from "./segmented-control-context.js"
 
 export function useSegmentedControl(
   props: SegmentedControlApiProps,
@@ -23,7 +24,10 @@ export function useSegmentedControl(
 export function useSegmentedControlItem({
   disabled,
   value,
-}: SegmentedControlItemApiProps) {
+}: SegmentedControlItemApiProps): {
+  checkboxContext: CheckboxApi
+  getItemBindings: SegmentedControlApi["getItemBindings"]
+} {
   const {
     defaultValue: groupDefaultValue,
     dir,

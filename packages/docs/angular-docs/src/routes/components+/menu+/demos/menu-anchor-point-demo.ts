@@ -1,11 +1,11 @@
 import {Component, computed, type ElementRef, viewChild} from "@angular/core"
 
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
 import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 
 @Component({
-  imports: [MenuModule, PortalComponent],
+  imports: [MenuModule, PortalDirective],
   selector: "menu-anchor-point-demo",
   template: `
     <div class="flex flex-col gap-4">
@@ -19,7 +19,7 @@ import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
         >
           Anchor
         </div>
-        <q-portal>
+        <ng-container *qPortal>
           <div q-menu-positioner>
             <div q-menu-content>
               <button q-menu-item value="new-text-file">New Text File</button>
@@ -28,7 +28,7 @@ import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
               <button q-menu-item value="export">Export</button>
             </div>
           </div>
-        </q-portal>
+        </ng-container>
       </q-menu>
     </div>
   `,

@@ -8,10 +8,6 @@ const figma = require("figma")
 
 const instance = figma.selectedInstance
 
-const icon = instance.getEnum("icon", {
-  only: "only",
-  start: "start",
-})
 const iconVariant = instance.getEnum("iconVariant", {
   filled: "filled",
 })
@@ -67,12 +63,6 @@ export default {
       ? [
           `import {ButtonModule} from "@qualcomm-ui/angular/button"`,
           `import {Plus} from "lucide-angular"`,
-        ]
-      : []),
-    ...(icon
-      ? [
-          `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {AArrowDown} from "lucide-angular"`,
         ]
       : []),
   ],

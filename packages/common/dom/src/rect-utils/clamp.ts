@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Point, RectInit, Size} from "./types"
+import type {Point, RectInit, Size} from "./types.js"
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max)

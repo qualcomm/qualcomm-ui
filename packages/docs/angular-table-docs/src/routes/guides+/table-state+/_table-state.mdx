@@ -51,7 +51,6 @@ export class ExampleComponent {
     // ...
   }))
 }
-
 ```
 
 > [!note]
@@ -210,7 +209,7 @@ export class ExampleComponent {
     },
     onSortingChange: (updater) => {
       this.sorting.update((old) =>
-        updater instanceof Function ? updater(old) : updater
+        updater instanceof Function ? updater(old) : updater,
       )
     },
     // ...
@@ -260,9 +259,7 @@ export class ExampleComponent {
     // syntax 2
     onSortingChange: (updater) => {
       const newSortingValue =
-        updater instanceof Function
-          ? updater(this.sorting())
-          : updater
+        updater instanceof Function ? updater(this.sorting()) : updater
       // do something with the new sorting value
       // ...
       this.sorting.set(newSortingValue) // normal state update

@@ -7,18 +7,13 @@
 import type {NumberFormatter, NumberParser} from "@internationalized/number"
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
-import type {
-  InputErrorIndicatorBindings,
-  InputErrorTextBindings,
-  InputHintBindings,
-  InputInputGroupBindings,
-  InputLabelBindings,
-} from "@qualcomm-ui/core/input"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
 import type {
+  Direction,
   DirectionProperty,
   LocaleProperty,
 } from "@qualcomm-ui/utils/direction"
@@ -34,20 +29,20 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
+import type {numberInputAnatomy} from "./number-input.anatomy.js"
+
 export interface NumberInputValueChangeDetails {
   value: string
   valueAsNumber: number
 }
 
-export interface NumberInputFocusChangeDetails
-  extends NumberInputValueChangeDetails {
+export interface NumberInputFocusChangeDetails extends NumberInputValueChangeDetails {
   focused: boolean
 }
 
 export type NumberInputValidityState = "rangeUnderflow" | "rangeOverflow"
 
-export interface NumberInputValueInvalidDetails
-  extends NumberInputValueChangeDetails {
+export interface NumberInputValueInvalidDetails extends NumberInputValueChangeDetails {
   reason: NumberInputValidityState
 }
 
@@ -89,10 +84,7 @@ export interface NumberInputIntlTranslations {
 export type NumberInputMode = "text" | "tel" | "numeric" | "decimal"
 
 export interface NumberInputApiProps
-  extends FieldApiProps,
-    CommonProperties,
-    DirectionProperty,
-    LocaleProperty {
+  extends FieldApiProps, CommonProperties, DirectionProperty, LocaleProperty {
   /**
    * Whether to allow mouse wheel to change the value
    */
@@ -434,49 +426,69 @@ export interface NumberInputSchema extends MachineSchema {
   state: "idle" | "focused" | "before:spin" | "spinning"
 }
 
-export interface NumberInputScopeAttribute {
-  "data-scope": "number-input"
+type PartName = AnatomyPartName<typeof numberInputAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"numberInput", P> {}
+
+export interface NumberInputRootBindings extends Part<"root"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  dir: Direction
 }
 
-interface CommonBindings
-  extends Required<DirectionProperty>,
-    NumberInputScopeAttribute {}
+export interface NumberInputLabelBindings extends Part<"label"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  dir: Direction
+  htmlFor: string
+  id: string
+}
 
-export interface NumberInputErrorTextBindings
-  extends InputErrorTextBindings,
-    CommonBindings {}
+export interface NumberInputHintBindings extends Part<"hint"> {
+  "data-disabled": BooleanDataAttr
+  dir: Direction
+  hidden: boolean
+  id: string
+}
 
-export interface NumberInputHintBindings
-  extends InputHintBindings,
-    CommonBindings {}
+export interface NumberInputErrorTextBindings extends Part<"errorText"> {
+  "aria-live": "polite"
+  dir: Direction
+  hidden: boolean
+  id: string
+}
 
-export interface NumberInputLabelBindings
-  extends InputLabelBindings,
-    CommonBindings {}
+export interface NumberInputErrorIndicatorBindings extends Part<"errorIndicator"> {
+  "aria-label": "Error"
+  dir: Direction
+  hidden: boolean
+}
 
-export interface NumberInputInputGroupBindings
-  extends CommonBindings,
-    InputInputGroupBindings {}
+export interface NumberInputInputGroupBindings extends Part<"inputGroup"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  "data-readonly": BooleanDataAttr
+  dir: Direction
+  onClick: JSX.MouseEventHandler<HTMLElement>
+}
 
-export interface NumberInputErrorIndicatorBindings
-  extends CommonBindings,
-    InputErrorIndicatorBindings {}
-
-export interface NumberInputControlBindings extends CommonBindings {
+export interface NumberInputControlBindings extends Part<"control"> {
   "aria-disabled": BooleanAriaAttr
   "aria-invalid": BooleanAriaAttr
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "control"
+  dir: Direction
   role: "group"
 }
 
-export interface NumberInputDecrementTriggerBindings extends CommonBindings {
+export interface NumberInputDecrementTriggerBindings extends Part<"decrementTrigger"> {
   "aria-controls": string
   "aria-label": string | undefined
   "data-disabled": BooleanDataAttr | undefined
-  "data-part": "decrement-trigger"
+  dir: Direction
   disabled: boolean | undefined
   id: string
   onPointerDown: JSX.PointerEventHandler<HTMLButtonElement>
@@ -486,20 +498,33 @@ export interface NumberInputDecrementTriggerBindings extends CommonBindings {
   type: "button"
 }
 
-export interface NumberInputIncrementTriggerBindings
-  extends Omit<NumberInputDecrementTriggerBindings, "data-part"> {
-  "data-part": "increment-trigger"
+export interface NumberInputIncrementTriggerBindings extends Part<"incrementTrigger"> {
+  "aria-controls": string
+  "aria-label": string | undefined
+  "data-disabled": BooleanDataAttr | undefined
+  dir: Direction
+  disabled: boolean | undefined
+  id: string
+  onPointerDown: JSX.PointerEventHandler<HTMLButtonElement>
+  onPointerLeave: JSX.PointerEventHandler<HTMLButtonElement>
+  onPointerUp: JSX.PointerEventHandler<HTMLButtonElement>
+  tabIndex: -1
+  type: "button"
 }
 
-export interface NumberInputValueTextBindings extends CommonBindings {
+export interface NumberInputValueTextBindings extends Part<"valueText"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "value-text"
+  dir: Direction
 }
 
-export interface NumberInputInputBindings extends CommonBindings {
+export interface NumberInputInputBindings extends Part<"input"> {
   "aria-invalid": BooleanAriaAttr
+  /**
+   * @since 1.11.0
+   */
+  "aria-labelledby": string | undefined
   "aria-roledescription": "numberfield"
   "aria-valuemax": number
   "aria-valuemin": number
@@ -510,8 +535,8 @@ export interface NumberInputInputBindings extends CommonBindings {
   "data-disabled": BooleanDataAttr
   "data-empty": BooleanDataAttr
   "data-invalid": BooleanDataAttr
-  "data-part": "input"
   defaultValue: string
+  dir: Direction
   disabled: boolean | undefined
   form: string | undefined
   id: string
@@ -530,17 +555,10 @@ export interface NumberInputInputBindings extends CommonBindings {
   type: "text"
 }
 
-export interface NumberInputRootBindings extends CommonBindings {
+export interface NumberInputUnitSelectBindings extends Part<"unitSelect"> {
   "data-disabled": BooleanDataAttr
-  "data-focus": BooleanDataAttr
-  "data-invalid": BooleanDataAttr
-  "data-part": "root"
-}
-
-export interface NumberInputUnitSelectBindings extends CommonBindings {
-  "data-disabled": BooleanDataAttr
-  "data-part": "unit-select"
   "data-readonly": BooleanDataAttr
+  dir: Direction
   disabled: boolean | undefined
   type: "button"
 }

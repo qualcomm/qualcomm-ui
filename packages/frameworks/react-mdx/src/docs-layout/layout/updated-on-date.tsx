@@ -5,7 +5,7 @@ import type {ComponentPropsWithoutRef, ReactElement} from "react"
 
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
+import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface UpdatedOnDateProps extends ComponentPropsWithoutRef<"span"> {}
 

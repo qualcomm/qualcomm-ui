@@ -1,1 +1,1 @@
-export * from "./doc-props-indexer"
+export * from "./doc-props-indexer.js"

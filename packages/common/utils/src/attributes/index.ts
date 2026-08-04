@@ -1,1 +1,1 @@
-export * from "./attributes"
+export * from "./attributes.js"

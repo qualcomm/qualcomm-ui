@@ -5,7 +5,7 @@ import {type ComponentProps, Fragment, type ReactElement} from "react"
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import {useHighlight, type UseHighlightProps} from "./use-highlight"
+import {useHighlight, type UseHighlightProps} from "./use-highlight.js"
 
 const highlightProps = createProps<UseHighlightProps>()(
   "exactMatch",
@@ -18,8 +18,7 @@ const highlightProps = createProps<UseHighlightProps>()(
 const splitProps = createSplitProps<UseHighlightProps>(highlightProps)
 
 export interface HighlightTextProps
-  extends ComponentProps<"mark">,
-    UseHighlightProps {}
+  extends ComponentProps<"mark">, UseHighlightProps {}
 
 export function HighlightText(props: HighlightTextProps): ReactElement {
   if (typeof props.text !== "string") {

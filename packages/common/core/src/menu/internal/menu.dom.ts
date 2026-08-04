@@ -14,7 +14,7 @@ import {
 import {first, last, next, prev} from "@qualcomm-ui/utils/array"
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {MenuElementIds, MenuScope} from "../menu.types"
+import type {MenuElementIds, MenuScope} from "../menu.types.js"
 
 export const domIds: ScopeDomIds<MenuElementIds, MenuScope> = {
   arrow: (scope) => scope.ids.get("arrow"),

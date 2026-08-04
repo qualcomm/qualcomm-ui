@@ -12,6 +12,7 @@ import type {User} from "./data"
   template: `
     <div class="flex w-32 gap-2">
       <q-number-input
+        aria-label="Min"
         placeholder="Min"
         size="sm"
         [min]="0"

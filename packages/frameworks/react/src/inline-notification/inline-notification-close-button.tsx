@@ -5,16 +5,15 @@ import type {ReactElement, ReactNode} from "react"
 
 import {X} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {useInlineNotificationCloseTrigger} from "@qualcomm-ui/react-core/inline-notification"
 import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsInlineNotificationContext} from "./qds-inline-notification-context"
+import {useQdsInlineNotificationContext} from "./qds-inline-notification-context.js"
 
 export interface InlineNotificationCloseButtonProps
-  extends IdProp,
-    ElementRenderProp<"button"> {
+  extends IdProp, ElementRenderProp<"button"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

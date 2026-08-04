@@ -1,2 +1,2 @@
 export * from "./angular"
-export * from "./reference-types"
+export type * from "./reference-types"

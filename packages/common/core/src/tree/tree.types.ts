@@ -5,6 +5,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {TypeaheadState} from "@qualcomm-ui/dom/query"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -15,7 +16,7 @@ import type {
   TreeNode,
   ValuePath,
 } from "@qualcomm-ui/utils/collection"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -27,6 +28,8 @@ import type {
   MachineSchema,
   Scope,
 } from "@qualcomm-ui/utils/machine"
+
+import type {treeAnatomy} from "./tree.anatomy.js"
 
 export interface FocusChangeDetails<T extends TreeNode = TreeNode> {
   /**
@@ -279,8 +282,9 @@ export interface TreeScope extends Scope {
   ids: BindableIds<TreeSchema>
 }
 
-export interface TreeSchema<T extends TreeNode = TreeNode>
-  extends MachineSchema {
+export interface TreeSchema<
+  T extends TreeNode = TreeNode,
+> extends MachineSchema {
   actions: ActionSchema<
     | "clearChecked"
     | "clearExpanded"
@@ -407,52 +411,47 @@ export interface TreeSchema<T extends TreeNode = TreeNode>
   state: "idle"
 }
 
-export interface TreeCommonBindings extends DirectionProperty {
-  "data-scope": "tree"
-}
+type PartName = AnatomyPartName<typeof treeAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"tree", P> {}
 
-export interface TreeRootBindings extends TreeCommonBindings {
+export interface TreeRootBindings extends Part<"root"> {
   "aria-label": string
   "aria-labelledby": string | undefined
-  "aria-multiselectable": boolean | undefined
-  "data-part": "root"
+  "aria-multiselectable": BooleanAriaAttr
+  dir: Direction
   id: string
   onKeyDown: JSX.KeyboardEventHandler<HTMLElement>
   role: "tree"
   tabIndex: -1
 }
 
-export interface TreeBranchContentBindings extends TreeCommonBindings {
+export interface TreeBranchContentBindings extends Part<"branchContent"> {
   "data-depth": number
-  "data-part": "branch-content"
   "data-path": string
   "data-value": string
   role: "group"
 }
 
-export interface TreeBranchIndentGuideBindings extends TreeCommonBindings {
+export interface TreeBranchIndentGuideBindings extends Part<"branchIndentGuide"> {
   "data-depth": number
-  "data-part": "branch-indent-guide"
   style: JSX.CSSProperties
 }
 
-export interface TreeNodeCheckboxBindings extends TreeCommonBindings {
+export interface TreeNodeCheckboxBindings extends Part<"nodeCheckbox"> {
   "aria-checked": BooleanAriaAttr | "mixed"
   "aria-labelledby": string | undefined
   "data-disabled": BooleanDataAttr
-  "data-part": "node-checkbox"
   "data-state": "checked" | "unchecked" | "indeterminate"
   onClick: JSX.MouseEventHandler
   role: "checkbox"
   tabIndex: -1
 }
 
-export interface TreeLabelBindings extends TreeCommonBindings {
-  "data-part": "label"
+export interface TreeLabelBindings extends Part<"label"> {
   id: string
 }
 
-export interface TreeLeafNodeBindings extends TreeCommonBindings {
+export interface TreeLeafNodeBindings extends Part<"leafNode"> {
   "aria-current": "true" | undefined
   "aria-disabled": BooleanAriaAttr
   "aria-level": number
@@ -461,7 +460,6 @@ export interface TreeLeafNodeBindings extends TreeCommonBindings {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-ownedby": string
-  "data-part": "leaf-node"
   "data-path": string
   "data-selected": BooleanDataAttr
   "data-value": string
@@ -474,39 +472,35 @@ export interface TreeLeafNodeBindings extends TreeCommonBindings {
   tabIndex: 0 | -1
 }
 
-export interface TreeNodeActionBindings extends TreeCommonBindings {
+export interface TreeNodeActionBindings extends Part<"nodeAction"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
-  "data-part": "node-action"
   "data-selected": BooleanDataAttr
   onClick: JSX.MouseEventHandler
 }
 
-export interface TreeNodeTextBindings extends TreeCommonBindings {
+export interface TreeNodeTextBindings extends Part<"nodeText"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
-  "data-part": "node-text"
   "data-selected": BooleanDataAttr
   id: string
 }
 
-export interface TreeNodeIconBindings extends TreeCommonBindings {
+export interface TreeNodeIconBindings extends Part<"nodeIcon"> {
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
-  "data-part": "node-icon"
   "data-selected": BooleanDataAttr
 }
 
-export interface TreeNodeIndicatorBindings extends TreeCommonBindings {
+export interface TreeNodeIndicatorBindings extends Part<"nodeIndicator"> {
   "aria-hidden": true
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
-  "data-part": "node-indicator"
   "data-selected": BooleanDataAttr
   hidden: boolean
 }
 
-export interface TreeBranchBindings extends TreeCommonBindings {
+export interface TreeBranchBindings extends Part<"branch"> {
   "aria-disabled": BooleanAriaAttr
   "aria-expanded": BooleanAriaAttr
   "aria-level": number
@@ -516,7 +510,6 @@ export interface TreeBranchBindings extends TreeCommonBindings {
   "data-disabled": BooleanDataAttr
   "data-loading": BooleanDataAttr
   "data-ownedby": string
-  "data-part": "branch"
   "data-path": string
   "data-selected": BooleanDataAttr
   "data-state": "open" | "closed"
@@ -526,21 +519,19 @@ export interface TreeBranchBindings extends TreeCommonBindings {
   style: JSX.CSSProperties
 }
 
-export interface TreeBranchIndicatorBindings extends TreeCommonBindings {
+export interface TreeBranchIndicatorBindings extends Part<"branchIndicator"> {
   "aria-hidden": true
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-loading": BooleanDataAttr
-  "data-part": "branch-indicator"
   "data-selected": BooleanDataAttr
   "data-state": "open" | "closed"
 }
 
-export interface TreeBranchTriggerBindings extends TreeCommonBindings {
+export interface TreeBranchTriggerBindings extends Part<"branchTrigger"> {
   "aria-label": "Collapse" | "Expand"
   "data-disabled": BooleanDataAttr
   "data-loading": BooleanDataAttr
-  "data-part": "branch-trigger"
   "data-state": "open" | "closed"
   "data-value": string
   disabled: boolean
@@ -548,13 +539,12 @@ export interface TreeBranchTriggerBindings extends TreeCommonBindings {
   role: "button"
 }
 
-export interface TreeBranchNodeBindings extends TreeCommonBindings {
+export interface TreeBranchNodeBindings extends Part<"branchNode"> {
   "aria-busy": BooleanAriaAttr
   "data-depth": number
   "data-disabled": BooleanDataAttr
   "data-focus": BooleanDataAttr
   "data-loading": BooleanDataAttr
-  "data-part": "branch-node"
   "data-path": string
   "data-selected": BooleanDataAttr
   "data-state": "open" | "closed"

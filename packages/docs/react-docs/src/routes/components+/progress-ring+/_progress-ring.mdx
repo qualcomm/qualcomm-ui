@@ -1,13 +1,12 @@
 ---
 title: Progress Ring
-group: Feedback
 description: Progress rings provide users with visual feedback about the status of ongoing processes through a circular progress indicator. This component displays both determinate progress with specific percentages and indeterminate loading states.
 component: ProgressRing
 aliases:
   [circular progress, spinner, activity indicator, radial progress, ring loader]
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
@@ -38,7 +37,10 @@ Indeterminate progress rings keep users informed that work is happening when tim
 
 For most use cases, you can use the simple `ProgressRing` component.
 
-<Demo name="ProgressRingSimpleDemo" component={demos.ProgressRingSimpleDemo} />
+<Demo
+  name="ProgressRingSimpleDemo"
+  component={demos.ProgressRingSimpleDemo}
+/>
 
 ### Composite
 
@@ -57,11 +59,14 @@ completion percentage
 
 When the [value](./#value-1) prop is set, the filled portion of the circle will represent the total percent relative to [max](./#max) and [min](./#min). This is referred to as the "determinate" state.
 
-<Demo name="ProgressRingValueDemo" component={demos.ProgressRingValueDemo} />
+<Demo
+  name="ProgressRingValueDemo"
+  component={demos.ProgressRingValueDemo}
+/>
 
 ### Value Text
 
-Display the value text by passing a value to the [valueText](./#valuetext) prop. The value text only shows when the size is `lg` or `xl`.
+Display the value text by passing a value to the [valueText](./#valueText) prop. The value text only shows when the size is `lg` or `xl`.
 
 <Demo
   name="ProgressRingValueTextDemo"
@@ -71,23 +76,20 @@ Display the value text by passing a value to the [valueText](./#valuetext) prop.
 ### Sizes
 
 ::: terms
-extra small
-extra large
-small
-medium
-large
+extra small, extra large, small, medium, large
 :::
 
 Use the [size](./#size) prop to change the size of the circle.
 
-<Demo name="ProgressRingSizesDemo" component={demos.ProgressRingSizesDemo} />
+<Demo
+  name="ProgressRingSizesDemo"
+  component={demos.ProgressRingSizesDemo}
+/>
 
 ### Thickness
 
 ::: terms
-stroke width
-stroke thickness
-track width
+stroke width, stroke thickness, track width
 :::
 
 Use the [thickness](./#thickness) prop to change the pixel width of the track and bar.
@@ -121,12 +123,28 @@ a11y
 :::
 
 - When the value is supplied, the component automatically provides the corresponding `aria-value*` attributes to the element.
-- The progress element is automatically marked with `role="progressbar"`.
-- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the `aria-label` of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+- The progress element is automatically marked with [`role="progressbar"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles).
+- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.ProgressRingExplorerDemo}
+  linkPrefix="progress-ring"
+  parts={[
+    "root",
+    "label",
+    "circle-container",
+    {name: "circle-track", link: "#progress-ring-track"},
+    {name: "circle-bar", link: "#progress-ring-bar"},
+    "value-text",
+  ]}
+  scope="progress"
+/>
 
 ## API
 
-### \<ProgressRing\>
+### \<ProgressRing>
 
 The `ProgressRing` component extends the [ProgressRing.Root](./#progress-ring-root) with the following props:
 
@@ -148,7 +166,7 @@ This API is accessible in JSX via the `<ProgressRing.Context>` component:
 
 ## Composite API
 
-### \<ProgressRing.Root\>
+### \<ProgressRing.Root>
 
 <TypeDocProps name="ProgressRingRootProps" />
 
@@ -156,7 +174,7 @@ This API is accessible in JSX via the `<ProgressRing.Context>` component:
   name={["ProgressRingRootBindings", "QdsProgressRingRootBindings"]}
 />
 
-### \<ProgressRing.Label\>
+### \<ProgressRing.Label>
 
 <TypeDocProps name="ProgressRingLabelProps" />
 
@@ -164,7 +182,7 @@ This API is accessible in JSX via the `<ProgressRing.Context>` component:
   name={["ProgressLabelBindings", "QdsProgressRingLabelBindings"]}
 />
 
-### \<ProgressRing.ValueText\>
+### \<ProgressRing.ValueText>
 
 <TypeDocProps name="ProgressRingValueTextProps" />
 
@@ -172,7 +190,7 @@ This API is accessible in JSX via the `<ProgressRing.Context>` component:
   name={["ProgressValueTextBindings", "QdsProgressRingValueTextBindings"]}
 />
 
-### \<ProgressRing.ErrorText\>
+### \<ProgressRing.ErrorText>
 
 <TypeDocProps name="ProgressRingErrorTextProps" />
 
@@ -180,13 +198,13 @@ This API is accessible in JSX via the `<ProgressRing.Context>` component:
   name={["ProgressErrorTextBindings", "QdsProgressRingErrorTextBindings"]}
 />
 
-### \<ProgressRing.CircleContainer\>
+### \<ProgressRing.CircleContainer>
 
 <TypeDocProps name="ProgressRingCircleContainerProps" />
 
 <TypeDocAttributes name="QdsProgressRingCircleContainerBindings" />
 
-### \<ProgressRing.Circle\>
+### \<ProgressRing.Circle>
 
 <TypeDocProps name="ProgressRingCircleProps" />
 
@@ -194,7 +212,7 @@ This API is accessible in JSX via the `<ProgressRing.Context>` component:
   name={["ProgressRingCircleBindings", "QdsProgressRingCircleBindings"]}
 />
 
-### \<ProgressRing.Track\>
+### \<ProgressRing.Track>
 
 <TypeDocProps name="ProgressRingTrackProps" />
 
@@ -202,7 +220,7 @@ This API is accessible in JSX via the `<ProgressRing.Context>` component:
   name={["ProgressRingTrackBindings", "QdsProgressRingTrackBindings"]}
 />
 
-### \<ProgressRing.Bar\>
+### \<ProgressRing.Bar>
 
 <TypeDocProps name="ProgressRingBarProps" />
 

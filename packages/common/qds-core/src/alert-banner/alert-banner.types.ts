@@ -1,9 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 
-import type {alertBannerClasses} from "./alert-banner.classes"
+import type {alertBannerAnatomy} from "./alert-banner.anatomy.js"
+import type {alertBannerClasses} from "./alert-banner.classes.js"
 
 export type QdsAlertBannerEmphasis =
   | "info"
@@ -39,49 +41,36 @@ export interface QdsAlertBannerApiProps extends DirectionProperty {
 
 type AlertBannerClasses = typeof alertBannerClasses
 
-export interface QdsAlertBannerCommonBindings {
-  "data-scope": "alert-banner"
-}
+type PartName = AnatomyPartName<typeof alertBannerAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"alertBanner", P> {}
 
 export interface QdsAlertBannerRootBindings
-  extends QdsAlertBannerCommonBindings,
-    Required<DirectionProperty> {
+  extends Part<"root">, Required<DirectionProperty> {
   className: AlertBannerClasses["root"]
   "data-emphasis": QdsAlertBannerEmphasis
-  "data-part": "root"
   "data-variant": QdsAlertBannerVariant
   role: "alert" | "status"
 }
 
-export interface QdsAlertBannerIconBindings
-  extends QdsAlertBannerCommonBindings {
+export interface QdsAlertBannerIconBindings extends Part<"statusIcon"> {
   className: AlertBannerClasses["icon"]
-  "data-part": "status-icon"
 }
 
-export interface QdsAlertBannerHeadingBindings
-  extends QdsAlertBannerCommonBindings {
+export interface QdsAlertBannerHeadingBindings extends Part<"heading"> {
   className: AlertBannerClasses["heading"]
-  "data-part": "heading"
 }
 
-export interface QdsAlertBannerDescriptionBindings
-  extends QdsAlertBannerCommonBindings {
+export interface QdsAlertBannerDescriptionBindings extends Part<"description"> {
   className: AlertBannerClasses["description"]
-  "data-part": "description"
 }
 
-export interface QdsAlertBannerActionBindings
-  extends QdsAlertBannerCommonBindings {
+export interface QdsAlertBannerActionBindings extends Part<"action"> {
   className: AlertBannerClasses["action"]
-  "data-part": "action"
 }
 
-export interface QdsAlertBannerCloseButtonBindings
-  extends QdsAlertBannerCommonBindings {
+export interface QdsAlertBannerCloseButtonBindings extends Part<"closeButton"> {
   "aria-label": string
   className: AlertBannerClasses["closeButton"]
-  "data-part": "close-button"
 }
 
 export type QdsAlertBannerCloseButtonEmphasis =

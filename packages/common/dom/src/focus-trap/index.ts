@@ -1,2 +1,2 @@
-export type * from "./focus-trap.types"
-export * from "./trap-focus"
+export type * from "./focus-trap.types.js"
+export * from "./trap-focus.js"

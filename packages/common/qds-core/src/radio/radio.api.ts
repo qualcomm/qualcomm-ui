@@ -5,7 +5,7 @@ import {inputClasses} from "@qualcomm-ui/qds-core/input"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {radioClasses} from "./radio.classes"
+import {radioClasses} from "./radio.classes.js"
 import type {
   QdsRadioApi,
   QdsRadioApiProps,
@@ -19,7 +19,7 @@ import type {
   QdsRadioItemHiddenInputBindings,
   QdsRadioItemHintBindings,
   QdsRadioItemLabelBindings,
-} from "./radio.types"
+} from "./radio.types.js"
 
 export function createQdsRadioApi(
   {indented = false, size = "md"}: QdsRadioApiProps,

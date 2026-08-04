@@ -14,18 +14,18 @@ import * as React from "react"
 import {ChevronsLeftRight} from "lucide-react"
 
 import type {ReactDemoWithScope, SourceCodeData} from "@qualcomm-ui/mdx-common"
-import {Button} from "@qualcomm-ui/react/button"
-import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
-import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"
-import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {useRunner, type UseRunnerProps} from "@qualcomm-ui/react-mdx/runner"
+import {Button} from "@qualcomm-ui/react/button"
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
+import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"
+import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {getDefaultSourceCode} from "./code-demo.utils"
+import {getDefaultSourceCode} from "./code-demo.utils.js"
 
 export interface QdsReactDemoProps extends ComponentPropsWithRef<"div"> {
   /**

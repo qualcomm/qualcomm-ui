@@ -1,1 +1,1 @@
-export * from "./interact-outside"
+export * from "./interact-outside.js"

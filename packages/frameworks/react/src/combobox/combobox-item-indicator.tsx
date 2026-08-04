@@ -5,14 +5,13 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Check} from "lucide-react"
 
-import {Icon} from "@qualcomm-ui/react/icon"
 import {
   CoreCombobox,
   type CoreComboboxItemIndicatorProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {Icon} from "@qualcomm-ui/react/icon"
 
-export interface ComboboxItemIndicatorProps
-  extends CoreComboboxItemIndicatorProps {
+export interface ComboboxItemIndicatorProps extends CoreComboboxItemIndicatorProps {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    *

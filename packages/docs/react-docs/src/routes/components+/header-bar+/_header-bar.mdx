@@ -1,12 +1,11 @@
 ---
 title: Header Bar
-group: Data Display
 description: The header bar provides a consistent, high-level control surface for the application. It features a logo that reinforces brand identity, navigation items for accessing primary sections, and an action bar that contains important tools and utilities.
 component: HeaderBar
 aliases: [app bar, navbar, toolbar]
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
 
@@ -31,7 +30,10 @@ responsive, icon button, user avatar
 
 A typical header bar includes a logo, application title, nav items, and an action bar.
 
-<Demo name="HeaderBarShowcaseDemo" component={demos.HeaderBarShowcaseDemo} />
+<Demo
+  name="HeaderBarShowcaseDemo"
+  component={demos.HeaderBarShowcaseDemo}
+/>
 
 ### Sizes
 
@@ -51,7 +53,10 @@ theme, color scheme
 
 Use the [surface](./#surface) prop to set the background color. Available options are `primary` (default) and `secondary`.
 
-<Demo name="HeaderBarSurfacesDemo" component={demos.HeaderBarSurfacesDemo} />
+<Demo
+  name="HeaderBarSurfacesDemo"
+  component={demos.HeaderBarSurfacesDemo}
+/>
 
 ### Padding
 
@@ -69,67 +74,87 @@ Set the [padding](./#padding-1) prop to `large` to increase horizontal padding.
 nav menu
 :::
 
-Render a menu nav item with the [HeaderBar.MenuItem](#header-bar-menu-item) component. This component must be wrapped in a Menu.
+Render a menu nav item with the [HeaderBar.MenuItem](./#header-bar-menu-item) component. This component must be wrapped in a Menu.
 
-<Demo name="HeaderBarMenuItemDemo" component={demos.HeaderBarMenuItemDemo} />
+<Demo
+  name="HeaderBarMenuItemDemo"
+  component={demos.HeaderBarMenuItemDemo}
+/>
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.HeaderBarExplorerDemo}
+  linkPrefix="header-bar"
+  parts={[
+    "root",
+    "logo",
+    "app-title",
+    "divider",
+    "nav",
+    "nav-item",
+    "action-bar",
+  ]}
+  scope="header-bar"
+/>
 
 ## API
 
-### \<HeaderBar.Root\>
+### \<HeaderBar.Root>
 
 <TypeDocProps name="HeaderBarRootProps" />
 
 <TypeDocAttributes name="QdsHeaderBarRootBindings" />
 
-### \<HeaderBar.ActionBar\>
+### \<HeaderBar.ActionBar>
 
 <TypeDocProps name="HeaderBarActionBarProps" />
 
 <TypeDocAttributes name="QdsHeaderBarActionBarBindings" />
 
-### \<HeaderBar.ActionButton\>
+### \<HeaderBar.ActionButton>
 
 <TypeDocProps name="HeaderBarActionButtonProps" />
 
-### \<HeaderBar.ActionIconButton\>
+### \<HeaderBar.ActionIconButton>
 
 <TypeDocProps name="HeaderBarActionIconButtonProps" />
 
-### \<HeaderBar.AppTitle\>
+### \<HeaderBar.AppTitle>
 
 <TypeDocProps name="HeaderBarAppTitleProps" />
 
 <TypeDocAttributes name="QdsHeaderBarAppTitleBindings" />
 
-### \<HeaderBar.Divider\>
+### \<HeaderBar.Divider>
 
 <TypeDocProps name="HeaderBarDividerProps" />
 
 <TypeDocAttributes name="QdsHeaderBarDividerBindings" />
 
-### \<HeaderBar.Logo\>
+### \<HeaderBar.Logo>
 
 <TypeDocProps name="HeaderBarLogoProps" />
 
 <TypeDocAttributes name="QdsHeaderBarLogoBindings" />
 
-### \<HeaderBar.MenuItem\>
+### \<HeaderBar.MenuItem>
 
 <TypeDocProps name="HeaderBarMenuItemProps" />
 
-### \<HeaderBar.NavItem\>
+### \<HeaderBar.NavItem>
 
 <TypeDocProps name="HeaderBarNavItemProps" />
 
 <TypeDocAttributes name="QdsHeaderBarNavItemBindings" />
 
-### \<HeaderBar.Nav\>
+### \<HeaderBar.Nav>
 
 <TypeDocProps name="HeaderBarNavProps" />
 
 <TypeDocAttributes name="QdsHeaderBarNavBindings" />
 
-### \<HeaderBar.WindowControls\>
+### \<HeaderBar.WindowControls>
 
 <TypeDocProps name="HeaderBarWindowControlsProps" />
 

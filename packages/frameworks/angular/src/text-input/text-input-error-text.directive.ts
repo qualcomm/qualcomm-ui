@@ -3,9 +3,9 @@
 
 import {Component, input} from "@angular/core"
 
-import {useInputErrorText} from "@qualcomm-ui/angular/input"
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTextInputErrorTextDirective} from "@qualcomm-ui/angular-core/text-input"
+import {useInputErrorText} from "@qualcomm-ui/angular/input"
 
 /**
  * Error message displayed when the input is invalid.

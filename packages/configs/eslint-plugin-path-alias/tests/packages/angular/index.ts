@@ -1,1 +1,1 @@
-export * from "./components/input"
+export type * from "./components/input"

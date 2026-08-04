@@ -1,10 +1,10 @@
 import {Search} from "lucide-react"
 
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
 import {useListCollection} from "@qualcomm-ui/react-core/collection"
 import {useFilter} from "@qualcomm-ui/react-core/locale"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Combobox} from "@qualcomm-ui/react/combobox"
 
 import {countries} from "./country-list"
 

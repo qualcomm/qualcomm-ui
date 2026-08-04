@@ -2,6 +2,7 @@ import {Component, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 import {Search} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {PaginationModule} from "@qualcomm-ui/angular/pagination"
 import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
@@ -12,7 +13,6 @@ import {
   TableModule,
 } from "@qualcomm-ui/angular/table"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -38,6 +38,7 @@ import {createUserQuery, type User, userColumns} from "./data"
       <div q-table-root>
         <div q-table-action-bar>
           <q-text-input
+            aria-label="Search columns"
             class="w-56"
             placeholder="Search every column..."
             size="sm"

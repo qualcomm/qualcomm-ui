@@ -1,8 +1,8 @@
 import {createContext, type ReactElement, useContext, useState} from "react"
 
 import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
 import {render, renderHook} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {

@@ -3,8 +3,8 @@
 
 import {Component} from "@angular/core"
 
-import {useInputGroup} from "@qualcomm-ui/angular/input"
 import {CorePasswordInputInputGroupDirective} from "@qualcomm-ui/angular-core/password-input"
+import {useInputGroup} from "@qualcomm-ui/angular/input"
 
 @Component({
   selector: "[q-password-input-input-group]",

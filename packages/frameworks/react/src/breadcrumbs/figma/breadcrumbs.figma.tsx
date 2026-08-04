@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import figma from "@figma/code-connect"
-import {FolderClosed} from "lucide-react"
 
 import type {
   QdsBreadcrumbsEmphasis,
@@ -10,18 +9,8 @@ import type {
 } from "@qualcomm-ui/qds-core/breadcrumbs"
 import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 
-// Shared props for size and emphasis (omitting defaults)
-const sharedProps = {
-  emphasis: figma.enum<QdsBreadcrumbsEmphasis>("emphasis", {
-    neutral: "neutral",
-  }),
-  size: figma.enum<QdsBreadcrumbsSize>("size", {
-    lg: "lg",
-    sm: "sm",
-  }),
-}
+// Breadcrumbs Item is mapped via the raw template in ./breadcrumb-item.figma.js
 
-/** Breadcrumb Container (Root + List) */
 figma.connect(Breadcrumbs.Root, "<FIGMA_COMPONENTS_BASE>?node-id=3728-17610", {
   example: ({children, emphasis, size}) => (
     <Breadcrumbs.Root aria-label="Breadcrumbs" emphasis={emphasis} size={size}>
@@ -29,51 +18,13 @@ figma.connect(Breadcrumbs.Root, "<FIGMA_COMPONENTS_BASE>?node-id=3728-17610", {
     </Breadcrumbs.Root>
   ),
   props: {
-    ...sharedProps,
     children: figma.children("_Breadcrumb item"),
-  },
-})
-
-/** Breadcrumb Item */
-
-// Default item (idle/hover/pressed/focus states)
-figma.connect(Breadcrumbs.Item, "<FIGMA_COMPONENTS_BASE>?node-id=3728-13488", {
-  example: ({icon}) => (
-    <Breadcrumbs.Item icon={icon}>Breadcrumb</Breadcrumbs.Item>
-  ),
-  props: {
-    icon: figma.boolean("showIcon", {
-      true: FolderClosed,
+    emphasis: figma.enum<QdsBreadcrumbsEmphasis>("emphasis", {
+      neutral: "neutral",
+    }),
+    size: figma.enum<QdsBreadcrumbsSize>("size", {
+      lg: "lg",
+      sm: "sm",
     }),
   },
-})
-
-// Active item (current page)
-figma.connect(Breadcrumbs.Item, "<FIGMA_COMPONENTS_BASE>?node-id=3728-13488", {
-  example: ({icon}) => (
-    <Breadcrumbs.Item aria-current="page" icon={icon}>
-      Breadcrumb
-    </Breadcrumbs.Item>
-  ),
-  props: {
-    icon: figma.boolean("showIcon", {
-      true: FolderClosed,
-    }),
-  },
-  variant: {state: "active"},
-})
-
-// Disabled item
-figma.connect(Breadcrumbs.Item, "<FIGMA_COMPONENTS_BASE>?node-id=3728-13488", {
-  example: ({icon}) => (
-    <Breadcrumbs.Item disabled icon={icon}>
-      Breadcrumb
-    </Breadcrumbs.Item>
-  ),
-  props: {
-    icon: figma.boolean("showIcon", {
-      true: FolderClosed,
-    }),
-  },
-  variant: {state: "disabled"},
 })

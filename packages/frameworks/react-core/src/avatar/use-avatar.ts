@@ -15,7 +15,7 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useAvatarContext} from "./avatar-context"
+import {useAvatarContext} from "./avatar-context.js"
 
 export function useAvatar(props: AvatarApiProps): AvatarApi {
   const machine = useMachine(avatarMachine, props)

@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
@@ -17,6 +18,8 @@ import type {
   MachineSchema,
   Scope,
 } from "@qualcomm-ui/utils/machine"
+
+import type {stepperAnatomy} from "./stepper.anatomy.js"
 
 export type StepperOrientation =
   | "horizontal"
@@ -242,37 +245,34 @@ export interface StepperItemState extends StepperItemProps {
   visited: boolean
 }
 
-interface CommonBindings extends Required<DirectionProperty> {
-  scope: "stepper"
-}
+type PartName = AnatomyPartName<typeof stepperAnatomy>
+interface Part<P extends PartName>
+  extends AnatomyPart<"stepper", P>, Required<DirectionProperty> {}
 
-export interface StepperRootBindings extends CommonBindings {
+export interface StepperRootBindings extends Part<"root"> {
   "data-orientation": StepperOrientation
-  "data-part": "root"
   id: string
 }
 
-export interface StepperListBindings extends CommonBindings {
+export interface StepperListBindings extends Part<"list"> {
   "aria-orientation": "horizontal" | "vertical"
   "aria-owns": string
   "data-orientation": StepperOrientation
-  "data-part": "list"
   id: string
   role: "tablist"
 }
 
-export interface StepperItemBindings extends CommonBindings {
+export interface StepperItemBindings extends Part<"item"> {
   "data-current": BooleanDataAttr
   "data-first": BooleanDataAttr
   "data-last": BooleanDataAttr
   "data-orientation": StepperOrientation
-  "data-part": "item"
   "data-previous": BooleanDataAttr
   "data-skippable": BooleanDataAttr
   role: "none"
 }
 
-export interface StepperTriggerBindings extends CommonBindings {
+export interface StepperTriggerBindings extends Part<"trigger"> {
   "aria-controls": string
   "aria-current": "step" | undefined
   "aria-disabled": BooleanAriaAttr
@@ -283,7 +283,6 @@ export interface StepperTriggerBindings extends CommonBindings {
   "data-invalid": BooleanDataAttr
   "data-last": BooleanDataAttr
   "data-orientation": StepperOrientation
-  "data-part": "trigger"
   "data-pending": BooleanDataAttr
   "data-state": "open" | "closed"
   id: string
@@ -292,10 +291,9 @@ export interface StepperTriggerBindings extends CommonBindings {
   tabIndex: 0 | -1
 }
 
-export interface StepperContentBindings extends CommonBindings {
+export interface StepperContentBindings extends Part<"content"> {
   "aria-labelledby": string
   "data-orientation": StepperOrientation
-  "data-part": "content"
   "data-state": "open" | "closed"
   hidden: boolean
   id: string
@@ -303,56 +301,49 @@ export interface StepperContentBindings extends CommonBindings {
   tabIndex: 0
 }
 
-export interface StepperIndicatorBindings extends CommonBindings {
+export interface StepperIndicatorBindings extends Part<"indicator"> {
   "aria-hidden": true
   "data-complete": BooleanDataAttr
   "data-current": BooleanDataAttr
   "data-incomplete": BooleanDataAttr
   "data-orientation": StepperOrientation
-  "data-part": "indicator"
   style: JSX.CSSProperties
 }
 
-export interface StepperSeparatorBindings extends CommonBindings {
+export interface StepperSeparatorBindings extends Part<"separator"> {
   "data-complete": BooleanDataAttr
   "data-incomplete": BooleanDataAttr
   "data-orientation": StepperOrientation
-  "data-part": "separator"
   style: JSX.CSSProperties | undefined
 }
 
-export interface StepperLabelBindings extends CommonBindings {
+export interface StepperLabelBindings extends Part<"label"> {
   "data-complete": BooleanDataAttr
   "data-current": BooleanDataAttr
   "data-incomplete": BooleanDataAttr
   "data-orientation": StepperOrientation
-  "data-part": "label"
 }
 
-export interface StepperCompletedContentBindings extends CommonBindings {
-  "data-part": "completed-content"
+export interface StepperCompletedContentBindings extends Part<"completedContent"> {
   hidden: boolean
 }
 
-export interface StepperHintBindings extends CommonBindings {
+export interface StepperHintBindings extends Part<"hint"> {
   "data-complete": BooleanDataAttr
   "data-current": BooleanDataAttr
   "data-incomplete": BooleanDataAttr
   "data-orientation": StepperOrientation
-  "data-part": "hint"
 }
 
-export interface StepperNextTriggerBindings extends CommonBindings {
+export interface StepperNextTriggerBindings extends Part<"nextTrigger"> {
   "data-disabled": BooleanDataAttr
-  "data-part": "next-trigger"
   disabled: boolean
   onClick: JSX.MouseEventHandler
   type: "button"
 }
 
-export interface StepperPrevTriggerBindings extends CommonBindings {
+export interface StepperPrevTriggerBindings extends Part<"prevTrigger"> {
   "data-disabled": BooleanDataAttr
-  "data-part": "prev-trigger"
   disabled: boolean
   onClick: JSX.MouseEventHandler
   type: "button"

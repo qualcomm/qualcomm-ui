@@ -1,5 +1,169 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.5.9
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
+## 1.5.8
+
+Jul 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/dom@1.1.5, @qualcomm-ui/core@1.11.6]
+
+## 1.5.7
+
+Jun 10th, 2026
+
+### Miscellaneous Chores
+
+- lint ([996b90a](https://github.com/qualcomm/qualcomm-ui/commit/996b90a))
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.2, @qualcomm-ui/dom@1.1.4, @qualcomm-ui/core@1.11.5]
+
+### Code Refactoring
+
+- support nodenext resolution ([067b4de](https://github.com/qualcomm/qualcomm-ui/commit/067b4de))
+
+### Styles
+
+- apply lint updates ([9fec50d](https://github.com/qualcomm/qualcomm-ui/commit/9fec50d))
+
+## 1.5.6
+
+Jun 5th, 2026
+
+### Bug Fixes
+
+- [useSegmentedControlItem]: add explicit return type ([0318e9d](https://github.com/qualcomm/qualcomm-ui/commit/0318e9d))
+
+## 1.5.5
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.4]
+
+## 1.5.4
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/dom, @qualcomm-ui/utils]
+
+## 1.5.3
+
+Jun 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.5.2
+
+May 29th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.5.1
+
+May 22nd, 2026
+
+### Miscellaneous Chores
+
+- update pnpm and test dependencies ([b175d6a](https://github.com/qualcomm/qualcomm-ui/commit/b175d6a))
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.5.0
+
+May 14th, 2026
+
+### Features
+
+- [file-upload]: add shared file upload primitives ([c6f26f5](https://github.com/qualcomm/qualcomm-ui/commit/c6f26f5))
+- [file-upload]: add framework core bindings ([fcec116](https://github.com/qualcomm/qualcomm-ui/commit/fcec116))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 1.4.7
+
+May 7th, 2026
+
+### Miscellaneous Chores
+
+- [deps]: allow lucide-react v1 ([510b95c](https://github.com/qualcomm/qualcomm-ui/commit/510b95c))
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.4.6
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 1.4.5
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.4.4
+
+Apr 29th, 2026
+
+### Bug Fixes
+
+- [menu]: support disabled state for all item variants ([a55faf1](https://github.com/qualcomm/qualcomm-ui/commit/a55faf1))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.4.3
+
+Apr 23rd, 2026
+
+### Code Refactoring
+
+- [react-core]: export UseControlledState interface ([1596b17](https://github.com/qualcomm/qualcomm-ui/commit/1596b17))
+
+## 1.4.2
+
+Apr 19th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/dom, @qualcomm-ui/core]
+
+## 1.4.1
+
+Apr 19th, 2026
+
+### Code Refactoring
+
+- [fieldset]: update anatomy attributes ([69bfdd5](https://github.com/qualcomm/qualcomm-ui/commit/69bfdd5))
+- [field]: update anatomy attributes ([0d8ebc0](https://github.com/qualcomm/qualcomm-ui/commit/0d8ebc0))
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
 ## 1.4.0
 
 Apr 7th, 2026

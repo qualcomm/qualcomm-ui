@@ -8,7 +8,7 @@ import {
   BaseApiContextService,
   createApiContext,
 } from "@qualcomm-ui/angular-core/machine"
-import {type ProgressApi} from "@qualcomm-ui/core/progress"
+import type {ProgressApi} from "@qualcomm-ui/core/progress"
 
 @Injectable()
 export class ProgressContextService extends BaseApiContextService<ProgressApi> {}

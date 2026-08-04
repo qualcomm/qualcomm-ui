@@ -4,9 +4,9 @@
 import {Component, computed} from "@angular/core"
 import {X} from "lucide-angular"
 
-import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreSelectClearTriggerDirective} from "@qualcomm-ui/angular-core/select"
+import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context.service"

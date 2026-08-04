@@ -13,11 +13,11 @@ import {
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {domEls, domIds} from "./internal"
+import {domEls, domIds} from "./internal/index.js"
+import {radioAnatomy} from "./radio.anatomy.js"
 import type {
   ItemState,
   RadioApi,
-  RadioCommonBindings,
   RadioGroupBindings,
   RadioGroupErrorTextBindings,
   RadioGroupHintBindings,
@@ -31,7 +31,9 @@ import type {
   RadioItemHintBindings,
   RadioItemLabelBindings,
   RadioSchema,
-} from "./radio.types"
+} from "./radio.types.js"
+
+const parts = radioAnatomy.parts
 
 export function createRadioApi(
   machine: Machine<RadioSchema>,
@@ -39,10 +41,7 @@ export function createRadioApi(
 ): RadioApi {
   const {computed, context, prop, scope, send} = machine
 
-  const commonBindings: RadioCommonBindings = {
-    "data-scope": "radio",
-    dir: prop("dir"),
-  }
+  const dir = prop("dir")
 
   const groupDisabled = computed("disabled")
   const invalid = prop("invalid")
@@ -97,7 +96,7 @@ export function createRadioApi(
     getGroupBindings(props): RadioGroupBindings {
       scope.ids.register("root", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.group,
         "aria-describedby": prop("invalid")
           ? domIds.errorText(scope)
           : undefined,
@@ -106,7 +105,7 @@ export function createRadioApi(
         "aria-orientation": prop("orientation"),
         "data-disabled": booleanDataAttr(groupDisabled),
         "data-orientation": prop("orientation"),
-        "data-part": "group",
+        dir,
         id: domIds.root(scope),
         role: "radiogroup",
       })
@@ -115,9 +114,9 @@ export function createRadioApi(
     getGroupErrorTextBindings(props): RadioGroupErrorTextBindings {
       scope.ids.register("errorText", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.errorText,
         "aria-live": "polite",
-        "data-part": "error-text",
+        dir,
         hidden: !prop("invalid"),
         id: domIds.errorText(scope),
       })
@@ -126,20 +125,20 @@ export function createRadioApi(
     getGroupHintBindings(props): RadioGroupHintBindings {
       scope.ids.register("hint", props)
       return normalize.element({
-        ...commonBindings,
+        ...parts.hint,
         "data-disabled": booleanDataAttr(groupDisabled),
-        "data-part": "hint",
+        dir,
         hidden: !!prop("invalid"),
         id: domIds.hint(scope),
       })
     },
 
     getGroupItemsBindings(): RadioGroupItemsBindings {
-      return {
-        ...commonBindings,
+      return normalize.element({
+        ...parts.items,
         "data-orientation": prop("orientation"),
-        "data-part": "items",
-      }
+        dir,
+      })
     },
 
     getItemState,
@@ -147,9 +146,9 @@ export function createRadioApi(
     getLabelBindings(props): RadioGroupLabelBindings {
       scope.ids.register("label", props)
       return normalize.label({
-        ...commonBindings,
+        ...parts.label,
         "data-disabled": booleanDataAttr(groupDisabled),
-        "data-part": "label",
+        dir,
         id: domIds.label(scope),
         onClick: focus,
       })
@@ -161,9 +160,9 @@ export function createRadioApi(
         .register(itemProps.value, itemProps.id, itemProps.onDestroy)
       const itemState = getItemState(itemProps)
       return normalize.element({
-        ...commonBindings,
+        ...parts.item,
         ...getItemDataAttrs(itemProps),
-        "data-part": "item",
+        dir,
         htmlFor: domIds.itemHiddenInput(scope, itemProps.value)!,
         onClick(event) {
           if (!itemState.disabled && isSafari() && !event.defaultPrevented) {
@@ -212,11 +211,11 @@ export function createRadioApi(
     getRadioControlBindings(itemProps): RadioItemControlBindings {
       const itemState = getItemState(itemProps)
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemControl,
         ...getItemDataAttrs(itemProps),
         "aria-hidden": true,
         "data-active": booleanDataAttr(itemState.active),
-        "data-part": "item-control",
+        dir,
       })
     },
 
@@ -226,14 +225,14 @@ export function createRadioApi(
         .collection("itemHiddenInput")
         .register(itemProps.value, itemProps.id, itemProps.onDestroy)
       return normalize.input({
-        ...commonBindings,
+        ...parts.itemHiddenInput,
         ...getItemDataAttrs(itemProps),
         "aria-labelledby": scope.ids
           .collection("itemLabel")
           .get(itemProps.value),
         "data-ownedby": domIds.root(scope),
-        "data-part": "item-hidden-input",
         defaultChecked: itemState.checked,
+        dir,
         disabled: itemState.disabled,
         form: prop("form") || undefined,
         id: itemProps.id,
@@ -281,9 +280,9 @@ export function createRadioApi(
         .collection("itemHint")
         .register(itemProps.value, itemProps.id, itemProps.onDestroy)
       return normalize.element({
-        ...commonBindings,
+        ...parts.itemHint,
         ...getItemDataAttrs(itemProps),
-        "data-part": "item-hint",
+        dir,
         hidden: !!invalid,
         id: itemProps.id,
       })
@@ -294,9 +293,9 @@ export function createRadioApi(
         .collection("itemLabel")
         .register(itemProps.value, itemProps.id, itemProps.onDestroy)
       return normalize.label({
-        ...commonBindings,
+        ...parts.itemLabel,
         ...getItemDataAttrs(itemProps),
-        "data-part": "item-label",
+        dir,
         id: itemProps.id,
         onClick: () => {
           if (!getItemState(itemProps).disabled) {

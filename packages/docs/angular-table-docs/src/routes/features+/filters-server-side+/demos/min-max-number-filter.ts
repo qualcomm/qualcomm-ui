@@ -56,6 +56,7 @@ function setFilterValue(
       }
       <div class="flex w-32 gap-2">
         <q-number-input
+          aria-label="Min value"
           placeholder="Min"
           size="sm"
           [min]="0"
@@ -65,6 +66,7 @@ function setFilterValue(
           <div hidden q-number-input-control></div>
         </q-number-input>
         <q-number-input
+          aria-label="Max value"
           placeholder="Max"
           size="sm"
           [max]="999"

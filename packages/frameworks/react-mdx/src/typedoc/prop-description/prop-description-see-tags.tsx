@@ -3,14 +3,14 @@
 
 import {Fragment, type ReactNode} from "react"
 
-import {Link} from "@qualcomm-ui/react/link"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {Link} from "@qualcomm-ui/react/link"
 import type {
   QuiCommentDisplayPart,
   QuiCommentTag,
 } from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionSummary} from "./prop-description-summary"
+import {PropDescriptionSummary} from "./prop-description-summary.js"
 
 function isSingleLinkTag(tag: QuiCommentTag) {
   return (

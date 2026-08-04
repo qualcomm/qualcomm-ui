@@ -1,3 +1,3 @@
-export * from "./divider.api"
-export * from "./divider.classes"
-export type * from "./divider.types"
+export * from "./divider.api.js"
+export * from "./divider.classes.js"
+export type * from "./divider.types.js"

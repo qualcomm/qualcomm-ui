@@ -5,7 +5,7 @@ import type {ReactElement, ReactNode} from "react"
 
 import {
   createQdsTextBadgeApi,
-  type QdsTextBadgeProps as QdsTextBadgeProps,
+  type QdsTextBadgeProps,
 } from "@qualcomm-ui/qds-core/badge"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
@@ -15,8 +15,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface BadgeProps
-  extends QdsTextBadgeProps,
-    ElementRenderProp<"span"> {
+  extends QdsTextBadgeProps, ElementRenderProp<"span"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

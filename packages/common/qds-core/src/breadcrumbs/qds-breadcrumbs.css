@@ -26,6 +26,10 @@
         color: var(--color-text-neutral-primary);
         --icon-color: var(--color-icon-neutral-primary);
       }
+      &:not(a) {
+        cursor: default;
+        pointer-events: none;
+      }
     }
   }
 
@@ -45,6 +49,8 @@
   border: 0 solid;
   border-radius: var(--border-radius-sm);
   box-sizing: border-box;
+
+  cursor: pointer;
   display: inline-flex;
   gap: var(--spacing-40);
   margin: 0;

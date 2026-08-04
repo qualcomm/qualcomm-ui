@@ -29,13 +29,18 @@ import {
 } from "@qualcomm-ui/utils/machine"
 import {maybeAccess} from "@qualcomm-ui/utils/object"
 
-import {emptyCollection} from "./combobox.collection"
+import {emptyCollection} from "./combobox.collection.js"
 import type {
   ComboboxInputValueChangeReason,
   ComboboxOpenChangeReason,
   ComboboxSchema,
-} from "./combobox.types"
-import {domEls, focusInputEl, focusTriggerEl, getItemEl} from "./internal"
+} from "./combobox.types.js"
+import {
+  domEls,
+  focusInputEl,
+  focusTriggerEl,
+  getItemEl,
+} from "./internal/index.js"
 
 const {and, not} = createGuards<ComboboxSchema>()
 
@@ -182,7 +187,9 @@ const comboboxMachineBase = {
       cleanups.push(observerCleanup)
 
       return () => {
-        cleanups.forEach((cleanup) => cleanup())
+        for (const cleanup of cleanups) {
+          cleanup()
+        }
       }
     },
     trackDismissableLayer({prop, scope, send}) {
@@ -310,7 +317,6 @@ const comboboxMachineBase = {
       selectionBehavior: props.multiple ? "clear" : "replace",
       ...props,
       positioning: {
-        gutter: 2,
         placement: "bottom-start",
         sameWidth: true,
         ...props.positioning,

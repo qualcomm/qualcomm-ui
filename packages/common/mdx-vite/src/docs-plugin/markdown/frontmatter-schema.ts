@@ -5,7 +5,19 @@ import {z, type ZodObject} from "zod"
 
 import type {PageFrontmatter} from "@qualcomm-ui/mdx-common"
 
-import {implement} from "../config/zod"
+import type {Implements} from "../config/zod.js"
+
+function implement<Model = never>() {
+  return {
+    with: <
+      Schema extends Implements<Model> & {
+        [unknownKey in Exclude<keyof Schema, keyof Model>]: never
+      },
+    >(
+      schema: Schema,
+    ) => z.object(schema),
+  }
+}
 
 /**
  * Used to validate the MDX frontmatter and emit warnings for pages that violate the

@@ -1,24 +1,30 @@
-import {type PopoverProps, Popover as SimplePopover} from "./popover"
-import {PopoverAnchor, type PopoverAnchorProps} from "./popover-anchor"
-import {PopoverArrow, type PopoverArrowProps} from "./popover-arrow"
-import {PopoverArrowTip, type PopoverArrowTipProps} from "./popover-arrow-tip"
+import {PopoverAnchor, type PopoverAnchorProps} from "./popover-anchor.js"
+import {
+  PopoverArrowTip,
+  type PopoverArrowTipProps,
+} from "./popover-arrow-tip.js"
+import {PopoverArrow, type PopoverArrowProps} from "./popover-arrow.js"
 import {
   PopoverCloseTrigger,
   type PopoverCloseTriggerProps,
-} from "./popover-close-trigger"
-import {PopoverContent, type PopoverContentProps} from "./popover-content"
+} from "./popover-close-trigger.js"
+import {PopoverContent, type PopoverContentProps} from "./popover-content.js"
 import {
   PopoverDescription,
   type PopoverDescriptionProps,
-} from "./popover-description"
-import {PopoverIndicator, type PopoverIndicatorProps} from "./popover-indicator"
-import {PopoverLabel, type PopoverLabelProps} from "./popover-label"
+} from "./popover-description.js"
+import {
+  PopoverIndicator,
+  type PopoverIndicatorProps,
+} from "./popover-indicator.js"
+import {PopoverLabel, type PopoverLabelProps} from "./popover-label.js"
 import {
   PopoverPositioner,
   type PopoverPositionerProps,
-} from "./popover-positioner"
-import {PopoverRoot, type PopoverRootProps} from "./popover-root"
-import {PopoverTrigger, type PopoverTriggerProps} from "./popover-trigger"
+} from "./popover-positioner.js"
+import {PopoverRoot, type PopoverRootProps} from "./popover-root.js"
+import {PopoverTrigger, type PopoverTriggerProps} from "./popover-trigger.js"
+import {type PopoverProps, Popover as SimplePopover} from "./popover.js"
 
 export type {
   PopoverAnchorProps,

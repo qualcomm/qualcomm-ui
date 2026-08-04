@@ -1,3 +1,3 @@
-export * from "./action-group.api"
-export * from "./action-group.classes"
-export type * from "./action-group.types"
+export * from "./action-group.api.js"
+export * from "./action-group.classes.js"
+export type * from "./action-group.types.js"

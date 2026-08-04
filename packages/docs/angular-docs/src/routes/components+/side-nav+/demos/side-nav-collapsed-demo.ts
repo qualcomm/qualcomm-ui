@@ -1,10 +1,10 @@
 import {Component, signal} from "@angular/core"
 import {PanelLeftClose, PanelLeftOpen} from "lucide-angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {SideNavModule} from "@qualcomm-ui/angular/side-nav"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 import {collection, icons} from "./items"
 import {QLogoComponent} from "./q-logo.component"

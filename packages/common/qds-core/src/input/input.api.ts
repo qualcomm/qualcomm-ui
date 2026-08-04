@@ -3,7 +3,8 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {inputClasses} from "./input.classes"
+import {qdsInputAnatomy} from "./input.anatomy.js"
+import {inputClasses} from "./input.classes.js"
 import type {
   QdsInputApi,
   QdsInputApiProps,
@@ -19,7 +20,9 @@ import type {
   QdsInputRootBindings,
   QdsInputSize,
   QdsInputStartIconBindings,
-} from "./input.types"
+} from "./input.types.js"
+
+const parts = qdsInputAnatomy.parts
 
 const inputIconSizes: Record<QdsInputSize, number> = {
   lg: 20,
@@ -50,8 +53,8 @@ export function createQdsInputApi<IconType>(
     },
     getEndIconBindings(): QdsInputEndIconBindings {
       return normalize.element({
+        ...parts.endIcon,
         className: inputClasses.icon,
-        "data-part": "end-icon",
         "data-size": size,
       })
     },
@@ -102,8 +105,8 @@ export function createQdsInputApi<IconType>(
     },
     getStartIconBindings(): QdsInputStartIconBindings {
       return normalize.element({
+        ...parts.startIcon,
         className: inputClasses.icon,
-        "data-part": "start-icon",
         "data-size": size,
       })
     },

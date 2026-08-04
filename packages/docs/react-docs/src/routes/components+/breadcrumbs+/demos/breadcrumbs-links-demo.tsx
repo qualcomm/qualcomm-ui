@@ -13,7 +13,7 @@ export function BreadcrumbsLinksDemo(): ReactElement {
         <Breadcrumbs.Item icon={Home} render={<Link to="/" />}>
           Home
         </Breadcrumbs.Item>
-        <Breadcrumbs.Item render={<Link to="/components" />}>
+        <Breadcrumbs.Item render={<Link to="/components/overview" />}>
           Components
         </Breadcrumbs.Item>
         <Breadcrumbs.Item

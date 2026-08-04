@@ -1,1 +1,1 @@
-export * from "./escape-string-regexp"
+export * from "./escape-string-regexp.js"

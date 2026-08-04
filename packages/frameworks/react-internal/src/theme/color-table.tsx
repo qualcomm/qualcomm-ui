@@ -1,10 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {useEffect, useState} from "react"
+import {type ReactElement, useEffect, useState} from "react"
 
-import {Table} from "@qualcomm-ui/react/table"
 import {useTheme} from "@qualcomm-ui/react-router-utils/client"
+import {Table} from "@qualcomm-ui/react/table"
 import type {ColorData} from "@qualcomm-ui/tailwind-plugin/theme"
 
 import {TableWrapper} from "./table-wrapper"
@@ -13,7 +13,7 @@ interface ColorTableProps {
   data: ColorData[]
 }
 
-export function ColorTable({data = []}: ColorTableProps) {
+export function ColorTable({data = []}: ColorTableProps): ReactElement {
   // we need to force a re-render after mount and on theme change to reflect the
   // computed property values.
   const [theme] = useTheme()
@@ -36,7 +36,7 @@ export function ColorTable({data = []}: ColorTableProps) {
   return (
     <div key={key} className="w-full">
       <div className="doc-props-list__root bottom-border block sm:hidden">
-        {data.map(({tailwindClass, variable}) => {
+        {data.map(({tailwindClasses, variable}) => {
           return (
             <div key={variable} className="doc-props-list-item__root">
               <div className="doc-props-list-item__name-wrapper"></div>
@@ -49,8 +49,8 @@ export function ColorTable({data = []}: ColorTableProps) {
                 </div>
                 <div className="doc-props__content">
                   <div className="doc-props__title">Tailwind Class</div>
-                  <code className="fit bg-transparent! font-mono">
-                    {tailwindClass}
+                  <code className="fit bg-transparent! font-mono whitespace-pre-line">
+                    {tailwindClasses.join("\n")}
                   </code>
                 </div>
                 <div className="doc-props__content">
@@ -85,11 +85,13 @@ export function ColorTable({data = []}: ColorTableProps) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data.map(({tailwindClass, variable}) => {
+          {data.map(({tailwindClasses, variable}) => {
             return (
               <Table.Row key={variable}>
                 <Table.Cell>{variable}</Table.Cell>
-                <Table.Cell>{tailwindClass}</Table.Cell>
+                <Table.Cell className="whitespace-pre-line">
+                  {tailwindClasses.join("\n")}
+                </Table.Cell>
                 <Table.Cell
                   className="h-8"
                   style={{

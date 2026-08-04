@@ -3,12 +3,12 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {InputLabel} from "@qualcomm-ui/react/input"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {
   useTextInputContext,
   useTextInputLabel,
 } from "@qualcomm-ui/react-core/text-input"
+import {InputLabel} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TextInputLabelProps extends ElementRenderProp<"label"> {

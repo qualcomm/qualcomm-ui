@@ -1,2 +1,2 @@
-export * from "./highlight-text"
-export * from "./use-highlight"
+export * from "./highlight-text.js"
+export * from "./use-highlight.js"

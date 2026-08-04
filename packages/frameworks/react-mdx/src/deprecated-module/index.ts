@@ -1,1 +1,1 @@
-export * from "./deprecated-module"
+export * from "./deprecated-module.js"

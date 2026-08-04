@@ -4,17 +4,16 @@
 import type {ReactElement} from "react"
 
 import {
-  InputErrorIndicator,
-  type InputErrorIndicatorProps,
-} from "@qualcomm-ui/react/input"
-import {
   CoreCombobox,
   type CoreComboboxErrorIndicatorProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {
+  InputErrorIndicator,
+  type InputErrorIndicatorProps,
+} from "@qualcomm-ui/react/input"
 
 export interface ComboboxErrorIndicatorProps
-  extends CoreComboboxErrorIndicatorProps,
-    InputErrorIndicatorProps {}
+  extends CoreComboboxErrorIndicatorProps, InputErrorIndicatorProps {}
 
 /**
  * Visual indicator displayed when the input is invalid. Renders a `<div>` element

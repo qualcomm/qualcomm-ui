@@ -1,5 +1,76 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.4.2
+
+Jun 10th, 2026
+
+### Styles
+
+- apply lint updates ([4826561](https://github.com/qualcomm/qualcomm-ui/commit/4826561))
+
+### Code Refactoring
+
+- support nodenext resolution ([4056254](https://github.com/qualcomm/qualcomm-ui/commit/4056254))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.0.8]
+
+## 2.4.1
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common]
+
+## 2.4.0
+
+May 14th, 2026
+
+### Features
+
+- [docs-layout]: add configurable badge renderers ([b2e87d5](https://github.com/qualcomm/qualcomm-ui/commit/b2e87d5))
+
+## 2.3.0
+
+Apr 29th, 2026
+
+### Features
+
+- [docs-plugin]: add since field to SimplifiedProp and SectionTypes ([c853f18](https://github.com/qualcomm/qualcomm-ui/commit/c853f18))
+
+## 2.2.0
+
+Apr 23rd, 2026
+
+### Features
+
+- [mdx-common]: add NavBadge type and isNavBadge type guard ([1ef8453](https://github.com/qualcomm/qualcomm-ui/commit/1ef8453))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common]
+
+## 2.1.3
+
+Apr 23rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common]
+
+## 2.1.2
+
+Apr 19th, 2026
+
+### Miscellaneous Chores
+
+- upgrade prettier and eslint dependenies, fix resulting formatting issues ([332185a](https://github.com/qualcomm/qualcomm-ui/commit/332185a))
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common]
+
 ## 2.1.1
 
 Apr 2nd, 2026

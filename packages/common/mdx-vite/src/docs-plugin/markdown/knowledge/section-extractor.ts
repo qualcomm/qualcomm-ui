@@ -17,10 +17,10 @@ import type {
   SimplifiedProp,
 } from "@qualcomm-ui/mdx-common"
 
-import {isSpoilerBlock, isStepBlock} from "../../remark"
-import {SlugGenerator, slugify} from "../create-slug"
+import {isSpoilerBlock, isStepBlock} from "../../remark/index.js"
+import {SlugGenerator, slugify} from "../create-slug.js"
 
-import {computeMd5} from "./utils"
+import {computeMd5} from "./utils.js"
 
 export interface SectionExtractorOptions {
   /**
@@ -250,12 +250,22 @@ export class SectionExtractor {
     for (const node of nodes) {
       if (node.type === "code") {
         const codeNode = node as Code & {
-          data?: {typeDocProps?: {name: string; props: SimplifiedProp[]}}
+          data?: {
+            typeDocProps?: {
+              name: string
+              props: SimplifiedProp[]
+              since?: string
+            }
+          }
         }
 
         if (codeNode.data?.typeDocProps) {
-          const {name, props} = codeNode.data.typeDocProps
-          sectionTypes.push({props, type: name})
+          const {name, props, since} = codeNode.data.typeDocProps
+          sectionTypes.push({
+            props,
+            since,
+            type: name,
+          })
         }
 
         codeExamples.push({

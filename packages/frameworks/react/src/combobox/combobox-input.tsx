@@ -3,11 +3,11 @@
 
 import type {ReactElement} from "react"
 
-import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {
   CoreCombobox,
   type CoreComboboxInputProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface ComboboxInputProps extends CoreComboboxInputProps {}

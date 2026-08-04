@@ -2,6 +2,7 @@
   background: var(--color-background-neutral-00);
   border: solid 1px var(--table-border-color);
   border-radius: var(--border-radius-md);
+  box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   width: 100%;
 
@@ -99,6 +100,7 @@
   }
   background: var(--color-background-neutral-02);
   border-bottom: solid 1px var(--table-border-color);
+  box-sizing: border-box;
   font: var(--header-font);
   height: var(--cell-min-height);
   padding: var(--spacing-50) var(--cell-padding-x);
@@ -110,6 +112,7 @@
   &:not(:last-of-type) {
     border-inline-end: var(--cell-border-right);
   }
+  box-sizing: border-box;
   font: var(--cell-font);
   height: var(--cell-min-height);
   padding: var(--spacing-50) var(--cell-padding-x);
@@ -186,6 +189,7 @@
 .qui-table__drag-preview {
   align-items: center;
   border: solid 1px var(--color-border-neutral-01);
+  box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   display: flex;
   font: var(--font-static-body-xs-default);

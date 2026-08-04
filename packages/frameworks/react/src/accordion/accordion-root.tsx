@@ -24,7 +24,8 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface AccordionRootProps
-  extends AccordionApiProps,
+  extends
+    AccordionApiProps,
     QdsAccordionApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {
   /**

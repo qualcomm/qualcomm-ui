@@ -64,7 +64,7 @@
 
 .qui-progress-ring__track {
   fill: transparent;
-  stroke: var(--track-default);
+  stroke: var(--cross-component-track-default);
   stroke-width: var(--stroke-width);
 }
 
@@ -97,7 +97,7 @@
   }
 
   &[data-disabled] {
-    --progress-color: var(--color-utility-disabled-track-fill);
+    --progress-color: var(--color-utility-disabled-background-solid);
   }
 
   &[data-disabled][data-state="indeterminate"] {

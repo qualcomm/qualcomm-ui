@@ -3,10 +3,6 @@
 
 import {computed, Directive, inject, input} from "@angular/core"
 
-import {
-  provideQdsInputContext,
-  QdsInputContextService,
-} from "@qualcomm-ui/angular/input"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
@@ -14,6 +10,10 @@ import {
   provideSelectContext,
 } from "@qualcomm-ui/angular-core/select"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {
+  provideQdsInputContext,
+  QdsInputContextService,
+} from "@qualcomm-ui/angular/input"
 import {createQdsInputApi} from "@qualcomm-ui/qds-core/input"
 import {
   createQdsSelectApi,

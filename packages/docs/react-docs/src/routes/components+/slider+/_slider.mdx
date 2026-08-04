@@ -1,6 +1,5 @@
 ---
 title: Slider
-group: Form Controls
 description: A slider is an input control that allows users to adjust a single value or a value range along a defined linear scale. It provides a draggable handle mapped to a continuous or discrete interval.
 component: Slider
 aliases: [range slider, range picker]
@@ -110,13 +109,15 @@ endpoint labels
 
 For more compact designs, you can display the `min` and `max` markers at the ends of the track using the [sideMarkers](./#sideMarkers) prop.
 
-<Demo name="SliderSideMarkersDemo" component={demos.SliderSideMarkersDemo} />
+<Demo
+  name="SliderSideMarkersDemo"
+  component={demos.SliderSideMarkersDemo}
+/>
 
 ### Range
 
 ::: terms
-dual thumb
-two handles
+dual thumb, two handles
 :::
 
 Set the [value](./#value) or [defaultValue](./#defaultValue) prop with two values to create a range slider.
@@ -265,7 +266,7 @@ function RangeSlider() {
 
 ### Thumbs with tooltips
 
-Setting the [tooltip](#./tooltip) prop on the `Slider.Thumbs` component is the equivalent of the following composition:
+Setting the [tooltip](./#tooltip-2) prop on the `Slider.Thumbs` component is the equivalent of the following composition:
 
 ```tsx
 import {Slider} from "@qualcomm-ui/react/slider"
@@ -336,14 +337,13 @@ function SliderWithCustomMarkers() {
     "marker-group",
     "marker",
     "hint",
-    "error-text",
   ]}
   scope="slider"
 />
 
 ## API
 
-### \<Slider\>
+### \<Slider>
 
 The `Slider` extends the [Slider.Root](./#slider-root) with the following props:
 
@@ -351,87 +351,87 @@ The `Slider` extends the [Slider.Root](./#slider-root) with the following props:
 
 ## Composite API
 
-### \<Slider.Root\>
+### \<Slider.Root>
 
 <TypeDocProps name="SliderRootProps" />
 
 <TypeDocAttributes name="SliderRootBindings" />
 
-### \<Slider.Label\>
+### \<Slider.Label>
 
 <TypeDocProps name="SliderLabelProps" />
 
 <TypeDocAttributes name="SliderLabelBindings" />
 
-### \<Slider.ValueText\>
+### \<Slider.ValueText>
 
 <TypeDocProps name="SliderValueTextProps" />
 
 <TypeDocAttributes name="SliderValueTextBindings" />
 
-### \<Slider.Control\>
+### \<Slider.Control>
 
 <TypeDocProps name="SliderControlProps" />
 
 <TypeDocAttributes name="SliderControlBindings" />
 
-### \<Slider.Track\>
+### \<Slider.Track>
 
 <TypeDocProps name="SliderTrackProps" />
 
 <TypeDocAttributes name="SliderTrackBindings" />
 
-### \<Slider.Range\>
+### \<Slider.Range>
 
 <TypeDocProps name="SliderRangeProps" />
 
 <TypeDocAttributes name="SliderRangeBindings" />
 
-### \<Slider.Thumbs\> shortcut
+### \<Slider.Thumbs> shortcut
 
 <TypeDocProps name="SliderThumbsProps" />
 
-### \<Slider.Thumb\>
+### \<Slider.Thumb>
 
 <TypeDocProps name="SliderThumbProps" />
 
 <TypeDocAttributes name="SliderThumbBindings" />
 
-### \<Slider.ThumbIndicator\>
+### \<Slider.ThumbIndicator>
 
 <TypeDocProps name="SliderThumbIndicatorProps" />
 
 <TypeDocAttributes name="SliderThumbIndicatorBindings" />
 
-### \<Slider.HiddenInput\>
+### \<Slider.HiddenInput>
 
 <TypeDocProps name="SliderHiddenInputProps" />
 
 <TypeDocAttributes name="SliderHiddenInputBindings" />
 
-### \<Slider.Markers\> shortcut
+### \<Slider.Markers> shortcut
 
 <TypeDocProps name="SliderMarkersProps" />
 
-### \<Slider.MarkerGroup\>
+### \<Slider.MarkerGroup>
 
 <TypeDocProps name="SliderMarkerGroupProps" />
 
 <TypeDocAttributes name="SliderMarkerGroupBindings" />
 
-### \<Slider.Marker\>
+### \<Slider.Marker>
 
 <TypeDocProps name="SliderMarkerProps" />
 
 <TypeDocAttributes name="SliderMarkerBindings" />
 
-### \<Slider.Hint\>
+### \<Slider.Hint>
 
 <TypeDocProps name="SliderHintProps" />
 
 <TypeDocAttributes name="SliderHintBindings" />
 
-### \<Slider.ErrorText\>
+### \<Slider.ErrorText>
 
 <TypeDocProps name="SliderErrorTextProps" />
 

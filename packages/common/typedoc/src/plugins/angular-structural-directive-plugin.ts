@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {readFileSync} from "fs"
+import {readFileSync} from "node:fs"
 import {
   type Application,
   type Context,
@@ -11,11 +11,13 @@ import {
   TypeScript,
 } from "typedoc"
 
-import {isInputSignal} from "../guards"
+import {isInputSignal} from "../guards.js"
 
-import {pluginFileCache} from "./shared"
+import {pluginFileCache} from "./shared.js"
 
-export function loadStructuralDirectivePlugin(app: Readonly<Application>) {
+export function loadStructuralDirectivePlugin(
+  app: Readonly<Application>,
+): void {
   const selectorCache = new Map<string, string>()
 
   app.converter.on(Converter.EVENT_CREATE_DECLARATION, (context, decl) => {

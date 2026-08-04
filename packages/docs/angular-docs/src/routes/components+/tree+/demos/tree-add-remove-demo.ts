@@ -1,10 +1,10 @@
 import {Component, input, output, signal} from "@angular/core"
 import {FileText, FolderIcon, Plus, Trash} from "lucide-angular"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {useTreeContext} from "@qualcomm-ui/angular-core/tree"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 

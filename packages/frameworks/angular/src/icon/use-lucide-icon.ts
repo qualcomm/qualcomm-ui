@@ -130,11 +130,11 @@ export function useLucideIcon<
   }
 
   function clearIconParts(): void {
-    createdElements.forEach((element) => {
+    for (const element of createdElements) {
       if (element.parentNode) {
         renderer.removeChild(element.parentNode, element)
       }
-    })
+    }
     createdElements = []
   }
 
@@ -168,9 +168,9 @@ export function useLucideIcon<
       applyBindings(svgElement, getIconBindings(), renderer)
     }
     if (data) {
-      data.forEach((part) => {
+      for (const part of data) {
         createIconPart(part, svgElement)
-      })
+      }
     }
   })
 

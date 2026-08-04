@@ -1,13 +1,15 @@
 ---
 title: Collapsible
-group: Disclosure
 description: Collapsible components allow users to toggle the visibility of content sections, providing a simple way to show or hide information on demand.
 component: Collapsible
 aliases: [disclosure, expandable]
 ---
 
-import {QdsDemo} from "~components/demo"
-import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -22,9 +24,7 @@ import {Collapsible} from "@qualcomm-ui/angular/collapsible"
 ### Showcase
 
 ::: terms
-uncontrolled
-toggle visibility
-show hide content
+uncontrolled, toggle visibility, show hide content
 :::
 
 Basic collapsible component with a trigger button that expands and collapses content.
@@ -34,13 +34,21 @@ Basic collapsible component with a trigger button that expands and collapses con
 ### Controlled State
 
 ::: terms
-external state management
-signal
+external state management, signal
 :::
 
-Control the collapsible's open/closed state using the [open](./#open) and [openChanged](./#openchanged) properties.
+Control the collapsible's open/closed state using the [open](./#open) and [openChanged](./#openChanged) properties.
 
 <QdsDemo name="CollapsibleControlledDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-collapsible"
+  name="CollapsibleExplorerDemo"
+  parts={["root", "trigger", "content"]}
+  scope="collapsible"
+/>
 
 ## API
 
@@ -48,14 +56,14 @@ Control the collapsible's open/closed state using the [open](./#open) and [openC
 
 <TypeDocProps name="CollapsibleRootComponent" />
 
-<TypeDocAttributes name="CollapsibleRootBindings" />
+<TypeDocAngularAttributes name="CollapsibleRootBindings" />
 
 ### q-collapsible-trigger
 
-<TypeDocAttributes name="CollapsibleTriggerBindings" />
+<TypeDocAngularAttributes name="CollapsibleTriggerBindings" />
 
 ### q-collapsible-content
 
-<TypeDocAttributes
+<TypeDocAngularAttributes
   name={["CollapsibleContentBindings", "QdsCollapsibleContentBindings"]}
 />

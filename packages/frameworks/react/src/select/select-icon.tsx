@@ -6,7 +6,7 @@ import type {ReactElement} from "react"
 import {IconOrNode, type IconOrNodeProps} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSelectContext} from "./qds-select-context"
+import {useQdsSelectContext} from "./qds-select-context.js"
 
 export interface SelectIconProps extends Omit<IconOrNodeProps, "size"> {}
 

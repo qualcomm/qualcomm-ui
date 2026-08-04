@@ -1,10 +1,10 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.vitest.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "noEmit": true,
     "strictPropertyInitialization": false,
-    "composite": true
+    "composite": true,
+    "rootDir": "./tests"
   },
   "include": [
     "./tests"

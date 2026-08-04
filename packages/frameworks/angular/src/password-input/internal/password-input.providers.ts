@@ -3,12 +3,12 @@
 
 import {inject, type Provider} from "@angular/core"
 
-import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 import {
   AbstractInputFormControlDirective,
   INPUT_FORM_CONTROL_CONTEXT,
 } from "@qualcomm-ui/angular-core/input"
 import {providePasswordInputContext} from "@qualcomm-ui/angular-core/password-input"
+import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 
 export function providePasswordInput(): Provider[] {
   return [

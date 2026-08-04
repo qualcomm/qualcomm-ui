@@ -3,10 +3,10 @@
 
 import {Component, computed, input, type OnInit} from "@angular/core"
 
-import {useIconButtonApi} from "@qualcomm-ui/angular/button"
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],

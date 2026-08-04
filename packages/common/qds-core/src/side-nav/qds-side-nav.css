@@ -2,13 +2,27 @@
  * depth of the node in the tree. */
 
 .qui-side-nav__root {
-  --indent-spacing: 16px;
+  --side-nav-item-wrap: var(--spacing-70);
+  --side-nav-item-padding: var(--spacing-90);
+  --indent-spacing: calc(var(--side-nav-item-padding) + var(--side-nav-item-wrap));
   background: var(--color-surface-primary);
   box-sizing: border-box;
+  container-name: qds-side-nav;
   display: flex;
   flex-direction: column;
   min-width: 240px;
-  padding: var(--spacing-70) 0;
+  padding: var(--spacing-90) 0;
+
+  &[data-size="sm"] {
+    --qds-side-nav-size: sm;
+    --side-nav-item-wrap: var(--spacing-40);
+    --side-nav-item-padding: var(--spacing-70);
+    padding: var(--spacing-70) 0;
+  }
+
+  &[data-size="md"] {
+    --qds-side-nav-size: md;
+  }
 
   &[data-surface="secondary"] {
     background: var(--color-surface-secondary);
@@ -65,7 +79,7 @@
 .qui-side-nav__divider.qui-divider__root {
   align-self: center;
   margin: 0;
-  width: calc(100% - var(--spacing-90) * 2);
+  width: calc(100% - var(--spacing-70) * 2);
   --divider-border-color: var(--color-border-neutral-01);
 }
 
@@ -75,11 +89,19 @@
   width: 100%;
 
   > .qui-side-nav__divider {
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-100);
+
+    @container qds-side-nav style(--qds-side-nav-size: sm) {
+      margin-bottom: var(--spacing-80);
+    }
   }
 
   + .qui-side-nav__group {
-    margin-top: 16px;
+    margin-top: var(--spacing-100);
+
+    @container qds-side-nav style(--qds-side-nav-size: sm) {
+      margin-top: var(--spacing-80);
+    }
   }
 }
 
@@ -87,12 +109,17 @@
   color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-xs-default);
   padding: 0 var(--spacing-100) var(--spacing-90);
+
+  @container qds-side-nav style(--qds-side-nav-size: sm) {
+    font: var(--font-static-body-xxs-default);
+    padding: 0 var(--spacing-80) var(--spacing-70);
+  }
 }
 
 .qui-side-nav__node-root {
   align-items: center;
   background: var(--color-interactive-background-ghost-idle);
-  border: solid 1px transparent;
+  border: 0;
   border-radius: var(--border-radius-xs);
   box-sizing: border-box;
   color: var(--color-interactive-text-neutral-idle);
@@ -101,17 +128,23 @@
   font: var(--font-static-body-sm-bold);
   gap: var(--spacing-50);
   height: 40px;
-  line-height: normal;
   margin-left: calc(
-    (calc(var(--depth, 1) - 1) * var(--indent-spacing)) + var(--spacing-70)
+    (calc(var(--depth, 1) - 1) * var(--side-nav-item-padding)) +
+      var(--side-nav-item-wrap)
   );
-  margin-right: var(--spacing-70);
+  margin-right: var(--side-nav-item-wrap);
   min-height: 40px;
   outline: none;
-  padding-left: var(--spacing-70);
-  padding-right: var(--spacing-70);
+  padding-left: var(--side-nav-item-padding);
+  padding-right: var(--side-nav-item-padding);
   position: relative;
   text-decoration: inherit;
+
+  @container qds-side-nav style(--qds-side-nav-size: sm) {
+    font: var(--font-static-body-sm-compact-bold);
+    height: var(--sizing-100);
+    min-height: var(--sizing-100);
+  }
 
   &:hover {
     background: var(--color-interactive-background-ghost-hover);
@@ -123,20 +156,18 @@
 
   &:focus-visible {
     border-color: var(--color-utility-focus-border);
-    outline: solid 1px var(--color-utility-focus-border);
+    outline: solid 2px var(--color-utility-focus-border);
+    outline-offset: -1px;
+    .qui-side-nav__node-indicator {
+      width: 0;
+    }
   }
 
-  &:has([data-part="branch-trigger"]) {
+  &:has([data-tree-part="branch-trigger"]) {
     --branch-trigger-width: calc(16px + var(--spacing-50));
   }
 
-  &[data-size="sm"] {
-    font: var(--font-static-body-xs-default);
-    height: 32px;
-    min-height: 32px;
-  }
-
-  &[data-selected][data-part="leaf-node"] {
+  &[data-selected][data-tree-part="leaf-node"] {
     background: var(--color-interactive-background-ghost-hover);
   }
 
@@ -158,7 +189,7 @@
     pointer-events: none;
   }
 
-  &[data-part="branch-node"] {
+  &[data-tree-part="branch-node"] {
     .qui-side-nav__node-indicator {
       display: none;
     }
@@ -175,8 +206,8 @@
 
 /* indicate that a branch has an active leaf node */
 .qui-side-nav__branch-root {
-  &:has(.qui-side-nav__node-root[data-part="leaf-node"][data-selected]) {
-    > .qui-side-nav__node-root[data-part="branch-node"]:first-child {
+  &:has(.qui-side-nav__node-root[data-tree-part="leaf-node"][data-selected]) {
+    > .qui-side-nav__node-root[data-tree-part="branch-node"]:first-child {
       color: var(--color-text-brand-primary);
       --icon-color: var(--color-icon-brand-primary);
     }
@@ -186,7 +217,7 @@
 .qui-side-nav__branch-indent-guide {
   background: var(--color-border-neutral-01);
   height: 100%;
-  left: calc(1px + var(--indent-spacing) * var(--depth));
+  left: calc(var(--indent-spacing) * var(--depth));
   position: absolute;
   width: 1px;
 }
@@ -197,7 +228,7 @@
    * The animated collapse/expand prevents nested item outline due to overflow: hidden.
    * This padding gives the outline enough space to render.
    */
-  padding: 1px;
+  padding: 1px 0;
   position: relative;
 }
 
@@ -213,10 +244,18 @@
   left: 0;
   position: absolute;
   width: 3px;
+
+  @container qds-side-nav style(--qds-side-nav-size: sm) {
+    width: 2px;
+  }
 }
 
 .qui-icon__root.qui-side-nav__node-icon {
   --icon-size: var(--sizing-70);
+
+  @container qds-side-nav style(--qds-side-nav-size: sm) {
+    --icon-size: var(--sizing-60);
+  }
 }
 
 .qui-side-nav__collapse-trigger {

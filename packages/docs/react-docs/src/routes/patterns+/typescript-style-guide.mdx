@@ -21,12 +21,12 @@ Identifiers must use only ASCII letters, digits, underscores (for constants and 
 | ---------------- | ----------------------------------------------------------------------------------------- |
 | PascalCase       | class / interface / type / enum / decorator / type parameters / React function components |
 | camelCase        | variable / parameter / function / method / property                                       |
-| UPPER_SNAKE_CASE | global constant values, enum values                                                       |
+| UPPER\_SNAKE\_CASE | global constant values, enum values                                                       |
 | kebab-case       | files and folders                                                                         |
 
 #### Naming Style
 
-TypeScript expresses information in types, so names _should not_ be decorated with information that is included in the type. (See also [Testing Blog](https://testing.googleblog.com/2017/10/code-health-identifiernamingpostforworl.html) for more about what not to include).
+TypeScript expresses information in types, so names *should not* be decorated with information that is included in the type. (See also [Testing Blog](https://testing.googleblog.com/2017/10/code-health-identifiernamingpostforworl.html) for more about what not to include).
 
 Some concrete examples of this rule:
 
@@ -51,7 +51,7 @@ Treat abbreviations like acronyms in names as whole words, i.e. `loadHttpUrl`, n
 
 ## Language Features
 
-#### Prefer ES6 import syntax
+### Prefer ES6 import syntax
 
 In modern TypeScript, `import` statements are used to refer to dependencies between modules, whereas `require` is used in CommonJS modules. The following is a table of noteworthy differences between the two symbols:
 
@@ -64,7 +64,7 @@ In modern TypeScript, `import` statements are used to refer to dependencies betw
 
 Prefer the `import` statement where possible.
 
-#### Avoid default exports
+### Avoid default exports
 
 ```ts
 export default function foo(a: number, b: number) {
@@ -105,9 +105,6 @@ var foo = someValue
 You should use `import type {...}` when you use the imported symbol only as a type. Use regular imports for values:
 
 ```ts
-import type {Foo} from "./foo"
-import {Bar} from "./foo"
-
 import {type Foo, Bar} from "./foo"
 ```
 
@@ -547,7 +544,7 @@ function foo() {
 
 #### Prefer rest and spread when appropriate
 
-Use a _rest_ parameter instead of accessing arguments. Never name a local variable or parameter arguments, which confusingly shadows the built-in name.
+Use a *rest* parameter instead of accessing arguments. Never name a local variable or parameter arguments, which confusingly shadows the built-in name.
 
 ```ts
 function variadic(array: string[], ...numbers: number[]) {}
@@ -615,7 +612,7 @@ const bool2 = !!str
 const str2 = `result: ${bool2}`
 ```
 
-_Do not_ use the `new` operator with these wrapper classes. Wrapper classes have surprising behavior, such as `new Boolean(false)` evaluating to `true`.
+*Do not* use the `new` operator with these wrapper classes. Wrapper classes have surprising behavior, such as `new Boolean(false)` evaluating to `true`.
 
 #### Implicit coercion
 
@@ -794,4 +791,4 @@ The double equality operators cause error-prone type coercions that are harder t
 
 #### Remove commented-out code
 
-This section has moved to [Clean Code](/patterns/clean-code#comments)
+This section has moved to [Clean Code](/patterns/clean-code/clean-code#comments)

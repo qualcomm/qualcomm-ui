@@ -3,6 +3,11 @@
 
 import type {PluginOption} from "vite"
 
+const REACT_ROUTER_HMR_RUNTIME_ID = "virtual:react-router/hmr-runtime"
+const REACT_ROUTER_FULL_RELOAD_PATH = "/__frontmatter-hmr-fix/full-reload"
+const reactRouterMissingRouteModuleUpdateError =
+  /^(\s*)throw Error\(\s*`\[react-router:hmr\] No module update found for route \$\{route\.id\}`,\s*\);/m
+
 /**
  * Options for the {@link frontmatterHmrPlugin}.
  */
@@ -37,8 +42,40 @@ export function frontmatterHmrPlugin(
 ): PluginOption {
   const {exportName = "frontmatter"} = opts
   return {
+    configureServer(server) {
+      server.middlewares.use(
+        REACT_ROUTER_FULL_RELOAD_PATH,
+        (req, res, next) => {
+          if (req.method !== "POST") {
+            next()
+            return
+          }
+
+          server.ws.send({type: "full-reload"})
+          res.statusCode = 204
+          res.end()
+        },
+      )
+    },
     name: "frontmatter-hmr-fix",
-    transform(code: string) {
+    transform(code: string, id: string) {
+      if (id.includes(REACT_ROUTER_HMR_RUNTIME_ID)) {
+        // React Router sends route metadata updates for edited route files even
+        // when the browser has not imported that route module yet. In that
+        // cold-route case there is no module accept callback to populate
+        // __reactRouterRouteModuleUpdates, so the runtime needs to reload
+        // instead of throwing.
+        return code.replace(
+          reactRouterMissingRouteModuleUpdateError,
+          (_match, indent: string) =>
+            [
+              `${indent}console.debug(\`[react-router:hmr] No module update found for route \${route.id}\`);`,
+              `${indent}void fetch("${REACT_ROUTER_FULL_RELOAD_PATH}", {method: "POST"}).catch(() => window.location.reload());`,
+              `${indent}return;`,
+            ].join("\n"),
+        )
+      }
+
       if (code.includes(`export const ${exportName}`)) {
         // cheat `isLikelyComponentType`
         // https://github.com/facebook/react/blob/f5af92d2c47d1e1f455faf912b1d3221d1038c37/packages/react-refresh/src/ReactFreshRuntime.js#L717-L723

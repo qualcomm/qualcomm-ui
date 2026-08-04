@@ -4,23 +4,23 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {RowModel} from ".."
-import type {TableFeature} from "../core/table"
+import type {TableFeature} from "../core/table.js"
 import {
   type BuiltInSortingFn,
   reSplitAlphaNumeric,
   sortingFns,
-} from "../sorting-fns"
+} from "../sorting-fns.js"
 import type {
   Column,
   OnChangeFn,
+  RowModel,
   Row,
   RowData,
   SortingFns,
   TableInstance,
   Updater,
-} from "../types"
-import {isFunction, makeStateUpdater} from "../utils"
+} from "../types.js"
+import {isFunction, makeStateUpdater} from "../utils.js"
 
 export type SortDirection = "asc" | "desc"
 
@@ -214,8 +214,7 @@ type ResolvedSortingFns = keyof SortingFns extends never
     }
 
 export interface SortingOptions<_TData extends RowData>
-  extends SortingOptionsBase,
-    ResolvedSortingFns {}
+  extends SortingOptionsBase, ResolvedSortingFns {}
 
 export interface SortingInstance<TData extends RowData> {
   /** @internal */

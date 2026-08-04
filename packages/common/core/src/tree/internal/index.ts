@@ -1,2 +1,2 @@
-export * from "./tree.dom"
-export * from "./tree.utils"
+export * from "./tree.dom.js"
+export * from "./tree.utils.js"

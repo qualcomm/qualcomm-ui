@@ -2,21 +2,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
-import type {
-  InputClearTriggerBindings,
-  InputErrorIndicatorBindings,
-  InputErrorTextBindings,
-  InputHintBindings,
-  InputInputBindings,
-  InputInputGroupBindings,
-  InputLabelBindings,
-  InputRootBindings,
-} from "@qualcomm-ui/core/input"
+import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {
   BooleanAriaAttr,
   BooleanDataAttr,
 } from "@qualcomm-ui/utils/attributes"
-import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
+import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -27,6 +18,8 @@ import type {
   MachineSchema,
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
+
+import type {passwordInputAnatomy} from "./password-input.anatomy.js"
 
 export interface PasswordInputIntlTranslations {
   visibilityTrigger?: ((visible: boolean) => string) | undefined
@@ -41,9 +34,7 @@ export interface PasswordInputElementIds {
 }
 
 export interface PasswordInputApiProps
-  extends FieldApiProps,
-    CommonProperties,
-    DirectionProperty {
+  extends FieldApiProps, CommonProperties, DirectionProperty {
   /**
    * The {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete autocomplete}
    * attribute for the password input.
@@ -160,60 +151,87 @@ export interface PasswordInputSchema extends MachineSchema {
   state: "idle"
 }
 
-export interface PasswordInputScopeAttribute {
-  "data-scope": "password-input"
+type PartName = AnatomyPartName<typeof passwordInputAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"passwordInput", P> {}
+
+export interface PasswordInputRootBindings extends Part<"root"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  dir: Direction
 }
 
-interface CommonBindings
-  extends Required<DirectionProperty>,
-    PasswordInputScopeAttribute {}
+export interface PasswordInputLabelBindings extends Part<"label"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  htmlFor: string
+  id: string
+}
 
-export interface PasswordInputRootBindings
-  extends CommonBindings,
-    InputRootBindings {}
+export interface PasswordInputErrorTextBindings extends Part<"errorText"> {
+  "aria-live": "polite"
+  hidden: boolean
+  id: string
+}
 
-export interface PasswordInputLabelBindings
-  extends CommonBindings,
-    InputLabelBindings {}
+export interface PasswordInputHintBindings extends Part<"hint"> {
+  "data-disabled": BooleanDataAttr
+  hidden: boolean
+  id: string
+}
 
-export interface PasswordInputErrorTextBindings
-  extends CommonBindings,
-    InputErrorTextBindings {}
+export interface PasswordInputErrorIndicatorBindings extends Part<"errorIndicator"> {
+  "aria-label": "Error"
+  hidden: boolean
+}
 
-export interface PasswordInputHintBindings
-  extends CommonBindings,
-    InputHintBindings {}
+export interface PasswordInputInputGroupBindings extends Part<"inputGroup"> {
+  "data-disabled": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
+  "data-readonly": BooleanDataAttr
+  onClick: JSX.MouseEventHandler<HTMLElement>
+}
 
-export interface PasswordInputErrorIndicatorBindings
-  extends CommonBindings,
-    InputErrorIndicatorBindings {}
-
-export interface PasswordInputInputGroupBindings
-  extends CommonBindings,
-    InputInputGroupBindings {}
-
-export interface PasswordInputInputBindings
-  extends CommonBindings,
-    InputInputBindings {
+export interface PasswordInputInputBindings extends Part<"input"> {
+  "aria-describedby": string | undefined
+  "aria-invalid": BooleanAriaAttr
+  "aria-labelledby": string | undefined
   autoComplete: "current-password" | "new-password" | undefined
   autoCorrect: "off"
+  "data-empty": BooleanDataAttr
+  "data-focus": BooleanDataAttr
+  "data-invalid": BooleanDataAttr
   "data-readonly": BooleanDataAttr
   "data-state": "visible" | "hidden"
+  defaultValue: string
+  disabled: boolean | undefined
+  form?: string
+  id: string
+  name?: string
+  onBlur: JSX.FocusEventHandler
+  onChange: JSX.ChangeEventHandler<HTMLInputElement>
+  onFocus: JSX.FocusEventHandler
   readOnly: boolean | undefined
+  required?: boolean
   spellCheck: "false"
   type: "text" | "password"
 }
 
-export interface PasswordInputClearTriggerBindings
-  extends CommonBindings,
-    InputClearTriggerBindings {}
+export interface PasswordInputClearTriggerBindings extends Part<"clearTrigger"> {
+  "aria-label": "Clear input"
+  "data-disabled": BooleanDataAttr
+  disabled: boolean | undefined
+  onClick: JSX.MouseEventHandler
+  type: "button"
+}
 
-export interface PasswordInputVisibilityTriggerBindings extends CommonBindings {
+export interface PasswordInputVisibilityTriggerBindings extends Part<"visibilityTrigger"> {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "aria-label": string
   "data-disabled": BooleanDataAttr
-  "data-part": "visibility-trigger"
   "data-readonly": BooleanDataAttr
   "data-state": "visible" | "hidden"
   disabled: boolean

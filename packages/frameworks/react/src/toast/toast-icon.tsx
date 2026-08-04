@@ -6,13 +6,13 @@ import type {ReactElement} from "react"
 import {BellRing, CircleAlert, CircleCheck, TriangleAlert} from "lucide-react"
 
 import type {QdsNotificationEmphasis} from "@qualcomm-ui/qds-core/inline-notification"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
-import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsToastContext} from "./qds-toast-context"
+import {useQdsToastContext} from "./qds-toast-context.js"
 
 export interface ToastIconProps extends ElementRenderProp<"span"> {
   /**

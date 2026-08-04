@@ -1,4 +1,5 @@
 export * from "./checkbox-group-composite-demo"
+export * from "./checkbox-group-explorer-demo"
 export * from "./checkbox-group-error-demo"
 export * from "./checkbox-group-hint-demo"
 export * from "./checkbox-group-orientation-demo"

@@ -7,8 +7,8 @@
 import {observeAttributes, observeChildren} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import type {AvatarSchema} from "./avatar.types"
-import {domEls} from "./internal"
+import type {AvatarSchema} from "./avatar.types.js"
+import {domEls} from "./internal/index.js"
 
 export const avatarMachine: MachineConfig<AvatarSchema> =
   createMachine<AvatarSchema>({
@@ -38,9 +38,7 @@ export const avatarMachine: MachineConfig<AvatarSchema> =
             const removed = removedNodes.find(
               (node) =>
                 node.nodeType === Node.ELEMENT_NODE &&
-                (node as Element).matches(
-                  "[data-scope=avatar][data-part=image]",
-                ),
+                (node as Element).matches("[data-avatar-part=image]"),
             )
             if (removed) {
               send({type: "IMG.UNMOUNT"})

@@ -3,12 +3,12 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {dividerClasses} from "./divider.classes"
+import {dividerClasses} from "./divider.classes.js"
 import type {
   QdsDividerApi,
   QdsDividerApiProps,
   QdsDividerRootBindings,
-} from "./divider.types"
+} from "./divider.types.js"
 
 export function createQdsDividerApi(
   props: QdsDividerApiProps,

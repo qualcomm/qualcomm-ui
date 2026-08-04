@@ -11,7 +11,6 @@ import {
   createQdsCheckboxApi,
   type QdsCheckboxApiProps,
 } from "@qualcomm-ui/qds-core/checkbox"
-import {useQdsFieldGroupContext} from "@qualcomm-ui/react/field-group"
 import {
   CheckboxContextProvider,
   useCheckbox,
@@ -23,12 +22,14 @@ import {
   type IdProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {useQdsFieldGroupContext} from "@qualcomm-ui/react/field-group"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsCheckboxContextProvider} from "./qds-checkbox-context"
+import {QdsCheckboxContextProvider} from "./qds-checkbox-context.js"
 
 export interface CheckboxRootProps
-  extends IdProp,
+  extends
+    IdProp,
     CheckboxApiProps,
     QdsCheckboxApiProps,
     Omit<ElementRenderProp<"label">, "dir"> {

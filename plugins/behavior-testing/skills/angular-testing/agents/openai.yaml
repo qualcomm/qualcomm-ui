@@ -1,0 +1,7 @@
+interface:
+  display_name: "Angular Testing"
+  short_description: "Write Angular tests around public behavior"
+  default_prompt: "Use $angular-testing to write or review Angular tests around public behavior."
+
+policy:
+  allow_implicit_invocation: true

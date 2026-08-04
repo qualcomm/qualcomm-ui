@@ -1,12 +1,11 @@
 ---
 title: Number Input
-group: Form Controls
 description: The number input component provides a structured way for users to input numerical data with built-in validation and controls. It combines a text input field with stepper buttons and can include unit selection functionality for measurements, currency, or other quantifiable values.
 component: NumberInput
 aliases: [spinner, stepper, numeric input]
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -44,8 +43,7 @@ Provide child directives to customize specific elements while keeping the simple
 ### Composite
 
 ::: terms
-compound
-parts
+compound, parts
 :::
 
 Build with the composite API for granular control. This API requires you to provide each subcomponent, but gives you full control over the structure and layout.
@@ -55,9 +53,7 @@ Build with the composite API for granular control. This API requires you to prov
 ### Min and Max values
 
 ::: terms
-range
-limit
-bounds
+range, limit, bounds
 :::
 
 Pass the [min](./#min) and [max](./#max) props to the root component to set the minimum and maximum values of the number input.
@@ -75,9 +71,7 @@ Pass the [step](./#step) prop to the root component to set the increment or decr
 ### States
 
 ::: terms
-disabled
-readonly
-required
+disabled, readonly, required
 :::
 
 The following shows how the component appears in each interactive state.
@@ -87,9 +81,7 @@ The following shows how the component appears in each interactive state.
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Customize size using the [size](./#size) prop. The default size is `md`.
@@ -99,9 +91,7 @@ Customize size using the [size](./#size) prop. The default size is `md`.
 ### Unit Selector
 
 ::: terms
-currency
-price
-measurement
+currency, price, measurement
 :::
 
 Add a unit selector to the number input by passing an array of [options](./#unit-option) to the [unitOptions](./#unitOptions) prop.
@@ -113,8 +103,7 @@ The selected unit follows our [controlled state](/patterns/controlled-state) pat
 ### Error Text and Indicator
 
 ::: terms
-validation
-form error
+validation, form error
 :::
 
 Error messages are displayed using two props:
@@ -131,10 +120,7 @@ The error text and indicator will only render when [invalid](./#invalid) is true
 ### Template Forms
 
 ::: terms
-ngModel
-template-driven
-FormsModule
-two-way binding
+ngModel, template-driven, FormsModule, two-way binding
 :::
 
 When using template-driven forms with `ngModel`, perform validation manually in your component and pass the result to the [invalid](./#invalid) property.
@@ -146,16 +132,14 @@ When using template-driven forms with `ngModel`, perform validation manually in 
 
 #### Required
 
-When using template forms, pass the [required](./#required) property to apply a validator to the form control.
+When using template forms, pass the [required](./#required-1) property to apply a validator to the form control.
 
 <QdsDemo name="NumberInputRequiredTemplateFormsDemo" />
 
 ### Reactive Forms
 
 ::: terms
-FormControl
-FormGroup
-ReactiveFormsModule
+FormControl, FormGroup, ReactiveFormsModule
 :::
 
 Use Reactive forms for better control of form state and validation.
@@ -165,11 +149,10 @@ Use Reactive forms for better control of form state and validation.
 #### State Guidelines
 
 ::: terms
-form control state
-Validators
+form control state, Validators
 :::
 
-The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
+The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required-1) properties have no effect when using Reactive Forms. Use the equivalent Reactive Form bindings instead:
 
 <QdsDemo name="NumberInputReactiveFormStatesDemo" />
 
@@ -179,13 +162,34 @@ When using the composite API with Reactive Forms, always apply form control bind
 
 <QdsDemo name="NumberInputCompositeFormsDemo" />
 
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-number-input"
+  name="NumberInputExplorerDemo"
+  parts={[
+    "root",
+    "label",
+    "input-group",
+    "input",
+    "control",
+    "increment-trigger",
+    "decrement-trigger",
+    "hint",
+  ]}
+  scope="number-input"
+/>
+
 ## API
 
-### \<q-number-input\>
+### \<q-number-input>
 
 The `<q-number-input>` component extends the [q-number-input-root](./#q-number-input-root) directive with the following properties:
 
-<TypeDocProps name="NumberInputComponent" omitFrom="NumberInputRootDirective" />
+<TypeDocProps
+  name="NumberInputComponent"
+  omitFrom="NumberInputRootDirective"
+/>
 
 ## Composite API
 
@@ -270,7 +274,10 @@ The `<q-number-input>` component extends the [q-number-input-root](./#q-number-i
 <TypeDocProps name="NumberInputErrorIndicatorComponent" />
 
 <TypeDocAngularAttributes
-  name={["NumberInputErrorIndicatorBindings", "QdsInputErrorIndicatorBindings"]}
+  name={[
+    "NumberInputErrorIndicatorBindings",
+    "QdsInputErrorIndicatorBindings",
+  ]}
 />
 
 ### q-number-input-unit-select
@@ -278,7 +285,10 @@ The `<q-number-input>` component extends the [q-number-input-root](./#q-number-i
 <TypeDocProps name="NumberInputUnitSelectComponent" />
 
 <TypeDocAngularAttributes
-  name={["NumberInputUnitSelectBindings", "QdsNumberInputUnitSelectBindings"]}
+  name={[
+    "NumberInputUnitSelectBindings",
+    "QdsNumberInputUnitSelectBindings",
+  ]}
 />
 
 ## Data Structures

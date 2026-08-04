@@ -5,13 +5,16 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {buttonClasses} from "./button.classes"
+import {buttonClasses} from "./button.classes.js"
+import {iconButtonAnatomy} from "./icon-button.anatomy.js"
 import type {
   QdsIconButtonApi,
   QdsIconButtonApiProps,
   QdsIconButtonIconBindings,
   QdsIconButtonRootBindings,
-} from "./icon-button.types"
+} from "./icon-button.types.js"
+
+const parts = iconButtonAnatomy.parts
 
 export function createQdsIconButtonApi(
   props: Explicit<QdsIconButtonApiProps>,
@@ -27,22 +30,20 @@ export function createQdsIconButtonApi(
   return {
     getIconBindings(): QdsIconButtonIconBindings {
       return normalize.element({
+        ...parts.icon,
         className: buttonClasses.icon,
         "data-density": density,
-        "data-part": "icon",
-        "data-scope": "icon-button",
         "data-size": size,
       })
     },
     getRootBindings(): QdsIconButtonRootBindings {
       return normalize.button({
+        ...parts.root,
         className: buttonClasses.root,
         "data-density": density,
         "data-disabled": booleanDataAttr(disabled),
         "data-emphasis": emphasis,
         "data-kind": "icon",
-        "data-part": "root",
-        "data-scope": "icon-button",
         "data-shape": shape,
         "data-size": size,
         "data-variant": variant,

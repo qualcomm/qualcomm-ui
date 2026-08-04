@@ -5,16 +5,16 @@ import {type JSONOutput, ReflectionKind} from "typedoc"
 
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
-import type {BuildOptions} from "../types"
+import type {BuildOptions} from "../types.js"
 
-import {TypeDocPropBuilder} from "./prop-builder"
-import {TypeSerializer} from "./type-serializer"
+import {TypeDocPropBuilder} from "./prop-builder.js"
+import {TypeSerializer} from "./type-serializer.js"
 import type {
   KnownInterfaces,
   ParseResult,
   QuiDeclarationReflection,
   QuiReflectionSymbolId,
-} from "./types"
+} from "./types.js"
 
 /**
  * Iterate through every node.

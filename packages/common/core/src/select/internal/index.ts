@@ -1,1 +1,1 @@
-export * from "./select.dom"
+export * from "./select.dom.js"

@@ -5,20 +5,19 @@ import type {ReactElement, ReactNode} from "react"
 
 import {
   createQdsIconBadgeApi,
-  type QdsIconBadgeProps as QdsIconBadgeProps,
+  type QdsIconBadgeProps,
 } from "@qualcomm-ui/qds-core/badge"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface IconBadgeProps
-  extends QdsIconBadgeProps,
-    ElementRenderProp<"span"> {
+  extends QdsIconBadgeProps, ElementRenderProp<"span"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    * When provided, overrides the icon prop.

@@ -3,8 +3,8 @@
 
 import {Directive} from "@angular/core"
 
-import {useInputHint} from "@qualcomm-ui/angular/input"
 import {CoreComboboxHintDirective} from "@qualcomm-ui/angular-core/combobox"
+import {useInputHint} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "[q-combobox-hint]",

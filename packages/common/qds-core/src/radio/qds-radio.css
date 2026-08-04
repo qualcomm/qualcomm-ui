@@ -11,6 +11,7 @@
 .qui-radio-group__label {
   color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-xs-default);
+  padding: 0;
 
   &[data-disabled] {
     color: var(--color-utility-disabled-text);
@@ -86,9 +87,13 @@
     outline-offset: 1px;
   }
 
+  &[data-hover] {
+    border-color: var(--color-interactive-border-neutral-hover);
+  }
+
   &[data-state="checked"] {
     background: var(--color-interactive-background-primary-idle);
-    border-color: var(--color-interactive-background-primary-idle);
+    border: 0;
 
     &::after {
       background: var(--color-utility-persistent-white);
@@ -102,28 +107,27 @@
 
     &[data-hover] {
       background: var(--color-interactive-background-primary-hover);
-      border-color: var(--color-interactive-background-primary-hover);
     }
 
     &[data-disabled] {
       background: var(--color-utility-disabled-background);
-      border-color: var(--color-utility-disabled-border);
       color: var(--color-utility-disabled-text);
+      &::after {
+        background: var(--color-utility-disabled-icon);
+      }
     }
   }
 
   &[data-invalid][data-state="checked"] {
     background: var(--color-interactive-background-danger-idle);
-    border-color: var(--color-interactive-background-danger-idle);
+    border: 0;
 
     &[data-hover] {
       background: var(--color-interactive-background-danger-hover);
-      border-color: var(--color-interactive-background-danger-hover);
     }
 
     &[data-disabled] {
       background: var(--color-utility-disabled-background);
-      border-color: var(--color-utility-disabled-background);
       color: var(--color-utility-disabled-text);
       &::after {
         background: var(--color-utility-disabled-icon);

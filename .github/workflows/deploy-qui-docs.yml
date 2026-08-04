@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+    - main
     paths:
-      - packages/common/**
-      - packages/frameworks/react*/**
-      - packages/docs/qui-docs/**
+    - packages/common/**
+    - packages/frameworks/react*/**
+    - packages/docs/qui-docs/**
 
 jobs:
   deploy:
-    uses: ./.github/workflows/reusable-docs-deploy-test.yml
+    uses: ./.github/workflows/reusable-docs-deploy-prod.yml
     with:
       dockerfile: dockerfiles/dockerfile-qui-docs
-      ecr-repository-name: docs-next
+      ecr-repository-name: qui-docs
     secrets: inherit

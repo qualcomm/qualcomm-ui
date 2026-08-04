@@ -6,10 +6,10 @@ import type {ReactNode} from "react"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import type {QuiComment, SerializedType} from "@qualcomm-ui/typedoc-common"
 
-import {usePropsLayoutContext} from "../use-props-layout-context"
+import {usePropsLayoutContext} from "../use-props-layout-context.js"
 
-import {TypeDocParametersTable} from "./type-doc-parameters-table"
-import {TypeDocReflectionReturn} from "./type-doc-reflection-return"
+import {TypeDocParametersTable} from "./type-doc-parameters-table.js"
+import {TypeDocReflectionReturn} from "./type-doc-reflection-return.js"
 
 export interface TypeDocReflectionProps {
   comment?: QuiComment

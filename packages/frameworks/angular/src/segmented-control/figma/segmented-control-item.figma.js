@@ -15,30 +15,44 @@ const icon = instance.getEnum("icon", {
   start: "start",
 })
 const text = instance.findText("Action").textContent
+
+const figmaSize = instance.getString("size")
+const swapPropName =
+  figmaSize === "sm" ? "iconXxs" : figmaSize === "md" ? "iconXs" : "iconSm"
+
+const needsIcon = icon === "start" || icon === "only"
+const iconInstance = needsIcon
+  ? instance.getInstanceSwap(swapPropName)
+  : undefined
+const iconName = iconInstance ? toLucideName(iconInstance.name) : "AArrowDown"
+
 const disabledAttr = disabled ? " disabled" : ""
+const ariaLabelAttr = icon === "only" ? ` aria-label="Section"` : ""
+const iconAttr = needsIcon ? ` icon="${iconName}"` : ""
+const textAttr = icon === "only" ? "" : ` text="${text}"`
+const valueAttr = icon === "only" ? ` value="section"` : ` value="${text}"`
 
-let example
-
-if (icon === "only") {
-  example = figma.code`
-    <label${disabledAttr} aria-label="Section" icon="AArrowDown" q-segmented-control-item value="section"></label>`
-}
-
-if (icon === "start") {
-  example = figma.code`
-    <label${disabledAttr} icon="AArrowDown" q-segmented-control-item text="${text}" value="${text}"></label>`
-}
-
-if (icon === "none") {
-  example = figma.code`
-    <label${disabledAttr} q-segmented-control-item text="${text}" value="${text}"></label>`
-}
+const example = figma.code`<label${disabledAttr}${ariaLabelAttr}${iconAttr} q-segmented-control-item${textAttr}${valueAttr}></label>`
 
 export default {
   example,
   id: "SegmentedControlItem",
   imports: [
     `import {SegmentedControlModule} from "@qualcomm-ui/angular/segmented-control"`,
+    ...(needsIcon
+      ? [
+          `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
+          `import {${iconName}} from "lucide-angular"`,
+        ]
+      : []),
   ],
   metadata: {nestable: true},
+}
+
+function toLucideName(figmaName) {
+  return figmaName
+    .replace(/^utl\//, "")
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
 }

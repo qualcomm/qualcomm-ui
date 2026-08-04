@@ -5,15 +5,15 @@ import type {ReactElement} from "react"
 
 import {ChevronDown, ChevronUp} from "lucide-react"
 
-import {Icon} from "@qualcomm-ui/react/icon"
-import {Menu} from "@qualcomm-ui/react/menu"
 import {useMenuContext} from "@qualcomm-ui/react-core/menu"
 import {useNumberInputContext} from "@qualcomm-ui/react-core/number-input"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
+import {Icon} from "@qualcomm-ui/react/icon"
+import {Menu} from "@qualcomm-ui/react/menu"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsNumberInputContext} from "./qds-number-input-context"
+import {useQdsNumberInputContext} from "./qds-number-input-context.js"
 
 export interface NumberInputUnitSelectProps extends IdProp {}
 
@@ -22,7 +22,7 @@ function NumberInputUnitSelectTriggerContent(): ReactElement {
 
   return (
     <Icon
-      data-part="chevron"
+      data-number-input-part="chevron"
       icon={menuContext.open ? ChevronUp : ChevronDown}
       size="sm"
     />
@@ -54,8 +54,8 @@ export function NumberInputUnitSelect({
 
   return (
     <Menu.Root size={menuSize}>
-      <Menu.Trigger>
-        <button id={id} {...buttonBindings}>
+      <Menu.Trigger id={id}>
+        <button {...buttonBindings}>
           <span>{displayLabel}</span>
           <NumberInputUnitSelectTriggerContent />
         </button>

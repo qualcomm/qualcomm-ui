@@ -1,7 +1,12 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {ElementRef, inject, Injectable, InjectionToken} from "@angular/core"
+import {
+  type ElementRef,
+  inject,
+  Injectable,
+  InjectionToken,
+} from "@angular/core"
 
 export const PORTAL_CONTAINER = new InjectionToken<
   ElementRef<HTMLElement> | HTMLElement | null

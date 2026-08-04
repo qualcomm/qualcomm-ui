@@ -12,10 +12,12 @@ import {
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useCopyToClipboard} from "./use-copy-to-clipboard"
+import {useCopyToClipboard} from "./use-copy-to-clipboard.js"
 
-export interface CopyToClipboardInlineIconButtonProps
-  extends Omit<InlineIconButtonProps, "icon"> {
+export interface CopyToClipboardInlineIconButtonProps extends Omit<
+  InlineIconButtonProps,
+  "icon"
+> {
   valueOrFn: string | (() => string)
 }
 

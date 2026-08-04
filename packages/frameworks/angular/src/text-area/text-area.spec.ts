@@ -10,6 +10,7 @@ import {describe, expect, test} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
 import {TextAreaModule} from "@qualcomm-ui/angular/text-area"
+import type {Direction} from "@qualcomm-ui/utils/direction"
 
 import {type MultiComponentTest, runTests} from "~test-utils"
 
@@ -68,7 +69,7 @@ class SimpleTextAreaComponent {
 
   readonly counter = input<boolean | undefined>(undefined)
   readonly defaultValue = input<string | undefined>(undefined)
-  readonly dir = input<string | undefined>(undefined)
+  readonly dir = input<Direction | undefined>(undefined)
   readonly disabled = input<boolean | undefined>(undefined)
   readonly errorText = input<string | undefined>(undefined)
   readonly hint = input<string | undefined>(undefined)
@@ -164,7 +165,7 @@ const tests: MultiComponentTest[] = [
 
         const label =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="label"]')
+            ? $(container, '[data-text-area-part="label"]')
             : page.getByTestId(testIds.label)
         const input =
           component === SimpleTextAreaComponent
@@ -192,7 +193,7 @@ const tests: MultiComponentTest[] = [
 
         const hint =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="hint"]')
+            ? $(container, '[data-text-area-part="hint"]')
             : page.getByTestId(testIds.hint)
 
         await expect.element(hint).toBeVisible()
@@ -211,7 +212,7 @@ const tests: MultiComponentTest[] = [
 
         const hint =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="hint"]')
+            ? $(container, '[data-text-area-part="hint"]')
             : page.getByTestId(testIds.hint)
 
         await expect.element(hint).not.toBeVisible()
@@ -229,7 +230,7 @@ const tests: MultiComponentTest[] = [
 
         const errorText =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="error-text"]')
+            ? $(container, '[data-text-area-part="error-text"]')
             : page.getByTestId(testIds.errorText)
         const input =
           component === SimpleTextAreaComponent
@@ -253,7 +254,7 @@ const tests: MultiComponentTest[] = [
 
         const errorText =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="error-text"]')
+            ? $(container, '[data-text-area-part="error-text"]')
             : page.getByTestId(testIds.errorText)
 
         await expect.element(errorText).not.toBeVisible()
@@ -271,7 +272,7 @@ const tests: MultiComponentTest[] = [
 
         const root =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="root"]')
+            ? $(container, '[data-text-area-part="root"]')
             : page.getByTestId(testIds.root)
         const input =
           component === SimpleTextAreaComponent
@@ -338,7 +339,7 @@ const tests: MultiComponentTest[] = [
 
         const root =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="root"]')
+            ? $(container, '[data-text-area-part="root"]')
             : page.getByTestId(testIds.root)
 
         await expect.element(root).toHaveAttribute("dir", "rtl")
@@ -359,7 +360,7 @@ const counterTests: MultiComponentTest[] = [
 
         const counter =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="counter"]')
+            ? $(container, '[data-text-area-part="counter"]')
             : page.getByTestId(testIds.counter)
 
         await expect.element(counter).toBeVisible()
@@ -378,7 +379,7 @@ const counterTests: MultiComponentTest[] = [
 
         const counter =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="counter"]')
+            ? $(container, '[data-text-area-part="counter"]')
             : page.getByTestId(testIds.counter)
 
         await expect.element(counter).toBeVisible()
@@ -397,7 +398,7 @@ const counterTests: MultiComponentTest[] = [
 
         const counter =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="counter"]')
+            ? $(container, '[data-text-area-part="counter"]')
             : page.getByTestId(testIds.counter)
 
         if (component === SimpleTextAreaComponent) {
@@ -419,7 +420,7 @@ const counterTests: MultiComponentTest[] = [
 
         const counter =
           component === SimpleTextAreaComponent
-            ? $(container, '[data-part="counter"]')
+            ? $(container, '[data-text-area-part="counter"]')
             : page.getByTestId(testIds.counter)
         const input =
           component === SimpleTextAreaComponent

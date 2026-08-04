@@ -1,5 +1,5 @@
 .qui-tag__root {
-  > span {
+  > span:not(.qui-tag__icon) {
     text-box: cap alphabetic;
   }
 
@@ -20,6 +20,7 @@
   user-select: none;
 
   --tag-size: var(--sizing-90);
+  --tag-icon-size: var(--sizing-60);
   --tag-radius: var(--border-radius-md);
   --tag-bg-base: transparent;
   --tag-border-base: var(--color-interactive-border-neutral-idle);
@@ -35,7 +36,29 @@
   }
   &[data-size="lg"] {
     --tag-size: var(--sizing-100);
+    --tag-icon-size: var(--sizing-70);
     padding-inline: var(--spacing-80);
+
+    > .qui-tag__icon[data-tag-part="start-icon"] {
+      margin-inline-end: var(--spacing-70);
+    }
+    > .qui-tag__icon[data-tag-part="end-icon"] {
+      margin-inline-start: var(--spacing-70);
+    }
+  }
+
+  &[data-size="xl"] {
+    --tag-size: var(--sizing-125);
+    --tag-icon-size: var(--sizing-70);
+    font: var(--font-static-body-sm-bold);
+    padding-inline: var(--spacing-100);
+
+    > .qui-tag__icon[data-tag-part="start-icon"] {
+      margin-inline-end: var(--spacing-70);
+    }
+    > .qui-tag__icon[data-tag-part="end-icon"] {
+      margin-inline-start: var(--spacing-70);
+    }
   }
 
   &[data-shape="rounded"] {
@@ -49,13 +72,17 @@
     color: var(--color-interactive-text-primary-idle);
     --icon-color: var(--color-interactive-icon-primary-idle);
 
+    /* emphasis specific hover/pressed rules */
+
     &[data-variant="link"]:hover,
-    &[data-variant="selectable"]:hover {
+    &[data-variant="selectable"]:hover,
+    &:where(a):not([data-active]):hover {
       color: var(--color-interactive-text-primary-hover);
       --icon-color: var(--color-interactive-icon-primary-hover);
     }
 
-    &[data-variant="link"]:active {
+    &[data-variant="link"]:active,
+    &:where(a):not([data-active]):active {
       color: var(--color-interactive-text-primary-pressed);
       --icon-color: var(--color-interactive-icon-primary-pressed);
     }
@@ -163,17 +190,24 @@
   }
 
   &[data-variant="link"],
-  &[data-variant="selectable"] {
+  &[data-variant="selectable"],
+  &:where(a) {
     cursor: pointer;
+  }
+
+  &:where(a) {
+    color: var(--color-interactive-text-neutral-idle);
+    text-decoration: none;
   }
 
   &[data-variant="dismissable"] {
     padding-inline-end: 0;
   }
 
-  /* interactive variants: hover */
+  /* interactive: hover */
   &[data-variant="link"]:hover,
-  &[data-variant="selectable"]:hover {
+  &[data-variant="selectable"]:hover,
+  &:where(a):not([data-active]):hover {
     background:
       linear-gradient(var(--color-interactive-background-ghost-hover) 0 0),
       var(--tag-bg-base);
@@ -181,13 +215,14 @@
     --icon-color: var(--color-interactive-icon-neutral-hover);
   }
 
-  /* link variant: underline */
-  &[data-variant="link"]:hover {
+  &[data-variant="link"]:hover,
+  &:where(a):not([data-active]):hover {
     text-decoration: underline;
   }
 
-  /* link variant: pressed state */
-  &[data-variant="link"]:active {
+  /* interactive: pressed state */
+  &[data-variant="link"]:active,
+  &:where(a):not([data-active]):active {
     background:
       linear-gradient(var(--color-interactive-background-ghost-pressed) 0 0),
       var(--tag-bg-base);
@@ -195,8 +230,8 @@
     --icon-color: var(--color-interactive-icon-neutral-pressed);
   }
 
-  /* selected */
-  &[data-selected] {
+  &[data-selected],
+  &:where(a)[data-active] {
     background: var(--tag-bg-selected);
     border-color: var(--tag-border-selected);
     color: var(--tag-text-selected);
@@ -212,47 +247,56 @@
 
   /* focus */
   &[data-variant="link"]:focus-visible,
-  &[data-variant="selectable"]:focus-visible {
+  &[data-variant="selectable"]:focus-visible,
+  &:where(a):focus-visible {
     border-color: var(--color-utility-focus-border);
     outline: solid 2px var(--color-utility-focus-border);
     outline-offset: -1px;
   }
 
   /* disabled */
-  &[data-scope][data-disabled] {
+  &[data-disabled] {
     &:not([data-emphasis^="outline-"]) {
       background: var(--color-utility-disabled-background);
     }
     border-color: var(--color-utility-disabled-border);
     color: var(--color-utility-disabled-text);
     cursor: default;
+    pointer-events: none;
     --icon-color: var(--color-utility-disabled-icon);
   }
 }
 
 .qui-tag__icon {
   color: var(--icon-color);
-  &[data-scope="tag"][data-size] {
-    --icon-size: var(--sizing-60);
+
+  /* For when the icon is declared as a node, i.e. `<Plus />` */
+  .lucide {
+    display: block;
+    height: var(--icon-size);
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    width: var(--icon-size);
   }
-  &[data-scope="tag"][data-size="lg"] {
-    --icon-size: var(--sizing-70);
-  }
-  &[data-part="start-icon"] {
+
+  &[data-tag-part="start-icon"] {
     margin-inline-end: var(--spacing-50);
   }
-  &[data-size="lg"][data-part="start-icon"] {
-    margin-inline-end: var(--spacing-70);
-  }
-  &[data-part="end-icon"] {
+  &[data-tag-part="end-icon"] {
     margin-inline-start: var(--spacing-50);
   }
-  &[data-size="lg"][data-part="end-icon"] {
-    margin-inline-start: var(--spacing-70);
-  }
-  .qui-tag__dismiss-button > &[data-part="end-icon"] {
+  .qui-tag__dismiss-button > &[data-tag-part="end-icon"] {
     margin-inline-start: 0;
   }
+}
+
+/*
+ * Overrides .qui-icon__root's own [data-size] mapping when the
+ * icon class lands directly on the SVG.
+ */
+.qui-tag__root .qui-tag__icon[data-tag-part] {
+  --icon-size: var(--tag-icon-size);
 }
 
 .qui-tag__dismiss-button {

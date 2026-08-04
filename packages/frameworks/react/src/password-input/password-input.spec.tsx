@@ -2,8 +2,8 @@ import {type HTMLAttributes, type InputHTMLAttributes, useState} from "react"
 
 import {KeyRound} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {InputStartIcon} from "@qualcomm-ui/react/input"
 import {PasswordInput} from "@qualcomm-ui/react/password-input"

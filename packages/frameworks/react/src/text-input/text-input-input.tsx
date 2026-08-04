@@ -3,16 +3,14 @@
 
 import type {ComponentPropsWithRef, ReactElement} from "react"
 
-import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {useTextInputInput} from "@qualcomm-ui/react-core/text-input"
+import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import type {ComponentDataAttributes} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TextInputInputProps
-  extends ComponentPropsWithRef<"input">,
-    ComponentDataAttributes,
-    IdProp {}
+  extends ComponentPropsWithRef<"input">, ComponentDataAttributes, IdProp {}
 
 /**
  * The text input element. Renders an `<input>` element.

@@ -1,12 +1,11 @@
 ---
 title: Tree
-group: Disclosure
 description: Tree components display hierarchical data in a collapsible structure, allowing users to explore nested relationships while keeping the interface organized and navigable.
 component: Tree
 aliases: [treeview, file browser, hierarchical, nested]
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -42,11 +41,7 @@ These defaults can be overridden in the `TreeCollection` [constructor](./#constr
 ### Node Shorthand
 
 ::: terms
-file explorer
-folder tree
-directory view
-directory structure
-folder hierarchy
+file explorer, folder tree, directory view, directory structure, folder hierarchy
 :::
 
 We expose the `q-tree-nodes` component for rendering Branch and Leaf nodes. Use the `<ng-template q-tree-branch-template>` and `<ng-template q-tree-leaf-template>` directives to customize the content of each tree item.
@@ -61,9 +56,7 @@ Note that `q-tree-nodes` automatically renders child nodes for branches, so you 
 ### Nodes
 
 ::: terms
-recursive rendering
-branch node
-leaf node
+recursive rendering, branch node, leaf node
 :::
 
 You can bring your own recursive component to create your own abstraction for the tree.
@@ -76,34 +69,27 @@ You can bring your own recursive component to create your own abstraction for th
 ### Default Expanded
 
 ::: terms
-initially open
-open by default
-expandable
-collapsible
-signal
-two-way binding
+initially open, open by default, expandable, collapsible, signal, two-way binding
 :::
 
-Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) input. Or use [expandedValue](./#expandedValue) and [expandedValueChange](./#expandedValueChange) to control the expansion manually. These inputs follow our [controlled state](/patterns/controlled-state) pattern.
+Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) input. Or use [expandedValue](./#expandedValue) and [expandedValueChanged](./#expandedValueChanged) to control the expansion manually. These inputs follow our [controlled state](/patterns/controlled-state) pattern.
 
 <QdsDemo name="TreeDefaultExpandedDemo" />
 
 ### Checkbox Trees
 
 ::: terms
-multi-select
-selectable
+multi-select, selectable
 :::
 
-Use the `q-tree-node-checkbox` directive within each node to create a checkbox tree. The checked state of the tree can be controlled using the [checkedValue](./#checkedValue), [checkedValueChange](./#checkedValueChange), and [defaultCheckedValue](./#defaultCheckedValue) inputs, which follow our [controlled state](/patterns/controlled-state) pattern.
+Use the `q-tree-node-checkbox` directive within each node to create a checkbox tree. The checked state of the tree can be controlled using the [checkedValue](./#checkedValue), [checkedValueChanged](./#checkedValueChanged), and [defaultCheckedValue](./#defaultCheckedValue) inputs, which follow our [controlled state](/patterns/controlled-state) pattern.
 
 <QdsDemo name="TreeCheckboxDemo" />
 
 ### Checkbox selection state
 
 ::: terms
-cascading
-parent-child
+cascading, parent-child
 :::
 
 The Tree handles nested checkbox selection automatically:
@@ -171,8 +157,7 @@ The following demo shows checked state below the tree. Interact with it to see s
 ### Disabled Nodes
 
 ::: terms
-inactive
-non-interactive
+inactive, non-interactive
 :::
 
 You can disable nodes by setting the `disabled` property on the node object.
@@ -182,8 +167,7 @@ You can disable nodes by setting the `disabled` property on the node object.
 ### Filtering
 
 ::: terms
-searchable
-find
+searchable, find
 :::
 
 Here's an example that filters the nodes using `matchSorter`.
@@ -193,9 +177,7 @@ Here's an example that filters the nodes using `matchSorter`.
 ### Links
 
 ::: terms
-navigation
-router
-anchor
+navigation, router, anchor
 :::
 
 Tree nodes can be links using Angular's `RouterLink` directive. Apply the `q-tree-branch-node` or `q-tree-leaf-node` directive to an anchor element with `[routerLink]`.
@@ -205,10 +187,7 @@ Tree nodes can be links using Angular's `RouterLink` directive. Apply the `q-tre
 ### Sizes
 
 ::: terms
-compact
-density
-small
-medium
+compact, density, small, medium
 :::
 
 Tree item sizes are controlled using the [size](./#size) input on the root of the tree.
@@ -218,14 +197,33 @@ Tree item sizes are controlled using the [size](./#size) input on the root of th
 ### Add / Remove nodes
 
 ::: terms
-dynamic
-editable
-CRUD
+dynamic, editable, CRUD
 :::
 
 The `TreeCollection` class exposes methods to handle the addition and removal of nodes. Here's an example of how to use them.
 
 <QdsDemo name="TreeAddRemoveDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-tree"
+  name="TreeExplorerDemo"
+  parts={[
+    "root",
+    "branch",
+    "branch-node",
+    "branch-trigger",
+    "branch-content",
+    "branch-indent-guide",
+    "leaf-node",
+    "node-checkbox",
+    "node-icon",
+    "node-indicator",
+    "node-text",
+  ]}
+  scope="tree"
+/>
 
 ## API
 
@@ -233,7 +231,9 @@ The `TreeCollection` class exposes methods to handle the addition and removal of
 
 <TypeDocProps name="TreeRootDirective" />
 
-<TypeDocAngularAttributes name={["TreeRootBindings", "QdsTreeRootBindings"]} />
+<TypeDocAngularAttributes
+  name={["TreeRootBindings", "QdsTreeRootBindings"]}
+/>
 
 ### q-tree-nodes
 

@@ -2,9 +2,9 @@ import type {ReactElement} from "react"
 
 import {LogOut, Settings, User} from "lucide-react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Avatar} from "@qualcomm-ui/react/avatar"
 import {Menu} from "@qualcomm-ui/react/menu"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 export function MenuAvatarDemo(): ReactElement {
   return (

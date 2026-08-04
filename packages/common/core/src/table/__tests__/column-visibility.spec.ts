@@ -42,6 +42,8 @@ describe("Column Visibility", () => {
     const cells = table
       .getRowModel()
       .rows.flatMap((row) => row.getVisibleCells())
-    cells.forEach((cell) => expect(cell.column.id).not.eq("firstName"))
+    for (const cell of cells) {
+      expect(cell.column.id).not.eq("firstName")
+    }
   })
 })

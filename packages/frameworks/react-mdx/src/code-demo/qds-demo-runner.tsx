@@ -11,11 +11,12 @@ import type {
 import type {ReactDemoWithScope} from "@qualcomm-ui/mdx-common"
 import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"
 
-import {QdsDemoThemeSelector} from "./internal"
-import {QdsReactDemo, type QdsReactDemoProps} from "./qds-react-demo"
+import {QdsDemoThemeSelector} from "./internal/index.js"
+import {QdsReactDemo, type QdsReactDemoProps} from "./qds-react-demo.js"
 
 export interface QdsDemoRunnerProps
-  extends ComponentPropsWithRef<"div">,
+  extends
+    ComponentPropsWithRef<"div">,
     Pick<QdsReactDemoProps, "name" | "updating" | "onDemoRendered"> {
   className?: string
 

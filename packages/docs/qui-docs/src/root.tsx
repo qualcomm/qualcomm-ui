@@ -1,5 +1,3 @@
-import "./globals.css"
-
 import {useEffect, useMemo, useRef, useState} from "react"
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
@@ -20,15 +18,8 @@ import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
-  isQdsBrand,
-  type QdsBrand,
-  QdsThemeContextProvider,
-  type QdsThemeContextValue,
-  useQdsThemeContext,
-} from "@qualcomm-ui/react/qds-theme"
-import {
   GlobalConfigContextProvider,
-  GlobalConfigContextValue,
+  type GlobalConfigContextValue,
 } from "@qualcomm-ui/react-internal/layout"
 import {
   type DemoSettings,
@@ -50,6 +41,13 @@ import {
   updateSiteState,
   useTheme,
 } from "@qualcomm-ui/react-router-utils/client"
+import {
+  isQdsBrand,
+  type QdsBrand,
+  QdsThemeContextProvider,
+  type QdsThemeContextValue,
+  useQdsThemeContext,
+} from "@qualcomm-ui/react/qds-theme"
 
 import {AppDocsLayout} from "./components"
 import {
@@ -58,6 +56,8 @@ import {
   siteStateCookie,
   themeCookie,
 } from "./sessions.server"
+
+import "./globals.css"
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 
@@ -157,6 +157,7 @@ function App() {
           href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
           rel="stylesheet"
         />
+        <link href="https://use.typekit.net/nhs4wvu.css" rel="stylesheet" />
       </head>
       <body>
         <GlobalConfigContextProvider value={globalConfigContext}>

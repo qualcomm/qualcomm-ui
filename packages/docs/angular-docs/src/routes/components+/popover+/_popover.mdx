@@ -1,13 +1,15 @@
 ---
 title: Popover
-group: Overlays
 description: Popover displays contextual information or actions in a floating container that appears relative to a trigger element. Unlike dialogs, popovers are non-modal and allow users to continue interacting with the background content.
 component: Popover
 aliases: [popup, floating panel, flyout, callout, bubble]
 ---
 
-import {QdsDemo} from "~components/demo"
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
+import {
+  TypeDocAngularAttributes,
+  TypeDocProps,
+} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
@@ -41,6 +43,24 @@ Use [emphasis](./#emphasis-1) to control the visual style of the popover. Two em
 
 <QdsDemo name="PopoverEmphasisDemo" />
 
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-popover"
+  name="PopoverExplorerDemo"
+  parts={[
+    "anchor",
+    "trigger",
+    "positioner",
+    "content",
+    "arrow",
+    "arrow-tip",
+    "label",
+    "description",
+  ]}
+  scope="popover"
+/>
+
 ## API
 
 ### q-popover
@@ -51,15 +71,71 @@ The `q-popover` directive extends the [q-popover-root](./#q-popover-root) direct
 
 ## Composite API
 
+This section describes the elements of the Popover's composite API.
+
 ### q-popover-root
 
 <TypeDocProps name="PopoverRootDirective" />
 
-This section describes the elements of the Popover's composite API.
+<TypeDocAngularAttributes name="PopoverRootBindings" />
+
+### q-popover-anchor
+
+<TypeDocProps name="PopoverAnchorDirective" />
+
+<TypeDocAngularAttributes name="PopoverAnchorBindings" />
+
+### q-popover-trigger
+
+<TypeDocProps name="PopoverTriggerDirective" />
+
+<TypeDocAngularAttributes name="PopoverTriggerBindings" />
+
+### q-popover-positioner
+
+<TypeDocProps name="PopoverPositionerDirective" />
+
+<TypeDocAngularAttributes name="PopoverPositionerBindings" />
+
+### q-popover-content
+
+<TypeDocProps name="PopoverContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsPopoverContentBindings", "PopoverContentBindings"]}
+/>
+
+### q-popover-arrow
+
+<TypeDocProps name="PopoverArrowDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsPopoverArrowBindings", "PopoverArrowBindings"]}
+/>
+
+### q-popover-arrow-tip
+
+<TypeDocProps name="PopoverArrowTipDirective" />
+
+<TypeDocAngularAttributes name="PopoverArrowTipBindings" />
 
 ### q-popover-label
 
 <TypeDocProps name="PopoverLabelDirective" />
+
+<TypeDocAngularAttributes name="PopoverLabelBindings" />
+
+### q-popover-description
+
+<TypeDocProps name="PopoverDescriptionDirective" />
+
+<TypeDocAngularAttributes name="PopoverDescriptionBindings" />
+
+### q-popover-close-trigger
+
+<TypeDocProps name="PopoverCloseTriggerDirective" />
+
+<TypeDocAngularAttributes name="PopoverCloseTriggerBindings" />
 
 ## Data Structures
 

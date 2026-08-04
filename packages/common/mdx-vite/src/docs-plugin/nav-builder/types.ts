@@ -20,18 +20,17 @@ export interface NavMeta {
   separator?: boolean
 }
 
-export interface RouteMetaEntryInternal
-  extends Pick<
-    PageFrontmatter,
-    | "group"
-    | "hideToc"
-    | "hideSideNav"
-    | "hideFromSearch"
-    | "hideBreadcrumbs"
-    | "hidePageLinks"
-    | "hidden"
-    | "sideNavTitle"
-  > {
+export interface RouteMetaEntryInternal extends Pick<
+  PageFrontmatter,
+  | "group"
+  | "hideToc"
+  | "hideSideNav"
+  | "hideFromSearch"
+  | "hideBreadcrumbs"
+  | "hidePageLinks"
+  | "hidden"
+  | "sideNavTitle"
+> {
   /**
    * Nested routes.
    */
@@ -94,8 +93,10 @@ export type RouteMetaInternal = Record<string, RouteMetaEntryInternal>
 
 export type NavConfig = RouteMeta | NavMeta
 
-export interface RouteMeta
-  extends Omit<RouteMetaEntryInternal, "children" | "order"> {
+export interface RouteMeta extends Omit<
+  RouteMetaEntryInternal,
+  "children" | "order"
+> {
   /**
    * Nested routes.
    *

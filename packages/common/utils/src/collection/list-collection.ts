@@ -12,7 +12,7 @@ import type {
   CollectionSearchOptions,
   ListCollectionMethods,
   ListCollectionOptions,
-} from "./types"
+} from "./types.js"
 
 const fallback: ListCollectionMethods<any> = {
   itemDisabled(item) {
@@ -245,13 +245,14 @@ export class ListCollection<T extends CollectionItem = CollectionItem> {
 
     const groups = new Map<string, T[]>()
 
-    this.items.forEach((item, index) => {
-      const groupKey = groupBy(item, index)
+    for (let i = 0; i < this.items.length; i++) {
+      const item = this.items[i]
+      const groupKey = groupBy(item, i)
       if (!groups.has(groupKey)) {
         groups.set(groupKey, [])
       }
       groups.get(groupKey)!.push(item)
-    })
+    }
 
     const entries = Array.from(groups.entries())
 

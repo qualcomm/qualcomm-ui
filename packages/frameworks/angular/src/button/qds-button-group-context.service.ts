@@ -8,16 +8,9 @@ import {
   BaseApiContextService,
   createApiContext,
 } from "@qualcomm-ui/angular-core/machine"
-import type {
-  QdsButtonApiProps,
-  QdsButtonGroupApiProps,
-} from "@qualcomm-ui/qds-core/button"
+import type {ResolvableButtonGroupProps} from "@qualcomm-ui/qds-core/button"
 
-export interface ButtonGroupContextValue
-  extends Pick<
-    QdsButtonGroupApiProps,
-    keyof QdsButtonGroupApiProps & keyof QdsButtonApiProps
-  > {}
+export type ButtonGroupContextValue = ResolvableButtonGroupProps
 
 @Injectable()
 export class QdsButtonGroupContextService extends BaseApiContextService<ButtonGroupContextValue> {}

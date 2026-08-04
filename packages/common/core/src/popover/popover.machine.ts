@@ -13,8 +13,8 @@ import {preventBodyScroll} from "@qualcomm-ui/dom/remove-scroll"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {domEls} from "./internal"
-import type {PopoverSchema} from "./popover.types"
+import {domEls} from "./internal/index.js"
+import type {PopoverSchema} from "./popover.types.js"
 
 export const popoverMachine: MachineConfig<PopoverSchema> =
   createMachine<PopoverSchema>({
@@ -32,6 +32,7 @@ export const popoverMachine: MachineConfig<PopoverSchema> =
         const anchorEl = domEls.anchor(scope) ?? domEls.trigger(scope)
         const getPositionerEl = () => domEls.positioner(scope)
         getPlacement(anchorEl, getPositionerEl, {
+          arrowSelector: "[data-popover-part=arrow]",
           ...prop("positioning"),
           ...event.options,
           defer: true,
@@ -158,6 +159,7 @@ export const popoverMachine: MachineConfig<PopoverSchema> =
         const getAnchorEl = () => domEls.anchor(scope)
         const getPositionerEl = () => domEls.positioner(scope)
         return getPlacement(getAnchorEl, getPositionerEl, {
+          arrowSelector: "[data-popover-part=arrow]",
           ...prop("positioning"),
           defer: true,
           onComplete(data) {

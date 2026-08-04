@@ -1,0 +1,113 @@
+---
+title: Routing
+---
+
+# {frontmatter.title}
+
+Use this contract when you create, move, validate, or review route pages in a QUI Docs site. For the filename-to-URL model, see [Routing Conventions](/routing-conventions). For the guided setup walkthrough, see [Page Configuration](/pages). For writing principles and reviewer gates, see [Principles](/principles) and [Rules](/rules).
+
+## Before editing
+
+Inspect the existing docs surface before adding or moving a page:
+
+- Open `qui-docs.config.ts` and check the section order, existing `navConfig` entries, and any configured `knowledge` exclusions.
+- Read nearby sibling routes so the new page matches the section's naming, tone, heading depth, and link style.
+- Read [Principles](/principles) before writing the content shape.
+- Read [Rules](/rules) before choosing filenames, frontmatter, links, screenshots, or examples.
+
+## Page file contract
+
+- Put route pages under the configured `pageDirectory`, usually `src/routes`.
+- Use kebab-case route files and folders. Use `page-authoring.mdx`, not `pageAuthoring.mdx`.
+- Use folder segments ending in `+` for nested URL groups. Example: `authoring+/page-authoring.mdx` maps to `/page-authoring`.
+- Do not create new section `index.mdx` pages. They make a side-nav item act as both a parent folder and a page.
+- Use `overview.mdx` only when the section needs real context about what it covers, who it is for, and how to think about the child pages.
+- Do not create an `overview.mdx` page just to list child routes. The side navigation already lists sibling pages.
+
+## MDX contract
+
+Every route MDX page starts with a `title` and uses that title as the only H1:
+
+```mdx
+---
+title: Page Authoring
+---
+
+# {frontmatter.title}
+```
+
+- Keep one H1 per page, always `# {frontmatter.title}`.
+- Use optional frontmatter fields only when they have a specific page behavior. Common fields include `description`, `sideNavTitle`, `hidden`, `hideFromSearch`, `hideToc`, `hideSideNav`, `hideBreadcrumbs`, and `hidePageLinks`.
+- Check [PageFrontmatter](/api/page-frontmatter) before adding metadata fields. Do not invent frontmatter keys for behavior the platform does not read.
+- Use H2 sections for primary tasks or concepts. Use H3 and H4 only when they add useful hierarchy.
+- Do not skip heading levels, style heading text with bold or italics, or end headings with trailing punctuation.
+- Use root-relative links for docs pages. Example: `[Rules](/rules)`.
+- Do not add a manual table of contents. The docs layout builds one from H2-H4 headings.
+
+## Navigation contract
+
+Use `navConfig` when a page's order, nesting, initial expanded state, label, or visibility matters. Routes without entries still appear, but their order falls back to route discovery.
+
+- Add section children in the exact sidebar order reviewers should see.
+- For each route entry, set `id` to the path segment at that nesting level. A page at `/page-authoring` uses `id: "authoring"` at the top level and `id: "page-authoring"` inside `children`.
+- Use `children` for nested route entries.
+- Use `expanded: true` only when a section should be open on initial load.
+- Use `title` when a folder or route needs a sidebar label that cannot come from MDX frontmatter.
+- Use `sideNavTitle` when the page title should stay unchanged but the side-nav label needs to be shorter.
+- Use `hidden` only for pages that should stay out of the side navigation and adjacent page links.
+- Prefer stable section order over alphabetical fallback for authored documentation sections.
+
+Properties defined in `navConfig` take precedence over overlapping page frontmatter. Check [NavConfig](/api/nav-config) before adding route metadata.
+
+## Search and knowledge contract
+
+- Use MDX for documentation pages that should be searchable. MDX pages are included in the search index by default.
+- Use `.tsx` routes sparingly. TSX pages can appear in navigation when configured, but their rendered content is not indexed for search by default. MDX allows you to use React components in your pages, so prefer MDX routes even for pages with more complex content.
+- Set `hideFromSearch: true` in frontmatter or `navConfig` when the page content should be excluded from search.
+- Check the `knowledge` field in `qui-docs.config.ts` before assuming a page is included in AI knowledge exports. The config can exclude route globs and add extra files.
+- For generated knowledge behavior, output files, and upload workflows, see [AI Knowledge](/ai-knowledge).
+
+## Move and rename contract
+
+When you move or rename a route, keep old URLs working when they may already be linked or indexed:
+
+1. Create the new canonical MDX route.
+2. Add a small compatibility `.ts` route at the old path.
+3. Redirect to the new root-relative URL.
+4. Update inbound links you touch in the same PR to point at the new canonical route.
+5. Do not add new links to compatibility routes.
+
+Use this redirect shape:
+
+```ts
+import {redirect} from "react-router"
+
+export const loader = () => {
+  return redirect("/new/path")
+}
+```
+
+Compatibility routes redirect or delegate only. They do not duplicate page content.
+
+## Verification contract
+
+Before opening a PR:
+
+- Run `pnpm qui-docs lint`.
+- Run or compile every code snippet you add when the snippet is meant to execute.
+- Validate links and fragments through the docs build when a build is appropriate for the checkout.
+- Before running a docs build in this repo, read the configured docs port from `vite.config.ts` and check whether it is occupied.
+- If the configured port is occupied, assume the docs dev server is already running and skip the routine build unless the task explicitly requires it.
+- Manually review the new or moved route, its parent section, and any linked authoring pages for sidebar order, headings, links, and tone.
+
+## Author self-check
+
+Before review, confirm:
+
+- The page has one clear primary type from [Principles](/principles).
+- The first paragraph states what the reader can do after reading.
+- Filename, route path, frontmatter, H1, headings, and links follow [Rules](/rules).
+- The page is in `navConfig` when order, nesting, label, expansion, or visibility matters.
+- Search and AI knowledge behavior are intentional.
+- Moved or renamed pages have compatibility redirects and updated canonical inbound links.
+- Examples use realistic values and executable snippets have been checked.

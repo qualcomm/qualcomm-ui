@@ -6,12 +6,42 @@ export function AlertBannerVariantDemo(): ReactElement {
   return (
     <div className="grid w-full gap-4">
       {/* preview */}
-      <AlertBanner emphasis="info" heading="info" variant="subtle" />
-      <AlertBanner emphasis="success" heading="success" variant="subtle" />
-      <AlertBanner emphasis="warning" heading="warning" variant="subtle" />
-      <AlertBanner emphasis="danger" heading="danger" variant="subtle" />
-      <AlertBanner emphasis="neutral" heading="neutral" variant="subtle" />
+      <AlertBanner
+        action={<AlertBanner.Button>Action</AlertBanner.Button>}
+        description="Description"
+        emphasis="info"
+        heading="info"
+        variant="subtle"
+      />
       {/* preview */}
+      <AlertBanner
+        action={<AlertBanner.Button>Action</AlertBanner.Button>}
+        description="Description"
+        emphasis="success"
+        heading="success"
+        variant="subtle"
+      />
+      <AlertBanner
+        action={<AlertBanner.Button>Action</AlertBanner.Button>}
+        description="Description"
+        emphasis="warning"
+        heading="warning"
+        variant="subtle"
+      />
+      <AlertBanner
+        action={<AlertBanner.Button>Action</AlertBanner.Button>}
+        description="Description"
+        emphasis="danger"
+        heading="danger"
+        variant="subtle"
+      />
+      <AlertBanner
+        action={<AlertBanner.Button>Action</AlertBanner.Button>}
+        description="Description"
+        emphasis="neutral"
+        heading="neutral"
+        variant="subtle"
+      />
     </div>
   )
 }

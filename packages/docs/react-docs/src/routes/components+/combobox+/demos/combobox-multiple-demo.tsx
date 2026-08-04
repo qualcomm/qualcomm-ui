@@ -1,10 +1,10 @@
 import {useState} from "react"
 
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
-import {Tag} from "@qualcomm-ui/react/tag"
 import {useListCollection} from "@qualcomm-ui/react-core/collection"
 import {useFilter} from "@qualcomm-ui/react-core/locale"
+import {Combobox} from "@qualcomm-ui/react/combobox"
+import {Tag} from "@qualcomm-ui/react/tag"
 
 import {countries} from "./country-list"
 

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Audit QUI Best Practices"
+  short_description: "Review covered QUI component rules"
+  default_prompt: "Use $audit-qui-component-rules to review covered QUI React component usage before a PR."
+
+policy:
+  allow_implicit_invocation: true

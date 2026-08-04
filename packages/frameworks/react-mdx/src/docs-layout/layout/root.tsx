@@ -19,16 +19,17 @@ import {
 } from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {MdxProvider} from "../mdx-provider"
-import type {DocsLayoutSettings} from "../types"
+import {MdxProvider} from "../mdx-provider.js"
+import type {DocsLayoutSettings} from "../types.js"
 
 import {
   MdxDocsLayoutContextProvider,
   type MdxDocsLayoutContextState,
-} from "./use-mdx-docs-layout"
+} from "./use-mdx-docs-layout.js"
 
 export interface RootProps
-  extends Omit<ElementRenderProp<"div">, "children">,
+  extends
+    Omit<ElementRenderProp<"div">, "children">,
     Omit<DocsLayoutSettings, "rootBreadcrumb" | "header" | "footer"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -42,7 +43,9 @@ export function Root({
   demoState: demoStateProp,
   docProps,
   hideToc,
+  layoutComponents,
   mdxComponents,
+  navDensity = "compact",
   onDemoSettingsChange,
   onDemoStateChange,
   onPackageManagerChange,
@@ -71,6 +74,7 @@ export function Root({
       demoSettings,
       demoState,
       docProps,
+      layoutComponents,
       packageManager,
       renderLink,
       setDemoSettings: (updaterOrValue) => {
@@ -111,6 +115,7 @@ export function Root({
       demoState,
       docProps,
       onDemoSettingsChange,
+      layoutComponents,
       onDemoStateChange,
       onPackageManagerChange,
       packageManager,
@@ -135,6 +140,7 @@ export function Root({
       hidePageLinks,
       hideSideNav,
       mainContentElement,
+      navDensity,
       navItems,
       pageExport,
       pageFrontmatter: pageData?.data ?? {},
@@ -148,6 +154,7 @@ export function Root({
   }, [
     exports,
     hideToc,
+    navDensity,
     mainContentElement,
     navItems,
     pageDocProps,
@@ -155,7 +162,10 @@ export function Root({
     pathname,
   ])
 
-  const mergedProps = mergeProps({className: "qui-docs__root"}, props)
+  const mergedProps = mergeProps(
+    {className: "qui-docs__root", "data-nav-density": navDensity},
+    props,
+  )
 
   return (
     <MdxDocsProvider value={mdxDocsContextValue}>

@@ -5,19 +5,18 @@ import type {ReactElement} from "react"
 
 import {ChevronLeft} from "lucide-react"
 
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {usePaginationPrevTrigger} from "@qualcomm-ui/react-core/pagination"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsPaginationContext} from "./qds-pagination-context"
+import {useQdsPaginationContext} from "./qds-pagination-context.js"
 
-export interface PaginationPrevTriggerProps
-  extends ElementRenderProp<"button"> {
+export interface PaginationPrevTriggerProps extends ElementRenderProp<"button"> {
   /**
    * lucide-react icon.
    *

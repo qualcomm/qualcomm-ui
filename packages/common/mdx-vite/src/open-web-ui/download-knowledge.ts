@@ -6,10 +6,10 @@ import dotenv from "dotenv"
 import {mkdir, writeFile} from "node:fs/promises"
 import {resolve} from "node:path"
 
-import {FilesApi, KnowledgeApi} from "./api"
-import {getConfigFromEnv, loadEnv} from "./env"
+import {FilesApi, KnowledgeApi} from "./api.js"
+import {getConfigFromEnv, loadEnv} from "./env.js"
 
-export function addDownloadKnowledgeCommand() {
+export function addDownloadKnowledgeCommand(): void {
   program
     .command("download-knowledge")
     .description("Download files from an Open Web UI knowledge base")

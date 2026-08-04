@@ -1,3 +1,7 @@
+.qui-tooltip__root {
+  display: contents;
+}
+
 .qui-tooltip__content {
   background-color: var(--color-background-neutral-10);
   border-radius: 2px;
@@ -10,10 +14,9 @@
   transition:
     opacity 130ms ease-in-out,
     display 130ms ease-in-out allow-discrete;
+  z-index: calc(var(--z-index-tooltip) + var(--layer-index, 0));
   --arrow-background: var(--color-background-neutral-10);
   --arrow-size: 10px;
-  --arrow-height: 8px;
-  --z-index: calc(var(--z-index-tooltip) + var(--layer-index, 0));
 
   @starting-style {
     opacity: 0;
@@ -22,4 +25,8 @@
   &:not([data-state="open"]) {
     opacity: 0;
   }
+}
+
+.qui-tooltip__arrow-tip {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }

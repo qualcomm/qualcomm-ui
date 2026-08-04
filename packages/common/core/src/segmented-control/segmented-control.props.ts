@@ -3,7 +3,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {SegmentedControlApiProps} from "./segmented-control.types"
+import type {SegmentedControlApiProps} from "./segmented-control.types.js"
 
 export const segmentedControlGroupProps: (keyof SegmentedControlApiProps)[] =
   createProps<SegmentedControlApiProps>()(

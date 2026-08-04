@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {avatarClasses} from "./avatar.classes"
+import {avatarClasses} from "./avatar.classes.js"
 import type {
   QdsAvatarApi,
   QdsAvatarApiProps,
@@ -11,7 +11,7 @@ import type {
   QdsAvatarImageBindings,
   QdsAvatarRootBindings,
   QdsAvatarStatusBindings,
-} from "./avatar.types"
+} from "./avatar.types.js"
 
 export function createQdsAvatarApi(
   props: QdsAvatarApiProps,

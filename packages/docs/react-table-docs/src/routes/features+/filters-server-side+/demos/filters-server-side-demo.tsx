@@ -10,6 +10,8 @@ import {
   type PaginationState,
   type SortingState,
 } from "@qualcomm-ui/core/table"
+import {useDebounce} from "@qualcomm-ui/react-core/effects"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Pagination} from "@qualcomm-ui/react/pagination"
 import {Popover} from "@qualcomm-ui/react/popover"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
@@ -20,8 +22,6 @@ import {
   useTablePagination,
 } from "@qualcomm-ui/react/table"
 import {TextInput} from "@qualcomm-ui/react/text-input"
-import {useDebounce} from "@qualcomm-ui/react-core/effects"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
 import {TableColumnFilter} from "./filters"
 import {fetchData, type User, type UserColumnMeta} from "./use-data"

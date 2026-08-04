@@ -1,3 +1,3 @@
-export * from "./radio.api"
-export * from "./radio.classes"
-export type * from "./radio.types"
+export * from "./radio.api.js"
+export * from "./radio.classes.js"
+export type * from "./radio.types.js"

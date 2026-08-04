@@ -68,7 +68,7 @@ export default function SingleDemoPage() {
 
     if (!demoComponent) {
       const MissingDemo: ComponentType = () => (
-        <div role="alert" className="text-danger">
+        <div className="text-danger" role="alert">
           Missing demo export: {componentName}
         </div>
       )

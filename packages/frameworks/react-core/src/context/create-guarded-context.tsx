@@ -1,12 +1,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {
-  type Context,
-  createContext as createReactContext,
-  type Provider,
-  use,
-} from "react"
+import {createContext as createReactContext, use} from "react"
+
+import type {CreateContextReturn} from "./context.types.js"
 
 export interface CreateContextOptions<T> {
   defaultValue?: T
@@ -16,12 +13,6 @@ export interface CreateContextOptions<T> {
   providerName?: string
   strict?: boolean
 }
-
-export type CreateContextReturn<T> = [
-  Provider<T>,
-  (requireContext?: boolean) => T,
-  Context<T>,
-]
 
 function getErrorMessage(hook: string, provider: string) {
   return `${hook} returned \`undefined\`. It seems you forgot to wrap this component with ${provider}`

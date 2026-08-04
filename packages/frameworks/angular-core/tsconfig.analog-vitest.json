@@ -3,28 +3,13 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "emitDeclarationOnly": false,
-    "strictPropertyInitialization": false,
-    "moduleResolution": "Bundler",
-    "types": [
-      "vitest",
-      "@vitest/browser/matchers"
-    ],
-    "target": "es2020",
+    "moduleResolution": "bundler",
     "paths": {
       "~test-utils": ["./test/index.ts"],
       "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"]
     }
   },
   "files": ["./test/test-setup.ts"],
-  "include": [
-    "src/**/*.spec.ts",
-    "./test"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.angular-lib.json"
-    }
-  ]
+  "include": ["src/**/*.spec.ts", "./test"]
 }

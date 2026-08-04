@@ -1,12 +1,11 @@
 ---
 title: Checkbox
-group: Form Controls
 description: Checkboxes provide a straightforward way for users to make multiple selections from a set of options, whether they're choosing preferences, confirming actions, or filtering content.
 component: Checkbox
 aliases: [check box, tick box]
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -55,9 +54,7 @@ When [disabled](./#disabled) is true, the checkbox becomes non-interactive and i
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 The checkbox supports three [sizes](./#size): `sm`, `md` (default), and `lg`.
@@ -67,8 +64,7 @@ The checkbox supports three [sizes](./#size): `sm`, `md` (default), and `lg`.
 ### Hint
 
 ::: terms
-helper text
-description
+helper text, description
 :::
 
 Add a hint to provide additional context below the checkbox.
@@ -78,8 +74,7 @@ Add a hint to provide additional context below the checkbox.
 ### Group
 
 ::: terms
-checkbox group
-field group
+checkbox group, field group
 :::
 
 Use [CheckboxGroup](/components/checkbox-group) to group related checkboxes with a shared label, hint text, and validation state.
@@ -89,10 +84,7 @@ Use [CheckboxGroup](/components/checkbox-group) to group related checkboxes with
 ### Template Forms
 
 ::: terms
-ngModel
-template-driven
-FormsModule
-two-way binding
+ngModel, template-driven, FormsModule, two-way binding
 :::
 
 - When using template forms, add the [required](./#required) attribute to enable validation
@@ -103,9 +95,7 @@ two-way binding
 ### Reactive Forms
 
 ::: terms
-FormControl
-FormGroup
-ReactiveFormsModule
+FormControl, FormGroup, ReactiveFormsModule
 :::
 
 Use Reactive Forms instead of Template-driven Forms for better control over form state and validation.
@@ -115,8 +105,7 @@ Use Reactive Forms instead of Template-driven Forms for better control over form
 ### Multi-Field Validation
 
 ::: terms
-cross-field validation
-Validators
+cross-field validation, Validators
 :::
 
 Reactive forms let you validate across multiple fields simultaneously, perfect for complex business rules like date ranges or dependent field relationships.
@@ -145,13 +134,18 @@ The composite elements are only intended to be used as direct descendants of the
   - it makes the entire component clickable, not just the input/control.
   - it provides implicit association between the text and input element, which is ideal for screen readers.
 - Always use the associated [label](./#label) or [q-checkbox-label](./#q-checkbox-label) directive when authoring the text label. This is automatically associated with the input element.
-- If you omit the label, you must provide an [aria-label](./#aria-label) or [aria-labelledby](./#aria-labelledby) attribute on the `q-checkbox-hidden-input` element:
+- If you omit the visible label, give the checkbox an accessible name with `aria-label` or `aria-labelledby` on the simple `q-checkbox`. If you use the composite API, provide `aria-label` or `aria-labelledby` on the `q-checkbox-hidden-input` element. Avoid `[attr.aria-label]` and `[attr.aria-labelledby]`; use `[aria-label]` or `[aria-labelledby]` for dynamic values.
 
-```angular-html
-<label q-checkbox>
-  <input q-checkbox-hidden-input aria-label="Accessible label" />
-</label>
-```
+<QdsDemo name="CheckboxAriaLabelDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-checkbox"
+  name="CheckboxExplorerDemo"
+  parts={["root", "label", "control", "indicator"]}
+  scope="checkbox"
+/>
 
 ## API
 

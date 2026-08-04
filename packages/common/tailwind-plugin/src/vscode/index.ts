@@ -1,1 +1,1 @@
-export * from "./vscode-plugin"
+export * from "./vscode-plugin.js"

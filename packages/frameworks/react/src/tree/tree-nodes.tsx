@@ -6,19 +6,21 @@ import type {ReactElement} from "react"
 import {renderProp, type RenderProp} from "@qualcomm-ui/react-core/system"
 import {useTreeContext} from "@qualcomm-ui/react-core/tree"
 
-import {TreeBranch} from "./tree-branch"
-import {TreeBranchContent} from "./tree-branch-content"
+import {TreeBranchContent} from "./tree-branch-content.js"
 import {
   TreeBranchIndentGuide,
   type TreeBranchIndentGuideProps,
-} from "./tree-branch-indent-guide"
+} from "./tree-branch-indent-guide.js"
+import {TreeBranch} from "./tree-branch.js"
 import {
   TreeNodeProvider,
   type TreeNodeProviderProps,
-} from "./tree-node-provider"
+} from "./tree-node-provider.js"
 
-export interface TreeNodesProps<T>
-  extends Omit<TreeNodeProviderProps<T>, "children"> {
+export interface TreeNodesProps<T> extends Omit<
+  TreeNodeProviderProps<T>,
+  "children"
+> {
   /**
    * Props passed to the branch indent guide component. Only applicable when {@link
    * showIndentGuide} is true.

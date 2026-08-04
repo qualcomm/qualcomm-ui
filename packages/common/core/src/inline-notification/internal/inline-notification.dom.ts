@@ -6,7 +6,7 @@ import type {ScopeDomIds} from "@qualcomm-ui/utils/machine"
 import type {
   InlineNotificationElementIds,
   InlineNotificationScope,
-} from "../inline-notification.types"
+} from "../inline-notification.types.js"
 
 export const domIds: ScopeDomIds<
   InlineNotificationElementIds,

@@ -12,7 +12,7 @@ import {
 import {
   type ExtractedPreview,
   extractPreviewsAndCleanSource,
-} from "../code-demo.utils"
+} from "../code-demo.utils.js"
 
 /**
  * @public

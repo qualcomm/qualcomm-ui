@@ -7,7 +7,7 @@
 import {getFocusables} from "@qualcomm-ui/dom/query"
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {PopoverElementIds, PopoverScope} from "../popover.types"
+import type {PopoverElementIds, PopoverScope} from "../popover.types.js"
 
 export const domIds: ScopeDomIds<PopoverElementIds, PopoverScope> = {
   anchor: (scope) => scope.ids.get("anchor"),

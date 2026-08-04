@@ -15,15 +15,7 @@ import {ButtonModule} from "@qualcomm-ui/angular/button"
         q-alert-banner
         variant="strong"
       >
-        <button
-          emphasis="white-persistent"
-          q-alert-banner-action
-          q-button
-          size="sm"
-          variant="outline"
-        >
-          Take action
-        </button>
+        <button q-alert-banner-button>Take action</button>
       </div>
 
       <div
@@ -32,15 +24,7 @@ import {ButtonModule} from "@qualcomm-ui/angular/button"
         q-alert-banner
         variant="subtle"
       >
-        <button
-          emphasis="neutral"
-          q-alert-banner-action
-          q-button
-          size="sm"
-          variant="outline"
-        >
-          Take action
-        </button>
+        <button q-alert-banner-button>Take action</button>
       </div>
       <!-- preview -->
     </div>

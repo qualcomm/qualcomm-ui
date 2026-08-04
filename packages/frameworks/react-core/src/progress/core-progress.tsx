@@ -19,10 +19,14 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ProgressContextProvider, useProgressContext} from "./progress-context"
+import {
+  ProgressContextProvider,
+  useProgressContext,
+} from "./progress-context.js"
 
 export interface CoreProgressRootProps
-  extends ProgressApiProps,
+  extends
+    ProgressApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -71,8 +75,7 @@ export function CoreProgressBar({
 }
 
 export interface CoreProgressLabelProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -98,8 +101,7 @@ export function CoreProgressLabel({
 }
 
 export interface CoreProgressTrackProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -149,8 +151,7 @@ export function CoreProgressValueText({
 }
 
 export interface CoreProgressErrorTextProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -180,8 +181,7 @@ export function CoreProgressErrorText({
 }
 
 export interface CoreProgressHintProps
-  extends IdProp,
-    ElementRenderProp<"div"> {
+  extends IdProp, ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */

@@ -129,7 +129,7 @@ export function useIntersectionObserver({
           ? observer.thresholds
           : [observer.thresholds]
 
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           const isIntersecting =
             entry.isIntersecting &&
             thresholds.some((threshold) => entry.intersectionRatio >= threshold)
@@ -144,7 +144,7 @@ export function useIntersectionObserver({
             unobserve()
             unobserve = undefined
           }
-        })
+        }
       },
       {root, rootMargin, threshold},
     )
