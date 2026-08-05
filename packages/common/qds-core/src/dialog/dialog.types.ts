@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {dialogAnatomy} from "@qualcomm-ui/core/dialog"
+import type {QdsIconSize} from "@qualcomm-ui/qds-core/icon"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 
 import type {dialogClasses} from "./dialog.classes.js"
@@ -21,7 +22,7 @@ export type QdsDialogPlacement = "top" | "center" | "bottom"
 
 export interface QdsDialogApiProps {
   /**
-   * The style variant of the dialog's indicator.
+   * The style variant of the dialog's indicator icon.
    *
    * @default 'neutral'
    */
@@ -72,7 +73,7 @@ export interface QdsDialogContentBindings extends Part<"content"> {
 export interface QdsDialogIndicatorIconBindings {
   className: DialogClasses["indicatorIcon"]
   "data-emphasis": QdsDialogEmphasis
-  "data-size": QdsDialogSize
+  "data-size": QdsIconSize
 }
 
 export interface QdsDialogHeadingBindings extends Part<"heading"> {
@@ -107,6 +108,7 @@ export interface QdsDialogBackdropBindings extends Part<"backdrop"> {
 
 export interface QdsDialogApi {
   emphasis: QdsDialogEmphasis
+  iconSize: QdsIconSize
   size: QdsDialogSize
 
   // group: bindings
