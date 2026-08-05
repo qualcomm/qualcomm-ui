@@ -17,7 +17,11 @@ import {useQdsComboboxContext} from "./qds-combobox-context.service"
   standalone: false,
   template: `
     <ng-content>
-      <svg qIcon="X" [q-bind]="clearTriggerContext.getIconBindings()"></svg>
+      <svg
+        qIcon="X"
+        [q-bind]="clearTriggerContext.getIconBindings()"
+        [size]="clearTriggerContext.size()"
+      ></svg>
     </ng-content>
   `,
 })
