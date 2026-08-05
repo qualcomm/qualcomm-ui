@@ -2,8 +2,6 @@
 title: Overview
 ---
 
-import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
-
 # {frontmatter.title}
 
 This guide is for contributors to the qualcomm-ui component library. The library is a cross-framework design system built on a headless state machine architecture, with implementations for React and Angular.
@@ -21,84 +19,50 @@ The [Architecture](/contribution-guidelines/architecture) page covers each layer
 
 ## Monorepo Structure
 
-<FileTree
-  expandedValue={[
-    "packages",
-    "common",
-    "configs",
-    "debug-apps",
-    "docs",
-    "frameworks",
-  ]}
-  items={[
-    {
-      name: "packages",
-      items: [
-        {
-          name: "common",
-          items: [
-            {name: "core"},
-            {name: "dom"},
-            {name: "qds-core"},
-            {name: "utils"},
-          ],
-        },
-        {
-          name: "configs",
-          items: [
-            {name: "eslint-config-angular"},
-            {name: "eslint-config-mdx"},
-            {name: "eslint-config-react"},
-            {name: "eslint-config-typescript"},
-          ],
-        },
-        {
-          name: "debug-apps",
-          items: [
-            {name: "angular-csr"},
-            {name: "angular-ssr"},
-            {name: "react-ssr"},
-          ],
-        },
-        {
-          name: "docs",
-          items: [
-            {name: "angular-docs"},
-            {name: "react-docs"},
-          ],
-        },
-        {
-          name: "frameworks",
-          items: [
-            {name: "angular"},
-            {name: "angular-core"},
-            {name: "react"},
-            {name: "react-core"},
-            {name: "react-mdx"},
-          ],
-        },
-      ],
-    },
-  ]}
-/>
+```text
+packages/
+|-- common/
+|   |-- core/
+|   |-- dom/
+|   |-- qds-core/
+|   `-- utils/
+|-- configs/
+|   |-- eslint-config-angular/
+|   |-- eslint-config-mdx/
+|   |-- eslint-config-react/
+|   `-- eslint-config-typescript/
+|-- debug-apps/
+|   |-- angular-csr/
+|   |-- angular-ssr/
+|   `-- react-ssr/
+|-- docs/
+|   |-- angular-docs/
+|   `-- react-docs/
+`-- frameworks/
+    |-- angular/
+    |-- angular-core/
+    |-- react/
+    |-- react-core/
+    `-- react-mdx/
+```
 
-| Package | Description |
-| :-- | :-- |
-| `core` | Headless state machines and component APIs |
-| `dom` | DOM abstractions (focus, positioning, queries) |
-| `qds-core` | Design tokens, CSS classes, QDS styling APIs |
-| `utils` | Zero-dependency shared utilities |
-| `angular` | Styled Angular components (QDS) |
-| `angular-core` | Angular directives and services wrapping core |
-| `react` | Styled React components (QDS) |
-| `react-core` | React hooks and context wrapping core |
-| `react-mdx` | Shared MDX components for docs |
-| `eslint-config-*` | Shared ESLint configurations |
-| `angular-csr` | Angular CSR debug app |
-| `angular-ssr` | Angular SSR debug app |
-| `react-ssr` | React SSR debug app |
-| `angular-docs` | Angular documentation site |
-| `react-docs` | React documentation site |
+| Package           | Description                                    |
+|:------------------|:-----------------------------------------------|
+| `core`            | Headless state machines and component APIs     |
+| `dom`             | DOM abstractions (focus, positioning, queries) |
+| `qds-core`        | Design tokens, CSS classes, QDS styling APIs   |
+| `utils`           | Zero-dependency shared utilities               |
+| `angular`         | Styled Angular components (QDS)                |
+| `angular-core`    | Angular directives and services wrapping core  |
+| `react`           | Styled React components (QDS)                  |
+| `react-core`      | React hooks and context wrapping core          |
+| `react-mdx`       | Shared MDX components for docs                 |
+| `eslint-config-*` | Shared ESLint configurations                   |
+| `angular-csr`     | Angular CSR debug app                          |
+| `angular-ssr`     | Angular SSR debug app                          |
+| `react-ssr`       | React SSR debug app                            |
+| `angular-docs`    | Angular documentation site                     |
+| `react-docs`      | React documentation site                       |
 
 > [!note]
 > React contributors cannot skip Angular sections, and vice versa. However, you can start with one framework's implementation and learn the other afterward. The shared layers (`core`, `dom`, `qds-core`, `utils`) are required knowledge for both.
