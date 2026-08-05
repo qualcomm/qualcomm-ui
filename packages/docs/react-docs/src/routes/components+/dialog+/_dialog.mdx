@@ -18,9 +18,7 @@ import {Dialog} from "@qualcomm-ui/react/dialog"
 ```
 
 ::: terms
-interstitial
-blocking ui
-focus trap
+interstitial, blocking ui, focus trap
 :::
 
 ## Examples
@@ -28,9 +26,7 @@ focus trap
 ### Sizes
 
 ::: terms
-small
-medium
-dialog width
+small, medium, dialog width
 :::
 
 The dialog component has two sizes: `sm` and `md`. Size governs the width of the dialog, as well as the content's spacing, font size, and padding.
@@ -40,22 +36,17 @@ The dialog component has two sizes: `sm` and `md`. Size governs the width of the
 ### Indicator Emphasis
 
 ::: terms
-status
-severity
+status, severity
 :::
 
-Use the [emphasis](./#emphasis) prop to change the intent of the dialog's indicator icon.
+Use the [emphasis](./#emphasis) prop to show an icon change the color of the dialog's indicator icon.
 
 <Demo name="DialogEmphasisDemo" component={demos.DialogEmphasisDemo} />
 
 ### Placement
 
 ::: terms
-position
-alignment
-top
-center
-bottom
+position, alignment, top, center, bottom
 :::
 
 Use the [placement](./#placement) prop to change the placement of the dialog.
@@ -65,9 +56,7 @@ Use the [placement](./#placement) prop to change the placement of the dialog.
 ### Controlled State
 
 ::: terms
-show
-hide
-programmatic
+show, hide, programmatic
 :::
 
 Dialog visibility can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
@@ -80,8 +69,7 @@ Dialog visibility can be controlled using the [open](./#open), [onOpenChange](./
 ### Outside Scroll
 
 ::: terms
-overflow
-page scroll
+overflow, page scroll
 :::
 
 The default [scrollBehavior](./#scrollBehavior) is `outside`, which makes the entire page scrollable when modal content exceeds viewport height. The modal and backdrop move with the page scroll instead of creating an internal scroll area within the modal.
@@ -107,10 +95,7 @@ Set the [scrollBehavior](./#scrollBehavior) prop to `inside` to create an intern
 ### Alert Dialog
 
 ::: terms
-confirmation
-confirm prompt
-delete
-destructive
+confirmation, confirm prompt, delete, destructive
 :::
 
 Set the [role](./#role) prop to `alertdialog` to change the dialog component to an [alert dialog](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role). This is recommended for situations where the dialog is used to notify users of urgent information that demands their immediate attention.
