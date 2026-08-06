@@ -311,7 +311,7 @@ export class SectionExtractor {
       hash: sectionHash,
       headingLevel: section.headingLevel,
       sectionId,
-      sectionUrlHash: `#${section.anchorId}`,
+      sectionUrlHash: section.anchorId ? `#${section.anchorId}` : undefined,
     }
   }
 
