@@ -471,6 +471,11 @@ export interface SectionEntry {
   sectionId: string
 
   /**
+   * Hash of the section URL, used to link to the section.
+   */
+  sectionUrlHash?: string | undefined
+
+  /**
    * Search terms extracted from ::: terms ::: blocks within this section.
    */
   terms?: string[]

@@ -1,5 +1,19 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.34.0
+
+Aug 6th, 2026
+
+### Features
+
+- [dialog]: add iconSize to api ([0d0e79b](https://github.com/qualcomm/qualcomm-ui/commit/0d0e79b))
+- [icon-button]: expose size in api ([dd6fc8e](https://github.com/qualcomm/qualcomm-ui/commit/dd6fc8e))
+- [icon-badge]: expose size in api ([11ba5f9](https://github.com/qualcomm/qualcomm-ui/commit/11ba5f9))
+
+### Bug Fixes
+
+- [inline-notification]: adjust end padding with action and close button ([7ce7d49](https://github.com/qualcomm/qualcomm-ui/commit/7ce7d49))
+
 ## 1.33.2
 
 Jul 28th, 2026

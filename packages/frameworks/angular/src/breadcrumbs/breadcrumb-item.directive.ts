@@ -25,7 +25,11 @@ import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
     </ng-content>
 
     <ng-content select="[q-breadcrumb-item-separator]">
-      <svg q-breadcrumb-item-separator [qIcon]="separator()"></svg>
+      <svg
+        q-breadcrumb-item-separator
+        [qIcon]="separator()"
+        [size]="qdsContext().size"
+      ></svg>
     </ng-content>
   `,
 })

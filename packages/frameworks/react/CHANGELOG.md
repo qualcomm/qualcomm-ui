@@ -1,5 +1,19 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.3
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- deprecate inline-icon-button component ([8e39d9c](https://github.com/qualcomm/qualcomm-ui/commit/8e39d9c))
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.34.0]
+
+### Bug Fixes
+
+- [dialog/drawer]: use compact icon button for close action ([45634a1](https://github.com/qualcomm/qualcomm-ui/commit/45634a1))
+- [component icons]: apply icon sizes explicitly, update sizes to match latest figma designs ([ac19397](https://github.com/qualcomm/qualcomm-ui/commit/ac19397))
+
 ## 1.27.2
 
 Jul 28th, 2026

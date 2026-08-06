@@ -20,9 +20,7 @@ import {DialogModule} from "@qualcomm-ui/angular/dialog"
 ```
 
 ::: terms
-interstitial
-blocking ui
-focus trap
+interstitial, blocking ui, focus trap
 :::
 
 ## Examples
@@ -30,32 +28,20 @@ focus trap
 ### Sizes
 
 ::: terms
-small
-medium
-dialog width
+small, medium, dialog width
 :::
 
 The dialog component has two sizes: `sm` and `md`. Size governs the width of the dialog, as well as the content's spacing, font size, and padding.
 
 <QdsDemo name="DialogSizesDemo" />
 
-### Indicator Emphasis
-
-::: terms
-status, severity
-:::
-
-Use the [emphasis](./#emphasis) prop to change the intent and color of the dialog's indicator icon.
-
-<QdsDemo name="DialogEmphasisDemo" />
-
-### Custom Indicator
+### Indicator Icon
 
 ::: terms
 replace icon, remove icon
 :::
 
-Set a custom indicator icon by providing the `q-dialog-indicator-icon` directive within the `q-dialog-body` directive. Or hide it entirely using the [hideIndicatorIcon](./#hideIndicatorIcon) property on the `q-dialog-body` directive.
+Set an indicator icon by providing the `q-dialog-indicator-icon` directive within the `q-dialog-body` directive. Use the [emphasis](./#emphasis) prop on `q-dialog-root` to change its color.
 
 <QdsDemo name="DialogIndicatorIconDemo" />
 
@@ -111,7 +97,7 @@ Set the [role](./#role) prop to `alertdialog` to change the dialog component to 
 
 ## Shortcuts
 
-### \<q-dialog-floating-portal\>
+### \<q-dialog-floating-portal>
 
 A helper component that combines the portal, positioner, and content
 components. This shortcut is equivalent to:
@@ -127,11 +113,11 @@ components. This shortcut is equivalent to:
 
 ## API
 
-### \<q-dialog-root\>
+### \<q-dialog-root>
 
 <TypeDocProps name="DialogRootDirective" />
 
-### \<q-dialog-floating-portal\>
+### \<q-dialog-floating-portal>
 
 <TypeDocProps name="DialogFloatingPortalComponent" />
 

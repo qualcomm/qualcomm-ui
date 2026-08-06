@@ -13,7 +13,7 @@ const emphasis: QdsDialogEmphasis[] = [
   "danger",
 ]
 
-export function DialogEmphasisDemo(): ReactElement {
+export function DialogIndicatorIconDemo(): ReactElement {
   return (
     <div className="flex flex-col gap-4">
       {emphasis.map((emp) => (

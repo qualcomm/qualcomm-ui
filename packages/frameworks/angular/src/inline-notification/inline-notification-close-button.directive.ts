@@ -6,7 +6,7 @@ import {X} from "lucide-angular"
 
 import {CoreInlineNotificationCloseTriggerDirective} from "@qualcomm-ui/angular-core/inline-notification"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -19,15 +19,15 @@ import {useQdsInlineNotificationContext} from "./qds-inline-notification-context
   standalone: false,
   template: `
     <ng-content>
-      <svg qIcon="X" [q-bind]="inlineIconButtonApi().getIconBindings()"></svg>
+      <svg qIcon="X" [q-bind]="iconButtonApi().getIconBindings()"></svg>
     </ng-content>
   `,
 })
 export class InlineNotificationCloseButtonDirective extends CoreInlineNotificationCloseTriggerDirective {
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
-    emphasis: "neutral",
+  protected readonly iconButtonApi = useIconButtonApi({
+    density: "compact",
     size: "md",
-    variant: "fixed",
+    variant: "ghost",
   })
   protected readonly qdsContext = useQdsInlineNotificationContext()
 
@@ -37,7 +37,7 @@ export class InlineNotificationCloseButtonDirective extends CoreInlineNotificati
       computed(() =>
         mergeProps(
           this.qdsContext().getCloseButtonBindings(),
-          this.inlineIconButtonApi().getRootBindings(),
+          this.iconButtonApi().getRootBindings(),
         ),
       ),
     )

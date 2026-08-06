@@ -28,6 +28,9 @@ export function createQdsIconButtonApi(
   const variant = props.variant || "fill"
 
   return {
+    size,
+
+    // group: bindings
     getIconBindings(): QdsIconButtonIconBindings {
       return normalize.element({
         ...parts.icon,

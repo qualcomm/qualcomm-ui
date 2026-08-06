@@ -9,7 +9,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 @Component({
   imports: [HeaderBarModule, AvatarModule, IconDirective],
   providers: [provideIcons({Layers2, LayoutGrid, Moon, Settings})],
-  selector: "header-bar-showcase-demo",
+  selector: "header-bar-padding-demo",
   template: `
     <div class="@container" padding="large" q-header-bar-root>
       <div q-header-bar-logo>

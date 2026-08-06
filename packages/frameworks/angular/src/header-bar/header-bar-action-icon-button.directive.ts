@@ -15,7 +15,11 @@ import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
   template: `
     <ng-content select="svg[qIcon]" />
     @if (icon()) {
-      <svg [q-bind]="iconProps()" [qIcon]="icon()!"></svg>
+      <svg
+        [q-bind]="iconProps()"
+        [qIcon]="icon()!"
+        [size]="iconButtonApi().size"
+      ></svg>
     }
   `,
 })

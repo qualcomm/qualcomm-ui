@@ -58,7 +58,11 @@ const breadcrumbsSizeToMenuSize: Record<string, QdsMenuSize> = {
     <ng-content select="[q-breadcrumb-overflow-trigger]">
       <button q-breadcrumb-overflow-trigger [attr.aria-label]="ariaLabel()">
         @if (icon()) {
-          <svg q-breadcrumb-item-icon [qIcon]="icon()!"></svg>
+          <svg
+            q-breadcrumb-item-icon
+            [qIcon]="icon()"
+            [size]="qdsContext().size"
+          ></svg>
         }
         &hellip;
       </button>
@@ -72,7 +76,11 @@ const breadcrumbsSizeToMenuSize: Record<string, QdsMenuSize> = {
     </ng-template>
 
     <ng-content select="[q-breadcrumb-item-separator]">
-      <svg q-breadcrumb-item-separator [qIcon]="separator()"></svg>
+      <svg
+        q-breadcrumb-item-separator
+        [qIcon]="separator()"
+        [size]="qdsContext().size"
+      ></svg>
     </ng-content>
   `,
 })
@@ -103,7 +111,7 @@ export class BreadcrumbOverflowItemComponent extends CoreMenuRootDirective {
    */
   readonly separator = input<LucideIconOrString>("ChevronRight")
 
-  private readonly qdsContext = useQdsBreadcrumbsContext()
+  protected readonly qdsContext = useQdsBreadcrumbsContext()
   private readonly qdsMenuService = inject(QdsMenuContextService)
 
   private readonly trackItemBindings = useTrackBindings(() =>

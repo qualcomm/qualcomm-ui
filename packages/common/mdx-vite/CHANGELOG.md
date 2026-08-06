@@ -1,5 +1,21 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.9.0
+
+Aug 6th, 2026
+
+### Features
+
+- [ai-knowledge]: add section url hash data in page section exports ([55b7535](https://github.com/qualcomm/qualcomm-ui/commit/55b7535))
+
+### Code Refactoring
+
+- search types ([2beccfb](https://github.com/qualcomm/qualcomm-ui/commit/2beccfb))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common@2.5.0]
+
 ## 3.8.7
 
 Jul 16th, 2026
