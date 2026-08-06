@@ -1,5 +1,29 @@
 # @qualcomm-ui/angular Changelog
 
+## 2.15.0
+
+Aug 6th, 2026
+
+### Features
+
+- [icons]: support injection token for qIcon bindings ([3a15bf8](https://github.com/qualcomm/qualcomm-ui/commit/3a15bf8))
+
+### Miscellaneous Chores
+
+- deprecate inline-icon-button component ([8e39d9c](https://github.com/qualcomm/qualcomm-ui/commit/8e39d9c))
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.34.0, @qualcomm-ui/angular-core@2.4.8]
+
+### Bug Fixes
+
+- [icon-button]: prevent size from reverting on icon change ([34ff621](https://github.com/qualcomm/qualcomm-ui/commit/34ff621))
+- [combobox]: always use icon size from context ([4a595f3](https://github.com/qualcomm/qualcomm-ui/commit/4a595f3))
+- [dialog/drawer]: use compact icon button for close action ([b3e995d](https://github.com/qualcomm/qualcomm-ui/commit/b3e995d))
+- [component icons]: apply icon sizes explicitly, update sizes to match latest figma designs ([ac19397](https://github.com/qualcomm/qualcomm-ui/commit/ac19397))
+
+### Tests
+
+- [dialog]: remove emphasis tests ([0cffab1](https://github.com/qualcomm/qualcomm-ui/commit/0cffab1))
+
 ## 2.14.2
 
 Jul 28th, 2026

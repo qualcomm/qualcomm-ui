@@ -1,5 +1,17 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.5.0
+
+Aug 6th, 2026
+
+### Features
+
+- [ai-knowledge]: add section url hash data in page section exports ([55b7535](https://github.com/qualcomm/qualcomm-ui/commit/55b7535))
+
+### Code Refactoring
+
+- search types ([2beccfb](https://github.com/qualcomm/qualcomm-ui/commit/2beccfb))
+
 ## 2.4.2
 
 Jun 10th, 2026
