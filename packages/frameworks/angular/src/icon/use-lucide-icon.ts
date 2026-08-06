@@ -20,13 +20,12 @@ import {
 } from "@qualcomm-ui/angular-core/lucide"
 import {applyBindings, normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {accessSignal, type MaybeSignal} from "@qualcomm-ui/angular-core/signals"
-import {
-  getQdsIconBindings,
-  type QdsIconBindings,
-  type QdsIconSize,
-} from "@qualcomm-ui/qds-core/icon"
+import {getQdsIconBindings, type QdsIconSize} from "@qualcomm-ui/qds-core/icon"
 import {pascalCase} from "@qualcomm-ui/utils/change-case"
 import type {Dict} from "@qualcomm-ui/utils/machine"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+
+import {ICON_CONTEXT_TOKEN} from "./icon.tokens"
 
 export interface UseLucideIconOptions<
   ThrowOnUnresolvedStringIcon extends boolean | undefined = false,
@@ -58,7 +57,7 @@ export interface UseLucideIconOptions<
 export interface UseLucideIconReturn<
   ThrowOnUnresolvedStringIcon extends boolean = false,
 > {
-  getIconBindings: Signal<QdsIconBindings>
+  getIconBindings: Signal<Dict>
   icon: ThrowOnUnresolvedStringIcon extends true
     ? Signal<LucideIcon>
     : Signal<LucideIcon | undefined>
@@ -77,6 +76,7 @@ export function useLucideIcon<
   const onDestroy = useOnDestroy()
   let createdElements: HTMLElement[] = []
   const iconProps = options.iconProps || {}
+  const injectedContext = inject(ICON_CONTEXT_TOKEN, {optional: true})
 
   const providedIcons =
     options.icons ||
@@ -94,15 +94,22 @@ export function useLucideIcon<
   }
 
   const getIconBindings = computed(() => {
-    return getQdsIconBindings(
-      {
-        height: accessSignal(iconProps?.height),
-        size: accessSignal(iconProps?.size),
-        viewBox: accessSignal(iconProps?.viewBox),
-        width: accessSignal(iconProps?.width),
-        xmlns,
-      },
-      normalizeProps,
+    const sizeProp = accessSignal(iconProps?.size)
+    const injectionBindings = injectedContext?.getBindings?.()
+
+    return mergeProps(
+      injectionBindings,
+      getQdsIconBindings(
+        {
+          height: accessSignal(iconProps?.height),
+          // size prop, if supplied, always overrides context
+          size: sizeProp || injectionBindings?.["data-size"],
+          viewBox: accessSignal(iconProps?.viewBox),
+          width: accessSignal(iconProps?.width),
+          xmlns,
+        },
+        normalizeProps,
+      ),
     )
   })
 

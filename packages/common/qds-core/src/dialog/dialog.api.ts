@@ -28,9 +28,11 @@ export function createQdsDialogApi(
   const size = props.size || "sm"
   const emphasis = props.emphasis || "neutral"
   const scrollBehavior = props.scrollBehavior || "outside"
+  const iconSize = size === "sm" ? "24px" : "32px"
 
   return {
     emphasis,
+    iconSize,
     size,
 
     // group: bindings
@@ -79,7 +81,7 @@ export function createQdsDialogApi(
       return normalize.element({
         className: dialogClasses.indicatorIcon,
         "data-emphasis": emphasis,
-        "data-size": size,
+        "data-size": iconSize,
       })
     },
     getPositionerBindings(): QdsDialogPositionerBindings {

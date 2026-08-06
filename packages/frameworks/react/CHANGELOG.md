@@ -1,5 +1,55 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.3
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- deprecate inline-icon-button component ([8e39d9c](https://github.com/qualcomm/qualcomm-ui/commit/8e39d9c))
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.34.0]
+
+### Bug Fixes
+
+- [dialog/drawer]: use compact icon button for close action ([45634a1](https://github.com/qualcomm/qualcomm-ui/commit/45634a1))
+- [component icons]: apply icon sizes explicitly, update sizes to match latest figma designs ([ac19397](https://github.com/qualcomm/qualcomm-ui/commit/ac19397))
+
+## 1.27.2
+
+Jul 28th, 2026
+
+### Tests
+
+- [tabs]: improve focus state test coverage ([b388a69](https://github.com/qualcomm/qualcomm-ui/commit/b388a69))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/react-core@1.5.9]
+
+## 1.27.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.1]
+
+## 1.27.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.0]
+
 ## 1.26.1
 
 Jul 17th, 2026

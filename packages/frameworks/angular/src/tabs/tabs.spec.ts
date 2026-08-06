@@ -246,8 +246,10 @@ describe("tabs", () => {
 
     await userEvent.tab()
     expect(documentsTab).toHaveFocus()
+    await expect.element(documentsTab).toHaveAttribute("data-focus-visible")
 
     await userEvent.keyboard("{ArrowRight}")
+    await expect.element(documentsTab).not.toHaveFocus()
     expect(productsTab).toHaveFocus()
 
     await userEvent.keyboard("{ArrowRight}")

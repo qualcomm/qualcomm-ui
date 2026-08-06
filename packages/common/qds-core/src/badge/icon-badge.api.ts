@@ -21,6 +21,9 @@ export function createQdsIconBadgeApi(
 ): QdsIconBadgeApi {
   const size = props.size || "md"
   return {
+    size,
+
+    // group: bindings
     getIconBindings(): QdsIconBadgeIconBindings {
       return normalize.element({
         ...parts.icon,

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/react-router-utils",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "Utilities for React Router",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -43,8 +43,8 @@
   },
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/mdx-common": "workspace:^2.4.2",
-    "@qualcomm-ui/mdx-vite": "workspace:^3.8.7",
+    "@qualcomm-ui/mdx-common": "workspace:^2.5.0",
+    "@qualcomm-ui/mdx-vite": "workspace:^3.9.0",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/vite": "catalog:",
     "@types/node": "catalog:",
@@ -61,8 +61,8 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/mdx-common": "workspace:^2.4.2",
-    "@qualcomm-ui/mdx-vite": "workspace:^3.8.7",
+    "@qualcomm-ui/mdx-common": "workspace:^2.5.0",
+    "@qualcomm-ui/mdx-vite": "workspace:^3.9.0",
     "minimatch": ">=10.0.3",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0",

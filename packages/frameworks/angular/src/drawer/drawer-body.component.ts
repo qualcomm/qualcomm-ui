@@ -13,11 +13,7 @@ import {DialogBodyComponent} from "@qualcomm-ui/angular/dialog"
   selector: "[q-drawer-body]",
   standalone: false,
   template: `
-    @if (!hideIndicatorIcon()) {
-      <ng-content select="[q-drawer-indicator-icon]">
-        <svg q-drawer-indicator-icon [qIcon]="indicatorIcon()"></svg>
-      </ng-content>
-    }
+    <ng-content select="[q-drawer-indicator-icon]" />
     <ng-content />
   `,
 })

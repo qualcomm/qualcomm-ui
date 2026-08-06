@@ -21,7 +21,11 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
   template: `
     <ng-content select="svg[qIcon]" />
     @if (icon()) {
-      <svg [q-bind]="iconProps()" [qIcon]="icon()!"></svg>
+      <svg
+        [q-bind]="iconProps()"
+        [qIcon]="icon()"
+        [size]="resolvedSize()"
+      ></svg>
     }
     <svg
       qIcon="ChevronDown"

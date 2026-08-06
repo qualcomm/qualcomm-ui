@@ -9,11 +9,14 @@ import {CoreTreeNodeIconDirective} from "@qualcomm-ui/angular-core/tree"
 import {useQdsTreeContext} from "./qds-tree-context.service"
 
 @Component({
+  host: {
+    "[attr.data-size]": "qdsContext().size",
+  },
   selector: "[q-tree-node-icon]",
   standalone: false,
   template: `
     @if (icon()) {
-      <svg [qIcon]="icon()!" />
+      <svg [qIcon]="icon()" [size]="qdsContext().size" />
     }
     <ng-content />
   `,

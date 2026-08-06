@@ -1,5 +1,45 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.11.3
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.3, @qualcomm-ui/mdx-common@2.5.0]
+
+## 2.11.2
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/react@1.27.2, @qualcomm-ui/react-core@1.5.9]
+
+## 2.11.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [demos]: account for new bottom border in tab list ([ad9771a](https://github.com/qualcomm/qualcomm-ui/commit/ad9771a))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.1]
+
+## 2.11.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.0]
+
 ## 2.10.1
 
 Jul 17th, 2026

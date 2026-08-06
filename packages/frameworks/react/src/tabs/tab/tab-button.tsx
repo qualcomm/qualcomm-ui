@@ -61,7 +61,7 @@ export function TabButton({
           </span>
         )
       ) : null}
-      {children}
+      <span {...qdsContext.getTabButtonTextBindings()}>{children}</span>
       {endIcon ? (
         isValidElement(endIcon) ? (
           <IconOrNode icon={endIcon} {...qdsContext.getTabEndIconBindings()} />

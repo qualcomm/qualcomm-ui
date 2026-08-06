@@ -17,15 +17,7 @@ import {useQdsDialogContext} from "./qds-dialog-context.service"
   selector: "[q-dialog-body]",
   standalone: false,
   template: `
-    @if (!hideIndicatorIcon()) {
-      <ng-content select="[q-dialog-indicator-icon]">
-        <svg
-          data-test-id="dialog-indicator-icon"
-          q-dialog-indicator-icon
-          [qIcon]="indicatorIcon()"
-        ></svg>
-      </ng-content>
-    }
+    <ng-content select="[q-dialog-indicator-icon]" />
     <ng-content />
   `,
 })
@@ -34,6 +26,8 @@ export class DialogBodyComponent extends CoreDialogBodyDirective {
 
   /**
    * Hides the indicator icon.
+   *
+   * @deprecated no longer used.
    */
   readonly hideIndicatorIcon = input<boolean | undefined, Booleanish>(
     undefined,
@@ -42,6 +36,9 @@ export class DialogBodyComponent extends CoreDialogBodyDirective {
     },
   )
 
+  /**
+   * @deprecated no longer used
+   */
   readonly indicatorIcon = computed(() => {
     switch (this.qdsContext().emphasis) {
       case "neutral":

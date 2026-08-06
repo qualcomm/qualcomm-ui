@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/qds-core",
-  "version": "1.32.0",
+  "version": "1.34.0",
   "description": "qds core components",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -61,7 +61,7 @@
   "devDependencies": {
     "@figma/rest-api-spec": "^0.31.0",
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/core": "workspace:^1.11.6",
+    "@qualcomm-ui/core": "workspace:^1.11.7",
     "@qualcomm-ui/css-utils": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/utils": "workspace:^1.3.2",
@@ -85,7 +85,7 @@
     "vite": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/core": "workspace:^1.11.6",
+    "@qualcomm-ui/core": "workspace:^1.11.7",
     "@qualcomm-ui/utils": "workspace:^1.3.2"
   }
 }

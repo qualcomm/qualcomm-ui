@@ -7,7 +7,7 @@ import {type LucideIcon, X} from "lucide-react"
 
 import {CoreDialog} from "@qualcomm-ui/react-core/dialog"
 import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsDialogContext} from "./qds-dialog-context.js"
@@ -32,7 +32,12 @@ export function DialogCloseButton({
 
   return (
     <CoreDialog.CloseTrigger>
-      <InlineIconButton icon={icon || X} {...mergedProps} />
+      <IconButton
+        density="compact"
+        icon={icon || X}
+        variant="ghost"
+        {...mergedProps}
+      />
     </CoreDialog.CloseTrigger>
   )
 }

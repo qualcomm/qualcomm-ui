@@ -21,12 +21,19 @@ import type {
 
 import {useInlineIconButtonApi} from "./use-inline-icon-button-api"
 
+/**
+ * @deprecated migrate to `<button q-icon-button density="compact">`
+ */
 @Component({
   hostDirectives: [QuiPreloadDirective],
   imports: [IconDirective, QBindDirective],
   selector: "[q-inline-icon-button]",
   template: `
-    <svg [q-bind]="api().getIconBindings()" [qIcon]="icon()"></svg>
+    <svg
+      [q-bind]="api().getIconBindings()"
+      [qIcon]="icon()"
+      [size]="api().size"
+    ></svg>
   `,
 })
 export class InlineIconButtonComponent

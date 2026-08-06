@@ -45,7 +45,11 @@ import {
   template: `
     <ng-content #ref select="svg[qIcon]" />
     @if (icon()) {
-      <svg [q-bind]="iconProps()" [qIcon]="icon()!"></svg>
+      <svg
+        [q-bind]="iconProps()"
+        [qIcon]="icon()!"
+        [size]="iconButtonContext.context().size"
+      ></svg>
     }
   `,
 })

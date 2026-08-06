@@ -20,6 +20,7 @@ import {useQdsComboboxContext} from "./qds-combobox-context.service"
       <svg
         qIcon="ChevronDown"
         [q-bind]="inlineIconButtonApi().getIconBindings()"
+        [size]="inlineIconButtonApi().size"
       ></svg>
     </ng-content>
   `,

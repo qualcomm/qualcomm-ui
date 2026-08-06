@@ -16,7 +16,11 @@ import {useQdsSelectContext} from "./qds-select-context.service"
   selector: "[q-select-indicator]",
   standalone: false,
   template: `
-    <svg [q-bind]="inlineIconButtonApi().getIconBindings()" [qIcon]="icon()" />
+    <svg
+      [q-bind]="inlineIconButtonApi().getIconBindings()"
+      [qIcon]="icon()"
+      [size]="inlineIconButtonApi().size"
+    />
   `,
 })
 export class SelectIndicatorDirective implements OnInit {

@@ -46,17 +46,21 @@ import {useQdsTabsContext} from "./qds-tabs-context.service"
         <svg
           [q-bind]="qdsContext().getTabStartIconBindings()"
           [qIcon]="startIcon()!"
+          [size]="qdsContext().size"
         />
       }
     </ng-content>
 
-    <ng-content />
+    <span [q-bind]="qdsContext().getTabButtonTextBindings()">
+      <ng-content />
+    </span>
 
     <ng-content select="[q-end-icon]">
       @if (endIcon()) {
         <svg
           [q-bind]="qdsContext().getTabEndIconBindings()"
           [qIcon]="endIcon()!"
+          [size]="qdsContext().size"
         />
       }
     </ng-content>

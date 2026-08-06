@@ -621,6 +621,7 @@ const tests: MultiComponentTestCase[] = [
         const trigger = page.getByText(triggerText)
         await expect.element(trigger).not.toHaveAttribute("aria-describedby")
         await trigger.hover()
+        await expect.element(page.getByText(tooltipContent)).toBeVisible()
         await expect.element(trigger).toHaveAttribute("aria-describedby")
       })
     },

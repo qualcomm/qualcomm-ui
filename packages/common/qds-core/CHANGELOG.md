@@ -1,5 +1,48 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.34.0
+
+Aug 6th, 2026
+
+### Features
+
+- [dialog]: add iconSize to api ([0d0e79b](https://github.com/qualcomm/qualcomm-ui/commit/0d0e79b))
+- [icon-button]: expose size in api ([dd6fc8e](https://github.com/qualcomm/qualcomm-ui/commit/dd6fc8e))
+- [icon-badge]: expose size in api ([11ba5f9](https://github.com/qualcomm/qualcomm-ui/commit/11ba5f9))
+
+### Bug Fixes
+
+- [inline-notification]: adjust end padding with action and close button ([7ce7d49](https://github.com/qualcomm/qualcomm-ui/commit/7ce7d49))
+
+## 1.33.2
+
+Jul 28th, 2026
+
+### Styles
+
+- [tabs]: use secondary text color for inactive line tab variant ([7d01476](https://github.com/qualcomm/qualcomm-ui/commit/7d01476))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
+## 1.33.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+- [tabs]: add line tab bottom border ([4f6caef](https://github.com/qualcomm/qualcomm-ui/commit/4f6caef))
+
+## 1.33.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
 ## 1.32.0
 
 Jul 16th, 2026

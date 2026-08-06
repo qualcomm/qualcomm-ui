@@ -21,7 +21,11 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
   selector: "[q-password-input-visibility-trigger]",
   standalone: false,
   template: `
-    <svg [q-bind]="buttonApi().getIconBindings()" [qIcon]="icon()"></svg>
+    <svg
+      [q-bind]="buttonApi().getIconBindings()"
+      [qIcon]="icon()"
+      [size]="buttonApi().size"
+    ></svg>
   `,
 })
 export class PasswordInputVisibilityTriggerDirective extends CorePasswordInputVisibilityTriggerDirective {
