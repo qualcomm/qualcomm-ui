@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {
+  type Dispatch,
   type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
+  type SetStateAction,
   useCallback,
   useEffect,
   useRef,
@@ -18,6 +20,7 @@ import {
 import {SearchIcon} from "lucide-react"
 
 import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
+import type {SemanticSearchResult} from "@qualcomm-ui/mdx-common"
 import {useDebounce} from "@qualcomm-ui/react-core/effects"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
@@ -26,29 +29,57 @@ import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Kbd} from "@qualcomm-ui/react/kbd"
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-import {GroupedResultItem} from "./grouped-result-item.js"
-import {SearchResultItem} from "./search-result-item.js"
-import {useGroupedResults} from "./use-grouped-results.js"
+import {SemanticSearchResultItem} from "./semantic-search-result-item.js"
 
-interface SiteSearchProps {
+export interface SiteSemanticSearchProps {
+  /**
+   * The current value of the input.
+   */
+  inputValue: string
+
+  /**
+   * Boolean that indicates if the search results are currently loading.
+   */
+  isLoading?: boolean
+
+  /**
+   * Boolean that indicates to show Mac activation hotkey on initial SSR. If
+   * omitted, the value will be determined automated based on the user's platform.
+   */
+  isMac?: boolean
+
   /**
    * Node to render when no results are found.
    *
    * @default "No results found..."
    */
   noResults?: ReactNode
+
+  /**
+   * Search results to display.
+   */
+  searchResults: SemanticSearchResult[]
+
+  /**
+   * The function to call when the input value changes.
+   */
+  setInputValue: Dispatch<SetStateAction<string>>
 }
 
-export function SiteSearch({
+export function SiteSemanticSearch({
+  inputValue,
+  isLoading,
+  isMac: isMacProp,
   noResults = "No results found...",
-}: SiteSearchProps): ReactNode {
+  searchResults,
+  setInputValue,
+}: SiteSemanticSearchProps): ReactNode {
   const [showDialog, setShowDialog] = useState(false)
-  const [inputValue, setInputValue] = useState("")
   const dialogInputRef = useRef<HTMLInputElement>(null)
   const dialogInputContainerRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<Array<HTMLElement | null>>([])
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const [isMac, setIsMac] = useState<boolean>(false)
+  const [isMac, setIsMac] = useState<boolean>(isMacProp ?? false)
 
   const {renderLink: Link} = useMdxDocsContext()
 
@@ -74,13 +105,17 @@ export function SiteSearch({
 
   const debouncedInputValue = useDebounce(inputValue, 100)
 
-  const groupedResults = useGroupedResults(debouncedInputValue)
-
-  const onInputChange = useCallback((value: string) => {
-    setInputValue(value)
-  }, [])
+  const onInputChange = useCallback(
+    (value: string) => {
+      setInputValue(value)
+    },
+    [setInputValue],
+  )
 
   useEffect(() => {
+    if (isMac) {
+      return
+    }
     let cleanup: (() => void) | undefined
 
     async function setup() {
@@ -118,7 +153,7 @@ export function SiteSearch({
     return () => {
       cleanup?.()
     }
-  }, [])
+  }, [isMac])
 
   const onListItemKeyDown = useCallback((event: ReactKeyboardEvent) => {
     switch (event.key) {
@@ -157,6 +192,9 @@ export function SiteSearch({
   const {getFloatingProps, getItemProps, getReferenceProps} = useInteractions([
     listNavigation,
   ])
+
+  const matchedQuery =
+    inputValue.length > 1 ? (inputValue.split(" ").at(-1) ?? "") : ""
 
   return (
     <Dialog.Root
@@ -243,47 +281,24 @@ export function SiteSearch({
                   {...getFloatingProps()}
                   className="qui-site-search__floating-panel-mobile"
                 >
-                  {groupedResults.length ? (
-                    <>
-                      {groupedResults.map((result) => (
-                        <div
-                          key={`${result.id}-${result.categoryId}`}
-                          className="qui-site-search__result-group-wrapper"
-                        >
-                          <GroupedResultItem
-                            active={result.index === activeIndex}
-                            render={<Link href={result.pathname} />}
-                            {...getItemProps({
-                              onKeyDown: onListItemKeyDown,
-                              ref: (ref) => {
-                                listRef.current[result.index] = ref
-                              },
-                              tabIndex: -1,
-                            })}
-                            item={result}
-                          />
-                          <div className="qui-site-search__result-group">
-                            {result.items.map((item) => (
-                              <SearchResultItem
-                                key={item.id}
-                                inputValue={inputValue}
-                                {...getItemProps({
-                                  onKeyDown: onListItemKeyDown,
-                                  ref: (ref) => {
-                                    listRef.current[item.index] = ref
-                                  },
-                                  tabIndex: -1,
-                                })}
-                                active={item.index === activeIndex}
-                                isChild
-                                item={item}
-                                render={<Link href={item.href} />}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </>
+                  {searchResults.length ? (
+                    searchResults.map((item, index) => {
+                      return (
+                        <SemanticSearchResultItem
+                          key={item.id}
+                          {...getItemProps({
+                            onKeyDown: onListItemKeyDown,
+                            ref: (ref) => {
+                              listRef.current[index] = ref
+                            },
+                            tabIndex: -1,
+                          })}
+                          active={index === activeIndex}
+                          item={item}
+                          matchedQuery={matchedQuery}
+                        />
+                      )
+                    })
                   ) : noResults ? (
                     <div className="qui-site-search__no-results">
                       {noResults}

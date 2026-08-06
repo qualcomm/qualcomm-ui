@@ -12,33 +12,33 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import type {GroupedSearchResult} from "./use-grouped-results.js"
 
-export type GroupedResultItemProps = ElementRenderProp<"button"> & {
+export interface GroupedResultItemProps extends ElementRenderProp<"button"> {
   active: boolean
   item: GroupedSearchResult
 }
 
 export function GroupedResultItem({
   active,
-  className,
   item,
-  ref,
   ...props
 }: GroupedResultItemProps): ReactElement {
+  const mergedProps = mergeProps(
+    {
+      className: "qui-site-search__list-item qui-menu-item__root",
+    },
+    props,
+  )
+
   return (
     <PolymorphicElement
-      ref={ref}
       as="button"
-      className={clsx(
-        "qui-site-search__list-item qui-menu-item__root",
-        className,
-      )}
       data-focus-visible={booleanDataAttr(isFocusVisible())}
       data-highlighted={booleanDataAttr(active)}
-      {...props}
+      {...mergedProps}
     >
       <Icon
         className="qui-site-search__item-icon"

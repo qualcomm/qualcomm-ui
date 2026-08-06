@@ -1,23 +1,22 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {type ReactElement, useRef} from "react"
+import type {ReactElement} from "react"
 
 import {HashIcon, TablePropertiesIcon, TextSearchIcon} from "lucide-react"
 
 import {isFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import type {SearchResult} from "@qualcomm-ui/mdx-common"
 import {HighlightText} from "@qualcomm-ui/react-core/highlight"
-import {useMergedRef} from "@qualcomm-ui/react-core/refs"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import {clsx} from "@qualcomm-ui/utils/clsx"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export type SearchResultItemProps = ElementRenderProp<"button"> & {
+export interface SearchResultItemProps extends ElementRenderProp<"button"> {
   active: boolean
   inputValue: string
   isChild?: boolean
@@ -36,35 +35,29 @@ function getSearchResultIcon(item: SearchResult) {
 
 export function SearchResultItem({
   active,
-  className,
   inputValue,
   isChild = false,
   item,
-  ref,
   ...props
 }: SearchResultItemProps): ReactElement {
-  const rootRef = useRef<HTMLButtonElement>(null)
-  const mergedRef = useMergedRef(ref, rootRef)
   const icon = getSearchResultIcon(item)
+  const mergedProps = mergeProps(
+    {
+      className: "qui-site-search__list-item qui-menu-item__root",
+    },
+    props,
+  )
 
   return (
     <PolymorphicElement
-      ref={mergedRef}
       as="button"
-      className={clsx(
-        "qui-site-search__list-item",
-        "qui-menu-item__root",
-        className,
-      )}
       data-child={booleanDataAttr(isChild)}
       data-focus-visible={booleanDataAttr(isFocusVisible())}
       data-highlighted={booleanDataAttr(active)}
       data-type={item.type}
-      {...props}
+      {...mergedProps}
     >
-      {icon ? (
-        <Icon className="qui-site-search__item-icon" icon={icon} size="lg" />
-      ) : null}
+      <Icon className="qui-site-search__item-icon" icon={icon} size="lg" />
       <div className="qui-site-search__list-item-content">
         {item.type === "content" && item.content ? (
           <>
