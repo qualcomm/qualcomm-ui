@@ -21,6 +21,9 @@ import type {
 
 import {useInlineIconButtonApi} from "./use-inline-icon-button-api"
 
+/**
+ * @deprecated migrate to `<button q-icon-button density="compact">`
+ */
 @Component({
   hostDirectives: [QuiPreloadDirective],
   imports: [IconDirective, QBindDirective],
