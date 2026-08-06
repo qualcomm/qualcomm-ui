@@ -19,6 +19,7 @@ import {useQdsTreeContext} from "./qds-tree-context.service"
       <svg
         [q-bind]="inlineIconButtonApi().getIconBindings()"
         [qIcon]="icon()!"
+        [size]="inlineIconButtonApi().size"
       ></svg>
     }
     <ng-content />

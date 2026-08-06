@@ -46,6 +46,7 @@ import {useQdsTabsContext} from "./qds-tabs-context.service"
         <svg
           [q-bind]="qdsContext().getTabStartIconBindings()"
           [qIcon]="startIcon()!"
+          [size]="qdsContext().size"
         />
       }
     </ng-content>
@@ -59,6 +60,7 @@ import {useQdsTabsContext} from "./qds-tabs-context.service"
         <svg
           [q-bind]="qdsContext().getTabEndIconBindings()"
           [qIcon]="endIcon()!"
+          [size]="qdsContext().size"
         />
       }
     </ng-content>

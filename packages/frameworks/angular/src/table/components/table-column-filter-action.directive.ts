@@ -33,6 +33,7 @@ import {qdsTableApi} from "./qds-table-api"
       <svg
         [q-bind]="inlineIconButtonApi().getIconBindings()"
         [qIcon]="icon()"
+        [size]="inlineIconButtonApi().size"
       ></svg>
     }
   `,

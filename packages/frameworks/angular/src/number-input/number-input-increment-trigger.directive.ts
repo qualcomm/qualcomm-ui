@@ -22,12 +22,14 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
       <svg
         qIcon="Plus"
         [q-bind]="inlineIconButtonApi().getIconBindings()"
+        [size]="inlineIconButtonApi().size"
       ></svg>
     </ng-content>
   `,
 })
 export class NumberInputIncrementTriggerDirective extends CoreNumberInputIncrementTriggerDirective {
   protected readonly qdsNumberInputContext = useQdsNumberInputContext()
+
   protected readonly inlineIconButtonApi = useInlineIconButtonApi({
     emphasis: "neutral",
     size: computed(() => this.qdsNumberInputContext().size),

@@ -26,7 +26,11 @@ import {useInlineIconButtonApi} from "./use-inline-icon-button-api"
   imports: [IconDirective, QBindDirective],
   selector: "[q-inline-icon-button]",
   template: `
-    <svg [q-bind]="api().getIconBindings()" [qIcon]="icon()"></svg>
+    <svg
+      [q-bind]="api().getIconBindings()"
+      [qIcon]="icon()"
+      [size]="api().size"
+    ></svg>
   `,
 })
 export class InlineIconButtonComponent

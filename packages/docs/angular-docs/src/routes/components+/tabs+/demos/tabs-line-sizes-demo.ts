@@ -20,16 +20,16 @@ import type {QdsTabsSize} from "@qualcomm-ui/qds-core/tabs"
             <div q-tabs-list>
               <div q-tabs-indicator></div>
               <div q-tab-root value="documents">
-                <button q-tab-button>Documents</button>
+                <button endIcon="FileText" q-tab-button>Documents</button>
               </div>
               <div q-tab-root value="products">
-                <button q-tab-button>Products</button>
+                <button endIcon="Smartphone" q-tab-button>Products</button>
               </div>
               <div q-tab-root value="software">
-                <button q-tab-button>Software</button>
+                <button endIcon="Code" q-tab-button>Software</button>
               </div>
               <div q-tab-root value="hardware">
-                <button q-tab-button>Hardware</button>
+                <button endIcon="Cpu" q-tab-button>Hardware</button>
               </div>
             </div>
           </div>

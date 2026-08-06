@@ -26,14 +26,16 @@ import {useQdsStepperContext} from "./qds-stepper-context.service"
       @if (completedIcon()) {
         <svg
           [q-bind]="qdsContext().getIndicatorIconBindings()"
-          [qIcon]="completedIcon()!"
+          [qIcon]="completedIcon()"
+          [size]="qdsContext().size"
         />
       }
     } @else if (!itemState().current && itemState().invalid) {
       @if (errorIcon()) {
         <svg
           [q-bind]="qdsContext().getIndicatorIconBindings()"
-          [qIcon]="errorIcon()!"
+          [qIcon]="errorIcon()"
+          [size]="qdsContext().size"
         />
       }
     } @else {

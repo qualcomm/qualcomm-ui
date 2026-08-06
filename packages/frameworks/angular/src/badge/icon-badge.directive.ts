@@ -5,21 +5,22 @@ import {
   booleanAttribute,
   Component,
   computed,
+  inject,
   input,
   type OnInit,
 } from "@angular/core"
 
-import {
-  type LucideIconOrString,
-  provideIcons,
-} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
-  QBindDirective,
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {
+  ICON_CONTEXT_TOKEN,
+  IconDirective,
+  type IconTokenContext,
+} from "@qualcomm-ui/angular/icon"
 import {
   createQdsIconBadgeApi,
   type QdsBadgeCategoryEmphasis,
@@ -31,13 +32,23 @@ import {
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 @Component({
-  imports: [IconDirective, QBindDirective],
-  providers: [provideIcons({})],
+  imports: [IconDirective],
+  providers: [
+    {
+      provide: ICON_CONTEXT_TOKEN,
+      useFactory: (): IconTokenContext => {
+        const directive = inject(IconBadgeDirective)
+        return {
+          getBindings: computed(() => directive.qdsContext().getIconBindings()),
+        }
+      },
+    },
+  ],
   selector: "[q-icon-badge]",
   template: `
     <ng-content>
       @if (icon()) {
-        <svg [q-bind]="api().getIconBindings()" [qIcon]="icon()!"></svg>
+        <svg [qIcon]="icon()!"></svg>
       }
     </ng-content>
   `,
@@ -77,7 +88,7 @@ export class IconBadgeDirective
    */
   readonly icon = input<LucideIconOrString>()
 
-  protected readonly api = computed(() => {
+  readonly qdsContext = computed(() => {
     return createQdsIconBadgeApi(
       {
         disabled: this.disabled(),
@@ -90,7 +101,7 @@ export class IconBadgeDirective
   })
 
   protected readonly trackBindings = useTrackBindings(() =>
-    this.api().getRootBindings(),
+    this.qdsContext().getRootBindings(),
   )
 
   ngOnInit() {
