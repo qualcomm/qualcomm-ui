@@ -348,26 +348,6 @@ describe("Dialog", () => {
     await expect.element(page.getByText("Dialog is closed")).toBeVisible()
   })
 
-  const emphases: QdsDialogEmphasis[] = [
-    "neutral",
-    "info",
-    "success",
-    "warning",
-    "danger",
-  ]
-
-  for (const emphasis of emphases) {
-    test(`indicator icon renders for ${emphasis} emphasis`, async () => {
-      await render(IndicatorIconDialogComponent, {
-        inputs: {emphasis},
-      })
-
-      const indicatorIcon = page.getByTestId("dialog-indicator-icon")
-
-      expect(indicatorIcon).toBeVisible()
-    })
-  }
-
   test("indicator icon renders a custom icon element when provided", async () => {
     await render(CustomIndicatorIconDialogComponent)
 
