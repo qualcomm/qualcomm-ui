@@ -35,3 +35,48 @@ export interface GroupedSearchResult<ResultType = SearchResult> {
   pathname: string
   title: string
 }
+
+/**
+ * Documentation section returned by semantic search.
+ */
+export interface SemanticSearchResult {
+  /**
+   * Raw markdown for the matched documentation section.
+   */
+  content: string
+
+  /**
+   * ISO timestamp for when the section was created.
+   */
+  createdAt: string
+
+  /**
+   * URL hash that links directly to the section.
+   */
+  hash: string
+
+  /**
+   * Breadcrumb path of headings leading to this section.
+   */
+  headerPath: string[]
+
+  /**
+   * Stable section identifier.
+   */
+  id: string
+
+  /**
+   * URL pathname for the page that contains the section.
+   */
+  pathname: string
+
+  /**
+   * Display title for the matched section.
+   */
+  title: string
+
+  /**
+   * ISO timestamp for when the section was last updated.
+   */
+  updatedAt: string
+}
