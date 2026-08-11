@@ -1,0 +1,124 @@
+---
+title: Generic Table Abstractions
+---
+
+# {frontmatter.title}
+
+Shared table wrappers usually begin with a reasonable observation: several tables repeat the same header, body, row, and cell rendering code. Extracting that code feels like obvious cleanup.
+
+The trouble starts when the wrapper takes responsibility for the parts that are not the same. Loading, navigation, pagination, filtering, permissions, and row actions belong to different product workflows. They only happen to appear near a table.
+
+## The Wrapper Starts Small
+
+The first version may do nothing more than translate rows and cells into design-system markup:
+
+```tsx
+import type {TableInstance} from "@qualcomm-ui/core/table"
+import {flexRender, Table} from "@qualcomm-ui/react/table"
+
+interface DataTableProps<TData extends object> {
+  table: TableInstance<TData>
+}
+
+function DataTable<TData extends object>({table}: DataTableProps<TData>) {
+  return (
+    <Table.Root>
+      <Table.Table>
+        <Table.Body>
+          {table.getRowModel().rows.map((row) => (
+            <Table.Row key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <Table.Cell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.Cell>
+              ))}
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Table>
+    </Table.Root>
+  )
+}
+```
+
+There is nothing inherently wrong with this component. It has one job and preserves the table instance's typed rendering context.
+
+## Then the Tables Diverge
+
+The next screen needs a loading overlay. Another needs pagination. A third makes each row clickable, while a fourth has links and buttons inside its cells. Soon the wrapper API describes product behavior as well as table markup:
+
+```tsx
+import type {ReactNode} from "react"
+
+import type {TableInstance} from "@qualcomm-ui/core/table"
+
+interface DataTableProps<TData extends object> {
+  actionBar?: ReactNode
+  disableRowPointer?: boolean
+  enablePagination?: boolean
+  fixedHeader?: boolean
+  isLoading?: boolean
+  onRowClick?: (row: TData) => void
+  table: TableInstance<TData>
+  totalRows?: number
+}
+```
+
+Each prop looks defensible in isolation. Together they reveal that unrelated screens are negotiating through one component.
+
+`isLoading` is already ambiguous. An initial request has no rows to show, so a body-level placeholder makes sense. A background refetch should usually leave existing rows visible and put a smaller progress indicator in the action bar. One boolean cannot express both experiences without more rules or more props.
+
+`onRowClick` makes a similar assumption: the row is one large interaction target. That breaks down when a row contains a link, checkbox, menu, or editable control. The wrapper must suppress some events, add pointer-style options, or expose another escape hatch.
+
+At that point, `DataTable` is a generic application table. It is generic because unrelated screens configure it. It is application-specific because it owns loading feedback, navigation, interaction, and layout policy. Adding another product table means changing the shared component or working around it.
+
+## Keep Behavior With the Product Table
+
+Compose the design-system primitives inside the component that owns the workflow. That component already knows whether a request is an initial load or a refetch, what a row represents, and which actions the user can perform.
+
+```tsx
+function UsersTable() {
+  const query = useUsersQuery()
+  const isInitialLoading = query.isLoading && query.data === undefined
+  const isRefetching = query.isFetching && !isInitialLoading
+  const table = useReactTable({
+    columns,
+    data: query.data ?? [],
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (user) => user.id,
+  })
+
+  if (isInitialLoading) {
+    return <UsersTableSkeleton />
+  }
+
+  return (
+    <Table.Root>
+      <Table.ActionBar>
+        <span>{table.getRowModel().rows.length} users</span>
+        {isRefetching ? <ProgressRing size="xs" /> : null}
+      </Table.ActionBar>
+
+      <Table.Table>
+        <UsersTableHeader table={table} />
+        <UsersTableBody table={table} />
+      </Table.Table>
+    </Table.Root>
+  )
+}
+```
+
+The product table is longer than a `<DataTable>` call, but the extra markup is not accidental duplication. It shows where loading feedback, row behavior, and layout decisions live. A change to the user-management workflow stays in `UsersTable` instead of adding another mode to a shared renderer.
+
+## Reuse the Parts That Stay Stable
+
+Removing a generic application table does not mean giving up reuse. Keep the boundaries narrow:
+
+- Use `Table.Root`, `Table.Header`, `Table.Row`, and the other table primitives for consistent structure and styling.
+- Reuse typed cell components for repeated presentations and interactions.
+- Reuse column modules when their accessors, headers, cells, and feature configuration change together.
+- Reuse translators between table state and a specific backend contract.
+
+The practical test is simple: share code when its consumers need the same behavior and would change it for the same reason. If each new table adds a prop that only it understands, keep that behavior in the product table and compose the shared pieces directly.
+
+For the narrower reuse boundaries, see [Reusable Columns](/best-practices/reusable-columns), [State, Identity, and Workflows](/best-practices/state-and-workflows), and [Loading and Empty States](/best-practices/loading-and-empty-states).
