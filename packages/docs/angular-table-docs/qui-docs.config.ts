@@ -53,6 +53,9 @@ const navConfig: NavConfig[] = [
         id: "table-composition",
       },
       {
+        id: "generic-table-abstractions",
+      },
+      {
         id: "reusable-columns",
       },
       {
