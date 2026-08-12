@@ -4279,7 +4279,7 @@ importers:
         specifier: workspace:^1.5.9
         version: link:../react-core
       '@qualcomm-ui/react-mdx':
-        specifier: workspace:^2.11.4
+        specifier: workspace:^2.11.5
         version: link:../react-mdx
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.5
