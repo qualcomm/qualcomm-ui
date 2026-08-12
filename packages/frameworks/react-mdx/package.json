@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/react-mdx",
-  "version": "2.11.4",
+  "version": "2.11.5",
   "description": "React components and utilities for MDX documentation sites based on QUI Docs",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",

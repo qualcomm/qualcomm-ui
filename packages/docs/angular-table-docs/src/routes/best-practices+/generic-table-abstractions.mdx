@@ -1,0 +1,166 @@
+---
+title: Generic Table Abstractions
+---
+
+# {frontmatter.title}
+
+Teams often reach for a reusable table abstraction for good reasons. Several tables may repeat the same setup: headers, cells, editable controls, row actions, loading states, and toolbar behavior. Centralizing that work can look like the fastest way to improve consistency.
+
+The trouble starts when the wrapper takes responsibility for the parts that are not the same. Let's explore where this abstraction breaks down.
+
+## The Wrapper Starts Small
+
+The first version may do nothing more than translate rows and cells into design-system markup:
+
+```angular-ts
+import {Component, input} from "@angular/core"
+
+import {type AngularTable, TableModule} from "@qualcomm-ui/angular/table"
+import type {RowData} from "@qualcomm-ui/core/table"
+
+@Component({
+  imports: [TableModule],
+  selector: "data-table",
+  template: `
+    <div q-table-root>
+      <table q-table-table>
+        <tbody q-table-body>
+          @for (row of table().getRowModel().rows; track row.id) {
+            <tr q-table-row>
+              @for (cell of row.getVisibleCells(); track cell.id) {
+                <td q-table-cell>
+                  <ng-container *renderCell="cell; let value">
+                    {{ value }}
+                  </ng-container>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  `,
+})
+export class DataTable<TData extends RowData> {
+  readonly table = input.required<AngularTable<TData>>()
+}
+```
+
+There is nothing inherently wrong with this component in isolation. It has one job and preserves the table instance's typed rendering context.
+
+## Feature Bloat
+
+The next workflow needs a loading overlay. Another needs a refetch indicator. A third calls for customizable actions above the table. Each prop looks defensible in isolation. Together they reveal that several use cases are coupled to one component. Let's add a few features to see how this breaks down.
+
+### Loading Indicator
+
+```angular-ts
+import {Component, input} from "@angular/core"
+
+import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
+import {type AngularTable, TableModule} from "@qualcomm-ui/angular/table"
+import type {RowData} from "@qualcomm-ui/core/table"
+
+@Component({
+  imports: [ProgressRingModule, TableModule],
+  selector: "data-table",
+  template: `
+    <div q-table-root>
+      <div q-table-scroll-container>
+        <table q-table-table>
+          <tbody q-table-body>
+            @if (isLoading()) {
+              <tr q-table-row>
+                <td
+                  q-table-cell
+                  [attr.colspan]="table().getAllLeafColumns().length"
+                >
+                  <div q-progress-ring size="sm"></div>
+                </td>
+              </tr>
+            } @else {
+              @for (row of table().getRowModel().rows; track row.id) {
+                <tr q-table-row>
+                  @for (cell of row.getVisibleCells(); track cell.id) {
+                    <td q-table-cell>
+                      <ng-container *renderCell="cell; let value">
+                        {{ value }}
+                      </ng-container>
+                    </td>
+                  }
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `,
+})
+export class DataTable<TData extends RowData> {
+  readonly isLoading = input(false)
+  readonly table = input.required<AngularTable<TData>>()
+}
+```
+
+`isLoading` represents the initial loading state. When there are no rows to preserve, it renders the body-level `ProgressRing`.
+
+### Refetch Indicator
+
+But then a new requirement arises: we need to show a loading state while refetching. The loaded rows should remain visible while we show a separate loading indicator above the table. `isRefetching` adds that state to the wrapper:
+
+```angular-ts
+export class DataTable<TData extends RowData> {
+  readonly isLoading = input(false)
+  readonly isRefetching = input(false)
+  readonly table = input.required<AngularTable<TData>>()
+}
+```
+
+```angular-html
+<div q-table-action-bar>
+  @if (isRefetching()) {
+    <div q-progress-ring size="xs"></div>
+  }
+</div>
+```
+
+`DataTable` now owns the presentation rules for both loading states.
+
+### Table Actions
+
+The next workflow needs actions above the table. So we expose projected content for that wrapper API:
+
+```angular-html
+<div q-table-action-bar>
+  @if (isRefetching()) {
+    <div q-progress-ring size="xs"></div>
+  }
+
+  <ng-content select="[app-table-actions]" />
+</div>
+```
+
+But now we've painted ourselves into a corner. The projected `app-table-actions` content conflicts with the refetch indicator, which was previously positioned in the same `q-table-action-bar` that the new workflow needs.
+
+At this point, `DataTable` is too generic in some ways and too specific in others. Adding another feature means changing the shared component or working around it. The more components that use the single abstraction, the more risk each change brings. There are better ways to manage complexity and reuse.
+
+## Avoid wrapper abstractions
+
+Compose each table inside the component that owns the workflow. That component already knows whether a request is an initial load or a refetch, what a row represents, and which actions the user can perform.
+
+If needed, abstract reusable concerns into separate components, but avoid coupling them to a specific workflow. Consider a reusable title component that can be used in multiple places:
+
+### Create small, reusable pieces
+
+> [!tip]
+> Only share code when its consumers need the same behavior and would change it for the same reason.
+
+Removing a generic application table does not mean giving up reuse. Keep the boundaries narrow:
+
+- Use the QUI Table directives such as `q-table-root`, `q-table-header`, and the other table primitives for consistent structure and styling.
+- Reuse typed cell components for repeated presentations and interactions.
+- Reuse column modules when their accessors, headers, cells, and feature configuration change together.
+- Reuse translators between table state and a specific backend contract.
+
+Also see [Reusable Columns](/best-practices/reusable-columns), [State, Identity, and Workflows](/best-practices/state-and-workflows), and [Loading and Empty States](/best-practices/loading-and-empty-states).
