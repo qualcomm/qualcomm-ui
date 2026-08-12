@@ -1,5 +1,17 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.4
+
+Aug 11th, 2026
+
+### Bug Fixes
+
+- [accordion]: prevent open animation from triggering on mount ([b79bab4](https://github.com/qualcomm/qualcomm-ui/commit/b79bab4))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.35.0]
+
 ## 1.27.3
 
 Aug 6th, 2026

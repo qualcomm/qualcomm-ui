@@ -1,5 +1,13 @@
 # @qualcomm-ui/tailwind-plugin Changelog
 
+## 1.10.0
+
+Aug 11th, 2026
+
+### Features
+
+- [tokens]: sync latest Figma values ([e2b85b6](https://github.com/qualcomm/qualcomm-ui/commit/e2b85b6))
+
 ## 1.9.0
 
 Jul 16th, 2026

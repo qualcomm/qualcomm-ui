@@ -67,11 +67,11 @@ catalog:
   "@typescript-eslint/parser": 8.58.2
   "@typescript-eslint/rule-tester": 8.58.2
   "@typescript-eslint/utils": 8.58.2
-  "@vitejs/plugin-react": 6.0.1
-  "@vitest/browser": 4.1.8
-  "@vitest/browser-playwright": 4.1.8
-  "@vitest/coverage-v8": 4.1.8
-  "@vitest/ui": 4.1.8
+  "@vitejs/plugin-react": 6.0.5
+  "@vitest/browser": 4.1.10
+  "@vitest/browser-playwright": 4.1.10
+  "@vitest/coverage-v8": 4.1.10
+  "@vitest/ui": 4.1.10
   autoprefixer: 10.4.22
   chalk: 5.6.2
   chokidar: 5.0.0
@@ -96,9 +96,9 @@ catalog:
   typescript: 5.9.3
   typescript-eslint: 8.58.2
   unified: 11.0.5
-  vite: 8.1.0
+  vite: 8.2.1
   vite-plugin-static-copy: 4.1.0
-  vitest: 4.1.8
+  vitest: 4.1.10
 
 minimumReleaseAge: 1440
 

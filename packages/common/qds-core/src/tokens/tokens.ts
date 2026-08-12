@@ -1320,62 +1320,162 @@ export const tokens: TokenWithComment[] = [
     "value": "#7697ff"
   },
   {
+    "name": "color-utility-opacity-brand-01",
+    "type": "color",
+    "value": "#2a2aea05"
+  },
+  {
+    "name": "color-utility-opacity-brand-02",
+    "type": "color",
+    "value": "#2a2aea0a"
+  },
+  {
+    "name": "color-utility-opacity-brand-03",
+    "type": "color",
+    "value": "#2a2aea14"
+  },
+  {
+    "name": "color-utility-opacity-brand-04",
+    "type": "color",
+    "value": "#2a2aea1f"
+  },
+  {
+    "name": "color-utility-opacity-brand-05",
+    "type": "color",
+    "value": "#2a2aea29"
+  },
+  {
+    "name": "color-utility-opacity-brand-06",
+    "type": "color",
+    "value": "#2a2aea3d"
+  },
+  {
+    "name": "color-utility-opacity-brand-07",
+    "type": "color",
+    "value": "#2a2aea52"
+  },
+  {
+    "name": "color-utility-opacity-brand-08",
+    "type": "color",
+    "value": "#2a2aea7a"
+  },
+  {
+    "name": "color-utility-opacity-brand-09",
+    "type": "color",
+    "value": "#2a2aeaa3"
+  },
+  {
+    "name": "color-utility-opacity-brand-10",
+    "type": "color",
+    "value": "#2a2aeacc"
+  },
+  {
+    "name": "color-utility-opacity-inverse-01",
+    "type": "color",
+    "value": "#00000005"
+  },
+  {
+    "name": "color-utility-opacity-inverse-02",
+    "type": "color",
+    "value": "#0000000a"
+  },
+  {
+    "name": "color-utility-opacity-inverse-03",
+    "type": "color",
+    "value": "#00000014"
+  },
+  {
+    "name": "color-utility-opacity-inverse-04",
+    "type": "color",
+    "value": "#0000001f"
+  },
+  {
+    "name": "color-utility-opacity-inverse-05",
+    "type": "color",
+    "value": "#00000029"
+  },
+  {
+    "name": "color-utility-opacity-inverse-06",
+    "type": "color",
+    "value": "#0000003d"
+  },
+  {
+    "name": "color-utility-opacity-inverse-07",
+    "type": "color",
+    "value": "#00000052"
+  },
+  {
+    "name": "color-utility-opacity-inverse-08",
+    "type": "color",
+    "value": "#0000007a"
+  },
+  {
+    "name": "color-utility-opacity-inverse-09",
+    "type": "color",
+    "value": "#000000a3"
+  },
+  {
+    "name": "color-utility-opacity-inverse-10",
+    "type": "color",
+    "value": "#000000cc"
+  },
+  {
     "comment": "Utility mechanic — opacity. Rung 01 of the raw transparency axis — the faintest veil. Resolves to black at low opacity in light theme and white in dark theme. Held at Theme as an opacity literal (chain: Brand → Theme only). Reach for directly while composing UI for a barely-there translucent layer; also drawn on internally by the system&#39;s translucent treatments. ALL_SCOPES is correct here — the one intentional ALL_SCOPES case in the colour system; the opacity ladder composes in every picker by design.\n\nDo not use to fake a disabled state (→ disabled/*; disabled/background = opacity/03 in value — mechanics differ). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung — it is a position on an axis of veiling, not a named role. No contrast guarantee.",
-    "name": "color-utility-opacity-01",
+    "name": "color-utility-opacity-neutral-01",
     "type": "color",
     "value": "#ffffff05"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 02 of the raw transparency axis. Resolves to black in light theme and white in dark theme at increasing opacity. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-02",
+    "name": "color-utility-opacity-neutral-02",
     "type": "color",
     "value": "#ffffff0a"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 03 of the raw transparency axis. Held at Theme as an opacity literal. Caution: shares a value with disabled/background — values coincide; mechanics don&#39;t. Pick disabled/background to dim a control (the authored disabled treatment); reach for this rung only when &quot;veil by this amount&quot; is the intent with no disabled meaning. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-03",
+    "name": "color-utility-opacity-neutral-03",
     "type": "color",
     "value": "#ffffff14"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 04 of the raw transparency axis. Held at Theme as an opacity literal. Caution: shares a value with disabled/border — values coincide; mechanics don&#39;t. Pick disabled/border for the disabled control&#39;s border; reach for this rung only when &quot;veil by this amount&quot; is the intent with no disabled meaning. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-04",
+    "name": "color-utility-opacity-neutral-04",
     "type": "color",
     "value": "#ffffff1f"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 05 of the raw transparency axis — the mid-point. Resolves to black in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-05",
+    "name": "color-utility-opacity-neutral-05",
     "type": "color",
     "value": "#ffffff29"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 06 of the raw transparency axis. Resolves to black in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-06",
+    "name": "color-utility-opacity-neutral-06",
     "type": "color",
     "value": "#ffffff3d"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 07 of the raw transparency axis. Resolves to black in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-07",
+    "name": "color-utility-opacity-neutral-07",
     "type": "color",
     "value": "#ffffff52"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 08 of the raw transparency axis — a dense veil. Resolves to black at high opacity in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-08",
+    "name": "color-utility-opacity-neutral-08",
     "type": "color",
     "value": "#ffffff7a"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 09 of the raw transparency axis — a very dense veil. Resolves to black at very high opacity in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
-    "name": "color-utility-opacity-09",
+    "name": "color-utility-opacity-neutral-09",
     "type": "color",
     "value": "#ffffffa3"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 10 of the raw transparency axis — the densest veil. Resolves to black at near-full opacity in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung — the ladder is an axis of veiling, not a set of named roles. No contrast guarantee.",
-    "name": "color-utility-opacity-10",
+    "name": "color-utility-opacity-neutral-10",
     "type": "color",
     "value": "#ffffffcc"
   },
