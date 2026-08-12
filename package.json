@@ -45,6 +45,7 @@
     "react-ssr": "pnpm -C packages/debug-apps/react-ssr",
     "eslint-plugin-angular": "pnpm -C packages/configs/eslint-plugin-angular",
     "eslint-plugin-react": "pnpm -C packages/configs/eslint-plugin-react",
+    "sync-design-tokens": "pnpm qds-core update-design-tokens && pnpm tailwind-plugin build",
     "oxfmt-config": "pnpm -C packages/configs/oxfmt-config",
     "oxlint-config": "pnpm -C packages/configs/oxlint-config",
     "react-swagger": "pnpm -C packages/frameworks/react-swagger",

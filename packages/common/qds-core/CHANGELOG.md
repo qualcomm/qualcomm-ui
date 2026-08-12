@@ -1,5 +1,13 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.35.0
+
+Aug 11th, 2026
+
+### Features
+
+- [tokens]: sync latest Figma values ([e2b85b6](https://github.com/qualcomm/qualcomm-ui/commit/e2b85b6))
+
 ## 1.34.0
 
 Aug 6th, 2026
