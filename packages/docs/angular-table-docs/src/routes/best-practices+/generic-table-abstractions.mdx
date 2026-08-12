@@ -147,9 +147,9 @@ At this point, `DataTable` is too generic in some ways and too specific in other
 
 ## Avoid wrapper abstractions
 
-Compose each table inside the component that owns the workflow. That component already knows whether a request is an initial load or a refetch, what a row represents, and which actions the user can perform.
+Compose each table inside the component that owns the workflow. That workflow should already know whether a request is an initial load or a refetch, what a row represents, which actions the user can perform, etc.
 
-If needed, abstract reusable concerns into separate components, but avoid coupling them to a specific workflow. Consider a reusable title component that can be used in multiple places:
+If needed, abstract reusable concerns into separate components.
 
 ### Create small, reusable pieces
 
@@ -158,7 +158,7 @@ If needed, abstract reusable concerns into separate components, but avoid coupli
 
 Removing a generic application table does not mean giving up reuse. Keep the boundaries narrow:
 
-- Use the QUI Table directives such as `q-table-root`, `q-table-header`, and the other table primitives for consistent structure and styling.
+- Use the QUI Table components like `q-table-root`, `q-table-header`, and the other table primitives for consistent structure and styling.
 - Reuse typed cell components for repeated presentations and interactions.
 - Reuse column modules when their accessors, headers, cells, and feature configuration change together.
 - Reuse translators between table state and a specific backend contract.
