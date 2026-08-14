@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input, type OnInit} from "@angular/core"
-import {UnfoldHorizontal} from "lucide-angular"
+import {LucideUnfoldHorizontal} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -18,13 +18,13 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({UnfoldHorizontal})],
+  providers: [provideIcons({LucideUnfoldHorizontal})],
   selector: "[q-table-column-resize-handle]",
   standalone: false,
   template: `
     <svg
       [q-bind]="inlineIconButtonApi().getIconBindings()"
-      [qIcon]="icon()"
+      [qIcon]="icon()!"
       [size]="inlineIconButtonApi().size"
     ></svg>
   `,

@@ -1,6 +1,6 @@
 import {Component, signal} from "@angular/core"
 import {render} from "@testing-library/angular"
-import {TriangleAlert} from "lucide-angular"
+import {LucideTriangleAlert} from "@lucide/angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 
@@ -75,7 +75,7 @@ describe("FieldGroup", () => {
     class FieldGroupCustomIconComponent {
       protected readonly errorMessage = signal(errorMessage)
       protected readonly groupLabel = signal(groupLabel)
-      protected readonly icon = signal(TriangleAlert)
+      protected readonly icon = signal(LucideTriangleAlert)
     }
 
     await render(FieldGroupCustomIconComponent)

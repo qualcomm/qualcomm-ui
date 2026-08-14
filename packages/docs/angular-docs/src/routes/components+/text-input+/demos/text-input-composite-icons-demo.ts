@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {AArrowDown, Calendar} from "lucide-angular"
+import {LucideAArrowDown, LucideCalendar} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
 
 @Component({
   imports: [TextInputModule],
-  providers: [provideIcons({AArrowDown, Calendar})],
+  providers: [provideIcons({LucideAArrowDown, LucideCalendar})],
   selector: "text-input-icons-demo",
   template: `
     <!-- preview -->

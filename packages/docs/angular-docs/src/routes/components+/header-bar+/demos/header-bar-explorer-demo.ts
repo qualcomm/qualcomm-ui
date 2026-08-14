@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {Layers2, Moon, Settings} from "lucide-angular"
+import {LucideLayers2, LucideMoon, LucideSettings} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {HeaderBarModule} from "@qualcomm-ui/angular/header-bar"
@@ -7,7 +7,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [HeaderBarModule, IconDirective],
-  providers: [provideIcons({Layers2, Moon, Settings})],
+  providers: [provideIcons({LucideLayers2, LucideMoon, LucideSettings})],
   selector: "header-bar-explorer-demo",
   template: `
     <div q-header-bar-root>

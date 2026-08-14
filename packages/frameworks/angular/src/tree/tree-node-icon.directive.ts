@@ -16,7 +16,7 @@ import {useQdsTreeContext} from "./qds-tree-context.service"
   standalone: false,
   template: `
     @if (icon()) {
-      <svg [qIcon]="icon()" [size]="qdsContext().size" />
+      <svg [qIcon]="icon()!" [size]="qdsContext().size" />
     }
     <ng-content />
   `,

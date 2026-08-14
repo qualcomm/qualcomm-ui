@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, inject, type OnInit} from "@angular/core"
-import {ChevronDown, ChevronUp} from "lucide-angular"
+import {LucideChevronDown, LucideChevronUp} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
@@ -30,7 +30,7 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
     provideMenuMachineContext(),
     providePresenceContext(),
     provideQdsMenuContext(),
-    provideIcons({ChevronDown, ChevronUp}),
+    provideIcons({LucideChevronDown, LucideChevronUp}),
   ],
   selector: "q-number-input-unit-select",
   standalone: false,
@@ -47,7 +47,7 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
       <svg
         data-number-input-part="chevron"
         size="sm"
-        [qIcon]="menuContext().open ? 'ChevronUp' : 'ChevronDown'"
+        [qIcon]="menuContext().open ? 'ChevronUp' : 'LucideChevronDown'"
       ></svg>
     </button>
     <ng-template qPortal>

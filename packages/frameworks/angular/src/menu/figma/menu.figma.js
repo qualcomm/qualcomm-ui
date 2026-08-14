@@ -110,7 +110,7 @@ export default {
     `import {MenuModule} from "@qualcomm-ui/angular/menu"`,
     `import {PortalComponent} from "@qualcomm-ui/angular-core/portal"`,
     `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-    `import {ArrowBigUp, Command, Component} from "lucide-angular"`,
+    `import {ArrowBigUp, Command, Component} from "@lucide/angular"`,
   ],
   metadata: {nestable: true},
 }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {Check} from "lucide-angular"
+import {LucideCheck} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -13,12 +13,12 @@ import {
   useStepperContext,
   useStepperItemContext,
 } from "@qualcomm-ui/angular-core/stepper"
-import {StepperIndicatorAlert} from "@qualcomm-ui/qds-core/stepper"
 
 import {useQdsStepperContext} from "./qds-stepper-context.service"
+import {StepperIndicatorAlertIcon} from "./stepper.icons"
 
 @Component({
-  providers: [provideIcons({Check})],
+  providers: [provideIcons({LucideCheck})],
   selector: "[q-stepper-indicator]",
   standalone: false,
   template: `
@@ -26,7 +26,7 @@ import {useQdsStepperContext} from "./qds-stepper-context.service"
       @if (completedIcon()) {
         <svg
           [q-bind]="qdsContext().getIndicatorIconBindings()"
-          [qIcon]="completedIcon()"
+          [qIcon]="completedIcon()!"
           [size]="qdsContext().size"
         />
       }
@@ -34,7 +34,7 @@ import {useQdsStepperContext} from "./qds-stepper-context.service"
       @if (errorIcon()) {
         <svg
           [q-bind]="qdsContext().getIndicatorIconBindings()"
-          [qIcon]="errorIcon()"
+          [qIcon]="errorIcon()!"
           [size]="qdsContext().size"
         />
       }
@@ -57,7 +57,7 @@ export class StepperIndicatorDirective extends CoreStepperIndicatorDirective {
    * @default StepperIndicatorAlert
    */
   readonly errorIcon = input<LucideIconOrString | undefined>(
-    StepperIndicatorAlert,
+    StepperIndicatorAlertIcon,
   )
 
   protected readonly qdsContext = useQdsStepperContext()

@@ -3,25 +3,25 @@
 
 import {Component, computed, input} from "@angular/core"
 import {
-  BellRing,
-  CircleAlert,
-  CircleCheck,
-  Info,
-  TriangleAlert,
-} from "lucide-angular"
+  LucideBellRing,
+  LucideCircleAlert,
+  LucideCircleCheck,
+  type LucideIcon,
+  LucideInfo,
+  LucideTriangleAlert,
+} from "@lucide/angular"
 
 import {CoreInlineNotificationIconDirective} from "@qualcomm-ui/angular-core/inline-notification"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import type {QdsNotificationEmphasis} from "@qualcomm-ui/qds-core/inline-notification"
 
 import {useQdsInlineNotificationContext} from "./qds-inline-notification-context.service"
 
 const icons: Partial<Record<QdsNotificationEmphasis, LucideIcon>> = {
-  danger: CircleAlert,
-  info: Info,
-  neutral: BellRing,
-  success: CircleCheck,
-  warning: TriangleAlert,
+  danger: LucideCircleAlert,
+  info: LucideInfo,
+  neutral: LucideBellRing,
+  success: LucideCircleCheck,
+  warning: LucideTriangleAlert,
 }
 
 @Component({

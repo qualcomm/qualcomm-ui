@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {CircleAlert, Trash2} from "lucide-angular"
+import {LucideCircleAlert, LucideTrash2} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
@@ -8,7 +8,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [DialogModule, ButtonModule, IconDirective],
-  providers: [provideIcons({CircleAlert, Trash2})],
+  providers: [provideIcons({LucideCircleAlert, LucideTrash2})],
   selector: "dialog-alert-dialog-demo",
   template: `
     <div emphasis="danger" q-dialog-root role="alertdialog">

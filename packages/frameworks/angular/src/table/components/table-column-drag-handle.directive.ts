@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input, type OnInit} from "@angular/core"
-import {GripVertical} from "lucide-angular"
+import {LucideGripVertical} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -15,13 +15,13 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({GripVertical})],
+  providers: [provideIcons({LucideGripVertical})],
   selector: "[q-table-column-drag-handle]",
   standalone: false,
   template: `
     <svg
       [q-bind]="inlineIconButtonApi().getIconBindings()"
-      [qIcon]="icon()"
+      [qIcon]="icon()!"
       [size]="inlineIconButtonApi().size"
     ></svg>
   `,

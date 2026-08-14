@@ -1,6 +1,6 @@
 import {Component, output, signal} from "@angular/core"
 import {render} from "@testing-library/angular"
-import {Ellipsis} from "lucide-angular"
+import {Ellipsis} from "@lucide/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 

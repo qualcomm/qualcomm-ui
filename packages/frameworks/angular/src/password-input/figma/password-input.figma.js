@@ -59,7 +59,7 @@ export default {
   id: "PasswordInput",
   imports: [
     `import {PasswordInputModule} from "@qualcomm-ui/angular/password-input"`,
-    ...(startIcon ? [`import {${iconName}} from "lucide-angular"`] : []),
+    ...(startIcon ? [`import {${iconName}} from "@lucide/angular"`] : []),
   ],
   metadata: {nestable: true},
 }

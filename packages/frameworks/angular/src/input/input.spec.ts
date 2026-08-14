@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
+import {LucideCircleAlert, LucideSearch} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {CircleAlert, Search} from "lucide-angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 
@@ -16,10 +16,10 @@ describe("Input primitives", () => {
   test("renders standalone hint and error text content", async () => {
     @Component({
       imports: [ErrorTextComponent, HintDirective],
-      providers: [provideIcons({CircleAlert})],
+      providers: [provideIcons({LucideCircleAlert})],
       template: `
         <p q-hint>Use 8 or more characters.</p>
-        <p icon="CircleAlert" q-error-text>Password is required.</p>
+        <p icon="LucideCircleAlert" q-error-text>Password is required.</p>
       `,
     })
     class InputTextComponent {}
@@ -38,7 +38,7 @@ describe("Input primitives", () => {
   test("renders standalone input start and end icons", async () => {
     @Component({
       imports: [InputEndIconComponent, InputStartIconComponent],
-      providers: [provideIcons({Search})],
+      providers: [provideIcons({LucideSearch})],
       template: `
         <span
           data-test-id="start-input-icon"

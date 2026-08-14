@@ -1,6 +1,6 @@
 import {Component, computed, inject} from "@angular/core"
 import {RouterLink} from "@angular/router"
-import {Moon, Sun} from "lucide-angular"
+import {LucideMoon, LucideSun} from "@lucide/angular"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {LinkDirective} from "@qualcomm-ui/angular/link"
@@ -43,7 +43,7 @@ export class Home {
   protected readonly themeService = inject(QdsThemeService)
 
   readonly themeIcon = computed(() =>
-    this.themeService.theme() === "light" ? Sun : Moon,
+    this.themeService.theme() === "light" ? LucideSun : LucideMoon,
   )
 
   groups = [

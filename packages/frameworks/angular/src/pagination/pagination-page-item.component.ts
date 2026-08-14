@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {Ellipsis} from "lucide-angular"
+import {LucideEllipsis} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CorePaginationPageItemDirective} from "@qualcomm-ui/angular-core/pagination"
@@ -10,7 +10,7 @@ import {CorePaginationPageItemDirective} from "@qualcomm-ui/angular-core/paginat
 import {useQdsPaginationContext} from "./qds-pagination-context.service"
 
 @Component({
-  providers: [provideIcons({Ellipsis})],
+  providers: [provideIcons({LucideEllipsis})],
   selector: "[q-pagination-page-item]",
   standalone: false,
   template: `

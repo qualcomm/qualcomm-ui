@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {ExternalLink} from "lucide-angular"
+import {LucideExternalLink} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 
 @Component({
   imports: [ButtonModule],
-  providers: [provideIcons({ExternalLink})],
+  providers: [provideIcons({LucideExternalLink})],
   selector: "icon-button-emphasis-demo",
   template: `
     <div class="grid grid-cols-3 grid-rows-2 gap-x-8 gap-y-1">

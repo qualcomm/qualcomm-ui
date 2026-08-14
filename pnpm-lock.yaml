@@ -1463,6 +1463,9 @@ importers:
       '@angular/router':
         specifier: 'catalog:'
         version: 22.1.2(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(@angular/platform-browser@22.1.2(@angular/animations@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2)))(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2)))(rxjs@7.8.2)
+      '@lucide/angular':
+        specifier: 'catalog:'
+        version: 1.31.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       '@qualcomm-ui/angular':
         specifier: workspace:*
         version: link:../../frameworks/angular
@@ -1490,9 +1493,6 @@ importers:
       '@tanstack/virtual-core':
         specifier: ^3.13.12
         version: 3.17.7
-      lucide-angular:
-        specifier: 0.569.0
-        version: 0.569.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       postcss:
         specifier: 'catalog:'
         version: 8.5.10
@@ -1557,6 +1557,9 @@ importers:
       '@faker-js/faker':
         specifier: ~9.6.0
         version: 9.6.0
+      '@lucide/angular':
+        specifier: 'catalog:'
+        version: 1.31.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       '@qualcomm-ui/angular':
         specifier: workspace:*
         version: link:../../frameworks/angular
@@ -1587,9 +1590,6 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.2.1
-      lucide-angular:
-        specifier: 0.569.0
-        version: 0.569.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       postcss:
         specifier: 'catalog:'
         version: 8.5.10
@@ -1898,6 +1898,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.7.1(@standard-schema/spec@1.1.0)(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(arktype@2.2.3)(react-hook-form@7.85.0(react@19.2.4))(valibot@1.4.2(typescript@6.0.3))(zod@4.4.3)
+      '@lucide/angular':
+        specifier: 'catalog:'
+        version: 1.31.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       '@qualcomm-ui/angular':
         specifier: workspace:*
         version: link:../../frameworks/angular
@@ -2006,9 +2009,6 @@ importers:
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
-      lucide-angular:
-        specifier: 0.569.0
-        version: 0.569.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       lucide-react:
         specifier: 0.569.0
         version: 0.569.0(react@19.2.4)
@@ -2226,6 +2226,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.7.1(@standard-schema/spec@1.1.0)(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(arktype@2.2.3)(react-hook-form@7.85.0(react@19.2.4))(valibot@1.4.2(typescript@6.0.3))(zod@4.4.3)
+      '@lucide/angular':
+        specifier: 'catalog:'
+        version: 1.31.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       '@qualcomm-ui/angular':
         specifier: workspace:*
         version: link:../../frameworks/angular
@@ -2334,9 +2337,6 @@ importers:
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
-      lucide-angular:
-        specifier: 0.569.0
-        version: 0.569.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))
       lucide-react:
         specifier: 0.569.0
         version: 0.569.0(react@19.2.4)
@@ -13502,13 +13502,6 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
-
-  lucide-angular@0.569.0:
-    resolution: {integrity: sha512-ArxDyzCXsI8NZBybeHCIkd4M0qLvb8tN6FRdgCmrIm1xzXQUW6ETSeOhLyIAnIIcvat9RfOHbddu7AJUd4QENA==}
-    deprecated: Package deprecated. Please use @lucide/angular instead.
-    peerDependencies:
-      '@angular/common': 13.x - 21.x
-      '@angular/core': 13.x - 21.x
 
   lucide-react@0.569.0:
     resolution: {integrity: sha512-70SOx2wHI+fcSzAN6dA4GRvkZSFKapppiAbE+/ktpkeYCo1ULlD5wSMGHRlBsWSsVn4Uwzoo/4i+5o0pIWnwTQ==}
@@ -28478,12 +28471,6 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
-
-  lucide-angular@0.569.0(@angular/common@22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2)):
-    dependencies:
-      '@angular/common': 22.1.2(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2)
-      '@angular/core': 22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2)
-      tslib: 2.5.3
 
   lucide-react@0.569.0(react@19.2.4):
     dependencies:

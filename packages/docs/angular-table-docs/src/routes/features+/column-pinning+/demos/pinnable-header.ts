@@ -1,6 +1,6 @@
 import {NgTemplateOutlet} from "@angular/common"
 import {Component, computed, input} from "@angular/core"
-import {ChevronLeft, ChevronRight, X} from "lucide-angular"
+import {LucideChevronLeft, LucideChevronRight, LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {TableModule} from "@qualcomm-ui/angular/table"
@@ -10,7 +10,7 @@ import type {User} from "./data"
 
 @Component({
   imports: [TableModule, NgTemplateOutlet],
-  providers: [provideIcons({ChevronLeft, ChevronRight, X})],
+  providers: [provideIcons({LucideChevronLeft, LucideChevronRight, LucideX})],
   selector: "th[pinnable-header]",
   template: `
     <ng-template #pinnedIndicator>

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input} from "@angular/core"
-import {CircleAlert} from "lucide-angular"
+import {LucideCircleAlert} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTextInputErrorIndicatorDirective} from "@qualcomm-ui/angular-core/text-input"
@@ -16,17 +16,17 @@ import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
   standalone: false,
   template: `
     <ng-content>
-      <svg [qIcon]="icon()"></svg>
+      <svg [qIcon]="icon()!"></svg>
     </ng-content>
   `,
 })
 export class TextInputErrorIndicatorDirective extends CoreTextInputErrorIndicatorDirective {
   /**
-   * lucide-angular icon
+   * `@lucide/angular` icon
    *
-   * @default CircleAlert
+   * @default LucideCircleAlert
    */
-  readonly icon = input<LucideIconOrString>(CircleAlert)
+  readonly icon = input<LucideIconOrString>(LucideCircleAlert)
 
   protected readonly inputErrorIndicatorContext = useInputErrorIndicator()
 

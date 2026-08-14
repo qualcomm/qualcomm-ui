@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {booleanAttribute, Component, input, type OnInit} from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -14,7 +14,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
 
 @Component({
-  providers: [provideIcons({ChevronRight})],
+  providers: [provideIcons({LucideChevronRight})],
   selector: "[q-breadcrumb-item]",
   standalone: false,
   template: `
@@ -45,9 +45,9 @@ export class BreadcrumbItemDirective implements OnInit {
   /**
    * The separator element to render between items.
    *
-   * @default ChevronRight
+   * @default LucideChevronRight
    */
-  readonly separator = input<LucideIconOrString>("ChevronRight")
+  readonly separator = input<LucideIconOrString>("LucideChevronRight")
 
   protected readonly qdsContext = useQdsBreadcrumbsContext()
 

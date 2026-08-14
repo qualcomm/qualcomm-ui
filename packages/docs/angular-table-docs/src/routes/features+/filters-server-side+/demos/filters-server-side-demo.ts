@@ -2,7 +2,7 @@ import {Component, computed, effect, signal} from "@angular/core"
 import {toObservable, toSignal} from "@angular/core/rxjs-interop"
 import {FormsModule} from "@angular/forms"
 import {injectQuery} from "@tanstack/angular-query-experimental"
-import {Search} from "lucide-angular"
+import {LucideSearch} from "@lucide/angular"
 import {debounceTime} from "rxjs"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -36,7 +36,7 @@ import {TableColumnFilter} from "./table-column-filter"
     PopoverModule,
     TableColumnFilter,
   ],
-  providers: [provideIcons({Search})],
+  providers: [provideIcons({LucideSearch})],
   selector: "filters-server-side-demo",
   template: `
     <div class="flex w-full flex-col gap-4 p-2">

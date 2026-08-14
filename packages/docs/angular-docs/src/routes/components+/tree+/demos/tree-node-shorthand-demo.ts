@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {FileText, FolderIcon} from "lucide-angular"
+import {LucideFileText, LucideFolder} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
@@ -14,7 +14,7 @@ interface FileNode {
 
 @Component({
   imports: [TreeModule, IconDirective],
-  providers: [provideIcons({FileText, FolderIcon})],
+  providers: [provideIcons({LucideFileText, LucideFolder})],
   selector: "tree-node-shorthand-demo",
   template: `
     <div class="w-full max-w-sm" q-tree-root [collection]="collection">
@@ -32,7 +32,7 @@ interface FileNode {
           >
             <div q-tree-branch-node>
               <div q-tree-branch-trigger></div>
-              <svg q-tree-node-icon qIcon="FolderIcon"></svg>
+              <svg q-tree-node-icon qIcon="LucideFolder"></svg>
               <span q-tree-node-text>{{ branch.node.name }}</span>
             </div>
           </ng-template>
@@ -44,7 +44,7 @@ interface FileNode {
           >
             <div q-tree-leaf-node>
               <div q-tree-node-indicator></div>
-              <svg q-tree-node-icon qIcon="FileText"></svg>
+              <svg q-tree-node-icon qIcon="LucideFileText"></svg>
               <span q-tree-node-text>{{ leaf.node.name }}</span>
             </div>
           </ng-template>

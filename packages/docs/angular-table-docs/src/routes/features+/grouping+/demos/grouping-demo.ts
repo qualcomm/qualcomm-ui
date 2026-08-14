@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {Combine, Ungroup} from "lucide-angular"
+import {LucideCombine, LucideUngroup} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PaginationModule} from "@qualcomm-ui/angular/pagination"
@@ -20,7 +20,7 @@ import {createUserQuery, type User, userColumns} from "./data"
 
 @Component({
   imports: [TableModule, PaginationModule],
-  providers: [provideIcons({Combine, Ungroup})],
+  providers: [provideIcons({LucideCombine, LucideUngroup})],
   selector: "grouping-demo",
   template: `
     <div q-table-root>

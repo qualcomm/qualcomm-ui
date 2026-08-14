@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
+import {LucideExternalLink, LucidePlus} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {ExternalLink, Plus} from "lucide-angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 
@@ -12,9 +12,9 @@ describe("Link", () => {
   test("renders link content with generated start and end icons", async () => {
     @Component({
       imports: [LinkDirective],
-      providers: [provideIcons({ExternalLink, Plus})],
+      providers: [provideIcons({LucideExternalLink, LucidePlus})],
       template: `
-        <a endIcon="ExternalLink" href="/docs" q-link startIcon="Plus">
+        <a endIcon="LucideExternalLink" href="/docs" q-link startIcon="Plus">
           Documentation
         </a>
       `,
@@ -31,12 +31,12 @@ describe("Link", () => {
   test("uses projected start and end icon elements", async () => {
     @Component({
       imports: [EndIconDirective, LinkDirective, StartIconDirective],
-      providers: [provideIcons({ExternalLink, Plus})],
+      providers: [provideIcons({LucideExternalLink, LucidePlus})],
       template: `
         <a href="/docs" q-link>
           <svg icon="Plus" q-start-icon></svg>
           Custom docs
-          <svg icon="ExternalLink" q-end-icon></svg>
+          <svg icon="LucideExternalLink" q-end-icon></svg>
         </a>
       `,
     })

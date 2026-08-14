@@ -45,7 +45,7 @@ const startIconName = startIconInstance
   : "File"
 const endIconName = endIconInstance
   ? toLucideName(endIconInstance.name)
-  : "ChevronRight"
+  : "LucideChevronRight"
 
 const disabledAttr = disabled ? " disabled" : ""
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
@@ -67,7 +67,7 @@ export default {
   imports: [
     `import {LinkDirective} from "@qualcomm-ui/angular/link"`,
     ...(icons.length > 0
-      ? [`import {${icons.join(", ")}} from "lucide-angular"`]
+      ? [`import {${icons.join(", ")}} from "@lucide/angular"`]
       : []),
   ],
   metadata: {nestable: true},

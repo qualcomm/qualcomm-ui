@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
 import {render} from "@testing-library/angular"
-import {Search} from "lucide-angular"
+import {Search} from "@lucide/angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 

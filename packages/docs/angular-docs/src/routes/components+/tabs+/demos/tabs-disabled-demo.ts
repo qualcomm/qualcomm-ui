@@ -1,12 +1,19 @@
 import {Component} from "@angular/core"
-import {Code, Cpu, FileText, Smartphone} from "lucide-angular"
+import {
+  LucideCode,
+  LucideCpu,
+  LucideFileText,
+  LucideSmartphone,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {TabsModule} from "@qualcomm-ui/angular/tabs"
 
 @Component({
   imports: [TabsModule],
-  providers: [provideIcons({Code, Cpu, FileText, Smartphone})],
+  providers: [
+    provideIcons({LucideCode, LucideCpu, LucideFileText, LucideSmartphone}),
+  ],
   selector: "tabs-disabled-demo",
   template: `
     <div class="flex flex-col gap-6">
@@ -14,7 +21,7 @@ import {TabsModule} from "@qualcomm-ui/angular/tabs"
         <div q-tabs-list>
           <div q-tabs-indicator></div>
           <div q-tab-root value="documents">
-            <button endIcon="FileText" q-tab-button>Documents</button>
+            <button endIcon="LucideFileText" q-tab-button>Documents</button>
           </div>
           <div disabled q-tab-root value="products">
             <button endIcon="Smartphone" q-tab-button>Products</button>
@@ -32,7 +39,7 @@ import {TabsModule} from "@qualcomm-ui/angular/tabs"
         <div q-tabs-list>
           <div q-tabs-indicator></div>
           <div q-tab-root value="documents">
-            <button endIcon="FileText" q-tab-button>Documents</button>
+            <button endIcon="LucideFileText" q-tab-button>Documents</button>
           </div>
           <div disabled q-tab-root value="products">
             <button endIcon="Smartphone" q-tab-button>Products</button>

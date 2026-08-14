@@ -1,12 +1,12 @@
 import {Component, signal} from "@angular/core"
-import {Check, Plus} from "lucide-angular"
+import {LucideCheck, LucidePlus} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {TagDirective} from "@qualcomm-ui/angular/tag"
 
 @Component({
   imports: [TagDirective],
-  providers: [provideIcons({Check, Plus})],
+  providers: [provideIcons({LucideCheck, LucidePlus})],
   selector: "tag-controlled-demo",
   template: `
     <div class="flex flex-col items-start gap-2">

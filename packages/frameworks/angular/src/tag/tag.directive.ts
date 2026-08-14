@@ -10,7 +10,7 @@ import {
   type OnInit,
   output,
 } from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -55,7 +55,7 @@ import {QdsTagContextService} from "./qds-tag-context.service"
   ],
   providers: [
     QdsTagContextService,
-    provideIcons({X}),
+    provideIcons({LucideX}),
     {
       provide: START_ICON_CONTEXT_TOKEN,
       useFactory: (): IconTokenContext => {

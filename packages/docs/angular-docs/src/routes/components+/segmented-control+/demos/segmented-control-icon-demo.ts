@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {ChartArea, Map, Table} from "lucide-angular"
+import {LucideChartArea, LucideMap, LucideTable} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {SegmentedControlModule} from "@qualcomm-ui/angular/segmented-control"
 
 @Component({
   imports: [SegmentedControlModule],
-  providers: [provideIcons({ChartArea, Map, Table})],
+  providers: [provideIcons({LucideChartArea, LucideMap, LucideTable})],
   selector: "segmented-control-icon-demo",
   template: `
     <!-- preview -->

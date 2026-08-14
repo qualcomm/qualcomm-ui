@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {CoreInlineNotificationCloseTriggerDirective} from "@qualcomm-ui/angular-core/inline-notification"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -14,7 +14,7 @@ import {useQdsInlineNotificationContext} from "./qds-inline-notification-context
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-inline-notification-close-button]",
   standalone: false,
   template: `
