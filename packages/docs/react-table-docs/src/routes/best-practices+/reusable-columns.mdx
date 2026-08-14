@@ -10,13 +10,7 @@ The constraint is that columns are table configuration, so they should have stab
 
 ## Column Modules
 
-### Concern
-
-Teams often reach for a reusable table abstraction for good reasons. Several tables may repeat the same setup: headers, cells, editable controls, row actions, loading states, and toolbar behavior. Centralizing that work can look like the fastest way to improve consistency.
-
-### Pitfall
-
-The problem appears when a generated column closes over changing React state: edited values, pending flags, permissions, or callbacks from the current render. The most common attempted fix is to add that state to the column memo dependencies.
+The problem appears when a generated column closes over changing React state: edited values, pending flags, permissions, or callbacks from the current render.
 
 In this example, the table has an editable `status` column. `editedValues` stores unsaved cell drafts, and `isSaving` disables the control while a save is in flight. Assume row IDs are already stable. The problem here is the column dependency.
 
@@ -53,13 +47,13 @@ function UsersTable({data}: {data: User[]}) {
 }
 ```
 
-This fixes stale reads, but it makes the column array change on every edit. Each `setEditedValues` call creates a new object, so `useMemo` returns new column definitions. When the column configuration changes, the entire table is recomputed.
+This fixes stale reads, but it makes the column array change on every edit. Each `setEditedValues` call creates a new object, so `useMemo` returns new column definitions. When the column configuration changes, the entire table is recomputed. This is a big performance issue.
 
-This exemplifies where reusable wrappers tend to fall apart. The entire table depends on the column definitions. Once row draft state is a column dependency, a single cell edit can cause all that table configuration work to rerun, which typically results in performance issues. But if you omit the dependency list, the table may return stale values. The solution is to keep frequently changing row workflow state out of column definitions.
+There are a few solutions to this problem. The one we'll explore today is scoping state updates to the column's cell component.
 
 ### Preferred Pattern
 
-The following example shows the same boundary using Jotai. The table creates a scoped Jotai store around its implementation, while the column definition stays static.
+The following example shows the same boundary using Jotai. The table creates a scoped Jotai store around its implementation. A custom cell component taps into this store and reads/writes the state to the atom. All while the column definition stays static.
 
 This keeps the column responsible for column structure only, and offloads the data concern to the inner cell component.
 
@@ -132,9 +126,11 @@ function UsersTableInner({data}: {data: User[]}) {
 
 You could repeat the same approach with [React Context](https://react.dev/learn/passing-data-deeply-with-context) instead of Jotai for the same effect.
 
-This keeps the column array memoized with an empty dependency list because the column structure is static. The changing edit state stays in the product table's edit workflow.
+This keeps the column array memoized with an empty dependency list because the column structure is static. The changing edit state stays in the workflow that owns the table.
 
-When a value changes which columns exist or how static column options are configured, include it in the memo dependencies:
+### When to update column definitions
+
+You typically only update column definitions when a value changes which columns exist or how static column options are configured:
 
 ```tsx
 const columns = useMemo<ColumnDef<User>[]>(
@@ -147,10 +143,6 @@ const columns = useMemo<ColumnDef<User>[]>(
   [canEdit, showActions],
 )
 ```
-
-Those dependencies are different from row workflow state. `canEdit` and `showActions` decide which static column definitions exist. They should not be draft values, mutation flags, or other row-level values that change as the user interacts with the table.
-
-Use dependencies for column shape and static configuration. Move frequently changing row workflow state into typed cells, providers, forms, or query/mutation state.
 
 ## Cell Content
 
@@ -189,7 +181,7 @@ function CellContent({
 }
 ```
 
-This starts as reuse, but the switchboard weakens types, hides dependencies, and couples every new cell type to the central renderer. It also pressures callers to pass changing values through a generic `options` bag instead of more detailed alternatives like typed props, render context, or query/mutation selectors.
+This starts as reuse, but the switchboard weakens types, hides dependencies, and couples every new cell type to the central renderer.
 
 ### Preferred Pattern
 

@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.11.5
+
+Aug 12th, 2026
+
+### Bug Fixes
+
+- [updated-on-date]: use fixed time zone to prevent SSR hydration issue ([626f72a](https://github.com/qualcomm/qualcomm-ui/commit/626f72a))
+
 ## 2.11.4
 
 Aug 11th, 2026
