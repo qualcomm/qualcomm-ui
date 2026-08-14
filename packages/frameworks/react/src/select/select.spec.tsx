@@ -8,7 +8,6 @@ import {page, userEvent} from "vitest/browser"
 import {selectCollection} from "@qualcomm-ui/core/select"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Select, type SelectRootProps} from "@qualcomm-ui/react/select"
-import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
@@ -736,55 +735,37 @@ const tests: MultiComponentTestCase[] = [
       return (
         <Select
           collection={stringCollection}
-          contentProps={
-            {
-              "data-test-id": testIds.content,
-            } as DataAttributes
-          }
-          controlProps={
-            {
-              "data-test-id": testIds.control,
-            } as DataAttributes
-          }
+          contentProps={{
+            "data-test-id": testIds.content,
+          }}
+          controlProps={{
+            "data-test-id": testIds.control,
+          }}
           data-test-id={testIds.root}
           errorText="Error text"
-          errorTextProps={
-            {
-              "data-test-id": testIds.errorText,
-            } as DataAttributes
-          }
+          errorTextProps={{
+            "data-test-id": testIds.errorText,
+          }}
           hint="Hint text"
-          hintProps={
-            {
-              "data-test-id": testIds.hint,
-            } as DataAttributes
-          }
-          indicatorProps={
-            {
-              "data-test-id": testIds.indicator,
-            } as DataAttributes
-          }
+          hintProps={{
+            "data-test-id": testIds.hint,
+          }}
+          indicatorProps={{
+            "data-test-id": testIds.indicator,
+          }}
           label="Select option"
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as DataAttributes
-          }
-          positionerProps={
-            {
-              "data-test-id": testIds.positioner,
-            } as DataAttributes
-          }
-          selectProps={
-            {
-              "data-test-id": testIds.hiddenSelect,
-            } as DataAttributes
-          }
-          valueTextProps={
-            {
-              "data-test-id": testIds.valueText,
-            } as DataAttributes
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
+          positionerProps={{
+            "data-test-id": testIds.positioner,
+          }}
+          selectProps={{
+            "data-test-id": testIds.hiddenSelect,
+          }}
+          valueTextProps={{
+            "data-test-id": testIds.valueText,
+          }}
         />
       )
     },
@@ -818,11 +799,9 @@ const tests: MultiComponentTestCase[] = [
         <Select
           aria-label="City"
           collection={stringCollection}
-          selectProps={
-            {
-              "data-test-id": testIds.hiddenSelect,
-            } as DataAttributes
-          }
+          selectProps={{
+            "data-test-id": testIds.hiddenSelect,
+          }}
         />
       )
     },
@@ -844,11 +823,9 @@ const tests: MultiComponentTestCase[] = [
           <Select
             aria-labelledby="city-label"
             collection={stringCollection}
-            selectProps={
-              {
-                "data-test-id": testIds.hiddenSelect,
-              } as DataAttributes
-            }
+            selectProps={{
+              "data-test-id": testIds.hiddenSelect,
+            }}
           />
         </>
       )

@@ -20,7 +20,9 @@ const branchCheckbox =
 
 const leafIndicator = `<div q-tree-node-indicator></div>`
 const leafIcon =
-  variant === "icon" ? `<svg q-tree-node-icon qIcon="LucideFileText"></svg>` : ""
+  variant === "icon"
+    ? `<svg q-tree-node-icon qIcon="LucideFileText"></svg>`
+    : ""
 const leafCheckbox =
   variant === "checkbox" ? `<span q-tree-node-checkbox></span>` : ""
 

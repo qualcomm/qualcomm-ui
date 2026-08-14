@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
+import {LucideSearch} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Search} from "@lucide/angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 
@@ -15,7 +15,7 @@ describe("Icon", () => {
   test("renders a qIcon from an injected icon name", async () => {
     @Component({
       imports: [IconDirective],
-      providers: [provideIcons({Search})],
+      providers: [provideIcons({LucideSearch})],
       template: `
         <svg data-test-id="search-icon" qIcon="Search" size="lg"></svg>
       `,
@@ -33,7 +33,7 @@ describe("Icon", () => {
   test("renders start and end icon directives when given icon content", async () => {
     @Component({
       imports: [EndIconDirective, StartIconDirective],
-      providers: [provideIcons({Search})],
+      providers: [provideIcons({LucideSearch})],
       template: `
         <span data-test-id="start-icon" icon="Search" q-start-icon></span>
         <span data-test-id="end-icon" icon="Search" q-end-icon></span>

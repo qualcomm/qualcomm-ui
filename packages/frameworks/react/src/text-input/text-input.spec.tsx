@@ -1,4 +1,4 @@
-import {type HTMLAttributes, useState} from "react"
+import {useState} from "react"
 
 import {Calendar, Search} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
@@ -524,15 +524,13 @@ const controlledStateTests: MultiComponentTestCase[] = [
     simple() {
       return (
         <TextInput
-          inputProps={
-            {
-              "data-test-id": "text-input-element",
-              maxLength: 50,
-              minLength: 5,
-              pattern: "[A-Za-z]+",
-              title: "Custom title",
-            } as HTMLAttributes<HTMLInputElement>
-          }
+          inputProps={{
+            "data-test-id": "text-input-element",
+            maxLength: 50,
+            minLength: 5,
+            pattern: "[A-Za-z]+",
+            title: "Custom title",
+          }}
           label={demoLabel}
           placeholder={demoPlaceholder}
         />
@@ -643,12 +641,10 @@ const controlledStateTests: MultiComponentTestCase[] = [
       return (
         <TextInput
           errorText={demoErrorText}
-          errorTextProps={
-            {
-              className: "custom-error-class",
-              "data-test-id": "error-text",
-            } as HTMLAttributes<HTMLElement>
-          }
+          errorTextProps={{
+            className: "custom-error-class",
+            "data-test-id": "error-text",
+          }}
           invalid
           label={demoLabel}
           placeholder={demoPlaceholder}
@@ -710,13 +706,11 @@ const controlledStateTests: MultiComponentTestCase[] = [
     simple() {
       return (
         <TextInput
-          inputProps={
-            {
-              "aria-describedby": "custom-description",
-              "data-custom": "custom-value",
-              role: "textbox",
-            } as HTMLAttributes<HTMLInputElement>
-          }
+          inputProps={{
+            "aria-describedby": "custom-description",
+            "data-custom": "custom-value",
+            role: "textbox",
+          }}
           label={demoLabel}
           placeholder={demoPlaceholder}
         />

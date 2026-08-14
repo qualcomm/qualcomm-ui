@@ -1,6 +1,6 @@
 import {Component, output, signal} from "@angular/core"
+import {LucideEllipsis} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Ellipsis} from "@lucide/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
@@ -180,7 +180,7 @@ class SubmenuComponent {
 
 @Component({
   imports: [MenuModule, PortalDirective],
-  providers: [provideIcons({Ellipsis})],
+  providers: [provideIcons({LucideEllipsis})],
   template: `
     <q-menu>
       <button
@@ -271,7 +271,7 @@ class InheritedButtonSizeMenuComponent {}
 
 @Component({
   imports: [MenuModule, PortalDirective],
-  providers: [provideIcons({Ellipsis})],
+  providers: [provideIcons({LucideEllipsis})],
   template: `
     <q-menu size="sm">
       <button

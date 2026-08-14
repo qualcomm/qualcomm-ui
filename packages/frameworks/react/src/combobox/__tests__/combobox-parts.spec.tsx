@@ -5,7 +5,6 @@ import {page} from "vitest/browser"
 import {comboboxCollection} from "@qualcomm-ui/core/combobox"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Combobox} from "@qualcomm-ui/react/combobox"
-import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
@@ -202,34 +201,24 @@ const tests: MultiComponentTestCase[] = [
       return (
         <Combobox
           collection={stringCollection}
-          contentProps={
-            {
-              "data-test-id": testIds.content,
-            } as DataAttributes
-          }
-          controlProps={
-            {
-              "data-test-id": testIds.control,
-            } as DataAttributes
-          }
+          contentProps={{
+            "data-test-id": testIds.content,
+          }}
+          controlProps={{
+            "data-test-id": testIds.control,
+          }}
           data-test-id={testIds.root}
           hint="Hint text"
-          hintProps={
-            {
-              "data-test-id": testIds.hint,
-            } as DataAttributes
-          }
+          hintProps={{
+            "data-test-id": testIds.hint,
+          }}
           label="Label"
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as DataAttributes
-          }
-          positionerProps={
-            {
-              "data-test-id": testIds.positioner,
-            } as DataAttributes
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
+          positionerProps={{
+            "data-test-id": testIds.positioner,
+          }}
         />
       )
     },

@@ -1,8 +1,8 @@
 import {Component, computed, effect, signal} from "@angular/core"
 import {toObservable, toSignal} from "@angular/core/rxjs-interop"
 import {FormsModule} from "@angular/forms"
-import {injectQuery} from "@tanstack/angular-query-experimental"
 import {LucideSearch} from "@lucide/angular"
+import {injectQuery} from "@tanstack/angular-query-experimental"
 import {debounceTime} from "rxjs"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"

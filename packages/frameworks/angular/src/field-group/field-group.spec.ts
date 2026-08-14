@@ -1,6 +1,6 @@
 import {Component, signal} from "@angular/core"
-import {render} from "@testing-library/angular"
 import {LucideTriangleAlert} from "@lucide/angular"
+import {render} from "@testing-library/angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 

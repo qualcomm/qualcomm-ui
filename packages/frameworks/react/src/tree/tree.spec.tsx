@@ -1,4 +1,4 @@
-import {type HTMLAttributes, type ReactNode, useState} from "react"
+import {type ReactNode, useState} from "react"
 
 import {FileText, FolderIcon, MoreHorizontal} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
@@ -426,9 +426,7 @@ describe("Tree", () => {
         {collection.rootNode.nodes?.map((node, index) => (
           <Tree.Nodes
             key={node.id}
-            indentGuideProps={
-              {"data-test-id": "indent-guide"} as HTMLAttributes<HTMLElement>
-            }
+            indentGuideProps={{"data-test-id": "indent-guide"}}
             indexPath={[index]}
             node={node}
             renderBranch={({node}) => (

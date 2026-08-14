@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, type OnInit} from "@angular/core"
-import {LucideBellRing, LucideCircleAlert, LucideCircleCheck, LucideTriangleAlert} from "@lucide/angular"
+import {
+  LucideBellRing,
+  LucideCircleAlert,
+  LucideCircleCheck,
+  LucideTriangleAlert,
+} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"

@@ -222,15 +222,13 @@ export class TypeFormatter {
         p.name,
       )}`
       return `${name}${p.flags?.isOptional ? "?" : ""}: ${replaceType(
-        p.type
-          ? this.formatType(p.type as JSONOutput.SomeType, opts)
-          : "unknown",
+        p.type ? this.formatType(p.type, opts) : "unknown",
         opts.paramsReplacer,
       )}`
     })
 
     const type = replaceType(
-      s.type ? this.formatType(s.type as JSONOutput.SomeType, opts) : "unknown",
+      s.type ? this.formatType(s.type, opts) : "unknown",
       opts.paramsReplacer,
     )
     const startParens = opts.isPartOfUnion ? "((" : "("
@@ -373,7 +371,7 @@ export class TypeFormatter {
                 // exported variable with methods
                 child.signatures?.length && !child.type
                   ? this.formatSignature(child.signatures, opts)
-                  : this.formatType(child.type as JSONOutput.SomeType, opts),
+                  : this.formatType(child.type, opts),
             })
           }
 

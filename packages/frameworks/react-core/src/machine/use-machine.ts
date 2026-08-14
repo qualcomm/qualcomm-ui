@@ -28,7 +28,6 @@ import {
   MachineStatus,
   type Params,
   type PropsParams,
-  type SendFn,
   type ValueOrFn,
   type WatchParams,
 } from "@qualcomm-ui/utils/machine"
@@ -400,24 +399,22 @@ export function useMachine<T extends MachineSchema>(
     // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getParams = useRef(
-    (): Params<T> => ({
-      action,
-      actions,
-      choose,
-      computed,
-      context,
-      event: getEvent(),
-      flush,
-      guard,
-      prop,
-      refs,
-      scope: {...scope, ids: ids.current},
-      send: send as SendFn<T>,
-      state: getState(),
-      track: useTrack,
-    }),
-  )
+  const getParams = useRef((): Params<T> => ({
+    action,
+    actions,
+    choose,
+    computed,
+    context,
+    event: getEvent(),
+    flush,
+    guard,
+    prop,
+    refs,
+    scope: {...scope, ids: ids.current},
+    send,
+    state: getState(),
+    track: useTrack,
+  }))
 
   config.watch?.(getParams.current() as WatchParams<T>)
 
@@ -428,7 +425,7 @@ export function useMachine<T extends MachineSchema>(
     prop,
     refs,
     scope: {...scope, ids: ids.current},
-    send: send as SendFn<T>,
+    send,
     state: getState(),
   }
 }

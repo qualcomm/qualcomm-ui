@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {booleanAttribute, Component, computed, input} from "@angular/core"
-import {LucideCircleAlert, LucideCircleCheck, LucideTriangleAlert} from "@lucide/angular"
+import {
+  LucideCircleAlert,
+  LucideCircleCheck,
+  LucideTriangleAlert,
+} from "@lucide/angular"
 
 import {CoreDialogBodyDirective} from "@qualcomm-ui/angular-core/dialog"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"

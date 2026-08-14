@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {NumberFormatter, NumberParser} from "@internationalized/number"
+import type {NumberParser} from "@internationalized/number"
 
 import type {FieldApiProps} from "@qualcomm-ui/core/field"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"

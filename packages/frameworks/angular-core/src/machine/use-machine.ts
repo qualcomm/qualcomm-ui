@@ -31,7 +31,6 @@ import {
   type MachineSchema,
   MachineStatus,
   type Params,
-  type SendFn,
   type Transition,
   type ValueOrFn,
   type WatchParams,
@@ -358,7 +357,7 @@ export function useMachine<T extends MachineSchema>(
     get scope() {
       return {...scope(), ids}
     },
-    send: send as SendFn<T>,
+    send,
     state: getState(),
     track: useTrack(injector),
   })
@@ -403,7 +402,7 @@ export function useMachine<T extends MachineSchema>(
     get scope() {
       return {...scope(), ids}
     },
-    send: send as SendFn<T>,
+    send,
     state: getState(),
   }
 }

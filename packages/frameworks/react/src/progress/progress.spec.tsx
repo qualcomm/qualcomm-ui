@@ -1,4 +1,4 @@
-import {type HTMLAttributes, useState} from "react"
+import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
@@ -365,43 +365,31 @@ const tests: MultiComponentTestCase[] = [
     simple() {
       return (
         <Progress
-          barProps={
-            {
-              "data-test-id": testIds.bar,
-            } as HTMLAttributes<HTMLElement>
-          }
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
           data-test-id={testIds.root}
           errorText={errorMessage}
-          errorTextProps={
-            {
-              "data-test-id": testIds.errorText,
-            } as HTMLAttributes<HTMLElement>
-          }
+          errorTextProps={{
+            "data-test-id": testIds.errorText,
+          }}
           hint={hintMessage}
-          hintProps={
-            {
-              "data-test-id": testIds.hint,
-            } as HTMLAttributes<HTMLElement>
-          }
+          hintProps={{
+            "data-test-id": testIds.hint,
+          }}
           invalid
           label={testLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as HTMLAttributes<HTMLElement>
-          }
-          trackProps={
-            {
-              "data-test-id": testIds.track,
-            } as HTMLAttributes<HTMLElement>
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
+          trackProps={{
+            "data-test-id": testIds.track,
+          }}
           value={60}
           valueText="60%"
-          valueTextProps={
-            {
-              "data-test-id": testIds.valueText,
-            } as HTMLAttributes<HTMLElement>
-          }
+          valueTextProps={{
+            "data-test-id": testIds.valueText,
+          }}
         />
       )
     },

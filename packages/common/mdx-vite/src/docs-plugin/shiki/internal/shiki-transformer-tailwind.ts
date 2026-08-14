@@ -534,7 +534,7 @@ export async function transformWithInlineStyles(
     }
 
     if (inlineStyles.length > 0) {
-      const existingStyle = node.properties?.style as string | undefined
+      const existingStyle = node.properties?.style
       const newStyle = inlineStyles.join("; ")
       node.properties = node.properties ?? {}
       node.properties.style = existingStyle

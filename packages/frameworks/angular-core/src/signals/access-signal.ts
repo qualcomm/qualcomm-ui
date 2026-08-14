@@ -14,7 +14,7 @@ import type {MaybeSignal} from "./signals.types"
  */
 export function accessSignal<T>(maybeSignal: MaybeSignal<T>): T {
   if (!maybeSignal) {
-    return maybeSignal as unknown as T
+    return maybeSignal
   }
   return isSignal(maybeSignal) ? maybeSignal() : maybeSignal
 }

@@ -224,7 +224,7 @@ export type PaginationPageItemBindings =
       "data-active": BooleanDataAttr
       "data-page": number
       "data-type": "page"
-      onClick: JSX.MouseEventHandler<HTMLButtonElement>
+      onClick: JSX.MouseEventHandler
     })
   | (Part<"pageItem"> & {
       "data-type": "separator"

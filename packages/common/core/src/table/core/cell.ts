@@ -102,7 +102,7 @@ export function createCell<TData extends RowData, TValue>(
   }
 
   for (const feature of table._features) {
-    feature.createCell?.(cell as Cell<TData, TValue>, column, row, table)
+    feature.createCell?.(cell, column, row, table)
   }
 
   return cell as Cell<TData, TValue>
