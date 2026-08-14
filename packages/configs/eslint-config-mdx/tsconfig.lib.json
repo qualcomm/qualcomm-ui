@@ -4,7 +4,9 @@
     "rootDir": "./src",
     "composite": true,
     "outDir": "dist",
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib"
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib",
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ES2025"],
+    "types": ["node"]
   },
   "include": ["./src"]
 }

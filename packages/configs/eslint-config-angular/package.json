@@ -40,11 +40,11 @@
     "typescript-eslint": "catalog:"
   },
   "peerDependencies": {
-    "angular-eslint": ">=22.0.0",
+    "angular-eslint": ">=22.1.0",
     "eslint": ">=9.37.0",
     "eslint-plugin-oxfmt": ">=0.9.0",
     "oxfmt": ">=0.54.0",
-    "typescript": ">=5.5.4",
-    "typescript-eslint": ">=8.58.2"
+    "typescript": ">=5.5.4 <7",
+    "typescript-eslint": ">=8.67.0"
   }
 }
