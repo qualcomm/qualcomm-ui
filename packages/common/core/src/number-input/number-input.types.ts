@@ -259,7 +259,7 @@ type ComputedContext = Readonly<{
   /**
    * The number i18n formatter
    */
-  formatter: NumberFormatter
+  formatter: Intl.NumberFormat
 
   /**
    * Whether the value is at the max

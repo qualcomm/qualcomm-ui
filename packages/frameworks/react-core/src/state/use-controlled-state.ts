@@ -1,8 +1,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-/* eslint-disable react-hooks/rules-of-hooks, react-hooks/exhaustive-deps */
-import {useCallback, useEffect, useRef, useState} from "react"
+/* eslint-disable react-hooks/exhaustive-deps */
+import {useCallback, useRef, useState} from "react"
 
 export interface UseControlledState<T> {
   /**
@@ -49,35 +49,12 @@ export function useControlledState<
   controlled,
   defaultValue: defaultProp,
   delayCallback,
-  name,
   onChangeProp,
-  state = "value",
 }: UseControlledState<State>): [State | undefined, SetState] {
   // isControlled is ignored in the hook dependency lists as it should never change.
   const {current: isControlled} = useRef(controlled !== undefined)
   const [valueState, setValue] = useState(defaultProp)
   const value = isControlled ? controlled : valueState
-
-  if (process.env.NODE_ENV !== "production") {
-    useEffect(() => {
-      if (isControlled !== (controlled !== undefined)) {
-        console.error(
-          [
-            `QUI: A component is changing the ${
-              isControlled ? "" : "un"
-            }controlled ${state} state of ${name} to be ${
-              isControlled ? "un" : ""
-            }controlled.`,
-            "Elements should not switch from uncontrolled to controlled (or vice versa).",
-            `Decide between using a controlled or uncontrolled ${name} ` +
-              "element for the lifetime of the component.",
-            "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.",
-            "More info: https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components",
-          ].join("\n"),
-        )
-      }
-    }, [state, name, controlled])
-  }
 
   const setValueIfUncontrolled: SetState = useCallback<any>(
     (newValue: State, ...rest: any[]) => {
