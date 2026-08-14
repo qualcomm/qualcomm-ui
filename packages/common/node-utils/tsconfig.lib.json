@@ -6,6 +6,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib",
+    "types": ["node"],
     "paths": {
       "@qualcomm-ui/node-utils/*": ["./src/*/index.ts"]
     }

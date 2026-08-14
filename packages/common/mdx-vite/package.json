@@ -53,8 +53,8 @@
     "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads"
   },
   "dependencies": {
-    "@shikijs/rehype": "^3.13.0",
-    "@shikijs/transformers": "^3.13.0",
+    "@shikijs/rehype": "^4.4.3",
+    "@shikijs/transformers": "^4.4.3",
     "chalk": "catalog:",
     "chokidar": "catalog:",
     "cosmiconfig": "^9.0.0",

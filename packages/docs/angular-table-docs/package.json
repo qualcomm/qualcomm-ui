@@ -112,7 +112,7 @@
     "@qualcomm-ui/mdx-vite": "workspace:*",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@react-router/dev": "catalog:",
-    "@shikijs/rehype": "^3.13.0",
+    "@shikijs/rehype": "^4.4.3",
     "@tailwindcss/vite": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/react": "catalog:",
