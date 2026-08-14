@@ -1,4 +1,4 @@
-name: Reusable Docs Deploy
+name: Reusable Docs Deploy Test
 
 on:
   workflow_call:
