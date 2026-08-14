@@ -57,7 +57,7 @@ export default {
     ...(needsIcon
       ? [
           `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {${iconName}} from "@lucide/angular"`,
+          `import {Lucide${iconName}} from "@lucide/angular"`,
         ]
       : []),
   ],
