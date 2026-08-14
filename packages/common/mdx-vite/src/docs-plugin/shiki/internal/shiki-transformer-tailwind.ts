@@ -5,7 +5,7 @@ import type {Element, Root, Text} from "hast"
 import {fromHtml} from "hast-util-from-html"
 import {toHtml} from "hast-util-to-html"
 import {readFile} from "node:fs/promises"
-import postcss, {type Rule} from "postcss"
+import postcss, {type ChildNode, type Rule} from "postcss"
 import selectorParser from "postcss-selector-parser"
 import type {ShikiTransformer} from "shiki"
 import {compile} from "tailwindcss"
@@ -326,7 +326,7 @@ function resolveCssValue(
 }
 
 interface SelectorAnalysis {
-  /** The class name if it's a simple class selector */
+  /** The leading class name represented by the selector */
   className: string | null
   /** Whether this selector can be inlined (single class, no pseudo/combinators) */
   inlineable: boolean
@@ -347,11 +347,6 @@ function analyzeSelector(selector: string): SelectorAnalysis {
     }
 
     const selectorNode = selectors.nodes[0]
-    if (selectorNode.nodes.length !== 1) {
-      inlineable = false
-      return
-    }
-
     const node = selectorNode.nodes[0]
     if (node.type !== "class") {
       inlineable = false
@@ -359,6 +354,9 @@ function analyzeSelector(selector: string): SelectorAnalysis {
     }
 
     className = node.value
+    if (selectorNode.nodes.length !== 1) {
+      inlineable = false
+    }
 
     selectorNode.walk((n) => {
       if (
@@ -393,6 +391,20 @@ function parseCompiledCss(css: string): ParsedRule[] {
   const root = postcss.parse(css)
   const variables = extractCssVariables(css)
 
+  function serializeResidualRule(rule: Rule): string {
+    let residualNode: ChildNode = rule.clone()
+    let parent = rule.parent
+
+    while (parent?.type === "atrule" && parent.name !== "layer") {
+      const wrapper = parent.clone({nodes: []})
+      wrapper.append(residualNode)
+      residualNode = wrapper
+      parent = parent.parent
+    }
+
+    return residualNode.toString()
+  }
+
   function processRule(rule: Rule, insideAtRule: boolean) {
     const {className, inlineable} = analyzeSelector(rule.selector)
 
@@ -421,7 +433,7 @@ function parseCompiledCss(css: string): ParsedRule[] {
       className,
       declarations: declarations.join("; "),
       inlineable: inlineable && !insideAtRule && !hasNestedAtRule,
-      originalRule: rule.toString(),
+      originalRule: serializeResidualRule(rule),
     })
   }
 
@@ -463,17 +475,35 @@ function buildResidualCss(css: string, inlineableClasses: Set<string>): string {
     return className !== null && !inlineableClasses.has(className)
   }
 
+  function cloneResidualNode(node: ChildNode): ChildNode | null {
+    if (node.type === "rule") {
+      return shouldKeepRule(node) ? node.clone() : null
+    }
+
+    if (node.type !== "atrule" || !node.nodes) {
+      return null
+    }
+
+    const clone = node.clone({nodes: []})
+    for (const child of node.nodes) {
+      const residualNode = cloneResidualNode(child)
+      if (residualNode) {
+        clone.append(residualNode)
+      }
+    }
+
+    return clone.nodes?.length ? clone : null
+  }
+
   root.walkAtRules("layer", (atRule) => {
     if (atRule.params !== "utilities") {
       return
     }
 
     atRule.each((node) => {
-      if (node.type === "rule") {
-        const rule = node
-        if (shouldKeepRule(rule)) {
-          residualRules.push(rule.toString())
-        }
+      const residualNode = cloneResidualNode(node)
+      if (residualNode) {
+        residualRules.push(residualNode.toString())
       }
     })
   })
