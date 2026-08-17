@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-typescript",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "QUI ESLint config for consistent TypeScript code",
   "keywords": [
     "config",

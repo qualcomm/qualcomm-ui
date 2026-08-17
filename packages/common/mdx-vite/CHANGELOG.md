@@ -1,5 +1,21 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.9.2
+
+Aug 16th, 2026
+
+### Bug Fixes
+
+- [shiki-transformer]: support tailwindcss v4.3 syntax ([9bebf58](https://github.com/qualcomm/qualcomm-ui/commit/9bebf58))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3]
+
 ## 3.9.1
 
 Aug 11th, 2026

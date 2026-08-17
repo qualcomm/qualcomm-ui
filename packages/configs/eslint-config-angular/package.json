@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-angular",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "QUI ESLint config for consistent Angular code formatting",
   "keywords": [
     "config",
