@@ -58,7 +58,7 @@ export default {
   id: "Select",
   imports: [
     `import {SelectModule} from "@qualcomm-ui/angular/select"`,
-    ...(startIcon ? [`import {${iconName}} from "@lucide/angular"`] : []),
+    ...(startIcon ? [`import {Lucide${iconName}} from "@lucide/angular"`] : []),
   ],
   metadata: {nestable: true},
 }

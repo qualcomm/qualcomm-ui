@@ -41,7 +41,10 @@ const endIconAttr = endIcon ? ` endIcon="${endIconName}"` : ""
 const icons = [
   ...new Set(
     [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
-  ),
+  )
+    .values()
+    .toArray()
+    .map((v) => `Lucide${v}`),
 ]
 const needsIcon = icons.length > 0
 

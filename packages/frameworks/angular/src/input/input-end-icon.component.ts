@@ -21,7 +21,7 @@ import {useQdsInputContext} from "./qds-input-context.service"
   `,
 })
 export class InputEndIconComponent implements OnInit {
-  readonly icon = input<LucideIconOrString | string>()
+  readonly icon = input<LucideIconOrString>()
 
   context = useQdsInputContext({optional: true})
 

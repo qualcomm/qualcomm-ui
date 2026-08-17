@@ -56,7 +56,10 @@ const endIconAttr = endIcon ? ` endIcon="${endIconName}"` : ""
 const icons = [
   ...new Set(
     [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
-  ),
+  )
+    .values()
+    .toArray()
+    .map((v) => `Lucide${v}`),
 ]
 
 const example = figma.code`<a${disabledAttr}${emphasisAttr}${endIconAttr} href="#" q-link${sizeAttr}${startIconAttr}>${label}</a>`

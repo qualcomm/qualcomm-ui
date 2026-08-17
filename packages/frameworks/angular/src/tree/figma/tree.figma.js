@@ -14,7 +14,7 @@ const size = instance.getEnum("size", {sm: "sm"})
 const sizeAttr = size ? ` size="${size}"` : ""
 
 const branchIcon =
-  variant === "icon" ? `<svg q-tree-node-icon qIcon="FolderIcon"></svg>` : ""
+  variant === "icon" ? `<svg q-tree-node-icon qIcon="Folder"></svg>` : ""
 const branchCheckbox =
   variant === "checkbox" ? `<span q-tree-node-checkbox></span>` : ""
 
@@ -33,7 +33,7 @@ const iconImports =
   variant === "icon"
     ? [
         `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-        `import {LucideFileText, FolderIcon} from "@lucide/angular"`,
+        `import {LucideFileText, LucideFolder} from "@lucide/angular"`,
       ]
     : []
 

@@ -59,7 +59,10 @@ const startIconAttr = startIcon ? ` startIcon="${startIconName}"` : ""
 const icons = [
   ...new Set(
     [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
-  ),
+  )
+    .values()
+    .toArray()
+    .map((v) => `Lucide${v}`),
 ]
 
 export default {
