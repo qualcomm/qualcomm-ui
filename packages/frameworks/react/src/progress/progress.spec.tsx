@@ -343,6 +343,102 @@ const tests: MultiComponentTestCase[] = [
   {
     composite() {
       return (
+        <Progress.Root value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar data-test-id={testIds.bar} />
+          </Progress.Track>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return (
+        <Progress
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
+          label={testLabel}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer is enabled by default", async () => {
+        await render(getComponent())
+        await expect
+          .element(page.getByTestId(testIds.bar))
+          .toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Progress.Root shimmer value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar data-test-id={testIds.bar} />
+          </Progress.Track>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return (
+        <Progress
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
+          label={testLabel}
+          shimmer
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer enabled explicitly", async () => {
+        await render(getComponent())
+        await expect
+          .element(page.getByTestId(testIds.bar))
+          .toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Progress.Root shimmer={false} value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar data-test-id={testIds.bar} />
+          </Progress.Track>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return (
+        <Progress
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
+          label={testLabel}
+          shimmer={false}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer disabled", async () => {
+        await render(getComponent())
+        await expect.element(page.getByTestId(testIds.bar)).toBeVisible()
+        await expect
+          .element(page.getByTestId(testIds.bar))
+          .not.toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
         <Progress.Root data-test-id={testIds.root} invalid value={60}>
           <Progress.Label data-test-id={testIds.label}>
             {testLabel}

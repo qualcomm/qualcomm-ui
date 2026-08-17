@@ -149,7 +149,7 @@ export function createProgressApi(
         "data-state": state,
         style: {
           "--percent": `${computed("valuePercent")}%`,
-          "--progress": context.get("value"),
+          "--progress": computed("valuePercent"),
         },
       })
     },
