@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-fsd",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "QUI ESLint config for feature-sliced design",
   "keywords": [
     "config",
@@ -47,7 +47,7 @@
   "peerDependencies": {
     "eslint": ">=9.37.0",
     "eslint-plugin-boundaries": ">=7.0.1 <8",
-    "typescript": ">=5.0.0",
-    "typescript-eslint": ">=8.31.1"
+    "typescript": ">=6.0.3 <7",
+    "typescript-eslint": ">=8.67.0"
   }
 }

@@ -27,7 +27,7 @@ function provideThemeCookie(opts?: QdsThemeProviderOptions): Provider {
     useFactory: () => {
       return (
         opts?.themeOverride ||
-        readCookie<Theme>(THEME_COOKIE_NAME) ||
+        readCookie(THEME_COOKIE_NAME) ||
         opts?.defaultTheme ||
         "dark"
       )
@@ -44,7 +44,7 @@ function provideBrandCookie(opts?: QdsThemeProviderOptions): Provider {
     useFactory: () => {
       return (
         opts?.brandOverride ||
-        readCookie<Brand>(BRAND_COOKIE_NAME) ||
+        readCookie(BRAND_COOKIE_NAME) ||
         opts?.defaultBrand ||
         "qualcomm"
       )
@@ -73,7 +73,7 @@ export function provideQdsTheme(opts?: QdsThemeProviderOptions) {
   ]
 }
 
-export function readCookie<T extends string>(name: string): string | undefined {
+export function readCookie(name: string): string | undefined {
   // Browser path
   // eslint-disable-next-line no-restricted-globals
   if (typeof document !== "undefined") {
@@ -87,7 +87,7 @@ export function readCookie<T extends string>(name: string): string | undefined {
   if (request) {
     const cookieHeader = request.headers.get("cookie") ?? ""
     const match = cookieHeader.match(new RegExp(`(?:^|; )${name}=([^;]*)`))
-    return match?.[1] as T | undefined
+    return match?.[1]
   }
 
   return undefined

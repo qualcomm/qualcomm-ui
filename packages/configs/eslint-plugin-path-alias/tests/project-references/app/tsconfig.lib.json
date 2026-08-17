@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "paths": {
+      "@reference/app/*": ["./src/*/index.ts"]
+    }
+  },
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "../shared/tsconfig.lib.json"
+    }
+  ]
+}

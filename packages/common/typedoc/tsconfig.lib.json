@@ -5,7 +5,8 @@
     "incremental": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib"
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib",
+    "types": ["node"]
   },
   "include": ["./src"],
   "references": [

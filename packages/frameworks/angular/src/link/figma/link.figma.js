@@ -45,7 +45,7 @@ const startIconName = startIconInstance
   : "File"
 const endIconName = endIconInstance
   ? toLucideName(endIconInstance.name)
-  : "ChevronRight"
+  : "LucideChevronRight"
 
 const disabledAttr = disabled ? " disabled" : ""
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
@@ -56,7 +56,10 @@ const endIconAttr = endIcon ? ` endIcon="${endIconName}"` : ""
 const icons = [
   ...new Set(
     [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
-  ),
+  )
+    .values()
+    .toArray()
+    .map((v) => `Lucide${v}`),
 ]
 
 const example = figma.code`<a${disabledAttr}${emphasisAttr}${endIconAttr} href="#" q-link${sizeAttr}${startIconAttr}>${label}</a>`
@@ -67,7 +70,7 @@ export default {
   imports: [
     `import {LinkDirective} from "@qualcomm-ui/angular/link"`,
     ...(icons.length > 0
-      ? [`import {${icons.join(", ")}} from "lucide-angular"`]
+      ? [`import {${icons.join(", ")}} from "@lucide/angular"`]
       : []),
   ],
   metadata: {nestable: true},

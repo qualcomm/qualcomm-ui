@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {CoreFileUploadClearTriggerDirective} from "@qualcomm-ui/angular-core/file-upload"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -11,7 +11,7 @@ import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-file-input-clear-trigger]",
   standalone: false,
   template: `

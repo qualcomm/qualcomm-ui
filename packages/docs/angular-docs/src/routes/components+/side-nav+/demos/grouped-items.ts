@@ -1,18 +1,18 @@
 import {
-  Bell,
-  Boxes,
-  ChartPie,
-  CreditCard,
-  Grid2x2,
-  Key,
-  LayoutDashboard,
-  Link,
-  Network,
-  Settings2,
-  ShieldCheck,
-  User,
-  Webhook,
-} from "lucide-angular"
+  LucideBell,
+  LucideBoxes,
+  LucideChartPie,
+  LucideCreditCard,
+  LucideGrid2x2,
+  LucideKey,
+  LucideLayoutDashboard,
+  LucideLink,
+  LucideNetwork,
+  LucideSettings2,
+  LucideShieldCheck,
+  LucideUser,
+  LucideWebhook,
+} from "@lucide/angular"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
@@ -116,17 +116,17 @@ export const groupedCollection = createTreeCollection<SideNavItem>({
 })
 
 export const groupedIcons = {
-  Bell,
-  Boxes,
-  ChartPie,
-  CreditCard,
-  Grid2x2,
-  Key,
-  LayoutDashboard,
-  Link,
-  Network,
-  Settings2,
-  ShieldCheck,
-  User,
-  Webhook,
+  LucideBell,
+  LucideBoxes,
+  LucideChartPie,
+  LucideCreditCard,
+  LucideGrid2x2,
+  LucideKey,
+  LucideLayoutDashboard,
+  LucideLink,
+  LucideNetwork,
+  LucideSettings2,
+  LucideShieldCheck,
+  LucideUser,
+  LucideWebhook,
 }

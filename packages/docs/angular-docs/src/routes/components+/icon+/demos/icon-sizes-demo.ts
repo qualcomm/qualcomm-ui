@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {ExternalLink} from "lucide-angular"
+import {LucideExternalLink} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [IconDirective],
-  providers: [provideIcons({ExternalLink})],
+  providers: [provideIcons({LucideExternalLink})],
   selector: "icon-sizes-demo",
   template: `
     <div class="text-icon-neutral-primary grid justify-center gap-4">

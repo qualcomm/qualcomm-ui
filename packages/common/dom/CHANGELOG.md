@@ -1,5 +1,17 @@
 # @qualcomm-ui/dom Changelog
 
+## 1.1.6
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3]
+
 ## 1.1.5
 
 Jul 1st, 2026

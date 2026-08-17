@@ -1,9 +1,4 @@
-import {
-  type FormEvent,
-  type HTMLAttributes,
-  type InputHTMLAttributes,
-  useState,
-} from "react"
+import {type FormEvent, useState} from "react"
 
 import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
@@ -333,28 +328,20 @@ const tests: MultiComponentTest[] = [
     simple() {
       return (
         <Switch
-          controlProps={
-            {
-              "data-test-id": testIds.control,
-            } as HTMLAttributes<HTMLElement>
-          }
+          controlProps={{
+            "data-test-id": testIds.control,
+          }}
           data-test-id={testIds.root}
-          hiddenInputProps={
-            {
-              "data-test-id": testIds.hiddenInput,
-            } as InputHTMLAttributes<HTMLInputElement>
-          }
+          hiddenInputProps={{
+            "data-test-id": testIds.hiddenInput,
+          }}
           label={demoLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as HTMLAttributes<HTMLElement>
-          }
-          thumbProps={
-            {
-              "data-test-id": testIds.thumb,
-            } as HTMLAttributes<HTMLElement>
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
+          thumbProps={{
+            "data-test-id": testIds.thumb,
+          }}
         />
       )
     },

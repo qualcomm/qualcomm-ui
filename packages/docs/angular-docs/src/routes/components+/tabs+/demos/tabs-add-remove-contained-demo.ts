@@ -1,5 +1,5 @@
 import {Component, signal} from "@angular/core"
-import {Plus} from "lucide-angular"
+import {LucidePlus} from "@lucide/angular"
 
 import {LoremIpsumDirective} from "@qualcomm-ui/angular-core/lorem-ipsum"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -14,7 +14,7 @@ interface Item {
 
 @Component({
   imports: [TabsModule, LoremIpsumDirective, ButtonModule],
-  providers: [provideIcons({Plus})],
+  providers: [provideIcons({LucidePlus})],
   selector: "tabs-add-remove-demo",
   template: `
     <div

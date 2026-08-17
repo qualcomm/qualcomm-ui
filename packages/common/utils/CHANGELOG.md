@@ -1,5 +1,17 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.3.3
+
+Aug 16th, 2026
+
+### Bug Fixes
+
+- [machine]: add type polyfill for TS 6 compat ([70acec1](https://github.com/qualcomm/qualcomm-ui/commit/70acec1))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
 ## 1.3.2
 
 Jun 10th, 2026

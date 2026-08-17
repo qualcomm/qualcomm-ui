@@ -17,11 +17,11 @@ import type {DeepKeys, DeepValue} from "./utils.js"
 export type ColumnHelper<TData extends RowData> = {
   accessor: <
     TAccessor extends AccessorFn<TData> | DeepKeys<TData>,
-    TValue extends TAccessor extends AccessorFn<TData, infer TReturn>
+    TValue extends (TAccessor extends AccessorFn<TData, infer TReturn>
       ? TReturn
       : TAccessor extends DeepKeys<TData>
         ? DeepValue<TData, TAccessor>
-        : never,
+        : never),
   >(
     accessor: TAccessor,
     column: TAccessor extends AccessorFn<TData>
@@ -47,7 +47,7 @@ export function createColumnHelper<
             accessorKey: accessor,
           }
     },
-    display: (column) => column as ColumnDef<TData, unknown>,
-    group: (column) => column as ColumnDef<TData, unknown>,
+    display: (column) => column,
+    group: (column) => column,
   }
 }

@@ -1,4 +1,4 @@
-import {type ComponentPropsWithoutRef, useState} from "react"
+import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
@@ -529,18 +529,10 @@ const tests: MultiComponentTestCase[] = [
     simple() {
       return (
         <Tooltip
-          arrowProps={
-            {"data-test-id": "arrow"} as ComponentPropsWithoutRef<"div">
-          }
-          arrowTipProps={
-            {"data-test-id": "arrow-tip"} as ComponentPropsWithoutRef<"div">
-          }
-          contentProps={
-            {"data-test-id": "content"} as ComponentPropsWithoutRef<"div">
-          }
-          positionerProps={
-            {"data-test-id": "positioner"} as ComponentPropsWithoutRef<"div">
-          }
+          arrowProps={{"data-test-id": "arrow"}}
+          arrowTipProps={{"data-test-id": "arrow-tip"}}
+          contentProps={{"data-test-id": "content"}}
+          positionerProps={{"data-test-id": "positioner"}}
           trigger={(props) => <button {...props}>{triggerText}</button>}
         >
           {tooltipContent}

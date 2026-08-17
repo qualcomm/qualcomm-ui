@@ -65,7 +65,7 @@
     "@commander-js/extra-typings": "catalog:",
     "@eslint/js": "catalog:",
     "@manypkg/get-packages": "^3.1.0",
-    "@qualcomm-ui/changesets-cli": "^2.1.0",
+    "@qualcomm-ui/changesets-cli": "^2.2.0",
     "@qualcomm-ui/eslint-config-angular": "workspace:*",
     "@qualcomm-ui/eslint-config-mdx": "workspace:*",
     "@qualcomm-ui/eslint-config-react": "workspace:*",

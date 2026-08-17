@@ -40,7 +40,7 @@ export default {
     ...(startIcon
       ? [
           `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {${startIconName}} from "lucide-angular"`,
+          `import {Lucide${startIconName}} from "@lucide/angular"`,
         ]
       : []),
   ],

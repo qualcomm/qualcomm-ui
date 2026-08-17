@@ -387,9 +387,7 @@ export function createTable<TData extends RowData>(
     _getDefaultColumnDef: memo(
       () => [table.options.defaultColumn],
       (defaultColumn) => {
-        defaultColumn = (defaultColumn ?? {}) as Partial<
-          ColumnDef<TData, unknown>
-        >
+        defaultColumn = defaultColumn ?? {}
 
         return {
           cell: (props) => props.getValue(),
@@ -412,7 +410,7 @@ export function createTable<TData extends RowData>(
             return Object.assign(obj, feature.getDefaultColumnDef?.())
           }, {}),
           ...defaultColumn,
-        } as Partial<ColumnDef<TData, unknown>>
+        }
       },
       {
         debug: () => table.options.debugAll ?? table.options.debugColumns,

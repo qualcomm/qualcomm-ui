@@ -805,12 +805,9 @@ export class FocusTrap {
           startOfGroupIndex < 0 &&
           (containerGroup?.container === target ||
             (target &&
-              isFocusable(target as unknown as HTMLElement) &&
-              !isTabbable(target as unknown as HTMLElement) &&
-              !containerGroup?.nextTabbableNode(
-                target as unknown as HTMLElement,
-                false,
-              )))
+              isFocusable(target) &&
+              !isTabbable(target) &&
+              !containerGroup?.nextTabbableNode(target, false)))
         ) {
           // an exception case where the target is either the container itself, or
           //  a non-tabbable node that was given focus (i.e. tabindex is negative
@@ -837,7 +834,6 @@ export class FocusTrap {
             getTabIndex(target as unknown as HTMLElement) >= 0
               ? destinationGroup.lastTabbableNode
               : destinationGroup.lastDomTabbableNode
-          // @ts-expect-error
         } else if (!isTabEvent(event)) {
           // user must have customized the nav keys so we have to move focus
           // manually _within_ the active group: do this based on the order
@@ -858,11 +854,9 @@ export class FocusTrap {
         if (
           lastOfGroupIndex < 0 &&
           (containerGroup?.container === target ||
-            (isFocusable(target as unknown as HTMLElement) &&
-              !isTabbable(target as unknown as HTMLElement) &&
-              !containerGroup?.nextTabbableNode(
-                target as unknown as HTMLElement,
-              )))
+            (isFocusable(target) &&
+              !isTabbable(target) &&
+              !containerGroup?.nextTabbableNode(target)))
         ) {
           // an exception case where the target is the container itself, or
           //  a non-tabbable node that was given focus (i.e. tabindex is negative
@@ -890,7 +884,6 @@ export class FocusTrap {
             getTabIndex(target as unknown as HTMLElement) >= 0
               ? destinationGroup.firstTabbableNode
               : destinationGroup.firstDomTabbableNode
-          // @ts-expect-error
         } else if (!isTabEvent(event)) {
           // user must have customized the nav keys so we have to move focus
           // manually _within_ the active group: do this based on the order
@@ -910,7 +903,8 @@ export class FocusTrap {
   }
 }
 
-const isTabEvent = (event: KeyboardEvent) => event.key === "Tab"
+const isTabEvent = (event: KeyboardEvent | FocusEvent | undefined) =>
+  event ? "key" in event && event.key === "Tab" : false
 
 const valueOrHandler = (value: any, ...params: any[]) =>
   typeof value === "function" ? value(...params) : value

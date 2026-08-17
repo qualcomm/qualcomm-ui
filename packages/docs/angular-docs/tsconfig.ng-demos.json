@@ -1,9 +1,11 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
   "compilerOptions": {
-    "moduleResolution": "bundler",
+    "outDir": "node_modules/.tmp/ng-demos-out",
     "composite": true,
+    "moduleResolution": "bundler",
     "rootDir": "./src",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-ng-demos",
     "paths": {
       "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
       "@qualcomm-ui/angular-core/*": [

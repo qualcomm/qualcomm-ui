@@ -1,5 +1,10 @@
 import {Component} from "@angular/core"
-import {Code, Cpu, FileText, Smartphone} from "lucide-angular"
+import {
+  LucideCode,
+  LucideCpu,
+  LucideFileText,
+  LucideSmartphone,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {TabsModule} from "@qualcomm-ui/angular/tabs"
@@ -7,7 +12,9 @@ import type {QdsTabsSize} from "@qualcomm-ui/qds-core/tabs"
 
 @Component({
   imports: [TabsModule],
-  providers: [provideIcons({Code, Cpu, FileText, Smartphone})],
+  providers: [
+    provideIcons({LucideCode, LucideCpu, LucideFileText, LucideSmartphone}),
+  ],
   selector: "tabs-contained-sizes-demo",
   template: `
     <div class="flex flex-col gap-6">

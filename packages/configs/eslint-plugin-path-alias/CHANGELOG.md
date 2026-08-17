@@ -1,5 +1,13 @@
 # @qualcomm-ui/eslint-plugin-path-alias Changelog
 
+## 1.2.0
+
+Aug 16th, 2026
+
+### Features
+
+- [tsconfig]: resolve paths from project references ([fed3a32](https://github.com/qualcomm/qualcomm-ui/commit/fed3a32))
+
 ## 1.1.2
 
 Jun 10th, 2026

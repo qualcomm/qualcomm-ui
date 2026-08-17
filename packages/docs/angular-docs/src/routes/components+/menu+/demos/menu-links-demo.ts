@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
 import {RouterLink} from "@angular/router"
-import {ExternalLink} from "lucide-angular"
+import {LucideExternalLink} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
@@ -8,7 +8,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [MenuModule, PortalDirective, RouterLink],
-  providers: [provideIcons({ExternalLink})],
+  providers: [provideIcons({LucideExternalLink})],
   selector: "menu-links-demo",
   template: `
     <q-menu>

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CorePaginationNextTriggerDirective} from "@qualcomm-ui/angular-core/pagination"
@@ -13,16 +13,16 @@ import {useQdsPaginationContext} from "./qds-pagination-context.service"
   selector: "[q-pagination-next-trigger]",
   standalone: false,
   template: `
-    <svg [qIcon]="icon()" />
+    <svg [qIcon]="icon()!" />
   `,
 })
 export class PaginationNextTriggerComponent extends CorePaginationNextTriggerDirective {
   /**
-   * lucide-angular icon.
+   * `@lucide/angular` icon.
    *
-   * @default ChevronRight
+   * @default LucideChevronRight
    */
-  readonly icon = input<LucideIconOrString>(ChevronRight)
+  readonly icon = input<LucideIconOrString>(LucideChevronRight)
 
   protected readonly qdsPaginationContext = useQdsPaginationContext()
 

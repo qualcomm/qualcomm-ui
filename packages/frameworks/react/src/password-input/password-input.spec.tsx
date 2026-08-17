@@ -1,4 +1,4 @@
-import {type HTMLAttributes, type InputHTMLAttributes, useState} from "react"
+import {type HTMLAttributes, useState} from "react"
 
 import {KeyRound} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
@@ -677,15 +677,13 @@ const controlledStateTests: MultiComponentTestCase[] = [
     simple() {
       return (
         <PasswordInput
-          inputProps={
-            {
-              "data-test-id": "password-input-element",
-              maxLength: 50,
-              minLength: 8,
-              pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}",
-              title: "Password requirements",
-            } as InputHTMLAttributes<HTMLInputElement>
-          }
+          inputProps={{
+            "data-test-id": "password-input-element",
+            maxLength: 50,
+            minLength: 8,
+            pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}",
+            title: "Password requirements",
+          }}
           label={demoLabel}
           placeholder={demoPlaceholder}
         />
@@ -809,12 +807,10 @@ const controlledStateTests: MultiComponentTestCase[] = [
       return (
         <PasswordInput
           errorText={demoErrorText}
-          errorTextProps={
-            {
-              className: "custom-error-class",
-              "data-test-id": "error-text",
-            } as HTMLAttributes<HTMLElement>
-          }
+          errorTextProps={{
+            className: "custom-error-class",
+            "data-test-id": "error-text",
+          }}
           invalid
           label={demoLabel}
           placeholder={demoPlaceholder}
@@ -851,12 +847,10 @@ const controlledStateTests: MultiComponentTestCase[] = [
         <PasswordInput
           label={demoLabel}
           placeholder={demoPlaceholder}
-          visibilityTriggerProps={
-            {
-              className: "custom-visibility-class",
-              "data-test-id": "visibility-trigger",
-            } as HTMLAttributes<HTMLElement>
-          }
+          visibilityTriggerProps={{
+            className: "custom-visibility-class",
+            "data-test-id": "visibility-trigger",
+          }}
         />
       )
     },

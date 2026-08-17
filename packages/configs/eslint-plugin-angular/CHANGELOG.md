@@ -1,5 +1,13 @@
 # @qualcomm-ui/eslint-plugin-angular Changelog
 
+## 1.2.3
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
 ## 1.2.2
 
 Jun 10th, 2026

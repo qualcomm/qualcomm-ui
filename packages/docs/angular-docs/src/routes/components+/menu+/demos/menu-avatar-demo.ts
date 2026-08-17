@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {LogOut, Settings, User} from "lucide-angular"
+import {LucideLogOut, LucideSettings, LucideUser} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
@@ -8,7 +8,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [AvatarModule, MenuModule, PortalDirective],
-  providers: [provideIcons({LogOut, Settings, User})],
+  providers: [provideIcons({LucideLogOut, LucideSettings, LucideUser})],
   selector: "menu-avatar-demo",
   template: `
     <q-menu [positioning]="{placement: 'right-start'}">

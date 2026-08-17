@@ -1,4 +1,4 @@
-name: Reusable Docs Deploy
+name: Reusable Docs Deploy Prod
 
 on:
   workflow_call:

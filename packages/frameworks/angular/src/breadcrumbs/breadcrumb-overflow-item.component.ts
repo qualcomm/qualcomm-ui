@@ -8,7 +8,7 @@ import {
   inject,
   input,
 } from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -45,7 +45,7 @@ const breadcrumbsSizeToMenuSize: Record<string, QdsMenuSize> = {
  */
 @Component({
   providers: [
-    provideIcons({ChevronRight}),
+    provideIcons({LucideChevronRight}),
     provideMenuContext(),
     provideMenuTriggerContext(),
     provideMenuMachineContext(),
@@ -60,7 +60,7 @@ const breadcrumbsSizeToMenuSize: Record<string, QdsMenuSize> = {
         @if (icon()) {
           <svg
             q-breadcrumb-item-icon
-            [qIcon]="icon()"
+            [qIcon]="icon()!"
             [size]="qdsContext().size"
           ></svg>
         }
@@ -107,9 +107,9 @@ export class BreadcrumbOverflowItemComponent extends CoreMenuRootDirective {
   /**
    * The separator element to render between items.
    *
-   * @default ChevronRight
+   * @default LucideChevronRight
    */
-  readonly separator = input<LucideIconOrString>("ChevronRight")
+  readonly separator = input<LucideIconOrString>("LucideChevronRight")
 
   protected readonly qdsContext = useQdsBreadcrumbsContext()
   private readonly qdsMenuService = inject(QdsMenuContextService)

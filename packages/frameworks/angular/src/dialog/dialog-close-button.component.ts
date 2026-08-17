@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {CoreDialogCloseTriggerDirective} from "@qualcomm-ui/angular-core/dialog"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -15,7 +15,7 @@ import {useQdsDialogContext} from "./qds-dialog-context.service"
  * A button that closes the dialog.
  */
 @Component({
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-dialog-close-button]",
   standalone: false,
   template: `

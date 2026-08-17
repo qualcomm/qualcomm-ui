@@ -1,5 +1,21 @@
 # @qualcomm-ui/angular Changelog
 
+## 3.0.0
+
+Aug 16th, 2026
+
+### BREAKING CHANGES
+
+- migrate to TS 6.0, update lucide-angular to @lucide/angular ([fb20318](https://github.com/qualcomm/qualcomm-ui/commit/fb20318))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/angular-core@3.0.0, @qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/qds-core@1.35.1]
+
 ## 2.15.1
 
 Aug 11th, 2026

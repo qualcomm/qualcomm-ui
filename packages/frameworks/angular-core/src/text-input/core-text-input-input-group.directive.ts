@@ -4,12 +4,14 @@
 import {Directive, type OnInit} from "@angular/core"
 
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import type {TextInputApi} from "@qualcomm-ui/core/text-input"
 
 import {useTextInputContext} from "./text-input-context.service"
 
 @Directive()
 export class CoreTextInputInputGroupDirective implements OnInit {
-  protected readonly textInputContext = useTextInputContext()
+  protected readonly textInputContext: () => TextInputApi =
+    useTextInputContext()
 
   protected readonly trackBindings = useTrackBindings(() => {
     return this.textInputContext().getInputGroupBindings()

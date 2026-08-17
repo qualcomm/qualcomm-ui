@@ -76,9 +76,7 @@ export class TypeParser {
     if (entryPoints.length) {
       return entryPoints
     }
-    const tsconfig = resolveTsconfig(
-      this.options.typedocOptions?.tsconfig as string,
-    )
+    const tsconfig = resolveTsconfig(this.options.typedocOptions?.tsconfig)
     if (!tsconfig) {
       return []
     }
@@ -91,9 +89,7 @@ export class TypeParser {
   }
 
   private resolveExclude(): string[] {
-    const tsconfig = resolveTsconfig(
-      this.options.typedocOptions?.tsconfig as string,
-    )
+    const tsconfig = resolveTsconfig(this.options.typedocOptions?.tsconfig)
 
     const exclude: string[] = [
       ...(this.options.typedocOptions?.exclude ?? []),

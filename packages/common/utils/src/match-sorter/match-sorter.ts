@@ -147,6 +147,7 @@ function getHighestRanking<ItemType>(
         newRank = maxRanking
       }
       if (newRank > rank) {
+        // @ts-expect-error type coercion
         rank = newRank
         keyIndex = i
         keyThreshold = threshold
@@ -157,7 +158,7 @@ function getHighestRanking<ItemType>(
     {
       keyIndex: -1,
       keyThreshold: options.threshold,
-      rank: Rankings.NO_MATCH as Rankings,
+      rank: Rankings.NO_MATCH,
       rankedValue: item as unknown as string,
     },
   )

@@ -1,6 +1,7 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
   "compilerOptions": {
+    "noCheck": true,
     "paths": {
       "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
       "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"]

@@ -8,7 +8,7 @@ import {
   input,
   type OnInit,
 } from "@angular/core"
-import {Funnel} from "lucide-angular"
+import {LucideFunnel} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -25,14 +25,14 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({Funnel})],
+  providers: [provideIcons({LucideFunnel})],
   selector: "[q-table-column-filter-action]",
   standalone: false,
   template: `
     @if (filterable()) {
       <svg
         [q-bind]="inlineIconButtonApi().getIconBindings()"
-        [qIcon]="icon()"
+        [qIcon]="icon()!"
         [size]="inlineIconButtonApi().size"
       ></svg>
     }

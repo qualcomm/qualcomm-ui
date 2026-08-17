@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, type OnInit} from "@angular/core"
-import {BellRing, CircleAlert, CircleCheck, TriangleAlert} from "lucide-angular"
+import {
+  LucideBellRing,
+  LucideCircleAlert,
+  LucideCircleCheck,
+  LucideTriangleAlert,
+} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
@@ -42,11 +47,11 @@ export class ToastIconDirective implements OnInit {
     Record<QdsNotificationEmphasis, LucideIconOrString>,
     "loading"
   > = {
-    danger: CircleAlert,
-    info: CircleAlert,
-    neutral: BellRing,
-    success: CircleCheck,
-    warning: TriangleAlert,
+    danger: LucideCircleAlert,
+    info: LucideCircleAlert,
+    neutral: LucideBellRing,
+    success: LucideCircleCheck,
+    warning: LucideTriangleAlert,
   }
 
   protected readonly trackBindings = useTrackBindings(() => {

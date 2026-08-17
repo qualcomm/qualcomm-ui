@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {AArrowDown} from "lucide-angular"
+import {LucideAArrowDown} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 
 @Component({
   imports: [ButtonModule],
-  providers: [provideIcons({AArrowDown})],
+  providers: [provideIcons({LucideAArrowDown})],
   selector: "button-group-shared-props-demo",
   template: `
     <div class="flex w-full flex-col gap-4">

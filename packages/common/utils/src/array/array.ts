@@ -233,7 +233,7 @@ export function flatArray<T>(arr: T[]): T[] {
  * Marshals a non-array field into an array, or returns the array
  */
 export function ensureArray<T>(field: T | T[] = []): T[] {
-  return Array.isArray(field) ? (field as unknown as T[]) : [field]
+  return Array.isArray(field) ? field : [field]
 }
 
 /**

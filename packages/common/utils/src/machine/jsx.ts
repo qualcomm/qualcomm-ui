@@ -193,7 +193,6 @@ export namespace JSX {
 
   export interface AbstractView {
     document: Document
-    styleMedia: StyleMedia
   }
 
   export interface UIEvent<

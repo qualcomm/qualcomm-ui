@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input, type OnInit} from "@angular/core"
-import {ArrowDownUp, ArrowUp} from "lucide-angular"
+import {LucideArrowDownUp, LucideArrowUp} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -18,7 +18,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({ArrowDownUp, ArrowUp})],
+  providers: [provideIcons({LucideArrowDownUp, LucideArrowUp})],
   selector: "[q-table-column-sort-action]",
   standalone: false,
   template: `
