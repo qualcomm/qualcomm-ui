@@ -156,7 +156,7 @@
 
   &[data-state="loading"],
   &[data-state="complete"] {
-    width: var(--percent);
+    width: calc(var(--percent) * 1%);
   }
 
   &[data-shimmer][data-state="loading"]:not([data-invalid]):not(

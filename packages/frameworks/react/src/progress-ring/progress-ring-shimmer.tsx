@@ -3,12 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CoreProgressRing} from "@qualcomm-ui/react-core/progress-ring"
-
 import {useQdsProgressRingContext} from "./qds-progress-ring-context.js"
 
 export function ProgressRingShimmer(): ReactElement {
   const qdsContext = useQdsProgressRingContext()
 
-  return <CoreProgressRing.Bar {...qdsContext.getShimmerBindings()} />
+  return <circle {...qdsContext.getShimmerBindings()} />
 }

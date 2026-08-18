@@ -85,7 +85,7 @@
 
   &:not([data-state="indeterminate"]) {
     stroke-dashoffset: calc(
-      var(--circumference) * ((100 - var(--progress)) / 100)
+      var(--circumference) * ((100 - var(--percent)) / 100)
     );
   }
 
@@ -124,23 +124,23 @@
 .qui-progress-ring__shimmer {
   --progress-ring-shimmer-color: 255 255 255;
   --progress-ring-shimmer-opacity: 0.3;
-  --progress-ring-shimmer-width: var(--progress);
+  --progress-ring-shimmer-width: var(--percent);
   --progress-ring-shimmer-start: calc(
     0 - var(--progress-ring-shimmer-width) +
-      (var(--progress) + var(--progress-ring-shimmer-width)) *
+      (var(--percent) + var(--progress-ring-shimmer-width)) *
       var(--progress-ring-shimmer-phase)
   );
   --progress-ring-shimmer-visible-start: clamp(
     0,
     var(--progress-ring-shimmer-start),
-    var(--progress)
+    var(--percent)
   );
   --progress-ring-shimmer-visible-end: clamp(
     0,
     calc(
       var(--progress-ring-shimmer-start) + var(--progress-ring-shimmer-width)
     ),
-    var(--progress)
+    var(--percent)
   );
   --progress-ring-shimmer-visible-length: calc(
     var(--progress-ring-shimmer-visible-end) -
@@ -191,9 +191,10 @@
     --progress-ring-shimmer-opacity: 0.2;
   }
 
-  &[data-shimmer][data-state="loading"]:not([data-disabled]):not(
+  .qui-progress-ring__root[data-state="loading"]:not([data-disabled]):not(
       [data-invalid]
-    ) {
+    )
+    &[data-shimmer] {
     animation: qui-progress-ring__shimmer 5s linear 8s infinite;
   }
 }

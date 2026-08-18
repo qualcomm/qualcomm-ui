@@ -65,7 +65,7 @@ export function createProgressApi(
       "data-value": value ?? undefined,
       dir: prop("dir"),
       style: {
-        "--percent": `${computed("valuePercent")}%`,
+        "--percent": computed("valuePercent"),
       },
     })
   }
@@ -108,9 +108,6 @@ export function createProgressApi(
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
         "data-state": state,
-        style: {
-          "--percent": `${computed("valuePercent")}%`,
-        },
       })
     },
     getErrorTextBindings(
@@ -147,10 +144,6 @@ export function createProgressApi(
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
         "data-state": state,
-        style: {
-          "--percent": `${computed("valuePercent")}%`,
-          "--progress": computed("valuePercent"),
-        },
       })
     },
     getRingCircleBindings(
