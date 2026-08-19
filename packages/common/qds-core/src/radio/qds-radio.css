@@ -152,6 +152,12 @@
   }
 }
 
+[data-radio-part="item-control"][data-state="unchecked"] {
+  [data-checkmark-part="indicator-icon"] {
+    display: none;
+  }
+}
+
 .qui-radio__label {
   color: var(--color-text-neutral-primary);
   font: var(--font-static-body-xs-default);
