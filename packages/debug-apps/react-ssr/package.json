@@ -63,6 +63,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
     "@mdx-js/react": "catalog:",
     "@mdx-js/rollup": "catalog:",
     "@qualcomm-ui/mdx-vite": "workspace:*",
