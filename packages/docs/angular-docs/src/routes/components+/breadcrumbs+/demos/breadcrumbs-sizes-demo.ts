@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {Home} from "lucide-angular"
+import {LucideHouse} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {BreadcrumbsModule} from "@qualcomm-ui/angular/breadcrumbs"
@@ -7,7 +7,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [BreadcrumbsModule, IconDirective],
-  providers: [provideIcons({Home})],
+  providers: [provideIcons({LucideHouse})],
   selector: "breadcrumbs-sizes-demo",
   template: `
     <div class="flex flex-col gap-4">
@@ -15,7 +15,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
         <ol q-breadcrumbs-list>
           <li q-breadcrumb-item>
             <a href="/" q-breadcrumb-item-trigger>
-              <svg q-breadcrumb-item-icon qIcon="Home"></svg>
+              <svg q-breadcrumb-item-icon qIcon="House"></svg>
               Home
             </a>
           </li>
@@ -32,7 +32,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
         <ol q-breadcrumbs-list>
           <li q-breadcrumb-item>
             <a href="/" q-breadcrumb-item-trigger>
-              <svg q-breadcrumb-item-icon qIcon="Home"></svg>
+              <svg q-breadcrumb-item-icon qIcon="House"></svg>
               Home
             </a>
           </li>
@@ -50,7 +50,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
         <ol q-breadcrumbs-list>
           <li q-breadcrumb-item>
             <a href="/" q-breadcrumb-item-trigger>
-              <svg q-breadcrumb-item-icon qIcon="Home"></svg>
+              <svg q-breadcrumb-item-icon qIcon="House"></svg>
               Home
             </a>
           </li>

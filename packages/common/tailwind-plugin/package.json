@@ -52,7 +52,7 @@
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/css-utils": "catalog:",
-    "@qualcomm-ui/qds-core": "workspace:^1.35.0",
+    "@qualcomm-ui/qds-core": "workspace:^1.35.1",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/vite": "catalog:",
     "shx": "catalog:",

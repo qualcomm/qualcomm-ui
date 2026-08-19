@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {computed, Directive, inject, input, type OnInit} from "@angular/core"
+import type {LucideIcon} from "@lucide/angular"
 
 import {
   CoreFileUploadRootDirective,
   FileUploadContextService,
   provideFileUploadContext,
 } from "@qualcomm-ui/angular-core/file-upload"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
   useTrackBindings,
@@ -53,7 +54,7 @@ export class FileInputRootDirective
    * </div>
    * ```
    */
-  readonly endIcon = input<LucideIcon | string | undefined>()
+  readonly endIcon = input<LucideIconOrString | undefined>()
 
   /**
    * The size of the input field and its elements. Governs properties like font

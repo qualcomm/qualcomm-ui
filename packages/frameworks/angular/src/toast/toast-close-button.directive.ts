@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreToastCloseTriggerDirective} from "@qualcomm-ui/angular-core/toast"
@@ -12,7 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsToastContext} from "./qds-toast-context.service"
 
 @Component({
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-toast-close-button]",
   standalone: false,
   template: `

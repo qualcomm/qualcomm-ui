@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CardModule} from "@qualcomm-ui/angular/card"
 
 @Component({
   imports: [CardModule],
-  providers: [provideIcons({ChevronRight})],
+  providers: [provideIcons({LucideChevronRight})],
   selector: "card-actions-demo",
   template: `
     <div class="flex flex-wrap gap-6">

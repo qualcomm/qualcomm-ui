@@ -64,5 +64,5 @@ export function Portal(
     return null
   }
 
-  return createPortal(children, mountNode as unknown as HTMLElement)
+  return createPortal(children, mountNode)
 }

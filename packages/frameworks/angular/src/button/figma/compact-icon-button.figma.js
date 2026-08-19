@@ -46,7 +46,7 @@ export default {
   id: "CompactIconButton",
   imports: [
     `import {ButtonModule} from "@qualcomm-ui/angular/button"`,
-    `import {${iconName}} from "lucide-angular"`,
+    `import {Lucide${iconName}} from "@lucide/angular"`,
   ],
   metadata: {nestable: true},
 }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {ChevronDown} from "lucide-angular"
+import {LucideChevronDown} from "@lucide/angular"
 
 import {CoreComboboxTriggerDirective} from "@qualcomm-ui/angular-core/combobox"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -12,13 +12,13 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
 
 @Component({
-  providers: [provideIcons({ChevronDown})],
+  providers: [provideIcons({LucideChevronDown})],
   selector: "[q-combobox-trigger]",
   standalone: false,
   template: `
     <ng-content>
       <svg
-        qIcon="ChevronDown"
+        qIcon="LucideChevronDown"
         [q-bind]="inlineIconButtonApi().getIconBindings()"
         [size]="inlineIconButtonApi().size"
       ></svg>

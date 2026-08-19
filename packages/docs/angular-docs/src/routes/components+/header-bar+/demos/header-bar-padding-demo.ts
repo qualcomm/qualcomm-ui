@@ -1,5 +1,10 @@
 import {Component} from "@angular/core"
-import {Layers2, LayoutGrid, Moon, Settings} from "lucide-angular"
+import {
+  LucideLayers2,
+  LucideLayoutGrid,
+  LucideMoon,
+  LucideSettings,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
@@ -8,7 +13,9 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [HeaderBarModule, AvatarModule, IconDirective],
-  providers: [provideIcons({Layers2, LayoutGrid, Moon, Settings})],
+  providers: [
+    provideIcons({LucideLayers2, LucideLayoutGrid, LucideMoon, LucideSettings}),
+  ],
   selector: "header-bar-padding-demo",
   template: `
     <div class="@container" padding="large" q-header-bar-root>

@@ -1,25 +1,12 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-type HtmlAttributes = {
-  [key: string]: string | number
-}
-type LucideIconNode = readonly [string, HtmlAttributes]
-type LucideIconData = readonly LucideIconNode[]
+import type {LucideIcon, LucideIconData} from "@lucide/angular"
 
-type SvgAttributes = {[key: string]: string | number}
-
-export type LucideIconArrayData = readonly [string, SvgAttributes]
-
-// https://github.com/lucide-icons/lucide/issues/1735
-export type LucideIconCompat = readonly [
-  string,
-  SvgAttributes,
-  LucideIconNode[]?,
-]
-
-export type LucideIconPart = LucideIconNode
-export type LucideIcon = LucideIconData
+/**
+ * re-export for backwards compat
+ */
+export type {LucideIcon}
 
 /**
  * The imported LucideIcon or a string. The string form of the icon works with the
@@ -29,7 +16,7 @@ export type LucideIcon = LucideIconData
  * ```ts
  * import {IconDirective} from '@qualcomm-ui/angular/icon'
  * import {provideIcons} from '@qualcomm-ui/angular-core/lucide'
- * import {Search} from 'lucide-angular'
+ * import {LucideSearch} from '@lucide/angular'
  * ```
  *
  * @Component({
@@ -42,4 +29,4 @@ export type LucideIcon = LucideIconData
  * class ExampleComponent {}
  * ```
  */
-export type LucideIconOrString = LucideIcon | string
+export type LucideIconOrString = LucideIcon | LucideIconData | string

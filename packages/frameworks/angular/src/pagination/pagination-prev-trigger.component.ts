@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {ChevronLeft} from "lucide-angular"
+import {LucideChevronLeft} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CorePaginationPrevTriggerDirective} from "@qualcomm-ui/angular-core/pagination"
@@ -13,16 +13,16 @@ import {useQdsPaginationContext} from "./qds-pagination-context.service"
   selector: "[q-pagination-prev-trigger]",
   standalone: false,
   template: `
-    <svg [qIcon]="icon()" />
+    <svg [qIcon]="icon()!" />
   `,
 })
 export class PaginationPrevTriggerComponent extends CorePaginationPrevTriggerDirective {
   /**
-   * lucide-angular icon.
+   * `@lucide/angular` icon.
    *
-   * @default ChevronLeft
+   * @default LucideChevronLeft
    */
-  readonly icon = input<LucideIconOrString>(ChevronLeft)
+  readonly icon = input<LucideIconOrString>(LucideChevronLeft)
 
   protected readonly qdsPaginationContext = useQdsPaginationContext()
 

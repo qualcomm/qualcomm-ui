@@ -54,7 +54,7 @@ export default {
   id: "Combobox",
   imports: [
     `import {ComboboxModule} from "@qualcomm-ui/angular/combobox"`,
-    ...(startIcon ? [`import {${iconName}} from "lucide-angular"`] : []),
+    ...(startIcon ? [`import {Lucide${iconName}} from "@lucide/angular"`] : []),
   ],
   metadata: {nestable: true},
 }

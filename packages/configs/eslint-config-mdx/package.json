@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-mdx",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "description": "QUI ESLint config for consistent MDX code",
   "keywords": [
     "config",

@@ -24,7 +24,7 @@
       "prefix": "qui",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "project": "./src/ng-package.json",
             "tsConfig": "./tsconfig.lib.json"

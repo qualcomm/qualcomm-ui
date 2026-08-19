@@ -1,5 +1,5 @@
 import {Component, computed, inject} from "@angular/core"
-import {Moon, Sun} from "lucide-angular"
+import {LucideMoon, LucideSun} from "@lucide/angular"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {QdsThemeService} from "@qualcomm-ui/angular/theme"
@@ -40,6 +40,6 @@ export class ForceThemeDemo {
   protected readonly themeService = inject(QdsThemeService)
 
   protected readonly themeIcon = computed(() =>
-    this.themeService.theme() === "light" ? Sun : Moon,
+    this.themeService.theme() === "light" ? LucideSun : LucideMoon,
   )
 }

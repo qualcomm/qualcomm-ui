@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
+import {LucideStar} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Star} from "lucide-angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 
@@ -76,7 +76,7 @@ const testCases: MultiComponentTest[] = [
     composite() {
       @Component({
         imports: [ComboboxModule, PortalDirective],
-        providers: [provideIcons({Star})],
+        providers: [provideIcons({LucideStar})],
         template: `
           <div icon="Star" q-combobox-root [collection]="collection">
             <label q-combobox-label>Label</label>
@@ -109,7 +109,7 @@ const testCases: MultiComponentTest[] = [
     simple() {
       @Component({
         imports: [ComboboxModule],
-        providers: [provideIcons({Star})],
+        providers: [provideIcons({LucideStar})],
         template: `
           <q-combobox icon="Star" label="Label" [collection]="collection" />
         `,

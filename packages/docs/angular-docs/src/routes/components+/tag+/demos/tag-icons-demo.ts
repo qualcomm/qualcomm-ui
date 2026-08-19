@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {Plus} from "lucide-angular"
+import {LucidePlus} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {TagDirective} from "@qualcomm-ui/angular/tag"
 
 @Component({
   imports: [TagDirective],
-  providers: [provideIcons({Plus})],
+  providers: [provideIcons({LucidePlus})],
   selector: "tag-icons-demo",
   template: `
     <div class="flex flex-col items-center gap-2">

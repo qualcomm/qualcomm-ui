@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {booleanAttribute, Component, computed, input} from "@angular/core"
-import {CircleAlert, CircleCheck, TriangleAlert} from "lucide-angular"
+import {
+  LucideCircleAlert,
+  LucideCircleCheck,
+  LucideTriangleAlert,
+} from "@lucide/angular"
 
 import {CoreDialogBodyDirective} from "@qualcomm-ui/angular-core/dialog"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
@@ -42,15 +46,15 @@ export class DialogBodyComponent extends CoreDialogBodyDirective {
   readonly indicatorIcon = computed(() => {
     switch (this.qdsContext().emphasis) {
       case "neutral":
-        return CircleAlert
+        return LucideCircleAlert
       case "info":
-        return CircleAlert
+        return LucideCircleAlert
       case "success":
-        return CircleCheck
+        return LucideCircleCheck
       case "warning":
-        return TriangleAlert
+        return LucideTriangleAlert
       case "danger":
-        return CircleAlert
+        return LucideCircleAlert
     }
   })
 

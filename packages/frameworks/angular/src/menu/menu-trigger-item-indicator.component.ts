@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, type OnInit} from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
@@ -10,12 +10,12 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {useQdsMenuContext} from "./qds-menu-context.service"
 
 @Component({
-  providers: [provideIcons({ChevronRight})],
+  providers: [provideIcons({LucideChevronRight})],
   selector: "[q-menu-trigger-item-indicator]",
   standalone: false,
   template: `
     <ng-content>
-      <svg qIcon="ChevronRight" />
+      <svg qIcon="LucideChevronRight" />
     </ng-content>
   `,
 })

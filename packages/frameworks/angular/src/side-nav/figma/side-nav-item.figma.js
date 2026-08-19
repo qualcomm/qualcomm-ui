@@ -42,7 +42,7 @@ export default {
   imports: [
     `import {SideNavModule} from "@qualcomm-ui/angular/side-nav"`,
     `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-    `import {Rocket} from "lucide-angular"`,
+    `import {Rocket} from "@lucide/angular"`,
   ],
   metadata: {nestable: true},
 }

@@ -26,7 +26,7 @@
   "updateInternalDependencies": "patch",
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "updateInternalDependents": "always",
-    "onlyUpdatePeerDependentsWhenOutOfRange": true
+    "onlyUpdatePeerDependentsWhenOutOfRange": false
   },
   "ignore": [
     "@qualcomm-ui/angular-docs",

@@ -14,7 +14,7 @@ interface QuiEslintPluginReact {
 const defaultExport: QuiEslintPluginReact = {
   config,
   plugin,
-  rules: rules as unknown as QuiEslintPluginReact["rules"],
+  rules,
 }
 
 export default defaultExport

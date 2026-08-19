@@ -36,7 +36,7 @@ export function getEventTarget<T extends EventTarget>(
 export function isSelfTarget(
   event: Partial<Pick<UIEvent, "currentTarget" | "target" | "composedPath">>,
 ): boolean {
-  return contains(event.currentTarget as Node, getEventTarget(event))
+  return contains(event.currentTarget, getEventTarget(event))
 }
 
 export function isOpeningInNewTab(

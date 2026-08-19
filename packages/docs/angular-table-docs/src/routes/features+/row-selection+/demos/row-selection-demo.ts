@@ -1,6 +1,6 @@
 import {Component, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
-import {Search} from "lucide-angular"
+import {LucideSearch} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
@@ -31,7 +31,7 @@ import {createUserQuery, type User, userColumns} from "./data"
     ProgressRingModule,
     PaginationModule,
   ],
-  providers: [provideIcons({Search})],
+  providers: [provideIcons({LucideSearch})],
   selector: "row-selection-demo",
   template: `
     <div class="flex w-full flex-col gap-4 p-2">

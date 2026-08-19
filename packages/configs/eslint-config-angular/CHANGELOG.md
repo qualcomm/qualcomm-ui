@@ -1,5 +1,13 @@
 # @qualcomm-ui/eslint-config-angular Changelog
 
+## 3.0.0
+
+Aug 16th, 2026
+
+### BREAKING CHANGES
+
+- migrate to TS 6.0 ([637a29d](https://github.com/qualcomm/qualcomm-ui/commit/637a29d))
+
 ## 2.0.0
 
 Jun 10th, 2026

@@ -62,7 +62,7 @@ export default {
     ...(plusBtn
       ? [
           `import {ButtonModule} from "@qualcomm-ui/angular/button"`,
-          `import {Plus} from "lucide-angular"`,
+          `import {Plus} from "@lucide/angular"`,
         ]
       : []),
   ],

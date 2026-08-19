@@ -191,20 +191,8 @@ export namespace JSX {
     touches: TouchList
   }
 
-  /**
-   * @deprecated this used to be in lib.dom.d.ts but is no longer available as of TS 6.0
-   */
-  interface StyleMedia {
-    type: string;
-    matchMedium(mediaquery: string): boolean;
-  }
-
   export interface AbstractView {
     document: Document
-    /**
-     * @deprecated
-     */
-    styleMedia: StyleMedia
   }
 
   export interface UIEvent<

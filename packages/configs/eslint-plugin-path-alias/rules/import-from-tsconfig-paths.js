@@ -2,42 +2,16 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {ESLintUtils} from "@typescript-eslint/utils"
-import {existsSync, readFileSync} from "node:fs"
-import {dirname, join, parse, posix, resolve as resolvePath} from "node:path"
-import ts from "typescript"
+import {dirname, posix, resolve as resolvePath} from "node:path"
+
+import {findTsconfig, getProjectTsconfigs} from "./tsconfig-references.js"
 
 const createRule = ESLintUtils.RuleCreator(
   (name) => `https://example.com/rule/${name}`,
 )
 
-const tsconfigCache = new Map()
-
 function toPosixPath(path) {
   return posix.normalize(path.replace(/\\/g, "/"))
-}
-
-function readTsconfig(tsconfigPath) {
-  if (tsconfigCache.has(tsconfigPath)) {
-    return tsconfigCache.get(tsconfigPath)
-  }
-  const {config, error} = ts.readConfigFile(tsconfigPath, (filename) =>
-    readFileSync(filename, "utf8"),
-  )
-  const result = error ? null : config
-  tsconfigCache.set(tsconfigPath, result)
-  return result
-}
-
-function findTsconfig(startPath) {
-  let currentDir = dirname(startPath)
-  while (parse(currentDir).root !== currentDir) {
-    const tsconfigPath = join(currentDir, "tsconfig.json")
-    if (existsSync(tsconfigPath)) {
-      return tsconfigPath
-    }
-    currentDir = dirname(currentDir)
-  }
-  return null
 }
 
 function parsePathAliases(tsconfig, tsconfigDir) {
@@ -155,12 +129,15 @@ export const importFromTsconfigPaths = createRule({
     if (!tsconfigPath) {
       return {}
     }
-    const tsconfig = readTsconfig(tsconfigPath)
-    if (!tsconfig) {
+
+    const projectTsconfigs = getProjectTsconfigs(tsconfigPath)
+    if (projectTsconfigs.length === 0) {
       return {}
     }
 
-    const aliases = parsePathAliases(tsconfig, dirname(tsconfigPath))
+    const aliases = projectTsconfigs.flatMap(({path, tsconfig}) =>
+      parsePathAliases(tsconfig, dirname(path)),
+    )
     const currentFilePath = toPosixPath(resolvePath(fileName))
 
     function checkImport(importPath, node) {

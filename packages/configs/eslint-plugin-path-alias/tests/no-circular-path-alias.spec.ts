@@ -47,6 +47,11 @@ ruleTester.run("no-circular-path-alias", noCircularPathAlias, {
       errors: [{messageId: "circularDependency"}],
       filename: "./tests/packages/nested/src/one/index.ts",
     },
+    {
+      code: `import utils from "@reference/shared/utils"`,
+      errors: [{messageId: "circularDependency"}],
+      filename: "./tests/project-references/shared/src/utils/index.ts",
+    },
   ],
   valid: [
     // Normal imports that don't create immediate cycles

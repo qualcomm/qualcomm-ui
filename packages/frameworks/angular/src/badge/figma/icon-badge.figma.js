@@ -59,7 +59,7 @@ export default {
   id: "IconBadge",
   imports: [
     `import {IconBadgeDirective} from "@qualcomm-ui/angular/badge"`,
-    `import {${iconName}} from "lucide-angular"`,
+    `import {Lucide${iconName}} from "@lucide/angular"`,
   ],
   metadata: {nestable: true},
 }

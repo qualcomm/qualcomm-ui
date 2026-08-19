@@ -1,6 +1,11 @@
 import {NgTemplateOutlet} from "@angular/common"
 import {Component} from "@angular/core"
-import {Layers2, LayoutGrid, Moon, Settings} from "lucide-angular"
+import {
+  LucideLayers2,
+  LucideLayoutGrid,
+  LucideMoon,
+  LucideSettings,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
@@ -9,7 +14,9 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [HeaderBarModule, AvatarModule, IconDirective, NgTemplateOutlet],
-  providers: [provideIcons({Layers2, LayoutGrid, Moon, Settings})],
+  providers: [
+    provideIcons({LucideLayers2, LucideLayoutGrid, LucideMoon, LucideSettings}),
+  ],
   selector: "header-bar-surfaces-demo",
   template: `
     <div class="flex w-full flex-col gap-4">

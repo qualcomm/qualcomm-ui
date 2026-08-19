@@ -14,7 +14,7 @@ interface QuiEslintPluginAngular {
 const defaultExport: QuiEslintPluginAngular = {
   config,
   plugin,
-  rules: rules as unknown as QuiEslintPluginAngular["rules"],
+  rules,
 }
 
 export default defaultExport

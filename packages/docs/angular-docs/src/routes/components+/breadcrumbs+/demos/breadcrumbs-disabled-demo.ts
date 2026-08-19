@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
 import {RouterLink} from "@angular/router"
-import {Home} from "lucide-angular"
+import {LucideHouse} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {BreadcrumbsModule} from "@qualcomm-ui/angular/breadcrumbs"
@@ -8,7 +8,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [BreadcrumbsModule, IconDirective, RouterLink],
-  providers: [provideIcons({Home})],
+  providers: [provideIcons({LucideHouse})],
   selector: "breadcrumbs-disabled-demo",
   template: `
     <!-- preview -->
@@ -16,7 +16,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
       <ol q-breadcrumbs-list>
         <li q-breadcrumb-item>
           <a q-breadcrumb-item-trigger routerLink="/">
-            <svg q-breadcrumb-item-icon qIcon="Home"></svg>
+            <svg q-breadcrumb-item-icon qIcon="House"></svg>
             Home
           </a>
         </li>

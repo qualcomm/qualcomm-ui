@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTextInputClearTriggerDirective} from "@qualcomm-ui/angular-core/text-input"
@@ -14,7 +14,7 @@ import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
  */
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-text-input-clear-trigger]",
   standalone: false,
   template: `

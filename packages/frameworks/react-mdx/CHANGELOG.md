@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.11.6
+
+Aug 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.5, @qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/react-core@1.5.10]
+
 ## 2.11.5
 
 Aug 12th, 2026

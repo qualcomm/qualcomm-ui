@@ -16,7 +16,7 @@ const swapPropName = figmaSize === "sm" ? "iconXs" : "iconSm"
 
 const iconInstance =
   variant === "icon" ? instance.getInstanceSwap(swapPropName) : undefined
-const iconName = iconInstance ? toLucideName(iconInstance.name) : "FolderIcon"
+const iconName = iconInstance ? toLucideName(iconInstance.name) : "Folder"
 
 const iconEl =
   variant === "icon" ? `<svg q-tree-node-icon qIcon="${iconName}"></svg>` : ""
@@ -27,7 +27,7 @@ const iconImports =
   variant === "icon"
     ? [
         `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-        `import {${iconName}} from "lucide-angular"`,
+        `import {Lucide${iconName}} from "@lucide/angular"`,
       ]
     : []
 

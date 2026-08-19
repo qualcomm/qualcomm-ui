@@ -12,7 +12,12 @@ import {
   input,
   signal,
 } from "@angular/core"
-import {CircleAlert, FilePlus, Trash2, Upload} from "lucide-angular"
+import {
+  LucideCircleAlert,
+  LucideFilePlus,
+  LucideTrash2,
+  LucideUpload,
+} from "@lucide/angular"
 
 import {provideFileUploadContext} from "@qualcomm-ui/angular-core/file-upload"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -28,7 +33,12 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    provideIcons({CircleAlert, FilePlus, Trash2, Upload}),
+    provideIcons({
+      LucideCircleAlert,
+      LucideFilePlus,
+      LucideTrash2,
+      LucideUpload,
+    }),
     provideFileUploadContext(),
     provideQdsFileUploadContext(),
   ],
@@ -94,7 +104,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                     aria-label="Remove file"
                     q-button
                     q-file-upload-item-delete-trigger
-                    startIcon="Trash2"
+                    startIcon="LucideTrash2"
                     type="button"
                     variant="ghost"
                   ></button>
@@ -112,7 +122,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                   <span q-file-upload-item-name></span>
                   <span data-invalid q-file-upload-item-size-text>
                     <svg
-                      qIcon="CircleAlert"
+                      qIcon="LucideCircleAlert"
                       [style.height.px]="12"
                       [style.min-height.px]="12"
                       [style.min-width.px]="12"
@@ -125,7 +135,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
                   aria-label="Remove file"
                   q-button
                   q-file-upload-item-delete-trigger
-                  startIcon="Trash2"
+                  startIcon="LucideTrash2"
                   type="button"
                   variant="ghost"
                 ></button>
@@ -152,7 +162,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
               aria-label="Add more files"
               q-button
               q-file-upload-trigger
-              startIcon="FilePlus"
+              startIcon="LucideFilePlus"
               type="button"
               variant="outline"
             >
@@ -165,7 +175,7 @@ import {provideQdsFileUploadContext} from "./qds-file-upload-context.service"
               aria-label="Clear all files"
               q-button
               q-file-upload-clear-trigger
-              startIcon="Trash2"
+              startIcon="LucideTrash2"
               type="button"
               variant="ghost"
             >

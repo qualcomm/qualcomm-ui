@@ -3,25 +3,25 @@
 
 import {Component, computed, input, type OnInit} from "@angular/core"
 import {
-  BellRing,
-  CircleAlert,
-  CircleCheck,
-  Info,
-  TriangleAlert,
-} from "lucide-angular"
+  LucideBellRing,
+  LucideCircleAlert,
+  LucideCircleCheck,
+  type LucideIcon,
+  LucideInfo,
+  LucideTriangleAlert,
+} from "@lucide/angular"
 
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {QdsAlertBannerEmphasis} from "@qualcomm-ui/qds-core/alert-banner"
 
 import {useQdsAlertBannerContext} from "./qds-alert-banner-context.service"
 
 const icons: Record<QdsAlertBannerEmphasis, LucideIcon> = {
-  danger: CircleAlert,
-  info: Info,
-  neutral: BellRing,
-  success: CircleCheck,
-  warning: TriangleAlert,
+  danger: LucideCircleAlert,
+  info: LucideInfo,
+  neutral: LucideBellRing,
+  success: LucideCircleCheck,
+  warning: LucideTriangleAlert,
 }
 
 @Component({

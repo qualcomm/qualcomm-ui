@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {KeyRound} from "lucide-angular"
+import {LucideKeyRound} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PasswordInputModule} from "@qualcomm-ui/angular/password-input"
 
 @Component({
   imports: [PasswordInputModule],
-  providers: [provideIcons({KeyRound})],
+  providers: [provideIcons({LucideKeyRound})],
   selector: "password-input-simple-icons-demo",
   template: `
     <!-- preview -->

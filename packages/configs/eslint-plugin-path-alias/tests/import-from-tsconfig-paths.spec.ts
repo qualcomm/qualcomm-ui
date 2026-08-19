@@ -58,6 +58,12 @@ ruleTester.run("import-from-tsconfig-paths", importFromTsconfigPaths, {
       filename: "./tests/packages/nested/src/two/not-internal/file.ts",
       output: `import method from "@qualcomm-ui/nested/one"`,
     },
+    {
+      code: `import utils from "../../../shared/src/utils"`,
+      errors: [{messageId: "externalRelative"}],
+      filename: "./tests/project-references/app/src/button/file.ts",
+      output: `import utils from "@reference/shared/utils"`,
+    },
   ],
   valid: [
     {

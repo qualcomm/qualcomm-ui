@@ -1,5 +1,21 @@
 # @qualcomm-ui/react Changelog
 
+## 1.27.5
+
+Aug 16th, 2026
+
+### Tests
+
+- [checkmark]: add missing await for updated test dependency ([1541d76](https://github.com/qualcomm/qualcomm-ui/commit/1541d76))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/react-core@1.5.10, @qualcomm-ui/qds-core@1.35.1]
+
 ## 1.27.4
 
 Aug 11th, 2026

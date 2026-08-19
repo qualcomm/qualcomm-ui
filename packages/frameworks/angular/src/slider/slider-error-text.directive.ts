@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {CircleAlert} from "lucide-angular"
+import {LucideCircleAlert} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreSliderErrorTextDirective} from "@qualcomm-ui/angular-core/slider"
@@ -21,9 +21,9 @@ export class SliderErrorTextDirective extends CoreSliderErrorTextDirective {
   /**
    * Error indicator icon.
    *
-   * @default CircleAlert
+   * @default LucideCircleAlert
    */
-  readonly icon = input<LucideIconOrString>(CircleAlert)
+  readonly icon = input<LucideIconOrString>(LucideCircleAlert)
 
   protected readonly qdsSliderContext = useQdsSliderContext()
 

@@ -45,7 +45,7 @@ describe("CheckmarkCheckedIcon", () => {
         <CheckmarkCheckedIcon data-test-id={iconTestId} size={size} />,
       )
       await expect.element(page.getByTestId(iconTestId)).toBeVisible()
-      unmount()
+      await unmount()
     }
   })
 
@@ -63,7 +63,7 @@ describe("CheckmarkIndeterminateIcon", () => {
         <CheckmarkIndeterminateIcon data-test-id={iconTestId} size={size} />,
       )
       await expect.element(page.getByTestId(iconTestId)).toBeVisible()
-      unmount()
+      await unmount()
     }
   })
 

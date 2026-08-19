@@ -3,7 +3,7 @@
 
 import {Component, input} from "@angular/core"
 
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreSelectErrorTextDirective} from "@qualcomm-ui/angular-core/select"
 import {useInputErrorText} from "@qualcomm-ui/angular/input"
 
@@ -21,7 +21,7 @@ export class SelectErrorTextDirective extends CoreSelectErrorTextDirective {
   /**
    * Optional error indicator icon.
    */
-  readonly icon = input<LucideIcon | string>()
+  readonly icon = input<LucideIconOrString>()
 
   protected readonly errorTextContext = useInputErrorText()
 

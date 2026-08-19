@@ -1,5 +1,17 @@
 # @qualcomm-ui/typedoc Changelog
 
+## 1.1.7
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Documentation
+
+- disable typedoc type checking ([dcc37ef](https://github.com/qualcomm/qualcomm-ui/commit/dcc37ef))
+
 ## 1.1.6
 
 Jun 10th, 2026
