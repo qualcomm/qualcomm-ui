@@ -22,7 +22,7 @@ import {
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   createSelectApi,
-  type HighlightChangeDetails,
+  type SelectHighlightChangeDetails,
   type ScrollToIndexDetails,
   type SelectApiProps,
   selectMachine,
@@ -163,7 +163,7 @@ export class CoreSelectRootDirective<T extends CollectionItem = CollectionItem>
    * The callback fired when the highlighted item changes.
    */
   readonly highlightChanged = output<
-    {value: string | null} & HighlightChangeDetails<T>
+    {value: string | null} & SelectHighlightChangeDetails<T>
   >()
 
   /**

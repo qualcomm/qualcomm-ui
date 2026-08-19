@@ -1,5 +1,6 @@
 export * from "./grid-collection.js"
 export * from "./list-collection.js"
+export * from "./selection-map.js"
 export * from "./selection.js"
 export * from "./tree-collection.js"
 export * from "./tree-visit.js"
