@@ -34,6 +34,13 @@ describe("createFilter", () => {
     expect(filter.fuzzyContains("hello world", "zzzz")).toBe(false)
   })
 
+  test("matches locale-aware exact substrings before fuzzy matching", () => {
+    const filter = createFilter({sensitivity: "base"})
+
+    expect(filter.fuzzyContains("hello WORLD", "world")).toBe(true)
+    expect(filter.fuzzyContains("Résumé", "resume")).toBe(true)
+  })
+
   test("treats empty substrings as matches", () => {
     const filter = createFilter()
 
