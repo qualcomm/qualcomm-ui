@@ -26,6 +26,7 @@ export interface ProgressRingRootProps
  */
 export function ProgressRingRoot({
   emphasis,
+  shimmer,
   size,
   thickness,
   ...props
@@ -35,12 +36,13 @@ export function ProgressRingRoot({
       createQdsProgressRingApi(
         {
           emphasis,
+          shimmer,
           size,
           thickness,
         } satisfies Explicit<QdsProgressRingApiProps>,
         normalizeProps,
       ),
-    [emphasis, size, thickness],
+    [emphasis, shimmer, size, thickness],
   )
 
   const rootProps = mergeProps(api.getRootBindings(), props)

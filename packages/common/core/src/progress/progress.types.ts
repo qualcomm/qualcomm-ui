@@ -117,7 +117,6 @@ export interface ProgressBarBindings extends Part<"bar"> {
   "data-invalid": BooleanDataAttr
   "data-max": number
   "data-state": ProgressState
-  style: JSX.CSSProperties
 }
 
 export interface ProgressLabelBindings extends Part<"label"> {
@@ -165,7 +164,6 @@ export interface ProgressRingBarBindings extends Part<"circleBar"> {
   "data-invalid": BooleanDataAttr
   "data-max": number
   "data-state": ProgressState
-  style: JSX.CSSProperties
 }
 
 export interface ProgressRingCircleBindings
