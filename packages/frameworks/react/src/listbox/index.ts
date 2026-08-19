@@ -77,6 +77,10 @@ interface ListboxComponent {
   Root: FunctionComponent<ListboxRootProps>
 }
 
+/**
+ * @since 1.28.0
+ * @alpha
+ */
 export const Listbox: ListboxComponent = {
   Content: ListboxContent,
   Input: ListboxInput,

@@ -1,5 +1,17 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.4.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Code Refactoring
+
+* [filter]: prefer locale-aware substring matches ([6cd18e0](https://github.com/qualcomm/qualcomm-ui/commit/6cd18e0))
+
 ## 1.3.3
 
 Aug 16th, 2026

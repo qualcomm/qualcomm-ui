@@ -1,5 +1,17 @@
 # @qualcomm-ui/dom Changelog
 
+## 1.2.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.4.0]
+
 ## 1.1.6
 
 Aug 16th, 2026

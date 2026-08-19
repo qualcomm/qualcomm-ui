@@ -19,7 +19,7 @@ import type {ListCollection} from "./list-collection.js"
 export type SelectionMode = "single" | "multiple" | "none" | "extended"
 
 /**
- * @since next-release
+ * @since 1.4.0
  */
 export class ListSelection extends Set<string> {
   selectionMode: SelectionMode = "single"

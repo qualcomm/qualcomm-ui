@@ -1,5 +1,22 @@
 # @qualcomm-ui/core Changelog
 
+## 1.12.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
 ## 1.11.8
 
 Aug 16th, 2026

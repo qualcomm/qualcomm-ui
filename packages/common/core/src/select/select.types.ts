@@ -44,7 +44,7 @@ export interface HighlightChangeDetails<
 > extends SelectHighlightChangeDetails<T> {}
 
 /**
- * @since next-release
+ * @since 1.12.0
  */
 export interface SelectHighlightChangeDetails<
   T extends CollectionItem = CollectionItem,

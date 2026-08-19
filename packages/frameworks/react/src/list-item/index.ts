@@ -35,6 +35,7 @@ export type {
 }
 
 /**
+ * @since 1.28.0
  * @alpha
  */
 type ListItemComponent = typeof SimpleListItem & {

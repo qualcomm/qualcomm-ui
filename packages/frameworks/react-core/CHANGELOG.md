@@ -1,5 +1,21 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.6.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Documentation
+
+* [listbox]: document component usage ([200dad7](https://github.com/qualcomm/qualcomm-ui/commit/200dad7))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
 ## 1.5.10
 
 Aug 16th, 2026
