@@ -1,3 +1,6 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
 export const listItemClasses = {
   accessory: "qui-list-item__accessory",
   control: "qui-list-item__control",
