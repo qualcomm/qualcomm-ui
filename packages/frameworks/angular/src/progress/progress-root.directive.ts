@@ -1,7 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, inject, input, type OnInit} from "@angular/core"
+import {
+  booleanAttribute,
+  computed,
+  Directive,
+  inject,
+  input,
+  type OnInit,
+} from "@angular/core"
 
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
@@ -16,6 +23,7 @@ import {
   type QdsProgressLabelOrientation,
   type QdsProgressSize,
 } from "@qualcomm-ui/qds-core/progress"
+import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
 import {
@@ -51,6 +59,15 @@ export class ProgressRootDirective
   readonly labelOrientation = input<QdsProgressLabelOrientation>()
 
   /**
+   * Whether to display a shimmer effect on a loading determinate progress.
+   *
+   * @default true
+   */
+  readonly shimmer = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
+  /**
    * Governs the height of the progress bar and track.
    *
    * @default 'md'
@@ -68,6 +85,7 @@ export class ProgressRootDirective
           {
             emphasis: this.emphasis(),
             labelOrientation: this.labelOrientation(),
+            shimmer: this.shimmer(),
             size: this.size(),
           } satisfies Explicit<QdsProgressApiProps>,
           normalizeProps,

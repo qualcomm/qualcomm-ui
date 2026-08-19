@@ -63,6 +63,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
     "@mdx-js/react": "catalog:",
     "@mdx-js/rollup": "catalog:",
     "@qualcomm-ui/mdx-vite": "workspace:*",
@@ -93,7 +94,7 @@
     "typescript": "catalog:",
     "unified": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-babel": "^1.6.0"
+    "vite-plugin-babel": "^1.7.3"
   },
   "engines": {
     "node": ">=20"

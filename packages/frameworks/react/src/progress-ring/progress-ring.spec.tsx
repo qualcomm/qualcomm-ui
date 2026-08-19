@@ -22,6 +22,13 @@ const testIds = {
   valueText: "progress-ring-value-text",
 }
 
+function getShimmer(): Element | null {
+  return page
+    .getByTestId(testIds.root)
+    .element()
+    .querySelector(".qui-progress-ring__shimmer")
+}
+
 const tests: MultiComponentTestCase[] = [
   {
     composite() {
@@ -322,6 +329,103 @@ const tests: MultiComponentTestCase[] = [
       test("Invalid progress ring with error text", async () => {
         await render(getComponent())
         await expect.element(page.getByText(errorMessage)).toBeVisible()
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <ProgressRing.Root data-test-id={testIds.root} value={40}>
+          <ProgressRing.CircleContainer>
+            <ProgressRing.Circle>
+              <ProgressRing.Track />
+              <ProgressRing.Bar />
+            </ProgressRing.Circle>
+          </ProgressRing.CircleContainer>
+          <ProgressRing.Label>{testLabel}</ProgressRing.Label>
+        </ProgressRing.Root>
+      )
+    },
+    simple() {
+      return (
+        <ProgressRing
+          data-test-id={testIds.root}
+          label={testLabel}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer is enabled by default", async () => {
+        await render(getComponent())
+        await expect.poll(getShimmer).toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <ProgressRing.Root data-test-id={testIds.root} shimmer value={40}>
+          <ProgressRing.CircleContainer>
+            <ProgressRing.Circle>
+              <ProgressRing.Track />
+              <ProgressRing.Bar />
+            </ProgressRing.Circle>
+          </ProgressRing.CircleContainer>
+          <ProgressRing.Label>{testLabel}</ProgressRing.Label>
+        </ProgressRing.Root>
+      )
+    },
+    simple() {
+      return (
+        <ProgressRing
+          data-test-id={testIds.root}
+          label={testLabel}
+          shimmer
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer enabled explicitly", async () => {
+        await render(getComponent())
+        await expect.poll(getShimmer).toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <ProgressRing.Root
+          data-test-id={testIds.root}
+          shimmer={false}
+          value={40}
+        >
+          <ProgressRing.CircleContainer>
+            <ProgressRing.Circle>
+              <ProgressRing.Track />
+              <ProgressRing.Bar />
+            </ProgressRing.Circle>
+          </ProgressRing.CircleContainer>
+          <ProgressRing.Label>{testLabel}</ProgressRing.Label>
+        </ProgressRing.Root>
+      )
+    },
+    simple() {
+      return (
+        <ProgressRing
+          data-test-id={testIds.root}
+          label={testLabel}
+          shimmer={false}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer disabled", async () => {
+        await render(getComponent())
+        await expect.poll(getShimmer).toBeInTheDocument()
+        await expect.poll(getShimmer).not.toHaveAttribute("data-shimmer")
       })
     },
   },
