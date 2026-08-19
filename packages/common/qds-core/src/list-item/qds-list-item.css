@@ -1,0 +1,173 @@
+.qui-list-item__root {
+  background: var(--color-interactive-background-ghost-idle);
+  border: solid 1px transparent;
+  box-sizing: border-box;
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-body-sm-default);
+  line-height: normal;
+  outline: none;
+  padding: var(--list-item-padding-y) var(--list-item-padding-x);
+  position: relative;
+  text-align: left;
+  text-decoration: inherit;
+  --list-item-padding-x: var(--spacing-100);
+  --list-item-padding-y: var(--spacing-80);
+
+  &::after {
+    border-block-end: 1px solid var(--color-border-neutral-01);
+    bottom: 0;
+    content: "";
+    inset-inline: var(--list-item-padding-x);
+    position: absolute;
+  }
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-default);
+    --list-item-padding-x: var(--spacing-90);
+    --list-item-padding-y: var(--spacing-50);
+  }
+
+  &[data-size="lg"] {
+    --list-item-padding-y: var(--spacing-90);
+  }
+
+  &[data-interactive] {
+    cursor: pointer;
+
+    &:hover:not([data-disabled]) {
+      background: var(--color-interactive-background-ghost-hover);
+    }
+
+    &:active:not([data-disabled]) {
+      background: var(--color-interactive-background-ghost-pressed);
+    }
+  }
+
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+    --icon-color: var(--color-utility-disabled-icon);
+    cursor: default;
+
+    .qui-list-item__command,
+    .qui-list-item__indicator,
+    .qui-list-item__description,
+    .qui-list-item__secondary-text {
+      color: var(--color-utility-disabled-text);
+      .qui-icon__root {
+        color: var(--icon-color);
+      }
+    }
+  }
+
+  &:focus-visible,
+  &[data-highlighted] {
+    border-color: var(--color-utility-focus-border);
+    outline: solid 1px var(--color-utility-focus-border);
+  }
+
+  &[data-highlighted] {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.qui-list-item__label {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-body-sm-bold);
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-bold);
+  }
+
+  &[data-size="lg"] {
+    font: var(--font-static-body-md-bold);
+  }
+
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+  }
+}
+
+.qui-list-item__description {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+}
+
+.qui-list-item__secondary-text {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+}
+
+/* Grid */
+.qui-list-item__root {
+  align-items: center;
+  column-gap: var(--spacing-70);
+  display: grid;
+  grid-auto-columns: max-content;
+  grid-auto-flow: column;
+  grid-template-columns:
+    var(--list-item-leading-tracks,)
+    minmax(0, 1fr);
+  grid-template-rows: auto auto;
+
+  --list-item-start-icon-column: 1;
+  --list-item-text-column: 1;
+
+  &:has(
+    > :is([data-list-item-part="control"], [data-list-item-part="start-icon"])
+  ) {
+    --list-item-leading-tracks: auto;
+    --list-item-text-column: 2;
+  }
+
+  &:has(> [data-list-item-part="control"]):has(
+      > [data-list-item-part="start-icon"]
+    ) {
+    --list-item-leading-tracks: auto auto;
+    --list-item-start-icon-column: 2;
+    --list-item-text-column: 3;
+  }
+
+  > :is(
+    [data-list-item-part="control"],
+    [data-list-item-part="start-icon"],
+    [data-list-item-part="secondary-text"],
+    [data-list-item-part="accessory"]
+  ) {
+    grid-row: 1 / span 2;
+  }
+
+  > [data-list-item-part="control"] {
+    grid-column: 1;
+  }
+
+  > [data-list-item-part="start-icon"] {
+    grid-column: var(--list-item-start-icon-column);
+  }
+
+  > :is([data-list-item-part="label"], [data-list-item-part="description"]) {
+    grid-column: var(--list-item-text-column);
+    min-inline-size: 0;
+  }
+
+  > [data-list-item-part="label"] {
+    grid-row: 1;
+  }
+
+  > [data-list-item-part="description"] {
+    grid-row: 2;
+  }
+}
+
+.qui-list-item__accessory {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-20);
+}
+
+.qui-list-item__control {
+  &[data-state="unchecked"] {
+    background: transparent;
+  }
+}

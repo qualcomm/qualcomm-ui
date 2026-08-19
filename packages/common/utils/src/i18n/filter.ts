@@ -20,7 +20,8 @@ export interface FilterReturn {
   endsWith(string: string, substring: string): boolean
 
   /**
-   * Checks if string contains substring within Levenshtein distance threshold
+   * Checks if string starts with substring or contains substring within Levenshtein
+   * distance threshold
    */
   fuzzyContains(string: string, substring: string): boolean
 
@@ -33,7 +34,7 @@ export interface FilterReturn {
 export interface FilterOptions extends Intl.CollatorOptions {
   /**
    * The number of single-character edits (insertions, deletions, substitutions)
-   * tolerated for a match.
+   * tolerated for a match. Applicable only when a fuzzy matching filter enabled.
    *
    * Examples with fuzzyThreshold: 2:
    *
@@ -97,6 +98,9 @@ export function createFilter(options?: FilterOptions): FilterReturn {
 
   function fuzzyContains(string: string, substring: string): boolean {
     if (substring.length === 0) {
+      return true
+    }
+    if (contains(string, substring)) {
       return true
     }
     string = normalize(string)

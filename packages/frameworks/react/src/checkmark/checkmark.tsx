@@ -14,14 +14,20 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {CheckmarkIcon} from "./checkmark-icon.js"
+import {
+  type CheckboxIndicatorIconProps,
+  CheckmarkIcon,
+} from "./checkmark-icon.js"
 
 export interface CheckmarkProps
-  extends ElementRenderProp<"div">, QdsCheckmarkApiProps {}
+  extends ElementRenderProp<"div">, QdsCheckmarkApiProps {
+  iconProps?: Omit<CheckboxIndicatorIconProps, "indeterminate">
+}
 
 export function Checkmark({
   checked,
   disabled,
+  iconProps,
   indeterminate,
   size,
   ...props
@@ -40,10 +46,14 @@ export function Checkmark({
     [checked, disabled, indeterminate, size],
   )
   const mergedProps = mergeProps(api.getRootBindings(), props)
+  const mergedCheckmarkIconProps = mergeProps(api.getIconBindings(), iconProps)
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      <CheckmarkIcon indeterminate={indeterminate} {...api.getIconBindings()} />
+      <CheckmarkIcon
+        indeterminate={indeterminate}
+        {...mergedCheckmarkIconProps}
+      />
     </PolymorphicElement>
   )
 }

@@ -230,3 +230,12 @@ export const addDomEvent = <K extends keyof DOMEventMap>(
     node?.removeEventListener(eventName, handler as any, options)
   }
 }
+
+export function isCtrlOrMetaKey(
+  e: Pick<KeyboardEvent, "ctrlKey" | "metaKey">,
+): boolean {
+  if (isMac()) {
+    return e.metaKey
+  }
+  return e.ctrlKey
+}

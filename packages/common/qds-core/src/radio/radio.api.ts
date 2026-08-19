@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {checkboxClasses} from "@qualcomm-ui/qds-core/checkbox"
 import {inputClasses} from "@qualcomm-ui/qds-core/input"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
@@ -15,6 +16,8 @@ import type {
   QdsRadioGroupItemsBindings,
   QdsRadioGroupLabelBindings,
   QdsRadioItemBindings,
+  QdsRadioItemCheckboxControlBindings,
+  QdsRadioItemCheckboxIndicatorBindings,
   QdsRadioItemControlBindings,
   QdsRadioItemHiddenInputBindings,
   QdsRadioItemHintBindings,
@@ -60,6 +63,18 @@ export function createQdsRadioApi(
     getItemBindings(): QdsRadioItemBindings {
       return normalize.label({
         className: radioClasses.item,
+      })
+    },
+    getItemCheckboxControlBindings(): QdsRadioItemCheckboxControlBindings {
+      return normalize.element({
+        className: checkboxClasses.control,
+        "data-size": size,
+      })
+    },
+    getItemCheckboxIndicatorBindings(): QdsRadioItemCheckboxIndicatorBindings {
+      return normalize.element({
+        className: checkboxClasses.indicator,
+        "data-size": size,
       })
     },
     getItemControlBindings(): QdsRadioItemControlBindings {
