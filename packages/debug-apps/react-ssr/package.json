@@ -94,7 +94,7 @@
     "typescript": "catalog:",
     "unified": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-babel": "^1.6.0"
+    "vite-plugin-babel": "^1.7.3"
   },
   "engines": {
     "node": ">=20"
