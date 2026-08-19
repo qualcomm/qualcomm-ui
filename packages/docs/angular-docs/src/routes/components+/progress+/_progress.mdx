@@ -26,7 +26,9 @@ The progress bar can be in one of two states:
 - indeterminate: the default state.
 - determinate: assumed when the [value](./#value) prop is passed.
 
-Indeterminate progress bar keep users informed that work is happening when timeframes are unknown.
+Indeterminate progress bars keep users informed that work is happening when timeframes are unknown.
+
+Determinate progress bars display a shimmer effect across the filled portion while loading after 8 seconds. It is suppressed for users who prefer reduced motion. Set the [shimmer](./#shimmer) prop to `false` to turn it off.
 
 ## Examples
 

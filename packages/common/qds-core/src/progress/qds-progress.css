@@ -118,11 +118,22 @@
 }
 
 .qui-progress__bar {
+  --progress-shimmer-color: 255 255 255;
+  --progress-shimmer-opacity: 0.3;
   background: var(--progress-color);
   border-radius: var(--border-radius-rounded);
   height: var(--progress-height);
   max-height: var(--progress-height);
   transition: width 200ms ease;
+
+  [data-theme="dark"] & {
+    --progress-shimmer-opacity: 0.15;
+  }
+
+  [data-theme="dark"] &[data-emphasis="neutral"] {
+    --progress-shimmer-color: 0 0 0;
+    --progress-shimmer-opacity: 0.2;
+  }
 
   &[data-emphasis="primary"] {
     --progress-color: var(--color-background-brand-primary);
@@ -145,7 +156,36 @@
 
   &[data-state="loading"],
   &[data-state="complete"] {
-    width: var(--percent);
+    width: calc(var(--percent) * 1%);
+  }
+
+  &[data-shimmer][data-state="loading"]:not([data-invalid]):not(
+      [data-disabled]
+    ) {
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+      animation: qui-progress__shimmer 5s linear 8s infinite;
+      background: linear-gradient(
+        90deg,
+        rgb(var(--progress-shimmer-color) / 0) 0%,
+        rgb(var(--progress-shimmer-color) / var(--progress-shimmer-opacity)) 33%,
+        rgb(var(--progress-shimmer-color) / var(--progress-shimmer-opacity)) 66%,
+        rgb(var(--progress-shimmer-color) / 0) 100%
+      );
+      bottom: 0;
+      content: "";
+      left: 0;
+      position: absolute;
+      top: 0;
+      transform: translateX(-120%);
+      width: 100%;
+
+      @media (prefers-reduced-motion: reduce) {
+        display: none;
+      }
+    }
   }
 
   &[data-state="indeterminate"]:not([data-disabled]) {
@@ -177,6 +217,20 @@
       transition: transform 0.2s linear 0s;
       width: auto;
     }
+  }
+}
+
+@keyframes qui-progress__shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  36% {
+    transform: translateX(120%);
+  }
+
+  100% {
+    transform: translateX(120%);
   }
 }
 
