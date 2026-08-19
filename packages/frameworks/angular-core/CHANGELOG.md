@@ -1,5 +1,17 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 3.1.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
 ## 3.0.0
 
 Aug 16th, 2026

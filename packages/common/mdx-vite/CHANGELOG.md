@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.9.3
+
+Aug 18th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.4.0]
+
 ## 3.9.2
 
 Aug 16th, 2026

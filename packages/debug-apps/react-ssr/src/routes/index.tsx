@@ -19,6 +19,7 @@ const components = [
   "inline-icon-button",
   "inline-notification",
   "link",
+  "listbox",
   "menu",
   "number-input",
   "pagination",

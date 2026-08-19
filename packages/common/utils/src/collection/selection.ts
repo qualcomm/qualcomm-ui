@@ -18,7 +18,10 @@ import type {ListCollection} from "./list-collection.js"
  */
 export type SelectionMode = "single" | "multiple" | "none" | "extended"
 
-export class Selection extends Set<string> {
+/**
+ * @since 1.4.0
+ */
+export class ListSelection extends Set<string> {
   selectionMode: SelectionMode = "single"
   deselectable = true
 
@@ -26,12 +29,12 @@ export class Selection extends Set<string> {
     super(values)
   }
 
-  copy = (): Selection => {
-    const clone = new Selection([...this])
+  copy = (): ListSelection => {
+    const clone = new ListSelection([...this])
     return this.sync(clone)
   }
 
-  private sync = (other: Selection): Selection => {
+  private sync = (other: ListSelection): ListSelection => {
     other.selectionMode = this.selectionMode
     other.deselectable = this.deselectable
     return other
@@ -79,7 +82,7 @@ export class Selection extends Set<string> {
     collection: ListCollection,
     anchorValue: string,
     targetValue: string,
-  ): Selection => {
+  ): ListSelection => {
     if (this.selectionMode === "none") {
       return this
     }
@@ -107,7 +110,10 @@ export class Selection extends Set<string> {
     return selection
   }
 
-  toggleSelection = (collection: ListCollection, value: string): Selection => {
+  toggleSelection = (
+    collection: ListCollection,
+    value: string,
+  ): ListSelection => {
     if (this.selectionMode === "none") {
       return this
     }
@@ -129,7 +135,7 @@ export class Selection extends Set<string> {
   replaceSelection = (
     collection: ListCollection,
     value: string | null,
-  ): Selection => {
+  ): ListSelection => {
     if (this.selectionMode === "none") {
       return this
     }
@@ -142,16 +148,16 @@ export class Selection extends Set<string> {
       return this
     }
 
-    const selection = new Selection([value])
+    const selection = new ListSelection([value])
     return this.sync(selection)
   }
 
-  setSelection = (values: Iterable<string>): Selection => {
+  setSelection = (values: Iterable<string>): ListSelection => {
     if (this.selectionMode === "none") {
       return this
     }
 
-    const selection = new Selection()
+    const selection = new ListSelection()
     for (const value of values) {
       if (value != null) {
         selection.add(value)
@@ -164,7 +170,7 @@ export class Selection extends Set<string> {
     return this.sync(selection)
   }
 
-  clearSelection = (): Selection => {
+  clearSelection = (): ListSelection => {
     const selection = this.copy()
     if (selection.deselectable && selection.size > 0) {
       selection.clear()
@@ -176,7 +182,7 @@ export class Selection extends Set<string> {
     collection: ListCollection,
     value: string,
     forceToggle?: boolean,
-  ): Selection => {
+  ): ListSelection => {
     if (this.selectionMode === "none") {
       return this
     }
@@ -194,13 +200,21 @@ export class Selection extends Set<string> {
     }
   }
 
-  deselect = (value: string): Selection => {
+  deselect = (value: string): ListSelection => {
     const selection = this.copy()
     selection.delete(value)
     return selection
   }
 
-  isEqual = (other: Selection): boolean => {
+  isEqual = (other: ListSelection): boolean => {
     return isEqual(Array.from(this), Array.from(other))
   }
 }
+
+/**
+ * @deprecated migrate to {@link ListSelection}
+ *
+ * This conflicts with the {@link https://developer.mozilla.org/en-US/docs/Web/API/Selection Selection}
+ * type and has been renamed to ListSelection for clarity.
+ */
+export const Selection: typeof ListSelection = ListSelection

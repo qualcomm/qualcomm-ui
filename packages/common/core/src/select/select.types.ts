@@ -36,7 +36,17 @@ export interface SelectValueChangeDetails<
   items: T[]
 }
 
+/**
+ * @deprecated migrate to {SelectHighlightChangeDetails}
+ */
 export interface HighlightChangeDetails<
+  T extends CollectionItem = CollectionItem,
+> extends SelectHighlightChangeDetails<T> {}
+
+/**
+ * @since 1.12.0
+ */
+export interface SelectHighlightChangeDetails<
   T extends CollectionItem = CollectionItem,
 > {
   highlightedIndex: number
@@ -164,7 +174,7 @@ export interface SelectApiProps<T extends CollectionItem = CollectionItem>
   defaultHighlightedValue?: string | null | undefined
 
   /**
-   * Whether the select's open state is controlled by the user
+   * Whether the select's popup opens by default
    */
   defaultOpen?: boolean | undefined
 
@@ -238,7 +248,7 @@ export interface SelectApiProps<T extends CollectionItem = CollectionItem>
    * The callback fired when the highlighted item changes.
    */
   onHighlightChange?:
-    | ((value: string | null, details: HighlightChangeDetails<T>) => void)
+    | ((value: string | null, details: SelectHighlightChangeDetails<T>) => void)
     | undefined
 
   /**

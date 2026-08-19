@@ -81,7 +81,7 @@ export function FiltersClientSideDemo() {
 
   const table = useReactTable<User>({
     columns: userColumns,
-    data,
+    data: useMemo(() => data, [data]),
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

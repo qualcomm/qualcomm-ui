@@ -1,5 +1,28 @@
 # @qualcomm-ui/react Changelog
 
+## 1.28.0
+
+Aug 18th, 2026
+
+### Features
+
+* [list-item]: add simple and compound components ([d60852c](https://github.com/qualcomm/qualcomm-ui/commit/d60852c))
+* [radio]: add checkbox-style controls ([f87748f](https://github.com/qualcomm/qualcomm-ui/commit/f87748f))
+* [listbox]: add styled react components ([03b1f06](https://github.com/qualcomm/qualcomm-ui/commit/03b1f06))
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Tests
+
+* [listbox]: cover component selection ([ca10975](https://github.com/qualcomm/qualcomm-ui/commit/ca10975))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/qds-core@1.36.0, @qualcomm-ui/utils@1.4.0, @qualcomm-ui/react-core@1.6.0]
+
 ## 1.27.5
 
 Aug 16th, 2026

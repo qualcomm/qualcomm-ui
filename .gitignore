@@ -110,6 +110,7 @@ packages/**/.vitest-attachments
 .fleet/
 .idea/*
 !.idea/externalDependencies.xml
+!.idea/bookmarks.json
 .webstorm/backup
 .ai
 

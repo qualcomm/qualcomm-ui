@@ -900,6 +900,79 @@
     ]
   },
   {
+    "list-item": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/list-item+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/list-item+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/list-item"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/list-item"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/list-item"
+      }
+    ]
+  },
+  {
+    "listbox": [
+      {
+        "description": "angular-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/angular-docs/src/routes/components+/listbox+"
+      },
+      {
+        "description": "react-docs",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/docs/react-docs/src/routes/components+/listbox+"
+      },
+      {
+        "description": "angular",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular/src/listbox"
+      },
+      {
+        "description": "angular-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/angular-core/src/listbox"
+      },
+      {
+        "description": "react",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react/src/listbox"
+      },
+      {
+        "description": "react-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/frameworks/react-core/src/listbox"
+      },
+      {
+        "description": "core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/core/src/listbox"
+      },
+      {
+        "description": "qds-core",
+        "provider": "com.intellij.ide.bookmark.providers.LineBookmarkProvider",
+        "url": "file://$PROJECT_DIR$/packages/common/qds-core/src/listbox"
+      }
+    ]
+  },
+  {
     "input": [
       {
         "description": "angular",

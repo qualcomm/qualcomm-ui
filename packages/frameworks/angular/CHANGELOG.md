@@ -1,5 +1,21 @@
 # @qualcomm-ui/angular Changelog
 
+## 3.1.0
+
+Aug 18th, 2026
+
+### Features
+
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/qds-core@1.36.0, @qualcomm-ui/utils@1.4.0, @qualcomm-ui/angular-core@3.1.0]
+
 ## 3.0.0
 
 Aug 16th, 2026
