@@ -21,8 +21,9 @@ import {
 } from "@qualcomm-ui/react-router-utils/client"
 
 import {AppHeader} from "./components/app-header"
-import "./globals.css"
 import {themeCookie} from "./sessions.server"
+
+import "./globals.css"
 
 export const links: LinksFunction = () => [
   {href: "https://fonts.googleapis.com", rel: "preconnect"},
