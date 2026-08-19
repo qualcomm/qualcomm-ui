@@ -53,6 +53,14 @@
     cursor: unset;
     user-select: none;
   }
+
+  &:has([data-radio-part="item-hidden-input"]:focus-visible) {
+    .qui-radio__control {
+      border-color: var(--color-interactive-border-neutral-hover);
+      outline: solid 2px var(--color-utility-focus-border);
+      outline-offset: 1px;
+    }
+  }
 }
 
 .qui-radio__control {
