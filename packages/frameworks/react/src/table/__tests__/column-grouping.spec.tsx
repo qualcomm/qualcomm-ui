@@ -1,6 +1,9 @@
 import {useMemo, useState} from "react"
 
 import {Combine, Ungroup} from "lucide-react"
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {
   type ColumnDef,
@@ -11,9 +14,6 @@ import {
   type GroupingState,
 } from "@qualcomm-ui/core/table"
 import {flexRender, Table, useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -46,7 +46,7 @@ interface GroupingExampleProps {
 }
 
 function GroupingExample({onGroupingChange}: GroupingExampleProps) {
-  const data = useMemo(makeGuideUsers, [])
+  const data = useMemo(() => makeGuideUsers(), [])
   const [groupedColumnMode, setGroupedColumnMode] =
     useState<GroupingColumnMode>("reorder")
   const [expanded, setExpanded] = useControlledState({})
@@ -68,10 +68,7 @@ function GroupingExample({onGroupingChange}: GroupingExampleProps) {
 
   return (
     <>
-      <button
-        onClick={() => setGroupedColumnMode("remove")}
-        type="button"
-      >
+      <button onClick={() => setGroupedColumnMode("remove")} type="button">
         Hide grouped columns
       </button>
       <output aria-live="polite">
@@ -138,9 +135,7 @@ describe("Column Grouping Guide", () => {
 
     await page.getByRole("button", {name: "Group Team"}).click()
 
-    await expect.poll(() => onGroupingChange).toHaveBeenLastCalledWith([
-      "team",
-    ])
+    await expect.poll(() => onGroupingChange).toHaveBeenLastCalledWith(["team"])
     await expect
       .element(page.getByText("Visible columns: team, name, visits"))
       .toBeVisible()

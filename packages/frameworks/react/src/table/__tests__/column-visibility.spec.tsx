@@ -1,14 +1,15 @@
 import {useMemo} from "react"
 
+import {describe, expect, test} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type ColumnDef,
   getCoreRowModel,
   type VisibilityState,
 } from "@qualcomm-ui/core/table"
 import {useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -37,10 +38,9 @@ const columns: ColumnDef<GuideUser>[] = [
 ]
 
 function ColumnVisibilityExample() {
-  const data = useMemo(makeGuideUsers, [])
-  const [columnVisibility, setColumnVisibility] = useControlledState<VisibilityState>(
-    {},
-  )
+  const data = useMemo(() => makeGuideUsers(), [])
+  const [columnVisibility, setColumnVisibility] =
+    useControlledState<VisibilityState>({})
   const table = useReactTable({
     columns,
     data,
@@ -58,7 +58,9 @@ function ColumnVisibilityExample() {
             <input
               checked={column.getIsVisible()}
               disabled={!column.getCanHide()}
-              onChange={(event) => column.toggleVisibility(event.currentTarget.checked)}
+              onChange={(event) =>
+                column.toggleVisibility(event.currentTarget.checked)
+              }
               type="checkbox"
             />
             Show {String(column.columnDef.header)}

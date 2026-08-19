@@ -154,6 +154,12 @@ export function makeHierarchicalGuideUsers(): GuideUser[] {
   return hierarchicalUsers.map(cloneUser)
 }
 
-export function getServerPage(pageIndex: number, pageSize: number): GuideUser[] {
-  return makeGuideUsers().slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+export function getServerPage(
+  pageIndex: number,
+  pageSize: number,
+): GuideUser[] {
+  return makeGuideUsers().slice(
+    pageIndex * pageSize,
+    (pageIndex + 1) * pageSize,
+  )
 }

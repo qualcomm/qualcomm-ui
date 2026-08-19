@@ -1,5 +1,9 @@
 import {useMemo} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type Cell,
   type ColumnDef,
@@ -9,9 +13,6 @@ import {
   type Row,
 } from "@qualcomm-ui/core/table"
 import {flexRender, Table, useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -44,12 +45,7 @@ interface PinnedTableProps {
   rows: Row<GuideUser>[]
 }
 
-function PinnedTable({
-  getCells,
-  headerGroups,
-  label,
-  rows,
-}: PinnedTableProps) {
+function PinnedTable({getCells, headerGroups, label, rows}: PinnedTableProps) {
   return (
     <Table.Root>
       <Table.ScrollContainer>
@@ -76,10 +72,7 @@ function PinnedTable({
               <Table.Row key={row.id}>
                 {getCells(row).map((cell) => (
                   <Table.Cell key={cell.id} cell={cell}>
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext(),
-                    )}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Table.Cell>
                 ))}
               </Table.Row>
@@ -98,11 +91,12 @@ interface ColumnPinningExampleProps {
 function ColumnPinningExample({
   onColumnPinningChange,
 }: ColumnPinningExampleProps) {
-  const data = useMemo(makeGuideUsers, [])
-  const [columnPinning, setColumnPinning] = useControlledState<ColumnPinningState>(
-    {left: [], right: []},
-    onColumnPinningChange,
-  )
+  const data = useMemo(() => makeGuideUsers(), [])
+  const [columnPinning, setColumnPinning] =
+    useControlledState<ColumnPinningState>(
+      {left: [], right: []},
+      onColumnPinningChange,
+    )
   const table = useReactTable({
     columns,
     data,
@@ -126,10 +120,7 @@ function ColumnPinningExample({
       >
         Pin Role right
       </button>
-      <button
-        onClick={() => table.getColumn("name")?.pin(false)}
-        type="button"
-      >
+      <button onClick={() => table.getColumn("name")?.pin(false)} type="button">
         Unpin Name
       </button>
       {table.getIsSomeColumnsPinned("left") ? (
@@ -168,10 +159,12 @@ describe("Column Pinning Guide", () => {
 
     await page.getByRole("button", {name: "Pin Name left"}).click()
 
-    await expect.poll(() => onColumnPinningChange).toHaveBeenLastCalledWith({
-      left: ["name"],
-      right: [],
-    })
+    await expect
+      .poll(() => onColumnPinningChange)
+      .toHaveBeenLastCalledWith({
+        left: ["name"],
+        right: [],
+      })
     await expect
       .element(page.getByRole("table", {name: "Left pinned columns"}))
       .toBeVisible()
@@ -197,9 +190,7 @@ describe("Column Pinning Guide", () => {
       .not.toBeInTheDocument()
     await expect
       .element(
-        page
-          .getByRole("table", {name: "Center columns"})
-          .getByText("Name"),
+        page.getByRole("table", {name: "Center columns"}).getByText("Name"),
       )
       .toBeVisible()
   })

@@ -1,5 +1,9 @@
 import {useMemo} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type ColumnDef,
   type ColumnOrderState,
@@ -7,9 +11,6 @@ import {
   getCoreRowModel,
 } from "@qualcomm-ui/core/table"
 import {useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -43,14 +44,13 @@ interface ColumnOrderingExampleProps {
 function ColumnOrderingExample({
   onColumnOrderChange,
 }: ColumnOrderingExampleProps) {
-  const data = useMemo(makeGuideUsers, [])
+  const data = useMemo(() => makeGuideUsers(), [])
   const [columnOrder, setColumnOrder] = useControlledState<ColumnOrderState>(
     ["name", "team", "role"],
     onColumnOrderChange,
   )
-  const [columnPinning, setColumnPinning] = useControlledState<ColumnPinningState>(
-    {left: [], right: []},
-  )
+  const [columnPinning, setColumnPinning] =
+    useControlledState<ColumnPinningState>({left: [], right: []})
   const table = useReactTable({
     columns,
     data,
@@ -98,11 +98,9 @@ describe("Column Ordering Guide", () => {
 
     await page.getByRole("button", {name: "Move Role first"}).click()
 
-    await expect.poll(() => onColumnOrderChange).toHaveBeenLastCalledWith([
-      "role",
-      "name",
-      "team",
-    ])
+    await expect
+      .poll(() => onColumnOrderChange)
+      .toHaveBeenLastCalledWith(["role", "name", "team"])
     await expect
       .element(page.getByText("Visible columns: role, name, team"))
       .toBeVisible()

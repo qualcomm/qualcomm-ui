@@ -1,5 +1,9 @@
 import {useEffect, useMemo, useState} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -8,10 +12,11 @@ import {
   type TableInstance,
 } from "@qualcomm-ui/core/table"
 import {Pagination} from "@qualcomm-ui/react/pagination"
-import {Table, useReactTable, useTablePagination} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
+import {
+  Table,
+  useReactTable,
+  useTablePagination,
+} from "@qualcomm-ui/react/table"
 
 import {getServerPage, makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -51,7 +56,7 @@ function PaginationControls({
 }
 
 function ClientPaginationExample() {
-  const data = useMemo(makeGuideUsers, [])
+  const data = useMemo(() => makeGuideUsers(), [])
   const [pagination, setPagination] = useControlledState<PaginationState>({
     pageIndex: 0,
     pageSize: 2,
@@ -89,11 +94,13 @@ function ServerPaginationExample({loadPage}: ServerPaginationExampleProps) {
   useEffect(() => {
     let active = true
 
-    void loadPage(pagination.pageIndex, pagination.pageSize).then((nextData) => {
-      if (active) {
-        setData(nextData)
-      }
-    })
+    void loadPage(pagination.pageIndex, pagination.pageSize).then(
+      (nextData) => {
+        if (active) {
+          setData(nextData)
+        }
+      },
+    )
 
     return () => {
       active = false
@@ -122,16 +129,12 @@ describe("Pagination Guide", () => {
   test("moves client-side rows between pages", async () => {
     await render(<ClientPaginationExample />)
 
-    await expect
-      .element(page.getByText("Showing 1-2 of 6 users"))
-      .toBeVisible()
+    await expect.element(page.getByText("Showing 1-2 of 6 users")).toBeVisible()
     await expect.element(page.getByText("Ada Lovelace")).toBeVisible()
 
     await page.getByRole("button", {name: "Go to next page"}).click()
 
-    await expect
-      .element(page.getByText("Showing 3-4 of 6 users"))
-      .toBeVisible()
+    await expect.element(page.getByText("Showing 3-4 of 6 users")).toBeVisible()
     await expect.element(page.getByText("Alicia Stone")).toBeVisible()
     await expect.element(page.getByText("Ada Lovelace")).not.toBeInTheDocument()
   })
@@ -142,15 +145,16 @@ describe("Pagination Guide", () => {
     await page.getByLabelText("Rows per page").click()
     await page.getByRole("menuitem", {name: "3"}).click()
 
-    await expect
-      .element(page.getByText("Showing 1-3 of 6 users"))
-      .toBeVisible()
+    await expect.element(page.getByText("Showing 1-3 of 6 users")).toBeVisible()
     await expect.element(page.getByText("Alicia Stone")).toBeVisible()
   })
 
   test("loads the next server page from controlled pagination state", async () => {
-    const loadPage = vi.fn(async (pageIndex: number, pageSize: number) =>
-      getServerPage(pageIndex, pageSize),
+    const loadPage = vi.fn(
+      async (pageIndex: number, pageSize: number) =>
+        new Promise<GuideUser[]>((resolve) =>
+          setTimeout(() => resolve(getServerPage(pageIndex, pageSize)), 0),
+        ),
     )
 
     await render(<ServerPaginationExample loadPage={loadPage} />)

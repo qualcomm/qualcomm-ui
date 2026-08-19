@@ -31,21 +31,16 @@ export function GuideTable({
             {table.getHeaderGroups().map((headerGroup) => (
               <Table.Row key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Table.HeaderCell
-                    key={header.id}
-                    colSpan={header.colSpan}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : (
-                          <div>
-                            {flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                            {renderHeaderAction?.(header)}
-                          </div>
+                  <Table.HeaderCell key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <div>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
                         )}
+                        {renderHeaderAction?.(header)}
+                      </div>
+                    )}
                   </Table.HeaderCell>
                 ))}
               </Table.Row>

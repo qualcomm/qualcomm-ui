@@ -37,7 +37,7 @@ export function createGuideColumns(): ColumnDef<GuideUser>[] {
     {
       accessorKey: "rank",
       cell: (info) => {
-        const rank = info.getValue()
+        const rank = info.getValue() as string
         return rank === undefined ? "Unranked" : String(rank)
       },
       header: "Rank",

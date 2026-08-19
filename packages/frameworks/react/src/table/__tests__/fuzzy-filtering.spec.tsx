@@ -1,6 +1,9 @@
 import {useMemo} from "react"
 
 import Fuzzysort from "fuzzysort"
+import {describe, expect, test} from "vitest"
+import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
 
 import {
   type ColumnDef,
@@ -13,9 +16,6 @@ import {
   type SortingState,
 } from "@qualcomm-ui/core/table"
 import {Table, useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test} from "vitest"
-import {page, userEvent} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -46,10 +46,9 @@ const columns: ColumnDef<GuideUser>[] = [
 ]
 
 function FuzzyFilteringExample() {
-  const data = useMemo(makeGuideUsers, [])
-  const [columnFilters, setColumnFilters] = useControlledState<ColumnFiltersState>(
-    [],
-  )
+  const data = useMemo(() => makeGuideUsers(), [])
+  const [columnFilters, setColumnFilters] =
+    useControlledState<ColumnFiltersState>([])
   const [sorting, setSorting] = useControlledState<SortingState>([])
   const table = useReactTable({
     columns,

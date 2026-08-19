@@ -1,8 +1,8 @@
 import {useMemo} from "react"
 
 import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {
   type ColumnDef,
@@ -142,10 +142,7 @@ function BuiltInFilteringExample() {
 
   return (
     <>
-      <button
-        onClick={() => setFilter("includes", "ad")}
-        type="button"
-      >
+      <button onClick={() => setFilter("includes", "ad")} type="button">
         Find names containing ad
       </button>
       <button
@@ -154,10 +151,7 @@ function BuiltInFilteringExample() {
       >
         Find exact-case Alpha
       </button>
-      <button
-        onClick={() => setFilter("equalsString", "alpha")}
-        type="button"
-      >
+      <button onClick={() => setFilter("equalsString", "alpha")} type="button">
         Find names equal to alpha
       </button>
       <button onClick={() => setFilter("equals", "Active")} type="button">
@@ -201,9 +195,7 @@ function BuiltInFilteringExample() {
       </button>
       <button
         onClick={() =>
-          table
-            .getColumn("scoreRange")
-            ?.setFilterValue([undefined, undefined])
+          table.getColumn("scoreRange")?.setFilterValue([undefined, undefined])
         }
         type="button"
       >
@@ -440,10 +432,7 @@ function GroupedAggregationExample() {
 
   return (
     <>
-      <button
-        onClick={() => table.setGrouping(["category"])}
-        type="button"
-      >
+      <button onClick={() => table.setGrouping(["category"])} type="button">
         Summarize categories
       </button>
       <ul aria-label="Category summaries">
@@ -670,7 +659,9 @@ describe("Core Table Utilities", () => {
 
     await page.getByRole("button", {name: "Show active users"}).click()
 
-    await expect.element(page.getByText("Visible users: Ada, Grace")).toBeVisible()
+    await expect
+      .element(page.getByText("Visible users: Ada, Grace"))
+      .toBeVisible()
     await expect
       .element(
         page.getByText(
@@ -679,7 +670,9 @@ describe("Core Table Utilities", () => {
       )
       .toBeVisible()
     await expect.element(page.getByText("Visit range: 12 to 12")).toBeVisible()
-    await expect.element(page.getByText("Unavailable range: none")).toBeVisible()
+    await expect
+      .element(page.getByText("Unavailable range: none"))
+      .toBeVisible()
 
     await page.getByRole("button", {name: "Show all users"}).click()
     await expect

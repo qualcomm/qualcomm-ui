@@ -1,5 +1,9 @@
 import {useMemo} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -7,11 +11,12 @@ import {
   type RowSelectionState,
 } from "@qualcomm-ui/core/table"
 import {useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
-import {makeGuideUsers, makeHierarchicalGuideUsers, type GuideUser} from "./fixtures"
+import {
+  makeGuideUsers,
+  makeHierarchicalGuideUsers,
+  type GuideUser,
+} from "./fixtures"
 import {useControlledState} from "./state"
 import {GuideTable} from "./table-view"
 
@@ -42,7 +47,9 @@ function SelectionExample({
             aria-label={`Select ${row.original.name}`}
             checked={row.getIsSelected()}
             disabled={!row.getCanSelect()}
-            onChange={(event) => row.toggleSelected(event.currentTarget.checked)}
+            onChange={(event) =>
+              row.toggleSelected(event.currentTarget.checked)
+            }
             type="checkbox"
           />
         ),
@@ -98,9 +105,11 @@ describe("Row Selection Guide", () => {
     await ada.click()
 
     await expect.element(ada).toBeChecked()
-    await expect.poll(() => onRowSelectionChange).toHaveBeenLastCalledWith({
-      ada: true,
-    })
+    await expect
+      .poll(() => onRowSelectionChange)
+      .toHaveBeenLastCalledWith({
+        ada: true,
+      })
   })
 
   test("selects all eligible rows without selecting a disabled row", async () => {

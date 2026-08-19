@@ -1,5 +1,9 @@
 import {useMemo} from "react"
 
+import {describe, expect, test} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type ColumnDef,
   type ExpandedState,
@@ -9,11 +13,12 @@ import {
   type PaginationState,
 } from "@qualcomm-ui/core/table"
 import {Table, useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
-import {makeGuideUsers, makeHierarchicalGuideUsers, type GuideUser} from "./fixtures"
+import {
+  makeGuideUsers,
+  makeHierarchicalGuideUsers,
+  type GuideUser,
+} from "./fixtures"
 import {useControlledState} from "./state"
 import {GuideTable} from "./table-view"
 
@@ -31,8 +36,12 @@ const nestedColumns: ColumnDef<GuideUser>[] = [
   },
 ]
 
-function NestedExpansionExample({paginateExpandedRows = true}: {paginateExpandedRows?: boolean}) {
-  const data = useMemo(makeHierarchicalGuideUsers, [])
+function NestedExpansionExample({
+  paginateExpandedRows = true,
+}: {
+  paginateExpandedRows?: boolean
+}) {
+  const data = useMemo(() => makeHierarchicalGuideUsers(), [])
   const [expanded, setExpanded] = useControlledState<ExpandedState>({})
   const [pagination, setPagination] = useControlledState<PaginationState>({
     pageIndex: 0,
@@ -56,7 +65,7 @@ function NestedExpansionExample({paginateExpandedRows = true}: {paginateExpanded
 }
 
 function DetailExpansionExample() {
-  const data = useMemo(makeGuideUsers, [])
+  const data = useMemo(() => makeGuideUsers(), [])
   const [expanded, setExpanded] = useControlledState<ExpandedState>({})
   const table = useReactTable({
     columns: nestedColumns,
@@ -96,14 +105,18 @@ describe("Row Expansion Guide", () => {
     await expandButton.click()
 
     await expect.element(page.getByText("Mina Lovelace")).toBeVisible()
-    await expect.element(page.getByRole("button", {name: "Collapse row"})).toBeVisible()
+    await expect
+      .element(page.getByRole("button", {name: "Collapse row"}))
+      .toBeVisible()
 
     await page
       .getByRole("row", {name: "Collapse row Ada Lovelace"})
       .getByRole("button", {name: "Collapse row"})
       .click()
 
-    await expect.element(page.getByText("Mina Lovelace")).not.toBeInTheDocument()
+    await expect
+      .element(page.getByText("Mina Lovelace"))
+      .not.toBeInTheDocument()
   })
 
   test("renders custom detail content for a row without sub-rows", async () => {
@@ -114,7 +127,9 @@ describe("Row Expansion Guide", () => {
       .getByRole("button", {name: "Expand row"})
       .click()
 
-    await expect.element(page.getByText("Details for Ada Lovelace")).toBeVisible()
+    await expect
+      .element(page.getByText("Details for Ada Lovelace"))
+      .toBeVisible()
   })
 
   test("keeps expanded children on their parent page when configured", async () => {

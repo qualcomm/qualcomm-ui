@@ -1,14 +1,15 @@
 import {useMemo} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
+
 import {
   type ColumnDef,
   getCoreRowModel,
   getFilteredRowModel,
 } from "@qualcomm-ui/core/table"
 import {useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page, userEvent} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -45,7 +46,7 @@ function GlobalFilteringExample({
   manual = false,
   onGlobalFilterChange,
 }: GlobalFilteringExampleProps) {
-  const data = useMemo(makeGuideUsers, [])
+  const data = useMemo(() => makeGuideUsers(), [])
   const [globalFilter, setGlobalFilter] = useControlledState(
     "",
     onGlobalFilterChange,
@@ -107,9 +108,9 @@ describe("Global Filtering Guide", () => {
 
     await userEvent.type(page.getByLabelText("Search users"), "Platform")
 
-    await expect.poll(() => onGlobalFilterChange).toHaveBeenLastCalledWith(
-      "Platform",
-    )
+    await expect
+      .poll(() => onGlobalFilterChange)
+      .toHaveBeenLastCalledWith("Platform")
     await expect.element(page.getByText("Grace Hopper")).toBeVisible()
   })
 })

@@ -1,5 +1,9 @@
 import {useMemo} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
+
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -8,11 +12,12 @@ import {
   getFilteredRowModel,
 } from "@qualcomm-ui/core/table"
 import {useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page, userEvent} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
-import {makeGuideUsers, makeHierarchicalGuideUsers, type GuideUser} from "./fixtures"
+import {
+  makeGuideUsers,
+  makeHierarchicalGuideUsers,
+  type GuideUser,
+} from "./fixtures"
 import {useControlledState} from "./state"
 import {GuideTable} from "./table-view"
 
@@ -47,11 +52,9 @@ function FilteringExample({
   manual = false,
   onFiltersChange,
 }: FilteringExampleProps) {
-  const data = useMemo(makeGuideUsers, [])
-  const [columnFilters, setColumnFilters] = useControlledState<ColumnFiltersState>(
-    [],
-    onFiltersChange,
-  )
+  const data = useMemo(() => makeGuideUsers(), [])
+  const [columnFilters, setColumnFilters] =
+    useControlledState<ColumnFiltersState>([], onFiltersChange)
   const table = useReactTable({
     columns,
     data,
@@ -83,7 +86,9 @@ function FilteringExample({
             const value = event.currentTarget.value
             table
               .getColumn("visits")
-              ?.setFilterValue(value === "" ? undefined : [Number(value), undefined])
+              ?.setFilterValue(
+                value === "" ? undefined : [Number(value), undefined],
+              )
           }}
           type="number"
           value={visitRange?.[0] ?? ""}
@@ -98,10 +103,9 @@ function FilteringExample({
 }
 
 function LeafFilteringExample() {
-  const data = useMemo(makeHierarchicalGuideUsers, [])
-  const [columnFilters, setColumnFilters] = useControlledState<ColumnFiltersState>(
-    [],
-  )
+  const data = useMemo(() => makeHierarchicalGuideUsers(), [])
+  const [columnFilters, setColumnFilters] =
+    useControlledState<ColumnFiltersState>([])
   const table = useReactTable({
     columns,
     data,
@@ -139,7 +143,9 @@ describe("Column Filtering Guide", () => {
 
     await expect.element(page.getByText("Ada Lovelace")).toBeVisible()
     await expect.element(page.getByText("Alicia Stone")).toBeVisible()
-    await expect.element(page.getByText("Alice Johnson")).not.toBeInTheDocument()
+    await expect
+      .element(page.getByText("Alice Johnson"))
+      .not.toBeInTheDocument()
 
     await page.getByRole("button", {name: "Clear filters"}).click()
 
@@ -169,15 +175,13 @@ describe("Column Filtering Guide", () => {
   test("publishes filters without transforming supplied rows in manual mode", async () => {
     const onFiltersChange = vi.fn()
 
-    await render(
-      <FilteringExample manual onFiltersChange={onFiltersChange} />,
-    )
+    await render(<FilteringExample manual onFiltersChange={onFiltersChange} />)
 
     await userEvent.type(page.getByLabelText("Filter role"), "Admin")
 
-    await expect.poll(() => onFiltersChange).toHaveBeenLastCalledWith([
-      {id: "role", value: "Admin"},
-    ])
+    await expect
+      .poll(() => onFiltersChange)
+      .toHaveBeenLastCalledWith([{id: "role", value: "Admin"}])
     await expect.element(page.getByText("Linus Torvalds")).toBeVisible()
   })
 })

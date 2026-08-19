@@ -1,14 +1,15 @@
 import {useMemo} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type ColumnDef,
   type ColumnSizingState,
   getCoreRowModel,
 } from "@qualcomm-ui/core/table"
 import {useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -37,10 +38,8 @@ interface ColumnSizingExampleProps {
   onColumnSizingChange?: (columnSizing: ColumnSizingState) => void
 }
 
-function ColumnSizingExample({
-  onColumnSizingChange,
-}: ColumnSizingExampleProps) {
-  const data = useMemo(makeGuideUsers, [])
+function ColumnSizingExample({onColumnSizingChange}: ColumnSizingExampleProps) {
+  const data = useMemo(() => makeGuideUsers(), [])
   const [columnSizing, setColumnSizing] = useControlledState<ColumnSizingState>(
     {},
     onColumnSizingChange,
@@ -55,16 +54,10 @@ function ColumnSizingExample({
 
   return (
     <>
-      <button
-        onClick={() => table.setColumnSizing({name: 120})}
-        type="button"
-      >
+      <button onClick={() => table.setColumnSizing({name: 120})} type="button">
         Set Name width to 120
       </button>
-      <button
-        onClick={() => table.setColumnSizing({name: 240})}
-        type="button"
-      >
+      <button onClick={() => table.setColumnSizing({name: 240})} type="button">
         Set Name width to 240
       </button>
       <button
@@ -85,24 +78,24 @@ describe("Column Sizing Guide", () => {
   test("updates controlled column sizing through the public table API", async () => {
     const onColumnSizingChange = vi.fn()
 
-    await render(<ColumnSizingExample onColumnSizingChange={onColumnSizingChange} />)
+    await render(
+      <ColumnSizingExample onColumnSizingChange={onColumnSizingChange} />,
+    )
 
-    await page
-      .getByRole("button", {name: "Set Name width to 120"})
-      .click()
+    await page.getByRole("button", {name: "Set Name width to 120"}).click()
 
-    await expect.poll(() => onColumnSizingChange).toHaveBeenLastCalledWith({
-      name: 120,
-    })
+    await expect
+      .poll(() => onColumnSizingChange)
+      .toHaveBeenLastCalledWith({
+        name: 120,
+      })
     await expect.element(page.getByText("Name column size: 120")).toBeVisible()
   })
 
   test("restores the configured width through the public column API", async () => {
     await render(<ColumnSizingExample />)
 
-    await page
-      .getByRole("button", {name: "Set Name width to 120"})
-      .click()
+    await page.getByRole("button", {name: "Set Name width to 120"}).click()
 
     await expect.element(page.getByText("Name column size: 120")).toBeVisible()
 
@@ -114,9 +107,7 @@ describe("Column Sizing Guide", () => {
   test("limits an externally controlled width to the configured maximum", async () => {
     await render(<ColumnSizingExample />)
 
-    await page
-      .getByRole("button", {name: "Set Name width to 240"})
-      .click()
+    await page.getByRole("button", {name: "Set Name width to 240"}).click()
 
     await expect.element(page.getByText("Name column size: 200")).toBeVisible()
   })

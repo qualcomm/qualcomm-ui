@@ -1,5 +1,9 @@
 import {useMemo} from "react"
 
+import {describe, expect, test, vi} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
+
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -7,9 +11,6 @@ import {
   type SortingState,
 } from "@qualcomm-ui/core/table"
 import {Table, useReactTable} from "@qualcomm-ui/react/table"
-import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
-import {render} from "vitest-browser-react"
 
 import {makeGuideUsers, type GuideUser} from "./fixtures"
 import {useControlledState} from "./state"
@@ -31,7 +32,7 @@ const columns: ColumnDef<GuideUser>[] = [
   {
     accessorKey: "rank",
     cell: (info) => {
-      const rank = info.getValue()
+      const rank = info.getValue() as string
       return rank === undefined ? "Unranked" : String(rank)
     },
     header: "Rank",
@@ -112,10 +113,12 @@ describe("Sorting Guide", () => {
       .getByRole("button", {name: "Sort team"})
       .click({modifiers: ["Shift"]})
 
-    await expect.poll(() => onSortingChange).toHaveBeenLastCalledWith([
-      {desc: false, id: "name"},
-      {desc: false, id: "team"},
-    ])
+    await expect
+      .poll(() => onSortingChange)
+      .toHaveBeenLastCalledWith([
+        {desc: false, id: "name"},
+        {desc: false, id: "team"},
+      ])
   })
 
   test("places undefined values first when configured", async () => {
@@ -125,9 +128,9 @@ describe("Sorting Guide", () => {
 
     await page.getByRole("button", {name: "Sort rank"}).click()
 
-    await expect.poll(() => onSortingChange).toHaveBeenLastCalledWith([
-      {desc: false, id: "rank"},
-    ])
+    await expect
+      .poll(() => onSortingChange)
+      .toHaveBeenLastCalledWith([{desc: false, id: "rank"}])
     await expect
       .element(page.getByText(/Visible users: Alice Johnson/))
       .toBeVisible()
@@ -140,9 +143,9 @@ describe("Sorting Guide", () => {
 
     await page.getByRole("button", {name: "Sort name"}).click()
 
-    await expect.poll(() => onSortingChange).toHaveBeenLastCalledWith([
-      {desc: false, id: "name"},
-    ])
+    await expect
+      .poll(() => onSortingChange)
+      .toHaveBeenLastCalledWith([{desc: false, id: "name"}])
     await expect
       .element(page.getByText(/Visible users: Margaret Hamilton/))
       .toBeVisible()
