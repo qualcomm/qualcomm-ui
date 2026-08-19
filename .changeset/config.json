@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
   "changelog": [
     "../node_modules/@qualcomm-ui/changesets-cli/dist/changelog-formatter.cjs",
     {
@@ -24,9 +24,12 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
+  "privatePackages": {
+    "version": true,
+    "tag": false
+  },
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
-    "updateInternalDependents": "always",
-    "onlyUpdatePeerDependentsWhenOutOfRange": false
+    "updateInternalDependents": "always"
   },
   "ignore": [
     "@qualcomm-ui/angular-docs",

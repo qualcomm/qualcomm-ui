@@ -60,7 +60,7 @@
     "bump": "pnpm qui-changesets prep-release --include-commit-links && pnpm qui-changesets update-jsdoc-since-tags"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
+    "@changesets/cli": "^3.0.0",
     "@clack/prompts": "1.0.0-alpha.6",
     "@commander-js/extra-typings": "catalog:",
     "@eslint/js": "catalog:",
