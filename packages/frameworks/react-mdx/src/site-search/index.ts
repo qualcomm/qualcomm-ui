@@ -1,5 +1,7 @@
 export * from "./grouped-result-item.js"
 export * from "./search-result-item.js"
+export * from "./semantic-search-result-item.js"
+export * from "./semantic-site-search.js"
 export * from "./site-search.js"
 export * from "./use-grouped-results.js"
 export * from "./use-site-search.js"

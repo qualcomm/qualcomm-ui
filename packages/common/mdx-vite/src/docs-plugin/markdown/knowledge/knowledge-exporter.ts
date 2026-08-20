@@ -470,7 +470,6 @@ export class KnowledgeExporter {
         const pageInfo = {
           frontmatter: {},
           id: extraFile.id,
-          pathname: `/${extraFile.id}`,
           title: extraFile.title || extraFile.id,
         }
 

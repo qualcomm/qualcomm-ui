@@ -297,7 +297,7 @@ export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
  */
 export interface PagesExportConfig {
   /**
-   * Output path for pages.json, relative to the public directory.
+   * Output path for pages.json, relative to the knowledge output directory.
    * @default 'pages.json'
    */
   outputPath?: string
@@ -320,7 +320,7 @@ export interface SectionExportConfig {
   minContentLength?: number
 
   /**
-   * Output path for sections.json, relative to the public directory.
+   * Output path for sections.json, relative to the knowledge output directory.
    * @default 'sections.json'
    */
   outputPath?: string
