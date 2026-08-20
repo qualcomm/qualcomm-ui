@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/react-core",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Design-agnostic React building blocks and utilities.",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -48,7 +48,7 @@
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/core": "workspace:^1.12.0",
     "@qualcomm-ui/dom": "workspace:^1.2.0",
-    "@qualcomm-ui/react-test-utils": "workspace:^1.0.5",
+    "@qualcomm-ui/react-test-utils": "workspace:^1.0.6",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/utils": "workspace:^1.4.0",
     "@qualcomm-ui/vite": "catalog:",
