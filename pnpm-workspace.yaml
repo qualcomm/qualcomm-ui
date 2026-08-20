@@ -68,7 +68,7 @@ catalog:
   "@typescript-eslint/parser": 8.67.0
   "@typescript-eslint/rule-tester": 8.67.0
   "@typescript-eslint/utils": 8.67.0
-  "@vitejs/plugin-react": 6.0.5
+  "@vitejs/plugin-react": 6.1.0
   "@vitest/browser": 4.1.10
   "@vitest/browser-playwright": 4.1.10
   "@vitest/coverage-v8": 4.1.10
@@ -106,3 +106,4 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@qualcomm-ui/*"
   - "vite"
+  - "@vitejs/plugin-react@6.1.0"
