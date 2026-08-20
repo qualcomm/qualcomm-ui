@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-test-utils
 
+## 1.0.6
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
 ## 1.0.5
 
 Jul 16th, 2026

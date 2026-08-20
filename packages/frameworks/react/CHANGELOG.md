@@ -1,5 +1,17 @@
 # @qualcomm-ui/react Changelog
 
+## 1.28.1
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react-core@1.6.1]
+
 ## 1.28.0
 
 Aug 18th, 2026
