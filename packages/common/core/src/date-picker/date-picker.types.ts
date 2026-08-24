@@ -726,6 +726,7 @@ export interface DatePickerSchema extends MachineSchema {
     | "trackDismissableElement"
     | "trackFormControlState"
     | "trackPositioning"
+    | "trapFocus"
   >
   events: Events
   guards: GuardSchema<

@@ -16,6 +16,7 @@ import {
 
 import {trackDismissableElement} from "@qualcomm-ui/dom/dismissable"
 import {getPlacement, type Placement} from "@qualcomm-ui/dom/floating-ui"
+import {trapFocus} from "@qualcomm-ui/dom/focus-trap"
 import {createLiveRegion} from "@qualcomm-ui/dom/live-region"
 import {
   disableTextSelection,
@@ -1012,6 +1013,17 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           },
         })
       },
+
+      trapFocus({prop, scope}) {
+        if (prop("inline")) {
+          return
+        }
+
+        return trapFocus([domEls.control(scope), domEls.content(scope)], {
+          initialFocus: false,
+          returnFocusOnDeactivate: false,
+        })
+      },
     },
 
     guards: {
@@ -1423,7 +1435,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
       },
 
       open: {
-        effects: ["trackDismissableElement", "trackPositioning"],
+        effects: ["trackDismissableElement", "trackPositioning", "trapFocus"],
         entry: [
           "snapshotValue",
           "resumeRangeSelection",
