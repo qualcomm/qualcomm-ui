@@ -365,7 +365,9 @@ describe("DatePicker - Multiple", () => {
 
       await page.getByRole("button", {name: "Swap mode"}).click()
 
-      const trigger = page.getByRole("button", {name: /open calendar/i})
+      const trigger = page.getByRole("button", {
+        name: /(?:choose|change) date/i,
+      })
       await expect.element(trigger).toBeVisible()
       await trigger.click()
       await expect.element(page.getByRole("grid")).toBeVisible()
@@ -433,7 +435,7 @@ describe("DatePicker - Multiple", () => {
       await render(<Simple />)
 
       await expect
-        .element(page.getByRole("button", {name: /open calendar/i}))
+        .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
         .not.toBeInTheDocument()
     })
   })

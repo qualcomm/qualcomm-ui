@@ -57,13 +57,15 @@ const tests: MultiComponentTestCase[] = [
 
         await expect.element(page.getByRole("grid")).not.toBeInTheDocument()
 
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await userEvent.keyboard("{Escape}")
         await expect.element(page.getByRole("grid")).not.toBeInTheDocument()
         await expect
-          .element(page.getByRole("button", {name: /open calendar/i}))
+          .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
           .toHaveFocus()
       })
     },
@@ -75,7 +77,9 @@ const tests: MultiComponentTestCase[] = [
       test("toggles closed when the trigger is clicked while open", async () => {
         await render(getComponent())
 
-        const trigger = page.getByRole("button", {name: /calendar/i})
+        const trigger = page.getByRole("button", {
+          name: /(?:choose|change) date|close calendar/i,
+        })
         await trigger.click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 

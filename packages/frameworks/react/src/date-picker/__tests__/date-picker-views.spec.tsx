@@ -78,7 +78,7 @@ function Simple(props: Partial<DatePickerProps>) {
 }
 
 const openCalendar = () =>
-  page.getByRole("button", {name: /open calendar/i}).click()
+  page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
 /**
  * Only the active view is exposed to the a11y tree, so the single visible grid

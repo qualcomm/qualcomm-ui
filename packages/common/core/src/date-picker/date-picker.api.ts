@@ -140,10 +140,19 @@ export function createDatePickerApi(
     ...defaultTranslations,
     ...compact(prop("translations")),
   }
+  const inputFormat = getInputPlaceholder(locale!)
 
   const dayFormatter = getDayFormatter(locale!, timeZone!, focusedValue)
   const monthFormatter = getMonthFormatter(locale!, timeZone!, focusedValue)
   const unitDuration = getUnitDuration(computed("visibleDuration"))
+
+  const triggerLabel = translations.trigger({
+    open,
+    selectionMode: prop("selectionMode")!,
+    valueText: selectedValue.map((date) =>
+      date ? dayFormatter.format(date.toDate(timeZone!)) : undefined,
+    ),
+  })
 
   function getMonthWeeks(from = startValue) {
     const numOfWeeks = prop("fixedWeeks") ? 6 : undefined
@@ -578,7 +587,7 @@ export function createDatePickerApi(
         "data-state": open ? "open" : "closed",
         hidden: !open,
         id: props.id,
-        role: "application",
+        role: prop("inline") ? "group" : "dialog",
         tabIndex: -1,
       })
     },
@@ -726,9 +735,10 @@ export function createDatePickerApi(
       return normalize.input({
         ...commonProps,
         "aria-describedby": mergeAriaIds(
-          domIds.hint(scope),
+          invalid ? undefined : domIds.hint(scope),
           invalid ? domIds.errorText(scope) : undefined,
         ),
+        "aria-description": translations.inputDescription(inputFormat),
         "aria-invalid": booleanAriaAttr(invalid),
         "aria-label": isRangePicker
           ? index === 0
@@ -809,7 +819,7 @@ export function createDatePickerApi(
             event.preventDefault()
           }
         },
-        placeholder: prop("placeholder") || getInputPlaceholder(locale!),
+        placeholder: prop("placeholder") || inputFormat,
         readOnly,
         required: prop("required"),
         spellCheck: "false",
@@ -836,9 +846,9 @@ export function createDatePickerApi(
         "aria-controls": domIds.content(scope),
         "aria-disabled": booleanAriaAttr(disabled),
         "aria-expanded": open,
-        "aria-haspopup": "grid",
+        "aria-haspopup": "dialog",
         "aria-invalid": booleanAriaAttr(invalid),
-        "aria-label": translations.trigger(open),
+        "aria-label": triggerLabel,
         "aria-readonly": booleanAriaAttr(readOnly),
         "aria-required": booleanAriaAttr(prop("required")),
         "data-disabled": booleanDataAttr(disabled),
@@ -1266,8 +1276,8 @@ export function createDatePickerApi(
         ...commonProps,
         "aria-controls": domIds.content(scope),
         "aria-expanded": open,
-        "aria-haspopup": "grid",
-        "aria-label": translations.trigger(open),
+        "aria-haspopup": "dialog",
+        "aria-label": triggerLabel,
         ...parts.trigger,
         "data-placeholder-shown": booleanDataAttr(empty),
         "data-placement": currentPlacement,
@@ -1294,6 +1304,7 @@ export function createDatePickerApi(
         ...parts.view,
         "data-view": view,
         hidden: context.get("view") !== view,
+        role: "application",
       })
     },
     getViewCloseTriggerBindings() {

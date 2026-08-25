@@ -16,7 +16,7 @@ const seeded = parseDate("2024-06-15")
 const grid = () => page.getByRole("grid")
 const input = () => page.getByRole("textbox")
 const openCalendar = () =>
-  page.getByRole("button", {name: /open calendar/i}).click()
+  page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
 async function openAndWait() {
   await openCalendar()
@@ -285,7 +285,7 @@ describe("DatePicker - Controlled", () => {
 
     await expect.element(grid()).not.toBeInTheDocument()
     await expect
-      .element(page.getByRole("button", {name: /open calendar/i}))
+      .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
       .toHaveFocus()
   })
 

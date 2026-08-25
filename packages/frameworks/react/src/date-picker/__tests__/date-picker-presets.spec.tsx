@@ -78,7 +78,7 @@ function Simple(props: Partial<DatePickerProps>) {
 }
 
 const openCalendar = () =>
-  page.getByRole("button", {name: /open calendar/i}).click()
+  page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 const presetsTrigger = () => page.getByRole("button", {name: /show presets/i})
 const calendarTrigger = () => page.getByRole("button", {name: /show calendar/i})
 const startInput = () => page.getByRole("textbox", {name: /start date/i})

@@ -157,7 +157,7 @@ describe("DatePicker - Form", () => {
       </Form>,
     )
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
     await submit()
 
@@ -275,7 +275,7 @@ describe("DatePicker - Form", () => {
     await reset()
     await expect.element(startInput).toHaveValue("")
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 12, 2024/}).click()
 
     await expect.element(startInput).toHaveValue("06/12/2024")

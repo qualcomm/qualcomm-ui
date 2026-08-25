@@ -59,7 +59,7 @@ const tests: MultiComponentTestCase[] = [
         await render(getComponent())
 
         await expect
-          .element(page.getByRole("button", {name: /open calendar/i}))
+          .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
           .toBeDisabled()
         await expect.element(page.getByRole("grid")).not.toBeInTheDocument()
       })
@@ -72,7 +72,9 @@ const tests: MultiComponentTestCase[] = [
       test("readOnly leaves the trigger enabled but does not open the popover", async () => {
         await render(getComponent())
 
-        const trigger = page.getByRole("button", {name: /open calendar/i})
+        const trigger = page.getByRole("button", {
+          name: /(?:choose|change) date/i,
+        })
         await expect.element(trigger).not.toBeDisabled()
 
         await trigger.click()

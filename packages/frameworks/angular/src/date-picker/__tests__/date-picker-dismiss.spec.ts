@@ -32,7 +32,8 @@ function withOutside(rootAttrs?: string) {
 }
 
 const grid = () => page.getByRole("grid")
-const trigger = () => page.getByRole("button", {name: /open calendar/i})
+const trigger = () =>
+  page.getByRole("button", {name: /(?:choose|change) date/i})
 const openCalendar = () => trigger().click()
 const outsideButton = () =>
   page.getByRole("button", {name: "Focusable outside"})

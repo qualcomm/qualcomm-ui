@@ -71,7 +71,7 @@ const focusedCell = () =>
   page.getByRole("button", {exact: false, name: /June 15, 2024/})
 
 const openCalendar = () =>
-  page.getByRole("button", {name: /open calendar/i}).click()
+  page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
 const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
   {

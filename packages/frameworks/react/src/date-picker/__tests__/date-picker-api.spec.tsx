@@ -281,7 +281,7 @@ describe("DatePicker - API", () => {
     await expect.element(input()).toHaveValue("06/15/2024")
     expect(latest?.value[0]).toMatchObject({hour: 9, minute: 30})
 
-    await act("Open calendar")
+    await act("Change date")
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
 
     await expect.element(input()).toHaveValue("06/20/2024")
@@ -299,7 +299,7 @@ describe("DatePicker - API", () => {
       />,
     )
 
-    await act("Open calendar")
+    await act("Change date")
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
     await expect.element(input()).toHaveValue("06/20/2024")
 

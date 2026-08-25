@@ -299,7 +299,7 @@ describe("DatePicker - Form", () => {
       `),
     )
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
     await submit()
 
@@ -329,7 +329,7 @@ describe("DatePicker - Form", () => {
     await render(reactiveHost())
     await expect.element(status()).toHaveTextContent("|false|false|false")
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
 
     await expect
@@ -342,7 +342,7 @@ describe("DatePicker - Form", () => {
     await render(reactiveHost(`selectionMode="range"`))
     await expect.element(status()).toHaveTextContent("|false|false|false")
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
 
     await expect.element(status()).toHaveTextContent("2024-06-10|false")
@@ -379,7 +379,7 @@ describe("DatePicker - Form", () => {
   test("an optional range control accepts a partial selection", async () => {
     await render(optionalReactiveHost(`selectionMode="range"`))
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
 
     await expect.element(status()).toHaveTextContent("2024-06-10|true")
@@ -388,7 +388,7 @@ describe("DatePicker - Form", () => {
   test("closing the calendar without a selection only marks the control touched", async () => {
     await render(reactiveHost())
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await expect.element(page.getByRole("grid")).toBeVisible()
     await userEvent.keyboard("{Escape}")
     await expect.element(page.getByRole("grid")).not.toBeInTheDocument()
@@ -514,7 +514,7 @@ describe("DatePicker - Form", () => {
     await reset()
     await expect.element(startInput()).toHaveValue("")
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 12, 2024/}).click()
 
     await expect.element(startInput()).toHaveValue("06/12/2024")

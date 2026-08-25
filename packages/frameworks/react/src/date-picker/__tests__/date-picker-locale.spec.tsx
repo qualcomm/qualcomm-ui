@@ -24,6 +24,40 @@ describe("DatePicker - Locale", () => {
     await expect.element(input()).toHaveAttribute("placeholder", "Pick a day")
   })
 
+  test("the input describes the expected format, following the locale", async () => {
+    await render(<DatePicker label="Abflug" locale="de-DE" />)
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-description", "Date format: dd.mm.yyyy")
+  })
+
+  test("an explicit placeholder does not change the described format", async () => {
+    await render(
+      <DatePicker label="Abflug" locale="de-DE" placeholder="Pick a day" />,
+    )
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-description", "Date format: dd.mm.yyyy")
+  })
+
+  test("translations override the described format", async () => {
+    await render(
+      <DatePicker
+        label="Abflug"
+        locale="de-DE"
+        translations={{
+          inputDescription: (format) => `Datumsformat: ${format}`,
+        }}
+      />,
+    )
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-description", "Datumsformat: dd.mm.yyyy")
+  })
+
   test("the committed value is formatted for the locale", async () => {
     await render(
       <DatePicker defaultValue={[seeded]} label="Abflug" locale="de-DE" />,
@@ -130,7 +164,7 @@ describe("DatePicker - Locale", () => {
     )
 
     await expect
-      .element(page.getByRole("button", {name: "Open calendar"}))
+      .element(page.getByRole("button", {name: "Choose date"}))
       .toBeVisible()
   })
 
@@ -139,7 +173,8 @@ describe("DatePicker - Locale", () => {
       <DatePicker
         label="Abflug"
         translations={{
-          trigger: (open) => (open ? "Kalender schließen" : "Kalender öffnen"),
+          trigger: ({open}) =>
+            open ? "Kalender schließen" : "Kalender öffnen",
         }}
       />,
     )

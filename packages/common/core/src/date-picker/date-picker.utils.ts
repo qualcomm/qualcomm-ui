@@ -109,6 +109,9 @@ export const defaultTranslations: Required<DatePickerIntlTranslations> = {
     return `Choose ${state.valueText}`
   },
   errorIndicator: "Error",
+  inputDescription(format) {
+    return `Date format: ${format}`
+  },
   nextTrigger(view) {
     return match(view, {
       day: "Switch to next month",
@@ -136,8 +139,28 @@ export const defaultTranslations: Required<DatePickerIntlTranslations> = {
   },
   rangeInputEnd: "End date",
   rangeInputStart: "Start date",
-  trigger(open) {
-    return open ? "Close calendar" : "Open calendar"
+  trigger(state) {
+    if (state.open) {
+      return "Close calendar"
+    }
+    const [start, end] = state.valueText
+    if (state.selectionMode === "multiple") {
+      const count = state.valueText.filter(Boolean).length
+      return count ? `Change dates, ${count} selected` : "Choose dates"
+    }
+    if (state.selectionMode === "range") {
+      if (start && end) {
+        return `Change date range, ${start} to ${end}`
+      }
+      if (start) {
+        return `Change date range, from ${start}`
+      }
+      if (end) {
+        return `Change date range, until ${end}`
+      }
+      return "Choose date range"
+    }
+    return start ? `Change date, ${start}` : "Choose date"
   },
   viewCloseTrigger: "Return to calendar",
   viewTrigger(view, targetView) {

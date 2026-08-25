@@ -184,7 +184,7 @@ describe("DatePicker - Clear", () => {
     await render(
       <Simple closeOnSelect={false} defaultValue={[seeded]} timeZone="UTC" />,
     )
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
     await clearTrigger().click()
 

@@ -211,7 +211,7 @@ describe("DatePicker - Clear", () => {
     await render(
       simple(`${seededAttrs} [closeOnSelect]="false" timeZone="UTC"`),
     )
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await expect.element(page.getByRole("grid")).toBeVisible()
 
     await clearTrigger().click()

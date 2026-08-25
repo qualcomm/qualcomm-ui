@@ -85,7 +85,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`selecting a day with the pointer commits it and closes — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
@@ -103,7 +105,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`Space selects the focused day the calendar opened on — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await userEvent.keyboard("{ }")
@@ -119,7 +123,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`Enter selects the focused day the calendar opened on — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await userEvent.keyboard("{Enter}")
@@ -135,7 +141,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`arrow keys move day focus before committing — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await userEvent.keyboard("{ArrowRight}{Enter}")
@@ -151,7 +159,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`ArrowDown moves focus forward one week — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await userEvent.keyboard("{ArrowDown}{Enter}")
@@ -167,7 +177,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`Home jumps to the first day of the month — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await userEvent.keyboard("{Home}{Enter}")
@@ -183,7 +195,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`End jumps to the last day of the month — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         await userEvent.keyboard("{End}{Enter}")

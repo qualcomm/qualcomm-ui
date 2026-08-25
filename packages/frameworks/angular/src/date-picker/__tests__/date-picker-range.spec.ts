@@ -101,7 +101,9 @@ const tests: MultiComponentTest[] = [
     testCase: (component) => {
       test(`the range start keeps the calendar open and the end closes it — ${component.name}`, async () => {
         await render(component)
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
 
         await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
 
@@ -221,7 +223,7 @@ describe("DatePicker - Range", () => {
 
   test("previews the range band while hovering after picking a start date", async () => {
     await render(simple())
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
     await dayTrigger("June 20, 2024").hover()
@@ -244,7 +246,7 @@ describe("DatePicker - Range", () => {
 
   test("marks the committed range band once both endpoints are selected", async () => {
     await render(simple(`[closeOnSelect]="false"`))
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
@@ -267,7 +269,7 @@ describe("DatePicker - Range", () => {
 
   test("leaving the grid clears the previewed band", async () => {
     await render(simple())
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
     await dayTrigger("June 20, 2024").hover()
@@ -285,7 +287,7 @@ describe("DatePicker - Range", () => {
 
   test("keyboard navigation previews the band the same way hovering does", async () => {
     await render(simple())
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
     await userEvent.keyboard("{Enter}")
     await userEvent.keyboard("{ArrowRight}{ArrowRight}")
@@ -301,7 +303,7 @@ describe("DatePicker - Range", () => {
 
   test("a third click starts a new range from the clicked day", async () => {
     await render(simple(`[closeOnSelect]="false"`))
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
@@ -320,7 +322,7 @@ describe("DatePicker - Range", () => {
     await startInput().fill("06/10/2024")
     await userEvent.keyboard("{Enter}")
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
 
     await expect.element(startInput()).toHaveValue("06/10/2024")
@@ -334,7 +336,7 @@ describe("DatePicker - Range", () => {
     await userEvent.keyboard("{Enter}")
     await expect.element(startInput()).toHaveValue("")
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 5, 2024/}).click()
 
     await expect.element(startInput()).toHaveValue("06/05/2024")
@@ -343,7 +345,7 @@ describe("DatePicker - Range", () => {
 
   test("the second calendar pick completes the range regardless of click order", async () => {
     await render(simple())
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()

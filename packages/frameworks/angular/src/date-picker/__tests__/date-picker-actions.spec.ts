@@ -122,7 +122,7 @@ function multipleSelection() {
 
 const grid = () => page.getByRole("grid")
 const openCalendar = () =>
-  page.getByRole("button", {name: /open calendar/i}).click()
+  page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 const okTrigger = () => page.getByRole("button", {name: "OK"})
 const cancelTrigger = () => page.getByRole("button", {name: "Cancel"})
 

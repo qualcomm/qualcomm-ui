@@ -93,7 +93,9 @@ const tests: MultiComponentTestCase[] = [
       test("trigger accessible name reflects the open state", async () => {
         await render(getComponent())
 
-        const trigger = page.getByRole("button", {name: /open calendar/i})
+        const trigger = page.getByRole("button", {
+          name: /(?:choose|change) date/i,
+        })
         await trigger.click()
 
         await expect
@@ -106,10 +108,51 @@ const tests: MultiComponentTestCase[] = [
     composite: () => <Composite />,
     simple: () => <Simple />,
     testCase: (getComponent) => {
+      test("the popup is a dialog announced by name, wrapping an application view", async () => {
+        await render(getComponent())
+
+        const trigger = page.getByRole("button", {
+          name: /(?:choose|change) date/i,
+        })
+        await expect.element(trigger).toHaveAttribute("aria-haspopup", "dialog")
+        await trigger.click()
+
+        const dialog = page.getByRole("dialog")
+        await expect.element(dialog).toBeVisible()
+        await expect.element(dialog).toHaveAccessibleName("calendar")
+        await expect
+          .element(dialog)
+          .toHaveAttribute("aria-roledescription", "datepicker")
+
+        await expect.element(page.getByRole("application")).toBeVisible()
+      })
+    },
+  },
+  {
+    simple: () => <Simple variant="inline" />,
+    testCase: (getComponent) => {
+      test("the inline calendar is a group, not a dialog", async () => {
+        await render(getComponent())
+
+        await expect.element(page.getByRole("grid")).toBeVisible()
+        expect(page.getByRole("dialog").elements()).toHaveLength(0)
+        await expect
+          .element(page.getByRole("group", {name: "calendar"}))
+          .toBeVisible()
+        await expect.element(page.getByRole("application")).toBeVisible()
+      })
+    },
+  },
+  {
+    composite: () => <Composite />,
+    simple: () => <Simple />,
+    testCase: (getComponent) => {
       test("weekday headers expose full day names to assistive technology", async () => {
         await render(getComponent())
 
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
 
         const headers = page.getByRole("columnheader")
@@ -129,7 +172,7 @@ const tests: MultiComponentTestCase[] = [
 
         await expect.element(page.getByRole("grid")).toBeVisible()
         await expect
-          .element(page.getByRole("button", {name: /open calendar/i}))
+          .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
           .not.toBeInTheDocument()
       })
     },
@@ -161,7 +204,9 @@ const tests: MultiComponentTestCase[] = [
 
         await expect.element(page.getByText("Pick a date")).toBeVisible()
 
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
         await expect.element(page.getByRole("grid")).toBeVisible()
       })
     },
@@ -171,7 +216,9 @@ const tests: MultiComponentTestCase[] = [
     testCase: (getComponent) => {
       test("minView='month' opens directly at the month view", async () => {
         await render(getComponent())
-        await page.getByRole("button", {name: /open calendar/i}).click()
+        await page
+          .getByRole("button", {name: /(?:choose|change) date/i})
+          .click()
 
         await expect
           .element(page.getByRole("grid"))
@@ -183,6 +230,38 @@ const tests: MultiComponentTestCase[] = [
 
 describe("DatePicker - Parts", () => {
   runTests(tests)
+
+  test("the trigger confirms the selected date in its accessible name", async () => {
+    await render(<Simple defaultValue={[parseDate("2024-06-10")]} />)
+
+    await expect
+      .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
+      .toHaveAccessibleName("Change date, Monday, June 10, 2024")
+  })
+
+  test("the trigger names both ends of a committed range, and a half-open one", async () => {
+    await render(
+      <Simple defaultValue={[parseDate("2024-06-10")]} selectionMode="range" />,
+    )
+
+    await expect
+      .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
+      .toHaveAccessibleName("Change date range, from Monday, June 10, 2024")
+  })
+
+  test("the field-as-trigger counts selections in multiple mode", async () => {
+    await render(
+      <Simple
+        defaultValue={[parseDate("2024-06-10"), parseDate("2024-06-12")]}
+        label={undefined}
+        selectionMode="multiple"
+      />,
+    )
+
+    await expect
+      .element(page.getByLabelText(/change dates/i))
+      .toHaveAccessibleName("Change dates, 2 selected")
+  })
 
   test("the calendar grid is named by the range it shows, at every view level", async () => {
     await render(<Simple variant="inline" />)
@@ -262,7 +341,7 @@ describe("DatePicker - Parts", () => {
     )
     await expect.element(page.getByText("nothing selected")).toBeVisible()
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
 
     await expect.element(page.getByText("06/20/2024")).toBeVisible()
@@ -289,12 +368,12 @@ describe("DatePicker - Parts", () => {
       </DatePicker.Root>,
     )
 
-    await page.getByRole("button", {name: /open calendar/i}).click()
+    await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
 
     await expect.element(page.getByRole("grid")).not.toBeInTheDocument()
     await expect
-      .element(page.getByRole("button", {name: /open calendar/i}))
+      .element(page.getByRole("button", {name: /(?:choose|change) date/i}))
       .toHaveFocus()
   })
 })

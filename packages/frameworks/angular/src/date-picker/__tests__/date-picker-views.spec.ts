@@ -247,7 +247,7 @@ function maxMonthWithApi() {
 }
 
 const openCalendar = () =>
-  page.getByRole("button", {name: /open calendar/i}).click()
+  page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
 const grid = () => page.getByRole("grid")
 

@@ -84,11 +84,19 @@ export interface DatePickerTime {
 
 export type DatePickerSelectionMode = "single" | "multiple" | "range"
 
+export interface DatePickerTriggerState {
+  open: boolean
+  selectionMode: DatePickerSelectionMode
+  /** Formatted for speech, by position; holes are `undefined`. */
+  valueText: (string | undefined)[]
+}
+
 export interface DatePickerIntlTranslations {
   clearTrigger?: string | undefined
   content?: string | undefined
   dayCell?: ((state: DatePickerDayTableCellState) => string) | undefined
   errorIndicator?: string | undefined
+  inputDescription?: ((format: string) => string) | undefined
   nextTrigger?: ((view: DatePickerDateView) => string) | undefined
   placeholder?:
     | ((locale: string) => {day: string; month: string; year: string})
@@ -98,7 +106,7 @@ export interface DatePickerIntlTranslations {
   prevTrigger?: ((view: DatePickerDateView) => string) | undefined
   rangeInputEnd?: string | undefined
   rangeInputStart?: string | undefined
-  trigger?: ((open: boolean) => string) | undefined
+  trigger?: ((state: DatePickerTriggerState) => string) | undefined
   viewCloseTrigger?: string | undefined
   viewTrigger?:
     | ((view: DatePickerDateView, targetView?: DatePickerDateView) => string)
@@ -1231,7 +1239,7 @@ export interface DatePickerContentBindings
   "data-state": "open" | "closed"
   hidden: boolean
   id: string
-  role: "application"
+  role: "dialog" | "group"
   tabIndex: -1
 }
 
@@ -1414,7 +1422,7 @@ export interface DatePickerTriggerBindings
   extends CommonBindings, Part<"trigger"> {
   "aria-controls": string
   "aria-expanded": boolean
-  "aria-haspopup": "grid"
+  "aria-haspopup": "dialog"
   "aria-label": string
   "data-placeholder-shown": BooleanDataAttr
   "data-placement": Placement | undefined
@@ -1429,6 +1437,7 @@ export interface DatePickerTriggerBindings
 export interface DatePickerViewBindings extends CommonBindings, Part<"view"> {
   "data-view": DatePickerDateView
   hidden: boolean
+  role: "application"
 }
 
 export interface DatePickerViewTriggerBindings
@@ -1475,7 +1484,7 @@ export interface DatePickerInputGroupTriggerBindings extends CommonBindings {
   "aria-controls": string
   "aria-disabled": BooleanAriaAttr
   "aria-expanded": boolean
-  "aria-haspopup": "grid"
+  "aria-haspopup": "dialog"
   "aria-invalid": BooleanAriaAttr
   "aria-label": string
   "aria-readonly": BooleanAriaAttr
@@ -1495,6 +1504,7 @@ export interface DatePickerInputGroupTriggerBindings extends CommonBindings {
 
 export interface DatePickerInputBindings extends CommonBindings, Part<"input"> {
   "aria-describedby": string | undefined
+  "aria-description": string
   "aria-invalid": BooleanAriaAttr
   autoComplete: "off"
   autoCorrect: "off"

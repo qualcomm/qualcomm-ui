@@ -66,7 +66,23 @@ class UndefinedTranslationsComponent {
 })
 class CustomTranslationsComponent {
   readonly translations: DatePickerIntlTranslations = {
-    trigger: (open) => (open ? "Kalender schließen" : "Kalender öffnen"),
+    trigger: ({open}) => (open ? "Kalender schließen" : "Kalender öffnen"),
+  }
+}
+
+@Component({
+  imports: [DatePickerModule],
+  template: `
+    <q-date-picker
+      label="Abflug"
+      locale="de-DE"
+      [translations]="translations"
+    />
+  `,
+})
+class GermanFormatTranslationComponent {
+  readonly translations: DatePickerIntlTranslations = {
+    inputDescription: (format) => `Datumsformat: ${format}`,
   }
 }
 
@@ -81,6 +97,30 @@ describe("DatePicker - Locale", () => {
     await render(german(`placeholder="Pick a day"`))
 
     await expect.element(input()).toHaveAttribute("placeholder", "Pick a day")
+  })
+
+  test("the input describes the expected format, following the locale", async () => {
+    await render(german())
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-description", "Date format: dd.mm.yyyy")
+  })
+
+  test("an explicit placeholder does not change the described format", async () => {
+    await render(german(`placeholder="Pick a day"`))
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-description", "Date format: dd.mm.yyyy")
+  })
+
+  test("translations override the described format", async () => {
+    await render(GermanFormatTranslationComponent)
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-description", "Datumsformat: dd.mm.yyyy")
   })
 
   test("the committed value is formatted for the locale", async () => {
@@ -150,7 +190,7 @@ describe("DatePicker - Locale", () => {
     await render(UndefinedTranslationsComponent)
 
     await expect
-      .element(page.getByRole("button", {name: "Open calendar"}))
+      .element(page.getByRole("button", {name: "Choose date"}))
       .toBeVisible()
   })
 

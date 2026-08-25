@@ -9,7 +9,8 @@ import {DatePicker, parseDate} from "@qualcomm-ui/react/date-picker"
 const seeded = parseDate("2024-06-15")
 
 const grid = () => page.getByRole("grid")
-const trigger = () => page.getByRole("button", {name: /open calendar/i})
+const trigger = () =>
+  page.getByRole("button", {name: /(?:choose|change) date/i})
 const openCalendar = () => trigger().click()
 
 /**
