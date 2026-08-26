@@ -144,7 +144,7 @@ class ServerSemanticSearchService implements SemanticSearchService {
         typeDocNames: 8,
         typeDocProps: 8,
       },
-      hybridWeights: {text: 0.65, vector: 0.35},
+      hybridWeights: {text: 0.2, vector: 0.8},
       limit,
       mode: "hybrid",
       properties: [

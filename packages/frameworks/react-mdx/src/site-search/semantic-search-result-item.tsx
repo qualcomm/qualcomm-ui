@@ -56,24 +56,30 @@ export function SemanticSearchResultItem({
         <span className="qui-site-search__section-title">{item.heading}</span>
         <div className="qui-site-search__metadata">{item.title}</div>
         <span className="qui-site-search__content">
-          {renderHighlightedExcerpt(item.excerpt, item.highlights)}
+          <HighlightedExcerpt
+            excerpt={item.excerpt}
+            highlights={item.highlights}
+          />
         </span>
       </div>
     </PolymorphicElement>
   )
 }
 
-function renderHighlightedExcerpt(
-  excerpt: string,
-  highlights: SemanticSearchHighlight[] | undefined,
-): ReactNode {
+function HighlightedExcerpt({
+  excerpt,
+  highlights,
+}: {
+  excerpt: string
+  highlights: SemanticSearchHighlight[] | undefined
+}): ReactNode {
   const validHighlights = (highlights ?? [])
     .filter(
       (highlight) =>
         Number.isInteger(highlight.start) &&
         Number.isInteger(highlight.end) &&
         highlight.start >= 0 &&
-        highlight.end > highlight.start &&
+        highlight.end - highlight.start > 2 &&
         highlight.end <= excerpt.length,
     )
     .sort((left, right) => left.start - right.start)

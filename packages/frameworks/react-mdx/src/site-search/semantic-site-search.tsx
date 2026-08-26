@@ -89,6 +89,8 @@ export function SemanticSiteSearch({
 
   const listNavigation = useListNavigation(context, {
     activeIndex: searchState.activeIndex,
+    focusItemOnHover: false,
+    focusItemOnOpen: false,
     listRef,
     loop: true,
     onNavigate: (index) => {
@@ -138,7 +140,7 @@ export function SemanticSiteSearch({
   const {data, error, isLoading} = useQuery<SemanticSearchResult[]>({
     placeholderData: (previousData) => previousData,
     queryFn:
-      searchState.inputValue.trim().length > 1
+      searchState.inputValue.trim().length > 2
         ? async () => {
             return fetch(endpoint, {
               body: JSON.stringify({query: searchState.inputValue.trim()}),
@@ -291,7 +293,7 @@ export function SemanticSiteSearch({
                   {results.length
                     ? results.map((result, index) => (
                         <SemanticSearchResultItem
-                          key={result.sectionId}
+                          key={`${result.href}-${result.excerpt}`}
                           active={index === searchState.activeIndex}
                           item={result}
                           render={<Link href={result.href} />}

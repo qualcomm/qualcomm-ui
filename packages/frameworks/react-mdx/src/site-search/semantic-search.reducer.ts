@@ -54,7 +54,6 @@ export function semanticSearchReducer(
   } else if (action.type === "SHOW_DIALOG") {
     return {
       ...state,
-      activeIndex: null,
       showDialog: true,
     }
   }

@@ -23,6 +23,67 @@ afterEach(async () => {
 })
 
 describe("createSemanticSearchService", () => {
+  test("prioritizes semantic intent for natural-language questions", async () => {
+    temporaryDirectory = await mkdtemp(join(tmpdir(), "qui-semantic-search-"))
+    const inlineNotificationVector = createVector(0.7)
+    await writeArtifact([
+      createArtifactSection({
+        display: {
+          excerpt: "Inline notification API reference.",
+          heading: "<InlineNotification.Root>",
+          href: "/components/inline-notification#inline-notification-root",
+          title: "Inline Notification",
+        },
+        keywords: {
+          ...emptyKeywords(),
+          heading: "<InlineNotification.Root>",
+          prose:
+            "The InlineNotification component supports every property from InlineNotification.Root.",
+          title: "Inline Notification",
+          typeDocNames: "InlineNotificationRootProps",
+          typeDocProps:
+            "InlineNotificationRootProps icon ReactNode InlineNotificationRootProps id string",
+        },
+        sectionId: "inline-notification-root",
+        vector: inlineNotificationVector,
+      }),
+      createArtifactSection({
+        display: {
+          excerpt: "Guidelines for testing UI components.",
+          heading: "UI Testing",
+          href: "/ai-tools/plugins/ui-testing",
+          title: "UI Testing",
+        },
+        keywords: {
+          ...emptyKeywords(),
+          heading: "UI Testing",
+          prose:
+            "Write React component tests around public behavior and visible outcomes.",
+          title: "UI Testing",
+        },
+        sectionId: "ui-testing",
+        vector: createVector(),
+      }),
+    ])
+    const encoder = createFakeEncoder(([text]) =>
+      text?.endsWith("InlineNotification.Root")
+        ? inlineNotificationVector
+        : createVector(),
+    )
+    const service = createSemanticSearchService({
+      artifactDirectory: temporaryDirectory,
+      createEncoder: () => Promise.resolve(encoder.encoder),
+    })
+
+    const response = await service.search("how do I test UI components?", 10)
+
+    expect(response.results[0]?.sectionId).toBe("ui-testing")
+
+    const exactResponse = await service.search("InlineNotification.Root", 10)
+
+    expect(exactResponse.results[0]?.sectionId).toBe("inline-notification-root")
+  })
+
   test("uses boosted keyword fields and prefixes query embeddings", async () => {
     temporaryDirectory = await mkdtemp(join(tmpdir(), "qui-semantic-search-"))
     await writeArtifact([
@@ -77,11 +138,15 @@ describe("createSemanticSearchService", () => {
   })
 })
 
-function createFakeEncoder(): {
+function createFakeEncoder(
+  selectVector: (texts: string[]) => number[] = () => createVector(),
+): {
   embed: ReturnType<typeof vi.fn>
   encoder: SemanticSearchEncoder
 } {
-  const embed = vi.fn(async (_texts: string[]) => [createVector()])
+  const embed = vi.fn((texts: string[]) =>
+    Promise.resolve([selectVector(texts)]),
+  )
 
   return {
     embed,
@@ -142,8 +207,14 @@ function emptyKeywords(): SemanticSearchArtifactSection["keywords"] {
   }
 }
 
-function createVector(): number[] {
-  return Array.from({length: semanticSearchModel.dimensions}, (_, index) =>
-    index === 0 ? 1 : 0,
-  )
+function createVector(similarity = 1): number[] {
+  return Array.from({length: semanticSearchModel.dimensions}, (_, index) => {
+    if (index === 0) {
+      return similarity
+    }
+    if (index === 1) {
+      return Math.sqrt(1 - similarity ** 2)
+    }
+    return 0
+  })
 }
