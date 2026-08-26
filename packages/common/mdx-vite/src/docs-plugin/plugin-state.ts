@@ -158,7 +158,7 @@ export class PluginState {
 
     if (isDev && shouldLog) {
       console.debug(
-        `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Compiled search index in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${this.indexer.cachedFileCount ? chalk.greenBright.bold(` (${this.indexer.cachedFileCount}/${this.indexer.mdxFileCount} files cached)`) : ""}`,
+        `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Compiled page data in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${this.indexer.cachedFileCount ? chalk.greenBright.bold(` (${this.indexer.cachedFileCount}/${this.indexer.mdxFileCount} files cached)`) : ""}`,
       )
     }
 
@@ -239,6 +239,7 @@ export class PluginState {
         extraFiles: this.knowledgeConfig.extraFiles,
         frontmatter: this.knowledgeConfig.frontmatter,
         pageIdPrefix: this.knowledgeConfig.pageIdPrefix,
+        pageMap: this.indexer?.pageMap,
         pages: this.knowledgeConfig.pages,
         routeDir: this.routesDir,
         sections: this.knowledgeConfig.sections,

@@ -22,7 +22,7 @@ afterEach(async () => {
 })
 
 describe("buildSemanticSearchArtifact", () => {
-  test("embeds only navigable sections and reuses unchanged vectors", async () => {
+  test("embeds only searchable navigable sections and reuses unchanged vectors", async () => {
     temporaryDirectory = await mkdtemp(join(tmpdir(), "qui-semantic-search-"))
     const sectionsPath = join(temporaryDirectory, "sections.json")
     const outputDirectory = join(temporaryDirectory, "artifact")
@@ -30,8 +30,8 @@ describe("buildSemanticSearchArtifact", () => {
     await writeSections(sectionsPath, [
       searchable,
       createSection({
-        pageFrontmatter: {hideFromSearch: true},
-        sectionId: "hidden-section",
+        excludeFromSearch: true,
+        sectionId: "excluded-section",
       }),
       createSection({pathname: undefined, sectionId: "knowledge-only-section"}),
     ])

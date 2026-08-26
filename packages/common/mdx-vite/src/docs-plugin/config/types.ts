@@ -172,6 +172,12 @@ export interface SearchIndexerOptions {
   disableCache?: boolean
 
   /**
+   * Whether to disable the legacy built-in search indexer. This has been replaced
+   * with a new semantic search engine.
+   */
+  disableLegacySearchIndex?: boolean
+
+  /**
    * ToC headings.
    *
    * @default ['h2','h3','h4']

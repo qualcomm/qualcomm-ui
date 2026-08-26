@@ -432,6 +432,11 @@ export interface SectionEntry {
   content: string
 
   /**
+   * Set to true when this section is excluded from site search.
+   */
+  excludeFromSearch?: boolean
+
+  /**
    * Hash of this section's contents. Includes {@link codeExamples}, {@link
    * metadata}, {@link headerPath}, {@link pathname}, {@link rawContent}, and
    * {@link searchText}.

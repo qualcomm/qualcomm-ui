@@ -13,6 +13,7 @@ import type {
   KnowledgeSections,
   PageEntry,
   PageFrontmatter,
+  PageMap,
   SectionEntry,
 } from "@qualcomm-ui/mdx-common"
 
@@ -53,6 +54,7 @@ export interface KnowledgeExporterConfig {
   extraFiles?: KnowledgeExtraFile[]
   frontmatter?: KnowledgeFrontmatterConfig
   pageIdPrefix?: string
+  pageMap?: PageMap
   pages?: PagesExportConfig
   routeDir: string
   sections?: SectionExportConfig
@@ -164,6 +166,12 @@ export class KnowledgeExporter {
           processed.sectionAst,
           pageInfo,
         )
+        const pageMetadata = this.config.pageMap?.[page.pathname]
+        if (pageMetadata?.hidden || pageMetadata?.hideFromSearch) {
+          for (const section of pageSections) {
+            section.excludeFromSearch = true
+          }
+        }
         allSections.push(...pageSections)
 
         const pageEntry = extractor.extractPage(processed.sectionAst, pageInfo)

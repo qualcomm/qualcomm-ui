@@ -137,22 +137,23 @@ export function SemanticSiteSearch({
 
   const {data, error, isLoading} = useQuery<SemanticSearchResult[]>({
     placeholderData: (previousData) => previousData,
-    queryFn: searchState.inputValue
-      ? async () => {
-          return fetch(endpoint, {
-            body: JSON.stringify({query: searchState.inputValue.trim()}),
-            headers: {"Content-Type": "application/json"},
-            method: "POST",
-          })
-            .then((res) => res.json())
-            .then((resJson) => {
-              if (!isSemanticSearchResponse(resJson)) {
-                throw new Error("Semantic search response is malformed.")
-              }
-              return resJson.results
+    queryFn:
+      searchState.inputValue.trim().length > 1
+        ? async () => {
+            return fetch(endpoint, {
+              body: JSON.stringify({query: searchState.inputValue.trim()}),
+              headers: {"Content-Type": "application/json"},
+              method: "POST",
             })
-        }
-      : skipToken,
+              .then((res) => res.json())
+              .then((resJson) => {
+                if (!isSemanticSearchResponse(resJson)) {
+                  throw new Error("Semantic search response is malformed.")
+                }
+                return resJson.results
+              })
+          }
+        : skipToken,
     queryKey: [searchState.inputValue],
   })
 

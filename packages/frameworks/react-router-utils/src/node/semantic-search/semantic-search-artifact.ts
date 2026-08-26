@@ -68,7 +68,7 @@ export interface SemanticSearchArtifactSectionInput extends Omit<
 export function createSemanticSearchArtifactSection(
   section: SectionEntry,
 ): SemanticSearchArtifactSectionInput | null {
-  if (!section.pathname || section.pageFrontmatter?.hideFromSearch === true) {
+  if (!section.pathname || section.excludeFromSearch === true) {
     return null
   }
 
