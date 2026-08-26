@@ -43,6 +43,66 @@ const regions: Region[] = [
     label: "Virginia",
     value: "virginia",
   },
+  {
+    description: "United Kingdom",
+    label: "London",
+    value: "london",
+  },
+  {
+    description: "India",
+    label: "Mumbai",
+    value: "mumbai",
+  },
+  {
+    description: "South Korea",
+    label: "Seoul",
+    value: "seoul",
+  },
+  {
+    description: "Canada",
+    label: "Toronto",
+    value: "toronto",
+  },
+  {
+    description: "Brazil",
+    label: "Sao Paulo",
+    value: "sao-paulo",
+  },
+  {
+    description: "France",
+    label: "Paris",
+    value: "paris",
+  },
+  {
+    description: "Spain",
+    label: "Madrid",
+    value: "madrid",
+  },
+  {
+    description: "Italy",
+    label: "Milan",
+    value: "milan",
+  },
+  {
+    description: "United Arab Emirates",
+    label: "Dubai",
+    value: "dubai",
+  },
+  {
+    description: "Sweden",
+    label: "Stockholm",
+    value: "stockholm",
+  },
+  {
+    description: "South Africa",
+    label: "Cape Town",
+    value: "cape-town",
+  },
+  {
+    description: "Mexico",
+    label: "Queretaro",
+    value: "queretaro",
+  },
 ]
 
 export function ListboxFilteringDemo(): ReactElement {
@@ -67,7 +127,7 @@ export function ListboxFilteringDemo(): ReactElement {
           startIcon={Search}
         />
         <Listbox.Label>Deployment region</Listbox.Label>
-        <Listbox.Content>
+        <Listbox.Content className="max-h-64 overflow-y-auto">
           {collection.items.map((region) => (
             <Listbox.Item key={region.value} item={region}>
               <Listbox.ItemControl />
