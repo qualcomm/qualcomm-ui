@@ -78,11 +78,11 @@ export function semanticSearchDevPlugin({
       server.watcher.on("change", onSectionsChanged)
       scheduleRebuild(onError)
 
-      return () => {
+      server.httpServer?.once("close", () => {
         clearTimeout(timeout)
         server.watcher.off("add", onSectionsChanged)
         server.watcher.off("change", onSectionsChanged)
-      }
+      })
     },
     name: "semantic-search-dev",
   }
