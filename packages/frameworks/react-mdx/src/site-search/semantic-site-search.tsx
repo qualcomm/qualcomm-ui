@@ -6,6 +6,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useReducer,
   useRef,
   useState,
 } from "react"
@@ -15,6 +16,7 @@ import {
   useInteractions,
   useListNavigation,
 } from "@floating-ui/react"
+import {skipToken, useQuery} from "@tanstack/react-query"
 import {SearchIcon} from "lucide-react"
 
 import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
@@ -30,6 +32,10 @@ import {Kbd} from "@qualcomm-ui/react/kbd"
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
 import {SemanticSearchResultItem} from "./semantic-search-result-item.js"
+import {
+  initialSemanticSearchState,
+  semanticSearchReducer,
+} from "./semantic-search.reducer.js"
 
 export interface SemanticSiteSearchProps {
   /**
@@ -54,22 +60,19 @@ export interface SemanticSiteSearchProps {
   unavailable?: ReactNode
 }
 
-type SearchState = "idle" | "loading" | "ready" | "unavailable"
-
 export function SemanticSiteSearch({
   endpoint = "/api/search",
   noResults = "No results found...",
   unavailable = "Search is unavailable.",
 }: SemanticSiteSearchProps): ReactNode {
-  const [showDialog, setShowDialog] = useState(false)
-  const [inputValue, setInputValue] = useState("")
-  const [results, setResults] = useState<SemanticSearchResult[]>([])
-  const [searchState, setSearchState] = useState<SearchState>("idle")
   const dialogInputRef = useRef<HTMLInputElement>(null)
   const dialogInputContainerRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<Array<HTMLElement | null>>([])
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [isMac, setIsMac] = useState<boolean>(false)
+  const [searchState, dispatchSearchAction] = useReducer(
+    semanticSearchReducer,
+    initialSemanticSearchState,
+  )
 
   const {renderLink: Link} = useMdxDocsContext()
 
@@ -81,15 +84,15 @@ export function SemanticSiteSearch({
   }, [])
 
   const {context, refs} = useFloating({
-    open: showDialog,
+    open: searchState.showDialog,
   })
 
   const listNavigation = useListNavigation(context, {
-    activeIndex,
+    activeIndex: searchState.activeIndex,
     listRef,
     loop: true,
     onNavigate: (index) => {
-      setActiveIndex(index)
+      dispatchSearchAction({index, type: "SET_ACTIVE_INDEX"})
     },
   })
 
@@ -114,7 +117,7 @@ export function SemanticSiteSearch({
           event.key === "k" &&
           ((isMac && event.metaKey) || (!isMac && event.ctrlKey))
         ) {
-          setShowDialog(true)
+          dispatchSearchAction({type: "SHOW_DIALOG"})
           event.preventDefault()
         }
       }
@@ -132,64 +135,31 @@ export function SemanticSiteSearch({
     }
   }, [])
 
-  useEffect(() => {
-    const query = inputValue.trim()
-    const controller = new AbortController()
+  const {data, error, isLoading} = useQuery<SemanticSearchResult[]>({
+    placeholderData: (previousData) => previousData,
+    queryFn: searchState.inputValue
+      ? async () => {
+          return fetch(endpoint, {
+            body: JSON.stringify({query: searchState.inputValue.trim()}),
+            headers: {"Content-Type": "application/json"},
+            method: "POST",
+          })
+            .then((res) => res.json())
+            .then((resJson) => {
+              if (!isSemanticSearchResponse(resJson)) {
+                throw new Error("Semantic search response is malformed.")
+              }
+              return resJson.results
+            })
+        }
+      : skipToken,
+    queryKey: [searchState.inputValue],
+  })
 
-    setActiveIndex(null)
-    if (query.length < 2) {
-      setResults([])
-      setSearchState("idle")
-      return () => {
-        controller.abort()
-      }
-    }
-
-    const timeout = setTimeout(() => {
-      setSearchState("loading")
-
-      void fetch(endpoint, {
-        body: JSON.stringify({query}),
-        headers: {"Content-Type": "application/json"},
-        method: "POST",
-        signal: controller.signal,
-      })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw new Error(
-              `Semantic search request failed: ${response.status}`,
-            )
-          }
-
-          const body: unknown = await response.json()
-          if (!isSemanticSearchResponse(body)) {
-            throw new Error("Semantic search response is malformed.")
-          }
-
-          return body.results
-        })
-        .then((results) => {
-          if (!controller.signal.aborted) {
-            setResults(results)
-            setSearchState("ready")
-          }
-        })
-        .catch((error: unknown) => {
-          if (!controller.signal.aborted) {
-            setResults([])
-            setSearchState("unavailable")
-          }
-        })
-    }, 200)
-
-    return () => {
-      clearTimeout(timeout)
-      controller.abort()
-    }
-  }, [endpoint, inputValue])
+  const results = data ?? []
 
   const onInputChange = useCallback((value: string) => {
-    setInputValue(value)
+    dispatchSearchAction({type: "SET_INPUT_VALUE", value})
   }, [])
 
   const onListItemKeyDown = useCallback((event: ReactKeyboardEvent) => {
@@ -228,14 +198,14 @@ export function SemanticSiteSearch({
   const {getFloatingProps, getItemProps, getReferenceProps} = useInteractions([
     listNavigation,
   ])
-  const shouldShowPanel = inputValue.trim().length >= 2
+  const shouldShowPanel = searchState.inputValue.trim().length >= 2
 
   return (
     <Dialog.Root
       onOpenChange={(open) => {
-        setShowDialog(open)
+        dispatchSearchAction({type: open ? "SHOW_DIALOG" : "HIDE_DIALOG"})
       }}
-      open={showDialog}
+      open={searchState.showDialog}
       restoreFocus={false}
     >
       <Dialog.Trigger>
@@ -264,7 +234,7 @@ export function SemanticSiteSearch({
             onClick={(event) => {
               event.stopPropagation()
             }}
-            onFocus={() => setShowDialog(true)}
+            onFocus={() => dispatchSearchAction({type: "SHOW_DIALOG"})}
             placeholder="Search the docs"
             size="sm"
             startIcon={SearchIcon}
@@ -284,7 +254,7 @@ export function SemanticSiteSearch({
                   event.target as HTMLElement,
                 )
               ) {
-                setShowDialog(false)
+                dispatchSearchAction({type: "HIDE_DIALOG"})
               }
             }}
             style={{background: "transparent", border: 0, padding: 0}}
@@ -304,7 +274,7 @@ export function SemanticSiteSearch({
                 placeholder="Search the docs"
                 size="lg"
                 startIcon={SearchIcon}
-                value={inputValue}
+                value={searchState.inputValue}
               />
               {shouldShowPanel ? (
                 <div
@@ -312,16 +282,16 @@ export function SemanticSiteSearch({
                   {...getFloatingProps()}
                   className="qui-site-search__floating-panel-mobile"
                 >
-                  {searchState === "loading" ? (
+                  {isLoading && !results.length ? (
                     <div className="qui-site-search__no-results">
                       Searching…
                     </div>
                   ) : null}
-                  {searchState === "ready" && results.length
+                  {results.length
                     ? results.map((result, index) => (
                         <SemanticSearchResultItem
                           key={result.sectionId}
-                          active={index === activeIndex}
+                          active={index === searchState.activeIndex}
                           item={result}
                           render={<Link href={result.href} />}
                           {...getItemProps({
@@ -334,12 +304,12 @@ export function SemanticSiteSearch({
                         />
                       ))
                     : null}
-                  {searchState === "ready" && results.length === 0 ? (
+                  {!isLoading && !results.length ? (
                     <div className="qui-site-search__no-results">
                       {noResults}
                     </div>
                   ) : null}
-                  {searchState === "unavailable" ? (
+                  {error ? (
                     <div className="qui-site-search__no-results">
                       {unavailable}
                     </div>
