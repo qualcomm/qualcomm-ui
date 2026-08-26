@@ -22,7 +22,7 @@ import {
   DocsLayout,
   type DocsLayoutSettings,
 } from "@qualcomm-ui/react-mdx/docs-layout"
-import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
+import {SemanticSiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 import {updateSiteState} from "@qualcomm-ui/react-router-utils/client"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Link} from "@qualcomm-ui/react/link"
@@ -140,7 +140,7 @@ export function AppDocsLayout({
               </HeaderBar.Nav>
 
               <HeaderBar.ActionBar>
-                <SiteSearch />
+                <SemanticSiteSearch />
                 <HeaderRepositoryLink />
                 <GlobalConfig />
                 <HeaderAiLink />

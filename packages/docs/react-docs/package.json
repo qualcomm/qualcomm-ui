@@ -7,7 +7,8 @@
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "scripts": {
-    "build": "run-s build:typedoc build:site",
+    "build": "run-s build:typedoc build:site && pnpm build:semantic-search",
+    "build:semantic-search": "tsx build-semantic-search.ts",
     "build:site": "react-router build --mode production",
     "build:typedoc": "qui-typedoc build",
     "watch:typedoc": "qui-typedoc watch",

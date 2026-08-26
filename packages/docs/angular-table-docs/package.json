@@ -8,7 +8,8 @@
   "type": "module",
   "scripts": {
     "build:prod": "./scripts/build-prod.sh",
-    "build": "run-s build:typedoc build:web",
+    "build": "run-s build:typedoc build:web build:semantic-search",
+    "build:semantic-search": "tsx build-semantic-search.ts",
     "build:web": "run-s build:angular copy-build build:site",
     "build:angular": "ng build",
     "build:site": "react-router build",
