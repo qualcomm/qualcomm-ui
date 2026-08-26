@@ -1,7 +1,7 @@
+import {create, insertMultiple, search, type Orama} from "@orama/orama"
 import {stat} from "node:fs/promises"
 import {join} from "node:path"
 
-import {create, insertMultiple, search, type Orama} from "@orama/orama"
 import type {
   SemanticSearchHighlight,
   SemanticSearchResponse,
@@ -196,7 +196,9 @@ class ServerSemanticSearchService implements SemanticSearchService {
         .then((encoder) => {
           const model = this.artifact?.model
           if (!model || !hasSameSemanticSearchModel(encoder.model, model)) {
-            throw new Error("Semantic search model does not match the artifact.")
+            throw new Error(
+              "Semantic search model does not match the artifact.",
+            )
           }
 
           this.encoder = encoder

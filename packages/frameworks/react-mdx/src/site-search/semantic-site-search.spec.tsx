@@ -4,15 +4,17 @@
 import type {MouseEvent} from "react"
 
 import {afterEach, describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import type {SemanticSearchResult} from "@qualcomm-ui/mdx-common"
+
+import {MdxDocsProvider} from "../context/use-mdx-docs-context.js"
+
 import {
   SemanticSiteSearch,
   type SemanticSiteSearchProps,
 } from "./semantic-site-search.js"
-import {MdxDocsProvider} from "../context/use-mdx-docs-context.js"
 
 afterEach(() => {
   vi.restoreAllMocks()
@@ -48,14 +50,18 @@ describe("SemanticSiteSearch", () => {
     resolveFirstResponse!(searchResponse([staleResult]))
     await new Promise((resolve) => setTimeout(resolve, 0))
 
-    await expect.element(page.getByText(staleResult.heading)).not.toBeInTheDocument()
+    await expect
+      .element(page.getByText(staleResult.heading))
+      .not.toBeInTheDocument()
   })
 
   test("renders a flat result list and navigates through the supplied link", async () => {
     const onNavigate = vi.fn()
     vi.stubGlobal(
       "fetch",
-      vi.fn(() => Promise.resolve(searchResponse([currentResult, secondResult]))),
+      vi.fn(() =>
+        Promise.resolve(searchResponse([currentResult, secondResult])),
+      ),
     )
 
     const input = await renderSearch({onNavigate})
@@ -140,9 +146,7 @@ async function renderSearch({
     </MdxDocsProvider>,
   )
 
-  await page
-    .getByRole("searchbox", {name: "Search the documentation"})
-    .click()
+  await page.getByRole("searchbox", {name: "Search the documentation"}).click()
   const input = page.getByRole("textbox", {name: "Search the docs"}).last()
   await expect.element(input).toBeVisible()
 

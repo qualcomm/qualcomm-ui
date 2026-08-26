@@ -1,7 +1,6 @@
+import {env, pipeline} from "@huggingface/transformers"
 import {mkdir} from "node:fs/promises"
 import {join} from "node:path"
-
-import {env, pipeline} from "@huggingface/transformers"
 
 import {
   semanticSearchModel,
@@ -33,11 +32,7 @@ export async function createTransformerSemanticSearchEncoder({
   // Transformers 4.2 cannot resolve a revision-pinned tokenizer from its cache
   // by model ID, so the offline server uses the cache's revision directory.
   const model = localFilesOnly
-    ? join(
-        cacheDirectory,
-        semanticSearchModel.id,
-        semanticSearchModel.revision,
-      )
+    ? join(cacheDirectory, semanticSearchModel.id, semanticSearchModel.revision)
     : semanticSearchModel.id
   const extractor = await pipeline("feature-extraction", model, {
     cache_dir: cacheDirectory,

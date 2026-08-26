@@ -432,11 +432,6 @@ export interface SectionEntry {
   content: string
 
   /**
-   * Markdown-free prose used to build semantic search embeddings.
-   */
-  searchText: string
-
-  /**
    * Hash of this section's contents. Includes {@link codeExamples}, {@link
    * metadata}, {@link headerPath}, {@link pathname}, {@link rawContent}, and
    * {@link searchText}.
@@ -474,6 +469,11 @@ export interface SectionEntry {
    * Raw markdown content from the AST, including code blocks.
    */
   rawContent: string
+
+  /**
+   * Markdown-free prose used to build semantic search embeddings.
+   */
+  searchText: string
 
   /**
    * Generated section ID for anchor links.

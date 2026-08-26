@@ -54,7 +54,9 @@ export function resolveSemanticSearchPaths(
  */
 export function resolveSemanticSearchArtifactDirectory(
   projectRoot: string,
-  {environment = process.env.NODE_ENV}: ResolveSemanticSearchArtifactDirectoryOptions = {},
+  {
+    environment = process.env.NODE_ENV,
+  }: ResolveSemanticSearchArtifactDirectoryOptions = {},
 ): string {
   return resolve(
     projectRoot,

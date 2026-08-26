@@ -1,13 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {ActionFunction} from "react-router"
+
 import type {
   SemanticSearchInvalidRequestError,
   SemanticSearchRequest,
   SemanticSearchResponse,
   SemanticSearchUnavailableError,
 } from "@qualcomm-ui/mdx-common"
-import type {ActionFunction} from "react-router"
 
 const defaultLimit = 10
 const maximumLimit = 20
@@ -25,7 +26,8 @@ export interface SemanticSearchActionService {
  * Each docs site provides its own resolver so its action uses that site's
  * artifact and model cache without loading either in the route module.
  */
-export type GetSemanticSearchActionService = () => Promise<SemanticSearchActionService>
+export type GetSemanticSearchActionService =
+  () => Promise<SemanticSearchActionService>
 
 /**
  * Creates a React Router action for a server-local semantic search endpoint.

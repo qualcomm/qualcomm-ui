@@ -10,6 +10,9 @@
   ],
   "references": [
     {
+      "path": "./tsconfig.lib.json"
+    },
+    {
       "path": "../../common/mdx-vite/tsconfig.lib.json"
     }
   ]

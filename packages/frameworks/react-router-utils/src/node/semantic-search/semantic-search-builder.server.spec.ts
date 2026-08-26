@@ -1,9 +1,9 @@
 import {mkdtemp, rm, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
+import {afterEach, describe, expect, test, vi} from "vitest"
 
 import type {KnowledgeSections, SectionEntry} from "@qualcomm-ui/mdx-common"
-import {afterEach, describe, expect, test, vi} from "vitest"
 
 import {
   createSemanticSearchArtifactSection,

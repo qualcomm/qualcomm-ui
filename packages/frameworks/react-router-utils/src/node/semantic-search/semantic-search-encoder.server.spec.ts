@@ -1,7 +1,6 @@
 import {mkdtemp, rm} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
-
 import {afterEach, describe, expect, test, vi} from "vitest"
 
 const transformers = vi.hoisted(() => ({
@@ -11,10 +10,8 @@ const transformers = vi.hoisted(() => ({
 
 vi.mock("@huggingface/transformers", () => transformers)
 
-import {
-  createTransformerSemanticSearchEncoder,
-} from "./semantic-search-encoder.server.js"
 import {semanticSearchModel} from "./semantic-search-artifact.js"
+import {createTransformerSemanticSearchEncoder} from "./semantic-search-encoder.server.js"
 
 let cacheDirectory: string | undefined
 

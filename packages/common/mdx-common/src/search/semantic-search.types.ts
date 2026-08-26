@@ -5,39 +5,39 @@
  * JSON request body accepted by a semantic documentation search endpoint.
  */
 export interface SemanticSearchRequest {
-  /** Search text supplied by the reader. */
-  query: string
-
   /** Maximum number of ranked sections to return. */
   limit?: number
+
+  /** Search text supplied by the reader. */
+  query: string
 }
 
 /**
  * A half-open character range in a result excerpt.
  */
 export interface SemanticSearchHighlight {
-  /** Zero-based start offset in the excerpt. */
-  start: number
-
   /** Exclusive end offset in the excerpt. */
   end: number
+
+  /** Zero-based start offset in the excerpt. */
+  start: number
 }
 
 /**
  * A navigable documentation section returned by semantic search.
  */
 export interface SemanticSearchResult {
-  /** Local route and optional section fragment. */
-  href: string
-
-  /** Excerpt-relative ranges matching the query, when available. */
-  highlights?: SemanticSearchHighlight[]
+  /** Plain-text excerpt from the matching section. */
+  excerpt: string
 
   /** Section heading. */
   heading: string
 
-  /** Plain-text excerpt from the matching section. */
-  excerpt: string
+  /** Excerpt-relative ranges matching the query, when available. */
+  highlights?: SemanticSearchHighlight[]
+
+  /** Local route and optional section fragment. */
+  href: string
 
   /** Stable identifier from the knowledge section export. */
   sectionId: string

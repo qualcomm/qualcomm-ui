@@ -54,8 +54,10 @@ export interface SemanticSearchArtifact {
   version: number
 }
 
-export interface SemanticSearchArtifactSectionInput
-  extends Omit<SemanticSearchArtifactSection, "vector"> {
+export interface SemanticSearchArtifactSectionInput extends Omit<
+  SemanticSearchArtifactSection,
+  "vector"
+> {
   embeddingText: string
 }
 
@@ -221,20 +223,29 @@ function parseSection(
   index: number,
 ): SemanticSearchArtifactSection {
   const section = asRecord(value, `artifact.sections[${index}]`)
-  const display = asRecord(section.display, `artifact.sections[${index}].display`)
+  const display = asRecord(
+    section.display,
+    `artifact.sections[${index}].display`,
+  )
   const keywords = asRecord(
     section.keywords,
     `artifact.sections[${index}].keywords`,
   )
   const vector = asArray(section.vector, `artifact.sections[${index}].vector`)
 
-  if (vector.length !== dimensions || vector.some((value) => !isFiniteNumber(value))) {
+  if (
+    vector.length !== dimensions ||
+    vector.some((value) => !isFiniteNumber(value))
+  ) {
     throw new Error(
       `artifact.sections[${index}].vector must contain ${dimensions} finite numbers.`,
     )
   }
 
-  const href = asString(display.href, `artifact.sections[${index}].display.href`)
+  const href = asString(
+    display.href,
+    `artifact.sections[${index}].display.href`,
+  )
   if (!href.startsWith("/")) {
     throw new Error(
       `artifact.sections[${index}].display.href must be a local path.`,
@@ -258,7 +269,10 @@ function parseSection(
       ),
     },
     keywords: {
-      code: asString(keywords.code, `artifact.sections[${index}].keywords.code`),
+      code: asString(
+        keywords.code,
+        `artifact.sections[${index}].keywords.code`,
+      ),
       heading: asString(
         keywords.heading,
         `artifact.sections[${index}].keywords.heading`,
@@ -284,7 +298,10 @@ function parseSection(
         `artifact.sections[${index}].keywords.typeDocProps`,
       ),
     },
-    sectionId: asString(section.sectionId, `artifact.sections[${index}].sectionId`),
+    sectionId: asString(
+      section.sectionId,
+      `artifact.sections[${index}].sectionId`,
+    ),
     sourceHash: asString(
       section.sourceHash,
       `artifact.sections[${index}].sourceHash`,

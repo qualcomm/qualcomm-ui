@@ -423,14 +423,10 @@ export class SectionExtractor {
     }
 
     for (const node of nodes) {
-      collect(node as unknown as SearchTextNode)
+      collect(node)
     }
 
-    return text
-      .join(" ")
-      .replace(urlPattern, "")
-      .replace(/\s+/g, " ")
-      .trim()
+    return text.join(" ").replace(urlPattern, "").replace(/\s+/g, " ").trim()
   }
 
   private generateSectionId(headerPath: string[]): string {

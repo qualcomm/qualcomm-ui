@@ -4,7 +4,6 @@
 import {mkdir, mkdtemp, readFile, rm, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
-
 import {afterEach, describe, expect, test} from "vitest"
 
 import {PluginState} from "../plugin-state.js"

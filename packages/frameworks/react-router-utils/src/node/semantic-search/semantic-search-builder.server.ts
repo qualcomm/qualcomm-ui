@@ -50,7 +50,8 @@ export async function buildSemanticSearchArtifact({
   const inputs = sections.sections
     .map(createSemanticSearchArtifactSection)
     .filter(
-      (section): section is SemanticSearchArtifactSectionInput => section !== null,
+      (section): section is SemanticSearchArtifactSectionInput =>
+        section !== null,
     )
   const sectionsToEmbed = inputs.filter(
     (section) => !reusableVectors.has(getReuseKey(section)),
@@ -78,7 +79,11 @@ export async function buildSemanticSearchArtifact({
 
     return toArtifactSection(section, vector)
   })
-  const artifact = createSemanticSearchArtifact(sections, artifactSections, model)
+  const artifact = createSemanticSearchArtifact(
+    sections,
+    artifactSections,
+    model,
+  )
 
   await writeSemanticSearchArtifactAtomically(artifactPath, artifact)
 
@@ -103,7 +108,9 @@ async function embedSections(
   }
 
   if (!hasSameSemanticSearchModel(encoder.model, model)) {
-    throw new Error("Semantic search encoder does not match the artifact model.")
+    throw new Error(
+      "Semantic search encoder does not match the artifact model.",
+    )
   }
 
   const vectors = new Map<string, number[]>()
@@ -175,10 +182,7 @@ function getReusableVectors(
   )
 }
 
-function getReuseKey(section: {
-  sectionId: string
-  sourceHash: string
-}): string {
+function getReuseKey(section: {sectionId: string; sourceHash: string}): string {
   return `${section.sectionId}:${section.sourceHash}`
 }
 

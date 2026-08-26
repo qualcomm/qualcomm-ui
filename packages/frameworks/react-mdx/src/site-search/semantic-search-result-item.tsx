@@ -47,7 +47,11 @@ export function SemanticSearchResultItem({
       data-highlighted={booleanDataAttr(active)}
       {...props}
     >
-      <Icon className="qui-site-search__item-icon" icon={TextSearchIcon} size="lg" />
+      <Icon
+        className="qui-site-search__item-icon"
+        icon={TextSearchIcon}
+        size="lg"
+      />
       <div className="qui-site-search__list-item-content">
         <span className="qui-site-search__section-title">{item.heading}</span>
         <div className="qui-site-search__metadata">{item.title}</div>
@@ -75,8 +79,7 @@ function renderHighlightedExcerpt(
     .sort((left, right) => left.start - right.start)
     .filter(
       (highlight, index, sortedHighlights) =>
-        index === 0 ||
-        highlight.start >= sortedHighlights[index - 1].end,
+        index === 0 || highlight.start >= sortedHighlights[index - 1].end,
     )
 
   if (validHighlights.length === 0) {

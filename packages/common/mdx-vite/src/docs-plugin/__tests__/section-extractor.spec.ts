@@ -375,10 +375,7 @@ const excluded = "code block"
 \`\`\`
 `
       const extractor = new SectionExtractor()
-      const {sections} = extractor.extract(
-        parseGfmMarkdown(markdown),
-        pageInfo,
-      )
+      const {sections} = extractor.extract(parseGfmMarkdown(markdown), pageInfo)
 
       expect(sections[0]).toMatchObject({
         pathname: "/test-page",
