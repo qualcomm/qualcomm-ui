@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.6.1
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
 ## 1.6.0
 
 Aug 18th, 2026
