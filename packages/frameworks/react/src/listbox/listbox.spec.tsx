@@ -1,6 +1,8 @@
-import {describe, expect, test} from "vitest"
+import {useState, type ReactElement} from "react"
+
+import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
-import {page} from "vitest/browser"
+import {page, userEvent} from "vitest/browser"
 
 import {listboxCollection} from "@qualcomm-ui/core/listbox"
 import {Listbox} from "@qualcomm-ui/react/listbox"
@@ -46,5 +48,50 @@ describe("Listbox", () => {
     await option.click()
 
     await expect.element(option).toHaveAttribute("aria-selected", "true")
+  })
+
+  test("navigates from the input when content mounts after focus", async () => {
+    const onHighlightChangeSpy = vi.fn()
+
+    function DeferredContentListbox(): ReactElement {
+      const [renderContent, setRenderContent] = useState(false)
+
+      return (
+        <Listbox.Root
+          collection={collection}
+          onHighlightChange={onHighlightChangeSpy}
+        >
+          <Listbox.Input
+            label="Filter options"
+            onKeyDownCapture={(event) => {
+              if (event.key === "ArrowDown") {
+                setRenderContent(true)
+              }
+            }}
+          />
+          {renderContent ? (
+            <Listbox.Content data-test-id="content">
+              {items.map((item) => (
+                <Listbox.Item key={item} item={item}>
+                  <Listbox.ItemLabel>{item}</Listbox.ItemLabel>
+                </Listbox.Item>
+              ))}
+            </Listbox.Content>
+          ) : null}
+        </Listbox.Root>
+      )
+    }
+
+    await render(<DeferredContentListbox />)
+
+    await page.getByRole("textbox", {name: "Filter options"}).click()
+    await expect.element(page.getByTestId("content")).not.toBeInTheDocument()
+
+    await userEvent.keyboard("{ArrowDown}")
+
+    await expect
+      .poll(() => onHighlightChangeSpy.mock.lastCall?.[0].highlightedValue)
+      .toBe("Option 1")
+    await expect.element(page.getByTestId("content")).toBeVisible()
   })
 })
