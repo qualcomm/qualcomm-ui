@@ -395,43 +395,18 @@ export function createListboxApi(
           }
           const nativeEvent = getNativeEvent(event)
 
-          const navigateToValue = (nextValue: string | null): void => {
-            if (!nextValue) {
-              return
-            }
-
+          const forwardEvent = () => {
             event.preventDefault()
-            send({
-              anchorValue: highlightedValue,
-              shiftKey: event.shiftKey,
-              type: "NAVIGATE",
-              value: nextValue,
-            })
+            const win = scope.getWin()
+            const keyboardEvent = new (win as any).KeyboardEvent(
+              nativeEvent.type,
+              nativeEvent,
+            )
+            listboxDomEls.content(scope)?.dispatchEvent(keyboardEvent)
           }
 
           switch (nativeEvent.key) {
-            case "ArrowLeft": {
-              if (!isGridCollection(collection)) {
-                return
-              }
-              if (event.ctrlKey) {
-                return
-              }
-              if (keyboardPriority !== "navigate") {
-                return
-              }
-
-              let nextValue = highlightedValue
-                ? collection.getPreviousValue(highlightedValue)
-                : null
-              if (!nextValue && prop("loopFocus")) {
-                nextValue = collection.lastValue
-              }
-
-              navigateToValue(nextValue)
-              break
-            }
-
+            case "ArrowLeft":
             case "ArrowRight": {
               if (!isGridCollection(collection)) {
                 return
@@ -442,30 +417,11 @@ export function createListboxApi(
               if (keyboardPriority !== "navigate") {
                 return
               }
-
-              let nextValue = highlightedValue
-                ? collection.getNextValue(highlightedValue)
-                : null
-              if (!nextValue && prop("loopFocus")) {
-                nextValue = collection.firstValue
-              }
-
-              navigateToValue(nextValue)
+              forwardEvent()
               break
             }
 
-            case "Home": {
-              if (keyboardPriority !== "navigate") {
-                return
-              }
-              if (highlightedValue == null && event.shiftKey) {
-                return
-              }
-
-              navigateToValue(collection.firstValue)
-              break
-            }
-
+            case "Home":
             case "End": {
               if (keyboardPriority !== "navigate") {
                 return
@@ -473,40 +429,13 @@ export function createListboxApi(
               if (highlightedValue == null && event.shiftKey) {
                 return
               }
-
-              navigateToValue(collection.lastValue)
+              forwardEvent()
               break
             }
 
-            case "ArrowDown": {
-              let nextValue: string | null = null
-              if (isGridCollection(collection) && highlightedValue) {
-                nextValue = collection.getNextRowValue(highlightedValue)
-              } else if (highlightedValue) {
-                nextValue = collection.getNextValue(highlightedValue)
-              }
-
-              if (!nextValue && (prop("loopFocus") || !highlightedValue)) {
-                nextValue = collection.firstValue
-              }
-
-              navigateToValue(nextValue)
-              break
-            }
-
+            case "ArrowDown":
             case "ArrowUp": {
-              let nextValue: string | null = null
-              if (isGridCollection(collection) && highlightedValue) {
-                nextValue = collection.getPreviousRowValue(highlightedValue)
-              } else if (highlightedValue) {
-                nextValue = collection.getPreviousValue(highlightedValue)
-              }
-
-              if (!nextValue && (prop("loopFocus") || !highlightedValue)) {
-                nextValue = collection.lastValue
-              }
-
-              navigateToValue(nextValue)
+              forwardEvent()
               break
             }
 
