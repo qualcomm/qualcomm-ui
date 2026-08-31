@@ -60,7 +60,6 @@ catalog:
   "@react-router/node": 7.16.0
   "@react-router/remix-routes-option-adapter": 7.16.0
   "@react-router/serve": 7.16.0
-  "@rolldown/plugin-babel": 0.2.3
   "@tailwindcss/postcss": 4.3.3
   "@tailwindcss/vite": 4.3.3
   "@types/lodash-es": 4.17.12
@@ -71,7 +70,7 @@ catalog:
   "@typescript-eslint/parser": 8.67.0
   "@typescript-eslint/rule-tester": 8.67.0
   "@typescript-eslint/utils": 8.67.0
-  "@vitejs/plugin-react": 6.1.0
+  "@vitejs/plugin-react": 6.1.1
   "@vitest/browser": 4.1.10
   "@vitest/browser-playwright": 4.1.10
   "@vitest/coverage-v8": 4.1.10
@@ -86,6 +85,7 @@ catalog:
   lodash-es: 4.18.1
   ng-packagr: 21.2.0
   npm-run-all2: 8.0.4
+  oxc-transform-react: 0.147.0
   oxfmt: 0.54.0
   oxlint: 1.69.0
   postcss: 8.5.10
@@ -109,4 +109,3 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@qualcomm-ui/*"
   - "vite"
-  - "@vitejs/plugin-react@6.1.0"
