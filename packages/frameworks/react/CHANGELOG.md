@@ -1,5 +1,21 @@
 # @qualcomm-ui/react Changelog
 
+## 1.29.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-picker]: focus trap ([3a63bd1](https://github.com/qualcomm/qualcomm-ui/commit/3a63bd1))
+* [date-picker]: add the React date picker ([326b218](https://github.com/qualcomm/qualcomm-ui/commit/326b218))
+* [tag]: allow customizing the dismiss button label ([b86bf8e](https://github.com/qualcomm/qualcomm-ui/commit/b86bf8e))
+* [select]: label remove buttons with the selected item text ([39b2c7b](https://github.com/qualcomm/qualcomm-ui/commit/39b2c7b))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/qds-core@1.37.0, @qualcomm-ui/react-core@1.7.0]
+
 ## 1.28.1
 
 Aug 20th, 2026

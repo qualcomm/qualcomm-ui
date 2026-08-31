@@ -1,5 +1,18 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.37.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: add design system styles and api bindings ([510fe9d](https://github.com/qualcomm/qualcomm-ui/commit/510fe9d))
+* [tag]: allow customizing the dismiss button label ([b86bf8e](https://github.com/qualcomm/qualcomm-ui/commit/b86bf8e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0]
+
 ## 1.36.0
 
 Aug 18th, 2026
