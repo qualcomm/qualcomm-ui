@@ -245,13 +245,22 @@ export interface MenuApiProps
    * The options used to dynamically position the menu
    * @inheritDoc
    */
-  positioning?: PositioningOptions | undefined
+  positioning?: MenuPositioningOptions | undefined
 
   /**
    * Whether the pressing printable characters should trigger typeahead navigation
    * @default true
    */
   typeahead?: boolean | undefined
+}
+
+export interface MenuPositioningOptions extends PositioningOptions {
+  /**
+   * The initial placement of the floating element
+   *
+   * @default 'bottom-start'
+   */
+  placement?: Placement | undefined
 }
 
 type PropsWithDefault =

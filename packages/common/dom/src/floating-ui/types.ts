@@ -128,7 +128,7 @@ export interface PositioningOptions {
   /**
    * The main axis offset or gap between the reference and floating element
    *
-   * @default 8
+   * @default 2
    */
   gutter?: number | undefined
 

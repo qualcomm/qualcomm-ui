@@ -4,9 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-export function compact<T extends Record<string, unknown> | undefined>(
-  obj: T,
-): T {
+export function compact<T extends object | undefined>(obj: T): T {
   if (!isPlainObject(obj) || obj === undefined) {
     return obj
   }

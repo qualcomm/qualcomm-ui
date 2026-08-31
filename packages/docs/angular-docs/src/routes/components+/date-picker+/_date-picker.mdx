@@ -1,0 +1,901 @@
+---
+title: Date Picker
+description: The date picker lets users select a single date, multiple dates, or a date range from a calendar, with day, month, and year views.
+component: DatePicker
+aliases: [calendar, datepicker, date input]
+badges:
+  - id: since
+    label: 3.2.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#320
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {DatePickerModule} from "@qualcomm-ui/angular/date-picker"
+```
+
+## Overview
+
+- The value is an array of `DateValue` from [@internationalized/date](https://react-spectrum.adobe.com/internationalized/date/), not a native `Date`. The type is re-exported from `@qualcomm-ui/angular/date-picker`, along with `parseDate`, `today`, `getLocalTimeZone`, and `CalendarDate`.
+- Build values with `parseDate("2026-08-14")` for fixed dates, or `today(getLocalTimeZone())` for relative ones. Both return a `CalendarDate`, a date with no time attached.
+- To keep a time alongside the date, start from a [`CalendarDateTime`](https://react-aria.adobe.com/internationalized/date/CalendarDateTime) or [`ZonedDateTime`](https://react-aria.adobe.com/internationalized/date/ZonedDateTime) instead. Picking a new day preserves the time.
+- Avoid converting a native `Date`. Only its local year, month, and day are read, so a UTC timestamp such as `new Date("2026-08-14T00:00:00Z")` becomes August 13 in time zones behind UTC. Pass the ISO date string to `parseDate` instead.
+
+## Examples
+
+### Single Date
+
+The default [selectionMode](./#selectionMode). Type a date into the field in the locale format, or pick one from the calendar.
+
+<QdsDemo name="DatePickerSingleDemo" />
+
+### Child Directives
+
+::: terms
+slots, child directives, projection
+:::
+
+Provide child directives to customize specific elements while keeping the simple API's default structure. Anything not provided falls back to the default.
+
+`q-date-picker-control`, `q-date-picker-input-group`, `q-date-picker-hint`, `q-date-picker-error-text`, `q-date-picker-headline`, `q-date-picker-headline-label`, `q-date-picker-headline-value`, `q-date-picker-presets`, and `q-date-picker-actions` can all be provided this way. Use this to reach inputs the simple API does not expose, such as [moreLabel](./#moreLabel) on the headline value.
+
+Providing `q-date-picker-actions` also adds the footer, so [closeOnSelect](./#closeOnSelect) does not need to be set. The `inline` variant never shows a footer, so it ignores that directive.
+
+<QdsDemo name="DatePickerChildDirectivesDemo" />
+
+### Composite
+
+::: terms
+composite api, parts, anatomy
+:::
+
+Build with the composite API for granular control. The simple `<q-date-picker>` renders exactly this tree, including the three `q-date-picker-view` blocks for the day, month, and year views.
+
+<QdsDemo name="DatePickerCompositeDemo" />
+
+### Range
+
+::: terms
+date range, start date, end date
+:::
+
+Set `selectionMode="range"` to collect a start and end date. Use the [separator](./#separator) input on `q-date-picker`, or on the composite [`q-date-picker-input-group`](./#separator-1), to change the character between the two inputs; it defaults to `-`. The calendar shows a band between the two dates.
+
+A range can be partially filled, in which case the missing end is `null`.
+
+<QdsDemo name="DatePickerRangeDemo" />
+
+### Multiple
+
+::: terms
+multi select, multiple dates, tags
+:::
+
+Set `selectionMode="multiple"` to collect several dates, shown as dismissible tags in the field. The field is display-only in this mode, so dates are picked from the calendar rather than typed.
+
+Use [maxSelectedDates](./#maxSelectedDates) to cap how many dates can be selected.
+
+The popover always shows [action buttons](./#action-buttons) in this mode.
+
+<QdsDemo name="DatePickerMultipleDemo" />
+
+### Action Buttons
+
+::: terms
+cancel, ok, footer, apply
+:::
+
+Set [closeOnSelect](./#closeOnSelect) to `false` to add a footer with Cancel and OK buttons. `selectionMode="multiple"` always includes it.
+
+Selections apply as they are made. OK keeps them and closes the popover, while Cancel, `Escape`, and clicking outside all revert to the value the popover opened with. The field's clear button applies immediately and is not affected by Cancel.
+
+<QdsDemo name="DatePickerActionsDemo" />
+
+### Open on Click
+
+::: terms
+click to expand, expand on click
+:::
+
+Set [openOnClick](./#openOnClick) to automatically open the popover when the user clicks the field. This keeps focus in it so typing continues.
+
+<QdsDemo name="DatePickerOpenOnClickDemo" />
+
+### Presets
+
+::: terms
+shortcuts, quick select, relative dates
+:::
+
+Use the [presets](./#presets-1) input to offer common selections, such as the last 7 days. A button in the day view header opens the presets panel.
+
+Each preset is a `{label, value}` pair, where `value` is either a named range such as `"next7Days"` or an explicit `DateValue[]`.
+
+<QdsDemo name="DatePickerPresetsDemo" />
+
+### Sizes
+
+::: terms
+small, medium, large
+:::
+
+This component supports three [size](./#size) options to accommodate different layout densities.
+
+The available sizes are `sm`, `md`, and `lg`. The default size is `md`. Size applies to the input field only; the calendar is unaffected.
+
+<QdsDemo name="DatePickerSizesDemo" />
+
+### Hint and Error Text
+
+::: terms
+helper text, validation message, error indicator
+:::
+
+Add a [hint](./#hint) to provide additional context below the field. When [invalid](./#invalid) is `true`, the [errorText](./#errorText) replaces it and the field shows an error indicator icon.
+
+<QdsDemo name="DatePickerHintDemo" />
+
+### States
+
+::: terms
+disabled state, read-only, readonly, invalid state
+:::
+
+The date picker supports disabled, read-only, and invalid states. When you bind a reactive form control, set the state through the control rather than these inputs.
+
+<QdsDemo name="DatePickerStatesDemo" />
+
+### Min and Max Dates
+
+::: terms
+date bounds, range limit
+:::
+
+Use the [min](./#min) and [max](./#max) inputs to bound the selectable dates. Dates outside the bounds are disabled, and typed values are clamped into range.
+
+<QdsDemo name="DatePickerMinMaxDemo" />
+
+### Outside Days
+
+::: terms
+adjacent months, leading days, trailing days
+:::
+
+Days from the previous and next month fill the first and last week of the grid. Set [hideOutsideDays](./#hideOutsideDays) to leave those cells empty instead.
+
+<QdsDemo name="DatePickerHideOutsideDaysDemo" />
+
+### Unavailable Dates
+
+::: terms
+blocked dates, holidays, disabled dates
+:::
+
+Use the [isDateUnavailable](./#isDateUnavailable) input to block individual dates that [min](./#min) and [max](./#max) cannot express, such as weekends or holidays.
+
+<QdsDemo name="DatePickerUnavailableDemo" />
+
+### Locale
+
+::: terms
+internationalization, i18n, language, date format
+:::
+
+Use the [locale](./#locale-1) input to change how dates are displayed and parsed. It takes a [BCP 47 language tag](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) and defaults to `en-US`. The month and weekday names, the first day of the week, the placeholder, and the separators the field accepts all follow from it. For example, `de-DE` gives a `dd.mm.yyyy` placeholder and accepts `.` as the separator.
+
+Use the [startOfWeek](./#startOfWeek) input to override only the first day of the week.
+
+<QdsDemo name="DatePickerLocaleDemo" />
+
+### Inline
+
+::: terms
+always open, embedded calendar, flat
+:::
+
+Set [variant](./#variant) to `inline` to render an always-visible calendar with no field or popover. This variant never shows action buttons and has no inputs, so it does not submit a value with a native form; read the selection through the bound form control.
+
+The inline variant shows a headline with the label and current value. Set `[headline]="false"` to remove it.
+
+<QdsDemo name="DatePickerInlineDemo" />
+
+### Custom Trigger
+
+::: terms
+structural directive, button trigger, unstyled trigger, api
+:::
+
+[`*datePickerContext`](./#date-picker-context) is a structural directive that hands you the picker api, so you can drive your own presentation from the picker's state. Use it to read the current value, format your own label, or call actions such as `clearValue`.
+
+```angular-html
+<span *datePickerContext="let api">
+  {{ api.valueAsString[0] || "No date selected" }}
+</span>
+```
+
+[`q-date-picker-trigger`](./#q-date-picker-trigger) pairs with it to replace the field entirely. It is a behavioral, unstyled trigger with no styled wrapper, so compose it with `q-button` on the same element. Place it inside [`q-date-picker-control`](./#q-date-picker-control), which anchors the popover.
+
+```angular-html
+<button *datePickerContext="let api" q-button q-date-picker-trigger variant="outline">
+  {{ api.valueAsString[0] || "Pick a date" }}
+</button>
+```
+
+Accessibility attributes, focus restoration, and dismissal behavior come from the picker, so you do not write them yourself.
+
+<QdsDemo name="DatePickerCustomTriggerDemo" />
+
+### Within Dialog
+
+::: terms
+modal, disable portal
+:::
+
+Set [disablePortal](./#disablePortal) to render the calendar popover in place rather than at the end of `document.body`. This is required inside a [Dialog](/components/dialog) or [Popover](/components/popover).
+
+<QdsDemo name="DatePickerWithinDialogDemo" />
+
+## Forms
+
+::: terms
+formdata, native validation, submit, reset
+:::
+
+The control value is an array of `DateValue | null`, and entries can be `null` when a range is partially filled.
+
+The selection is also submitted natively under [name](./#name), and the number of entries follows the selection mode: one for a single date, two for a range, and one per date in `multiple` mode. Entries arrive in document order, so a range is always start then end.
+
+A range keeps the position of each end, so clearing only the start submits an empty first entry with the end date second. Read a range by position rather than by taking the first non-empty entry.
+
+Resetting the form restores the initial value.
+
+### Reactive Forms
+
+::: terms
+FormControl, FormGroup, ReactiveFormsModule, Validators
+:::
+
+Bind a `FormControl` with `[formControl]` or `formControlName`. The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required) inputs have no effect in this case; use the equivalent form control bindings instead.
+
+In `range` mode, a required control also applies a validator that rejects a partially filled range.
+
+<QdsDemo name="DatePickerReactiveFormsDemo" />
+
+### Template Forms
+
+::: terms
+ngModel, template-driven, FormsModule, two-way binding
+:::
+
+Bind `ngModel` for template-driven forms. Here the [disabled](./#disabled), [readOnly](./#readOnly), [invalid](./#invalid), and [required](./#required) inputs govern the state of the control.
+
+<QdsDemo name="DatePickerTemplateFormsDemo" />
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-date-picker"
+  name="DatePickerExplorerDemo"
+  parts={[
+    "root",
+    "control",
+    "label",
+    "input-group",
+    "input",
+    "clear-trigger",
+    "trigger",
+    "hint",
+    "content",
+    "view-control",
+    "view-trigger",
+    "prev-trigger",
+    "next-trigger",
+    "table",
+    "table-cell-trigger",
+    "presets-trigger",
+    "presets",
+    "preset-trigger",
+  ]}
+  scope="date-picker"
+/>
+
+## API
+
+### \<q-date-picker\>
+
+The simple date picker extends the [q-date-picker-root](./#q-date-picker-root) directive with the following properties:
+
+<TypeDocProps
+  name="DatePickerComponent"
+  omitFrom="DatePickerRootDirective"
+/>
+
+## Composite API
+
+This section describes the elements of the date picker's composite API.
+
+### q-date-picker-root
+
+<TypeDocProps name="DatePickerRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerRootBindings", "DatePickerRootBindings"]}
+/>
+
+### q-date-picker-label
+
+<TypeDocProps name="DatePickerLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerLabelBindings", "DatePickerLabelBindings"]}
+/>
+
+### q-date-picker-control
+
+<TypeDocProps name="DatePickerControlDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerControlBindings", "DatePickerControlBindings"]}
+/>
+
+### q-date-picker-input-group
+
+See [Shortcuts](./#shortcuts) for the tree this renders in each selection mode.
+
+<TypeDocProps name="DatePickerInputGroupDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerControlGroupBindings",
+    "QdsDatePickerInputGroupBindings",
+    "DatePickerInputGroupBindings",
+  ]}
+/>
+
+### q-date-picker-input-group-trigger
+
+The bordered field inside the input group. In `multiple` mode it also acts as the
+calendar trigger, because no text input owns focus there.
+
+<TypeDocProps name="DatePickerInputGroupTriggerDirective" />
+
+<TypeDocAngularAttributes name={["DatePickerInputGroupTriggerBindings"]} />
+
+### q-date-picker-input
+
+A range picker renders two inputs, distinguished by `index`.
+
+<TypeDocProps name="DatePickerInputDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerInputBindings", "DatePickerInputBindings"]}
+/>
+
+### q-date-picker-value-tags
+
+<TypeDocProps name="DatePickerValueTagsDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerValueTagsBindings", "DatePickerHiddenInputBindings"]}
+/>
+
+### q-date-picker-clear-trigger
+
+Applies the clear behavior to any element, without QDS styling. Use it to build a
+custom clear control. For the styled control used inside the input group, see
+[q-date-picker-input-clear-trigger](./#q-date-picker-input-clear-trigger).
+
+<TypeDocProps name="DatePickerClearTriggerDirective" />
+
+<TypeDocAngularAttributes name={["DatePickerClearTriggerBindings"]} />
+
+### q-date-picker-input-clear-trigger
+
+The clear trigger as it is styled inside the input group: a
+[q-date-picker-clear-trigger](./#q-date-picker-clear-trigger) rendered as an
+[icon button](/components/icon-button) with compact density and a default `X` icon.
+Project content to replace the icon.
+
+<TypeDocProps name="DatePickerInputClearTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerClearTriggerBindings",
+    "DatePickerClearTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-error-indicator
+
+<TypeDocProps name="DatePickerErrorIndicatorDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerErrorIndicatorBindings",
+    "DatePickerErrorIndicatorBindings",
+  ]}
+/>
+
+### q-date-picker-trigger
+
+Applies the open and close behavior to any element, without QDS styling. Use it
+to build a custom trigger. For the styled control used inside the input group,
+see [q-date-picker-input-trigger](./#q-date-picker-input-trigger).
+
+<TypeDocProps name="DatePickerTriggerDirective" />
+
+<TypeDocAngularAttributes name={["DatePickerTriggerBindings"]} />
+
+### q-date-picker-input-trigger
+
+The calendar trigger as it is styled inside the input group: a
+[q-date-picker-trigger](./#q-date-picker-trigger) rendered as an
+[icon button](/components/icon-button) with compact density and a default `Calendar`
+icon. Project content to replace the icon.
+
+In `multiple` mode the input group renders a non-interactive calendar icon
+instead, because `q-date-picker-input-group-trigger` carries the trigger
+bindings.
+
+<TypeDocProps name="DatePickerInputTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerTriggerBindings", "DatePickerTriggerBindings"]}
+/>
+
+### q-date-picker-hint
+
+<TypeDocProps name="DatePickerHintDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerHintBindings", "DatePickerHintBindings"]}
+/>
+
+### q-date-picker-error-text
+
+<TypeDocProps name="DatePickerErrorTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerErrorTextBindings", "DatePickerErrorTextBindings"]}
+/>
+
+### q-date-picker-positioner
+
+<TypeDocProps name="DatePickerPositionerDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerPositionerBindings", "DatePickerPositionerBindings"]}
+/>
+
+### q-date-picker-content
+
+<TypeDocProps name="DatePickerContentDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerContentBindings", "DatePickerContentBindings"]}
+/>
+
+### q-date-picker-headline
+
+<TypeDocProps name="DatePickerHeadlineDirective" />
+
+<TypeDocAngularAttributes name="QdsDatePickerHeadlineBindings" />
+
+### q-date-picker-headline-label
+
+The default caption is `Date range` in range mode and `Date` otherwise. Pass content to override it.
+
+<TypeDocProps name="DatePickerHeadlineLabelDirective" />
+
+<TypeDocAngularAttributes name="QdsDatePickerHeadlineLabelBindings" />
+
+### q-date-picker-headline-value
+
+In `multiple` mode this shows up to two dates then appends a count suffix.
+
+<TypeDocProps name="DatePickerHeadlineValueDirective" />
+
+<TypeDocAngularAttributes name="QdsDatePickerHeadlineValueBindings" />
+
+### q-date-picker-view
+
+<TypeDocProps name="DatePickerViewDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerViewBindings", "DatePickerViewBindings"]}
+/>
+
+### q-date-picker-view-control
+
+<TypeDocProps name="DatePickerViewControlDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerViewControlBindings",
+    "DatePickerViewControlBindings",
+  ]}
+/>
+
+### q-date-picker-view-trigger
+
+<TypeDocProps name="DatePickerViewTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerViewTriggerBindings",
+    "DatePickerViewTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-view-close-trigger
+
+<TypeDocProps name="DatePickerViewCloseTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerViewCloseTriggerBindings",
+    "DatePickerViewCloseTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-prev-trigger
+
+Disabled when the previous page falls entirely outside `min`.
+
+<TypeDocProps name="DatePickerPrevTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerPrevTriggerBindings",
+    "DatePickerPrevTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-next-trigger
+
+Disabled when the next page falls entirely outside `max`.
+
+<TypeDocProps name="DatePickerNextTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerNextTriggerBindings",
+    "DatePickerNextTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-month-text
+
+<TypeDocProps name="DatePickerMonthTextDirective" />
+
+### q-date-picker-year-text
+
+<TypeDocProps name="DatePickerYearTextDirective" />
+
+### q-date-picker-range-text
+
+<TypeDocProps name="DatePickerRangeTextDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerRangeTextBindings", "DatePickerRangeTextBindings"]}
+/>
+
+### q-date-picker-table
+
+The column count is fixed per view.
+
+<TypeDocProps name="DatePickerTableDirective" omit={["columns"]} />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerTableBindings", "DatePickerTableBindings"]}
+/>
+
+### q-date-picker-table-head
+
+<TypeDocProps name="DatePickerTableHeadDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerTableHeadBindings", "DatePickerTableHeadBindings"]}
+/>
+
+### q-date-picker-table-header
+
+<TypeDocProps name="DatePickerTableHeaderDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerTableHeaderBindings",
+    "DatePickerTableHeaderBindings",
+  ]}
+/>
+
+### q-date-picker-table-body
+
+<TypeDocProps name="DatePickerTableBodyDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerTableBodyBindings", "DatePickerTableBodyBindings"]}
+/>
+
+### q-date-picker-table-row
+
+<TypeDocProps name="DatePickerTableRowDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerTableRowBindings", "DatePickerTableRowBindings"]}
+/>
+
+### q-date-picker-table-cell
+
+The bindings differ by the view the cell belongs to.
+
+<TypeDocProps name="DatePickerTableCellDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerTableCellBindings",
+    "DatePickerDayTableCellBindings",
+    "DatePickerMonthTableCellBindings",
+    "DatePickerYearTableCellBindings",
+  ]}
+/>
+
+### q-date-picker-table-cell-trigger
+
+The bindings differ by the view the cell belongs to.
+
+<TypeDocProps name="DatePickerTableCellTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerTableCellTriggerBindings",
+    "DatePickerDayTableCellTriggerBindings",
+    "DatePickerMonthTableCellTriggerBindings",
+    "DatePickerYearTableCellTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-day-grid-header
+
+<TypeDocProps name="DatePickerDayGridHeaderDirective" />
+
+### q-date-picker-day-grid
+
+<TypeDocProps name="DatePickerDayGridDirective" />
+
+### q-date-picker-month-grid
+
+<TypeDocProps name="DatePickerMonthGridDirective" />
+
+### q-date-picker-year-grid
+
+Renders the year cells for the year view. Takes no inputs.
+
+### q-date-picker-presets
+
+<TypeDocProps name="DatePickerPresetsDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsDatePickerPresetsBindings", "DatePickerPresetsBindings"]}
+/>
+
+### q-date-picker-presets-trigger
+
+<TypeDocProps name="DatePickerPresetsTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerPresetsTriggerBindings",
+    "DatePickerPresetsTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-preset-trigger
+
+<TypeDocProps name="DatePickerPresetTriggerDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsDatePickerPresetTriggerBindings",
+    "DatePickerPresetTriggerBindings",
+  ]}
+/>
+
+### q-date-picker-actions
+
+<TypeDocProps name="DatePickerActionsDirective" />
+
+<TypeDocAngularAttributes name="QdsDatePickerActionsBindings" />
+
+### q-date-picker-cancel-trigger
+
+<TypeDocProps name="DatePickerCancelTriggerDirective" />
+
+### q-date-picker-ok-trigger
+
+<TypeDocProps name="DatePickerOkTriggerDirective" />
+
+### datePickerContext
+
+<TypeDocProps name="DatePickerContextDirective" />
+
+### DatePickerApi
+
+The api handed to the `*datePickerContext` structural directive.
+
+<TypeDocProps
+  name="DatePickerApi"
+  omit={[
+    "getClearTriggerBindings",
+    "getContentBindings",
+    "getControlBindings",
+    "getDayTableCellBindings",
+    "getDayTableCellTriggerBindings",
+    "getErrorIndicatorBindings",
+    "getErrorTextBindings",
+    "getHiddenInputBindings",
+    "getHintBindings",
+    "getInputBindings",
+    "getInputGroupBindings",
+    "getInputGroupTriggerBindings",
+    "getLabelBindings",
+    "getMonthTableCellBindings",
+    "getMonthTableCellTriggerBindings",
+    "getNextTriggerBindings",
+    "getPositionerBindings",
+    "getPresetTriggerBindings",
+    "getPresetsBindings",
+    "getPresetsTriggerBindings",
+    "getPrevTriggerBindings",
+    "getRangeTextBindings",
+    "getRootBindings",
+    "getTableBindings",
+    "getTableBodyBindings",
+    "getTableHeadBindings",
+    "getTableHeaderBindings",
+    "getTableRowBindings",
+    "getTriggerBindings",
+    "getViewBindings",
+    "getViewCloseTriggerBindings",
+    "getViewControlBindings",
+    "getViewTriggerBindings",
+    "getYearTableCellBindings",
+    "getYearTableCellTriggerBindings",
+  ]}
+  partial
+/>
+
+## Data Structures
+
+### DatePickerPositioningOptions
+
+<TypeDocProps name="DatePickerPositioningOptions" partial />
+
+## Shortcuts
+
+### q-date-picker-input-group
+
+Groups the field parts into one bordered control. For a single date picker it renders roughly this structure:
+
+```angular-html
+<label q-date-picker-label>{{ label }}</label>
+<div q-date-picker-input-group-trigger>
+  <input q-date-picker-input [index]="0" />
+  <button q-date-picker-input-clear-trigger></button>
+  <span aria-hidden></span>
+  <span q-date-picker-error-indicator></span>
+  <button q-date-picker-input-trigger></button>
+</div>
+```
+
+The two buttons are compact icon buttons, and the empty span is the divider between the input and the triggers. See [q-date-picker-input-clear-trigger](./#q-date-picker-input-clear-trigger) and [q-date-picker-input-trigger](./#q-date-picker-input-trigger).
+
+In `range` mode it renders two inputs with the `separator` between them:
+
+```angular-html
+<input q-date-picker-input [index]="0" />
+<span aria-hidden>{{ separator }}</span>
+<input q-date-picker-input [index]="1" />
+```
+
+In `multiple` mode it renders `q-date-picker-value-tags` in place of the inputs:
+
+```angular-html
+<span
+  q-date-picker-value-tags
+  [dismissLabel]="dismissLabel"
+  [placeholder]="placeholder"
+></span>
+```
+
+Multiple mode also replaces the calendar trigger with a non-interactive calendar icon, because the field itself carries the trigger bindings.
+
+### q-date-picker-day-grid-header
+
+Renders the weekday header row of the day view. This shortcut is equivalent to:
+
+```angular-html
+<thead q-date-picker-table-head>
+  <tr q-date-picker-table-row>
+    @for (weekDay of weekDays; track $index) {
+      <th
+        q-date-picker-table-header
+        scope="col"
+        [attr.aria-label]="weekDay.long"
+      >
+        {{ weekDay[format] }}
+      </th>
+    }
+  </tr>
+</thead>
+```
+
+### q-date-picker-day-grid
+
+Renders the day cells of the visible month. This shortcut is equivalent to:
+
+```angular-html
+<tbody q-date-picker-table-body>
+  @for (week of weeks; track $index) {
+    <tr q-date-picker-table-row>
+      @for (day of week; track $index) {
+        <td
+          q-date-picker-table-cell
+          [value]="day"
+          [visibleRange]="visibleRange"
+        >
+          <div q-date-picker-table-cell-trigger>{{ day.day }}</div>
+        </td>
+      }
+    </tr>
+  }
+</tbody>
+```
+
+### q-date-picker-month-grid
+
+Renders the month cells of the month view. This shortcut is equivalent to:
+
+```angular-html
+<tbody q-date-picker-table-body>
+  @for (months of getMonthsGrid({columns, format}); track $index) {
+    <tr q-date-picker-table-row>
+      @for (month of months; track $index) {
+        <td q-date-picker-table-cell [value]="month.value">
+          <div q-date-picker-table-cell-trigger>{{ month.label }}</div>
+        </td>
+      }
+    </tr>
+  }
+</tbody>
+```
+
+### q-date-picker-year-grid
+
+Renders the year cells of the year view. This shortcut is equivalent to:
+
+```angular-html
+<tbody q-date-picker-table-body>
+  @for (years of getYearsGrid({columns}); track $index) {
+    <tr q-date-picker-table-row>
+      @for (year of years; track $index) {
+        <td q-date-picker-table-cell [value]="year.value">
+          <div q-date-picker-table-cell-trigger>{{ year.label }}</div>
+        </td>
+      }
+    </tr>
+  }
+</tbody>
+```

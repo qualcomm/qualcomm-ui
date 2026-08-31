@@ -104,6 +104,7 @@ export function Tag({
   children,
   defaultSelected,
   disabled,
+  dismissLabel,
   emphasis,
   endIcon,
   onDismiss,
@@ -125,7 +126,17 @@ export function Tag({
   })
 
   const qdsApi = createQdsTagApi(
-    {active, disabled, emphasis, radius, selected, shape, size, variant},
+    {
+      active,
+      disabled,
+      dismissLabel,
+      emphasis,
+      radius,
+      selected,
+      shape,
+      size,
+      variant,
+    },
     normalizeProps,
   )
 
