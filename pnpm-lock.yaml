@@ -3825,6 +3825,9 @@ importers:
       commander:
         specifier: ^14.0.2
         version: 14.0.3
+      fuzzysort:
+        specifier: ^3.0.1
+        version: 3.1.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1

@@ -66,6 +66,7 @@
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
     "commander": "^14.0.2",
+    "fuzzysort": "^3.0.1",
     "lodash-es": "catalog:",
     "lucide-react": "0.569.0",
     "playwright": "^1.60.0",
