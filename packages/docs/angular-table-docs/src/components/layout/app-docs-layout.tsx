@@ -20,12 +20,12 @@ import {
   DocsLayout,
   type DocsLayoutSettings,
 } from "@qualcomm-ui/react-mdx/docs-layout"
-import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 
 import angularPkg from "../../../../../frameworks/angular/package.json"
 
 import {DemoUpdateContextProvider} from "./demo-update-context"
+import {GlobalSearch} from "./global-search"
 import {useAngularDemoReloader} from "./use-angular-demo-reloader"
 import {useRouterLinkInterceptor} from "./use-router-link-interceptor"
 
@@ -73,7 +73,7 @@ export function AppDocsLayout({children, ...props}: Props): ReactNode {
             </HeaderBar.Nav>
 
             <HeaderBar.ActionBar>
-              <SiteSearch />
+              <GlobalSearch />
               <HeaderRepositoryLink />
               <GlobalConfig />
               <HeaderAiLink />

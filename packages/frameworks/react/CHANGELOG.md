@@ -1,5 +1,17 @@
 # @qualcomm-ui/react Changelog
 
+## 1.30.0
+
+Aug 31st, 2026
+
+### Features
+
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react-core@1.8.0]
+
 ## 1.29.0
 
 Aug 30th, 2026

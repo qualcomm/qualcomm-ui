@@ -128,17 +128,19 @@ const navConfig: NavConfig[] = [
   },
 ]
 
+const packageDirectory = process.cwd()
+
 const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
-      resolve(__dirname, "../../frameworks/react/CHANGELOG.md"),
+      resolve(packageDirectory, "../../frameworks/react/CHANGELOG.md"),
       "utf-8",
     ),
     id: "react-changelog",
   },
   {
     contents: readFileSync(
-      resolve(__dirname, "../../common/core/CHANGELOG.md"),
+      resolve(packageDirectory, "../../common/core/CHANGELOG.md"),
       "utf-8",
     ),
     id: "core-changelog",
@@ -146,7 +148,7 @@ const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
       resolve(
-        __dirname,
+        packageDirectory,
         "../../frameworks/react-internal/files/component-list.md",
       ),
       "utf-8",
@@ -157,7 +159,7 @@ const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
       resolve(
-        __dirname,
+        packageDirectory,
         "../../frameworks/react-internal/files/mcp-server-setup.md",
       ),
       "utf-8",
@@ -168,8 +170,9 @@ const extraFiles: KnowledgeExtraFile[] = [
 
 export default {
   appDirectory: "src",
+  disableLegacySearchIndex: true,
   knowledge: {
-    baseUrl: "https://react-next.qui.qualcomm.com",
+    baseUrl: "https://react.qui.qualcomm.com",
     exclude: [
       "**/installation+/**",
       "index.mdx",

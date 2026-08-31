@@ -1,11 +1,7 @@
 import {type ReactNode, type RefObject, useMemo, useState} from "react"
 
 import {Blocks} from "lucide-react"
-import {
-  Link as ReactRouterLink,
-  useLocation,
-  useSearchParams,
-} from "react-router"
+import {Link as ReactRouterLink, useLocation} from "react-router"
 
 import {PortalContextProvider} from "@qualcomm-ui/react-core/portal"
 import {
@@ -25,10 +21,11 @@ import {
   DocsLayout,
   type DocsLayoutSettings,
 } from "@qualcomm-ui/react-mdx/docs-layout"
-import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 
 import reactPkg from "../../../../../frameworks/react/package.json"
+
+import {GlobalSearch} from "./global-search"
 
 const layoutComponents: LayoutComponents = {
   PageHeaderBadges,
@@ -55,19 +52,8 @@ export function MdxLayout({
   ...props
 }: Props): ReactNode {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [searchParams] = useSearchParams()
-
-  // persist the search input to the URL
-  const query = searchParams.get("query") ?? ""
-
-  const [searchInput, setSearchInput] = useState(query)
 
   const location = useLocation()
-
-  // sync the search input with the url state (used in browser back/forward)
-  if (searchInput !== query) {
-    setSearchInput(query)
-  }
 
   const portalContext = useMemo(
     () => ({container: portalContainerRef}),
@@ -102,7 +88,7 @@ export function MdxLayout({
             </HeaderBar.Nav>
 
             <HeaderBar.ActionBar>
-              <SiteSearch />
+              <GlobalSearch />
               <HeaderRepositoryLink />
               <GlobalConfig />
               <HeaderAiLink />

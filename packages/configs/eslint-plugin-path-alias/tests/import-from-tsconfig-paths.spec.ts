@@ -119,5 +119,13 @@ import {useState} from "react"`,
       code: `import helper from ".."`,
       filename: "./tests/packages/angular/radio/internal-to-radio/file.ts",
     },
+    {
+      code: `import tabs from "../tabs/index"`,
+      filename: "./tests/project-references/app/src/button/file.spec.ts",
+    },
+    {
+      code: `import "./test-styles.css"`,
+      filename: "./tests/project-references/app/test/test-setup.ts",
+    },
   ],
 })

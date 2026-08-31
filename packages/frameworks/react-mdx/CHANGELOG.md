@@ -1,5 +1,18 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.12.0
+
+Aug 31st, 2026
+
+### Features
+
+* [semantic-search]: add reusable global search component ([188e188](https://github.com/qualcomm/qualcomm-ui/commit/188e188))
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.0, @qualcomm-ui/react@1.30.0, @qualcomm-ui/react-core@1.8.0]
+
 ## 2.11.9
 
 Aug 30th, 2026
