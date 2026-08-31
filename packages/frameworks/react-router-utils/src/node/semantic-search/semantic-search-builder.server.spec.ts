@@ -5,10 +5,7 @@ import {afterEach, describe, expect, test, vi} from "vitest"
 
 import type {KnowledgeSections, SectionEntry} from "@qualcomm-ui/mdx-common"
 
-import {
-  createSemanticSearchArtifactSection,
-  semanticSearchModel,
-} from "./semantic-search-artifact.js"
+import {semanticSearchModel} from "./semantic-search-artifact.js"
 import {buildSemanticSearchArtifact} from "./semantic-search-builder.server.js"
 import type {SemanticSearchEncoder} from "./semantic-search-encoder.server.js"
 
@@ -52,6 +49,7 @@ function createFakeEncoder(): {
   embed: ReturnType<typeof vi.fn>
   encoder: SemanticSearchEncoder
 } {
+  /* eslint-disable-next-line @typescript-eslint/require-await */
   const embed = vi.fn(async (texts: string[]) =>
     texts.map((_text, index) => createVector(index + 1)),
   )

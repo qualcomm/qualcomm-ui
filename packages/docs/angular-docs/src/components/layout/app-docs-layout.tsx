@@ -29,11 +29,11 @@ import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import angularPkg from "../../../../../frameworks/angular/package.json"
 
 import {DemoUpdateContextProvider} from "./demo-update-context"
+import {GlobalSearch} from "./global-search"
 import {ResetDemoDimensionsButton} from "./reset-demo-dimensions-button"
 import {useAngularDemoReloader} from "./use-angular-demo-reloader"
 import {useRouterLinkInterceptor} from "./use-router-link-interceptor"
 import {useThemeSwitchInterceptor} from "./use-theme-switch-interceptor"
-import { GlobalSearch } from "./global-search"
 
 const layoutComponents: LayoutComponents = {
   PageHeaderBadges,
