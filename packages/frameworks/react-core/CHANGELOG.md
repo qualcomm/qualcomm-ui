@@ -1,5 +1,21 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.7.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: add the React date picker ([326b218](https://github.com/qualcomm/qualcomm-ui/commit/326b218))
+
+### Bug Fixes
+
+* [machine]: only clear an element id when it is still the registered one ([19d0b82](https://github.com/qualcomm/qualcomm-ui/commit/19d0b82))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/dom@1.3.0]
+
 ## 1.6.1
 
 Aug 20th, 2026

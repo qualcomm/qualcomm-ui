@@ -160,6 +160,14 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
   })
 
   /**
+   * Accessible label for the dismiss button.
+   * Only applicable when {@link variant} is `dismissable`.
+   *
+   * @default 'Dismiss'
+   */
+  readonly dismissLabel = input<string>()
+
+  /**
    * {@link https://lucide.dev/icons lucide-angular} icon, positioned after the label.
    * Ignored when {@link variant} is `dismissable`, as it is reserved for the
    * dismiss icon.
@@ -256,6 +264,7 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
           {
             active: this.active(),
             disabled: this.disabled(),
+            dismissLabel: this.dismissLabel(),
             emphasis: this.emphasis(),
             radius: this.radius(),
             selected: this.selectedState().value(),

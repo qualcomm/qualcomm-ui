@@ -133,12 +133,6 @@ export interface SelectScope extends ScopeWithIds<SelectSchema> {}
 
 export interface SelectPositioningOptions extends PositioningOptions {
   /**
-   * The main axis offset or gap between the reference and floating element
-   * @default 2
-   */
-  gutter?: number | undefined
-
-  /**
    * The initial placement of the floating element
    * @default 'bottom-start'
    */

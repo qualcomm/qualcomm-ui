@@ -102,6 +102,7 @@ tsconfig.*.tsbuildinfo
 **/*\wsl.*
 **/coverage
 packages/**/.vitest-attachments
+.playwright-mcp/
 
 ###############################################################################
 # OS / editor / IDE files

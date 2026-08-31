@@ -13,8 +13,5 @@ import type {MaybeSignal} from "./signals.types"
  * @return {T} The resolved value of the signal if the input is a signal, or the input value itself if it is not a signal.
  */
 export function accessSignal<T>(maybeSignal: MaybeSignal<T>): T {
-  if (!maybeSignal) {
-    return maybeSignal
-  }
   return isSignal(maybeSignal) ? maybeSignal() : maybeSignal
 }

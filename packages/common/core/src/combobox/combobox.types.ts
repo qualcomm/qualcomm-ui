@@ -348,12 +348,6 @@ export interface ComboboxApiProps<T extends CollectionItem = CollectionItem>
 
 export interface ComboboxPositioningOptions extends PositioningOptions {
   /**
-   * The main axis offset or gap between the reference and floating element
-   * @default 2
-   */
-  gutter?: number | undefined
-
-  /**
    * The initial placement of the floating element
    * @default 'bottom-start'
    */

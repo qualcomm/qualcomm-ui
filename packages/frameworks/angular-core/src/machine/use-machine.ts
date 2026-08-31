@@ -82,6 +82,17 @@ export function useMachine<T extends MachineSchema>(
       return configIds?.[key]?.get?.()
     },
     register(key, valueOrParams, onDestroy?: any) {
+      /**
+       * A replacement element registers before the outgoing element's cleanup
+       * runs. Clearing unconditionally would discard the newer registration.
+       */
+      const clearIfCurrentId = (id: unknown) => () => {
+        if (configIds?.[key]?.get?.() !== id) {
+          return
+        }
+        configIds?.[key].set?.(undefined)
+      }
+
       if (
         typeof valueOrParams === "object" &&
         valueOrParams !== null &&
@@ -89,10 +100,10 @@ export function useMachine<T extends MachineSchema>(
       ) {
         const params = valueOrParams
         configIds?.[key].set?.(params.id)
-        params.onDestroy?.(() => configIds?.[key].set?.(undefined))
+        params.onDestroy?.(clearIfCurrentId(params.id))
       } else {
         configIds?.[key].set?.(valueOrParams)
-        onDestroy?.(() => configIds?.[key].set?.(undefined))
+        onDestroy?.(clearIfCurrentId(valueOrParams))
       }
     },
     set(key, value) {
