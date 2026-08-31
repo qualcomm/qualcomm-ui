@@ -172,6 +172,12 @@ export interface SearchIndexerOptions {
   disableCache?: boolean
 
   /**
+   * Whether to disable the legacy built-in search indexer. This has been replaced
+   * with a new semantic search engine.
+   */
+  disableLegacySearchIndex?: boolean
+
+  /**
    * ToC headings.
    *
    * @default ['h2','h3','h4']
@@ -297,7 +303,7 @@ export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
  */
 export interface PagesExportConfig {
   /**
-   * Output path for pages.json, relative to the public directory.
+   * Output path for pages.json, relative to the knowledge output directory.
    * @default 'pages.json'
    */
   outputPath?: string
@@ -320,7 +326,7 @@ export interface SectionExportConfig {
   minContentLength?: number
 
   /**
-   * Output path for sections.json, relative to the public directory.
+   * Output path for sections.json, relative to the knowledge output directory.
    * @default 'sections.json'
    */
   outputPath?: string

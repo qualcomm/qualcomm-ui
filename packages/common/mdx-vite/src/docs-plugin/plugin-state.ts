@@ -6,7 +6,7 @@ import chokidar from "chokidar"
 import {glob} from "glob"
 import {readFileSync} from "node:fs"
 import {mkdir, writeFile} from "node:fs/promises"
-import {join, resolve} from "node:path"
+import {dirname, join, resolve} from "node:path"
 import prettyMilliseconds from "pretty-ms"
 import type {ViteDevServer} from "vite"
 
@@ -158,7 +158,7 @@ export class PluginState {
 
     if (isDev && shouldLog) {
       console.debug(
-        `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Compiled search index in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${this.indexer.cachedFileCount ? chalk.greenBright.bold(` (${this.indexer.cachedFileCount}/${this.indexer.mdxFileCount} files cached)`) : ""}`,
+        `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Compiled page data in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${this.indexer.cachedFileCount ? chalk.greenBright.bold(` (${this.indexer.cachedFileCount}/${this.indexer.mdxFileCount} files cached)`) : ""}`,
       )
     }
 
@@ -239,6 +239,7 @@ export class PluginState {
         extraFiles: this.knowledgeConfig.extraFiles,
         frontmatter: this.knowledgeConfig.frontmatter,
         pageIdPrefix: this.knowledgeConfig.pageIdPrefix,
+        pageMap: this.indexer?.pageMap,
         pages: this.knowledgeConfig.pages,
         routeDir: this.routesDir,
         sections: this.knowledgeConfig.sections,
@@ -251,14 +252,26 @@ export class PluginState {
     this.pages = result.pages
     this.sections = result.sections
 
-    await mkdir(outputDir, {recursive: true})
+    const sectionsOutputPath = join(
+      outputDir,
+      this.knowledgeConfig.sections?.outputPath ?? "sections.json",
+    )
+    const pagesOutputPath = join(
+      outputDir,
+      this.knowledgeConfig.pages?.outputPath ?? "pages.json",
+    )
+
+    await Promise.all([
+      mkdir(dirname(sectionsOutputPath), {recursive: true}),
+      mkdir(dirname(pagesOutputPath), {recursive: true}),
+    ])
     await writeFile(
-      join(outputDir, "sections.json"),
+      sectionsOutputPath,
       JSON.stringify(result.sections, null, 2),
       "utf-8",
     )
     await writeFile(
-      join(outputDir, "pages.json"),
+      pagesOutputPath,
       JSON.stringify(result.pages, null, 2),
       "utf-8",
     )
