@@ -138,6 +138,15 @@ export const importFromTsconfigPaths = createRule({
     const aliases = projectTsconfigs.flatMap(({path, tsconfig}) =>
       parsePathAliases(tsconfig, dirname(path)),
     )
+    const compilerOptions =
+      context.sourceCode.parserServices.program?.getCompilerOptions()
+    const currentProjectAliases = compilerOptions?.configFilePath
+      ? parsePathAliases(
+          {compilerOptions},
+          compilerOptions.pathsBasePath ||
+            dirname(compilerOptions.configFilePath),
+        )
+      : aliases
     const currentFilePath = toPosixPath(resolvePath(fileName))
 
     function checkImport(importPath, node) {
@@ -147,7 +156,10 @@ export const importFromTsconfigPaths = createRule({
       const absoluteTarget = toPosixPath(
         resolvePath(dirname(fileName), importPath),
       )
-      const currentAliasRoot = findAliasRoot(currentFilePath, aliases)
+      const currentAliasRoot = findAliasRoot(
+        currentFilePath,
+        currentProjectAliases,
+      )
       if (!currentAliasRoot) {
         return
       }

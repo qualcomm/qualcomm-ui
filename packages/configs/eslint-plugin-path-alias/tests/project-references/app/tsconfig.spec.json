@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "paths": {
+      "~test/*": ["./test/*"]
+    }
+  },
+  "include": ["./src/**/*.spec.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}
