@@ -135,7 +135,7 @@ export const importFromTsconfigPaths = createRule({
       return {}
     }
 
-    const aliases = projectTsconfigs.flatMap(({path, tsconfig}) =>
+    const projectAliases = projectTsconfigs.flatMap(({path, tsconfig}) =>
       parsePathAliases(tsconfig, dirname(path)),
     )
     const compilerOptions =
@@ -146,7 +146,10 @@ export const importFromTsconfigPaths = createRule({
           compilerOptions.pathsBasePath ||
             dirname(compilerOptions.configFilePath),
         )
-      : aliases
+      : projectAliases
+    const aliases = compilerOptions?.configFilePath
+      ? [...currentProjectAliases, ...projectAliases]
+      : projectAliases
     const currentFilePath = toPosixPath(resolvePath(fileName))
 
     function checkImport(importPath, node) {

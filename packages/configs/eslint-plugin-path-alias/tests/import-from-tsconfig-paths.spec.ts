@@ -123,5 +123,9 @@ import {useState} from "react"`,
       code: `import tabs from "../tabs/index"`,
       filename: "./tests/project-references/app/src/button/file.spec.ts",
     },
+    {
+      code: `import "./test-styles.css"`,
+      filename: "./tests/project-references/app/test/test-setup.ts",
+    },
   ],
 })
