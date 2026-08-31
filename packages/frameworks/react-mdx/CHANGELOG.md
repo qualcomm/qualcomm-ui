@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.11.9
+
+Aug 30th, 2026
+
+### Bug Fixes
+
+* [component-explorer]: skip highlighting parts that have no visible box ([65935ff](https://github.com/qualcomm/qualcomm-ui/commit/65935ff))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/react@1.29.0, @qualcomm-ui/react-core@1.7.0]
+
 ## 2.11.8
 
 Aug 20th, 2026

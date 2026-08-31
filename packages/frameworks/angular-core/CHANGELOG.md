@@ -1,5 +1,25 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 3.2.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: add the Angular date picker ([bee0c27](https://github.com/qualcomm/qualcomm-ui/commit/bee0c27))
+
+### Bug Fixes
+
+* [machine]: keep the api context view instead of rebuilding it ([3998313](https://github.com/qualcomm/qualcomm-ui/commit/3998313))
+* proper positioning defaults in components and JSDoc ([cb9973e](https://github.com/qualcomm/qualcomm-ui/commit/cb9973e))
+* [angular-core]: drop accessSignal falsy guard ([c099586](https://github.com/qualcomm/qualcomm-ui/commit/c099586))
+* [machine]: only clear an element id when it is still the registered one ([19d0b82](https://github.com/qualcomm/qualcomm-ui/commit/19d0b82))
+* [forms]: flush the pending value when a child part reports blur ([1b8fc61](https://github.com/qualcomm/qualcomm-ui/commit/1b8fc61))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/dom@1.3.0]
+
 ## 3.1.0
 
 Aug 18th, 2026

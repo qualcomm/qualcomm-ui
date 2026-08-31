@@ -1,5 +1,17 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.9.4
+
+Aug 30th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: index component types for lookup without emitting rows ([76c57a8](https://github.com/qualcomm/qualcomm-ui/commit/76c57a8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.0]
+
 ## 3.9.3
 
 Aug 18th, 2026

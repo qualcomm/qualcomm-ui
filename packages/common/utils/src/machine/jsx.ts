@@ -436,6 +436,12 @@ export namespace JSX {
      */
     "aria-describedby"?: string | undefined
     /**
+     * Defines a string value that describes or annotates the current element.
+     * Prefer `aria-describedby` unless the description has no host element:
+     * assistive-technology support for this attribute is narrower.
+     */
+    "aria-description"?: string | undefined
+    /**
      * Identifies the element that provides a detailed, extended description for the
      * object.
      *

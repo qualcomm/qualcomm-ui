@@ -1,5 +1,14 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.5.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-utils]: add calendar date utilities ([4937390](https://github.com/qualcomm/qualcomm-ui/commit/4937390))
+
 ## 1.4.0
 
 Aug 18th, 2026

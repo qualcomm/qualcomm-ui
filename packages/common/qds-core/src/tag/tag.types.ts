@@ -58,6 +58,14 @@ export interface QdsTagApiProps {
   disabled?: boolean
 
   /**
+   * Accessible label for the dismiss button.
+   * Only applicable when {@link variant} is `dismissable`.
+   *
+   * @default 'Dismiss'
+   */
+  dismissLabel?: string
+
+  /**
    * Governs the color of the tag.
    * @default 'outline-brand'
    */

@@ -26,9 +26,9 @@ import {
   createPopoverApi,
   type PopoverApiProps,
   popoverMachine,
+  type PopoverPositioningOptions,
 } from "@qualcomm-ui/core/popover"
 import type {LayerDismissEvent} from "@qualcomm-ui/dom/dismissable"
-import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {
   FocusOutsideEvent,
   InteractOutsideEvent,
@@ -120,7 +120,7 @@ export class CorePopoverRootDirective
    *
    * @inheritDoc
    */
-  readonly positioning = input<PositioningOptions>()
+  readonly positioning = input<PopoverPositioningOptions>()
 
   /**
    * On close, restore focus to the element that triggered the open event.

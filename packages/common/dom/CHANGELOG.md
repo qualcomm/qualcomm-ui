@@ -1,5 +1,22 @@
 # @qualcomm-ui/dom Changelog
 
+## 1.3.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: focus trap ([3a63bd1](https://github.com/qualcomm/qualcomm-ui/commit/3a63bd1))
+* [date-picker]: add the date picker state machine ([be92213](https://github.com/qualcomm/qualcomm-ui/commit/be92213))
+
+### Bug Fixes
+
+* proper positioning defaults in components and JSDoc ([cb9973e](https://github.com/qualcomm/qualcomm-ui/commit/cb9973e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.0]
+
 ## 1.2.0
 
 Aug 18th, 2026

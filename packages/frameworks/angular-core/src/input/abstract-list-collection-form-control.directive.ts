@@ -316,14 +316,17 @@ export abstract class AbstractBaseListCollectionFormControlDirective<
 
   registerOnChange(fn: (value: any) => void): void {
     this.onChange = (_value) => {
-      fn(_value)
+      // set first: a parent's rollback in `valueChanges` must land last
       this.value.set(_value ?? [])
+      fn(_value)
     }
   }
 
   protected onTouched = () => {}
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn
+    // let descendant parts that own a focusable element report blur
+    this.formControlContext.onTouched = fn
   }
 
   /**
