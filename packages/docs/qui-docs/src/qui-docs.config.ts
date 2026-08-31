@@ -3,6 +3,8 @@ import {resolve} from "node:path"
 
 import type {NavConfig, QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
 
+const packageDirectory = process.cwd()
+
 const navConfig: NavConfig[] = [
   {
     hidden: true,
@@ -41,14 +43,14 @@ const config: QuiDocsConfig = {
     extraFiles: [
       {
         contents: readFileSync(
-          resolve(__dirname, "../../../frameworks/react-mdx/CHANGELOG.md"),
+          resolve(packageDirectory, "../../frameworks/react-mdx/CHANGELOG.md"),
           "utf-8",
         ),
         id: "react-mdx-changelog",
       },
       {
         contents: readFileSync(
-          resolve(__dirname, "../../../common/mdx-vite/CHANGELOG.md"),
+          resolve(packageDirectory, "../../common/mdx-vite/CHANGELOG.md"),
           "utf-8",
         ),
         id: "mdx-vite-changelog",

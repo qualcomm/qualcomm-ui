@@ -14,6 +14,9 @@ allowBuilds:
   esbuild: true
   lmdb: true
   msgpackr-extract: true
+  onnxruntime-node: true
+  protobufjs: true
+  sharp: true
   tree-sitter: true
   tree-sitter-json: true
   unrs-resolver: true
