@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.6.0
+
+Aug 31st, 2026
+
+### Features
+
+* [search]: add semantic search types and section search fields ([05791c0](https://github.com/qualcomm/qualcomm-ui/commit/05791c0))
+
 ## 2.5.0
 
 Aug 6th, 2026

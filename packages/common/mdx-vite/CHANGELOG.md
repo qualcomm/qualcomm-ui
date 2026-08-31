@@ -1,5 +1,17 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.10.0
+
+Aug 31st, 2026
+
+### Features
+
+* [search]: support semantic search knowledge exports ([9567b40](https://github.com/qualcomm/qualcomm-ui/commit/9567b40))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.0]
+
 ## 3.9.4
 
 Aug 30th, 2026
