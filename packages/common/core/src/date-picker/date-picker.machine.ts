@@ -476,6 +476,19 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           .subtract({years: (event as DatePickerActionEvent).columns})
         setFocusedValue(params, nextValue)
       },
+      focusResolvedDate(params) {
+        const event = params.event as DatePickerActionEvent
+
+        if (event.index == null) {
+          return
+        }
+        const parsed = event.resolution?.parsed
+        if (!parsed) {
+          return
+        }
+
+        setFocusedValue(params, parsed)
+      },
       focusSectionEnd(params) {
         const {computed} = params
         setFocusedValue(params, computed("endValue").copy())
@@ -557,21 +570,17 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           value: valueAsString[activeIndex],
         })
       },
-      selectParsedDate({context, event, prop}) {
+      selectResolvedDate({context, event, prop}) {
         const evt = event as DatePickerActionEvent
-        if (evt.index == null) {
+        const resolution = evt.resolution
+        if (evt.index == null || resolution == null) {
           return
         }
 
-        const parse = prop("parse")!
-        let date = parse(evt.value as string, {
-          locale: prop("locale")!,
-          timeZone: prop("timeZone")!,
-        })
-
-        // restore the last committed value rather than coercing an unparsable date
-        if (!date || !isValidDate(date)) {
-          if (evt.value) {
+        // restore the last committed value rather than coercing an unparsable
+        // or unavailable date
+        if (resolution.kind !== "accepted") {
+          if (resolution.kind === "unavailable" || evt.value) {
             const committed = getValueAsString(context.get("value"), prop)
             context.set("inputValue", {
               index: evt.index,
@@ -581,20 +590,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           return
         }
 
-        // constrain date to min/max range
-        date = constrainValue(date, prop("min"), prop("max"))
-
-        // reject unavailable dates by reverting the input to the last committed
-        // value.
-        if (prop("isDateUnavailable")?.(date, prop("locale")!)) {
-          const committed = getValueAsString(context.get("value"), prop)
-          context.set("inputValue", {
-            index: evt.index,
-            value: committed[evt.index] ?? "",
-          })
-          return
-        }
-
+        const date = resolution.committed
         const stored = context.get("value")
         const values =
           prop("selectionMode") === "range"
@@ -1267,7 +1263,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           actions: [
             "setActiveIndexToStart",
             "resumeRangeSelection",
-            "selectParsedDate",
+            "selectResolvedDate",
           ],
           guard: "shouldFixOnBlur",
         },
@@ -1294,7 +1290,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         },
       ],
       "INPUT.ENTER": {
-        actions: ["focusParsedDate", "selectParsedDate"],
+        actions: ["focusResolvedDate", "selectResolvedDate"],
       },
       "INPUT.FOCUS": {
         actions: ["setActiveIndex"],

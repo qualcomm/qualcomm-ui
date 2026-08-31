@@ -36,6 +36,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import type {datePickerAnatomy} from "./date-picker.anatomy.js"
+import type {DatePickerInputResolution} from "./internal/date-picker.resolve-input.js"
 
 /** callback details */
 
@@ -520,7 +521,8 @@ type Actions = ActionSchema<
   | "setInputValue"
   | "syncInputValue"
   | "focusParsedDate"
-  | "selectParsedDate"
+  | "focusResolvedDate"
+  | "selectResolvedDate"
   | "resetView"
   | "setStartValue"
   | "invokeOnOpen"
@@ -599,11 +601,13 @@ type Events =
   | {
       fixOnBlur: boolean
       index: number
+      resolution?: DatePickerInputResolution | undefined
       type: "INPUT.BLUR"
       value: string
     }
   | {
       index: number
+      resolution: DatePickerInputResolution
       type: "INPUT.ENTER"
       value: string
     }
