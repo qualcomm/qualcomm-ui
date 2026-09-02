@@ -79,6 +79,12 @@ export function ListboxDynamicDataDemo(): ReactElement {
     }
   }, [set])
 
+  const status = loading
+    ? "Loading regions..."
+    : collection.items.length === 0
+      ? "No regions found"
+      : null
+
   return (
     <div className="w-full max-w-sm">
       {/* preview */}
@@ -95,27 +101,22 @@ export function ListboxDynamicDataDemo(): ReactElement {
           aria-busy={loading}
           className="max-h-64 overflow-y-auto"
         >
-          {loading ? (
-            <div className="text-muted-foreground px-3 py-2 text-sm">
-              Loading regions...
-            </div>
-          ) : collection.items.length === 0 ? (
-            <div className="text-muted-foreground px-3 py-2 text-sm">
-              No regions found
-            </div>
-          ) : (
-            collection.items.map((region) => (
-              <Listbox.Item key={region.value} item={region}>
-                <Listbox.ItemControl />
-                <Listbox.ItemLabel>{region.label}</Listbox.ItemLabel>
-                <Listbox.ItemDescription>
-                  {region.description}
-                </Listbox.ItemDescription>
-              </Listbox.Item>
-            ))
-          )}
+          {collection.items.map((region) => (
+            <Listbox.Item key={region.value} item={region}>
+              <Listbox.ItemControl />
+              <Listbox.ItemLabel>{region.label}</Listbox.ItemLabel>
+              <Listbox.ItemDescription>
+                {region.description}
+              </Listbox.ItemDescription>
+            </Listbox.Item>
+          ))}
         </Listbox.Content>
       </Listbox.Root>
+      {status ? (
+        <p className="text-muted-foreground mt-2 text-sm" role="status">
+          {status}
+        </p>
+      ) : null}
       {/* preview */}
     </div>
   )
