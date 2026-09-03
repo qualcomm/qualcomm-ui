@@ -1,0 +1,156 @@
+:root {
+  [data-brand][data-theme="dark"] {
+    --json-viewer-color-string: #d9b770;
+    --json-viewer-color-number: #b5cea8;
+    --json-viewer-color-boolean: #739ed6;
+    --json-viewer-color-null: #739ed6;
+    --json-viewer-color-undefined: #739ed6;
+    --json-viewer-color-function: #dcdcaa;
+    --json-viewer-color-date: #4ec9b0;
+    --json-viewer-color-regex: #d16969;
+    --json-viewer-color-symbol: #b6a9d4;
+    --json-viewer-color-bigint: #b5cea8;
+    --json-viewer-color-error: #f1735e;
+    --json-viewer-color-circular: #aaaaab;
+    --json-viewer-color-constructor: #b5cea8;
+    --json-viewer-color-brace: #babbb8;
+    --json-viewer-color-preview: #aaaaab;
+    --json-viewer-color-key: #a9b9d4;
+    --json-viewer-color-colon: #babbb8;
+  }
+
+  [data-brand][data-theme="light"] {
+    --json-viewer-color-string: #c25100;
+    --json-viewer-color-number: #1f845a;
+    --json-viewer-color-boolean: #2a2aea;
+    --json-viewer-color-null: #2a2aea;
+    --json-viewer-color-undefined: #2a2aea;
+    --json-viewer-color-function: #8f46fc;
+    --json-viewer-color-date: #02827e;
+    --json-viewer-color-regex: #9521b9;
+    --json-viewer-color-symbol: #9521b9;
+    --json-viewer-color-bigint: #1f845a;
+    --json-viewer-color-error: #c71100;
+    --json-viewer-color-circular: #636364;
+    --json-viewer-color-constructor: #02827e;
+    --json-viewer-color-brace: #636364;
+    --json-viewer-color-preview: #636364;
+    --json-viewer-color-key: #a1480e;
+    --json-viewer-color-colon: #636364;
+  }
+}
+
+
+.qui-json-viewer__root {
+  font: var(--font-static-code-sm-default);
+  width: 100%;
+}
+
+/* Compact row height - override tree node defaults */
+.qui-json-viewer__root .qui-tree__node-root {
+  gap: var(--spacing-30);
+  height: auto;
+  min-height: unset;
+  font: var(--font-static-code-sm-default);
+}
+
+.qui-json-viewer__value[data-type="string"] {
+  color: var(--json-viewer-color-string);
+}
+
+.qui-json-viewer__value[data-type="number"] {
+  color: var(--json-viewer-color-number);
+}
+
+.qui-json-viewer__value[data-type="boolean"] {
+  color: var(--json-viewer-color-boolean);
+}
+
+.qui-json-viewer__value[data-type="null"] {
+  color: var(--json-viewer-color-null);
+}
+
+.qui-json-viewer__value[data-type="undefined"] {
+  color: var(--json-viewer-color-undefined);
+}
+
+.qui-json-viewer__value[data-type="function"] {
+  color: var(--json-viewer-color-function);
+}
+
+.qui-json-viewer__value[data-type="date"] {
+  color: var(--json-viewer-color-date);
+}
+
+.qui-json-viewer__value[data-type="regex"] {
+  color: var(--json-viewer-color-regex);
+}
+
+.qui-json-viewer__value[data-type="symbol"] {
+  color: var(--json-viewer-color-symbol);
+}
+
+.qui-json-viewer__value[data-type="bigint"] {
+  color: var(--json-viewer-color-bigint);
+}
+
+.qui-json-viewer__value[data-type="error"] {
+  color: var(--json-viewer-color-error);
+}
+
+.qui-json-viewer__value[data-type="circular"] {
+  color: var(--json-viewer-color-circular);
+  font-style: italic;
+}
+
+.qui-json-viewer__value[data-type="object"],
+.qui-json-viewer__value[data-type="array"],
+.qui-json-viewer__value[data-type="map"],
+.qui-json-viewer__value[data-type="set"],
+.qui-json-viewer__value[data-type="weakmap"],
+.qui-json-viewer__value[data-type="weakset"],
+.qui-json-viewer__value[data-type="headers"],
+.qui-json-viewer__value[data-type="formdata"],
+.qui-json-viewer__value[data-type="urlsearchparams"],
+.qui-json-viewer__value[data-type="iterable"] {
+  color: var(--json-viewer-color-preview);
+}
+
+.qui-json-viewer__value [data-kind="constructor"] {
+  color: var(--json-viewer-color-constructor);
+}
+
+.qui-json-viewer__value [data-kind="brace"] {
+  color: var(--json-viewer-color-brace);
+}
+
+.qui-json-viewer__value [data-kind="preview-text"] {
+  color: var(--json-viewer-color-preview);
+}
+
+.qui-json-viewer__value [data-kind="function-type"] {
+  color: var(--json-viewer-color-constructor);
+  font-style: italic;
+}
+
+.qui-json-viewer__value [data-kind="colon"] {
+  color: var(--json-viewer-color-colon);
+}
+
+.qui-json-viewer__value [data-kind="error-stack"] {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.qui-json-viewer__key {
+  color: var(--json-viewer-color-key);
+}
+
+.qui-json-viewer__key[data-non-enumerable] {
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.qui-json-viewer__colon {
+  color: var(--json-viewer-color-colon);
+}
