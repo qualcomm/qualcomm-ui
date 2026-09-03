@@ -12,14 +12,14 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsComboboxContext} from "./qds-combobox-context.js"
 
 /**
- * @since next-release
+ * @since 1.31.0
  */
 export interface ComboboxItemGroupProps extends CoreComboboxItemGroupProps {}
 
 /**
  * Visually separates a group of items. Renders a `<div>` element by default.
  *
- * @since next-release
+ * @since 1.31.0
  */
 export function ComboboxItemGroup(props: ComboboxItemGroupProps): ReactElement {
   const qdsContext = useQdsComboboxContext()

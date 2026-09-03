@@ -11,7 +11,7 @@ import {
 import {useQdsSelectContext} from "./qds-select-context.service"
 
 /**
- * @since next-release
+ * @since 3.3.0
  */
 @Directive({
   providers: [provideSelectItemGroupContext()],

@@ -120,13 +120,13 @@ type ComboboxComponent = typeof SimpleCombobox & {
    * Visually separates and a group of items. Renders a `<div>` element by
    * default.
    *
-   * @since next-release
+   * @since 1.31.0
    */
   ItemGroup: typeof ComboboxItemGroup
   /**
    * Label for an item group. Renders a `<div>` element by default.
    *
-   * @since next-release
+   * @since 1.31.0
    */
   ItemGroupLabel: typeof ComboboxItemGroupLabel
   /**

@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.9.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group components ([58451e8](https://github.com/qualcomm/qualcomm-ui/commit/58451e8))
+
 ## 1.8.0
 
 Aug 31st, 2026

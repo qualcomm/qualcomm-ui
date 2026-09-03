@@ -8,7 +8,7 @@ import {CoreSelectItemGroupLabelDirective} from "@qualcomm-ui/angular-core/selec
 import {useQdsSelectContext} from "./qds-select-context.service"
 
 /**
- * @since next-release
+ * @since 3.3.0
  */
 @Directive({
   selector: "[q-select-item-group-label]",

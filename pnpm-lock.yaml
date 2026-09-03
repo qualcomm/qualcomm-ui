@@ -824,7 +824,7 @@ importers:
         specifier: 'catalog:'
         version: 1.1.3(@commander-js/extra-typings@14.0.0(commander@14.0.3))(cosmiconfig@9.0.2(typescript@6.0.3))
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.37.0
+        specifier: workspace:^1.38.0
         version: link:../qds-core
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
@@ -3496,7 +3496,7 @@ importers:
         specifier: 0.21.2
         version: 0.21.2(@rspack/core@2.1.10(@module-federation/runtime-tools@0.21.2)(@swc/helpers@0.5.23))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@6.0.3)(webpack@5.109.2(esbuild@0.28.2)(postcss@8.5.25))
       '@qualcomm-ui/angular-core':
-        specifier: workspace:^3.2.0
+        specifier: workspace:^3.3.0
         version: link:../angular-core
       '@qualcomm-ui/cli':
         specifier: 'catalog:'
@@ -3508,7 +3508,7 @@ importers:
         specifier: workspace:^1.3.0
         version: link:../../common/dom
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.37.0
+        specifier: workspace:^1.38.0
         version: link:../../common/qds-core
       '@qualcomm-ui/tailwind-plugin':
         specifier: workspace:^1.10.0
@@ -3769,10 +3769,10 @@ importers:
         specifier: workspace:^1.3.0
         version: link:../../common/dom
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.37.0
+        specifier: workspace:^1.38.0
         version: link:../../common/qds-core
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.8.0
+        specifier: workspace:^1.9.0
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6
@@ -4100,13 +4100,13 @@ importers:
         specifier: workspace:^2.6.0
         version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.37.0
+        specifier: workspace:^1.38.0
         version: link:../../common/qds-core
       '@qualcomm-ui/react':
-        specifier: workspace:^1.30.0
+        specifier: workspace:^1.31.0
         version: link:../react
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.8.0
+        specifier: workspace:^1.9.0
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6
@@ -4288,16 +4288,16 @@ importers:
         specifier: 'catalog:'
         version: 1.1.3(@commander-js/extra-typings@14.0.0(commander@14.0.3))(cosmiconfig@9.0.2(typescript@6.0.3))
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.37.0
+        specifier: workspace:^1.38.0
         version: link:../../common/qds-core
       '@qualcomm-ui/react':
-        specifier: workspace:^1.30.0
+        specifier: workspace:^1.31.0
         version: link:../react
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.8.0
+        specifier: workspace:^1.9.0
         version: link:../react-core
       '@qualcomm-ui/react-mdx':
-        specifier: workspace:^2.12.0
+        specifier: workspace:^2.12.1
         version: link:../react-mdx
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6

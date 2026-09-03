@@ -12,14 +12,14 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsSelectContext} from "./qds-select-context.js"
 
 /**
- * @since next-release
+ * @since 1.31.0
  */
 export interface SelectItemGroupProps extends CoreSelectItemGroupProps {}
 
 /**
  * Visually separates a group of items. Renders a `<div>` element by default.
  *
- * @since next-release
+ * @since 1.31.0
  */
 export function SelectItemGroup(props: SelectItemGroupProps): ReactElement {
   const qdsContext = useQdsSelectContext()

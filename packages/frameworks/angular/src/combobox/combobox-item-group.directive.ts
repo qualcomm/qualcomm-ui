@@ -11,7 +11,7 @@ import {
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
 
 /**
- * @since next-release
+ * @since 3.3.0
  */
 @Directive({
   providers: [provideComboboxItemGroupContext()],
