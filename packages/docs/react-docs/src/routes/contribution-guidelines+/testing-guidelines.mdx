@@ -1,0 +1,160 @@
+---
+title: Testing Guidelines
+---
+
+# {frontmatter.title}
+
+This page covers the testing philosophy and patterns used for React and Angular component tests. Both frameworks share the same principles and tooling, with framework-specific differences in how test components are defined.
+
+## Test Behavior, Not Implementation
+
+Tests verify what a component **does**, not how it does it internally. A well-written test survives refactoring. If the behavior stays the same, the tests stay green.
+
+- **Query by role, label, or text**, not by CSS class names, data attributes, or component internals
+- **Assert on visible state** (checked, disabled, text content), not on internal state variables
+- **Interact the way a user would** (click, type, tab), not by calling internal methods
+
+Implementation details change during refactoring. Tests coupled to them produce false negatives: the test breaks, but the behavior is fine. Testing the public interface avoids this.
+
+> [!tip]
+> If a test references a CSS class name, an internal hook, or a specific DOM structure, it is testing implementation. Rewrite it to test behavior.
+
+## Testing Stack
+
+- **vitest**: test runner
+- **vitest browser mode**: runs tests in a real browser via Playwright instead of jsdom
+- **`@testing-library` patterns**: query utilities (`getByRole`, `getByLabelText`, `getByText`) and user event simulation
+- **`@testing-library/angular`**: Angular-specific render utility
+
+## React Component Tests
+
+### Location
+
+`packages/frameworks/react/src/[component]/[component].spec.tsx`
+
+### The MultiComponentTestCase Pattern
+
+Every React component test uses `MultiComponentTestCase`. This structure runs each test against **both** the simple (convenience) API and the composite (parts) API.
+
+```tsx
+const tests: MultiComponentTestCase[] = [
+  {
+    composite() {
+      return (
+        <Checkbox.Root>
+          <Checkbox.HiddenInput />
+          <Checkbox.Control>
+            <Checkbox.Indicator />
+          </Checkbox.Control>
+          <Checkbox.Label>{demoLabel}</Checkbox.Label>
+        </Checkbox.Root>
+      )
+    },
+    simple() {
+      return <Checkbox label={demoLabel} />
+    },
+    testCase: (getComponent) => {
+      test("checked/unchecked state", async () => {
+        await render(getComponent())
+        await expect.element(page.getByLabelText(demoLabel)).not.toBeChecked()
+        await userEvent.click(page.getByText(demoLabel))
+        await expect.element(page.getByLabelText(demoLabel)).toBeChecked()
+      })
+    },
+  },
+]
+```
+
+- `simple()` returns the convenience component with flat props
+- `composite()` returns the parts-based composition
+- `testCase(getComponent)` receives a factory that returns either variant. The test code is identical for both.
+- This guarantees both APIs produce identical behavior
+
+> [!warning]
+> Every test case must work with both the simple and composite APIs. If a test can only work with one, the component APIs are inconsistent. Fix the component, not the test.
+
+### Testing Utilities
+
+- `render(component)`: mount the component in the browser
+- `page.getByLabelText(text)`: query by accessible label
+- `page.getByText(text)`: query by visible text
+- `page.getByRole(role)`: query by ARIA role
+- `expect.element(el)`: assert on element state (`.toBeChecked()`, `.toBeDisabled()`, `.toHaveTextContent()`, etc.)
+- `userEvent.click(el)`: simulate user interaction
+
+## Angular Component Tests
+
+### Location
+
+`packages/frameworks/angular/src/[component]/[component].spec.ts`
+
+### The MultiComponentTest Pattern
+
+Angular uses a similar dual-API pattern. Test components are Angular `@Component` classes instead of JSX.
+
+```ts
+const testCases: MultiComponentTest[] = [
+  {
+    composite() {
+      @Component({
+        imports: [CheckboxModule],
+        template: `
+          <label q-checkbox-root>
+            <input q-checkbox-hidden-input />
+            <div q-checkbox-control></div>
+            <span q-checkbox-label>{{ demoLabel }}</span>
+          </label>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly demoLabel = demoLabel
+      }
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [CheckboxModule],
+        template: `<label label="${demoLabel}" q-checkbox></label>`,
+      })
+      class SimpleComponent {}
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`checked/unchecked state — ${component.name}`, async () => {
+        await render(component)
+        expect(page.getByLabelText(demoLabel)).not.toBeChecked()
+        await userEvent.click(page.getByText(demoLabel))
+        expect(page.getByLabelText(demoLabel)).toBeChecked()
+      })
+    },
+  },
+]
+```
+
+- `simple()` and `composite()` return Angular component classes (not instances)
+- `render(component)` from `@testing-library/angular` handles TestBed setup
+- Test assertions use the same `page.*` and `expect.*` utilities as React
+- Angular form testing covers both Template Forms (`ngModel`) and Reactive Forms (`formControl`)
+
+## Running Tests
+
+```bash
+pnpm react test         # React component tests
+pnpm angular test       # Angular component tests
+pnpm core test          # Core headless tests
+```
+
+## What to Test
+
+Coverage checklist for each component:
+
+- State toggling (checked/unchecked, open/closed, etc.)
+- Disabled state (interactions are blocked)
+- Default values
+- Controlled state (external value management)
+- Indicator/visual state elements are present
+- Form integration (React: React Hook Form, TanStack Form; Angular: ngModel, Reactive Forms)
+- Programmatic value changes
+- Form reset behavior
+- Validation states (touched, dirty, valid) where applicable
+- All subcomponent parts render correctly in both APIs
