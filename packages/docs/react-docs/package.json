@@ -20,7 +20,7 @@
     "upload-knowledge": "qui-mdx-vite upload-knowledge"
   },
   "dependencies": {
-    "@faker-js/faker": "~9.6.0",
+    "@faker-js/faker": "~10.5.0",
     "@floating-ui/react": "^0.27.3",
     "@hookform/resolvers": "^5.2.2",
     "@internationalized/number": "^3.6.4",

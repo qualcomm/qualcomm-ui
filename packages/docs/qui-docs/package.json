@@ -22,7 +22,7 @@
     "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@faker-js/faker": "~9.6.0",
+    "@faker-js/faker": "~10.5.0",
     "@floating-ui/react": "^0.27.3",
     "@qualcomm-ui/core": "workspace:*",
     "@qualcomm-ui/dom": "workspace:*",
