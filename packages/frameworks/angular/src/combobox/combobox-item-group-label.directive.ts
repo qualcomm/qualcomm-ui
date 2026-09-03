@@ -3,28 +3,21 @@
 
 import {computed, Directive} from "@angular/core"
 
-import {
-  CoreComboboxItemDirective,
-  provideComboboxItemContext,
-} from "@qualcomm-ui/angular-core/combobox"
+import {CoreComboboxItemGroupLabelDirective} from "@qualcomm-ui/angular-core/combobox"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
 
-/**
- * @since next-release
- */
 @Directive({
-  providers: [provideComboboxItemContext()],
-  selector: "[q-combobox-item]",
+  selector: "[q-combobox-item-group-label]",
   standalone: false,
 })
-export class ComboboxItemDirective extends CoreComboboxItemDirective {
+export class ComboboxItemGroupLabelDirective extends CoreComboboxItemGroupLabelDirective {
   protected readonly qdsComboboxContext = useQdsComboboxContext()
 
   constructor() {
     super()
     this.trackBindings.extendWith(
-      computed(() => this.qdsComboboxContext().getItemBindings()),
+      computed(() => this.qdsComboboxContext().getItemGroupLabelBindings()),
     )
   }
 }

@@ -4,8 +4,8 @@
 import {computed, Directive} from "@angular/core"
 
 import {
-  CoreComboboxItemDirective,
-  provideComboboxItemContext,
+  CoreComboboxItemGroupDirective,
+  provideComboboxItemGroupContext,
 } from "@qualcomm-ui/angular-core/combobox"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
@@ -14,17 +14,17 @@ import {useQdsComboboxContext} from "./qds-combobox-context.service"
  * @since next-release
  */
 @Directive({
-  providers: [provideComboboxItemContext()],
-  selector: "[q-combobox-item]",
+  providers: [provideComboboxItemGroupContext()],
+  selector: "[q-combobox-item-group]",
   standalone: false,
 })
-export class ComboboxItemDirective extends CoreComboboxItemDirective {
+export class ComboboxItemGroupDirective extends CoreComboboxItemGroupDirective {
   protected readonly qdsComboboxContext = useQdsComboboxContext()
 
   constructor() {
     super()
     this.trackBindings.extendWith(
-      computed(() => this.qdsComboboxContext().getItemBindings()),
+      computed(() => this.qdsComboboxContext().getItemGroupBindings()),
     )
   }
 }

@@ -19,6 +19,8 @@ import {ComboboxErrorTextDirective} from "./combobox-error-text.directive"
 import {ComboboxHintDirective} from "./combobox-hint.directive"
 import {ComboboxIconDirective} from "./combobox-icon.directive"
 import {ComboboxInputDirective} from "./combobox-input.directive"
+import {ComboboxItemGroupLabelDirective} from "./combobox-item-group-label.directive"
+import {ComboboxItemGroupDirective} from "./combobox-item-group.directive"
 import {ComboboxItemIndicatorDirective} from "./combobox-item-indicator.directive"
 import {ComboboxItemTextDirective} from "./combobox-item-text.directive"
 import {ComboboxItemDirective} from "./combobox-item.directive"
@@ -46,6 +48,8 @@ import {ComboboxComponent} from "./combobox.component"
     ComboboxHintDirective,
     ComboboxInputDirective,
     ComboboxItemDirective,
+    ComboboxItemGroupDirective,
+    ComboboxItemGroupLabelDirective,
     ComboboxItemIndicatorDirective,
     ComboboxItemTextDirective,
     ComboboxItemsComponent,
@@ -70,6 +74,8 @@ import {ComboboxComponent} from "./combobox.component"
     ComboboxHintDirective,
     ComboboxInputDirective,
     ComboboxItemDirective,
+    ComboboxItemGroupDirective,
+    ComboboxItemGroupLabelDirective,
     ComboboxItemIndicatorDirective,
     ComboboxItemTextDirective,
     ComboboxItemsComponent,
