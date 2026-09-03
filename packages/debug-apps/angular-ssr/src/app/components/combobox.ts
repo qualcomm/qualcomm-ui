@@ -11,6 +11,7 @@ import {ComboboxIconCustomizationDemo} from "@qualcomm-ui/angular-docs/component
 import {ComboboxIconDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-icon-demo"
 import {ComboboxInputBehaviorDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-input-behavior-demo"
 import {ComboboxItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-item-customization-demo"
+import {ComboboxItemGroupDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-item-group-demo"
 import {ComboboxItemsDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-items-demo"
 import {ComboboxMaxHeightDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-max-height-demo"
 import {ComboboxMultipleDemo} from "@qualcomm-ui/angular-docs/components+/combobox+/demos/combobox-multiple-demo"
@@ -44,6 +45,7 @@ import {ComboboxWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/c
     ComboboxIconDemo,
     ComboboxInputBehaviorDemo,
     ComboboxItemCustomizationDemo,
+    ComboboxItemGroupDemo,
     ComboboxItemsDemo,
     ComboboxMaxHeightDemo,
     ComboboxMultipleDemo,
@@ -131,6 +133,12 @@ import {ComboboxWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/c
         <h2 class="section-title">Item Customization</h2>
         <div class="demo-container">
           <combobox-item-customization-demo />
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Item Groups</h2>
+        <div class="demo-container">
+          <combobox-item-group-demo />
         </div>
       </div>
       <div class="section">

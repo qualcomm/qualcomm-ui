@@ -6,6 +6,7 @@ import {SelectControlledOpenDemo} from "@qualcomm-ui/angular-docs/components+/se
 import {SelectErrorDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-error-demo"
 import {SelectIconDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-icon-demo"
 import {SelectItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-item-customization-demo"
+import {SelectItemGroupDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-item-group-demo"
 import {SelectItemsDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-items-demo"
 import {SelectMaxHeightDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-max-height-demo"
 import {SelectMultipleDemo} from "@qualcomm-ui/angular-docs/components+/select+/demos/select-multiple-demo"
@@ -31,6 +32,7 @@ import {SelectWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/sel
     SelectIconDemo,
     SelectItemCustomizationDemo,
     SelectItemsDemo,
+    SelectItemGroupDemo,
     SelectMaxHeightDemo,
     SelectMultipleDemo,
     SelectObjectReactiveFormsDemo,
@@ -83,6 +85,12 @@ import {SelectWithinPopoverDemo} from "@qualcomm-ui/angular-docs/components+/sel
         <h2 class="section-title">Item Customization</h2>
         <div class="demo-container">
           <select-item-customization-demo />
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Item Groups</h2>
+        <div class="demo-container">
+          <select-item-group-demo />
         </div>
       </div>
       <div class="section">
