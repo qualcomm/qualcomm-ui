@@ -27,6 +27,51 @@ const countryItems = [
   {code: "FR", name: "France"},
 ]
 
+const groupedCollection = selectCollection({
+  groupBy: (item) => item.group,
+  itemLabel: (item) => item.label,
+  items: [
+    {group: "Available", label: "Item 1", value: "1"},
+    {group: "Available", label: "Item 2", value: "2"},
+    {group: "Onboarded", label: "Item 3", value: "3"},
+  ],
+  itemValue: (item) => item.value,
+})
+
+@Component({
+  imports: [SelectModule, PortalDirective],
+  template: `
+    <div q-select-root [collection]="collection">
+      <label q-select-label>Select option</label>
+      <div q-select-control>
+        <span q-select-value-text></span>
+        <button q-select-indicator></button>
+      </div>
+      <select q-select-hidden-select></select>
+      <ng-template qPortal>
+        <div q-select-positioner>
+          <div q-select-content>
+            @for (group of collection.group(); track group[0]) {
+              <div q-select-item-group>
+                <div q-select-item-group-label>{{ group[0] }}</div>
+                @for (item of group[1]; track item.value) {
+                  <div q-select-item [item]="item">
+                    <span q-select-item-text>{{ item.label }}</span>
+                    <span q-select-item-indicator></span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  `,
+})
+class GroupedSelectComponent {
+  collection = groupedCollection
+}
+
 const testCases: MultiComponentTest[] = [
   {
     composite() {
@@ -2251,4 +2296,28 @@ const testCases: MultiComponentTest[] = [
 
 describe("Select", () => {
   runTests(testCases)
+
+  test("item groups use their labels as accessible names", async () => {
+    await render(GroupedSelectComponent)
+
+    await page.getByRole("combobox", {name: "Select option"}).click()
+
+    const group = page.getByRole("group", {name: "Available"})
+    const label = page.getByText("Available")
+    const labelId = label.element().getAttribute("id")
+
+    expect(labelId).toBeTruthy()
+    await expect.element(group).toHaveAccessibleName("Available")
+    await expect.element(group).toHaveAttribute("aria-labelledby", labelId!)
+  })
+
+  test("options inside item groups remain selectable", async () => {
+    await render(GroupedSelectComponent)
+
+    const control = page.getByRole("combobox", {name: "Select option"})
+    await control.click()
+    await page.getByRole("option", {name: "Item 2"}).click()
+
+    await expect.element(control).toHaveTextContent("Item 2")
+  })
 })

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/angular-core",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "private": true,
   "description": "Design-agnostic Angular building blocks and utilities.",
   "license": "BSD-3-Clause-Clear",

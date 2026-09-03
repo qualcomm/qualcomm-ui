@@ -1,5 +1,18 @@
 # @qualcomm-ui/react Changelog
 
+## 1.31.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group components ([a8f8e5e](https://github.com/qualcomm/qualcomm-ui/commit/a8f8e5e))
+* [combobox]: add item group components ([2b27b58](https://github.com/qualcomm/qualcomm-ui/commit/2b27b58))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@1.38.0, @qualcomm-ui/react-core@1.9.0]
+
 ## 1.30.0
 
 Aug 31st, 2026

@@ -309,3 +309,27 @@
     row-gap: var(--spacing-40);
   }
 }
+
+.qui-select__item-group {
+  &:not(:first-child) {
+    &::before {
+      background: var(--color-border-neutral-01);
+      content: "";
+      display: block;
+      height: 1px;
+      margin: var(--spacing-40) 0;
+      width: 100%;
+    }
+  }
+}
+
+.qui-select__item-group-label {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-sm-default);
+  padding: var(--spacing-70) var(--spacing-100) var(--spacing-40)
+    var(--spacing-100);
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-default);
+  }
+}
