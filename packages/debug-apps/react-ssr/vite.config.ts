@@ -15,6 +15,18 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
+  /**
+   * Pre-bundle deps the static scanner can't see (react/compiler-runtime is
+   * injected by babel), so a late re-optimization can't crash the page mid-load.
+   */
+  optimizeDeps: {
+    include: [
+      "react/compiler-runtime",
+      "@tanstack/react-query",
+      "@floating-ui/dom",
+      "lodash-es",
+    ],
+  },
   plugins: [
     tailwindcss(),
     mdx({
