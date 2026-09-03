@@ -24,6 +24,14 @@ import {
   type SelectItemCheckboxProps,
 } from "./select-item-checkbox.js"
 import {
+  SelectItemGroupLabel,
+  type SelectItemGroupLabelProps,
+} from "./select-item-group-label.js"
+import {
+  SelectItemGroup,
+  type SelectItemGroupProps,
+} from "./select-item-group.js"
+import {
   SelectItemIndicator,
   type SelectItemIndicatorProps,
 } from "./select-item-indicator.js"
@@ -55,6 +63,8 @@ export type {
   SelectIconProps,
   SelectIndicatorProps,
   SelectItemCheckboxProps,
+  SelectItemGroupProps,
+  SelectItemGroupLabelProps,
   SelectItemIndicatorProps,
   SelectItemTextProps,
   SelectItemProps,
@@ -113,6 +123,18 @@ type SelectComponent = typeof SimpleSelect & {
    */
   ItemCheckbox: typeof SelectItemCheckbox
   /**
+   * Visually separates a group of items. Renders a `<div>` element by default.
+   *
+   * @since next-release
+   */
+  ItemGroup: typeof SelectItemGroup
+  /**
+   * Label for an item group. Renders a `<div>` element by default.
+   *
+   * @since next-release
+   */
+  ItemGroupLabel: typeof SelectItemGroupLabel
+  /**
    * Visual indicator showing the selected state of an item. Renders a `<span>`
    * element by default.
    */
@@ -155,6 +177,8 @@ Select.Icon = SelectIcon
 Select.Indicator = SelectIndicator
 Select.Item = SelectItem
 Select.ItemCheckbox = SelectItemCheckbox
+Select.ItemGroup = SelectItemGroup
+Select.ItemGroupLabel = SelectItemGroupLabel
 Select.ItemIndicator = SelectItemIndicator
 Select.Items = SelectItems
 Select.ItemText = SelectItemText
