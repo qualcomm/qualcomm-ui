@@ -818,16 +818,12 @@ export function createDatePickerApi(
           if (!interactive) {
             return
           }
+          if (isComposingEvent(event)) {
+            return
+          }
           const keyMap: EventKeyMap<HTMLInputElement> = {
             Enter(event) {
-              // TODO: consider form submission (with enter key)
-              if (isComposingEvent(event)) {
-                return
-              }
               const value = event.currentTarget?.value
-              if (value?.trim() === "") {
-                return
-              }
               send({
                 index,
                 resolution: resolveInput(value),
