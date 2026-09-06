@@ -523,6 +523,7 @@ type Actions = ActionSchema<
   | "focusParsedDate"
   | "focusResolvedDate"
   | "selectResolvedDate"
+  | "submitOwningForm"
   | "resetView"
   | "setStartValue"
   | "invokeOnOpen"
@@ -747,6 +748,7 @@ export interface DatePickerSchema extends MachineSchema {
     | "closeOnSelect"
     | "hasSelectedRange"
     | "isAboveMinView"
+    | "isAcceptedResolution"
     | "isDayPointerMoveOutsideVisibleMonth"
     | "isDayView"
     | "isInputValueEmpty"
@@ -758,6 +760,7 @@ export interface DatePickerSchema extends MachineSchema {
     | "isRangePicker"
     | "isYearView"
     | "selectsToMinView"
+    | "shouldCloseOnEnter"
     | "shouldFixOnBlur"
     | "shouldRestoreFocus"
   >
@@ -765,6 +768,7 @@ export interface DatePickerSchema extends MachineSchema {
   props: RequiredBy<DatePickerApiProps, "dir">
   refs: {
     announcer?: LiveRegion | undefined
+    pendingFormValueAsString?: string[] | undefined
     syncInputElementCleanup?: VoidFunction | undefined
     valueSnapshot?: (DateValue | null)[] | undefined
   }
