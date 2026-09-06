@@ -13,6 +13,7 @@ import {page, userEvent} from "vitest/browser"
 import {
   DatePickerModule,
   type DateValue,
+  isWeekend,
   parseDate,
 } from "@qualcomm-ui/angular/date-picker"
 import type {DatePickerValueChangeDetails} from "@qualcomm-ui/core/date-picker"
@@ -73,8 +74,11 @@ function formHost(picker: string) {
       null,
       parseDate("2024-06-20"),
     ]
+    readonly min = parseDate("2024-06-10")
     readonly range = [parseDate("2024-06-10"), parseDate("2024-06-20")]
     readonly seeded = seeded
+    readonly startOnlyRange = [parseDate("2024-06-10")]
+    readonly isWeekend = isWeekend
     readonly submitted = submitted
     readonly value = [seeded]
     readonly valueChangedHandler = output<DatePickerValueChangeDetails>()
@@ -181,6 +185,9 @@ function toggleableRangeHost() {
 }
 
 const status = () => page.getByTestId("status")
+const grid = () => page.getByRole("grid")
+const openCalendar = () =>
+  page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 const startInput = () => page.getByRole("textbox", {name: /start date/i})
 const endInput = () => page.getByRole("textbox", {name: /end date/i})
 
@@ -592,5 +599,285 @@ describe("DatePicker - Form", () => {
     )
 
     await expect.poll(() => isRootDisabled()).toBe(true)
+  })
+
+  test("pressing Enter on a typed date in a closed picker submits it", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [defaultValue]="value"
+        />
+      `),
+    )
+
+    const input = page.getByRole("textbox")
+    await input.fill("06/20/2024")
+    await userEvent.keyboard("{Enter}")
+
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("departure")).toEqual([
+      "06/20/2024",
+    ])
+    await expect.element(input).toHaveValue("06/20/2024")
+  })
+
+  test("pressing Enter on a value that reformats submits the formatted value", async () => {
+    await render(
+      formHost(`<q-date-picker label="Departure" name="departure" />`),
+    )
+
+    await page.getByRole("textbox").fill("6/2/2024")
+    await userEvent.keyboard("{Enter}")
+
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("departure")).toEqual([
+      "06/02/2024",
+    ])
+  })
+
+  test("pressing Enter on a date before min submits the constrained value", async () => {
+    await render(
+      formHost(`
+        <q-date-picker label="Departure" name="departure" [min]="min" />
+      `),
+    )
+
+    await page.getByRole("textbox").fill("06/01/2024")
+    await userEvent.keyboard("{Enter}")
+
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("departure")).toEqual([
+      "06/10/2024",
+    ])
+  })
+
+  test("pressing Enter with an empty input submits the form", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [defaultValue]="value"
+        />
+      `),
+    )
+
+    await page.getByRole("textbox").fill("")
+    await userEvent.keyboard("{Enter}")
+
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("departure")).toEqual([""])
+  })
+
+  test("pressing Enter with an empty input does not submit a required picker", async () => {
+    await render(
+      formHost(`
+        <q-date-picker label="Departure" name="departure" [required]="true" />
+      `),
+    )
+
+    await page.getByRole("textbox").fill("")
+    await userEvent.keyboard("{Enter}")
+
+    expect(submitted).not.toHaveBeenCalled()
+  })
+
+  test("pressing Enter on an unparseable value neither commits nor submits", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [defaultValue]="value"
+        />
+      `),
+    )
+
+    const input = page.getByRole("textbox")
+    // letters are stripped by the input, so an invalid date needs digits
+    await input.fill("13/45/2024")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(input).toHaveValue("06/15/2024")
+    expect(submitted).not.toHaveBeenCalled()
+  })
+
+  test("pressing Enter on a date blocked by isDateUnavailable neither commits nor submits", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [defaultValue]="value"
+          [isDateUnavailable]="isWeekend"
+        />
+      `),
+    )
+
+    const input = page.getByRole("textbox")
+    // June 16 2024 is a Sunday
+    await input.fill("06/16/2024")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(input).toHaveValue("06/15/2024")
+    expect(submitted).not.toHaveBeenCalled()
+  })
+
+  test("pressing Enter with the calendar open submits and closes it", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [defaultFocusedValue]="seeded"
+        />
+      `),
+    )
+
+    await openCalendar()
+    await expect.element(grid()).toBeVisible()
+
+    await page.getByRole("textbox").fill("06/20/2024")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(grid()).not.toBeInTheDocument()
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("departure")).toEqual([
+      "06/20/2024",
+    ])
+  })
+
+  test("pressing Enter on one endpoint of an incomplete range submits and keeps the calendar open", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Trip"
+          name="trip"
+          selectionMode="range"
+          [defaultFocusedValue]="seeded"
+        />
+      `),
+    )
+
+    await openCalendar()
+    await startInput().fill("06/12/2024")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(grid()).toBeVisible()
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("trip")).toEqual([
+      "06/12/2024",
+      "",
+    ])
+  })
+
+  test("pressing Enter on the last missing endpoint submits both and closes", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Trip"
+          name="trip"
+          selectionMode="range"
+          [defaultValue]="startOnlyRange"
+        />
+      `),
+    )
+
+    await openCalendar()
+    await endInput().fill("06/20/2024")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(grid()).not.toBeInTheDocument()
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("trip")).toEqual([
+      "06/10/2024",
+      "06/20/2024",
+    ])
+  })
+
+  test("pressing Enter on a reversed range submits the reordered endpoints", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Trip"
+          name="trip"
+          selectionMode="range"
+          [defaultValue]="range"
+        />
+      `),
+    )
+
+    await openCalendar()
+    await endInput().fill("06/05/2024")
+    await userEvent.keyboard("{Enter}")
+
+    expect(submitted).toHaveBeenCalledTimes(1)
+    expect(submitted.mock.calls[0][0].getAll("trip")).toEqual([
+      "06/05/2024",
+      "06/10/2024",
+    ])
+  })
+
+  test("pressing Enter on a rejected date leaves an open calendar open and does not submit", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [defaultValue]="value"
+        />
+      `),
+    )
+
+    await openCalendar()
+    await page.getByRole("textbox").fill("13/45/2024")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(grid()).toBeVisible()
+    expect(submitted).not.toHaveBeenCalled()
+  })
+
+  test("with closeOnSelect false, pressing Enter commits without submitting", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [closeOnSelect]="false"
+          [defaultFocusedValue]="seeded"
+        />
+      `),
+    )
+
+    await openCalendar()
+    const input = page.getByRole("textbox")
+    await input.fill("06/20/2024")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(input).toHaveValue("06/20/2024")
+    await expect.element(grid()).toBeVisible()
+    expect(submitted).not.toHaveBeenCalled()
+  })
+
+  test("with closeOnSelect false, pressing Enter on a cleared input does not submit", async () => {
+    await render(
+      formHost(`
+        <q-date-picker
+          label="Departure"
+          name="departure"
+          [closeOnSelect]="false"
+          [defaultValue]="value"
+        />
+      `),
+    )
+
+    await openCalendar()
+    await page.getByRole("textbox").fill("")
+    await userEvent.keyboard("{Enter}")
+
+    await expect.element(grid()).toBeVisible()
+    expect(submitted).not.toHaveBeenCalled()
   })
 })
