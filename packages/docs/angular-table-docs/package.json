@@ -44,7 +44,7 @@
     "@angular/router": "catalog:",
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.1.0",
-    "@faker-js/faker": "~9.6.0",
+    "@faker-js/faker": "~10.5.0",
     "@floating-ui/dom": "^1.7.0",
     "@floating-ui/react": "^0.27.3",
     "@hookform/resolvers": "^5.2.2",
