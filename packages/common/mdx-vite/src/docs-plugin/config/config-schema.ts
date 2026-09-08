@@ -107,6 +107,7 @@ const knowledgeConfigSchema = implement<KnowledgeConfig>().with({
 const configSchema = implement<QuiDocsConfig>().with({
   appDirectory: z.string().optional(),
   disableCache: z.boolean().optional(),
+  disableLegacySearchIndex: z.boolean().optional(),
   headings: z
     .array(
       z.union([

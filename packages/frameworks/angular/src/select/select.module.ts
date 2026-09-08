@@ -19,6 +19,8 @@ import {SelectHiddenSelectDirective} from "./select-hidden-select.directive"
 import {SelectHintDirective} from "./select-hint.directive"
 import {SelectIndicatorDirective} from "./select-indicator.directive"
 import {SelectItemCheckboxComponent} from "./select-item-checkbox.component"
+import {SelectItemGroupLabelDirective} from "./select-item-group-label.directive"
+import {SelectItemGroupDirective} from "./select-item-group.directive"
 import {SelectItemIndicatorDirective} from "./select-item-indicator.directive"
 import {SelectItemTextDirective} from "./select-item-text.directive"
 import {SelectItemDirective} from "./select-item.directive"
@@ -40,6 +42,8 @@ import {SelectComponent} from "./select.component"
     SelectItemDirective,
     SelectItemTextDirective,
     SelectItemCheckboxComponent,
+    SelectItemGroupDirective,
+    SelectItemGroupLabelDirective,
     SelectItemIndicatorDirective,
     SelectLabelDirective,
     SelectPositionerDirective,
@@ -61,6 +65,8 @@ import {SelectComponent} from "./select.component"
     SelectItemDirective,
     SelectItemTextDirective,
     SelectItemCheckboxComponent,
+    SelectItemGroupDirective,
+    SelectItemGroupLabelDirective,
     SelectItemIndicatorDirective,
     SelectLabelDirective,
     SelectPositionerDirective,

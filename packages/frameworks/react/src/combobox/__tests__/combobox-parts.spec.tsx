@@ -16,6 +16,46 @@ const emptyCollection = comboboxCollection({
   items: [],
 })
 
+const groupedCollection = comboboxCollection({
+  groupBy: (item) => item.group,
+  itemLabel: (item) => item.label,
+  items: [
+    {group: "Available", label: "Item 1", value: "1"},
+    {group: "Available", label: "Item 2", value: "2"},
+    {group: "Onboarded", label: "Item 3", value: "3"},
+  ],
+  itemValue: (item) => item.value,
+})
+
+function GroupedCombobox() {
+  return (
+    <Combobox.Root collection={groupedCollection}>
+      <Combobox.Label>Combobox label</Combobox.Label>
+      <Combobox.Control>
+        <Combobox.Input />
+        <Combobox.Trigger />
+      </Combobox.Control>
+      <Portal>
+        <Combobox.Positioner>
+          <Combobox.Content>
+            {groupedCollection.group().map(([group, items]) => (
+              <Combobox.ItemGroup key={group}>
+                <Combobox.ItemGroupLabel>{group}</Combobox.ItemGroupLabel>
+                {items.map((item) => (
+                  <Combobox.Item key={item.value} item={item}>
+                    <Combobox.ItemText>{item.label}</Combobox.ItemText>
+                    <Combobox.ItemIndicator />
+                  </Combobox.Item>
+                ))}
+              </Combobox.ItemGroup>
+            ))}
+          </Combobox.Content>
+        </Combobox.Positioner>
+      </Portal>
+    </Combobox.Root>
+  )
+}
+
 const testIds = {
   clearTrigger: "combobox-clear-trigger",
   content: "combobox-content",
@@ -242,6 +282,30 @@ const tests: MultiComponentTestCase[] = [
 
 describe("Combobox - Parts", () => {
   runTests(tests)
+
+  test("item groups use their labels as accessible names", async () => {
+    await render(<GroupedCombobox />)
+
+    await page.getByRole("button", {name: /toggle suggestions/i}).click()
+
+    const group = page.getByRole("group", {name: "Available"})
+    const label = page.getByText("Available")
+    const labelId = label.element().getAttribute("id")
+
+    expect(labelId).toBeTruthy()
+    await expect.element(group).toHaveAccessibleName("Available")
+    await expect.element(group).toHaveAttribute("aria-labelledby", labelId!)
+  })
+
+  test("options inside item groups remain selectable", async () => {
+    await render(<GroupedCombobox />)
+
+    const input = page.getByRole("combobox", {name: "Combobox label"})
+    await page.getByRole("button", {name: /toggle suggestions/i}).click()
+    await page.getByRole("option", {name: "Item 2"}).click()
+
+    await expect.element(input).toHaveValue("Item 2")
+  })
 
   test("context render prop exposes live combobox state", async () => {
     await render(

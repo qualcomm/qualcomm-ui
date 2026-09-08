@@ -354,6 +354,61 @@ Outro text.
       expect(section.rawContent).toContain("Middle text.")
       expect(section.rawContent).toContain("Outro text.")
     })
+
+    test("builds Markdown-free search text with a local pathname", () => {
+      const markdown = `
+# Test Page
+
+## Search text
+
+Use [a local label](https://example.com/docs) and https://example.com/raw.
+
+- First list item
+- Second list item with \`inline code\`
+
+| Name | Meaning |
+| ---- | ------- |
+| API | Public interface |
+
+\`\`\`ts
+const excluded = "code block"
+\`\`\`
+`
+      const extractor = new SectionExtractor()
+      const {sections} = extractor.extract(parseGfmMarkdown(markdown), pageInfo)
+
+      expect(sections[0]).toMatchObject({
+        pathname: "/test-page",
+        searchText:
+          "Use a local label and . First list item Second list item with inline code Name Meaning API Public interface",
+      })
+      expect(sections[0].searchText).not.toContain("https://example.com")
+      expect(sections[0].searchText).not.toContain("excluded")
+      expect(sections[0].searchText).not.toContain("```")
+    })
+
+    test("omits local pathname and changes the section hash when routes differ", () => {
+      const markdown = `
+# Test Page
+
+## Search text
+
+Plain prose.
+`
+      const extractor = new SectionExtractor()
+      const tree = parseMarkdown(markdown)
+      const withoutPath = extractor.extract(tree, {
+        ...pageInfo,
+        pathname: undefined,
+      }).sections[0]
+      const withDifferentPath = extractor.extract(tree, {
+        ...pageInfo,
+        pathname: "/different-page",
+      }).sections[0]
+
+      expect(withoutPath.pathname).toBeUndefined()
+      expect(withoutPath.hash).not.toBe(withDifferentPath.hash)
+    })
   })
 
   describe("configuration options", () => {

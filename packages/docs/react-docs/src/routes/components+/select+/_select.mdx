@@ -79,6 +79,16 @@ The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) a
 
 <Demo name="SelectItemsDemo" component={demos.SelectItemsDemo} />
 
+### Item Groups
+
+::: terms
+grouped options
+:::
+
+Use the ListCollection's [groupBy](./#groupBy) and [groupSort](./#groupSort) properties to group items into categories. Then render them using the `group()` method on the ListCollection instance.
+
+<Demo name="SelectItemGroupDemo" component={demos.SelectItemGroupDemo} />
+
 ### Sizes
 
 ::: terms
@@ -228,6 +238,8 @@ Tanstack form also supports [ArkType](https://tanstack.com/form/latest/docs/fram
     "indicator",
     "content",
     "item",
+    "item-group",
+    "item-group-label",
     "item-text",
     "item-indicator",
     "hint",
@@ -312,6 +324,22 @@ This section describes the elements of the Select's composite API.
 <TypeDocProps name="SelectItemProps" />
 
 <TypeDocAttributes name={["QdsSelectItemBindings", "SelectItemBindings"]} />
+
+### \<Select.ItemGroup>
+
+<TypeDocProps name="SelectItemGroupProps" />
+
+<TypeDocAttributes
+  name={["QdsSelectItemGroupBindings", "SelectItemGroupBindings"]}
+/>
+
+### \<Select.ItemGroupLabel>
+
+<TypeDocProps name="SelectItemGroupLabelProps" />
+
+<TypeDocAttributes
+  name={["QdsSelectItemGroupLabelBindings", "SelectItemGroupLabelBindings"]}
+/>
 
 ### \<Select.ItemCheckbox>
 

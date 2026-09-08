@@ -20,10 +20,11 @@ import {
   DocsLayout,
   type DocsLayoutSettings,
 } from "@qualcomm-ui/react-mdx/docs-layout"
-import {SiteSearch} from "@qualcomm-ui/react-mdx/site-search"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 
 import reactMdxPkg from "../../../../../frameworks/react-mdx/package.json"
+
+import {GlobalSearch} from "./global-search"
 
 interface Props extends Partial<DocsLayoutSettings> {
   /**
@@ -85,7 +86,7 @@ export function AppDocsLayout({
             </HeaderBar.Nav>
 
             <HeaderBar.ActionBar>
-              <SiteSearch />
+              <GlobalSearch />
               <HeaderRepositoryLink />
               <GlobalConfig />
               <ThemeToggle />

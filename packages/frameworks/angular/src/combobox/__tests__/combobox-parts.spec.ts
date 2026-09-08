@@ -17,6 +17,50 @@ const emptyCollection = comboboxCollection({
   items: [],
 })
 
+const groupedCollection = comboboxCollection({
+  groupBy: (item) => item.group,
+  itemLabel: (item) => item.label,
+  items: [
+    {group: "Available", label: "Item 1", value: "1"},
+    {group: "Available", label: "Item 2", value: "2"},
+    {group: "Onboarded", label: "Item 3", value: "3"},
+  ],
+  itemValue: (item) => item.value,
+})
+
+@Component({
+  imports: [ComboboxModule, PortalDirective],
+  template: `
+    <div defaultOpen q-combobox-root [collection]="collection">
+      <label q-combobox-label>Select option</label>
+      <div q-combobox-control>
+        <input q-combobox-input />
+        <button q-combobox-trigger></button>
+      </div>
+      <ng-template qPortal>
+        <div q-combobox-positioner>
+          <div q-combobox-content>
+            @for (group of collection.group(); track group[0]) {
+              <div q-combobox-item-group>
+                <div q-combobox-item-group-label>{{ group[0] }}</div>
+                @for (item of group[1]; track item.value) {
+                  <div q-combobox-item [item]="item">
+                    <span q-combobox-item-text>{{ item.label }}</span>
+                    <span q-combobox-item-indicator></span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  `,
+})
+class GroupedComboboxComponent {
+  collection = groupedCollection
+}
+
 const testIds = {
   clearTrigger: "combobox-clear-trigger",
   content: "combobox-content",
@@ -349,6 +393,27 @@ const testCases: MultiComponentTest[] = [
 
 describe("Combobox - Parts", () => {
   runTests(testCases)
+
+  test("item groups use their labels as accessible names", async () => {
+    await render(GroupedComboboxComponent)
+
+    const group = page.getByRole("group", {name: "Available"})
+    const label = page.getByText("Available")
+    const labelId = label.element().getAttribute("id")
+
+    expect(labelId).toBeTruthy()
+    await expect.element(group).toHaveAccessibleName("Available")
+    await expect.element(group).toHaveAttribute("aria-labelledby", labelId!)
+  })
+
+  test("options inside item groups remain selectable", async () => {
+    await render(GroupedComboboxComponent)
+
+    const input = page.getByRole("combobox", {name: "Select option"})
+    await page.getByRole("option", {name: "Item 2"}).click()
+
+    await expect.element(input).toHaveValue("Item 2")
+  })
 
   test("context template exposes live combobox state", async () => {
     @Component({

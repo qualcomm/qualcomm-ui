@@ -432,8 +432,14 @@ export interface SectionEntry {
   content: string
 
   /**
+   * Set to true when this section is excluded from site search.
+   */
+  excludeFromSearch?: boolean
+
+  /**
    * Hash of this section's contents. Includes {@link codeExamples}, {@link
-   * metadata}, {@link headerPath}, and {@link rawContent}.
+   * metadata}, {@link headerPath}, {@link pathname}, {@link rawContent}, and
+   * {@link searchText}.
    */
   hash: string
 
@@ -460,9 +466,19 @@ export interface SectionEntry {
   pageId: string
 
   /**
+   * Local route pathname when this section has a navigable page.
+   */
+  pathname?: string
+
+  /**
    * Raw markdown content from the AST, including code blocks.
    */
   rawContent: string
+
+  /**
+   * Markdown-free prose used to build semantic search embeddings.
+   */
+  searchText: string
 
   /**
    * Generated section ID for anchor links.

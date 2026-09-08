@@ -10,7 +10,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "run-s build:typedoc build:site",
+    "build": "run-s build:typedoc build:site build:semantic-search",
+    "build:semantic-search": "tsx build-semantic-search.ts",
     "build:site": "react-router build",
     "build:typedoc": "qui-typedoc build",
     "watch:typedoc": "qui-typedoc watch",

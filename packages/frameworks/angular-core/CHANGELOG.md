@@ -1,5 +1,13 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 3.3.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group support ([323ce37](https://github.com/qualcomm/qualcomm-ui/commit/323ce37))
+
 ## 3.2.0
 
 Aug 30th, 2026

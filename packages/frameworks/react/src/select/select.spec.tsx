@@ -25,6 +25,47 @@ const objectCollection = selectCollection({
   itemValue: (item) => item.value,
 })
 
+const groupedCollection = selectCollection({
+  groupBy: (item) => item.group,
+  itemLabel: (item) => item.label,
+  items: [
+    {group: "Available", label: "Item 1", value: "1"},
+    {group: "Available", label: "Item 2", value: "2"},
+    {group: "Onboarded", label: "Item 3", value: "3"},
+  ],
+  itemValue: (item) => item.value,
+})
+
+function GroupedSelect() {
+  return (
+    <Select.Root collection={groupedCollection}>
+      <Select.Label>Select option</Select.Label>
+      <Select.Control>
+        <Select.ValueText />
+        <Select.Indicator />
+      </Select.Control>
+      <Portal>
+        <Select.Positioner>
+          <Select.Content>
+            {groupedCollection.group().map(([group, items]) => (
+              <Select.ItemGroup key={group}>
+                <Select.ItemGroupLabel>{group}</Select.ItemGroupLabel>
+                {items.map((item) => (
+                  <Select.Item key={item.value} item={item}>
+                    <Select.ItemText>{item.label}</Select.ItemText>
+                    <Select.ItemIndicator />
+                  </Select.Item>
+                ))}
+              </Select.ItemGroup>
+            ))}
+          </Select.Content>
+        </Select.Positioner>
+      </Portal>
+      <Select.HiddenSelect />
+    </Select.Root>
+  )
+}
+
 const testIds = {
   clearTrigger: "select-clear-trigger",
   content: "select-content",
@@ -969,4 +1010,28 @@ const tests: MultiComponentTestCase[] = [
 
 describe("Select", () => {
   runTests(tests)
+
+  test("item groups use their labels as accessible names", async () => {
+    await render(<GroupedSelect />)
+
+    await page.getByRole("combobox", {name: "Select option"}).click()
+
+    const group = page.getByRole("group", {name: "Available"})
+    const label = page.getByText("Available")
+    const labelId = label.element().getAttribute("id")
+
+    expect(labelId).toBeTruthy()
+    await expect.element(group).toHaveAccessibleName("Available")
+    await expect.element(group).toHaveAttribute("aria-labelledby", labelId!)
+  })
+
+  test("options inside item groups remain selectable", async () => {
+    await render(<GroupedSelect />)
+
+    const control = page.getByRole("combobox", {name: "Select option"})
+    await control.click()
+    await page.getByRole("option", {name: "Item 2"}).click()
+
+    await expect.element(control).toHaveTextContent("Item 2")
+  })
 })

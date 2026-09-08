@@ -1,5 +1,13 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.38.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [combobox/select]: add ItemGroup and ItemGroupLabel styles and api ([e77b0c1](https://github.com/qualcomm/qualcomm-ui/commit/e77b0c1))
+
 ## 1.37.0
 
 Aug 30th, 2026

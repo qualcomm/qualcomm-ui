@@ -14,6 +14,8 @@ import type {
   QdsSelectIconBindings,
   QdsSelectIndicatorBindings,
   QdsSelectItemBindings,
+  QdsSelectItemGroupBindings,
+  QdsSelectItemGroupLabelBindings,
   QdsSelectItemIndicatorBindings,
   QdsSelectItemTextBindings,
   QdsSelectLabelBindings,
@@ -71,6 +73,18 @@ export function createQdsSelectApi(
       return normalize.element({
         className: selectClasses.item,
         "data-selection-indicator": selectionIndicator,
+        "data-size": size,
+      })
+    },
+    getItemGroupBindings(): QdsSelectItemGroupBindings {
+      return normalize.element({
+        className: selectClasses.itemGroup,
+        "data-size": size,
+      })
+    },
+    getItemGroupLabelBindings(): QdsSelectItemGroupLabelBindings {
+      return normalize.element({
+        className: selectClasses.itemGroupLabel,
         "data-size": size,
       })
     },

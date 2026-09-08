@@ -1,5 +1,21 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.9.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group components ([58451e8](https://github.com/qualcomm/qualcomm-ui/commit/58451e8))
+
+## 1.8.0
+
+Aug 31st, 2026
+
+### Features
+
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
 ## 1.7.0
 
 Aug 30th, 2026

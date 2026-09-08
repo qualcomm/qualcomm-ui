@@ -1,5 +1,21 @@
 # @qualcomm-ui/react-router-utils Changelog
 
+## 2.2.0
+
+Aug 31st, 2026
+
+### Features
+
+* [semantic-search]: add server-side indexing and query support ([9ee7bbe](https://github.com/qualcomm/qualcomm-ui/commit/9ee7bbe))
+
+### Tests
+
+* [semantic-search]: cover artifact reuse and hybrid ranking ([e3f69fc](https://github.com/qualcomm/qualcomm-ui/commit/e3f69fc))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.10.0, @qualcomm-ui/mdx-common@2.6.0]
+
 ## 2.1.12
 
 Aug 30th, 2026

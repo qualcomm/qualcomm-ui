@@ -126,7 +126,7 @@ export default {
    */
   hotUpdateIgnore: /angular-demo-module|public/,
   knowledge: {
-    baseUrl: "https://angular-next.qui.qualcomm.com",
+    baseUrl: "https://angular.qui.qualcomm.com",
     exclude: [
       "index.mdx",
       "**/components+/overview*",

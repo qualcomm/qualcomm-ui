@@ -1,5 +1,17 @@
 # @qualcomm-ui/angular Changelog
 
+## 3.3.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [combobox/select]: add item group components ([577914a](https://github.com/qualcomm/qualcomm-ui/commit/577914a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@1.38.0, @qualcomm-ui/angular-core@3.3.0]
+
 ## 3.2.0
 
 Aug 30th, 2026

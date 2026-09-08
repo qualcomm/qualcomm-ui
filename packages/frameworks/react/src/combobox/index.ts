@@ -17,6 +17,14 @@ import {
 import {ComboboxHint, type ComboboxHintProps} from "./combobox-hint.js"
 import {ComboboxInput, type ComboboxInputProps} from "./combobox-input.js"
 import {
+  ComboboxItemGroupLabel,
+  type ComboboxItemGroupLabelProps,
+} from "./combobox-item-group-label.js"
+import {
+  ComboboxItemGroup,
+  type ComboboxItemGroupProps,
+} from "./combobox-item-group.js"
+import {
   ComboboxItemIndicator,
   type ComboboxItemIndicatorProps,
 } from "./combobox-item-indicator.js"
@@ -60,6 +68,8 @@ export type {
   ComboboxRootProps,
   ComboboxTriggerProps,
   ComboboxVirtualContentProps,
+  ComboboxItemGroupProps,
+  ComboboxItemGroupLabelProps,
 }
 
 type ComboboxComponent = typeof SimpleCombobox & {
@@ -106,6 +116,19 @@ type ComboboxComponent = typeof SimpleCombobox & {
    * default.
    */
   Item: typeof ComboboxItem
+  /**
+   * Visually separates and a group of items. Renders a `<div>` element by
+   * default.
+   *
+   * @since 1.31.0
+   */
+  ItemGroup: typeof ComboboxItemGroup
+  /**
+   * Label for an item group. Renders a `<div>` element by default.
+   *
+   * @since 1.31.0
+   */
+  ItemGroupLabel: typeof ComboboxItemGroupLabel
   /**
    * Visual indicator showing the selected state of an item. Renders a `<span>`
    * element by default.
@@ -159,6 +182,8 @@ Combobox.Input = ComboboxInput
 Combobox.ItemIndicator = ComboboxItemIndicator
 Combobox.ItemText = ComboboxItemText
 Combobox.Item = ComboboxItem
+Combobox.ItemGroup = ComboboxItemGroup
+Combobox.ItemGroupLabel = ComboboxItemGroupLabel
 Combobox.Items = ComboboxItems
 Combobox.Label = ComboboxLabel
 Combobox.Positioner = ComboboxPositioner
