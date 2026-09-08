@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-router-utils Changelog
 
+## 2.2.1
+
+Sep 8th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: use stable unique identifier for section ids ([8c9b2c6](https://github.com/qualcomm/qualcomm-ui/commit/8c9b2c6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.1, @qualcomm-ui/mdx-vite@3.10.1]
+
 ## 2.2.0
 
 Aug 31st, 2026
