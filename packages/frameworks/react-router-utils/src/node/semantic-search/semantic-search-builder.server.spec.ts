@@ -70,7 +70,7 @@ function createSection(overrides: Partial<SectionEntry> = {}): SectionEntry {
     pathname: "/test-page",
     rawContent: "Configure nested routing.",
     searchText: "Configure nested routing.",
-    sectionId: "test-page-routing",
+    sectionId: "test-page#routing",
     sectionUrlHash: "#routing",
     ...overrides,
   }

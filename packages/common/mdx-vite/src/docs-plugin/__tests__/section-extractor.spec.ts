@@ -95,7 +95,69 @@ Content here.
       const extractor = new SectionExtractor()
       const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
 
-      expect(sections[0].sectionId).toBe("test-page-getting-started")
+      expect(sections[0].sectionId).toBe("test-page#getting-started")
+    })
+
+    test("includes page identity in section IDs", () => {
+      const markdown = `
+# Shared Title
+
+## Configuration
+
+Content here.
+`
+      const extractor = new SectionExtractor()
+      const first = extractor.extract(parseMarkdown(markdown), {
+        ...pageInfo,
+        id: "first-page",
+        pathname: "/first-page",
+        title: "Shared Title",
+      })
+      const second = extractor.extract(parseMarkdown(markdown), {
+        ...pageInfo,
+        id: "second-page",
+        pathname: "/second-page",
+        title: "Shared Title",
+      })
+
+      expect(first.sections[0].sectionId).toBe("first-page#configuration")
+      expect(second.sections[0].sectionId).toBe("second-page#configuration")
+    })
+
+    test("uses unique page-local anchors for repeated headings", () => {
+      const markdown = `
+# Test Page
+
+## Configuration
+
+First section.
+
+## Configuration
+
+Second section.
+`
+      const extractor = new SectionExtractor()
+      const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
+
+      expect(sections.map((section) => section.sectionId)).toEqual([
+        "test-page#configuration",
+        "test-page#configuration-1",
+      ])
+    })
+
+    test("includes the page ID prefix exactly once", () => {
+      const markdown = `
+# Test Page
+
+## Getting Started
+
+Content here.
+`
+      const extractor = new SectionExtractor({pageIdPrefix: "site-"})
+      const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
+
+      expect(sections[0].pageId).toBe("site-test-page")
+      expect(sections[0].sectionId).toBe("site-test-page#getting-started")
     })
 
     test("generates correct section URLs", () => {
@@ -561,8 +623,8 @@ More content.
       const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
 
       expect(sections).toHaveLength(2)
-      expect(sections[0].sectionId).toBe("test-page-whats-new")
-      expect(sections[1].sectionId).toBe("test-page-api-reference-v20")
+      expect(sections[0].sectionId).toBe("test-page#whats-new")
+      expect(sections[1].sectionId).toBe("test-page#api-reference-v20")
     })
   })
 

@@ -481,8 +481,8 @@ export interface SectionEntry {
   searchText: string
 
   /**
-   * Generated section ID for anchor links.
-   * @example "button-examples-variants"
+   * Stable generated identifier for this page section.
+   * @example "button#variants"
    */
   sectionId: string
 
