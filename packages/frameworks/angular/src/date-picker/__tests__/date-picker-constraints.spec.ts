@@ -6,18 +6,13 @@ import {page, userEvent} from "vitest/browser"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {
   DatePickerModule,
-  type DateValue,
+  isWeekend,
   parseDate,
 } from "@qualcomm-ui/angular/date-picker"
 
 import {type MultiComponentTest, runTests} from "~test-utils"
 
 const seeded = parseDate("2024-06-15")
-
-const weekends = (date: DateValue) => {
-  const weekday = new Date(date.year, date.month - 1, date.day).getDay()
-  return weekday === 0 || weekday === 6
-}
 
 function compositeTemplate(rootAttrs = "") {
   return `
@@ -66,7 +61,7 @@ function selectedUnavailableTemplate() {
       [closeOnSelect]="false"
       [defaultFocusedValue]="seeded"
       [defaultValue]="[seeded]"
-      [isDateUnavailable]="weekends"
+      [isDateUnavailable]="isWeekend"
     />
   `
 }
@@ -82,7 +77,7 @@ function composite(rootAttrs?: string) {
     protected readonly max = parseDate("2024-06-20")
     protected readonly min = parseDate("2024-06-10")
     protected readonly seeded = seeded
-    protected readonly weekends = weekends
+    protected readonly isWeekend = isWeekend
   }
   return CompositeComponent
 }
@@ -98,7 +93,7 @@ function simple(rootAttrs?: string) {
     protected readonly max = parseDate("2024-06-20")
     protected readonly min = parseDate("2024-06-10")
     protected readonly seeded = seeded
-    protected readonly weekends = weekends
+    protected readonly isWeekend = isWeekend
   }
   return SimpleComponent
 }
@@ -122,7 +117,7 @@ function selectedUnavailable() {
   })
   class SelectedUnavailableComponent {
     protected readonly seeded = seeded
-    protected readonly weekends = weekends
+    protected readonly isWeekend = isWeekend
   }
   return SelectedUnavailableComponent
 }
@@ -207,11 +202,11 @@ const tests: MultiComponentTest[] = [
   {
     composite: () =>
       composite(
-        `[isDateUnavailable]="weekends" (valueChanged)="valueChangedHandler.emit()"`,
+        `[isDateUnavailable]="isWeekend" (valueChanged)="valueChangedHandler.emit()"`,
       ),
     simple: () =>
       simple(
-        `[isDateUnavailable]="weekends" (valueChanged)="valueChangedHandler.emit()"`,
+        `[isDateUnavailable]="isWeekend" (valueChanged)="valueChangedHandler.emit()"`,
       ),
     testCase: (component) => {
       test(`unavailable days announce themselves and reject clicks — ${component.name}`, async () => {
@@ -249,8 +244,8 @@ const tests: MultiComponentTest[] = [
     },
   },
   {
-    composite: () => composite(`[isDateUnavailable]="weekends"`),
-    simple: () => simple(`[isDateUnavailable]="weekends"`),
+    composite: () => composite(`[isDateUnavailable]="isWeekend"`),
+    simple: () => simple(`[isDateUnavailable]="isWeekend"`),
     testCase: (component) => {
       test(`Space on an unavailable day does not commit it — ${component.name}`, async () => {
         await render(component)
@@ -266,8 +261,8 @@ const tests: MultiComponentTest[] = [
     },
   },
   {
-    composite: () => composite(`[isDateUnavailable]="weekends"`),
-    simple: () => simple(`[isDateUnavailable]="weekends"`),
+    composite: () => composite(`[isDateUnavailable]="isWeekend"`),
+    simple: () => simple(`[isDateUnavailable]="isWeekend"`),
     testCase: (component) => {
       test(`Enter on an unavailable day does not commit it — ${component.name}`, async () => {
         await render(component)
@@ -283,8 +278,8 @@ const tests: MultiComponentTest[] = [
     },
   },
   {
-    composite: () => composite(`[isDateUnavailable]="weekends"`),
-    simple: () => simple(`[isDateUnavailable]="weekends"`),
+    composite: () => composite(`[isDateUnavailable]="isWeekend"`),
+    simple: () => simple(`[isDateUnavailable]="isWeekend"`),
     testCase: (component) => {
       test(`typing an unavailable date reverts the input to the last committed value — ${component.name}`, async () => {
         await render(component)

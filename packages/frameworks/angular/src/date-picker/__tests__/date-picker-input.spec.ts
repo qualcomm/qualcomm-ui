@@ -175,6 +175,30 @@ const tests: MultiComponentTest[] = [
     },
   },
   {
+    composite: () => composite(roundTripAttrs),
+    simple: () => simple(roundTripAttrs),
+    testCase: (component) => {
+      test(`pressing Enter after filling the input invokes parse exactly once — ${component.name}`, async () => {
+        formatSpy = vi.fn((date: DateValue) =>
+          date.toString().replaceAll("-", "/"),
+        )
+        const parse = vi.fn((value: string) =>
+          value === "2024/06/20" ? parseDate("2024-06-20") : undefined,
+        )
+        parseSpy = parse
+        await render(component)
+
+        const input = page.getByRole("textbox")
+        await input.fill("2024/06/20")
+        parse.mockClear()
+
+        await userEvent.keyboard("{Enter}")
+
+        expect(parse).toHaveBeenCalledOnce()
+      })
+    },
+  },
+  {
     composite: () => composite(`${seededAttrs} ${watchValue}`),
     simple: () => simple(`${seededAttrs} ${watchValue}`),
     testCase: (component) => {
