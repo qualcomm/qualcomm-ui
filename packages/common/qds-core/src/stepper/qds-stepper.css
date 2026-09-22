@@ -30,11 +30,11 @@
     }
   }
 
-  &:hover:not([aria-disabled="true"]) {
+  &:hover:not([aria-disabled="true"], [data-current]) {
     --stepper-indicator-background: var(
       --color-interactive-background-ghost-hover
     );
-    &[data-pending]:not([data-current]) {
+    &[data-pending] {
       --stepper-indicator-background:
         linear-gradient(
           0deg,
@@ -45,11 +45,11 @@
     }
   }
 
-  &:active:not([aria-disabled="true"]) {
+  &:active:not([aria-disabled="true"], [data-current]) {
     --stepper-indicator-background: var(
       --color-interactive-background-ghost-pressed
     );
-    &[data-pending]:not([data-current]) {
+    &[data-pending] {
       --stepper-indicator-background:
         linear-gradient(
           0deg,
