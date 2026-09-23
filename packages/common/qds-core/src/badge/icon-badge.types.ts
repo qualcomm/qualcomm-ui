@@ -48,7 +48,6 @@ export interface QdsIconBadgeRootBindings extends Part<"root"> {
 
 export interface QdsIconBadgeIconBindings extends Part<"icon"> {
   className: BadgeClasses["icon"]
-  "data-size": QdsBadgeExtendedSize
 }
 
 export interface QdsIconBadgeApi {
