@@ -12,7 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "target": "ES2022",
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    "types": ["node"]
   },
   "include": ["./scripts", "*.ts"],
 }
