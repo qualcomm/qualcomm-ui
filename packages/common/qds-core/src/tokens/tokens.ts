@@ -28,7 +28,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "Square sentinel — a deliberate hard right angle. Value: 0. A bound zero, NOT the absence of a token: this step says the corner is intentionally square, keeping the decision traceable and re-pointable. Bind this token for a square corner; never leave it untokenised or type 0 — a typed zero bypasses Core and loses the intent. Value coincides with a zero stroke width — pick by what the value is (a corner shape), never by the number. This group owns corner shape only — edge thickness → border/width/*, edge colour → color/border/*. Scoped to CORNER_RADIUS.",
     "name": "border-radius-none",
     "type": "number",
-    "value": 0
+    "value": "0px"
   },
   {
     "comment": "Pill sentinel — always fully rounded into a capsule, whatever the element&#39;s size. Value: 360 (clamps to a full capsule at any size). Distinct from the largest graduated step (xxl): a graduated step gives a fixed corner that becomes proportionally less round as the element grows; rounded always clamps to a full capsule. Bind this token for a capsule; never type 360 — a typed number bypasses Core and won&#39;t behave as the capsule does when the element resizes. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
@@ -76,7 +76,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "No-stroke sentinel — a deliberately undrawn edge. Value: 0. A bound zero, NOT the absence of a token: this step says the edge has no stroke on purpose, keeping the decision traceable and re-pointable. Bind this token for an intentionally undrawn edge; never leave the stroke off without it — omitting a token loses the intent. Value coincides with border/radius/none (a square corner) — pick by what the value is (a stroke thickness), never by the number. This group owns stroke thickness only — corner shape → border/radius/*, edge colour → color/border/*. Scoped to STROKE_FLOAT.",
     "name": "border-width-none",
     "type": "number",
-    "value": 0
+    "value": "0px"
   },
   {
     "comment": "Faint hairline stroke. Value: 1px. The lightest visible edge — barely-there, delineating without asserting. Choose by how prominent the edge should be: fainter sits lower, heavier sits higher. Between two steps, take the nearer. Never type the literal 1 — bind this variable. No published component currently binds this step — the ladder is the available set of thicknesses, not spare stock. This group owns stroke thickness only; corner shape → border/radius/*, colour → color/border/*. Scoped to STROKE_FLOAT.",
@@ -2115,7 +2115,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "Spacing — Fine region. Value: 0px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 0 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
     "name": "spacing-0",
     "type": "number",
-    "value": 0
+    "value": "0px"
   },
   {
     "comment": "Spacing — Fine region. Value: 1px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 1 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
