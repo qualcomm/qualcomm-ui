@@ -17,9 +17,9 @@ import {
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   createQdsNumberBadgeApi,
-  type QdsBadgeBasicSize,
   type QdsNumberBadgeEmphasis,
   type QdsNumberBadgeProps,
+  type QdsNumberBadgeSize,
 } from "@qualcomm-ui/qds-core/badge"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
@@ -59,7 +59,7 @@ export class NumberBadgeDirective
    * Governs the size of the badge.
    * @default 'md'
    */
-  readonly size = input<QdsBadgeBasicSize>()
+  readonly size = input<QdsNumberBadgeSize>()
 
   /**
    * The numeric value to display for the number badge.

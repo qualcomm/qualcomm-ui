@@ -9,6 +9,7 @@ import type {
   QdsBadgeExtraSize,
   QdsBadgeSemanticEmphasis,
   QdsNumberBadgeEmphasis,
+  QdsNumberBadgeSize,
   QdsStatusBadgeVariant,
   QdsTextBadgeVariant,
 } from "@qualcomm-ui/qds-core/badge"
@@ -42,9 +43,10 @@ figma.connect(NumberBadge, "<FIGMA_COMPONENTS_BASE>?node-id=13390-5460", {
       success: "success",
       warning: "warning",
     }),
-    size: figma.enum<QdsBadgeBasicSize>("size", {
+    size: figma.enum<QdsNumberBadgeSize>("size", {
       lg: "lg",
       sm: "sm",
+      xs: "xs",
     }),
     value: figma.string("label"),
   },
