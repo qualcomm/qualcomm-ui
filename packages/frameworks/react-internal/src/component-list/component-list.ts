@@ -3,7 +3,7 @@
 
 interface UiComponent {
   description: string
-  fileName?: string
+  fileName: string
   name: string
   planned?: boolean
   url: string
@@ -61,6 +61,7 @@ export const componentList: UiComponent[] = [
   {
     description:
       "Cards present information in a compact and visually appealing way.",
+    fileName: "card.svg",
     name: "Card",
     url: "/components/card",
   },
@@ -72,27 +73,17 @@ export const componentList: UiComponent[] = [
     url: "/components/checkbox",
   },
   {
-    description:
-      "Groups related checkboxes with a shared label, hint text, and validation state.",
-    name: "Checkbox Group",
-    url: "/components/checkbox-group",
-  },
-  {
     description: "Toggles the visibility of content sections on demand.",
+    fileName: "collapsible.svg",
     name: "Collapsible",
     url: "/components/collapsible",
   },
   {
     description:
       "Combines a text input with a dropdown list for searchable selection.",
+    fileName: "combobox.svg",
     name: "Combobox",
     url: "/components/combobox",
-  },
-  {
-    description: "Displays device information in a structured card format.",
-    name: "Device Card",
-    planned: true,
-    url: "/components/device-card",
   },
   {
     description:
@@ -110,39 +101,30 @@ export const componentList: UiComponent[] = [
   {
     description:
       "Creates an overlay panel for forms, details, or supplementary information.",
+    fileName: "drawer.svg",
     name: "Drawer",
     url: "/components/drawer",
   },
   {
     description:
-      "Provides consistent site-wide navigation and information at the page bottom.",
-    name: "Footer",
-    planned: true,
-    url: "/components/footer",
-  },
-  {
-    description:
       "Provides a consistent control surface with logo, navigation, and actions.",
+    fileName: "header-bar.svg",
     name: "Header Bar",
     url: "/components/header-bar",
   },
   {
     description:
       "Displays visual symbols that represent functions or content types.",
+    fileName: "icon.svg",
     name: "Icon",
     url: "/components/icon",
   },
   {
     description:
       "Performs an action when clicked using an icon instead of text.",
+    fileName: "icon-button.svg",
     name: "Icon Button",
     url: "/components/icon-button",
-  },
-  {
-    description:
-      "Provides a compact icon-only action trigger for tight spaces.",
-    name: "Inline Icon Button",
-    url: "/components/inline-icon-button",
   },
   {
     description:
@@ -168,7 +150,7 @@ export const componentList: UiComponent[] = [
   {
     description:
       "A toast notification delivers temporary messages that appear and disappear automatically.",
-    fileName: "notification.svg",
+    fileName: "inline-notification.svg",
     name: "Notification",
     url: "/components/toast",
   },
@@ -229,6 +211,7 @@ export const componentList: UiComponent[] = [
   {
     description:
       "Presents selectable segments for single or multi-select interactions.",
+    fileName: "segmented-control.svg",
     name: "Segmented Control",
     url: "/components/segmented-control",
   },
@@ -241,6 +224,7 @@ export const componentList: UiComponent[] = [
   {
     description:
       "Provides persistent navigation through major application sections.",
+    fileName: "side-navigation.svg",
     name: "Side Nav",
     url: "/components/side-nav",
   },
@@ -253,6 +237,7 @@ export const componentList: UiComponent[] = [
   {
     description:
       "A stepper visualizes a group of connected actions or the order of a workflow.",
+    fileName: "stepper.svg",
     name: "Stepper",
     url: "/components/stepper",
   },
@@ -264,13 +249,8 @@ export const componentList: UiComponent[] = [
   },
   {
     description:
-      "Groups related switches with a shared label, hint text, and validation state.",
-    name: "Switch Group",
-    url: "/components/switch-group",
-  },
-  {
-    description:
       "Displays structured data with sorting, filtering, and selection features.",
+    fileName: "table.svg",
     name: "Table",
     url: "/components/table",
   },

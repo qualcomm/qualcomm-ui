@@ -34,7 +34,6 @@ export function ComponentGrid(): ReactElement {
               <img
                 alt={component.name}
                 className="qui-component-grid__image"
-                height={200}
                 src={`/images/components/${component.fileName}`}
               />
             ) : (
