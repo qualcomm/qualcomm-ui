@@ -1,5 +1,22 @@
 # @qualcomm-ui/eslint-plugin-path-alias Changelog
 
+## 1.2.1
+
+Aug 31st, 2026
+
+### Bug Fixes
+
+- [import-from-tsconfig-paths]: resolve extended tsconfig file paths ([246bd67](https://github.com/qualcomm/qualcomm-ui/commit/246bd67))
+- [import-from-tsconfig-paths]: resolve aliases from current file's tsconfig ([887d89e](https://github.com/qualcomm/qualcomm-ui/commit/887d89e))
+
+## 1.2.0
+
+Aug 16th, 2026
+
+### Features
+
+- [tsconfig]: resolve paths from project references ([fed3a32](https://github.com/qualcomm/qualcomm-ui/commit/fed3a32))
+
 ## 1.1.2
 
 Jun 10th, 2026

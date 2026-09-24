@@ -11,9 +11,9 @@ import {
   type Signal,
   signal,
 } from "@angular/core"
-import {Check, Copy} from "lucide-angular"
+import {LucideCheck, LucideCopy} from "@lucide/angular"
 
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 
 import {NAVIGATOR} from "./tokens"
 
@@ -28,8 +28,8 @@ export class ClipboardService implements OnDestroy {
   }
   private readonly _copied = signal<boolean>(false)
 
-  readonly icon: Signal<LucideIcon> = computed(() =>
-    this.copied() ? Check : Copy,
+  readonly icon: Signal<LucideIconOrString> = computed(() =>
+    this.copied() ? LucideCheck : LucideCopy,
   )
 
   private copyTimeout: ReturnType<typeof setTimeout>

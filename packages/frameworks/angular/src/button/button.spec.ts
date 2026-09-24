@@ -1,6 +1,6 @@
 import {Component, output} from "@angular/core"
+import {LucidePlus, LucideSearch} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Plus, Search} from "lucide-angular"
 import {describe, expect, test, vi} from "vitest"
 import {page} from "vitest/browser"
 
@@ -9,7 +9,7 @@ import {ButtonModule} from "@qualcomm-ui/angular/button"
 
 @Component({
   imports: [ButtonModule],
-  providers: [provideIcons({Plus, Search})],
+  providers: [provideIcons({LucidePlus, LucideSearch})],
   template: `
     <button
       q-button
@@ -34,11 +34,11 @@ class ButtonComponent {
 
 @Component({
   imports: [ButtonModule],
-  providers: [provideIcons({Search})],
+  providers: [provideIcons({LucideSearch})],
   template: `
     <button
       aria-label="Search"
-      icon="Search"
+      icon="LucideSearch"
       q-icon-button
       [disabled]="disabled"
       (click)="clicked.emit()"
@@ -97,7 +97,7 @@ describe("Button", () => {
   test("renders a visible start icon alongside the children", async () => {
     @Component({
       imports: [ButtonModule],
-      providers: [provideIcons({Plus})],
+      providers: [provideIcons({LucidePlus})],
       template: `
         <button q-button startIcon="Plus">Add Item</button>
       `,
@@ -114,7 +114,7 @@ describe("Button", () => {
   test("renders a visible end icon alongside the children", async () => {
     @Component({
       imports: [ButtonModule],
-      providers: [provideIcons({Plus})],
+      providers: [provideIcons({LucidePlus})],
       template: `
         <button endIcon="Plus" q-button>Add Item</button>
       `,
@@ -157,10 +157,10 @@ describe("IconButton", () => {
   test("renders a user-supplied icon visibly inside the button", async () => {
     @Component({
       imports: [ButtonModule],
-      providers: [provideIcons({Search})],
+      providers: [provideIcons({LucideSearch})],
       template: `
         <button aria-label="Search" q-icon-button>
-          <svg data-test-id="icon-button-icon" qIcon="Search"></svg>
+          <svg data-test-id="icon-button-icon" qIcon="LucideSearch"></svg>
         </button>
       `,
     })
@@ -179,7 +179,7 @@ describe("IconButton", () => {
 
     @Component({
       imports: [ButtonModule],
-      providers: [provideIcons({Plus})],
+      providers: [provideIcons({LucidePlus})],
       template: `
         <button
           aria-label="Add"

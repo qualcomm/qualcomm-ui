@@ -170,7 +170,7 @@ export function createToastStore<V = string>(
         result = ["resolve", response]
         if (isHttpResponse(response) && !response.ok) {
           removable = false
-          const errorOptions = options.error?.(response as T)
+          const errorOptions = options.error?.(response)
           create({...shared, ...errorOptions, id, type: "danger"})
         } else if (options.success !== undefined) {
           removable = false

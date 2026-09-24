@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {progressAnatomy} from "@qualcomm-ui/core/progress"
+import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {JSX, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {progressRingClasses} from "./progress-ring.classes.js"
@@ -14,15 +15,23 @@ import type {
   QdsProgressRingErrorTextBindings,
   QdsProgressRingLabelBindings,
   QdsProgressRingRootBindings,
+  QdsProgressRingShimmerBindings,
   QdsProgressRingTrackBindings,
   QdsProgressRingValueTextBindings,
 } from "./progress-ring.types.js"
+
+const circleGeometry: JSX.CSSProperties = {
+  cx: "calc(var(--size) / 2)",
+  cy: "calc(var(--size) / 2)",
+  r: "var(--radius)",
+}
 
 export function createQdsProgressRingApi(
   props: QdsProgressRingApiProps,
   normalize: PropNormalizer,
 ): QdsProgressRingApi {
   const emphasis = props.emphasis || "primary"
+  const shimmer = props.shimmer ?? true
   const size = props.size || "md"
   const thickness = props.thickness
   const circleStyle: JSX.CSSProperties = {}
@@ -44,11 +53,7 @@ export function createQdsProgressRingApi(
         className: progressRingClasses.bar,
         "data-emphasis": emphasis,
         "data-size": size,
-        style: {
-          cx: "calc(var(--size) / 2)",
-          cy: "calc(var(--size) / 2)",
-          r: "var(--radius)",
-        },
+        style: circleGeometry,
       })
     },
     getCircleBindings(): QdsProgressRingCircleBindings {
@@ -82,15 +87,21 @@ export function createQdsProgressRingApi(
         "data-size": size,
       })
     },
+    getShimmerBindings(): QdsProgressRingShimmerBindings {
+      return normalize.element({
+        "aria-hidden": true,
+        className: progressRingClasses.shimmer,
+        "data-emphasis": emphasis,
+        "data-shimmer": booleanDataAttr(shimmer),
+        "data-size": size,
+        style: circleGeometry,
+      })
+    },
     getTrackBindings(): QdsProgressRingTrackBindings {
       return normalize.element({
         className: progressRingClasses.track,
         "data-size": size,
-        style: {
-          cx: "calc(var(--size) / 2)",
-          cy: "calc(var(--size) / 2)",
-          r: "var(--radius)",
-        },
+        style: circleGeometry,
       })
     },
     getValueTextBindings(): QdsProgressRingValueTextBindings {

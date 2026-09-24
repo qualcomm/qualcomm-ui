@@ -19,6 +19,9 @@ const navConfig: NavConfig[] = [
   {
     id: "versioning",
   },
+  {
+    id: "migrate-v2-to-v3",
+  },
 
   {separator: true},
   {sectionTitle: "Integrations"},
@@ -75,17 +78,19 @@ const navConfig: NavConfig[] = [
   },
 ]
 
+const packageDirectory = process.cwd()
+
 const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
-      resolve(__dirname, "../../frameworks/angular/CHANGELOG.md"),
+      resolve(packageDirectory, "../../frameworks/angular/CHANGELOG.md"),
       "utf-8",
     ),
     id: "angular-changelog",
   },
   {
     contents: readFileSync(
-      resolve(__dirname, "../../common/core/CHANGELOG.md"),
+      resolve(packageDirectory, "../../common/core/CHANGELOG.md"),
       "utf-8",
     ),
     id: "core-changelog",
@@ -93,7 +98,7 @@ const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
       resolve(
-        __dirname,
+        packageDirectory,
         "../../frameworks/react-internal/files/component-list.md",
       ),
       "utf-8",
@@ -104,7 +109,7 @@ const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
       resolve(
-        __dirname,
+        packageDirectory,
         "../../frameworks/react-internal/files/mcp-server-setup.md",
       ),
       "utf-8",
@@ -123,7 +128,7 @@ export default {
    */
   hotUpdateIgnore: /angular-demo-module|public/,
   knowledge: {
-    baseUrl: "https://angular-next.qui.qualcomm.com",
+    baseUrl: "https://angular.qui.qualcomm.com",
     exclude: [
       "index.mdx",
       "**/components+/overview*",

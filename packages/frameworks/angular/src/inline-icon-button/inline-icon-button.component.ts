@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input, type OnInit} from "@angular/core"
-import {X} from "lucide-angular"
+import {type LucideIcon, LucideX} from "@lucide/angular"
 
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {
   QBindDirective,
   useTrackBindings,
@@ -21,12 +20,19 @@ import type {
 
 import {useInlineIconButtonApi} from "./use-inline-icon-button-api"
 
+/**
+ * @deprecated migrate to `<button q-icon-button density="compact">`
+ */
 @Component({
   hostDirectives: [QuiPreloadDirective],
   imports: [IconDirective, QBindDirective],
   selector: "[q-inline-icon-button]",
   template: `
-    <svg [q-bind]="api().getIconBindings()" [qIcon]="icon()"></svg>
+    <svg
+      [q-bind]="api().getIconBindings()"
+      [qIcon]="icon()!"
+      [size]="api().size"
+    ></svg>
   `,
 })
 export class InlineIconButtonComponent
@@ -35,7 +41,7 @@ export class InlineIconButtonComponent
   /**
    * @default X
    */
-  readonly icon = input<LucideIcon>(X)
+  readonly icon = input<LucideIcon>(LucideX)
 
   /**
    * The style variant of the button. Governs color.

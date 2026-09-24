@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {useEffect, useState} from "react"
+import {type ReactElement, useEffect, useState} from "react"
 
 import {Table} from "@qualcomm-ui/react/table"
 import type {BasicThemeData} from "@qualcomm-ui/tailwind-plugin/theme"
@@ -12,7 +12,7 @@ interface SpacingTableProps {
   data: Required<BasicThemeData>[]
 }
 
-export function SpacingTable({data = []}: SpacingTableProps) {
+export function SpacingTable({data = []}: SpacingTableProps): ReactElement {
   // we need to force a re-render after mount to reflect the computed property
   // values.
   const [key, setKey] = useState<number>(0)
@@ -30,21 +30,23 @@ export function SpacingTable({data = []}: SpacingTableProps) {
     return getComputedStyle(document.documentElement).getPropertyValue(variable)
   }
 
-  const showTailwindColumn = data.some(({tailwindClass}) => tailwindClass)
+  const showTailwindColumn = data.some(
+    ({tailwindClasses}) => tailwindClasses.length,
+  )
 
   return (
     <div key={key} className="w-full">
       <div className="doc-props-list__root bottom-border block sm:hidden">
-        {data.map(({tailwindClass, variable}) => {
+        {data.map(({tailwindClasses, variable}) => {
           return (
             <div key={variable} className="doc-props-list-item__root">
               <div className="doc-props-list-item__name-wrapper"></div>
               <div className="doc-props-columns">
-                {tailwindClass ? (
+                {tailwindClasses?.length ? (
                   <div className="doc-props__content">
                     <div className="doc-props__title">Tailwind Class</div>
                     <code className="fit bg-transparent! font-mono">
-                      {tailwindClass}
+                      {tailwindClasses.join("\n")}
                     </code>
                   </div>
                 ) : null}
@@ -84,11 +86,11 @@ export function SpacingTable({data = []}: SpacingTableProps) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data.map(({tailwindClass, variable}) => {
+          {data.map(({tailwindClasses, variable}) => {
             return (
               <Table.Row key={variable}>
                 {showTailwindColumn ? (
-                  <Table.Cell>{tailwindClass}</Table.Cell>
+                  <Table.Cell>{tailwindClasses.join("\n")}</Table.Cell>
                 ) : null}
                 <Table.Cell>{variable}</Table.Cell>
                 <Table.Cell>{getPropertyValue(variable)}</Table.Cell>

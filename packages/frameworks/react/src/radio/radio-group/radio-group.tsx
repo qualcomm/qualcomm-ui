@@ -44,7 +44,7 @@ export function RadioGroup({
 }: RadioGroupProps): ReactElement {
   const labelContent = label || labelProps?.children
   return (
-    <RadioGroupRoot {...(props as RadioGroupRootProps)}>
+    <RadioGroupRoot {...props}>
       {labelContent ? (
         <RadioGroupLabel {...labelProps}>{labelContent}</RadioGroupLabel>
       ) : null}

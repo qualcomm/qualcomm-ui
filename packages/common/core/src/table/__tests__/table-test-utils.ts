@@ -282,7 +282,7 @@ export function createTableHarness(
     ...defaultTableState(),
     ...options.initialState,
     ...options.state,
-  } as TableState
+  }
 
   const table = createTable<TestPerson>({
     columns: options.columns ?? makeTestColumns(),
@@ -314,7 +314,7 @@ export function createTableHarness(
         ...defaultTableState(),
         ...options.initialState,
         ...nextState,
-      } as TableState
+      }
       table.updateOptions({state})
     },
     table,

@@ -28,6 +28,8 @@ export interface InlineIconButtonProps
  * A small button with an icon that can be used to trigger an action. Typically used
  * within input fields, menu items, or other components that require a small action
  * button. Renders a `<button>` element by default.
+ *
+ * @deprecated migrate to `<IconButton density="compact">`
  */
 export function InlineIconButton({
   emphasis,

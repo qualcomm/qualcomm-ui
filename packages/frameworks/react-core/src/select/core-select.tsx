@@ -9,6 +9,7 @@ import {
 } from "@qualcomm-ui/core/presence"
 import {
   createSelectApi,
+  type ItemGroupProps,
   type ItemProps,
   type SelectApiProps,
   selectMachine,
@@ -36,6 +37,10 @@ import {
   useSelectContext,
   useSelectItemContext,
 } from "./select-context.js"
+import {
+  SelectItemGroupContextProvider,
+  useSelectItemGroupContext,
+} from "./select-item-group-context.js"
 
 export interface CoreSelectRootProps
   extends
@@ -199,6 +204,48 @@ export function CoreSelectItem({
       </SelectItemContextProvider>
     </PolymorphicElement>
   )
+}
+
+export interface CoreSelectItemGroupProps extends ElementRenderProp<"div"> {
+  /**
+   * Unique identifier for the select item group. Not the final HTML `id`
+   * attribute.
+   */
+  id?: string
+}
+
+export function CoreSelectItemGroup({
+  id: idProp,
+  ...props
+}: CoreSelectItemGroupProps): ReactElement {
+  const selectContext = useSelectContext()
+  const id = useControlledId(idProp)
+  const itemGroupProps: ItemGroupProps = {id}
+  const mergedProps = mergeProps(
+    selectContext.getItemGroupBindings(itemGroupProps),
+    props,
+  )
+
+  return (
+    <SelectItemGroupContextProvider value={itemGroupProps}>
+      <PolymorphicElement as="div" {...mergedProps} />
+    </SelectItemGroupContextProvider>
+  )
+}
+
+export interface CoreSelectItemGroupLabelProps extends ElementRenderProp<"div"> {}
+
+export function CoreSelectItemGroupLabel(
+  props: CoreSelectItemGroupLabelProps,
+): ReactElement {
+  const selectContext = useSelectContext()
+  const itemGroupProps = useSelectItemGroupContext()
+  const mergedProps = mergeProps(
+    selectContext.getItemGroupLabelBindings({htmlFor: itemGroupProps.id}),
+    props,
+  )
+
+  return <PolymorphicElement as="div" {...mergedProps} />
 }
 
 export interface CoreSelectItemTextProps extends ElementRenderProp<"span"> {}

@@ -78,6 +78,16 @@ async function buildConfigsIfNeeded() {
   ])
 }
 
+async function configureGitHooks() {
+  if (!(await exists(resolve(cwd, ".git")))) {
+    return
+  }
+
+  await execa("git", ["config", "--local", "core.hooksPath", ".githooks"], {
+    cwd,
+  })
+}
+
 async function runPostInstall() {
   await initTypeDocFiles()
 
@@ -85,6 +95,7 @@ async function runPostInstall() {
     return
   }
 
+  await configureGitHooks()
   await buildConfigsIfNeeded()
 }
 

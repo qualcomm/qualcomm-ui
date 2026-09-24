@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {Sigma} from "lucide-angular"
+import {LucideSigma} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
 
 @Component({
   imports: [NumberInputModule],
-  providers: [provideIcons({Sigma})],
+  providers: [provideIcons({LucideSigma})],
   selector: "number-input-sizes-demo",
   template: `
     <div class="flex flex-col items-start gap-4">

@@ -6,7 +6,6 @@ import {page} from "vitest/browser"
 
 import type {MultiComponentTestCase} from "@qualcomm-ui/react-test-utils"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
-import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
 
 const demoLabel = "Demo Label"
 const demoHint = "Demo Hint"
@@ -150,11 +149,9 @@ const tests: MultiComponentTestCase[] = [
     simple() {
       return (
         <Checkbox
-          indicatorProps={
-            {
-              "data-test-id": "checkbox-indicator",
-            } as DataAttributes
-          }
+          indicatorProps={{
+            "data-test-id": "checkbox-indicator",
+          }}
           label={demoLabel}
         />
       )
@@ -311,35 +308,25 @@ const tests: MultiComponentTestCase[] = [
     simple() {
       return (
         <Checkbox
-          controlProps={
-            {
-              "data-test-id": testIds.control,
-            } as DataAttributes
-          }
+          controlProps={{
+            "data-test-id": testIds.control,
+          }}
           data-test-id={testIds.root}
           defaultChecked
-          hiddenInputProps={
-            {
-              "data-test-id": testIds.hiddenInput,
-            } as DataAttributes
-          }
+          hiddenInputProps={{
+            "data-test-id": testIds.hiddenInput,
+          }}
           hint={demoHint}
-          hintProps={
-            {
-              "data-test-id": testIds.hint,
-            } as DataAttributes
-          }
-          indicatorProps={
-            {
-              "data-test-id": testIds.indicator,
-            } as DataAttributes
-          }
+          hintProps={{
+            "data-test-id": testIds.hint,
+          }}
+          indicatorProps={{
+            "data-test-id": testIds.indicator,
+          }}
           label={demoLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as DataAttributes
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
         />
       )
     },

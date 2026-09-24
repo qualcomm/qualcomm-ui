@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, inject} from "@angular/core"
-import {ChevronDown} from "lucide-angular"
+import {LucideChevronDown} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreMenuTriggerDirective} from "@qualcomm-ui/angular-core/menu"
@@ -24,7 +24,7 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
     QuiPreloadDirective,
   ],
   providers: [
-    provideIcons({ChevronDown}),
+    provideIcons({LucideChevronDown}),
     provideQdsButtonContext(),
     {
       provide: START_ICON_CONTEXT_TOKEN,
@@ -47,7 +47,7 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
     }
     <ng-content />
     <svg
-      qIcon="ChevronDown"
+      qIcon="LucideChevronDown"
       [q-bind]="indicatorBindings()"
       [size]="resolvedSize()"
     ></svg>

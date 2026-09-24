@@ -8,7 +8,7 @@ import {
   inject,
   input,
 } from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -45,7 +45,7 @@ const breadcrumbsSizeToMenuSize: Record<string, QdsMenuSize> = {
  */
 @Component({
   providers: [
-    provideIcons({ChevronRight}),
+    provideIcons({LucideChevronRight}),
     provideMenuContext(),
     provideMenuTriggerContext(),
     provideMenuMachineContext(),
@@ -58,7 +58,11 @@ const breadcrumbsSizeToMenuSize: Record<string, QdsMenuSize> = {
     <ng-content select="[q-breadcrumb-overflow-trigger]">
       <button q-breadcrumb-overflow-trigger [attr.aria-label]="ariaLabel()">
         @if (icon()) {
-          <svg q-breadcrumb-item-icon [qIcon]="icon()!"></svg>
+          <svg
+            q-breadcrumb-item-icon
+            [qIcon]="icon()!"
+            [size]="qdsContext().size"
+          ></svg>
         }
         &hellip;
       </button>
@@ -72,7 +76,11 @@ const breadcrumbsSizeToMenuSize: Record<string, QdsMenuSize> = {
     </ng-template>
 
     <ng-content select="[q-breadcrumb-item-separator]">
-      <svg q-breadcrumb-item-separator [qIcon]="separator()"></svg>
+      <svg
+        q-breadcrumb-item-separator
+        [qIcon]="separator()"
+        [size]="qdsContext().size"
+      ></svg>
     </ng-content>
   `,
 })
@@ -99,11 +107,11 @@ export class BreadcrumbOverflowItemComponent extends CoreMenuRootDirective {
   /**
    * The separator element to render between items.
    *
-   * @default ChevronRight
+   * @default LucideChevronRight
    */
-  readonly separator = input<LucideIconOrString>("ChevronRight")
+  readonly separator = input<LucideIconOrString>("LucideChevronRight")
 
-  private readonly qdsContext = useQdsBreadcrumbsContext()
+  protected readonly qdsContext = useQdsBreadcrumbsContext()
   private readonly qdsMenuService = inject(QdsMenuContextService)
 
   private readonly trackItemBindings = useTrackBindings(() =>

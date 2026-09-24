@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {useEffect, useState} from "react"
+import {type ReactElement, useEffect, useState} from "react"
 
 import {Table} from "@qualcomm-ui/react/table"
 import type {FontData} from "@qualcomm-ui/tailwind-plugin/theme"
@@ -12,7 +12,7 @@ interface FontTableProps {
   data: FontData[]
 }
 
-export function FontTable({data = []}: FontTableProps) {
+export function FontTable({data = []}: FontTableProps): ReactElement {
   // we need to force a re-render after mount to reflect the computed property
   // values.
   const [key, setKey] = useState<number>(0)
@@ -33,7 +33,7 @@ export function FontTable({data = []}: FontTableProps) {
   return (
     <div key={key} className="w-full">
       <div className="doc-props-list__root bottom-border block md:hidden">
-        {data.map(({tailwindClass, variable}) => {
+        {data.map(({tailwindClasses, variable}) => {
           return (
             <div key={variable} className="doc-props-list-item__root">
               <div className="doc-props-list-item__name-wrapper"></div>
@@ -41,7 +41,7 @@ export function FontTable({data = []}: FontTableProps) {
                 <div className="doc-props__content">
                   <div className="doc-props__title">Tailwind Class</div>
                   <code className="fit bg-transparent! font-mono text-sm">
-                    {tailwindClass}
+                    {tailwindClasses.join("\n")}
                   </code>
                 </div>
                 <div className="doc-props__content">
@@ -80,10 +80,10 @@ export function FontTable({data = []}: FontTableProps) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data.map(({tailwindClass, variable}) => {
+          {data.map(({tailwindClasses, variable}) => {
             return (
               <Table.Row key={variable}>
-                <Table.Cell>{tailwindClass}</Table.Cell>
+                <Table.Cell>{tailwindClasses.join("\n")}</Table.Cell>
                 <Table.Cell>{variable}</Table.Cell>
                 <Table.Cell>
                   <span

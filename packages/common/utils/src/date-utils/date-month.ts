@@ -1,0 +1,157 @@
+// Modified from https://github.com/chakra-ui/zag
+// MIT License
+// Changes from Qualcomm Technologies, Inc. are provided under the following license:
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import {
+  DateFormatter,
+  type DateValue,
+  endOfWeek,
+  getWeeksInMonth,
+  isSameDay,
+  startOfWeek,
+} from "@internationalized/date"
+
+const daysOfTheWeek = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const
+type DaysOfTheWeek = (typeof daysOfTheWeek)[number]
+function normalizeFirstDayOfWeek(
+  firstDayOfWeek?: number,
+): DaysOfTheWeek | undefined {
+  return firstDayOfWeek != null ? daysOfTheWeek[firstDayOfWeek] : undefined
+}
+
+export function getStartOfWeek(
+  date: DateValue,
+  locale: string,
+  firstDayOfWeek?: number,
+): DateValue {
+  const firstDay = normalizeFirstDayOfWeek(firstDayOfWeek)
+  return startOfWeek(date, locale, firstDay)
+}
+
+export function getEndOfWeek(
+  date: DateValue,
+  locale: string,
+  firstDayOfWeek?: number,
+): DateValue {
+  const firstDay = normalizeFirstDayOfWeek(firstDayOfWeek)
+  return endOfWeek(date, locale, firstDay)
+}
+
+export function getDaysInWeek(
+  weekIndex: number,
+  from: DateValue,
+  locale: string,
+  firstDayOfWeek?: number,
+): DateValue[] {
+  const weekDate = from.add({weeks: weekIndex})
+  const dates: DateValue[] = []
+  let date = getStartOfWeek(weekDate, locale, firstDayOfWeek)
+  while (dates.length < 7) {
+    dates.push(date)
+    const nextDate = date.add({days: 1})
+    if (isSameDay(date, nextDate)) {
+      break
+    }
+    date = nextDate
+  }
+  return dates
+}
+
+export function getMonthDays(
+  from: DateValue,
+  locale: string,
+  numOfWeeks?: number,
+  firstDayOfWeek?: number,
+): DateValue[][] {
+  const firstDay = normalizeFirstDayOfWeek(firstDayOfWeek)
+  const monthWeeks = numOfWeeks ?? getWeeksInMonth(from, locale, firstDay)
+  const weeks = [...new Array(monthWeeks).keys()]
+  return weeks.map((week) => getDaysInWeek(week, from, locale, firstDayOfWeek))
+}
+
+export function getWeekdayFormats(locale: string, timeZone: string) {
+  const longFormat = new DateFormatter(locale, {timeZone, weekday: "long"})
+  const shortFormat = new DateFormatter(locale, {timeZone, weekday: "short"})
+  const narrowFormat = new DateFormatter(locale, {timeZone, weekday: "narrow"})
+  return <T extends DateValue | Date>(
+    value: T,
+  ): {
+    long: string
+    narrow: string
+    short: string
+    value: T
+  } => {
+    const date = value instanceof Date ? value : value.toDate(timeZone)
+    return {
+      long: longFormat.format(date),
+      narrow: narrowFormat.format(date),
+      short: shortFormat.format(date),
+      value,
+    }
+  }
+}
+
+export function getWeekDays(
+  date: DateValue,
+  startOfWeekProp: number | undefined,
+  timeZone: string,
+  locale: string,
+): {long: string; narrow: string; short: string; value: DateValue}[] {
+  const firstDayOfWeek = getStartOfWeek(date, locale, startOfWeekProp)
+  const weeks = [...new Array(7).keys()]
+  const format = getWeekdayFormats(locale, timeZone)
+  return weeks.map((index) => format(firstDayOfWeek.add({days: index})))
+}
+
+export function getMonthNames(
+  locale: string,
+  format: Intl.DateTimeFormatOptions["month"] = "long",
+  referenceDate?: DateValue,
+): string[] {
+  if (
+    !referenceDate ||
+    referenceDate.calendar.identifier === "gregory" ||
+    referenceDate.calendar.identifier === "iso8601"
+  ) {
+    const date = new Date(2021, 0, 1)
+    const monthNames: string[] = []
+    for (let i = 0; i < 12; i++) {
+      monthNames.push(date.toLocaleString(locale, {month: format}))
+      date.setMonth(date.getMonth() + 1)
+    }
+    return monthNames
+  }
+
+  const monthCount = referenceDate.calendar.getMonthsInYear(referenceDate)
+  const formatter = new DateFormatter(locale, {
+    calendar: referenceDate.calendar.identifier,
+    month: format,
+  })
+  const monthNames: string[] = []
+  for (let month = 1; month <= monthCount; month++) {
+    const d = referenceDate.set({month})
+    monthNames.push(formatter.format(d.toDate("UTC")))
+  }
+  return monthNames
+}
+
+export function getWeekOfYear(date: DateValue, locale: string): number {
+  const mondayOfWeek = startOfWeek(date, locale, "mon")
+  const year = mondayOfWeek.year
+  const jan4 = mondayOfWeek.set({day: 4, month: 1})
+  const week1Monday = startOfWeek(jan4, locale, "mon")
+
+  const julianMonday = mondayOfWeek.calendar.toJulianDay(mondayOfWeek)
+  const julianWeek1 = week1Monday.calendar.toJulianDay(week1Monday)
+
+  if (julianMonday >= julianWeek1) {
+    return 1 + Math.floor((julianMonday - julianWeek1) / 7)
+  }
+
+  const prevJan4 = mondayOfWeek.set({day: 4, month: 1, year: year - 1})
+  const prevWeek1Monday = startOfWeek(prevJan4, locale, "mon")
+  const julianPrevWeek1 = prevWeek1Monday.calendar.toJulianDay(prevWeek1Monday)
+  return 1 + Math.floor((julianMonday - julianPrevWeek1) / 7)
+}

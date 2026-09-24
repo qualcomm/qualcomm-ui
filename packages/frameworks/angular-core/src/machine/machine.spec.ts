@@ -699,4 +699,112 @@ describe("Machine", () => {
     collection.remove("item-1")
     expect(collection.get("item-1")).toBeUndefined()
   })
+
+  test("ids: outgoing element does not clear a newer registration", async () => {
+    interface Schema extends MachineSchema {
+      ids: {
+        trigger: string
+      }
+      state: "idle"
+    }
+
+    const machine = createMachine<Schema>({
+      ids: ({bindableId}) => ({
+        trigger: bindableId<string>(),
+      }),
+      initialState() {
+        return "idle"
+      },
+      states: {
+        idle: {},
+      },
+    })
+
+    const api = await renderMachine(machine)
+
+    let destroyButton: (() => void) | undefined
+    api.scope.ids.register("trigger", "button-trigger", (callback) => {
+      destroyButton = callback
+    })
+    expect(api.scope.ids.get("trigger")).toBe("button-trigger")
+
+    // the replacement registers before the outgoing element is destroyed
+    api.scope.ids.register("trigger", "field-trigger", () => {})
+    destroyButton?.()
+
+    expect(api.scope.ids.get("trigger")).toBe("field-trigger")
+  })
+
+  test("ids: outgoing element does not clear a newer registration (object overload)", async () => {
+    interface Schema extends MachineSchema {
+      ids: {
+        trigger: string
+      }
+      state: "idle"
+    }
+
+    const machine = createMachine<Schema>({
+      ids: ({bindableId}) => ({
+        trigger: bindableId<string>(),
+      }),
+      initialState() {
+        return "idle"
+      },
+      states: {
+        idle: {},
+      },
+    })
+
+    const api = await renderMachine(machine)
+
+    let destroyButton: (() => void) | undefined
+    api.scope.ids.register("trigger", {
+      id: "button-trigger",
+      onDestroy: (callback) => {
+        destroyButton = callback
+      },
+    })
+    expect(api.scope.ids.get("trigger")).toBe("button-trigger")
+
+    api.scope.ids.register("trigger", {
+      id: "field-trigger",
+      onDestroy: () => {},
+    })
+    destroyButton?.()
+
+    expect(api.scope.ids.get("trigger")).toBe("field-trigger")
+  })
+
+  test("ids: destroying the current element clears the registration", async () => {
+    interface Schema extends MachineSchema {
+      ids: {
+        trigger: string
+      }
+      state: "idle"
+    }
+
+    const machine = createMachine<Schema>({
+      ids: ({bindableId}) => ({
+        trigger: bindableId<string>(),
+      }),
+      initialState() {
+        return "idle"
+      },
+      states: {
+        idle: {},
+      },
+    })
+
+    const api = await renderMachine(machine)
+
+    let destroyTrigger: (() => void) | undefined
+    api.scope.ids.register("trigger", "button-trigger", (callback) => {
+      destroyTrigger = callback
+    })
+    expect(api.scope.ids.get("trigger")).toBe("button-trigger")
+
+    destroyTrigger?.()
+
+    expect(api.scope.ids.get("trigger")).toBeUndefined()
+  })
 })

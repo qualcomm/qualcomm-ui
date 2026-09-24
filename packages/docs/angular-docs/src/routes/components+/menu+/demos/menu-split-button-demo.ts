@@ -1,5 +1,10 @@
 import {Component} from "@angular/core"
-import {Download, FileArchive, FileJson, FileText} from "lucide-angular"
+import {
+  LucideDownload,
+  LucideFileArchive,
+  LucideFileBraces,
+  LucideFileText,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
@@ -7,7 +12,14 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [MenuModule, PortalDirective],
-  providers: [provideIcons({Download, FileArchive, FileJson, FileText})],
+  providers: [
+    provideIcons({
+      LucideDownload,
+      LucideFileArchive,
+      LucideFileBraces,
+      LucideFileText,
+    }),
+  ],
   selector: "menu-split-button-demo",
   template: `
     <q-menu [positioning]="{placement: 'bottom-end'}">
@@ -24,7 +36,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
         <div q-menu-positioner>
           <div q-menu-content>
             <button q-menu-item value="pdf">
-              <div icon="FileText" q-menu-item-start-icon></div>
+              <div icon="LucideFileText" q-menu-item-start-icon></div>
               Download as PDF
             </button>
             <button q-menu-item value="json">

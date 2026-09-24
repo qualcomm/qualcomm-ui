@@ -17,6 +17,7 @@ import {useQdsComboboxContext} from "./qds-combobox-context.service"
         <svg
           [q-bind]="qdsComboboxContext().getIconBindings()"
           [qIcon]="qdsInputContext().startIcon!"
+          [size]="qdsComboboxContext().size"
         />
       }
     </ng-content>

@@ -1,4 +1,4 @@
-import {type HTMLAttributes, type SVGAttributes, useState} from "react"
+import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
@@ -20,6 +20,13 @@ const testIds = {
   root: "progress-ring-root",
   track: "progress-ring-track",
   valueText: "progress-ring-value-text",
+}
+
+function getShimmer(): Element | null {
+  return page
+    .getByTestId(testIds.root)
+    .element()
+    .querySelector(".qui-progress-ring__shimmer")
 }
 
 const tests: MultiComponentTestCase[] = [
@@ -109,7 +116,7 @@ const tests: MultiComponentTestCase[] = [
   {
     composite() {
       return (
-        <ProgressRing.Root value={null}>
+        <ProgressRing.Root>
           <ProgressRing.CircleContainer>
             <ProgressRing.Circle>
               <ProgressRing.Track />
@@ -121,7 +128,7 @@ const tests: MultiComponentTestCase[] = [
       )
     },
     simple() {
-      return <ProgressRing label={testLabel} value={null} />
+      return <ProgressRing label={testLabel} />
     },
     testCase: (getComponent) => {
       test("Indeterminate progress ring", async () => {
@@ -227,7 +234,7 @@ const tests: MultiComponentTestCase[] = [
   {
     composite() {
       function Component() {
-        const [value, setValue] = useState<number | null | undefined>(25)
+        const [value, setValue] = useState<number | undefined>(25)
         return (
           <div>
             <ProgressRing.Root onValueChange={setValue} value={value}>
@@ -249,7 +256,7 @@ const tests: MultiComponentTestCase[] = [
     },
     simple() {
       function Component() {
-        const [value, setValue] = useState<number | null | undefined>(25)
+        const [value, setValue] = useState<number | undefined>(25)
         return (
           <div>
             <ProgressRing
@@ -328,6 +335,103 @@ const tests: MultiComponentTestCase[] = [
   {
     composite() {
       return (
+        <ProgressRing.Root data-test-id={testIds.root} value={40}>
+          <ProgressRing.CircleContainer>
+            <ProgressRing.Circle>
+              <ProgressRing.Track />
+              <ProgressRing.Bar />
+            </ProgressRing.Circle>
+          </ProgressRing.CircleContainer>
+          <ProgressRing.Label>{testLabel}</ProgressRing.Label>
+        </ProgressRing.Root>
+      )
+    },
+    simple() {
+      return (
+        <ProgressRing
+          data-test-id={testIds.root}
+          label={testLabel}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer is enabled by default", async () => {
+        await render(getComponent())
+        await expect.poll(getShimmer).toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <ProgressRing.Root data-test-id={testIds.root} shimmer value={40}>
+          <ProgressRing.CircleContainer>
+            <ProgressRing.Circle>
+              <ProgressRing.Track />
+              <ProgressRing.Bar />
+            </ProgressRing.Circle>
+          </ProgressRing.CircleContainer>
+          <ProgressRing.Label>{testLabel}</ProgressRing.Label>
+        </ProgressRing.Root>
+      )
+    },
+    simple() {
+      return (
+        <ProgressRing
+          data-test-id={testIds.root}
+          label={testLabel}
+          shimmer
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer enabled explicitly", async () => {
+        await render(getComponent())
+        await expect.poll(getShimmer).toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <ProgressRing.Root
+          data-test-id={testIds.root}
+          shimmer={false}
+          value={40}
+        >
+          <ProgressRing.CircleContainer>
+            <ProgressRing.Circle>
+              <ProgressRing.Track />
+              <ProgressRing.Bar />
+            </ProgressRing.Circle>
+          </ProgressRing.CircleContainer>
+          <ProgressRing.Label>{testLabel}</ProgressRing.Label>
+        </ProgressRing.Root>
+      )
+    },
+    simple() {
+      return (
+        <ProgressRing
+          data-test-id={testIds.root}
+          label={testLabel}
+          shimmer={false}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer disabled", async () => {
+        await render(getComponent())
+        await expect.poll(getShimmer).toBeInTheDocument()
+        await expect.poll(getShimmer).not.toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
         <ProgressRing.Root
           data-test-id={testIds.root}
           invalid
@@ -359,48 +463,34 @@ const tests: MultiComponentTestCase[] = [
     simple() {
       return (
         <ProgressRing
-          barProps={
-            {
-              "data-test-id": testIds.bar,
-            } as SVGAttributes<SVGCircleElement>
-          }
-          circleContainerProps={
-            {
-              "data-test-id": testIds.circleContainer,
-            } as HTMLAttributes<HTMLElement>
-          }
-          circleProps={
-            {
-              "data-test-id": testIds.circle,
-            } as SVGAttributes<SVGSVGElement>
-          }
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
+          circleContainerProps={{
+            "data-test-id": testIds.circleContainer,
+          }}
+          circleProps={{
+            "data-test-id": testIds.circle,
+          }}
           data-test-id={testIds.root}
           errorText={errorMessage}
-          errorTextProps={
-            {
-              "data-test-id": testIds.errorText,
-            } as HTMLAttributes<HTMLElement>
-          }
+          errorTextProps={{
+            "data-test-id": testIds.errorText,
+          }}
           invalid
           label={testLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as HTMLAttributes<HTMLElement>
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
           size="lg"
-          trackProps={
-            {
-              "data-test-id": testIds.track,
-            } as SVGAttributes<SVGCircleElement>
-          }
+          trackProps={{
+            "data-test-id": testIds.track,
+          }}
           value={60}
           valueText="60%"
-          valueTextProps={
-            {
-              "data-test-id": testIds.valueText,
-            } as HTMLAttributes<HTMLElement>
-          }
+          valueTextProps={{
+            "data-test-id": testIds.valueText,
+          }}
         />
       )
     },

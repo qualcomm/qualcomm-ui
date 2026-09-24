@@ -14,6 +14,7 @@ import {provideTreeContext} from "@qualcomm-ui/angular-core/tree"
 import {
   createQdsSideNavApi,
   type QdsSideNavRootProps,
+  type QdsSideNavSize,
   type QdsSideNavSurface,
 } from "@qualcomm-ui/qds-core/side-nav"
 
@@ -37,6 +38,15 @@ export class SideNavRootDirective
   extends CoreSideNavRootDirective
   implements SignalifyInput<QdsSideNavRootProps>, OnInit
 {
+  /**
+   * Governs item padding, height, spacing, font size, and icon size.
+   *
+   * @since 2.13.0
+   *
+   * @default 'md'
+   */
+  readonly size = input<QdsSideNavSize>()
+
   /**
    * The background color of the side navigation.
    *

@@ -130,6 +130,7 @@ export function createQdsSideNavApi(normalize: PropNormalizer): QdsSideNavApi {
     getRootBindings(props: QdsSideNavRootProps): QdsSideNavRootBindings {
       return normalize.element({
         className: sideNavClasses.root,
+        "data-size": props.size || "md",
         "data-surface": props.surface || "primary",
       })
     },

@@ -1,0 +1,312 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import {
+  type Dispatch,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
+
+import {
+  useFloating,
+  useInteractions,
+  useListNavigation,
+} from "@floating-ui/react"
+import {SearchIcon} from "lucide-react"
+
+import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
+import type {SemanticSearchResult} from "@qualcomm-ui/mdx-common"
+import {Portal} from "@qualcomm-ui/react-core/portal"
+import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {Dialog} from "@qualcomm-ui/react/dialog"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
+import {Kbd} from "@qualcomm-ui/react/kbd"
+import {TextInput} from "@qualcomm-ui/react/text-input"
+
+import {SemanticSearchResultItem} from "./semantic-search-result-item.js"
+import type {
+  SemanticSearchAction,
+  SemanticSearchState,
+} from "./semantic-search.reducer.js"
+
+export interface SemanticSiteSearchProps {
+  /**
+   * Error node to render. Note that this will always render in the search results
+   * if supplied, so it should be conditionally rendered.
+   */
+  error?: ReactNode
+
+  /**
+   * Whether the semantic search server is currently loading results.
+   */
+  isLoadingResults: boolean | undefined
+
+  /**
+   * Node to render when the server returns no matches.
+   *
+   * @default "No results found..."
+   */
+  noResults?: ReactNode
+
+  /**
+   * Search result items to render.
+   */
+  results: SemanticSearchResult[]
+
+  /**
+   * Search action dispatch returned by useSemanticSearchReducer.
+   */
+  searchActionDispatch: Dispatch<SemanticSearchAction>
+
+  /**
+   * Search state returned by useSemanticSearchReducer.
+   */
+  searchState: SemanticSearchState
+}
+
+export function SemanticSiteSearch({
+  error,
+  isLoadingResults,
+  noResults = "No results found...",
+  results,
+  searchActionDispatch: dispatchSearchAction,
+  searchState,
+}: SemanticSiteSearchProps): ReactNode {
+  const dialogInputRef = useRef<HTMLInputElement>(null)
+  const dialogInputContainerRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<Array<HTMLElement | null>>([])
+  const [isMac, setIsMac] = useState<boolean>(false)
+
+  const {renderLink: Link} = useMdxDocsContext()
+
+  useEffect(() => {
+    const unsub = trackFocusVisible({root: document.documentElement})
+    return () => {
+      unsub()
+    }
+  }, [])
+
+  const {context, refs} = useFloating({
+    open: searchState.showDialog,
+  })
+
+  const listNavigation = useListNavigation(context, {
+    activeIndex: searchState.activeIndex,
+    focusItemOnHover: false,
+    focusItemOnOpen: false,
+    listRef,
+    loop: true,
+    onNavigate: (index) => {
+      dispatchSearchAction({index, type: "SET_ACTIVE_INDEX"})
+    },
+  })
+
+  useEffect(() => {
+    let cleanup: (() => void) | undefined
+
+    async function setup() {
+      let isMac = false
+
+      try {
+        const UaParser = await import("my-ua-parser").then((m) => m.UAParser)
+        const userAgent = new UaParser(window.navigator.userAgent)
+        isMac = userAgent.getOS().name === "Mac OS"
+      } catch {
+        isMac = /Mac/i.test(window.navigator.userAgent)
+      }
+
+      setIsMac(isMac)
+
+      function listener(event: KeyboardEvent) {
+        if (
+          event.key === "k" &&
+          ((isMac && event.metaKey) || (!isMac && event.ctrlKey))
+        ) {
+          dispatchSearchAction({type: "SHOW_DIALOG"})
+          event.preventDefault()
+        }
+      }
+
+      window.addEventListener("keydown", listener)
+      cleanup = () => {
+        window.removeEventListener("keydown", listener)
+      }
+    }
+
+    void setup()
+
+    return () => {
+      cleanup?.()
+    }
+  }, [dispatchSearchAction])
+
+  const onInputChange = useCallback(
+    (value: string) => {
+      dispatchSearchAction({type: "SET_INPUT_VALUE", value})
+    },
+    [dispatchSearchAction],
+  )
+
+  const onListItemKeyDown = useCallback((event: ReactKeyboardEvent) => {
+    switch (event.key) {
+      case "Enter":
+      case "Space":
+        break
+      case "Tab":
+        dialogInputRef.current?.focus()
+        event.preventDefault()
+        break
+      case "ArrowDown":
+      case "ArrowUp":
+        break
+      default:
+        dialogInputRef.current?.focus()
+        break
+    }
+  }, [])
+
+  const onInputKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLInputElement>) => {
+      switch (event.key) {
+        case "ArrowDown":
+          event.preventDefault()
+          listRef.current[0]?.focus()
+          break
+        case "ArrowUp":
+          event.preventDefault()
+          break
+      }
+    },
+    [],
+  )
+
+  const {getFloatingProps, getItemProps, getReferenceProps} = useInteractions([
+    listNavigation,
+  ])
+  const shouldShowPanel = searchState.inputValue.trim().length >= 2
+
+  return (
+    <Dialog.Root
+      onOpenChange={(open) => {
+        dispatchSearchAction({type: open ? "SHOW_DIALOG" : "HIDE_DIALOG"})
+      }}
+      open={searchState.showDialog}
+      restoreFocus={false}
+    >
+      <Dialog.Trigger>
+        <div
+          aria-label="Search the documentation"
+          className="qui-site-search__trigger"
+          role="searchbox"
+        >
+          <HeaderBar.ActionIconButton
+            aria-label="Search"
+            className="qui-site-search__mobile-icon-button"
+            icon={SearchIcon}
+          />
+          <TextInput
+            className="qui-site-search__text-input"
+            endIcon={
+              <Kbd>
+                <div>{isMac ? "⌘" : "CTRL"}</div>
+                <div>+</div>
+                <div>K</div>
+              </Kbd>
+            }
+            inputProps={{
+              "aria-label": "Search the docs",
+            }}
+            onClick={(event) => {
+              event.stopPropagation()
+            }}
+            onFocus={() => dispatchSearchAction({type: "SHOW_DIALOG"})}
+            placeholder="Search the docs"
+            size="sm"
+            startIcon={SearchIcon}
+            value=""
+          />
+        </div>
+      </Dialog.Trigger>
+
+      <Portal>
+        <Dialog.Backdrop className="qui-site-search__mobile-dialog-backdrop" />
+        <Dialog.Positioner>
+          <Dialog.Content
+            className="qui-site-search__mobile-dialog-content"
+            onClick={(event) => {
+              if (
+                !dialogInputContainerRef.current?.contains(
+                  event.target as HTMLElement,
+                )
+              ) {
+                dispatchSearchAction({type: "HIDE_DIALOG"})
+              }
+            }}
+            style={{background: "transparent", border: 0, padding: 0}}
+          >
+            <div className="qui-site-search__mobile-input-wrapper">
+              <TextInput
+                {...getReferenceProps({
+                  onKeyDown: onInputKeyDown,
+                })}
+                ref={dialogInputContainerRef}
+                className="q-background-2"
+                inputProps={{
+                  "aria-label": "Search the docs",
+                  ref: dialogInputRef,
+                }}
+                onValueChange={onInputChange}
+                placeholder="Search the docs"
+                size="lg"
+                startIcon={SearchIcon}
+                value={searchState.inputValue}
+              />
+              {shouldShowPanel ? (
+                <div
+                  ref={refs.setFloating}
+                  {...getFloatingProps()}
+                  className="qui-site-search__floating-panel-mobile"
+                >
+                  {isLoadingResults && !results.length ? (
+                    <div className="qui-site-search__no-results">
+                      Searching…
+                    </div>
+                  ) : null}
+                  {results.length
+                    ? results.map((result, index) => (
+                        <SemanticSearchResultItem
+                          key={`${result.href}-${result.excerpt}`}
+                          active={index === searchState.activeIndex}
+                          item={result}
+                          render={<Link href={result.href} />}
+                          {...getItemProps({
+                            onKeyDown: onListItemKeyDown,
+                            ref: (ref) => {
+                              listRef.current[index] = ref
+                            },
+                            tabIndex: -1,
+                          })}
+                        />
+                      ))
+                    : null}
+                  {!isLoadingResults && !results.length ? (
+                    <div className="qui-site-search__no-results">
+                      {noResults}
+                    </div>
+                  ) : null}
+                  {error ? (
+                    <div className="qui-site-search__no-results">{error}</div>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  )
+}

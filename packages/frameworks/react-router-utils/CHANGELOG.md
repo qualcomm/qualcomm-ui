@@ -1,5 +1,89 @@
 # @qualcomm-ui/react-router-utils Changelog
 
+## 2.2.1
+
+Sep 8th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: use stable unique identifier for section ids ([8c9b2c6](https://github.com/qualcomm/qualcomm-ui/commit/8c9b2c6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.1, @qualcomm-ui/mdx-vite@3.10.1]
+
+## 2.2.0
+
+Aug 31st, 2026
+
+### Features
+
+* [semantic-search]: add server-side indexing and query support ([9ee7bbe](https://github.com/qualcomm/qualcomm-ui/commit/9ee7bbe))
+
+### Tests
+
+* [semantic-search]: cover artifact reuse and hybrid ranking ([e3f69fc](https://github.com/qualcomm/qualcomm-ui/commit/e3f69fc))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.10.0, @qualcomm-ui/mdx-common@2.6.0]
+
+## 2.1.12
+
+Aug 30th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.9.4]
+
+## 2.1.11
+
+Aug 18th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.9.3]
+
+## 2.1.10
+
+Aug 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.9.2]
+
+## 2.1.9
+
+Aug 11th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.9.1]
+
+## 2.1.8
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common@2.5.0, @qualcomm-ui/mdx-vite@3.9.0]
+
+## 2.1.7
+
+Jul 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.8.7]
+
+## 2.1.6
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-vite@3.8.6]
+
 ## 2.1.5
 
 Jun 15th, 2026

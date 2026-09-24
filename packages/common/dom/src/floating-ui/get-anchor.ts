@@ -49,5 +49,5 @@ export function getAnchorElement(
       }
       return anchor.getBoundingClientRect()
     },
-  } as VirtualElement
+  }
 }

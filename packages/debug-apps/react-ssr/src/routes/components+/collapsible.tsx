@@ -1,13 +1,13 @@
-import {CollapsibleControlledStateDemo as ControlledStateDemo} from "@qualcomm-ui/react-docs/components+/collapsible+/demos/collapsible-controlled-state-demo"
-import {CollapsibleShowcaseDemo as ShowcaseDemo} from "@qualcomm-ui/react-docs/components+/collapsible+/demos/collapsible-showcase-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: ControlledStateDemo, title: "Controlled State"},
-  {component: ShowcaseDemo, title: "Showcase"},
-]
+const componentName = "collapsible"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/collapsible+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function CollapsibleDemos() {
-  return <DemoPageLayout componentName="collapsible" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

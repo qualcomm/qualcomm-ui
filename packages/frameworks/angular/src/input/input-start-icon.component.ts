@@ -3,7 +3,7 @@
 
 import {Component, input, type OnInit} from "@angular/core"
 
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {inputClasses} from "@qualcomm-ui/qds-core/input"
@@ -24,7 +24,7 @@ import {useQdsInputContext} from "./qds-input-context.service"
 export class InputStartIconComponent implements OnInit {
   readonly inputClasses = inputClasses
 
-  readonly icon = input<LucideIcon | string>()
+  readonly icon = input<LucideIconOrString>()
 
   context = useQdsInputContext({optional: true})
 

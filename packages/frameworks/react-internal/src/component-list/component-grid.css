@@ -19,6 +19,8 @@
   height: auto;
   justify-self: center;
   margin: 0;
+  max-width: 290px;
+  min-width: 290px;
   position: relative;
   text-decoration: inherit;
   transition: transform var(--animation-duration-moderate) ease;
@@ -85,4 +87,7 @@
 
 .qui-component-grid__image {
   min-height: 200px;
+  border-top-left-radius: var(--border-radius-xxl);
+  border-top-right-radius: var(--border-radius-xxl);
+  background: #020b3f;
 }

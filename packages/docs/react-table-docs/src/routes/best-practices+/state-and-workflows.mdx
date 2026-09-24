@@ -1,248 +1,124 @@
 ---
-title: State, Identity, and Workflows
+title: Use Columns for Row Behavior
 ---
 
 # {frontmatter.title}
 
-Table state and domain workflow state often meet in the same UI, but they should not be modeled as the same thing. Use table state for table features. Use domain state, query state, mutation state, or local workflow state for product behavior.
+A column should describe what a record means in this table: the label a person sees and the action available for that record.
 
-## Keep Domain Workflow State Outside the Table
+## Start With the Result
 
-### Concern
+Consider a package-management table. A disabled package needs an explanation and may still offer `View details` while `Publish` is unavailable.
 
-Some state is table state: sorting, filtering, selection, expansion, visibility, and other features exposed by the table. Other state is domain workflow state: pending mutations, modal state, validation errors, draft workflows, permission checks, current user context, or query-specific filters.
+| Package state | Status cell                | Actions cell                                 |
+|---------------|----------------------------|----------------------------------------------|
+| `Ready`       | `Ready to publish`         | `Publish` is available                       |
+| `Disabled`    | `Disabled` with its reason | `View details` is shown instead of `Publish` |
 
-It is common for table interactions to drive an external data source. Sorting may map to backend field names, filters may map to query parameters, and row actions may map to mutation state. That does not mean the table should own the entire data workflow.
+## Define the Row Behavior
 
-### Pitfall
-
-Controlled column filter state is valid when it represents actual column filters. The pitfall is using `ColumnFiltersState` as a generic query parameter bag for values that are not table column filters.
-
-```tsx
-const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-  {id: "status", value: "open"},
-  {id: "includeArchived", value: false},
-  {id: "mineOnly", value: true},
-])
-```
-
-This makes non-column concerns look like column filters. `status` may be a real column filter, but `includeArchived` and `mineOnly` are product query state unless they map to filterable columns in the table.
-
-When a wrapper treats every backend query option as table state, it creates a second state model on top of the table. The wrapper has to synchronize query mapping, fetching, loading, toolbar behavior, row actions, and rendering with table feature state. That wrapper usually grows because each backend and product workflow is slightly different.
-
-### Preferred Pattern
-
-Use built-in table state for table features. Use route, component, query, mutation, or domain state for workflow concerns that do not map cleanly to table features.
+The following column definitions use the same package data for the status and actions cells. `onPublish` and `onViewDetails` come from the owning workflow.
 
 ```tsx
-const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-  {id: "status", value: "open"},
-])
-const [sorting, setSorting] = useState<SortingState>([])
-const [includeArchived, setIncludeArchived] = useState(false)
-const [mineOnly, setMineOnly] = useState(true)
+import type {ColumnDef} from "@qualcomm-ui/core/table"
 
-const query = useTicketsQuery(
-  ticketTableQuery({
-    columnFilters,
-    sorting,
-    includeArchived,
-    mineOnly,
-  }),
-)
-
-const table = useReactTable({
-  columns,
-  data: query.data ?? [],
-  getCoreRowModel: getCoreRowModel(),
-  getRowId: (row) => row.id,
-  manualFiltering: true,
-  manualSorting: true,
-  state: {
-    columnFilters,
-    sorting,
-  },
-  onColumnFiltersChange: setColumnFilters,
-  onSortingChange: setSorting,
-})
-```
-
-The reusable part is the translator between table/domain state and the backend contract:
-
-```tsx
-function ticketTableQuery({
-  columnFilters,
-  sorting,
-  includeArchived,
-  mineOnly,
-}: {
-  columnFilters: ColumnFiltersState
-  sorting: SortingState
-  includeArchived: boolean
-  mineOnly: boolean
-}) {
-  return {
-    filters: columnFilters.map(toTicketFilter),
-    sort: sorting.map(toTicketSort),
-    includeArchived,
-    mineOnly,
-  }
+interface Package {
+  name: string
+  status: "Ready" | "Disabled"
+  statusHelpText?: string
 }
-```
 
-For frequently changing row or cell workflow state, use typed cell components that read from a domain provider:
-
-```tsx
-<TicketActionsProvider>
-  <TicketsTable data={tickets} />
-</TicketActionsProvider>
-```
-
-```tsx
-const columns = useMemo<ColumnDef<Ticket>[]>(
-  () => [
-    columnHelper.display({
-      id: "actions",
-      cell: ({row}) => <TicketActionsCell ticket={row.original} />,
-    }),
-  ],
-  [],
-)
-
-function TicketActionsCell({ticket}: {ticket: Ticket}) {
-  const isPending = useIsTicketPending(ticket.id)
-  const actions = useTicketActions()
-
-  return (
-    <TicketActions
-      disabled={isPending}
-      onClose={() => actions.close(ticket.id)}
-      ticket={ticket}
-    />
-  )
-}
-```
-
-Or subscribe directly to query or mutation cache state:
-
-```tsx
-function TicketActionsCell({ticket}: {ticket: Ticket}) {
-  const isClosing = useIsMutating({
-    mutationKey: ["ticket", ticket.id, "close"],
-  })
-
-  return <TicketActions disabled={isClosing > 0} ticket={ticket} />
-}
-```
-
-Use `table.options.meta` mainly for stable callbacks or adapters. Do not put frequently changing row or cell values in `meta` just because cells need them.
-
-## Keep Row Identity Stable
-
-### Concern
-
-Row index is always available and can look sufficient in static examples. It is tempting to use `row.index` for edit maps, pending rows, selection side effects, or action state because the value is already present in the cell context.
-
-### Pitfall
-
-`row.index` is not stable identity. Index-keyed state can attach to the wrong record after sorting, filtering, refetching, insertion, deletion, grouping, expansion, or editing.
-
-```tsx
-const [editedValues, setEditedValues] = useState<Record<number, Partial<User>>>(
-  {},
-)
-
-const columns = useMemo<ColumnDef<User>[]>(
-  () => [
-    columnHelper.accessor("status", {
+export function createPackageColumns(
+  onPublish: (pkg: Package) => void,
+  onViewDetails: (pkg: Package) => void,
+): ColumnDef<Package>[] {
+  return [
+    {
+      accessorKey: "name",
+      header: "Package",
+    },
+    {
+      accessorKey: "status",
       header: "Status",
-      cell: ({row}) => (
-        <StatusSelect
-          value={editedValues[row.index]?.status ?? row.original.status}
-          onValueChange={(status) =>
-            setEditedValues((values) => ({
-              ...values,
-              [row.index]: {...values[row.index], status},
-            }))
-          }
-        />
-      ),
-    }),
-  ],
-  [editedValues],
-)
+      cell: ({row}) => {
+        const pkg = row.original
+        const label = pkg.status === "Ready" ? "Ready to publish" : "Disabled"
+
+        return (
+          <span>
+            {label}
+            {pkg.statusHelpText ? `: ${pkg.statusHelpText}` : null}
+          </span>
+        )
+      },
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({row}) => {
+        const pkg = row.original
+
+        if (pkg.status === "Disabled") {
+          return (
+            <button onClick={() => onViewDetails(pkg)} type="button">
+              View details
+            </button>
+          )
+        }
+
+        return (
+          <button onClick={() => onPublish(pkg)} type="button">
+            Publish
+          </button>
+        )
+      },
+    },
+  ]
+}
 ```
 
-### Preferred Pattern
+The `status` column turns a stored value into the label and help text needed by this table. The actions column reads the package status and chooses the matching action and callback.
 
-Use durable domain IDs through `getRowId`, then key external row state by `row.id`. This should map to a unique identifier in your `data` objects.
+This is business logic in columns: rules that determine a row's visible state and available interaction.
 
-Keep the column definition static. Pass stable row identity and the current cell value to a typed cell component, then let that component read and update edit workflow state.
+## Consume the Column Factory
+
+Pass the table screen's two action handlers to `createPackageColumns`, then pass its result directly to `useReactTable`.
 
 ```tsx
-type EditedUserValues = Record<string, Partial<User>>
+import {useMemo} from "react"
 
-const columns = [
-  columnHelper.accessor("status", {
-    header: "Status",
-    cell: ({getValue, row}) => (
-      <EditableStatusCell rowId={row.id} value={getValue()} />
-    ),
-  }),
-] satisfies ColumnDef<User>[]
+import {getCoreRowModel} from "@qualcomm-ui/core/table"
+import {useReactTable} from "@qualcomm-ui/react/table"
 
-function UsersTable({data}: {data: User[]}) {
-  const [editedValues, setEditedValues] = useState<EditedUserValues>({})
+function usePackagesTable(
+  packages: Package[],
+  onPublish: (pkg: Package) => void,
+  onViewDetails: (pkg: Package) => void,
+) {
+  const columns = useMemo(
+    () => createPackageColumns(onPublish, onViewDetails),
+    [onPublish, onViewDetails],
+  )
 
-  const table = useReactTable({
+  return useReactTable({
     columns,
-    data,
+    data: packages,
     getCoreRowModel: getCoreRowModel(),
-    getRowId: (row) => row.id,
   })
-
-  return (
-    <UserEditProvider
-      editedValues={editedValues}
-      setEditedValues={setEditedValues}
-    >
-      <UsersTableView table={table} />
-    </UserEditProvider>
-  )
-}
-
-function EditableStatusCell({
-  rowId,
-  value,
-}: {
-  rowId: string
-  value: User["status"]
-}) {
-  const {editedValues, setEditedValues} = useUserEditState()
-  const status = editedValues[rowId]?.status ?? value
-
-  return (
-    <StatusSelect
-      value={status}
-      onValueChange={(nextStatus) =>
-        setEditedValues((values) => ({
-          ...values,
-          [rowId]: {...values[rowId], status: nextStatus},
-        }))
-      }
-    />
-  )
 }
 ```
 
-In this example, `editedValues` belongs to the edit workflow provider and is keyed by `row.id`. It is not an input to `columns`.
+The component that calls `usePackagesTable` renders the returned table with the usual table markup. When a person chooses an action, the cell calls the matching handler with the exact `Package` supplied by the screen.
 
-Use `row.index` only when position itself is the displayed value. For grouped or expanded rows, be explicit about whether state belongs to the generated row or the original domain record.
+## Keep the Workflow Behind the Callback
+
+The callback's business logic does not need to live in the column. `onPublish` can open a confirmation dialog, start a request, report an error, and refresh the table data. `onViewDetails` can navigate to the package page.
+
+The column needs only the rule and the typed callback.
 
 ## Related Guides
 
+- [Column Definitions](/guides/column-definitions)
+- [Reusable Columns](/best-practices/reusable-columns)
 - [Rows](/guides/rows)
-- [Table State](/guides/table-state)
-- [Sorting](/feature-guides/sorting)
-- [Column Filtering](/feature-guides/column-filtering)
-- [Row Selection](/feature-guides/row-selection)

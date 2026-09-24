@@ -9,24 +9,30 @@ import {
   Renderer2,
   type Signal,
 } from "@angular/core"
+import {
+  type LucideIcon,
+  type LucideIconNode,
+  type LucideIcons,
+  LUCIDE_ICONS as LUCIDE_ICONS_FROM_LUCIDE,
+  type LucideIconData,
+  isLucideIconComponent,
+  isLucideIconData,
+} from "@lucide/angular"
 
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {
   LUCIDE_ICONS,
-  type LucideIcon,
   type LucideIconOrString,
-  type LucideIconPart,
   type LucideIconProviderValue,
 } from "@qualcomm-ui/angular-core/lucide"
 import {applyBindings, normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {accessSignal, type MaybeSignal} from "@qualcomm-ui/angular-core/signals"
-import {
-  getQdsIconBindings,
-  type QdsIconBindings,
-  type QdsIconSize,
-} from "@qualcomm-ui/qds-core/icon"
-import {pascalCase} from "@qualcomm-ui/utils/change-case"
+import {getQdsIconBindings, type QdsIconSize} from "@qualcomm-ui/qds-core/icon"
+import {kebabCase, pascalCase} from "@qualcomm-ui/utils/change-case"
 import type {Dict} from "@qualcomm-ui/utils/machine"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+
+import {ICON_CONTEXT_TOKEN} from "./icon.tokens"
 
 export interface UseLucideIconOptions<
   ThrowOnUnresolvedStringIcon extends boolean | undefined = false,
@@ -58,10 +64,10 @@ export interface UseLucideIconOptions<
 export interface UseLucideIconReturn<
   ThrowOnUnresolvedStringIcon extends boolean = false,
 > {
-  getIconBindings: Signal<QdsIconBindings>
+  getIconBindings: Signal<Dict>
   icon: ThrowOnUnresolvedStringIcon extends true
-    ? Signal<LucideIcon>
-    : Signal<LucideIcon | undefined>
+    ? Signal<LucideIconData>
+    : Signal<LucideIconData | undefined>
   icons: LucideIconProviderValue | null
   xmlns: string
 }
@@ -77,16 +83,21 @@ export function useLucideIcon<
   const onDestroy = useOnDestroy()
   let createdElements: HTMLElement[] = []
   const iconProps = options.iconProps || {}
+  const injectedContext = inject(ICON_CONTEXT_TOKEN, {optional: true})
 
   const providedIcons =
     options.icons ||
     inject<LucideIconProviderValue | null>(LUCIDE_ICONS, {
       optional: true,
     })
+  const providedIconsFromLucide = inject<LucideIcons>(
+    LUCIDE_ICONS_FROM_LUCIDE,
+    {optional: true},
+  )
 
   const xmlns = accessSignal(iconProps.xmlns) || "http://www.w3.org/2000/svg"
   const resolvedIcon = computed(() => {
-    return getIcon(accessSignal(options.icon))
+    return getIconData(accessSignal(options.icon))
   })
 
   function isSvgHostElement(): boolean {
@@ -94,15 +105,22 @@ export function useLucideIcon<
   }
 
   const getIconBindings = computed(() => {
-    return getQdsIconBindings(
-      {
-        height: accessSignal(iconProps?.height),
-        size: accessSignal(iconProps?.size),
-        viewBox: accessSignal(iconProps?.viewBox),
-        width: accessSignal(iconProps?.width),
-        xmlns,
-      },
-      normalizeProps,
+    const sizeProp = accessSignal(iconProps?.size)
+    const injectionBindings = injectedContext?.getBindings?.()
+
+    return mergeProps(
+      injectionBindings,
+      getQdsIconBindings(
+        {
+          height: accessSignal(iconProps?.height),
+          // size prop, if supplied, always overrides context
+          size: sizeProp || injectionBindings?.["data-size"],
+          viewBox: accessSignal(iconProps?.viewBox),
+          width: accessSignal(iconProps?.width),
+          xmlns,
+        },
+        normalizeProps,
+      ),
     )
   })
 
@@ -110,14 +128,11 @@ export function useLucideIcon<
     if (isSvgHostElement()) {
       return elementRef.nativeElement
     }
-    return createIconPart(
-      ["svg", getIconBindings() as Dict],
-      elementRef.nativeElement,
-    )
+    return createIconPart(["svg", getIconBindings()], elementRef.nativeElement)
   }
 
   function createIconPart(
-    [tag, attrs]: LucideIconPart,
+    [tag, attrs]: LucideIconNode,
     appendTarget: HTMLElement,
   ): HTMLElement {
     const element: HTMLElement = renderer.createElement(tag, xmlns)
@@ -138,28 +153,64 @@ export function useLucideIcon<
     createdElements = []
   }
 
-  function getIcon(
-    iconOrName: LucideIcon | string | undefined,
-  ): LucideIcon | undefined {
+  function getIconData(
+    iconOrName: LucideIcon | LucideIconData | string | undefined,
+  ): LucideIconData | undefined {
     if (typeof iconOrName !== "string") {
+      if (isLucideIconComponent(iconOrName)) {
+        return iconOrName.icon
+      }
       return iconOrName
     }
     const icons = providedIcons || {}
+    const iconsFromLucide = providedIconsFromLucide || {}
     const iconName = pascalCase(iconOrName)
+    // Starting in @lucide/angular v1, Lucide icons are prefixed with Lucide. But we
+    // still support the legacy name without the prefix for DX and backwards
+    // compatibility.
+    const lucidePrefixIconName = `Lucide${iconName}`
     const icon =
-      icons[iconName] || icons[`${iconName}Icon`] || icons[iconOrName]
-    if (options.throwOnUnresolvedStringIcon && !icon) {
+      icons[iconName] ||
+      icons[`${iconName}Icon`] ||
+      icons[iconOrName] ||
+      icons[lucidePrefixIconName]
+
+    if (icon) {
+      if (isLucideIconComponent(icon)) {
+        return icon.icon
+      }
+      if (isLucideIconData(icon)) {
+        return icon
+      }
+    }
+
+    const kebabIconName = kebabCase(iconOrName)
+
+    const iconFromLucideProvider =
+      iconsFromLucide[kebabIconName] || kebabIconName.startsWith("lucide-")
+        ? iconsFromLucide[kebabIconName.replace("lucide-", "")]
+        : undefined
+
+    if (iconFromLucideProvider) {
+      return iconFromLucideProvider
+    }
+
+    if (
+      options.throwOnUnresolvedStringIcon &&
+      !icon &&
+      !iconFromLucideProvider
+    ) {
       throw new Error(
-        `Expected to find an icon named "${iconName}" but none was provided. Refer to the provider documentation at https://angular-next.qui.qualcomm.com/components/icon#provider`,
+        `Expected to find an icon named "${iconName}" but none was provided. Refer to the provider documentation at https://angular.qui.qualcomm.com/components/icon#provider`,
       )
     }
-    return icon
+    return undefined
   }
 
   effect(() => {
     clearIconParts()
-    const data = resolvedIcon()
-    if (!data) {
+    const icon = resolvedIcon()
+    if (!icon) {
       clearIconParts()
       return
     }
@@ -167,8 +218,8 @@ export function useLucideIcon<
     if (isSvgHostElement()) {
       applyBindings(svgElement, getIconBindings(), renderer)
     }
-    if (data) {
-      for (const part of data) {
+    if (icon) {
+      for (const part of icon.node) {
         createIconPart(part, svgElement)
       }
     }

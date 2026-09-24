@@ -1,4 +1,4 @@
-import {type HTMLAttributes, useState} from "react"
+import {useState} from "react"
 
 import {FileText, FolderIcon, MoreHorizontal} from "lucide-react"
 import {describe, expect, test, vi} from "vitest"
@@ -345,9 +345,7 @@ describe("SideNav", () => {
         {collection.rootNode.nodes?.map((node, index) => (
           <SideNav.Nodes
             key={node.id}
-            indentGuideProps={
-              {"data-test-id": "indent-guide"} as HTMLAttributes<HTMLElement>
-            }
+            indentGuideProps={{"data-test-id": "indent-guide"}}
             indexPath={[index]}
             node={node}
             renderBranch={({node}) => (

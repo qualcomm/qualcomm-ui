@@ -5,7 +5,11 @@ import type {ReactElement, ReactNode} from "react"
 
 import {X} from "lucide-react"
 
-import {createQdsTagApi, type QdsTagApiProps} from "@qualcomm-ui/qds-core/tag"
+import {
+  createQdsTagApi,
+  type QdsTagApiProps,
+  type QdsTagShape,
+} from "@qualcomm-ui/qds-core/tag"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useControlledState} from "@qualcomm-ui/react-core/state"
@@ -79,6 +83,15 @@ export interface TagProps extends QdsTagApiProps, ElementRenderProp<"button"> {
   selected?: boolean
 
   /**
+   * Governs the shape of the tag.
+   *
+   * @since 1.17.0
+   *
+   * @default 'square'
+   */
+  shape?: QdsTagShape
+
+  /**
    * {@link https://lucide.dev lucide-react} icon, positioned before
    * the button text. Can be supplied as a `ReactElement` for additional
    * customization.
@@ -91,6 +104,7 @@ export function Tag({
   children,
   defaultSelected,
   disabled,
+  dismissLabel,
   emphasis,
   endIcon,
   onDismiss,
@@ -112,7 +126,17 @@ export function Tag({
   })
 
   const qdsApi = createQdsTagApi(
-    {active, disabled, emphasis, radius, selected, shape, size, variant},
+    {
+      active,
+      disabled,
+      dismissLabel,
+      emphasis,
+      radius,
+      selected,
+      shape,
+      size,
+      variant,
+    },
     normalizeProps,
   )
 

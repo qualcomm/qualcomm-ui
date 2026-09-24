@@ -1,5 +1,17 @@
 # @qualcomm-ui/eslint-config-mdx Changelog
 
+## 4.0.0
+
+Aug 16th, 2026
+
+### BREAKING CHANGES
+
+- migrate to TS 6.0 ([637a29d](https://github.com/qualcomm/qualcomm-ui/commit/637a29d))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
 ## 3.0.3
 
 Jun 10th, 2026

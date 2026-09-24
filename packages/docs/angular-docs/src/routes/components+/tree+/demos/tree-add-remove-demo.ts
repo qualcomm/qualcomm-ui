@@ -1,5 +1,10 @@
 import {Component, input, output, signal} from "@angular/core"
-import {FileText, FolderIcon, Plus, Trash} from "lucide-angular"
+import {
+  LucideFileText,
+  LucideFolder,
+  LucidePlus,
+  LucideTrash,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {useTreeContext} from "@qualcomm-ui/angular-core/tree"
@@ -16,7 +21,7 @@ interface FileNode {
 
 @Component({
   imports: [TreeModule],
-  providers: [provideIcons({Plus, Trash})],
+  providers: [provideIcons({LucidePlus, LucideTrash})],
   selector: "tree-node-actions",
   template: `
     <button
@@ -114,7 +119,9 @@ const initialCollection = createTreeCollection<FileNode>({
 
 @Component({
   imports: [TreeModule, IconDirective, TreeNodeActions],
-  providers: [provideIcons({FileText, FolderIcon, Plus, Trash})],
+  providers: [
+    provideIcons({LucideFileText, LucideFolder, LucidePlus, LucideTrash}),
+  ],
   selector: "tree-add-remove-demo",
   template: `
     <div class="w-full max-w-sm" q-tree-root [collection]="collection()">
@@ -132,7 +139,7 @@ const initialCollection = createTreeCollection<FileNode>({
             <div q-tree-branch-node role="treeitem">
               <div q-tree-node-indicator></div>
               <div q-tree-branch-trigger></div>
-              <svg q-tree-node-icon qIcon="FolderIcon"></svg>
+              <svg q-tree-node-icon qIcon="LucideFolder"></svg>
               <span q-tree-node-text>
                 {{ collection().stringifyNode(branch.node) }}
               </span>
@@ -153,7 +160,7 @@ const initialCollection = createTreeCollection<FileNode>({
           >
             <div q-tree-leaf-node>
               <div q-tree-node-indicator></div>
-              <svg q-tree-node-icon qIcon="FileText"></svg>
+              <svg q-tree-node-icon qIcon="LucideFileText"></svg>
               <span q-tree-node-text>
                 {{ collection().stringifyNode(leaf.node) }}
               </span>

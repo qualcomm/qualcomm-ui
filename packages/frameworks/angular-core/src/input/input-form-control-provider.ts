@@ -25,6 +25,12 @@ export interface InputFormControlContext<T> {
   /** `true` when used with template-driven forms (`[(ngModel)]`, `ngModel`). */
   isTemplateDrivenForm: () => boolean
   ngControl: NgControl | null
+
+  /**
+   * The CVA touch callback. Unlike `markAsTouched`, it also flushes the pending
+   * value of an `updateOn: 'blur'` control.
+   */
+  onTouched?: () => void
 }
 
 export type FormControlKnownErrors = Record<

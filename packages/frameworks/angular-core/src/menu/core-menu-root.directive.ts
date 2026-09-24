@@ -26,6 +26,7 @@ import {
   type MenuApiProps,
   menuMachine,
   type MenuNavigateDetails,
+  type MenuPositioningOptions,
 } from "@qualcomm-ui/core/menu"
 import {
   createPresenceApi,
@@ -33,7 +34,6 @@ import {
   presenceMachine,
 } from "@qualcomm-ui/core/presence"
 import type {LayerDismissEvent} from "@qualcomm-ui/dom/dismissable"
-import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {
   FocusOutsideEvent,
   InteractOutsideEvent,
@@ -137,7 +137,7 @@ export class CoreMenuRootDirective
    * The options used to dynamically position the menu
    * @inheritDoc
    */
-  readonly positioning = input<PositioningOptions | undefined>()
+  readonly positioning = input<MenuPositioningOptions | undefined>()
 
   /**
    * Whether the pressing printable characters should trigger typeahead navigation

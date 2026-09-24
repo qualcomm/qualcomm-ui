@@ -6,13 +6,14 @@ title: Table Composition
 
 A table is not one abstraction. It usually coordinates data identity, column configuration, cell presentation, table feature state, product workflow state, backend query mapping, and loading feedback.
 
-Tables become hard to maintain when unrelated concerns are collapsed into one wrapper, schema, or renderer. Proper table composition means assigning each concern to the layer that owns it. Those concerns should stay visible enough to change independently.
+Tables become hard to maintain when unrelated concerns are collapsed into one wrapper. Proper table composition means assigning each concern to the layer that owns it. Those concerns should stay visible enough to change independently.
 
 The guides in this section cover the main composition boundaries:
 
+- [Generic Table Abstractions](/best-practices/generic-table-abstractions) - How a small shared renderer can grow out of control, and how to choose better reuse boundaries.
 - [Reusable Columns](/best-practices/reusable-columns) - How to reuse column modules and cell components without putting changing workflow state into column definitions.
-- [State, Identity, and Workflows](/best-practices/state-and-workflows) - How to keep row identity stable and separate table feature state from product workflow state.
-- [Loading and Empty States](/best-practices/loading-and-empty-states) - How to place loading, refetch, empty, and row-level pending feedback in predictable table surfaces.
+- [State, Identity, and Workflows](/best-practices/state-and-workflows) - How to keep row identity stable and separate table feature state from workflow state.
+- [Loading and Empty States](/best-practices/loading-and-empty-states) - How to place loading, refetch, empty, and pending feedback in predictable table surfaces.
 
 ## Related Guides
 

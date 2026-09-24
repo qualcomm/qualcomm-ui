@@ -1,13 +1,13 @@
 import {Component} from "@angular/core"
 import {
-  Copy,
-  Ellipsis,
-  File,
-  FileText,
-  FolderOpen,
-  Pencil,
-  Trash2,
-} from "lucide-angular"
+  LucideCopy,
+  LucideEllipsis,
+  LucideFile,
+  LucideFileText,
+  LucideFolderOpen,
+  LucidePencil,
+  LucideTrash2,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
@@ -16,7 +16,15 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 @Component({
   imports: [MenuModule, PortalComponent],
   providers: [
-    provideIcons({Copy, Ellipsis, File, FileText, FolderOpen, Pencil, Trash2}),
+    provideIcons({
+      LucideCopy,
+      LucideEllipsis,
+      LucideFile,
+      LucideFileText,
+      LucideFolderOpen,
+      LucidePencil,
+      LucideTrash2,
+    }),
   ],
   selector: "menu-button-demo",
   template: `
@@ -27,7 +35,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
           <div q-menu-positioner>
             <div q-menu-content>
               <button q-menu-item value="new-text-file">
-                <div icon="FileText" q-menu-item-start-icon></div>
+                <div icon="LucideFileText" q-menu-item-start-icon></div>
                 New Text File
               </button>
               <button q-menu-item value="new-file">

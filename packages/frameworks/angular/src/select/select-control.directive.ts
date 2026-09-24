@@ -16,6 +16,7 @@ import {useQdsSelectContext} from "./qds-select-context.service"
       <svg
         [q-bind]="qdsSelectContext().getIconBindings()"
         [qIcon]="qdsInputContext().startIcon!"
+        [size]="qdsInputContext().size"
       />
     }
     <ng-content />

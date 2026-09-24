@@ -1,5 +1,3 @@
-import type {HTMLAttributes} from "react"
-
 import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
 import {page} from "vitest/browser"
@@ -127,35 +125,25 @@ const tests: MultiComponentTest[] = [
       return (
         <InlineNotification
           action={<a href="#action">Action</a>}
-          actionProps={
-            {
-              "data-test-id": testIds.actionContainer,
-            } as HTMLAttributes<HTMLElement>
-          }
-          closeButtonProps={
-            {
-              "data-test-id": testIds.closeButton,
-            } as HTMLAttributes<HTMLElement>
-          }
+          actionProps={{
+            "data-test-id": testIds.actionContainer,
+          }}
+          closeButtonProps={{
+            "data-test-id": testIds.closeButton,
+          }}
           data-test-id={testIds.root}
           description={demoDescription}
-          descriptionProps={
-            {
-              "data-test-id": testIds.description,
-            } as HTMLAttributes<HTMLElement>
-          }
+          descriptionProps={{
+            "data-test-id": testIds.description,
+          }}
           dismissable
-          iconProps={
-            {
-              "data-test-id": testIds.icon,
-            } as HTMLAttributes<HTMLElement>
-          }
+          iconProps={{
+            "data-test-id": testIds.icon,
+          }}
           label={demoLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as HTMLAttributes<HTMLElement>
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
         />
       )
     },

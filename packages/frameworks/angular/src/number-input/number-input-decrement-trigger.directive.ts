@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {Minus} from "lucide-angular"
+import {LucideMinus} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreNumberInputDecrementTriggerDirective} from "@qualcomm-ui/angular-core/number-input"
@@ -14,7 +14,7 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({Minus})],
+  providers: [provideIcons({LucideMinus})],
   selector: "[q-number-input-decrement-trigger]",
   standalone: false,
   template: `

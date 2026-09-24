@@ -4,7 +4,7 @@
 import {Component, input} from "@angular/core"
 
 import {provideCheckboxContext} from "@qualcomm-ui/angular-core/checkbox"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 
 import {SegmentedControlItemRootDirective} from "./segmented-control-item-root.directive"
 
@@ -30,5 +30,5 @@ import {SegmentedControlItemRootDirective} from "./segmented-control-item-root.d
 })
 export class SegmentedControlItemComponent extends SegmentedControlItemRootDirective {
   readonly text = input<string>()
-  readonly icon = input<LucideIcon | string>()
+  readonly icon = input<LucideIconOrString>()
 }

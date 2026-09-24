@@ -33,22 +33,27 @@
     --circle-size: var(--sizing-60);
     --thickness: 2px;
   }
+
   &[data-size="xs"] {
     --circle-size: var(--sizing-70);
     --thickness: 2px;
   }
+
   &[data-size="sm"] {
     --circle-size: var(--sizing-80);
     --thickness: 3px;
   }
+
   &[data-size="md"] {
     --circle-size: var(--sizing-120);
     --thickness: 4px;
   }
+
   &[data-size="lg"] {
     --thickness: 5px;
     --circle-size: var(--sizing-160);
   }
+
   &[data-size="xl"] {
     --circle-size: var(--sizing-180);
     --thickness: 6px;
@@ -56,6 +61,7 @@
 
   &[data-state="indeterminate"]:not([data-disabled]) {
     animation: qui-progress-ring__indeterminate-rotate 3s linear infinite;
+
     .qui-progress-ring__bar {
       animation: qui-progress-ring__indeterminate-circle 2s linear infinite;
     }
@@ -72,18 +78,21 @@
   fill: transparent;
   stroke: var(--progress-color);
   stroke-dasharray: var(--circumference);
-  stroke-dashoffset: calc(
-    var(--circumference) * ((100 - var(--progress)) / 100)
-  );
-
   stroke-linecap: round;
   stroke-width: var(--stroke-width);
   transform-origin: center;
   transition: stroke-dashoffset 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
+  &:not([data-state="indeterminate"]) {
+    stroke-dashoffset: calc(
+      var(--circumference) * ((100 - var(--percent)) / 100)
+    );
+  }
+
   &[data-emphasis="primary"] {
     --progress-color: var(--color-background-brand-primary);
   }
+
   &[data-emphasis="neutral"] {
     --progress-color: var(--color-background-support-neutral);
   }
@@ -102,6 +111,91 @@
 
   &[data-disabled][data-state="indeterminate"] {
     --progress-color: var(--color-utility-disabled-background);
+  }
+}
+
+/* Firefox treats registered keyframe values containing var() as discrete. */
+@property --progress-ring-shimmer-phase {
+  inherits: false;
+  initial-value: 0;
+  syntax: "<number>";
+}
+
+.qui-progress-ring__shimmer {
+  --progress-ring-shimmer-color: 255 255 255;
+  --progress-ring-shimmer-opacity: 0.3;
+  --progress-ring-shimmer-width: var(--percent);
+  --progress-ring-shimmer-start: calc(
+    0 - var(--progress-ring-shimmer-width) +
+      (var(--percent) + var(--progress-ring-shimmer-width)) *
+      var(--progress-ring-shimmer-phase)
+  );
+  --progress-ring-shimmer-visible-start: clamp(
+    0,
+    var(--progress-ring-shimmer-start),
+    var(--percent)
+  );
+  --progress-ring-shimmer-visible-end: clamp(
+    0,
+    calc(
+      var(--progress-ring-shimmer-start) + var(--progress-ring-shimmer-width)
+    ),
+    var(--percent)
+  );
+  --progress-ring-shimmer-visible-length: calc(
+    var(--progress-ring-shimmer-visible-end) -
+      var(--progress-ring-shimmer-visible-start)
+  );
+  --progress-ring-shimmer-angle: calc(
+    var(--progress-ring-shimmer-width) * 3.6deg
+  );
+  --progress-ring-shimmer-position: calc(
+    var(--progress-ring-shimmer-start) * 3.6deg
+  );
+
+  fill: transparent;
+  mask-clip: view-box;
+  mask-image: conic-gradient(
+    from calc(90deg + var(--progress-ring-shimmer-position)),
+    transparent 0deg,
+    #fff calc(var(--progress-ring-shimmer-angle) / 3),
+    #fff calc(var(--progress-ring-shimmer-angle) * 2 / 3),
+    transparent var(--progress-ring-shimmer-angle)
+  );
+  mask-origin: view-box;
+  opacity: 0;
+  stroke: rgb(
+    var(--progress-ring-shimmer-color) / var(--progress-ring-shimmer-opacity)
+  );
+  /* Clip the unwrapped band to the active arc. */
+  stroke-dasharray: calc(
+      var(--circumference) * var(--progress-ring-shimmer-visible-length) / 100
+    )
+    var(--circumference);
+  stroke-dashoffset: calc(
+    var(--circumference) * var(--progress-ring-shimmer-visible-start) / -100
+  );
+  stroke-linecap: round;
+  stroke-width: var(--stroke-width);
+
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+
+  [data-theme="dark"] & {
+    --progress-ring-shimmer-opacity: 0.15;
+  }
+
+  [data-theme="dark"] &[data-emphasis="neutral"] {
+    --progress-ring-shimmer-color: 0 0 0;
+    --progress-ring-shimmer-opacity: 0.2;
+  }
+
+  .qui-progress-ring__root[data-state="loading"]:not([data-disabled]):not(
+      [data-invalid]
+    )
+    &[data-shimmer] {
+    animation: qui-progress-ring__shimmer 5s linear 8s infinite;
   }
 }
 
@@ -134,7 +228,7 @@
   }
 }
 
-.qui-progress__error-text {
+.qui-progress-ring__error-text {
   align-items: flex-start;
   color: var(--color-text-support-danger);
   display: inline-flex;
@@ -142,16 +236,35 @@
   font: var(--font-static-body-xs-default);
 }
 
+@keyframes qui-progress-ring__shimmer {
+  0% {
+    --progress-ring-shimmer-phase: 0;
+    opacity: 1;
+  }
+
+  36% {
+    --progress-ring-shimmer-phase: 1;
+    opacity: 1;
+  }
+
+  100% {
+    --progress-ring-shimmer-phase: 1;
+    opacity: 1;
+  }
+}
+
 @keyframes qui-progress-ring__indeterminate-circle {
   0% {
     stroke-dasharray: 0 var(--circumference);
     transform: rotate(0deg);
   }
+
   50% {
     stroke-dasharray: calc(var(--circumference) / 2)
       calc(var(--circumference) / 2);
     transform: rotate(360deg);
   }
+
   100% {
     stroke-dasharray: 0 var(--circumference);
     transform: rotate(720deg);
@@ -162,6 +275,7 @@
   0% {
     transform: rotate(-90deg);
   }
+
   100% {
     transform: rotate(270deg);
   }

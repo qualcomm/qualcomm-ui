@@ -1,5 +1,141 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.38.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [combobox/select]: add ItemGroup and ItemGroupLabel styles and api ([e77b0c1](https://github.com/qualcomm/qualcomm-ui/commit/e77b0c1))
+
+## 1.37.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: add design system styles and api bindings ([510fe9d](https://github.com/qualcomm/qualcomm-ui/commit/510fe9d))
+* [tag]: allow customizing the dismiss button label ([b86bf8e](https://github.com/qualcomm/qualcomm-ui/commit/b86bf8e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0]
+
+## 1.36.0
+
+Aug 18th, 2026
+
+### Features
+
+* [list-item]: add simple and compound components ([d60852c](https://github.com/qualcomm/qualcomm-ui/commit/d60852c))
+* [radio]: add checkbox-style controls ([f87748f](https://github.com/qualcomm/qualcomm-ui/commit/f87748f))
+* [listbox]: add styled react components ([03b1f06](https://github.com/qualcomm/qualcomm-ui/commit/03b1f06))
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Bug Fixes
+
+* [radio]: preserve focus ring during arrow navigation ([7e5cf48](https://github.com/qualcomm/qualcomm-ui/commit/7e5cf48))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/utils@1.4.0]
+
+## 1.35.1
+
+Aug 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8]
+
+## 1.35.0
+
+Aug 11th, 2026
+
+### Features
+
+- [tokens]: sync latest Figma values ([e2b85b6](https://github.com/qualcomm/qualcomm-ui/commit/e2b85b6))
+
+## 1.34.0
+
+Aug 6th, 2026
+
+### Features
+
+- [dialog]: add iconSize to api ([0d0e79b](https://github.com/qualcomm/qualcomm-ui/commit/0d0e79b))
+- [icon-button]: expose size in api ([dd6fc8e](https://github.com/qualcomm/qualcomm-ui/commit/dd6fc8e))
+- [icon-badge]: expose size in api ([11ba5f9](https://github.com/qualcomm/qualcomm-ui/commit/11ba5f9))
+
+### Bug Fixes
+
+- [inline-notification]: adjust end padding with action and close button ([7ce7d49](https://github.com/qualcomm/qualcomm-ui/commit/7ce7d49))
+
+## 1.33.2
+
+Jul 28th, 2026
+
+### Styles
+
+- [tabs]: use secondary text color for inactive line tab variant ([7d01476](https://github.com/qualcomm/qualcomm-ui/commit/7d01476))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
+## 1.33.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+- [tabs]: add line tab bottom border ([4f6caef](https://github.com/qualcomm/qualcomm-ui/commit/4f6caef))
+
+## 1.33.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+## 1.32.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+- [tokens]: add compact small body typography ([2050eb3](https://github.com/qualcomm/qualcomm-ui/commit/2050eb3))
+
+### Styles
+
+- [drawer]: improve background contrast in dark mode ([c58c00c](https://github.com/qualcomm/qualcomm-ui/commit/c58c00c))
+
+### Bug Fixes
+
+- [tree]: trim node text box to cap height ([ea51430](https://github.com/qualcomm/qualcomm-ui/commit/ea51430))
+
+## 1.31.0
+
+Jul 13th, 2026
+
+### Features
+
+- [tokens]: build and export design token data with comments ([31708c9](https://github.com/qualcomm/qualcomm-ui/commit/31708c9))
+
+### Styles
+
+- update design tokens ([a56caa6](https://github.com/qualcomm/qualcomm-ui/commit/a56caa6))
+
+### Build System
+
+- omit token comments from CSS output ([68c2602](https://github.com/qualcomm/qualcomm-ui/commit/68c2602))
+
 ## 1.30.4
 
 Jul 10th, 2026

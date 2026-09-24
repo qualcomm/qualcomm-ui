@@ -53,6 +53,9 @@ const navConfig: NavConfig[] = [
         id: "table-composition",
       },
       {
+        id: "generic-table-abstractions",
+      },
+      {
         id: "reusable-columns",
       },
       {
@@ -104,7 +107,7 @@ export default {
    */
   hotUpdateIgnore: /angular-demo-module|public/,
   knowledge: {
-    baseUrl: "https://angular-table-next.qui.qualcomm.com",
+    baseUrl: "https://angular-table.qui.qualcomm.com",
     exclude: ["installation.mdx", "index/_index.mdx"],
     integrations: {
       openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}],

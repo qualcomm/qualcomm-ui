@@ -2,7 +2,6 @@ import {type ReactElement, type ReactNode, useState} from "react"
 
 import {Plus} from "lucide-react"
 
-import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
 import {Button} from "@qualcomm-ui/react/button"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 
@@ -27,7 +26,7 @@ export function TabsAddRemoveDemo(): ReactElement {
     const newTabs = [...tabs]
 
     newTabs.push({
-      content: `Tab Body`,
+      content: `Tab Content`,
       id: `${parseInt(tabs[newTabs.length - 1]?.id ?? "0") + 1}`,
       title: `Tab`,
     })
@@ -47,7 +46,12 @@ export function TabsAddRemoveDemo(): ReactElement {
   }
 
   return (
-    <Tabs.Root onValueChange={setSelectedTab} size="sm" value={selectedTab}>
+    <Tabs.Root
+      className="w-full"
+      onValueChange={setSelectedTab}
+      size="sm"
+      value={selectedTab}
+    >
       <Tabs.List>
         <Tabs.Indicator />
         {tabs.map((item) => (
@@ -67,9 +71,6 @@ export function TabsAddRemoveDemo(): ReactElement {
         <Tabs.Panel key={item.id} value={item.id}>
           <div className="font-heading-xs text-neutral-primary my-6">
             {item.content} {item.id}
-          </div>
-          <div className="font-body-sm text-neutral-primary">
-            <LoremIpsum />
           </div>
         </Tabs.Panel>
       ))}

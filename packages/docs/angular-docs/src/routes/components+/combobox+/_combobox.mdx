@@ -134,6 +134,16 @@ The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) a
 
 <QdsDemo name="ComboboxItemsDemo" />
 
+### Item Groups
+
+::: terms
+grouped options
+:::
+
+Use the ListCollection's [groupBy](./#groupBy) and [groupSort](./#groupSort) properties to group items into categories. Render each category with `q-combobox-item-group` and `q-combobox-item-group-label` by iterating over the collection's `group()` method.
+
+<QdsDemo name="ComboboxItemGroupDemo" />
+
 ### Item Customization
 
 ::: terms
@@ -333,6 +343,8 @@ The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required-1
     "trigger",
     "content",
     "item",
+    "item-group",
+    "item-group-label",
     "item-text",
     "item-indicator",
     "hint",
@@ -420,6 +432,25 @@ The simple combobox extends the [q-combobox-root](./#q-combobox-root) directive 
 
 <TypeDocAngularAttributes
   name={["QdsSelectItemBindings", "ComboboxItemBindings"]}
+/>
+
+### q-combobox-item-group
+
+<TypeDocProps name="ComboboxItemGroupDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectItemGroupBindings", "ComboboxItemGroupBindings"]}
+/>
+
+### q-combobox-item-group-label
+
+<TypeDocProps name="ComboboxItemGroupLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsSelectItemGroupLabelBindings",
+    "ComboboxItemGroupLabelBindings",
+  ]}
 />
 
 ### q-combobox-item-indicator

@@ -31,8 +31,11 @@
 
 body {
   background: var(--color-background-neutral-00);
-  display: flex;
   margin: 0;
+}
+
+.app-content {
+  display: flex;
   padding: 32px;
 }
 

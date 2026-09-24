@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
 import {RouterLink} from "@angular/router"
-import {Home} from "lucide-angular"
+import {LucideHouse} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {BreadcrumbsModule} from "@qualcomm-ui/angular/breadcrumbs"
@@ -9,7 +9,7 @@ import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
 
 @Component({
   imports: [BreadcrumbsModule, IconDirective, RouterLink, TooltipModule],
-  providers: [provideIcons({Home})],
+  providers: [provideIcons({LucideHouse})],
   selector: "breadcrumbs-tooltip-demo",
   template: `
     <!-- preview -->
@@ -18,7 +18,7 @@ import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
         <li q-breadcrumb-item>
           <div q-tooltip>
             <a q-breadcrumb-item-trigger q-tooltip-trigger routerLink="/">
-              <svg q-breadcrumb-item-icon qIcon="Home"></svg>
+              <svg q-breadcrumb-item-icon qIcon="House"></svg>
               Home
             </a>
             Navigate to home page

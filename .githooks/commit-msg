@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -eu
+
+commit_message_file=$1
+user_name=$(git config user.name || true)
+user_email=$(git config user.email || true)
+
+if [ -z "$user_name" ] || [ -z "$user_email" ]; then
+  echo "Commit rejected: configure git user.name and user.email before committing." >&2
+  exit 1
+fi
+
+expected_signoff="Signed-off-by: $user_name <$user_email>"
+
+if git interpret-trailers --parse "$commit_message_file" | grep -Fqx "$expected_signoff"; then
+  exit 0
+fi
+
+echo "Commit rejected: missing required trailer:" >&2
+echo "" >&2
+echo "  $expected_signoff" >&2
+echo "" >&2
+echo "Use 'git commit --signoff' to add it." >&2
+exit 1

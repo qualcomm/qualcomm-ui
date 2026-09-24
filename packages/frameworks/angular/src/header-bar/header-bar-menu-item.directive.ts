@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input, type OnInit} from "@angular/core"
-import {ChevronDown} from "lucide-angular"
+import {LucideChevronDown} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -16,7 +16,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
 
 @Component({
-  providers: [provideIcons({ChevronDown})],
+  providers: [provideIcons({LucideChevronDown})],
   selector: "[q-header-bar-menu-item]",
   standalone: false,
   template: `
@@ -24,7 +24,7 @@ import {useQdsHeaderBarContext} from "./qds-header-bar-context.service"
       <svg [qIcon]="icon()!"></svg>
     }
     <ng-content />
-    <svg data-header-bar-part="end-icon" qIcon="ChevronDown"></svg>
+    <svg data-header-bar-part="end-icon" qIcon="LucideChevronDown"></svg>
   `,
 })
 export class HeaderBarMenuItemDirective implements OnInit {

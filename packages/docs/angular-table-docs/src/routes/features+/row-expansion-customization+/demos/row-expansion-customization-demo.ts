@@ -70,8 +70,7 @@ import {createUserQuery, type User, userColumns} from "./data"
                   >
                     <pre
                       class="w-fit rounded bg-transparent p-2 font-mono text-xs"
-                      >{{ row.original | json }}</pre
-                    >
+                      >{{ row.original | json }}</pre>
                   </td>
                 </tr>
               }

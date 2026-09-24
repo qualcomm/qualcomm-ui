@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {ChevronLeft, ChevronRight} from "lucide-angular"
+import {LucideChevronLeft, LucideChevronRight} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
@@ -7,7 +7,7 @@ import {TabsModule} from "@qualcomm-ui/angular/tabs"
 
 @Component({
   imports: [TabsModule, ButtonModule],
-  providers: [provideIcons({ChevronLeft, ChevronRight})],
+  providers: [provideIcons({LucideChevronLeft, LucideChevronRight})],
   selector: "tabs-context-demo",
   template: `
     <div class="w-full" defaultValue="tab-1" q-tabs-root>

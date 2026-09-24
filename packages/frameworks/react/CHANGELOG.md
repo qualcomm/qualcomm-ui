@@ -1,5 +1,187 @@
 # @qualcomm-ui/react Changelog
 
+## 1.31.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group components ([a8f8e5e](https://github.com/qualcomm/qualcomm-ui/commit/a8f8e5e))
+* [combobox]: add item group components ([2b27b58](https://github.com/qualcomm/qualcomm-ui/commit/2b27b58))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@1.38.0, @qualcomm-ui/react-core@1.9.0]
+
+## 1.30.0
+
+Aug 31st, 2026
+
+### Features
+
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react-core@1.8.0]
+
+## 1.29.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-picker]: focus trap ([3a63bd1](https://github.com/qualcomm/qualcomm-ui/commit/3a63bd1))
+* [date-picker]: add the React date picker ([326b218](https://github.com/qualcomm/qualcomm-ui/commit/326b218))
+* [tag]: allow customizing the dismiss button label ([b86bf8e](https://github.com/qualcomm/qualcomm-ui/commit/b86bf8e))
+* [select]: label remove buttons with the selected item text ([39b2c7b](https://github.com/qualcomm/qualcomm-ui/commit/39b2c7b))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/qds-core@1.37.0, @qualcomm-ui/react-core@1.7.0]
+
+## 1.28.1
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react-core@1.6.1]
+
+## 1.28.0
+
+Aug 18th, 2026
+
+### Features
+
+* [list-item]: add simple and compound components ([d60852c](https://github.com/qualcomm/qualcomm-ui/commit/d60852c))
+* [radio]: add checkbox-style controls ([f87748f](https://github.com/qualcomm/qualcomm-ui/commit/f87748f))
+* [listbox]: add styled react components ([03b1f06](https://github.com/qualcomm/qualcomm-ui/commit/03b1f06))
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Tests
+
+* [listbox]: cover component selection ([ca10975](https://github.com/qualcomm/qualcomm-ui/commit/ca10975))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/qds-core@1.36.0, @qualcomm-ui/utils@1.4.0, @qualcomm-ui/react-core@1.6.0]
+
+## 1.27.5
+
+Aug 16th, 2026
+
+### Tests
+
+- [checkmark]: add missing await for updated test dependency ([1541d76](https://github.com/qualcomm/qualcomm-ui/commit/1541d76))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/react-core@1.5.10, @qualcomm-ui/qds-core@1.35.1]
+
+## 1.27.4
+
+Aug 11th, 2026
+
+### Bug Fixes
+
+- [accordion]: prevent open animation from triggering on mount ([b79bab4](https://github.com/qualcomm/qualcomm-ui/commit/b79bab4))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.35.0]
+
+## 1.27.3
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- deprecate inline-icon-button component ([8e39d9c](https://github.com/qualcomm/qualcomm-ui/commit/8e39d9c))
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.34.0]
+
+### Bug Fixes
+
+- [dialog/drawer]: use compact icon button for close action ([45634a1](https://github.com/qualcomm/qualcomm-ui/commit/45634a1))
+- [component icons]: apply icon sizes explicitly, update sizes to match latest figma designs ([ac19397](https://github.com/qualcomm/qualcomm-ui/commit/ac19397))
+
+## 1.27.2
+
+Jul 28th, 2026
+
+### Tests
+
+- [tabs]: improve focus state test coverage ([b388a69](https://github.com/qualcomm/qualcomm-ui/commit/b388a69))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/react-core@1.5.9]
+
+## 1.27.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.1]
+
+## 1.27.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.0]
+
+## 1.26.1
+
+Jul 17th, 2026
+
+### Bug Fixes
+
+- [docs]: use correct since tags for component interfaces that extend from another package ([1fc6c24](https://github.com/qualcomm/qualcomm-ui/commit/1fc6c24))
+
+## 1.26.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.32.0, @qualcomm-ui/react-core@1.5.8]
+
+## 1.25.5
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.31.0]
+
 ## 1.25.4
 
 Jul 10th, 2026

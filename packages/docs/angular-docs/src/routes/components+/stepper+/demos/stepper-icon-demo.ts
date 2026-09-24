@@ -1,11 +1,11 @@
 import {Component} from "@angular/core"
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsUp,
-  DollarSign,
-  User,
-} from "lucide-angular"
+  LucideChevronLeft,
+  LucideChevronRight,
+  LucideChevronsUp,
+  LucideDollarSign,
+  LucideUser,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
@@ -15,7 +15,13 @@ import {StepperModule} from "@qualcomm-ui/angular/stepper"
 @Component({
   imports: [StepperModule, ButtonModule, IconDirective],
   providers: [
-    provideIcons({ChevronLeft, ChevronRight, ChevronsUp, DollarSign, User}),
+    provideIcons({
+      LucideChevronLeft,
+      LucideChevronRight,
+      LucideChevronsUp,
+      LucideDollarSign,
+      LucideUser,
+    }),
   ],
   selector: "stepper-icon-demo",
   template: `

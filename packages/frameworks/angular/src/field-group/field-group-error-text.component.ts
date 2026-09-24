@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input, type OnInit} from "@angular/core"
-import {CircleAlert} from "lucide-angular"
+import {LucideCircleAlert} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
@@ -24,9 +24,9 @@ export class FieldGroupErrorTextComponent implements OnInit {
   /**
    * Error indicator icon.
    *
-   * @default CircleAlert
+   * @default LucideCircleAlert
    */
-  readonly icon = input<LucideIconOrString>(CircleAlert)
+  readonly icon = input<LucideIconOrString>(LucideCircleAlert)
 
   protected readonly qdsFieldGroupContext = useQdsFieldGroupContext()
 

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "paths": {
+      "@reference/shared/*": ["./src/*/index.ts"]
+    }
+  },
+  "include": ["./src"]
+}

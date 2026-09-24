@@ -432,15 +432,15 @@ export class TypeSerializer {
               return {
                 ...content,
                 docLink: knownType?.resolvedType?.docLink,
-              } as QuiCommentDisplayPart
+              }
             }
-            return content as QuiCommentDisplayPart
+            return content
           }),
         }
       }
       // the additional properties in QuiCommentTag and its derivative types are all
       // optional, so this cast is fine.
-      return tag as QuiCommentTag
+      return tag
     })
   }
 

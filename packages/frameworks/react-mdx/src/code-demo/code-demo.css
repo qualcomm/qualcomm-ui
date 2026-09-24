@@ -81,6 +81,11 @@
 }
 
 .qui-demo-runner__tabs {
+  .qui-tabs__list {
+    &::before {
+      display: none;
+    }
+  }
   pre.shiki-code,
   pre.shiki {
     span,

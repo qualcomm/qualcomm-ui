@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {Star} from "lucide-angular"
+import {LucideStar} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconBadgeDirective} from "@qualcomm-ui/angular/badge"
 
 @Component({
   imports: [IconBadgeDirective],
-  providers: [provideIcons({Star})],
+  providers: [provideIcons({LucideStar})],
   selector: "icon-badge-size-demo",
   template: `
     <div class="flex flex-wrap items-center gap-4">

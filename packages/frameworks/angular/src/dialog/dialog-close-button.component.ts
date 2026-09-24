@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {CoreDialogCloseTriggerDirective} from "@qualcomm-ui/angular-core/dialog"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsDialogContext} from "./qds-dialog-context.service"
@@ -15,7 +15,7 @@ import {useQdsDialogContext} from "./qds-dialog-context.service"
  * A button that closes the dialog.
  */
 @Component({
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-dialog-close-button]",
   standalone: false,
   template: `
@@ -24,10 +24,10 @@ import {useQdsDialogContext} from "./qds-dialog-context.service"
 })
 export class DialogCloseButtonComponent extends CoreDialogCloseTriggerDirective {
   protected readonly qdsContext = useQdsDialogContext()
-  protected readonly buttonApi = useInlineIconButtonApi({
-    emphasis: "neutral",
+  protected readonly buttonApi = useIconButtonApi({
+    density: "compact",
     size: "md",
-    variant: "fixed",
+    variant: "ghost",
   })
 
   constructor() {

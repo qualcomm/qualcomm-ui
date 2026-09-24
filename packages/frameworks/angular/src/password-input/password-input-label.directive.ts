@@ -2,21 +2,21 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {Asterisk} from "lucide-angular"
+import {LucideAsterisk} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CorePasswordInputLabelDirective} from "@qualcomm-ui/angular-core/password-input"
 import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 @Component({
-  providers: [provideIcons({Asterisk})],
+  providers: [provideIcons({LucideAsterisk})],
   selector: "[q-password-input-label]",
   standalone: false,
   template: `
     <ng-content />
     @if (passwordInputContext().required) {
       <svg
-        qIcon="Asterisk"
+        qIcon="LucideAsterisk"
         size="xs"
         [q-bind]="qdsInputContext().getRequiredIndicatorBindings()"
       ></svg>

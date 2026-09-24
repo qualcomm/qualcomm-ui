@@ -16,7 +16,8 @@ import {qdsTableApi} from "./qds-table-api"
   template: `
     <svg
       [q-bind]="inlineIconButtonApi().getIconBindings()"
-      [qIcon]="icon()"
+      [qIcon]="icon()!"
+      [size]="inlineIconButtonApi().size"
     ></svg>
   `,
 })

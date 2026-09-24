@@ -132,10 +132,6 @@
       }
     }
   }
-
-  .qui-side-nav__node-indicator {
-    display: none;
-  }
 }
 
 .qui-docs-sidebar__mobile-container {
@@ -378,9 +374,21 @@ pre.qui-docs-code {
   }
 
   .qui-side-nav__group-label {
+    font: var(--font-static-body-xs-default);
     margin-top: 12px;
     padding-bottom: 8px;
     padding-left: calc(var(--indent-spacing) * var(--depth));
+  }
+
+  .qui-side-nav__node-root {
+    font: var(--font-static-body-sm-bold);
+    margin-left: calc(
+      (calc(var(--depth, 1) - 1) * var(--indent-spacing)) + var(--spacing-70)
+    );
+  }
+
+  .qui-side-nav__branch-indent-guide {
+    left: calc(1px + var(--indent-spacing) * var(--depth));
   }
 
   .qui-docs-sidebar__group-separator {

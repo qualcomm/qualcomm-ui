@@ -310,6 +310,9 @@ describe("Tabs", () => {
 
     await userEvent.tab()
     await assertTabSelected(tabLabels[0])
+    await expect
+      .element(getTabButton(tabLabels[0]))
+      .toHaveAttribute("data-focus-visible")
 
     await userEvent.keyboard("{ArrowRight}")
     await assertTabSelected(tabLabels[0])
@@ -338,12 +341,13 @@ describe("Tabs", () => {
     await page.getByText("Before Tabs").click()
 
     await userEvent.tab()
-    await expect
-      .element(getTabButton(tabLabels[1]))
-      .toHaveAttribute("data-focus")
+    const tab1 = getTabButton(tabLabels[1])
+    await expect.element(tab1).toHaveAttribute("data-focus")
+    await expect.element(tab1).toHaveAttribute("data-focus-visible")
 
     await userEvent.tab()
     await expect.element(page.getByText(panelContents[1])).toHaveFocus()
+    await expect.element(tab1).not.toHaveAttribute("data-focus")
     await userEvent.tab()
     await expect.element(page.getByText("After Tabs")).toHaveFocus()
   })

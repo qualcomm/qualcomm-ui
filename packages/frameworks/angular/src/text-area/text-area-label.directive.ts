@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {Asterisk} from "lucide-angular"
+import {LucideAsterisk} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTextAreaLabelDirective} from "@qualcomm-ui/angular-core/text-area"
@@ -13,14 +13,14 @@ import {useQdsTextAreaContext} from "./qds-text-area-context.service"
  * An accessible label that is automatically associated with the input.
  */
 @Component({
-  providers: [provideIcons({Asterisk})],
+  providers: [provideIcons({LucideAsterisk})],
   selector: "[q-text-area-label]",
   standalone: false,
   template: `
     <ng-content />
     @if (textAreaContext().required) {
       <svg
-        qIcon="Asterisk"
+        qIcon="LucideAsterisk"
         size="xs"
         [q-bind]="qdsTextAreaContext().getRequiredIndicatorBindings()"
       ></svg>

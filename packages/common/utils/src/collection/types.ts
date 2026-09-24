@@ -25,7 +25,7 @@ export interface ListCollectionMethods<
    */
   itemDisabled: (item: T) => boolean | undefined
   /**
-   * Function to get the item's label.
+   * Function to get the item's label. This is the string used for filtering.
    */
   itemLabel: (item: T) => string
   /**

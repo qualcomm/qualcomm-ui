@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {CircleAlert} from "lucide-angular"
+import {LucideCircleAlert} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreNumberInputErrorIndicatorDirective} from "@qualcomm-ui/angular-core/number-input"
@@ -16,17 +16,17 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
   standalone: false,
   template: `
     <ng-content>
-      <svg [qIcon]="icon()"></svg>
+      <svg [qIcon]="icon()!"></svg>
     </ng-content>
   `,
 })
 export class NumberInputErrorIndicatorDirective extends CoreNumberInputErrorIndicatorDirective {
   /**
-   * lucide-angular icon
+   * `@lucide/angular` icon
    *
-   * @default CircleAlert
+   * @default LucideCircleAlert
    */
-  readonly icon = input<LucideIconOrString>(CircleAlert)
+  readonly icon = input<LucideIconOrString>(LucideCircleAlert)
 
   readonly qdsNumberInputContext = useQdsNumberInputContext()
   readonly inputErrorIndicatorContext = useInputErrorIndicator()

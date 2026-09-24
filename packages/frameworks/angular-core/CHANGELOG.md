@@ -1,5 +1,77 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 3.3.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group support ([323ce37](https://github.com/qualcomm/qualcomm-ui/commit/323ce37))
+
+## 3.2.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: add the Angular date picker ([bee0c27](https://github.com/qualcomm/qualcomm-ui/commit/bee0c27))
+
+### Bug Fixes
+
+* [machine]: keep the api context view instead of rebuilding it ([3998313](https://github.com/qualcomm/qualcomm-ui/commit/3998313))
+* proper positioning defaults in components and JSDoc ([cb9973e](https://github.com/qualcomm/qualcomm-ui/commit/cb9973e))
+* [angular-core]: drop accessSignal falsy guard ([c099586](https://github.com/qualcomm/qualcomm-ui/commit/c099586))
+* [machine]: only clear an element id when it is still the registered one ([19d0b82](https://github.com/qualcomm/qualcomm-ui/commit/19d0b82))
+* [forms]: flush the pending value when a child part reports blur ([1b8fc61](https://github.com/qualcomm/qualcomm-ui/commit/1b8fc61))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/dom@1.3.0]
+
+## 3.1.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
+## 3.0.0
+
+Aug 16th, 2026
+
+### BREAKING CHANGES
+
+- migrate to TS 6.0, update lucide-angular to @lucide/angular ([fb20318](https://github.com/qualcomm/qualcomm-ui/commit/fb20318))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/dom@1.1.6]
+
+## 2.4.8
+
+Aug 6th, 2026
+
+### Bug Fixes
+
+- [track-bindings]: handle spaces in class property ([46baae6](https://github.com/qualcomm/qualcomm-ui/commit/46baae6))
+
+## 2.4.7
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
 ## 2.4.6
 
 Jul 1st, 2026

@@ -43,7 +43,16 @@ export function createGuardedContext<T>(options: CreateContextOptions<T> = {}) {
         errorMessage ?? getErrorMessage(hookName, providerName),
       )
       error.name = "ContextError"
-      Error.captureStackTrace?.(error, useContext)
+
+      if (
+        "captureStackTrace" in Error &&
+        typeof Error.captureStackTrace === "function"
+      ) {
+        /**
+         * Only true/available in Node.js context.
+         */
+        Error.captureStackTrace?.(error, useContext)
+      }
       throw error
     }
 

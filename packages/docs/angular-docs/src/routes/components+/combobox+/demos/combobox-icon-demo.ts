@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {MapPin} from "lucide-angular"
+import {LucideMapPin} from "@lucide/angular"
 
 import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -10,7 +10,7 @@ import {countries} from "./country-list"
 
 @Component({
   imports: [ComboboxModule],
-  providers: [provideIcons({MapPin})],
+  providers: [provideIcons({LucideMapPin})],
   selector: "combobox-icon-demo",
   template: `
     <!-- preview -->

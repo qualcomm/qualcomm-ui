@@ -1,6 +1,6 @@
 import {Component} from "@angular/core"
+import {LucidePlus} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Plus} from "lucide-angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 
@@ -57,7 +57,7 @@ describe("Badge", () => {
   test("renders an icon badge from the provided icon name", async () => {
     @Component({
       imports: [IconBadgeDirective],
-      providers: [provideIcons({Plus})],
+      providers: [provideIcons({LucidePlus})],
       template: `
         <span
           data-test-id="icon-badge"

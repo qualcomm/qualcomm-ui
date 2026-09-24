@@ -1,5 +1,105 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.10.1
+
+Sep 8th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: use stable unique identifier for section ids ([8c9b2c6](https://github.com/qualcomm/qualcomm-ui/commit/8c9b2c6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.1]
+
+## 3.10.0
+
+Aug 31st, 2026
+
+### Features
+
+* [search]: support semantic search knowledge exports ([9567b40](https://github.com/qualcomm/qualcomm-ui/commit/9567b40))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.0]
+
+## 3.9.4
+
+Aug 30th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: index component types for lookup without emitting rows ([76c57a8](https://github.com/qualcomm/qualcomm-ui/commit/76c57a8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.0]
+
+## 3.9.3
+
+Aug 18th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.4.0]
+
+## 3.9.2
+
+Aug 16th, 2026
+
+### Bug Fixes
+
+- [shiki-transformer]: support tailwindcss v4.3 syntax ([9bebf58](https://github.com/qualcomm/qualcomm-ui/commit/9bebf58))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3]
+
+## 3.9.1
+
+Aug 11th, 2026
+
+## Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/tailwind-plugin@1.10.0]
+
+## 3.9.0
+
+Aug 6th, 2026
+
+### Features
+
+- [ai-knowledge]: add section url hash data in page section exports ([55b7535](https://github.com/qualcomm/qualcomm-ui/commit/55b7535))
+
+### Code Refactoring
+
+- search types ([2beccfb](https://github.com/qualcomm/qualcomm-ui/commit/2beccfb))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common@2.5.0]
+
+## 3.8.7
+
+Jul 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/tailwind-plugin@1.9.0]
+
+## 3.8.6
+
+Jul 13th, 2026
+
+### Code Refactoring
+
+- remove unused internal functions ([7163ecc](https://github.com/qualcomm/qualcomm-ui/commit/7163ecc))
+
 ## 3.8.5
 
 Jun 15th, 2026

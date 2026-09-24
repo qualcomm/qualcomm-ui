@@ -6,6 +6,7 @@
     "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-scripts"
   },
   "include": [
+    "package.json",
     "*.ts"
   ]
 }

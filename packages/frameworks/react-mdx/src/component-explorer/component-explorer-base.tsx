@@ -124,22 +124,17 @@ export function ComponentExplorerBase({
             ),
         )
 
-    if (targetElements.length === 0) {
-      setHighlightRects([])
-      return
-    }
-
     const previewRect = previewElement.getBoundingClientRect()
     const highlightOffset = 4
-    const rects = targetElements.map((targetElement) => {
-      const elementRect = targetElement.getBoundingClientRect()
-      return {
+    const rects = targetElements
+      .map((targetElement) => targetElement.getBoundingClientRect())
+      .filter((elementRect) => elementRect.width > 0 && elementRect.height > 0)
+      .map((elementRect) => ({
         height: elementRect.height + highlightOffset * 2,
         left: elementRect.left - previewRect.left - highlightOffset,
         top: elementRect.top - previewRect.top - highlightOffset,
         width: elementRect.width + highlightOffset * 2,
-      }
-    })
+      }))
 
     setHighlightRects(rects)
   }, [hoveredPart, scope])

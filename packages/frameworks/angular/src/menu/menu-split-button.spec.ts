@@ -1,6 +1,6 @@
 import {Component, output} from "@angular/core"
+import {LucideDownload} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Download} from "lucide-angular"
 import {describe, expect, test, vi} from "vitest"
 import {page} from "vitest/browser"
 
@@ -14,7 +14,7 @@ function menu() {
 
 @Component({
   imports: [MenuModule, PortalDirective],
-  providers: [provideIcons({Download})],
+  providers: [provideIcons({LucideDownload})],
   template: `
     <q-menu>
       <div

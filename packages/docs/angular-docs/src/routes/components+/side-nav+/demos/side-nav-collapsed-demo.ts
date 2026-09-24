@@ -1,5 +1,5 @@
 import {Component, signal} from "@angular/core"
-import {PanelLeftClose, PanelLeftOpen} from "lucide-angular"
+import {LucidePanelLeftClose, LucidePanelLeftOpen} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
@@ -11,7 +11,9 @@ import {QLogoComponent} from "./q-logo.component"
 
 @Component({
   imports: [SideNavModule, IconDirective, ButtonModule, QLogoComponent],
-  providers: [provideIcons({...icons, PanelLeftClose, PanelLeftOpen})],
+  providers: [
+    provideIcons({...icons, LucidePanelLeftClose, LucidePanelLeftOpen}),
+  ],
   selector: "side-nav-collapsed-demo",
   template: `
     <div class="flex w-full justify-start">

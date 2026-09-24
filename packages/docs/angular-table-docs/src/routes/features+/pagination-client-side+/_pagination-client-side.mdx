@@ -7,15 +7,13 @@ import {QdsDemo} from "~components/demo"
 # {frontmatter.title}
 
 ::: terms
-table paging example
-page navigation
-large dataset pagination
-global filter with paging
-page range display
+table paging example, page navigation, large dataset pagination, global filter with paging, page range display
 :::
 
 This page features a client-side pagination demo that fetches all data up front. Refer to the [Pagination Guide](/feature-guides/pagination) for a detailed explanation. For server-side pagination, refer to the [Server-side Pagination Example](/features/pagination-server-side).
 
 The demo below loads 10,000 rows and uses `getPaginationRowModel` to handle page slicing automatically. It integrates the Pagination component to provide page navigation buttons, configurable page sizes, and a page range indicator showing the current row range and total count.
+
+Note that the table pagination uses the `q-table-pagination` directive. Its API is identical to the [q-pagination-root](https://angular.qui.qualcomm.com/components/pagination#q-pagination-root) directive.
 
 <QdsDemo expanded name="PaginationClientSideDemo" />

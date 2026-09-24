@@ -28,7 +28,6 @@ import {
   MachineStatus,
   type Params,
   type PropsParams,
-  type SendFn,
   type ValueOrFn,
   type WatchParams,
 } from "@qualcomm-ui/utils/machine"
@@ -87,6 +86,21 @@ export function useMachine<T extends MachineSchema>(
       return idsRef.current?.[key].get()
     },
     register(key, valueOrParams, onDestroy?: any) {
+      /**
+       * A replacement element registers during render, before the outgoing
+       * element's cleanup runs at commit. Clearing unconditionally would
+       * discard the newer registration.
+       */
+      const clearIfCurrentId = (id: unknown) => () => {
+        if (idsRef.current?.[key].get() !== id) {
+          return
+        }
+        idsRef.current?.[key].set(undefined, {
+          cleanup: true,
+          immediate: true,
+        })
+      }
+
       if (
         typeof valueOrParams === "object" &&
         valueOrParams !== null &&
@@ -94,20 +108,10 @@ export function useMachine<T extends MachineSchema>(
       ) {
         const params = valueOrParams
         idsRef.current?.[key].set(params.id)
-        params.onDestroy?.(() =>
-          idsRef.current?.[key].set(undefined, {
-            cleanup: true,
-            immediate: true,
-          }),
-        )
+        params.onDestroy?.(clearIfCurrentId(params.id))
       } else {
         idsRef.current?.[key].set(valueOrParams)
-        onDestroy?.(() =>
-          idsRef.current?.[key].set(undefined, {
-            cleanup: true,
-            immediate: true,
-          }),
-        )
+        onDestroy?.(clearIfCurrentId(valueOrParams))
       }
     },
     set(key, value) {
@@ -400,24 +404,22 @@ export function useMachine<T extends MachineSchema>(
     // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getParams = useRef(
-    (): Params<T> => ({
-      action,
-      actions,
-      choose,
-      computed,
-      context,
-      event: getEvent(),
-      flush,
-      guard,
-      prop,
-      refs,
-      scope: {...scope, ids: ids.current},
-      send: send as SendFn<T>,
-      state: getState(),
-      track: useTrack,
-    }),
-  )
+  const getParams = useRef((): Params<T> => ({
+    action,
+    actions,
+    choose,
+    computed,
+    context,
+    event: getEvent(),
+    flush,
+    guard,
+    prop,
+    refs,
+    scope: {...scope, ids: ids.current},
+    send,
+    state: getState(),
+    track: useTrack,
+  }))
 
   config.watch?.(getParams.current() as WatchParams<T>)
 
@@ -428,7 +430,7 @@ export function useMachine<T extends MachineSchema>(
     prop,
     refs,
     scope: {...scope, ids: ids.current},
-    send: send as SendFn<T>,
+    send,
     state: getState(),
   }
 }

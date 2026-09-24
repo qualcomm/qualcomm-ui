@@ -1,5 +1,82 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.9.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group components ([58451e8](https://github.com/qualcomm/qualcomm-ui/commit/58451e8))
+
+## 1.8.0
+
+Aug 31st, 2026
+
+### Features
+
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
+## 1.7.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: add the React date picker ([326b218](https://github.com/qualcomm/qualcomm-ui/commit/326b218))
+
+### Bug Fixes
+
+* [machine]: only clear an element id when it is still the registered one ([19d0b82](https://github.com/qualcomm/qualcomm-ui/commit/19d0b82))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/dom@1.3.0]
+
+## 1.6.1
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
+## 1.6.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Documentation
+
+* [listbox]: document component usage ([200dad7](https://github.com/qualcomm/qualcomm-ui/commit/200dad7))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
+## 1.5.10
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- [types]: support TS 6.0 ([cb71a86](https://github.com/qualcomm/qualcomm-ui/commit/cb71a86))
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/dom@1.1.6]
+
+## 1.5.9
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
 ## 1.5.8
 
 Jul 1st, 2026

@@ -1,5 +1,5 @@
 import {Component, computed, signal} from "@angular/core"
-import {User} from "lucide-angular"
+import {LucideUser} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
@@ -10,7 +10,7 @@ import type {QdsCardSize} from "@qualcomm-ui/qds-core/card"
 
 @Component({
   imports: [CardModule, AvatarModule, RadioModule, IconDirective],
-  providers: [provideIcons({User})],
+  providers: [provideIcons({LucideUser})],
   selector: "card-sizes-demo",
   template: `
     <div class="flex flex-col items-center gap-8">

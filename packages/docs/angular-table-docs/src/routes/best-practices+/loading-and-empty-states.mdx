@@ -10,11 +10,11 @@ Loading state is part of the table experience, but not every loading state belon
 
 ### Concern
 
-Teams want users to know when table data is refreshing, and they want that loading UI to be consistent across tables. The tempting path is to make every column aware of the query state.
+Teams want users to know when table data is refreshing, and they want that loading UI to be consistent across tables. The tempting path is to make columns aware of the query state.
 
 ### Pitfall
 
-Table-level fetch state should not be threaded through every column. A common implementation is to close over `query.isFetching()` inside cell renderers and rebuild the column definitions from a `computed` signal:
+Table-level fetch state should not be threaded through every column. It usually looks like this:
 
 ```angular-ts
 export class UsersTable {
@@ -44,11 +44,11 @@ export class UsersTable {
 
 This mixes two separate concerns. During a background refetch, the previously loaded rows are still useful. Replacing each value with a spinner, skeleton, or loading string makes the table harder to scan, may cause cells to shift, and hides the data the user was just reading.
 
-It also makes the column array change whenever fetch state changes. Every refetch toggles `query.isFetching()`, the `computed` signal returns new column definitions, and the table has to reprocess configuration that did not actually change. Avoiding the signal read would keep stale loading state in the cells. The conclusion is the same as other reusable-column cases: table-level fetch state does not belong in column definitions.
+It also makes the column array change whenever fetch state changes. Every refetch toggles `query.isFetching()`, the `computed` signal returns new column definitions, and the table completely rerenders whenever this happens.
 
 ### Preferred Pattern
 
-Keep loaded rows visible during refetch and place a predictable loading affordance in `q-table-action-bar`, usually next to a refresh button. Reserve body-level placeholders for the initial load, when there are no real rows to preserve.
+Keep loaded rows visible during refetch and place a predictable loading indicator in `q-table-action-bar`, usually next to a refresh button. Reserve body-level placeholders for the initial load, when there are no real rows to preserve.
 
 Separate those states before rendering:
 

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-plugin-react",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "ESLint plugin for enforcing best-practices with QUI React component consumption",
   "keywords": [
     "a11y",

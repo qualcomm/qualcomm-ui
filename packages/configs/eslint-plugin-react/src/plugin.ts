@@ -30,7 +30,7 @@ export const rules = {
 export const plugin: ESLint.Plugin = {
   // typescript-eslint data structures are used for JSX support but
   // the types are not compatible with eslint rule definitions
-  rules: rules as unknown as ESLint.Plugin["rules"],
+  rules,
 }
 
 export const config: Linter.Config[] = [

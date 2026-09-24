@@ -59,7 +59,10 @@ const startIconAttr = startIcon ? ` startIcon="${startIconName}"` : ""
 const icons = [
   ...new Set(
     [startIcon && startIconName, endIcon && endIconName].filter(Boolean),
-  ),
+  )
+    .values()
+    .toArray()
+    .map((v) => `Lucide${v}`),
 ]
 
 export default {
@@ -72,7 +75,7 @@ export default {
     ...(icons.length > 0
       ? [
           `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {${icons.join(", ")}} from "lucide-angular"`,
+          `import {${icons.join(", ")}} from "@lucide/angular"`,
         ]
       : []),
   ],

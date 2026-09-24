@@ -17,6 +17,7 @@
     }
   },
   "include": ["./src"],
+  "exclude": ["./src/**/*.spec.ts"],
   "references": [
     {
       "path": "../../common/core/tsconfig.lib.json"

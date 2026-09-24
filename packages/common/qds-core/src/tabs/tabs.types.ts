@@ -104,6 +104,10 @@ export interface QdsTabsTabDismissButtonBindings {
   "data-size": QdsTabsSize
 }
 
+export interface QdsTabsTabButtonTextBindings {
+  className: TabClasses["buttonText"]
+}
+
 export interface QdsTabsApi {
   size: QdsTabsSize
   variant: QdsTabsVariant
@@ -115,6 +119,7 @@ export interface QdsTabsApi {
   getRootBindings(): QdsTabsRootBindings
   getTabBindings(): QdsTabsTabBindings
   getTabButtonBindings(): QdsTabsTabButtonBindings
+  getTabButtonTextBindings(): QdsTabsTabButtonTextBindings
   getTabDismissButtonBindings(): QdsTabsTabDismissButtonBindings
   getTabEndIconBindings(): QdsTabsTabEndIconBindings
   getTabStartIconBindings(): QdsTabsTabStartIconBindings

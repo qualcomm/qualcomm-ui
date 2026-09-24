@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/typedoc",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Documentation generation utilities",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -69,7 +69,7 @@
     "cosmiconfig": ">=9.0.0",
     "oxfmt": ">=0.51.0",
     "typedoc": ">=0.28.4",
-    "typescript": ">=5.3.3"
+    "typescript": ">=5.3.3 <7"
   },
   "engines": {
     "node": ">=20"

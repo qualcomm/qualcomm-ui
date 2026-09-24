@@ -6,6 +6,7 @@
 
 import {trackElementRect} from "@qualcomm-ui/dom/dom-query"
 import {trackMutation} from "@qualcomm-ui/dom/element-size"
+import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import {getFocusables, nextTick, raf} from "@qualcomm-ui/dom/query"
 import {
   createGuards,
@@ -257,6 +258,9 @@ export const tabsMachine: MachineConfig<TabsSchema> = createMachine<TabsSchema>(
       }
     },
     effects: {
+      trackFocusVisible({scope}) {
+        return trackFocusVisible({root: scope.getRootNode?.()})
+      },
       trackTabListElement: (params) => {
         const {actions, refs, scope} = params
         const cleanup = refs.get("listObserverCleanup")
@@ -320,7 +324,7 @@ export const tabsMachine: MachineConfig<TabsSchema> = createMachine<TabsSchema>(
     },
     onInit: {
       actions: ["syncIndicatorRect", "syncTabIndex"],
-      effects: ["trackTabListElement"],
+      effects: ["trackTabListElement", "trackFocusVisible"],
     },
     props({props}) {
       return {

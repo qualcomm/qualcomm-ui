@@ -10,6 +10,7 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {ProgressRingBar} from "./progress-ring-bar.js"
+import {ProgressRingShimmer} from "./progress-ring-shimmer.js"
 import {ProgressRingTrack} from "./progress-ring-track.js"
 import {useQdsProgressRingContext} from "./qds-progress-ring-context.js"
 
@@ -33,6 +34,7 @@ export function ProgressRingCircle({
           <ProgressRingBar />
         </>
       )}
+      <ProgressRingShimmer />
     </CoreProgressRing.Circle>
   )
 }

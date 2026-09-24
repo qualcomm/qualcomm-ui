@@ -111,7 +111,7 @@ export default {
       : []),
     ...(actionBar
       ? [
-          `import {LayoutGrid, Moon, Search, Settings, User} from "lucide-angular"`,
+          `import {LucideLayoutGrid, LucideMoon, LucideSearch, LucideSettings, LucideUser} from "@lucide/angular"`,
         ]
       : []),
   ],

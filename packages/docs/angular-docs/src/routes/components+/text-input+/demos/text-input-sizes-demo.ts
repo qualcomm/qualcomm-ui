@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {Search} from "lucide-angular"
+import {LucideSearch} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
 
 @Component({
   imports: [TextInputModule],
-  providers: [provideIcons({Search})],
+  providers: [provideIcons({LucideSearch})],
   selector: "text-input-sizes-demo",
   template: `
     <div class="flex flex-col items-start gap-4">

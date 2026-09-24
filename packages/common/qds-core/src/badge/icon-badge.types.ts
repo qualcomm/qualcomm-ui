@@ -54,4 +54,5 @@ export interface QdsIconBadgeIconBindings extends Part<"icon"> {
 export interface QdsIconBadgeApi {
   getIconBindings(): QdsIconBadgeIconBindings
   getRootBindings(): QdsIconBadgeRootBindings
+  size: QdsBadgeExtendedSize
 }

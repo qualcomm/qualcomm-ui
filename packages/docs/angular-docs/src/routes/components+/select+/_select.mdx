@@ -84,6 +84,16 @@ The `items` prop can be an array of objects. Use the [itemLabel](./#itemLabel) a
 
 <QdsDemo name="SelectItemsDemo" />
 
+### Item Groups
+
+::: terms
+grouped options
+:::
+
+Use the ListCollection's [groupBy](./#groupBy) and [groupSort](./#groupSort) properties to group items into categories. Render each category with `q-select-item-group` and `q-select-item-group-label` by iterating over the collection's `group()` method.
+
+<QdsDemo name="SelectItemGroupDemo" />
+
 ### Sizes
 
 ::: terms
@@ -245,6 +255,8 @@ The [disabled](./#disabled), [invalid](./#invalid), and [required](./#required-1
     "indicator",
     "content",
     "item",
+    "item-group",
+    "item-group-label",
     "item-text",
     "item-indicator",
     "hint",
@@ -328,6 +340,22 @@ The simple select extends the [q-select-root](./#q-select-root) directive with t
 
 <TypeDocAngularAttributes
   name={["QdsSelectItemBindings", "SelectItemBindings"]}
+/>
+
+### q-select-item-group
+
+<TypeDocProps name="SelectItemGroupDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectItemGroupBindings", "SelectItemGroupBindings"]}
+/>
+
+### q-select-item-group-label
+
+<TypeDocProps name="SelectItemGroupLabelDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsSelectItemGroupLabelBindings", "SelectItemGroupLabelBindings"]}
 />
 
 ### q-select-item-checkbox

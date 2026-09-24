@@ -1,5 +1,63 @@
 # @qualcomm-ui/core Changelog
 
+## 1.13.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-picker]: focus trap ([3a63bd1](https://github.com/qualcomm/qualcomm-ui/commit/3a63bd1))
+* [date-picker]: add the date picker state machine ([be92213](https://github.com/qualcomm/qualcomm-ui/commit/be92213))
+
+### Bug Fixes
+
+* proper positioning defaults in components and JSDoc ([cb9973e](https://github.com/qualcomm/qualcomm-ui/commit/cb9973e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.0, @qualcomm-ui/dom@1.3.0]
+
+## 1.12.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
+## 1.11.8
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- [types]: support TS 6.0 ([cb71a86](https://github.com/qualcomm/qualcomm-ui/commit/cb71a86))
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/dom@1.1.6]
+
+## 1.11.7
+
+Jul 28th, 2026
+
+### Bug Fixes
+
+- [tabs]: apply focus-visible state on the first tab event into the tab list ([ddadab3](https://github.com/qualcomm/qualcomm-ui/commit/ddadab3))
+- [tabs]: remove dismiss buttons from tab order ([f3ece00](https://github.com/qualcomm/qualcomm-ui/commit/f3ece00))
+- [tabs]: clear focus when leaving the tab list and focusing another tab list ([7ab71c0](https://github.com/qualcomm/qualcomm-ui/commit/7ab71c0))
+
 ## 1.11.6
 
 Jul 1st, 2026

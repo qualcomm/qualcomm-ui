@@ -7,15 +7,11 @@ import {QdsDemo} from "~components/demo"
 # {frontmatter.title}
 
 ::: terms
-remote paging
-paging
-PaginationState
-manualPagination
-onPaginationChange
-pageCount
-totalCount
+remote paging, paging, PaginationState, manualPagination, onPaginationChange, pageCount, totalCount
 :::
 
 Server-side pagination demo with a simulated backend API. Pagination state is managed explicitly in the component and sent to the backend on each change. This is the standard approach for backend integrations where the server handles the pagination logic. See the [Pagination Guide](/feature-guides/pagination) for implementation details.
+
+Note that the table pagination uses the `q-table-pagination` directive. Its API is identical to the [q-pagination-root](https://angular.qui.qualcomm.com/components/pagination#q-pagination-root) directive.
 
 <QdsDemo expanded name="PaginationServerSideDemo" />

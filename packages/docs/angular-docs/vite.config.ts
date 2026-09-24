@@ -13,6 +13,12 @@ import {
   getRemarkPlugins,
   quiDocsPlugin,
 } from "@qualcomm-ui/mdx-vite"
+import {
+  resolveSemanticSearchPaths,
+  semanticSearchDevPlugin,
+} from "@qualcomm-ui/react-router-utils/node"
+
+import quiDocsConfig from "./qui-docs.config.js"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -94,6 +100,11 @@ export default defineConfig({
     reactRouter(),
     quiDocsPlugin(),
     frontmatterHmrPlugin(),
+    semanticSearchDevPlugin({
+      outputDirectory: resolve(__dirname, "generated/semantic-search"),
+      sectionsPath: resolveSemanticSearchPaths(quiDocsConfig.knowledge)
+        .sectionsPath,
+    }),
     angularDemoPlugin({
       demoPattern: [
         // these paths must also be accounted for in

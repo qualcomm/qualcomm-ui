@@ -8,9 +8,7 @@ import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
 import type {SelectElementIds, SelectScope} from "../select.types.js"
 
-export const domIds: ScopeDomIds<SelectElementIds, SelectScope> & {
-  itemGroup: (scope: SelectScope, id: string | number) => string
-} = {
+export const domIds: ScopeDomIds<SelectElementIds, SelectScope> = {
   clearTrigger: (scope) => scope.ids.get("clearTrigger"),
   content: (scope) => scope.ids.get("content"),
   control: (scope) => scope.ids.get("control"),

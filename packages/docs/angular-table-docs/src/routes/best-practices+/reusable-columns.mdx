@@ -10,13 +10,7 @@ The constraint is that columns are table configuration, so they should have stab
 
 ## Column Modules
 
-### Concern
-
-Teams often reach for a reusable table abstraction for good reasons. Several tables may repeat the same setup: headers, cells, editable controls, row actions, loading states, and toolbar behavior. Centralizing that work can look like the fastest way to improve consistency.
-
-### Pitfall
-
-The problem appears when a generated column closes over changing Angular state: edited values, pending flags, permissions, or callbacks from the current component. The most common attempted fix is to rebuild the column definitions from a `computed` signal that reads that changing state.
+The problem appears when a generated column closes over changing Angular state: edited values, pending flags, permissions, or callbacks from the current component.
 
 In this example, the table has an editable `status` column. `editedValues` stores unsaved cell drafts, and `isSaving` disables the control while a save is in flight. Assume row IDs are already stable. The problem here is the column dependency.
 
@@ -44,15 +38,15 @@ export class UsersTable {
 }
 ```
 
-This fixes stale reads, but it makes the column array change on every edit. Each `editedValues.update()` call creates a new object, so the `computed` signal returns new column definitions. When the column configuration changes, the entire table is recomputed.
+This fixes stale reads, but it makes the column array change on every edit. Each `editedValues.update()` call creates a new object, so the `computed` signal returns new column definitions. When the column configuration changes, the entire table is recomputed. This is a big performance issue.
 
-This exemplifies where reusable wrappers tend to fall apart. The entire table depends on the column definitions. Once row draft state is a column dependency, a single cell edit can cause all that table configuration work to rerun, which typically results in performance issues. But if you stop reading the signal from the column definition, the cell may render stale values. The solution is to keep frequently changing row workflow state out of column definitions.
+There are a few solutions to this problem. The one we'll explore today is scoping state updates to the column's cell component.
 
 ### Preferred Pattern
 
 The following example uses Angular dependency injection and signals. The table provides a scoped edit service around its implementation, while the column definition stays static.
 
-This keeps the column responsible for column structure only, and offloads the changing data concern to the inner cell component and service.
+This keeps the column responsible for column structure only, and offloads the changing data concern to the inner cell component and wrapper service.
 
 ```angular-ts
 import {Injectable, signal} from "@angular/core"
@@ -143,9 +137,11 @@ export class UsersTable {
 
 Providing `UserEditService` on the table component scopes the edit workflow to that table instance. If the same table appears twice on a page, each instance gets its own service and its own signals.
 
-This keeps the column array stable because the column structure is static. The changing edit state stays in the product table's edit workflow.
+This keeps the column array stable because the column structure is static. The changing edit state stays in the workflow that owns the table.
 
-When a value changes which columns exist or how static column options are configured, include it in the code that builds the columns:
+### When to update column definitions
+
+You typically only update column definitions when a value changes which columns exist or how static column options are configured:
 
 ```angular-ts
 readonly columns = computed<ColumnDef<User>[]>(() =>
@@ -156,10 +152,6 @@ readonly columns = computed<ColumnDef<User>[]>(() =>
   ].filter((column): column is ColumnDef<User> => column !== null),
 )
 ```
-
-Those dependencies are different from row workflow state. `canEdit` and `showActions` decide which static column definitions exist. They should not be draft values, mutation flags, or other row-level values that change as the user interacts with the table.
-
-Use dependencies for column shape and static configuration. Move frequently changing row workflow state into typed cells, component-scoped services, forms, or query/mutation state.
 
 ## Cell Content
 
@@ -202,7 +194,7 @@ export class CellContent {
 }
 ```
 
-This starts as reuse, but the switchboard weakens types, hides dependencies, and couples every new cell type to the central renderer. It also pressures callers to pass changing values through a generic `options` bag instead of more detailed alternatives like typed cell components, render context, services, or query/mutation selectors.
+This starts as reuse, but the switchboard weakens types, hides dependencies, and couples every new cell type to the central renderer.
 
 ### Preferred Pattern
 

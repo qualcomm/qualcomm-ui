@@ -32,6 +32,14 @@ export default {
       outFileName: "snapdragon-light.min.css",
     },
     {
+      cssFiles: ["src/styles/dragonfly-dark.css"],
+      outFileName: "dragonfly-dark.min.css",
+    },
+    {
+      cssFiles: ["src/styles/dragonfly-light.css"],
+      outFileName: "dragonfly-light.min.css",
+    },
+    {
       cssFiles: ["src/styles/arduino-dark.css"],
       outFileName: "arduino-dark.min.css",
     },

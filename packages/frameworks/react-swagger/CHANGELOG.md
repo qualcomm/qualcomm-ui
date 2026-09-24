@@ -1,5 +1,113 @@
 # @qualcomm-ui/react-swagger Changelog
 
+## 1.3.34
+
+Sep 2nd, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@1.38.0, @qualcomm-ui/react-core@1.9.0]
+
+## 1.3.33
+
+Aug 31st, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react-core@1.8.0]
+
+## 1.3.32
+
+Aug 30th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/qds-core@1.37.0, @qualcomm-ui/react-core@1.7.0]
+
+## 1.3.31
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react-core@1.6.1]
+
+## 1.3.30
+
+Aug 18th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/qds-core@1.36.0, @qualcomm-ui/utils@1.4.0, @qualcomm-ui/react-core@1.6.0]
+
+## 1.3.29
+
+Aug 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/react-core@1.5.10, @qualcomm-ui/qds-core@1.35.1]
+
+## 1.3.28
+
+Aug 11th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.35.0]
+
+## 1.3.27
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.34.0]
+
+## 1.3.26
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/react-core@1.5.9]
+
+## 1.3.25
+
+Jul 27th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.1]
+
+## 1.3.24
+
+Jul 23rd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.0]
+
+## 1.3.23
+
+Jul 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.32.0, @qualcomm-ui/react-core@1.5.8]
+
+## 1.3.22
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.31.0]
+
 ## 1.3.21
 
 Jul 10th, 2026

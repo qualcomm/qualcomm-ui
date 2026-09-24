@@ -53,6 +53,9 @@ const navConfig: NavConfig[] = [
         id: "table-composition",
       },
       {
+        id: "generic-table-abstractions",
+      },
+      {
         id: "reusable-columns",
       },
       {
@@ -97,7 +100,7 @@ const navConfig: NavConfig[] = [
 export default {
   appDirectory: "src",
   knowledge: {
-    baseUrl: "https://react-table-next.qui.qualcomm.com",
+    baseUrl: "https://react-table.qui.qualcomm.com",
     exclude: ["installation.mdx", "index/_index.mdx"],
     integrations: {
       openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],

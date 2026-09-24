@@ -1,6 +1,6 @@
 import {Component, computed, inject} from "@angular/core"
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router"
-import {Layers2, Moon, Sun} from "lucide-angular"
+import {LucideLayers2, LucideMoon, LucideSun} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
@@ -17,7 +17,7 @@ import {QdsThemeService} from "@qualcomm-ui/angular/theme"
     IconDirective,
     AvatarModule,
   ],
-  providers: [provideIcons({Layers2, Moon, Sun})],
+  providers: [provideIcons({LucideLayers2, LucideMoon, LucideSun})],
   selector: "app-root",
   template: `
     <div class="flex h-screen flex-col">

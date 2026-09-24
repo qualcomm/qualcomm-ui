@@ -1,5 +1,10 @@
 import {Component} from "@angular/core"
-import {Command, File, FolderOpen, Pencil} from "lucide-angular"
+import {
+  LucideCommand,
+  LucideFile,
+  LucideFolderOpen,
+  LucidePencil,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
@@ -7,7 +12,9 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [MenuModule, IconDirective],
-  providers: [provideIcons({Command, File, FolderOpen, Pencil})],
+  providers: [
+    provideIcons({LucideCommand, LucideFile, LucideFolderOpen, LucidePencil}),
+  ],
   selector: "menu-explorer-demo",
   template: `
     <q-menu defaultOpen [positioning]="{placement: 'bottom-start'}">

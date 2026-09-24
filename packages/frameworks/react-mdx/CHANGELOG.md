@@ -1,5 +1,158 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.12.2
+
+Sep 8th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.1]
+
+## 2.12.1
+
+Sep 2nd, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react@1.31.0, @qualcomm-ui/react-core@1.9.0]
+
+## 2.12.0
+
+Aug 31st, 2026
+
+### Features
+
+* [semantic-search]: add reusable global search component ([188e188](https://github.com/qualcomm/qualcomm-ui/commit/188e188))
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.0, @qualcomm-ui/react@1.30.0, @qualcomm-ui/react-core@1.8.0]
+
+## 2.11.9
+
+Aug 30th, 2026
+
+### Bug Fixes
+
+* [component-explorer]: skip highlighting parts that have no visible box ([65935ff](https://github.com/qualcomm/qualcomm-ui/commit/65935ff))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/react@1.29.0, @qualcomm-ui/react-core@1.7.0]
+
+## 2.11.8
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react@1.28.1, @qualcomm-ui/react-core@1.6.1]
+
+## 2.11.7
+
+Aug 18th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/react@1.28.0, @qualcomm-ui/utils@1.4.0, @qualcomm-ui/react-core@1.6.0]
+
+## 2.11.6
+
+Aug 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.5, @qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/react-core@1.5.10]
+
+## 2.11.5
+
+Aug 12th, 2026
+
+### Bug Fixes
+
+- [updated-on-date]: use fixed time zone to prevent SSR hydration issue ([626f72a](https://github.com/qualcomm/qualcomm-ui/commit/626f72a))
+
+## 2.11.4
+
+Aug 11th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.4]
+
+## 2.11.3
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.3, @qualcomm-ui/mdx-common@2.5.0]
+
+## 2.11.2
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/react@1.27.2, @qualcomm-ui/react-core@1.5.9]
+
+## 2.11.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [demos]: account for new bottom border in tab list ([ad9771a](https://github.com/qualcomm/qualcomm-ui/commit/ad9771a))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.1]
+
+## 2.11.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.0]
+
+## 2.10.1
+
+Jul 17th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.26.1]
+
+## 2.10.0
+
+Jul 16th, 2026
+
+### Features
+
+- [docs-layout]: match sidebar size to navigation density ([68e7229](https://github.com/qualcomm/qualcomm-ui/commit/68e7229))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.26.0, @qualcomm-ui/react-core@1.5.8]
+
+## 2.9.13
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.5]
+
 ## 2.9.12
 
 Jul 10th, 2026

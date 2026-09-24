@@ -87,6 +87,16 @@ export interface QdsSelectIconBindings {
   "data-size": QdsSelectSize
 }
 
+export interface QdsSelectItemGroupBindings {
+  className: SelectClasses["itemGroup"]
+  "data-size": QdsSelectSize
+}
+
+export interface QdsSelectItemGroupLabelBindings {
+  className: SelectClasses["itemGroupLabel"]
+  "data-size": QdsSelectSize
+}
+
 export interface QdsSelectApi {
   selectionIndicator: QdsSelectSelectionIndicator
   size: QdsSelectSize
@@ -99,6 +109,8 @@ export interface QdsSelectApi {
   getIconBindings(): QdsSelectIconBindings
   getIndicatorBindings(): QdsSelectIndicatorBindings
   getItemBindings(): QdsSelectItemBindings
+  getItemGroupBindings(): QdsSelectItemGroupBindings
+  getItemGroupLabelBindings(): QdsSelectItemGroupLabelBindings
   getItemIndicatorBindings(): QdsSelectItemIndicatorBindings
   getItemTextBindings(): QdsSelectItemTextBindings
   getLabelBindings(): QdsSelectLabelBindings

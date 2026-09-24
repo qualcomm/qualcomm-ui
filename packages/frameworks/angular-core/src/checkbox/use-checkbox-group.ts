@@ -113,5 +113,5 @@ function access<T>(value: Signal<T> | T | undefined): T | undefined {
   if (typeof value === "function") {
     return (value as unknown as Signal<T>)()
   }
-  return value as T
+  return value
 }

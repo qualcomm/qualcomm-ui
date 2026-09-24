@@ -1,6 +1,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
+
 import type {progressClasses} from "./progress.classes.js"
 
 export type QdsProgressSize = "sm" | "md" | "lg"
@@ -25,6 +27,13 @@ export interface QdsProgressApiProps {
    * @default 'top'
    */
   labelOrientation?: QdsProgressLabelOrientation
+
+  /**
+   * Whether to display a shimmer effect on a loading determinate progress.
+   *
+   * @default true
+   */
+  shimmer?: boolean
 
   /**
    * Governs the height of the progress bar and track.
@@ -54,6 +63,7 @@ export interface QdsProgressTrackBindings {
 export interface QdsProgressBarBindings {
   className: ProgressClasses["bar"]
   "data-emphasis": QdsProgressEmphasis
+  "data-shimmer": BooleanDataAttr
   "data-size": QdsProgressSize
 }
 

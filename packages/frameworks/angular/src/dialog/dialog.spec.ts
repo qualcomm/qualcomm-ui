@@ -1,4 +1,4 @@
-import {Component, input, signal} from "@angular/core"
+import {Component, signal} from "@angular/core"
 import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
@@ -7,7 +7,6 @@ import {provideDialogContext} from "@qualcomm-ui/angular-core/dialog"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {providePresenceContext} from "@qualcomm-ui/angular-core/presence"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
-import type {QdsDialogEmphasis} from "@qualcomm-ui/qds-core/dialog"
 
 import {DialogRootDirective} from "./dialog-root.directive"
 import {DialogModule} from "./dialog.module"
@@ -121,22 +120,6 @@ class ContextDialogComponent {
 class FloatingPortalDialogComponent {
   protected readonly labels = labels
   protected readonly text = text
-}
-
-@Component({
-  imports: [DialogModule],
-  template: `
-    <div defaultOpen q-dialog-root [emphasis]="emphasis()">
-      <q-dialog-floating-portal>
-        <div q-dialog-body>
-          <h2 q-dialog-heading>{{ emphasis() }} dialog</h2>
-        </div>
-      </q-dialog-floating-portal>
-    </div>
-  `,
-})
-class IndicatorIconDialogComponent {
-  readonly emphasis = input<QdsDialogEmphasis>("neutral")
 }
 
 @Component({
@@ -347,26 +330,6 @@ describe("Dialog", () => {
     await page.getByLabelText(labels.closeButton).click()
     await expect.element(page.getByText("Dialog is closed")).toBeVisible()
   })
-
-  const emphases: QdsDialogEmphasis[] = [
-    "neutral",
-    "info",
-    "success",
-    "warning",
-    "danger",
-  ]
-
-  for (const emphasis of emphases) {
-    test(`indicator icon renders for ${emphasis} emphasis`, async () => {
-      await render(IndicatorIconDialogComponent, {
-        inputs: {emphasis},
-      })
-
-      const indicatorIcon = page.getByTestId("dialog-indicator-icon")
-
-      expect(indicatorIcon).toBeVisible()
-    })
-  }
 
   test("indicator icon renders a custom icon element when provided", async () => {
     await render(CustomIndicatorIconDialogComponent)

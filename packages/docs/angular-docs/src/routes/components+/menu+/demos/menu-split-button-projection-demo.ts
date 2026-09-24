@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {Copy, FilePlus, Save} from "lucide-angular"
+import {LucideCopy, LucideFilePlus, LucideSave} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
@@ -8,7 +8,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [ButtonModule, MenuModule, PortalDirective],
-  providers: [provideIcons({Copy, FilePlus, Save})],
+  providers: [provideIcons({LucideCopy, LucideFilePlus, LucideSave})],
   selector: "menu-split-button-projection-demo",
   template: `
     <q-menu [positioning]="{placement: 'bottom-end'}">

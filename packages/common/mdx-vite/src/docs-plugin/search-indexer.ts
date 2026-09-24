@@ -490,7 +490,11 @@ export class SearchIndexer {
       this.config.routingStrategy,
     ).map((file) => this.compileTsxFile(file))
 
-    this._searchIndex.push(...mdxIndex.filter((entry) => !entry.hideFromSearch))
+    if (!this.config.disableLegacySearchIndex) {
+      this._searchIndex.push(
+        ...mdxIndex.filter((entry) => !entry.hideFromSearch),
+      )
+    }
 
     this.navBuilder.build()
 

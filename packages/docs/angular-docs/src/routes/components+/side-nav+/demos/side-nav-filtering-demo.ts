@@ -1,6 +1,6 @@
 import {Component, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
-import {Search} from "lucide-angular"
+import {LucideSearch} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
@@ -24,7 +24,7 @@ import {QLogoComponent} from "./q-logo.component"
     FormsModule,
     QLogoComponent,
   ],
-  providers: [provideIcons({...groupedIcons, Search})],
+  providers: [provideIcons({...groupedIcons, LucideSearch})],
   selector: "side-nav-filtering-demo",
   template: `
     <div class="flex justify-center">

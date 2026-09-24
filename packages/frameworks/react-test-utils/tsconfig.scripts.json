@@ -5,5 +5,5 @@
     "outDir": "node_modules/.tmp/scripts-out-tsc",
     "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-scripts"
   },
-  "include": ["*.ts"]
+  "include": ["package.json", "*.ts"]
 }

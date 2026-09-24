@@ -1,12 +1,22 @@
 import {Component} from "@angular/core"
-import {ExternalLink, MonitorSpeaker, SatelliteDish} from "lucide-angular"
+import {
+  LucideExternalLink,
+  LucideMonitorSpeaker,
+  LucideSatelliteDish,
+} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [IconDirective],
-  providers: [provideIcons({ExternalLink, MonitorSpeaker, SatelliteDish})],
+  providers: [
+    provideIcons({
+      LucideExternalLink,
+      LucideMonitorSpeaker,
+      LucideSatelliteDish,
+    }),
+  ],
   selector: "icon-provider-demo",
   standalone: true,
   template: `

@@ -16,3 +16,7 @@ export const START_ICON_CONTEXT_TOKEN = new InjectionToken<IconTokenContext>(
 export const END_ICON_CONTEXT_TOKEN = new InjectionToken<IconTokenContext>(
   "END_ICON_TOKEN",
 )
+
+export const ICON_CONTEXT_TOKEN = new InjectionToken<IconTokenContext>(
+  "ICON_TOKEN",
+)

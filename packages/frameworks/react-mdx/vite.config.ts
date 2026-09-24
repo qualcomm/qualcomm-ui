@@ -1,5 +1,4 @@
-import babel from "@rolldown/plugin-babel"
-import react, {reactCompilerPreset} from "@vitejs/plugin-react"
+import react from "@vitejs/plugin-react"
 import {defineConfig} from "vite"
 
 import {
@@ -28,7 +27,7 @@ export default defineConfig({
         /^@qualcomm-ui\//,
       ],
       output: {
-        banner: `"use client;"`,
+        banner: `"use client";`,
         entryFileNames: "[name].js",
         minify: {
           mangle: {
@@ -42,11 +41,5 @@ export default defineConfig({
   define: {
     __QUI_DEV___: mode === "development" ? "true" : "false",
   },
-  plugins: [
-    react(),
-    babel({
-      presets: [reactCompilerPreset()],
-    }),
-    libraryEntriesPlugin(),
-  ],
+  plugins: [react({compiler: true}), libraryEntriesPlugin()],
 })

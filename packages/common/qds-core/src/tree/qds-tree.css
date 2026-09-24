@@ -111,3 +111,7 @@
     --icon-size: var(--sizing-80);
   }
 }
+
+.qui-tree__node-text {
+  text-box: cap alphabetic;
+}

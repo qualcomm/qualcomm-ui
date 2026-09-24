@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {checkboxClasses} from "@qualcomm-ui/qds-core/checkbox"
 import type {inputClasses} from "@qualcomm-ui/qds-core/input"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
@@ -36,6 +37,16 @@ export interface QdsRadioItemLabelBindings {
 
 export interface QdsRadioItemControlBindings {
   className: RadioClasses["itemControl"]
+  "data-size": QdsRadioSize
+}
+
+export interface QdsRadioItemCheckboxControlBindings {
+  className: typeof checkboxClasses.control
+  "data-size": QdsRadioSize
+}
+
+export interface QdsRadioItemCheckboxIndicatorBindings {
+  className: typeof checkboxClasses.indicator
   "data-size": QdsRadioSize
 }
 
@@ -80,6 +91,8 @@ export interface QdsRadioApi {
   getGroupItemsBindings(): QdsRadioGroupItemsBindings
   getGroupLabelBindings(): QdsRadioGroupLabelBindings
   getItemBindings(): QdsRadioItemBindings
+  getItemCheckboxControlBindings(): QdsRadioItemCheckboxControlBindings
+  getItemCheckboxIndicatorBindings(): QdsRadioItemCheckboxIndicatorBindings
   getItemControlBindings(): QdsRadioItemControlBindings
   getItemHiddenInputBindings(): QdsRadioItemHiddenInputBindings
   getItemHintBindings(): QdsRadioItemHintBindings

@@ -1,12 +1,12 @@
 import {Component} from "@angular/core"
-import {Search} from "lucide-angular"
+import {LucideSearch} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 
 @Component({
   imports: [ButtonModule],
-  providers: [provideIcons({Search})],
+  providers: [provideIcons({LucideSearch})],
   selector: "icon-button-variant-combinations-demo",
   template: `
     <div class="grid grid-cols-3 grid-rows-4 gap-x-8 gap-y-5">

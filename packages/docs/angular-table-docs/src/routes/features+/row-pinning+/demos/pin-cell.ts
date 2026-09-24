@@ -1,5 +1,5 @@
 import {Component, inject} from "@angular/core"
-import {ArrowDown, ArrowUp, X} from "lucide-angular"
+import {LucideArrowDown, LucideArrowUp, LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
@@ -17,7 +17,7 @@ export interface RowPinningMeta {
 
 @Component({
   imports: [TableModule],
-  providers: [provideIcons({ArrowDown, ArrowUp, X})],
+  providers: [provideIcons({LucideArrowDown, LucideArrowUp, LucideX})],
   selector: "app-pin-cell",
   template: `
     @if (context().row.getIsPinned()) {

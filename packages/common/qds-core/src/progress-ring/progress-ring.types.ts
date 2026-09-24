@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {AnatomyPart} from "@qualcomm-ui/utils/anatomy"
+import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {JSX} from "@qualcomm-ui/utils/machine"
 
 import type {progressRingClasses} from "./progress-ring.classes.js"
@@ -23,6 +24,13 @@ export interface QdsProgressRingApiProps {
    * @default 'primary'
    */
   emphasis?: QdsProgressRingEmphasis
+
+  /**
+   * Whether to display a shimmer effect on a loading determinate progress.
+   *
+   * @default true
+   */
+  shimmer?: boolean
 
   /**
    * Governs the height of the progress circle and track.
@@ -62,6 +70,15 @@ export interface QdsProgressRingBarBindings {
   "data-size": QdsProgressRingSize
 }
 
+export interface QdsProgressRingShimmerBindings {
+  "aria-hidden": true
+  className: ProgressClasses["shimmer"]
+  "data-emphasis": QdsProgressRingEmphasis
+  "data-shimmer": BooleanDataAttr
+  "data-size": QdsProgressRingSize
+  style: JSX.CSSProperties
+}
+
 export interface QdsProgressRingCircleBindings {
   className: ProgressClasses["circle"]
   "data-emphasis": QdsProgressRingEmphasis
@@ -96,6 +113,7 @@ export interface QdsProgressRingApi {
   getErrorTextBindings(): QdsProgressRingErrorTextBindings
   getLabelBindings(): QdsProgressRingLabelBindings
   getRootBindings(): QdsProgressRingRootBindings
+  getShimmerBindings(): QdsProgressRingShimmerBindings
   getTrackBindings(): QdsProgressRingTrackBindings
   getValueTextBindings(): QdsProgressRingValueTextBindings
 }

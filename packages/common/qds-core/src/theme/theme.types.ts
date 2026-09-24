@@ -3,6 +3,7 @@
 
 export const QdsBrand = {
   ARDUINO: "arduino",
+  DRAGONFLY: "dragonfly",
   DRAGONWING: "dragonwing",
   QUALCOMM: "qualcomm",
   SNAPDRAGON: "snapdragon",

@@ -1,6 +1,6 @@
 import {Component, output, signal} from "@angular/core"
+import {LucidePlus, LucideStar} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Plus, Star} from "lucide-angular"
 import {describe, expect, test, vi} from "vitest"
 import {page} from "vitest/browser"
 
@@ -47,7 +47,7 @@ describe("Tag", () => {
   test("renders startIcon visible alongside the label", async () => {
     @Component({
       imports: [TagDirective],
-      providers: [provideIcons({Plus})],
+      providers: [provideIcons({LucidePlus})],
       template: `
         <span q-tag startIcon="Plus">Label</span>
       `,
@@ -64,7 +64,7 @@ describe("Tag", () => {
   test("renders endIcon visible alongside the label", async () => {
     @Component({
       imports: [TagDirective],
-      providers: [provideIcons({Star})],
+      providers: [provideIcons({LucideStar})],
       template: `
         <span endIcon="Star" q-tag>Label</span>
       `,
@@ -81,7 +81,7 @@ describe("Tag", () => {
   test("ignores endIcon when variant is dismissable and renders a Dismiss button", async () => {
     @Component({
       imports: [EndIconDirective, TagDirective],
-      providers: [provideIcons({Star})],
+      providers: [provideIcons({LucideStar})],
       template: `
         <span q-tag variant="dismissable">
           Label

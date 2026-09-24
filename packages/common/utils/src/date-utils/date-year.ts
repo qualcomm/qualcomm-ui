@@ -1,0 +1,74 @@
+// Modified from https://github.com/chakra-ui/zag
+// MIT License
+// Changes from Qualcomm Technologies, Inc. are provided under the following license:
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import {CalendarDate, type DateValue, toCalendar} from "@internationalized/date"
+
+export interface YearsRange {
+  from: number
+  to: number
+}
+export function getYearsRange(range: YearsRange): number[] {
+  const years: number[] = []
+  for (let year = range.from; year <= range.to; year += 1) {
+    years.push(year)
+  }
+  return years
+}
+
+const DEFAULT_MIN_YEAR = 1900
+const DEFAULT_MAX_YEAR = 2099
+
+export function getDefaultYearRange(
+  referenceDate: DateValue,
+  min?: DateValue,
+  max?: DateValue,
+): YearsRange {
+  const calendar = referenceDate.calendar
+  const fromYear =
+    min?.year ??
+    toCalendar(new CalendarDate(DEFAULT_MIN_YEAR, 1, 1), calendar).year
+  const toYear =
+    max?.year ??
+    toCalendar(new CalendarDate(DEFAULT_MAX_YEAR, 12, 31), calendar).year
+  return {from: fromYear, to: toYear}
+}
+
+const FUTURE_YEAR_COERCION = 10
+
+export function normalizeYear(
+  year: string | null | undefined,
+): string | undefined {
+  if (!year) {
+    return
+  }
+  if (year.length === 3) {
+    return year.padEnd(4, "0")
+  }
+  if (year.length === 2) {
+    const currentYear = new Date().getFullYear()
+    const currentCentury = Math.floor(currentYear / 100) * 100
+    const twoDigitYear = parseInt(year.slice(-2), 10)
+    const fullYear = currentCentury + twoDigitYear
+    return fullYear > currentYear + FUTURE_YEAR_COERCION
+      ? (fullYear - 100).toString()
+      : fullYear.toString()
+  }
+  return year
+}
+
+export function getDecadeRange(
+  year: number,
+  opts?: {strict?: boolean},
+): number[] {
+  const chunkSize = opts?.strict ? 10 : 12
+  const computedYear = year - (year % 10)
+  const years: number[] = []
+  for (let i = 0; i < chunkSize; i += 1) {
+    const value = computedYear + i
+    years.push(value)
+  }
+  return years
+}

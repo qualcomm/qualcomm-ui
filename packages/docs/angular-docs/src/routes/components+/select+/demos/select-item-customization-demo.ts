@@ -1,5 +1,12 @@
 import {Component, computed, signal} from "@angular/core"
-import {Apple, Banana, Grape, Hamburger, IceCream, Salad} from "lucide-angular"
+import {
+  LucideApple,
+  LucideBanana,
+  LucideGrape,
+  LucideHamburger,
+  LucideIceCreamCone,
+  LucideSalad,
+} from "@lucide/angular"
 
 import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
@@ -51,12 +58,12 @@ export class SelectItemCustomizationDemo {
     itemDisabled: (item) => item.disabled,
     itemLabel: (item) => item.name,
     items: [
-      {icon: Grape, id: "grape", name: "Grape"},
-      {icon: Banana, id: "banana", name: "Banana"},
-      {disabled: true, icon: Apple, id: "apple", name: "Apple"},
-      {icon: IceCream, id: "ice-cream", name: "Ice Cream"},
-      {icon: Hamburger, id: "hamburger", name: "Hamburger"},
-      {icon: Salad, id: "salad", name: "Salad"},
+      {icon: LucideGrape, id: "grape", name: "Grape"},
+      {icon: LucideBanana, id: "banana", name: "Banana"},
+      {disabled: true, icon: LucideApple, id: "apple", name: "Apple"},
+      {icon: LucideIceCreamCone, id: "ice-cream", name: "Ice Cream"},
+      {icon: LucideHamburger, id: "hamburger", name: "Hamburger"},
+      {icon: LucideSalad, id: "salad", name: "Salad"},
     ],
     itemValue: (item) => item.id,
   })

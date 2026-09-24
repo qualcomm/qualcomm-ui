@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {Eye, EyeOff} from "lucide-angular"
+import {LucideEye, LucideEyeOff} from "@lucide/angular"
 
 import {
   type LucideIconOrString,
@@ -17,11 +17,15 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({Eye, EyeOff})],
+  providers: [provideIcons({LucideEye, LucideEyeOff})],
   selector: "[q-password-input-visibility-trigger]",
   standalone: false,
   template: `
-    <svg [q-bind]="buttonApi().getIconBindings()" [qIcon]="icon()"></svg>
+    <svg
+      [q-bind]="buttonApi().getIconBindings()"
+      [qIcon]="icon()!"
+      [size]="buttonApi().size"
+    ></svg>
   `,
 })
 export class PasswordInputVisibilityTriggerDirective extends CorePasswordInputVisibilityTriggerDirective {

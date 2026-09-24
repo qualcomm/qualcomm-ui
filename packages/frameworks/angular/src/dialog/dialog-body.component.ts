@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {booleanAttribute, Component, computed, input} from "@angular/core"
-import {CircleAlert, CircleCheck, TriangleAlert} from "lucide-angular"
+import {
+  LucideCircleAlert,
+  LucideCircleCheck,
+  LucideTriangleAlert,
+} from "@lucide/angular"
 
 import {CoreDialogBodyDirective} from "@qualcomm-ui/angular-core/dialog"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
@@ -17,15 +21,7 @@ import {useQdsDialogContext} from "./qds-dialog-context.service"
   selector: "[q-dialog-body]",
   standalone: false,
   template: `
-    @if (!hideIndicatorIcon()) {
-      <ng-content select="[q-dialog-indicator-icon]">
-        <svg
-          data-test-id="dialog-indicator-icon"
-          q-dialog-indicator-icon
-          [qIcon]="indicatorIcon()"
-        ></svg>
-      </ng-content>
-    }
+    <ng-content select="[q-dialog-indicator-icon]" />
     <ng-content />
   `,
 })
@@ -34,6 +30,8 @@ export class DialogBodyComponent extends CoreDialogBodyDirective {
 
   /**
    * Hides the indicator icon.
+   *
+   * @deprecated no longer used.
    */
   readonly hideIndicatorIcon = input<boolean | undefined, Booleanish>(
     undefined,
@@ -42,18 +40,21 @@ export class DialogBodyComponent extends CoreDialogBodyDirective {
     },
   )
 
+  /**
+   * @deprecated no longer used
+   */
   readonly indicatorIcon = computed(() => {
     switch (this.qdsContext().emphasis) {
       case "neutral":
-        return CircleAlert
+        return LucideCircleAlert
       case "info":
-        return CircleAlert
+        return LucideCircleAlert
       case "success":
-        return CircleCheck
+        return LucideCircleCheck
       case "warning":
-        return TriangleAlert
+        return LucideTriangleAlert
       case "danger":
-        return CircleAlert
+        return LucideCircleAlert
     }
   })
 

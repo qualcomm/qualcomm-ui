@@ -124,7 +124,7 @@ Use the `<Tabs.Context>` component to access the tabs API from JSX.
 
 <Demo name="TabsContextDemo" component={demos.TabsContextDemo} />
 
-### Add and Remove Tabs
+### Dismissable Tabs
 
 ::: terms
 closable tabs, close button, dismissible
@@ -133,6 +133,15 @@ closable tabs, close button, dismissible
 Use `<Tab.DismissButton>` to make tabs removable. Combine this with React state to create a dynamic tab interface where users can add and close tabs.
 
 <Demo name="TabsAddRemoveDemo" component={demos.TabsAddRemoveDemo} />
+
+### Dismissable Tabs (Contained)
+
+When using the `contained` tab [variant](./#variant), the dismiss icon only shows on hover.
+
+<Demo
+  name="TabsAddRemoveContainedDemo"
+  component={demos.TabsAddRemoveContainedDemo}
+/>
 
 ## Explorer
 
@@ -155,19 +164,19 @@ Use `<Tab.DismissButton>` to make tabs removable. Combine this with React state 
 
 ### Tabs
 
-#### \<Tabs.Root\>
+#### \<Tabs.Root>
 
 <TypeDocProps name="TabsRootProps" />
 
 <TypeDocAttributes name={["QdsTabsRootBindings", "TabsRootBindings"]} />
 
-#### \<Tabs.List\>
+#### \<Tabs.List>
 
 <TypeDocProps name="TabsListProps" />
 
 <TypeDocAttributes name={["QdsTabsListBindings", "TabsListBindings"]} />
 
-#### \<Tabs.Indicator\>
+#### \<Tabs.Indicator>
 
 <TypeDocProps name="TabsIndicatorProps" />
 
@@ -175,7 +184,7 @@ Use `<Tab.DismissButton>` to make tabs removable. Combine this with React state 
   name={["QdsTabsIndicatorBindings", "TabsIndicatorBindings"]}
 />
 
-#### \<Tabs.Panel\>
+#### \<Tabs.Panel>
 
 <TypeDocProps name="TabsPanelProps" />
 
@@ -183,13 +192,13 @@ Use `<Tab.DismissButton>` to make tabs removable. Combine this with React state 
 
 ### Tab
 
-#### \<Tab.Root\>
+#### \<Tab.Root>
 
 <TypeDocProps name="TabRootProps" />
 
 <TypeDocAttributes name={["QdsTabsTabBindings", "TabsTabBindings"]} />
 
-#### \<Tab.Button\>
+#### \<Tab.Button>
 
 <TypeDocProps name="TabButtonProps" />
 
@@ -197,7 +206,7 @@ Use `<Tab.DismissButton>` to make tabs removable. Combine this with React state 
   name={["QdsTabsTabButtonBindings", "TabsTabButtonBindings"]}
 />
 
-#### \<Tab.DismissButton\>
+#### \<Tab.DismissButton>
 
 <TypeDocProps name="TabDismissButtonProps" />
 
@@ -205,7 +214,7 @@ Use `<Tab.DismissButton>` to make tabs removable. Combine this with React state 
   name={["QdsTabsTabDismissButtonBindings", "TabsTabDismissButtonBindings"]}
 />
 
-#### \<Tabs.Context\>
+#### \<Tabs.Context>
 
 <TypeDocProps name="TabsContextProps" />
 

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTabDismissButtonDirective} from "@qualcomm-ui/angular-core/tabs"
@@ -12,7 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsTabsContext} from "./qds-tabs-context.service"
 
 @Component({
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-tab-dismiss-button]",
   standalone: false,
   template: `

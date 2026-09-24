@@ -1,12 +1,12 @@
 import {
-  Bell,
-  CircleUser,
-  CreditCard,
-  LayoutDashboard,
-  Network,
-  ShieldCheck,
-  User,
-} from "lucide-angular"
+  LucideBell,
+  LucideCircleUser,
+  LucideCreditCard,
+  LucideLayoutDashboard,
+  LucideNetwork,
+  LucideShieldCheck,
+  LucideUser,
+} from "@lucide/angular"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
@@ -68,11 +68,11 @@ export const collection = createTreeCollection<SideNavItem>({
 })
 
 export const icons = {
-  Bell,
-  CircleUser,
-  CreditCard,
-  LayoutDashboard,
-  Network,
-  ShieldCheck,
-  User,
+  LucideBell,
+  LucideCircleUser,
+  LucideCreditCard,
+  LucideLayoutDashboard,
+  LucideNetwork,
+  LucideShieldCheck,
+  LucideUser,
 }

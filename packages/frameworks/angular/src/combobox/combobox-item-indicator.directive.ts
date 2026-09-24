@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {Check} from "lucide-angular"
+import {LucideCheck} from "@lucide/angular"
 
 import {CoreComboboxItemIndicatorDirective} from "@qualcomm-ui/angular-core/combobox"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
@@ -10,7 +10,7 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
 
 @Component({
-  providers: [provideIcons({Check})],
+  providers: [provideIcons({LucideCheck})],
   selector: "[q-combobox-item-indicator]",
   standalone: false,
   template: `

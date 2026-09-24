@@ -10,6 +10,7 @@ import {ProgressRingContextDirective} from "./progress-ring-context.directive"
 import {ProgressRingErrorTextDirective} from "./progress-ring-error-text.directive"
 import {ProgressRingLabelDirective} from "./progress-ring-label.directive"
 import {ProgressRingRootDirective} from "./progress-ring-root.directive"
+import {ProgressRingShimmerDirective} from "./progress-ring-shimmer.directive"
 import {ProgressRingTrackDirective} from "./progress-ring-track.directive"
 import {ProgressRingValueTextDirective} from "./progress-ring-value-text.directive"
 import {ProgressRingDirective} from "./progress-ring.directive"
@@ -19,6 +20,7 @@ import {ProgressRingDirective} from "./progress-ring.directive"
     ProgressRingDirective,
     ProgressRingRootDirective,
     ProgressRingBarDirective,
+    ProgressRingShimmerDirective,
     ProgressRingCircleDirective,
     ProgressRingCircleContainerDirective,
     ProgressRingContextDirective,

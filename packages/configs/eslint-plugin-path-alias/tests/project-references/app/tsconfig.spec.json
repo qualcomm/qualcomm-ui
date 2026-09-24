@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.vitest.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": ["./src/**/*.spec.ts", "./test"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

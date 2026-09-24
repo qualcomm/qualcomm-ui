@@ -27,6 +27,7 @@ export function UpdatedOnDate({
         {new Date(updatedOn).toLocaleDateString("en-US", {
           day: "numeric",
           month: "short",
+          timeZone: "UTC",
           year: "numeric",
         })}
       </time>

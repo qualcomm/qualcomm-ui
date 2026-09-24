@@ -641,7 +641,7 @@ export const Filters: TableFeature = {
       maxLeafRowFilterDepth: 100,
       onColumnFiltersChange: makeStateUpdater("columnFilters", table),
       onGlobalFilterChange: makeStateUpdater("globalFilter", table),
-    } as FiltersOptions<TData>
+    }
   },
 
   getInitialState: (state): FiltersTableState => {

@@ -1,0 +1,229 @@
+---
+title: Routing Conventions
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+QUI Docs builds on [Remix Flat Routes](https://github.com/kiliman/remix-flat-routes) to provide flexible file-based routing. Use these conventions to understand how page file paths map to URL segments.
+
+## Choose a routing strategy
+
+These conventions apply when the React Router route configuration uses `hybridRoutes` (the default). See [Custom Routing](#custom-file-based-routing) when the application defines file-based routes manually.
+
+The `routingStrategy` setting controls how folders participate in route discovery. Both built-in strategies preserve Remix Flat Routes filename behavior in the React Router route manifest.
+
+To enable `hybridRoutes` in a fresh application, install the dependencies:
+
+<NpmInstallTabs packages="@react-router/remix-routes-option-adapter @qualcomm-ui/react-router-utils @react-router/dev" />
+
+Then set up your `routes.ts` file:
+
+```ts
+import type {RouteConfigEntry} from "@react-router/dev/routes"
+import {remixRoutesOptionAdapter} from "@react-router/remix-routes-option-adapter"
+
+import {hybridRoutes} from "@qualcomm-ui/react-router-utils/node"
+
+export const routes: Promise<RouteConfigEntry[]> = remixRoutesOptionAdapter(
+  (defineRoutes) => {
+    return hybridRoutes("routes", defineRoutes, {
+      appDir: "src",
+      // optional: ignore files that match specific patterns
+      ignoredRouteFiles: ["**/*demos/**/*"],
+      // optional: refer to the next section for more details
+      routingStrategy: "react-router-directory-groups",
+    })
+  },
+)
+
+export default routes
+```
+
+## Default routing strategy
+
+The default strategy follows Remix Flat Routes naming. A folder ending in `+` turns its child filenames into flat route segments. Plain folders use the flat-folder convention and only recognize route module filenames such as `route.mdx`, `_layout.tsx`, or `page.route.mdx`.
+
+The default strategy requires `+` on folders that organize regular route files:
+
+## Directory groups
+
+Set `routingStrategy` to `"react-router-directory-groups"` for a simpler file tree approach. Plain folders and `+` folders both turn child filenames into route segments. Plain folders beginning with `_` are private and excluded from discovery.
+
+| Route module | URL |
+| --- | --- |
+| `help/troubleshooting.mdx` | `/help/troubleshooting` |
+| `guide/content-creation/overview.mdx` | `/guide/content-creation/overview` |
+
+The `+` form remains valid in directory-group mode:
+
+| Route module | URL |
+| --- | --- |
+| `public+/login.mdx` | `/public/login` |
+
+These MDX directory examples produce the same URLs in the React Router route manifest, QUI Docs page map, side navigation, and search index.
+
+### Private folders
+
+In directory-group mode, a plain folder whose name begins with `_` is private. QUI Docs skips every route file inside it. Use private folders for demos, components, fixtures, and other files that support a page without creating pages of their own.
+
+| File | Discovery result |
+| --- | --- |
+| `components/button.mdx` | Creates `/components/button` |
+| `components/_demos/basic.tsx` | Excluded by the `_demos` folder |
+| `components/_components/example.mdx` | Excluded by the `_components` folder |
+| `components/_button.mdx` | Creates `/components`; underscore-prefixed files remain route modules |
+
+The private-folder rule does not apply to a folder containing `+`, such as `_public+`. The route manifest treats `_public+` as a pathless group, but the QUI Docs page map retains `_public` in indexed URLs. Do not use an underscore-plus folder for indexed MDX pages.
+
+## React Router route-module conventions
+
+Both routing strategies support the remaining Remix Flat Routes conventions for JSX and TSX route modules. These examples describe the React Router route manifest. QUI Docs does not apply pathless-segment, trailing-underscore, or optional-segment normalization when it builds the MDX page map, side navigation, and search index. Do not use these advanced filenames for indexed MDX pages. You may still use them for JSX and TSX route modules.
+
+### Flat filenames
+
+Dots in a route filename create URL segments. Route nesting uses the longest matching route filename as the parent layout.
+
+| Route module | URL | Route relationship |
+| --- | --- | --- |
+| `privacy.jsx` | `/privacy` | Root child |
+| `pages.tos.jsx` | `/pages/tos` | Root child; no `pages.jsx` layout exists |
+| `about.jsx` | `/about` | Parent layout |
+| `about.contact.jsx` | `/about/contact` | Child of `about.jsx` |
+| `about.index.jsx` | `/about` | Index child of `about.jsx` |
+| `about._index.jsx` | `/about` | Alias for `about.index.jsx` |
+| `dashboard.route.jsx` | `/dashboard` | Root child; `.route` does not add a URL segment |
+
+`about.index.jsx` and `about._index.jsx` are alternative names for the same index route. Use one of them, not both.
+
+### Layouts and parent overrides
+
+A route becomes a layout when another route has a matching filename prefix. The layout component must render an outlet for its child routes.
+
+| Route module | URL | Layout behavior |
+| --- | --- | --- |
+| `about.jsx` | `/about` | URL layout for `about.*` children |
+| `about.contact.jsx` | `/about/contact` | Renders inside `about.jsx` |
+| `_auth.jsx` | No URL segment | Pathless layout for `_auth.*` children |
+| `_auth.login.jsx` | `/login` | Renders inside `_auth.jsx` |
+
+A leading underscore creates a pathless segment. The segment still determines layout nesting but does not appear in the URL.
+
+Append an underscore to a segment to keep the URL segment while opting out of the matching parent layout:
+
+| Route module | URL | Layout behavior |
+| --- | --- | --- |
+| `about_.company.jsx` | `/about/company` | Does not render inside `about.jsx` |
+| `app_.projects.$id.roadmap.tsx` | `/app/projects/:id/roadmap` | Does not render inside `app.jsx` |
+
+### Dynamic and optional segments
+
+A segment beginning with `$` creates a dynamic parameter. A bare `$` creates a splat that matches the remaining URL. Parentheses make a static or dynamic segment optional.
+
+| Route module | URL pattern |
+| --- | --- |
+| `users.$userId.jsx` | `/users/:userId` |
+| `docs.$.jsx` | `/docs/*` |
+| `reports.(archive).jsx` | `/reports/archive?` |
+| `reports.($year).jsx` | `/reports/:year?` |
+
+> [!tip]
+> QUI Docs excludes filenames containing `$` from its page map, side navigation, and search index.
+
+## Custom file-based routing
+
+Use this approach to create your own file-based routing strategy.
+
+### When to Configure Routing
+
+React Router's [Framework Mode](https://reactrouter.com/home#react-router-as-a-framework) supports manually defined route definitions. When you use manual routes, QUI Docs can still discover MDX files, but it cannot infer the page URL from React Router's route config.
+
+Add a [routingStrategy](/api/qui-docs-config#routingStrategy) so QUI Docs can map each discovered page file to the same URL React Router uses.
+
+### Example Routes
+
+Assume that the app defines these route files:
+
+<FileTree
+  className="mt-4"
+  expandedValue={["src", "routes", "help"]}
+  onExpandedValueChange={() => {}}
+  items={[
+    {
+      name: "src",
+      items: [
+        {
+          name: "routes",
+          items: [
+            {name: "index.mdx"},
+            {name: "setup.mdx"},
+            {
+              name: "help",
+              items: [
+                {name: "contact-us.mdx"},
+                {name: "troubleshooting.mdx"},
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+The React Router route config can map those files explicitly:
+
+```typescript
+// src/routes.ts
+import {type RouteConfig, index, prefix, route} from "@react-router/dev/routes"
+
+export default [
+  index("routes/index.mdx"),
+  route("setup", "routes/setup.mdx"),
+
+  ...prefix("help", [
+    route("contact-us", "routes/help/contact-us.mdx"),
+    route("troubleshooting", "routes/help/troubleshooting.mdx"),
+  ]),
+] satisfies RouteConfig
+```
+
+### Routing Strategy
+
+In `qui-docs.config.ts`, provide a function that receives each file path relative to `pageDirectory` and returns the URL path segments for that file.
+
+```typescript
+// qui-docs.config.ts
+import {QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
+
+export default {
+  // ...
+  routingStrategy: (filePath: string) => {
+    const routePath = filePath.replace(/\.(mdx|tsx)$/, "")
+    const segments = routePath.split("/")
+
+    if (segments.at(-1) === "index") {
+      return segments.slice(0, -1)
+    }
+
+    return segments
+  },
+} satisfies QuiDocsConfig
+```
+
+The home route returns an empty array because it renders at `/`.
+
+| filePath                   | expected path segments        |
+| :------------------------- | :---------------------------- |
+| `index.mdx`                | `[]`                          |
+| `setup.mdx`                | `["setup"]`                   |
+| `help/contact-us.mdx`      | `["help", "contact-us"]`      |
+| `help/troubleshooting.mdx` | `["help", "troubleshooting"]` |
+
+### Keep Routes in Sync
+
+The `routingStrategy` should describe the same URLs as `routes.ts`. If the React Router route config changes, update the strategy in the same PR so navigation, page links, breadcrumbs, and search results continue to point to the rendered page.
+
+For the default file-based convention, omit `routingStrategy` and follow the naming rules in [Page Configuration](/pages).

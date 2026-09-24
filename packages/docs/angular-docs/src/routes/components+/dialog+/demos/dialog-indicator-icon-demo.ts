@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {AArrowDown} from "lucide-angular"
+import {LucideAArrowDown} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
@@ -8,7 +8,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 @Component({
   imports: [DialogModule, ButtonModule, IconDirective],
-  providers: [provideIcons({AArrowDown})],
+  providers: [provideIcons({LucideAArrowDown})],
   selector: "dialog-indicator-icon-demo",
   template: `
     <div class="flex justify-center" q-dialog-root>

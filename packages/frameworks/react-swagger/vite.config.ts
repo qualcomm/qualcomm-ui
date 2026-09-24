@@ -20,7 +20,7 @@ export default defineConfig({
         /^@qualcomm-ui\//,
       ],
       output: {
-        banner: `"use client;"`,
+        banner: `"use client";`,
         entryFileNames: "[name].js",
         minify: {
           mangle: {

@@ -2,7 +2,7 @@ import {ESLint} from "eslint"
 import {defineConfig} from "eslint/config"
 import {type InfiniteDepthConfigWithExtends, parser} from "typescript-eslint"
 
-import fsdPlugin from "../index"
+import fsdPlugin from "../src"
 
 export const pathPrefix = "./tests/src"
 
@@ -23,12 +23,8 @@ const flatConfig: InfiniteDepthConfigWithExtends[] = [
     },
   },
   {
-    extends: [fsdPlugin.configs.publicApi],
-    files: ["**/*.ts"],
-  },
-  {
-    extends: [fsdPlugin.configs.layers, fsdPlugin.configs.segments],
-    files: ["**/*.ts"],
+    extends: [fsdPlugin.configs.recommended],
+    files: ["**/*.{ts,tsx}"],
     rules: {
       "import/order": "off",
       "unused-imports/no-unused-imports": "off",

@@ -17,7 +17,7 @@ const ruleTester = new RuleTester({
 })
 
 describe("input-label-association", () => {
-  ruleTester.run("simple components", inputLabelAssociation as any, {
+  ruleTester.run("simple components", inputLabelAssociation, {
     invalid: [
       {
         code: `<q-text-input></q-text-input>`,
@@ -219,7 +219,7 @@ describe("input-label-association", () => {
     ],
   })
 
-  ruleTester.run("compound roots", inputLabelAssociation as any, {
+  ruleTester.run("compound roots", inputLabelAssociation, {
     invalid: [
       {
         code: `

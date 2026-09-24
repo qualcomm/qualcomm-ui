@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {DialogCloseButtonComponent} from "@qualcomm-ui/angular/dialog"
@@ -11,7 +11,7 @@ import {DialogCloseButtonComponent} from "@qualcomm-ui/angular/dialog"
  * A button that closes the drawer.
  */
 @Component({
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-drawer-close-button]",
   standalone: false,
   template: `

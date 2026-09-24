@@ -1,5 +1,38 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.5.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-utils]: add calendar date utilities ([4937390](https://github.com/qualcomm/qualcomm-ui/commit/4937390))
+
+## 1.4.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Code Refactoring
+
+* [filter]: prefer locale-aware substring matches ([6cd18e0](https://github.com/qualcomm/qualcomm-ui/commit/6cd18e0))
+
+## 1.3.3
+
+Aug 16th, 2026
+
+### Bug Fixes
+
+- [machine]: add type polyfill for TS 6 compat ([70acec1](https://github.com/qualcomm/qualcomm-ui/commit/70acec1))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
 ## 1.3.2
 
 Jun 10th, 2026

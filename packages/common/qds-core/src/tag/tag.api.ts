@@ -50,7 +50,7 @@ export function createQdsTagApi(
     getDismissButtonBindings(): QdsTagDismissButtonBindings {
       return normalize.button({
         ...parts.dismissButton,
-        "aria-label": "Dismiss",
+        "aria-label": props.dismissLabel || "Dismiss",
         className: tagClasses.dismissButton,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-size": size,

@@ -1,13 +1,13 @@
-import {ButtonGroupLayoutDemo as LayoutDemo} from "@qualcomm-ui/react-docs/components+/button-group+/demos/button-group-layout-demo"
-import {ButtonGroupSharedPropsDemo as SharedPropsDemo} from "@qualcomm-ui/react-docs/components+/button-group+/demos/button-group-shared-props-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: LayoutDemo, title: "Layout"},
-  {component: SharedPropsDemo, title: "Shared Props"},
-]
+const componentName = "button-group"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/button-group+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function ButtonGroupDemos() {
-  return <DemoPageLayout componentName="button-group" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

@@ -1,4 +1,4 @@
-import {type HTMLAttributes, useState} from "react"
+import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
 import {render} from "vitest-browser-react"
@@ -409,17 +409,13 @@ const tests: MultiComponentTestCase[] = [
         <RadioGroup
           data-test-id={testIds.group}
           defaultValue="option1"
-          itemsProps={
-            {
-              "data-test-id": testIds.items,
-            } as HTMLAttributes<HTMLElement>
-          }
+          itemsProps={{
+            "data-test-id": testIds.items,
+          }}
           label={demoGroupLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.groupLabel,
-            } as HTMLAttributes<HTMLElement>
-          }
+          labelProps={{
+            "data-test-id": testIds.groupLabel,
+          }}
         >
           {radioOptions.map((option) => (
             <Radio
@@ -609,23 +605,17 @@ const tests: MultiComponentTestCase[] = [
       return (
         <RadioGroup defaultValue={demoValue}>
           <Radio
-            controlProps={
-              {
-                "data-test-id": testIds.control,
-              } as HTMLAttributes<HTMLElement>
-            }
+            controlProps={{
+              "data-test-id": testIds.control,
+            }}
             data-test-id={testIds.root}
-            hiddenInputProps={
-              {
-                "data-test-id": testIds.hiddenInput,
-              } as HTMLAttributes<HTMLElement>
-            }
+            hiddenInputProps={{
+              "data-test-id": testIds.hiddenInput,
+            }}
             label={demoLabel}
-            labelProps={
-              {
-                "data-test-id": testIds.label,
-              } as HTMLAttributes<HTMLElement>
-            }
+            labelProps={{
+              "data-test-id": testIds.label,
+            }}
             value={demoValue}
           />
         </RadioGroup>

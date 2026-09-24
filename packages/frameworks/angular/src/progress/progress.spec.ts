@@ -21,6 +21,9 @@ const testIds = {
   valueText: "progress-value-text",
 }
 
+const getBar = (container: Element) =>
+  container.querySelector("[q-progress-bar]")
+
 const tests: MultiComponentTest[] = [
   {
     composite() {
@@ -621,6 +624,230 @@ const tests: MultiComponentTest[] = [
         await expect.element(page.getByTestId(testIds.bar)).toBeVisible()
         await expect.element(page.getByTestId(testIds.errorText)).toBeVisible()
         await expect.element(page.getByTestId(testIds.hint)).not.toBeVisible()
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div q-progress-root [value]="50">
+            <div q-progress-label>{{ testLabel() }}</div>
+            <div q-progress-track></div>
+          </div>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div q-progress [label]="testLabel()" [value]="50"></div>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`shimmer enabled by default — ${component.name}`, async () => {
+        const {container} = await render(component)
+
+        expect(getBar(container)).toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div q-progress-root [shimmer]="false" [value]="50">
+            <div q-progress-label>{{ testLabel() }}</div>
+            <div q-progress-track></div>
+          </div>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div
+            q-progress
+            [label]="testLabel()"
+            [shimmer]="false"
+            [value]="50"
+          ></div>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`shimmer disabled — ${component.name}`, async () => {
+        const {container} = await render(component)
+
+        expect(getBar(container)).not.toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div q-progress-root [shimmer]="true" [value]="50">
+            <div q-progress-label>{{ testLabel() }}</div>
+            <div q-progress-track></div>
+          </div>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div
+            q-progress
+            [label]="testLabel()"
+            [shimmer]="true"
+            [value]="50"
+          ></div>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`shimmer explicitly enabled — ${component.name}`, async () => {
+        const {container} = await render(component)
+
+        expect(getBar(container)).toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div q-progress-root shimmer="false" [value]="50">
+            <div q-progress-label>{{ testLabel() }}</div>
+            <div q-progress-track></div>
+          </div>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div
+            q-progress
+            shimmer="false"
+            [label]="testLabel()"
+            [value]="50"
+          ></div>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`shimmer disabled via static attribute — ${component.name}`, async () => {
+        const {container} = await render(component)
+
+        expect(getBar(container)).not.toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div>
+            <div q-progress-root [shimmer]="shimmer()" [value]="50">
+              <div q-progress-label>{{ testLabel() }}</div>
+              <div q-progress-track></div>
+            </div>
+            <button type="button" (click)="shimmer.set(false)">
+              Disable Shimmer
+            </button>
+          </div>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly shimmer = signal(true)
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [ProgressModule],
+        template: `
+          <div>
+            <div
+              q-progress
+              [label]="testLabel()"
+              [shimmer]="shimmer()"
+              [value]="50"
+            ></div>
+            <button type="button" (click)="shimmer.set(false)">
+              Disable Shimmer
+            </button>
+          </div>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly shimmer = signal(true)
+        protected readonly testLabel = signal(testLabel)
+      }
+
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`shimmer reacts to input changes — ${component.name}`, async () => {
+        const {container} = await render(component)
+
+        expect(getBar(container)).toHaveAttribute("data-shimmer")
+        await page.getByRole("button", {name: "Disable Shimmer"}).click()
+        expect(getBar(container)).not.toHaveAttribute("data-shimmer")
       })
     },
   },

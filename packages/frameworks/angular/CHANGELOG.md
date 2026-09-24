@@ -1,5 +1,153 @@
 # @qualcomm-ui/angular Changelog
 
+## 3.3.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [combobox/select]: add item group components ([577914a](https://github.com/qualcomm/qualcomm-ui/commit/577914a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@1.38.0, @qualcomm-ui/angular-core@3.3.0]
+
+## 3.2.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-picker]: focus trap ([3a63bd1](https://github.com/qualcomm/qualcomm-ui/commit/3a63bd1))
+* [date-picker]: add the Angular date picker ([bee0c27](https://github.com/qualcomm/qualcomm-ui/commit/bee0c27))
+* [tag]: allow customizing the dismiss button label ([b86bf8e](https://github.com/qualcomm/qualcomm-ui/commit/b86bf8e))
+* [select]: label remove buttons with the selected item text ([39b2c7b](https://github.com/qualcomm/qualcomm-ui/commit/39b2c7b))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/angular-core@3.2.0, @qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/qds-core@1.37.0]
+
+## 3.1.0
+
+Aug 18th, 2026
+
+### Features
+
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/qds-core@1.36.0, @qualcomm-ui/utils@1.4.0, @qualcomm-ui/angular-core@3.1.0]
+
+## 3.0.0
+
+Aug 16th, 2026
+
+### BREAKING CHANGES
+
+- migrate to TS 6.0, update lucide-angular to @lucide/angular ([fb20318](https://github.com/qualcomm/qualcomm-ui/commit/fb20318))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/angular-core@3.0.0, @qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/qds-core@1.35.1]
+
+## 2.15.1
+
+Aug 11th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.35.0, @qualcomm-ui/angular-core@2.4.8]
+
+## 2.15.0
+
+Aug 6th, 2026
+
+### Features
+
+- [icons]: support injection token for qIcon bindings ([3a15bf8](https://github.com/qualcomm/qualcomm-ui/commit/3a15bf8))
+
+### Miscellaneous Chores
+
+- deprecate inline-icon-button component ([8e39d9c](https://github.com/qualcomm/qualcomm-ui/commit/8e39d9c))
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.34.0, @qualcomm-ui/angular-core@2.4.8]
+
+### Bug Fixes
+
+- [icon-button]: prevent size from reverting on icon change ([34ff621](https://github.com/qualcomm/qualcomm-ui/commit/34ff621))
+- [combobox]: always use icon size from context ([4a595f3](https://github.com/qualcomm/qualcomm-ui/commit/4a595f3))
+- [dialog/drawer]: use compact icon button for close action ([b3e995d](https://github.com/qualcomm/qualcomm-ui/commit/b3e995d))
+- [component icons]: apply icon sizes explicitly, update sizes to match latest figma designs ([ac19397](https://github.com/qualcomm/qualcomm-ui/commit/ac19397))
+
+### Tests
+
+- [dialog]: remove emphasis tests ([0cffab1](https://github.com/qualcomm/qualcomm-ui/commit/0cffab1))
+
+## 2.14.2
+
+Jul 28th, 2026
+
+### Tests
+
+- [tabs]: improve focus state test coverage ([b388a69](https://github.com/qualcomm/qualcomm-ui/commit/b388a69))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/qds-core@1.33.2, @qualcomm-ui/angular-core@2.4.7]
+
+## 2.14.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [tabs]: reveal contained tab dismiss buttons on hover ([6a01d50](https://github.com/qualcomm/qualcomm-ui/commit/6a01d50))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.1]
+
+## 2.14.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.33.0]
+
+## 2.13.0
+
+Jul 16th, 2026
+
+### Features
+
+- [side-nav]: add size variants and adjust item padding ([093ab43](https://github.com/qualcomm/qualcomm-ui/commit/093ab43))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.32.0, @qualcomm-ui/angular-core@2.4.6]
+
+## 2.12.5
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/qds-core@1.31.0, @qualcomm-ui/angular-core@2.4.6]
+
 ## 2.12.4
 
 Jul 10th, 2026

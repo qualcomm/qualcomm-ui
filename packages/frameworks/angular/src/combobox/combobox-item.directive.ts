@@ -10,6 +10,9 @@ import {
 
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
 
+/**
+ * @since 3.3.0
+ */
 @Directive({
   providers: [provideComboboxItemContext()],
   selector: "[q-combobox-item]",

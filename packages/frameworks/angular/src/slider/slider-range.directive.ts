@@ -4,6 +4,7 @@
 import {computed, Directive} from "@angular/core"
 
 import {CoreSliderRangeDirective} from "@qualcomm-ui/angular-core/slider"
+import type {QdsSliderApi} from "@qualcomm-ui/qds-core/slider"
 
 import {useQdsSliderContext} from "./qds-slider-context.service"
 
@@ -12,7 +13,8 @@ import {useQdsSliderContext} from "./qds-slider-context.service"
   standalone: false,
 })
 export class SliderRangeDirective extends CoreSliderRangeDirective {
-  protected readonly qdsSliderContext = useQdsSliderContext()
+  protected readonly qdsSliderContext: () => QdsSliderApi =
+    useQdsSliderContext()
 
   constructor() {
     super()

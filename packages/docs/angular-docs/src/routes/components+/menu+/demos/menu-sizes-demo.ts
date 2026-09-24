@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {LogOut, Settings, User} from "lucide-angular"
+import {LucideLogOut, LucideSettings, LucideUser} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
@@ -7,7 +7,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [MenuModule, PortalComponent],
-  providers: [provideIcons({LogOut, Settings, User})],
+  providers: [provideIcons({LucideLogOut, LucideSettings, LucideUser})],
   selector: "menu-sizes-demo",
   template: `
     <q-menu size="sm">

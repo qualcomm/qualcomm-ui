@@ -280,7 +280,9 @@ export function applyBindings(
       return
     }
     for (const name of names.split(",")) {
-      renderer.removeClass(el, name)
+      for (const className of name.split(" ")) {
+        renderer.removeClass(el, className)
+      }
     }
   }
 

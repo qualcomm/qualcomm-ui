@@ -45,6 +45,7 @@
     "react-ssr": "pnpm -C packages/debug-apps/react-ssr",
     "eslint-plugin-angular": "pnpm -C packages/configs/eslint-plugin-angular",
     "eslint-plugin-react": "pnpm -C packages/configs/eslint-plugin-react",
+    "sync-design-tokens": "pnpm qds-core update-design-tokens && pnpm tailwind-plugin build",
     "oxfmt-config": "pnpm -C packages/configs/oxfmt-config",
     "oxlint-config": "pnpm -C packages/configs/oxlint-config",
     "react-swagger": "pnpm -C packages/frameworks/react-swagger",
@@ -59,12 +60,12 @@
     "bump": "pnpm qui-changesets prep-release --include-commit-links && pnpm qui-changesets update-jsdoc-since-tags"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
+    "@changesets/cli": "^3.0.0",
     "@clack/prompts": "1.0.0-alpha.6",
     "@commander-js/extra-typings": "catalog:",
     "@eslint/js": "catalog:",
     "@manypkg/get-packages": "^3.1.0",
-    "@qualcomm-ui/changesets-cli": "^2.1.0",
+    "@qualcomm-ui/changesets-cli": "^2.2.0",
     "@qualcomm-ui/eslint-config-angular": "workspace:*",
     "@qualcomm-ui/eslint-config-mdx": "workspace:*",
     "@qualcomm-ui/eslint-config-react": "workspace:*",
@@ -111,5 +112,5 @@
     "playwright": "1.60.0",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@11.11.0+sha512.4463f65fd80ed80d69bc1d4bf163ee94f605c7380fc318bb5b2ebe15f8cd12d49c51a4d59e951b401e764d3b6ca751cbf51bc50ed7001a6bcb4935e684c34882"
+  "packageManager": "pnpm@12.6.0+sha512.3ef68f951cb111ac204b4a5a16f0b2ddf0da56a96e0413e81d855d9f0b55ef926714709028e1cd00c405c2c5fb7b9e8ec4dc46777c805d0373c2f2ff00fd20ec"
 }

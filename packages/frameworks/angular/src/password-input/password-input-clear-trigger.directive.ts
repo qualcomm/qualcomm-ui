@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CorePasswordInputClearTriggerDirective} from "@qualcomm-ui/angular-core/password-input"
 import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 
 @Component({
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-password-input-clear-trigger]",
   standalone: false,
   template: `

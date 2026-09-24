@@ -1,6 +1,6 @@
 import {Component, computed, inject} from "@angular/core"
 import {RouterLink} from "@angular/router"
-import {Moon, Sun} from "lucide-angular"
+import {LucideMoon, LucideSun} from "@lucide/angular"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {LinkDirective} from "@qualcomm-ui/angular/link"
@@ -43,21 +43,27 @@ export class Home {
   protected readonly themeService = inject(QdsThemeService)
 
   readonly themeIcon = computed(() =>
-    this.themeService.theme() === "light" ? Sun : Moon,
+    this.themeService.theme() === "light" ? LucideSun : LucideMoon,
   )
 
   groups = [
     {name: "Accordion", path: "/accordion"},
+    {name: "Alert Banner", path: "/alert-banner"},
     {name: "Avatar", path: "/avatar"},
     {name: "Breadcrumbs", path: "/breadcrumbs"},
     {name: "Button", path: "/button"},
     {name: "Button Group", path: "/button-group"},
+    {name: "Card", path: "/card"},
     {name: "Checkbox", path: "/checkbox"},
+    {name: "Checkbox Group", path: "/checkbox-group"},
     {name: "Collapsible", path: "/collapsible"},
     {name: "Combobox", path: "/combobox"},
+    {name: "Date Picker", path: "/date-picker"},
     {name: "Dialog", path: "/dialog"},
     {name: "Divider", path: "/divider"},
     {name: "Drawer", path: "/drawer"},
+    {name: "File Input", path: "/file-input"},
+    {name: "Header Bar", path: "/header-bar"},
     {name: "Icon", path: "/icon"},
     {name: "Icon Button", path: "/icon-button"},
     {name: "Inline Icon Button", path: "/inline-icon-button"},
@@ -77,10 +83,13 @@ export class Home {
     {name: "Slider", path: "/slider"},
     {name: "Stepper", path: "/stepper"},
     {name: "Switch", path: "/switch"},
+    {name: "Switch Group", path: "/switch-group"},
     {name: "Tabs", path: "/tabs"},
     {name: "Tag", path: "/tag"},
+    {name: "Text Area", path: "/text-area"},
     {name: "Text Input", path: "/text-input"},
     {name: "Toast", path: "/toast"},
     {name: "Tooltip", path: "/tooltip"},
+    {name: "Tree", path: "/tree"},
   ]
 }

@@ -65,13 +65,7 @@ Combined, pages live at `<process.cwd()>/<appDirectory>/<pageDirectory>`. With d
 
 ### routingStrategy
 
-Controls how file paths map to URL segments. Two built-in values:
-
-- **omitted (default)** — uses [remix-flat-routes](https://github.com/kiliman/remix-flat-routes) conventions. Only folders ending in `+` create nested URL groups. Plain folders behave as standard React Router nested routes and do not contribute their own URL segment.
-
-- **`"react-router-directory-groups"`** — both plain folders and `+` folders create nested URL groups. Folders whose name starts with `_` (for example `_demos`) are excluded from route discovery entirely. A file at `help/troubleshooting.mdx` maps to `/help/troubleshooting` without requiring a `help+` folder name.
-
-When routes are defined manually rather than auto-discovered, `routingStrategy` can also be a custom function. See [Custom Routing](/custom-routing) for the full setup.
+Controls how file paths map to URL segments. This is explored in detail on the [Routing Conventions](/routing-conventions) page.
 
 ## Navigation
 

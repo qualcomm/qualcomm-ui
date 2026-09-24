@@ -1,5 +1,46 @@
 # @qualcomm-ui/dom Changelog
 
+## 1.3.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: focus trap ([3a63bd1](https://github.com/qualcomm/qualcomm-ui/commit/3a63bd1))
+* [date-picker]: add the date picker state machine ([be92213](https://github.com/qualcomm/qualcomm-ui/commit/be92213))
+
+### Bug Fixes
+
+* proper positioning defaults in components and JSDoc ([cb9973e](https://github.com/qualcomm/qualcomm-ui/commit/cb9973e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.0]
+
+## 1.2.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.4.0]
+
+## 1.1.6
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3]
+
 ## 1.1.5
 
 Jul 1st, 2026

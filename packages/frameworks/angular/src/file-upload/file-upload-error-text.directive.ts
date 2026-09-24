@@ -4,7 +4,7 @@
 import {Component, computed, input} from "@angular/core"
 
 import {CoreFileUploadErrorTextDirective} from "@qualcomm-ui/angular-core/file-upload"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 
 import {useQdsFileUploadContext} from "./qds-file-upload-context.service"
 
@@ -22,7 +22,7 @@ export class FileUploadErrorTextDirective extends CoreFileUploadErrorTextDirecti
   /**
    * Optional error indicator icon.
    */
-  readonly icon = input<LucideIcon | string>()
+  readonly icon = input<LucideIconOrString>()
 
   protected readonly qdsFileUploadContext = useQdsFileUploadContext()
 

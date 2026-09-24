@@ -8,6 +8,7 @@ import {useAccordionItemContent} from "@qualcomm-ui/react-core/accordion"
 import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
 import {Collapsible} from "@qualcomm-ui/react/collapsible"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+import {splitProps} from "@qualcomm-ui/utils/object"
 
 export interface AccordionItemContentAnimatorProps
   extends IdProp, ElementRenderProp<"div"> {
@@ -26,7 +27,9 @@ export function AccordionItemContentAnimator({
   id,
   ...props
 }: AccordionItemContentAnimatorProps): ReactElement {
-  const contextProps = useAccordionItemContent({id})
+  const [, contextProps] = splitProps(useAccordionItemContent({id}), [
+    "data-state",
+  ])
   const mergedProps = mergeProps(
     contextProps,
     {className: accordionClasses.itemContentAnimator},

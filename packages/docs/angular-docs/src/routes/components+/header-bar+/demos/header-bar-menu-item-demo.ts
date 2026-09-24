@@ -1,5 +1,5 @@
 import {Component} from "@angular/core"
-import {AArrowDown, Layers2} from "lucide-angular"
+import {LucideAArrowDown, LucideLayers2} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
@@ -9,7 +9,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [HeaderBarModule, MenuModule, IconDirective, PortalDirective],
-  providers: [provideIcons({AArrowDown, Layers2})],
+  providers: [provideIcons({LucideAArrowDown, LucideLayers2})],
   selector: "header-bar-menu-item-demo",
   template: `
     <!-- preview -->

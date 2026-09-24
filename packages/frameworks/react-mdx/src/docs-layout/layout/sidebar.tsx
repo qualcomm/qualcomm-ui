@@ -235,6 +235,7 @@ export function Sidebar({
           onSelectedValueChange(details.selectedValue)
         }}
         selectedValue={selectedValue}
+        size={navDensity === "compact" ? "sm" : "md"}
       >
         {children ? (
           <SideNav.Header data-sticky={booleanDataAttr(stickyHeader)}>
@@ -316,7 +317,6 @@ export function Sidebar({
                     )
                   }
                 >
-                  <SideNav.NodeIndicator />
                   <SideNav.NodeText>{node.title}</SideNav.NodeText>
                   {SideNavBadgesComponent && node.badges ? (
                     <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">

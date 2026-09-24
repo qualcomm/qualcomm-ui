@@ -47,4 +47,5 @@ export interface QdsIconButtonIconBindings extends Part<"icon"> {
 export interface QdsIconButtonApi {
   getIconBindings(): QdsIconButtonIconBindings
   getRootBindings(): QdsIconButtonRootBindings
+  size: QdsButtonSize
 }
