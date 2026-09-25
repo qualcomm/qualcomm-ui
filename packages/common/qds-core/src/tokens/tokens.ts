@@ -28,7 +28,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "Square sentinel — a deliberate hard right angle. Value: 0. A bound zero, NOT the absence of a token: this step says the corner is intentionally square, keeping the decision traceable and re-pointable. Bind this token for a square corner; never leave it untokenised or type 0 — a typed zero bypasses Core and loses the intent. Value coincides with a zero stroke width — pick by what the value is (a corner shape), never by the number. This group owns corner shape only — edge thickness → border/width/*, edge colour → color/border/*. Scoped to CORNER_RADIUS.",
     "name": "border-radius-none",
     "type": "number",
-    "value": 0
+    "value": "0px"
   },
   {
     "comment": "Pill sentinel — always fully rounded into a capsule, whatever the element&#39;s size. Value: 360 (clamps to a full capsule at any size). Distinct from the largest graduated step (xxl): a graduated step gives a fixed corner that becomes proportionally less round as the element grows; rounded always clamps to a full capsule. Bind this token for a capsule; never type 360 — a typed number bypasses Core and won&#39;t behave as the capsule does when the element resizes. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
@@ -76,7 +76,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "No-stroke sentinel — a deliberately undrawn edge. Value: 0. A bound zero, NOT the absence of a token: this step says the edge has no stroke on purpose, keeping the decision traceable and re-pointable. Bind this token for an intentionally undrawn edge; never leave the stroke off without it — omitting a token loses the intent. Value coincides with border/radius/none (a square corner) — pick by what the value is (a stroke thickness), never by the number. This group owns stroke thickness only — corner shape → border/radius/*, edge colour → color/border/*. Scoped to STROKE_FLOAT.",
     "name": "border-width-none",
     "type": "number",
-    "value": 0
+    "value": "0px"
   },
   {
     "comment": "Faint hairline stroke. Value: 1px. The lightest visible edge — barely-there, delineating without asserting. Choose by how prominent the edge should be: fainter sits lower, heavier sits higher. Between two steps, take the nearer. Never type the literal 1 — bind this variable. No published component currently binds this step — the ladder is the available set of thicknesses, not spare stock. This group owns stroke thickness only; corner shape → border/radius/*, colour → color/border/*. Scoped to STROKE_FLOAT.",
@@ -255,19 +255,19 @@ export const tokens: TokenWithComment[] = [
     "comment": "Translucent structural edge — faintest hairline; adapts to the surface beneath (grey on light, light on dark). Chain stops at Theme (opacity literal). Prefer over opaque where the edge must adapt across surfaces or themes. Not for: state edges (→ support/*); fills. Contrast: translucent — verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-border-neutral-01",
     "type": "color",
-    "value": "#ffffff1a"
+    "value": "rgba(255, 255, 255, 0.1)"
   },
   {
     "comment": "Translucent structural edge — mid-rung; more visible than 01, less assertive than 03; adapts to the surface beneath. Chain stops at Theme (opacity literal). Not for: state edges (→ support/*); fills. Contrast: verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-border-neutral-02",
     "type": "color",
-    "value": "#ffffff33"
+    "value": "rgba(255, 255, 255, 0.2)"
   },
   {
     "comment": "Translucent structural edge — firmest rung while still adapting to the surface beneath. Chain stops at Theme (opacity literal). Not for: state edges (→ support/*); fills. Contrast: verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-border-neutral-03",
     "type": "color",
-    "value": "#ffffff4d"
+    "value": "rgba(255, 255, 255, 0.3)"
   },
   {
     "comment": "Opaque dark (inverse) structural edge — fixed dark colour regardless of backdrop. Distinct role, NOT the continuation of the translucent ladder. Not for: state edges (→ support/*); brand edges; fills. Contrast: verify 3:1 at point of use. Scoped to STROKE_COLOR.",
@@ -627,19 +627,19 @@ export const tokens: TokenWithComment[] = [
     "comment": "Ghost — fill of a ghost-voice interactive control at hover. The translucent fill appearing when the pointer is over the control. Translucent (opacity literal). No measured foreground — composes over the surface beneath. Take the whole state set together. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-ghost-hover",
     "type": "color",
-    "value": "#ffffff14"
+    "value": "rgba(255, 255, 255, 0.08)"
   },
   {
     "comment": "Ghost — fill of a ghost-voice interactive control at idle. Ghost has no resting fill — this token is transparent at idle. Translucent (held at Theme as an opacity literal). No measured foreground — the ghost fill composes over the surface beneath; contrast is set by that surface. Take the whole state set (idle/hover/pressed) together. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-ghost-idle",
     "type": "color",
-    "value": "#ffffff00"
+    "value": "rgba(255, 255, 255, 0)"
   },
   {
     "comment": "Ghost — fill of a ghost-voice interactive control at pressed. Translucent (opacity literal). No measured foreground — composes over the surface beneath. Take the whole state set together. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-ghost-pressed",
     "type": "color",
-    "value": "#ffffff29"
+    "value": "rgba(255, 255, 255, 0.16)"
   },
   {
     "comment": "Inverse — solid fill of an inverse-voice control at hover. On a backdrop whose tonal value flips across themes. Foreground: broad guaranteed set at hover — icon/neutral/primary, icon/neutral/secondary, icon/brand/primary, text/neutral/primary, text/neutral/secondary, support icons and danger text (see Guarantees). Not inverse. Scoped to FRAME_FILL, SHAPE_FILL.",
@@ -663,19 +663,19 @@ export const tokens: TokenWithComment[] = [
     "comment": "Inverse ghost — translucent fill of an inverse-voice ghost-form control at hover on a flipping backdrop. No measured foreground — composes over the surface beneath. Take the whole state set together. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-inverse-ghost-hover",
     "type": "color",
-    "value": "#00000014"
+    "value": "rgba(0, 0, 0, 0.08)"
   },
   {
     "comment": "Inverse ghost — fill of an inverse-voice ghost-form control at idle. Transparent at rest on a backdrop whose tonal value flips across themes. Translucent (opacity literal). No measured foreground — composes over the flipping surface beneath. Take the whole state set together. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-inverse-ghost-idle",
     "type": "color",
-    "value": "#00000000"
+    "value": "rgba(0, 0, 0, 0)"
   },
   {
     "comment": "Inverse ghost — translucent fill of an inverse-voice ghost-form control at pressed on a flipping backdrop. No measured foreground. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-inverse-ghost-pressed",
     "type": "color",
-    "value": "#00000029"
+    "value": "rgba(0, 0, 0, 0.16)"
   },
   {
     "comment": "Neutral — fill of a neutral-voice interactive control at hover. Take the whole state set (idle/hover/pressed) together. Foreground: component-owned. Scoped to FRAME_FILL, SHAPE_FILL.",
@@ -717,19 +717,19 @@ export const tokens: TokenWithComment[] = [
     "comment": "Persistent/black ghost — translucent fill at hover on a light-stable backdrop. No measured foreground. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-persistent-black-ghost-hover",
     "type": "color",
-    "value": "#00000014"
+    "value": "rgba(0, 0, 0, 0.08)"
   },
   {
     "comment": "Persistent/black ghost — fill of a persistent-black-voice ghost-form control at idle. Transparent at rest on a light-stable backdrop. Translucent (opacity literal). No measured foreground — composes over the backdrop. Take the whole state set together. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-persistent-black-ghost-idle",
     "type": "color",
-    "value": "#00000000"
+    "value": "rgba(0, 0, 0, 0)"
   },
   {
     "comment": "Persistent/black ghost — translucent fill at pressed on a light-stable backdrop. No measured foreground. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-persistent-black-ghost-pressed",
     "type": "color",
-    "value": "#00000029"
+    "value": "rgba(0, 0, 0, 0.16)"
   },
   {
     "comment": "Persistent/white — solid fill at hover. On a dark-stable backdrop; value fixed white in both themes. Foreground: component-owned. Scoped to FRAME_FILL, SHAPE_FILL.",
@@ -753,19 +753,19 @@ export const tokens: TokenWithComment[] = [
     "comment": "Persistent/white ghost — translucent fill at hover on a dark-stable backdrop. No measured foreground. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-persistent-white-ghost-hover",
     "type": "color",
-    "value": "#ffffff14"
+    "value": "rgba(255, 255, 255, 0.08)"
   },
   {
     "comment": "Persistent/white ghost — fill of a persistent-white-voice ghost-form control at idle. Transparent at rest on a dark-stable backdrop. Translucent (opacity literal). No measured foreground — composes over the backdrop. Take the whole state set together. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-persistent-white-ghost-idle",
     "type": "color",
-    "value": "#ffffff00"
+    "value": "rgba(255, 255, 255, 0)"
   },
   {
     "comment": "Persistent/white ghost — translucent fill at pressed on a dark-stable backdrop. No measured foreground. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-interactive-background-persistent-white-ghost-pressed",
     "type": "color",
-    "value": "#ffffff29"
+    "value": "rgba(255, 255, 255, 0.16)"
   },
   {
     "comment": "Primary — fill of a primary-voice interactive control at hover (pointer over the control). Take the whole state set (idle/hover/pressed) together. Foreground: component-owned; no group-level guarantee. Scoped to FRAME_FILL, SHAPE_FILL.",
@@ -807,13 +807,13 @@ export const tokens: TokenWithComment[] = [
     "comment": "Inverse — edge of an inverse-voice control at hover. On a flipping backdrop. Translucent (opacity literal). Take the whole state set together. Contrast: verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-inverse-hover",
     "type": "color",
-    "value": "#000000e5"
+    "value": "rgba(0, 0, 0, 0.9)"
   },
   {
     "comment": "Inverse — edge of an inverse-voice interactive control at idle. For a control on a backdrop whose tonal value flips across themes. Translucent (held at Theme as an opacity literal; effective colour from what it sits over). Take the whole state set (idle/hover/pressed) together. Prefer the inverse charge over a per-instance mode override. Contrast: translucent — verify 3:1 against effective adjacent colour at point of use (WCAG 1.4.11). Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-inverse-idle",
     "type": "color",
-    "value": "#000000cc"
+    "value": "rgba(0, 0, 0, 0.8)"
   },
   {
     "comment": "Inverse — edge of an inverse-voice control at pressed. On a flipping backdrop. Opaque at pressed (resolves to a primitive). Take the whole state set together. Contrast: verify 3:1 against adjacent colours at point of use. Scoped to STROKE_COLOR.",
@@ -825,31 +825,31 @@ export const tokens: TokenWithComment[] = [
     "comment": "Neutral — edge of a neutral-voice outlined control or input at hover. Translucent (opacity literal; effective colour from what it sits over). Take the whole state set together. Contrast: verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-neutral-hover",
     "type": "color",
-    "value": "#ffffff6b"
+    "value": "rgba(255, 255, 255, 0.42)"
   },
   {
     "comment": "Neutral — edge of a neutral-voice outlined interactive control or input at idle. Translucent (held at Theme as an opacity literal; effective colour comes from what it sits over). Always take the whole state set (idle/hover/pressed) together. Not for static edges (→ color/border/*). Contrast: translucent — verify 3:1 against the EFFECTIVE adjacent colour at point of use if the only state indicator (WCAG 1.4.11). Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-neutral-idle",
     "type": "color",
-    "value": "#ffffff4d"
+    "value": "rgba(255, 255, 255, 0.3)"
   },
   {
     "comment": "Neutral — edge of a neutral-voice outlined control or input at pressed. Translucent (opacity literal). Take the whole state set together. Contrast: verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-neutral-pressed",
     "type": "color",
-    "value": "#ffffff8a"
+    "value": "rgba(255, 255, 255, 0.54)"
   },
   {
     "comment": "Persistent/black — edge at hover. On a light-stable backdrop. Translucent (opacity literal). Take the whole state set together. Contrast: verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-persistent-black-hover",
     "type": "color",
-    "value": "#000000e5"
+    "value": "rgba(0, 0, 0, 0.9)"
   },
   {
     "comment": "Persistent/black — edge of a persistent-black-voice control at idle. On a light-stable backdrop; value is fixed black in both themes. Translucent (held at Theme as an opacity literal; effective colour from what it sits over). Take the whole state set (idle/hover/pressed) together. Contrast: translucent — verify 3:1 against effective adjacent colour at point of use (WCAG 1.4.11). Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-persistent-black-idle",
     "type": "color",
-    "value": "#000000cc"
+    "value": "rgba(0, 0, 0, 0.8)"
   },
   {
     "comment": "Persistent/black — edge at pressed. On a light-stable backdrop. Opaque at pressed (resolves to a primitive). Take the whole state set together. Contrast: verify 3:1 against adjacent colours at point of use. Scoped to STROKE_COLOR.",
@@ -861,13 +861,13 @@ export const tokens: TokenWithComment[] = [
     "comment": "Persistent/white — edge at hover. On a dark-stable backdrop. Translucent (opacity literal). Take the whole state set together. Contrast: verify 3:1 against effective adjacent colour at point of use. Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-persistent-white-hover",
     "type": "color",
-    "value": "#ffffffe5"
+    "value": "rgba(255, 255, 255, 0.9)"
   },
   {
     "comment": "Persistent/white — edge of a persistent-white-voice control at idle. On a dark-stable backdrop; value is fixed white in both themes. Translucent (held at Theme as an opacity literal; effective colour from what it sits over). Take the whole state set (idle/hover/pressed) together. Contrast: translucent — verify 3:1 against effective adjacent colour at point of use (WCAG 1.4.11). Scoped to STROKE_COLOR.",
     "name": "color-interactive-border-persistent-white-idle",
     "type": "color",
-    "value": "#ffffffcc"
+    "value": "rgba(255, 255, 255, 0.8)"
   },
   {
     "comment": "Persistent/white — edge at pressed. On a dark-stable backdrop. Opaque at pressed (resolves to a primitive). Take the whole state set together. Contrast: verify 3:1 against adjacent colours at point of use. Scoped to STROKE_COLOR.",
@@ -1221,13 +1221,13 @@ export const tokens: TokenWithComment[] = [
     "comment": "Disabled fill — translucent treatment for a control rendered unavailable. Use alongside disabled/border, /icon, /text; all four must dim together. Caution: same value as opacity/03 — pick by mechanic. When translucent bleeds incorrectly, use background-solid instead. Not for enabled low-emphasis content (&quot;quiet&quot; ≠ &quot;disabled&quot;). Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-utility-disabled-background",
     "type": "color",
-    "value": "#ffffff14"
+    "value": "rgba(255, 255, 255, 0.08)"
   },
   {
     "comment": "Disabled border — translucent. Caution: same value as opacity/04 — pick by mechanic. Use alongside disabled/background, /icon, /text. Not for enabled content. Scoped to STROKE_COLOR.",
     "name": "color-utility-disabled-border",
     "type": "color",
-    "value": "#ffffff1f"
+    "value": "rgba(255, 255, 255, 0.12)"
   },
   {
     "comment": "Disabled icon. Use alongside disabled/background, /border, /text. Not for enabled but quiet icons — disabled means &quot;cannot be used&quot;, not &quot;quiet&quot;. Scoped to FRAME_FILL, SHAPE_FILL, STROKE_COLOR.",
@@ -1239,13 +1239,13 @@ export const tokens: TokenWithComment[] = [
     "comment": "Disabled fill — inverse context (dark backdrop). Use when a disabled control sits on a dark surface. Prefer over per-instance mode override. Use alongside disabled/inverse/border, /icon, /text. Not for the everyday context (→ disabled/background). Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-utility-disabled-inverse-background",
     "type": "color",
-    "value": "#00000014"
+    "value": "rgba(0, 0, 0, 0.08)"
   },
   {
     "comment": "Disabled border — inverse context (dark backdrop). Use alongside disabled/inverse/background, /icon, /text. Not for everyday context (→ disabled/border). Scoped to STROKE_COLOR.",
     "name": "color-utility-disabled-inverse-border",
     "type": "color",
-    "value": "#0000001f"
+    "value": "rgba(0, 0, 0, 0.12)"
   },
   {
     "comment": "Disabled icon — inverse context (dark backdrop). Use alongside disabled/inverse/background, /border, /text. Not for everyday context. Scoped to FRAME_FILL, SHAPE_FILL, STROKE_COLOR.",
@@ -1263,13 +1263,13 @@ export const tokens: TokenWithComment[] = [
     "comment": "Disabled fill — persistent/black context (fixed-black backdrop). Use alongside disabled/persistent/black/border, /icon, /text. Not for everyday or inverse contexts. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-utility-disabled-persistent-black-background",
     "type": "color",
-    "value": "#00000014"
+    "value": "rgba(0, 0, 0, 0.08)"
   },
   {
     "comment": "Disabled border — persistent/black context. Use alongside persistent/black/background, /icon, /text. Scoped to STROKE_COLOR.",
     "name": "color-utility-disabled-persistent-black-border",
     "type": "color",
-    "value": "#0000001f"
+    "value": "rgba(0, 0, 0, 0.12)"
   },
   {
     "comment": "Disabled icon — persistent/black context. Use alongside persistent/black/background, /border, /text. Scoped to FRAME_FILL, SHAPE_FILL, STROKE_COLOR.",
@@ -1287,13 +1287,13 @@ export const tokens: TokenWithComment[] = [
     "comment": "Disabled fill — persistent/white context (fixed-white backdrop). Use alongside disabled/persistent/white/border, /icon, /text. Not for everyday (→ disabled/background) or inverse context. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-utility-disabled-persistent-white-background",
     "type": "color",
-    "value": "#ffffff14"
+    "value": "rgba(255, 255, 255, 0.08)"
   },
   {
     "comment": "Disabled border — persistent/white context. Use alongside persistent/white/background, /icon, /text. Not for everyday or inverse contexts. Scoped to STROKE_COLOR.",
     "name": "color-utility-disabled-persistent-white-border",
     "type": "color",
-    "value": "#ffffff1f"
+    "value": "rgba(255, 255, 255, 0.12)"
   },
   {
     "comment": "Disabled icon — persistent/white context. Use alongside persistent/white/background, /border, /text. Scoped to FRAME_FILL, SHAPE_FILL, STROKE_COLOR.",
@@ -1322,162 +1322,162 @@ export const tokens: TokenWithComment[] = [
   {
     "name": "color-utility-opacity-brand-01",
     "type": "color",
-    "value": "#2a2aea05"
+    "value": "rgba(42, 42, 234, 0.02)"
   },
   {
     "name": "color-utility-opacity-brand-02",
     "type": "color",
-    "value": "#2a2aea0a"
+    "value": "rgba(42, 42, 234, 0.04)"
   },
   {
     "name": "color-utility-opacity-brand-03",
     "type": "color",
-    "value": "#2a2aea14"
+    "value": "rgba(42, 42, 234, 0.08)"
   },
   {
     "name": "color-utility-opacity-brand-04",
     "type": "color",
-    "value": "#2a2aea1f"
+    "value": "rgba(42, 42, 234, 0.12)"
   },
   {
     "name": "color-utility-opacity-brand-05",
     "type": "color",
-    "value": "#2a2aea29"
+    "value": "rgba(42, 42, 234, 0.16)"
   },
   {
     "name": "color-utility-opacity-brand-06",
     "type": "color",
-    "value": "#2a2aea3d"
+    "value": "rgba(42, 42, 234, 0.24)"
   },
   {
     "name": "color-utility-opacity-brand-07",
     "type": "color",
-    "value": "#2a2aea52"
+    "value": "rgba(42, 42, 234, 0.32)"
   },
   {
     "name": "color-utility-opacity-brand-08",
     "type": "color",
-    "value": "#2a2aea7a"
+    "value": "rgba(42, 42, 234, 0.48)"
   },
   {
     "name": "color-utility-opacity-brand-09",
     "type": "color",
-    "value": "#2a2aeaa3"
+    "value": "rgba(42, 42, 234, 0.64)"
   },
   {
     "name": "color-utility-opacity-brand-10",
     "type": "color",
-    "value": "#2a2aeacc"
+    "value": "rgba(42, 42, 234, 0.8)"
   },
   {
     "name": "color-utility-opacity-inverse-01",
     "type": "color",
-    "value": "#00000005"
+    "value": "rgba(0, 0, 0, 0.02)"
   },
   {
     "name": "color-utility-opacity-inverse-02",
     "type": "color",
-    "value": "#0000000a"
+    "value": "rgba(0, 0, 0, 0.04)"
   },
   {
     "name": "color-utility-opacity-inverse-03",
     "type": "color",
-    "value": "#00000014"
+    "value": "rgba(0, 0, 0, 0.08)"
   },
   {
     "name": "color-utility-opacity-inverse-04",
     "type": "color",
-    "value": "#0000001f"
+    "value": "rgba(0, 0, 0, 0.12)"
   },
   {
     "name": "color-utility-opacity-inverse-05",
     "type": "color",
-    "value": "#00000029"
+    "value": "rgba(0, 0, 0, 0.16)"
   },
   {
     "name": "color-utility-opacity-inverse-06",
     "type": "color",
-    "value": "#0000003d"
+    "value": "rgba(0, 0, 0, 0.24)"
   },
   {
     "name": "color-utility-opacity-inverse-07",
     "type": "color",
-    "value": "#00000052"
+    "value": "rgba(0, 0, 0, 0.32)"
   },
   {
     "name": "color-utility-opacity-inverse-08",
     "type": "color",
-    "value": "#0000007a"
+    "value": "rgba(0, 0, 0, 0.48)"
   },
   {
     "name": "color-utility-opacity-inverse-09",
     "type": "color",
-    "value": "#000000a3"
+    "value": "rgba(0, 0, 0, 0.64)"
   },
   {
     "name": "color-utility-opacity-inverse-10",
     "type": "color",
-    "value": "#000000cc"
+    "value": "rgba(0, 0, 0, 0.8)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 01 of the raw transparency axis — the faintest veil. Resolves to black at low opacity in light theme and white in dark theme. Held at Theme as an opacity literal (chain: Brand → Theme only). Reach for directly while composing UI for a barely-there translucent layer; also drawn on internally by the system&#39;s translucent treatments. ALL_SCOPES is correct here — the one intentional ALL_SCOPES case in the colour system; the opacity ladder composes in every picker by design.\n\nDo not use to fake a disabled state (→ disabled/*; disabled/background = opacity/03 in value — mechanics differ). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung — it is a position on an axis of veiling, not a named role. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-01",
     "type": "color",
-    "value": "#ffffff05"
+    "value": "rgba(255, 255, 255, 0.02)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 02 of the raw transparency axis. Resolves to black in light theme and white in dark theme at increasing opacity. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-02",
     "type": "color",
-    "value": "#ffffff0a"
+    "value": "rgba(255, 255, 255, 0.04)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 03 of the raw transparency axis. Held at Theme as an opacity literal. Caution: shares a value with disabled/background — values coincide; mechanics don&#39;t. Pick disabled/background to dim a control (the authored disabled treatment); reach for this rung only when &quot;veil by this amount&quot; is the intent with no disabled meaning. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-03",
     "type": "color",
-    "value": "#ffffff14"
+    "value": "rgba(255, 255, 255, 0.08)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 04 of the raw transparency axis. Held at Theme as an opacity literal. Caution: shares a value with disabled/border — values coincide; mechanics don&#39;t. Pick disabled/border for the disabled control&#39;s border; reach for this rung only when &quot;veil by this amount&quot; is the intent with no disabled meaning. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-04",
     "type": "color",
-    "value": "#ffffff1f"
+    "value": "rgba(255, 255, 255, 0.12)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 05 of the raw transparency axis — the mid-point. Resolves to black in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-05",
     "type": "color",
-    "value": "#ffffff29"
+    "value": "rgba(255, 255, 255, 0.16)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 06 of the raw transparency axis. Resolves to black in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-06",
     "type": "color",
-    "value": "#ffffff3d"
+    "value": "rgba(255, 255, 255, 0.24)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 07 of the raw transparency axis. Resolves to black in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-07",
     "type": "color",
-    "value": "#ffffff52"
+    "value": "rgba(255, 255, 255, 0.32)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 08 of the raw transparency axis — a dense veil. Resolves to black at high opacity in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-08",
     "type": "color",
-    "value": "#ffffff7a"
+    "value": "rgba(255, 255, 255, 0.48)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 09 of the raw transparency axis — a very dense veil. Resolves to black at very high opacity in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer. Do not assign a fixed meaning to this rung. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-09",
     "type": "color",
-    "value": "#ffffffa3"
+    "value": "rgba(255, 255, 255, 0.64)"
   },
   {
     "comment": "Utility mechanic — opacity. Rung 10 of the raw transparency axis — the densest veil. Resolves to black at near-full opacity in light theme and white in dark theme. Held at Theme as an opacity literal. ALL_SCOPES is correct — the one intentional ALL_SCOPES case.\n\nDo not use to fake a disabled state (→ disabled/*). Do not use for a finished semantic layer (→ scrim/default). Do not assign a fixed meaning to this rung — the ladder is an axis of veiling, not a set of named roles. No contrast guarantee.",
     "name": "color-utility-opacity-neutral-10",
     "type": "color",
-    "value": "#ffffffcc"
+    "value": "rgba(255, 255, 255, 0.8)"
   },
   {
     "comment": "Persistent black — fixed value in both themes; does not flip. Use for fills or content that must stay black regardless of theme. Not for: general black (defeats theming — use theme-aware neutrals); dark architectural layers (→ color/surface/*).\nForeground: icon/neutral/secondary + all support icons guaranteed. Text pairings Manual. Scoped to FRAME_FILL, SHAPE_FILL, TEXT_FILL, STROKE_COLOR.",
@@ -1489,7 +1489,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "Persistent translucent white — fixed in both themes; does not flip. Use for a translucent white layer over a dark or shifting backdrop that must stay unchanged when theme switches. Translucent: no measured foreground. No TEXT_FILL scope. Scoped to ALL_FILLS, STROKE_COLOR.",
     "name": "color-utility-persistent-transparent-white",
     "type": "color",
-    "value": "#ffffffcc"
+    "value": "rgba(255, 255, 255, 0.8)"
   },
   {
     "comment": "Persistent white — fixed value in both themes; does not flip. Use for fills or content that must stay white regardless of theme. Not for general white — use theme-aware neutrals unless the fixed value is explicit intent.\nForeground: all pairings Manual. Not: icon/support/warning. Scoped to FRAME_FILL, SHAPE_FILL, TEXT_FILL, STROKE_COLOR.",
@@ -1513,7 +1513,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "Overlay-dimming layer — the dark translucent fill placed between the content behind and the overlay above it. The overlay sits ON the scrim. Not for: translucent panel fills (→ color/surface/*); general transparency (→ opacity/*). No contrast guarantee — content sits on the overlay, not the scrim. Scoped to FRAME_FILL, SHAPE_FILL.",
     "name": "color-utility-scrim-default",
     "type": "color",
-    "value": "#000000cc"
+    "value": "rgba(0, 0, 0, 0.8)"
   },
   {
     "name": "component-button-global-border-radius",
@@ -1618,47 +1618,47 @@ export const tokens: TokenWithComment[] = [
   {
     "name": "component-button-variant-outline-danger-border-hover",
     "type": "color",
-    "value": "#ffffff6b"
+    "value": "rgba(255, 255, 255, 0.42)"
   },
   {
     "name": "component-button-variant-outline-danger-border-idle",
     "type": "color",
-    "value": "#ffffff4d"
+    "value": "rgba(255, 255, 255, 0.3)"
   },
   {
     "name": "component-button-variant-outline-danger-border-pressed",
     "type": "color",
-    "value": "#ffffff8a"
+    "value": "rgba(255, 255, 255, 0.54)"
   },
   {
     "name": "component-button-variant-outline-neutral-border-hover",
     "type": "color",
-    "value": "#ffffff6b"
+    "value": "rgba(255, 255, 255, 0.42)"
   },
   {
     "name": "component-button-variant-outline-neutral-border-idle",
     "type": "color",
-    "value": "#ffffff4d"
+    "value": "rgba(255, 255, 255, 0.3)"
   },
   {
     "name": "component-button-variant-outline-neutral-border-pressed",
     "type": "color",
-    "value": "#ffffff8a"
+    "value": "rgba(255, 255, 255, 0.54)"
   },
   {
     "name": "component-button-variant-outline-primary-border-hover",
     "type": "color",
-    "value": "#ffffff6b"
+    "value": "rgba(255, 255, 255, 0.42)"
   },
   {
     "name": "component-button-variant-outline-primary-border-idle",
     "type": "color",
-    "value": "#ffffff4d"
+    "value": "rgba(255, 255, 255, 0.3)"
   },
   {
     "name": "component-button-variant-outline-primary-border-pressed",
     "type": "color",
-    "value": "#ffffff8a"
+    "value": "rgba(255, 255, 255, 0.54)"
   },
   {
     "name": "component-tag-selectable-neutral-selected-icon",
@@ -1703,7 +1703,7 @@ export const tokens: TokenWithComment[] = [
   {
     "name": "cross-component-track-default",
     "type": "color",
-    "value": "#ffffff1a"
+    "value": "rgba(255, 255, 255, 0.1)"
   },
   {
     "name": "font-dynamic-display-lg",
@@ -2115,7 +2115,7 @@ export const tokens: TokenWithComment[] = [
     "comment": "Spacing — Fine region. Value: 0px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 0 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
     "name": "spacing-0",
     "type": "number",
-    "value": 0
+    "value": "0px"
   },
   {
     "comment": "Spacing — Fine region. Value: 1px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 1 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
