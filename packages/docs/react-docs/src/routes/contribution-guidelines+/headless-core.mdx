@@ -1,0 +1,276 @@
+---
+title: Headless Core
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+
+# {frontmatter.title}
+
+The headless core contains framework-agnostic component logic across three packages: `@qualcomm-ui/utils`, `@qualcomm-ui/dom`, and `@qualcomm-ui/core`. These packages define state machines, DOM interactions, and public APIs that the React and Angular rendering layers consume. The checkbox serves as the reference implementation throughout.
+
+## `@qualcomm-ui/utils`
+
+Low-level utilities shared across all components.
+
+- `machine/`: State machine infrastructure (`createMachine`, `createNarrowedMachine`, `createGuards`, `createChoose`)
+- `attributes/`: Attribute helpers (`booleanDataAttr`, `booleanAriaAttr`, `mergeAriaIds`)
+- `merge-props/`: Prop merging utilities
+- `object/`: `createProps`, `createSplitProps` for prop splitting
+- `guard/`: Type utilities (`RequiredBy`, `Explicit`)
+- `collection/`: Collection management for list-based components
+- `descendants/`: DOM tree traversal patterns
+
+## `@qualcomm-ui/dom`
+
+DOM-specific utilities that components use to interact with the browser.
+
+- `focus-visible/`: Focus-visible detection (keyboard vs pointer focus)
+- `floating-ui/`: Positioning integration for poppers, tooltips, menus
+- `query/`: Element queries, input event dispatching, press tracking, form control tracking
+
+## `@qualcomm-ui/core`: Component State Machines
+
+Each component has its own directory with a consistent file structure.
+
+<FileTree
+  items={[
+    {
+      name: "checkbox",
+      items: [
+        {name: "checkbox.machine.ts"},
+        {name: "checkbox.api.ts"},
+        {name: "checkbox.types.ts"},
+        {name: "checkbox.props.ts"},
+        {
+          name: "internal",
+          items: [{name: "checkbox.dom.ts"}],
+        },
+        {name: "index.ts"},
+      ],
+    },
+  ]}
+  defaultExpandedValue={["checkbox", "internal"]}
+/>
+
+### Types (`checkbox.types.ts`)
+
+Every component defines a schema interface that fully describes the machine: its context, computed values, events, guards, effects, and the shape of its public API.
+
+```ts
+export interface CheckboxSchema extends MachineSchema {
+  context: {
+    checked: boolean
+    focused: boolean
+    focusVisible: boolean
+    hovered: boolean
+    active: boolean
+    fieldsetDisabled: boolean
+  }
+  computed: {
+    disabled: boolean | undefined
+    indeterminate: boolean | undefined
+  }
+  events:
+    | {type: "CHECKED.TOGGLE"; isTrusted: boolean}
+    | {type: "CHECKED.SET"; checked: boolean; isTrusted: boolean}
+    | {type: "CONTEXT.SET"; context: Partial<CheckboxContext>}
+  effects: EffectSchema<
+    "trackPressEvent" | "trackFocusVisible" | "trackFormControlState"
+  >
+  // ...
+}
+```
+
+The `CheckboxApiProps` interface defines the props that consumers pass in:
+
+```ts
+export interface CheckboxApiProps extends FieldApiProps, CommonProperties {
+  checked?: boolean
+  defaultChecked?: boolean
+  indeterminate?: boolean
+  name?: string
+  value?: string
+  onCheckedChange?(checked: boolean): void
+  onFocusChange?(focused: boolean): void
+  // ...
+}
+```
+
+### Machine (`checkbox.machine.ts`)
+
+The machine defines context initialization, computed values, event handlers, effects, and actions.
+
+```ts
+const checkboxMachineBase = {
+  context: ({bindable, prop}) => ({
+    checked: bindable<boolean>(() => ({
+      defaultValue: prop("defaultChecked"),
+      onChange: prop("onCheckedChange"),
+      value: prop("checked"),
+    })),
+    focused: bindable<boolean>(() => ({
+      defaultValue: false,
+      onChange: prop("onFocusChange"),
+    })),
+    // ...
+  }),
+
+  computed: {
+    disabled: ({context, prop}) =>
+      prop("disabled") || context.get("fieldsetDisabled"),
+    indeterminate: ({context, prop}) =>
+      prop("indeterminate") && !context.get("checked"),
+  },
+
+  on: {
+    "CHECKED.TOGGLE": [
+      {
+        actions: ["toggleChecked", "dispatchChangeEvent"],
+        guard: not("isTrusted"),
+      },
+      {actions: ["toggleChecked"]},
+    ],
+    "CHECKED.SET": [
+      {actions: ["setChecked", "dispatchChangeEvent"], guard: not("isTrusted")},
+      {actions: ["setChecked"]},
+    ],
+    "CONTEXT.SET": {actions: ["setContext"]},
+  },
+
+  onInit: {
+    effects: ["trackFormControlState", "trackPressEvent", "trackFocusVisible"],
+  },
+} satisfies MachineConfigBase<CheckboxSchema>
+
+export const checkboxMachine: MachineConfig<CheckboxSchema> =
+  createNarrowedMachine<CheckboxSchema>()(checkboxMachineBase, {
+    actions: {
+      toggleChecked({computed, context}) {
+        const checked = computed("indeterminate")
+          ? true
+          : !context.get("checked")
+        context.set("checked", checked)
+      },
+      setChecked({context, event}) {
+        // event is narrowed to { type: "CHECKED.SET"; checked: boolean; isTrusted: boolean }
+        context.set("checked", !!event.checked)
+      },
+      syncInputElement({computed, context, scope}) {
+        const inputEl = domEls.hiddenInput(scope)
+        if (!inputEl) return
+        setElementChecked(inputEl, context.get("checked"))
+        inputEl.indeterminate = !!computed("indeterminate")
+      },
+      // ...
+    },
+  })
+```
+
+- **`createNarrowedMachine`**: Splits machine definition into two parts. The base config (typed with `satisfies MachineConfigBase<Schema>`) defines structure: context, computed values, transitions, and effects. Actions are passed separately so TypeScript can narrow the `event` parameter in each action handler based on which transitions reference it. The curried call `createNarrowedMachine<Schema>()(base, { actions })` is required because TypeScript cannot mix explicit and inferred type parameters in a single call.
+- **`bindable()`**: Creates a reactive value that can be controlled externally (via `value`) or uncontrolled (via `defaultValue`). Fires `onChange` when the value changes. See [Controlled State](/patterns/controlled-state) for the underlying pattern.
+- **`computed`**: Derived values that combine context and props. Recomputed when dependencies change.
+- **`effects`**: Side effects that run when the machine starts. They return cleanup functions. `trackFormControlState` syncs with HTML form reset. `trackFocusVisible` detects keyboard-initiated focus. `trackPressEvent` tracks pointer and keyboard press interactions.
+- **`on`**: Event handlers mapping event types to actions. Guards conditionally select which action set runs.
+- **Event naming**: Events follow `NOUN.VERB` format: `CHECKED.TOGGLE`, `CHECKED.SET`, `CONTEXT.SET`.
+- **`watch`**: Tracks changes to specific context values or props and runs actions in response. The checkbox uses this to call `syncInputElement` when `checked` changes and `removeFocusIfNeeded` when `disabled` changes.
+
+### API (`checkbox.api.ts`)
+
+The API factory transforms the machine's internal state into a public interface. It exposes properties, methods, and binding getters.
+
+```ts
+export function createCheckboxApi(
+  machine: Machine<CheckboxSchema>,
+  normalize: PropNormalizer,
+): CheckboxApi {
+  const {computed, context, prop, scope, send} = machine
+
+  return {
+    checked: context.get("checked"),
+    disabled: computed("disabled"),
+
+    setChecked(checked: boolean) {
+      send({checked, isTrusted: false, type: "CHECKED.SET"})
+    },
+    toggleChecked() {
+      send({isTrusted: false, type: "CHECKED.TOGGLE"})
+    },
+
+    getRootBindings(props) {
+      scope.ids.register("root", props)
+      return normalize.label({
+        "data-disabled": booleanDataAttr(disabled),
+        "data-state": checked ? "checked" : "unchecked",
+        "data-scope": "checkbox",
+        "data-part": "root",
+        htmlFor: domIds.hiddenInput(scope),
+        // ...
+      })
+    },
+
+    getControlBindings(props) {
+      scope.ids.register("control", props)
+      return normalize.element({
+        "data-disabled": booleanDataAttr(disabled),
+        "data-state": checked ? "checked" : "unchecked",
+        "aria-hidden": "true",
+        "data-scope": "checkbox",
+        "data-part": "control",
+        // ...
+      })
+    },
+    // ...getIndicatorBindings(), getLabelBindings(), getHiddenInputBindings()
+  }
+}
+```
+
+Binding getters return objects containing HTML attributes, ARIA properties, data attributes, and event handlers. The `normalize` parameter adapts these for the target framework (React, Angular, etc.). This is the contract between the headless core and the rendering layer.
+
+### Props (`checkbox.props.ts`)
+
+The prop splitting pattern separates machine-specific props from HTML element props.
+
+```ts
+const checkboxProps = createProps<CheckboxApiProps>()(
+  "checked",
+  "defaultChecked",
+  "dir",
+  "disabled",
+  "form",
+  "ids",
+  "indeterminate",
+  "invalid",
+  "name",
+  "onCheckedChange",
+  "onFocusChange",
+  "readOnly",
+  "required",
+  "value",
+)
+
+export const splitCheckboxProps =
+  createSplitProps<CheckboxApiProps>(checkboxProps)
+```
+
+`splitCheckboxProps` takes a props object and returns a tuple: `[CheckboxApiProps, remainingHTMLProps]`. The styled layer uses this to route machine props to `useCheckbox()` and HTML props to the rendered element.
+
+## Creating a New Core Component
+
+1. Create a directory at `packages/common/core/src/[component]/`
+2. Define the schema in `[component].types.ts` with interfaces for context, computed values, events, the API, and binding return types
+3. Implement the machine in `[component].machine.ts` using `createNarrowedMachine`: define the base config with `satisfies MachineConfigBase<Schema>`, then pass actions separately to get narrowed event types
+4. Create the API factory in `[component].api.ts` to expose properties, methods, and binding getters
+5. Create the prop splitter in `[component].props.ts` listing all machine-specific prop names
+6. Add DOM selectors in `internal/[component].dom.ts` if the component needs to query specific elements
+7. Create barrel exports in `index.ts`
+
+## Conventions
+
+- All mutable state lives in the machine context via `bindable()`
+- Events follow `NOUN.VERB` naming: `CHECKED.TOGGLE`, `OPEN.SET`, `VALUE.CLEAR`
+- Effects return cleanup functions for subscriptions and listeners
+- `scope` provides access to the component's DOM subtree and ID registration
+- Computed values derive state from context + props. Use them for values like `disabled` that combine multiple sources.
+- Data attributes (`data-state`, `data-disabled`, `data-scope`, `data-part`) are the primary mechanism for communicating state to CSS
+
+See [QDS Core](/contribution-guidelines/qds-core) for how styling hooks into these data attributes.

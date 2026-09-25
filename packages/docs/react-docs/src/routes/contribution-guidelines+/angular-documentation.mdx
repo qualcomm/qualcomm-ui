@@ -1,0 +1,137 @@
+---
+title: Angular Documentation
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+
+# {frontmatter.title}
+
+This page covers how to document Angular components in the docs site at `packages/docs/angular-docs`.
+
+## Same Framework, Different Demos
+
+The Angular docs site uses the same technology stack as the React docs: React Router v7, MDX, and the same shared MDX components (`TypeDocProps`, `TypeDocAttributes`, `Demo`, etc.). Angular demos are Angular components rendered inside the React docs shell.
+
+All MDX authoring patterns from [React Documentation](/contribution-guidelines/react-documentation) apply. This page covers only what differs.
+
+## File Structure
+
+Each component has a documentation directory under `src/routes/components+/`:
+
+<FileTree
+  items={[
+    {
+      name: "src/routes/components+",
+      items: [
+        {
+          name: "checkbox+",
+          items: [
+            {name: "_checkbox.mdx"},
+            {
+              name: "demos",
+              items: [
+                {name: "checkbox-simple-demo.ts"},
+                {name: "checkbox-composite-demo.ts"},
+                {name: "index.ts"},
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+  defaultExpandedValue={[
+    "src/routes/components+",
+    "checkbox+",
+    "demos",
+  ]}
+/>
+
+Demo files use the `.ts` extension (not `.tsx`) since they are Angular components.
+
+## Angular Demo Components
+
+Demos are Angular components with inline templates:
+
+```ts
+import {Component} from "@angular/core"
+import {CheckboxModule} from "@qualcomm-ui/angular/checkbox"
+
+@Component({
+  imports: [CheckboxModule],
+  selector: "simple-checkbox-demo",
+  template: `
+    <!-- preview -->
+    <label label="Label" q-checkbox></label>
+    <!-- preview -->
+  `,
+})
+export class CheckboxSimpleDemo {}
+```
+
+Conventions:
+
+- `<!-- preview -->` comments mark the portion of the template shown in the code viewer. Content outside these markers is hidden from the source display but still rendered.
+- `selector` follows the pattern `[variant]-[component]-demo`
+- `imports` array includes the component's NgModule
+- Demo components are exported from `demos/index.ts`, same as React
+
+## MDX Page Differences
+
+The MDX structure matches [React Documentation](/contribution-guidelines/react-documentation) with these differences:
+
+- **Import statement**: shows `CheckboxModule` from `@qualcomm-ui/angular/checkbox` instead of destructured imports
+- **API section**: documents directive selectors (`q-checkbox`, `q-checkbox-root`) instead of JSX components (`<Checkbox>`, `<Checkbox.Root>`)
+- **TypeDocProps**: points to Angular interfaces
+- **TypeDocAttributes**: shows Angular-specific attribute bindings
+- **Forms examples**: cover Template Forms (`ngModel`) and Reactive Forms (`formControl`, `formControlName`) instead of React Hook Form / Tanstack Form
+- **Composition section**: shows directive-based composition on native HTML elements
+
+## Translation Guidelines
+
+When a React component already has docs, create the Angular docs with the same structure:
+
+- Same frontmatter structure (`title`, `group`, `description`, `component`, `aliases`)
+- Same section ordering (Examples, States, Disabled, Controlled, Sizes, Forms, Composition, API)
+- Same descriptions and explanations, adapted to Angular syntax
+- Angular-specific sections where behavior differs (forms integration, template syntax)
+
+## Angular-Specific Patterns
+
+Common patterns in Angular docs:
+
+**Simple API:**
+
+```html
+<label label="Accept terms" q-checkbox></label>
+```
+
+**Composite API:**
+
+```html
+<label q-checkbox-root>
+  <input q-checkbox-hidden-input />
+  <div q-checkbox-control></div>
+  <span q-checkbox-label>Accept terms</span>
+</label>
+```
+
+**Template Forms:**
+
+```html
+<label [(ngModel)]="accepted" q-checkbox-root>
+  ...
+</label>
+```
+
+**Reactive Forms:**
+
+```html
+<label [formControl]="acceptedControl" q-checkbox-root>
+  ...
+</label>
+```
+
+## navConfig
+
+Angular docs have their own `qui-docs.config.ts` at `packages/docs/angular-docs/qui-docs.config.ts`. The structure mirrors the React config. Add new components there.

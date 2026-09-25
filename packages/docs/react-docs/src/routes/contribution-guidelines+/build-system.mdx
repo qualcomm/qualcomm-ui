@@ -1,0 +1,95 @@
+---
+title: Build System
+---
+
+# {frontmatter.title}
+
+qualcomm-ui is a pnpm workspace monorepo using Turborepo for build orchestration. This page covers how the build system works and how to interact with it during development.
+
+## pnpm Workspaces
+
+`pnpm-workspace.yaml` defines the workspace roots. All packages under these directories are automatically linked:
+
+```yaml
+packages:
+  - packages/configs/*
+  - packages/common/*
+  - packages/debug-apps/*
+  - packages/docs/*
+  - packages/frameworks/*
+```
+
+The `catalog` section pins shared dependency versions across all packages. This ensures React, Angular, TypeScript, and other shared dependencies use consistent versions monorepo-wide. When adding or updating a dependency that multiple packages share, update the catalog entry rather than individual `package.json` files.
+
+The `minimumReleaseAge: 1440` setting (24 hours in minutes) prevents installing packages published less than 24 hours ago. This protects against compromised packages that are typically caught and removed within the first day of publication.
+
+## Turborepo
+
+Turborepo handles task orchestration and caching. The `turbo.json` config defines task dependencies and caching behavior:
+
+- `"dependsOn": ["^build"]`: a package's task runs only after all of its workspace dependencies have built. The `^` prefix means "upstream dependencies," not the package itself.
+- `"outputs": ["dist"]`: tells Turborepo what files to cache. On subsequent runs, if inputs haven't changed, Turborepo replays the cached output instead of rebuilding.
+- `"cache": false`: used on `dev` tasks to prevent caching persistent watch processes.
+- `"persistent": true`: marks long-running tasks (like dev servers) that don't exit on their own.
+
+You don't need to manually build dependencies. `pnpm build` builds everything in the correct order. If a dependency hasn't changed since the last build, Turborepo skips it entirely.
+
+## Build Order
+
+Turborepo resolves the dependency graph automatically. The build flows bottom-up:
+
+```
+utils (no dependencies)
+  └─ dom
+      └─ core
+          ├─ qds-core
+          ├─ react-core ─── react
+          └─ angular-core ── angular
+```
+
+`utils` builds first because it has no internal dependencies. `dom` depends on `utils`. `core` depends on both. `qds-core` depends on `core` and `utils`. The framework adapters depend on `core`, `dom`, and `utils`. The styled packages (`react`, `angular`) build last because they depend on their respective adapter and `qds-core`.
+
+## Package Script Aliases
+
+The root `package.json` defines convenience aliases for running commands in specific packages:
+
+```bash
+pnpm react <script>        # → pnpm -C packages/frameworks/react <script>
+pnpm angular <script>      # → pnpm -C packages/frameworks/angular <script>
+pnpm core <script>         # → pnpm -C packages/common/core <script>
+pnpm qds-core <script>     # → pnpm -C packages/common/qds-core <script>
+pnpm react-core <script>   # → pnpm -C packages/frameworks/react-core <script>
+pnpm angular-core <script> # → pnpm -C packages/frameworks/angular-core <script>
+pnpm react-docs <script>   # → pnpm -C packages/docs/react-docs <script>
+pnpm angular-docs <script> # → pnpm -C packages/docs/angular-docs <script>
+```
+
+These run any package script from the repo root without navigating directories.
+
+## Common Commands
+
+| Command | Description |
+| :-- | :-- |
+| `pnpm build` | Build all packages (excludes docs and debug apps) |
+| `pnpm build:react` | Build React packages only |
+| `pnpm dev:react` | Watch mode for React packages |
+| `pnpm dev:angular` | Watch mode for Angular packages |
+| `pnpm react-docs dev` | Start React docs site |
+| `pnpm angular-docs dev` | Start Angular docs site |
+| `pnpm react test` | Run React tests |
+| `pnpm angular test` | Run Angular tests |
+| `pnpm core test` | Run core tests |
+| `pnpm lint` | Lint all packages |
+| `pnpm doc-gen` | Generate TypeDoc API JSON |
+
+## TypeDoc Generation
+
+`pnpm doc-gen` runs the `build:typedoc` task, which generates JSON files used by the `TypeDocProps` and `TypeDocAttributes` MDX components. The task outputs to `.typedoc/*.json` and `src/assets/doc-props/doc-properties.json`.
+
+Run this after changing prop interfaces to update the API documentation tables.
+
+## Angular Build Specifics
+
+Angular packages use ng-packagr for building. Each Angular package has `ng-package.json` files defining entry points. The build produces Angular-compatible distribution format (FESM, ESM).
+
+Angular builds are slower than React builds due to ng-packagr's compilation pipeline. Turborepo's caching mitigates this. Unchanged Angular packages are skipped on subsequent builds.
