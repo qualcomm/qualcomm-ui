@@ -1,4 +1,4 @@
-import type {ReactElement} from "react"
+import {useEffect, useState, type ReactElement} from "react"
 
 import {Search} from "lucide-react"
 
@@ -43,81 +43,51 @@ const regions: Region[] = [
     label: "Virginia",
     value: "virginia",
   },
-  {
-    description: "United Kingdom",
-    label: "London",
-    value: "london",
-  },
-  {
-    description: "India",
-    label: "Mumbai",
-    value: "mumbai",
-  },
-  {
-    description: "South Korea",
-    label: "Seoul",
-    value: "seoul",
-  },
-  {
-    description: "Canada",
-    label: "Toronto",
-    value: "toronto",
-  },
-  {
-    description: "Brazil",
-    label: "Sao Paulo",
-    value: "sao-paulo",
-  },
-  {
-    description: "France",
-    label: "Paris",
-    value: "paris",
-  },
-  {
-    description: "Spain",
-    label: "Madrid",
-    value: "madrid",
-  },
-  {
-    description: "Italy",
-    label: "Milan",
-    value: "milan",
-  },
-  {
-    description: "United Arab Emirates",
-    label: "Dubai",
-    value: "dubai",
-  },
-  {
-    description: "Sweden",
-    label: "Stockholm",
-    value: "stockholm",
-  },
-  {
-    description: "South Africa",
-    label: "Cape Town",
-    value: "cape-town",
-  },
-  {
-    description: "Mexico",
-    label: "Queretaro",
-    value: "queretaro",
-  },
 ]
 
-export function ListboxFilteringDemo(): ReactElement {
+function fetchRegions(): Promise<Region[]> {
+  return new Promise((resolve) => {
+    window.setTimeout(() => {
+      resolve(regions)
+    }, 800)
+  })
+}
+
+export function ListboxDynamicDataDemo(): ReactElement {
+  const [loading, setLoading] = useState(true)
   const {fuzzyContains} = useFilter({sensitivity: "base"})
-  const {collection, filter} = useListCollection({
+  const {collection, filter, set} = useListCollection<Region>({
     filter: fuzzyContains,
-    initialItems: regions,
+    initialItems: [],
     itemLabel: (region) => `${region.label} ${region.description}`,
     itemValue: (region) => region.value,
   })
 
+  useEffect(() => {
+    let mounted = true
+
+    fetchRegions().then((items) => {
+      if (!mounted) {
+        return
+      }
+      set(items)
+      setLoading(false)
+    })
+
+    return () => {
+      mounted = false
+    }
+  }, [set])
+
+  const status = loading
+    ? "Loading regions..."
+    : collection.items.length === 0
+      ? "No regions found"
+      : null
+
   return (
     <div className="w-full max-w-sm">
       {/* preview */}
-
       <Listbox.Root collection={collection} selectionMode="single">
         <Listbox.Input
           className="mb-4"
@@ -127,7 +97,10 @@ export function ListboxFilteringDemo(): ReactElement {
           startIcon={Search}
         />
         <Listbox.Label>Deployment region</Listbox.Label>
-        <Listbox.Content className="max-h-64 overflow-y-auto">
+        <Listbox.Content
+          aria-busy={loading}
+          className="max-h-64 overflow-y-auto"
+        >
           {collection.items.map((region) => (
             <Listbox.Item key={region.value} item={region}>
               <Listbox.ItemControl />
@@ -139,6 +112,11 @@ export function ListboxFilteringDemo(): ReactElement {
           ))}
         </Listbox.Content>
       </Listbox.Root>
+      {status ? (
+        <p className="text-muted-foreground mt-2 text-sm" role="status">
+          {status}
+        </p>
+      ) : null}
       {/* preview */}
     </div>
   )
