@@ -563,3 +563,7 @@
     --button-group-gap: var(--spacing-100);
   }
 }
+
+.qui-button__root > .qui-badge__root {
+  flex-shrink: 0;
+}

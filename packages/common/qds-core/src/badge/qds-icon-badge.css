@@ -1,27 +1,27 @@
 .qui-badge__root[data-icon-badge-part="root"] {
   &[data-size="xxs"] {
     --icon-radius: var(--border-radius-xs);
-    --icon-size: var(--sizing-60);
+    --badge-icon-size: var(--sizing-60);
   }
   &[data-size="xs"] {
     --icon-radius: var(--border-radius-md);
-    --icon-size: var(--sizing-70);
+    --badge-icon-size: var(--sizing-70);
   }
   &[data-size="sm"] {
     --icon-radius: var(--border-radius-md);
-    --icon-size: var(--sizing-80);
+    --badge-icon-size: var(--sizing-80);
   }
   &[data-size="md"] {
     --icon-radius: var(--border-radius-md);
-    --icon-size: var(--sizing-90);
+    --badge-icon-size: var(--sizing-90);
   }
   &[data-size="lg"] {
     --icon-radius: var(--border-radius-md);
-    --icon-size: var(--sizing-120);
+    --badge-icon-size: var(--sizing-120);
   }
   &[data-size="xl"] {
     --icon-radius: var(--border-radius-md);
-    --icon-size: var(--sizing-140);
+    --badge-icon-size: var(--sizing-140);
   }
 
   background: var(--badge-background);
@@ -50,10 +50,10 @@
 
 .qui-badge__icon[data-icon-badge-part="icon"] {
   color: var(--icon-color, inherit);
-  --icon-size: inherit;
 }
 
 .qui-badge__root[data-icon-badge-part="root"] > svg {
+  --icon-size: var(--badge-icon-size);
   block-size: var(--icon-size);
   inline-size: var(--icon-size);
 }

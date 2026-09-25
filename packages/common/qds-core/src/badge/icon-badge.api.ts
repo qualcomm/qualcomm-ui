@@ -28,7 +28,6 @@ export function createQdsIconBadgeApi(
       return normalize.element({
         ...parts.icon,
         className: badgeClasses.icon,
-        "data-size": size,
       })
     },
     getRootBindings(): QdsIconBadgeRootBindings {

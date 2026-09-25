@@ -1,6 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {
+  QdsBadgeExtraSize,
+  QdsNumberBadgeEmphasis,
+  QdsNumberBadgeSize,
+} from "@qualcomm-ui/qds-core/badge"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
@@ -77,6 +82,7 @@ export interface QdsButtonRootBindings extends Part<"root"> {
   "data-kind": "text"
   "data-size": QdsButtonSize
   "data-variant": QdsButtonVariant
+  disabled: boolean | undefined
 }
 
 export interface QdsButtonStartIconBindings extends Part<"icon"> {
@@ -97,4 +103,25 @@ export interface QdsButtonApi {
   getEndIconBindings(): QdsButtonEndIconBindings
   getRootBindings(): QdsButtonRootBindings
   getStartIconBindings(): QdsButtonStartIconBindings
+
+  /**
+   * Default emphasis for a number badge.
+   *
+   * @since next-release
+   */
+  numberBadgeEmphasis: QdsNumberBadgeEmphasis
+
+  /**
+   * Default size for a number badge.
+   *
+   * @since next-release
+   */
+  numberBadgeSize: QdsNumberBadgeSize
+
+  /**
+   * Default size for a status badge.
+   *
+   * @since next-release
+   */
+  statusBadgeSize: QdsBadgeExtraSize
 }

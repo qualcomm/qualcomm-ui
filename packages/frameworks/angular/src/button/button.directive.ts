@@ -12,12 +12,14 @@ import {
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 
 import {BaseButtonDirective} from "./base-button.directive"
+import {provideQdsButtonBadgeContext} from "./button-badge.providers"
 import {provideQdsButtonContext} from "./qds-button-context.service"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
   providers: [
     provideQdsButtonContext(),
+    provideQdsButtonBadgeContext(),
     {
       provide: START_ICON_CONTEXT_TOKEN,
       useFactory: (): IconTokenContext => {
@@ -51,6 +53,8 @@ import {provideQdsButtonContext} from "./qds-button-context.service"
     </ng-content>
 
     <ng-content />
+
+    <ng-content select="[q-number-badge], [q-status-badge]" />
 
     <ng-content select="[q-end-icon]">
       @if (endIcon()) {

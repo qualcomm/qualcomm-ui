@@ -18,8 +18,12 @@ import {
 } from "@qualcomm-ui/angular-core/machine"
 import {
   type ButtonGroupContextValue,
+  provideQdsButtonBadgeContext,
+  provideQdsButtonContext,
   provideQdsButtonGroupContext,
+  QdsButtonContextService,
   QdsButtonGroupContextService,
+  useButtonApi,
 } from "@qualcomm-ui/angular/button"
 import type {
   QdsButtonDensity,
@@ -34,7 +38,11 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
  * @since 2.11.0
  */
 @Component({
-  providers: [provideQdsButtonGroupContext()],
+  providers: [
+    provideQdsButtonGroupContext(),
+    provideQdsButtonContext(),
+    provideQdsButtonBadgeContext(),
+  ],
   selector: "[q-menu-split-button]",
   standalone: false,
   template: `
@@ -46,6 +54,7 @@ import type {Booleanish} from "@qualcomm-ui/utils/coercion"
         (click)="actionClicked.emit($event)"
       >
         <ng-content />
+        <ng-content select="[q-number-badge], [q-status-badge]" />
       </button>
     </ng-content>
     <ng-content select="button[q-menu-icon-button]">
@@ -114,6 +123,8 @@ export class MenuSplitButtonComponent implements OnInit {
 
   protected readonly buttonGroupService = inject(QdsButtonGroupContextService)
 
+  protected readonly buttonService = inject(QdsButtonContextService)
+
   protected readonly trackBindings = useTrackBindings(() =>
     getQdsSplitButtonBindings(
       {
@@ -138,6 +149,15 @@ export class MenuSplitButtonComponent implements OnInit {
         size: this.size(),
         variant: this.variant(),
       })),
+    )
+    this.buttonService.init(
+      useButtonApi({
+        density: this.density,
+        disabled: this.disabled,
+        emphasis: this.emphasis,
+        size: this.size,
+        variant: this.variant,
+      }),
     )
     this.trackBindings()
   }
