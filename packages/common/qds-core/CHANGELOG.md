@@ -1,5 +1,13 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.38.1
+
+Sep 25th, 2026
+
+### Bug Fixes
+
+* [table]: cell vertical alignment in firefox ([07b38dc](https://github.com/qualcomm/qualcomm-ui/commit/07b38dc))
+
 ## 1.38.0
 
 Sep 2nd, 2026

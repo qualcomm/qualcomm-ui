@@ -37,7 +37,7 @@
     "@qualcomm-ui/react-router-utils": "workspace:*",
     "@qualcomm-ui/tailwind-plugin": "workspace:*",
     "@qualcomm-ui/typedoc": "workspace:*",
-    "@qualcomm-ui/utils": "workspace:^*",
+    "@qualcomm-ui/utils": "workspace:*",
     "@react-router/express": "catalog:",
     "@react-router/node": "catalog:",
     "@react-router/remix-routes-option-adapter": "catalog:",

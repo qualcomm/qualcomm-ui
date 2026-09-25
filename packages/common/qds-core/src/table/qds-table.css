@@ -116,7 +116,7 @@
   font: var(--cell-font);
   height: var(--cell-min-height);
   padding: var(--spacing-50) var(--cell-padding-x);
-  vertical-align: center;
+  vertical-align: middle;
 }
 
 .qui-table__title-bar {
