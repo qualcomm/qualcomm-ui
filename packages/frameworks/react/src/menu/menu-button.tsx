@@ -19,6 +19,7 @@ export interface MenuButtonProps extends Omit<ButtonProps, "endIcon"> {
 }
 
 export function MenuButton({
+  badge,
   children,
   density,
   size,
@@ -31,6 +32,7 @@ export function MenuButton({
   return (
     <Button {...mergedProps} density={density} size={resolvedSize}>
       {children}
+      {badge}
       <Icon
         {...qdsMenuContext.getIndicatorBindings()}
         icon={ChevronDown}
