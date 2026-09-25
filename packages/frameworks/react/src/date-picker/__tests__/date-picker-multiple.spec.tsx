@@ -385,6 +385,46 @@ describe("DatePicker - Multiple", () => {
       await expect.element(getField()).toHaveFocus()
     })
 
+    test("switching a populated multiple picker to single adjusts the value without a React lifecycle error", async () => {
+      const errors: unknown[] = []
+      const consoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation((...args) => {
+          errors.push(args[0])
+        })
+
+      function PopulatedModeSwitcher() {
+        const [mode, setMode] =
+          useState<DatePickerProps["selectionMode"]>("multiple")
+        return (
+          <>
+            <DatePicker
+              defaultValue={[parseDate("2024-06-10"), parseDate("2024-06-20")]}
+              label="Dates"
+              selectionMode={mode}
+            />
+            <button onClick={() => setMode("single")} type="button">
+              Swap mode
+            </button>
+          </>
+        )
+      }
+
+      try {
+        await render(<PopulatedModeSwitcher />)
+        await page.getByRole("button", {name: "Swap mode"}).click()
+
+        await expect
+          .element(page.getByRole("textbox"))
+          .toHaveValue("06/10/2024")
+        expect(
+          errors.filter((error) => String(error).includes("flushSync")),
+        ).toEqual([])
+      } finally {
+        consoleError.mockRestore()
+      }
+    })
+
     test("switching to range restores the group role on the field", async () => {
       function RangeSwitcher() {
         const [mode, setMode] =

@@ -36,6 +36,7 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import type {datePickerAnatomy} from "./date-picker.anatomy.js"
+import type {DatePickerInputResolution} from "./internal/date-picker.resolve-input.js"
 
 /** callback details */
 
@@ -520,7 +521,9 @@ type Actions = ActionSchema<
   | "setInputValue"
   | "syncInputValue"
   | "focusParsedDate"
-  | "selectParsedDate"
+  | "focusResolvedDate"
+  | "selectResolvedDate"
+  | "submitOwningForm"
   | "resetView"
   | "setStartValue"
   | "invokeOnOpen"
@@ -599,11 +602,13 @@ type Events =
   | {
       fixOnBlur: boolean
       index: number
+      resolution?: DatePickerInputResolution | undefined
       type: "INPUT.BLUR"
       value: string
     }
   | {
       index: number
+      resolution: DatePickerInputResolution
       type: "INPUT.ENTER"
       value: string
     }
@@ -743,6 +748,7 @@ export interface DatePickerSchema extends MachineSchema {
     | "closeOnSelect"
     | "hasSelectedRange"
     | "isAboveMinView"
+    | "isAcceptedResolution"
     | "isDayPointerMoveOutsideVisibleMonth"
     | "isDayView"
     | "isInputValueEmpty"
@@ -754,6 +760,7 @@ export interface DatePickerSchema extends MachineSchema {
     | "isRangePicker"
     | "isYearView"
     | "selectsToMinView"
+    | "shouldCloseOnEnter"
     | "shouldFixOnBlur"
     | "shouldRestoreFocus"
   >
@@ -761,6 +768,7 @@ export interface DatePickerSchema extends MachineSchema {
   props: RequiredBy<DatePickerApiProps, "dir">
   refs: {
     announcer?: LiveRegion | undefined
+    pendingFormValueAsString?: string[] | undefined
     syncInputElementCleanup?: VoidFunction | undefined
     valueSnapshot?: (DateValue | null)[] | undefined
   }
