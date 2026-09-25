@@ -22,9 +22,7 @@ import {Button} from "@qualcomm-ui/react/button"
 ### Variants
 
 ::: terms
-solid button
-bordered button
-transparent button
+solid button, bordered button, transparent button
 :::
 
 Buttons come in three variants: `fill`, `outline`, and `ghost`. Customize these with the [variant](./#variant) property.
@@ -34,20 +32,17 @@ Buttons come in three variants: `fill`, `outline`, and `ghost`. Customize these 
 ### Emphasis
 
 ::: terms
-destructive button
-delete button
+destructive button, delete button
 :::
 
-Control the visual [emphasis](./#emphasis) with different colors: `neutral`, `primary`, and `danger`.
+Control the visual [emphasis](./#emphasis-1) with different colors: `neutral`, `primary`, and `danger`.
 
 <Demo name="ButtonEmphasisDemo" component={demos.ButtonEmphasisDemo} />
 
 ### Sizes and Icons
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Control dimensions with the [size](./#size) prop. Icons are supplied using the [startIcon](./#startIcon) and [endIcon](./#endIcon) props.
@@ -57,9 +52,7 @@ Control dimensions with the [size](./#size) prop. Icons are supplied using the [
 ### Compact Density
 
 ::: terms
-condensed button
-slim button
-tight button
+condensed button, slim button, tight button
 :::
 
 Use the [density](./#density) prop to reduce the padding and height of the button. The options are `default` and `compact`.
@@ -69,9 +62,7 @@ Use the [density](./#density) prop to reduce the padding and height of the butto
 ### Variant Combinations
 
 ::: terms
-button grid
-button matrix
-all button styles
+button grid, button matrix, all button styles
 :::
 
 This grid shows all button combinations across variants and emphasis levels. The bottom row demonstrates the disabled state, which grays out the button regardless of variant or emphasis.
@@ -81,9 +72,7 @@ This grid shows all button combinations across variants and emphasis levels. The
 ### Contrast Colors
 
 ::: terms
-high contrast button
-button on dark background
-inverted button
+high contrast button, button on dark background, inverted button
 :::
 
 Use `white-persistent` for buttons on dark backgrounds and `black-persistent` for buttons on light backgrounds. These emphasis values maintain consistent contrast regardless of the active theme.
@@ -92,9 +81,23 @@ Use `white-persistent` for buttons on dark backgrounds and `black-persistent` fo
 
 ### Inverse Contrast
 
-To flip contrast against the active theme, set [emphasis](./#emphasis) to `inverse`.
+To flip contrast against the active theme, set [emphasis](./#emphasis-1) to `inverse`.
 
 <Demo component={demos.ButtonInverseDemo} name="ButtonInverseDemo" />
+
+### Badge
+
+::: terms
+count badge, notification count, status indicator
+:::
+
+Supply a [NumberBadge](/components/badges/number-badge) or [StatusBadge](/components/badges/status-badge) with the [badge](./#badge-1) prop. The badge renders after the label and before the end icon.
+
+The button supplies these defaults: badge size follows the button (`NumberBadge`: `xs` on `sm`/`md`, `sm` on `lg`; `StatusBadge`: `sm` on `sm`/`md`, `md` on `lg`), a disabled button disables its badge, and `NumberBadge` emphasis contrasts with the button. For `outline` and `ghost` buttons, `primary` maps to `brand` and `danger` to `danger`; `StatusBadge` emphasis remains unchanged. Props set on the badge take precedence over these defaults.
+
+The `badge` prop is also available on [Menu.Button](/components/menu#menu-button), and on [Menu.SplitButton](/components/menu#split-button) through `actionProps.badge`.
+
+<Demo name="ButtonBadgeDemo" component={demos.ButtonBadgeDemo} />
 
 ### Menu Button
 
@@ -123,8 +126,7 @@ For a button that pairs a primary action with a dropdown of related actions, use
 ### Start Icon
 
 ::: terms
-leading icon
-icon before text
+leading icon, icon before text
 :::
 
 Provided via the [startIcon](./#startIcon) prop.
@@ -134,8 +136,7 @@ Provided via the [startIcon](./#startIcon) prop.
 ### End Icon
 
 ::: terms
-trailing icon
-icon after text
+trailing icon, icon after text
 :::
 
 Provided via the [endIcon](./#endIcon) prop.

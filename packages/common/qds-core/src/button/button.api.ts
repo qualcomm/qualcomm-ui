@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {QdsNumberBadgeEmphasis} from "@qualcomm-ui/qds-core/badge"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
@@ -10,6 +11,7 @@ import {buttonClasses} from "./button.classes.js"
 import type {
   QdsButtonApi,
   QdsButtonApiProps,
+  QdsButtonEmphasis,
   QdsButtonEndIconBindings,
   QdsButtonRootBindings,
   QdsButtonStartIconBindings,
@@ -21,6 +23,24 @@ const sharedDefaults = {
   size: "md",
 } satisfies Pick<QdsButtonApiProps, "size">
 
+const filledBadgeEmphasis: Record<QdsButtonEmphasis, QdsNumberBadgeEmphasis> = {
+  "black-persistent": "persistent-white",
+  danger: "persistent-white",
+  inverse: "neutral",
+  neutral: "persistent-white",
+  primary: "persistent-white",
+  "white-persistent": "persistent-black",
+}
+
+const badgeEmphasis: Record<QdsButtonEmphasis, QdsNumberBadgeEmphasis> = {
+  "black-persistent": "persistent-black",
+  danger: "danger",
+  inverse: "neutral",
+  neutral: "neutral",
+  primary: "brand",
+  "white-persistent": "persistent-white",
+}
+
 export function createQdsButtonApi(
   props: Explicit<QdsButtonApiProps>,
   normalize: PropNormalizer,
@@ -30,6 +50,8 @@ export function createQdsButtonApi(
   const emphasis = props.emphasis || "neutral"
   const size = props.size || sharedDefaults.size
   const variant = props.variant || "fill"
+
+  const isLarge = size === "lg"
 
   return {
     getEndIconBindings(): QdsButtonEndIconBindings {
@@ -54,6 +76,7 @@ export function createQdsButtonApi(
         disabled,
       })
     },
+
     getStartIconBindings(): QdsButtonStartIconBindings {
       return normalize.element({
         ...parts.icon,
@@ -63,5 +86,11 @@ export function createQdsButtonApi(
         "data-size": size,
       })
     },
+    numberBadgeEmphasis:
+      variant === "fill"
+        ? filledBadgeEmphasis[emphasis]
+        : badgeEmphasis[emphasis],
+    numberBadgeSize: isLarge ? "sm" : "xs",
+    statusBadgeSize: isLarge ? "md" : "sm",
   }
 }

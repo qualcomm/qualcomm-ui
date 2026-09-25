@@ -6,6 +6,7 @@ import {page} from "vitest/browser"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {NumberBadgeDirective} from "@qualcomm-ui/angular/badge"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 function menu() {
@@ -61,6 +62,26 @@ class SplitButtonComponent {
 })
 class ProjectedChevronSplitButtonComponent {}
 
+@Component({
+  imports: [MenuModule, NumberBadgeDirective, PortalDirective],
+  template: `
+    <q-menu>
+      <div emphasis="primary" q-menu-split-button size="lg" variant="outline">
+        <span q-number-badge value="3"></span>
+        Inbox
+      </div>
+      <ng-template qPortal>
+        <div q-menu-positioner>
+          <div q-menu-content>
+            <button q-menu-item value="archive">Archive</button>
+          </div>
+        </div>
+      </ng-template>
+    </q-menu>
+  `,
+})
+class BadgeSplitButtonComponent {}
+
 describe("MenuSplitButton", () => {
   test("clicking the action button emits actionClicked without opening the menu", async () => {
     const actionClicked = vi.fn()
@@ -111,5 +132,21 @@ describe("MenuSplitButton", () => {
     await expect
       .element(page.getByRole("button", {name: "More options"}))
       .toHaveAttribute("data-emphasis", "primary")
+  })
+
+  test("renders a badge projected into the default action button after its label", async () => {
+    await render(BadgeSplitButtonComponent)
+
+    await expect
+      .element(page.getByRole("button", {name: "Inbox 3"}))
+      .toBeVisible()
+  })
+
+  test("applies the action button's defaults to a projected badge", async () => {
+    await render(BadgeSplitButtonComponent)
+
+    const badge = page.getByText("3").element().closest("[q-number-badge]")
+    expect(badge).toHaveAttribute("data-emphasis", "brand")
+    expect(badge).toHaveAttribute("data-size", "sm")
   })
 })

@@ -13,6 +13,9 @@ import {
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+import {compact} from "@qualcomm-ui/utils/object"
+
+import {useBadgeContext} from "./badge-context.js"
 
 export interface StatusBadgeProps
   extends QdsStatusBadgeProps, ElementRenderProp<"span"> {}
@@ -24,12 +27,16 @@ export function StatusBadge({
   variant,
   ...restProps
 }: StatusBadgeProps): ReactElement {
+  const badgeContext = useBadgeContext()
   const qdsApi = createQdsStatusBadgeApi(
     {
-      disabled,
-      emphasis,
-      size,
-      variant,
+      ...badgeContext?.statusBadge,
+      ...compact({
+        disabled,
+        emphasis,
+        size,
+        variant,
+      }),
     },
     normalizeProps,
   )

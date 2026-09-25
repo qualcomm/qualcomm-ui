@@ -8,6 +8,7 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreMenuTriggerDirective} from "@qualcomm-ui/angular-core/menu"
 import {
   BaseButtonDirective,
+  provideQdsButtonBadgeContext,
   provideQdsButtonContext,
 } from "@qualcomm-ui/angular/button"
 import {
@@ -26,6 +27,7 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
   providers: [
     provideIcons({LucideChevronDown}),
     provideQdsButtonContext(),
+    provideQdsButtonBadgeContext(),
     {
       provide: START_ICON_CONTEXT_TOKEN,
       useFactory: (): IconTokenContext => {
@@ -46,6 +48,7 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
       <svg q-start-icon [qIcon]="startIcon()!" [size]="resolvedSize()"></svg>
     }
     <ng-content />
+    <ng-content select="[q-number-badge], [q-status-badge]" />
     <svg
       qIcon="LucideChevronDown"
       [q-bind]="indicatorBindings()"

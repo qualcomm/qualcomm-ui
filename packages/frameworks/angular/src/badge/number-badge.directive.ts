@@ -5,6 +5,7 @@ import {
   booleanAttribute,
   Component,
   computed,
+  inject,
   input,
   numberAttribute,
   type OnInit,
@@ -22,6 +23,9 @@ import {
   type QdsNumberBadgeSize,
 } from "@qualcomm-ui/qds-core/badge"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
+import {compact} from "@qualcomm-ui/utils/object"
+
+import {BADGE_CONTEXT_TOKEN} from "./badge.tokens"
 
 @Component({
   selector: "[q-number-badge]",
@@ -68,14 +72,21 @@ export class NumberBadgeDirective
     transform: numberAttribute,
   })
 
+  protected readonly badgeContext = inject(BADGE_CONTEXT_TOKEN, {
+    optional: true,
+  })
+
   protected readonly api = computed(() => {
     return createQdsNumberBadgeApi(
       {
-        disabled: this.disabled(),
-        emphasis: this.emphasis(),
-        max: this.max(),
-        size: this.size(),
-        value: this.value(),
+        ...this.badgeContext?.numberBadge(),
+        ...compact({
+          disabled: this.disabled(),
+          emphasis: this.emphasis(),
+          max: this.max(),
+          size: this.size(),
+          value: this.value(),
+        }),
       },
       normalizeProps,
     )
