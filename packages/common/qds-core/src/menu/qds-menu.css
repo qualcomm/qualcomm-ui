@@ -314,7 +314,7 @@
       content: "";
       height: var(--split-separator-height);
       position: absolute;
-      right: calc(-1 * var(--sizing-10));
+      inset-inline-end: calc(-1 * var(--sizing-10));
       top: 50%;
       transform: translateY(-50%);
       width: var(--sizing-10);
@@ -338,18 +338,18 @@
       border-inline-start-width: 0;
     }
 
-    & > .qui-button__root:has(+ .qui-button__root:hover) {
+    & > .qui-button__root:not(:focus-visible):has(+ .qui-button__root:hover) {
       border-inline-end-color: var(--outline-border-hover);
     }
 
-    & > .qui-button__root:has(+ .qui-button__root:active) {
+    & > .qui-button__root:not(:focus-visible):has(+ .qui-button__root:active) {
       border-inline-end-color: var(--outline-border-pressed);
     }
 
     & > .qui-button__root:not(:first-child):focus-visible::before {
       background: var(--color-utility-focus-border);
       content: "";
-      inline-size: var(--component-button-variant-outline-border-width);
+      inline-size: var(--border-width-sm);
       inset-block: 0;
       inset-inline-start: 0;
       position: absolute;
