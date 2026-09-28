@@ -5,4 +5,5 @@ export const tagClasses = {
   dismissButton: "qui-tag__dismiss-button",
   icon: "qui-tag__icon",
   root: "qui-tag__root",
+  text: "qui-tag__text",
 } as const

@@ -14,6 +14,7 @@ import type {
   QdsTagEndIconBindings,
   QdsTagRootBindings,
   QdsTagStartIconBindings,
+  QdsTagTextBindings,
 } from "./tag.types.js"
 
 const parts = tagAnatomy.parts
@@ -83,6 +84,12 @@ export function createQdsTagApi(
       return normalize.element({
         ...parts.startIcon,
         className: tagClasses.icon,
+      })
+    },
+    getTextBindings(): QdsTagTextBindings {
+      return normalize.element({
+        ...parts.text,
+        className: tagClasses.text,
       })
     },
     isInteractiveVariant,

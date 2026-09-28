@@ -1,8 +1,4 @@
 .qui-tag__root {
-  > span:not(.qui-tag__icon) {
-    text-box: cap alphabetic;
-  }
-
   align-items: center;
   background: var(--tag-bg-base);
   border: solid 1px var(--tag-border-base);
@@ -13,7 +9,9 @@
   display: inline-flex;
   font: var(--font-static-body-xs-default);
   max-height: var(--tag-size);
+  max-width: var(--tag-max-width, 100%);
   min-height: var(--tag-size);
+  min-width: 0;
   outline: none;
   padding-block: var(--spacing-0);
   padding-inline: var(--spacing-70);
@@ -267,8 +265,18 @@
   }
 }
 
+.qui-tag__text {
+  min-width: 0;
+  /* `overflow: hidden` would hide descenders moved by `cap alphabetic` */
+  overflow-x: clip;
+  text-box: cap alphabetic;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .qui-tag__icon {
   color: var(--icon-color);
+  flex-shrink: 0;
 
   /* For when the icon is declared as a node, i.e. `<Plus />` */
   .lucide {
@@ -306,6 +314,7 @@
   border-radius: 0 var(--tag-radius) var(--tag-radius) 0;
   color: var(--color-interactive-icon-neutral-idle);
   display: inline-flex;
+  flex-shrink: 0;
   height: var(--tag-size);
   justify-content: center;
   margin-inline-start: var(--spacing-20);

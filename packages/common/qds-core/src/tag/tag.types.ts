@@ -138,6 +138,10 @@ export interface QdsTagEndIconBindings extends Part<"endIcon"> {
   className: TagClasses["icon"]
 }
 
+export interface QdsTagTextBindings extends Part<"text"> {
+  className: TagClasses["text"]
+}
+
 export interface QdsTagDismissButtonBindings extends Part<"dismissButton"> {
   "aria-label": string
   className: TagClasses["dismissButton"]
@@ -152,5 +156,6 @@ export interface QdsTagApi {
   getEndIconBindings(): QdsTagEndIconBindings
   getRootBindings(): QdsTagRootBindings
   getStartIconBindings(): QdsTagStartIconBindings
+  getTextBindings(): QdsTagTextBindings
   isInteractiveVariant(): boolean
 }
