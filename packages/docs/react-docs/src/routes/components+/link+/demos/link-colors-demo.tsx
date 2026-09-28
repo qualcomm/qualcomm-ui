@@ -10,7 +10,7 @@ export function LinkColorsDemo(): ReactElement {
       <Link emphasis="neutral">neutral</Link>
       <Link emphasis="brand">brand</Link>
       <div className="bg-persistent-black px-4 py-1">
-        <Link emphasis="white-persistent">white-persistent</Link>
+        <Link emphasis="persistent-white">persistent-white</Link>
       </div>
       {/* preview */}
     </div>

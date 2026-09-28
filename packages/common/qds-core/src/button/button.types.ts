@@ -12,6 +12,12 @@ import type {buttonClasses} from "./button.classes.js"
  */
 export type QdsButtonVariant = "fill" | "ghost" | "outline"
 
+/** @deprecated use "persistent-white" or "persistent-black" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsButtonEmphasis__deprecated =
+  | "white-persistent"
+  | "black-persistent"
+
 /**
  * The QDS button emphasis
  */
@@ -19,9 +25,10 @@ export type QdsButtonEmphasis =
   | "neutral"
   | "primary"
   | "danger"
-  | "white-persistent"
-  | "black-persistent"
+  | "persistent-white"
+  | "persistent-black"
   | "inverse"
+  | QdsButtonEmphasis__deprecated
 
 export type QdsButtonSize = "sm" | "md" | "lg"
 
