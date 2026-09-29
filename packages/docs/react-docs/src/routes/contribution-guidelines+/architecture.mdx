@@ -1,0 +1,131 @@
+---
+title: Architecture
+---
+
+# {frontmatter.title}
+
+qualcomm-ui uses a multi-layer architecture that separates component behavior, framework integration, and visual design into independent packages. This enables code reuse across React and Angular while maintaining a framework-native developer experience.
+
+## Philosophy
+
+Component behavior (state management, accessibility, keyboard navigation) is framework-agnostic. Only the reactivity system and rendering differ between React and Angular. The architecture exploits this by placing shared logic in a headless core built on state machines, inspired by [zag.js](https://zagjs.com).
+
+Each component is defined once as a state machine. The machine manages all behavior and produces binding objects (HTML attributes, event handlers, ARIA properties). Framework adapters subscribe to machine state through their native reactivity primitives (React hooks or Angular signals) and render the bindings into the DOM.
+
+## The 4-Layer Model
+
+### Layer 1: Headless Core
+
+Three packages with zero framework dependencies:
+
+- **`@qualcomm-ui/utils`**: Shared utilities: state machine infrastructure (`createMachine`, `createNarrowedMachine`, `bindable`), attribute helpers, merge-props, collection management.
+- **`@qualcomm-ui/dom`**: DOM abstractions: focus-visible detection, floating-ui positioning, element queries, press tracking.
+- **`@qualcomm-ui/core`**: Each component is a state machine that manages behavior and produces binding objects. A checkbox machine handles checked/unchecked toggling, form integration, and focus management without knowing whether React or Angular will render it.
+
+See [Headless Core](/contribution-guidelines/headless-core) for implementation details.
+
+### Layer 2: Framework Adapters
+
+Two packages that bridge core machines to framework reactivity:
+
+- **`@qualcomm-ui/react-core`**: Wraps each core machine in a React hook (`useCheckbox()`, `useDialog()`, etc.). Provides React Context for sharing component API across subcomponents. Key utilities: `useMachine`, `normalizeProps`, `PolymorphicElement`.
+- **`@qualcomm-ui/angular-core`**: Wraps each core machine in an Angular directive (`CoreCheckboxRootDirective`, etc.). Uses Angular services for context and signals for reactivity. Key utilities: `useMachine`, `normalizeProps`, `useTrackBindings`.
+
+Both adapters produce the same API surface (the core bindings) expressed through each framework's reactivity model.
+
+### Layer 3: Design System
+
+- **`@qualcomm-ui/qds-core`**: Adds visual styling without framework coupling. Defines CSS class names (`qui-checkbox__control`), CSS files using design tokens (`var(--color-background-neutral-00)`), and QDS-specific APIs (`createQdsCheckboxApi`) that return className and data-attribute bindings. All themes share the same base design tokens with different values.
+
+See [QDS Core](/contribution-guidelines/qds-core) for implementation details.
+
+### Layer 4: Styled Components
+
+The consumer-facing packages that merge everything:
+
+- **`@qualcomm-ui/react`**: React components (JSX) that combine react-core hooks with qds-core styling. Each component merges core bindings and QDS bindings via `mergeProps()`, then renders through `PolymorphicElement`. See [React Component](/contribution-guidelines/react-component).
+- **`@qualcomm-ui/angular`**: Angular directives/components that extend angular-core with qds-core styling via `trackBindings.extendWith()`. Grouped into NgModules for export. See [Angular Component](/contribution-guidelines/angular-component).
+
+## Dependency Flow
+
+```
+utils ─── dom ─── core ─── react-core ─── react
+                    │            │
+                    │       angular-core ── angular
+                    │
+                  qds-core ─── react
+                    │
+                  angular
+```
+
+`utils` has zero dependencies. `dom` depends on `utils`. `core` depends on both. `qds-core` depends on `core` and `utils`. The framework adapters depend on `core`, `dom`, and `utils`. The styled packages depend on their adapter and `qds-core`.
+
+## Data Flow Example
+
+What happens when a user clicks a checkbox:
+
+1. **DOM event**: The `<input>` element fires a click event.
+2. **Core machine**: The `onClick` handler in `getHiddenInputBindings()` sends `CHECKED.SET` to the machine with the new checked value.
+3. **State update**: The machine's `setChecked` action updates the `checked` bindable in context.
+4. **Bindings regenerate**: `getControlBindings()` now returns `data-state: "checked"` instead of `"unchecked"`.
+5. **Framework renders**: React re-renders via hook state change. Angular updates via signal change.
+6. **QDS styles apply**: CSS selector `[data-state="checked"]` activates the checked visual state.
+
+## File Naming Conventions
+
+**core**
+
+| Pattern             | Example               |
+| :------------------ | :-------------------- |
+| `[name].machine.ts` | `checkbox.machine.ts` |
+| `[name].api.ts`     | `checkbox.api.ts`     |
+| `[name].types.ts`   | `checkbox.types.ts`   |
+| `[name].props.ts`   | `checkbox.props.ts`   |
+
+**qds-core**
+
+| Pattern             | Example               |
+| :------------------ | :-------------------- |
+| `[name].classes.ts` | `checkbox.classes.ts` |
+| `[name].api.ts`     | `checkbox.api.ts`     |
+| `[name].types.ts`   | `checkbox.types.ts`   |
+| `qds-[name].css`    | `qds-checkbox.css`    |
+
+**react-core**
+
+| Pattern             | Example               |
+| :------------------ | :-------------------- |
+| `use-[name].ts`     | `use-checkbox.ts`     |
+| `[name]-context.ts` | `checkbox-context.ts` |
+
+**angular-core**
+
+| Pattern                           | Example                           |
+| :-------------------------------- | :-------------------------------- |
+| `core-[name]-[part].directive.ts` | `core-checkbox-root.directive.ts` |
+| `[name]-context.service.ts`       | `checkbox-context.service.ts`     |
+
+**react**
+
+| Pattern                 | Example                   |
+| :---------------------- | :------------------------ |
+| `[name]-[part].tsx`     | `checkbox-root.tsx`       |
+| `qds-[name]-context.ts` | `qds-checkbox-context.ts` |
+| `[name].spec.tsx`       | `checkbox.spec.tsx`       |
+
+**angular**
+
+| Pattern                         | Example                           |
+| :------------------------------ | :-------------------------------- |
+| `[name]-[part].directive.ts`    | `checkbox-root.directive.ts`      |
+| `qds-[name]-context.service.ts` | `qds-checkbox-context.service.ts` |
+| `[name].module.ts`              | `checkbox.module.ts`              |
+| `[name].spec.ts`                | `checkbox.spec.ts`                |
+
+## Key Abstractions
+
+- **State machines**: Each component in `core` is defined as a machine with context (reactive state via `bindable()`), events (`NOUN.VERB` naming, e.g. `CHECKED.TOGGLE`), actions, effects, computed values, and guards. Created with `createMachine()` or `createNarrowedMachine()`.
+- **Binding getters**: Machine APIs expose methods like `getRootBindings()` and `getControlBindings()` that return objects containing HTML attributes, ARIA properties, data attributes, and event handlers. These are the contract between the headless logic and the rendering layer.
+- **PropNormalizer**: Converts binding objects into framework-appropriate props. React and Angular each have their own normalizer.
+- **mergeProps**: Combines multiple binding objects into one, handling event handler composition and className merging. Used in the styled layer to merge core + QDS + user bindings. Order matters: core first, QDS second, user props last (user always wins).
+- **Dual context**: Styled components provide two contexts, one for core API (behavior) and one for QDS API (styling). Subcomponents consume both.

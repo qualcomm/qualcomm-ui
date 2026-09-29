@@ -1,0 +1,78 @@
+---
+title: Getting Started
+---
+
+# {frontmatter.title}
+
+This page covers everything needed to set up a local development environment for the qualcomm-ui component library.
+
+## Prerequisites
+
+- **Node.js**: See the root `package.json` `engines` field for the required version.
+- **pnpm**: Install globally with `npm install -g pnpm`, or check the `packageManager` field in the root `package.json` for the exact version.
+
+## Clone and Install
+
+```bash
+git clone <repo-url>
+cd qualcomm-ui
+pnpm i
+```
+
+## Initial Build
+
+```bash
+pnpm build
+```
+
+This compiles all packages. Turborepo handles the dependency graph, so packages build in the correct order automatically.
+
+## Package Aliases
+
+The root `package.json` defines aliases for running commands in specific packages without navigating directories:
+
+```bash
+pnpm react <script>        # packages/frameworks/react
+pnpm react-core <script>   # packages/frameworks/react-core
+pnpm angular <script>      # packages/frameworks/angular
+pnpm angular-core <script> # packages/frameworks/angular-core
+pnpm core <script>         # packages/common/core
+pnpm qds-core <script>     # packages/common/qds-core
+pnpm react-docs <script>   # packages/docs/react-docs
+pnpm angular-docs <script> # packages/docs/angular-docs
+```
+
+For example, `pnpm react test` runs the test script inside `packages/frameworks/react`.
+
+## Development Mode
+
+Two watch-mode commands are available from the repository root:
+
+- `pnpm dev:react`: Starts all React packages in watch mode (react-core, react, and related packages). Use this when working on React components.
+- `pnpm dev:angular`: Starts Angular packages in watch mode (angular-core, angular). Use this when working on Angular components.
+
+> [!tip]
+> For faster iteration when debugging a component, run `pnpm react-ssr dev` instead. This starts the debug app at `packages/debug-apps/react-ssr` in watch mode with hot reload, which is lighter than the full `pnpm dev:react` pipeline.
+
+## Documentation Sites
+
+- `pnpm react-docs dev`: Starts the React documentation site locally.
+- `pnpm angular-docs dev`: Starts the Angular documentation site locally.
+
+## TypeDoc Generation
+
+```bash
+pnpm doc-gen
+```
+
+This builds the TypeDoc JSON that powers the API tables in the documentation. Run this after building when prop interfaces change.
+
+## Running Tests
+
+```bash
+pnpm react test      # React component tests
+pnpm angular test    # Angular component tests
+pnpm core test       # Core headless tests
+```
+
+The [Testing Guidelines](/contribution-guidelines/testing-guidelines) page covers the testing strategy in detail.

@@ -1,0 +1,357 @@
+---
+title: Angular Component
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+
+# {frontmatter.title}
+
+Angular components span two packages: `@qualcomm-ui/angular-core` (abstract directives and services wrapping the headless core) and `@qualcomm-ui/angular` (styled directives and components with QDS integration). Both layers are covered here using the checkbox as a reference implementation.
+
+## angular-core: Directives and Services
+
+### Root Directive
+
+The root directive initializes the state machine and establishes the component's context (`core-checkbox-root.directive.ts`):
+
+```ts
+@Directive()
+export class CoreCheckboxRootDirective
+  extends AbstractCheckboxFormControlDirective
+  implements
+    SignalifyInput<Omit<CheckboxApiProps, "checked" | "form" | "ids">>,
+    ControlValueAccessor,
+    OnInit
+{
+  readonly dir = input<Direction | undefined>(undefined)
+  readonly getRootNode = input<(() => ShadowRoot | Document | Node) | undefined>()
+  readonly indeterminate = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+  readonly id = input<string | undefined>(undefined)
+  readonly value = input<string | undefined>()
+
+  protected readonly checkboxContextService = inject(CheckboxContextService)
+  protected readonly trackBindings = useTrackBindings(() =>
+    this.checkboxContextService.context().getRootBindings({id: this.hostId()}),
+  )
+
+  override ngOnInit() {
+    super.ngOnInit()
+
+    const machine = useMachine(
+      checkboxMachine,
+      computed<Explicit<CheckboxApiProps>>(() => ({
+        checked: this.checked(),
+        dir: this.dir(),
+        disabled: this.isDisabled(),
+        getRootNode: this.getRootNode() || (() => this.document),
+        indeterminate: this.indeterminate(),
+        name: this.name(),
+        onCheckedChange: (checked) => {
+          this.onChange(checked)
+          if (!this.control) {
+            this.checkedChanged.emit(checked)
+            this.checked.set(checked)
+          }
+        },
+        // ...remaining props
+      })),
+      this.injector,
+    )
+
+    this.checkboxContextService.init(
+      computed(() => createCheckboxApi(machine, normalizeProps)),
+    )
+
+    this.trackBindings()
+  }
+}
+```
+
+- **Abstract base class**: `AbstractCheckboxFormControlDirective` provides form control integration (`checked`, `disabled`, `name`, `invalid`, and Angular forms interop). Core root directives extend a base that handles shared form state.
+- **Signal-based inputs**: Angular's `input()` function creates reactive inputs. `SignalifyInput<T>` converts a core API props interface into signal-based input declarations.
+- **Machine initialization**: `useMachine(checkboxMachine, computed(...), this.injector)` wraps the headless state machine in Angular's signal-based reactivity. The `computed()` creates a reactive props object that updates the machine when signal values change.
+- **Context initialization**: `this.checkboxContextService.init(computed(() => createCheckboxApi(machine, normalizeProps)))` registers the API wrapped in `computed` so it reacts to machine state changes. Child directives consume this context to access binding getters.
+- **Track bindings**: `useTrackBindings()` creates a binding tracker that applies the root binding object to the host element. `this.trackBindings()` activates it in `ngOnInit`.
+- **ControlValueAccessor**: The `onChange` callback bridges machine state to Angular's form control system, supporting both `ngModel` and Reactive Forms.
+
+### Context Service
+
+Each component defines a context service that makes the core API available to child directives through Angular's dependency injection:
+
+```ts
+@Injectable()
+export class CheckboxContextService extends BaseApiContextService<CheckboxApi> {}
+
+export const [
+  CHECKBOX_CONTEXT,
+  useCheckboxContext,
+  provideCheckboxContext,
+]: ApiContext<CheckboxApi> = createApiContext<CheckboxApi>(
+  "CheckboxContext",
+  CheckboxContextService,
+)
+```
+
+`createApiContext` produces three things:
+
+- `CHECKBOX_CONTEXT`: Injection token for the service
+- `useCheckboxContext()`: Consumes the context (called in directive/component constructors)
+- `provideCheckboxContext()`: Provider factory used in the root directive's `providers` array
+
+This is the Angular equivalent of React's Context API, built on dependency injection. The root directive provides the context, and child directives consume it to access binding getters like `getControlBindings()` and `getLabelBindings()`.
+
+### Sub-Part Directives
+
+Child directives consume the context and apply their own bindings (`core-checkbox-control.directive.ts`):
+
+```ts
+@Directive()
+export class CoreCheckboxControlDirective implements OnInit {
+  readonly id = input<string>()
+
+  protected readonly checkboxContext = useCheckboxContext()
+
+  protected readonly trackBindings = useTrackBindings(() =>
+    this.checkboxContext().getControlBindings({
+      id: this.hostId(),
+      onDestroy: this.onDestroy,
+    }),
+  )
+
+  private readonly hostId = computed(() => useId(this, this.id()))
+  private readonly onDestroy = useOnDestroy()
+
+  ngOnInit() {
+    this.trackBindings()
+  }
+}
+```
+
+The directive calls `useCheckboxContext()` to get the API, then uses `useTrackBindings` to apply the control binding object to its host element. This pattern repeats for every sub-part: label, hidden input, indicator, hint, and error text.
+
+### Key Utilities
+
+- **`useMachine(machine, props, injector)`**: Wraps a headless state machine in Angular's signal-based reactivity. Returns the machine instance for use in `createCheckboxApi()`.
+- **`normalizeProps`**: Converts binding objects to Angular-compatible element attributes (e.g., `className` to `class`, event handlers to Angular-compatible format).
+- **`useTrackBindings()`**: Creates a binding tracker that applies binding objects to host elements as HTML attributes, ARIA properties, and data attributes. Returns a function that activates tracking in `ngOnInit`. Provides `extendWith()` for layering additional bindings (used by the styled layer for QDS).
+- **`useId()`**: Generates stable IDs for accessibility. Accepts an optional user-provided ID override.
+- **`SignalifyInput<T>`**: Utility type that converts a core API props interface to Angular signal-based input declarations. Ensures the directive's inputs match the core API contract.
+
+## angular: Styled Directives and Components
+
+### Root Directive
+
+The styled root directive extends the core directive and adds the QDS design system layer. From `checkbox-root.directive.ts`:
+
+```ts
+@Directive({
+  providers: [provideCheckboxContext(), provideQdsCheckboxContext()],
+  selector: "[q-checkbox-root]",
+  standalone: false,
+})
+export class CheckboxRootDirective
+  extends CoreCheckboxRootDirective
+  implements SignalifyInput<QdsCheckboxApiProps>
+{
+  readonly size = input<QdsCheckboxSize | undefined>()
+
+  readonly qdsCheckboxService = inject(QdsCheckboxContextService)
+
+  private readonly fieldGroupContext = useQdsFieldGroupContext({optional: true})
+
+  override ngOnInit() {
+    super.ngOnInit()
+
+    this.qdsCheckboxService.init(
+      computed(() =>
+        createQdsCheckboxApi(
+          {size: this.size() ?? this.fieldGroupContext?.().size},
+          normalizeProps,
+        ),
+      ),
+    )
+
+    this.trackBindings.extendWith(
+      computed(() => this.qdsCheckboxService.context().getRootBindings()),
+    )
+  }
+}
+```
+
+1. **Extends core**: `CoreCheckboxRootDirective` provides all headless behavior. The styled directive only adds QDS concerns.
+2. **Selector**: `[q-checkbox-root]` is an attribute selector. Consumers apply it to whatever host element they choose.
+3. **Providers**: `providers: [provideCheckboxContext(), provideQdsCheckboxContext()]` makes both the core and QDS contexts available to child directives.
+4. **QDS inputs**: `size` is a QDS-specific input. It falls back to the parent `fieldGroupContext` size if not provided directly.
+5. **QDS initialization**: After `super.ngOnInit()` initializes the core machine, the QDS API is created with `createQdsCheckboxApi({size}, normalizeProps)` and registered with the QDS context service.
+6. **Extended bindings**: `this.trackBindings.extendWith(...)` layers QDS class names and data attributes on top of the core bindings already applied by the parent class.
+
+The styled directive adds the design system layer on top of core behavior. This follows the same layered pattern as React, using Angular's class inheritance instead of hooks.
+
+### Subcomponents
+
+Styled subcomponents extend core sub-part directives and add QDS bindings (`checkbox-control.component.ts`):
+
+```ts
+@Component({
+  selector: "[q-checkbox-control]",
+  standalone: false,
+  template: `
+    <ng-content>
+      <div q-checkbox-indicator></div>
+    </ng-content>
+  `,
+})
+export class CheckboxControlComponent extends CoreCheckboxControlDirective {
+  protected readonly qdsCheckboxContext = useQdsCheckboxContext()
+
+  constructor() {
+    super()
+    this.trackBindings.extendWith(
+      computed(() => this.qdsCheckboxContext().getControlBindings()),
+    )
+  }
+}
+```
+
+- **Extends core**: `CoreCheckboxControlDirective` already has core bindings applied via `trackBindings`.
+- **QDS extension**: `this.trackBindings.extendWith(computed(() => qdsContext().getControlBindings()))` adds QDS class names and data attributes on top of core bindings.
+- **Template**: Default content includes `<div q-checkbox-indicator></div>` via `<ng-content>` with fallback content.
+
+`trackBindings.extendWith()` is the Angular equivalent of React's `mergeProps()`. Core bindings come first, QDS bindings are layered on top.
+
+### NgModule
+
+All component parts are declared and exported as a module (`checkbox.module.ts`):
+
+```ts
+@NgModule({
+  declarations: [
+    CheckboxComponent,
+    CheckboxRootDirective,
+    CheckboxControlComponent,
+    CheckboxLabelDirective,
+    CheckboxHiddenInputDirective,
+    CheckboxHintDirective,
+    CheckboxIndicatorComponent,
+    CheckboxErrorTextComponent,
+  ],
+  exports: [
+    CheckboxComponent,
+    CheckboxRootDirective,
+    CheckboxControlComponent,
+    CheckboxLabelDirective,
+    CheckboxHiddenInputDirective,
+    CheckboxHintDirective,
+    CheckboxIndicatorComponent,
+    CheckboxErrorTextComponent,
+  ],
+  imports: [QBindDirective, IconDirective, CheckmarkIconComponent],
+})
+export class CheckboxModule {}
+```
+
+Consumers import `CheckboxModule` to access all directives and components. The `imports` array pulls in shared directives like `QBindDirective` and `IconDirective` that the component's templates use internally.
+
+### Convenience Component
+
+`CheckboxComponent` (selector: `[q-checkbox]`) provides a simpler API for common use cases. It extends `CheckboxRootDirective` and assembles all parts internally via its template:
+
+```ts
+@Component({
+  providers: [provideCheckboxContext(), provideQdsCheckboxContext()],
+  selector: "[q-checkbox]",
+  standalone: false,
+  template: `
+    <ng-content select="[q-checkbox-hidden-input]">
+      <input q-checkbox-hidden-input />
+    </ng-content>
+    <ng-content select="[q-checkbox-control]">
+      <div q-checkbox-control>
+        <div q-checkbox-indicator></div>
+      </div>
+    </ng-content>
+    <ng-content select="[q-checkbox-label]">
+      @if (label()) {
+        <span q-checkbox-label>{{ label() }}</span>
+      }
+    </ng-content>
+    <!-- ...error text, hint -->
+  `,
+})
+export class CheckboxComponent extends CheckboxRootDirective {
+  readonly errorText = input<string>()
+  readonly hint = input<string>()
+  readonly label = input<string | undefined>()
+}
+```
+
+The convenience component accepts `label`, `hint`, and `errorText` as string inputs and renders the full component structure. Each `<ng-content>` slot has a fallback, so consumers can override individual parts with the directive API when needed. This mirrors the React convenience component pattern.
+
+## Creating a New Angular Component
+
+### In angular-core
+
+<FileTree
+  items={[
+    {
+      name: "[component]",
+      items: [
+        {name: "core-[component]-root.directive.ts"},
+        {name: "core-[component]-control.directive.ts"},
+        {name: "[component]-context.service.ts"},
+        {name: "index.ts"},
+      ],
+    },
+  ]}
+  defaultExpandedValue={["[component]"]}
+/>
+
+1. Create the directory at `packages/frameworks/angular-core/src/[component]/`
+2. Create `core-[component]-root.directive.ts`: Abstract directive with machine setup via `useMachine()`, signal inputs matching the core API props, `useTrackBindings` for root bindings, and `ControlValueAccessor` if it is a form control
+3. Create sub-part directives (`core-[component]-control.directive.ts`, etc.): Each consumes the context via `useCheckboxContext()` and applies its binding getter through `useTrackBindings`
+4. Create `[component]-context.service.ts`: Extend `BaseApiContextService<ComponentApi>` and call `createApiContext()` to produce the injection token, consumer function, and provider factory
+5. Export from `index.ts`
+
+### In angular
+
+<FileTree
+  items={[
+    {
+      name: "[component]",
+      items: [
+        {name: "[component]-root.directive.ts"},
+        {name: "[component]-control.component.ts"},
+        {name: "qds-[component]-context.service.ts"},
+        {name: "[component].component.ts"},
+        {name: "[component].module.ts"},
+        {name: "[component].spec.ts"},
+        {name: "index.ts"},
+      ],
+    },
+  ]}
+  defaultExpandedValue={["[component]"]}
+/>
+
+1. Create the directory at `packages/frameworks/angular/src/[component]/`
+2. Create `[component]-root.directive.ts`: Extends the core root directive, adds `provideCheckboxContext()` and `provideQdsCheckboxContext()` to providers, adds QDS-specific inputs (e.g., `size`, `variant`), initializes the QDS API in `ngOnInit` after `super.ngOnInit()`, and calls `trackBindings.extendWith()` for QDS root bindings
+3. Create subcomponent files extending core sub-part directives. Each calls `trackBindings.extendWith()` in the constructor to add QDS bindings.
+4. Create `qds-[component]-context.service.ts`: QDS context service following the same `createApiContext` pattern
+5. Create `[component].component.ts`: Convenience component extending the root directive with a template that assembles all parts and `<ng-content>` slots for overrides
+6. Create `[component].module.ts`: NgModule declaring and exporting all parts, importing shared directives as needed
+7. Create `[component].spec.ts`: Tests (see [Testing Guidelines](/contribution-guidelines/testing-guidelines))
+8. Export from `index.ts`
+
+## Key Patterns
+
+- Core directives are abstract. Styled directives extend them with QDS behavior.
+- `useTrackBindings` applies core bindings to host elements. `extendWith()` layers QDS bindings on top.
+- Context uses Angular DI: `provideXxxContext()` in providers, `useXxxContext()` in constructors
+- Signal-based inputs (`input()`) for reactive prop passing, typed with `SignalifyInput<T>`
+- Form controls implement `ControlValueAccessor` for `ngModel` and Reactive Forms integration
+- All parts are grouped in an NgModule for export
+- Attribute selectors (`[q-checkbox-root]`) let consumers control the host element type
+- Convenience components assemble all parts in a template with `<ng-content>` fallback slots
+
+See [Testing Guidelines](/contribution-guidelines/testing-guidelines) for testing strategies and [Angular Documentation](/contribution-guidelines/angular-documentation) for documenting Angular components.

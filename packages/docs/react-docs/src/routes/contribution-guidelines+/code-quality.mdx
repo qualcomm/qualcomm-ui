@@ -1,0 +1,92 @@
+---
+title: Code Quality
+---
+
+# {frontmatter.title}
+
+Standards and tooling for maintaining code quality across the monorepo.
+
+## TypeScript
+
+Strict mode is assumed across all packages.
+
+- Use named imports for Node.js modules with the `node:` prefix (e.g., `import {readFile} from "node:fs/promises"`)
+- Prefer promises (`node:fs/promises`) over synchronous equivalents
+- Handle errors appropriately or state assumptions explicitly
+- Prefer built-in solutions over external libraries unless there is clear justification
+
+## Comments
+
+Comments explain **why**, not **what**.
+
+### Remove
+
+- Comments that restate what the code clearly does
+- Type information already expressed in TypeScript
+- Section dividers and commented-out code
+
+```ts
+// Bad — restates the code
+// Check if user exists
+if (!user) return null
+
+// Bad — TypeScript already tells us this
+// Array of user objects
+const users: User[] = []
+```
+
+### Keep
+
+- JSDoc on exported interfaces and public APIs
+- Non-obvious business logic with context
+- Workarounds with explanations (browser bugs, API quirks)
+- Regex explanations
+- Performance decisions
+- TODO/FIXME with issue references
+
+```ts
+// Good — explains non-obvious behavior
+// Safari doesn't support smooth scrolling in iframes, fall back to instant
+const behavior = isSafari && isInIframe ? "instant" : "smooth"
+
+// Good — JSDoc on public API
+/**
+ * The checked state of the checkbox.
+ * @default false
+ */
+checked?: boolean
+```
+
+Before adding a comment, ask: "Can I rename a variable or extract a function to make this obvious instead?"
+
+## Linting
+
+The monorepo provides shared ESLint configs:
+
+- `eslint-config-typescript`: base TypeScript rules
+- `eslint-config-react`: React-specific rules
+- `eslint-config-angular`: Angular-specific rules
+- `eslint-config-mdx`: MDX documentation rules
+
+Run `pnpm lint` from the root to lint all packages.
+
+## Formatting
+
+Code formatting is handled by Prettier. The configuration lives in `prettier.config.js` at the repo root. CSS files use Stylelint with `stylelint-order` for consistent property ordering.
+
+Match the existing formatting. Do not introduce new patterns.
+
+## Dependencies
+
+- Prefer built-in solutions over external libraries
+- New dependencies require justification
+- The `catalog` section in `pnpm-workspace.yaml` pins shared dependency versions
+- `minimumReleaseAge: 1440` (24 hours) ensures packages are not installed immediately after publishing, reducing supply chain risk
+
+## Pull Request Process
+
+- Branch from `main`
+- Commits require DCO (Developer Certificate of Origin) sign-off
+- PRs are scanned by Semgrep for security issues
+- Keep PRs focused: one feature or fix per PR
+- All tests must pass before merging
