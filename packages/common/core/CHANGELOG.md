@@ -1,5 +1,13 @@
 # @qualcomm-ui/core Changelog
 
+## 1.13.1
+
+Sep 29th, 2026
+
+### Bug Fixes
+
+* [date-picker]: handle form submission with Enter ([6b52294](https://github.com/qualcomm/qualcomm-ui/commit/6b52294942686bd2703558b54dbb937f3faa1efb))
+
 ## 1.13.0
 
 Aug 30th, 2026
