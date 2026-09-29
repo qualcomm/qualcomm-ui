@@ -74,7 +74,7 @@ export interface QdsAlertBannerCloseButtonBindings extends Part<"closeButton"> {
 }
 
 export type QdsAlertBannerCloseButtonEmphasis =
-  | "black-persistent"
+  | "persistent-black"
   | "inverse"
   | "neutral"
 

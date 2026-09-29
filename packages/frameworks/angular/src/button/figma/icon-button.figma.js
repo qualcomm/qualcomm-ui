@@ -10,10 +10,10 @@ const instance = figma.selectedInstance
 
 const disabled = instance.getEnum("state", {disabled: true})
 const emphasis = instance.getEnum("emphasis", {
-  "black-persistent": "black-persistent",
   danger: "danger",
+  "persistent-black": "persistent-black",
+  "persistent-white": "persistent-white",
   primary: "primary",
-  "white-persistent": "white-persistent",
 })
 const shape = instance.getEnum("shape", {
   rounded: "rounded",

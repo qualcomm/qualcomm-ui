@@ -103,6 +103,7 @@
     --button-icon-pressed: var(--color-interactive-icon-danger-pressed);
   }
 
+  &[data-emphasis="persistent-white"],
   &[data-emphasis="white-persistent"] {
     --button-text-idle: var(--color-utility-persistent-white);
     --button-text-hover: var(--color-utility-persistent-white);
@@ -118,6 +119,7 @@
     }
   }
 
+  &[data-emphasis="persistent-black"],
   &[data-emphasis="black-persistent"] {
     --button-text-idle: var(--color-utility-persistent-black);
     --button-text-hover: var(--color-utility-persistent-black);
@@ -232,6 +234,7 @@
     --button-bg-pressed: var(--color-interactive-background-ghost-pressed);
     --button-bg-disabled: var(--color-interactive-background-ghost-idle);
 
+    &[data-emphasis="persistent-white"],
     &[data-emphasis="white-persistent"] {
       --button-bg-idle: var(
         --color-interactive-background-persistent-white-ghost-idle
@@ -247,6 +250,7 @@
       );
     }
 
+    &[data-emphasis="persistent-black"],
     &[data-emphasis="black-persistent"] {
       --button-bg-idle: var(
         --color-interactive-background-persistent-black-ghost-idle
@@ -321,6 +325,7 @@
       );
     }
 
+    &[data-emphasis="persistent-white"],
     &[data-emphasis="white-persistent"] {
       --outline-border-idle: var(
         --color-interactive-border-persistent-white-idle
@@ -336,6 +341,7 @@
       );
     }
 
+    &[data-emphasis="persistent-black"],
     &[data-emphasis="black-persistent"] {
       --outline-border-idle: var(
         --color-interactive-border-persistent-black-idle
@@ -417,6 +423,7 @@
       }
     }
 
+    &[data-emphasis="persistent-white"],
     &[data-emphasis="white-persistent"] {
       --button-text-idle: var(--color-utility-persistent-black);
       --button-text-hover: var(--color-utility-persistent-black);
@@ -438,6 +445,7 @@
       );
     }
 
+    &[data-emphasis="persistent-black"],
     &[data-emphasis="black-persistent"] {
       --button-text-idle: var(--color-utility-persistent-white);
       --button-text-hover: var(--color-utility-persistent-white);
