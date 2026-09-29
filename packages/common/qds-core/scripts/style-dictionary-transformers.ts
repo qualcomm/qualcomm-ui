@@ -309,7 +309,9 @@ export function registerCustomTransformsForDtcg({
   StyleDictionary.registerTransformGroup({
     name: "custom/css-extended",
     transforms: [
-      ...StyleDictionary.hooks.transformGroups.css,
+      ...StyleDictionary.hooks.transformGroups.css.filter(
+        (transform) => transform !== "color/css",
+      ),
       "web/transform-opacity",
       "web/expand-shadows",
       "web/font-family-fallback",

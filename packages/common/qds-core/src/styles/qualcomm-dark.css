@@ -246,7 +246,7 @@
   --color-utility-scrim-default: #000000cc;
   --border-radius-lg: 6px;
   --border-radius-md: 4px;
-  --border-radius-none: 0;
+  --border-radius-none: 0px;
   --border-radius-rounded: 360px;
   --border-radius-sm: 3px;
   --border-radius-xl: 8px;
@@ -254,7 +254,7 @@
   --border-radius-xxl: 12px;
   --border-width-lg: 3px;
   --border-width-md: 2px;
-  --border-width-none: 0;
+  --border-width-none: 0px;
   --border-width-sm: 1px;
   --border-width-xl: 4px;
   --canvas-width: 375;
@@ -373,7 +373,7 @@
   --sizing-180: 80px;
   --sizing-190: 120px;
   --sizing-200: 160px;
-  --spacing-0: 0;
+  --spacing-0: 0px;
   --spacing-10: 1px;
   --spacing-20: 2px;
   --spacing-30: 3px;
