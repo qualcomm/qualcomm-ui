@@ -87,7 +87,7 @@ import {QdsTagContextService} from "./qds-tag-context.service"
       }
     </ng-content>
 
-    <span><ng-content /></span>
+    <span [q-bind]="qdsTagApi.context().getTextBindings()"><ng-content /></span>
 
     @if (variant() === "dismissable") {
       <button
