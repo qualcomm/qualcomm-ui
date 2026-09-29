@@ -81,7 +81,12 @@ import {
   getRoleDescription,
   isDateWithinRange,
 } from "./date-picker.utils.js"
-import {domEls, domIds, isInteractiveDescendantEvent} from "./internal/index.js"
+import {
+  domEls,
+  domIds,
+  isInteractiveDescendantEvent,
+  resolveDatePickerInput,
+} from "./internal/index.js"
 
 export function createDatePickerApi(
   machine: Machine<DatePickerSchema>,
@@ -185,6 +190,17 @@ export function createDatePickerApi(
 
   function isUnavailable(date: DateValue) {
     return isDateUnavailable(date, isDateUnavailableFn, locale!, min, max)
+  }
+
+  function resolveInput(value: string) {
+    return resolveDatePickerInput(value, {
+      isDateUnavailable: isDateUnavailableFn,
+      locale: locale!,
+      max,
+      min,
+      parse: prop("parse")!,
+      timeZone: timeZone!,
+    })
   }
 
   function focusMonth(month: number) {
@@ -764,7 +780,13 @@ export function createDatePickerApi(
         },
         onBlur(event) {
           const value = (event.currentTarget as HTMLInputElement)?.value.trim()
-          send({fixOnBlur, index, type: "INPUT.BLUR", value})
+          send({
+            fixOnBlur,
+            index,
+            resolution: fixOnBlur ? resolveInput(value) : undefined,
+            type: "INPUT.BLUR",
+            value,
+          })
         },
         onClick(event) {
           if (event.defaultPrevented) {
@@ -796,19 +818,17 @@ export function createDatePickerApi(
           if (!interactive) {
             return
           }
+          if (isComposingEvent(event)) {
+            return
+          }
           const keyMap: EventKeyMap<HTMLInputElement> = {
             Enter(event) {
-              // TODO: consider form submission (with enter key)
-              if (isComposingEvent(event)) {
-                return
-              }
-              if (event.currentTarget?.value.trim() === "") {
-                return
-              }
+              const value = event.currentTarget?.value
               send({
                 index,
+                resolution: resolveInput(value),
                 type: "INPUT.ENTER",
-                value: event.currentTarget?.value,
+                value,
               })
             },
           }

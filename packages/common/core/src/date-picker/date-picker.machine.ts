@@ -56,6 +56,7 @@ import type {
   DatePickerActionEvent,
   DatePickerSchema,
   DatePickerDateView,
+  DatePickerScope,
   DatePickerSelectionMode,
 } from "./date-picker.types.js"
 import {
@@ -73,7 +74,7 @@ import {
 } from "./date-picker.utils.js"
 import {domEls, getFocusedCell, getInputEls} from "./internal/index.js"
 
-const {and, not} = createGuards<DatePickerSchema>()
+const {and, not, or} = createGuards<DatePickerSchema>()
 
 function isDateArrayEqual(
   a: (DateValue | null)[],
@@ -121,20 +122,37 @@ function getValueAsString(
   })
 }
 
+function getDefaultSubmitButton(form: HTMLFormElement) {
+  for (const el of form.elements) {
+    if ((el as HTMLButtonElement).type === "submit") {
+      return el as HTMLButtonElement
+    }
+  }
+  return undefined
+}
+
+function writeInputElements(scope: DatePickerScope, values: string[]) {
+  for (const [index, inputEl] of getInputEls(scope).entries()) {
+    setElementValue(inputEl, values[index] || "")
+  }
+}
+
 export const datePickerMachine: MachineConfig<DatePickerSchema> =
   createMachine<DatePickerSchema>({
     actions: {
       adjustValueToSelectionMode({context, flush, prop}) {
-        const mode = prop("selectionMode") || "single"
-        const values = context.get("value")
-        const next = normalizeValueForMode(values, mode)
-        if (!isDateArrayEqual(next, values)) {
-          context.set("value", next)
-        }
-        const nextActiveIndex = getNextActiveIndex(context.get("value"), mode)
-        if (context.get("activeIndex") !== nextActiveIndex) {
-          flush(() => context.set("activeIndex", nextActiveIndex))
-        }
+        flush(() => {
+          const mode = prop("selectionMode") || "single"
+          const values = context.get("value")
+          const next = normalizeValueForMode(values, mode)
+          if (!isDateArrayEqual(next, values)) {
+            context.set("value", next)
+          }
+          const nextActiveIndex = getNextActiveIndex(context.get("value"), mode)
+          if (context.get("activeIndex") !== nextActiveIndex) {
+            context.set("activeIndex", nextActiveIndex)
+          }
+        })
       },
       announceValueText({context, prop, refs}) {
         const value = context.get("value")
@@ -476,6 +494,19 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           .subtract({years: (event as DatePickerActionEvent).columns})
         setFocusedValue(params, nextValue)
       },
+      focusResolvedDate(params) {
+        const event = params.event as DatePickerActionEvent
+
+        if (event.index == null) {
+          return
+        }
+        const parsed = event.resolution?.parsed
+        if (!parsed) {
+          return
+        }
+
+        setFocusedValue(params, parsed)
+      },
       focusSectionEnd(params) {
         const {computed} = params
         setFocusedValue(params, computed("endValue").copy())
@@ -557,21 +588,18 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           value: valueAsString[activeIndex],
         })
       },
-      selectParsedDate({context, event, prop}) {
+      selectResolvedDate({context, event, prop, refs}) {
         const evt = event as DatePickerActionEvent
-        if (evt.index == null) {
+        const resolution = evt.resolution
+        refs.set("pendingFormValueAsString", undefined)
+        if (evt.index == null || resolution == null) {
           return
         }
 
-        const parse = prop("parse")!
-        let date = parse(evt.value as string, {
-          locale: prop("locale")!,
-          timeZone: prop("timeZone")!,
-        })
-
-        // restore the last committed value rather than coercing an unparsable date
-        if (!date || !isValidDate(date)) {
-          if (evt.value) {
+        // restore the last committed value rather than coercing an unparsable
+        // or unavailable date
+        if (resolution.kind !== "accepted") {
+          if (resolution.kind === "unavailable" || evt.value) {
             const committed = getValueAsString(context.get("value"), prop)
             context.set("inputValue", {
               index: evt.index,
@@ -581,20 +609,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           return
         }
 
-        // constrain date to min/max range
-        date = constrainValue(date, prop("min"), prop("max"))
-
-        // reject unavailable dates by reverting the input to the last committed
-        // value.
-        if (prop("isDateUnavailable")?.(date, prop("locale")!)) {
-          const committed = getValueAsString(context.get("value"), prop)
-          context.set("inputValue", {
-            index: evt.index,
-            value: committed[evt.index] ?? "",
-          })
-          return
-        }
-
+        const date = resolution.committed
         const stored = context.get("value")
         const values =
           prop("selectionMode") === "range"
@@ -607,6 +622,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         // always sync the input value, even if the selecteddate is not changed
         // e.g. selected value is 02/28/2024, and the input value changed to 02/28
         const valueAsString = getValueAsString(adjustedValues, prop)
+        refs.set("pendingFormValueAsString", valueAsString)
         context.set("inputValue", {
           index: evt.index,
           value: valueAsString[evt.index],
@@ -773,13 +789,32 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         refs.set("valueSnapshot", Array.from(context.get("value")))
       },
 
+      submitOwningForm({refs, scope}) {
+        const pending = refs.get("pendingFormValueAsString")
+        if (pending) {
+          refs.set("pendingFormValueAsString", undefined)
+          // the machine's rAF input sync is too late for a form serializing now
+          writeInputElements(scope, pending)
+        }
+        const inputEl = getInputEls(scope)[0]
+        const form =
+          inputEl?.form ?? domEls.control(scope)?.closest("form") ?? undefined
+        if (!form) {
+          return
+        }
+        // mimic native submission by clicking the form's default button
+        const submitter = getDefaultSubmitButton(form)
+        if (submitter) {
+          submitter.click()
+          return
+        }
+        form.requestSubmit()
+      },
+
       syncInputElement({computed, refs, scope}) {
         refs.get("syncInputElementCleanup")?.()
         const cleanup = raf(() => {
-          const inputEls = getInputEls(scope)
-          for (const [index, inputEl] of inputEls.entries()) {
-            setElementValue(inputEl, computed("valueAsString")[index] || "")
-          }
+          writeInputElements(scope, computed("valueAsString"))
         })
         refs.set("syncInputElementCleanup", cleanup)
       },
@@ -924,6 +959,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
               view: context.get("view"),
             })
           },
+          sync: true,
           value: prop("value"),
         })),
         view: bindable(() => ({
@@ -973,7 +1009,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         })
       },
 
-      trackFormControlState({context, prop, refs, scope}) {
+      trackFormControlState({context, flush, prop, refs, scope}) {
         const anchorEl =
           getInputEls(scope)[0] ??
           domEls.control(scope) ??
@@ -983,14 +1019,16 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
             context.set("fieldsetDisabled", disabled)
           },
           onFormReset: () => {
-            const mode = prop("selectionMode") || "single"
-            const next = normalizeValueForMode(
-              context.initial("value") ?? [],
-              mode,
-            )
-            context.set("value", next)
-            refs.set("valueSnapshot", Array.from(next))
-            context.set("activeIndex", getNextActiveIndex(next, mode))
+            flush(() => {
+              const mode = prop("selectionMode") || "single"
+              const next = normalizeValueForMode(
+                context.initial("value") ?? [],
+                mode,
+              )
+              context.set("value", next)
+              refs.set("valueSnapshot", Array.from(next))
+              context.set("activeIndex", getNextActiveIndex(next, mode))
+            })
           },
         })
       },
@@ -1063,6 +1101,8 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
       },
       isAboveMinView: ({context, prop}) =>
         isAboveMinView(context.get("view"), prop("minView")!),
+      isAcceptedResolution: ({event}: {event: DatePickerActionEvent}) =>
+        event.resolution?.kind === "accepted",
       isDayPointerMoveOutsideVisibleMonth: ({event}) =>
         (event as DatePickerActionEvent).cell === "day" &&
         (event as DatePickerActionEvent).outsideRange === true,
@@ -1085,6 +1125,16 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
         ((event as DatePickerActionEvent).view || context.get("view")) ===
         "year",
       selectsToMinView: ({prop}) => prop("viewOnSelect") === "min",
+      shouldCloseOnEnter: ({context, event, prop}) => {
+        const evt = event as DatePickerActionEvent
+        if (evt.resolution?.kind !== "accepted" || !prop("closeOnSelect")) {
+          return false
+        }
+        if (prop("selectionMode") !== "range") {
+          return true
+        }
+        return context.get("value")[evt.index === 0 ? 1 : 0] != null
+      },
       shouldFixOnBlur: ({event}) =>
         !!(event as DatePickerActionEvent).fixOnBlur,
       shouldRestoreFocus: ({context}) => !!context.get("restoreFocus"),
@@ -1226,6 +1276,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
     refs() {
       return {
         announcer: undefined,
+        pendingFormValueAsString: undefined,
         syncInputElementCleanup: undefined,
         valueSnapshot: undefined,
       }
@@ -1267,7 +1318,7 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           actions: [
             "setActiveIndexToStart",
             "resumeRangeSelection",
-            "selectParsedDate",
+            "selectResolvedDate",
           ],
           guard: "shouldFixOnBlur",
         },
@@ -1293,9 +1344,19 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
           ],
         },
       ],
-      "INPUT.ENTER": {
-        actions: ["focusParsedDate", "selectParsedDate"],
-      },
+      "INPUT.ENTER": [
+        {
+          actions: [
+            "focusResolvedDate",
+            "selectResolvedDate",
+            "submitOwningForm",
+          ],
+          guard: or("isAcceptedResolution", "isInputValueEmpty"),
+        },
+        {
+          actions: ["focusResolvedDate", "selectResolvedDate"],
+        },
+      ],
       "INPUT.FOCUS": {
         actions: ["setActiveIndex"],
       },
@@ -1607,6 +1668,41 @@ export const datePickerMachine: MachineConfig<DatePickerSchema> =
             },
             {
               target: "idle",
+            },
+          ],
+          "INPUT.ENTER": [
+            {
+              actions: [
+                "focusResolvedDate",
+                "selectResolvedDate",
+                "invokeOnClose",
+                "submitOwningForm",
+              ],
+              guard: and("shouldCloseOnEnter", "isOpenControlled"),
+            },
+            {
+              actions: [
+                "focusResolvedDate",
+                "selectResolvedDate",
+                "invokeOnClose",
+                "submitOwningForm",
+              ],
+              guard: "shouldCloseOnEnter",
+              target: "focused",
+            },
+            {
+              actions: [
+                "focusResolvedDate",
+                "selectResolvedDate",
+                "submitOwningForm",
+              ],
+              guard: and(
+                or("isAcceptedResolution", "isInputValueEmpty"),
+                "closeOnSelect",
+              ),
+            },
+            {
+              actions: ["focusResolvedDate", "selectResolvedDate"],
             },
           ],
           INTERACT_OUTSIDE: [

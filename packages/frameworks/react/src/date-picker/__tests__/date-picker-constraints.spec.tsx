@@ -7,6 +7,7 @@ import {
   DatePicker,
   type DatePickerProps,
   type DatePickerRootProps,
+  isWeekend,
   parseDate,
 } from "@qualcomm-ui/react/date-picker"
 
@@ -57,11 +58,6 @@ const dayCell = (day: RegExp) => page.getByRole("gridcell", {name: day})
 
 /** Cell state and focus live on the trigger inside the `gridcell`. */
 const dayTrigger = (day: string) => page.getByLabelText(day)
-
-const weekends = (date: {day: number; month: number; year: number}) => {
-  const weekday = new Date(date.year, date.month - 1, date.day).getDay()
-  return weekday === 0 || weekday === 6
-}
 
 const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
   {
@@ -121,8 +117,10 @@ const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
     },
   },
   {
-    composite: (props) => <Composite isDateUnavailable={weekends} {...props} />,
-    simple: (props) => <Simple isDateUnavailable={weekends} {...props} />,
+    composite: (props) => (
+      <Composite isDateUnavailable={isWeekend} {...props} />
+    ),
+    simple: (props) => <Simple isDateUnavailable={isWeekend} {...props} />,
     testCase: (getComponent) => {
       test("unavailable days announce themselves and reject clicks", async () => {
         const onValueChange = vi.fn()
@@ -152,8 +150,8 @@ const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
     },
   },
   {
-    composite: () => <Composite isDateUnavailable={weekends} />,
-    simple: () => <Simple isDateUnavailable={weekends} />,
+    composite: () => <Composite isDateUnavailable={isWeekend} />,
+    simple: () => <Simple isDateUnavailable={isWeekend} />,
     testCase: (getComponent) => {
       test("Space on an unavailable day does not commit it", async () => {
         await render(getComponent())
@@ -168,8 +166,8 @@ const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
     },
   },
   {
-    composite: () => <Composite isDateUnavailable={weekends} />,
-    simple: () => <Simple isDateUnavailable={weekends} />,
+    composite: () => <Composite isDateUnavailable={isWeekend} />,
+    simple: () => <Simple isDateUnavailable={isWeekend} />,
     testCase: (getComponent) => {
       test("Enter on an unavailable day does not commit it", async () => {
         await render(getComponent())
@@ -184,8 +182,8 @@ const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
     },
   },
   {
-    composite: () => <Composite isDateUnavailable={weekends} />,
-    simple: () => <Simple isDateUnavailable={weekends} />,
+    composite: () => <Composite isDateUnavailable={isWeekend} />,
+    simple: () => <Simple isDateUnavailable={isWeekend} />,
     testCase: (getComponent) => {
       test("typing an unavailable date reverts the input to the last committed value", async () => {
         await render(getComponent())
@@ -281,7 +279,7 @@ describe("DatePicker - Constraints", () => {
         closeOnSelect={false}
         defaultFocusedValue={seeded}
         defaultValue={[seeded]}
-        isDateUnavailable={weekends}
+        isDateUnavailable={isWeekend}
         label="Departure date"
       />,
     )

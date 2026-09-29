@@ -134,6 +134,30 @@ const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
       <Simple defaultValue={[parseDate("2024-06-15")]} {...props} />
     ),
     testCase: (getComponent) => {
+      test("pressing Enter invokes a custom parse function exactly once", async () => {
+        const parse = vi.fn((value: string) =>
+          value === "06/20/2024" ? parseDate("2024-06-20") : undefined,
+        )
+        await render(getComponent({parse}))
+
+        const input = page.getByRole("textbox")
+        await input.fill("06/20/2024")
+        parse.mockClear()
+
+        await userEvent.keyboard("{Enter}")
+
+        expect(parse).toHaveBeenCalledTimes(1)
+      })
+    },
+  },
+  {
+    composite: (props) => (
+      <Composite defaultValue={[parseDate("2024-06-15")]} {...props} />
+    ),
+    simple: (props) => (
+      <Simple defaultValue={[parseDate("2024-06-15")]} {...props} />
+    ),
+    testCase: (getComponent) => {
       test("clearing the input clears the committed value", async () => {
         const onValueChange = vi.fn()
         await render(getComponent({onValueChange}))
