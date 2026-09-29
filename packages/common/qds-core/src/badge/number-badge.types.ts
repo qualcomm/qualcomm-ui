@@ -11,6 +11,8 @@ import type {
 } from "./badge.types.js"
 import type {numberBadgeAnatomy} from "./number-badge.anatomy.js"
 
+export type QdsNumberBadgeSize = "xs" | QdsBadgeBasicSize
+
 export type QdsNumberBadgeEmphasis =
   | "neutral"
   | "neutral-outline"
@@ -40,7 +42,7 @@ export interface QdsNumberBadgeProps extends QdsBaseBadgeProps {
    * Governs the size of the badge.
    * @default 'md'
    */
-  size?: QdsBadgeBasicSize
+  size?: QdsNumberBadgeSize
 
   /**
    * The numeric value to display.
@@ -56,7 +58,7 @@ export interface QdsNumberBadgeRootBindings extends Part<"root"> {
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsNumberBadgeEmphasis
   "data-overflow": BooleanDataAttr
-  "data-size": QdsBadgeBasicSize
+  "data-size": QdsNumberBadgeSize
 }
 
 export interface QdsNumberBadgeApi {

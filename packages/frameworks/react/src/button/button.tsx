@@ -9,6 +9,7 @@ import {
 } from "@qualcomm-ui/qds-core/button"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
+import {BadgeContextProvider} from "@qualcomm-ui/react/badge"
 import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -19,6 +20,7 @@ import type {ButtonProps} from "./button.types.js"
  * A styled button. Renders a `<button>` element by default.
  */
 export function Button({
+  badge,
   children,
   density,
   disabled,
@@ -29,28 +31,37 @@ export function Button({
   variant,
   ...props
 }: ButtonProps): ReactElement {
-  const api = createQdsButtonApi(
-    resolveButtonPropsWithGroup(useButtonGroupContext(), {
-      density,
-      disabled,
-      emphasis,
-      size,
-      variant,
-    }),
-    normalizeProps,
-  )
-
+  const resolved = resolveButtonPropsWithGroup(useButtonGroupContext(), {
+    density,
+    disabled,
+    emphasis,
+    size,
+    variant,
+  })
+  const api = createQdsButtonApi(resolved, normalizeProps)
   const mergedProps = mergeProps(api.getRootBindings(), props)
 
   return (
-    <PolymorphicElement as="button" {...mergedProps}>
-      {startIcon ? (
-        <IconOrNode icon={startIcon} {...api.getStartIconBindings()} />
-      ) : null}
-      {children}
-      {endIcon ? (
-        <IconOrNode icon={endIcon} {...api.getEndIconBindings()} />
-      ) : null}
-    </PolymorphicElement>
+    <BadgeContextProvider
+      value={{
+        numberBadge: {
+          disabled: resolved.disabled,
+          emphasis: api.numberBadgeEmphasis,
+          size: api.numberBadgeSize,
+        },
+        statusBadge: {disabled: resolved.disabled, size: api.statusBadgeSize},
+      }}
+    >
+      <PolymorphicElement as="button" {...mergedProps}>
+        {startIcon ? (
+          <IconOrNode icon={startIcon} {...api.getStartIconBindings()} />
+        ) : null}
+        {children}
+        {badge}
+        {endIcon ? (
+          <IconOrNode icon={endIcon} {...api.getEndIconBindings()} />
+        ) : null}
+      </PolymorphicElement>
+    </BadgeContextProvider>
   )
 }

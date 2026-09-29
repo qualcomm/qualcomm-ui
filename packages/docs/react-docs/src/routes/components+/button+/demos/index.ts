@@ -1,3 +1,4 @@
+export * from "./button-badge-demo"
 export * from "./button-contrast-demo"
 export * from "./button-density-demo"
 export * from "./button-emphasis-demo"

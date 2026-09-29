@@ -19,7 +19,7 @@ const emphasis = instance.getEnum("emphasis", {
   success: "success",
   warning: "warning",
 })
-const size = instance.getEnum("size", {lg: "lg", sm: "sm"})
+const size = instance.getEnum("size", {lg: "lg", sm: "sm", xs: "xs"})
 const disabled = instance.getEnum("disabled", {yes: true})
 const label = instance.getString("label") || "5"
 
