@@ -1,0 +1,78 @@
+---
+title: JSON Viewer
+description: JSON Viewer renders JavaScript data as an expandable, collapsible tree with syntax-colored values.
+component: JsonViewer
+aliases: [json, json-tree, data viewer, object viewer]
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {JsonViewer} from "@qualcomm-ui/react/json-viewer"
+```
+
+## Examples
+
+### Simple
+
+Pass any JavaScript value to `data`. Use `defaultExpandedDepth` to control how many levels are expanded initially.
+
+<Demo name="JsonViewerSimpleDemo" component={demos.JsonViewerSimpleDemo} />
+
+### Composite
+
+Use the composite API when you need to render additional content alongside the tree.
+
+<Demo name="JsonViewerCompositeDemo" component={demos.JsonViewerCompositeDemo} />
+
+### Data Types
+
+The viewer renders values with type-specific coloring for strings, numbers, booleans, null, undefined, dates, regex, and more.
+
+<Demo name="JsonViewerDataTypesDemo" component={demos.JsonViewerDataTypesDemo} />
+
+### Root Provider
+
+Use `useJsonViewer` with `JsonViewer.RootProvider` to control the viewer state externally, such as expanding or collapsing all nodes programmatically.
+
+<Demo name="JsonViewerRootProviderDemo" component={demos.JsonViewerRootProviderDemo} />
+
+### Complex Types
+
+Maps, Sets, Headers, URLSearchParams, URLs, Errors, and functions are all supported.
+
+<Demo name="JsonViewerComplexTypesDemo" component={demos.JsonViewerComplexTypesDemo} />
+
+## API
+
+### \<JsonViewer>
+
+The simple JSON viewer extends the [JsonViewer.Root](./#json-viewer-root) component with the following props:
+
+<TypeDocProps name="JsonViewerProps" omitFrom="JsonViewerRootProps" />
+
+## Composite API
+
+### \<JsonViewer.Root>
+
+<TypeDocProps name="JsonViewerRootProps" />
+
+### \<JsonViewer.RootProvider>
+
+<TypeDocProps name="JsonViewerRootProviderProps" />
+
+### \<JsonViewer.Tree>
+
+<TypeDocProps name="JsonViewerTreeProps" />
+
+### useJsonViewer
+
+<TypeDocProps name="UseJsonViewerProps" />
+
+<TypeDocProps name="UseJsonViewerReturn" />

@@ -1,0 +1,77 @@
+---
+title: JSON Viewer
+description: JSON Viewer renders JavaScript data as an expandable, collapsible tree with syntax-colored values.
+component: JsonViewer
+aliases: [json, json-tree, data viewer, object viewer]
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```ts
+import {JsonViewerModule} from "@qualcomm-ui/angular/json-viewer"
+```
+
+## Examples
+
+### Simple
+
+Pass any JavaScript value to `data`. Use `defaultExpandedDepth` to control how many levels are expanded initially.
+
+<QdsDemo name="JsonViewerSimpleDemo" />
+
+### Composite
+
+Use the composite API when you need to render additional content alongside the tree.
+
+<QdsDemo name="JsonViewerCompositeDemo" />
+
+### Data Types
+
+The viewer renders values with type-specific coloring for strings, numbers, booleans, null, undefined, dates, regex, and more.
+
+<QdsDemo name="JsonViewerDataTypesDemo" />
+
+### Root Provider
+
+Use `createJsonViewerState` with `q-json-viewer-root-provider` to control the viewer state externally, such as expanding or collapsing all nodes programmatically.
+
+<QdsDemo name="JsonViewerRootProviderDemo" />
+
+### Complex Types
+
+Maps, Sets, Headers, URLSearchParams, URLs, Errors, and functions are all supported.
+
+<QdsDemo name="JsonViewerComplexTypesDemo" />
+
+## API
+
+### \<q-json-viewer>
+
+The simple JSON viewer extends the [q-json-viewer-root](./#q-json-viewer-root) component with the following inputs:
+
+<TypeDocProps name="JsonViewerComponent" omitFrom="JsonViewerRootComponent" />
+
+## Composite API
+
+### \<q-json-viewer-root>
+
+<TypeDocProps name="JsonViewerRootComponent" />
+
+### \<q-json-viewer-root-provider>
+
+<TypeDocProps name="JsonViewerRootProviderComponent" />
+
+### \<q-json-viewer-tree>
+
+<TypeDocProps name="JsonViewerTreeComponent" />
+
+### createJsonViewerState
+
+<TypeDocProps name="CreateJsonViewerStateOptions" />
+
+<TypeDocProps name="JsonViewerState" />
