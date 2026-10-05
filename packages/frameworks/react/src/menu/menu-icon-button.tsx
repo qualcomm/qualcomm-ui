@@ -14,6 +14,7 @@ import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
 import {
   type IconButtonProps,
   useButtonGroupContext,
+  useButtonPropsContext,
 } from "@qualcomm-ui/react/button"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -46,8 +47,11 @@ export function MenuIconButton({
     size: resolvedSize,
     variant: resolvedVariant,
   } = resolveButtonProps(
-    {density, disabled, emphasis, size: size ?? qdsMenuContext.size, variant},
-    {group: useButtonGroupContext()},
+    {density, disabled, emphasis, size, variant},
+    {
+      defaults: {...useButtonPropsContext(), size: qdsMenuContext.size},
+      group: useButtonGroupContext(),
+    },
   )
 
   const api = useMemo(

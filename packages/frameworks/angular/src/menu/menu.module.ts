@@ -13,6 +13,9 @@ import {MenuCheckboxItemControlComponent} from "./menu-checkbox-item-control.com
 import {MenuCheckboxItemDirective} from "./menu-checkbox-item.directive"
 import {MenuContentDirective} from "./menu-content.directive"
 import {MenuContextTriggerDirective} from "./menu-context-trigger.directive"
+import {MenuFooterDirective} from "./menu-footer.directive"
+import {MenuHeaderLabelDirective} from "./menu-header-label.directive"
+import {MenuHeaderDirective} from "./menu-header.directive"
 import {MenuIconButtonComponent} from "./menu-icon-button.component"
 import {MenuItemCommandDirective} from "./menu-item-command.directive"
 import {MenuItemDescriptionDirective} from "./menu-item-description.directive"
@@ -35,6 +38,9 @@ import {MenuComponent} from "./menu.component"
 
 @NgModule({
   declarations: [
+    MenuFooterDirective,
+    MenuHeaderDirective,
+    MenuHeaderLabelDirective,
     MenuComponent,
     MenuContentDirective,
     MenuPositionerComponent,
@@ -61,6 +67,9 @@ import {MenuComponent} from "./menu.component"
     MenuSplitButtonComponent,
   ],
   exports: [
+    MenuFooterDirective,
+    MenuHeaderDirective,
+    MenuHeaderLabelDirective,
     MenuComponent,
     MenuContentDirective,
     MenuPositionerComponent,

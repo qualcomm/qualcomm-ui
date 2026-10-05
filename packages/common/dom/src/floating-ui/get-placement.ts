@@ -260,11 +260,12 @@ function getPlacementImpl(
       }
     }
 
-    const contentEl = floating.firstElementChild
-
-    if (contentEl) {
-      const styles = getComputedStyle(contentEl)
-      floating.style.setProperty("--z-index", styles.zIndex)
+    for (const child of Array.from(floating.children)) {
+      const zIndex = getComputedStyle(child).zIndex
+      if (zIndex !== "auto") {
+        floating.style.setProperty("--z-index", zIndex)
+        break
+      }
     }
   }
 

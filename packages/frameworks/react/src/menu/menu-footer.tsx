@@ -3,7 +3,6 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {useMenuPositioner} from "@qualcomm-ui/react-core/menu"
 import {
   type ElementRenderProp,
   PolymorphicElement,
@@ -13,7 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsMenuContext} from "./qds-menu-context.js"
 
-export interface MenuPositionerProps extends ElementRenderProp<"div"> {
+export interface MenuFooterProps extends ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
@@ -21,30 +20,15 @@ export interface MenuPositionerProps extends ElementRenderProp<"div"> {
 }
 
 /**
- * A container that positions the menu relative to its anchor element. Renders a
- * `<div>` element by default.
+ * The bottom section of the menu. Renders a `<div>` element by default.
  */
-export function MenuPositioner({
-  children,
-  id,
-  ...props
-}: MenuPositionerProps): ReactElement | null {
-  const contextProps = useMenuPositioner({id})
+export function MenuFooter(props: MenuFooterProps): ReactElement {
   const qdsContext = useQdsMenuContext()
-  if (!contextProps) {
-    return null
-  }
-  const mergedProps = mergeProps(
-    contextProps,
-    qdsContext.getPositionerBindings(),
-    props,
-  )
+  const mergedProps = mergeProps(qdsContext.getFooterBindings(), props)
 
   return (
-    <ButtonPropsContextProvider value={{}}>
-      <PolymorphicElement as="div" {...mergedProps}>
-        {children}
-      </PolymorphicElement>
+    <ButtonPropsContextProvider value={qdsContext.getFooterButtonProps()}>
+      <PolymorphicElement as="div" {...mergedProps} />
     </ButtonPropsContextProvider>
   )
 }

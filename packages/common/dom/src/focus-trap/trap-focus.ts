@@ -6,7 +6,7 @@
 
 import {getDocument, raf} from "@qualcomm-ui/dom/query"
 
-import {FocusTrap} from "./focus-trap.js"
+import {FOCUS_TRAP_TAB_DELEGATE_ATTR, FocusTrap} from "./focus-trap.js"
 import type {FocusTrapOptions} from "./focus-trap.types.js"
 
 type ElementOrNull = HTMLElement | null
@@ -58,4 +58,4 @@ export function trapFocus(el: ElementOrGetter, options: TrapFocusOptions = {}) {
   }
 }
 
-export {FocusTrap, type FocusTrapOptions}
+export {FOCUS_TRAP_TAB_DELEGATE_ATTR, FocusTrap, type FocusTrapOptions}

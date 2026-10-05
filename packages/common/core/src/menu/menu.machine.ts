@@ -17,6 +17,7 @@ import {
   getByTypeahead,
   getEventTarget,
   getInitialFocus,
+  getNearestOverflowAncestor,
   isEditableElement,
   observeAttributes,
   raf,
@@ -63,6 +64,9 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
       clearIntentPolygon({context}) {
         context.set("intentPolygon", null)
       },
+      clearItemFocusVisible({context}) {
+        context.set("itemFocusVisible", false)
+      },
       clickHighlightedItem({computed, scope}) {
         const itemEl = scope.getById(computed("highlightedId")!)
         if (!itemEl || itemEl.dataset.disabled) {
@@ -73,13 +77,18 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
       closeRootMenu({refs}) {
         closeRootMenu({parent: refs.get("parent")})
       },
-      focusMenu({context, event, scope}) {
+      focusMenu({context, event, scope, state}) {
         raf(() => {
+          if (!state.hasTag("open")) {
+            return
+          }
           const contentEl = domEls.content(scope)
+          const ownedByThisMenu = (el: Element | null) =>
+            el?.closest('[data-menu-part="content"]') === contentEl
           const initialFocusEl = getInitialFocus({
-            enabled: !contains(contentEl, scope.getActiveElement()),
+            enabled: !ownedByThisMenu(scope.getActiveElement()),
             filter(node) {
-              return !node.role?.startsWith("menuitem")
+              return !node.role?.startsWith("menuitem") && ownedByThisMenu(node)
             },
             root: contentEl,
           })
@@ -287,6 +296,9 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
           ...polygon,
         ])
       },
+      setItemFocusVisible({context}) {
+        context.set("itemFocusVisible", true)
+      },
       setLastHighlightedItem({context, event}) {
         if ("target" in event) {
           context.set(
@@ -378,8 +390,12 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
 
           const itemEl = scope.getById(computed("highlightedId")!)
           const contentEl = domEls.content(scope)
+          const scrollEl = itemEl ? getNearestOverflowAncestor(itemEl) : null
 
-          scrollIntoView(itemEl, {block: "nearest", rootEl: contentEl})
+          scrollIntoView(itemEl, {
+            block: "nearest",
+            rootEl: contains(contentEl, scrollEl) ? scrollEl : contentEl,
+          })
         }
         raf(() => exec())
 
@@ -391,11 +407,11 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
         })
       },
       trackInteractOutside({computed, prop, refs, scope, send}) {
-        const getContentEl = () => domEls.content(scope)
+        const getPositionerEl = () => domEls.positioner(scope)
         let restoreFocus = true
-        return trackDismissableElement(getContentEl, {
+        return trackDismissableElement(getPositionerEl, {
           defer: true,
-          exclude: () => domEls.trigger(scope),
+          exclude: () => [domEls.trigger(scope)],
           onDismiss() {
             send({restoreFocus, src: "interact-outside", type: "CLOSE"})
           },
@@ -408,11 +424,9 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
           },
           onFocusOutside(event) {
             const target = getEventTarget(event.detail.originalEvent)
-            if (contains(domEls.content(scope), event.currentTarget)) {
-              // fix for angular nested portal behavior
-              event.preventDefault()
-              domEls.content(scope)?.focus({preventScroll: true})
-            }
+            // keeps focus in the menu (angular nested portal workaround)
+            event.preventDefault()
+            domEls.content(scope)?.focus({preventScroll: true})
             prop("onFocusOutside")?.(event)
 
             const isWithinContextTrigger = contains(
@@ -813,6 +827,12 @@ export const menuMachine: MachineConfig<MenuSchema> = createMachine<MenuSchema>(
           },
           ARROW_UP: {
             actions: ["highlightPrevItem", "focusMenu"],
+          },
+          CONTENT_BLUR: {
+            actions: ["clearItemFocusVisible"],
+          },
+          CONTENT_FOCUS_VISIBLE: {
+            actions: ["setItemFocusVisible"],
           },
           CONTEXT_MENU: {
             actions: ["setAnchorPoint", "focusMenu"],
