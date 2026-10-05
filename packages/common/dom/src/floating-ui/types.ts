@@ -108,6 +108,12 @@ export interface PositioningOptions {
   boundary?: (() => PositioningBoundary) | undefined
 
   /**
+   * CSS selector for the content element whose `z-index` is copied to the
+   * floating element. Falls back to the first child.
+   */
+  contentSelector?: string | undefined
+
+  /**
    * Whether the popover should fit the viewport.
    */
   fitViewport?: boolean | undefined

@@ -8,7 +8,10 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {ButtonPropsContextProvider} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+
+import {useQdsMenuContext} from "./qds-menu-context.js"
 
 export interface MenuPositionerProps extends ElementRenderProp<"div"> {
   /**
@@ -27,14 +30,21 @@ export function MenuPositioner({
   ...props
 }: MenuPositionerProps): ReactElement | null {
   const contextProps = useMenuPositioner({id})
+  const qdsContext = useQdsMenuContext()
   if (!contextProps) {
     return null
   }
-  const mergedProps = mergeProps(contextProps, props)
+  const mergedProps = mergeProps(
+    contextProps,
+    qdsContext.getPositionerBindings(),
+    props,
+  )
 
   return (
-    <PolymorphicElement as="div" {...mergedProps}>
-      {children}
-    </PolymorphicElement>
+    <ButtonPropsContextProvider value={{}}>
+      <PolymorphicElement as="div" {...mergedProps}>
+        {children}
+      </PolymorphicElement>
+    </ButtonPropsContextProvider>
   )
 }

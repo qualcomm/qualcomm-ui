@@ -27,6 +27,12 @@ import type {
   UnpauseOptions,
 } from "./focus-trap.types.js"
 
+/**
+ * Marks an element inside a trap that handles Tab navigation itself, such as an
+ * open menu.
+ */
+export const FOCUS_TRAP_TAB_DELEGATE_ATTR = "data-focus-trap-tab-delegate"
+
 const activeFocusTraps = {
   activateTrap(trapStack: FocusTrap[], trap: FocusTrap) {
     if (trapStack.length > 0) {
@@ -415,6 +421,16 @@ export class FocusTrap {
   }
 
   private handleTabKey = (event: KeyboardEvent) => {
+    const target = getEventTarget<Element>(event)
+    const delegate = target?.closest?.(`[${FOCUS_TRAP_TAB_DELEGATE_ATTR}]`)
+    if (
+      delegate &&
+      this.state.containers.some(
+        (container) => container !== delegate && container.contains(delegate),
+      )
+    ) {
+      return
+    }
     if (
       this.config.isKeyForward?.(event) ||
       this.config.isKeyBackward?.(event)

@@ -74,9 +74,7 @@ export function useMenuArrow(): MenuArrowBindings {
   return context.getArrowBindings()
 }
 
-export type UseMenuContentReturn =
-  | (MenuContentBindings & {ref: Ref<any>})
-  | null
+export type UseMenuContentReturn = MenuContentBindings | null
 
 export function useMenuContent({id: idProp}: IdProp): UseMenuContentReturn {
   const context = useMenuContext()
@@ -87,11 +85,9 @@ export function useMenuContent({id: idProp}: IdProp): UseMenuContentReturn {
     return null
   }
 
-  return mergeProps(
-    context.getContentBindings({id}),
-    presence.getPresenceBindings(),
-    {ref: presence.ref},
-  )
+  return mergeProps(context.getContentBindings({id}), {
+    hidden: presence.getPresenceBindings().hidden,
+  })
 }
 
 export function useMenuContextTrigger({
@@ -104,9 +100,13 @@ export function useMenuContextTrigger({
   })
 }
 
+export type UseMenuPositionerReturn =
+  | (MenuPositionerBindings & {ref: Ref<any>})
+  | null
+
 export function useMenuPositioner({
   id: idProp,
-}: IdProp): MenuPositionerBindings | null {
+}: IdProp): UseMenuPositionerReturn {
   const context = useMenuContext()
   const presence = usePresenceContext()
   const id = useControlledId(idProp)
@@ -115,7 +115,11 @@ export function useMenuPositioner({
     return null
   }
 
-  return context.getPositionerBindings({id})
+  return mergeProps(
+    context.getPositionerBindings({id}),
+    presence.getPresenceBindings(),
+    {ref: presence.ref},
+  )
 }
 
 export function useMenuTrigger({id}: IdProp): MenuTriggerBindings {
