@@ -42,6 +42,36 @@ Use [`<Menu.Button>`](./#menu-button-1) for a labeled trigger and [`<Menu.IconBu
 
 <Demo name="MenuButtonDemo" component={demos.MenuButtonDemo} />
 
+### Header and Footer
+
+::: terms
+menu title, clear all, apply, scrollable items, fixed header, fixed footer
+:::
+
+Place `<Menu.Header>` before the menu content and `<Menu.Footer>` after it. Both stay in place while the items scroll.
+
+```tsx
+<Menu.Positioner>
+  <Menu.Header>
+    <Menu.HeaderLabel>Filters</Menu.HeaderLabel>
+  </Menu.Header>
+  <Menu.Content style={{maxHeight: 200}}>
+    {/* items */}
+  </Menu.Content>
+  <Menu.Footer>
+    <Button>Apply</Button>
+  </Menu.Footer>
+</Menu.Positioner>
+```
+
+Use [Button](/components/button) for header and footer actions. Header buttons default to the menu size, compact density, and the ghost variant. Footer buttons default to compact density and a size of `md` for a small menu or `lg` for a medium menu. Footer buttons fill the available width. Set button props to override these defaults.
+
+Arrow keys move between menu items. `Tab` and `Shift + Tab` move focus between the header, the items, and the footer, and wrap at the ends.
+
+Header and footer are only supported on the top-level menu. Don't use them in [submenus](./#nested-menus).
+
+<Demo name="MenuHeaderFooterDemo" component={demos.MenuHeaderFooterDemo} />
+
 ### Split Button
 
 ::: terms
@@ -222,6 +252,9 @@ Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu whe
   linkPrefix="menu"
   parts={[
     "trigger",
+    "positioner",
+    "header",
+    "header-label",
     "content",
     "item-group",
     "item-group-label",
@@ -232,6 +265,7 @@ Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu whe
     {name: "item-control", link: "#menu-checkbox-item-control"},
     "item-indicator",
     "separator",
+    "footer",
   ]}
   previewClassName="items-start mt-6"
   scope="menu"
@@ -267,6 +301,14 @@ The following describes the individual subcomponents of the `Menu` component.
 
 <TypeDocProps name="MenuSplitButtonProps" />
 
+### \<Menu.Positioner>
+
+<TypeDocProps name="MenuPositionerProps" />
+
+<TypeDocAttributes
+  name={["MenuPositionerBindings", "QdsMenuPositionerBindings"]}
+/>
+
 ### \<Menu.Content>
 
 <TypeDocProps name="MenuContentProps" />
@@ -274,6 +316,24 @@ The following describes the individual subcomponents of the `Menu` component.
 <TypeDocAttributes
   name={["MenuContentBindings", "QdsMenuContentBindings"]}
 />
+
+### \<Menu.Header>
+
+<TypeDocProps name="MenuHeaderProps" />
+
+<TypeDocAttributes name="QdsMenuHeaderBindings" />
+
+### \<Menu.HeaderLabel>
+
+<TypeDocProps name="MenuHeaderLabelProps" />
+
+<TypeDocAttributes name="QdsMenuHeaderLabelBindings" />
+
+### \<Menu.Footer>
+
+<TypeDocProps name="MenuFooterProps" />
+
+<TypeDocAttributes name="QdsMenuFooterBindings" />
 
 ### \<Menu.Trigger>
 
