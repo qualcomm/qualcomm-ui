@@ -7,7 +7,7 @@ import {ChevronDown, type LucideIcon} from "lucide-react"
 
 import {
   createQdsIconButtonApi,
-  resolveButtonPropsWithGroup,
+  resolveButtonProps,
 } from "@qualcomm-ui/qds-core/button"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
@@ -45,13 +45,10 @@ export function MenuIconButton({
     emphasis: resolvedEmphasis,
     size: resolvedSize,
     variant: resolvedVariant,
-  } = resolveButtonPropsWithGroup(useButtonGroupContext(), {
-    density,
-    disabled,
-    emphasis,
-    size: size ?? qdsMenuContext.size,
-    variant,
-  })
+  } = resolveButtonProps(
+    {density, disabled, emphasis, size: size ?? qdsMenuContext.size, variant},
+    {group: useButtonGroupContext()},
+  )
 
   const api = useMemo(
     () =>
