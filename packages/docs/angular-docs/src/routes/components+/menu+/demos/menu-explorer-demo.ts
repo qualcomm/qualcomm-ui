@@ -1,4 +1,4 @@
-import {Component} from "@angular/core"
+import {Component, signal} from "@angular/core"
 import {
   LucideCommand,
   LucideFile,
@@ -7,19 +7,27 @@ import {
 } from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
-  imports: [MenuModule, IconDirective],
+  imports: [ButtonModule, MenuModule, IconDirective],
   providers: [
     provideIcons({LucideCommand, LucideFile, LucideFolderOpen, LucidePencil}),
   ],
   selector: "menu-explorer-demo",
   template: `
-    <q-menu defaultOpen [positioning]="{placement: 'bottom-start'}">
+    <q-menu
+      [open]="open()"
+      [positioning]="{placement: 'bottom-start'}"
+      (openChanged)="open.set($event)"
+    >
       <button emphasis="primary" q-menu-button variant="fill">Actions</button>
       <div q-menu-positioner>
+        <div q-menu-header>
+          <div q-menu-header-label>Actions</div>
+        </div>
         <div q-menu-content>
           <div q-menu-item-group>
             <label q-menu-item-group-label>File</label>
@@ -58,8 +66,13 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
             </button>
           </div>
         </div>
+        <div q-menu-footer>
+          <button q-button type="button" (click)="open.set(false)">Done</button>
+        </div>
       </div>
     </q-menu>
   `,
 })
-export class MenuExplorerDemo {}
+export class MenuExplorerDemo {
+  protected readonly open = signal(true)
+}

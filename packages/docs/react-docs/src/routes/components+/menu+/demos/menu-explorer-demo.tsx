@@ -1,17 +1,27 @@
-import type {ReactElement} from "react"
+import {type ReactElement, useState} from "react"
 
 import {Command, File, FolderOpen, Pencil} from "lucide-react"
 
+import {Button} from "@qualcomm-ui/react/button"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Menu} from "@qualcomm-ui/react/menu"
 
 export function MenuExplorerDemo(): ReactElement {
+  const [open, setOpen] = useState(true)
+
   return (
-    <Menu.Root defaultOpen positioning={{placement: "bottom-start"}}>
+    <Menu.Root
+      onOpenChange={setOpen}
+      open={open}
+      positioning={{placement: "bottom-start"}}
+    >
       <Menu.Trigger>
         <Menu.Button emphasis="primary">Actions</Menu.Button>
       </Menu.Trigger>
       <Menu.Positioner>
+        <Menu.Header>
+          <Menu.HeaderLabel>Actions</Menu.HeaderLabel>
+        </Menu.Header>
         <Menu.Content>
           <Menu.ItemGroup>
             <Menu.ItemGroupLabel>File</Menu.ItemGroupLabel>
@@ -48,6 +58,11 @@ export function MenuExplorerDemo(): ReactElement {
             </Menu.CheckboxItem>
           </Menu.ItemGroup>
         </Menu.Content>
+        <Menu.Footer>
+          <Button onClick={() => setOpen(false)} type="button">
+            Done
+          </Button>
+        </Menu.Footer>
       </Menu.Positioner>
     </Menu.Root>
   )

@@ -6,6 +6,7 @@ import {MenuCheckboxItemsDemo} from "@qualcomm-ui/angular-docs/components+/menu+
 import {MenuCheckboxStateDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-checkbox-state-demo"
 import {MenuContextMenuDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-context-menu-demo"
 import {MenuControlledStateDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-controlled-state-demo"
+import {MenuHeaderFooterDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-header-footer-demo"
 import {MenuHideWhenDetachedDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-hide-when-detached-demo"
 import {MenuItemCustomizationDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-item-customization-demo"
 import {MenuLinksDemo} from "@qualcomm-ui/angular-docs/components+/menu+/demos/menu-links-demo"
@@ -23,6 +24,7 @@ import {MenuWithinDialogDemo} from "@qualcomm-ui/angular-docs/components+/menu+/
     MenuCheckboxStateDemo,
     MenuContextMenuDemo,
     MenuControlledStateDemo,
+    MenuHeaderFooterDemo,
     MenuHideWhenDetachedDemo,
     MenuItemCustomizationDemo,
     MenuLinksDemo,
@@ -69,6 +71,12 @@ import {MenuWithinDialogDemo} from "@qualcomm-ui/angular-docs/components+/menu+/
         <h2 class="section-title">Controlled State</h2>
         <div class="demo-container">
           <menu-controlled-state-demo />
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Header and Footer</h2>
+        <div class="demo-container">
+          <menu-header-footer-demo />
         </div>
       </div>
       <div class="section">
