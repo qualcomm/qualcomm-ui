@@ -23,6 +23,11 @@ export interface MenuRadioItemProps
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
   children?: ReactNode
+
+  /**
+   * @deprecated never called. Use `onValueChange` on `<Menu.RadioItemGroup>` instead.
+   */
+  onSelect?: (() => void) | undefined
 }
 
 export function MenuRadioItem({
