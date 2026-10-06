@@ -52,7 +52,7 @@ import {
   getItemGroupId,
   getItemGroupLabelId,
   getItemId,
-} from "./internal/index.js"
+} from "./internal/combobox.dom.js"
 
 const parts = comboboxAnatomy.parts
 

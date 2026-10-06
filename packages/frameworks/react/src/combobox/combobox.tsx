@@ -24,6 +24,7 @@ import {
   type ComboboxErrorTextProps,
 } from "./combobox-error-text.js"
 import {ComboboxHint, type ComboboxHintProps} from "./combobox-hint.js"
+import {ComboboxInputTags} from "./combobox-input-tags.js"
 import {ComboboxInput, type ComboboxInputProps} from "./combobox-input.js"
 import {type ComboboxItemRenderProp, ComboboxItems} from "./combobox-items.js"
 import {ComboboxLabel, type ComboboxLabelProps} from "./combobox-label.js"
@@ -192,6 +193,7 @@ export function Combobox<T extends CollectionItem = CollectionItem>({
   inputProps: inputPropsProp,
   label,
   labelProps,
+  multiple,
   portalProps,
   positionerProps,
   renderItem,
@@ -233,13 +235,14 @@ export function Combobox<T extends CollectionItem = CollectionItem>({
   }
 
   return (
-    <ComboboxRoot {...props} ids={ids}>
+    <ComboboxRoot {...props} ids={ids} multiple={multiple}>
       {labelContent ? (
         <ComboboxLabel {...labelProps} id={ids.label}>
           {labelContent}
         </ComboboxLabel>
       ) : null}
       <ComboboxControl {...controlProps} id={ids.control}>
+        {multiple ? <ComboboxInputTags /> : null}
         <ComboboxInput {...inputProps} id={ids.input} />
         <ComboboxClearTrigger {...clearTriggerProps} id={ids.clearTrigger} />
         <ComboboxErrorIndicator {...errorIndicatorProps} />

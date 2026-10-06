@@ -9,6 +9,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
-    }
+    },
+    {
+      "path": "../dom/tsconfig.lib.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json",
+    },
   ]
 }

@@ -19,9 +19,11 @@ export const domIds: ScopeDomIds<
   errorText: (scope) => scope.ids.get("errorText"),
   hint: (scope) => scope.ids.get("hint"),
   input: (scope) => scope.ids.get("input"),
+  invisibleTagContainer: (scope) => scope.ids.get("invisibleTagContainer"),
   label: (scope) => scope.ids.get("label"),
   positioner: (scope) => scope.ids.get("positioner"),
   root: (scope) => scope.ids.get("root"),
+  tagContainer: (scope) => scope.ids.get("tagContainer"),
   trigger: (scope) => scope.ids.get("trigger"),
 }
 
@@ -37,9 +39,12 @@ export const domEls: ScopeDomElements<
   errorText: (scope) => scope.getById(domIds.errorText(scope)),
   hint: (scope) => scope.getById(domIds.hint(scope)),
   input: (scope) => scope.getById(domIds.input(scope)),
+  invisibleTagContainer: (scope) =>
+    scope.getById(domIds.invisibleTagContainer(scope)),
   label: (scope) => scope.getById(domIds.label?.(scope)),
   positioner: (scope) => scope.getById(domIds.positioner(scope)),
   root: (scope) => scope.getById(domIds.root(scope)),
+  tagContainer: (scope) => scope.getById(domIds.tagContainer(scope)),
   trigger: (scope) => scope.getById(domIds.trigger(scope)),
 }
 
@@ -80,4 +85,25 @@ export function focusTriggerEl(ctx: ComboboxScope): void {
     return
   }
   triggerEl?.focus({preventScroll: true})
+}
+
+export function getInvisibleTagId(scope: ComboboxScope, value: string): string {
+  return `combobox:${domIds.root(scope)}:invisible-tag:${value}`
+}
+
+export function getInvisibleTagEl(
+  scope: ComboboxScope,
+  value: string,
+): HTMLElement | null {
+  return scope.getById(getInvisibleTagId(scope, value))
+}
+
+export function getInvisibleOverflowTagId(scope: ComboboxScope): string {
+  return `combobox:${domIds.root(scope)}:invisible-overflow-tag`
+}
+
+export function getInvisibleOverflowTagEl(
+  scope: ComboboxScope,
+): HTMLElement | null {
+  return scope.getById(getInvisibleOverflowTagId(scope))
 }

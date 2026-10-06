@@ -4,7 +4,6 @@ import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 import {useListCollection} from "@qualcomm-ui/react-core/collection"
 import {useFilter} from "@qualcomm-ui/react-core/locale"
 import {Combobox} from "@qualcomm-ui/react/combobox"
-import {Tag} from "@qualcomm-ui/react/tag"
 
 import {countries} from "./country-list"
 
@@ -21,31 +20,16 @@ export function ComboboxMultipleDemo() {
     filter(details.inputValue)
   }
 
-  function handleValueDismissed(item: string) {
-    setValue(value.filter((v) => v !== item))
-  }
-
   return (
-    <div className="flex w-72 flex-col gap-4">
-      <div className="flex flex-wrap gap-2">
-        {value.map((item) => (
-          <Tag
-            key={item}
-            emphasis="neutral"
-            onClick={() => handleValueDismissed(item)}
-            variant="dismissable"
-          >
-            {item}
-          </Tag>
-        ))}
-      </div>
+    <div className="flex flex-col gap-4">
       <Combobox
-        className="w-full"
+        className="w-72"
         collection={collection}
         label="Country"
         multiple
         onInputValueChange={handleInputChange}
         onValueChange={(details) => setValue(details.value)}
+        openOnClick
         placeholder="Select a country"
         value={value}
       />

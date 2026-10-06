@@ -1,5 +1,10 @@
 {
   "files": [],
+  "compilerOptions": {
+    "paths": {
+      "@qualcomm-ui/dom/*": ["./src/*/index.ts"],
+    }
+  },
   "references": [
     {
       "path": "./tsconfig.lib.json"
