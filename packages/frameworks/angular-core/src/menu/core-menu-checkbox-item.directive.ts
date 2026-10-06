@@ -33,6 +33,11 @@ export class CoreMenuCheckboxItemDirective
 
   readonly checkedChanged = output<boolean | undefined>()
 
+  /**
+   * @deprecated never emitted. Use `(checkedChanged)` instead.
+   */
+  override readonly selected = output()
+
   protected readonly menuOptionItemService = inject(
     MenuOptionItemContextService,
   )
