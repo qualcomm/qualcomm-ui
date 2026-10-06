@@ -874,4 +874,53 @@ describe("Menu.SplitButton", () => {
       .element(page.getByRole("button", {name: "More options"}))
       .toHaveAttribute("data-emphasis", "primary")
   })
+
+  test("calls onSelect on checkbox and radio items on every selection", async () => {
+    const onCheckboxSelect = vi.fn()
+    const onRadioSelect = vi.fn()
+
+    await render(
+      <Menu.Root>
+        <Menu.Trigger>
+          <Menu.Button>Options Menu</Menu.Button>
+        </Menu.Trigger>
+        <Portal>
+          <Menu.Positioner>
+            <Menu.Content>
+              <Menu.CheckboxItem
+                closeOnSelect={false}
+                onSelect={onCheckboxSelect}
+                value="line-numbers"
+              >
+                <Menu.ItemLabel>Line numbers</Menu.ItemLabel>
+              </Menu.CheckboxItem>
+              <Menu.RadioItemGroup value="compact">
+                <Menu.RadioItem
+                  closeOnSelect={false}
+                  onSelect={onRadioSelect}
+                  value="compact"
+                >
+                  <Menu.ItemLabel>Compact</Menu.ItemLabel>
+                </Menu.RadioItem>
+              </Menu.RadioItemGroup>
+            </Menu.Content>
+          </Menu.Positioner>
+        </Portal>
+      </Menu.Root>,
+    )
+
+    await page.getByRole("button", {name: "Options Menu"}).click()
+
+    const checkboxItem = page.getByRole("menuitemcheckbox", {
+      name: "Line numbers",
+    })
+    await checkboxItem.click()
+    await checkboxItem.click()
+    await expect.poll(() => onCheckboxSelect).toHaveBeenCalledTimes(2)
+
+    const radioItem = page.getByRole("menuitemradio", {name: "Compact"})
+    await expect.element(radioItem).toHaveAttribute("aria-checked", "true")
+    await radioItem.click()
+    await expect.poll(() => onRadioSelect).toHaveBeenCalledTimes(1)
+  })
 })

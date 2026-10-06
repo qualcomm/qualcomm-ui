@@ -331,6 +331,43 @@ class ItemSelectedMenuComponent {
   readonly unmountOnExit = input(false)
 }
 
+@Component({
+  imports: [MenuModule, PortalDirective],
+  template: `
+    <q-menu>
+      <button q-menu-button>Options Menu</button>
+      <ng-template qPortal>
+        <div q-menu-positioner>
+          <div q-menu-content>
+            <button
+              q-menu-checkbox-item
+              value="line-numbers"
+              [closeOnSelect]="false"
+              (selected)="checkboxSelected.emit()"
+            >
+              <span q-menu-item-label>Line numbers</span>
+            </button>
+            <div defaultValue="compact" q-menu-radio-item-group>
+              <button
+                q-menu-radio-item
+                value="compact"
+                [closeOnSelect]="false"
+                (selected)="radioSelected.emit()"
+              >
+                <span q-menu-item-label>Compact</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </q-menu>
+  `,
+})
+class OptionItemSelectedMenuComponent {
+  readonly checkboxSelected = output<void>()
+  readonly radioSelected = output<void>()
+}
+
 describe("Menu", () => {
   test("opens from trigger keyboard shortcuts and selects the highlighted item", async () => {
     const selected = vi.fn()
@@ -551,4 +588,26 @@ describe("Menu", () => {
       }
     },
   )
+
+  test("emits the selected output on checkbox and radio items on every selection", async () => {
+    const checkboxSelected = vi.fn()
+    const radioSelected = vi.fn()
+    await render(OptionItemSelectedMenuComponent, {
+      on: {checkboxSelected, radioSelected},
+    })
+
+    await openMenu("Options Menu")
+
+    const checkboxItem = page.getByRole("menuitemcheckbox", {
+      name: "Line numbers",
+    })
+    await checkboxItem.click()
+    await checkboxItem.click()
+    await expect.poll(() => checkboxSelected).toHaveBeenCalledTimes(2)
+
+    const radioItem = page.getByRole("menuitemradio", {name: "Compact"})
+    await expect.element(radioItem).toHaveAttribute("aria-checked", "true")
+    await radioItem.click()
+    await expect.poll(() => radioSelected).toHaveBeenCalledTimes(1)
+  })
 })
