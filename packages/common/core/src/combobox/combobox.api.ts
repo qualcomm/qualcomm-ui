@@ -30,10 +30,17 @@ import type {
   ComboboxApiItemProps,
   ComboboxClearTriggerBindings,
   ComboboxControlBindings,
+  ComboboxDropdownTagContainerBindings,
   ComboboxEmptyBindings,
   ComboboxErrorIndicatorBindings,
   ComboboxErrorTextBindings,
   ComboboxHintBindings,
+  ComboboxInputSelectionTagBindings,
+  ComboboxInputTagBindings,
+  ComboboxInputTagContainerBindings,
+  ComboboxInvisibleInputTagBindings,
+  ComboboxInvisibleInputTagContainerBindings,
+  ComboboxInvisibleOverflowTagBindings,
   ComboboxItemBindings,
   ComboboxItemContext,
   ComboboxItemGroupBindings,
@@ -41,6 +48,7 @@ import type {
   ComboboxItemIndicatorBindings,
   ComboboxItemTextBindings,
   ComboboxLabelBindings,
+  ComboboxOverflowTagBindings,
   ComboboxPositionerBindings,
   ComboboxRootBindings,
   ComboboxSchema,
@@ -49,9 +57,12 @@ import type {
 import {
   domEls,
   domIds,
+  getInputTagId,
+  getInvisibleTagId,
   getItemGroupId,
   getItemGroupLabelId,
   getItemId,
+  getMeasureIndicatorId,
 } from "./internal/combobox.dom.js"
 
 const parts = comboboxAnatomy.parts
@@ -621,6 +632,113 @@ export function createComboboxApi(
         tabIndex: props.focusable ? undefined : -1,
         type: "button",
       })
+    },
+
+    // group: tags
+    getDropdownTagContainerBindings(
+      props,
+    ): ComboboxDropdownTagContainerBindings {
+      scope.ids.register("dropdownTagContainer", props)
+      return {
+        ...parts.dropdownTagContainer,
+        id: scope.ids.get("dropdownTagContainer"),
+        style: {},
+      }
+    },
+    getInputSelectionTagBindings(): ComboboxInputSelectionTagBindings {
+      return {
+        ...parts.inputSelectionTag,
+        hidden: !(focused || open),
+        onClick: (event) => {
+          event.preventDefault()
+          event.stopPropagation()
+          send({src: "tag-click", type: "OPEN"})
+        },
+      }
+    },
+    getInputTagBindings(value: string): ComboboxInputTagBindings {
+      const visibleTags = computed("visibleTags")
+      const isVisible = visibleTags.includes(value)
+      return {
+        ...parts.inputTag,
+        "data-value": value,
+        hidden: !isVisible || focused || open,
+        id: getInputTagId(scope, value),
+        onDismiss: () => {
+          send({type: "TAG.DISMISS", value})
+        },
+      }
+    },
+    getInputTagContainerBindings(props): ComboboxInputTagContainerBindings {
+      scope.ids.register("inputTagContainer", props)
+      const empty = !prop("value")?.length
+
+      return {
+        ...parts.inputTagContainer,
+        "data-empty": booleanDataAttr(empty),
+        hidden: empty,
+        id: scope.ids.get("inputTagContainer"),
+        style: {
+          "--gap": `4px`,
+          alignItems: "center",
+          display: empty ? "none" : "flex",
+          flexWrap: "nowrap",
+          gap: `4px`,
+          minWidth: "max-content",
+          position: "relative",
+        },
+      }
+    },
+    getInvisibleInputTagBindings(value): ComboboxInvisibleInputTagBindings {
+      return {
+        ...parts.invisibleInputTag,
+        "data-value": value,
+        id: getInvisibleTagId(scope, value),
+        style: {
+          minWidth: "max-content",
+          position: "absolute",
+          visibility: "hidden",
+        },
+      }
+    },
+    getInvisibleInputTagContainerBindings(
+      props,
+    ): ComboboxInvisibleInputTagContainerBindings {
+      scope.ids.register("invisibleInputTagContainer", props)
+      return {
+        ...parts.invisibleInputTagContainer,
+        id: scope.ids.get("invisibleInputTagContainer"),
+        style: {
+          position: "absolute",
+          visibility: "hidden",
+          whiteSpace: "nowrap",
+        },
+      }
+    },
+    getInvisibleOverflowTagBindings(): ComboboxInvisibleOverflowTagBindings {
+      return {
+        ...parts.invisibleOverflowTag,
+        "aria-hidden": true,
+        "data-open": booleanDataAttr(open),
+        id: getMeasureIndicatorId(scope),
+        style: {
+          position: "absolute",
+          visibility: "hidden",
+          whiteSpace: "nowrap",
+        },
+      }
+    },
+    getOverflowTagBindings(): ComboboxOverflowTagBindings {
+      const hasOverflow = computed("hasOverflowTag")
+      return {
+        ...parts.overflowTag,
+        "data-state": hasOverflow ? "visible" : "hidden",
+        hidden: !hasOverflow || open || focused,
+        style: {
+          flexShrink: 0,
+          whiteSpace: "nowrap",
+        },
+      }
     },
   }
 }

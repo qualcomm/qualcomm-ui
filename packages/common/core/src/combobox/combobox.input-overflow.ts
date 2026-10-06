@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-export interface CalculateVisibleTagsInput {
+export interface CalculateVisibleInputTagsOpts {
   availableWidth: number
   gap: number
   indicatorWidth: number
@@ -9,7 +9,7 @@ export interface CalculateVisibleTagsInput {
   tagWidths: number[]
 }
 
-export interface CalculateVisibleTagsResult {
+export interface CalculateVisibleInputTagsResult {
   overflowCount: number
   visibleCount: number
   visibleIndices: number[]
@@ -23,10 +23,13 @@ export interface CalculateVisibleTagsResult {
  * Gap model: with CSS flex `gap`, K visible tags + indicator + input
  * = K+2 children and K+1 gaps. Base overhead accounts for 1 gap
  * (indicator-to-input); each tag adds its width + 1 gap.
+ *
+ * TODO: determine whether to include other input group sub-elements in gap
+ *   computation.
  */
 export function calculateVisibleInputTags(
-  input: CalculateVisibleTagsInput,
-): CalculateVisibleTagsResult {
+  input: CalculateVisibleInputTagsOpts,
+): CalculateVisibleInputTagsResult {
   const {availableWidth, gap, indicatorWidth, tagWidths} = input
   const total = tagWidths.length
   // input padding

@@ -10,7 +10,7 @@ import {
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
 
-import {calculateVisibleTags} from "./input-tags.overflow.js"
+import {calculateVisibleInputTags} from "./input-tags.overflow.js"
 import type {InputTagsSchema} from "./input-tags.types.js"
 import {
   getControlEl,
@@ -174,7 +174,7 @@ export const inputTagsMachine: MachineConfig<InputTagsSchema> =
       },
 
       recalculateVisibleTags({context, prop}) {
-        const result = calculateVisibleTags({
+        const result = calculateVisibleInputTags({
           availableWidth: context.get("availableTagWidth"),
           gap: prop("gap"),
           indicatorWidth: context.get("overflowTagWidth"),

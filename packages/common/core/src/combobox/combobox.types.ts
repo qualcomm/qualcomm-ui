@@ -76,6 +76,7 @@ export type ComboboxOpenChangeReason =
   | "item-select" // User selected an item
   | "clear-trigger" // User clicked clear button
   | "input-focus" // User focuses the input
+  | "tag-click" // User clicked on an input tag
 
 export interface ComboboxOpenChangeDetails {
   open: boolean
@@ -367,14 +368,15 @@ export interface ComboboxElementIds {
   clearTrigger: string
   content: string
   control: string
+  dropdownTagContainer: string
   errorText: string
   hint: string
   input: string
-  invisibleTagContainer: string
+  inputTagContainer: string
+  invisibleInputTagContainer: string
   label: string
   positioner: string
   root: string
-  tagContainer: string
   trigger: string
 }
 
@@ -431,7 +433,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
   computed: {
     autoComplete: boolean
     autoHighlight: boolean
-    hasOverflowTags: boolean
+    hasOverflowTag: boolean
     hasSelectedItems: boolean
     isCustomValue: boolean
     isInputValueEmpty: boolean
@@ -599,173 +601,6 @@ export interface ComboboxApiItemGroupProps {
 
 export interface ComboboxApiItemGroupLabelProps {
   htmlFor: string
-}
-
-export interface ComboboxApi<T extends CollectionItem = CollectionItem> {
-  /**
-   * Function to clear the highlighted value
-   */
-  clearHighlightValue: () => void
-
-  /**
-   * Function to clear the value of the combobox
-   */
-  clearValue: (value?: string) => void
-
-  /**
-   * Function to toggle the combobox
-   *
-   * @inheritDoc
-   */
-  collection: ListCollection<T>
-
-  /**
-   * Whether the combobox is disabled
-   */
-  disabled: boolean
-
-  /**
-   * Function to focus on the combobox input
-   */
-  focus: () => void
-
-  /**
-   * Whether the combobox is focused
-   */
-  focused: boolean
-
-  /**
-   * Returns the state of a combobox item
-   */
-  getItemState: (props: ComboboxApiItemProps<T>) => ComboboxItemContext
-
-  /**
-   * Whether there's a selected item
-   */
-  hasSelectedItems: boolean
-
-  /**
-   * The highlighted item
-   */
-  highlightedItem: T | null
-
-  /**
-   * The value of the highlighted item
-   */
-  highlightedValue: string | null
-
-  /**
-   * The value of the combobox input
-   */
-  inputValue: string
-
-  /**
-   * Whether the combobox allows multiple selections
-   */
-  multiple: boolean
-
-  /**
-   * Whether the combobox is open
-   */
-  open: boolean
-
-  /**
-   * Function to set the positioning options
-   */
-  reposition: (options?: Partial<PositioningOptions>) => void
-
-  /**
-   * Whether the combobox is a required input field
-   */
-  required: boolean | undefined
-
-  /**
-   * The selected items
-   */
-  selectedItems: T[]
-
-  /**
-   * Function to select a value
-   */
-  selectValue: (value: string) => void
-
-  /**
-   * The value of the combobox input
-   */
-  setHighlightValue: (value: string) => void
-
-  /**
-   * Function to set the input value of the combobox
-   */
-  setInputValue: (
-    value: string,
-    reason?: ComboboxInputValueChangeReason,
-  ) => void
-
-  /**
-   * Function to open or close the combobox
-   */
-  setOpen: (open: boolean, reason?: ComboboxOpenChangeReason) => void
-
-  /**
-   * Function to set the function to scroll to a specific index. Can be used instead
-   * of the scrollToIndexFn prop.
-   */
-  setScrollToIndexFn(fn: (details: ComboboxScrollToIndexDetails) => void): void
-
-  /**
-   * Function to set the value of the combobox
-   */
-  setValue: (value: string[]) => void
-
-  /**
-   * Function to sync the selected items with the value.
-   * Useful when `value` is updated from async sources.
-   */
-  syncSelectedItems: () => void
-
-  /**
-   * The selected item keys
-   */
-  value: string[]
-
-  /**
-   * The string representation of the selected items
-   */
-  valueAsString: string
-
-  // group: getters
-  getClearTriggerBindings: (
-    params: IdRegistrationProps,
-  ) => ComboboxClearTriggerBindings
-  getContentBindings: (params: IdRegistrationProps) => ComboboxContentBindings
-  getControlBindings: (params: IdRegistrationProps) => ComboboxControlBindings
-  getEmptyBindings: () => ComboboxEmptyBindings
-  getErrorIndicatorBindings: () => ComboboxErrorIndicatorBindings
-  getErrorTextBindings: (
-    params: IdRegistrationProps,
-  ) => ComboboxErrorTextBindings
-  getHintBindings: (params: IdRegistrationProps) => ComboboxHintBindings
-  getInputBindings: (params: IdRegistrationProps) => ComboboxInputBindings
-  getItemBindings: (props: ComboboxItemContext) => ComboboxItemBindings
-  getItemGroupBindings: (
-    props: ComboboxApiItemGroupProps,
-  ) => ComboboxItemGroupBindings
-  getItemGroupLabelBindings: (
-    props: ComboboxApiItemGroupLabelProps,
-  ) => ComboboxItemGroupLabelBindings
-  getItemIndicatorBindings: (
-    props: ComboboxItemContext,
-  ) => ComboboxItemIndicatorBindings
-  getItemTextBindings: (props: ComboboxItemContext) => ComboboxItemTextBindings
-  getLabelBindings: (params: IdRegistrationProps) => ComboboxLabelBindings
-  getPositionerBindings: (
-    params: IdRegistrationProps,
-  ) => ComboboxPositionerBindings
-  getRootBindings: (params: IdRegistrationProps) => ComboboxRootBindings
-  getTriggerBindings: (
-    params: IdRegistrationProps & ComboboxApiTriggerProps,
-  ) => ComboboxTriggerBindings
 }
 
 type PartName = AnatomyPartName<typeof comboboxAnatomy>
@@ -946,7 +781,40 @@ export interface ComboboxTriggerBindings extends Part<"trigger"> {
   type: "button"
 }
 
-export interface ComboboxDropdownTagsRoot extends Part<"dropdownTagsRoot"> {
+// tags
+
+export interface ComboboxInputTagContainerBindings extends Part<"inputTagContainer"> {
+  "data-empty": BooleanDataAttr
+  hidden: boolean
+  id: string
+  style: JSX.CSSProperties
+}
+
+export interface ComboboxInputTagBindings extends Part<"inputTag"> {
+  "data-value": string
+  hidden: boolean | undefined
+  id: string
+  onDismiss: () => void
+}
+
+export interface ComboboxInputSelectionTagBindings extends Part<"inputSelectionTag"> {
+  hidden: boolean
+  onClick: JSX.MouseEventHandler
+}
+
+export interface ComboboxInvisibleInputTagContainerBindings extends Part<"invisibleInputTagContainer"> {
+  id: string
+  style: JSX.CSSProperties
+}
+
+export interface ComboboxInvisibleInputTagBindings extends Part<"invisibleInputTag"> {
+  "data-value": string
+  id: string
+  style: JSX.CSSProperties
+}
+
+export interface ComboboxDropdownTagContainerBindings extends Part<"dropdownTagContainer"> {
+  id: string
   style: JSX.CSSProperties
 }
 
@@ -958,5 +826,192 @@ export interface ComboboxOverflowTagBindings extends Part<"overflowTag"> {
 
 export interface ComboboxInvisibleOverflowTagBindings extends Part<"invisibleOverflowTag"> {
   "aria-hidden": true
+  "data-open": BooleanDataAttr
+  id: string
   style: JSX.CSSProperties
+}
+
+export interface ComboboxApi<T extends CollectionItem = CollectionItem> {
+  /**
+   * Function to clear the highlighted value
+   */
+  clearHighlightValue: () => void
+
+  /**
+   * Function to clear the value of the combobox
+   */
+  clearValue: (value?: string) => void
+
+  /**
+   * Function to toggle the combobox
+   *
+   * @inheritDoc
+   */
+  collection: ListCollection<T>
+
+  /**
+   * Whether the combobox is disabled
+   */
+  disabled: boolean
+
+  /**
+   * Function to focus on the combobox input
+   */
+  focus: () => void
+
+  /**
+   * Whether the combobox is focused
+   */
+  focused: boolean
+
+  /**
+   * Returns the state of a combobox item
+   */
+  getItemState: (props: ComboboxApiItemProps<T>) => ComboboxItemContext
+
+  /**
+   * Whether there's a selected item
+   */
+  hasSelectedItems: boolean
+
+  /**
+   * The highlighted item
+   */
+  highlightedItem: T | null
+
+  /**
+   * The value of the highlighted item
+   */
+  highlightedValue: string | null
+
+  /**
+   * The value of the combobox input
+   */
+  inputValue: string
+
+  /**
+   * Whether the combobox allows multiple selections
+   */
+  multiple: boolean
+
+  /**
+   * Whether the combobox is open
+   */
+  open: boolean
+
+  /**
+   * Function to set the positioning options
+   */
+  reposition: (options?: Partial<PositioningOptions>) => void
+
+  /**
+   * Whether the combobox is a required input field
+   */
+  required: boolean | undefined
+
+  /**
+   * The selected items
+   */
+  selectedItems: T[]
+
+  /**
+   * Function to select a value
+   */
+  selectValue: (value: string) => void
+
+  /**
+   * The value of the combobox input
+   */
+  setHighlightValue: (value: string) => void
+
+  /**
+   * Function to set the input value of the combobox
+   */
+  setInputValue: (
+    value: string,
+    reason?: ComboboxInputValueChangeReason,
+  ) => void
+
+  /**
+   * Function to open or close the combobox
+   */
+  setOpen: (open: boolean, reason?: ComboboxOpenChangeReason) => void
+
+  /**
+   * Function to set the function to scroll to a specific index. Can be used instead
+   * of the scrollToIndexFn prop.
+   */
+  setScrollToIndexFn(fn: (details: ComboboxScrollToIndexDetails) => void): void
+
+  /**
+   * Function to set the value of the combobox
+   */
+  setValue: (value: string[]) => void
+
+  /**
+   * Function to sync the selected items with the value.
+   * Useful when `value` is updated from async sources.
+   */
+  syncSelectedItems: () => void
+
+  /**
+   * The selected item keys
+   */
+  value: string[]
+
+  /**
+   * The string representation of the selected items
+   */
+  valueAsString: string
+
+  // group: getters
+  getClearTriggerBindings: (
+    params: IdRegistrationProps,
+  ) => ComboboxClearTriggerBindings
+  getContentBindings: (params: IdRegistrationProps) => ComboboxContentBindings
+  getControlBindings: (params: IdRegistrationProps) => ComboboxControlBindings
+  getEmptyBindings: () => ComboboxEmptyBindings
+  getErrorIndicatorBindings: () => ComboboxErrorIndicatorBindings
+  getErrorTextBindings: (
+    params: IdRegistrationProps,
+  ) => ComboboxErrorTextBindings
+  getHintBindings: (params: IdRegistrationProps) => ComboboxHintBindings
+  getInputBindings: (params: IdRegistrationProps) => ComboboxInputBindings
+  getItemBindings: (props: ComboboxItemContext) => ComboboxItemBindings
+  getItemGroupBindings: (
+    props: ComboboxApiItemGroupProps,
+  ) => ComboboxItemGroupBindings
+  getItemGroupLabelBindings: (
+    props: ComboboxApiItemGroupLabelProps,
+  ) => ComboboxItemGroupLabelBindings
+  getItemIndicatorBindings: (
+    props: ComboboxItemContext,
+  ) => ComboboxItemIndicatorBindings
+  getItemTextBindings: (props: ComboboxItemContext) => ComboboxItemTextBindings
+  getLabelBindings: (params: IdRegistrationProps) => ComboboxLabelBindings
+  getPositionerBindings: (
+    params: IdRegistrationProps,
+  ) => ComboboxPositionerBindings
+  getRootBindings: (params: IdRegistrationProps) => ComboboxRootBindings
+  getTriggerBindings: (
+    params: IdRegistrationProps & ComboboxApiTriggerProps,
+  ) => ComboboxTriggerBindings
+
+  // group: tag bindings
+  getDropdownTagContainerBindings: (
+    params: IdRegistrationProps,
+  ) => ComboboxDropdownTagContainerBindings
+  getInputSelectionTagBindings: () => ComboboxInputSelectionTagBindings
+  getInputTagBindings: (value: string) => ComboboxInputTagBindings
+  getInputTagContainerBindings: (
+    params: IdRegistrationProps,
+  ) => ComboboxInputTagContainerBindings
+  getInvisibleInputTagBindings: (
+    value: string,
+  ) => ComboboxInvisibleInputTagBindings
+  getInvisibleInputTagContainerBindings: (
+    params: IdRegistrationProps,
+  ) => ComboboxInvisibleInputTagContainerBindings
+  getInvisibleOverflowTagBindings: () => ComboboxInvisibleOverflowTagBindings
+  getOverflowTagBindings: () => ComboboxOverflowTagBindings
 }

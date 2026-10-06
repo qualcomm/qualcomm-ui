@@ -71,12 +71,6 @@ export function getInvisibleTagEl(
   return scope.getById(getInvisibleTagId(scope, value))
 }
 
-export function getInvisibleTagsContainerEl(
-  scope: InputTagsElementScope,
-): HTMLElement | null {
-  return scope.getById(scope.ids.get("invisibleTagContainer"))
-}
-
 export function getMeasureIndicatorId(scope: InputTagsElementScope): string {
   return `tags:${getContainerId(scope)}:measure-indicator`
 }

@@ -31,7 +31,7 @@ import {
 import {maybeAccess} from "@qualcomm-ui/utils/object"
 
 import {emptyCollection} from "./combobox.collection.js"
-import {calculateVisibleTags} from "./combobox.overflow.js"
+import {calculateVisibleDropdownTags} from "./combobox.overflow.js"
 import type {
   ComboboxInputValueChangeReason,
   ComboboxOpenChangeReason,
@@ -52,7 +52,7 @@ const comboboxMachineBase = {
   computed: {
     autoComplete: ({prop}) => prop("inputBehavior") === "autocomplete",
     autoHighlight: ({prop}) => prop("inputBehavior") === "autohighlight",
-    hasOverflowTags: () => false,
+    hasOverflowTag: () => false,
     hasSelectedItems: ({context}) => context.get("value").length > 0,
     isCustomValue: ({computed, context}) =>
       context.get("inputValue") !== computed("valueAsString"),
@@ -285,14 +285,15 @@ const comboboxMachineBase = {
       clearTrigger: bindableId(ids?.clearTrigger),
       content: bindableId(ids?.content),
       control: bindableId(ids?.control),
+      dropdownTagContainer: bindableId(ids?.dropdownTagContainer),
       errorText: bindableId(ids?.errorText),
       hint: bindableId(ids?.hint),
       input: bindableId(ids?.input),
-      invisibleTagContainer: bindableId(ids?.invisibleTagContainer),
+      inputTagContainer: bindableId(ids?.inputTagContainer),
+      invisibleInputTagContainer: bindableId(ids?.invisibleInputTagContainer),
       label: bindableId(ids?.label),
       positioner: bindableId(ids?.positioner),
       root: bindableId(ids?.root),
-      tagContainer: bindableId(ids?.tagContainer),
       trigger: bindableId(ids?.trigger),
     }
   },
@@ -995,7 +996,7 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
         context.set("tagWidths", tagWidths)
       },
       recalculateVisibleTags({context}) {
-        const result = calculateVisibleTags({
+        const result = calculateVisibleDropdownTags({
           availableWidth: context.get("availableTagWidth"),
           // TODO: move to prop
           gap: 4,

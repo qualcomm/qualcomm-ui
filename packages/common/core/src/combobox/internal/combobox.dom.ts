@@ -8,6 +8,8 @@ import {query} from "@qualcomm-ui/dom/query"
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
 import type {ComboboxElementIds, ComboboxScope} from "../combobox.types.js"
+import type {InputTagsElementScope} from "../../input-tags/index.js"
+import {getContainerId} from "../../input-tags/internal/input-tags.dom.js"
 
 export const domIds: ScopeDomIds<
   Omit<ComboboxElementIds, "itemGroupLabel">,
@@ -16,14 +18,16 @@ export const domIds: ScopeDomIds<
   clearTrigger: (scope) => scope.ids.get("clearTrigger"),
   content: (scope) => scope.ids.get("content"),
   control: (scope) => scope.ids.get("control"),
+  dropdownTagContainer: (scope) => scope.ids.get("dropdownTagContainer"),
   errorText: (scope) => scope.ids.get("errorText"),
   hint: (scope) => scope.ids.get("hint"),
   input: (scope) => scope.ids.get("input"),
-  invisibleTagContainer: (scope) => scope.ids.get("invisibleTagContainer"),
+  inputTagContainer: (scope) => scope.ids.get("inputTagContainer"),
+  invisibleInputTagContainer: (scope) =>
+    scope.ids.get("invisibleInputTagContainer"),
   label: (scope) => scope.ids.get("label"),
   positioner: (scope) => scope.ids.get("positioner"),
   root: (scope) => scope.ids.get("root"),
-  tagContainer: (scope) => scope.ids.get("tagContainer"),
   trigger: (scope) => scope.ids.get("trigger"),
 }
 
@@ -36,15 +40,17 @@ export const domEls: ScopeDomElements<
   clearTrigger: (scope) => scope.getById(domIds.clearTrigger(scope)),
   content: (scope) => scope.getById(domIds.content(scope)),
   control: (scope) => scope.getById(domIds.control(scope)),
+  dropdownTagContainer: (scope) =>
+    scope.getById(domIds.dropdownTagContainer(scope)),
   errorText: (scope) => scope.getById(domIds.errorText(scope)),
   hint: (scope) => scope.getById(domIds.hint(scope)),
   input: (scope) => scope.getById(domIds.input(scope)),
-  invisibleTagContainer: (scope) =>
-    scope.getById(domIds.invisibleTagContainer(scope)),
+  inputTagContainer: (scope) => scope.getById(domIds.inputTagContainer(scope)),
+  invisibleInputTagContainer: (scope) =>
+    scope.getById(domIds.invisibleInputTagContainer(scope)),
   label: (scope) => scope.getById(domIds.label?.(scope)),
   positioner: (scope) => scope.getById(domIds.positioner(scope)),
   root: (scope) => scope.getById(domIds.root(scope)),
-  tagContainer: (scope) => scope.getById(domIds.tagContainer(scope)),
   trigger: (scope) => scope.getById(domIds.trigger(scope)),
 }
 
@@ -87,6 +93,12 @@ export function focusTriggerEl(ctx: ComboboxScope): void {
   triggerEl?.focus({preventScroll: true})
 }
 
+// tags
+
+export function getInputTagId(scope: ComboboxScope, value: string): string {
+  return `tags:${domIds.inputTagContainer(scope)}:tag:${value}`
+}
+
 export function getInvisibleTagId(scope: ComboboxScope, value: string): string {
   return `combobox:${domIds.root(scope)}:invisible-tag:${value}`
 }
@@ -106,4 +118,14 @@ export function getInvisibleOverflowTagEl(
   scope: ComboboxScope,
 ): HTMLElement | null {
   return scope.getById(getInvisibleOverflowTagId(scope))
+}
+
+export function getMeasureIndicatorId(scope: ComboboxScope): string {
+  return `tags:${domIds.inputTagContainer(scope)}:measure-indicator`
+}
+
+export function getMeasureIndicatorEl(
+  scope: ComboboxScope,
+): HTMLElement | null {
+  return scope.getById(getMeasureIndicatorId(scope))
 }

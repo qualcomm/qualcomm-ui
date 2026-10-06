@@ -1,14 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-export interface CalculateVisibleTagsInput {
+export interface CalculateVisibleDropdownTagsOpts {
   availableWidth: number
   gap: number
   showAllButtonWidth: number
   tagWidths: number[]
 }
 
-export interface CalculateVisibleTagsResult {
+export interface CalculateVisibleDropdownTagsResult {
   overflowCount: number
   visibleCount: number
   visibleIndices: number[]
@@ -23,9 +23,9 @@ export interface CalculateVisibleTagsResult {
  * = K+2 children and K+1 gaps. Base overhead accounts for 1 gap
  * (indicator-to-input); each tag adds its width + 1 gap.
  */
-export function calculateVisibleTags(
-  input: CalculateVisibleTagsInput,
-): CalculateVisibleTagsResult {
+export function calculateVisibleDropdownTags(
+  input: CalculateVisibleDropdownTagsOpts,
+): CalculateVisibleDropdownTagsResult {
   const {availableWidth, gap, showAllButtonWidth, tagWidths} = input
   const total = tagWidths.length
   // TODO: account for dropdown padding?
