@@ -189,7 +189,7 @@ export function createMenuApi(
 
   return {
     addItemListener(props) {
-      const node = scope.getById(props.id)
+      const node = props.element ?? (props.id ? scope.getById(props.id) : null)
       if (!node) {
         return
       }
