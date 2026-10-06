@@ -62,9 +62,14 @@ export interface ItemProps {
 
 export interface ItemListenerProps {
   /**
+   * The item element. Takes precedence over {@link id}.
+   */
+  element?: HTMLElement | null | undefined
+
+  /**
    * The id of the item. Can be obtained from the `getItemState` function.
    */
-  id: string
+  id?: string | undefined
 
   /**
    * Function called when the item is selected

@@ -1,4 +1,4 @@
-import {Component, output, signal} from "@angular/core"
+import {Component, input, output, signal} from "@angular/core"
 import {LucideEllipsis} from "@lucide/angular"
 import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
@@ -308,6 +308,29 @@ class InheritedIconButtonSizeMenuComponent {}
 })
 class OverriddenButtonSizeMenuComponent {}
 
+@Component({
+  imports: [MenuModule, PortalDirective],
+  template: `
+    <q-menu [lazyMount]="lazyMount()" [unmountOnExit]="unmountOnExit()">
+      <button q-menu-button>Item Menu</button>
+      <ng-template qPortal>
+        <div q-menu-positioner>
+          <div q-menu-content>
+            <button q-menu-item value="rename" (selected)="itemSelected.emit()">
+              Rename
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </q-menu>
+  `,
+})
+class ItemSelectedMenuComponent {
+  readonly itemSelected = output<void>()
+  readonly lazyMount = input(false)
+  readonly unmountOnExit = input(false)
+}
+
 describe("Menu", () => {
   test("opens from trigger keyboard shortcuts and selects the highlighted item", async () => {
     const selected = vi.fn()
@@ -504,4 +527,28 @@ describe("Menu", () => {
       .element(page.getByRole("button", {name: "Sized Menu"}))
       .toHaveAttribute("data-size", "lg")
   })
+
+  test.each([
+    {lazyMount: false, unmountOnExit: false},
+    {lazyMount: true, unmountOnExit: false},
+    {lazyMount: false, unmountOnExit: true},
+    {lazyMount: true, unmountOnExit: true},
+  ])(
+    "emits the item's selected output on every open (lazyMount: $lazyMount, unmountOnExit: $unmountOnExit)",
+    async ({lazyMount, unmountOnExit}) => {
+      const itemSelected = vi.fn()
+      await render(ItemSelectedMenuComponent, {
+        inputs: {lazyMount, unmountOnExit},
+        on: {itemSelected},
+      })
+      const trigger = page.getByRole("button", {name: "Item Menu"})
+
+      for (const calls of [1, 2]) {
+        await trigger.click()
+        await page.getByRole("menuitem", {name: "Rename"}).click()
+        await expect.element(trigger).toHaveAttribute("aria-expanded", "false")
+        await expect.poll(() => itemSelected).toHaveBeenCalledTimes(calls)
+      }
+    },
+  )
 })
