@@ -433,6 +433,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
   computed: {
     autoComplete: boolean
     autoHighlight: boolean
+    empty: boolean
     hasOverflowTag: boolean
     hasSelectedItems: boolean
     isCustomValue: boolean
@@ -461,11 +462,15 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
     | "trackPlacement"
     | "trackFocusVisible"
     | "trackDropdownResize"
+    | "trackControlResize"
   >
   events: {
     previousEvent?: ComboboxSchema["events"]
     src?: ComboboxOpenChangeReason
   } & (
+    | {
+        type: "REMEASURE"
+      }
     | {
         type: "TAG.DISMISS"
         value: string
@@ -802,11 +807,6 @@ export interface ComboboxInputSelectionTagBindings extends Part<"inputSelectionT
   onClick: JSX.MouseEventHandler
 }
 
-export interface ComboboxInvisibleInputTagContainerBindings extends Part<"invisibleInputTagContainer"> {
-  id: string
-  style: JSX.CSSProperties
-}
-
 export interface ComboboxInvisibleInputTagBindings extends Part<"invisibleInputTag"> {
   "data-value": string
   id: string
@@ -898,6 +898,11 @@ export interface ComboboxApi<T extends CollectionItem = CollectionItem> {
    * Whether the combobox is open
    */
   open: boolean
+
+  /**
+   * The number of tags that currently overflow beyond the input width
+   */
+  overflowTagCount: number
 
   /**
    * Function to set the positioning options
@@ -1009,9 +1014,6 @@ export interface ComboboxApi<T extends CollectionItem = CollectionItem> {
   getInvisibleInputTagBindings: (
     value: string,
   ) => ComboboxInvisibleInputTagBindings
-  getInvisibleInputTagContainerBindings: (
-    params: IdRegistrationProps,
-  ) => ComboboxInvisibleInputTagContainerBindings
   getInvisibleOverflowTagBindings: () => ComboboxInvisibleOverflowTagBindings
   getOverflowTagBindings: () => ComboboxOverflowTagBindings
 }

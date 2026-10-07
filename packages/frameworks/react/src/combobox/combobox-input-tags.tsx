@@ -3,13 +3,7 @@
 
 import {Fragment, type ReactElement} from "react"
 
-import {
-  createInputTagsApi,
-  type InputTagsApiProps,
-  inputTagsMachine,
-} from "@qualcomm-ui/core/input-tags"
 import {useComboboxContext} from "@qualcomm-ui/react-core/combobox"
-import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
   type ElementRenderProp,
@@ -26,44 +20,36 @@ export function ComboboxInputTags({
 }: ComboboxTagsProps): ReactElement | null {
   const {
     collection,
-    focus: focusInput,
-    focused: inputFocused,
-    open,
-    selectValue,
-    setOpen,
+    getInputSelectionTagBindings,
+    getInputTagBindings,
+    getInputTagContainerBindings,
+    getInvisibleInputTagBindings,
+    getInvisibleOverflowTagBindings,
+    getOverflowTagBindings,
+    overflowTagCount,
     value,
   } = useComboboxContext()
 
-  const machine = useMachine(inputTagsMachine, {
-    focusInput,
-    inputFocused,
-    onSelectValue: selectValue,
-    open,
-    setOpen,
-    value,
-  } satisfies InputTagsApiProps)
-  const tagsApi = createInputTagsApi(machine, normalizeProps)
-
   const mergedProps = mergeProps(
-    tagsApi.getContainerBindings({id: useControlledId(id)}),
+    getInputTagContainerBindings({id: useControlledId(id)}),
     props,
   )
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      {tagsApi.values.map((item) => {
+      {value.map((item) => {
         const label = collection.stringifyItem(item)
         return (
           <Fragment key={item}>
             <Tag
-              {...tagsApi.getTagBindings(item)}
+              {...getInputTagBindings(item)}
               emphasis="neutral"
               variant="dismissable"
             >
               {label}
             </Tag>
             <Tag
-              {...tagsApi.getInvisibleTagBindings(item)}
+              {...getInvisibleInputTagBindings(item)}
               emphasis="neutral"
               variant="dismissable"
             >
@@ -72,16 +58,14 @@ export function ComboboxInputTags({
           </Fragment>
         )
       })}
-      <Tag
-        {...tagsApi.getOverflowTagBindings({id: useControlledId()})}
-        emphasis="neutral"
-      >
-        +{tagsApi.overflowCount}
+      {/* TODO: this used to take an id in the old API, figure out if still necessary */}
+      <Tag {...getOverflowTagBindings()} emphasis="neutral">
+        +{overflowTagCount}
       </Tag>
-      <Tag {...tagsApi.getInvisibleOverflowTagBindings()} emphasis="neutral">
+      <Tag {...getInvisibleOverflowTagBindings()} emphasis="neutral">
         +{value.length}
       </Tag>
-      <Tag {...tagsApi.getSelectionTagBindings()} emphasis="neutral">
+      <Tag {...getInputSelectionTagBindings()} emphasis="neutral">
         Selected ({value.length})
       </Tag>
     </PolymorphicElement>

@@ -31,7 +31,7 @@ import {
 import {maybeAccess} from "@qualcomm-ui/utils/object"
 
 import {emptyCollection} from "./combobox.collection.js"
-import {calculateVisibleDropdownTags} from "./combobox.overflow.js"
+import {calculateVisibleInputTags} from "./combobox.input-overflow.js"
 import type {
   ComboboxInputValueChangeReason,
   ComboboxOpenChangeReason,
@@ -52,16 +52,30 @@ const comboboxMachineBase = {
   computed: {
     autoComplete: ({prop}) => prop("inputBehavior") === "autocomplete",
     autoHighlight: ({prop}) => prop("inputBehavior") === "autohighlight",
-    hasOverflowTag: () => false,
     hasSelectedItems: ({context}) => context.get("value").length > 0,
     isCustomValue: ({computed, context}) =>
       context.get("inputValue") !== computed("valueAsString"),
     isInputValueEmpty: ({context}) => context.get("inputValue").length === 0,
     isInteractive: ({prop}) => !(prop("readOnly") || prop("disabled")),
-    overflowTagCount: () => 0,
     valueAsString: ({context, prop}) =>
       prop("collection").stringifyItems(context.get("selectedItems")),
-    visibleTags: () => [] as string[],
+
+    // group: tags
+    empty: ({prop}) => {
+      const values = prop("value")
+      return !values?.length
+    },
+    hasOverflowTag: ({computed}) => computed("overflowTagCount") > 0,
+    overflowTagCount: ({context, prop}) => {
+      const values = prop("value")
+      const total = values?.length ?? 0
+      return Math.max(0, total - context.get("visibleTagIndices").length)
+    },
+    visibleTags: ({context, prop}) => {
+      const values = prop("value") ?? []
+      const indices = context.get("visibleTagIndices")
+      return indices.map((i) => values[i]).filter(Boolean)
+    },
   },
 
   context({bindable, getContext, getEvent, prop}) {
@@ -140,6 +154,7 @@ const comboboxMachineBase = {
         },
         value: prop("value"),
       })),
+
       // group: tags
       availableTagWidth: bindable<number>(() => ({
         defaultValue: 0,
@@ -214,6 +229,30 @@ const comboboxMachineBase = {
           cleanup()
         }
       }
+    },
+    trackControlResize({context, prop, scope, send}) {
+      const controlElement = domEls.control(scope)
+      if (!controlElement) {
+        return
+      }
+
+      return trackElementSize(controlElement, (size) => {
+        if (size) {
+          const inputElementRect = domEls.input(scope)?.getBoundingClientRect()
+          const controlElementRect = domEls
+            .control(scope)
+            ?.getBoundingClientRect()
+          if (!inputElementRect || !controlElementRect) {
+            return
+          }
+          const isRtl = prop("dir") === "rtl"
+          const availableWidth = isRtl
+            ? controlElementRect.right - inputElementRect.left
+            : inputElementRect.right - controlElementRect.left
+          context.set("availableTagWidth", availableWidth)
+          send({type: "REMEASURE"})
+        }
+      })
     },
     trackDismissableLayer({prop, scope, send}) {
       if (prop("disableLayer")) {
@@ -321,6 +360,9 @@ const comboboxMachineBase = {
     },
     "POSITIONING.SET": {
       actions: ["reposition"],
+    },
+    REMEASURE: {
+      actions: ["measureTags", "measureOverflowTag", "recalculateVisibleTags"],
     },
     "SELECTED_ITEMS.SYNC": {
       actions: ["syncSelectedItems"],
@@ -513,6 +555,7 @@ const comboboxMachineBase = {
     },
 
     idle: {
+      effects: ["trackControlResize"],
       entry: ["scrollContentToTop", "clearHighlightedValue"],
       on: {
         "CONTROLLED.OPEN": {
@@ -954,7 +997,7 @@ const comboboxMachineBase = {
     },
   },
 
-  watch({action, context, prop, send, track}) {
+  watch({action, computed, context, prop, send, state, track}) {
     track([() => context.hash("value")], () => {
       action(["syncSelectedItems"])
     })
@@ -970,6 +1013,17 @@ const comboboxMachineBase = {
     track([() => prop("collection").toString()], () => {
       send({type: "CHILDREN_CHANGE"})
     })
+    track(
+      [
+        () => computed("valueAsString"),
+        () => state.hasTag("focused") || prop("open"),
+      ],
+      () => {
+        raf(() => {
+          send({type: "REMEASURE"})
+        })
+      },
+    )
   },
 } satisfies MachineConfigBase<ComboboxSchema>
 
@@ -996,11 +1050,12 @@ export const comboboxMachine: MachineConfig<ComboboxSchema> =
         context.set("tagWidths", tagWidths)
       },
       recalculateVisibleTags({context}) {
-        const result = calculateVisibleDropdownTags({
+        const result = calculateVisibleInputTags({
           availableWidth: context.get("availableTagWidth"),
           // TODO: move to prop
           gap: 4,
-          showAllButtonWidth: context.get("overflowTagWidth"),
+          indicatorWidth: 24,
+          minInputWidth: 50,
           tagWidths: context.get("tagWidths"),
         })
         context.set("visibleTagIndices", result.visibleIndices)

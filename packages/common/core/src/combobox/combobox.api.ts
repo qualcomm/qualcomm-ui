@@ -39,7 +39,6 @@ import type {
   ComboboxInputTagBindings,
   ComboboxInputTagContainerBindings,
   ComboboxInvisibleInputTagBindings,
-  ComboboxInvisibleInputTagContainerBindings,
   ComboboxInvisibleOverflowTagBindings,
   ComboboxItemBindings,
   ComboboxItemContext,
@@ -134,6 +133,7 @@ export function createComboboxApi(
     inputValue: context.get("inputValue"),
     multiple: !!prop("multiple"),
     open,
+    overflowTagCount: computed("overflowTagCount"),
     reposition(options = {}) {
       send({options, type: "POSITIONING.SET"})
     },
@@ -698,20 +698,6 @@ export function createComboboxApi(
           minWidth: "max-content",
           position: "absolute",
           visibility: "hidden",
-        },
-      }
-    },
-    getInvisibleInputTagContainerBindings(
-      props,
-    ): ComboboxInvisibleInputTagContainerBindings {
-      scope.ids.register("invisibleInputTagContainer", props)
-      return {
-        ...parts.invisibleInputTagContainer,
-        id: scope.ids.get("invisibleInputTagContainer"),
-        style: {
-          position: "absolute",
-          visibility: "hidden",
-          whiteSpace: "nowrap",
         },
       }
     },
