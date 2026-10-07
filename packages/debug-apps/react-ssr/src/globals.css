@@ -63,6 +63,9 @@ body {
   border-radius: 8px;
   display: flex;
   justify-content: center;
-  min-width: 600px;
+  min-width: 0;
+  overflow: auto;
   padding: 2rem;
+  resize: horizontal;
+  width: 600px;
 }
