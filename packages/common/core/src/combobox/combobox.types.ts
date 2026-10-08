@@ -421,6 +421,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
     | "setInitialFocus"
     | "setInputValue"
     | "setValue"
+    | "syncDropdownSize"
     | "syncHighlightedItem"
     | "syncInputFocus"
     | "syncInputValue"
@@ -446,6 +447,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
   context: {
     availableTagWidth: number
     currentPlacement?: Placement | undefined
+    dropdownWidth: number
     highlightedItem: T | null
     highlightedValue: string | null
     inputValue: string
@@ -469,7 +471,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
     src?: ComboboxOpenChangeReason
   } & (
     | {
-        type: "REMEASURE"
+        type: "REMEASURE_INPUT_TAGS"
       }
     | {
         type: "TAG.DISMISS"
@@ -527,7 +529,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
         type: "LAYER.INTERACT_OUTSIDE"
       }
     | {src: "trigger-click"; type: "TRIGGER.CLICK"}
-    | {type: "REMEASURE_TAGS"}
+    | {type: "REMEASURE_DROPDOWN_TAGS"}
   )
 
   guards: GuardSchema<
@@ -554,7 +556,7 @@ export interface ComboboxSchema<T extends CollectionItem = CollectionItem> {
       | ((details: ComboboxScrollToIndexDetails) => void)
       | null
       | undefined
-    untrackDropdownSize: (() => void) | undefined
+    syncDropdownSize: (() => void) | undefined
   }
   state: "idle" | "focused" | "suggesting" | "interacting"
   tag: "open" | "focused" | "idle" | "closed"

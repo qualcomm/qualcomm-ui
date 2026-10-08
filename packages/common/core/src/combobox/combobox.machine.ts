@@ -159,6 +159,10 @@ const comboboxMachineBase = {
       availableTagWidth: bindable<number>(() => ({
         defaultValue: 0,
       })),
+      dropdownWidth: bindable<number>(() => ({
+        defaultValue: 0,
+        syncRead: true,
+      })),
       overflowTagWidth: bindable<number>(() => ({
         defaultValue: 0,
       })),
@@ -250,7 +254,7 @@ const comboboxMachineBase = {
             ? controlElementRect.right - inputElementRect.left
             : inputElementRect.right - controlElementRect.left
           context.set("availableTagWidth", availableWidth)
-          send({type: "REMEASURE"})
+          send({type: "REMEASURE_INPUT_TAGS"})
         }
       })
     },
@@ -284,22 +288,84 @@ const comboboxMachineBase = {
         type: "listbox",
       })
     },
-    trackDropdownResize({context, refs, scope, send}) {
-      const positionerEl = domEls.positioner(scope)
-      if (!positionerEl) {
-        return
+    trackDropdownResize({context, prop, refs, scope, send, state}) {
+      let observedElement: HTMLElement | null = null
+      let untrack: VoidFunction | undefined
+      let cancelFrame: VoidFunction | undefined
+      let disposed = false
+
+      const stop = () => {
+        cancelFrame?.()
+        cancelFrame = undefined
+        untrack?.()
+        untrack = undefined
+        observedElement = null
       }
-      refs.get("untrackDropdownSize")?.()
-      refs.set(
-        "untrackDropdownSize",
-        trackElementSize(positionerEl, (size) => {
-          if (size) {
-            const availableWidth = size.width
-            context.set("availableTagWidth", availableWidth)
-            send({type: "REMEASURE_TAGS"})
+
+      const isActive = () =>
+        !disposed &&
+        refs.get("syncDropdownSize") === syncDropdownSize &&
+        !!prop("multiple") &&
+        state.hasTag("open")
+
+      const syncDropdownSize = () => {
+        cancelFrame?.()
+        cancelFrame = undefined
+        if (!isActive()) {
+          stop()
+          return
+        }
+
+        cancelFrame = raf(() => {
+          cancelFrame = undefined
+          if (!isActive()) {
+            stop()
+            return
           }
-        }),
-      )
+
+          const positionerEl = domEls.positioner(scope)
+          if (positionerEl === observedElement) {
+            return
+          }
+          stop()
+          if (!positionerEl) {
+            return
+          }
+
+          observedElement = positionerEl
+          let active = true
+          let previousWidth: number | undefined
+          const cleanup = trackElementSize(positionerEl, (size) => {
+            if (
+              !active ||
+              !isActive() ||
+              domEls.positioner(scope) !== positionerEl ||
+              !size ||
+              size.width === previousWidth
+            ) {
+              return
+            }
+            previousWidth = size.width
+            context.set("dropdownWidth", size.width)
+            send({type: "REMEASURE_DROPDOWN_TAGS"})
+          })
+          untrack = () => {
+            active = false
+            cleanup?.()
+          }
+        })
+      }
+
+      // The subscription spans both open states; the root effect owns cleanup.
+      refs.set("syncDropdownSize", syncDropdownSize)
+      syncDropdownSize()
+      return () => {
+        disposed = true
+        stop()
+        if (refs.get("syncDropdownSize") === syncDropdownSize) {
+          refs.set("syncDropdownSize", undefined)
+        }
+      }
     },
     trackFocusVisible({scope}) {
       return trackFocusVisible({root: scope.getRootNode?.()})
@@ -361,7 +427,7 @@ const comboboxMachineBase = {
     "POSITIONING.SET": {
       actions: ["reposition"],
     },
-    REMEASURE: {
+    REMEASURE_INPUT_TAGS: {
       actions: ["measureTags", "measureOverflowTag", "recalculateVisibleTags"],
     },
     "SELECTED_ITEMS.SYNC": {
@@ -382,7 +448,7 @@ const comboboxMachineBase = {
       ]) as any,
       "syncInputFocus",
     ],
-    effects: ["trackFocusVisible"],
+    effects: ["trackFocusVisible", "trackDropdownResize"],
   },
 
   props({props}) {
@@ -417,7 +483,7 @@ const comboboxMachineBase = {
   refs: ({prop}) => {
     return {
       scrollToIndexFn: prop("scrollToIndexFn"),
-      untrackDropdownSize: () => {},
+      syncDropdownSize: undefined,
     }
   },
 
@@ -997,7 +1063,17 @@ const comboboxMachineBase = {
     },
   },
 
-  watch({action, computed, context, prop, send, state, track}) {
+  watch({action, computed, context, prop, scope, send, state, track}) {
+    track(
+      [
+        () => state.hasTag("open"),
+        () => prop("multiple"),
+        () => scope.ids.get("positioner"),
+      ],
+      () => {
+        action(["syncDropdownSize"])
+      },
+    )
     track([() => context.hash("value")], () => {
       action(["syncSelectedItems"])
     })
@@ -1020,7 +1096,7 @@ const comboboxMachineBase = {
       ],
       () => {
         raf(() => {
-          send({type: "REMEASURE"})
+          send({type: "REMEASURE_INPUT_TAGS"})
         })
       },
     )
@@ -1030,6 +1106,9 @@ const comboboxMachineBase = {
 export const comboboxMachine: MachineConfig<ComboboxSchema> =
   createNarrowedMachine<ComboboxSchema>()(comboboxMachineBase, {
     actions: {
+      syncDropdownSize({refs}) {
+        refs.get("syncDropdownSize")?.()
+      },
       measureOverflowTag({context, scope}) {
         const showAllButtonEl = getInvisibleOverflowTagEl(scope)
         if (!showAllButtonEl) {
