@@ -5,7 +5,7 @@ import {isValidElement, type ReactElement} from "react"
 
 import {
   createQdsIconButtonApi,
-  resolveButtonPropsWithGroup,
+  resolveButtonProps,
 } from "@qualcomm-ui/qds-core/button"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
@@ -13,6 +13,7 @@ import {Icon, IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useButtonGroupContext} from "./button-group-context.js"
+import {useButtonPropsContext} from "./button-props-context.js"
 import type {IconButtonProps} from "./icon-button.types.js"
 
 /**
@@ -28,13 +29,10 @@ export function IconButton({
   variant,
   ...props
 }: IconButtonProps): ReactElement {
-  const resolved = resolveButtonPropsWithGroup(useButtonGroupContext(), {
-    density,
-    disabled,
-    emphasis,
-    size,
-    variant,
-  })
+  const resolved = resolveButtonProps(
+    {density, disabled, emphasis, size, variant},
+    {defaults: useButtonPropsContext(), group: useButtonGroupContext()},
+  )
 
   const api = createQdsIconButtonApi({...resolved, shape}, normalizeProps)
 

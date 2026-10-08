@@ -1,3 +1,6 @@
+export * from "./menu-footer.directive"
+export * from "./menu-header.directive"
+export * from "./menu-header-label.directive"
 export * from "./menu-button.component"
 export * from "./menu-checkbox-item-control.component"
 export * from "./menu-checkbox-item.directive"
