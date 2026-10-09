@@ -123,8 +123,9 @@
   &[data-nav-density="compact"] {
     /* TODO: remove when the small side nav size lands */
     .qui-side-nav__node-root {
-      height: 32px;
       min-height: 32px;
+      padding-top: 4px;
+      padding-bottom: 4px;
 
       &:has(+ .qui-side-nav__node-root),
       &:has(+ .qui-side-nav__branch-root) {
