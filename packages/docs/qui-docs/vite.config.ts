@@ -3,6 +3,8 @@ import {reactRouter} from "@react-router/dev/vite"
 import tailwindcss from "@tailwindcss/vite"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
+import rehypeKatex from "rehype-katex"
+import remarkMath from "remark-math"
 import {defineConfig} from "vite"
 
 import {
@@ -31,8 +33,11 @@ export default defineConfig({
     tailwindcss(),
     mdx({
       providerImportSource: "@mdx-js/react",
-      rehypePlugins: [...getRehypePlugins({configFile: quiDocsConfigFile})],
-      remarkPlugins: [...getRemarkPlugins()],
+      rehypePlugins: [
+        ...getRehypePlugins({configFile: quiDocsConfigFile}),
+        rehypeKatex,
+      ],
+      remarkPlugins: [...getRemarkPlugins(), remarkMath],
     }),
     reactRouter(),
     quiDocsPlugin({configFile: quiDocsConfigFile}),
