@@ -22,6 +22,8 @@ const navConfig: NavConfig[] = [
   {id: "markdown"},
   {id: "typedoc"},
   {id: "configuration"},
+  {sectionTitle: "Extensions", separator: true},
+  {id: "latex"},
   {sectionTitle: "Content Guidelines", separator: true},
   {id: "principles"},
   {id: "routing"},

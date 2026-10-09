@@ -1,0 +1,124 @@
+---
+title: LaTeX
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+Add inline formulas and multiline equations to a QUI Docs site with `remark-math` and `rehype-katex`. The plugins parse LaTeX syntax in MDX and render it with [KaTeX](https://katex.org/).
+
+## Prerequisites
+
+Start with a running QUI Docs site that uses `@mdx-js/rollup` in `vite.config.ts` and React Router in `src/root.tsx`. The [QUI Docs template](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-qui-docs) includes this setup.
+
+## Install the plugins
+
+Install the plugins in the docs application's package directory:
+
+<NpmInstallTabs dev packages="remark-math rehype-katex" />
+
+`remark-math` recognizes dollar-delimited expressions. `rehype-katex` renders those expressions during MDX compilation.
+
+## Configure Vite
+
+Add `remarkMath` to the existing MDX remark plugins. Place `rehypeKatex` before `getRehypePlugins()` in the rehype plugins array:
+
+```ts
+import mdx from "@mdx-js/rollup"
+import rehypeKatex from "rehype-katex"
+import remarkMath from "remark-math"
+import {defineConfig} from "vite"
+
+import {getRehypePlugins, getRemarkPlugins} from "@qualcomm-ui/mdx-vite"
+
+export default defineConfig({
+  plugins: [
+    // ...
+    mdx({
+      providerImportSource: "@mdx-js/react",
+      // NOTE: order matters.  rehypeKatex must be first.
+      rehypePlugins: [rehypeKatex, ...getRehypePlugins()],
+      remarkPlugins: [...getRemarkPlugins(), remarkMath],
+    }),
+    // ...
+  ],
+})
+```
+
+Merge the MDX configuration into your existing Vite configuration, preserving any other plugins and options your site uses.
+
+Plugin order matters. Display math initially becomes a `<pre><code>` element. The QUI Docs plugins include Shiki syntax highlighting, which processes code blocks. Running KaTeX first lets it render the equation before Shiki handles the remaining code blocks.
+
+## Load the KaTeX stylesheet
+
+Add the stylesheet entry to the existing `links` export in `src/root.tsx`. The stylesheet provides equation layout and font definitions. Keep the site's other stylesheet and font entries:
+
+```tsx
+import type {LinksFunction} from "react-router"
+
+export const links: LinksFunction = () => [
+  // ... omitted for brevity
+  {
+    href: "https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css",
+    rel: "stylesheet",
+  },
+]
+```
+
+## Write equations
+
+### Inline formulas
+
+Wrap an inline formula in single dollar signs:
+
+```mdx
+The line follows $y = x + 1$.
+```
+
+The line follows $y = x + 1$.
+
+Use `\$` for a literal dollar sign in prose. Inline code and fenced code blocks preserve dollar signs as written.
+
+### Display equations
+
+Place the opening and closing `$$` delimiters on separate lines to display an equation as a centered block:
+
+```mdx
+$$
+\sqrt{a^2 + b^2}
+$$
+```
+
+$$
+\sqrt{a^2 + b^2}
+$$
+
+Writing `$$ expression $$` on one line produces inline math.
+
+### Multiline equations
+
+Use the `aligned` environment to align multiple equation rows. The `&` marks the alignment point, and `\\` ends a row. Source line breaks alone do not create separate equation rows.
+
+```mdx
+$$
+\begin{aligned}
+y &= x + 1 \\
+z &= \sqrt{a^2 + b^2}
+\end{aligned}
+$$
+```
+
+$$
+\begin{aligned}
+y &= x + 1 \\
+z &= \sqrt{a^2 + b^2}
+\end{aligned}
+$$
+
+## Verify rendering
+
+Restart the development server after changing `vite.config.ts`. Add the examples to an MDX page and open its route. The inline formula should sit within the sentence, the display equation should be centered, and the aligned example should show two rows.
+
+- If equations have missing fonts, duplicate text, or incorrect spacing, check that `<Links />` is present and that the KaTeX stylesheet and fonts load successfully. A mismatched integrity hash causes the browser to reject the stylesheet.
+- If KaTeX reports an unknown command or invalid expression, check the syntax against its [supported functions](https://katex.org/docs/supported.html).

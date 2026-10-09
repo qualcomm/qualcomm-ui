@@ -4,6 +4,7 @@
 import type {Root} from "mdast"
 import remarkFrontmatter from "remark-frontmatter"
 import remarkGfm from "remark-gfm"
+import remarkMath from "remark-math"
 import remarkMdx from "remark-mdx"
 import remarkParse from "remark-parse"
 import remarkStringify from "remark-stringify"
@@ -55,7 +56,7 @@ export interface RemarkPipelineOptions {
 export function createRemarkProcessor(
   options: RemarkPipelineOptions = {},
 ): Processor<Root, undefined, undefined, undefined, undefined> {
-  const processor = unified().use(remarkParse)
+  const processor = unified().use(remarkParse).use(remarkMath)
 
   if (options.mdx) {
     processor.use(remarkMdx)

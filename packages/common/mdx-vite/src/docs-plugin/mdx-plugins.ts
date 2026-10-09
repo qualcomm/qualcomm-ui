@@ -64,7 +64,7 @@ export function getShikiTransformers(): ShikiTransformer[] {
 
 /**
  * Used to retrieve all the rehype plugins required for QUI Docs MDX.
- * These should be passed to the `mdx` vite plugin from
+ * These should be passed to the `mdx` vite plugin.
  */
 export function getRehypePlugins(
   options: QuiRehypePluginOptions = {},
