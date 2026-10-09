@@ -187,8 +187,7 @@ export class KnowledgeExporter {
           sections: pageSections,
         })
       } catch (error) {
-        console.error(`Failed to process page: ${page.name}`)
-        throw error
+        console.error(`Failed to process page: ${page.url}, skipping`)
       }
     }
 
