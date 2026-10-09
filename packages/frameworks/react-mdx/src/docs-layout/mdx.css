@@ -30,10 +30,16 @@ a[data-footnote-ref="true"] {
   }
 }
 
+.qui-docs__page-header {
+  h1.mdx {
+    margin: 0 0 4px;
+  }
+}
+
 h1.mdx {
   color: var(--color-text-neutral-primary);
   font: var(--font-static-heading-xl);
-  margin: 0 0 4px;
+  margin: 40px 0 20px;
 }
 
 h2.mdx {
