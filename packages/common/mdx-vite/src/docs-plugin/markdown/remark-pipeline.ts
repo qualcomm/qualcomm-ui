@@ -19,6 +19,7 @@ import {
   remarkRemoveJsx,
   remarkRemoveMermaidCodeBlocks,
 } from "../remark/index.js"
+import {remarkMathCodeProtection} from "../remark/remark-math-code-protection.js"
 
 export interface RemarkPipelineOptions {
   /** GitHub-style alert blocks. */
@@ -56,7 +57,10 @@ export interface RemarkPipelineOptions {
 export function createRemarkProcessor(
   options: RemarkPipelineOptions = {},
 ): Processor<Root, undefined, undefined, undefined, undefined> {
-  const processor = unified().use(remarkParse).use(remarkMath)
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkMath)
+    .use(remarkMathCodeProtection)
 
   if (options.mdx) {
     processor.use(remarkMdx)

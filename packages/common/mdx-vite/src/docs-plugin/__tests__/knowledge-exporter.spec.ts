@@ -29,6 +29,15 @@ afterEach(async () => {
 describe("KnowledgeExporter math", () => {
   test.each([
     {
+      content:
+        "Environment variables appear preceded by $, for example `${SDK_ROOT}`.",
+      expected:
+        "Environment variables appear preceded by \\$, for example `${SDK_ROOT}`.",
+      name: "literal code following a prose dollar sign",
+      searchText:
+        "Environment variables appear preceded by $, for example ${SDK_ROOT} .",
+    },
+    {
       content: String.raw`$$ y = x + 1 $$
 
 $$ \sqrt{a^2 + b^2} $$`,

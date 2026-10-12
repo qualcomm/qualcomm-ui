@@ -40,6 +40,7 @@ import {
   remarkSteps,
 } from "./remark/index.js"
 import {remarkExtractMeta} from "./remark/remark-extract-meta.js"
+import {remarkMathCodeProtection} from "./remark/remark-math-code-protection.js"
 import {
   transformerCodeAttribute,
   transformerNotationHidden,
@@ -116,6 +117,7 @@ export function getRehypePlugins(
  */
 export function getRemarkPlugins(): PluggableList {
   return [
+    remarkMathCodeProtection,
     remarkFrontmatter,
     remarkMdxFrontmatter,
     remarkGfm,

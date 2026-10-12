@@ -84,10 +84,7 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
   },
   {
-    crossOrigin: "anonymous",
     href: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css",
-    integrity:
-      "sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp",
     rel: "stylesheet",
   },
 ]
