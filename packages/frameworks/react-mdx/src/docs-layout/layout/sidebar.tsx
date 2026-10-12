@@ -321,7 +321,6 @@ export function Sidebar({
                 </SideNav.LeafNode>
               )
             }}
-            showIndentGuide
           />
         ))}
       </SideNav.Root>
