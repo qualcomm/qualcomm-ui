@@ -3,6 +3,7 @@
 
 import {coercePixelProperty} from "@qualcomm-ui/utils/coercion"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
+import {warn} from "@qualcomm-ui/utils/warning"
 
 import {iconClasses} from "./icon.classes.js"
 import type {
@@ -12,6 +13,17 @@ import type {
 } from "./icon.types.js"
 
 const qdsIconSizes = new Set<string>(["xs", "sm", "md", "lg", "xl"])
+
+const cssWideKeywords = new Set<string>([
+  "auto",
+  "inherit",
+  "initial",
+  "revert",
+  "revert-layer",
+  "unset",
+])
+
+const bareWord = /^[a-z-]+$/i
 
 /**
  * Returns the size of the icon when it is supplied as a pixel value, or undefined
@@ -23,11 +35,16 @@ export function getIconSize(
   if (!size) {
     return
   }
-  // the raw size is determined by CSS
-  return qdsIconSizes.has(size as string)
-    ? // handled by CSS
-      undefined
-    : coercePixelProperty(size)
+  if (qdsIconSizes.has(size as string)) {
+    // the raw size is determined by CSS
+    return
+  }
+  const coerced = coercePixelProperty(size)
+  warn(
+    bareWord.test(coerced) && !cssWideKeywords.has(coerced),
+    `[@qualcomm-ui/qds-core/icon] '--icon-size: ${coerced}' is invalid CSS. Expected ${[...qdsIconSizes].join(" | ")} or a CSS length.`,
+  )
+  return coerced
 }
 
 export function getQdsIconBindings(

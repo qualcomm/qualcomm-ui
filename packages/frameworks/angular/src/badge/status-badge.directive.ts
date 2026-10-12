@@ -4,6 +4,7 @@
 import {
   booleanAttribute,
   computed,
+  inject,
   Directive,
   input,
   type OnInit,
@@ -22,6 +23,9 @@ import {
   type QdsStatusBadgeVariant,
 } from "@qualcomm-ui/qds-core/badge"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
+import {compact} from "@qualcomm-ui/utils/object"
+
+import {BADGE_CONTEXT_TOKEN} from "./badge.tokens"
 
 @Directive({
   selector: "[q-status-badge]",
@@ -54,13 +58,20 @@ export class StatusBadgeDirective
    */
   readonly variant = input<QdsStatusBadgeVariant>()
 
+  protected readonly badgeContext = inject(BADGE_CONTEXT_TOKEN, {
+    optional: true,
+  })
+
   protected readonly api = computed(() => {
     return createQdsStatusBadgeApi(
       {
-        disabled: this.disabled(),
-        emphasis: this.emphasis(),
-        size: this.size(),
-        variant: this.variant(),
+        ...this.badgeContext?.statusBadge(),
+        ...compact({
+          disabled: this.disabled(),
+          emphasis: this.emphasis(),
+          size: this.size(),
+          variant: this.variant(),
+        }),
       },
       normalizeProps,
     )
