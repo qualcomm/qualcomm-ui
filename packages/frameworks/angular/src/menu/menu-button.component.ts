@@ -43,20 +43,24 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
   template: `
     <ng-content select="[q-start-icon]" />
     @if (startIcon()) {
-      <svg q-start-icon [qIcon]="startIcon()!" [size]="resolvedSize()"></svg>
+      <svg
+        q-start-icon
+        [qIcon]="startIcon()!"
+        [size]="buttonService.context().size"
+      ></svg>
     }
     <ng-content />
     <svg
       qIcon="LucideChevronDown"
       [q-bind]="indicatorBindings()"
-      [size]="resolvedSize()"
+      [size]="buttonService.context().size"
     ></svg>
   `,
 })
 export class MenuButtonComponent extends BaseButtonDirective {
   protected qdsMenuContext = useQdsMenuContext()
 
-  protected override readonly resolvedSize = computed(
+  protected override readonly ownSize = computed(
     () => this.size() ?? this.qdsMenuContext().size,
   )
 

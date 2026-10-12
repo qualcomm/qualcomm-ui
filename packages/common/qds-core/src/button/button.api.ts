@@ -5,6 +5,7 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import type {ResolvableButtonGroupProps} from "./button-group.api.js"
 import {buttonAnatomy} from "./button.anatomy.js"
 import {buttonClasses} from "./button.classes.js"
 import type {
@@ -20,6 +21,40 @@ const parts = buttonAnatomy.parts
 const sharedDefaults = {
   size: "md",
 } satisfies Pick<QdsButtonApiProps, "size">
+
+export interface ButtonPropsSources {
+  /**
+   * Contextual defaults, e.g. from a menu header. Lowest priority.
+   */
+  defaults?: QdsButtonApiProps | null | undefined
+
+  /**
+   * Button-group values.
+   */
+  group?: ResolvableButtonGroupProps | null | undefined
+}
+
+/**
+ * Resolves a button's props against its group and contextual defaults.
+ *
+ * - `density`, `disabled`, `size` are non-overridable: group, then the button's
+ *   own props, then defaults.
+ * - `emphasis`, `variant` are overridable per-button: the button's own props,
+ *   then group, then defaults.
+ */
+export function resolveButtonProps<T extends ResolvableButtonGroupProps>(
+  props: T,
+  {defaults, group}: ButtonPropsSources = {},
+): T {
+  return {
+    ...props,
+    density: group?.density ?? props.density ?? defaults?.density,
+    disabled: group?.disabled ?? props.disabled ?? defaults?.disabled,
+    emphasis: props.emphasis ?? group?.emphasis ?? defaults?.emphasis,
+    size: group?.size ?? props.size ?? defaults?.size,
+    variant: props.variant ?? group?.variant ?? defaults?.variant,
+  }
+}
 
 export function createQdsButtonApi(
   props: Explicit<QdsButtonApiProps>,
@@ -63,5 +98,6 @@ export function createQdsButtonApi(
         "data-size": size,
       })
     },
+    size,
   }
 }

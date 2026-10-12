@@ -6,6 +6,7 @@ import {page, userEvent} from "vitest/browser"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 function menu() {
@@ -503,5 +504,28 @@ describe("Menu", () => {
     await expect
       .element(page.getByRole("button", {name: "Sized Menu"}))
       .toHaveAttribute("data-size", "lg")
+  })
+
+  test("sizes trigger icons with the button group's size", async () => {
+    await render(
+      `
+      <div aria-label="Actions" q-button-group size="lg">
+        <q-menu size="sm">
+          <button q-menu-button>Text trigger</button>
+        </q-menu>
+        <q-menu size="sm">
+          <button aria-label="Icon trigger" q-menu-icon-button></button>
+        </q-menu>
+      </div>
+    `,
+      {imports: [ButtonModule, MenuModule]},
+    )
+
+    for (const name of ["Text trigger", "Icon trigger"]) {
+      const trigger = page.getByRole("button", {name})
+      await expect.element(trigger).toHaveAttribute("data-size", "lg")
+      const indicator = trigger.element().querySelector(".qui-menu__indicator")
+      expect(indicator?.getAttribute("data-size")).toBe("lg")
+    }
   })
 })

@@ -5,7 +5,10 @@ import {describe, expect, test, vi} from "vitest"
 import {page} from "vitest/browser"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {
+  ButtonModule,
+  QDS_BUTTON_PROPS_CONTEXT,
+} from "@qualcomm-ui/angular/button"
 
 @Component({
   imports: [ButtonModule],
@@ -299,5 +302,114 @@ describe("ButtonGroup", () => {
     const button = page.getByRole("button", {name: "Save"})
     await expect.element(button).toHaveAttribute("data-emphasis", "neutral")
     await expect.element(button).toHaveAttribute("data-variant", "fill")
+  })
+})
+
+@Component({
+  imports: [ButtonModule],
+  providers: [
+    provideIcons({LucidePlus}),
+    {
+      provide: QDS_BUTTON_PROPS_CONTEXT,
+      useValue: () => ({
+        density: "compact",
+        disabled: true,
+        emphasis: "danger",
+        size: "sm",
+        variant: "ghost",
+      }),
+    },
+  ],
+  template: `
+    <button q-button>Inherited text</button>
+    <button
+      aria-label="Inherited icon"
+      icon="LucidePlus"
+      q-icon-button
+    ></button>
+    <button
+      density="default"
+      emphasis="primary"
+      q-button
+      size="lg"
+      variant="outline"
+      [disabled]="false"
+    >
+      Overridden text
+    </button>
+    <button
+      aria-label="Overridden icon"
+      density="default"
+      emphasis="primary"
+      icon="LucidePlus"
+      q-icon-button
+      size="lg"
+      variant="outline"
+      [disabled]="false"
+    ></button>
+    <div density="default" q-button-group size="lg" [disabled]="false">
+      <button q-button>Grouped text</button>
+      <button
+        aria-label="Grouped icon"
+        icon="LucidePlus"
+        q-icon-button
+      ></button>
+    </div>
+    <div emphasis="primary" q-button-group variant="outline">
+      <button q-button>Group styled text</button>
+      <button
+        aria-label="Group styled icon"
+        icon="LucidePlus"
+        q-icon-button
+      ></button>
+      <button emphasis="neutral" q-button variant="fill">
+        Own styled text
+      </button>
+    </div>
+  `,
+})
+class ContextualButtonsComponent {}
+
+describe("Contextual button props", () => {
+  test("supplies overridable props to text and icon buttons outside a menu", async () => {
+    await render(ContextualButtonsComponent)
+    for (const name of ["Inherited text", "Inherited icon"]) {
+      const button = page.getByRole("button", {name})
+      await expect.element(button).toBeDisabled()
+      await expect.element(button).toHaveAttribute("data-size", "sm")
+      await expect.element(button).toHaveAttribute("data-density", "compact")
+      await expect.element(button).toHaveAttribute("data-variant", "ghost")
+      await expect.element(button).toHaveAttribute("data-emphasis", "danger")
+    }
+    for (const name of ["Overridden text", "Overridden icon"]) {
+      const button = page.getByRole("button", {name})
+      await expect.element(button).not.toBeDisabled()
+      await expect.element(button).toHaveAttribute("data-size", "lg")
+      await expect.element(button).toHaveAttribute("data-density", "default")
+      await expect.element(button).toHaveAttribute("data-variant", "outline")
+      await expect.element(button).toHaveAttribute("data-emphasis", "primary")
+    }
+  })
+
+  test("preserves the button group's enforced size, density and disabled state", async () => {
+    await render(ContextualButtonsComponent)
+    for (const name of ["Grouped text", "Grouped icon"]) {
+      const button = page.getByRole("button", {name})
+      await expect.element(button).not.toBeDisabled()
+      await expect.element(button).toHaveAttribute("data-size", "lg")
+      await expect.element(button).toHaveAttribute("data-density", "default")
+    }
+  })
+
+  test("lets the button group's emphasis and variant win over the defaults", async () => {
+    await render(ContextualButtonsComponent)
+    for (const name of ["Group styled text", "Group styled icon"]) {
+      const button = page.getByRole("button", {name})
+      await expect.element(button).toHaveAttribute("data-emphasis", "primary")
+      await expect.element(button).toHaveAttribute("data-variant", "outline")
+    }
+    const own = page.getByRole("button", {name: "Own styled text"})
+    await expect.element(own).toHaveAttribute("data-emphasis", "neutral")
+    await expect.element(own).toHaveAttribute("data-variant", "fill")
   })
 })

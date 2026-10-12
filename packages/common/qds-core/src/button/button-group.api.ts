@@ -18,29 +18,6 @@ export type ResolvableButtonGroupProps = Pick<
   keyof QdsButtonGroupApiProps & keyof QdsButtonApiProps
 >
 
-/**
- * Merges button-group context values with a button's own props.
- *
- * `density`, `disabled`, and `size` are non-overridable (group wins).
- * `emphasis` and `variant` are overridable per-button (button wins).
- */
-export function resolveButtonPropsWithGroup<
-  T extends ResolvableButtonGroupProps,
->(group: ResolvableButtonGroupProps | undefined, base: T): T {
-  if (!group) {
-    return base
-  }
-  const {density, disabled, emphasis, size, variant} = group
-  return {
-    ...base,
-    density: density ?? base.density,
-    disabled: disabled ?? base.disabled,
-    emphasis: base.emphasis ?? emphasis,
-    size: size ?? base.size,
-    variant: base.variant ?? variant,
-  }
-}
-
 const parts = buttonGroupAnatomy.parts
 
 export function getQdsButtonGroupBindings(

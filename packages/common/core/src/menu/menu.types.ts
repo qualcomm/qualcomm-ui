@@ -311,6 +311,8 @@ type MenuEvent =
         | "POINTER_MOVED_AWAY_FROM_SUBMENU"
         | "HIGHLIGHTED.RESTORE"
         | "BLUR"
+        | "CONTENT_BLUR"
+        | "CONTENT_FOCUS_VISIBLE"
     }
   | {fromArrowKey: boolean; type: "FOCUS_MENU"}
   | {fromArrowKey: boolean; type: "OPEN_AUTOFOCUS"}
@@ -370,6 +372,8 @@ export interface MenuSchema extends MachineSchema {
     | "resumePointer"
     | "setHighlightedItem"
     | "clearHighlightedItem"
+    | "clearItemFocusVisible"
+    | "setItemFocusVisible"
     | "focusMenu"
     | "highlightFirstItem"
     | "highlightLastItem"
@@ -474,8 +478,12 @@ export interface MenuTriggerBindings extends Part<"trigger"> {
 }
 
 export interface MenuPositionerBindings extends Part<"positioner"> {
+  "data-focus-trap-tab-delegate": ""
+  "data-from": "context-trigger" | "trigger"
+  "data-placement": Placement | undefined
   dir: Direction
   id: string
+  onKeyDown: JSX.KeyboardEventHandler
   style: JSX.CSSProperties
 }
 
@@ -498,6 +506,8 @@ export interface MenuContentBindings extends Part<"content"> {
   dir: Direction
   hidden: boolean
   id: string
+  onBlur: JSX.FocusEventHandler
+  onFocus: JSX.FocusEventHandler
   onKeyDown: JSX.KeyboardEventHandler
   onPointerEnter: JSX.PointerEventHandler
   role: "menu" | "dialog"

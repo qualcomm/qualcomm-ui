@@ -104,4 +104,5 @@ export interface QdsButtonApi {
   getEndIconBindings(): QdsButtonEndIconBindings
   getRootBindings(): QdsButtonRootBindings
   getStartIconBindings(): QdsButtonStartIconBindings
+  size: QdsButtonSize
 }
