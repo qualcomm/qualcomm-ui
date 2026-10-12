@@ -28,6 +28,11 @@ export interface MenuCheckboxItemProps
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
   children?: ReactNode
+
+  /**
+   * @deprecated never called. Use `onCheckedChange` instead.
+   */
+  onSelect?: (() => void) | undefined
 }
 
 export function MenuCheckboxItem({
