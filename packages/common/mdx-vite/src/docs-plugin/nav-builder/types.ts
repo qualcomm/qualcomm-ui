@@ -43,6 +43,17 @@ export interface RouteMetaEntryInternal extends Pick<
   expanded?: boolean
 
   /**
+   * Replace a top-level side nav folder with its immediate children. Deeper
+   * nesting and route URLs are preserved. The parent label is removed; add a
+   * separate `sectionTitle` entry before the route to display a heading.
+   *
+   * Has no effect on nested routes or leaf pages.
+   *
+   * @default false
+   */
+  flattenChildren?: boolean
+
+  /**
    * Order for the groups within this item's hierarchy.
    */
   groupOrder?: string[]

@@ -30,6 +30,7 @@ export function transformRouteMetaArray(
         ? transformRouteMetaArray(current.children, routeMetaNav)
         : undefined,
       expanded: current.expanded,
+      flattenChildren: current.flattenChildren,
       group: current.group,
       groupOrder: current.groupOrder,
       hidden: current.hidden,
