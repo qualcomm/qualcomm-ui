@@ -20,6 +20,55 @@ afterEach(async () => {
 })
 
 describe("PluginState knowledge exports", () => {
+  test("excludes parent pages and cached exports when child routes change", async () => {
+    temporaryDirectory = await mkdtemp(join(tmpdir(), "qui-knowledge-parent-"))
+    const routeDirectory = join(temporaryDirectory, "routes")
+    const guideDirectory = join(routeDirectory, "guide+")
+    const publicDirectory = join(temporaryDirectory, "public")
+    await mkdir(guideDirectory, {recursive: true})
+    await writeRoute(routeDirectory, "index")
+    await writeRoute(guideDirectory, "index")
+
+    const state = new PluginState()
+    state.init(temporaryDirectory)
+    state.createIndexer({
+      appDirectory: temporaryDirectory,
+      filePath: join(temporaryDirectory, "qui-docs.config.ts"),
+      knowledge: {},
+      pageDirectory: "routes",
+    })
+    const exportPathnames = async () => {
+      state.buildIndex(false)
+      await state.generateKnowledge(publicDirectory)
+      return state.pages!.pages.map((page) => page.pathname).sort()
+    }
+
+    expect(await exportPathnames()).toEqual(["/", "/guide"])
+
+    await writeRoute(guideDirectory, "child")
+    expect(await exportPathnames()).toEqual(["/", "/guide/child"])
+    expect(
+      state.sections!.sections.some((section) => section.pathname === "/guide"),
+    ).toBe(false)
+    expect(state.exports.pathnames).not.toContain("/guide")
+
+    await writeFile(
+      join(guideDirectory, "index.mdx"),
+      "---\ntitle: [\n---\n\n<Broken",
+      "utf8",
+    )
+    expect(await exportPathnames()).toEqual(["/", "/guide/child"])
+
+    await writeRoute(guideDirectory, "index")
+    await rm(join(guideDirectory, "child.mdx"))
+    expect(await exportPathnames()).toEqual(["/", "/guide"])
+    expect(
+      state.sections!.sections.some(
+        (section) => section.pathname === "/guide/child",
+      ),
+    ).toBe(false)
+  })
+
   test("writes configured page and section filenames below the knowledge output directory", async () => {
     temporaryDirectory = await mkdtemp(join(tmpdir(), "qui-knowledge-output-"))
     const routeDirectory = join(temporaryDirectory, "routes")

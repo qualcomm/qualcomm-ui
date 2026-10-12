@@ -38,6 +38,7 @@ export const routeMetaSchema: ZodSchema<RouteMeta> =
   implement<RouteMeta>().with({
     children: z.array(z.lazy(() => routeMetaSchema)).optional(),
     expanded: z.boolean().optional(),
+    flattenChildren: z.boolean().optional(),
     group: z.string().optional(),
     groupOrder: z.string().array().optional(),
     hidden: z.boolean().optional(),

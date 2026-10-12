@@ -83,6 +83,10 @@ export const links: LinksFunction = () => [
     href: "https://use.typekit.net/nhs4wvu.css",
     rel: "stylesheet",
   },
+  {
+    href: "https://cdn.jsdelivr.net/npm/katex@0.19.0/dist/katex.min.css",
+    rel: "stylesheet",
+  },
 ]
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}

@@ -90,14 +90,39 @@
 }
 
 .qui-docs-sidebar__root {
+  --qui-docs-sidebar-scrollbar-color: var(--color-border-neutral-02);
+
   appearance: none;
   box-sizing: border-box;
   display: none;
   height: calc(100vh - var(--qui-header-height));
   left: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: sticky;
+  scrollbar-gutter: stable;
   top: var(--qui-header-height);
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &.qui-docs__mdx-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--qui-docs-sidebar-scrollbar-color);
+  }
+
+  @media (hover: hover) {
+    --qui-docs-sidebar-scrollbar-color: transparent;
+
+    &:hover {
+      --qui-docs-sidebar-scrollbar-color: var(--color-border-neutral-02);
+    }
+  }
+
+  /* Native scrollbar colors override custom thumb and button styles. */
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-color: var(--qui-docs-sidebar-scrollbar-color) transparent;
+    scrollbar-width: thin;
+  }
 
   @media screen and (min-width: 950px) {
     appearance: auto;
@@ -123,8 +148,9 @@
   &[data-nav-density="compact"] {
     /* TODO: remove when the small side nav size lands */
     .qui-side-nav__node-root {
-      height: 32px;
       min-height: 32px;
+      padding-top: 4px;
+      padding-bottom: 4px;
 
       &:has(+ .qui-side-nav__node-root),
       &:has(+ .qui-side-nav__branch-root) {
