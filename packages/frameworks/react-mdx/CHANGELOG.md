@@ -1,5 +1,26 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.13.0
+
+Oct 12th, 2026
+
+### Features
+
+* increase mdx inline alert top and bottom margins ([a86073b](https://github.com/qualcomm/qualcomm-ui/commit/a86073b))
+* [page-actions]: add raw markdown link menu option ([108465a](https://github.com/qualcomm/qualcomm-ui/commit/108465a))
+
+### Code Refactoring
+
+* [sidebar]: show vertical scrollbar only on hover ([209fd32](https://github.com/qualcomm/qualcomm-ui/commit/209fd32))
+* [side-nav]: remove indent guide from nav entries ([22fa6a6](https://github.com/qualcomm/qualcomm-ui/commit/22fa6a6))
+* adjust H1 margins based on surrounding content ([a86073b](https://github.com/qualcomm/qualcomm-ui/commit/a86073b))
+* [side-nav]: remove route links from parent routes that are also pages ([a4166f7](https://github.com/qualcomm/qualcomm-ui/commit/a4166f7))
+
+### Bug Fixes
+
+* [side-nav]: support item height expansion ([9509101](https://github.com/qualcomm/qualcomm-ui/commit/9509101))
+* add margin to H1's outside of the page-header ([4046b0b](https://github.com/qualcomm/qualcomm-ui/commit/4046b0b))
+
 ## 2.12.4
 
 Sep 29th, 2026
