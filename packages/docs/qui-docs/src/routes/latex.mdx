@@ -10,11 +10,11 @@ Add inline formulas and multiline equations to a QUI Docs site with `remark-math
 
 ## Prerequisites
 
-Start with a running QUI Docs site that uses `@mdx-js/rollup` in `vite.config.ts` and React Router in `src/root.tsx`. The [QUI Docs template](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-qui-docs) includes this setup.
+Start with a running QUI Docs site. The [QUI Docs template](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-qui-docs) is the recommended starting point.
 
 ## Install the plugins
 
-Install the plugins in the docs application's package directory:
+Install the plugins:
 
 <NpmInstallTabs dev packages="remark-math rehype-katex" />
 
@@ -78,7 +78,7 @@ The line follows $y = x + 1$.
 
 The line follows $y = x + 1$.
 
-Use `\$` for a literal dollar sign in prose. Inline code and fenced code blocks preserve dollar signs as written.
+Single dollar signs ($) are preserved as written.
 
 ### Display equations
 
