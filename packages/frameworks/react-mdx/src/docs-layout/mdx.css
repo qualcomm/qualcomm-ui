@@ -30,9 +30,15 @@ a[data-footnote-ref="true"] {
   }
 }
 
-.qui-docs__page-header {
+.qui-docs__main-content:has(.qui-docs__breadcrumbs + .qui-docs__page-header) {
   h1.mdx {
     margin: 0 0 4px;
+  }
+}
+
+.qui-docs__page-header:first-child {
+  h1.mdx {
+    margin: 4px 0;
   }
 }
 
@@ -391,7 +397,8 @@ hr.mdx {
   .qui-notification__root:not(
     .qui-demo-runner__wrapper > * .qui-notification__root
   ) {
-    margin-top: var(--qui-mdx-margin-default);
+    margin-top: 20px;
+    margin-bottom: 20px;
     .qui-notification__description {
       font: var(--font-static-body-md-default);
     }
