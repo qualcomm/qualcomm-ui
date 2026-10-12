@@ -3,7 +3,7 @@
 
 import {type ReactNode, useCallback} from "react"
 
-import {Check, Copy, Download} from "lucide-react"
+import {Check, Copy, Download, Link2} from "lucide-react"
 
 import {Portal} from "@qualcomm-ui/react-core/portal"
 import {useSiteContext} from "@qualcomm-ui/react-mdx/context"
@@ -53,6 +53,10 @@ export function PageActions(): ReactNode {
     valueOrFn: getExportAsText,
   })
 
+  const {copyToClipboard: copyPageUrlToClipboard} = useCopyToClipboard({
+    valueOrFn: () => `${window.location.href}.md`,
+  })
+
   if (!page || !pageExport || !getPages) {
     return null
   }
@@ -76,7 +80,17 @@ export function PageActions(): ReactNode {
                 <Menu.ItemStartIcon icon={Copy} />
                 <Menu.ItemLabel>Copy Page</Menu.ItemLabel>
                 <Menu.ItemDescription>
-                  Copy page as markdown for LLMs
+                  Copy page as markdown
+                </Menu.ItemDescription>
+              </Menu.Item>
+              <Menu.Item
+                onClick={copyPageUrlToClipboard}
+                value="copy-page-link"
+              >
+                <Menu.ItemStartIcon icon={Link2} />
+                <Menu.ItemLabel>Copy Markdown Page Link</Menu.ItemLabel>
+                <Menu.ItemDescription>
+                  Copy as link to page&#39;s raw markdown
                 </Menu.ItemDescription>
               </Menu.Item>
               <Menu.Item
