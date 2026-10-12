@@ -27,6 +27,7 @@ import {
   getPathnameFromPathSegments,
   getPathSegmentsFromFileName,
 } from "../../nav-builder/index.js"
+import {fixPath} from "../../path-utils.js"
 import {remarkSerializeJsxKnowledge} from "../../remark/index.js"
 import type {MdxFileReader} from "../markdown-file-reader.js"
 import {createRemarkProcessor} from "../remark-pipeline.js"
@@ -53,6 +54,8 @@ export interface KnowledgeExporterConfig {
   exclude?: string[]
   extraFiles?: KnowledgeExtraFile[]
   frontmatter?: KnowledgeFrontmatterConfig
+  /** Absolute MDX file paths excluded by the docs indexer. */
+  ignoredMdxFiles?: ReadonlySet<string>
   pageIdPrefix?: string
   pageMap?: PageMap
   pages?: PagesExportConfig
@@ -236,6 +239,9 @@ export class KnowledgeExporter {
     const excludePatterns = this.config.exclude ?? []
 
     const shouldExclude = (absolutePath: string): boolean => {
+      if (this.config.ignoredMdxFiles?.has(fixPath(absolutePath))) {
+        return true
+      }
       if (excludePatterns.length === 0) {
         return false
       }
