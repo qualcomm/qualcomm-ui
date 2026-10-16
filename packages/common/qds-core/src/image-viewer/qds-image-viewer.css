@@ -1,0 +1,13 @@
+.qui-image-viewer__viewport {
+  background: var(--color-background-neutral-01);
+  cursor: grab;
+
+  &[data-panning] {
+    cursor: grabbing;
+  }
+
+  &:focus-visible {
+    outline: var(--border-width-md) solid var(--color-utility-focus-border);
+    outline-offset: calc(-1 * var(--border-width-md));
+  }
+}
