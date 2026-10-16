@@ -1,0 +1,216 @@
+---
+title: Image Viewer
+description: Image Viewer supports pan, zoom, rotation, and flip controls for images.
+component: ImageViewer
+aliases: [image viewer, image zoom, pan and zoom, image pan]
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {ImageViewer} from "@qualcomm-ui/react/image-viewer"
+```
+
+## Overview
+
+The simple API renders the image, viewport, and default zoom out, zoom in, and reset controls. Set `controls` to `false` when the controls are rendered elsewhere.
+
+The composite API exposes the root, viewport, image, context, root provider, and control button components. Use it when the controls or layout require custom placement.
+
+The QDS viewport uses the full available width and a 16:9 aspect ratio by default. The image fills the viewport.
+
+## Keyboard and Pointer Interactions
+
+Focus the viewport before using keyboard interactions.
+
+- Arrow keys pan the image by `nudgeStep`, which defaults to `1` pixel.
+- `Shift` with an Arrow key uses `nudgeStepShift`, which defaults to `10` pixels.
+- `Ctrl` or `Cmd` with an Arrow key uses `nudgeStepCtrl`, which defaults to `50` pixels.
+- `+` or `=` zooms in.
+- `-` or `_` zooms out.
+- The mouse wheel zooms around the pointer position.
+- Pinch gestures zoom and pan the image on touch devices.
+
+## Viewport Sizing
+
+Use `viewportProps` to override the default 16:9 viewport dimensions.
+
+```tsx
+<ImageViewer
+  alt="Earth at night viewed from space"
+  src="/images/connected-l.png"
+  viewportProps={{
+    style: {aspectRatio: "4 / 3", maxWidth: "48rem"},
+  }}
+/>
+```
+
+## Examples
+
+### Simple
+
+Use the simple API for the default layout and controls.
+
+<Demo
+  name="ImageViewerSimpleDemo"
+  component={demos.ImageViewerSimpleDemo}
+/>
+
+### Composite
+
+Use the composite API when the image and controls require separate layout elements.
+
+<Demo name="ImageViewerBasicDemo" component={demos.ImageViewerBasicDemo} />
+
+### Controlled Zoom
+
+Set `zoom` and update it in `onZoomChange` when external state controls the zoom level.
+
+<Demo
+  name="ImageViewerControlledZoomDemo"
+  component={demos.ImageViewerControlledZoomDemo}
+/>
+
+### Zoom Limits
+
+Set `minZoom` and `maxZoom` to constrain the zoom range.
+
+<Demo
+  name="ImageViewerZoomLimitsDemo"
+  component={demos.ImageViewerZoomLimitsDemo}
+/>
+
+### Rotation
+
+Set `rotation` and update it in `onRotationChange` when external state controls the rotation.
+
+<Demo
+  name="ImageViewerRotationDemo"
+  component={demos.ImageViewerRotationDemo}
+/>
+
+### Flip
+
+Set `flip` and update it in `onFlipChange` when external state controls horizontal or vertical flipping.
+
+<Demo name="ImageViewerFlipDemo" component={demos.ImageViewerFlipDemo} />
+
+### Reset
+
+Use `useImageViewer` with `RootProvider` to place reset and transform controls outside the viewer root.
+
+<Demo name="ImageViewerResetDemo" component={demos.ImageViewerResetDemo} />
+
+### Events
+
+Use `onZoomChange` to track the current zoom level.
+
+<Demo
+  name="ImageViewerEventsDemo"
+  component={demos.ImageViewerEventsDemo}
+/>
+
+### Context
+
+Use `ImageViewer.Context` to access the viewer API inside the root.
+
+<Demo
+  name="ImageViewerContextDemo"
+  component={demos.ImageViewerContextDemo}
+/>
+
+### Root Provider
+
+Use `useImageViewer` with `ImageViewer.RootProvider` when external code owns the viewer API.
+
+<Demo
+  name="ImageViewerRootProviderDemo"
+  component={demos.ImageViewerRootProviderDemo}
+/>
+
+## API
+
+### \<ImageViewer>
+
+The `ImageViewer` component renders the composite parts and default controls.
+
+<TypeDocProps name="ImageViewerProps" />
+
+### ImageViewerApi
+
+The viewer API is available from `ImageViewer.Context` and `useImageViewer`.
+
+<TypeDocProps name="ImageViewerApi" partial />
+
+## Composite API
+
+### \<ImageViewer.Root>
+
+<TypeDocProps name="ImageViewerRootProps" />
+
+<TypeDocAttributes
+  name={["ImageViewerRootBindings", "QdsImageViewerRootBindings"]}
+/>
+
+### \<ImageViewer.RootProvider>
+
+<TypeDocProps name="ImageViewerRootProviderProps" />
+
+### \<ImageViewer.Viewport>
+
+<TypeDocProps name="ImageViewerViewportProps" />
+
+<TypeDocAttributes
+  name={["ImageViewerViewportBindings", "QdsImageViewerViewportBindings"]}
+/>
+
+### \<ImageViewer.Image>
+
+<TypeDocProps name="ImageViewerImageProps" />
+
+<TypeDocAttributes
+  name={["ImageViewerImageBindings", "QdsImageViewerImageBindings"]}
+/>
+
+### \<ImageViewer.Context>
+
+<TypeDocProps name="ImageViewerContextProps" />
+
+### \<ImageViewer.ZoomInButton>
+
+<TypeDocProps name="ImageViewerZoomInButtonProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsImageViewerZoomInTriggerBindings",
+    "ImageViewerZoomInTriggerBindings",
+  ]}
+/>
+
+### \<ImageViewer.ZoomOutButton>
+
+<TypeDocProps name="ImageViewerZoomOutButtonProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsImageViewerZoomOutTriggerBindings",
+    "ImageViewerZoomOutTriggerBindings",
+  ]}
+/>
+
+### \<ImageViewer.ResetButton>
+
+<TypeDocProps name="ImageViewerResetButtonProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsImageViewerResetTriggerBindings",
+    "ImageViewerResetTriggerBindings",
+  ]}
+/>
