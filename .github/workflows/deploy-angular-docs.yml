@@ -17,4 +17,7 @@ jobs:
     with:
       dockerfile: dockerfiles/dockerfile-angular-docs
       ecr-repository-name: angular-docs
-    secrets: inherit
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}
