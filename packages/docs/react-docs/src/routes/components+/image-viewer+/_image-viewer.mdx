@@ -26,13 +26,11 @@ import {ImageViewer} from "@qualcomm-ui/react/image-viewer"
 
 ## Overview
 
-Build the viewer with `ImageViewer.Root`, `ImageViewer.Viewport`, and `ImageViewer.Image`. Add control buttons as children of the root or viewport.
-
-The QDS viewport uses the full available width and a 16:9 aspect ratio by default. The image fills the viewport.
+The image viewport uses the full available width and a 16:9 aspect ratio by default. The image fills the viewport.
 
 ## Keyboard and Pointer Interactions
 
-Focus the viewport before using keyboard interactions.
+Focus the viewport to use keyboard interactions.
 
 - Arrow keys pan the image by [nudgeStep](./#nudgeStep), which defaults to `1` pixel.
 - `Shift` with an Arrow key uses [nudgeStepShift](./#nudgeStepShift), which defaults to `10` pixels.
@@ -99,7 +97,7 @@ Set [minZoom](./#minZoom) and [maxZoom](./#maxZoom) to constrain the zoom range.
 
 ### Rotation
 
-Set [rotation](./#rotation-1) and update it in [onRotationChange](./#onRotationChange). These props follow our [controlled state](/patterns/controlled-state) pattern.
+Set [rotation](./#rotation-2) and update it in [onRotationChange](./#onRotationChange). These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 <Demo
   name="ImageViewerRotationDemo"
@@ -108,7 +106,7 @@ Set [rotation](./#rotation-1) and update it in [onRotationChange](./#onRotationC
 
 ### Flip
 
-Set [flip](./#flip-1) and update it in [onFlipChange](./#onFlipChange). These props follow our [controlled state](/patterns/controlled-state) pattern.
+Set [flip](./#flip-2) and update it in [onFlipChange](./#onFlipChange). These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 <Demo name="ImageViewerFlipDemo" component={demos.ImageViewerFlipDemo} />
 
