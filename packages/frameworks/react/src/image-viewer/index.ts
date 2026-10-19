@@ -38,20 +38,6 @@ import {
   type ImageViewerZoomOutButtonProps,
 } from "./image-viewer-zoom-out-button.js"
 
-export {
-  useImageViewer,
-  useImageViewerContext,
-} from "@qualcomm-ui/react-core/image-viewer"
-
-export type {
-  ImageViewerApi,
-  ImageViewerApiProps,
-  FlipState,
-  FlipChangeDetails,
-  RotationChangeDetails,
-  ZoomChangeDetails,
-} from "@qualcomm-ui/core/image-viewer"
-
 export * from "./qds-image-viewer-context.js"
 
 export type {

@@ -2,8 +2,9 @@ import type {ReactElement} from "react"
 
 import {ZoomIn, ZoomOut} from "lucide-react"
 
+import {useImageViewer} from "@qualcomm-ui/react-core/image-viewer"
 import {IconButton} from "@qualcomm-ui/react/button"
-import {ImageViewer, useImageViewer} from "@qualcomm-ui/react/image-viewer"
+import {ImageViewer} from "@qualcomm-ui/react/image-viewer"
 
 export function ImageViewerRootProviderDemo(): ReactElement {
   const imageViewer = useImageViewer()

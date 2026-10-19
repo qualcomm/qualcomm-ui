@@ -23,7 +23,6 @@ import {
 } from "./core-image-viewer.js"
 
 export * from "./image-viewer-context.js"
-
 export * from "./use-image-viewer.js"
 
 export type {
