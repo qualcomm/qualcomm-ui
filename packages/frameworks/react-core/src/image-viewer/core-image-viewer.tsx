@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactElement, ReactNode} from "react"
+import type {ReactElement} from "react"
 
 import {
   type ImageViewerApi,
@@ -13,6 +13,8 @@ import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
   type ElementRenderProp,
   PolymorphicElement,
+  type RenderProp,
+  renderProp,
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -66,15 +68,17 @@ export function CoreImageViewerRoot(
 export interface CoreImageViewerContextProps {
   /**
    * Renders content using the current image viewer API.
+   *
+   * @inheritDoc
    */
-  children: (api: ImageViewerApi) => ReactNode
+  children: RenderProp<ImageViewerApi>
 }
 
 export function CoreImageViewerContext({
   children,
 }: CoreImageViewerContextProps): ReactElement {
   const api = useImageViewerContext()
-  return <>{children(api)}</>
+  return <>{renderProp(children, api)}</>
 }
 
 export interface CoreImageViewerControlOverlayProps extends ElementRenderProp<"div"> {}
