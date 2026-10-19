@@ -4,12 +4,12 @@ import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
 import {cdp, page, userEvent} from "vitest/browser"
 
+import {useImageViewer} from "@qualcomm-ui/react-core/image-viewer"
 import {
   ImageViewer,
   type ImageViewerControlOverlayProps,
   type ImageViewerRootProps,
   type ImageViewerViewportProps,
-  useImageViewer,
 } from "@qualcomm-ui/react/image-viewer"
 
 const imageAlt = "A test landscape"
