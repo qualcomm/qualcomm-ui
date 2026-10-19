@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.9.1
+
+Sep 29th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.1]
+
 ## 1.9.0
 
 Sep 2nd, 2026

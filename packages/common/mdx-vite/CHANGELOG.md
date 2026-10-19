@@ -1,5 +1,23 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.11.0
+
+Oct 12th, 2026
+
+### Features
+
+* add LaTeX support and guide ([10936f2](https://github.com/qualcomm/qualcomm-ui/commit/10936f2))
+* [nav-config]: add flattenChildren field and docs ([ce4a92a](https://github.com/qualcomm/qualcomm-ui/commit/ce4a92a))
+
+### Bug Fixes
+
+* account for inline math symbols in mdx parser ([0b0d1d7](https://github.com/qualcomm/qualcomm-ui/commit/0b0d1d7))
+* [extractor]: don't exit process on page extraction error ([a62927b](https://github.com/qualcomm/qualcomm-ui/commit/a62927b))
+
+### Code Refactoring
+
+* [side-nav]: remove route links from parent routes that are also pages ([a4166f7](https://github.com/qualcomm/qualcomm-ui/commit/a4166f7))
+
 ## 3.10.1
 
 Sep 8th, 2026

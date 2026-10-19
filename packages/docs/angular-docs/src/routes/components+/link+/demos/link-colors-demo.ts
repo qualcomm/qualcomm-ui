@@ -12,7 +12,7 @@ import {LinkDirective} from "@qualcomm-ui/angular/link"
       <a emphasis="neutral" q-link>neutral</a>
       <a emphasis="brand" q-link>brand</a>
       <div class="bg-persistent-black px-4 py-1">
-        <a emphasis="white-persistent" q-link>white-persistent</a>
+        <a emphasis="persistent-white" q-link>persistent-white</a>
       </div>
       <!-- preview -->
     </div>

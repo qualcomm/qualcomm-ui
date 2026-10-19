@@ -155,6 +155,43 @@ export default {
 
 :::
 
+### Flatten Nested Routes
+
+Set `flattenChildren: true` on a top-level route entry to place its immediate children at the parent route's position in the sidebar. The parent entry is removed from the sidebar. Child routes keep their nested children, and route URLs remain unchanged.
+
+Use a separate `sectionTitle` entry before the route entry when the promoted routes need a section heading:
+
+```ts
+import type {QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
+
+export default {
+  navConfig: [
+    {sectionTitle: "Guides"},
+    {
+      id: "guides",
+      flattenChildren: true,
+      children: [
+        {id: "installation"},
+        {
+          id: "advanced",
+          children: [{id: "configuration"}],
+        },
+      ],
+    },
+  ],
+} satisfies QuiDocsConfig
+```
+
+The sidebar renders `Guides` as a section heading. `Installation` and `Advanced` are top-level items. `Configuration` remains nested under `Advanced`:
+
+- Installation
+- Advanced
+  - Configuration
+
+The child page URLs remain `/guides/installation` and `/guides/advanced/configuration`.
+
+The default value is `false`. The property applies to top-level route entries with children. It has no effect on nested or leaf entries.
+
 ### Folder Titles
 
 Folders don't have an MDX file to provide a title, so QUI Docs falls back to formatting the folder name. To set an explicit sidebar label for a folder, add a `title` to its `navConfig` entry.

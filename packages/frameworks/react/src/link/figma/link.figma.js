@@ -12,7 +12,7 @@ const disabled = instance.getEnum("state", {disabled: true})
 const emphasis = instance.getEnum("emphasis", {
   brand: "brand",
   neutral: "neutral",
-  "white-persistent": "white-persistent",
+  "persistent-white": "persistent-white",
 })
 const label = instance.getString("label") || "Action"
 const size = instance.getEnum("size", {

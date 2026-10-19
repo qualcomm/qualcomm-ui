@@ -158,7 +158,7 @@ export function Tag({
       {startIcon ? (
         <IconOrNode icon={startIcon} {...qdsApi.getStartIconBindings()} />
       ) : null}
-      <span>{children}</span>
+      <span {...qdsApi.getTextBindings()}>{children}</span>
       {variant === "dismissable" ? (
         <button {...qdsApi.getDismissButtonBindings()} onClick={onDismiss}>
           <IconOrNode icon={X} {...qdsApi.getEndIconBindings()} />

@@ -33,7 +33,7 @@ export function createQdsAlertBannerApi(
   const closeButtonEmphasis =
     variant === "strong"
       ? emphasis === "warning"
-        ? "black-persistent"
+        ? "persistent-black"
         : "inverse"
       : "neutral"
 
@@ -102,7 +102,7 @@ export function resolveAlertBannerButtonProps({
   return {
     emphasis:
       variant === "strong" && emphasis === "warning"
-        ? "black-persistent"
+        ? "persistent-black"
         : variant === "strong"
           ? "inverse"
           : "neutral",

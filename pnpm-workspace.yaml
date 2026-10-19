@@ -55,11 +55,11 @@ catalog:
   "@qualcomm-ui/esbuild": 1.0.7
   "@qualcomm-ui/tsconfig": 2.3.0
   "@qualcomm-ui/vite": 1.1.2
-  "@react-router/dev": 7.16.0
-  "@react-router/express": 7.16.0
-  "@react-router/node": 7.16.0
-  "@react-router/remix-routes-option-adapter": 7.16.0
-  "@react-router/serve": 7.16.0
+  "@react-router/dev": 8.4.0
+  "@react-router/express": 8.4.0
+  "@react-router/node": 8.4.0
+  "@react-router/remix-routes-option-adapter": 8.4.0
+  "@react-router/serve": 8.4.0
   "@tailwindcss/postcss": 4.3.3
   "@tailwindcss/vite": 4.3.3
   "@types/lodash-es": 4.17.12
@@ -91,7 +91,7 @@ catalog:
   postcss: 8.5.10
   react: 19.2.4
   react-dom: 19.2.4
-  react-router: 7.16.0
+  react-router: 8.4.0
   react-shiki: 0.11.1
   shiki: 4.4.3
   shx: 0.4.0
@@ -100,7 +100,7 @@ catalog:
   typescript: 6.0.3
   typescript-eslint: 8.67.0
   unified: 11.0.5
-  vite: 8.2.1
+  vite: 8.3.4
   vite-plugin-static-copy: 4.1.0
   vitest: 4.1.10
 

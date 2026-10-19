@@ -10,7 +10,7 @@ import {ButtonModule} from "@qualcomm-ui/angular/button"
     <div class="flex w-full flex-col gap-4">
       <!-- preview -->
       <div
-        description="Use white-persistent emphasis for strong variant"
+        description="Use persistent-white emphasis for strong variant"
         heading="Strong"
         q-alert-banner
         variant="strong"

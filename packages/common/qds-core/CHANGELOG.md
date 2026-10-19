@@ -1,5 +1,24 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.38.2
+
+Sep 29th, 2026
+
+### Code Refactoring
+
+* [button]: rename `white/black-persistent` emphasis to `persistent-white/black`, old values deprecated ([3d5e93e](https://github.com/qualcomm/qualcomm-ui/commit/3d5e93ee378b774242f4559ba85ef3ac6a554399))
+
+### Bug Fixes
+
+* [split-button]: minor border CSS issues ([15d8ddc](https://github.com/qualcomm/qualcomm-ui/commit/15d8ddc1af44418e412a909ca7aa18e8def43a92))
+* [stepper]: active step hover ([8f69d2e](https://github.com/qualcomm/qualcomm-ui/commit/8f69d2e132691e7baf28fd176c44554d2da1cbd2))
+* [tag]: truncate long labels with an ellipsis ([55ff3ad](https://github.com/qualcomm/qualcomm-ui/commit/55ff3ad8bab7c236cfee7116bca9146c3e4bdb6e))
+* [tokens]: bypass `color/css` transform to keep hex color values + zero-value dimension tokens read `0px` instead of `0` ([87b01ad](https://github.com/qualcomm/qualcomm-ui/commit/87b01ad4cc2bb4b37765c7ab9d9fcf1861024c95))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.1]
+
 ## 1.38.1
 
 Sep 25th, 2026

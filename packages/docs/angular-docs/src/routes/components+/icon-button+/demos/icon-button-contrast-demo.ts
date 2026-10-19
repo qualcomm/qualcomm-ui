@@ -13,21 +13,21 @@ import {ButtonModule} from "@qualcomm-ui/angular/button"
       <div class="bg-persistent-black flex gap-8 rounded-md p-3">
         <button
           aria-label="External Link"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon="ExternalLink"
           q-icon-button
           variant="fill"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon="ExternalLink"
           q-icon-button
           variant="outline"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon="ExternalLink"
           q-icon-button
           variant="ghost"
@@ -37,21 +37,21 @@ import {ButtonModule} from "@qualcomm-ui/angular/button"
       <div class="bg-persistent-white flex gap-8 rounded-md p-3">
         <button
           aria-label="External Link"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon="ExternalLink"
           q-icon-button
           variant="fill"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon="ExternalLink"
           q-icon-button
           variant="outline"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon="ExternalLink"
           q-icon-button
           variant="ghost"

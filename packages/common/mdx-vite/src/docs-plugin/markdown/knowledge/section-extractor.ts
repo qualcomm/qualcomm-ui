@@ -1,9 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Code, Link, Parent, Root, RootContent, Text} from "mdast"
+import type {Code, Link, Parent, Root, RootContent} from "mdast"
 import {toString} from "mdast-util-to-string"
 import remarkGfm from "remark-gfm"
+import remarkMath from "remark-math"
 import remarkStringify from "remark-stringify"
 import {type Plugin, unified} from "unified"
 import {visit} from "unist-util-visit"
@@ -75,7 +76,7 @@ function transformLinks(): Plugin {
   return () => (tree) => {
     visit(tree, "link", (node: Link) => {
       let text = ""
-      visit(node, "text", (textNode: Text) => {
+      visit(node, ["text", "inlineMath"] as const, (textNode) => {
         text += textNode.value
       })
 
@@ -89,10 +90,14 @@ function transformLinks(): Plugin {
   }
 }
 
-const rawProcessor = unified().use(remarkGfm).use(remarkStringify)
+const rawProcessor = unified()
+  .use(remarkGfm)
+  .use(remarkMath)
+  .use(remarkStringify)
 
 const contentProcessor = unified()
   .use(remarkGfm)
+  .use(remarkMath)
   .use(transformLinks())
   .use(remarkStringify)
 
@@ -412,7 +417,12 @@ export class SectionExtractor {
         return
       }
 
-      if (node.type === "text" || node.type === "inlineCode") {
+      if (
+        node.type === "text" ||
+        node.type === "inlineCode" ||
+        node.type === "inlineMath" ||
+        node.type === "math"
+      ) {
         if (node.value) {
           text.push(node.value)
         }

@@ -8,11 +8,16 @@ import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {linkAnatomy} from "./link.anatomy.js"
 import type {linkClasses} from "./link.classes.js"
 
+/** @deprecated use "persistent-white" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsLinkEmphasis__deprecated = "white-persistent"
+
 export type QdsLinkEmphasis =
   | "default"
   | "neutral"
   | "brand"
-  | "white-persistent"
+  | "persistent-white"
+  | QdsLinkEmphasis__deprecated
 
 export type QdsLinkSize = "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
 

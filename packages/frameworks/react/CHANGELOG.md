@@ -1,5 +1,17 @@
 # @qualcomm-ui/react Changelog
 
+## 1.31.2
+
+Sep 29th, 2026
+
+### Bug Fixes
+
+* [tag]: truncate long labels with an ellipsis ([55ff3ad](https://github.com/qualcomm/qualcomm-ui/commit/55ff3ad8bab7c236cfee7116bca9146c3e4bdb6e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.1, @qualcomm-ui/qds-core@1.38.2, @qualcomm-ui/react-core@1.9.1]
+
 ## 1.31.1
 
 Sep 25th, 2026

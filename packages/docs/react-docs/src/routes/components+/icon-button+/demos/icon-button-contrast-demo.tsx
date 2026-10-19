@@ -11,19 +11,19 @@ export function IconButtonContrastDemo(): ReactElement {
       <div className="bg-persistent-black flex gap-6 p-4">
         <IconButton
           aria-label="Navigate"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon={ExternalLink}
           variant="fill"
         />
         <IconButton
           aria-label="Navigate"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon={ExternalLink}
           variant="outline"
         />
         <IconButton
           aria-label="Navigate"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon={ExternalLink}
           variant="ghost"
         />
@@ -33,19 +33,19 @@ export function IconButtonContrastDemo(): ReactElement {
       <div className="bg-persistent-white flex gap-6 p-4">
         <IconButton
           aria-label="Navigate"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon={ExternalLink}
           variant="fill"
         />
         <IconButton
           aria-label="Navigate"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon={ExternalLink}
           variant="outline"
         />
         <IconButton
           aria-label="Navigate"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon={ExternalLink}
           variant="ghost"
         />
