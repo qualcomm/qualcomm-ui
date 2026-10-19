@@ -5,7 +5,6 @@ import {ImageViewer} from "@qualcomm-ui/react/image-viewer"
 export function ImageViewerCompositeDemo(): ReactElement {
   return (
     <ImageViewer.Root className="w-full">
-      {/* preview */}
       <ImageViewer.Viewport>
         <ImageViewer.Image
           alt="Earth at night viewed from space"
@@ -17,7 +16,6 @@ export function ImageViewerCompositeDemo(): ReactElement {
         <ImageViewer.ZoomInButton />
         <ImageViewer.ResetButton />
       </div>
-      {/* preview */}
     </ImageViewer.Root>
   )
 }

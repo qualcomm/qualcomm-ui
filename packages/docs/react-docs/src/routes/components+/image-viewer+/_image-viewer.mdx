@@ -13,7 +13,7 @@ badges:
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
@@ -141,6 +141,23 @@ Use `useImageViewer` with `<ImageViewer.RootProvider>` when external code owns t
 <Demo
   name="ImageViewerRootProviderDemo"
   component={demos.ImageViewerRootProviderDemo}
+/>
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.ImageViewerExplorerDemo}
+  linkPrefix="image-viewer"
+  parts={[
+    "root",
+    "viewport",
+    "image",
+    "control-overlay",
+    {name: "zoom-in-trigger", link: "#image-viewer-zoom-in-button"},
+    {name: "zoom-out-trigger", link: "#image-viewer-zoom-out-button"},
+    {name: "reset-trigger", link: "#image-viewer-reset-button"},
+  ]}
+  scope="image-viewer"
 />
 
 ## API
