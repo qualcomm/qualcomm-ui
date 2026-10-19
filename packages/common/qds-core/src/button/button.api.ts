@@ -28,6 +28,8 @@ const filledBadgeEmphasis: Record<QdsButtonEmphasis, QdsNumberBadgeEmphasis> = {
   danger: "persistent-white",
   inverse: "neutral",
   neutral: "persistent-white",
+  "persistent-black": "persistent-black",
+  "persistent-white": "persistent-white",
   primary: "persistent-white",
   "white-persistent": "persistent-black",
 }
@@ -37,6 +39,8 @@ const badgeEmphasis: Record<QdsButtonEmphasis, QdsNumberBadgeEmphasis> = {
   danger: "danger",
   inverse: "neutral",
   neutral: "neutral",
+  "persistent-black": "persistent-black",
+  "persistent-white": "persistent-white",
   primary: "brand",
   "white-persistent": "persistent-white",
 }
