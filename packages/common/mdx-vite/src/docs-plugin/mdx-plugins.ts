@@ -40,6 +40,7 @@ import {
   remarkSteps,
 } from "./remark/index.js"
 import {remarkExtractMeta} from "./remark/remark-extract-meta.js"
+import {remarkMathCodeProtection} from "./remark/remark-math-code-protection.js"
 import {
   transformerCodeAttribute,
   transformerNotationHidden,
@@ -64,7 +65,7 @@ export function getShikiTransformers(): ShikiTransformer[] {
 
 /**
  * Used to retrieve all the rehype plugins required for QUI Docs MDX.
- * These should be passed to the `mdx` vite plugin from
+ * These should be passed to the `mdx` vite plugin.
  */
 export function getRehypePlugins(
   options: QuiRehypePluginOptions = {},
@@ -116,6 +117,7 @@ export function getRehypePlugins(
  */
 export function getRemarkPlugins(): PluggableList {
   return [
+    remarkMathCodeProtection,
     remarkFrontmatter,
     remarkMdxFrontmatter,
     remarkGfm,

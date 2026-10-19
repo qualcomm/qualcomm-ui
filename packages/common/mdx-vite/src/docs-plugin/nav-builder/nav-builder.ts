@@ -331,7 +331,33 @@ export class NavBuilder {
 
     this._navItems = this.groupNavItems(this.navItems)
     this._navItems = this.buildSearchMeta(this.navItems, [])
+    this._navItems = this.flattenChildren(this.navItems)
     return this.navItems
+  }
+
+  /**
+   * Flatten only after ordering and section metadata are resolved, so promoted
+   * children stay in their parent's position and retain their group context.
+   */
+  private flattenChildren(items: NavItem[]): NavItem[] {
+    return items.flatMap((item) => {
+      if (
+        item.pathSegments.length === 1 &&
+        item.items?.length &&
+        getRouteMeta(item.pathSegments, this.metaJson)?.flattenChildren
+      ) {
+        return this.promoteNavItems(item.items)
+      }
+      return [item]
+    })
+  }
+
+  private promoteNavItems(items: NavItem[]): NavItem[] {
+    return items.map((item) => ({
+      ...item,
+      depth: item.depth - 1,
+      items: item.items ? this.promoteNavItems(item.items) : undefined,
+    }))
   }
 
   private groupNavItems(items: NavItem[]): NavItem[] {

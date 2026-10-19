@@ -83,20 +83,6 @@
     ],
     "title": "Dedicated Devices"
   },
-  "/getting-started": {
-    "categories": [
-      "Getting Started"
-    ],
-    "data": {
-      "title": "Getting Started"
-    },
-    "id": "/routes/getting-started._index.mdx",
-    "pathname": "/getting-started",
-    "pathSegments": [
-      "getting-started"
-    ],
-    "title": "Getting Started"
-  },
   "/best-practices/choosing-dependencies": {
     "categories": [
       "Best Practices",
