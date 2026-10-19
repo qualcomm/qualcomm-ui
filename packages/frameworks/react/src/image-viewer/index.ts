@@ -52,6 +52,8 @@ export type {
   ZoomChangeDetails,
 } from "@qualcomm-ui/core/image-viewer"
 
+export * from "./qds-image-viewer-context.js"
+
 export type {
   ImageViewerControlOverlayProps,
   ImageViewerRootProps,
@@ -87,5 +89,3 @@ export const ImageViewer: ImageViewerComponent = {
   ZoomInButton: ImageViewerZoomInButton,
   ZoomOutButton: ImageViewerZoomOutButton,
 }
-
-export * from "./qds-image-viewer-context.js"
