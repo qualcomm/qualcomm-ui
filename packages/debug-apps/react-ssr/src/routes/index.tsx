@@ -16,6 +16,7 @@ const components = [
   "header-bar",
   "icon",
   "icon-button",
+  "image-viewer",
   "inline-icon-button",
   "inline-notification",
   "link",

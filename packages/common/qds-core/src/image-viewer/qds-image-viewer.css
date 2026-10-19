@@ -1,0 +1,53 @@
+.qui-image-viewer__root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-100);
+  width: 100%;
+}
+
+.qui-image-viewer__viewport {
+  aspect-ratio: 16 / 9;
+  background: var(--color-background-neutral-01);
+  cursor: grab;
+  width: 100%;
+
+  &[data-panning] {
+    cursor: grabbing;
+  }
+
+  &:is(:hover, :focus-within) > .qui-image-viewer__control-overlay {
+    visibility: visible;
+  }
+}
+
+.qui-image-viewer__control-overlay {
+  align-items: center;
+  background: var(--color-surface-overlay);
+  border: var(--border-width-sm) solid var(--color-border-neutral-01);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-low);
+  box-sizing: border-box;
+  cursor: default;
+  display: flex;
+  flex-wrap: wrap;
+  inset-block-start: var(--spacing-120);
+  inset-inline: var(--spacing-100);
+  margin-inline: auto;
+  visibility: hidden;
+  padding: var(--spacing-60);
+  position: absolute;
+  width: fit-content;
+  z-index: 1;
+
+  @media (hover: none) {
+    visibility: visible;
+  }
+}
+
+.qui-image-viewer__image {
+  backface-visibility: hidden;
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
