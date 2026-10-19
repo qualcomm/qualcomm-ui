@@ -42,16 +42,21 @@ export interface UseMenuItemReturn {
   itemContextValue: ItemState & ItemProps
 }
 
+function useItemSelectListener(
+  id: string,
+  onSelect: (() => void) | undefined,
+): void {
+  const context = useMenuContext()
+  useEffect(() => {
+    return context.addItemListener({id, onSelect})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, onSelect])
+}
+
 export function useMenuItem(props: ItemProps): UseMenuItemReturn {
   const context = useMenuContext()
   const itemState = context.getItemState(props)
-  useEffect(() => {
-    return context.addItemListener({
-      id: itemState.id,
-      onSelect: props.onSelect,
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemState.id, props.onSelect])
+  useItemSelectListener(itemState.id, props.onSelect)
 
   return {
     bindings: context.getItemBindings(props),
@@ -94,6 +99,7 @@ export function useMenuRadioItem(props: ItemProps): UseMenuRadioItemReturn {
     onCheckedChange: () => itemGroup.onValueChange?.(props.value),
     type: "radio",
   }
+  useItemSelectListener(context.getItemState(props).id, props.onSelect)
   return {
     bindings: context.getOptionItemBindings(optionItemProps),
     optionItemContextValue: {
@@ -126,6 +132,7 @@ export function useMenuCheckboxItem(
     },
     type: "checkbox",
   }
+  useItemSelectListener(context.getItemState(props).id, props.onSelect)
   return {
     bindings: context.getOptionItemBindings(optionItemProps),
     optionItemContextValue: {

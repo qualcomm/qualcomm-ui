@@ -5,11 +5,13 @@ import {
   booleanAttribute,
   computed,
   Directive,
+  ElementRef,
   inject,
   input,
   output,
 } from "@angular/core"
 
+import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import type {ItemProps} from "@qualcomm-ui/core/menu"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
@@ -58,6 +60,9 @@ export class BaseMenuItemDirective implements SignalifyInput<ItemProps> {
   protected readonly menuContext = useMenuContext()
   protected readonly menuItemService = inject(MenuItemContextService)
 
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef)
+  private readonly onSelectDestroy = useOnDestroy()
+
   readonly itemProps = computed<Explicit<ItemProps>>(() => ({
     closeOnSelect: this.closeOnSelect(),
     disabled: this.disabled(),
@@ -65,4 +70,12 @@ export class BaseMenuItemDirective implements SignalifyInput<ItemProps> {
     value: this.value(),
     valueText: this.valueText(),
   }))
+
+  protected listenForSelect(): void {
+    const cleanup = this.menuContext().addItemListener({
+      element: this.elementRef.nativeElement,
+      onSelect: () => this.selected.emit(),
+    })
+    this.onSelectDestroy(() => cleanup?.())
+  }
 }
