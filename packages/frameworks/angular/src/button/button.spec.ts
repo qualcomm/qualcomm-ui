@@ -1,11 +1,17 @@
-import {Component, output} from "@angular/core"
+import {Component, output, signal} from "@angular/core"
 import {LucidePlus, LucideSearch} from "@lucide/angular"
 import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page} from "vitest/browser"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {
+  NumberBadgeDirective,
+  StatusBadgeDirective,
+} from "@qualcomm-ui/angular/badge"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [ButtonModule],
@@ -299,5 +305,208 @@ describe("ButtonGroup", () => {
     const button = page.getByRole("button", {name: "Save"})
     await expect.element(button).toHaveAttribute("data-emphasis", "neutral")
     await expect.element(button).toHaveAttribute("data-variant", "fill")
+  })
+})
+
+describe("Button badge", () => {
+  test("projects a number badge inside the button", async () => {
+    @Component({
+      imports: [ButtonModule, NumberBadgeDirective],
+      template: `
+        <button q-button>
+          Notifications
+          <span q-number-badge value="3"></span>
+        </button>
+      `,
+    })
+    class BadgeButtonComponent {}
+
+    await render(BadgeButtonComponent)
+
+    await expect
+      .element(page.getByRole("button", {name: /Notifications/}))
+      .toBeVisible()
+    await expect.element(page.getByText("3")).toBeVisible()
+  })
+
+  test("renders the badge after the label even when authored before it", async () => {
+    @Component({
+      imports: [ButtonModule, NumberBadgeDirective],
+      providers: [provideIcons({LucidePlus})],
+      template: `
+        <button endIcon="LucidePlus" q-button>
+          <span q-number-badge value="3"></span>
+          Notifications
+        </button>
+      `,
+    })
+    class BadgeFirstComponent {}
+
+    await render(BadgeFirstComponent)
+
+    const button = page.getByRole("button")
+    await expect.element(button).toHaveAccessibleName("Notifications 3")
+    const badge = page.getByText("3").element().closest("[q-number-badge]")!
+    const endIcon = button.element().querySelector("svg")!
+    expect(
+      badge.compareDocumentPosition(endIcon) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+  })
+
+  test("derives a non-fill number badge's size and emphasis from the button", async () => {
+    @Component({
+      imports: [ButtonModule, NumberBadgeDirective],
+      template: `
+        <button emphasis="primary" q-button size="md" variant="outline">
+          Notifications
+          <span q-number-badge value="3"></span>
+        </button>
+      `,
+    })
+    class OutlineBadgeButtonComponent {}
+
+    await render(OutlineBadgeButtonComponent)
+
+    const badge = page.getByText("3").element().closest("[q-number-badge]")
+    expect(badge).toHaveAttribute("data-size", "xs")
+    expect(badge).toHaveAttribute("data-emphasis", "brand")
+  })
+
+  test("derives a fill number badge's size and emphasis from a large button", async () => {
+    @Component({
+      imports: [ButtonModule, NumberBadgeDirective],
+      template: `
+        <button emphasis="danger" q-button size="lg" variant="fill">
+          Notifications
+          <span q-number-badge value="3"></span>
+        </button>
+      `,
+    })
+    class LargeFillBadgeButtonComponent {}
+
+    await render(LargeFillBadgeButtonComponent)
+
+    const badge = page.getByText("3").element().closest("[q-number-badge]")
+    expect(badge).toHaveAttribute("data-size", "sm")
+    expect(badge).toHaveAttribute("data-emphasis", "persistent-white")
+  })
+
+  test("derives status badge size from the button without defaulting its emphasis", async () => {
+    @Component({
+      imports: [ButtonModule, StatusBadgeDirective],
+      template: `
+        <button emphasis="danger" q-button size="lg" variant="fill">
+          Status
+          <span data-test-id="status-badge" q-status-badge></span>
+        </button>
+      `,
+    })
+    class StatusBadgeButtonComponent {}
+
+    await render(StatusBadgeButtonComponent)
+
+    const badge = page.getByTestId("status-badge")
+    await expect.element(badge).toHaveAttribute("data-size", "md")
+    await expect.element(badge).toHaveAttribute("data-emphasis", "neutral")
+  })
+
+  test("author-provided badge inputs override the button's defaults", async () => {
+    @Component({
+      imports: [ButtonModule, NumberBadgeDirective],
+      template: `
+        <button emphasis="primary" q-button size="lg" variant="fill">
+          Notifications
+          <span emphasis="danger" q-number-badge size="md" value="3"></span>
+        </button>
+      `,
+    })
+    class OverriddenBadgeButtonComponent {}
+
+    await render(OverriddenBadgeButtonComponent)
+
+    const badge = page.getByText("3").element().closest("[q-number-badge]")
+    expect(badge).toHaveAttribute("data-size", "md")
+    expect(badge).toHaveAttribute("data-emphasis", "danger")
+  })
+
+  test("badge defaults follow the button's size and disabled state as they change", async () => {
+    @Component({
+      imports: [ButtonModule, NumberBadgeDirective],
+      template: `
+        <button q-button [disabled]="disabled()" [size]="size()">
+          Notifications
+          <span q-number-badge value="3"></span>
+        </button>
+        <button type="button" (click)="size.set('lg')">Grow</button>
+        <button type="button" (click)="disabled.set(true)">Disable</button>
+      `,
+    })
+    class ReactiveBadgeButtonComponent {
+      protected readonly disabled = signal(false)
+      protected readonly size = signal<"lg" | "md" | "sm">("md")
+    }
+
+    await render(ReactiveBadgeButtonComponent)
+
+    const getBadge = () =>
+      page.getByText("3").element().closest("[q-number-badge]")
+
+    expect(getBadge()).toHaveAttribute("data-size", "xs")
+    expect(getBadge()).not.toHaveAttribute("data-disabled")
+
+    await page.getByRole("button", {name: "Grow"}).click()
+    await expect.poll(() => getBadge()?.getAttribute("data-size")).toBe("sm")
+
+    await page.getByRole("button", {name: "Disable"}).click()
+    await expect
+      .poll(() => getBadge()?.hasAttribute("data-disabled"))
+      .toBe(true)
+  })
+
+  test("a badge rendered outside a button keeps its own defaults", async () => {
+    @Component({
+      imports: [NumberBadgeDirective],
+      template: `
+        <span q-number-badge value="3"></span>
+      `,
+    })
+    class StandaloneBadgeComponent {}
+
+    await render(StandaloneBadgeComponent)
+
+    const badge = page.getByText("3").element().closest("[q-number-badge]")
+    expect(badge).toHaveAttribute("data-size", "md")
+    expect(badge).toHaveAttribute("data-emphasis", "neutral")
+  })
+
+  test("MenuButton applies its size default to a projected number badge", async () => {
+    @Component({
+      imports: [MenuModule, NumberBadgeDirective, PortalDirective],
+      template: `
+        <q-menu>
+          <button q-menu-button size="lg">
+            Actions
+            <span q-number-badge value="3"></span>
+          </button>
+          <ng-template qPortal>
+            <div q-menu-positioner>
+              <div q-menu-content>
+                <button q-menu-item value="one">One</button>
+              </div>
+            </div>
+          </ng-template>
+        </q-menu>
+      `,
+    })
+    class MenuBadgeButtonComponent {}
+
+    await render(MenuBadgeButtonComponent)
+
+    await expect
+      .element(page.getByRole("button", {name: /Actions/}))
+      .toBeVisible()
+
+    const badge = page.getByText("3").element().closest("[q-number-badge]")
+    expect(badge).toHaveAttribute("data-size", "sm")
   })
 })

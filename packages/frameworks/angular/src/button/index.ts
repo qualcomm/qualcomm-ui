@@ -1,4 +1,5 @@
 export * from "./base-button.directive"
+export * from "./button-badge.providers"
 export * from "./button-group.directive"
 export * from "./button.directive"
 export * from "./button.module"

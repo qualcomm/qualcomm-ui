@@ -6,6 +6,7 @@ export function NumberBadgeSizeDemo(): ReactElement {
   return (
     <div className="flex flex-wrap items-center gap-4">
       {/* preview */}
+      <NumberBadge size="xs" value={5} />
       <NumberBadge size="sm" value={5} />
       <NumberBadge size="md" value={5} />
       <NumberBadge size="lg" value={5} />
