@@ -34,6 +34,11 @@ export interface MenuTriggerItemProps
    * @default ChevronRight
    */
   icon?: LucideIconOrElement
+
+  /**
+   * @deprecated never called. Use `onOpenChange` on the submenu's `<Menu.Root>` instead.
+   */
+  onSelect?: (() => void) | undefined
 }
 
 /**

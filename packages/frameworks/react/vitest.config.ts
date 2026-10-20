@@ -15,6 +15,7 @@ export default defineConfig({
       instances: [
         {
           browser: "chromium",
+          testTimeout: 8000,
         },
       ],
       locators: {

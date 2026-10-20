@@ -16,4 +16,7 @@ jobs:
     with:
       dockerfile: dockerfiles/dockerfile-react-docs
       ecr-repository-name: react-docs
-    secrets: inherit
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}

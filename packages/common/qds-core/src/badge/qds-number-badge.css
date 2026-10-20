@@ -3,6 +3,11 @@
     text-box: cap alphabetic;
   }
 
+  &[data-size="xs"] {
+    font: var(--font-static-body-xxs-default);
+    --count-size: var(--sizing-70);
+    padding: var(--spacing-0) var(--spacing-40);
+  }
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);
     --count-size: var(--sizing-80);
