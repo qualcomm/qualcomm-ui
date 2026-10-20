@@ -243,6 +243,7 @@ export class PluginState {
         pageMap: this.indexer?.pageMap,
         pages: this.knowledgeConfig.pages,
         routeDir: this.routesDir,
+        routingStrategy: this.config?.routingStrategy,
         sections: this.knowledgeConfig.sections,
       },
       fileReader,

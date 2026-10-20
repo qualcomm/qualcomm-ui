@@ -21,6 +21,7 @@ import type {
   KnowledgeExtraFile,
   KnowledgeFrontmatterConfig,
   PagesExportConfig,
+  RoutingStrategy,
   SectionExportConfig,
 } from "../../config/index.js"
 import {
@@ -60,6 +61,7 @@ export interface KnowledgeExporterConfig {
   pageMap?: PageMap
   pages?: PagesExportConfig
   routeDir: string
+  routingStrategy?: RoutingStrategy
   sections?: SectionExportConfig
   verbose?: boolean
 }
@@ -277,6 +279,7 @@ export class KnowledgeExporter {
         const segments = getPathSegmentsFromFileName(
           join(dirPath, mdxFile.name),
           this.config.routeDir,
+          this.config.routingStrategy,
         )
         const url = getPathnameFromPathSegments(segments)
 

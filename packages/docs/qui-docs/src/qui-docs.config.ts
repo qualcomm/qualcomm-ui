@@ -39,8 +39,9 @@ const navConfig: NavConfig[] = [
 
 const config: QuiDocsConfig = {
   appDirectory: "src",
+  disableLegacySearchIndex: true,
   knowledge: {
-    baseUrl: "https://docs-next.qui.qualcomm.com",
+    baseUrl: "https://docs.qui.qualcomm.com",
     exclude: ["**/debug+/**", "*guide+/swagger*"],
     extraFiles: [
       {
