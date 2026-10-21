@@ -60,7 +60,7 @@ Heading elements `h2`, `h3`, and `h4` create anchor links and comprise the page'
 | Syntax              | Result            |
 | :------------------ | :---------------- |
 | `**bold**`          | **bold**          |
-| `_italic_`          | _italic_          |
+| `_italic_`          | *italic*          |
 | `~~strikethrough~~` | ~~strikethrough~~ |
 | \`code\`            | `code`            |
 
@@ -159,6 +159,18 @@ Check out the <a href="https://react.dev" target="_blank">here</a> to learn more
 ```
 
 ---
+
+### Images
+
+All inline Markdown images are automatically converted to our [ImageViewer](https://react.qui.qualcomm.com/components/image-viewer) component. Click the inline image to expand and zoom.
+
+Store local images in the `public` directory at the app root and reference them with a root-relative path that starts with `/`. For example, `public/images/nature-2.avif` is referenced as `/images/nature-2.avif`. Omit `public` from the URL. Use a full `https://` URL for external images.
+
+```markdown
+![Scenic view of a lake in the mountains](/images/nature-2.avif)
+```
+
+![Scenic view of a lake in the mountains](/images/nature-2.avif)
 
 ### Alerts
 
