@@ -2,13 +2,14 @@ name: Deploy React Docs
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - release
-    paths:
-    - packages/common/**
-    - packages/frameworks/react*/**
-    - packages/docs/react-docs/**
+  workflow_call:
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY:
+        required: true
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY:
+        required: true
+      PROD_QUI_DOCS_ECR_REGISTRY_URL:
+        required: true
 
 jobs:
   deploy:
