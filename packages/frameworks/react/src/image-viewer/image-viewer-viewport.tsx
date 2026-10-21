@@ -14,7 +14,7 @@ import {useQdsImageViewerContext} from "./qds-image-viewer-context.js"
 export interface ImageViewerViewportProps extends CoreImageViewerViewportProps {}
 
 /**
- * The focusable viewport for panning and zooming the image.
+ * The focusable viewport containing ViewportImage and handling pan and zoom.
  */
 export function ImageViewerViewport(
   props: ImageViewerViewportProps,

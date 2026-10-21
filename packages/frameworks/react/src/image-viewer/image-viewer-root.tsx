@@ -13,6 +13,9 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {QdsImageViewerContextProvider} from "./qds-image-viewer-context.js"
 
+/**
+ * @since next-release
+ */
 export interface ImageViewerRootProps extends CoreImageViewerRootProps {}
 
 /**

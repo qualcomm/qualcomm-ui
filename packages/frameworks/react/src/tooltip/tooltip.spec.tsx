@@ -41,7 +41,9 @@ const tests: MultiComponentTestCase[] = [
       test("not visible by default", async () => {
         await render(getComponent())
         await expect.element(page.getByText(triggerText)).toBeVisible()
-        await expect.element(page.getByRole("tooltip")).not.toBeInTheDocument()
+        await expect
+          .element(page.getByRole("tooltip", {includeHidden: true}))
+          .not.toBeVisible()
       })
     },
   },

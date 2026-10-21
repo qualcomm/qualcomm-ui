@@ -54,6 +54,8 @@ export interface PreviewDescriptionDetails {
 }
 
 export interface IntlTranslations {
+  closeLabel?: string | undefined
+  openLabel?: string | undefined
   previewDescription?:
     | ((details: PreviewDescriptionDetails) => string)
     | undefined
@@ -67,9 +69,9 @@ export interface IntlTranslations {
 }
 
 export interface ImageViewerElementIds {
-  image: string
   root: string
   viewport: string
+  viewportImage: string
 }
 
 export interface ImageViewerApiProps
@@ -79,6 +81,11 @@ export interface ImageViewerApiProps
    * @default { horizontal: false, vertical: false }
    */
   defaultFlip?: FlipState | undefined
+  /**
+   * Whether the popup is initially open.
+   * @default false
+   */
+  defaultOpen?: boolean | undefined
   /**
    * The initial rotation to apply to the image in degrees.
    * @default 0
@@ -127,6 +134,10 @@ export interface ImageViewerApiProps
    */
   onFlipChange?: ((details: FlipChangeDetails) => void) | undefined
   /**
+   * Called when the popup requests an open state change.
+   */
+  onOpenChange?: ((open: boolean) => void) | undefined
+  /**
    * Callback fired when the rotation changes.
    */
   onRotationChange?: ((details: RotationChangeDetails) => void) | undefined
@@ -134,6 +145,10 @@ export interface ImageViewerApiProps
    * Callback fired when the zoom level changes.
    */
   onZoomChange?: ((details: ZoomChangeDetails) => void) | undefined
+  /**
+   * The controlled popup open state.
+   */
+  open?: boolean | undefined
   /**
    * The controlled rotation of the image in degrees (0 - 360).
    */
@@ -160,6 +175,7 @@ export interface ImageViewerApiProps
 }
 
 type PropsWithDefault =
+  | "defaultOpen"
   | "defaultZoom"
   | "zoomStep"
   | "zoomSensitivity"
@@ -172,6 +188,8 @@ type PropsWithDefault =
   | "nudgeStepCtrl"
 
 type Events =
+  | {open: boolean; type: "SET_OPEN"}
+  | {type: "OPEN" | "CLOSE"}
   | {src?: "prop"; type: "SET_ZOOM"; zoom: number}
   | {rotation: number; type: "SET_ROTATION"}
   | {flip: Partial<FlipState>; type: "SET_FLIP"}
@@ -203,14 +221,13 @@ type Events =
       src: "viewport"
       type: "NUDGE_PAN"
     }
-  | {size: Size; src: "element" | "ssr"; type: "SET_NATURAL_SIZE"}
   | {src: "resize"; type: "VIEWPORT_RESIZE"}
   | {type: "PINCH_END" | "RESET"}
 
 export interface ImageViewerSchema extends MachineSchema {
   actions: ActionSchema<
-    | "checkImageStatus"
-    | "setNaturalSize"
+    | "setOpen"
+    | "resetPan"
     | "setPointerStart"
     | "setOffsetStart"
     | "updatePanOffset"
@@ -226,12 +243,14 @@ export interface ImageViewerSchema extends MachineSchema {
     | "resizeViewport"
     | "resetToInitialState"
   >
-  computed: {isImageReady: boolean; isMeasured: boolean}
+  computed: {imageSize: Size; isImageReady: boolean; isMeasured: boolean}
   context: {
     flip: FlipState
+    imageReady: boolean
     naturalSize: Size
     offset: Point
     offsetStart: Point | null
+    open: boolean
     pinchDistance: number | null
     pinchMidpoint: Point | null
     pointerStart: Point | null
@@ -249,7 +268,7 @@ export interface ImageViewerSchema extends MachineSchema {
   guards: GuardSchema<"hasViewportRect" | "canPan">
   ids: ImageViewerElementIds
   props: RequiredBy<ImageViewerApiProps, PropsWithDefault>
-  state: "idle" | "panning"
+  state: "closed" | "idle" | "panning"
 }
 
 export interface ImageViewerScope extends ScopeWithIds<ImageViewerSchema> {}
@@ -269,6 +288,14 @@ export interface ImageViewerApi {
    * to toggle.
    */
   flipVertically: (value?: boolean) => void
+  /** Resolves the inline root for portal placement. */
+  getRootElement: () => HTMLElement | null
+  /** Resolves the document or shadow root that owns the viewer. */
+  getRootNode: () => Node | Document | ShadowRoot
+  /** Resolves the interactive viewport for popup focus management. */
+  getViewportElement: () => HTMLElement | null
+  /** Measures the mounted viewport after its aspect ratio has been applied. */
+  measureViewport: () => void
   /**
    * The natural (original) size of the image.
    */
@@ -277,10 +304,14 @@ export interface ImageViewerApi {
    * The current offset (pan position) of the image.
    */
   offset: Point
+  /** Whether the popup is open. */
+  open: boolean
   /**
    * Whether the image is currently being panned.
    */
   panning: boolean
+  /** Whether the expanded image is loaded and its viewport has been measured. */
+  ready: boolean
   /**
    * Function to reset the viewer to its initial state.
    */
@@ -299,6 +330,10 @@ export interface ImageViewerApi {
    * Function to set the flip state of the image.
    */
   setFlip: (flip: Partial<FlipState>) => void
+  /** Updates the mounted image's natural dimensions and loading status. */
+  setImageStatus: (status: {ready: boolean; size: Size}) => void
+  /** Requests a popup open state change. Closing restores the initial transform. */
+  setOpen: (open: boolean) => void
   /**
    * Function to set the rotation of the image.
    */
@@ -307,6 +342,8 @@ export interface ImageViewerApi {
    * Function to set the zoom level of the image.
    */
   setZoom: (zoom: number) => void
+  /** Localized labels for the popup controls. */
+  translations: IntlTranslations
   /**
    * The viewport rectangle dimensions and position.
    */
@@ -322,11 +359,12 @@ export interface ImageViewerApi {
    */
   zoomBy: (delta: number) => void
   // group: bindings
-  getControlOverlayBindings(): ImageViewerControlOverlayBindings
-  getImageBindings(props: IdRegistrationProps): ImageViewerImageBindings
   getResetTriggerBindings(): ImageViewerResetTriggerBindings
   getRootBindings(props: IdRegistrationProps): ImageViewerRootBindings
   getViewportBindings(props: IdRegistrationProps): ImageViewerViewportBindings
+  getViewportImageBindings(
+    props: IdRegistrationProps,
+  ): ImageViewerViewportImageBindings
   getZoomInTriggerBindings(): ImageViewerZoomInTriggerBindings
   getZoomOutTriggerBindings(): ImageViewerZoomOutTriggerBindings
 }
@@ -335,12 +373,10 @@ type PartName = AnatomyPartName<typeof imageViewerAnatomy>
 interface Part<P extends PartName>
   extends AnatomyPart<"imageViewer", P>, DirectionProperty {}
 
-export interface ImageViewerControlOverlayBindings extends Part<"controlOverlay"> {}
-
 export interface ImageViewerRootBindings extends Part<"root"> {
   "aria-busy": "true" | undefined
   "aria-controls": string
-  "aria-description": string
+  "aria-description": string | undefined
   "aria-label": string
   "aria-live": "polite"
   "aria-roledescription": string
@@ -356,6 +392,7 @@ export interface ImageViewerViewportBindings extends Part<"viewport"> {
   "aria-label": string
   "data-ownedby": string
   "data-panning": BooleanDataAttr
+  "data-ready": BooleanDataAttr
   id: string
   onKeyDown: JSX.KeyboardEventHandler<HTMLElement>
   onPointerDown: JSX.PointerEventHandler<HTMLElement>
@@ -364,14 +401,13 @@ export interface ImageViewerViewportBindings extends Part<"viewport"> {
   tabIndex: 0
 }
 
-export interface ImageViewerImageBindings extends Part<"image"> {
+export interface ImageViewerViewportImageBindings extends Part<"viewportImage"> {
   "data-flip-horizontal": BooleanDataAttr
   "data-flip-vertical": BooleanDataAttr
   "data-ownedby": string
   "data-ready": BooleanDataAttr
   draggable: false
   id: string
-  onLoad: (event: JSX.SyntheticEvent<HTMLImageElement>) => void
   style: JSX.CSSProperties
 }
 

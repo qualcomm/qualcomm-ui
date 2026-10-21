@@ -13,7 +13,6 @@ import {
 import {
   addPoints,
   distance,
-  isSizeEqual,
   type Point,
   type Size,
   subtractPoints,
@@ -26,7 +25,7 @@ import {
 } from "@qualcomm-ui/utils/machine"
 import {clampValue} from "@qualcomm-ui/utils/number"
 
-import {domEls, isControlOverlayEvent} from "./image-viewer.dom.js"
+import {measureImageViewerViewport, trackViewport} from "./image-viewer.dom.js"
 import type {
   BoundingRect,
   FlipState,
@@ -34,6 +33,7 @@ import type {
 } from "./image-viewer.types.js"
 import {
   clampOffset,
+  getFittedImageSize,
   getKeyboardMoveDelta,
   getMidpoint,
   getNudgeStep,
@@ -42,13 +42,19 @@ import {
   isVisibleRect,
   MIN_PINCH_DISTANCE,
   normalizeFlipState,
-  scaleSize,
   ZERO_POINT,
 } from "./utils/crop.js"
 
 const imageViewerMachineBase = {
   computed: {
-    isImageReady: ({context}) => isVisibleRect(context.get("naturalSize")),
+    imageSize: ({context}) =>
+      getFittedImageSize(
+        context.get("naturalSize"),
+        context.get("viewportRect"),
+        context.get("rotation"),
+      ),
+    isImageReady: ({context}) =>
+      context.get("imageReady") && isVisibleRect(context.get("naturalSize")),
     isMeasured: ({context}) => isVisibleRect(context.get("viewportRect")),
   },
   context({bindable, prop}) {
@@ -63,6 +69,7 @@ const imageViewerMachineBase = {
           value: prop("flip"),
         }
       }),
+      imageReady: bindable<boolean>(() => ({defaultValue: false})),
       naturalSize: bindable<Size>(() => ({
         defaultValue: {height: 0, width: 0},
       })),
@@ -71,6 +78,13 @@ const imageViewerMachineBase = {
       })),
       offsetStart: bindable<Point | null>(() => ({
         defaultValue: null,
+      })),
+      open: bindable<boolean>(() => ({
+        defaultValue: prop("defaultOpen"),
+        onChange(open) {
+          prop("onOpenChange")?.(open)
+        },
+        value: prop("open"),
       })),
       pinchDistance: bindable<number | null>(() => ({
         defaultValue: null,
@@ -127,132 +141,103 @@ const imageViewerMachineBase = {
       return callAll(
         addDomEvent(scope.getDoc(), "pointermove", onPointerMove),
         addDomEvent(scope.getDoc(), "pointerup", onPointerUp),
+        addDomEvent(scope.getDoc(), "pointercancel", onPointerUp),
       )
     },
     trackTouchEvents({scope, send}) {
-      const viewportEl = domEls.viewport(scope)
-      if (!viewportEl) {
-        return
-      }
+      return trackViewport(scope, (viewportEl) => {
+        function onTouchStart(event: TouchEvent) {
+          if (event.touches.length >= 2) {
+            event.preventDefault()
 
-      function onTouchStart(event: TouchEvent) {
-        if (
-          isControlOverlayEvent(scope, event) ||
-          Array.from(event.touches).some((touch) =>
-            isControlOverlayEvent(scope, touch),
-          )
-        ) {
-          return
+            const touches = Array.from(event.touches).map((touch) => ({
+              x: touch.clientX,
+              y: touch.clientY,
+            }))
+
+            send({touches, type: "PINCH_START"})
+          }
         }
-        if (event.touches.length >= 2) {
-          event.preventDefault()
 
-          const touches = Array.from(event.touches).map((touch) => ({
-            x: touch.clientX,
-            y: touch.clientY,
-          }))
+        function onTouchMove(event: TouchEvent) {
+          if (event.touches.length >= 2) {
+            event.preventDefault()
 
-          send({touches, type: "PINCH_START"})
+            const touches = Array.from(event.touches).map((touch) => ({
+              x: touch.clientX,
+              y: touch.clientY,
+            }))
+
+            send({touches, type: "PINCH_MOVE"})
+          }
         }
-      }
 
-      function onTouchMove(event: TouchEvent) {
-        if (
-          isControlOverlayEvent(scope, event) ||
-          Array.from(event.touches).some((touch) =>
-            isControlOverlayEvent(scope, touch),
-          )
-        ) {
-          return
+        function onTouchEnd(event: TouchEvent) {
+          if (event.touches.length < 2) {
+            send({type: "PINCH_END"})
+          }
         }
-        if (event.touches.length >= 2) {
-          event.preventDefault()
 
-          const touches = Array.from(event.touches).map((touch) => ({
-            x: touch.clientX,
-            y: touch.clientY,
-          }))
-
-          send({touches, type: "PINCH_MOVE"})
-        }
-      }
-
-      function onTouchEnd(event: TouchEvent) {
-        if (isControlOverlayEvent(scope, event)) {
-          return
-        }
-        if (event.touches.length < 2) {
-          send({type: "PINCH_END"})
-        }
-      }
-
-      return callAll(
-        addDomEvent(viewportEl, "touchstart", onTouchStart, {passive: false}),
-        addDomEvent(viewportEl, "touchmove", onTouchMove, {passive: false}),
-        addDomEvent(viewportEl, "touchend", onTouchEnd),
-      )
+        return callAll(
+          addDomEvent(viewportEl, "touchstart", onTouchStart, {passive: false}),
+          addDomEvent(viewportEl, "touchmove", onTouchMove, {passive: false}),
+          addDomEvent(viewportEl, "touchend", onTouchEnd),
+          addDomEvent(viewportEl, "touchcancel", onTouchEnd),
+        )
+      })
     },
     trackViewportResize({scope, send}) {
-      const viewportEl = domEls.viewport(scope)
-      if (!viewportEl) {
-        return
-      }
-      return trackElementRect([viewportEl], {
-        measure(el) {
-          return el.getBoundingClientRect()
-        },
-        onEntry() {
-          send({src: "resize", type: "VIEWPORT_RESIZE"})
-        },
+      return trackViewport(scope, (viewportEl) => {
+        return trackElementRect([viewportEl], {
+          measure(el) {
+            return el.getBoundingClientRect()
+          },
+          onEntry() {
+            send({src: "resize", type: "VIEWPORT_RESIZE"})
+          },
+        })
       })
     },
     trackWheelEvent({scope, send}) {
-      const viewportEl = domEls.viewport(scope)
-      if (!viewportEl) {
-        return
-      }
+      return trackViewport(scope, (viewportEl) => {
+        function onWheel(event: WheelEvent) {
+          event.preventDefault()
 
-      function onWheel(event: WheelEvent) {
-        if (isControlOverlayEvent(scope, event)) {
-          return
-        }
-        event.preventDefault()
+          const rect = viewportEl.getBoundingClientRect()
+          const point = {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top,
+          }
 
-        if (!viewportEl) {
-          return
+          send({delta: event.deltaY, point, trigger: "wheel", type: "ZOOM"})
         }
 
-        const rect = viewportEl.getBoundingClientRect()
-        const point = {
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top,
-        }
-
-        send({delta: event.deltaY, point, trigger: "wheel", type: "ZOOM"})
-      }
-
-      return addDomEvent(viewportEl, "wheel", onWheel, {passive: false})
+        return addDomEvent(viewportEl, "wheel", onWheel, {passive: false})
+      })
     },
   },
   ids({bindableId, ids}) {
     return {
-      image: bindableId<string>(ids?.image),
       root: bindableId<string>(ids?.root),
       viewport: bindableId<string>(ids?.viewport),
+      viewportImage: bindableId<string>(ids?.viewportImage),
     }
   },
-  initialState() {
-    return "idle"
+  initialState({prop}) {
+    return (prop("open") ?? prop("defaultOpen")) ? "idle" : "closed"
   },
   on: {
+    CLOSE: {target: "closed"},
     PINCH_END: {
       actions: ["clearPinchDistance"],
     },
     PINCH_MOVE: {
       actions: ["handlePinchMove"],
+      guard: "canPan",
     },
     PINCH_START: {
       actions: ["setPinchDistance"],
+      guard: "canPan",
     },
     RESET: {
       actions: ["resetToInitialState"],
@@ -260,6 +245,7 @@ const imageViewerMachineBase = {
     SET_FLIP: {
       actions: ["setFlip"],
     },
+    SET_OPEN: {actions: ["setOpen"]},
     SET_ROTATION: {
       actions: ["setRotation"],
     },
@@ -270,16 +256,10 @@ const imageViewerMachineBase = {
       actions: ["resizeViewport"],
     },
   },
-  /**
-   * The first touch enters panning. Keep listening so a second touch can start
-   * a pinch while that state is active.
-   */
-  onInit: {
-    effects: ["trackTouchEvents"],
-  },
   props({props}) {
     return {
       defaultFlip: {horizontal: false, vertical: false},
+      defaultOpen: false,
       defaultRotation: 0,
       defaultZoom: 1,
       maxZoom: 5,
@@ -293,9 +273,12 @@ const imageViewerMachineBase = {
     }
   },
   states: {
+    closed: {
+      entry: ["resetPan", "resetToInitialState"],
+      on: {OPEN: {target: "idle"}},
+    },
     idle: {
-      effects: ["trackViewportResize", "trackWheelEvent"],
-      entry: ["checkImageStatus"],
+      effects: ["trackViewportResize", "trackWheelEvent", "trackTouchEvents"],
       on: {
         NUDGE_PAN: {
           actions: ["nudgePan"],
@@ -306,9 +289,6 @@ const imageViewerMachineBase = {
           guard: "canPan",
           target: "panning",
         },
-        SET_NATURAL_SIZE: {
-          actions: ["setNaturalSize"],
-        },
         ZOOM: {
           actions: ["updateZoom"],
           guard: "hasViewportRect",
@@ -316,7 +296,7 @@ const imageViewerMachineBase = {
       },
     },
     panning: {
-      effects: ["trackPointerMove"],
+      effects: ["trackPointerMove", "trackTouchEvents", "trackViewportResize"],
       on: {
         POINTER_MOVE: {
           actions: ["updatePanOffset"],
@@ -329,6 +309,34 @@ const imageViewerMachineBase = {
     },
   },
   watch({context, prop, send, track}) {
+    track([() => context.get("open")], () => {
+      send({type: context.get("open") ? "OPEN" : "CLOSE"})
+    })
+    track(
+      [
+        () => context.get("rotation"),
+        () => context.get("naturalSize").width,
+        () => context.get("naturalSize").height,
+      ],
+      () => {
+        const viewportSize = context.get("viewportRect")
+        const rotation = context.get("rotation")
+        context.set(
+          "offset",
+          clampOffset({
+            imageSize: getFittedImageSize(
+              context.get("naturalSize"),
+              viewportSize,
+              rotation,
+            ),
+            offset: context.get("offset"),
+            rotation,
+            viewportSize,
+            zoom: context.get("zoom"),
+          }),
+        )
+      },
+    )
     track([() => prop("zoom")], () => {
       const propZoom = prop("zoom")
       if (propZoom === undefined) {
@@ -348,19 +356,6 @@ const imageViewerMachineBase = {
 export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
   createNarrowedMachine<ImageViewerSchema>()(imageViewerMachineBase, {
     actions: {
-      checkImageStatus({context, scope, send}) {
-        const naturalSize = context.get("naturalSize")
-        const imageEl = domEls.image(scope)
-        if (!imageEl?.complete) {
-          return
-        }
-
-        const {naturalHeight: height, naturalWidth: width} = imageEl
-
-        if (isVisibleRect({height, width}) && !isVisibleRect(naturalSize)) {
-          send({size: {height, width}, src: "ssr", type: "SET_NATURAL_SIZE"})
-        }
-      },
       clearOffsetStart({context}) {
         context.set("offsetStart", null)
       },
@@ -412,7 +407,7 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
         context.set("pinchDistance", touchDistance)
         context.set("pinchMidpoint", midpoint)
       },
-      nudgePan({context, event, prop}) {
+      nudgePan({computed, context, event, prop}) {
         const {ctrlKey, key, metaKey, shiftKey} = event
         const zoom = context.get("zoom")
         const rotation = context.get("rotation")
@@ -422,6 +417,7 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
         const delta = getKeyboardMoveDelta(key, step)
 
         const nextOffset = clampOffset({
+          imageSize: computed("imageSize"),
           offset: addPoints(context.get("offset"), delta),
           rotation,
           viewportSize: viewportRect,
@@ -430,31 +426,22 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
 
         context.set("offset", nextOffset)
       },
+      resetPan({context}) {
+        context.set("imageReady", false)
+        context.set("viewportRect", context.initial("viewportRect")!)
+        context.set("offset", ZERO_POINT)
+        context.set("pointerStart", null)
+        context.set("offsetStart", null)
+        context.set("pinchDistance", null)
+        context.set("pinchMidpoint", null)
+      },
       resetToInitialState({context}) {
         context.set("zoom", context.initial("zoom")!)
         context.set("rotation", context.initial("rotation")!)
         context.set("flip", context.initial("flip")!)
         context.set("offset", ZERO_POINT)
       },
-      resizeViewport({context, scope}) {
-        const viewportEl = domEls.viewport(scope)
-        if (!viewportEl) {
-          return
-        }
-
-        const newViewportRect = viewportEl.getBoundingClientRect()
-        if (!isVisibleRect(newViewportRect)) {
-          return
-        }
-
-        const oldViewportRect = context.get("viewportRect")
-
-        if (isSizeEqual(oldViewportRect, newViewportRect)) {
-          return
-        }
-
-        context.set("viewportRect", newViewportRect)
-      },
+      resizeViewport: measureImageViewerViewport,
       setFlip({context, event}) {
         const nextFlip = event.flip
         if (!nextFlip) {
@@ -467,12 +454,12 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
         }
         context.set("flip", normalized)
       },
-      setNaturalSize({context, event}) {
-        context.set("naturalSize", event.size)
-      },
       setOffsetStart({context}) {
         const offset = context.get("offset")
         context.set("offsetStart", {...offset})
+      },
+      setOpen({context, event}) {
+        context.set("open", event.open)
       },
       setPinchDistance({context, event, send}) {
         const touches = Array.isArray(event.touches) ? event.touches : []
@@ -507,7 +494,7 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
         const nextRotation = clampValue(rotation, 0, 360)
         context.set("rotation", nextRotation)
       },
-      updatePanOffset({context, event}) {
+      updatePanOffset({computed, context, event}) {
         const point = event.point
         const pointerStart = context.get("pointerStart")
         const offsetStart = context.get("offsetStart")
@@ -523,6 +510,7 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
         const delta = subtractPoints(point, pointerStart)
 
         const nextOffset = clampOffset({
+          imageSize: computed("imageSize"),
           offset: addPoints(offsetStart, delta),
           rotation,
           viewportSize: viewportRect,
@@ -531,7 +519,7 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
 
         context.set("offset", nextOffset)
       },
-      updateZoom({context, event, prop}) {
+      updateZoom({computed, context, event, prop}) {
         const targetZoom = event.type === "SET_ZOOM" ? event.zoom : undefined
         const delta = event.type === "ZOOM" ? event.delta : undefined
         const touchEvent =
@@ -581,6 +569,7 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
 
         const applyClampedOffset = (zoom: number, offset: Point): Point => {
           return clampOffset({
+            imageSize: computed("imageSize"),
             offset,
             rotation,
             viewportSize: viewportRect,
@@ -606,7 +595,6 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
           return
         }
 
-        const {height: viewportHeight, width: viewportWidth} = viewportRect
         const {x: centerX, y: centerY} = getViewportCenter(viewportRect)
 
         const zoomRatio = nextZoom / currentZoom
@@ -617,45 +605,29 @@ export const imageViewerMachine: MachineConfig<ImageViewerSchema> =
             (1 - zoomRatio) * (point.y - centerY) + zoomRatio * currentOffset.y,
         }
 
-        if (panDelta) {
-          nextOffset = applyClampedOffset(
-            nextZoom,
-            addPoints(nextOffset, panDelta),
-          )
-        } else if (nextZoom < currentZoom) {
-          const {height: scaledImageHeight, width: scaledImageWidth} =
-            scaleSize(viewportRect, nextZoom)
-
-          if (scaledImageWidth <= viewportWidth) {
-            nextOffset.x = 0
-          } else {
-            const minX = viewportWidth - centerX - scaledImageWidth / 2
-            const maxX = scaledImageWidth / 2 - centerX
-            nextOffset.x = Math.max(minX, Math.min(maxX, nextOffset.x))
-          }
-
-          if (scaledImageHeight <= viewportHeight) {
-            nextOffset.y = 0
-          } else {
-            const minY = viewportHeight - centerY - scaledImageHeight / 2
-            const maxY = scaledImageHeight / 2 - centerY
-            nextOffset.y = Math.max(minY, Math.min(maxY, nextOffset.y))
-          }
-        }
+        nextOffset = applyClampedOffset(
+          nextZoom,
+          panDelta ? addPoints(nextOffset, panDelta) : nextOffset,
+        )
 
         context.set("zoom", nextZoom)
         context.set("offset", nextOffset)
       },
     },
     guards: {
-      canPan({context}) {
+      canPan({computed, context}) {
         return (
-          isVisibleRect(context.get("naturalSize")) &&
-          isVisibleRect(context.get("viewportRect"))
+          context.get("open") &&
+          computed("isImageReady") &&
+          computed("isMeasured")
         )
       },
-      hasViewportRect({context}) {
-        return isVisibleRect(context.get("viewportRect"))
+      hasViewportRect({computed, context}) {
+        return (
+          context.get("open") &&
+          computed("isImageReady") &&
+          computed("isMeasured")
+        )
       },
     },
   })

@@ -18,7 +18,11 @@ export interface PortalProps {
   /**
    * Specify to override the container element.
    */
-  container?: RefObject<HTMLElement | null> | HTMLElement | null
+  container?:
+    | RefObject<HTMLElement | ShadowRoot | null>
+    | HTMLElement
+    | ShadowRoot
+    | null
 
   /**
    * Disable the portal conditionally. This causes the children to be rendered as-is.
