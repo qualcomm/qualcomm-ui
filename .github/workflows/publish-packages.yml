@@ -28,8 +28,9 @@ jobs:
     - uses: actions/checkout@v6
       with:
         fetch-depth: 0
+        persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
     - id: check
       run: pnpm qui-changesets check-versions
@@ -60,8 +61,10 @@ jobs:
     - uses: actions/checkout@v6
       with:
         fetch-depth: 0
+        # Needed to push the release-prep branch.
+        persist-credentials: true
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
     - name: Prepare versions and changelogs
       env:
@@ -122,10 +125,12 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -147,37 +152,56 @@ jobs:
   deploy-react-docs:
     needs: [ check, publish ]
     if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/react-docs')
-    uses: ./.github/workflows/deploy-react-docs.yml
-    secrets: inherit
+    uses: $/.github/workflows/deploy-react-docs.yml
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}
 
   deploy-react-table-docs:
     needs: [ check, publish ]
     if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/react-table-docs')
-    uses: ./.github/workflows/deploy-react-table-docs.yml
-    secrets: inherit
+    uses: $/.github/workflows/deploy-react-table-docs.yml
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}
 
   deploy-angular-docs:
     needs: [ check, publish ]
     if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/angular-docs')
-    uses: ./.github/workflows/deploy-angular-docs.yml
-    secrets: inherit
+    uses: $/.github/workflows/deploy-angular-docs.yml
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}
 
   deploy-angular-table-docs:
     needs: [ check, publish ]
     if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/angular-table-docs')
-    uses: ./.github/workflows/deploy-angular-table-docs.yml
-    secrets: inherit
+    uses: $/.github/workflows/deploy-angular-table-docs.yml
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}
 
   deploy-qui-docs:
     needs: [ check, publish ]
     if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/qui-docs')
-    uses: ./.github/workflows/deploy-qui-docs.yml
-    secrets: inherit
+    uses: $/.github/workflows/deploy-qui-docs.yml
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}
 
   publish-figma:
     needs: [ check, publish ]
     if: >-
       contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/react') ||
       contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/angular')
-    uses: ./.github/workflows/publish-figma.yml
-    secrets: inherit
+    uses: $/.github/workflows/publish-figma.yml
+    secrets:
+      TURBOREPO_REMOTE_CACHE_BUCKET_NAME: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
+      TURBOREPO_REMOTE_CACHE_ACCESS_KEY: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
+      TURBOREPO_REMOTE_CACHE_SECRET_KEY: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
+      FIGMA_REST_TOKEN: ${{ secrets.FIGMA_REST_TOKEN }}

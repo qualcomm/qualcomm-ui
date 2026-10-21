@@ -7,6 +7,15 @@ env:
 on:
   workflow_dispatch:
   workflow_call:
+    secrets:
+      TURBOREPO_REMOTE_CACHE_BUCKET_NAME:
+        required: true
+      TURBOREPO_REMOTE_CACHE_ACCESS_KEY:
+        required: true
+      TURBOREPO_REMOTE_CACHE_SECRET_KEY:
+        required: true
+      FIGMA_REST_TOKEN:
+        required: true
 
 jobs:
   publish-figma:
