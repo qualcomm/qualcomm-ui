@@ -5,7 +5,7 @@ import type {ReactElement} from "react"
 
 import {
   createQdsButtonApi,
-  resolveButtonPropsWithGroup,
+  resolveButtonProps,
 } from "@qualcomm-ui/qds-core/button"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
@@ -14,6 +14,7 @@ import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useButtonGroupContext} from "./button-group-context.js"
+import {useButtonPropsContext} from "./button-props-context.js"
 import type {ButtonProps} from "./button.types.js"
 
 /**
@@ -31,13 +32,10 @@ export function Button({
   variant,
   ...props
 }: ButtonProps): ReactElement {
-  const resolved = resolveButtonPropsWithGroup(useButtonGroupContext(), {
-    density,
-    disabled,
-    emphasis,
-    size,
-    variant,
-  })
+  const resolved = resolveButtonProps(
+    {density, disabled, emphasis, size, variant},
+    {defaults: useButtonPropsContext(), group: useButtonGroupContext()},
+  )
   const api = createQdsButtonApi(resolved, normalizeProps)
   const mergedProps = mergeProps(api.getRootBindings(), props)
 

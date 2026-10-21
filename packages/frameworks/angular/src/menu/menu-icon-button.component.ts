@@ -24,24 +24,21 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
       <svg
         [q-bind]="iconProps()"
         [qIcon]="icon()!"
-        [size]="resolvedSize()"
+        [size]="iconButtonContext.context().size"
       ></svg>
     }
     <svg
       qIcon="LucideChevronDown"
       [q-bind]="indicatorBindings()"
-      [size]="resolvedSize()"
+      [size]="iconButtonContext.context().size"
     ></svg>
   `,
 })
 export class MenuIconButtonComponent extends IconButtonDirective {
   protected readonly qdsMenuContext = useQdsMenuContext()
 
-  protected override readonly resolvedSize = computed(
-    () =>
-      this.buttonGroupContext?.()?.size ??
-      this.size() ??
-      this.qdsMenuContext().size,
+  protected override readonly ownSize = computed(
+    () => this.size() ?? this.qdsMenuContext().size,
   )
 
   readonly indicatorBindings = computed(() =>

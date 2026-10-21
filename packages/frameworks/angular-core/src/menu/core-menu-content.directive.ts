@@ -4,7 +4,6 @@
 import {
   computed,
   Directive,
-  effect,
   ElementRef,
   inject,
   input,
@@ -13,10 +12,7 @@ import {
 
 import {useId, useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
-import {
-  PresenceContextService,
-  usePresenceRenderer,
-} from "@qualcomm-ui/angular-core/presence"
+import {PresenceContextService} from "@qualcomm-ui/angular-core/presence"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useMenuContext} from "./menu-context.service"
@@ -40,29 +36,13 @@ export class CoreMenuContentDirective implements OnInit {
         id: this.hostId(),
         onDestroy: this.onDestroy,
       }),
-      this.presenceService.getPresenceBindings(),
+      {hidden: this.presenceService.getPresenceBindings().hidden},
     )
   })
 
   protected readonly onDestroy = useOnDestroy()
 
-  protected presenceEffect = usePresenceRenderer()
-
   private readonly hostId = computed(() => useId(this, this.id()))
-
-  constructor() {
-    // update the ref when the element is mounted or unmounted to keep state in sync.
-    // React does this automatically with its composable refs and data binding, but
-    // with Angular we must do this imperatively.
-    effect(() => {
-      const element = this.elementRef.nativeElement
-      if (this.presenceService.unmounted()) {
-        this.presenceService.setNode(null)
-      } else {
-        this.presenceService.setNode(element)
-      }
-    })
-  }
 
   ngOnInit() {
     this.trackBindings()

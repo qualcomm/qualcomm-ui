@@ -260,11 +260,18 @@ function getPlacementImpl(
       }
     }
 
-    const contentEl = floating.firstElementChild
+    const contentEl =
+      (options.contentSelector &&
+        floating.querySelector(options.contentSelector)) ||
+      floating.firstElementChild
 
     if (contentEl) {
-      const styles = getComputedStyle(contentEl)
-      floating.style.setProperty("--z-index", styles.zIndex)
+      floating.style.setProperty(
+        "--z-index",
+        getComputedStyle(contentEl).zIndex,
+      )
+    } else {
+      floating.style.removeProperty("--z-index")
     }
   }
 

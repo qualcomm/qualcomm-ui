@@ -1,4 +1,5 @@
 export * from "./button-group-context.js"
+export * from "./button-props-context.js"
 export * from "./button.js"
 export * from "./button-group.js"
 export type * from "./button.types.js"

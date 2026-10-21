@@ -110,7 +110,6 @@ export interface QdsButtonApi {
   getEndIconBindings(): QdsButtonEndIconBindings
   getRootBindings(): QdsButtonRootBindings
   getStartIconBindings(): QdsButtonStartIconBindings
-
   /**
    * Default emphasis for a number badge.
    *
@@ -124,6 +123,8 @@ export interface QdsButtonApi {
    * @since next-release
    */
   numberBadgeSize: QdsNumberBadgeSize
+
+  size: QdsButtonSize
 
   /**
    * Default size for a status badge.

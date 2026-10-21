@@ -14,6 +14,12 @@ import {
   MenuContextTrigger,
   type MenuContextTriggerProps,
 } from "./menu-context-trigger.js"
+import {MenuFooter, type MenuFooterProps} from "./menu-footer.js"
+import {
+  MenuHeaderLabel,
+  type MenuHeaderLabelProps,
+} from "./menu-header-label.js"
+import {MenuHeader, type MenuHeaderProps} from "./menu-header.js"
 import {MenuIconButton, type MenuIconButtonProps} from "./menu-icon-button.js"
 import {
   MenuInlineIconButton,
@@ -70,6 +76,9 @@ import {MenuTrigger, type MenuTriggerProps} from "./menu-trigger.js"
 
 export * from "./qds-menu-context.js"
 export type {
+  MenuFooterProps,
+  MenuHeaderProps,
+  MenuHeaderLabelProps,
   MenuIconButtonProps,
   MenuItemCommandProps,
   MenuInlineIconButtonProps,
@@ -103,6 +112,9 @@ interface MenuComponent {
   CheckboxItemControl: FunctionComponent<MenuCheckboxItemControlProps>
   Content: FunctionComponent<MenuContentProps>
   ContextTrigger: FunctionComponent<MenuContextTriggerProps>
+  Footer: FunctionComponent<MenuFooterProps>
+  Header: FunctionComponent<MenuHeaderProps>
+  HeaderLabel: FunctionComponent<MenuHeaderLabelProps>
   IconButton: FunctionComponent<MenuIconButtonProps>
   InlineIconButton: FunctionComponent<MenuInlineIconButtonProps>
   Item: FunctionComponent<MenuItemProps>
@@ -153,6 +165,9 @@ export const Menu: MenuComponent = {
   CheckboxItemControl: MenuCheckboxItemControl,
   Content: MenuContent,
   ContextTrigger: MenuContextTrigger,
+  Footer: MenuFooter,
+  Header: MenuHeader,
+  HeaderLabel: MenuHeaderLabel,
   IconButton: MenuIconButton,
   InlineIconButton: MenuInlineIconButton,
   Item: MenuItem,

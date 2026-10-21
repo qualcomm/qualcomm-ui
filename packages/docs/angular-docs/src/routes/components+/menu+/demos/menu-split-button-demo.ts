@@ -40,7 +40,7 @@ import {MenuModule} from "@qualcomm-ui/angular/menu"
               Download as PDF
             </button>
             <button q-menu-item value="json">
-              <div icon="FileJson" q-menu-item-start-icon></div>
+              <div icon="FileBraces" q-menu-item-start-icon></div>
               Download as JSON
             </button>
             <button q-menu-item value="zip">

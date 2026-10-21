@@ -1,11 +1,23 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, inject, input, type OnInit} from "@angular/core"
+import {
+  computed,
+  Directive,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  type OnInit,
+} from "@angular/core"
 
 import {useId, useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
-import {PresenceContextService} from "@qualcomm-ui/angular-core/presence"
+import {
+  PresenceContextService,
+  usePresenceRenderer,
+} from "@qualcomm-ui/angular-core/presence"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useMenuContext} from "./menu-context.service"
 
@@ -20,16 +32,37 @@ export class CoreMenuPositionerDirective implements OnInit {
   protected readonly menuContext = useMenuContext()
   protected readonly presenceService = inject(PresenceContextService)
 
+  readonly elementRef = inject(ElementRef)
+
   protected readonly trackBindings = useTrackBindings(() => {
-    return this.menuContext().getPositionerBindings({
-      id: this.hostId(),
-      onDestroy: this.onDestroy,
-    })
+    return mergeProps(
+      this.menuContext().getPositionerBindings({
+        id: this.hostId(),
+        onDestroy: this.onDestroy,
+      }),
+      this.presenceService.getPresenceBindings(),
+    )
   })
+
+  protected readonly presenceEffect = usePresenceRenderer()
 
   private readonly hostId = computed(() => useId(this, this.id()))
 
   private readonly onDestroy = useOnDestroy()
+
+  constructor() {
+    // update the ref when the element is mounted or unmounted to keep state in sync.
+    // React does this automatically with its composable refs and data binding, but
+    // with Angular we must do this imperatively.
+    effect(() => {
+      const element = this.elementRef.nativeElement
+      if (this.presenceService.unmounted()) {
+        this.presenceService.setNode(null)
+      } else {
+        this.presenceService.setNode(element)
+      }
+    })
+  }
 
   ngOnInit() {
     this.trackBindings()

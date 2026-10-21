@@ -41,6 +41,36 @@ Use [`q-menu-button`](./#q-menu-button) for a labeled trigger and [`q-menu-icon-
 
 <QdsDemo name="MenuButtonDemo" />
 
+### Header and Footer
+
+::: terms
+menu title, clear all, apply, scrollable items, fixed header, fixed footer
+:::
+
+Place `q-menu-header` before the menu content and `q-menu-footer` after it. Both stay in place while the items scroll.
+
+```angular-html
+<div q-menu-positioner>
+  <div q-menu-header>
+    <div q-menu-header-label>Filters</div>
+  </div>
+  <div q-menu-content [style.maxHeight.px]="200">
+    <!-- items -->
+  </div>
+  <div q-menu-footer>
+    <button q-button>Apply</button>
+  </div>
+</div>
+```
+
+Use [Button](/components/button) for header and footer actions. Header buttons default to the menu size, compact density, and the ghost variant. Footer buttons default to compact density and a size of `md` for a small menu or `lg` for a medium menu. Footer buttons fill the available width. Set button inputs to override these defaults.
+
+Arrow keys move between menu items. `Tab` and `Shift + Tab` move focus between the header, the items, and the footer, and wrap at the ends.
+
+Header and footer are only supported on the top-level menu. Don't use them in [submenus](./#nested-menus).
+
+<QdsDemo name="MenuHeaderFooterDemo" />
+
 ### Split Button
 
 ::: terms
@@ -229,6 +259,9 @@ Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu whe
   name="MenuExplorerDemo"
   parts={[
     "trigger",
+    "positioner",
+    "header",
+    "header-label",
     "content",
     "item-group",
     "item-group-label",
@@ -239,6 +272,7 @@ Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu whe
     {name: "item-control", link: "#q-menu-checkbox-item-control"},
     "item-indicator",
     "separator",
+    "footer",
   ]}
   previewClassName="items-start mt-6"
   scope="menu"
@@ -272,6 +306,14 @@ Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu whe
 
 <TypeDocAngularAttributes name="MenuTriggerBindings" />
 
+### q-menu-positioner
+
+<TypeDocProps name="MenuPositionerComponent" />
+
+<TypeDocAngularAttributes
+  name={["QdsMenuPositionerBindings", "MenuPositionerBindings"]}
+/>
+
 ### q-menu-content
 
 <TypeDocProps name="MenuContentDirective" />
@@ -279,6 +321,24 @@ Use the [positioning.hideWhenDetached](./#positioning) prop to hide the menu whe
 <TypeDocAngularAttributes
   name={["QdsMenuContentBindings", "MenuContentBindings"]}
 />
+
+### q-menu-header
+
+<TypeDocProps name="MenuHeaderDirective" />
+
+<TypeDocAngularAttributes name="QdsMenuHeaderBindings" />
+
+### q-menu-header-label
+
+<TypeDocProps name="MenuHeaderLabelDirective" />
+
+<TypeDocAngularAttributes name="QdsMenuHeaderLabelBindings" />
+
+### q-menu-footer
+
+<TypeDocProps name="MenuFooterDirective" />
+
+<TypeDocAngularAttributes name="QdsMenuFooterBindings" />
 
 ### q-menu-item-group
 

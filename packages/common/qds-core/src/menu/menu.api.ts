@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
 import {checkboxClasses} from "@qualcomm-ui/qds-core/checkbox"
 import {radioClasses} from "@qualcomm-ui/qds-core/radio"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
@@ -15,6 +16,9 @@ import type {
   QdsMenuCheckboxItemControlBindings,
   QdsMenuContentBindings,
   QdsMenuDescriptionBindings,
+  QdsMenuFooterBindings,
+  QdsMenuHeaderBindings,
+  QdsMenuHeaderLabelBindings,
   QdsMenuIndicatorBindings,
   QdsMenuItemAccessoryBindings,
   QdsMenuItemBindings,
@@ -24,6 +28,7 @@ import type {
   QdsMenuItemIndicatorBindings,
   QdsMenuItemLabelBindings,
   QdsMenuItemStartIconBindings,
+  QdsMenuPositionerBindings,
   QdsMenuRadioItemBindings,
   QdsMenuRadioItemControlBindings,
   QdsMenuSeparatorBindings,
@@ -39,6 +44,14 @@ export function createQdsMenuApi(
   return {
     size,
 
+    // group: prop translations
+    getFooterButtonProps(): QdsButtonApiProps {
+      return {density: "compact", size: size === "sm" ? "md" : "lg"}
+    },
+    getHeaderButtonProps(): QdsButtonApiProps {
+      return {density: "compact", size, variant: "ghost"}
+    },
+
     // group: bindings
     getButtonBindings(): QdsMenuButtonBindings {
       return normalize.element({
@@ -53,6 +66,27 @@ export function createQdsMenuApi(
     getContentBindings(): QdsMenuContentBindings {
       return normalize.element({
         className: menuClasses.content,
+        "data-size": size,
+      })
+    },
+    getFooterBindings(): QdsMenuFooterBindings {
+      return normalize.element({
+        ...parts.footer,
+        className: menuClasses.footer,
+        "data-size": size,
+      })
+    },
+    getHeaderBindings(): QdsMenuHeaderBindings {
+      return normalize.element({
+        ...parts.header,
+        className: menuClasses.header,
+        "data-size": size,
+      })
+    },
+    getHeaderLabelBindings(): QdsMenuHeaderLabelBindings {
+      return normalize.element({
+        ...parts.headerLabel,
+        className: menuClasses.headerLabel,
         "data-size": size,
       })
     },
@@ -112,6 +146,12 @@ export function createQdsMenuApi(
       return normalize.element({
         ...parts.description,
         className: menuItemClasses.itemDescription,
+        "data-size": size,
+      })
+    },
+    getPositionerBindings(): QdsMenuPositionerBindings {
+      return normalize.element({
+        className: menuClasses.positioner,
         "data-size": size,
       })
     },
