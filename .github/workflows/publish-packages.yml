@@ -1,36 +1,121 @@
-name: "Publish Packages and Create Releases"
+name: "Release"
 env:
   IS_CI: true
   TURBO_API: "http://127.0.0.1:8585"
   TURBO_TEAM: "qualcomm-ui"
   TURBO_TOKEN: "turbo-cache-token"
+
 on:
   workflow_dispatch:
   push:
-    branches: [ release ]
-    paths:
-      - 'packages/**/CHANGELOG.md'
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   check:
     runs-on: ubuntu-latest
     outputs:
       should-publish: ${{ steps.check.outputs.should-publish }}
+      affected: ${{ steps.affected.outputs.packages }}
+      base-sha: ${{ steps.base.outputs.sha }}
     steps:
     - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
 
     - uses: ./.github/actions/init-node-and-install
 
     - id: check
       run: pnpm qui-changesets check-versions
 
+    - name: Find previous release
+      id: base
+      run: echo "sha=$(git rev-list -n 1 "$(git describe --tags --abbrev=0)")" >> "$GITHUB_OUTPUT"
+
+    - name: Find affected packages
+      id: affected
+      env:
+        TURBO_SCM_BASE: ${{ steps.base.outputs.sha }}
+      run: |
+        packages=$(pnpm exec turbo ls --affected --output json | jq -c '[.packages.items[].name]')
+        echo "packages=$packages" >> "$GITHUB_OUTPUT"
+
+  prepare:
+    needs: check
+    if: needs.check.outputs.should-publish != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      PREP_BRANCH: release-prep
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - uses: ./.github/actions/init-node-and-install
+
+    - name: Prepare versions and changelogs
+      env:
+        BASE_SHA: ${{ needs.check.outputs.base-sha }}
+        TMPDIR: ${{ runner.temp }}
+      run: |
+        pnpm qui-changesets prep-release --include-commit-links --commit-sha "$BASE_SHA"
+        pnpm qui-changesets update-jsdoc-since-tags --diff-ref "$BASE_SHA"
+        pnpm install --lockfile-only --no-frozen-lockfile --ignore-scripts
+
+    - name: Commit and push release preparation
+      id: commit
+      run: |
+        git add --all -- packages .changeset package.json pnpm-lock.yaml pnpm-workspace.yaml
+        if git diff --cached --quiet; then
+          echo 'No release changes were generated.' >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+        fi
+
+        git diff --cached --check
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git commit --signoff -m 'chore: prepare release [skip-changelog]'
+        git push --force origin "HEAD:refs/heads/$PREP_BRANCH"
+        echo 'pushed=true' >> "$GITHUB_OUTPUT"
+
+    - name: Open or update release PR
+      if: steps.commit.outputs.pushed == 'true'
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        body_file="$RUNNER_TEMP/release-pr-body.md"
+        {
+          printf 'Merging this PR publishes the packages and deploys the affected docs sites. It is regenerated on every push to main.\n\n'
+          printf 'Approve the generated CI runs using **Approve workflows to run**.\n\n'
+          cat "$RUNNER_TEMP/release-notes.md" 2>/dev/null || true
+        } > "$body_file"
+
+        existing_pr=$(gh pr list --repo "$GITHUB_REPOSITORY" \
+          --base main --head "$PREP_BRANCH" --state open --json url --jq '.[0].url // empty')
+        if [[ -n "$existing_pr" ]]; then
+          gh pr edit "$existing_pr" --repo "$GITHUB_REPOSITORY" --body-file "$body_file"
+          pr_url=$existing_pr
+        else
+          pr_url=$(gh pr create --repo "$GITHUB_REPOSITORY" \
+            --base main --head "$PREP_BRANCH" \
+            --title 'chore: prepare release [skip-changelog]' --body-file "$body_file")
+        fi
+        printf 'Release PR: %s\n' "$pr_url" >> "$GITHUB_STEP_SUMMARY"
+
   publish:
     needs: check
     if: needs.check.outputs.should-publish == 'true'
     runs-on: ubuntu-latest
-    concurrency:
-      group: Publish Packages - ${{github.head_ref}}
-      cancel-in-progress: true
     timeout-minutes: 10
     permissions:
       id-token: write
@@ -58,3 +143,41 @@ jobs:
       run: pnpm qui-changesets create-github-releases --token $TOKEN
       env:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-react-docs:
+    needs: [ check, publish ]
+    if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/react-docs')
+    uses: ./.github/workflows/deploy-react-docs.yml
+    secrets: inherit
+
+  deploy-react-table-docs:
+    needs: [ check, publish ]
+    if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/react-table-docs')
+    uses: ./.github/workflows/deploy-react-table-docs.yml
+    secrets: inherit
+
+  deploy-angular-docs:
+    needs: [ check, publish ]
+    if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/angular-docs')
+    uses: ./.github/workflows/deploy-angular-docs.yml
+    secrets: inherit
+
+  deploy-angular-table-docs:
+    needs: [ check, publish ]
+    if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/angular-table-docs')
+    uses: ./.github/workflows/deploy-angular-table-docs.yml
+    secrets: inherit
+
+  deploy-qui-docs:
+    needs: [ check, publish ]
+    if: contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/qui-docs')
+    uses: ./.github/workflows/deploy-qui-docs.yml
+    secrets: inherit
+
+  publish-figma:
+    needs: [ check, publish ]
+    if: >-
+      contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/react') ||
+      contains(fromJSON(needs.check.outputs.affected), '@qualcomm-ui/angular')
+    uses: ./.github/workflows/publish-figma.yml
+    secrets: inherit

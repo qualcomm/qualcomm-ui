@@ -2,14 +2,7 @@ name: Deploy Angular Docs
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - release
-    paths:
-    - packages/common/**
-    - packages/frameworks/react*/**
-    - packages/frameworks/angular*/**
-    - packages/docs/angular-docs/**
+  workflow_call:
 
 jobs:
   deploy:

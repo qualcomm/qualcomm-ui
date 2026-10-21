@@ -2,13 +2,7 @@ name: Deploy QUI Docs
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - release
-    paths:
-    - packages/common/**
-    - packages/frameworks/react*/**
-    - packages/docs/qui-docs/**
+  workflow_call:
 
 jobs:
   deploy:

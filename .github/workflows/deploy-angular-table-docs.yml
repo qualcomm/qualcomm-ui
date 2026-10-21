@@ -2,14 +2,7 @@ name: Deploy Angular Table Docs
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - release
-    paths:
-    - packages/common/**
-    - packages/frameworks/react*/**
-    - packages/frameworks/angular*/**
-    - packages/docs/angular-table-docs/**
+  workflow_call:
 
 jobs:
   deploy:

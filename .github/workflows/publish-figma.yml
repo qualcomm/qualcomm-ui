@@ -5,13 +5,8 @@ env:
   TURBO_TOKEN: "turbo-cache-token"
 
 on:
-  push:
-    branches: [ release ]
-    paths:
-      - 'packages/frameworks/react/**/*.figma.tsx'
-      - 'packages/frameworks/react/**/*.figma.js'
-      - 'packages/frameworks/angular/**/*.figma.js'
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   publish-figma:
