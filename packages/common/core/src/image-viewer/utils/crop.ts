@@ -23,6 +23,7 @@ export const MIN_PINCH_DISTANCE = 1
 interface ClampOffsetParams {
   crop?: Rect
   fixedCropArea?: boolean
+  imageSize?: Size
   offset: Point
   rotation: number
   viewportSize: Size
@@ -30,12 +31,20 @@ interface ClampOffsetParams {
 }
 
 export function clampOffset(params: ClampOffsetParams): Point {
-  const {crop, fixedCropArea, offset, rotation, viewportSize, zoom} = params
+  const {
+    crop,
+    fixedCropArea,
+    viewportSize,
+    imageSize = viewportSize,
+    offset,
+    rotation,
+    zoom,
+  } = params
 
   const {cos, sin} = getRotationTransform(rotation)
 
   if (fixedCropArea && crop) {
-    const aabb = computeAabb(viewportSize, zoom, cos, sin)
+    const aabb = computeAabb(imageSize, zoom, cos, sin)
     const center = getViewportCenter(viewportSize)
 
     const cropRight = crop.x + crop.width
@@ -54,7 +63,7 @@ export function clampOffset(params: ClampOffsetParams): Point {
     return clampPoint(offset, minPoint, maxPoint)
   }
 
-  const aabb = computeAabb(viewportSize, zoom, cos, sin)
+  const aabb = computeAabb(imageSize, zoom, cos, sin)
 
   const extraWidth = max(0, aabb.width - viewportSize.width)
   const extraHeight = max(0, aabb.height - viewportSize.height)
@@ -175,4 +184,22 @@ export function scaleSize(size: Size, scale: number): Size {
     height: size.height * scale,
     width: size.width * scale,
   }
+}
+
+/** Fits the rotated image inside the viewport without changing its aspect ratio. */
+export function getFittedImageSize(
+  naturalSize: Size,
+  viewportSize: Size,
+  rotation: number,
+): Size {
+  if (!isVisibleRect(naturalSize) || !isVisibleRect(viewportSize)) {
+    return {height: 0, width: 0}
+  }
+  const {cos, sin} = getRotationTransform(rotation)
+  const bounds = computeAabb(naturalSize, 1, cos, sin)
+  const scale = Math.min(
+    viewportSize.width / bounds.width,
+    viewportSize.height / bounds.height,
+  )
+  return scaleSize(naturalSize, scale)
 }

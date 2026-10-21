@@ -5,10 +5,6 @@ import type {imageViewerClasses} from "./image-viewer.classes.js"
 
 type ImageViewerClasses = typeof imageViewerClasses
 
-export interface QdsImageViewerControlOverlayBindings {
-  className: ImageViewerClasses["controlOverlay"]
-}
-
 export interface QdsImageViewerRootBindings {
   className: ImageViewerClasses["root"]
 }
@@ -17,8 +13,12 @@ export interface QdsImageViewerViewportBindings {
   className: ImageViewerClasses["viewport"]
 }
 
-export interface QdsImageViewerImageBindings {
-  className: ImageViewerClasses["image"]
+export interface QdsImageViewerViewportImageBindings {
+  className: ImageViewerClasses["viewportImage"]
+}
+
+export interface QdsImageViewerStaticImageBindings {
+  className: ImageViewerClasses["staticImage"]
 }
 
 export interface QdsImageViewerZoomInTriggerBindings {
@@ -34,11 +34,37 @@ export interface QdsImageViewerResetTriggerBindings {
 }
 
 export interface QdsImageViewerApi {
-  getControlOverlayBindings(): QdsImageViewerControlOverlayBindings
-  getImageBindings(): QdsImageViewerImageBindings
+  getBackdropBindings(): QdsImageViewerBackdropBindings
+  getCloseTriggerBindings(): QdsImageViewerCloseTriggerBindings
+  getContentBindings(): QdsImageViewerContentBindings
+  getPositionerBindings(): QdsImageViewerPositionerBindings
   getResetTriggerBindings(): QdsImageViewerResetTriggerBindings
+
   getRootBindings(): QdsImageViewerRootBindings
+  getStaticImageBindings(): QdsImageViewerStaticImageBindings
+  getTriggerBindings(): QdsImageViewerTriggerBindings
   getViewportBindings(): QdsImageViewerViewportBindings
+  getViewportImageBindings(): QdsImageViewerViewportImageBindings
   getZoomInTriggerBindings(): QdsImageViewerZoomInTriggerBindings
   getZoomOutTriggerBindings(): QdsImageViewerZoomOutTriggerBindings
+}
+
+export interface QdsImageViewerTriggerBindings {
+  className: ImageViewerClasses["trigger"]
+}
+
+export interface QdsImageViewerCloseTriggerBindings {
+  className: ImageViewerClasses["closeTrigger"]
+}
+
+export interface QdsImageViewerBackdropBindings {
+  className: ImageViewerClasses["backdrop"]
+}
+
+export interface QdsImageViewerPositionerBindings {
+  className: ImageViewerClasses["positioner"]
+}
+
+export interface QdsImageViewerContentBindings {
+  className: ImageViewerClasses["content"]
 }

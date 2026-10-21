@@ -10,21 +10,21 @@ import {
   getEventPoint,
   getEventTarget,
 } from "@qualcomm-ui/dom/query"
+import {isSizeEqual} from "@qualcomm-ui/dom/rect-utils"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 import {toPx} from "@qualcomm-ui/utils/number"
 import {compact} from "@qualcomm-ui/utils/object"
 
 import {imageViewerAnatomy} from "./image-viewer.anatomy.js"
-import {domEls, domIds, isControlOverlayEvent} from "./image-viewer.dom.js"
+import {domEls, domIds, measureImageViewerViewport} from "./image-viewer.dom.js"
 import type {
   ImageViewerApi,
-  ImageViewerControlOverlayBindings,
   ImageViewerSchema,
   IntlTranslations,
   ImageViewerRootBindings,
   ImageViewerViewportBindings,
-  ImageViewerImageBindings,
+  ImageViewerViewportImageBindings,
   ImageViewerZoomInTriggerBindings,
   ImageViewerZoomOutTriggerBindings,
   ImageViewerResetTriggerBindings,
@@ -33,6 +33,8 @@ import {isEqualFlip, normalizeFlipState} from "./utils/crop.js"
 import {getImageTransformCss} from "./utils/transform.js"
 
 const defaultTranslations: Required<IntlTranslations> = {
+  closeLabel: "Close image viewer",
+  openLabel: "Expand image",
   previewDescription({rotation, zoom}) {
     const zoomText =
       zoom != null && Number.isFinite(zoom)
@@ -73,7 +75,9 @@ export function createImageViewerApi(
   const viewportRect = context.get("viewportRect")
   const isImageReady = computed("isImageReady")
   const isMeasured = computed("isMeasured")
-  const ready = isImageReady && isMeasured
+  const open = context.get("open")
+  const ready = open && isImageReady && isMeasured
+  const imageSize = computed("imageSize")
 
   const shouldIgnoreTouchPointer = (event: {
     isPrimary?: boolean
@@ -103,9 +107,19 @@ export function createImageViewerApi(
       }
       send({flip: {vertical: nextValue}, type: "SET_FLIP"})
     },
+    getRootElement: () =>
+      typeof document === "undefined" ? null : domEls.root(scope),
+    getRootNode: scope.getRootNode,
+    getViewportElement: () =>
+      typeof document === "undefined" ? null : domEls.viewport(scope),
+    measureViewport() {
+      measureImageViewerViewport(store)
+    },
     naturalSize,
     offset,
+    open,
     panning,
+    ready,
     reset() {
       send({type: "RESET"})
     },
@@ -123,12 +137,26 @@ export function createImageViewerApi(
       }
       send({flip: normalized, type: "SET_FLIP"})
     },
+    setImageStatus({ready, size}) {
+      // Rendering lifecycle updates must not wait for queued interaction events.
+      if (!ready || !isSizeEqual(size, context.get("naturalSize"))) {
+        context.set("viewportRect", context.initial("viewportRect")!)
+      }
+      if (!isSizeEqual(size, context.get("naturalSize"))) {
+        context.set("naturalSize", size)
+      }
+      context.set("imageReady", ready)
+    },
+    setOpen(open) {
+      send({open, type: "SET_OPEN"})
+    },
     setRotation(value) {
       send({rotation: value, type: "SET_ROTATION"})
     },
     setZoom(value) {
       send({type: "SET_ZOOM", zoom: value})
     },
+    translations,
     viewportRect,
     zoom,
     zoomBy(delta) {
@@ -136,44 +164,6 @@ export function createImageViewerApi(
     },
 
     // group: bindings
-    getControlOverlayBindings(): ImageViewerControlOverlayBindings {
-      return normalize.element({...parts.controlOverlay})
-    },
-    getImageBindings(props): ImageViewerImageBindings {
-      scope.ids.register("image", props)
-      const flipHorizontal = flip.horizontal
-      const flipVertical = flip.vertical
-      const transform = getImageTransformCss({flip, offset, rotation, zoom})
-      return normalize.img({
-        ...parts.image,
-        "data-flip-horizontal": booleanDataAttr(flipHorizontal),
-        "data-flip-vertical": booleanDataAttr(flipVertical),
-        "data-ownedby": domIds.viewport(scope),
-        "data-ready": booleanDataAttr(isImageReady),
-        draggable: false,
-        id: props.id,
-        onLoad(event) {
-          const imageEl = event.currentTarget
-          if (!imageEl?.complete) {
-            return
-          }
-          const {naturalHeight: height, naturalWidth: width} = imageEl
-          send({
-            size: {height, width},
-            src: "element",
-            type: "SET_NATURAL_SIZE",
-          })
-        },
-        style: {
-          objectFit: "fill",
-          pointerEvents: "none",
-          transform,
-          transformOrigin: "center center",
-          userSelect: "none",
-          willChange: "transform",
-        },
-      })
-    },
     getResetTriggerBindings(): ImageViewerResetTriggerBindings {
       return normalize.button({
         ...parts.resetTrigger,
@@ -190,14 +180,16 @@ export function createImageViewerApi(
       scope.ids.register("root", props)
       return normalize.element({
         ...parts.root,
-        "aria-busy": isImageReady ? undefined : "true",
+        "aria-busy": !open || ready ? undefined : "true",
         "aria-controls": domIds.viewport(scope),
-        "aria-description": isImageReady
-          ? translations.previewDescription({
-              rotation: Number.isFinite(rotation) ? rotation : null,
-              zoom: Number.isFinite(zoom) ? zoom : null,
-            })
-          : translations.previewLoading,
+        "aria-description": !open
+          ? undefined
+          : isImageReady
+            ? translations.previewDescription({
+                rotation: Number.isFinite(rotation) ? rotation : null,
+                zoom: Number.isFinite(zoom) ? zoom : null,
+              })
+            : translations.previewLoading,
         "aria-label": translations.rootLabel,
         "aria-live": "polite",
         "aria-roledescription": translations.rootRoleDescription,
@@ -222,9 +214,14 @@ export function createImageViewerApi(
         "aria-label": translations.rootLabel,
         "data-ownedby": domIds.root(scope),
         "data-panning": booleanDataAttr(panning),
+        "data-ready": booleanDataAttr(ready),
         id: props.id,
         onKeyDown(event) {
-          if (event.defaultPrevented || isControlOverlayEvent(scope, event)) {
+          if (
+            !ready ||
+            event.defaultPrevented ||
+            event.target !== event.currentTarget
+          ) {
             return
           }
           const src = "viewport"
@@ -250,7 +247,11 @@ export function createImageViewerApi(
           event.preventDefault()
         },
         onPointerDown(event) {
-          if (isControlOverlayEvent(scope, event)) {
+          if (
+            !ready ||
+            event.defaultPrevented ||
+            event.target !== event.currentTarget
+          ) {
             return
           }
           if (event.pointerType === "mouse" && event.button !== 0) {
@@ -260,8 +261,8 @@ export function createImageViewerApi(
             return
           }
           const target = getEventTarget<HTMLElement>(event)
-          const rootEl = domEls.root(scope)
-          if (!target || !rootEl || !contains(rootEl, target)) {
+          const viewportEl = domEls.viewport(scope)
+          if (!target || !viewportEl || !contains(viewportEl, target)) {
             return
           }
           const point = getEventPoint(event)
@@ -269,12 +270,47 @@ export function createImageViewerApi(
         },
         role: "group",
         style: {
+          "--image-aspect-ratio":
+            naturalSize.width > 0 && naturalSize.height > 0
+              ? naturalSize.width / naturalSize.height
+              : undefined,
+          opacity: ready ? 1 : 0,
           overflow: "hidden",
           position: "relative",
           touchAction: "none",
           userSelect: "none",
         },
         tabIndex: 0,
+      })
+    },
+    getViewportImageBindings(props): ImageViewerViewportImageBindings {
+      scope.ids.register("viewportImage", props)
+      const flipHorizontal = flip.horizontal
+      const flipVertical = flip.vertical
+      const transform = getImageTransformCss({flip, offset, rotation, zoom})
+      return normalize.img({
+        ...parts.viewportImage,
+        "data-flip-horizontal": booleanDataAttr(flipHorizontal),
+        "data-flip-vertical": booleanDataAttr(flipVertical),
+        "data-ownedby": domIds.viewport(scope),
+        "data-ready": booleanDataAttr(isImageReady),
+        draggable: false,
+        id: props.id,
+        style: {
+          height: toPx(imageSize.height),
+          left: "50%",
+          margin: 0,
+          maxHeight: "none",
+          maxWidth: "none",
+          objectFit: "contain",
+          pointerEvents: "none",
+          top: "50%",
+          transform: `translate(-50%, -50%) ${transform}`,
+          transformOrigin: "center center",
+          userSelect: "none",
+          width: toPx(imageSize.width),
+          willChange: "transform",
+        },
       })
     },
     getZoomInTriggerBindings(): ImageViewerZoomInTriggerBindings {

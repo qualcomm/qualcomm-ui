@@ -1,14 +1,19 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactElement} from "react"
+import {type ReactElement, useMemo} from "react"
 
 import {
   type ImageViewerApi,
   type ImageViewerApiProps,
   splitImageViewerProps,
 } from "@qualcomm-ui/core/image-viewer"
-import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
+import {CoreDialog} from "@qualcomm-ui/react-core/dialog"
+import {
+  useEventCallback,
+  useOnDestroy,
+  useSafeLayoutEffect,
+} from "@qualcomm-ui/react-core/effects"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
   type ElementRenderProp,
@@ -22,9 +27,14 @@ import {
   ImageViewerContextProvider,
   useImageViewerContext,
 } from "./image-viewer-context.js"
+import {ImageViewerImageContextProvider} from "./image-viewer-image-context.js"
 import {useImageViewer} from "./use-image-viewer.js"
 
 export interface CoreImageViewerRootProviderProps extends ElementRenderProp<"div"> {
+  /** Default alternative text for StaticImage and ViewportImage. */
+  alt?: string
+  /** Default image source for StaticImage and ViewportImage. */
+  src?: string
   /**
    * An image viewer API created with useImageViewer.
    *
@@ -34,20 +44,35 @@ export interface CoreImageViewerRootProviderProps extends ElementRenderProp<"div
 }
 
 export function CoreImageViewerRootProvider({
+  alt,
   children,
   id,
+  src,
   value,
   ...props
 }: CoreImageViewerRootProviderProps): ReactElement {
+  const imageContext = useMemo(() => ({alt, src}), [alt, src])
   const mergedProps = mergeProps(
     value.getRootBindings({id: useControlledId(id), onDestroy: useOnDestroy()}),
     props,
   )
   return (
     <ImageViewerContextProvider value={value}>
-      <PolymorphicElement as="div" {...mergedProps}>
-        {children}
-      </PolymorphicElement>
+      <ImageViewerImageContextProvider value={imageContext}>
+        <CoreDialog.Root
+          aria-label={value.translations.rootLabel}
+          getRootNode={value.getRootNode}
+          initialFocusEl={value.getViewportElement}
+          lazyMount
+          onOpenChange={value.setOpen}
+          open={value.open}
+          unmountOnExit
+        >
+          <PolymorphicElement as="div" {...mergedProps}>
+            {children}
+          </PolymorphicElement>
+        </CoreDialog.Root>
+      </ImageViewerImageContextProvider>
     </ImageViewerContextProvider>
   )
 }
@@ -55,7 +80,7 @@ export function CoreImageViewerRootProvider({
 export interface CoreImageViewerRootProps
   extends
     ImageViewerApiProps,
-    Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {}
+    Omit<CoreImageViewerRootProviderProps, "defaultValue" | "dir" | "value"> {}
 
 export function CoreImageViewerRoot(
   props: CoreImageViewerRootProps,
@@ -81,19 +106,6 @@ export function CoreImageViewerContext({
   return <>{renderProp(children, api)}</>
 }
 
-export interface CoreImageViewerControlOverlayProps extends ElementRenderProp<"div"> {}
-
-/**
- * An optional container for controls inside the image viewport.
- */
-export function CoreImageViewerControlOverlay(
-  props: CoreImageViewerControlOverlayProps,
-): ReactElement {
-  const api = useImageViewerContext()
-  const mergedProps = mergeProps(api.getControlOverlayBindings(), props)
-  return <PolymorphicElement as="div" {...mergedProps} />
-}
-
 export interface CoreImageViewerViewportProps extends ElementRenderProp<"div"> {}
 
 export function CoreImageViewerViewport({
@@ -101,6 +113,19 @@ export function CoreImageViewerViewport({
   ...props
 }: CoreImageViewerViewportProps): ReactElement {
   const api = useImageViewerContext()
+  const measureViewport = useEventCallback(api.measureViewport)
+  useSafeLayoutEffect(() => {
+    if (api.open) {
+      measureViewport()
+    }
+  }, [
+    api.open,
+    api.naturalSize.width,
+    api.naturalSize.height,
+    api.viewportRect.width,
+    api.viewportRect.height,
+    measureViewport,
+  ])
   const mergedProps = mergeProps(
     api.getViewportBindings({
       id: useControlledId(id),
@@ -109,20 +134,6 @@ export function CoreImageViewerViewport({
     props,
   )
   return <PolymorphicElement as="div" {...mergedProps} />
-}
-
-export interface CoreImageViewerImageProps extends ElementRenderProp<"img"> {}
-
-export function CoreImageViewerImage({
-  id,
-  ...props
-}: CoreImageViewerImageProps): ReactElement {
-  const api = useImageViewerContext()
-  const mergedProps = mergeProps(
-    api.getImageBindings({id: useControlledId(id), onDestroy: useOnDestroy()}),
-    props,
-  )
-  return <PolymorphicElement as="img" {...mergedProps} />
 }
 
 export interface CoreImageViewerZoomInTriggerProps extends ElementRenderProp<"button"> {}

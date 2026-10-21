@@ -10,6 +10,9 @@ import type {ImageViewerApiProps} from "./image-viewer.types.js"
 
 export const imageViewerProps: (keyof ImageViewerApiProps)[] =
   createProps<ImageViewerApiProps>()(
+    "open",
+    "defaultOpen",
+    "onOpenChange",
     "ids",
     "translations",
     "zoom",

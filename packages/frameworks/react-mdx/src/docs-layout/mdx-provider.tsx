@@ -17,7 +17,13 @@ import {Table} from "@qualcomm-ui/react/table"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {AnchorHeader, CodeTabs, PageHeader, ShikiPre} from "./internal/index.js"
+import {
+  AnchorHeader,
+  CodeTabs,
+  Image,
+  PageHeader,
+  ShikiPre,
+} from "./internal/index.js"
 
 interface Props {
   /**
@@ -158,7 +164,7 @@ export function MdxProvider({children, components}: Props): ReactNode {
           ),
           HeadingSteps,
           hr: (props) => <hr className="mdx" {...props} />,
-          img: (props) => <img alt="Image" className="mdx" {...props} />,
+          img: (props) => <Image className="mdx" imgProps={props} />,
           li: (props) => <li className="mdx" {...props} />,
           ol: (props) => <ol className="mdx" {...props} />,
           p: ({className, ...props}) => (

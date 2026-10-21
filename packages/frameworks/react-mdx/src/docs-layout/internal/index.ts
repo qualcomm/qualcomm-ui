@@ -1,5 +1,6 @@
 export * from "./anchor-header.js"
 export * from "./code-tabs.js"
+export * from "./image.js"
 export * from "./page-header.js"
 export * from "./shiki-pre.js"
 export * from "./toc-link.js"

@@ -1,4 +1,4 @@
-import {type FormEvent, useState} from "react"
+import {type FormEvent, type ReactNode, useState} from "react"
 
 import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
@@ -17,7 +17,7 @@ function Form({
   children,
   onSubmit,
 }: {
-  children: React.ReactNode
+  children: ReactNode
   onSubmit?: (data: FormData) => void
 }) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -52,7 +52,7 @@ function ControlledForm({
         defaultFocusedValue={seeded}
         label="Departure"
         name="departure"
-        onValueChange={(details) => setDate(details.value)}
+        onValueChange={(details) => setDate(details.value as DateValue[])}
         value={date}
       />
       <button type="submit">Submit</button>

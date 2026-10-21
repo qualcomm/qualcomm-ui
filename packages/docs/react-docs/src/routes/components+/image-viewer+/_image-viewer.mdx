@@ -1,15 +1,15 @@
 ---
 title: Image Viewer
-description: Image Viewer supports pan, zoom, rotation, and flip controls for images.
+description: Image Viewer renders a static image preview and opens a full-screen viewer for pan, zoom, rotation, and flip interactions.
 component: ImageViewer
 aliases: [image viewer, image zoom, pan and zoom, image pan]
 badges:
   - id: since
     label: 1.32.0
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1320
-  - id: beta
-    label: Beta
-    url: /versioning#beta
+  - id: alpha
+    label: Alpha
+    url: /versioning#alpha
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
@@ -24,13 +24,9 @@ import * as demos from "./demos"
 import {ImageViewer} from "@qualcomm-ui/react/image-viewer"
 ```
 
-## Overview
-
-The image viewport uses the full available width and a 16:9 aspect ratio by default. The image fills the viewport.
-
 ## Keyboard and Pointer Interactions
 
-Focus the viewport to use keyboard interactions.
+Focus the full-screen viewport to use keyboard interactions.
 
 - Arrow keys pan the image by [nudgeStep](./#nudgeStep), which defaults to `1` pixel.
 - `Shift` with an Arrow key uses [nudgeStepShift](./#nudgeStepShift), which defaults to `10` pixels.
@@ -39,42 +35,37 @@ Focus the viewport to use keyboard interactions.
 - `-` or `_` zooms out.
 - The mouse wheel zooms around the pointer position.
 - Pinch gestures zoom and pan the image on touch devices.
+- Press `Escape` or click the backdrop to close the viewer.
 
-## Viewport Sizing
-
-Set the viewport `style` to override the default 16:9 dimensions.
-
-```tsx
-<ImageViewer.Root className="w-full">
-  <ImageViewer.Viewport
-    style={{aspectRatio: "4 / 3", maxWidth: "48rem"}}
-  >
-    <ImageViewer.Image
-      alt="Earth at night viewed from space"
-      src="/images/connected-l.png"
-    />
-  </ImageViewer.Viewport>
-</ImageViewer.Root>
-```
+Closing resets zoom, rotation, flip, and pan.
 
 ## Examples
 
+### Simple
+
+Use [src](./#src) and [alt](./#alt) to render an image preview with the default popup, zoom, and reset controls.
+
+<Demo
+  name="ImageViewerSimpleDemo"
+  component={demos.ImageViewerSimpleDemo}
+/>
+
 ### Composite
 
-Use the composite parts to place the image and controls in separate layout elements.
+Supply [src](./#src) and [alt](./#alt) to `<ImageViewer.Root>`, then provide the composite parts to render the viewer.
 
 <Demo
   name="ImageViewerCompositeDemo"
   component={demos.ImageViewerCompositeDemo}
 />
 
-### Control Overlay
+### Controlled Open State
 
-Use `<ImageViewer.ControlOverlay>` to place controls over the viewport. Add the control buttons as children. Interaction events that originate in the panel do not apply to the viewport. Child elements keep ordinary pointer, keyboard, and focus behavior.
+Use [open](./#open) and [onOpenChange](./#onOpenChange) for controlled popup visibility. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 <Demo
-  name="ImageViewerControlOverlayDemo"
-  component={demos.ImageViewerControlOverlayDemo}
+  name="ImageViewerControlledOpenDemo"
+  component={demos.ImageViewerControlledOpenDemo}
 />
 
 ### Controlled Zoom
@@ -112,7 +103,7 @@ Set [flip](./#flip-2) and update it in [onFlipChange](./#onFlipChange). These pr
 
 ### Reset
 
-Use `useImageViewer` with `<RootProvider>` to place reset and transform controls outside the viewer root.
+Use `useImageViewer` with `<RootProvider>` when external code owns the viewer state and popup composition.
 
 <Demo name="ImageViewerResetDemo" component={demos.ImageViewerResetDemo} />
 
@@ -143,28 +134,19 @@ Use `useImageViewer` with `<ImageViewer.RootProvider>` when external code owns t
   component={demos.ImageViewerRootProviderDemo}
 />
 
-## Explorer
-
-<ComponentExplorer
-  component={demos.ImageViewerExplorerDemo}
-  linkPrefix="image-viewer"
-  parts={[
-    "root",
-    "viewport",
-    "image",
-    "control-overlay",
-    {name: "zoom-in-trigger", link: "#image-viewer-zoom-in-button"},
-    {name: "zoom-out-trigger", link: "#image-viewer-zoom-out-button"},
-    {name: "reset-trigger", link: "#image-viewer-reset-button"},
-  ]}
-  scope="image-viewer"
-/>
-
 ## API
+
+### \<ImageViewer>
+
+The simple API accepts the props from [`ImageViewer.Root`](./#image-viewer-root) except `children`. It renders the preview, popup, zoom controls, and reset control. Use the composite API for custom popup contents.
+
+<TypeDocProps name="ImageViewerProps" omitFrom="ImageViewerRootProps" />
 
 ### ImageViewerApi
 
 The viewer API is available from `<ImageViewer.Context>` and `useImageViewer`.
+
+Use `open` and `setOpen` to read and update popup visibility when external code owns the viewer API.
 
 <TypeDocProps name="ImageViewerApi" partial />
 
@@ -172,15 +154,83 @@ The viewer API is available from `<ImageViewer.Context>` and `useImageViewer`.
 
 ### \<ImageViewer.Root>
 
+`src` and `alt` are defaults that either image can override.
+
 <TypeDocProps name="ImageViewerRootProps" />
 
 <TypeDocAttributes
   name={["ImageViewerRootBindings", "QdsImageViewerRootBindings"]}
 />
 
+### \<ImageViewer.Trigger>
+
+<TypeDocProps name="ImageViewerTriggerProps" />
+
+<TypeDocAttributes
+  name={["DialogTriggerBindings", "QdsImageViewerTriggerBindings"]}
+/>
+
 ### \<ImageViewer.RootProvider>
 
 <TypeDocProps name="ImageViewerRootProviderProps" />
+
+## Shortcuts
+
+### \<ImageViewer.FloatingPortal>
+
+`ImageViewer.FloatingPortal` combines the portal, backdrop, positioner, and content elements.
+
+```tsx
+import {Portal} from "@qualcomm-ui/react-core/portal"
+
+;<Portal {...props}>
+  <ImageViewer.Backdrop {...backdropProps} />
+  <ImageViewer.Positioner {...positionerProps}>
+    <ImageViewer.Content {...contentProps}>{children}</ImageViewer.Content>
+  </ImageViewer.Positioner>
+</Portal>
+```
+
+<TypeDocProps name="ImageViewerFloatingPortalProps" />
+
+## Popup API
+
+### \<ImageViewer.Backdrop>
+
+<TypeDocProps name="ImageViewerBackdropProps" />
+
+<TypeDocAttributes
+  name={["DialogBackdropBindings", "QdsImageViewerBackdropBindings"]}
+/>
+
+### \<ImageViewer.Positioner>
+
+<TypeDocProps name="ImageViewerPositionerProps" />
+
+<TypeDocAttributes
+  name={["DialogPositionerBindings", "QdsImageViewerPositionerBindings"]}
+/>
+
+### \<ImageViewer.Content>
+
+<TypeDocProps name="ImageViewerContentProps" />
+
+<TypeDocAttributes
+  name={["DialogContentBindings", "QdsImageViewerContentBindings"]}
+/>
+
+### \<ImageViewer.CloseButton>
+
+<TypeDocProps name="ImageViewerCloseButtonProps" />
+
+<TypeDocAttributes
+  name={[
+    "DialogCloseTriggerBindings",
+    "QdsImageViewerCloseTriggerBindings",
+  ]}
+/>
+
+## Viewer API
 
 ### \<ImageViewer.Viewport>
 
@@ -190,22 +240,20 @@ The viewer API is available from `<ImageViewer.Context>` and `useImageViewer`.
   name={["ImageViewerViewportBindings", "QdsImageViewerViewportBindings"]}
 />
 
-### \<ImageViewer.Image>
+### \<ImageViewer.StaticImage>
 
-<TypeDocProps name="ImageViewerImageProps" />
+<TypeDocProps name="ImageViewerStaticImageProps" />
 
-<TypeDocAttributes
-  name={["ImageViewerImageBindings", "QdsImageViewerImageBindings"]}
-/>
+<TypeDocAttributes name="QdsImageViewerStaticImageBindings" />
 
-### \<ImageViewer.ControlOverlay>
+### \<ImageViewer.ViewportImage>
 
-<TypeDocProps name="ImageViewerControlOverlayProps" />
+<TypeDocProps name="ImageViewerViewportImageProps" />
 
 <TypeDocAttributes
   name={[
-    "ImageViewerControlOverlayBindings",
-    "QdsImageViewerControlOverlayBindings",
+    "ImageViewerViewportImageBindings",
+    "QdsImageViewerViewportImageBindings",
   ]}
 />
 

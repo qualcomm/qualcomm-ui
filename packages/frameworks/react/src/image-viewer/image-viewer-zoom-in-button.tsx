@@ -36,7 +36,15 @@ export function ImageViewerZoomInButton({
   const mergedProps = mergeProps(qdsContext.getZoomInTriggerBindings(), props)
   return (
     <CoreImageViewer.ZoomInTrigger
-      render={<IconButton {...mergedProps} icon={icon} render={render} />}
+      render={
+        <IconButton
+          {...mergedProps}
+          emphasis="white-persistent"
+          icon={icon}
+          render={render}
+          variant="outline"
+        />
+      }
     />
   )
 }

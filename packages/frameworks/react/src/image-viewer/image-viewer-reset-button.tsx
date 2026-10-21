@@ -36,7 +36,15 @@ export function ImageViewerResetButton({
   const mergedProps = mergeProps(qdsContext.getResetTriggerBindings(), props)
   return (
     <CoreImageViewer.ResetTrigger
-      render={<IconButton {...mergedProps} icon={icon} render={render} />}
+      render={
+        <IconButton
+          {...mergedProps}
+          emphasis="white-persistent"
+          icon={icon}
+          render={render}
+          variant="outline"
+        />
+      }
     />
   )
 }
