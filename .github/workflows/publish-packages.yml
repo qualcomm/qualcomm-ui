@@ -71,7 +71,15 @@ jobs:
         BASE_SHA: ${{ needs.check.outputs.base-sha }}
         TMPDIR: ${{ runner.temp }}
       run: |
-        pnpm qui-changesets prep-release --include-commit-links --commit-sha "$BASE_SHA"
+        pnpm qui-changesets changeset-generate --include-commit-links --commit-sha "$BASE_SHA"
+        # changeset version exits 1 when there is nothing to release.
+        if ! compgen -G '.changeset/*.md' | grep -qv '^\.changeset/README\.md$'; then
+          echo 'No releasable changes since the last release.' >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+        fi
+        pnpm changeset version
+        pnpm qui-changesets consolidate-changelogs
+        pnpm qui-changesets generate-release-notes
         pnpm qui-changesets update-jsdoc-since-tags --diff-ref "$BASE_SHA"
         pnpm install --lockfile-only --no-frozen-lockfile --ignore-scripts
 
