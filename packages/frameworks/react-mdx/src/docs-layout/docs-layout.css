@@ -6,11 +6,11 @@
 }
 
 [data-theme="dark"] {
-  --qui-docs-code-color: #8cb9f0;
+  --qui-docs-code-color: #d5d5d5;
 }
 
 [data-theme="light"] {
-  --qui-docs-code-color: var(--color-text-brand-primary);
+  --qui-docs-code-color: var(--color-text-neutral-secondary);
 }
 
 .qui-docs__root {
