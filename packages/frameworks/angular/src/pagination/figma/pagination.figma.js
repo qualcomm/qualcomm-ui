@@ -8,19 +8,17 @@ const figma = require("figma")
 
 const instance = figma.selectedInstance
 
-const isTableBar = instance.getEnum("type", {"table-bar": true})
-const control = instance.getEnum("control", {left: "left", right: "right"})
+const isAdvanced = instance.getEnum("variant", {advanced: true})
 const size = instance.getEnum("size", {
   md: "md",
 })
-const range = instance.getBoolean("range")
-const items = instance.getBoolean("items")
+const itemsPerPage = instance.getBoolean("itemsPerPage")
 
 const sizeAttr = size ? ` size="${size}"` : ""
-const count = isTableBar ? "360" : "100"
-const defaultPageSize = isTableBar ? "100" : "10"
+const count = isAdvanced ? "360" : "100"
+const defaultPageSize = isAdvanced ? "100" : "10"
 
-const pageMetadata = range
+const pageMetadata = isAdvanced
   ? `
       <span *paginationContext="let context" q-pagination-page-metadata>
         @let meta = context.pageMetadata;
@@ -28,21 +26,18 @@ const pageMetadata = range
       </span>`
   : ""
 
-const pageSize = items
-  ? `
+const pageSize =
+  isAdvanced && itemsPerPage
+    ? `
       <div q-pagination-page-size [options]="[10, 25, 50, 100]">
         <span q-pagination-page-size-label>Items per page</span>
       </div>`
-  : ""
-
-const controls = `${pageSize}${pageMetadata}`
-const before = control === "left" ? controls : ""
-const after = control === "right" ? controls : ""
+    : ""
 
 export default {
   example: figma.code`
-    <div count="${count}" defaultPageSize="${defaultPageSize}" q-pagination-root${sizeAttr}>${before}
-      <div q-pagination-page-buttons></div>${after}
+    <div count="${count}" defaultPageSize="${defaultPageSize}" q-pagination-root${sizeAttr}>${pageSize}${pageMetadata}
+      <div q-pagination-page-buttons></div>
     </div>`,
   id: "Pagination",
   imports: [`import {PaginationModule} from "@qualcomm-ui/angular/pagination"`],
