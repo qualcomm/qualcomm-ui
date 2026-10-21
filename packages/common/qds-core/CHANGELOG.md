@@ -1,5 +1,30 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 1.39.0
+
+Oct 20th, 2026
+
+### Features
+
+* [button]: add badge support ([b3385cb](https://github.com/qualcomm/qualcomm-ui/commit/b3385cb06583c92c8d914ae64e0d95223d6d93bc))
+* [button]: support contextual default props ([4ac73a8](https://github.com/qualcomm/qualcomm-ui/commit/4ac73a8d0731d9d5bece2353c04bbd84b4eed45a))
+* [icon]: warn on invalid icon size ([f825d95](https://github.com/qualcomm/qualcomm-ui/commit/f825d95a5a0e91240df523856aeed5d68dbd7605))
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+* [badge]: add xs number badge size ([b3385cb](https://github.com/qualcomm/qualcomm-ui/commit/b3385cb06583c92c8d914ae64e0d95223d6d93bc))
+* add image-viewer api and styles ([71ca7f7](https://github.com/qualcomm/qualcomm-ui/commit/71ca7f7))
+
+### Code Refactoring
+
+* [image-viewer]: use popup approach for interactive image ([49b09e3](https://github.com/qualcomm/qualcomm-ui/commit/49b09e3))
+
+### Bug Fixes
+
+* [badge]: apply the icon badge size scale to its icon ([a8d87d5](https://github.com/qualcomm/qualcomm-ui/commit/a8d87d5e8447c8d59a8753be933af58ff8e20d22))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.0]
+
 ## 1.38.2
 
 Sep 29th, 2026

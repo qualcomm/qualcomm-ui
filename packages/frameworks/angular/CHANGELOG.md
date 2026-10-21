@@ -1,5 +1,20 @@
 # @qualcomm-ui/angular Changelog
 
+## 3.4.0
+
+Oct 20th, 2026
+
+### Features
+
+* [button]: add badge support ([b3385cb](https://github.com/qualcomm/qualcomm-ui/commit/b3385cb06583c92c8d914ae64e0d95223d6d93bc))
+* [button]: support contextual default props ([4ac73a8](https://github.com/qualcomm/qualcomm-ui/commit/4ac73a8d0731d9d5bece2353c04bbd84b4eed45a))
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+* [badge]: add xs number badge size ([b3385cb](https://github.com/qualcomm/qualcomm-ui/commit/b3385cb06583c92c8d914ae64e0d95223d6d93bc))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.0, @qualcomm-ui/qds-core@1.39.0, @qualcomm-ui/angular-core@3.4.0]
+
 ## 3.3.2
 
 Sep 29th, 2026

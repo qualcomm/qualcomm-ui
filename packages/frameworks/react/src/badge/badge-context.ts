@@ -8,7 +8,7 @@ import type {
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 
 /**
- * @since next-release
+ * @since 1.32.0
  */
 export interface BadgeContextValue {
   numberBadgeProps: Pick<QdsNumberBadgeProps, "disabled" | "emphasis" | "size">
@@ -16,7 +16,7 @@ export interface BadgeContextValue {
 }
 
 /**
- * @since next-release
+ * @since 1.32.0
  */
 export const [BadgeContextProvider, useBadgeContext] =
   createGuardedContext<BadgeContextValue>({

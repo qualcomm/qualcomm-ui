@@ -1,5 +1,13 @@
 # @qualcomm-ui/dom Changelog
 
+## 1.3.1
+
+Oct 20th, 2026
+
+### Features
+
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+
 ## 1.3.0
 
 Aug 30th, 2026

@@ -1,5 +1,26 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 3.4.0
+
+Oct 20th, 2026
+
+### Features
+
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+
+### Code Refactoring
+
+* [menu]: deprecate `selected`/`onSelect` on trigger items, which never emitted ([2817557](https://github.com/qualcomm/qualcomm-ui/commit/2817557bb3fbfb120171d71ef28b87df498b6ab6))
+
+### Bug Fixes
+
+* [menu]: emit the item `(selected)` output in Angular, including with `lazyMount` and `unmountOnExit` ([91e57d8](https://github.com/qualcomm/qualcomm-ui/commit/91e57d837e9e67e6d52e3da0b28364bcaf1914f8))
+* [menu]: emit `selected`/`onSelect` on checkbox and radio items ([2817557](https://github.com/qualcomm/qualcomm-ui/commit/2817557bb3fbfb120171d71ef28b87df498b6ab6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.0, @qualcomm-ui/dom@1.3.1]
+
 ## 3.3.1
 
 Sep 29th, 2026

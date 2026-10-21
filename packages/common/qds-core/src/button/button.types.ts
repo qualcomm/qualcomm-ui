@@ -113,14 +113,14 @@ export interface QdsButtonApi {
   /**
    * Default emphasis for a number badge.
    *
-   * @since next-release
+   * @since 1.39.0
    */
   numberBadgeEmphasis: QdsNumberBadgeEmphasis
 
   /**
    * Default size for a number badge.
    *
-   * @since next-release
+   * @since 1.39.0
    */
   numberBadgeSize: QdsNumberBadgeSize
 
@@ -129,7 +129,7 @@ export interface QdsButtonApi {
   /**
    * Default size for a status badge.
    *
-   * @since next-release
+   * @since 1.39.0
    */
   statusBadgeSize: QdsBadgeExtraSize
 }

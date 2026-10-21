@@ -1,5 +1,26 @@
 # @qualcomm-ui/core Changelog
 
+## 1.14.0
+
+Oct 20th, 2026
+
+### Features
+
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+* add image-viewer api and utils ([2e503ff](https://github.com/qualcomm/qualcomm-ui/commit/2e503ff))
+
+### Code Refactoring
+
+* [image-viewer]: use popup approach for interactive image ([49b09e3](https://github.com/qualcomm/qualcomm-ui/commit/49b09e3))
+
+### Bug Fixes
+
+* [menu]: emit the item `(selected)` output in Angular, including with `lazyMount` and `unmountOnExit` ([91e57d8](https://github.com/qualcomm/qualcomm-ui/commit/91e57d837e9e67e6d52e3da0b28364bcaf1914f8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/dom@1.3.1]
+
 ## 1.13.1
 
 Sep 29th, 2026

@@ -1,5 +1,21 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 2.14.0
+
+Oct 20th, 2026
+
+### Features
+
+* [markdown]: add ImageViewer component for markdown images ([a6236b8](https://github.com/qualcomm/qualcomm-ui/commit/a6236b8))
+
+### Code Refactoring
+
+* distinguish inline code style from links ([e6c32f8](https://github.com/qualcomm/qualcomm-ui/commit/e6c32f8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.0, @qualcomm-ui/react@1.32.0, @qualcomm-ui/react-core@1.10.0]
+
 ## 2.13.0
 
 Oct 12th, 2026

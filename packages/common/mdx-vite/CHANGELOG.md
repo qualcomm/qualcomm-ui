@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 3.11.1
+
+Oct 20th, 2026
+
+### Bug Fixes
+
+* [ai-context]: pass routing strategy to exporter ([50d53a5](https://github.com/qualcomm/qualcomm-ui/commit/50d53a5))
+
 ## 3.11.0
 
 Oct 12th, 2026

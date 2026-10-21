@@ -1,5 +1,26 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.10.0
+
+Oct 20th, 2026
+
+### Features
+
+* add image-viewer component ([0cf432e](https://github.com/qualcomm/qualcomm-ui/commit/0cf432e))
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+
+### Code Refactoring
+
+* [image-viewer]: use popup approach for interactive image ([49b09e3](https://github.com/qualcomm/qualcomm-ui/commit/49b09e3))
+
+### Bug Fixes
+
+* [menu]: emit `selected`/`onSelect` on checkbox and radio items ([2817557](https://github.com/qualcomm/qualcomm-ui/commit/2817557bb3fbfb120171d71ef28b87df498b6ab6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.0, @qualcomm-ui/dom@1.3.1]
+
 ## 1.9.1
 
 Sep 29th, 2026

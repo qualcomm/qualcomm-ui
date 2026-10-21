@@ -94,7 +94,7 @@ type ImageViewerComponent = typeof SimpleImageViewer & {
 }
 
 /**
- * @since next-release
+ * @since 1.32.0
  */
 export const ImageViewer: ImageViewerComponent =
   SimpleImageViewer as ImageViewerComponent

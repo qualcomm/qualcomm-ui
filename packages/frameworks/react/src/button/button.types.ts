@@ -17,7 +17,7 @@ export interface ButtonProps
    * emphasis, size, and disabled state default to values that match the button.
    * Props set on the badge take precedence.
    *
-   * @since next-release
+   * @since 1.32.0
    */
   badge?: ReactNode
 
