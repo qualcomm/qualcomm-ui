@@ -16,6 +16,8 @@ import {
 
 Use this guide when creating new pages.
 
+## Prerequisites
+
 We recommend that you follow this guide with a fresh clone of our [QUI Docs
 Template](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-qui-docs) for the best experience. You'll need [Node.js](https://nodejs.org/en/download) installed to run the site. Clone the template using the following command:
 
@@ -53,6 +55,24 @@ Each page URL is derived from the file path relative to `pageDirectory`.
 The `.mdx` file extension is removed from the URL. A folder ending in `+` contributes a URL segment without the `+` character.
 
 See [Routing Conventions](/routing-conventions) for index routes, layouts, parameters, parent overrides, and private folders.
+
+## Page Structure
+
+Each page should start with the frontmatter title as its H1, followed by a brief description:
+
+```md
+---
+title: Troubleshooting
+---
+
+# {frontmatter.title}
+
+Resolve common build and deployment errors.
+```
+
+To keep the description in frontmatter, declare `description` and render it with `{frontmatter.description}` in place of the paragraph.
+
+See [Frontmatter](/rules#frontmatter) for the full rules.
 
 ## Nested Pages
 
