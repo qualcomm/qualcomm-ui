@@ -261,6 +261,7 @@ export function TableOfContents(): ReactNode {
     <div className="qui-toc">
       <div ref={containerRef} className="qui-toc__container">
         <PageActions />
+        <div className="qui-toc__label">On this page</div>
         <div className="qui-toc__links">
           {headings.map(({headingLevel, id, textContent}) => {
             const isActive = activeId === id
@@ -288,30 +289,11 @@ export function TableOfContents(): ReactNode {
                   } as CSSProperties
                 }
               >
-                {headingLevel > 2 ? (
-                  <>
-                    <div
-                      aria-hidden
-                      className="qui-toc__link-indent-guide"
-                      data-active={booleanDataAttr(
-                        isActive && headingLevel !== 4,
-                      )}
-                    />
-                    {headingLevel === 4 ? (
-                      <div
-                        aria-hidden
-                        className="qui-toc__link-indent-guide"
-                        data-active={booleanDataAttr(isActive)}
-                        style={
-                          {
-                            "--indent-depth": 1,
-                          } as CSSProperties
-                        }
-                      />
-                    ) : null}
-                  </>
-                ) : null}
-
+                <div
+                  aria-hidden
+                  className="qui-toc__link-indent-guide"
+                  data-active={booleanDataAttr(isActive)}
+                />
                 <Link href={`#${id}`}>{textContent}</Link>
               </TocLink>
             )
