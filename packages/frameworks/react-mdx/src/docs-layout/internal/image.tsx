@@ -21,7 +21,6 @@ export function Image({imgProps, ...props}: ImageProps): ReactElement {
       src={src}
       staticImageProps={imageProps}
       style={{
-        marginTop: "var(--qui-mdx-margin-default)",
         maxWidth: "100%",
         width: "100%",
         ...props.style,

@@ -400,10 +400,6 @@ pre.qui-docs-code {
   display: flex;
   gap: 12px;
 
-  h1 {
-    white-space: nowrap;
-  }
-
   a.qui-badge__root {
     cursor: pointer;
     text-decoration: none;

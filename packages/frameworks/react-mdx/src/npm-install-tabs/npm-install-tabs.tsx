@@ -45,6 +45,7 @@ export function NpmInstallTabs({
 
   return (
     <Tabs.Root
+      className="mdx"
       onValueChange={(value) => {
         setPackageManager?.(value as PackageManager)
       }}

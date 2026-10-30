@@ -246,7 +246,7 @@ pre.qui-docs-code {
 }
 
 .doc-props-description__root {
-  color: var(--color-text-neutral-primary);
+  color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-sm-default);
   min-width: 250px;
 
