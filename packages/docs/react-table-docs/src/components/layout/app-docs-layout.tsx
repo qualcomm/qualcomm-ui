@@ -24,7 +24,6 @@ import {
 } from "@qualcomm-ui/react-mdx/docs-layout"
 import {updateSiteState} from "@qualcomm-ui/react-router-utils/client"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
-import {Link} from "@qualcomm-ui/react/link"
 
 import reactPkg from "../../../../../frameworks/react/package.json"
 
