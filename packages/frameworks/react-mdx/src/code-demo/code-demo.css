@@ -1,7 +1,6 @@
 :root {
   --docs-code-demo-background-dark: var(--color-background-neutral-00);
   --docs-code-demo-background-light: var(--color-background-neutral-00);
-  --shiki-dark-bg: var(--color-utility-opacity-neutral-01) !important;
 }
 
 [data-theme="dark"] {
