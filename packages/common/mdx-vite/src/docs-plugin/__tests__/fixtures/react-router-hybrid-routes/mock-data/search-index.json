@@ -125,7 +125,7 @@
       "page-setup"
     ],
     "title": "Page Setup",
-    "content": "Let's start by adding a few pages. Create a `setup.mdx` in the `routes` directory:\n\nPopulate your page with the following:\n\n> ********\n>\n> NOTE\n>\n> > We'll explain the `# {frontmatter.title}` syntax in the `Markdown` guide.\n\nAfter adding this page, your sidebar should look like this:\n\nIn your application, click this route to navigate to the page. It should take you to `/setup`. Let's explore how this works.",
+    "content": "Let's start by adding a few pages. Create a `setup.mdx` in the `routes` directory:\n\nPopulate your page with the following:\n\n> ********\n>\n> > We'll explain the `# {frontmatter.title}` syntax in the `Markdown` guide.\n\nAfter adding this page, your sidebar should look like this:\n\nIn your application, click this route to navigate to the page. It should take you to `/setup`. Let's explore how this works.",
     "heading": "Add a Page",
     "headingLevel": 2,
     "href": "/guide/page-setup#add-a-page"
@@ -205,7 +205,7 @@
       "page-setup"
     ],
     "title": "Page Setup",
-    "content": "Next, we'll add an entry to expand the Help folder. Folders in the sidebar are closed by default. To make the `Help` folder open automatically, set the `expanded` property to true.\n\nNow your sidebar should look something like this:\n\n> ********\n>\n> NOTE\n>\n> > If the site navigates to a nested route, the sidebar will automatically expand to show the route's item\n> > regardless of the route's `navConfig` entry.\n\nWe'll cover one more example to explain how the `id` property works for child items.\n\nLet's add another page to our application.\n\n* Create a file: `src/routes/help+/contact-us.mdx`.\n* Populate it with the following:\n\nSince routes without navConfig entries are ordered alphabetically, the `Contact Us` item appears before the `Troubleshooting` item in the sidebar. We can fix this by creating a few entries in the navConfig.\n\nSince these routes are nested under the `/help` route, we'll need to add them to the `/help` item's `children` array:\n\n> ********\n>\n> NOTE\n>\n> > For each id, we only need to match the path segment of the route at its current nesting level.\n> > The plugin walks the navConfig tree recursively to assemble the route and match against the MDX file.",
+    "content": "Next, we'll add an entry to expand the Help folder. Folders in the sidebar are closed by default. To make the `Help` folder open automatically, set the `expanded` property to true.\n\nNow your sidebar should look something like this:\n\n> ********\n>\n> > If the site navigates to a nested route, the sidebar will automatically expand to show the route's item\n> > regardless of the route's `navConfig` entry.\n\nWe'll cover one more example to explain how the `id` property works for child items.\n\nLet's add another page to our application.\n\n* Create a file: `src/routes/help+/contact-us.mdx`.\n* Populate it with the following:\n\nSince routes without navConfig entries are ordered alphabetically, the `Contact Us` item appears before the `Troubleshooting` item in the sidebar. We can fix this by creating a few entries in the navConfig.\n\nSince these routes are nested under the `/help` route, we'll need to add them to the `/help` item's `children` array:\n\n> ********\n>\n> > For each id, we only need to match the path segment of the route at its current nesting level.\n> > The plugin walks the navConfig tree recursively to assemble the route and match against the MDX file.",
     "heading": "Expanded State",
     "headingLevel": 4,
     "href": "/guide/page-setup#expanded-state"
@@ -591,7 +591,7 @@
       "markdown"
     ],
     "title": "Markdown",
-    "content": "Our blockquotes are enhanced to enable inline alerts.\n\n> ********\n>\n> NOTE\n>\n> > We recommend that you use `folders` for organizing your routes.",
+    "content": "Our blockquotes are enhanced to enable inline alerts.\n\n> ********\n>\n> > We recommend that you use `folders` for organizing your routes.",
     "heading": "Alerts",
     "headingLevel": 3,
     "href": "/guide/markdown#alerts"
@@ -635,7 +635,7 @@
       "markdown"
     ],
     "title": "Markdown",
-    "content": "Customize the status color using `[!tip]`, `[!success]`, `[!warning]`, or `[!caution]`:\n\n> ********\n>\n> TIP\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ****\n>\n> SUCCESS\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ********\n>\n> WARNING\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ********\n>\n> CAUTION\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n***",
+    "content": "Customize the status color using `[!tip]`, `[!success]`, `[!warning]`, or `[!caution]`:\n\n> ********\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ****\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ********\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n> ********\n>\n> > We recommend that you use `folders` for organizing your routes.\n\n***",
     "heading": "Alert Variants",
     "headingLevel": 4,
     "href": "/guide/markdown#alert-variants"
