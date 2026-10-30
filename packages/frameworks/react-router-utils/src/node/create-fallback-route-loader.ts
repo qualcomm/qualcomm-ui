@@ -15,16 +15,22 @@ interface ExportsLoaderArgs {
   getSections: () => Promise<KnowledgeSections | null>
 }
 
+export interface FallbackRouteLoaderData {
+  /**
+   * Pathname of the requested route that could not be resolved
+   */
+  pathname: string
+}
+
 /**
  * Serves knowledge export files. Pages are served dynamically from pages.json.
- * Falls back to a /404 redirect if the path is not found.
  */
 export function createFallbackRouteLoader({
   exports,
   getPages,
   getSections,
 }: ExportsLoaderArgs): LoaderFunction {
-  return async ({params}) => {
+  return async ({params, request}) => {
     const path = params["*"]
 
     if (!path) {
@@ -73,6 +79,11 @@ export function createFallbackRouteLoader({
       }
     }
 
-    return redirect(`/404?url=${encodeURIComponent(path)}`)
+    return new Response(
+      JSON.stringify({
+        pathname: new URL(request.url).pathname?.replace(".data", ""),
+      } satisfies FallbackRouteLoaderData),
+      {headers: {"Content-Type": "application/json"}, status: 404},
+    )
   }
 }
