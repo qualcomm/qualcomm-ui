@@ -419,8 +419,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       '@qualcomm-ui/changesets-cli':
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^3.1.0
+        version: 3.1.0(@actions/core@1.11.1)(@changesets/read@1.0.0)(@changesets/types@7.0.0)(@changesets/write@1.0.0)(@commander-js/extra-typings@14.0.0(commander@14.0.3))(@manypkg/get-packages@3.1.0)(@octokit/rest@22.0.1)(commander@14.0.3)(dayjs@1.11.21)(ts-morph@27.0.2)
       '@qualcomm-ui/eslint-config-angular':
         specifier: workspace:*
         version: link:packages/configs/eslint-config-angular
@@ -8959,9 +8959,20 @@ packages:
   '@protobufjs/utf8@1.1.2':
     resolution: {integrity: sha512-b1UQwcEZ4yCnMCD8DAL1VlbvBJE9/IX4FTIp7BG1xYpf29SLazLSrqUkj4w7Y5y7cCVP6E5tcqqcI0xemPkHug==}
 
-  '@qualcomm-ui/changesets-cli@2.2.0':
-    resolution: {integrity: sha512-xpRDuDoErrcy7KQ59mBGypTYEoyBRq7PcclnODajxNl+iEA7aukdLfSv+nHSaBQoL/mFaobFRmxu3jf3HFff4w==}
+  '@qualcomm-ui/changesets-cli@3.1.0':
+    resolution: {integrity: sha512-UWToblUQsQeWFoaJvUZwv6qkeYZKhCxavnKeRYo38zjuX2Pmg6TXdUu1UuILC5hCQqU0xGjnL5GlCbUFaKhbjw==}
     hasBin: true
+    peerDependencies:
+      '@actions/core': '>=1.11.1'
+      '@changesets/read': '>=1.0.0'
+      '@changesets/types': '>=7.0.0'
+      '@changesets/write': '>=1.0.0'
+      '@commander-js/extra-typings': '>=14.0.0'
+      '@manypkg/get-packages': '>=3.1.0'
+      '@octokit/rest': ^22.0.1
+      commander: '>=14.0.3'
+      dayjs: '>=1.11.19'
+      ts-morph: '>=25.0.1'
 
   '@qualcomm-ui/cli@1.0.7':
     resolution: {integrity: sha512-Wi52OExl/9MoVMZs6NVAl+Ooq7IP7QPkKckETL1u3DsFFqiqptWcuolLxgbsw2LAJotO1XKXgjfZ5/GQ4yszxA==}
@@ -10181,9 +10192,6 @@ packages:
 
   '@ts-morph/common@0.22.0':
     resolution: {integrity: sha512-HqNBuV/oIlMKdkLshXd1zKBqNQCsuPEsgQOkfFQ/eUKjRlwndXW1AjN9LVkBEIukm00gGXSRmfkl0Wv5VXLnlw==}
-
-  '@ts-morph/common@0.26.1':
-    resolution: {integrity: sha512-Sn28TGl/4cFpcM+jwsH1wLncYq3FtN/BIpem+HOygfBWPT5pAeS5dB4VFVzV8FbnOKHpDLZmvAl4AjPEev5idA==}
 
   '@ts-morph/common@0.28.1':
     resolution: {integrity: sha512-W74iWf7ILp1ZKNYXY5qbddNaml7e9Sedv5lvU1V8lftlitkc9Pq1A+jlH23ltDgWYeZFFEqGCD1Ies9hqu3O+g==}
@@ -16818,9 +16826,6 @@ packages:
   ts-morph@21.0.1:
     resolution: {integrity: sha512-dbDtVdEAncKctzrVZ+Nr7kHpHkv+0JDJb2MjjpBaj8bFeCkePU9rHfMklmhuLFnpeq/EJZk2IhStY6NzqgjOkg==}
 
-  ts-morph@25.0.1:
-    resolution: {integrity: sha512-QJEiTdnz1YjrB3JFhd626gX4rKHDLSjSVMvGGG4v7ONc3RBwa0Eei98G9AT9uNFDMtV54JyuXsFeC+OH0n6bXQ==}
-
   ts-morph@27.0.2:
     resolution: {integrity: sha512-fhUhgeljcrdZ+9DZND1De1029PrE+cMkIP7ooqkLRTrRLTqcki2AstsyJm0vRNbTbVCNJ0idGlbBrfqc7/nA8w==}
 
@@ -22618,12 +22623,18 @@ snapshots:
 
   '@protobufjs/utf8@1.1.2': {}
 
-  '@qualcomm-ui/changesets-cli@2.2.0':
+  '@qualcomm-ui/changesets-cli@3.1.0(@actions/core@1.11.1)(@changesets/read@1.0.0)(@changesets/types@7.0.0)(@changesets/write@1.0.0)(@commander-js/extra-typings@14.0.0(commander@14.0.3))(@manypkg/get-packages@3.1.0)(@octokit/rest@22.0.1)(commander@14.0.3)(dayjs@1.11.21)(ts-morph@27.0.2)':
     dependencies:
       '@actions/core': 1.11.1
+      '@changesets/read': 1.0.0
+      '@changesets/types': 7.0.0
+      '@changesets/write': 1.0.0
+      '@commander-js/extra-typings': 14.0.0(commander@14.0.3)
       '@manypkg/get-packages': 3.1.0
       '@octokit/rest': 22.0.1
-      ts-morph: 25.0.1
+      commander: 14.0.3
+      dayjs: 1.11.21
+      ts-morph: 27.0.2
 
   '@qualcomm-ui/cli@1.0.7': {}
 
@@ -23958,12 +23969,6 @@ snapshots:
       fast-glob: 3.3.3
       minimatch: 9.0.9
       mkdirp: 3.0.1
-      path-browserify: 1.0.1
-
-  '@ts-morph/common@0.26.1':
-    dependencies:
-      fast-glob: 3.3.3
-      minimatch: 9.0.9
       path-browserify: 1.0.1
 
   '@ts-morph/common@0.28.1':
@@ -32800,11 +32805,6 @@ snapshots:
     dependencies:
       '@ts-morph/common': 0.22.0
       code-block-writer: 12.0.0
-
-  ts-morph@25.0.1:
-    dependencies:
-      '@ts-morph/common': 0.26.1
-      code-block-writer: 13.0.3
 
   ts-morph@27.0.2:
     dependencies:

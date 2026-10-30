@@ -57,7 +57,7 @@
     "check-updates": "ncu -c 2 -w",
     "doc-gen": "turbo run build:typedoc",
     "publish:all": "pnpm changeset publish && pnpm -r run publish-angular-package",
-    "bump": "pnpm qui-changesets prep-release --include-commit-links && pnpm qui-changesets update-jsdoc-since-tags"
+    "bump": "pnpm qui-changesets changeset-generate --include-commit-links"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.0",
@@ -65,7 +65,7 @@
     "@commander-js/extra-typings": "catalog:",
     "@eslint/js": "catalog:",
     "@manypkg/get-packages": "^3.1.0",
-    "@qualcomm-ui/changesets-cli": "^2.2.0",
+    "@qualcomm-ui/changesets-cli": "^3.1.0",
     "@qualcomm-ui/eslint-config-angular": "workspace:*",
     "@qualcomm-ui/eslint-config-mdx": "workspace:*",
     "@qualcomm-ui/eslint-config-react": "workspace:*",
