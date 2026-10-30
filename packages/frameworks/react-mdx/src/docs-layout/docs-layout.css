@@ -1,6 +1,6 @@
 :root {
   --qui-header-height: 48px;
-  --qui-side-nav-width: 312px;
+  --qui-side-nav-width: 240px;
   --background-primary: var(--color-surface-primary);
   --qui-docs-code-background: var(--color-background-neutral-01);
 }
@@ -41,7 +41,7 @@
   .qui-header-bar__root {
     container-type: inline-size;
     margin: 0 auto;
-    max-width: 1595px;
+    padding: 0 24px;
   }
 }
 
@@ -59,14 +59,16 @@
 .qui-docs__main-content {
   box-sizing: border-box;
   height: 100%;
+  margin: 0 auto;
+  max-width: 976px;
   min-height: calc(100vh - var(--qui-header-height));
   min-width: 300px;
   padding: var(--content-padding-top) var(--content-padding-right)
     var(--content-padding-bottom) var(--content-padding-left);
   width: 100%;
-  --content-padding-top: 12px;
+  --content-padding-top: 32px;
   --content-padding-right: 16px;
-  --content-padding-bottom: 12px;
+  --content-padding-bottom: 72px;
   --content-padding-left: 16px;
 
   b,
@@ -74,18 +76,11 @@
     font-weight: 500;
   }
 
-  @media (min-width: 600px) {
-    --content-padding-top: 20px;
-    --content-padding-right: 28px;
-    --content-padding-bottom: 20px;
-    --content-padding-left: 28px;
-  }
-
-  @media screen and (min-width: 1000px) {
-    --content-padding-top: 20px;
-    --content-padding-right: 0;
-    --content-padding-bottom: 32px;
-    --content-padding-left: 28px;
+  @media screen and (min-width: 950px) {
+    --content-padding-top: 48px;
+    --content-padding-right: 48px;
+    --content-padding-bottom: 120px;
+    --content-padding-left: 48px;
   }
 }
 
@@ -146,16 +141,29 @@
   }
 
   &[data-nav-density="compact"] {
-    /* TODO: remove when the small side nav size lands */
     .qui-side-nav__node-root {
+      font: var(--font-static-body-sm-default);
+      height: auto;
       min-height: 32px;
-      padding-top: 4px;
-      padding-bottom: 4px;
 
-      &:has(+ .qui-side-nav__node-root),
-      &:has(+ .qui-side-nav__branch-root) {
-        margin-bottom: 1px;
+      &[data-selected] {
+        font: var(--font-static-body-sm-bold);
       }
+    }
+  }
+
+  .qui-side-nav__node-root {
+    border-radius: var(--border-radius-lg);
+    padding-bottom: 4px;
+    padding-top: 4px;
+
+    &[data-selected] {
+      color: var(--color-text-neutral-primary);
+    }
+
+    &:has(+ .qui-side-nav__node-root),
+    &:has(+ .qui-side-nav__branch-root) {
+      margin-bottom: 1px;
     }
   }
 }
@@ -209,123 +217,22 @@
 
 .qui-docs__app-content {
   background: var(--background-primary);
-  display: grid;
-  grid-template-columns: 100%;
+  display: flex;
+  flex: 1;
+  margin: 0 auto;
+  max-width: 1480px;
   min-height: calc(100vh - var(--qui-header-height));
   width: 100%;
-  --content-padding-left: 28px;
-
-  @media screen and (min-width: 950px) {
-    grid-template-columns:
-      var(--qui-side-nav-width) calc(100vw - var(--qui-side-nav-width) - 17px)
-      0;
-
-    .qui-docs__main-content {
-      --content-padding-top: 20px;
-      --content-padding-right: 28px;
-      --content-padding-bottom: 32px;
-      --content-padding-left: 28px;
-    }
-
-    &[data-hide-side-nav] {
-      grid-template-columns: 100%;
-      padding-right: 24px;
-
-      &[data-hide-toc] {
-        padding-right: 0;
-      }
-    }
-  }
-
-  @media screen and (min-width: 1280px) {
-    grid-template-columns: var(--qui-side-nav-width) minmax(600px, 950px) 240px;
-
-    .qui-docs__main-content {
-      margin: 0 auto;
-      max-width: 950px;
-      --content-padding-top: 20px;
-      --content-padding-right: 0;
-      --content-padding-bottom: 32px;
-      --content-padding-left: 42px;
-    }
-
-    &[data-hide-side-nav] {
-      .qui-docs__main-content {
-        max-width: unset;
-      }
-      grid-template-columns:
-        minmax(600px, calc(900px + var(--qui-side-nav-width)))
-        240px;
-    }
-
-    &[data-hide-toc] {
-      grid-template-columns: var(--qui-side-nav-width) minmax(
-          600px,
-          calc(1600px - var(--qui-side-nav-width))
-        );
-
-      .qui-docs__main-content {
-        max-width: unset;
-        --content-padding-top: 20px;
-        --content-padding-right: 42px;
-        --content-padding-bottom: 32px;
-        --content-padding-left: 42px;
-      }
-
-      &[data-hide-side-nav] {
-        .qui-docs__main-content {
-          --content-padding-left: 28px;
-        }
-        grid-template-columns: minmax(
-          600px,
-          calc(1140px + var(--qui-side-nav-width))
-        );
-      }
-    }
-  }
-
-  @media screen and (min-width: 1510px) {
-    grid-template-columns:
-      var(--qui-side-nav-width) minmax(900px, 950px)
-      minmax(280px, 360px);
-    max-width: 1600px;
-
-    &[data-hide-side-nav] {
-      grid-template-columns:
-        minmax(900px, calc(1060px + var(--qui-side-nav-width)))
-        minmax(280px, 360px);
-    }
-
-    &[data-hide-toc] {
-      grid-template-columns: var(--qui-side-nav-width) minmax(
-          600px,
-          calc(1600px - var(--qui-side-nav-width))
-        );
-
-      .qui-docs__main-content {
-        max-width: 1600px;
-        --content-padding-top: 20px;
-        --content-padding-right: 42px;
-        --content-padding-bottom: 32px;
-        --content-padding-left: 42px;
-      }
-
-      &[data-hide-side-nav] {
-        grid-template-columns: minmax(600px, 1600px);
-      }
-    }
-  }
-
-  .qui-docs-sidebar__root > .q-side-navigation--root {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
 
   .qui-docs-heading {
     align-items: center;
     color: var(--color-text-neutral-primary) !important;
     display: inline-flex;
     gap: 8px;
+
+    .qui-docs-heading-text > .qui-link__root {
+      font: inherit;
+    }
   }
 }
 
@@ -395,8 +302,24 @@ pre.qui-docs-code {
 }
 
 .qui-docs-sidebar__root {
+  box-sizing: border-box;
+  min-width: 264px;
   .qui-side-nav__root {
-    padding: 0 8px;
+    box-sizing: border-box;
+    min-width: 240px;
+    padding: 32px 12px 48px 24px;
+
+    .qui-side-nav__filter-input {
+      margin-top: 0;
+    }
+
+    .qui-side-nav__branch-root:has(
+      .qui-side-nav__node-root[data-tree-part="leaf-node"][data-selected]
+    ) {
+      > .qui-side-nav__node-root[data-tree-part="branch-node"]:first-child {
+        color: var(--color-text-neutral-primary);
+      }
+    }
   }
 
   .qui-side-nav__group-label {
@@ -407,10 +330,11 @@ pre.qui-docs-code {
   }
 
   .qui-side-nav__node-root {
-    font: var(--font-static-body-sm-bold);
+    font: var(--font-static-body-sm-default);
     margin-left: calc(
       (calc(var(--depth, 1) - 1) * var(--indent-spacing)) + var(--spacing-70)
     );
+    margin-right: 0;
   }
 
   .qui-side-nav__branch-indent-guide {
