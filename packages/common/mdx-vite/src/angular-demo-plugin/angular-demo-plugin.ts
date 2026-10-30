@@ -270,7 +270,13 @@ export function angularDemoPlugin({
     },
     load(id) {
       if (id === VIRTUAL_MODULE_ID) {
-        return generateRegistryModule()
+        /**
+         * The module is a generated Map of highlighted source strings, so a
+         * source map has nothing useful to point at. Without an explicit empty
+         * map, Vite generates a hires identity map that is several times larger
+         * than the module itself.
+         */
+        return {code: generateRegistryModule(), map: {mappings: ""}}
       }
     },
     name: "angular-demo-plugin",

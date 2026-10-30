@@ -4,7 +4,7 @@
 import {mkdtempSync, rmSync, writeFileSync} from "node:fs"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
-import {afterEach, beforeEach, describe, expect, test} from "vitest"
+import {afterEach, beforeEach, describe, expect, test, vi} from "vitest"
 
 import {ConfigLoader} from "../config/config-loader"
 
@@ -21,6 +21,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
+  vi.restoreAllMocks()
   rmSync(tempDir, {force: true, recursive: true})
 })
 
@@ -42,5 +43,48 @@ describe("ConfigLoader", () => {
     const resolved = loader.loadConfig()
 
     expect(resolved.routingStrategy).toBeUndefined()
+  })
+
+  test("defaults lint rules when omitted", () => {
+    const filePath = writeConfigFile(`module.exports = {}`)
+    const loader = new ConfigLoader({configFile: filePath})
+
+    expect(loader.loadConfig().lint).toEqual({
+      brokenLinks: "warn",
+      pageTitle: "warn",
+    })
+  })
+
+  test("maps the deprecated validatePageLinks: false to brokenLinks: off", () => {
+    const filePath = writeConfigFile(
+      `module.exports = {validatePageLinks: false}`,
+    )
+    const loader = new ConfigLoader({configFile: filePath})
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+    expect(loader.loadConfig().lint.brokenLinks).toBe("off")
+    expect(warnSpy.mock.calls.flat().join("\n")).toContain(
+      "`validatePageLinks` will be removed",
+    )
+  })
+
+  test("prefers lint.brokenLinks over validatePageLinks", () => {
+    const filePath = writeConfigFile(
+      `module.exports = {lint: {brokenLinks: "error"}, validatePageLinks: false}`,
+    )
+    const loader = new ConfigLoader({configFile: filePath})
+    vi.spyOn(console, "warn").mockImplementation(() => {})
+
+    expect(loader.loadConfig().lint.brokenLinks).toBe("error")
+  })
+
+  test("rejects unknown lint severities", () => {
+    const filePath = writeConfigFile(
+      `module.exports = {lint: {pageTitle: "fatal"}}`,
+    )
+    const loader = new ConfigLoader({configFile: filePath})
+
+    vi.spyOn(console, "dir").mockImplementation(() => {})
+    expect(() => loader.loadConfig()).toThrow("Failed to parse config file.")
   })
 })

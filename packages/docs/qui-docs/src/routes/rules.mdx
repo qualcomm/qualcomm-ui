@@ -4,12 +4,11 @@ title: Rules
 
 # {frontmatter.title}
 
-> [!note]
-> This guide is intended for Qualcomm developers and QUI contributors.
-
-These are what reviewers check. **PRs must comply with the rules and conventions below before they can be merged.**
-
 These rules apply to MDX route files, the QUI Docs navigation config, and asset folders in any documentation site that uses the QUI Docs platform.
+
+## Overview
+
+This guide is intended for Qualcomm developers and QUI contributors.
 
 Use [Routing Guidelines](/routing) for the operational contract that applies these rules when creating, moving, validating, or reviewing route pages.
 
@@ -63,13 +62,17 @@ When moving an existing route:
    }
    ```
 
-3. Fix all broken links (they are logged via vite):
+3. Fix all broken links. The `brokenLinks` lint rule logs them via vite:
    ```console
    Found 1 broken link:
 
      /rules
        x /getting-started/authentication — page not found
    ```
+
+## Lint
+
+QUI Docs validates broken links and page titles during development and build. Rules set to `"error"` fail the production build (`vite build`). Both `pageTitle` and `brokenLinks` default to `"warn"`. Configure severity with the [`lint` option](/configuration#lint) in `qui-docs.config.ts`.
 
 ## Frontmatter
 
@@ -83,11 +86,35 @@ When moving an existing route:
 
 - Use `# {frontmatter.title}` as the page H1. Do not hard-code a different H1 and let it drift from frontmatter.
 
+- The H1 should be followed by a brief description of the page. Write it as an inline paragraph, or declare `description` in frontmatter and render it with `{frontmatter.description}`.
+
+  ```md
+  ---
+  title: Quick Start
+  ---
+
+  # {frontmatter.title}
+
+  Install the CLI and publish your first page.
+  ```
+
+  ```md
+  ---
+  title: Quick Start
+  description: Install the CLI and publish your first page.
+  ---
+
+  # {frontmatter.title}
+
+  {frontmatter.description}
+  ```
+
 - Pages intentionally hidden from navigation may add `hidden: true` to their frontmatter.
 
 ## Headings
 
-- One H1 per page (always the frontmatter title).
+- One H1 per page (always the frontmatter title). The H1 is the first content on the page. Only frontmatter, `import`, and `export` statements may appear before it.
+- Use H2 or lower for every section. The `pageTitle` lint rule reports a missing title, content before the title, and any additional H1.
 - H2 sections cover the main reader tasks or topics.
 - H3 and H4 only when they add useful hierarchy. Do not skip heading levels.
 - Do not create headings for decorative grouping or as a substitute for explanation.
@@ -292,7 +319,7 @@ Before opening the PR, confirm each item:
 - Links are root-relative and use descriptive text.
 - Filenames and routes are kebab-case, no camelCase, no typos.
 - No section `index.mdx` pages. Use a sorted `overview.mdx` page only when it explains what the section is about.
-- Frontmatter has `title` and H1 is `# {frontmatter.title}`.
+- Frontmatter has `title`, H1 is `# {frontmatter.title}`, and a brief description follows the H1.
 - No duplicate page exists under another route.
 - Page explains side effects, permissions, and failure modes when relevant.
 - Page is short enough to maintain, or has been split by how-to, concept, or API area.

@@ -93,7 +93,29 @@ count badge, notification count, status indicator
 
 Supply a [NumberBadge](/components/badges/number-badge) or [StatusBadge](/components/badges/status-badge) with the [badge](./#badge-1) prop. The badge renders after the label and before the end icon.
 
-The button supplies these defaults: badge size follows the button (`NumberBadge`: `xs` on `sm`/`md`, `sm` on `lg`; `StatusBadge`: `sm` on `sm`/`md`, `md` on `lg`), a disabled button disables its badge, and `NumberBadge` emphasis contrasts with the button. For `outline` and `ghost` buttons, `primary` maps to `brand` and `danger` to `danger`; `StatusBadge` emphasis remains unchanged. Props set on the badge take precedence over these defaults.
+The button passes these defaults to its badge:
+
+- A disabled button disables its badge.
+- Badge size follows the button size.
+- `NumberBadge` emphasis follows the button's `variant` and `emphasis`.
+- `StatusBadge` emphasis is not changed.
+
+Props set on the badge take precedence over these defaults.
+
+| Button size | `NumberBadge` size | `StatusBadge` size |
+| ----------- | ------------------ | ------------------ |
+| `sm`        | `xs`               | `sm`               |
+| `md`        | `xs`               | `sm`               |
+| `lg`        | `sm`               | `md`               |
+
+| Button emphasis    | `NumberBadge` emphasis on `fill` | `NumberBadge` emphasis on `outline` and `ghost` |
+| ------------------ | -------------------------------- | ----------------------------------------------- |
+| `neutral`          | `persistent-white`               | `neutral`                                       |
+| `primary`          | `persistent-white`               | `brand`                                         |
+| `danger`           | `persistent-white`               | `danger`                                        |
+| `persistent-white` | `persistent-white`               | `persistent-white`                              |
+| `persistent-black` | `persistent-black`               | `persistent-black`                              |
+| `inverse`          | `neutral`                        | `neutral`                                       |
 
 The `badge` prop is also available on [Menu.Button](/components/menu#menu-button), and on [Menu.SplitButton](/components/menu#split-button) through `actionProps.badge`.
 

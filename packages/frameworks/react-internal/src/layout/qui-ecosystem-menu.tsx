@@ -16,7 +16,7 @@ export interface QuiEcosystemMenuProps extends Partial<MenuRootProps> {}
 
 export function QuiEcosystemMenu(props: QuiEcosystemMenuProps): ReactElement {
   return (
-    <Menu.Root {...props}>
+    <Menu.Root {...props} size="sm">
       <Menu.Trigger>
         <HeaderBar.MenuItem icon={BookCopy}>QUI Ecosystem</HeaderBar.MenuItem>
       </Menu.Trigger>
@@ -27,13 +27,12 @@ export function QuiEcosystemMenu(props: QuiEcosystemMenuProps): ReactElement {
               (entry) => (
                 <Menu.Item
                   key={entry.label}
-                  render={<a href={entry.href} />}
+                  render={
+                    <a href={entry.href} rel="noreferrer" target="_blank" />
+                  }
                   value="qui-docs"
                 >
-                  <Menu.ItemStartIcon icon={entry.logo} />
-                  <Menu.ItemLabel className="font-code-sm-bold">
-                    {entry.description}
-                  </Menu.ItemLabel>
+                  {entry.label}
                 </Menu.Item>
               ),
             )}

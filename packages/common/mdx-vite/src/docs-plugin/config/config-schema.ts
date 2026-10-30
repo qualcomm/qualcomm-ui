@@ -11,6 +11,7 @@ import type {
   OpenWebUiIntegration,
   PagesExportConfig,
   QuiDocsConfig,
+  QuiDocsLintOptions,
   QuiDocsTypeDocOptions,
   SectionExportConfig,
 } from "./types.js"
@@ -105,6 +106,17 @@ const knowledgeConfigSchema = implement<KnowledgeConfig>().with({
   sections: sectionsExportsSchema.optional(),
 })
 
+const lintSeveritySchema = z.union([
+  z.literal("off"),
+  z.literal("warn"),
+  z.literal("error"),
+])
+
+const lintSchema = implement<QuiDocsLintOptions>().with({
+  brokenLinks: lintSeveritySchema.optional(),
+  pageTitle: lintSeveritySchema.optional(),
+})
+
 const configSchema = implement<QuiDocsConfig>().with({
   appDirectory: z.string().optional(),
   disableCache: z.boolean().optional(),
@@ -123,6 +135,7 @@ const configSchema = implement<QuiDocsConfig>().with({
     .optional(),
   hotUpdateIgnore: z.instanceof(RegExp).optional(),
   knowledge: knowledgeConfigSchema.optional(),
+  lint: lintSchema.optional(),
   navConfig: z.array(z.union([routeMetaSchema, navMetaSchema])).optional(),
   pageDirectory: z.string().optional(),
   pageTimestampMetadata: z

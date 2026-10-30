@@ -13,6 +13,8 @@ import {visit} from "unist-util-visit"
 
 import type {PageMap} from "@qualcomm-ui/mdx-common"
 
+import type {LintSeverity} from "./config/index.js"
+
 export interface CollectedLink {
   fragment?: string
   sourceFile: string
@@ -167,7 +169,10 @@ export function validateLinks(
 /**
  * Logs invalid links to the console grouped by source page.
  */
-export function reportInvalidLinks(invalidLinks: InvalidLink[]): void {
+export function reportInvalidLinks(
+  invalidLinks: InvalidLink[],
+  severity: LintSeverity = "warn",
+): void {
   if (invalidLinks.length === 0) {
     return
   }
@@ -179,8 +184,9 @@ export function reportInvalidLinks(invalidLinks: InvalidLink[]): void {
     grouped.set(link.sourcePathname, existing)
   }
 
+  const color = severity === "error" ? chalk.redBright : chalk.yellowBright
   console.debug(
-    `\n${chalk.yellowBright.bold(`Found ${invalidLinks.length} broken link${invalidLinks.length === 1 ? "" : "s"}:`)}`,
+    `\n${color.bold(`Found ${invalidLinks.length} broken link${invalidLinks.length === 1 ? "" : "s"}:`)}`,
   )
 
   for (const [sourcePathname, links] of grouped) {

@@ -24,7 +24,6 @@
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   --q-font-mono: "Roboto Mono", monospace;
-  --qui-header-height: 48px;
   --q-font-family: "Roboto Flex", sans-serif;
 }
 
@@ -36,11 +35,6 @@ body {
   background: var(--color-background-neutral-00);
   display: flex;
   margin: 0;
-}
-
-[data-theme="dark"][data-brand="qualcomm"] .feature-card-1 {
-  background: url("./assets/images/dark-bg-1.png") center center;
-  background-size: cover;
 }
 
 hr.mdx {
@@ -55,4 +49,61 @@ hr.mdx {
   td:last-of-type {
     max-width: 200px;
   }
+}
+
+.qui-docs__root[data-pathname="/"] {
+  .qui-docs__main-content {
+    padding: 20px 20px 42px;
+
+    @media screen and (min-width: 660px) {
+      padding: 32px 32px 64px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      max-width: 1360px;
+      padding: 72px 96px 120px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-block: 0;
+      margin-inline: 0;
+    }
+  }
+}
+
+.circuit-bg {
+  background: url("./assets/images/circuit-bg-light.svg") top center / cover
+    no-repeat;
+}
+[data-theme="dark"] .circuit-bg {
+  background-image: url("./assets/images/circuit-bg-dark.svg");
+}
+
+.dots-bg {
+  background: url("./assets/images/dots-bg-light.svg") top center / cover
+    no-repeat;
+}
+[data-theme="dark"] .dots-bg {
+  background-image: url("./assets/images/dots-bg-dark.svg");
+}
+
+.grid-bg {
+  background: url("./assets/images/grid-bg-light.svg") top center / cover
+    no-repeat;
+}
+[data-theme="dark"] .grid-bg {
+  background-image: url("./assets/images/grid-bg-dark.svg");
+}
+
+.hex-bg {
+  background: url("./assets/images/hex-bg-light.svg") top center / cover
+    no-repeat;
+}
+[data-theme="dark"] .hex-bg {
+  background-image: url("./assets/images/hex-bg-dark.svg");
 }

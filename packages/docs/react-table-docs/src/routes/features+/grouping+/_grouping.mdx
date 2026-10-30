@@ -3,7 +3,6 @@ title: Grouping
 component: Table
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 import {Demo} from "~components/demo"
 import * as demos from "./demos"
 
@@ -14,5 +13,7 @@ GroupingState, getGroupedRowModel, getToggleGroupingHandler, getIsGrouped, aggre
 :::
 
 Row grouping allows users to collapse rows into hierarchical groups based on column values. Click the group icon in a column header to group by that column. Grouped rows display a count of their subRows and can be expanded to show the underlying data. Use an `aggregationFn` on columns like "Visits" to aggregate values (e.g., sum) when rows are grouped.
+
+---
 
 <Demo expanded name="GroupingDemo" component={demos.GroupingDemo} />

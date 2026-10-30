@@ -163,7 +163,11 @@ export function Root({
   ])
 
   const mergedProps = mergeProps(
-    {className: "qui-docs__root", "data-nav-density": navDensity},
+    {
+      className: "qui-docs__root",
+      "data-nav-density": navDensity,
+      "data-pathname": pathname,
+    },
     props,
   )
 

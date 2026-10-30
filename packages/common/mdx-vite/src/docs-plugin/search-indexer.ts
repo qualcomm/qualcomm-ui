@@ -14,7 +14,11 @@ import type {
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 import {defined} from "@qualcomm-ui/utils/guard"
 
-import type {SearchIndexerOptions} from "./config/index.js"
+import {
+  type QuiDocsLintOptions,
+  resolveLintOptions,
+  type SearchIndexerOptions,
+} from "./config/index.js"
 import {DocPropsIndexer} from "./doc-props/index.js"
 import {
   collectAnchorIds,
@@ -49,6 +53,11 @@ import type {
   RouteMetaInternal,
   RouteMetaNavInternal,
 } from "./nav-builder/types.js"
+import {
+  type PageTitleIssue,
+  reportPageTitleIssues,
+  validatePageTitle,
+} from "./page-title-validator.js"
 import {fixPath} from "./path-utils.js"
 import {remarkSerializeJsxKnowledge} from "./remark/index.js"
 
@@ -67,9 +76,22 @@ export class SearchIndexer {
   private _collectedLinks: CollectedLink[] = []
   private _anchorIds: Record<string, Set<string>> = {}
   private _docPropIds: Record<string, Set<string>> = {}
+  private _invalidLinkCount = 0
+  private _pageTitleIssues: PageTitleIssue[] = []
+  private readonly lint: Required<QuiDocsLintOptions>
   private readonly routeMetaNav: Record<string, RouteMetaNavInternal> = {}
   readonly config: SearchIndexerOptions
   logWarnings: boolean
+
+  /**
+   * Number of issues found by lint rules set to `"error"` during the last build.
+   */
+  get lintErrorCount(): number {
+    return (
+      (this.lint.brokenLinks === "error" ? this._invalidLinkCount : 0) +
+      (this.lint.pageTitle === "error" ? this._pageTitleIssues.length : 0)
+    )
+  }
 
   get cachedFileCount(): number {
     return this.mdxFileReader.cachedFileCount
@@ -109,6 +131,8 @@ export class SearchIndexer {
     this._collectedLinks = []
     this._anchorIds = {}
     this._docPropIds = {}
+    this._invalidLinkCount = 0
+    this._pageTitleIssues = []
     this._ignoredMdxFiles = new Set()
     this._pageDocProps = {}
     this._pageMap = {}
@@ -127,6 +151,7 @@ export class SearchIndexer {
     } = {},
   ) {
     this.config = config
+    this.lint = resolveLintOptions(config)
     this.logWarnings = logWarnings
     this.allowedHeadings = new Set<string>(
       Array.from(config?.headings || ["h2", "h3", "h4"]),
@@ -260,16 +285,24 @@ export class SearchIndexer {
 
     let indexedPage: IndexedPage
     let collectedLinks: CollectedLink[] = []
+    const shouldValidateLinks = this.lint.brokenLinks !== "off"
 
     try {
-      if (this.config.validatePageLinks) {
-        const anchorTree = createRemarkProcessor({
+      if (shouldValidateLinks || this.lint.pageTitle !== "off") {
+        const rawTree = createRemarkProcessor({
           frontmatter: true,
           mdx: true,
         }).parse(fileContents)
-        const anchorIds = collectAnchorIds(anchorTree)
-        if (anchorIds.size) {
-          this._anchorIds[defaultSection.pathname] = anchorIds
+        if (shouldValidateLinks) {
+          const anchorIds = collectAnchorIds(rawTree)
+          if (anchorIds.size) {
+            this._anchorIds[defaultSection.pathname] = anchorIds
+          }
+        }
+        if (this.lint.pageTitle !== "off") {
+          this._pageTitleIssues.push(
+            ...validatePageTitle(rawTree, filePath, defaultSection.pathname),
+          )
         }
       }
 
@@ -291,7 +324,7 @@ export class SearchIndexer {
         })
         const tree = processor.runSync(processor.parse(fileContents)) as Root
 
-        if (this.config.validatePageLinks) {
+        if (shouldValidateLinks) {
           collectedLinks = collectLinks(tree, filePath, defaultSection.pathname)
           this._collectedLinks.push(...collectedLinks)
         }
@@ -352,7 +385,7 @@ export class SearchIndexer {
     if (hasDocProps) {
       this._pageDocProps[defaultSection.pathname] = docProps
 
-      if (this.config.validatePageLinks) {
+      if (shouldValidateLinks) {
         const ids = new Set<string>()
         for (const section of docPropSections) {
           if (section.heading?.id) {
@@ -552,14 +585,19 @@ export class SearchIndexer {
 
     this.navBuilder.build()
 
-    if (this.config.validatePageLinks) {
+    if (this.lint.brokenLinks !== "off") {
       const invalidLinks = validateLinks(
         this._collectedLinks,
         this._pageMap,
         this._docPropIds,
         this._anchorIds,
       )
-      reportInvalidLinks(invalidLinks)
+      this._invalidLinkCount = invalidLinks.length
+      reportInvalidLinks(invalidLinks, this.lint.brokenLinks)
+    }
+
+    if (this.lint.pageTitle !== "off") {
+      reportPageTitleIssues(this._pageTitleIssues, this.lint.pageTitle)
     }
 
     return compiledFiles

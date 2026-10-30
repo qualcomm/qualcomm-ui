@@ -3,7 +3,6 @@ title: Editable Data
 component: Table
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 import {Demo} from "~components/demo"
 import * as demos from "./demos"
 
@@ -12,10 +11,9 @@ import * as demos from "./demos"
 This example demonstrates inline editing by rendering each cell as a TextInput. The custom cell renderer uses `CellContext` to access cell values and the table instance. Data updates are handled through a custom `updateData` function added to `TableMeta`, which modifies the mutable data state while using `autoResetPageIndex` to prevent pagination from resetting during edits.
 
 ::: terms
-edit table cells
-editable table
-cell editing
-defaultColumn cell renderer
+edit table cells, editable table, cell editing, defaultColumn cell renderer
 :::
+
+---
 
 <Demo expanded name="EditableDataDemo" component={demos.EditableDataDemo} />

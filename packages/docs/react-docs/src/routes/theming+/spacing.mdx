@@ -1,0 +1,28 @@
+---
+title: Spacing
+---
+
+import {SpacingTable} from "@qualcomm-ui/react-internal/theme"
+import {themeSpacing} from "@qualcomm-ui/tailwind-plugin/theme"
+
+# {frontmatter.title}
+
+The [QDS spacing scale](https://ds.qualcomm.com/foundations/layout-and-spacing) is available as CSS variables. When using the QUI Tailwind plugin, your Tailwind theme's spacing scale is automatically extended with QDS values, enabling use with utilities such as [margin](https://tailwindcss.com/docs/margin), [padding](https://tailwindcss.com/docs/padding), and [gap](https://tailwindcss.com/docs/gap).
+
+## Examples
+
+```tsx
+// gap: var(--spacing-50);
+<div className="gap-qds-50 flex"></div>
+
+// margin-top: var(--spacing-80);
+<div className="mt-qds-80"></div>
+
+// padding: var(--spacing-120);
+<div className="p-qds-120"></div>
+```
+
+> [!note]
+> The default Tailwind spacing scale remains unchanged. QDS values are prefixed with `qds-` to distinguish them from the default scale.
+
+<SpacingTable data={themeSpacing} />

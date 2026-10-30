@@ -55,6 +55,7 @@ export function DocsBreadcrumbs({
 
         acc.push({
           children: pageTitle,
+          disabled: !route?.pathname,
           id: route?.pathname ?? route?.id ?? pageTitle,
           ...(route?.pathname
             ? {
@@ -88,6 +89,7 @@ export function DocsBreadcrumbs({
           ))}
         </Breadcrumbs.List>
       </Breadcrumbs.Root>
+
       {!showToc && <PageActions />}
     </PolymorphicElement>
   )

@@ -90,7 +90,7 @@ export function PageHeaderBadges({badges}: {badges: NavBadge[]}): ReactNode {
                   )
                 }
                 size="sm"
-                style={{height: 20, marginTop: 8}}
+                style={{height: 20, marginTop: 40}}
                 {...props}
               >
                 {badge.label}

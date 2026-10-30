@@ -19,12 +19,16 @@ export function NotFound({url, ...props}: NotFoundProps): ReactNode {
   const mergedProps = mergeProps({className: "qui-docs__not-found"}, props)
   return (
     <div {...mergedProps}>
-      <h1 className="mdx">Not Found</h1>
-      {url ? (
-        <p className="qui-docs__not-found-url">
-          The page at &#34;{url}&#34; does not exist.
-        </p>
-      ) : null}
+      <div className="qui-docs__page-intro">
+        <div className="qui-docs__page-header">
+          <h1 className="mdx">Not Found</h1>
+        </div>
+        {url ? (
+          <p className="qui-docs__not-found-url mdx">
+            The page at <code className="mdx">{url}</code> does not exist.
+          </p>
+        ) : null}
+      </div>
       <Link render={<RenderLink href="/" />} size="lg">
         Click here to return home
       </Link>

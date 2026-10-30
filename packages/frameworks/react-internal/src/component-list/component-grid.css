@@ -8,7 +8,6 @@
 
 .qui-component-grid__item {
   align-items: center;
-  background: var(--color-background-neutral-03);
   border: solid 1px var(--color-border-neutral-03);
   border-radius: var(--border-radius-xxl);
   box-sizing: border-box;
@@ -72,7 +71,7 @@
 }
 
 .qui-component-grid__item-description {
-  background: var(--color-background-neutral-02);
+  background: var(--color-utility-opacity-neutral-02);
   border: solid 0;
   border-bottom-left-radius: var(--border-radius-xxl);
   border-bottom-right-radius: var(--border-radius-xxl);
@@ -86,8 +85,8 @@
 }
 
 .qui-component-grid__image {
-  min-height: 200px;
+  background: #020b3f;
   border-top-left-radius: var(--border-radius-xxl);
   border-top-right-radius: var(--border-radius-xxl);
-  background: #020b3f;
+  min-height: 200px;
 }

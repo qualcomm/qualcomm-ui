@@ -196,7 +196,7 @@ describe("parent pages", () => {
       "---\ntitle: [\n---\n\n<Broken",
     )
     const child = await writeRoute("guide+/child.mdx")
-    const indexer = createIndexer({validatePageLinks: true})
+    const indexer = createIndexer({lint: {brokenLinks: "warn"}})
 
     expect(() => indexer.buildIndex([parent, child])).not.toThrow()
     expect(Object.keys(indexer.pageMap)).toEqual(["/guide/child"])
@@ -244,7 +244,7 @@ describe("parent pages", () => {
       "# Child\n\n[Parent](/guide)",
     )
     const debug = vi.spyOn(console, "debug").mockImplementation(() => {})
-    const indexer = createIndexer({validatePageLinks: true})
+    const indexer = createIndexer({lint: {brokenLinks: "warn"}})
 
     indexer.buildIndex([parent, child])
 

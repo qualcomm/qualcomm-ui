@@ -2,6 +2,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {PhrasingContent, Root} from "mdast"
+/**
+ * `hName` and `hProperties` are added to mdast `Data` via module augmentation in
+ * `mdast-util-to-hast`, which is only loaded when something imports it.
+ */
+import type {} from "remark-rehype"
 import type {Plugin} from "unified"
 import {visit} from "unist-util-visit"
 
@@ -16,7 +21,7 @@ const alertLegacyRegex = /^\[!(NOTE|TIP|SUCCESS|WARNING|CAUTION)(\/.*)?\]/i
 export const remarkAlerts: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, "blockquote", (node) => {
-      let alertType = ""
+      let alertType: IconType | undefined
       let title = ""
       let isNext = true
       const child = node.children.map((item) => {
@@ -27,8 +32,8 @@ export const remarkAlerts: Plugin<[], Root> = () => {
           const match = text.match(reg)
           if (match) {
             isNext = false
-            alertType = match[1].toLocaleLowerCase()
-            title = match[2] || alertType.toLocaleUpperCase()
+            alertType = match[1].toLocaleLowerCase() as IconType
+            title = match[2]?.trim()?.replace(/^\//, "")
             if (text.includes("\n")) {
               item.children[0] = {
                 type: "text",
@@ -55,23 +60,21 @@ export const remarkAlerts: Plugin<[], Root> = () => {
         return item
       })
 
-      title = title.replace(/^\//, "")
-
       if (alertType) {
         node.data = {
           hName: "div",
           hProperties: {
-            class: `qui-notification__root`,
-            "data-emphasis":
-              alertToEmphasis[alertType as IconType] || "neutral",
+            className: ["qui-notification__root", "mdx"],
+            "data-emphasis": alertToEmphasis[alertType] || "neutral",
             "data-orientation": "vertical",
             dir: "auto",
           },
         }
         node.children = [
           {
-            children: [getAlertIcon(alertType as IconType)],
+            children: [getAlertIcon(alertType)],
             data: {
+              hName: "div",
               hProperties: {
                 class: "qui-notification__icon",
                 "data-inline-notification-part": "status-icon",
@@ -79,7 +82,9 @@ export const remarkAlerts: Plugin<[], Root> = () => {
             },
             type: "paragraph",
           },
-          {
+        ]
+        if (title) {
+          node.children.push({
             children: [
               {
                 type: "text",
@@ -87,25 +92,26 @@ export const remarkAlerts: Plugin<[], Root> = () => {
               },
             ],
             data: {
+              hName: "div",
               hProperties: {
                 class: "qui-notification__label",
                 dir: "auto",
               },
             },
             type: "paragraph",
-          },
-          {
-            children: child,
-            data: {
-              hName: "div",
-              hProperties: {
-                class: `qui-notification__description`,
-                dir: "auto",
-              },
+          })
+        }
+        node.children.push({
+          children: child,
+          data: {
+            hName: "div",
+            hProperties: {
+              class: `qui-notification__description`,
+              dir: "auto",
             },
-            type: "blockquote",
           },
-        ]
+          type: "blockquote",
+        })
       }
     })
   }
@@ -294,7 +300,7 @@ const svgData: Record<IconType, PhrasingContent[]> = {
 
 const alertToEmphasis: Record<IconType, string> = {
   caution: "danger",
-  note: "neutral",
+  note: "info",
   success: "success",
   tip: "info",
   warning: "warning",

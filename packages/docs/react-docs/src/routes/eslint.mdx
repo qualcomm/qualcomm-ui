@@ -6,6 +6,8 @@ import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 # {frontmatter.title}
 
+This page covers our ESLint plugin and configurations.
+
 ## Plugin
 
 We provide an ESLint plugin that enforces best-practices for accessibility and component consumption. This guide assumes you've already set up and configured ESLint. If not, we recommend starting with the [configs](./#configs) section below.
@@ -39,7 +41,7 @@ export default defineConfig([
 
 ### Rules
 
-#### `accessible-name`
+#### accessible-name
 
 Enforces that certain QUI components have an `aria-label` or `aria-labelledby` attribute for accessibility.
 
@@ -58,7 +60,7 @@ Enforces that certain QUI components have an `aria-label` or `aria-labelledby` a
 <IconButton icon={/*...*/} aria-labelledby="close-label" />
 ```
 
-#### `avatar-image-alt`
+#### avatar-image-alt
 
 Enforces that `Avatar.Image` components have an `alt` attribute for accessibility.
 
@@ -75,7 +77,7 @@ Enforces that `Avatar.Image` components have an `alt` attribute for accessibilit
 </Avatar.Root>
 ```
 
-#### `input-label-association`
+#### input-label-association
 
 Enforces that form input components have proper label association for accessibility. Supports both simple and compound component patterns.
 
@@ -130,7 +132,7 @@ Enforces that form input components have proper label association for accessibil
 </Switch.Root>
 ```
 
-#### `interactive-card-element-nesting`
+#### interactive-card-element-nesting
 
 Disallows interactive elements inside `Card.Root` when the card itself is
 interactive.
@@ -147,7 +149,7 @@ interactive.
 </Card.Root>
 ```
 
-#### `prefer-alert-banner-button`
+#### prefer-alert-banner-button
 
 Enforces `AlertBanner.Button` for alert banner actions.
 
@@ -159,7 +161,7 @@ Enforces `AlertBanner.Button` for alert banner actions.
 <AlertBanner action={<AlertBanner.Button>Retry</AlertBanner.Button>} />
 ```
 
-#### `prefer-card-actions`
+#### prefer-card-actions
 
 Enforces `Card.Button` and `Card.Link` for direct QUI actions rendered inside
 `Card.Root`.
@@ -178,7 +180,7 @@ Enforces `Card.Button` and `Card.Link` for direct QUI actions rendered inside
 </Card.Root>
 ```
 
-#### `prefer-header-bar-actions`
+#### prefer-header-bar-actions
 
 Enforces `HeaderBar.ActionButton` and `HeaderBar.ActionIconButton` inside
 `HeaderBar.ActionBar`.
@@ -197,7 +199,7 @@ Enforces `HeaderBar.ActionButton` and `HeaderBar.ActionIconButton` inside
 </HeaderBar.ActionBar>
 ```
 
-#### `prefer-menu-trigger-buttons`
+#### prefer-menu-trigger-buttons
 
 Enforces menu-specific trigger button components inside `Menu.Trigger`.
 
@@ -213,7 +215,7 @@ Enforces menu-specific trigger button components inside `Menu.Trigger`.
 </Menu.Trigger>
 ```
 
-#### `prefer-select-item-checkbox`
+#### prefer-select-item-checkbox
 
 Enforces `Select.ItemCheckbox` when `Select.Root` statically sets
 `selectionIndicator="checkbox"`.

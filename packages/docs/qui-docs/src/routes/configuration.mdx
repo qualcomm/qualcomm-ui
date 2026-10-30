@@ -73,9 +73,43 @@ The `navConfig` array controls sidebar order, section groupings, initial expande
 
 ## Content and Validation
 
-### validatePageLinks
+### lint
 
-Validates internal MDX links and fragment references after the page map is built. Reports broken links to the build console. Default: `true`. Disable only when prototyping against an incomplete page set.
+Controls content validation rules. Each rule accepts a severity:
+
+- `"off"`: disables the rule.
+- `"warn"`: logs issues to the console.
+- `"error"`: logs issues in development and fails the production build (`vite build`).
+
+```ts
+lint: {
+  brokenLinks: "warn",
+  pageTitle: "warn",
+}
+```
+
+Rules:
+
+- `brokenLinks`: validates internal MDX links and fragment references after the page map and table of contents are built. Default: `"warn"`.
+- `pageTitle`: validates the h1 page title of every MDX page. Default: `"warn"`.
+
+The `pageTitle` rule reports:
+
+- Content before the h1 title. The page must start with `# {frontmatter.title}` or a literal title such as `# Page Title`. Frontmatter, `import`, and `export` statements may appear before it. Text and JSX components may not.
+- Any additional h1 heading after the title. Use h2 or lower for sections.
+
+Lines such as `# comment` inside fenced code blocks are not headings. Pages with no content, such as a page that only exports a loader, are skipped. Issues are reported as `path/to/file.mdx:line`:
+
+```console
+Found 2 page title issues:
+
+  /getting-started
+    x src/routes/getting-started.mdx:5 — page must start with an h1 title, e.g. `# {frontmatter.title}`
+    x src/routes/getting-started.mdx:20 — only the page title may be an h1, use h2 or lower
+```
+
+> [!note]
+> `validatePageLinks` is deprecated. `validatePageLinks: false` is equivalent to `lint: {brokenLinks: "off"}`. An explicit `lint.brokenLinks` value takes precedence.
 
 ### headings
 

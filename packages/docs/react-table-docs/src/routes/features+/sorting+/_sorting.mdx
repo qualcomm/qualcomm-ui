@@ -3,19 +3,17 @@ title: Sorting
 component: Table
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 import {Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
 
 ::: terms
-sort table rows
-ascending descending order
+sort table rows, ascending descending order
 :::
 
-Enable column sorting by adding `getSortedRowModel()` to your table configuration and tracking sort state with `SortingState`. Use `onSortingChange` to update the sorting state when users click column headers. The `Table.ColumnSortAction` component renders clickable sort indicators in header cells.
+The following demo shows how to enable sorting for table columns. For columns with non-standard data types like formatted dates, provide a custom `sortingFn` in the column definition to handle comparison logic.
 
-For columns with non-standard data types like formatted dates, provide a custom `sortingFn` in the column definition to handle comparison logic.
+---
 
 <Demo expanded name="SortingDemo" component={demos.SortingDemo} />

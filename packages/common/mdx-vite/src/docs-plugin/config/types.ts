@@ -185,6 +185,13 @@ export interface SearchIndexerOptions {
   headings?: TocHeading[]
 
   /**
+   * Lint rules applied to MDX pages during indexing.
+   *
+   * @inheritDoc
+   */
+  lint?: QuiDocsLintOptions
+
+  /**
    * Optional property for defining nav item hierarchy and page metadata.
    *
    * @inheritDoc
@@ -238,9 +245,37 @@ export interface SearchIndexerOptions {
    * have been assembled. Reports broken page links and fragment references to the
    * build console.
    *
+   * @deprecated use {@link QuiDocsLintOptions.brokenLinks} instead. `false` is
+   * equivalent to `lint.brokenLinks: "off"`.
+   *
    * @default true
    */
   validatePageLinks?: boolean
+}
+
+/**
+ * - `off`: the rule is disabled.
+ * - `warn`: issues are logged to the console.
+ * - `error`: issues are logged in development and fail the production build.
+ */
+export type LintSeverity = "off" | "warn" | "error"
+
+export interface QuiDocsLintOptions {
+  /**
+   * Validates internal links and fragment references after the page map and table
+   * of contents have been assembled.
+   *
+   * @default "warn"
+   */
+  brokenLinks?: LintSeverity
+
+  /**
+   * Requires every MDX page to start with a single h1 title, like
+   * `# {frontmatter.title}`, and reports any additional h1 headings.
+   *
+   * @default "warn"
+   */
+  pageTitle?: LintSeverity
 }
 
 export interface QuiDocsConfig extends Omit<
@@ -295,6 +330,7 @@ export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
    * full path to the cosmiconfig file.
    */
   filePath: string
+  lint: Required<QuiDocsLintOptions>
   pageDirectory: string
 }
 

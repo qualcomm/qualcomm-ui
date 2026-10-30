@@ -12,12 +12,6 @@ import {
   quiDocsPlugin,
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
-import {
-  resolveSemanticSearchPaths,
-  semanticSearchDevPlugin,
-} from "@qualcomm-ui/react-router-utils/node"
-
-import quiDocsConfig from "./qui-docs.config.js"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -48,12 +42,15 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       "@faker-js/faker",
+      "@floating-ui/dom",
       "@floating-ui/react",
       "@hookform/resolvers/arktype",
+      "@internationalized/date",
       "@internationalized/number",
       "@mdx-js/react",
       "@shikijs/langs/angular-ts",
       "@shikijs/langs/angular-html",
+      "@shikijs/langs/markdown",
       "@shikijs/langs/shell",
       "@shikijs/langs/json",
       "@shikijs/langs/tsx",
@@ -68,12 +65,17 @@ export default defineConfig({
       "jotai",
       "lodash-es",
       "lucide-react",
+      "markdown-to-jsx",
+      "my-ua-parser",
+      "quick-lru",
+      "react/compiler-runtime",
       "react-device-detect",
       "react-hook-form",
       "react-shiki/core",
       "react-simple-code-editor",
       "react-transition-group",
       "shiki",
+      "sucrase",
     ],
   },
   plugins: [
@@ -87,11 +89,6 @@ export default defineConfig({
     reactRouter(),
     quiDocsPlugin(),
     frontmatterHmrPlugin(),
-    semanticSearchDevPlugin({
-      outputDirectory: resolve(__dirname, "generated/semantic-search"),
-      sectionsPath: resolveSemanticSearchPaths(quiDocsConfig.knowledge)
-        .sectionsPath,
-    }),
     reactDemoPlugin({
       demoPattern: [
         "./src/routes/components+/**/demos/**/*.ts",
@@ -127,13 +124,15 @@ export default defineConfig({
   },
   server: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 3100,
-    warmup: {
-      clientFiles: [
-        "./src/root.tsx",
-        "./src/components/**/*.tsx",
-        "./src/routes/**/demos/**/*.tsx",
-        "./src/routes/**/*.ts",
-      ],
-    },
+  },
+  ssr: {
+    // The semantic search route depends on onnxruntime-node, which loads its
+    // native binding via a path relative to its own package. Bundling it into
+    // build/server breaks that path.
+    external: [
+      "@qualcomm-ui/react-router-utils",
+      "@huggingface/transformers",
+      "@orama/orama",
+    ],
   },
 })

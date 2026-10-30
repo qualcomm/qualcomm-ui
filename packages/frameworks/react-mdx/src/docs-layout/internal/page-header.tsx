@@ -20,11 +20,11 @@ export function PageHeader(props: PageHeaderProps): ReactElement {
   const BadgeComponent = layoutComponents?.PageHeaderBadges
 
   return (
-    <div className="qui-docs__page-header">
+    <header className="qui-docs__page-header">
       <h1 {...mergeProps({className: "mdx"}, props)} />
       {BadgeComponent && badges.length ? (
         <BadgeComponent badges={badges} />
       ) : null}
-    </div>
+    </header>
   )
 }
