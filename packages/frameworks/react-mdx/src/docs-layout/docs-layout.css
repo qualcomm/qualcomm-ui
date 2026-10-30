@@ -51,8 +51,26 @@
   justify-content: space-between;
   margin-bottom: 16px;
 
-  > ul.q-breadcrumb--root {
-    padding-top: 0;
+  .qui-breadcrumbs__root {
+    display: flex;
+    .qui-breadcrumbs__list {
+      flex-wrap: wrap;
+    }
+  }
+
+  .qui-breadcrumbs__item {
+    .qui-breadcrumbs__item-trigger[data-size] {
+      font: var(--font-static-body-sm-compact-default);
+    }
+    .qui-icon__root[data-size="md"] {
+      --icon-width: 14px;
+      --icon-height: 14px;
+    }
+    &[data-disabled] {
+      .qui-breadcrumbs__item-trigger[data-emphasis] {
+        color: var(--color-text-neutral-secondary);
+      }
+    }
   }
 }
 
