@@ -6,6 +6,8 @@ import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 # {frontmatter.title}
 
+This page covers our ESLint plugin and configurations.
+
 ## Plugin
 
 We provide an ESLint plugin that enforces best-practices for accessibility and component consumption. This guide assumes you've already set up and configured ESLint. If not, we recommend starting with the [configs](./#configs) section below.
@@ -48,7 +50,7 @@ export default defineConfig([
 
 ### Rules
 
-#### `accessible-name`
+#### accessible-name
 
 Enforces that certain QUI components have an `aria-label` or `aria-labelledby` attribute for accessibility.
 
@@ -68,7 +70,7 @@ Enforces that certain QUI components have an `aria-label` or `aria-labelledby` a
 <button q-icon-button icon="close" [attr.aria-label]="closeLabel"></button>
 ```
 
-#### `avatar-image-alt`
+#### avatar-image-alt
 
 Enforces that `q-avatar-image` has an `alt` attribute for accessibility.
 
@@ -81,7 +83,7 @@ Enforces that `q-avatar-image` has an `alt` attribute for accessibility.
 <img q-avatar-image [alt]="userName" src="/user.jpg" />
 ```
 
-#### `input-label-association`
+#### input-label-association
 
 Enforces that form input components have proper label association for accessibility. Supports both simple and compound component patterns.
 
@@ -150,7 +152,7 @@ Projected controls on simple components can also provide the accessible name:
 </label>
 ```
 
-#### `interactive-card-element-nesting`
+#### interactive-card-element-nesting
 
 Disallows interactive elements inside `q-card` when the card itself is interactive.
 
@@ -166,7 +168,7 @@ Disallows interactive elements inside `q-card` when the card itself is interacti
 </button>
 ```
 
-#### `prefer-alert-banner-button`
+#### prefer-alert-banner-button
 
 Enforces `q-alert-banner-button` for alert banner actions.
 
@@ -182,7 +184,7 @@ Enforces `q-alert-banner-button` for alert banner actions.
 </div>
 ```
 
-#### `prefer-card-actions`
+#### prefer-card-actions
 
 Enforces `q-card-button` and `q-card-link` for direct QUI actions rendered inside `q-card`.
 
@@ -200,7 +202,7 @@ Enforces `q-card-button` and `q-card-link` for direct QUI actions rendered insid
 </div>
 ```
 
-#### `prefer-header-bar-actions`
+#### prefer-header-bar-actions
 
 Enforces `q-header-bar-action-button` and `q-header-bar-action-icon-button` inside `q-header-bar-action-bar`.
 
@@ -218,7 +220,7 @@ Enforces `q-header-bar-action-button` and `q-header-bar-action-icon-button` insi
 </div>
 ```
 
-#### `prefer-menu-trigger-buttons`
+#### prefer-menu-trigger-buttons
 
 Enforces menu-specific trigger button components inside `q-menu-trigger`.
 
@@ -234,7 +236,7 @@ Enforces menu-specific trigger button components inside `q-menu-trigger`.
 </div>
 ```
 
-#### `prefer-select-item-checkbox`
+#### prefer-select-item-checkbox
 
 Enforces `q-select-item-checkbox` when `q-select-root` statically sets `selectionIndicator="checkbox"`.
 
