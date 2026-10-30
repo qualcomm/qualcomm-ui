@@ -8,6 +8,11 @@ import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
 
 This library requires React 19+
 
+> [!tip/Starter Template]
+> Starting fresh? An example application is available in our [template repository](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-router-ssr)
+
+## Getting Started
+
 There are four steps to installation:
 
 1. Install the npm packages
@@ -286,27 +291,31 @@ Your `<html>` element should look something like this:
 ></html>
 ```
 
-Note that you need to import the corresponding CSS for the brand you've selected:
+#### Import Brand CSS
+
+You need to import the CSS for the brand you've selected:
 
 ```css tabs="css-brand" label="Qualcomm"
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+@import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
 ```css tabs="css-brand" label="Snapdragon"
 @import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css";
 @import "@qualcomm-ui/qds-core/themes/snapdragon-light.css";
+@import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
 ```css tabs="css-brand" label="Dragonwing"
 @import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css";
 @import "@qualcomm-ui/qds-core/themes/dragonwing-light.css";
+@import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
-> [!tip/Component Styles]
-> Always import component styles, regardless of the chosen brand.
-
-```css
+```css tabs="css-brand" label="Dragonfly"
+@import "@qualcomm-ui/qds-core/themes/dragonfly-dark.css";
+@import "@qualcomm-ui/qds-core/themes/dragonfly-light.css";
 @import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
