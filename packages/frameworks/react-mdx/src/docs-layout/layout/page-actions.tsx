@@ -71,37 +71,28 @@ export function PageActions(): ReactNode {
           triggerProps={{"aria-label": "More page actions"}}
           variant="outline"
         >
-          Copy Page
+          Copy as markdown
         </Menu.SplitButton>
         <Portal>
           <Menu.Positioner>
             <Menu.Content>
               <Menu.Item onClick={copyToClipboard} value="copy-page">
                 <Menu.ItemStartIcon icon={Copy} />
-                <Menu.ItemLabel>Copy Page</Menu.ItemLabel>
-                <Menu.ItemDescription>
-                  Copy page as markdown
-                </Menu.ItemDescription>
+                <Menu.ItemLabel>Copy as markdown</Menu.ItemLabel>
               </Menu.Item>
               <Menu.Item
                 onClick={copyPageUrlToClipboard}
                 value="copy-page-link"
               >
                 <Menu.ItemStartIcon icon={Link2} />
-                <Menu.ItemLabel>Copy Markdown Page Link</Menu.ItemLabel>
-                <Menu.ItemDescription>
-                  Copy as link to page&#39;s raw markdown
-                </Menu.ItemDescription>
+                <Menu.ItemLabel>Copy markdown link</Menu.ItemLabel>
               </Menu.Item>
               <Menu.Item
                 onClick={() => void handleDownload()}
                 value="download-page"
               >
                 <Menu.ItemStartIcon icon={Download} />
-                <Menu.ItemLabel>Download Page</Menu.ItemLabel>
-                <Menu.ItemDescription>
-                  Download page as markdown
-                </Menu.ItemDescription>
+                <Menu.ItemLabel>Download markdown</Menu.ItemLabel>
               </Menu.Item>
             </Menu.Content>
           </Menu.Positioner>
