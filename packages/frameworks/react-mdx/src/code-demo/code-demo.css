@@ -1,6 +1,7 @@
 :root {
   --docs-code-demo-background-dark: var(--color-background-neutral-00);
   --docs-code-demo-background-light: var(--color-background-neutral-00);
+  --shiki-dark-bg: var(--color-utility-opacity-neutral-01) !important;
 }
 
 [data-theme="dark"] {
@@ -98,7 +99,6 @@
 }
 
 @container qui-docs-demo-container (min-width: 0) {
-  .q-collapse--root,
   .qui-demo-runner__tabs {
     max-width: 100cqw;
   }
@@ -148,6 +148,7 @@
 }
 
 .shiki-wrapper.mdx {
+  margin-bottom: 16px;
   margin-top: 16px;
   position: relative;
 
@@ -169,7 +170,7 @@ pre.shiki {
   border-bottom-right-radius: 4px;
   font: var(--font-static-code-sm-default);
   margin: 0;
-  padding: 16px 0;
+  padding: 24px 12px;
 
   .line {
     box-sizing: border-box;
