@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.6.2
+
+Oct 30th, 2026
+
+### Code Refactoring
+
+* [qui-shiki-theme]: update background color ([fa35830](https://github.com/qualcomm/qualcomm-ui/commit/fa35830))
+
 ## 2.6.1
 
 Sep 8th, 2026

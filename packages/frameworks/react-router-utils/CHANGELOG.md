@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-router-utils Changelog
 
+## 3.0.0
+
+Oct 30th, 2026
+
+### BREAKING CHANGES
+
+* [fallback-loader]: remove 404 redirect, return loader data ([296b44e](https://github.com/qualcomm/qualcomm-ui/commit/296b44e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.2, @qualcomm-ui/mdx-vite@4.0.0]
+
 ## 2.2.3
 
 Oct 20th, 2026

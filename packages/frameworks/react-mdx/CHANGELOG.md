@@ -1,5 +1,36 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.0.0
+
+Oct 30th, 2026
+
+### BREAKING CHANGES
+
+* [heading-steps]: render steps indent guide as an element ([0c5e86d](https://github.com/qualcomm/qualcomm-ui/commit/0c5e86d))
+* [docs-layout]: replace grid layout with constrained flex layout ([cc7b326](https://github.com/qualcomm/qualcomm-ui/commit/cc7b326))
+* [docs-layout]: redesign page footer links and updated-on date ([9fe9e24](https://github.com/qualcomm/qualcomm-ui/commit/9fe9e24))
+
+### Features
+
+* [toc]: add "On this page" label and brand active indicator ([bb0a32a](https://github.com/qualcomm/qualcomm-ui/commit/bb0a32a))
+* [mdx]: update content typography and vertical rhythm ([e8a042d](https://github.com/qualcomm/qualcomm-ui/commit/e8a042d))
+* [code-highlight]: increase code block padding and copy button offset ([7c4eeab](https://github.com/qualcomm/qualcomm-ui/commit/7c4eeab))
+
+### Code Refactoring
+
+* [not-found]: use page intro layout ([1d80fe3](https://github.com/qualcomm/qualcomm-ui/commit/1d80fe3))
+* [page-actions]: shorten menu labels and drop descriptions ([159dd68](https://github.com/qualcomm/qualcomm-ui/commit/159dd68))
+* [page-header]: render page header as a header element ([7a19315](https://github.com/qualcomm/qualcomm-ui/commit/7a19315))
+
+### Bug Fixes
+
+* [breadcrumbs]: disable breadcrumb items without a route ([0b32aa5](https://github.com/qualcomm/qualcomm-ui/commit/0b32aa5))
+* [qui-ecosystem]: point ecosystem links to production domains ([1759bf8](https://github.com/qualcomm/qualcomm-ui/commit/1759bf8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.2, @qualcomm-ui/react@1.32.1]
+
 ## 2.14.0
 
 Oct 20th, 2026
