@@ -4,6 +4,10 @@ title: Generic Table Abstractions
 
 # {frontmatter.title}
 
+Monolithic table abstractions are a common source of complexity. This guide explores how to avoid them.
+
+## The Problem
+
 Teams often reach for a reusable table abstraction for good reasons. Several tables may repeat the same setup: headers, cells, editable controls, row actions, loading states, and toolbar behavior. Centralizing that work can look like the fastest way to improve consistency.
 
 The trouble starts when the wrapper takes responsibility for the parts that are not the same. Let's explore where this abstraction breaks down.
@@ -52,7 +56,7 @@ There is nothing inherently wrong with this component in isolation. It has one j
 
 The next workflow needs a loading overlay. Another needs a refetch indicator. A third calls for customizable actions above the table. Each prop looks defensible in isolation. Together they reveal that several use cases are coupled to one component. Let's add a few features to see how this breaks down.
 
-### Loading Indicator
+### Feature 1: Loading Indicator
 
 ```angular-ts
 import {Component, input} from "@angular/core"
@@ -105,7 +109,7 @@ export class DataTable<TData extends RowData> {
 
 `isLoading` represents the initial loading state. When there are no rows to preserve, it renders the body-level `ProgressRing`.
 
-### Refetch Indicator
+### Feature 2: Refetch Indicator
 
 But then a new requirement arises: we need to show a loading state while refetching. The loaded rows should remain visible while we show a separate loading indicator above the table. `isRefetching` adds that state to the wrapper:
 
@@ -127,7 +131,7 @@ export class DataTable<TData extends RowData> {
 
 `DataTable` now owns the presentation rules for both loading states.
 
-### Table Actions
+### Feature 3: Table Actions
 
 The next workflow needs actions above the table. So we expose projected content for that wrapper API:
 
@@ -140,6 +144,8 @@ The next workflow needs actions above the table. So we expose projected content 
   <ng-content select="[app-table-actions]" />
 </div>
 ```
+
+### Cornered
 
 But now we've painted ourselves into a corner. The projected `app-table-actions` content conflicts with the refetch indicator, which was previously positioned in the same `q-table-action-bar` that the new workflow needs.
 
@@ -159,8 +165,11 @@ If needed, abstract reusable concerns into separate components.
 Removing a generic application table does not mean giving up reuse. Keep the boundaries narrow:
 
 - Use the QUI Table components like `q-table-root`, `q-table-header`, and the other table primitives for consistent structure and styling.
-- Reuse typed cell components for repeated presentations and interactions.
-- Reuse column modules when their accessors, headers, cells, and feature configuration change together.
-- Reuse translators between table state and a specific backend contract.
+- Reuse typed cell components and column modules for repeated presentations and interactions.
+- Create translators between table state and a specific backend contract.
 
-Also see [Reusable Columns](/best-practices/reusable-columns), [State, Identity, and Workflows](/best-practices/state-and-workflows), and [Loading and Empty States](/best-practices/loading-and-empty-states).
+Continue to learn more about these patterns:
+
+- [Reusable Columns](/best-practices/reusable-columns)
+- [State, Identity, and Workflows](/best-practices/state-and-workflows)
+- [Loading and Empty States](/best-practices/loading-and-empty-states).

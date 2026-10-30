@@ -4,7 +4,9 @@ title: Table Composition
 
 # {frontmatter.title}
 
-A table is not one abstraction. It usually coordinates data identity, column configuration, cell presentation, table feature state, product workflow state, backend query mapping, and loading feedback.
+A table is not one abstraction. It usually coordinates data identity, column configuration, cell presentation, table feature state, product workflow state, backend query mapping, and loading feedback. This guide covers how to manage some of these complexities in a scalable way.
+
+## Overview
 
 Tables become hard to maintain when unrelated concerns are collapsed into one wrapper. Proper table composition means assigning each concern to the layer that owns it. Those concerns should stay visible enough to change independently.
 

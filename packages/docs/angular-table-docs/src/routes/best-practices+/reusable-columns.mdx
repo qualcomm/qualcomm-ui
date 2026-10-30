@@ -6,8 +6,6 @@ title: Reusable Columns
 
 Column definitions are the most useful reuse boundary in the table. A column can own its accessor, header, cell renderer, sorting/filtering configuration, metadata, and domain-specific presentation.
 
-The constraint is that columns are table configuration, so they should have stable references. Reusable columns work best when the column owns static structure and delegates changing workflow state to the table, cell components, or domain layer.
-
 ## Column Modules
 
 The problem appears when a generated column closes over changing Angular state: edited values, pending flags, permissions, or callbacks from the current component.
@@ -43,6 +41,8 @@ This fixes stale reads, but it makes the column array change on every edit. Each
 There are a few solutions to this problem. The one we'll explore today is scoping state updates to the column's cell component.
 
 ### Preferred Pattern
+
+Reusable columns work best when the column owns static structure and delegates changing workflow state to the table, cell components, or a parent state layer.
 
 The following example uses Angular dependency injection and signals. The table provides a scoped edit service around its implementation, while the column definition stays static.
 
