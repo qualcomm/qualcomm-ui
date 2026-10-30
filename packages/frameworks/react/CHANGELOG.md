@@ -1,5 +1,13 @@
 # @qualcomm-ui/react Changelog
 
+## 1.32.1
+
+Oct 30th, 2026
+
+### Bug Fixes
+
+* [code-connect]: sync Pagination, Dialog and Tag with Figma ([d9cebab](https://github.com/qualcomm/qualcomm-ui/commit/d9cebab))
+
 ## 1.32.0
 
 Oct 20th, 2026

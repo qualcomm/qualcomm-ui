@@ -1,5 +1,27 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 4.0.0
+
+Oct 30th, 2026
+
+### BREAKING CHANGES
+
+* [mdx]: unwrap mdx paragraph child elements (images, JSX children) ([0296a44](https://github.com/qualcomm/qualcomm-ui/commit/0296a44))
+* [sectionizer]: collect h1 and surrounding elements into page intro section ([10e545c](https://github.com/qualcomm/qualcomm-ui/commit/10e545c))
+
+### Code Refactoring
+
+* [docs-plugin]: update link and page title linter, deprecate old settings ([6c3947f](https://github.com/qualcomm/qualcomm-ui/commit/6c3947f))
+* [alerts]: remove default titles from GFM alerts ([a183d43](https://github.com/qualcomm/qualcomm-ui/commit/a183d43))
+
+### Performance Improvements
+
+* [vite-plugins]: remove sourcemap from dev build, optimize virtual module size ([b193c46](https://github.com/qualcomm/qualcomm-ui/commit/b193c46))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.2]
+
 ## 3.11.1
 
 Oct 20th, 2026
