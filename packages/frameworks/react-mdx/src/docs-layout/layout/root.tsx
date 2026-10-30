@@ -11,21 +11,18 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {
   type DemoSettings,
-  type MdxDocsContextValue,
-  MdxDocsProvider,
+  type DocsRuntimeContextValue,
+  DocsRuntimeProvider,
   type PackageManager,
   type RouteDemoState,
-  useSiteContext,
+  useDocsManifestContext,
+  DocsPageProvider,
+  type DocsPageContextValue,
 } from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {MdxProvider} from "../mdx-provider.js"
 import type {DocsLayoutSettings} from "../types.js"
-
-import {
-  MdxDocsLayoutContextProvider,
-  type MdxDocsLayoutContextState,
-} from "./use-mdx-docs-layout.js"
 
 export interface RootProps
   extends
@@ -34,7 +31,7 @@ export interface RootProps
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
-  children: BindingRenderProp<MdxDocsLayoutContextState>
+  children: BindingRenderProp<DocsPageContextValue>
 }
 
 export function Root({
@@ -67,9 +64,9 @@ export function Root({
     demoSettingsProp || {transformTailwindClasses: false},
   )
 
-  const {exports, navItems, pageDocProps, pageMap} = useSiteContext()
+  const {exports, navItems, pageDocProps, pageMap} = useDocsManifestContext()
 
-  const mdxDocsContextValue: MdxDocsContextValue = useMemo(
+  const mdxDocsContextValue: DocsRuntimeContextValue = useMemo(
     () => ({
       demoSettings,
       demoState,
@@ -125,7 +122,7 @@ export function Root({
     ],
   )
 
-  const layoutContext: MdxDocsLayoutContextState = useMemo(() => {
+  const layoutContext: DocsPageContextValue = useMemo(() => {
     const pageData = pageMap[pathname]
     const toc = pageData?.toc ?? []
     const showToc = !!toc.length && !pageData?.hideToc && !hideToc
@@ -172,16 +169,16 @@ export function Root({
   )
 
   return (
-    <MdxDocsProvider value={mdxDocsContextValue}>
+    <DocsRuntimeProvider value={mdxDocsContextValue}>
       <MdxProvider components={mdxComponents} pathname={pathname}>
-        <MdxDocsLayoutContextProvider value={layoutContext}>
+        <DocsPageProvider value={layoutContext}>
           <PolymorphicElement as="div" {...mergedProps}>
             {bindingRenderProp(children, layoutContext, {
               forwardPropsToClone: false,
             })}
           </PolymorphicElement>
-        </MdxDocsLayoutContextProvider>
+        </DocsPageProvider>
       </MdxProvider>
-    </MdxDocsProvider>
+    </DocsRuntimeProvider>
   )
 }

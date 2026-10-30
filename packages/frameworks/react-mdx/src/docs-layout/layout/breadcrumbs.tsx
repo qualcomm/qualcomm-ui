@@ -7,7 +7,10 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  useDocsRuntimeContext,
+  useDocsPageContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {
   Breadcrumbs,
   type BreadcrumbsItemProps,
@@ -15,7 +18,6 @@ import {
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
 import {PageActions} from "./page-actions.js"
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface BreadcrumbsProps extends ElementRenderProp<"div"> {
   /**
@@ -33,8 +35,8 @@ export function DocsBreadcrumbs({
   rootBreadcrumb,
   ...props
 }: BreadcrumbsProps): ReactNode {
-  const {renderLink: Link} = useMdxDocsContext()
-  const {pageMap, pathname, showToc} = useMdxDocsLayoutContext()
+  const {renderLink: Link} = useDocsRuntimeContext()
+  const {pageMap, pathname, showToc} = useDocsPageContext()
 
   const items: DocsBreadcrumb[] = useMemo(() => {
     const pageMapEntry = pageMap[pathname]

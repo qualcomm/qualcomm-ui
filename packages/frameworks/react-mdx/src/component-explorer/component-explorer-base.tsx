@@ -10,7 +10,7 @@ import {
 } from "react"
 
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 
 interface HighlightRect {
   height: number
@@ -95,7 +95,7 @@ export function ComponentExplorerBase({
   scope,
   ...props
 }: ComponentExplorerBaseProps): ReactElement {
-  const {renderLink: Link} = useMdxDocsContext()
+  const {renderLink: Link} = useDocsRuntimeContext()
   const previewRef = useRef<HTMLDivElement>(null)
   const [hoveredPart, setHoveredPart] = useState<string | null>(null)
   const [highlightRects, setHighlightRects] = useState<HighlightRect[]>([])

@@ -11,7 +11,7 @@ import {
 
 import type {ReactDemoData} from "@qualcomm-ui/mdx-common"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import type {ColorScheme} from "@qualcomm-ui/react/qds-theme"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
@@ -103,7 +103,7 @@ export function ReactDemo({
 
   const [activeTab, setActiveTab] = useState<string>(demo?.fileName || "")
 
-  const {demoState, updateDemoState} = useMdxDocsContext()
+  const {demoState, updateDemoState} = useDocsRuntimeContext()
 
   const state = useMemo(() => {
     return demoState[demo.pageId] || {}

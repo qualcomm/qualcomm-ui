@@ -15,7 +15,7 @@ import {ChevronsLeftRight} from "lucide-react"
 
 import type {ReactDemoWithScope, SourceCodeData} from "@qualcomm-ui/mdx-common"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {useRunner, type UseRunnerProps} from "@qualcomm-ui/react-mdx/runner"
 import {Button} from "@qualcomm-ui/react/button"
@@ -120,7 +120,7 @@ export function QdsReactDemo({
 
   const [activeTab, setActiveTab] = useState<string>(demo?.fileName || "")
 
-  const {demoState, updateDemoState} = useMdxDocsContext()
+  const {demoState, updateDemoState} = useDocsRuntimeContext()
 
   const state = useMemo(() => {
     return demoState[demo.pageId] || {}

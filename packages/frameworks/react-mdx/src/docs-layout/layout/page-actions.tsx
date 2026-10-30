@@ -6,19 +6,20 @@ import {type ReactNode, useCallback} from "react"
 import {Check, Copy, Download, Link2} from "lucide-react"
 
 import {Portal} from "@qualcomm-ui/react-core/portal"
-import {useSiteContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  useDocsManifestContext,
+  useDocsPageContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {useCopyToClipboard} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {Menu} from "@qualcomm-ui/react/menu"
-
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export function pathnameToExportId(pathSegments: string[]): string {
   return pathSegments.join("-")
 }
 
 export function PageActions(): ReactNode {
-  const {exports, getPages, pageMap} = useSiteContext()
-  const {pageExport, pathname} = useMdxDocsLayoutContext()
+  const {exports, getPages, pageMap} = useDocsManifestContext()
+  const {pageExport, pathname} = useDocsPageContext()
   const page = pageMap[pathname]
   const exportId = pathnameToExportId(page?.pathSegments || [])
 

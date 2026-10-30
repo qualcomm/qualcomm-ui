@@ -5,8 +5,10 @@ import type {ReactElement} from "react"
 
 import {ExternalLink} from "lucide-react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
-import {useMdxDocsLayoutContext} from "@qualcomm-ui/react-mdx/docs-layout"
+import {
+  useDocsPageContext,
+  useDocsRuntimeContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {Link} from "@qualcomm-ui/react/link"
 import type {QuiInlineTagDisplayPart} from "@qualcomm-ui/typedoc-common"
 
@@ -18,8 +20,8 @@ export function PropDescriptionLink({
   inlineTag,
 }: PropDescriptionLinkProps): ReactElement {
   const {target, text} = inlineTag
-  const {renderLink: RenderLink} = useMdxDocsContext()
-  const {toc} = useMdxDocsLayoutContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
+  const {toc} = useDocsPageContext()
 
   if (
     text.startsWith("http") ||

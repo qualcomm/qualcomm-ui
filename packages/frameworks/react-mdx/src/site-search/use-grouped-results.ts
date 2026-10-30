@@ -4,7 +4,7 @@
 import {useMemo} from "react"
 
 import type {SearchResult} from "@qualcomm-ui/mdx-common"
-import {useSiteContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsManifestContext} from "@qualcomm-ui/react-mdx/context"
 
 import {useSiteSearch} from "./use-site-search.js"
 
@@ -18,7 +18,7 @@ export interface GroupedSearchResult {
 }
 
 export function useGroupedResults(query: string): GroupedSearchResult[] {
-  const {searchIndex} = useSiteContext()
+  const {searchIndex} = useDocsManifestContext()
   const search = useSiteSearch(searchIndex)
 
   return useMemo(() => {

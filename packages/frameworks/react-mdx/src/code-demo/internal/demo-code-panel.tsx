@@ -6,7 +6,7 @@ import {flushSync} from "react-dom"
 
 import {ChevronDown, ChevronUp} from "lucide-react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Tab, Tabs} from "@qualcomm-ui/react/tabs"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
@@ -60,7 +60,7 @@ export function DemoCodePanel({
   suppressHydrationWarning,
   tabsValue,
 }: DemoCodePanelProps): ReactNode {
-  const {setDemoSettings} = useMdxDocsContext()
+  const {setDemoSettings} = useDocsRuntimeContext()
 
   const effectiveTabsValue = tabsValue !== undefined ? tabsValue : activeTab
 

@@ -2,4 +2,9 @@ export * from "./docs-footer.js"
 export * from "./layout.js"
 export * from "./mobile-sidebar.js"
 export * from "./page-actions.js"
-export * from "./use-mdx-docs-layout.js"
+// Previously exported from this entry. Kept for backwards compatibility.
+export {
+  MdxDocsLayoutContextProvider,
+  type MdxDocsLayoutContextState,
+  useMdxDocsLayoutContext,
+} from "@qualcomm-ui/react-mdx/context"

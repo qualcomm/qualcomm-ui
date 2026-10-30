@@ -25,7 +25,7 @@ import {
 import {
   type DemoSettings,
   type PackageManager,
-  SiteContextProvider,
+  DocsManifestProvider,
 } from "@qualcomm-ui/react-mdx/context"
 import {
   type DocPropsLayout,
@@ -283,7 +283,7 @@ export default function AppWithProviders() {
   }, [docsSiteData])
 
   return (
-    <SiteContextProvider value={siteContext}>
+    <DocsManifestProvider value={siteContext}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
           <QdsThemeContextProvider value={qdsThemeContext}>
@@ -293,7 +293,7 @@ export default function AppWithProviders() {
           </QdsThemeContextProvider>
         </ThemeProvider>
       </PropsLayoutProvider>
-    </SiteContextProvider>
+    </DocsManifestProvider>
   )
 }
 

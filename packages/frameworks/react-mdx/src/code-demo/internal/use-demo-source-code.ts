@@ -4,7 +4,7 @@
 import {type RefObject, useCallback, useMemo, useRef} from "react"
 
 import type {SourceCode, SourceCodeData} from "@qualcomm-ui/mdx-common"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 
 export interface UseDemoSourceCodeOptions {
   activeTab: string
@@ -36,7 +36,7 @@ export function useDemoSourceCode({
   expanded,
   sourceCode,
 }: UseDemoSourceCodeOptions): UseDemoSourceCodeResult {
-  const {demoSettings} = useMdxDocsContext()
+  const {demoSettings} = useDocsRuntimeContext()
 
   const isInlineMode = demoSettings?.transformTailwindClasses
 
