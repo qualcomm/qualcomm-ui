@@ -116,9 +116,7 @@ z &= \sqrt{a^2 + b^2}
 \end{aligned}
 $$
 
-## Verify rendering
-
-Restart the development server after changing `vite.config.ts`. Add the examples to an MDX page and open its route. The inline formula should sit within the sentence, the display equation should be centered, and the aligned example should show two rows.
+## Troubleshooting
 
 - If equations have missing fonts, duplicate text, or incorrect spacing, check that `<Links />` is present and that the KaTeX stylesheet and fonts load successfully. A mismatched integrity hash causes the browser to reject the stylesheet.
 - If KaTeX reports an unknown command or invalid expression, check the syntax against its [supported functions](https://katex.org/docs/supported.html).
