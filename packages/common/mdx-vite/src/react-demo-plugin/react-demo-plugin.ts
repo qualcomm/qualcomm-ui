@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {transformerStyleToClass} from "@shikijs/transformers"
 import chalk from "chalk"
 import {glob} from "glob"
 import {readFile} from "node:fs/promises"
@@ -42,7 +43,7 @@ interface HandleUpdateOptions {
 
 interface HighlightCodeResult {
   full: string
-  preview?: string | null
+  preview?: string
 }
 
 interface ExtractedSourceCode {
@@ -56,6 +57,27 @@ let initializingHighlighter = false
 const demoRegistry = new Map<string, ReactDemoData>()
 const pageFiles = new Map<string, string[]>()
 const relativeImportDependents = new Map<string, Set<string>>()
+
+/**
+ * Highlighted demos repeat a few dozen distinct token styles hundreds of
+ * thousands of times. Hoisting them into classes keeps the registry module small
+ * enough for Vite to transform and the browser to parse quickly.
+ *
+ * Module-level for the same reason as `demoRegistry`: the registry is only
+ * collected once per process, so a second plugin instance must see the same
+ * classes.
+ */
+const styleToClass = transformerStyleToClass({classPrefix: "qui-demo-"})
+
+/**
+ * Only token styles are converted. The `<pre>` background stays inline so that
+ * it keeps overriding the docs layout rules that also set a background on code
+ * blocks.
+ */
+const tokenStyleToClass: ShikiTransformer = {
+  name: "qui-demo:token-style-to-class",
+  tokens: styleToClass.tokens,
+}
 
 /**
  * Generates virtual modules for React demo components. Virtual modules contain
@@ -122,6 +144,7 @@ export function reactDemoPlugin({
       }
 
       const updatedDemoNames: string[] = []
+      const styleCountBefore = styleToClass.getClassRegistry().size
 
       if (isDemoFile(file)) {
         await handleDemoAdditionOrUpdate({filePath: file})
@@ -161,12 +184,31 @@ export function reactDemoPlugin({
         }
       }
 
+      const stylesModule = server.moduleGraph.getModuleById(
+        VIRTUAL_MODULE_IDS.STYLES,
+      )
+      if (
+        stylesModule &&
+        styleToClass.getClassRegistry().size !== styleCountBefore
+      ) {
+        return [stylesModule]
+      }
+
       return []
     },
 
     load(id) {
       if (id === VIRTUAL_MODULE_IDS.AUTO) {
-        return generateAutoScopeModule()
+        /**
+         * The module is a generated Map of highlighted source strings, so a
+         * source map has nothing useful to point at. Without an explicit empty
+         * map, Vite generates a hires identity map that is several times larger
+         * than the module itself.
+         */
+        return {code: generateAutoScopeModule(), map: {mappings: ""}}
+      }
+      if (id === VIRTUAL_MODULE_IDS.STYLES) {
+        return {code: styleToClass.getCSS(), map: {mappings: ""}}
       }
     },
 
@@ -175,6 +217,9 @@ export function reactDemoPlugin({
     resolveId(id) {
       if (id === "virtual:qui-demo-scope/auto") {
         return VIRTUAL_MODULE_IDS.AUTO
+      }
+      if (id === "virtual:qui-demo-scope/styles.css") {
+        return VIRTUAL_MODULE_IDS.STYLES
       }
     },
 
@@ -277,14 +322,15 @@ export function reactDemoPlugin({
             },
           },
           ...transformers,
+          tokenStyleToClass,
         ],
       })
 
       return {
         full: highlightedCode,
         preview: previewCode
-          ? extractPreviewFromHighlightedHtml(highlightedCode)
-          : null,
+          ? (extractPreviewFromHighlightedHtml(highlightedCode) ?? undefined)
+          : undefined,
       }
     } catch (error) {
       console.warn(
@@ -335,6 +381,7 @@ export function reactDemoPlugin({
     const registryCode = generateDemoRegistry(demoRegistry)
     const parts = [
       "// Auto-generated demo scope resolver",
+      `import "virtual:qui-demo-scope/styles.css"`,
       registryCode,
       generateExportedFunctions(),
     ]

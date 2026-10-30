@@ -45,6 +45,13 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       state.buildIndex(state.buildCount > 0)
       state.buildCount++
 
+      const lintErrorCount = state.indexer.lintErrorCount
+      if (!isDev && lintErrorCount) {
+        throw new Error(
+          `@qualcomm-ui/mdx-vite: found ${lintErrorCount} lint error${lintErrorCount === 1 ? "" : "s"} in MDX pages. See the output above, or adjust "lint" in your qui-docs config.`,
+        )
+      }
+
       if (!isDev && state.knowledgeConfig) {
         await state.generateKnowledge(getPublicDir())
       }
@@ -147,12 +154,18 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       }
       return []
     },
-    load: (id): string | undefined => {
+    load: (id) => {
       if (id === PLUGIN_VIRTUAL_MODULE_ID) {
-        return `export const siteData = ${JSON.stringify(state.siteData)}`
+        return {
+          code: `export const siteData = ${JSON.stringify(state.siteData)}`,
+          map: {mappings: ""},
+        }
       }
       if (id === CONFIG_VIRTUAL_MODULE_ID) {
-        return `export const quiDocsConfig = ${JSON.stringify({...state.config, cwd: state.cwd, publicDir: viteConfig.publicDir})}`
+        return {
+          code: `export const quiDocsConfig = ${JSON.stringify({...state.config, cwd: state.cwd, publicDir: viteConfig.publicDir})}`,
+          map: {mappings: ""},
+        }
       }
       if (id === EXPORTS_VIRTUAL_MODULE_ID) {
         if (isDev) {
@@ -162,15 +175,21 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           const {host = "localhost", port = 5173} = viteConfig.server
           const hostname = host === true ? "localhost" : host || "localhost"
           const base = `${viteConfig.server.https ? "https" : "http"}://${hostname}:${port}`
-          return dedent`
-            export const getSections = () => fetch('${base}/__qui-docs/sections').then(r => r.json())
-            export const getPages = () => fetch('${base}/__qui-docs/pages').then(r => r.json())
-          `
+          return {
+            code: dedent`
+              export const getSections = () => fetch('${base}/__qui-docs/sections').then(r => r.json())
+              export const getPages = () => fetch('${base}/__qui-docs/pages').then(r => r.json())
+            `,
+            map: {mappings: ""},
+          }
         }
-        return dedent`
-          export const getSections = () => Promise.resolve(${JSON.stringify(state.sections)})
-          export const getPages = () => Promise.resolve(${JSON.stringify(state.pages)})
-        `
+        return {
+          code: dedent`
+            export const getSections = () => Promise.resolve(${JSON.stringify(state.sections)})
+            export const getPages = () => Promise.resolve(${JSON.stringify(state.pages)})
+          `,
+          map: {mappings: ""},
+        }
       }
       return undefined
     },
