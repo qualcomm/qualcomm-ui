@@ -154,7 +154,7 @@ export function AppDocsLayout({
         renderLink={DocLink}
         rootBreadcrumb={{
           children: "Home",
-          render: <Link render={<ReactRouterLink to="/" viewTransition />} />,
+          render: <ReactRouterLink to="/" viewTransition />,
         }}
         sidebarProps={{ref: sidebarRef}}
         {...props}
