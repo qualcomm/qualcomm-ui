@@ -78,10 +78,12 @@ jobs:
           exit 0
         fi
         pnpm changeset version
+        # pnpm verifies the lockfile before each script run, and CI enforces a frozen
+        # lockfile. Sync it now that workspace specifiers have been bumped.
+        pnpm install --lockfile-only --no-frozen-lockfile --ignore-scripts
         pnpm qui-changesets consolidate-changelogs
         pnpm qui-changesets generate-release-notes
         pnpm qui-changesets update-jsdoc-since-tags --diff-ref "$BASE_SHA"
-        pnpm install --lockfile-only --no-frozen-lockfile --ignore-scripts
 
     - name: Commit and push release preparation
       id: commit
