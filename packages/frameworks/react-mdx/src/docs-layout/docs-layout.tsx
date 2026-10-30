@@ -44,9 +44,9 @@ export function DocsLayout({
 
                 {children}
 
-                <UpdatedOn />
-
                 {!hidePageLinks && <Layout.PageLinks />}
+
+                <UpdatedOn data-bottom />
               </Layout.MainContent>
 
               <Layout.TableOfContents />

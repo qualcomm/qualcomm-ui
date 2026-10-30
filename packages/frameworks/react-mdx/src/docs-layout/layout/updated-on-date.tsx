@@ -22,7 +22,7 @@ export function UpdatedOnDate({
 
   return (
     <span {...mergeProps({className: "qui-docs__updated-on-date"}, props)}>
-      Last updated on{" "}
+      Updated{" "}
       <time className="qui-docs__updated-on-time">
         {new Date(updatedOn).toLocaleDateString("en-US", {
           day: "numeric",

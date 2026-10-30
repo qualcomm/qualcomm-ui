@@ -377,23 +377,35 @@ pre.qui-docs-code {
 
 .qui-docs__updated-on-wrapper {
   align-items: center;
+  color: var(--color-text-neutral-secondary);
   display: flex;
-  font: var(--font-static-heading-xxs-default);
-  font-style: italic;
+  font: var(--font-static-body-sm-compact-default);
   gap: 4px;
   justify-content: flex-end;
-  padding-top: var(--qui-mdx-margin-default);
+  white-space: nowrap;
+
+  &[data-top] {
+    padding-top: 0;
+  }
 }
 
 .qui-docs__updated-on-date {
-  font: var(--font-static-heading-xxs-default);
-  font-style: italic;
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-sm-compact-default);
 }
 
 .qui-docs__updated-on-time,
 .qui-docs__updated-by {
-  font: var(--font-static-heading-xxs-bold);
-  font-style: italic;
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-sm-compact-bold);
+}
+
+.qui-docs__updated-on-wrapper + .qui-page-links__container {
+  margin-top: 0;
+}
+
+.qui-docs__updated-on-wrapper[data-bottom] {
+  margin: 32px 0 12px 0;
 }
 
 .qui-docs__page-header {
