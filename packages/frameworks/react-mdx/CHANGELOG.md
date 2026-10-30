@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.1.0
+
+Oct 30th, 2026
+
+### Features
+
+* [context]: adjust context names for clarity, deprecate old symbols ([25563a1](https://github.com/qualcomm/qualcomm-ui/commit/25563a1))
+
 ## 3.0.0
 
 Oct 30th, 2026

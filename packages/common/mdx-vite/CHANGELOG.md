@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 4.0.1
+
+Oct 30th, 2026
+
+### Bug Fixes
+
+* [shiki]: handle vite's css minification in theme switcher ([4ead4b2](https://github.com/qualcomm/qualcomm-ui/commit/4ead4b2))
+
 ## 4.0.0
 
 Oct 30th, 2026

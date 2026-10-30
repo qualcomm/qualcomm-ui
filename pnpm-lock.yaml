@@ -4398,7 +4398,7 @@ importers:
         specifier: workspace:^2.6.2
         version: link:../../common/mdx-common
       '@qualcomm-ui/mdx-vite':
-        specifier: workspace:^4.0.0
+        specifier: workspace:^4.0.1
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
@@ -4467,7 +4467,7 @@ importers:
         specifier: workspace:^1.10.0
         version: link:../react-core
       '@qualcomm-ui/react-mdx':
-        specifier: workspace:^3.0.0
+        specifier: workspace:^3.1.0
         version: link:../react-mdx
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6
