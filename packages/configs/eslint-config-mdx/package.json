@@ -67,6 +67,7 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/vite": "catalog:",
     "cross-env": "^10.1.0",
+    "eslint": "catalog:",
     "eslint-mdx": "^3.7.0",
     "eslint-plugin-mdx": "^3.7.0",
     "eslint-plugin-react": "^7.37.5",

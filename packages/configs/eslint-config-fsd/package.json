@@ -41,6 +41,7 @@
     "@qualcomm-ui/tsconfig": "catalog:",
     "@typescript-eslint/rule-tester": "catalog:",
     "cross-env": "^10.1.0",
+    "eslint": "catalog:",
     "eslint-plugin-boundaries": "^7.0.2",
     "vitest": "catalog:"
   },
