@@ -8,10 +8,17 @@ import type {
 } from "@qualcomm-ui/mdx-vite"
 
 const navConfig: NavConfig[] = [
-  {sectionTitle: "Getting Started"},
   {
     hidden: true,
+    hideBreadcrumbs: true,
+    hidePageLinks: true,
+    hideSideNav: true,
+    hideToc: true,
     id: "_index",
+  },
+  {sectionTitle: "Getting Started"},
+  {
+    id: "introduction",
   },
   {
     id: "installation",
