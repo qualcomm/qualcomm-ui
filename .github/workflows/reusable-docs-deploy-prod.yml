@@ -12,6 +12,9 @@ on:
       aws-region:
         type: string
         default: us-west-2
+      pull-max-retries:
+        type: number
+        default: 15
     secrets:
       PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY:
         required: true
@@ -39,6 +42,36 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ inputs.aws-region }}
         ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}
+
+    - name: Pull base image
+      # Anonymous pulls from public.ecr.aws are rate limited per source IP,
+      # which GitHub-hosted runners share. Retry 429s with backoff so the
+      # build below uses the local image instead of pulling it again.
+      run: |
+        image=$(sed -n 's/^FROM[[:space:]]\{1,\}\([^[:space:]]*\).*/\1/p' "$DOCKERFILE" | head -n 1)
+        retries=0
+        while :; do
+          if output=$(docker pull --platform=linux/amd64 "$image" 2>&1); then
+            echo "$output"
+            break
+          fi
+          echo "$output"
+          case "$output" in
+            *429*|*toomanyrequests*) ;;
+            *) exit 1 ;;
+          esac
+          if [ "$retries" -ge "$MAX_RETRIES" ]; then
+            echo "::error::Rate limited pulling $image after $retries retries"
+            exit 1
+          fi
+          retries=$((retries + 1))
+          delay=$((retries * 5 > 30 ? 30 : retries * 5))
+          echo "Rate limited, retrying in ${delay}s (retry $retries/$MAX_RETRIES)"
+          sleep "$delay"
+        done
+      env:
+        DOCKERFILE: ${{ inputs.dockerfile }}
+        MAX_RETRIES: ${{ inputs.pull-max-retries }}
 
     - name: Build and push
       run: |
