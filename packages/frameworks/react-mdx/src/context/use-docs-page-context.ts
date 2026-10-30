@@ -19,7 +19,7 @@ import type {NavDensity} from "@qualcomm-ui/react-mdx/docs-layout"
 import type {PropsContextValue} from "@qualcomm-ui/react-mdx/typedoc"
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export interface DocsPageContextValue {
   hidePageLinks: boolean
@@ -40,13 +40,13 @@ export interface DocsPageContextValue {
 const DocsPageContext = createContext<DocsPageContextValue>(null as any)
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export const DocsPageProvider: Provider<DocsPageContextValue> =
   DocsPageContext.Provider
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export function useDocsPageContext(): DocsPageContextValue {
   const context = useContext(DocsPageContext)

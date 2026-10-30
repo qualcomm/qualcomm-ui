@@ -61,7 +61,7 @@ export interface LayoutComponents {
 }
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export interface DocsRuntimeContextValue {
   /**
@@ -119,13 +119,13 @@ export interface DocsRuntimeContextValue {
 const DocsRuntimeContext = createContext<DocsRuntimeContextValue | null>(null)
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export const DocsRuntimeProvider: Provider<DocsRuntimeContextValue | null> =
   DocsRuntimeContext.Provider
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export function useDocsRuntimeContext(): DocsRuntimeContextValue {
   const context = useContext(DocsRuntimeContext)

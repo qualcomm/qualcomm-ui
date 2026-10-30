@@ -6,7 +6,7 @@ import {createContext, type Provider, useContext} from "react"
 import type {KnowledgePages, SiteData} from "@qualcomm-ui/mdx-common"
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export interface DocsManifestContextValue extends SiteData {
   getPages?: () => Promise<KnowledgePages | null>
@@ -15,7 +15,7 @@ export interface DocsManifestContextValue extends SiteData {
 const DocsManifestContext = createContext<DocsManifestContextValue | null>(null)
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export const DocsManifestProvider: Provider<DocsManifestContextValue | null> =
   DocsManifestContext.Provider
@@ -23,7 +23,7 @@ export const DocsManifestProvider: Provider<DocsManifestContextValue | null> =
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 
 /**
- * @since next-release
+ * @since 3.1.0
  */
 export function useDocsManifestContext(): DocsManifestContextValue {
   const context = useContext(DocsManifestContext)
