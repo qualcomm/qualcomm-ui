@@ -1,4 +1,4 @@
-import {type ReactNode, type RefObject, useMemo, useState} from "react"
+import {type ReactNode, type RefObject, useMemo} from "react"
 
 import {Blocks} from "lucide-react"
 import {Link as ReactRouterLink, useLocation} from "react-router"
@@ -12,7 +12,6 @@ import {
   HeaderLogo,
   HeaderRepositoryLink,
   PageHeaderBadges,
-  QuiEcosystemMenu,
   SideNavBadges,
   ThemeToggle,
 } from "@qualcomm-ui/react-internal/layout"
@@ -51,8 +50,6 @@ export function MdxLayout({
   portalContainerRef,
   ...props
 }: Props): ReactNode {
-  const [menuOpen, setMenuOpen] = useState(false)
-
   const location = useLocation()
 
   const portalContext = useMemo(
@@ -84,7 +81,6 @@ export function MdxLayout({
               >
                 Components
               </HeaderBar.NavItem>
-              <QuiEcosystemMenu onOpenChange={setMenuOpen} open={menuOpen} />
             </HeaderBar.Nav>
 
             <HeaderBar.ActionBar>
