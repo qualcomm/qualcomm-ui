@@ -5,8 +5,10 @@ import type {ReactNode} from "react"
 
 import type {PagePropTypes} from "@qualcomm-ui/mdx-common"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
-import {useMdxDocsLayoutContext} from "@qualcomm-ui/react-mdx/docs-layout"
+import {
+  useDocsPageContext,
+  useDocsRuntimeContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
 import {Link} from "@qualcomm-ui/react/link"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
@@ -29,8 +31,8 @@ interface Props {
 export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
   // scoped to the TypeDocProps on the current page.
   const props = usePropsContext()
-  const {toc} = useMdxDocsLayoutContext()
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {toc} = useDocsPageContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
 
   const restPrefix = prop.rest ? "..." : ""
 

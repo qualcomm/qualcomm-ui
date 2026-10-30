@@ -19,7 +19,7 @@ import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
   type DemoSettings,
   type PackageManager,
-  SiteContextProvider,
+  DocsManifestProvider,
 } from "@qualcomm-ui/react-mdx/context"
 import {
   type DocPropsLayout,
@@ -181,7 +181,7 @@ export default function AppWithProviders() {
   }, [])
 
   return (
-    <SiteContextProvider value={docsSiteData}>
+    <DocsManifestProvider value={docsSiteData}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
           <Provider>
@@ -189,6 +189,6 @@ export default function AppWithProviders() {
           </Provider>
         </ThemeProvider>
       </PropsLayoutProvider>
-    </SiteContextProvider>
+    </DocsManifestProvider>
   )
 }

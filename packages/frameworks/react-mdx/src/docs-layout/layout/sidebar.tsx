@@ -16,15 +16,16 @@ import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import type {NavItem} from "@qualcomm-ui/mdx-common"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  useDocsRuntimeContext,
+  useDocsPageContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {matchSorter} from "@qualcomm-ui/utils/match-sorter"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
-
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface SidebarProps extends Omit<ElementRenderProp<"div">, "dir"> {
   /**
@@ -61,8 +62,8 @@ export function Sidebar({
   ...props
 }: SidebarProps): ReactElement {
   const ref = useRef<HTMLDivElement | null>(null)
-  const {navDensity, navItems, pathname} = useMdxDocsLayoutContext()
-  const {layoutComponents, renderLink: RenderLink} = useMdxDocsContext()
+  const {navDensity, navItems, pathname} = useDocsPageContext()
+  const {layoutComponents, renderLink: RenderLink} = useDocsRuntimeContext()
   const SideNavBadgesComponent = layoutComponents?.SideNavBadges
 
   const initialCollection = useMemo(

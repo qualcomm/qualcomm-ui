@@ -5,7 +5,7 @@ import {type ReactNode, useMemo} from "react"
 
 import {Info} from "lucide-react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {Badge} from "@qualcomm-ui/react/badge"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Link} from "@qualcomm-ui/react/link"
@@ -33,7 +33,7 @@ function formatSinceUrl(
 }
 
 export function PropName({changelogPathname, id, prop}: Props): ReactNode {
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
   const {disableRequired, linkifyPrimaryColumn} = useTypeDocContext()
   const required = prop.resolvedType.required && !disableRequired
   const deprecated = prop.resolvedType.deprecated
@@ -55,7 +55,7 @@ export function PropName({changelogPathname, id, prop}: Props): ReactNode {
       ? `[(${prop.name})]`
       : prop.name
 
-  const {docProps} = useMdxDocsContext()
+  const {docProps} = useDocsRuntimeContext()
 
   const changelogUrl = changelogPathname || docProps?.changelogUrl || ""
 

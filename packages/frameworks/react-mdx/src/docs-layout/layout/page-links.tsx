@@ -10,19 +10,18 @@ import {
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {
-  type MdxDocsContextValue,
-  useMdxDocsContext,
+  type DocsRuntimeContextValue,
+  useDocsRuntimeContext,
+  useDocsPageContext,
 } from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {TreeCollection} from "@qualcomm-ui/utils/collection"
 
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
-
 interface PageLinkProp {
   pageLink: NavItem
   prev?: boolean
-  renderLink: MdxDocsContextValue["renderLink"]
+  renderLink: DocsRuntimeContextValue["renderLink"]
 }
 
 function PageLink({
@@ -50,8 +49,8 @@ function PageLink({
 export interface PageLinksProps extends ElementRenderProp<"div"> {}
 
 export function PageLinks({className, ...props}: PageLinksProps): ReactElement {
-  const {renderLink} = useMdxDocsContext()
-  const {navItems, pathname} = useMdxDocsLayoutContext()
+  const {renderLink} = useDocsRuntimeContext()
+  const {navItems, pathname} = useDocsPageContext()
 
   const flattenedItems = useMemo(
     () =>

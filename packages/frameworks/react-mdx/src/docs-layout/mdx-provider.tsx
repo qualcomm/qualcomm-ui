@@ -5,7 +5,7 @@ import {type ReactNode, useMemo} from "react"
 
 import {MDXProvider, type useMDXComponents} from "@mdx-js/react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {HeadingSteps} from "@qualcomm-ui/react-mdx/heading-steps"
 import {
   SpoilerContent,
@@ -68,7 +68,7 @@ interface Props {
  * For a list of each supported component, visit the {@link https://mdxjs.com/table-of-components/ docs}.
  */
 export function MdxProvider({children, components}: Props): ReactNode {
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
 
   return (
     <MDXProvider

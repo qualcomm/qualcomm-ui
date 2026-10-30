@@ -3,15 +3,15 @@
 
 import type {ComponentPropsWithoutRef, ReactElement} from "react"
 
+import {useDocsPageContext} from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {UpdatedOnDate} from "./updated-on-date.js"
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface UpdatedOnProps extends ComponentPropsWithoutRef<"div"> {}
 
 export function UpdatedOn({...props}: UpdatedOnProps): ReactElement | null {
-  const docsLayoutData = useMdxDocsLayoutContext()
+  const docsLayoutData = useDocsPageContext()
   const pageData = docsLayoutData?.pageMap?.[docsLayoutData.pathname]
   const updatedOn = pageData?.updatedOn
   const updatedBy = pageData?.updatedBy

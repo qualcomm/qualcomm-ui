@@ -3,17 +3,19 @@
 
 import type {ComponentPropsWithRef, ReactElement} from "react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  useDocsPageContext,
+  useDocsRuntimeContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useMdxDocsLayoutContext} from "../layout/index.js"
 import type {FrontmatterBadge} from "../types.js"
 
 export interface PageHeaderProps extends ComponentPropsWithRef<"h1"> {}
 
 export function PageHeader(props: PageHeaderProps): ReactElement {
-  const context = useMdxDocsLayoutContext()
-  const {layoutComponents} = useMdxDocsContext()
+  const context = useDocsPageContext()
+  const {layoutComponents} = useDocsRuntimeContext()
   const frontmatter = context.pageFrontmatter
 
   const badges = (frontmatter.badges ?? []) as FrontmatterBadge[]

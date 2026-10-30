@@ -9,10 +9,9 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {useDocsPageContext} from "@qualcomm-ui/react-mdx/context"
 import {PropsContextProvider} from "@qualcomm-ui/react-mdx/typedoc"
 import {clsx} from "@qualcomm-ui/utils/clsx"
-
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface MainContentProps extends ElementRenderProp<"article"> {
   /**
@@ -36,7 +35,7 @@ export function MainContent({
   const ref = useRef<HTMLElement | null>(null)
 
   const {mainContentElement, pageProps, setMainContentElement} =
-    useMdxDocsLayoutContext()
+    useDocsPageContext()
 
   useSafeLayoutEffect(() => {
     if (mainContentElement !== ref.current) {

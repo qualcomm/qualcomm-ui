@@ -15,11 +15,13 @@ import type {
   PageHeading,
   PageMap,
 } from "@qualcomm-ui/mdx-common"
+import type {NavDensity} from "@qualcomm-ui/react-mdx/docs-layout"
 import type {PropsContextValue} from "@qualcomm-ui/react-mdx/typedoc"
 
-import type {NavDensity} from "../types.js"
-
-export interface MdxDocsLayoutContextState {
+/**
+ * @since next-release
+ */
+export interface DocsPageContextValue {
   hidePageLinks: boolean
   hideSideNav: boolean
   mainContentElement: HTMLElement | null
@@ -35,19 +37,23 @@ export interface MdxDocsLayoutContextState {
   toc: PageHeading[]
 }
 
-const MdxDocsLayoutContext = createContext<MdxDocsLayoutContextState>(
-  null as any,
-)
+const DocsPageContext = createContext<DocsPageContextValue>(null as any)
 
-export const MdxDocsLayoutContextProvider: Provider<MdxDocsLayoutContextState> =
-  MdxDocsLayoutContext.Provider
+/**
+ * @since next-release
+ */
+export const DocsPageProvider: Provider<DocsPageContextValue> =
+  DocsPageContext.Provider
 
-export function useMdxDocsLayoutContext(): MdxDocsLayoutContextState {
-  const context = useContext(MdxDocsLayoutContext)
+/**
+ * @since next-release
+ */
+export function useDocsPageContext(): DocsPageContextValue {
+  const context = useContext(DocsPageContext)
 
   if (!context) {
     throw new Error(
-      "useMdxDocsLayoutContext can only be used as children of a <Layout.Root> instance.",
+      "useDocsPageContext can only be used as children of a <Layout.Root> instance.",
     )
   }
 

@@ -21,7 +21,7 @@ import {SearchIcon} from "lucide-react"
 import {trackFocusVisible} from "@qualcomm-ui/dom/focus-visible"
 import type {SemanticSearchResult} from "@qualcomm-ui/mdx-common"
 import {Portal} from "@qualcomm-ui/react-core/portal"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {Dialog} from "@qualcomm-ui/react/dialog"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Kbd} from "@qualcomm-ui/react/kbd"
@@ -81,7 +81,7 @@ export function SemanticSiteSearch({
   const listRef = useRef<Array<HTMLElement | null>>([])
   const [isMac, setIsMac] = useState<boolean>(false)
 
-  const {renderLink: Link} = useMdxDocsContext()
+  const {renderLink: Link} = useDocsRuntimeContext()
 
   useEffect(() => {
     const unsub = trackFocusVisible({root: document.documentElement})

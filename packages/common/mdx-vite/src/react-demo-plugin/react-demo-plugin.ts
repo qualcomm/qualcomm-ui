@@ -208,7 +208,19 @@ export function reactDemoPlugin({
         return {code: generateAutoScopeModule(), map: {mappings: ""}}
       }
       if (id === VIRTUAL_MODULE_IDS.STYLES) {
-        return {code: styleToClass.getCSS(), map: {mappings: ""}}
+        /**
+         * Token colors use `light-dark()`. Unlike the inline styles they
+         * replace, this module goes through the consumer's CSS pipeline, and
+         * lightningcss (Vite 8's default minifier) lowers `light-dark()` to a
+         * polyfill keyed on `prefers-color-scheme`. That ignores the
+         * `color-scheme` set by the docs theme switcher, so code always follows
+         * the OS theme. Lightningcss leaves rules inside a matching `@supports`
+         * untouched, which keeps native `light-dark()` evaluation.
+         */
+        return {
+          code: `@supports (color: light-dark(#000, #fff)) {\n${styleToClass.getCSS()}\n}`,
+          map: {mappings: ""},
+        }
       }
     },
 

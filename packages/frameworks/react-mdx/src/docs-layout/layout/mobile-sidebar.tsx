@@ -6,12 +6,12 @@ import type {ReactElement, ReactNode} from "react"
 import {Menu, PanelLeftClose} from "lucide-react"
 
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {useDocsPageContext} from "@qualcomm-ui/react-mdx/context"
 import {IconButton} from "@qualcomm-ui/react/button"
 import {Drawer, type DrawerRootProps} from "@qualcomm-ui/react/drawer"
 import {Icon} from "@qualcomm-ui/react/icon"
 
 import {Sidebar} from "./sidebar.js"
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface MobileSidebarProps extends Omit<DrawerRootProps, "children"> {
   /**
@@ -26,7 +26,7 @@ export function MobileSidebar({
   children,
   ...props
 }: MobileSidebarProps): ReactElement {
-  const {pathname} = useMdxDocsLayoutContext()
+  const {pathname} = useDocsPageContext()
 
   return (
     <div className="qui-docs-sidebar__mobile-container">

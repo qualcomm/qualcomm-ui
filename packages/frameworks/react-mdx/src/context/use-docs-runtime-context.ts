@@ -60,7 +60,10 @@ export interface LayoutComponents {
   SideNavBadges?: FunctionComponent<{badges: NavBadge[]}>
 }
 
-export interface MdxDocsContextValue {
+/**
+ * @since next-release
+ */
+export interface DocsRuntimeContextValue {
   /**
    * @default {styleMode: 'default'}
    */
@@ -113,17 +116,23 @@ export interface MdxDocsContextValue {
   ) => void
 }
 
-const MdxDocsContext = createContext<MdxDocsContextValue | null>(null)
+const DocsRuntimeContext = createContext<DocsRuntimeContextValue | null>(null)
 
-export const MdxDocsProvider: Provider<MdxDocsContextValue | null> =
-  MdxDocsContext.Provider
+/**
+ * @since next-release
+ */
+export const DocsRuntimeProvider: Provider<DocsRuntimeContextValue | null> =
+  DocsRuntimeContext.Provider
 
-export function useMdxDocsContext(): MdxDocsContextValue {
-  const context = useContext(MdxDocsContext)
+/**
+ * @since next-release
+ */
+export function useDocsRuntimeContext(): DocsRuntimeContextValue {
+  const context = useContext(DocsRuntimeContext)
 
   if (!context) {
     throw new Error(
-      "useMdxDocsContext can only be used as children of an <MdxDocsProvider> instance.",
+      "useDocsRuntimeContext can only be used as children of a <DocsRuntimeProvider> instance.",
     )
   }
 

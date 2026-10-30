@@ -3,7 +3,7 @@
 
 import type {HTMLAttributes, ReactNode} from "react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {Link} from "@qualcomm-ui/react/link"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -15,7 +15,7 @@ export interface NotFoundProps extends Omit<
 }
 
 export function NotFound({url, ...props}: NotFoundProps): ReactNode {
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
   const mergedProps = mergeProps({className: "qui-docs__not-found"}, props)
   return (
     <div {...mergedProps}>

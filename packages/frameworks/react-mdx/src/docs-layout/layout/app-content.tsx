@@ -7,10 +7,9 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {useDocsPageContext} from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
-
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout.js"
 
 export interface AppContentProps extends ElementRenderProp<"div"> {
   /**
@@ -24,7 +23,7 @@ export function AppContent({
   className,
   ...props
 }: AppContentProps): ReactElement {
-  const {hideSideNav, showToc} = useMdxDocsLayoutContext()
+  const {hideSideNav, showToc} = useDocsPageContext()
 
   return (
     <PolymorphicElement

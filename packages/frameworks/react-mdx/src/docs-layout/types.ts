@@ -11,7 +11,7 @@ import type {
 } from "@qualcomm-ui/qds-core/badge"
 import type {
   DemoSettings,
-  MdxDocsContextValue,
+  DocsRuntimeContextValue,
   PackageManager,
   RouteDemoState,
 } from "@qualcomm-ui/react-mdx/context"
@@ -36,7 +36,7 @@ export interface DocPropsSettings {
 export type NavDensity = "compact" | "comfy"
 
 export interface DocsLayoutSettings extends Pick<
-  MdxDocsContextValue,
+  DocsRuntimeContextValue,
   "demoSettings" | "layoutComponents" | "packageManager" | "ssrUserAgent"
 > {
   /**
