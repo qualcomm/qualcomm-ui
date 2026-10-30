@@ -41,6 +41,7 @@ import {
 } from "./remark/index.js"
 import {remarkExtractMeta} from "./remark/remark-extract-meta.js"
 import {remarkMathCodeProtection} from "./remark/remark-math-code-protection.js"
+import {remarkUnwrapParagraphs} from "./remark/remark-unwrap-paragraphs.js"
 import {
   transformerCodeAttribute,
   transformerNotationHidden,
@@ -86,6 +87,7 @@ export function getRehypePlugins(
           defaultColor: "light-dark()",
           defaultLanguage: "plaintext",
           fallbackLanguage: "plaintext",
+          lazy: true,
           themes: {
             dark: quiCustomDarkTheme,
             light: "github-light-high-contrast",
@@ -127,6 +129,7 @@ export function getRemarkPlugins(): PluggableList {
     remarkFrontmatterDescription,
     remarkSpoilers,
     remarkSteps,
+    remarkUnwrapParagraphs,
     remarkSerializeJsxRender,
     remarkExtractMeta,
   ]
