@@ -26,9 +26,7 @@
 
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
   --q-font-mono: "Roboto Mono", monospace;
-  --qui-header-height: 48px;
   --q-font-family: "Roboto Flex", sans-serif;
 }
 
@@ -36,14 +34,35 @@
   font-family: "Roboto Mono", monospace;
 }
 
-.q-header--content {
-  padding: 6px 12px;
-}
-
 body {
   background: var(--color-background-neutral-00);
   display: flex;
   margin: 0;
+}
+
+.qui-docs__root[data-pathname="/"] {
+  .qui-docs__main-content {
+    padding: 20px 20px 42px;
+
+    @media screen and (min-width: 660px) {
+      padding: 32px 32px 64px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      max-width: 1360px;
+      padding: 72px 96px 120px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-block: 0;
+      margin-inline: 0;
+    }
+  }
 }
 
 svg.fsd {
@@ -73,4 +92,25 @@ svg.fsd {
         var(--view-transition-y)
     );
   }
+}
+
+.hex-bg {
+  background: url("/images/home/hex-bg-light.svg") top center / cover no-repeat;
+}
+[data-theme="dark"] .hex-bg {
+  background-image: url("/images/home/hex-bg-dark.svg");
+}
+
+.spec-grid-bg {
+  background-color: var(--color-background-neutral-01);
+  background-image:
+    linear-gradient(var(--color-border-neutral-01) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border-neutral-01) 1px, transparent 1px);
+  background-position: -1px -1px;
+  background-size: var(--sizing-70) var(--sizing-70);
+}
+
+[data-theme="dark"] .theme-image[data-theme="light"],
+[data-theme="light"] .theme-image[data-theme="dark"] {
+  display: none;
 }
