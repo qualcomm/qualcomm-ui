@@ -58,10 +58,10 @@ describe("SearchIndexer link validation cache", () => {
     const debugSpy = vi.spyOn(console, "debug").mockImplementation(() => {})
     const indexer = new SearchIndexer(
       {
+        lint: {brokenLinks: "warn"},
         navConfig: [],
         pageDirectory: "routes",
         srcDir: tmpDir,
-        validatePageLinks: true,
       },
       true,
       {mdxFileReader: new MdxFileReader(true)},
