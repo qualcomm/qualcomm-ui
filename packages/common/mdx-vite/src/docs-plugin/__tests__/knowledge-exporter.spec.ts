@@ -166,11 +166,11 @@ $$`,
   test("indexes math when page link validation is enabled", async () => {
     const directory = await writeMathPage(alignedMath)
     const indexer = new SearchIndexer({
+      lint: {brokenLinks: "warn"},
       navConfig: [],
       pageDirectory: ".",
       srcDir: directory,
       throwOnError: true,
-      validatePageLinks: true,
     })
 
     indexer.buildIndex([join(directory, "latex.mdx")])
