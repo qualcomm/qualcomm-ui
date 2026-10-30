@@ -216,6 +216,20 @@ section.heading {
   }
 }
 
+section.qui-docs__step-section {
+  &[data-heading-rank] {
+    margin-top: var(--qui-docs-content-spacing-lg);
+    scroll-margin-top: calc(var(--qui-docs-content-spacing-xl) + 12px);
+  }
+
+  &[data-heading-rank="4"],
+  &[data-heading-rank="5"],
+  &[data-heading-rank="6"] {
+    margin-top: 32px;
+    scroll-margin-top: 40px;
+  }
+}
+
 .qui-notification__root.mdx {
   border-left: solid 1px var(--border-color);
   border-radius: var(--border-radius-lg);
@@ -569,23 +583,37 @@ hr.mdx {
   }
 }
 
-.qui-docs__steps {
-  border-inline-start: 1px solid var(--color-border-neutral-02);
-  box-sizing: border-box;
+.qui-docs__steps-root {
   margin-inline-start: 16px;
   margin-bottom: 36px;
+  margin-top: 32px;
   padding-inline-start: 24px;
+  position: relative;
+}
+
+.qui-docs__step-indent-guide {
+  background-color: var(--color-border-neutral-01);
+  height: calc(100% - 6px);
+  left: 0;
+  position: absolute;
+  top: 6px;
+  width: 1px;
+}
+
+.qui-docs__steps-container {
+  box-sizing: border-box;
+  counter-reset: qui-docs-step;
 
   h2[data-step]::before {
-    height: 28px;
-    margin-inline-end: 12px;
-    margin-inline-start: -39px;
-    min-width: 28px;
-    width: 28px;
+    margin-top: 4px;
+  }
+
+  h4[data-step]::before {
+    margin-top: -2px;
   }
 
   [data-step] {
-    counter-increment: var(--counter-id);
+    counter-increment: qui-docs-step;
     position: relative;
 
     &::before {
@@ -594,16 +622,15 @@ hr.mdx {
       border-radius: 9999px;
       box-sizing: border-box;
       color: var(--color-text-neutral-secondary);
-      content: counter(var(--counter-id));
+      content: counter(qui-docs-step);
       display: inline-flex;
-      font: var(--font-static-body-md-default);
+      font: var(--font-static-body-sm-bold);
       height: 24px;
       justify-content: center;
       margin-inline-end: 12px;
       margin-inline-start: -36px;
       min-width: 24px;
-      text-align: center;
-      vertical-align: text-top;
+      vertical-align: top;
       visibility: visible;
       width: 24px;
     }
