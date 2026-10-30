@@ -1,7 +1,10 @@
 import {getPages, getSections} from "@qualcomm-ui/docs-plugin/markdown-content"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {NotFound} from "@qualcomm-ui/react-mdx/not-found"
-import {createFallbackRouteLoader} from "@qualcomm-ui/react-router-utils/node"
+import {
+  createFallbackRouteLoader,
+  type FallbackRouteLoaderData,
+} from "@qualcomm-ui/react-router-utils/node"
 
 export const loader = createFallbackRouteLoader({
   exports: siteData.exports,
@@ -12,7 +15,7 @@ export const loader = createFallbackRouteLoader({
 export default function NotFoundRoute({
   loaderData,
 }: {
-  loaderData: {url: string}
+  loaderData: FallbackRouteLoaderData
 }) {
-  return <NotFound url={loaderData.url} />
+  return <NotFound url={loaderData.pathname} />
 }
