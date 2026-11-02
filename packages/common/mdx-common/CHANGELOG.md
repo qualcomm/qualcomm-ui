@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.7.0
+
+Nov 2nd, 2026
+
+### Features
+
+* [shiki-themes]: use custom light theme ([2652e06](https://github.com/qualcomm/qualcomm-ui/commit/2652e06))
+
 ## 2.6.2
 
 Oct 30th, 2026
