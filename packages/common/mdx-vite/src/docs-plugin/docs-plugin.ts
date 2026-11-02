@@ -8,10 +8,12 @@ import {dedent} from "@qualcomm-ui/utils/dedent"
 
 import {ConfigLoader, type QuiDocsPluginOptions} from "./config/index.js"
 import {NAV_FILE_NAME} from "./nav-builder/load-folder-nav.js"
+import {getOpenApiModuleCode} from "./open-api/get-module-code.js"
 import {fixPath} from "./path-utils.js"
 import {
   CONFIG_VIRTUAL_MODULE_ID,
   EXPORTS_VIRTUAL_MODULE_ID,
+  OPENAPI_VIRTUAL_MODULE_ID,
   PLUGIN_VIRTUAL_MODULE_ID,
   PluginState,
 } from "./plugin-state.js"
@@ -155,6 +157,17 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           state.debouncedGenerateKnowledge(getPublicDir())
           const files = state.buildIndex(true)
 
+          // Route loaders run in the SSR environment, which `server.moduleGraph`
+          // doesn't cover.
+          for (const environment of Object.values(server.environments)) {
+            const openApiModule = environment.moduleGraph.getModuleById(
+              OPENAPI_VIRTUAL_MODULE_ID,
+            )
+            if (openApiModule) {
+              environment.moduleGraph.invalidateModule(openApiModule)
+            }
+          }
+
           const moduleByFile = server.moduleGraph.getModulesByFile(updateFile)
           if (!moduleByFile?.size) {
             console.debug("no module found for file, returning", updateFile)
@@ -194,6 +207,9 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           code: `export const siteData = ${JSON.stringify(state.siteData)}`,
           map: {mappings: ""},
         }
+      }
+      if (id === OPENAPI_VIRTUAL_MODULE_ID) {
+        return getOpenApiModuleCode(state.indexer.openApiOperations)
       }
       if (id === CONFIG_VIRTUAL_MODULE_ID) {
         return {
@@ -237,6 +253,9 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       }
       if (id === EXPORTS_VIRTUAL_MODULE_ID.substring(1)) {
         return EXPORTS_VIRTUAL_MODULE_ID
+      }
+      if (id === OPENAPI_VIRTUAL_MODULE_ID.substring(1)) {
+        return OPENAPI_VIRTUAL_MODULE_ID
       }
       return undefined
     },

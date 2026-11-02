@@ -34,6 +34,7 @@ export const PLUGIN_VIRTUAL_MODULE_ID = "\0@qualcomm-ui/mdx-vite-plugin"
 export const CONFIG_VIRTUAL_MODULE_ID = "\0@qualcomm-ui/docs-plugin/config"
 export const EXPORTS_VIRTUAL_MODULE_ID =
   "\0@qualcomm-ui/docs-plugin/markdown-content"
+export const OPENAPI_VIRTUAL_MODULE_ID = "\0@qualcomm-ui/docs-plugin/openapi"
 
 export interface ChangeOptions {
   onComplete?: () => void
@@ -109,6 +110,7 @@ export class PluginState {
       config,
       exports: this.exports,
       navItems: this.indexer.navItems,
+      openApiNav: this.indexer.openApiNav,
       pageDocProps: this.indexer.pageDocProps as unknown as PageDocProps,
       pageMap: this.indexer.pageMap,
       searchIndex: this.indexer.searchIndex,

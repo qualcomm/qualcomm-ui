@@ -70,6 +70,13 @@ import type {
   RouteMetaInternal,
   RouteMetaNavInternal,
 } from "./nav-builder/types.js"
+import {getOpenApiNavItems} from "./open-api/get-nav-items.js"
+import {
+  getOperationDetails,
+  type OpenApiOperationDetails,
+} from "./open-api/get-operation-details.js"
+import {getOperations} from "./open-api/get-operations.js"
+import {loadOpenApiSpec} from "./open-api/load-spec.js"
 import {
   type PageTitleIssue,
   reportPageTitleIssues,
@@ -185,6 +192,16 @@ export class SearchIndexer {
     return this._pageFiles
   }
 
+  get openApiNav(): Record<string, NavItem[]> {
+    return this._openApiNav
+  }
+  private _openApiNav: Record<string, NavItem[]> = {}
+
+  get openApiOperations(): Record<string, OpenApiOperationDetails> {
+    return this._openApiOperations
+  }
+  private _openApiOperations: Record<string, OpenApiOperationDetails> = {}
+
   get pageMap(): PageMap {
     return this._pageMap
   }
@@ -206,6 +223,8 @@ export class SearchIndexer {
     this._pageTitleIssues = []
     this._configIssueCount = 0
     this._ignoredMdxFiles = new Set()
+    this._openApiNav = {}
+    this._openApiOperations = {}
     this._pageDocProps = {}
     this._pageMap = {}
     this._searchIndex = []
@@ -346,6 +365,39 @@ export class SearchIndexer {
   }
 
   /**
+   * Adds the API's sidebar and a pageMap entry per operation.
+   */
+  private indexOpenApiSpec(
+    filePath: string,
+    specPath: string,
+    intro: PageSection,
+  ): void {
+    const spec = loadOpenApiSpec(filePath, specPath)
+    const operations = getOperations(spec)
+    this._openApiNav[intro.pathname] = getOpenApiNavItems(
+      intro,
+      operations,
+      spec.tags,
+    )
+    for (const operation of operations) {
+      const pathname = `${intro.pathname}/${operation.slug}`
+      this._openApiOperations[pathname] = getOperationDetails(spec, operation)
+      const title =
+        operation.summary ??
+        `${operation.method.toUpperCase()} ${operation.path}`
+      this._pageMap[pathname] = {
+        categories: [...intro.categories, title],
+        data: {},
+        hideToc: true,
+        id: `${intro.id}#${operation.slug}`,
+        pathname,
+        pathSegments: pathname.split("/").filter(Boolean),
+        title,
+      }
+    }
+  }
+
+  /**
    * Parses an MDX file to extract the site data for the nav items, doc props,
    * breadcrumbs, and search index.
    */
@@ -386,6 +438,10 @@ export class SearchIndexer {
 
     this._pageMap[defaultSection.pathname] = defaultSection
     this._pageFiles[defaultSection.pathname] = filePath
+
+    if (frontmatter.openApi) {
+      this.indexOpenApiSpec(filePath, frontmatter.openApi, defaultSection)
+    }
 
     let indexedPage: IndexedPage
     let collectedLinks: CollectedLink[] = []

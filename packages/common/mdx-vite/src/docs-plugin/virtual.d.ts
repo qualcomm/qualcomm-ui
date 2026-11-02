@@ -42,3 +42,11 @@ declare module "@qualcomm-ui/docs-plugin/markdown-content" {
    */
   export async function getSections(): Promise<KnowledgeSections | null>
 }
+
+/**
+ * Virtual module for OpenAPI operation routes. Only import it from a route
+ * module, so that React Router keeps it out of the client bundle.
+ */
+declare module "@qualcomm-ui/docs-plugin/openapi" {
+  export function loader(args: {request: Request}): unknown
+}
