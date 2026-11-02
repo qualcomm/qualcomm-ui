@@ -15,7 +15,7 @@ import {merge} from "lodash-es"
 import type {ShikiTransformer} from "shiki"
 import type {PluggableList} from "unified"
 
-import {quiCustomDarkTheme} from "@qualcomm-ui/mdx-common"
+import {quiCustomDarkTheme, quiCustomLightTheme} from "@qualcomm-ui/mdx-common"
 
 import {
   rehypeMdxCodeProps,
@@ -90,7 +90,7 @@ export function getRehypePlugins(
           lazy: true,
           themes: {
             dark: quiCustomDarkTheme,
-            light: "github-light-high-contrast",
+            light: quiCustomLightTheme,
           },
           transformers: [...getShikiTransformers(), transformerCodeAttribute()],
         } satisfies RehypeShikiOptions,

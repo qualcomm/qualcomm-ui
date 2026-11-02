@@ -19,6 +19,7 @@ import type {Plugin, ViteDevServer} from "vite"
 import {
   type AngularDemoInfo,
   quiCustomDarkTheme,
+  quiCustomLightTheme,
   type SourceCodeData,
 } from "@qualcomm-ui/mdx-common"
 import {dedent} from "@qualcomm-ui/utils/dedent"
@@ -98,7 +99,7 @@ export function angularDemoPlugin({
   routesDir = "src/routes",
   theme = {
     dark: quiCustomDarkTheme,
-    light: "github-light-high-contrast",
+    light: quiCustomLightTheme,
   },
   transformTailwindStyles,
 }: AngularDemoPluginOptions = {}): Plugin {

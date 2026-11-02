@@ -8,12 +8,11 @@ import markdown from "@shikijs/langs/markdown"
 import shell from "@shikijs/langs/shell"
 import tsx from "@shikijs/langs/tsx"
 import typescript from "@shikijs/langs/typescript"
-import light from "@shikijs/themes/github-light-high-contrast"
 import {createHighlighterCore} from "react-shiki/core"
 import {createJavaScriptRegexEngine} from "shiki"
 import type {HighlighterCore} from "shiki/types"
 
-import {quiCustomDarkTheme} from "@qualcomm-ui/mdx-common"
+import {quiCustomDarkTheme, quiCustomLightTheme} from "@qualcomm-ui/mdx-common"
 
 const jsEngine = createJavaScriptRegexEngine({forgiving: true})
 
@@ -38,7 +37,7 @@ export const shikiHighlighter: HighlighterCore = await createHighlighterCore({
       ...quiCustomDarkTheme,
       name: "dark",
     },
-    {...light, name: "light"},
+    {...quiCustomLightTheme, name: "light"},
   ],
 })
 
