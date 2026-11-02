@@ -1,0 +1,59 @@
+.qui-docs-openapi__endpoint {
+  align-items: center;
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  gap: var(--spacing-60);
+  margin-top: var(--spacing-80);
+  padding: var(--spacing-60) var(--spacing-80);
+}
+
+.qui-docs-openapi__path {
+  font: var(--font-static-code-md-default);
+  overflow-wrap: anywhere;
+}
+
+.qui-docs-openapi__description {
+  white-space: pre-line;
+}
+
+.qui-docs-openapi__variants-header {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-60);
+  margin-top: var(--spacing-60);
+}
+
+.qui-docs-openapi__columns {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--spacing-80);
+
+  @media screen and (min-width: 1280px) {
+    align-items: flex-start;
+    flex-direction: row;
+  }
+}
+
+.qui-docs-openapi__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.qui-docs-openapi__samples {
+  margin-top: var(--spacing-80);
+  min-width: 0;
+
+  @media screen and (min-width: 1280px) {
+    flex: 0 0 400px;
+    position: sticky;
+    top: calc(48px + var(--spacing-80));
+  }
+}
+
+.qui-docs-openapi__samples-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-60);
+}
