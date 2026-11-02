@@ -1,6 +1,6 @@
 :root {
-  --docs-code-demo-background-dark: var(--color-background-neutral-00);
-  --docs-code-demo-background-light: var(--color-background-neutral-00);
+  --docs-code-demo-background-dark: #0f0f0f;
+  --docs-code-demo-background-light: #fafafa;
 }
 
 [data-theme="dark"] {
