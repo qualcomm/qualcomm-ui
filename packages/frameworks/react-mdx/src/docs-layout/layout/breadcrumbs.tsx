@@ -53,7 +53,7 @@ export function DocsBreadcrumbs({
         // concat the paths as we iterate over the path segments.
         mergedPath = `${mergedPath}/${segment}`
         const route = pageMap[mergedPath]
-        const pageTitle = pageMapEntry.categories[currentIndex] ?? route.title
+        const pageTitle = pageMapEntry.categories[currentIndex] ?? route?.title
 
         acc.push({
           children: pageTitle,
