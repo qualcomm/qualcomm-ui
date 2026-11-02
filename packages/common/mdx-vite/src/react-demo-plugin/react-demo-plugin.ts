@@ -12,6 +12,7 @@ import type {Plugin} from "vite"
 
 import {
   quiCustomDarkTheme,
+  quiCustomLightTheme,
   type ReactDemoData,
   type SourceCodeData,
 } from "@qualcomm-ui/mdx-common"
@@ -88,7 +89,7 @@ export function reactDemoPlugin({
   routesDir = "src/routes",
   theme = {
     dark: quiCustomDarkTheme,
-    light: "github-light-high-contrast",
+    light: quiCustomLightTheme,
   },
   transformers = [],
   transformLine,
