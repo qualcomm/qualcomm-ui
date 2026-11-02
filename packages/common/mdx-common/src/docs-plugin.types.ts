@@ -91,6 +91,13 @@ export interface PageFrontmatter {
   id?: string
 
   /**
+   * Path or URL of an OpenAPI spec, relative to the MDX file.
+   *
+   * @since next-release
+   */
+  openApi?: string
+
+  /**
    * If `true`, the route will be flagged as restricted. This flag does nothing
    * internally. You will need to handle this in your application.
    */
@@ -239,6 +246,11 @@ export interface NavItem {
   items?: NavItem[]
 
   /**
+   * HTTP method of an OpenAPI operation item.
+   */
+  method?: string
+
+  /**
    * The order of the item relative to other items at the same depth. If an item's
    * order is not defined, it is unordered. Unordered items appear after ordered
    * items. Unordered items are sorted alphabetically.
@@ -351,6 +363,11 @@ export interface SiteData {
    * @inheritDoc
    */
   navItems: NavItem[]
+
+  /**
+   * Sidebar of each OpenAPI page, keyed by the pathname of its intro page.
+   */
+  openApiNav?: Record<string, NavItem[]>
 
   /**
    * If QUI DocProps are detected on a page, they will be added to this array. The
