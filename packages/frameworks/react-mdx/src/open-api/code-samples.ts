@@ -1,7 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getExample} from "./get-example.js"
+import {
+  findJsonMediaType,
+  getDeclaredExample,
+  getExample,
+  getMediaExample,
+  isJsonMediaType,
+  type MediaType,
+} from "./get-example.js"
 import type {JsonSchema} from "./schema-type.js"
 
 export interface CodeSampleInput {
@@ -17,6 +24,7 @@ export interface CodeSampleInput {
   }[]
   path: string
   requestBody?: {content?: Record<string, MediaType>}
+  responses?: Record<string, {content?: Record<string, MediaType>}>
   servers: OpenApiServer[]
 }
 
@@ -34,30 +42,6 @@ function getServerUrl(server: OpenApiServer | undefined): string {
   return url.replace(/\/$/, "")
 }
 
-interface MediaType {
-  example?: unknown
-  examples?: Record<string, {value?: unknown}>
-  schema?: JsonSchema
-}
-
-/**
- * The spec's own example wins: `example`, then the first of `examples`. `null`
- * is a valid example, only `undefined` means none.
- */
-function getDeclaredExample(source: {
-  example?: unknown
-  examples?: Record<string, {value?: unknown}>
-}): unknown {
-  if (source.example !== undefined) {
-    return source.example
-  }
-  return Object.values(source.examples ?? {})[0]?.value
-}
-
-function withFallback(value: unknown, fallback: () => unknown): unknown {
-  return value !== undefined ? value : fallback()
-}
-
 export interface CodeSample {
   code: string
   label: string
@@ -69,7 +53,60 @@ interface Request {
   contentType?: string
   headers: Record<string, string>
   method: string
+  /**
+   * When the sample parses the response as JSON: always, never, or only for
+   * these statuses, like a `200` with a body next to an empty `204`.
+   */
+  parseJson: boolean | number[]
   url: string
+}
+
+/**
+ * How the sample handles the success responses. A response that offers JSON
+ * among other formats gets an `Accept` header, so parsing it is safe.
+ * Explicit statuses take precedence over ranges like `2XX`.
+ */
+function getResponseHandling(
+  method: string,
+  responses: CodeSampleInput["responses"] = {},
+): {accept?: string; parseJson: Request["parseJson"]} {
+  const success = Object.entries(responses)
+    .filter(([code]) => /^2(\d\d|XX)$/i.test(code))
+    .map(([code, response]) => {
+      const content = response.content ?? {}
+      return {
+        code,
+        json: findJsonMediaType(content),
+        otherFormats: Object.keys(content).length > 1,
+      }
+    })
+  const json = success.filter((response) => response.json)
+  if (method === "HEAD" || !json.length) {
+    return {parseJson: false}
+  }
+  const accept = json.find((response) => response.otherFormats)?.json
+  if (json.length === success.length) {
+    return {accept, parseJson: true}
+  }
+  // A range like `2XX` can't be compared with a status, so it isn't guarded.
+  const explicit = json.every((response) => /^\d+$/.test(response.code))
+  return {
+    accept,
+    parseJson: explicit ? json.map((response) => Number(response.code)) : true,
+  }
+}
+
+function getStatusCondition(
+  statuses: number[],
+  status: string,
+  language: "javascript" | "python",
+): string {
+  if (statuses.length === 1) {
+    return `${status} ${language === "javascript" ? "===" : "=="} ${statuses[0]}`
+  }
+  return language === "javascript"
+    ? `[${statuses.join(", ")}].includes(${status})`
+    : `${status} in (${statuses.join(", ")})`
 }
 
 function toParameterValue(value: unknown): string {
@@ -120,6 +157,7 @@ function getRequest({
   parameters,
   path,
   requestBody,
+  responses,
   servers,
 }: CodeSampleInput): Request {
   let url = getServerUrl(servers[0]) + path
@@ -128,7 +166,8 @@ function getRequest({
 
   for (const parameter of parameters) {
     const declared = getDeclaredExample(parameter)
-    const example = withFallback(declared, () => getExample(parameter.schema))
+    const example =
+      declared !== undefined ? declared : getExample(parameter.schema)
     if (parameter.in === "path" && declared !== undefined) {
       url = url.replaceAll(
         `{${parameter.name}}`,
@@ -145,18 +184,19 @@ function getRequest({
   }
 
   const content = requestBody?.content ?? {}
-  const contentType = content["application/json"]
-    ? "application/json"
-    : Object.keys(content)[0]
+  const contentType = findJsonMediaType(content) ?? Object.keys(content)[0]
   if (contentType) {
     headers["Content-Type"] = contentType
   }
-  const media = contentType === "application/json" ? content[contentType] : null
-  const body = media
-    ? withFallback(getDeclaredExample(media), () => getExample(media.schema))
-    : undefined
+  const media = isJsonMediaType(contentType) ? content[contentType] : null
+  const body = media ? getMediaExample(media) : undefined
 
-  return {body, contentType, headers, method: method.toUpperCase(), url}
+  const upperMethod = method.toUpperCase()
+  const {accept, parseJson} = getResponseHandling(upperMethod, responses)
+  if (accept) {
+    headers.Accept = accept
+  }
+  return {body, contentType, headers, method: upperMethod, parseJson, url}
 }
 
 function toPython(value: unknown, indent = ""): string {
@@ -195,7 +235,7 @@ function curl({body, headers, method, url}: Request): string {
   return lines.join(" \\\n")
 }
 
-function javascript({body, headers, method, url}: Request): string {
+function javascript({body, headers, method, parseJson, url}: Request): string {
   const options = [`  method: "${method}",`]
   if (Object.keys(headers).length) {
     options.push(`  headers: ${JSON.stringify(headers)},`)
@@ -208,7 +248,11 @@ function javascript({body, headers, method, url}: Request): string {
     `const response = await fetch(${JSON.stringify(url)}, {`,
     ...options,
     "})",
-    "const data = await response.json()",
+    Array.isArray(parseJson)
+      ? `const data = ${getStatusCondition(parseJson, "response.status", "javascript")} ? await response.json() : null`
+      : parseJson
+        ? "const data = await response.json()"
+        : "console.log(response.status)",
   ].join("\n")
 }
 
@@ -222,7 +266,7 @@ const pythonMethods = [
   "PUT",
 ]
 
-function python({body, headers, method, url}: Request): string {
+function python({body, headers, method, parseJson, url}: Request): string {
   const args = [`    ${JSON.stringify(url)},`]
   if (Object.keys(headers).length) {
     args.push(`    headers=${toPython(headers, "    ")},`)
@@ -242,7 +286,11 @@ function python({body, headers, method, url}: Request): string {
     `response = ${call}`,
     ...args,
     ")",
-    "print(response.json())",
+    Array.isArray(parseJson)
+      ? `print(response.json() if ${getStatusCondition(parseJson, "response.status_code", "python")} else response.status_code)`
+      : parseJson
+        ? "print(response.json())"
+        : "print(response.status_code)",
   ].join("\n")
 }
 

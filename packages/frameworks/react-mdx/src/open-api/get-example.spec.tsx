@@ -3,7 +3,7 @@
 
 import {describe, expect, test} from "vitest"
 
-import {getExample} from "./get-example.js"
+import {getExample, isJsonMediaType} from "./get-example.js"
 
 describe("getExample", () => {
   test("prefers the spec's example, then default, then the first enum value", () => {
@@ -52,5 +52,19 @@ describe("getExample", () => {
         type: "object",
       }),
     ).toEqual({parent: undefined})
+  })
+
+  test("recognizes JSON media types and their variants", () => {
+    expect(
+      [
+        "application/json",
+        "application/json; charset=utf-8",
+        "application/problem+json",
+        "application/vnd.api+json",
+        "application/jsonl",
+        "application/xml",
+        "text/json",
+      ].map(isJsonMediaType),
+    ).toEqual([true, true, true, true, false, false, false])
   })
 })

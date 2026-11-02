@@ -57,3 +57,7 @@
   justify-content: space-between;
   margin-bottom: var(--spacing-60);
 }
+
+.qui-docs-openapi__example + .qui-docs-openapi__example {
+  margin-top: var(--spacing-80);
+}

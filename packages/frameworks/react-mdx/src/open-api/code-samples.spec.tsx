@@ -24,6 +24,9 @@ const createPet: CodeSampleInput = {
       },
     },
   },
+  responses: {
+    "201": {content: {"application/json": {schema: {type: "object"}}}},
+  },
   servers: [{url: "https://api.example.com/v1/"}],
 }
 
@@ -197,6 +200,64 @@ describe("getCodeSamples", () => {
     expect(
       sample(body({examples: {clear: {value: null}}}), "Python"),
     ).toContain('data="null"')
+  })
+
+  test.each([
+    ["an empty success response", "delete", {"204": {}}],
+    [
+      "a non-JSON success response",
+      "get",
+      {"200": {content: {"text/plain": {}}}},
+    ],
+    ["a HEAD request", "head", {"200": {content: {"application/json": {}}}}],
+  ])(
+    "prints the status instead of parsing JSON for %s",
+    (_, method, responses) => {
+      const input = {...createPet, method, requestBody: undefined, responses}
+      expect(sample(input, "JavaScript")).toContain(
+        "console.log(response.status)",
+      )
+      expect(sample(input, "JavaScript")).not.toContain("response.json()")
+      expect(sample(input, "Python")).toContain("print(response.status_code)")
+      expect(sample(input, "Python")).not.toContain("response.json()")
+    },
+  )
+
+  test.each([
+    [
+      "explicit JSON statuses",
+      {"2XX": {}, "200": {content: {"application/json": {}}}},
+      "const data = response.status === 200 ? await response.json() : null",
+      "print(response.json() if response.status_code == 200 else response.status_code)",
+    ],
+  ])(
+    "parses only the JSON responses, given %s",
+    (_, responses, javascript, python) => {
+      const input = {...createPet, requestBody: undefined, responses}
+      expect(sample(input, "JavaScript")).toContain(javascript)
+      expect(sample(input, "Python")).toContain(python)
+    },
+  )
+
+  test("asks for JSON when a response offers other formats too", () => {
+    const input = {
+      ...createPet,
+      requestBody: undefined,
+      responses: {
+        "200": {
+          content: {"application/vnd.pet+json": {}, "application/xml": {}},
+        },
+      },
+    }
+    expect(sample(input, "cURL")).toContain(
+      "-H 'Accept: application/vnd.pet+json'",
+    )
+    expect(sample(input, "JavaScript")).toContain(
+      '"Accept":"application/vnd.pet+json"',
+    )
+    expect(sample(input, "JavaScript")).toContain(
+      "const data = await response.json()",
+    )
   })
 
   test("falls back to requests.request for uncommon methods", () => {
