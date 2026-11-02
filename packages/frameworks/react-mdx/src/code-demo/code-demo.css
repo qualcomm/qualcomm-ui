@@ -169,12 +169,12 @@ pre.shiki {
   border-bottom-right-radius: 4px;
   font: var(--font-static-code-sm-default);
   margin: 0;
-  padding: 24px 12px;
+  padding: 24px 0;
 
   .line {
     box-sizing: border-box;
     display: inline-block;
-    padding: 0 16px;
+    padding: 0 24px;
     width: 100%;
   }
 
