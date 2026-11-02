@@ -22,6 +22,7 @@ import {
   useDocsRuntimeContext,
   useDocsPageContext,
 } from "@qualcomm-ui/react-mdx/context"
+import {Badge} from "@qualcomm-ui/react/badge"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
@@ -29,6 +30,8 @@ import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {matchSorter} from "@qualcomm-ui/utils/match-sorter"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+
+import {httpMethodBadges} from "../http-method-badges.js"
 
 export interface SidebarProps extends Omit<ElementRenderProp<"div">, "dir"> {
   /**
@@ -57,7 +60,29 @@ export interface SidebarProps extends Omit<ElementRenderProp<"div">, "dir"> {
   stickyHeader?: boolean
 }
 
-export function Sidebar({
+/**
+ * Pages can switch between nav trees, e.g. into an OpenAPI page's sidebar. Keys
+ * must be primitives, so each tree gets a number, and a new tree remounts the
+ * sidebar with fresh state.
+ */
+const navTreeKeys = new WeakMap<NavItem[], number>()
+let nextNavTreeKey = 0
+
+function getNavTreeKey(items: NavItem[]): number {
+  let key = navTreeKeys.get(items)
+  if (key === undefined) {
+    key = nextNavTreeKey++
+    navTreeKeys.set(items, key)
+  }
+  return key
+}
+
+export function Sidebar(props: SidebarProps): ReactElement {
+  const {navItems} = useDocsPageContext()
+  return <SidebarTree key={getNavTreeKey(navItems)} {...props} />
+}
+
+function SidebarTree({
   children,
   filterable = true,
   mobileDrawerState,
@@ -320,7 +345,16 @@ export function Sidebar({
                   }
                 >
                   <SideNav.NodeText>{node.title}</SideNav.NodeText>
-                  {SideNavBadgesComponent && node.badges?.length ? (
+                  {node.method ? (
+                    <SideNav.NodeAccessory
+                      className="qui-docs-sidebar__item-badges"
+                      data-align="end"
+                    >
+                      <Badge size="sm" {...httpMethodBadges[node.method]}>
+                        {node.method.toUpperCase()}
+                      </Badge>
+                    </SideNav.NodeAccessory>
+                  ) : SideNavBadgesComponent && node.badges?.length ? (
                     <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">
                       <SideNavBadgesComponent badges={node.badges} />
                     </SideNav.NodeAccessory>

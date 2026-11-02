@@ -64,7 +64,8 @@ export function Root({
     demoSettingsProp || {transformTailwindClasses: false},
   )
 
-  const {exports, navItems, pageDocProps, pageMap} = useDocsManifestContext()
+  const {exports, navItems, openApiNav, pageDocProps, pageMap} =
+    useDocsManifestContext()
 
   const mdxDocsContextValue: DocsRuntimeContextValue = useMemo(
     () => ({
@@ -133,12 +134,16 @@ export function Root({
 
     const pageProps = pageDocProps?.[pathname] || {}
 
+    const openApiPathname = Object.keys(openApiNav ?? {}).find(
+      (key) => pathname === key || pathname.startsWith(`${key}/`),
+    )
+
     return {
       hidePageLinks,
       hideSideNav,
       mainContentElement,
       navDensity,
-      navItems,
+      navItems: openApiPathname ? openApiNav![openApiPathname] : navItems,
       pageExport,
       pageFrontmatter: pageData?.data ?? {},
       pageMap,
@@ -154,6 +159,7 @@ export function Root({
     navDensity,
     mainContentElement,
     navItems,
+    openApiNav,
     pageDocProps,
     pageMap,
     pathname,

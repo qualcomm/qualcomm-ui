@@ -161,10 +161,25 @@
     &:empty {
       display: none;
     }
+
+    &[data-align="end"] {
+      flex-shrink: 0;
+      margin-left: auto;
+    }
   }
 
   .qui-side-nav__root {
     height: 100%;
+  }
+
+  .qui-side-nav__node-root {
+    flex-shrink: 0;
+    height: auto;
+  }
+
+  [data-tree-part="node-text"] {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   &[data-nav-density="compact"] {
