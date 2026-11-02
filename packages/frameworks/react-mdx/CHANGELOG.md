@@ -1,5 +1,22 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.2.0
+
+Nov 2nd, 2026
+
+### Features
+
+* [shiki-themes]: use custom light theme ([2652e06](https://github.com/qualcomm/qualcomm-ui/commit/2652e06))
+
+### Bug Fixes
+
+* update shiki background colors ([99aeedf](https://github.com/qualcomm/qualcomm-ui/commit/99aeedf))
+* adjust shiki line padding ([228033c](https://github.com/qualcomm/qualcomm-ui/commit/228033c))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.7.0]
+
 ## 3.1.0
 
 Oct 30th, 2026
