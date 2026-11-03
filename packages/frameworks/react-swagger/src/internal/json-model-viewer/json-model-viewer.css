@@ -97,7 +97,7 @@
       background: var(--color-interactive-background-ghost-hover);
     }
     align-items: center;
-    border-radius: var(--border-radius-xs);
+    border-radius: var(--border-radius-50);
     display: inline-flex;
     gap: 4px;
     justify-content: flex-start;
