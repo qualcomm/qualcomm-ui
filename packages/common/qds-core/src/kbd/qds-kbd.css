@@ -3,6 +3,6 @@
   color: var(--color-text-neutral-secondary);
   display: inline-flex;
   font: var(--font-static-body-xs-default);
-  gap: var(--spacing-10, 1px);
+  gap: var(--spacing-25, 1px);
   padding: 0;
 }

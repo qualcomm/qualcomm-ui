@@ -3,10 +3,10 @@
   --bar-grid-row: 1;
   --bar-start-column: 1;
   --hint-grid-row: calc(var(--bar-grid-row) + 1);
-  --progress-height: var(--sizing-50);
+  --progress-height: var(--sizing-200);
   display: grid;
-  grid-column-gap: var(--spacing-70);
-  grid-row-gap: var(--spacing-40);
+  grid-column-gap: var(--spacing-200);
+  grid-row-gap: var(--spacing-100);
   grid-template-columns: 1fr;
   position: relative;
   width: 100%;
@@ -42,10 +42,10 @@
   }
 
   &[data-size="sm"] {
-    --progress-height: var(--sizing-40);
+    --progress-height: var(--sizing-150);
   }
   &[data-size="lg"] {
-    --progress-height: var(--sizing-60);
+    --progress-height: var(--sizing-300);
   }
 }
 
@@ -85,7 +85,7 @@
   display: inline-flex;
   flex-wrap: nowrap;
   font: var(--font-static-body-xs-default);
-  gap: var(--spacing-40);
+  gap: var(--spacing-100);
   grid-column: 1 / -1;
   grid-row: calc(var(--bar-grid-row) + 1);
   /* Figma shows an extra pixel of space between the error icon and progress bar */
@@ -121,7 +121,7 @@
   --progress-shimmer-color: 255 255 255;
   --progress-shimmer-opacity: 0.3;
   background: var(--progress-color);
-  border-radius: var(--border-radius-rounded);
+  border-radius: var(--border-radius-max);
   height: var(--progress-height);
   max-height: var(--progress-height);
   transition: width 200ms ease;
@@ -193,7 +193,7 @@
       animation: qui-progress__indeterminate-animation-1 2.2s
         cubic-bezier(0.65, 0.815, 0.735, 0.395) 0s infinite normal none running;
       background: var(--progress-color);
-      border-radius: var(--border-radius-rounded);
+      border-radius: var(--border-radius-max);
       bottom: 0;
       content: "";
       left: 0;
@@ -207,7 +207,7 @@
       animation: qui-progress__indeterminate-animation-2 2.2s
         cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite normal none running;
       background: var(--progress-color);
-      border-radius: var(--border-radius-rounded);
+      border-radius: var(--border-radius-max);
       bottom: 0;
       content: "";
       left: 0;

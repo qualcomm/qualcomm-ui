@@ -7,7 +7,7 @@
   cursor: pointer;
   display: inline-flex;
   font: var(--font-static-body-sm-bold);
-  gap: var(--spacing-40);
+  gap: var(--spacing-100);
   margin: 0;
   outline: none;
   padding: 0;
@@ -32,7 +32,7 @@
 
   &:focus-visible {
     border: solid 1px var(--color-utility-focus-border);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-100);
     color: var(--color-interactive-text-link-default-idle);
     outline: solid 1px var(--color-utility-focus-border);
     outline-offset: 0;
@@ -120,27 +120,27 @@
 
   &[data-size="xs"] {
     font: var(--font-static-body-xs-bold);
-    gap: var(--spacing-20);
+    gap: var(--spacing-50);
   }
   &[data-size="sm"] {
     font: var(--font-static-body-sm-bold);
-    gap: var(--spacing-40);
+    gap: var(--spacing-100);
   }
   &[data-size="md"] {
     font: var(--font-static-body-md-bold);
-    gap: var(--spacing-40);
+    gap: var(--spacing-100);
   }
   &[data-size="lg"] {
     font: var(--font-static-body-lg-bold);
-    gap: var(--spacing-40);
+    gap: var(--spacing-100);
   }
   &[data-size="xl"] {
     font: var(--font-static-body-xl-bold);
-    gap: var(--spacing-50);
+    gap: var(--spacing-150);
   }
   &[data-size="xxl"] {
     font: var(--font-static-body-xxl-bold);
-    gap: var(--spacing-70);
+    gap: var(--spacing-200);
   }
 
   &[data-inherit-font-size] {

@@ -1,46 +1,46 @@
 .qui-number-input__input-group {
-  gap: var(--spacing-40);
-  height: var(--sizing-140);
-  min-width: var(--sizing-140);
+  gap: var(--spacing-100);
+  height: var(--sizing-1000);
+  min-width: var(--sizing-1000);
   padding-inline-end: var(--group-padding-end);
   padding-inline-start: var(--group-padding-start);
 
-  --group-padding-start: var(--spacing-90);
-  --step-button-size: var(--sizing-100);
+  --group-padding-start: var(--spacing-300);
+  --step-button-size: var(--sizing-700);
 
   &:has(.qui-number-input__unit-select) {
     --group-padding-start: 0;
   }
 
-  --group-padding-end: var(--spacing-50);
+  --group-padding-end: var(--spacing-150);
 
   &[data-size="sm"] {
-    --group-padding-end: var(--spacing-40);
-    --group-padding-start: var(--spacing-70);
-    --step-button-size: var(--sizing-90);
-    height: var(--sizing-120);
-    min-width: var(--sizing-120);
+    --group-padding-end: var(--spacing-100);
+    --group-padding-start: var(--spacing-200);
+    --step-button-size: var(--sizing-600);
+    height: var(--sizing-800);
+    min-width: var(--sizing-800);
   }
   &[data-size="lg"] {
-    --group-padding-end: var(--spacing-80);
-    --group-padding-start: var(--spacing-100);
-    height: var(--sizing-160);
-    min-width: var(--sizing-160);
+    --group-padding-end: var(--spacing-250);
+    --group-padding-start: var(--spacing-400);
+    height: var(--sizing-1200);
+    min-width: var(--sizing-1200);
   }
 
   &:has([data-number-input-part="decrement-trigger"]) {
     &:has([data-number-input-part="increment-trigger"]) {
       .qui-number-input__control {
-        gap: calc((var(--spacing-40) * 2) - 1px);
+        gap: calc((var(--spacing-100) * 2) - 1px);
       }
 
       [data-number-input-part="decrement-trigger"]:after {
         background: var(--color-border-neutral-01);
         content: " ";
-        height: var(--sizing-70);
+        height: var(--sizing-400);
         position: absolute;
-        right: calc((var(--spacing-40) * -1) - 1px);
-        width: var(--sizing-10);
+        right: calc((var(--spacing-100) * -1) - 1px);
+        width: var(--sizing-25);
       }
     }
   }
@@ -85,7 +85,7 @@
   appearance: none;
   background-color: transparent;
   border: 0;
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   font: var(--font-static-body-sm-default);
@@ -123,14 +123,14 @@
 
 .qui-number-input__input-group:has(.qui-number-input__unit-select)
   .qui-number-input__input {
-  padding-inline-start: var(--spacing-90);
+  padding-inline-start: var(--spacing-300);
 }
 
 .qui-number-input__input-group:has(
     .qui-number-input__unit-select
   )[data-size="sm"]
   .qui-number-input__input {
-  padding-inline-start: var(--spacing-70);
+  padding-inline-start: var(--spacing-200);
 }
 
 .qui-number-input__control {
@@ -155,10 +155,10 @@
 .qui-number-input__error-indicator {
   /* override the default size */
   &[data-size] {
-    margin-inline-end: var(--spacing-20);
+    margin-inline-end: var(--spacing-50);
   }
   &[data-size="lg"] {
-    margin-inline-end: var(--spacing-40);
+    margin-inline-end: var(--spacing-100);
   }
 }
 
@@ -168,24 +168,24 @@
   background: var(--color-background-neutral-01);
   border: none;
   border-inline-end: 1px solid var(--color-border-neutral-01);
-  border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+  border-radius: var(--border-radius-100) 0 0 var(--border-radius-100);
   color: var(--color-text-neutral-secondary);
   cursor: pointer;
   display: flex;
   font: var(--font-static-body-sm-default);
-  gap: var(--spacing-40);
-  height: var(--sizing-130);
-  padding-inline-end: var(--spacing-50);
-  padding-inline-start: var(--spacing-90);
+  gap: var(--spacing-100);
+  height: var(--sizing-950);
+  padding-inline-end: var(--spacing-150);
+  padding-inline-start: var(--spacing-300);
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);
-    height: var(--sizing-110);
-    padding-inline-start: var(--spacing-70);
+    height: var(--sizing-750);
+    padding-inline-start: var(--spacing-200);
   }
 
   &[data-size="lg"] {
-    height: var(--sizing-150);
+    height: var(--sizing-1150);
   }
 
   &:hover {
@@ -215,11 +215,11 @@
     --icon-size: 12px;
     box-sizing: content-box;
     color: var(--color-icon-neutral-primary);
-    padding: var(--spacing-70);
+    padding: var(--spacing-200);
   }
 
   &[data-size="sm"] [data-number-input-part="chevron"] {
-    padding: var(--spacing-40);
+    padding: var(--spacing-100);
   }
 
   &[data-readonly] [data-number-input-part="chevron"],

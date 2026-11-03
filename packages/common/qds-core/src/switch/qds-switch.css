@@ -1,12 +1,12 @@
 .qui-switch__root {
   align-items: center;
   -webkit-box-align: center;
-  column-gap: var(--spacing-70);
+  column-gap: var(--spacing-200);
   display: grid;
   grid-template-columns: auto 1fr;
   justify-content: start;
   position: relative;
-  row-gap: var(--spacing-50);
+  row-gap: var(--spacing-150);
   vertical-align: top;
 
   --switch-color-transition:
@@ -32,10 +32,10 @@
   align-items: center;
   background: var(--color-background-neutral-00);
   border: var(--border-width-sm, 1px) solid var(--color-border-neutral-03);
-  border-radius: var(--border-radius-rounded);
+  border-radius: var(--border-radius-max);
   box-sizing: border-box;
   display: inline-flex;
-  height: var(--sizing-80);
+  height: var(--sizing-500);
   justify-content: center;
   max-width: 34px;
   min-width: 34px;
@@ -44,14 +44,14 @@
   transition: var(--switch-color-transition);
 
   &[data-size="sm"] {
-    height: var(--sizing-70);
+    height: var(--sizing-400);
     max-width: 28px;
     min-width: 28px;
     padding: 2px;
   }
 
   &[data-size="lg"] {
-    height: var(--sizing-90);
+    height: var(--sizing-600);
     max-width: 42px;
     min-width: 42px;
   }

@@ -17,11 +17,11 @@
 }
 
 .qui-pagination__page-item {
-  --pagination-size: var(--sizing-140);
+  --pagination-size: var(--sizing-1000);
   align-items: center;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   color: var(--color-interactive-text-neutral-idle);
   display: inline-flex;
   font: var(--font-static-body-sm-bold);
@@ -43,7 +43,7 @@
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-bold);
-    --pagination-size: var(--sizing-120);
+    --pagination-size: var(--sizing-800);
   }
 
   &[data-active] {
@@ -74,9 +74,9 @@
 .qui-pagination__page-size {
   align-items: center;
   display: inline-flex;
-  gap: var(--spacing-70);
+  gap: var(--spacing-200);
 
   &[data-size="sm"] {
-    gap: var(--spacing-50);
+    gap: var(--spacing-150);
   }
 }

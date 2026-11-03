@@ -6,7 +6,7 @@
   appearance: none;
   background: transparent;
   border: 0;
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   cursor: zoom-in;
   display: block;
   padding: 0;
@@ -15,7 +15,7 @@
 
   &:focus-visible {
     outline: var(--border-width-md) solid var(--color-border-brand-primary);
-    outline-offset: var(--spacing-40);
+    outline-offset: var(--spacing-100);
   }
 
   & > img {
@@ -35,7 +35,7 @@
 }
 
 .qui-image-viewer__positioner {
-  --image-viewer-padding: var(--spacing-160);
+  --image-viewer-padding: var(--spacing-1000);
   box-sizing: border-box;
   display: flex;
   height: 100dvh;
@@ -49,8 +49,8 @@
   z-index: var(--z-index-dialog);
 
   @media (width < 640px) {
-    --image-viewer-padding: var(--spacing-100);
-    padding-top: max(var(--spacing-200), env(safe-area-inset-top));
+    --image-viewer-padding: var(--spacing-400);
+    padding-top: max(var(--spacing-1400), env(safe-area-inset-top));
   }
 }
 
@@ -59,7 +59,7 @@
   container-type: inline-size;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-100);
+  gap: var(--spacing-400);
   height: 100%;
   min-height: 0;
   outline: none;
@@ -73,15 +73,15 @@
 
 .qui-image-viewer__close-trigger {
   position: fixed;
-  right: max(var(--spacing-80), env(safe-area-inset-right));
-  top: max(var(--spacing-80), env(safe-area-inset-top));
+  right: max(var(--spacing-250), env(safe-area-inset-right));
+  top: max(var(--spacing-250), env(safe-area-inset-top));
   z-index: 1;
 }
 
 .qui-image-viewer__viewport {
   aspect-ratio: var(--image-aspect-ratio, 1);
   border: 1px solid var(--color-border-neutral-02);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   cursor: grab;
   flex: 1;
