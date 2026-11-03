@@ -1,5 +1,13 @@
 # @qualcomm-ui/codemod Changelog
 
+## 1.3.0
+
+Nov 3rd, 2026
+
+### Features
+
+* [qui-docs]: add fallback route file if it is missing ([5f22688](https://github.com/qualcomm/qualcomm-ui/commit/5f22688))
+
 ## 1.2.0
 
 Nov 3rd, 2026
