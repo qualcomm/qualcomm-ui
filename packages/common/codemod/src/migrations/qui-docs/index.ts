@@ -4,6 +4,7 @@
 import type {MigrationGroup} from "../types.js"
 
 import {docsContextNames} from "./docs-context-names/docs-context-names.js"
+import {fallbackRouteMiddleware} from "./fallback-route-middleware/fallback-route-middleware.js"
 import {notFoundRoute} from "./not-found-route/not-found-route.js"
 
 export type QuiDocsPackage =
@@ -12,7 +13,7 @@ export type QuiDocsPackage =
   | "@qualcomm-ui/react-router-utils"
 
 export const quiDocs: MigrationGroup<QuiDocsPackage> = {
-  codemods: [notFoundRoute, docsContextNames],
+  codemods: [notFoundRoute, docsContextNames, fallbackRouteMiddleware],
   description: "QUI documentation sites built with React Router",
   name: "qui-docs",
   packages: [
