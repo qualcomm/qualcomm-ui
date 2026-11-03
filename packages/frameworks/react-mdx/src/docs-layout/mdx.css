@@ -232,7 +232,7 @@ section.qui-docs__step-section {
 
 .qui-notification__root.mdx {
   border-left: solid 1px var(--border-color);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-150);
   padding: 20px 24px;
 
   /* Align icon for single-line notifications */
@@ -441,7 +441,7 @@ code.mdx {
 code.mdx:not(pre > code.mdx) {
   background: var(--qui-docs-code-background);
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   color: var(--qui-docs-code-color);
   display: inline-block;
@@ -456,17 +456,17 @@ code.mdx:not(pre > code.mdx) {
 blockquote.mdx {
   background-color: var(--color-background-support-info-subtle);
   border: solid var(--border-width-sm) var(--color-border-support-info-medium);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   margin-top: var(--qui-mdx-margin-default);
-  padding: var(--spacing-90) var(--spacing-100);
+  padding: var(--spacing-300) var(--spacing-400);
 
   > p.mdx {
     margin-top: 0;
   }
 
   p.mdx + p.mdx {
-    margin-top: var(--spacing-90);
+    margin-top: var(--spacing-300);
   }
 }
 
@@ -517,7 +517,7 @@ hr.mdx {
 
 .mdx-spoiler__root {
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-75);
   margin-top: var(--qui-mdx-margin-default);
 }
 
@@ -527,7 +527,7 @@ hr.mdx {
   display: flex;
   gap: 8px;
   height: 40px;
-  padding: 0 var(--spacing-90);
+  padding: 0 var(--spacing-300);
   width: 100%;
 
   p.mdx {
@@ -658,7 +658,7 @@ hr.mdx {
 
   &::-webkit-scrollbar-thumb {
     background: var(--color-border-neutral-02);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-75);
     opacity: 0;
 
     &:hover {
@@ -674,7 +674,7 @@ hr.mdx {
 .qui-docs__container-directive.mdx {
   background: var(--color-utility-opacity-neutral-02);
   border: 1px solid var(--color-border-neutral-01);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-150);
   margin-top: var(--qui-docs-content-spacing-sm);
   padding: 24px;
   width: 100%;

@@ -79,7 +79,7 @@
 }
 
 .qui-docs-highlighter__root {
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-150);
   position: relative;
 
   &:hover {
@@ -89,7 +89,7 @@
   }
 
   pre {
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-75);
     font-family: var(--q-font-code-demo, var(--q-font-mono)), monospace;
     font-size: 14px;
     &.disable-padding {
@@ -115,7 +115,7 @@
 
 .qui-demo-runner__title {
   align-items: center;
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-150);
   display: flex;
   min-height: 32px;
   padding: 0 16px;
@@ -259,7 +259,7 @@ pre.shiki.has-focused {
 
     &::-webkit-scrollbar-thumb {
       background: var(--color-border-neutral-02);
-      border-radius: var(--border-radius-sm);
+      border-radius: var(--border-radius-75);
 
       &:hover {
         background: var(--color-border-neutral-03);
