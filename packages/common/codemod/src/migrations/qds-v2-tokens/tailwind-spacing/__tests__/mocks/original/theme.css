@@ -1,0 +1,6 @@
+.card {
+  padding: var(--spacing-qds-90);
+  margin-block: calc(var(--spacing-qds-20) * -1);
+  border-radius: var(--radius-md);
+  @apply gap-qds-30 rounded-xl;
+}

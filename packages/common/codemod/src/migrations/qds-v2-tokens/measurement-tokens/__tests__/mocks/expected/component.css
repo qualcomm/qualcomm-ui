@@ -1,0 +1,17 @@
+.qds-example {
+  padding: var(--spacing-100) var(--spacing-400);
+  gap: var(--spacing-25);
+  margin: var(--spacing-0) var(--spacing-3300);
+  width: var(--sizing-100);
+  height: var(--sizing-850);
+  min-height: var(--sizing-4000);
+  border-radius: var(--border-radius-100);
+  --my-spacing-40: 1px;
+  inset: var(--my-spacing-40);
+  column-gap: var(--spacing-qds-40);
+  row-gap: var(--spacing-35);
+}
+
+.qds-example-pill {
+  border-radius: var(--border-radius-max);
+}
