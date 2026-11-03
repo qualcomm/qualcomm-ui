@@ -1,0 +1,17 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib",
+    "types": ["node"]
+  },
+  "include": ["./src"],
+  "exclude": [
+    "./src/**/__tests__",
+    "./src/**/*.spec.ts",
+    "./src/**/*.spec.tsx",
+    "**/mocks/**"
+  ]
+}
