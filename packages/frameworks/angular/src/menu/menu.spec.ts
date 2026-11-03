@@ -452,6 +452,7 @@ describe("Menu", () => {
     await openMenu("Options Menu")
 
     const checkboxItem = page.getByRole("menuitemcheckbox", {
+      exact: false,
       name: "Line numbers",
     })
     await expect.element(checkboxItem).toHaveAttribute("aria-checked", "false")

@@ -286,13 +286,13 @@ const testCases: MultiComponentTest[] = [
         await render(component)
 
         const trigger = page.getByRole("combobox")
-        await expect.element(trigger).toHaveTextContent("Denver")
-        await expect.element(trigger).toHaveTextContent("Miami")
+        await expect.element(trigger).toMatchTextContent(/Denver/)
+        await expect.element(trigger).toMatchTextContent(/Miami/)
 
-        await trigger.getByText("Denver").click()
+        await trigger.getByText(/Denver/).click()
 
-        await expect.element(trigger).not.toHaveTextContent("Denver")
-        await expect.element(trigger).toHaveTextContent("Miami")
+        await expect.element(trigger).not.toMatchTextContent(/Denver/)
+        await expect.element(trigger).toMatchTextContent(/Miami/)
       })
     },
   },

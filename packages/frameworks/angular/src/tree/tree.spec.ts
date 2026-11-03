@@ -1765,7 +1765,7 @@ describe("Tree", () => {
     await page.getByRole("button", {name: "API expand all"}).click()
     await expect
       .element(page.getByLabelText("API expanded value"))
-      .toHaveTextContent(/documents.*reports.*images.*disabled-folder/)
+      .toMatchTextContent(/documents.*reports.*images.*disabled-folder/)
 
     await page.getByRole("button", {name: "API collapse all"}).click()
     await expect
@@ -1809,7 +1809,7 @@ describe("Tree", () => {
     await page.getByRole("button", {name: "API select all"}).click()
     await expect
       .element(page.getByLabelText("API selected value"))
-      .toHaveTextContent(/readme/)
+      .toMatchTextContent(/readme/)
 
     await page.getByRole("button", {name: "API set checked doc1"}).click()
     await expect
@@ -1820,17 +1820,17 @@ describe("Tree", () => {
     )
     await expect
       .element(page.getByLabelText("API checked map"))
-      .toHaveTextContent(/documents:branch:indeterminate/)
+      .toMatchTextContent(/documents:branch:indeterminate/)
 
     await page
       .getByRole("button", {name: "API toggle documents checked"})
       .click()
     await expect
       .element(page.getByLabelText("API checked value"))
-      .toHaveTextContent(/doc2/)
+      .toMatchTextContent(/doc2/)
     await expect
       .element(page.getByLabelText("API checked map"))
-      .toHaveTextContent(/documents:branch:true/)
+      .toMatchTextContent(/documents:branch:true/)
 
     await page.getByRole("button", {name: "API clear checked"}).click()
     await expect

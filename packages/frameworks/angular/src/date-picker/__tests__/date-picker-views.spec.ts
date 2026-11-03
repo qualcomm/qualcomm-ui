@@ -273,7 +273,7 @@ const tests: MultiComponentTest[] = [
           .element(grid())
           .toHaveAttribute("aria-roledescription", monthLevel)
         await expect
-          .element(page.getByRole("gridcell", {name: "July"}))
+          .element(page.getByRole("gridcell", {exact: false, name: "July"}))
           .toBeVisible()
       })
     },
@@ -316,7 +316,9 @@ const tests: MultiComponentTest[] = [
         await openCalendar()
 
         await page.getByRole("button", {name: /switch to month view/i}).click()
-        await page.getByRole("gridcell", {name: "September"}).click()
+        await page
+          .getByRole("gridcell", {exact: false, name: "September"})
+          .click()
 
         await expect
           .element(grid())
@@ -476,7 +478,7 @@ describe("DatePicker - Views", () => {
       .element(grid())
       .toHaveAttribute("aria-roledescription", monthLevel)
 
-    await page.getByRole("gridcell", {name: "September"}).click()
+    await page.getByRole("gridcell", {exact: false, name: "September"}).click()
 
     await expect.element(page.getByRole("textbox")).toHaveValue("09/01/2024")
     await expect.element(grid()).not.toBeInTheDocument()

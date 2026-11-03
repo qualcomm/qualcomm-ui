@@ -126,7 +126,8 @@ function inlineHost(above: string) {
 const input = () => page.getByRole("textbox")
 const grid = () => page.getByRole("grid")
 const status = () => page.getByTestId("status")
-const act = (name: string) => page.getByRole("button", {name}).click()
+const act = (name: string) =>
+  page.getByRole("button", {exact: false, name}).click()
 
 describe("DatePicker - API", () => {
   beforeEach(() => {
@@ -306,13 +307,13 @@ describe("DatePicker - API", () => {
 
     await act("Set time")
     await expect.element(input()).toHaveValue("06/15/2024")
-    await expect.element(status()).toHaveTextContent("2024-06-15T09:30")
+    await expect.element(status()).toMatchTextContent(/2024-06-15T09:30/)
 
     await act("Change date")
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
 
     await expect.element(input()).toHaveValue("06/20/2024")
-    await expect.element(status()).toHaveTextContent("2024-06-20T09:30")
+    await expect.element(status()).toMatchTextContent(/2024-06-20T09:30/)
   })
 
   test("cancel reverts to the value the calendar opened with", async () => {

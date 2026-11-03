@@ -70,7 +70,7 @@ catalog:
   "@typescript-eslint/parser": 8.67.0
   "@typescript-eslint/rule-tester": 8.67.0
   "@typescript-eslint/utils": 8.67.0
-  "@vitejs/plugin-react": 6.1.1
+  "@vitejs/plugin-react": 6.2.1
   "@vitest/browser": 5.1.0
   "@vitest/browser-playwright": 5.1.0
   "@vitest/coverage-v8": 5.1.0

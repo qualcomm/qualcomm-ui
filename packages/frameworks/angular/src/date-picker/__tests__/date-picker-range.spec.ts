@@ -88,7 +88,7 @@ const endInput = () => page.getByRole("textbox", {name: /end date/i})
  * Cell state (`data-*`) and focus live on the trigger inside the `gridcell`,
  * not on the cell itself.
  */
-const dayTrigger = (day: string) => page.getByLabelText(day)
+const dayTrigger = (day: string) => page.getByLabelText(day, {exact: false})
 
 const watchValue = `(valueChanged)="valueChangedHandler.emit($event)"`
 
