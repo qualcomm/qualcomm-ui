@@ -69,11 +69,9 @@
     "react": "catalog:",
     "react-compiler-runtime": "^1.0.0",
     "react-dom": "catalog:",
-    "rollup-plugin-visualizer": "^5.12.0",
     "shx": "catalog:",
     "tailwindcss": "catalog:",
     "tsx": "catalog:",
-    "typescript-plugin-css-modules": "^5.0.1",
     "vite": "catalog:",
     "vitest": "catalog:",
     "vitest-browser-react": "^2.0.2"

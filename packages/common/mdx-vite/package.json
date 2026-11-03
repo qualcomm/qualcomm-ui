@@ -108,8 +108,6 @@
     "lodash-es": "catalog:",
     "minimatch": "^10.2.5",
     "ora": "^9.0.0",
-    "postcss": "catalog:",
-    "postcss-selector-parser": "^7.1.1",
     "rehype-mdx-code-props": "^3.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",

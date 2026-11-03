@@ -97,7 +97,6 @@
     "pretty-ms": "^9.3.0",
     "shx": "catalog:",
     "stylelint": "^16.23.1",
-    "stylelint-config-standard": "^39.0.1",
     "stylelint-order": "^7.0.0",
     "syncpack": "^15.3.1",
     "tailwindcss": "catalog:",
