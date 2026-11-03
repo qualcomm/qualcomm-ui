@@ -4,7 +4,7 @@
   "description": "Codemod utilities for automatic QUI package migrations",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
-  "repository": "https://github.com/qualcomm/qualcomm-ui-utils",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
   "bin": {
     "qui-codemod": "./lib/cli.cjs"
   },
