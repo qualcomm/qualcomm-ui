@@ -53,7 +53,7 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "minimatch": "^10.2.5",
+    "minimatch": "^11.0.1",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-router": "catalog:",
