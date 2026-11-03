@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-router-utils Changelog
 
+## 3.1.0
+
+Nov 3rd, 2026
+
+### Features
+
+* [routing]: apply middleware in fallback route ([23cde68](https://github.com/qualcomm/qualcomm-ui/commit/23cde68))
+
 ## 3.0.2
 
 Nov 2nd, 2026

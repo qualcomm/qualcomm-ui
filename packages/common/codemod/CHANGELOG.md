@@ -1,5 +1,17 @@
 # @qualcomm-ui/codemod Changelog
 
+## 1.2.0
+
+Nov 3rd, 2026
+
+### Features
+
+* [routing]: apply middleware in fallback route ([23cde68](https://github.com/qualcomm/qualcomm-ui/commit/23cde68))
+
+### Miscellaneous Chores
+
+* migrate codemod package ([b88c8d2](https://github.com/qualcomm/qualcomm-ui/commit/b88c8d2))
+
 ## 1.1.0
 
 Oct 30th, 2026
