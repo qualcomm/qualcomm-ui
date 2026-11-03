@@ -28,23 +28,23 @@ catalog:
   "@analogjs/vite-plugin-angular": 2.4.0
   "@analogjs/vitest-angular": 2.4.0
   "@angular-devkit/architect": 0.2102.1
-  "@angular-devkit/build-angular": ~22.1.4
-  "@angular-devkit/core": ~22.1.4
-  "@angular/animations": ~22.1.2
-  "@angular/build": ~22.1.4
-  "@angular/cdk": ~22.1.2
-  "@angular/cdk-experimental": ~22.1.2
-  "@angular/cli": ~22.1.4
-  "@angular/common": ~22.1.2
-  "@angular/compiler": ~22.1.2
-  "@angular/compiler-cli": ~22.1.2
-  "@angular/core": ~22.1.2
-  "@angular/forms": ~22.1.2
-  "@angular/platform-browser": ~22.1.2
-  "@angular/platform-browser-dynamic": ~22.1.2
-  "@angular/platform-server": ~22.1.2
-  "@angular/router": ~22.1.2
-  "@angular/ssr": ~22.1.4
+  "@angular-devkit/build-angular": ~22.2.5
+  "@angular-devkit/core": ~22.2.5
+  "@angular/animations": ~22.2.4
+  "@angular/build": ~22.2.5
+  "@angular/cdk": ~22.2.5
+  "@angular/cdk-experimental": ~22.2.5
+  "@angular/cli": ~22.2.5
+  "@angular/common": ~22.2.4
+  "@angular/compiler": ~22.2.4
+  "@angular/compiler-cli": ~22.2.4
+  "@angular/core": ~22.2.4
+  "@angular/forms": ~22.2.4
+  "@angular/platform-browser": ~22.2.4
+  "@angular/platform-browser-dynamic": ~22.2.4
+  "@angular/platform-server": ~22.2.4
+  "@angular/router": ~22.2.4
+  "@angular/ssr": ~22.2.5
   "@commander-js/extra-typings": 14.0.0
   "@eslint/js": 9.39.4
   "@lucide/angular": 1.31.0
