@@ -43,7 +43,8 @@ import {createUserQuery, type User, userColumns} from "./data"
         </div>
         <pre
           class="font-code-sm border-neutral-01 w-fit overflow-auto rounded border p-4"
-          >{{ tableState() | json }}</pre>
+          >{{ tableState() | json }}</pre
+        >
       </div>
 
       <div q-table-root>
