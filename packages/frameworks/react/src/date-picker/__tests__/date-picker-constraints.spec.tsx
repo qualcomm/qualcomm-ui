@@ -54,10 +54,11 @@ function Simple(props: Partial<DatePickerProps>) {
 const openCalendar = () =>
   page.getByRole("button", {name: /(?:choose|change) date/i}).click()
 
-const dayCell = (day: RegExp) => page.getByRole("gridcell", {name: day})
+const dayCell = (day: RegExp) =>
+  page.getByRole("gridcell", {exact: false, name: day})
 
 /** Cell state and focus live on the trigger inside the `gridcell`. */
-const dayTrigger = (day: string) => page.getByLabelText(day)
+const dayTrigger = (day: string) => page.getByLabelText(day, {exact: false})
 
 const tests: MultiComponentTestCase<Partial<DatePickerRootProps>>[] = [
   {

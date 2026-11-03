@@ -665,7 +665,7 @@ describe("ImageViewer", () => {
     })
     await expect
       .element(getTransformStatus())
-      .toHaveTextContent("zoom:2;offset:0,40;rotation:90;flip:true,false")
+      .toMatchTextContent("zoom:2;offset:0,40;rotation:90;flip:true,false")
 
     await page.getByRole("button", {name: "Close image viewer"}).click()
     await expect.element(getDialog()).not.toBeInTheDocument()
@@ -673,7 +673,7 @@ describe("ImageViewer", () => {
     await waitForPopup()
     await expect
       .element(getTransformStatus())
-      .toHaveTextContent("zoom:1;offset:0,0;rotation:0;flip:false,false")
+      .toMatchTextContent(/zoom:1;offset:0,0;rotation:0;flip:false,false/)
   })
 
   test("supports keyboard, wheel, and pointer transforms in the popup viewport", async () => {
@@ -698,12 +698,12 @@ describe("ImageViewer", () => {
       )
 
     await userEvent.keyboard("{ArrowRight}")
-    await expect.element(getTransformStatus()).toHaveTextContent("offset:1,0")
+    await expect.element(getTransformStatus()).toMatchTextContent("offset:1,0")
     await userEvent.dragAndDrop(getViewport(), getViewport(), {
       sourcePosition: {x: 100, y: 100},
       targetPosition: {x: 140, y: 100},
     })
-    await expect.element(getTransformStatus()).toHaveTextContent("offset:41,0")
+    await expect.element(getTransformStatus()).toMatchTextContent(/offset:41,0/)
   })
 
   test("supports pinch zoom in the popup viewport", async () => {
@@ -782,7 +782,7 @@ describe("ImageViewer", () => {
 
     await getTrigger().click()
     await waitForPopup()
-    await expect.element(getTransformStatus()).toHaveTextContent("offset:0,0")
+    await expect.element(getTransformStatus()).toMatchTextContent(/offset:0,0/)
   })
 
   test("reports controlled zoom, rotation, and flip changes through callbacks", async () => {
@@ -870,7 +870,7 @@ describe("ImageViewer", () => {
     await render(<ExternalApiViewer />)
     await waitForPopup()
     await page.getByRole("button", {name: "API zoom"}).click()
-    await expect.element(getTransformStatus()).toHaveTextContent("zoom:1.5")
+    await expect.element(getTransformStatus()).toMatchTextContent(/zoom:1.5/)
   })
 
   test("supports controlled state updates from the public callback", async () => {

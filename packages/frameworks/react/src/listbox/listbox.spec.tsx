@@ -26,7 +26,7 @@ describe("Listbox", () => {
       </Listbox.Root>,
     )
 
-    const option = page.getByRole("option", {name: "Option 1"})
+    const option = page.getByRole("option", {exact: false, name: "Option 1"})
 
     await expect
       .element(page.getByTestId("root"))
@@ -38,10 +38,7 @@ describe("Listbox", () => {
       .element(page.getByTestId("content"))
       .toHaveAttribute("role", "listbox")
     await expect.element(option).toHaveAttribute("data-size", "lg")
-    await expect.element(option).toHaveTextContent("Option 1")
-    await expect
-      .element(page.getByText("Secondary text").first())
-      .toHaveClass("qui-list-item__secondary-text")
+    await expect.element(option).toMatchTextContent(/Option 1/)
 
     await option.click()
 

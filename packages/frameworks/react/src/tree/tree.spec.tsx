@@ -917,7 +917,7 @@ describe("Tree", () => {
     await page.getByText("API expand all").click()
     await expect
       .element(page.getByTestId("api-expanded"))
-      .toHaveTextContent(/documents.*reports.*images.*disabled-folder/)
+      .toMatchTextContent(/documents.*reports.*images.*disabled-folder/)
 
     await page.getByText("API collapse all").click()
     await expect
@@ -959,7 +959,7 @@ describe("Tree", () => {
     await page.getByText("API select all").click()
     await expect
       .element(page.getByTestId("api-selected"))
-      .toHaveTextContent(/readme/)
+      .toMatchTextContent(/readme/)
 
     await page.getByText("API set checked doc1").click()
     await expect
@@ -968,15 +968,15 @@ describe("Tree", () => {
     expect(onCheckedNodesChange).toHaveBeenLastCalledWith(["doc1"])
     await expect
       .element(page.getByTestId("api-checked-map"))
-      .toHaveTextContent(/documents:branch:indeterminate/)
+      .toMatchTextContent(/documents:branch:indeterminate/)
 
     await page.getByText("API toggle documents checked").click()
     await expect
       .element(page.getByTestId("api-checked"))
-      .toHaveTextContent(/doc2/)
+      .toMatchTextContent(/doc2/)
     await expect
       .element(page.getByTestId("api-checked-map"))
-      .toHaveTextContent(/documents:branch:true/)
+      .toMatchTextContent(/documents:branch:true/)
 
     await page.getByText("API clear checked").click()
     await expect
