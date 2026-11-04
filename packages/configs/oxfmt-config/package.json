@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/oxfmt-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "QUI Oxfmt config for consistent code formatting",
   "keywords": [
     "config",
@@ -38,6 +38,6 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "oxfmt": ">=0.51.0"
+    "oxfmt": ">=0.75.0"
   }
 }

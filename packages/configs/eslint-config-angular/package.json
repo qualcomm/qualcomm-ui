@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-angular",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "QUI ESLint config for consistent Angular code formatting",
   "keywords": [
     "config",
@@ -43,7 +43,7 @@
     "angular-eslint": ">=22.1.0",
     "eslint": ">=9.37.0",
     "eslint-plugin-oxfmt": ">=0.9.0",
-    "oxfmt": ">=0.54.0",
+    "oxfmt": ">=0.75.0",
     "typescript": ">=5.5.4 <7",
     "typescript-eslint": ">=8.67.0"
   }
