@@ -82,7 +82,6 @@
     "js-yaml": "^3.14.2",
     "ng-packagr": "catalog:",
     "playwright": "^1.60.0",
-    "postcss": "catalog:",
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~7.8.0",
     "shx": "catalog:",

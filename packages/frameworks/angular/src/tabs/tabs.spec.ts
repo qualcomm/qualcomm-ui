@@ -659,13 +659,19 @@ describe("tabs", () => {
 
     await render(TestComponent)
 
-    await expect.element(page.getByText("Documents content")).toBeVisible()
+    await expect
+      .element(page.getByText("Documents content", {exact: false}))
+      .toBeVisible()
 
     await page.getByRole("button", {name: "Next"}).click()
-    await expect.element(page.getByText("Products content")).toBeVisible()
+    await expect
+      .element(page.getByText("Products content", {exact: false}))
+      .toBeVisible()
 
     await page.getByRole("button", {name: "Next"}).click()
-    await expect.element(page.getByText("Software content")).toBeVisible()
+    await expect
+      .element(page.getByText("Software content", {exact: false}))
+      .toBeVisible()
   })
 
   test("manual activation mode requires enter key to activate", async () => {

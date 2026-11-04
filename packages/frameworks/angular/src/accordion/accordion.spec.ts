@@ -151,7 +151,9 @@ describe("accordion", () => {
       await expect
         .element(page.getByTestId(testIds.accordionItem + items[i].value))
         .toBeVisible()
-      await expect.element(page.getByText(items[i].title)).toBeVisible()
+      await expect
+        .element(page.getByText(items[i].title, {exact: false}))
+        .toBeVisible()
       await expect
         .element(page.getByTestId(testIds.accordionContent + items[i].value))
         .not.toBeVisible()

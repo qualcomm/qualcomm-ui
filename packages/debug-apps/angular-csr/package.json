@@ -28,7 +28,6 @@
     "@tailwindcss/postcss": "catalog:",
     "@tanstack/angular-query-experimental": "^5.90.7",
     "@tanstack/virtual-core": "^3.13.12",
-    "postcss": "catalog:",
     "rxjs": "~7.8.0",
     "tailwindcss": "catalog:",
     "tslib": "~2.5.3"

@@ -91,7 +91,6 @@
     "swagger-ui-react": "^5.32.1",
     "tailwindcss": "catalog:",
     "tsx": "catalog:",
-    "typescript-plugin-css-modules": "^5.0.1",
     "url-parse": "^1.5.10",
     "vite": "catalog:",
     "zustand": "^4.5.2"

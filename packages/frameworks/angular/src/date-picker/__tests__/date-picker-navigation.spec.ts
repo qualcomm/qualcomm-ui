@@ -271,7 +271,7 @@ describe("DatePicker - Navigation", () => {
 
     await expect
       .element(page.getByRole("status"))
-      .toHaveTextContent(/^July 2024$/)
+      .toMatchTextContent(/^July 2024$/)
   })
 
   test("paging the day view announces the newly visible month", async () => {

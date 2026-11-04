@@ -4,12 +4,9 @@
   "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
   "compilerOptions": {
     "emitDeclarationOnly": false,
-    "moduleResolution": "bundler",
     "paths": {
-      "~test-utils": ["./test/index.ts"],
       "@qualcomm-ui/angular-core/*": ["./src/*/index.ts"]
     }
   },
-  "files": ["./test/test-setup.ts"],
   "include": ["src/**/*.spec.ts", "./test"]
 }

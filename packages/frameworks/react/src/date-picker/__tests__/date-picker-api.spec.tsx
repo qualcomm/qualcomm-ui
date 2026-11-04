@@ -58,7 +58,8 @@ function WithApi({
 
 const input = () => page.getByRole("textbox")
 const grid = () => page.getByRole("grid")
-const act = (name: string) => page.getByRole("button", {name}).click()
+const act = (name: string) =>
+  page.getByRole("button", {exact: false, name}).click()
 
 describe("DatePicker - API", () => {
   afterEach(() => {

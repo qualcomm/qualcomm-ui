@@ -352,13 +352,13 @@ describe("DatePicker - Form", () => {
     await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
 
-    await expect.element(status()).toHaveTextContent("2024-06-10|false")
+    await expect.element(status()).toMatchTextContent(/2024-06-10\|false/)
 
     await page.getByRole("gridcell", {name: /June 20, 2024/}).click()
 
     await expect
       .element(status())
-      .toHaveTextContent("2024-06-10,2024-06-20|true")
+      .toMatchTextContent(/2024-06-10,2024-06-20\|true/)
   })
 
   test("a required range control rejects an end-only selection", async () => {
@@ -367,7 +367,7 @@ describe("DatePicker - Form", () => {
     await endInput().fill("06/20/2024")
     await userEvent.keyboard("{Enter}")
 
-    await expect.element(status()).toHaveTextContent(",2024-06-20|false")
+    await expect.element(status()).toMatchTextContent(/,2024-06-20\|false/)
   })
 
   test("destroying a picker releases the range constraint it put on the control", async () => {
@@ -389,7 +389,7 @@ describe("DatePicker - Form", () => {
     await page.getByRole("button", {name: /(?:choose|change) date/i}).click()
     await page.getByRole("gridcell", {name: /June 10, 2024/}).click()
 
-    await expect.element(status()).toHaveTextContent("2024-06-10|true")
+    await expect.element(status()).toMatchTextContent(/2024-06-10\|true/)
   })
 
   test("closing the calendar without a selection only marks the control touched", async () => {

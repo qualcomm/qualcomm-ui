@@ -194,15 +194,18 @@ const tests: MultiComponentTestCase[] = [
       test("multiple selection", async () => {
         await render(getComponent())
 
-        const trigger = page.getByRole("combobox", {name: /select option/i})
+        const trigger = page.getByRole("combobox", {
+          exact: false,
+          name: /select option/i,
+        })
         await trigger.click()
 
         await page.getByRole("option", {name: "Option 1"}).click()
         await expect.element(page.getByRole("listbox")).toBeVisible()
 
         await page.getByRole("option", {name: "Option 3"}).click()
-        await expect.element(trigger).toHaveTextContent("Option 1")
-        await expect.element(trigger).toHaveTextContent("Option 3")
+        await expect.element(trigger).toMatchTextContent(/Option 1/)
+        await expect.element(trigger).toMatchTextContent(/Option 3/)
       })
     },
   },
@@ -303,14 +306,17 @@ const tests: MultiComponentTestCase[] = [
       test("removes a selected value from the trigger tag without opening the list", async () => {
         await render(getComponent())
 
-        const trigger = page.getByRole("combobox", {name: /select option/i})
-        await expect.element(trigger).toHaveTextContent("Option 1")
-        await expect.element(trigger).toHaveTextContent("Option 3")
+        const trigger = page.getByRole("combobox", {
+          exact: false,
+          name: /select option/i,
+        })
+        await expect.element(trigger).toMatchTextContent(/Option 1/)
+        await expect.element(trigger).toMatchTextContent(/Option 3/)
 
-        await trigger.getByText("Option 1").click()
+        await trigger.getByText(/Option 1/).click()
 
-        await expect.element(trigger).not.toHaveTextContent("Option 1")
-        await expect.element(trigger).toHaveTextContent("Option 3")
+        await expect.element(trigger).not.toMatchTextContent(/Option 1/)
+        await expect.element(trigger).toMatchTextContent(/Option 3/)
         await expect.element(page.getByRole("listbox")).not.toBeInTheDocument()
       })
     },

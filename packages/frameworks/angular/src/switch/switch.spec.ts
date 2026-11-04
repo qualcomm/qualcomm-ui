@@ -821,8 +821,8 @@ const testCases: MultiComponentTest[] = [
       test(`template forms: validation states — ${component.name}`, async () => {
         await render(component)
 
-        expect(page.getByTestId("status")).toHaveTextContent(
-          "Touched: false | Dirty: false",
+        expect(page.getByTestId("status")).toMatchTextContent(
+          /Touched: false \| Dirty: false/,
         )
         expect(page.getByText("Required")).not.toBeVisible()
 
@@ -830,14 +830,14 @@ const testCases: MultiComponentTest[] = [
         await userEvent.tab()
         await expect
           .element(page.getByTestId("status"))
-          .toHaveTextContent("Touched: true | Dirty: false")
+          .toMatchTextContent(/Touched: true \| Dirty: false/)
 
         expect(page.getByText("Required")).not.toBeVisible()
 
         await userEvent.click(page.getByText(demoLabel))
         await expect
           .element(page.getByTestId("status"))
-          .toHaveTextContent("Touched: true | Dirty: true")
+          .toMatchTextContent(/Touched: true \| Dirty: true/)
 
         await expect.element(page.getByText("Required")).toBeVisible()
 
@@ -845,7 +845,7 @@ const testCases: MultiComponentTest[] = [
 
         await expect
           .element(page.getByTestId("status"))
-          .toHaveTextContent("Touched: true | Dirty: true")
+          .toMatchTextContent(/Touched: true \| Dirty: true/)
 
         await expect.element(page.getByText("Required")).not.toBeVisible()
       })

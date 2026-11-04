@@ -71,6 +71,8 @@ describe("FieldGroup", () => {
     )
 
     await expect.element(page.getByTestId(customIconTestId)).toBeVisible()
-    await expect.element(page.getByText(errorMessage)).toBeVisible()
+    await expect
+      .element(page.getByText(errorMessage, {exact: false}))
+      .toBeVisible()
   })
 })
