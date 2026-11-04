@@ -30,7 +30,7 @@ export class BreadcrumbsRootDirective
 {
   /**
    * Governs the color of the breadcrumb item text and icon.
-   * @default 'primary'
+   * @default 'brand'
    */
   readonly emphasis = input<QdsBreadcrumbsEmphasis>()
 
