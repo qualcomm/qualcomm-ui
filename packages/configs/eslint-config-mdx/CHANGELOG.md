@@ -1,5 +1,13 @@
 # @qualcomm-ui/eslint-config-mdx Changelog
 
+## 4.0.1
+
+Nov 4th, 2026
+
+### Miscellaneous Chores
+
+* update oxfmt peer dependency range ([1e7f32f](https://github.com/qualcomm/qualcomm-ui/commit/1e7f32f))
+
 ## 4.0.0
 
 Aug 16th, 2026
