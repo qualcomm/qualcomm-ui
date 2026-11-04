@@ -18,13 +18,14 @@
   --bg-active: var(--color-interactive-background-ghost-pressed);
   --bg-checked: var(--color-interactive-background-neutral-idle);
   --bg-disabled: var(--color-utility-disabled-background);
-  &[data-variant="primary"] {
+  &[data-emphasis="brand"],
+  &[data-emphasis="primary"] {
     --text-idle: var(--color-interactive-text-primary-idle);
     --text-hover: var(--color-interactive-text-primary-hover);
     --text-active: var(--color-interactive-text-primary-pressed);
     --bg-checked: var(--color-interactive-background-primary-idle);
   }
-  &[data-variant="neutral"] {
+  &[data-emphasis="neutral"] {
     --text-idle: var(--color-interactive-text-neutral-idle);
     --text-hover: var(--color-interactive-text-neutral-hover);
     --text-active: var(--color-interactive-text-neutral-pressed);

@@ -7,11 +7,31 @@ export type QdsSegmentedControlSize = "sm" | "md" | "lg"
 
 export type QdsSegmentedControlLayout = "hug" | "fill"
 
-export type QdsSegmentedControlVariant = "primary" | "neutral"
+/** @deprecated use "brand" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsSegmentedControlEmphasis__deprecated = "primary"
+
+export type QdsSegmentedControlEmphasis =
+  | "brand"
+  | "neutral"
+  | QdsSegmentedControlEmphasis__deprecated
+
+/**
+ * @deprecated use {@link QdsSegmentedControlEmphasis} instead
+ */
+export type QdsSegmentedControlVariant = QdsSegmentedControlEmphasis
 
 type SegmentedControlClasses = typeof segmentedControlClasses
 
 export interface QdsSegmentedControlApiProps {
+  /**
+   * Governs the color of the segmented control.
+   *
+   * @default 'brand'
+   * @since next-release
+   */
+  emphasis?: QdsSegmentedControlEmphasis
+
   /**
    * The layout used to display the segmented control.
    * - `hug`: Content-sized; width matches the items only (default).
@@ -29,18 +49,16 @@ export interface QdsSegmentedControlApiProps {
   size?: QdsSegmentedControlSize
 
   /**
-   * The variant of the segmented control.
-   *
-   * @default undefined
+   * @deprecated use {@link emphasis} instead
    */
   variant?: QdsSegmentedControlVariant
 }
 
 export interface QdsSegmentedControlGroupBindings {
   className: SegmentedControlClasses["group"]
+  "data-emphasis": QdsSegmentedControlEmphasis
   "data-layout": QdsSegmentedControlLayout
   "data-size": QdsSegmentedControlSize
-  "data-variant": QdsSegmentedControlVariant
 }
 
 export interface QdsSegmentedControlItemBindings {
@@ -57,8 +75,12 @@ export interface QdsSegmentedControlItemHiddenInputBindings {
 }
 
 export interface QdsSegmentedControlApi {
+  emphasis: QdsSegmentedControlEmphasis
   layout: QdsSegmentedControlLayout
   size: QdsSegmentedControlSize
+  /**
+   * @deprecated use {@link emphasis} instead
+   */
   variant: QdsSegmentedControlVariant
 
   // group: bindings

@@ -76,8 +76,8 @@ export function createQdsSliderApi(
     getRootBindings(): QdsSliderRootBindings {
       return normalize.element({
         className: sliderClasses.root,
+        "data-emphasis": props.emphasis || props.variant || "brand",
         "data-size": props.size || "md",
-        "data-variant": props.variant || "primary",
       })
     },
     getThumbBindings(): QdsSliderThumbBindings {

@@ -11,12 +11,12 @@ const instance = figma.selectedInstance
 const layout = instance.getEnum("width", {fill: "fill"})
 const orientation = instance.getEnum("orientation", {vertical: "vertical"})
 const size = instance.getEnum("size", {lg: "lg", sm: "sm"})
-const variant = instance.getEnum("emphasis", {primary: "primary"})
+const emphasis = instance.getEnum("emphasis", {neutral: "neutral"})
 
 const layoutAttr = layout ? ` layout="${layout}"` : ""
 const orientationAttr = orientation ? ` orientation="${orientation}"` : ""
 const sizeAttr = size ? ` size="${size}"` : ""
-const variantAttr = variant ? ` variant="${variant}"` : ""
+const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 
 const items = instance.findConnectedInstances((node) => {
   const s = node.getEnum("state", {
@@ -37,7 +37,7 @@ const children = items.reduce(
 
 export default {
   example: figma.code`
-    <SegmentedControl.Root defaultValue={["section-1"]}${layoutAttr}${orientationAttr}${sizeAttr}${variantAttr}>
+    <SegmentedControl.Root defaultValue={["section-1"]}${layoutAttr}${orientationAttr}${sizeAttr}${emphasisAttr}>
       ${children}
     </SegmentedControl.Root>`,
   id: "SegmentedControl",

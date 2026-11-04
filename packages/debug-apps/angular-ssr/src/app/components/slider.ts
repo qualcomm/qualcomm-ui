@@ -3,6 +3,7 @@ import {Component} from "@angular/core"
 import {SliderCompositeDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-composite-demo"
 import {SliderDisabledDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-disabled-demo"
 import {SliderDisplayDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-display-demo"
+import {SliderEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-emphasis-demo"
 import {SliderFocusCallbackDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-focus-callback-demo"
 import {SliderHintDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-hint-demo"
 import {SliderMarkersDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-markers-demo"
@@ -18,12 +19,11 @@ import {SliderTemplateFormStateDemo} from "@qualcomm-ui/angular-docs/components+
 import {SliderTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-template-forms-demo"
 import {SliderTooltipDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-tooltip-demo"
 import {SliderValueCallbackDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-value-callback-demo"
-import {SliderVariantDemo} from "@qualcomm-ui/angular-docs/components+/slider+/demos/slider-variant-demo"
 
 @Component({
   imports: [
     SliderSimpleDemo,
-    SliderVariantDemo,
+    SliderEmphasisDemo,
     SliderSizeDemo,
     SliderHintDemo,
     SliderDisabledDemo,
@@ -69,9 +69,9 @@ import {SliderVariantDemo} from "@qualcomm-ui/angular-docs/components+/slider+/d
         </div>
       </div>
       <div class="section">
-        <h2 class="section-title">Variant</h2>
+        <h2 class="section-title">Emphasis</h2>
         <div class="demo-container">
-          <slider-variant-demo />
+          <slider-emphasis-demo />
         </div>
       </div>
       <div class="section">

@@ -12,6 +12,7 @@ import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   createQdsSegmentedControlApi,
   type QdsSegmentedControlApiProps,
+  type QdsSegmentedControlEmphasis,
   type QdsSegmentedControlLayout,
   type QdsSegmentedControlSize,
   type QdsSegmentedControlVariant,
@@ -35,13 +36,21 @@ export class SegmentedControlDirective
   implements SignalifyInput<QdsSegmentedControlApiProps>
 {
   /**
+   * Governs the color of the segmented control.
+   *
+   * @default 'brand'
+   * @since next-release
+   */
+  readonly emphasis = input<QdsSegmentedControlEmphasis | undefined>()
+
+  /**
    * Governs the width and height of the segmented control as well as the font size
    * of its content.
    */
   readonly size = input<QdsSegmentedControlSize | undefined>()
 
   /**
-   * The style variant of the segmented control.
+   * @deprecated use {@link emphasis} instead
    */
   readonly variant = input<QdsSegmentedControlVariant | undefined>()
 
@@ -69,6 +78,7 @@ export class SegmentedControlDirective
     const qdsSegmentedControlApi = computed(() =>
       createQdsSegmentedControlApi(
         {
+          emphasis: this.emphasis(),
           layout: this.layout(),
           size: this.size(),
           variant: this.variant(),

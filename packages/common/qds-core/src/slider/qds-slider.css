@@ -11,7 +11,8 @@
   --slider-label-color: var(--color-text-neutral-secondary);
   --slider-marker-color: var(--color-text-neutral-primary);
 
-  &[data-variant="primary"] {
+  &[data-emphasis="brand"],
+  &[data-emphasis="primary"] {
     --slider-thumb-color: var(--color-interactive-background-primary-idle);
     --slider-range-color: var(--color-background-brand-primary);
     --slider-thumb-color-hover: var(
@@ -21,7 +22,7 @@
       --color-interactive-background-primary-pressed
     );
   }
-  &[data-variant="neutral"] {
+  &[data-emphasis="neutral"] {
     --slider-thumb-color: var(--color-interactive-background-neutral-idle);
     --slider-range-color: var(--color-background-support-neutral);
     --slider-thumb-color-hover: var(

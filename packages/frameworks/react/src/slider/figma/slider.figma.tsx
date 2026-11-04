@@ -9,6 +9,9 @@ const sharedProps = {
   disabled: figma.enum("state", {
     disabled: true,
   }),
+  emphasis: figma.enum("emphasis", {
+    neutral: "neutral",
+  }),
   errorText: figma.string("errorText"),
   hint: figma.boolean("hint", {
     true: figma.string("hintText"),
@@ -24,9 +27,6 @@ const sharedProps = {
   }),
   size: figma.enum("size", {
     sm: "sm",
-  }),
-  variant: figma.enum("emphasis", {
-    neutral: "neutral",
   }),
 }
 
