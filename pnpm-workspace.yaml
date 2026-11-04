@@ -86,7 +86,7 @@ catalog:
   ng-packagr: 21.2.0
   npm-run-all2: 8.0.4
   oxc-transform-react: 0.147.0
-  oxfmt: 0.54.0
+  oxfmt: 0.75.0
   oxlint: 1.69.0
   postcss: 8.5.10
   react: 19.2.4

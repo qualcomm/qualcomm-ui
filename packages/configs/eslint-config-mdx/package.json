@@ -96,7 +96,7 @@
     "eslint-mdx": ">=3.7.0",
     "eslint-plugin-mdx": ">=3.7.0",
     "eslint-plugin-react": ">=7.37.5",
-    "oxfmt": ">=0.51.0",
+    "oxfmt": ">=0.75.0",
     "remark-frontmatter": ">=5.0.0",
     "remark-lint-fenced-code-flag": ">=4.2.0",
     "remark-lint-final-newline": ">=3.0.1",
