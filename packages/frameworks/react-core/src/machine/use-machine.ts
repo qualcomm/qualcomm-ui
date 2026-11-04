@@ -404,24 +404,22 @@ export function useMachine<T extends MachineSchema>(
     // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getParams = useRef(
-    (): Params<T> => ({
-      action,
-      actions,
-      choose,
-      computed,
-      context,
-      event: getEvent(),
-      flush,
-      guard,
-      prop,
-      refs,
-      scope: {...scope, ids: ids.current},
-      send,
-      state: getState(),
-      track: useTrack,
-    }),
-  )
+  const getParams = useRef((): Params<T> => ({
+    action,
+    actions,
+    choose,
+    computed,
+    context,
+    event: getEvent(),
+    flush,
+    guard,
+    prop,
+    refs,
+    scope: {...scope, ids: ids.current},
+    send,
+    state: getState(),
+    track: useTrack,
+  }))
 
   config.watch?.(getParams.current() as WatchParams<T>)
 

@@ -290,9 +290,7 @@ When you have more than one level of abstraction, your function is usually doing
 
 ```ts
 function parseCode(code: string) {
-  const REGEXES = [
-    /* ... */
-  ]
+  const REGEXES = [/* ... */]
   const statements = code.split(" ")
   const tokens = []
 
@@ -316,9 +314,7 @@ function parseCode(code: string) {
 **Better:**
 
 ```ts
-const REGEXES = [
-  /* ... */
-]
+const REGEXES = [/* ... */]
 
 function parseCode(code: string) {
   const tokens = tokenize(code)
@@ -695,7 +691,7 @@ interface User {
 
 When you find that you need to mark code for improvements later, use `// TODO` comments. Most IDE have special support for those kinds of comments so that you can quickly review the entire list of todos.
 
-Keep in mind that a _TODO_ comment is not an excuse for bad code.
+Keep in mind that a *TODO* comment is not an excuse for bad code.
 
 **Not Ideal:**
 

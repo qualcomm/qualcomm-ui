@@ -34,8 +34,8 @@ export default defineConfig({
         selector: "external",
       },
       {
-        elementNamePattern: ["~*/**"],
-        groupName: "internal",
+        elementNamePattern: ["~*/**", "~/**"],
+        groupName: "internal-alias",
         selector: "internal",
       },
     ],
@@ -45,6 +45,7 @@ export default defineConfig({
       ["builtin", "external"],
       {newlinesBetween: true},
       "qualcomm-ui",
+      "internal-alias",
       "internal",
       "parent",
       ["sibling", "index"],
