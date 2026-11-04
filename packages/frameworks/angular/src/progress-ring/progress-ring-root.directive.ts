@@ -41,7 +41,7 @@ export class ProgressRingRootDirective
   /**
    * Governs the color of the progress circle.
    *
-   * @default 'primary'
+   * @default 'brand'
    */
   readonly emphasis = input<QdsProgressRingEmphasis>()
 

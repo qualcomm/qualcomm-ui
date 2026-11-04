@@ -6,14 +6,23 @@ import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {progressClasses} from "./progress.classes.js"
 
 export type QdsProgressSize = "sm" | "md" | "lg"
-export type QdsProgressEmphasis = "primary" | "neutral"
+
+/** @deprecated use "brand" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsProgressEmphasis__deprecated = "primary"
+
+export type QdsProgressEmphasis =
+  | "brand"
+  | "neutral"
+  | QdsProgressEmphasis__deprecated
+
 export type QdsProgressLabelOrientation = "top" | "side"
 
 export interface QdsProgressApiProps {
   /**
    * Governs the color of the progress bar.
    *
-   * @default 'primary'
+   * @default 'brand'
    */
   emphasis?: QdsProgressEmphasis
 

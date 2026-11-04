@@ -15,13 +15,21 @@ export type QdsProgressRingSize =
   | "lg"
   | "xl"
   | number
-export type QdsProgressRingEmphasis = "primary" | "neutral"
+
+/** @deprecated use "brand" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsProgressRingEmphasis__deprecated = "primary"
+
+export type QdsProgressRingEmphasis =
+  | "brand"
+  | "neutral"
+  | QdsProgressRingEmphasis__deprecated
 
 export interface QdsProgressRingApiProps {
   /**
    * Governs the color of the progress circle.
    *
-   * @default 'primary'
+   * @default 'brand'
    */
   emphasis?: QdsProgressRingEmphasis
 

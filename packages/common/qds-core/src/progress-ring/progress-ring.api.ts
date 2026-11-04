@@ -30,7 +30,7 @@ export function createQdsProgressRingApi(
   props: QdsProgressRingApiProps,
   normalize: PropNormalizer,
 ): QdsProgressRingApi {
-  const emphasis = props.emphasis || "primary"
+  const emphasis = props.emphasis || "brand"
   const shimmer = props.shimmer ?? true
   const size = props.size || "md"
   const thickness = props.thickness
