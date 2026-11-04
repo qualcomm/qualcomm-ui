@@ -181,8 +181,10 @@ export class TagDirective implements SignalifyInput<QdsTagApiProps>, OnInit {
   readonly endIcon = input<LucideIconOrString>()
 
   /**
-   * Governs the color of the tag.
-   * @default 'brand'
+   * Governs the color of the tag. `neutral-outline-brand` looks like
+   * `neutral-outline`, except when selected, where it looks like
+   * `brand-outline`.
+   * @default 'brand-outline'
    */
   readonly emphasis = input<QdsTagEmphasis>()
 

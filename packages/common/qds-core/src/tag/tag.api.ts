@@ -39,7 +39,7 @@ export function createQdsTagApi(
     "aria-disabled": booleanAriaAttr(props.disabled, null),
     className: tagClasses.root,
     "data-disabled": booleanDataAttr(props.disabled),
-    "data-emphasis": props.emphasis || "outline-brand",
+    "data-emphasis": props.emphasis || "brand-outline",
     "data-selected": booleanDataAttr(selected),
     "data-shape": props.shape || props.radius || "square",
     "data-size": size,

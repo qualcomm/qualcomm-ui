@@ -12,20 +12,28 @@ import {TagDirective} from "@qualcomm-ui/angular/tag"
     <div class="flex flex-wrap items-center gap-2">
       <!-- preview -->
       <button
-        emphasis="outline-brand"
+        emphasis="brand-outline"
         q-tag
         startIcon="FaceSlightlySmiling"
         variant="selectable"
       >
-        outline-brand
+        brand-outline
       </button>
       <button
-        emphasis="outline-neutral"
+        emphasis="neutral-outline"
         q-tag
         startIcon="FaceSlightlySmiling"
         variant="selectable"
       >
-        outline-neutral
+        neutral-outline
+      </button>
+      <button
+        emphasis="neutral-outline-brand"
+        q-tag
+        startIcon="FaceSlightlySmiling"
+        variant="selectable"
+      >
+        neutral-outline-brand
       </button>
       <button
         emphasis="neutral"
@@ -34,6 +42,38 @@ import {TagDirective} from "@qualcomm-ui/angular/tag"
         variant="selectable"
       >
         neutral
+      </button>
+      <button
+        emphasis="info"
+        q-tag
+        startIcon="FaceSlightlySmiling"
+        variant="selectable"
+      >
+        info
+      </button>
+      <button
+        emphasis="success"
+        q-tag
+        startIcon="FaceSlightlySmiling"
+        variant="selectable"
+      >
+        success
+      </button>
+      <button
+        emphasis="warning"
+        q-tag
+        startIcon="FaceSlightlySmiling"
+        variant="selectable"
+      >
+        warning
+      </button>
+      <button
+        emphasis="danger"
+        q-tag
+        startIcon="FaceSlightlySmiling"
+        variant="selectable"
+      >
+        danger
       </button>
       <button
         emphasis="blue"

@@ -8,14 +8,33 @@ export function TagEmphasisDemo(): ReactElement {
   return (
     <div className="flex flex-wrap items-center gap-2">
       {/* preview */}
-      <Tag emphasis="outline-brand" startIcon={Smile} variant="selectable">
-        outline-brand
+      <Tag emphasis="brand-outline" startIcon={Smile} variant="selectable">
+        brand-outline
       </Tag>
-      <Tag emphasis="outline-neutral" startIcon={Smile} variant="selectable">
-        outline-neutral
+      <Tag emphasis="neutral-outline" startIcon={Smile} variant="selectable">
+        neutral-outline
+      </Tag>
+      <Tag
+        emphasis="neutral-outline-brand"
+        startIcon={Smile}
+        variant="selectable"
+      >
+        neutral-outline-brand
       </Tag>
       <Tag emphasis="neutral" startIcon={Smile} variant="selectable">
         neutral
+      </Tag>
+      <Tag emphasis="info" startIcon={Smile} variant="selectable">
+        info
+      </Tag>
+      <Tag emphasis="success" startIcon={Smile} variant="selectable">
+        success
+      </Tag>
+      <Tag emphasis="warning" startIcon={Smile} variant="selectable">
+        warning
+      </Tag>
+      <Tag emphasis="danger" startIcon={Smile} variant="selectable">
+        danger
       </Tag>
       <Tag emphasis="blue" startIcon={Smile} variant="selectable">
         blue
