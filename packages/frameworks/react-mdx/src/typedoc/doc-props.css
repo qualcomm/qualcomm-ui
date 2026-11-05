@@ -10,7 +10,7 @@
 
 .typedoc-props__table-wrapper {
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   color: var(--color-text-neutral-primary);
   margin-top: 16px;
   overflow-x: auto;
@@ -39,7 +39,7 @@
     pre {
       > code {
         background: var(--qui-docs-code-background);
-        border-radius: var(--border-radius-sm);
+        border-radius: var(--border-radius-75);
         color: var(--qui-docs-code-color);
         font-family: var(--q-font-mono), monospace;
         font-size: 14px !important;
@@ -63,11 +63,11 @@
   table {
     width: 100%;
     tbody.no-thead {
-      border-radius: var(--border-radius-md);
+      border-radius: var(--border-radius-100);
       border-top: solid 1px var(--color-border-neutral-01);
     }
     pre {
-      border-radius: var(--border-radius-sm);
+      border-radius: var(--border-radius-75);
     }
     .font-mono {
       font-size: 14px;
@@ -111,7 +111,7 @@
     }
     td {
       min-height: 42px;
-      padding: var(--spacing-70) var(--spacing-90);
+      padding: var(--spacing-200) var(--spacing-300);
 
       ul {
         list-style-type: circle;
@@ -197,7 +197,7 @@ pre.qui-docs-code {
 }
 
 .doc-props-item__label {
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-75);
   display: inline-flex;
   font: var(--font-static-code-sm-bold);
   justify-content: flex-start;
@@ -261,7 +261,7 @@ pre.qui-docs-code {
 
   code {
     background: var(--qui-docs-code-background);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-75);
     color: var(--qui-docs-code-color);
     font-family: var(--q-font-mono), monospace;
     font-size: 13px !important;
@@ -383,7 +383,7 @@ pre.qui-docs-code {
   font: var(--font-static-body-sm-default);
   pre.shiki-code {
     border: solid 1px var(--color-border-neutral-01);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-100);
     margin-top: 8px;
   }
   .mdx-spoiler__root {
@@ -411,7 +411,7 @@ pre.qui-docs-code {
     font: var(--font-static-body-sm-default);
     pre.shiki-code {
       border: solid 1px var(--color-border-neutral-01);
-      border-radius: var(--border-radius-md);
+      border-radius: var(--border-radius-100);
       margin-top: 8px;
     }
     .mdx-spoiler__root {
@@ -424,7 +424,7 @@ pre.qui-docs-code {
 
   .doc-props-description__example-tag {
     border: solid 1px var(--color-border-neutral-01);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-100);
     margin-top: var(--qui-mdx-margin-default);
   }
 
@@ -433,7 +433,7 @@ pre.qui-docs-code {
 
     pre.shiki-code {
       border: solid 1px var(--color-border-neutral-01);
-      border-radius: var(--border-radius-md);
+      border-radius: var(--border-radius-100);
       margin-top: var(--qui-mdx-margin-default);
     }
   }
@@ -530,7 +530,7 @@ pre.qui-docs-code {
   .doc-props__function-arg-name {
     background: var(--qui-docs-code-background);
     border: solid 1px var(--color-border-neutral-01);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-75);
     color: var(--color-text-neutral-primary);
     font: var(--font-static-code-sm-default);
     margin-right: 1px;
@@ -594,7 +594,7 @@ pre.qui-docs-code {
 
 .doc-function__param-name {
   background: var(--qui-docs-code-background);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-75);
   color: var(--color-text-neutral-primary);
   font: var(--font-static-code-sm-bold);
   padding: 2px 6px;
@@ -607,7 +607,7 @@ pre.qui-docs-code {
 
 .doc-function__optional-badge {
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-75);
   color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-xs-default);
   padding: 1px 6px;

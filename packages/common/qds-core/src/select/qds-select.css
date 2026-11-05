@@ -1,11 +1,11 @@
 .qui-select__root {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-40);
-  --input-group-gap: var(--spacing-40);
+  gap: var(--spacing-100);
+  --input-group-gap: var(--spacing-100);
 
   &[data-size="lg"] {
-    --input-group-gap: var(--spacing-50);
+    --input-group-gap: var(--spacing-150);
   }
 }
 
@@ -22,11 +22,11 @@
 }
 
 .qui-select__control {
-  --select-trigger-gap: var(--spacing-40);
+  --select-trigger-gap: var(--spacing-100);
   align-items: center;
   background: var(--color-background-neutral-00);
   border: 1px solid var(--color-interactive-border-neutral-idle);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-75);
   box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   cursor: pointer;
@@ -36,10 +36,10 @@
   justify-content: space-between;
   line-height: normal;
   margin: 0;
-  min-height: var(--sizing-140, 40px);
+  min-height: var(--sizing-1000, 40px);
   outline: none;
   overflow-x: hidden;
-  padding: 0 var(--spacing-70) 0 var(--spacing-90);
+  padding: 0 var(--spacing-200) 0 var(--spacing-300);
   position: relative;
   width: 100%;
 
@@ -55,13 +55,13 @@
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);
-    min-height: var(--sizing-120);
-    padding: 0 var(--spacing-50) 0 var(--spacing-70);
+    min-height: var(--sizing-800);
+    padding: 0 var(--spacing-150) 0 var(--spacing-200);
   }
   &[data-size="lg"] {
     font: var(--font-static-body-md-default);
-    min-height: var(--sizing-160, 48px);
-    padding: 0 var(--spacing-80) 0 var(--spacing-100);
+    min-height: var(--sizing-1200, 48px);
+    padding: 0 var(--spacing-250) 0 var(--spacing-400);
   }
 
   &:hover {
@@ -129,15 +129,15 @@
 .qui-select__icon {
   color: var(--icon-color);
   &[data-size="sm"] {
-    margin-right: calc(var(--spacing-50) - var(--select-trigger-gap));
+    margin-right: calc(var(--spacing-150) - var(--select-trigger-gap));
   }
   &[data-size="md"] {
-    margin-right: calc(var(--spacing-70) - var(--select-trigger-gap));
+    margin-right: calc(var(--spacing-200) - var(--select-trigger-gap));
   }
   &[data-size="lg"] {
-    --icon-height: var(--sizing-80);
-    --icon-width: var(--sizing-80);
-    margin-right: calc(var(--spacing-80) - var(--select-trigger-gap));
+    --icon-height: var(--sizing-500);
+    --icon-width: var(--sizing-500);
+    margin-right: calc(var(--spacing-250) - var(--select-trigger-gap));
   }
 }
 
@@ -155,7 +155,7 @@
 .qui-select__content {
   background: var(--color-surface-overlay);
   border: solid 1px var(--color-border-neutral-02);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-shadow: var(--shadow-medium);
   box-sizing: border-box;
   display: inline-flex;
@@ -165,7 +165,7 @@
   outline: none;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: var(--spacing-40) 0;
+  padding: var(--spacing-100) 0;
   position: relative;
   width: 100%;
   z-index: max(
@@ -221,12 +221,12 @@
   outline: none;
   padding: 0 var(--select-padding-x);
   width: 100%;
-  --select-padding-x: var(--spacing-100);
+  --select-padding-x: var(--spacing-400);
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);
     min-height: 32px;
-    --select-padding-x: var(--spacing-90);
+    --select-padding-x: var(--spacing-300);
   }
 
   &:hover {
@@ -302,11 +302,11 @@
   }
 
   &[data-multiple] {
-    column-gap: var(--spacing-70);
+    column-gap: var(--spacing-200);
     display: inline-flex;
     flex-wrap: wrap;
     padding: 4px 0;
-    row-gap: var(--spacing-40);
+    row-gap: var(--spacing-100);
   }
 }
 
@@ -317,7 +317,7 @@
       content: "";
       display: block;
       height: 1px;
-      margin: var(--spacing-40) 0;
+      margin: var(--spacing-100) 0;
       width: 100%;
     }
   }
@@ -326,8 +326,8 @@
 .qui-select__item-group-label {
   color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-sm-default);
-  padding: var(--spacing-70) var(--spacing-100) var(--spacing-40)
-    var(--spacing-100);
+  padding: var(--spacing-200) var(--spacing-400) var(--spacing-100)
+    var(--spacing-400);
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);

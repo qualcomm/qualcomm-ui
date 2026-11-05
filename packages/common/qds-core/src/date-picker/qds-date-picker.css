@@ -17,33 +17,33 @@
 
 /* overload the shared input-group end padding */
 .qui-date-picker__control-group .qui-date-picker__input-group {
-  padding-inline-end: var(--spacing-70);
+  padding-inline-end: var(--spacing-200);
 
   &[data-size="sm"] {
-    padding-inline-end: var(--spacing-50);
+    padding-inline-end: var(--spacing-150);
   }
 
   &[data-size="lg"] {
-    padding-inline-end: var(--spacing-80);
+    padding-inline-end: var(--spacing-250);
   }
 }
 
 /* the lg field keeps the md gap */
 .qui-date-picker__input-group[data-size="lg"] {
-  --input-group-gap: var(--spacing-40);
+  --input-group-gap: var(--spacing-100);
 }
 
 .qui-date-picker__control-group .qui-date-picker__input-group[data-size]:has(.qui-date-picker__value-tags) {
   align-items: center;
   height: auto;
-  min-height: var(--sizing-140);
+  min-height: var(--sizing-1000);
 
   &[data-size="sm"] {
-    min-height: var(--sizing-120);
+    min-height: var(--sizing-800);
   }
 
   &[data-size="lg"] {
-    min-height: var(--sizing-160);
+    min-height: var(--sizing-1200);
   }
 }
 
@@ -120,7 +120,7 @@
   align-self: stretch;
   color: var(--color-text-neutral-secondary);
   display: inline-flex;
-  padding-inline: var(--spacing-30);
+  padding-inline: var(--spacing-75);
 }
 
 .qui-date-picker__control-group .qui-date-picker__input-group[data-size]:has(.qui-date-picker__range-separator) {
@@ -141,15 +141,15 @@
 
 .qui-date-picker__value-tags {
   align-items: center;
-  column-gap: var(--spacing-70);
+  column-gap: var(--spacing-200);
   display: inline-flex;
   flex: 1 1 auto;
   flex-wrap: wrap;
   font: var(--font-static-body-sm-default);
   min-width: 0;
   overflow: hidden;
-  padding-block: var(--spacing-30);
-  row-gap: var(--spacing-40);
+  padding-block: var(--spacing-75);
+  row-gap: var(--spacing-100);
 }
 
 .qui-date-picker__input-group[data-size="sm"] .qui-date-picker__value-tags {
@@ -168,7 +168,7 @@
   align-self: center;
   background: var(--color-border-neutral-01);
   display: none;
-  height: var(--sizing-70);
+  height: var(--sizing-400);
   width: 1px;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .qui-date-picker__root> :is(.qui-input__hint, .qui-input__error-text) {
-  margin-block-start: var(--spacing-40);
+  margin-block-start: var(--spacing-100);
 }
 
 /* calendar pane */
@@ -189,9 +189,9 @@
 .qui-date-picker__content {
   background: var(--color-surface-overlay);
   border: 1px solid var(--color-border-neutral-01);
-  border-radius: var(--border-radius-xl);
+  border-radius: var(--border-radius-200);
   box-shadow: var(--shadow-medium);
-  inline-size: calc(7 * var(--sizing-120) + 2 * var(--spacing-100));
+  inline-size: calc(7 * var(--sizing-800) + 2 * var(--spacing-400));
   z-index: max(
     calc(var(--z-index-dropdown) + var(--layer-index)),
     calc(var(--layer-z-floor, 0) + 1)
@@ -210,7 +210,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-90) var(--spacing-100) var(--spacing-70) var(--spacing-120);
+  padding: var(--spacing-300) var(--spacing-400) var(--spacing-200) var(--spacing-600);
   width: 100%;
 }
 
@@ -231,14 +231,14 @@
   align-items: center;
   display: grid;
   grid-template-columns: auto auto 1fr auto auto;
-  padding: var(--spacing-100);
+  padding: var(--spacing-400);
 
   .qui-date-picker__prev-trigger {
     grid-column-start: 4;
   }
 
   .qui-date-picker__next-trigger {
-    margin-inline-start: var(--spacing-40);
+    margin-inline-start: var(--spacing-100);
   }
 }
 
@@ -247,14 +247,14 @@
 
   :is(.qui-date-picker__presets-trigger, .qui-date-picker__view-close-trigger) {
     grid-column-start: 7;
-    margin-inline-end: var(--spacing-50);
+    margin-inline-end: var(--spacing-150);
   }
 }
 
 .qui-date-picker__prev-trigger .qui-button__icon,
 .qui-date-picker__next-trigger .qui-button__icon {
-  --icon-height: var(--sizing-70);
-  --icon-width: var(--sizing-70);
+  --icon-height: var(--sizing-400);
+  --icon-width: var(--sizing-400);
 }
 
 /* footer actions */
@@ -263,9 +263,9 @@
   border-block-start: 1px solid var(--color-border-neutral-01);
   box-sizing: border-box;
   display: flex;
-  gap: var(--spacing-70);
+  gap: var(--spacing-200);
   justify-content: flex-end;
-  padding: var(--spacing-80) var(--spacing-100);
+  padding: var(--spacing-250) var(--spacing-400);
   width: 100%;
 }
 
@@ -278,10 +278,10 @@
 .qui-date-picker__presets {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-20);
-  max-block-size: calc(7 * var(--sizing-120));
+  gap: var(--spacing-50);
+  max-block-size: calc(7 * var(--sizing-800));
   overflow-y: auto;
-  padding: 0 var(--spacing-100) var(--spacing-100);
+  padding: 0 var(--spacing-400) var(--spacing-400);
 }
 
 /* triggers look like menu items */
@@ -293,10 +293,10 @@
   cursor: pointer;
   display: block;
   font: var(--font-static-body-xs-default);
-  min-block-size: var(--sizing-120);
+  min-block-size: var(--sizing-800);
   min-width: 0;
   overflow: hidden;
-  padding-inline: var(--spacing-90);
+  padding-inline: var(--spacing-300);
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -311,8 +311,8 @@
   }
 
   &:focus-visible {
-    outline: var(--sizing-20) solid var(--color-utility-focus-border);
-    outline-offset: calc(-1 * var(--sizing-20));
+    outline: var(--sizing-50) solid var(--color-utility-focus-border);
+    outline-offset: calc(-1 * var(--sizing-50));
   }
 }
 
@@ -321,16 +321,16 @@
 .qui-date-picker__table {
   border-collapse: collapse;
   font: var(--font-static-body-xs-default);
-  margin: 0 var(--spacing-100) var(--spacing-100);
+  margin: 0 var(--spacing-400) var(--spacing-400);
   user-select: none;
 }
 
 .qui-date-picker__table-header,
 .qui-date-picker__table-cell {
   box-sizing: border-box;
-  height: var(--sizing-120);
-  padding: var(--sizing-30);
-  width: var(--sizing-120);
+  height: var(--sizing-800);
+  padding: var(--sizing-100);
+  width: var(--sizing-800);
 }
 
 .qui-date-picker__table-cell {
@@ -349,15 +349,15 @@
 
 .qui-date-picker__table-cell-trigger {
   align-items: center;
-  border-radius: var(--border-radius-rounded);
+  border-radius: var(--border-radius-max);
   box-sizing: border-box;
   color: var(--color-text-neutral-primary);
   display: flex;
   font: var(--font-static-body-xs-bold);
-  height: var(--sizing-90);
+  height: var(--sizing-600);
   justify-content: center;
   text-box: cap alphabetic;
-  width: var(--sizing-90);
+  width: var(--sizing-600);
 
   /* stretch hitbox to the parent <td> */
   &::after {
@@ -385,8 +385,8 @@
   }
 
   &:focus-visible {
-    outline: var(--sizing-20) solid var(--color-utility-focus-border);
-    outline-offset: var(--spacing-10);
+    outline: var(--sizing-50) solid var(--color-utility-focus-border);
+    outline-offset: var(--spacing-25);
   }
 
   &[data-outside-range] {
@@ -446,10 +446,10 @@
 .qui-date-picker__table[data-view="month"],
 .qui-date-picker__table[data-view="year"] {
   display: grid;
-  gap: var(--spacing-90);
+  gap: var(--spacing-300);
   grid-template-columns: repeat(var(--columns, 4), 1fr);
   /* match the 7-column day grid width so the pane stays a fixed width */
-  width: calc(7 * var(--sizing-120));
+  width: calc(7 * var(--sizing-800));
 }
 
 /* allow the cells to be direct grid items */
@@ -470,8 +470,8 @@
   border: var(--border-width-sm) solid var(--color-interactive-border-neutral-idle);
   color: var(--color-interactive-text-neutral-idle);
   font: var(--font-static-body-xs-default);
-  height: var(--sizing-80);
-  padding-inline: var(--spacing-70);
+  height: var(--sizing-500);
+  padding-inline: var(--spacing-200);
   width: 100%;
 
   &[data-selected] {
@@ -494,7 +494,7 @@
     &::before {
       background: var(--color-background-brand-primary-subtle);
       content: "";
-      inset-block: var(--sizing-30);
+      inset-block: var(--sizing-100);
       inset-inline: 0;
       position: absolute;
       z-index: -1;
@@ -532,26 +532,26 @@
   /* multiline ranges need to extend to the card edges */
   &:first-child:has([data-in-range]):not( :has( :where([data-hover-range-start],
         [data-range-start]:not([data-hover-range-end]))))::before {
-    inset-inline-start: calc(-1 * var(--spacing-100));
+    inset-inline-start: calc(-1 * var(--spacing-400));
   }
 
   &:last-child:has([data-in-range]):not(:has(:where([data-range-end], [data-hover-range-end])))::before {
-    inset-inline-end: calc(-1 * var(--spacing-100));
+    inset-inline-end: calc(-1 * var(--spacing-400));
   }
 
   /* endpoint with no day-circle (hover/hidden outside month) draws its own rounded cap */
   &:has([data-hover-range-end]:not(:hover):not([data-selected]))::before,
   :where(.qui-date-picker__root[data-hide-outside-days]) &:has([data-outside-range][data-range-end]:not([data-range-start]))::before {
-    border-end-end-radius: var(--border-radius-rounded);
-    border-start-end-radius: var(--border-radius-rounded);
-    inset-inline-end: var(--sizing-30);
+    border-end-end-radius: var(--border-radius-max);
+    border-start-end-radius: var(--border-radius-max);
+    inset-inline-end: var(--sizing-100);
   }
 
   &:has([data-hover-range-start]:not(:hover):not([data-selected]))::before,
   :where(.qui-date-picker__root[data-hide-outside-days]) &:has([data-outside-range][data-range-start]:not([data-range-end]))::before {
-    border-end-start-radius: var(--border-radius-rounded);
-    border-start-start-radius: var(--border-radius-rounded);
-    inset-inline-start: var(--sizing-30);
+    border-end-start-radius: var(--border-radius-max);
+    border-start-start-radius: var(--border-radius-max);
+    inset-inline-start: var(--sizing-100);
   }
 }
 

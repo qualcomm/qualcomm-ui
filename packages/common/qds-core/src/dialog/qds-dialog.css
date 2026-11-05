@@ -25,13 +25,13 @@
   width: 100dvw;
   z-index: var(--z-index-dialog);
 
-  --indicator-icon-size: var(--sizing-90);
+  --indicator-icon-size: var(--sizing-600);
   .qui-dialog__indicator-icon {
     --icon-size: var(--indicator-icon-size);
   }
 
   &[data-size="md"] {
-    --indicator-icon-size: var(--sizing-120);
+    --indicator-icon-size: var(--sizing-800);
   }
 
   &[data-scroll-behavior="outside"] {
@@ -59,7 +59,7 @@
 .qui-dialog__content {
   background-color: var(--color-surface-overlay);
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-shadow: var(--shadow-high);
   box-sizing: border-box;
   color: var(--color-text-neutral-primary);
@@ -97,15 +97,15 @@
   display: flex;
   flex-direction: column;
   font: var(--font-static-body-xs-default);
-  gap: var(--spacing-90);
+  gap: var(--spacing-300);
   margin: 0;
-  padding: var(--spacing-110);
+  padding: var(--spacing-500);
   width: 100%;
 
   &[data-size="md"] {
     font: var(--font-static-body-sm-default);
-    gap: var(--spacing-100);
-    padding: var(--spacing-120);
+    gap: var(--spacing-400);
+    padding: var(--spacing-600);
   }
 }
 
@@ -123,9 +123,9 @@
   border-top: solid 1px var(--color-border-neutral-01);
   box-sizing: border-box;
   display: flex;
-  gap: var(--spacing-80);
+  gap: var(--spacing-250);
   justify-content: flex-end;
-  padding: var(--spacing-110);
+  padding: var(--spacing-500);
   width: 100%;
 }
 

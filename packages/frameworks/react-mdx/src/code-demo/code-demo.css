@@ -21,7 +21,7 @@
 
 .qui-docs-demo-container__root {
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   container-name: qui-docs-demo-container;
   container-type: inline-size;
@@ -76,7 +76,7 @@
   box-sizing: border-box;
   pre.shiki-code {
     border: solid 1px var(--color-border-neutral-01);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-100);
   }
 }
 
@@ -133,7 +133,7 @@
 
     &::-webkit-scrollbar-thumb {
       background: var(--color-background-neutral-08);
-      border-radius: var(--border-radius-xl);
+      border-radius: var(--border-radius-200);
     }
   }
 }
@@ -185,7 +185,7 @@ pre.shiki {
 
 pre.shiki.mdx {
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
 }
 
 .qui-demo-runner__wrapper {
@@ -283,15 +283,15 @@ pre.shiki.mdx {
   align-items: center;
   background: var(--color-surface-primary);
   border: 0;
-  border-bottom-left-radius: var(--border-radius-md);
-  border-bottom-right-radius: var(--border-radius-md);
+  border-bottom-left-radius: var(--border-radius-100);
+  border-bottom-right-radius: var(--border-radius-100);
   color: var(--color-text-neutral-primary);
   display: flex;
   font: var(--font-static-body-xs-bold);
   gap: 4px;
-  height: var(--sizing-120);
+  height: var(--sizing-800);
   justify-content: center;
-  min-height: var(--sizing-120);
+  min-height: var(--sizing-800);
   outline: none;
   width: 100%;
 }

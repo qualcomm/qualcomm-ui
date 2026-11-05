@@ -7,7 +7,7 @@
     ),
     var(--color-surface-raised);
   border: 0;
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -72,13 +72,13 @@
 
   &:has(.qui-card__avatar) {
     &[data-size="sm"] {
-      padding: var(--spacing-120) 0;
+      padding: var(--spacing-600) 0;
     }
     &[data-size="md"] {
-      padding: var(--spacing-180) 0;
+      padding: var(--spacing-1200) 0;
     }
     &[data-size="lg"] {
-      padding: var(--spacing-180) 0;
+      padding: var(--spacing-1200) 0;
     }
   }
 }
@@ -88,7 +88,7 @@
   display: flex;
   flex-direction: column;
   text-align: start;
-  --card-content-gap: var(--spacing-100);
+  --card-content-gap: var(--spacing-400);
 
   &[data-alignment="center"] {
     align-items: center;
@@ -96,14 +96,14 @@
   }
 
   &[data-size="sm"] {
-    padding: var(--spacing-100);
+    padding: var(--spacing-400);
   }
   &[data-size="md"] {
-    padding: var(--spacing-120);
+    padding: var(--spacing-600);
   }
   &[data-size="lg"] {
-    --card-content-gap: var(--spacing-110);
-    padding: var(--spacing-140);
+    --card-content-gap: var(--spacing-500);
+    padding: var(--spacing-800);
   }
 }
 
@@ -117,7 +117,7 @@
   color: var(--color-text-neutral-primary);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-20);
+  gap: var(--spacing-50);
   margin-bottom: var(--card-content-gap);
   position: relative;
 
@@ -134,7 +134,7 @@
   }
 
   &:has(.qui-card__menu-trigger) {
-    padding-right: var(--spacing-120);
+    padding-right: var(--spacing-600);
   }
 
   &[data-alignment="center"] {
@@ -198,25 +198,25 @@
   }
 
   &:not(:last-child) {
-    margin-bottom: var(--spacing-40);
+    margin-bottom: var(--spacing-100);
   }
 }
 
 /* spacing between subheading and paragraph */
 .qui-card__subheading-text:has(+ .qui-card__paragraph-text) {
-  margin-bottom: var(--spacing-40);
+  margin-bottom: var(--spacing-100);
 }
 
 /* paragraph text that is followed by a subheading */
 .qui-card__paragraph-text + .qui-card__subheading-text {
-  margin-bottom: var(--spacing-100);
+  margin-bottom: var(--spacing-400);
 }
 
 .qui-card__footer {
   align-items: center;
   border-top: var(--border-width-sm) solid var(--color-border-neutral-01);
   display: flex;
-  gap: var(--spacing-70);
+  gap: var(--spacing-200);
   justify-content: flex-end;
 
   &[data-alignment="center"] {
@@ -224,12 +224,12 @@
   }
 
   &[data-size="sm"] {
-    padding: var(--spacing-80) var(--spacing-90);
+    padding: var(--spacing-250) var(--spacing-300);
   }
   &[data-size="md"] {
-    padding: var(--spacing-80) var(--spacing-100);
+    padding: var(--spacing-250) var(--spacing-400);
   }
   &[data-size="lg"] {
-    padding: var(--spacing-90) var(--spacing-110);
+    padding: var(--spacing-300) var(--spacing-500);
   }
 }

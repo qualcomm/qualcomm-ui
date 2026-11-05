@@ -11,19 +11,19 @@
   &[data-size="sm"] {
     --accordion-trigger-padding-block: 7px;
     --accordion-trigger-font: var(--font-static-body-xs-bold);
-    --accordion-trigger-gap: var(--spacing-80);
+    --accordion-trigger-gap: var(--spacing-250);
     --accordion-trigger-secondary-font: var(--font-static-body-xs-default);
   }
   &[data-size="md"] {
     --accordion-trigger-padding-block: 10px;
     --accordion-trigger-font: var(--font-static-body-sm-bold);
-    --accordion-trigger-gap: var(--spacing-90);
+    --accordion-trigger-gap: var(--spacing-300);
     --accordion-trigger-secondary-font: var(--font-static-body-xs-default);
   }
   &[data-size="lg"] {
     --accordion-trigger-padding-block: 12px;
     --accordion-trigger-font: var(--font-static-body-md-bold);
-    --accordion-trigger-gap: var(--spacing-100);
+    --accordion-trigger-gap: var(--spacing-400);
     --accordion-trigger-secondary-font: var(--font-static-body-sm-default);
   }
 }

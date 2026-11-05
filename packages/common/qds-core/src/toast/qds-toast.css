@@ -5,7 +5,7 @@
   height: var(--height);
   min-width: 284px;
   opacity: var(--opacity);
-  padding: var(--spacing-90) var(--spacing-100);
+  padding: var(--spacing-300) var(--spacing-400);
   position: relative;
   scale: var(--scale);
   transition:
@@ -20,7 +20,7 @@
   z-index: var(--z-index);
 
   .qui-notification__close-button[data-size] {
-    --button-size: var(--sizing-90);
+    --button-size: var(--sizing-600);
   }
 }
 
@@ -29,9 +29,9 @@
   --icon-color: var(--color-icon-support-info);
   --border-left-color: var(--color-background-support-info);
   background: var(--color-surface-raised);
-  border-bottom-left-radius: var(--border-radius-md);
-  border-left: solid var(--sizing-40) var(--border-left-color);
-  border-top-left-radius: var(--border-radius-md);
+  border-bottom-left-radius: var(--border-radius-100);
+  border-left: solid var(--sizing-150) var(--border-left-color);
+  border-top-left-radius: var(--border-radius-100);
   outline: none;
 
   &[data-emphasis="success"] {
@@ -60,19 +60,19 @@
 
   &[data-emphasis="loading"] {
     .qui-toast__icon {
-      height: var(--sizing-70);
+      height: var(--sizing-400);
       padding-top: 1px;
     }
   }
 
   &:has([data-toast-part="close-trigger"]) {
-    padding-right: calc(var(--spacing-70) * 2 + var(--sizing-80));
+    padding-right: calc(var(--spacing-200) * 2 + var(--sizing-500));
   }
 
   display: grid;
   --icon-col: 0;
   &:has(.qui-toast__icon) {
-    column-gap: var(--spacing-50);
+    column-gap: var(--spacing-150);
     grid-template-columns: max-content 1fr;
     --content-col: 2;
   }
@@ -93,7 +93,7 @@
 }
 
 .qui-toast__description:has(+ .qui-toast__action) {
-  margin-bottom: var(--spacing-110);
+  margin-bottom: var(--spacing-500);
 }
 
 .qui-toast__icon {
@@ -109,9 +109,9 @@
 .qui-toast__close-button {
   /* override the default size */
   &[data-size] {
-    --button-size: var(--sizing-90);
+    --button-size: var(--sizing-600);
   }
   position: absolute;
-  right: var(--spacing-70);
-  top: var(--spacing-80);
+  right: var(--spacing-200);
+  top: var(--spacing-250);
 }

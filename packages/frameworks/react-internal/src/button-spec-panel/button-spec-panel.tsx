@@ -31,13 +31,13 @@ const RADIUS = 4
 const BORDER = 1
 
 const specs: {label: string; token: string; value: string}[] = [
-  {label: "Height", token: "--sizing-140", value: `${HEIGHT}px`},
-  {label: "Padding inline", token: "--spacing-100", value: `${PADDING}px`},
-  {label: "Gap", token: "--spacing-70", value: `${GAP}px`},
-  {label: "Icon", token: "--sizing-70", value: `${ICON}px`},
+  {label: "Height", token: "--sizing-1000", value: `${HEIGHT}px`},
+  {label: "Padding inline", token: "--spacing-400", value: `${PADDING}px`},
+  {label: "Gap", token: "--spacing-200", value: `${GAP}px`},
+  {label: "Icon", token: "--sizing-400", value: `${ICON}px`},
   {
     label: "Border radius",
-    token: "--border-radius-md",
+    token: "--border-radius-100",
     value: `${RADIUS}px`,
   },
   {

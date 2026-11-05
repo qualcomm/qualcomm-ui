@@ -13,52 +13,76 @@ export interface TokenWithComment {
 
 export const tokens: TokenWithComment[] = [
   {
-    "comment": "Generously rounded corner. Value: 6px. A clearly curved corner — noticeably softer than md. Choose by how rounded the corner should read; between two steps, take the nearer. Never type the literal 6 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-lg",
-    "type": "number",
-    "value": "6px"
-  },
-  {
-    "comment": "Moderately rounded corner. Value: 4px. A clearly softened turn — the everyday rounded corner. Choose by how rounded the corner should read. Caution: shares the value 4 with border/width/xl — pick by what the value is (a corner shape), never by the number. Never type the literal 4 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-md",
-    "type": "number",
-    "value": "4px"
-  },
-  {
     "comment": "Square sentinel — a deliberate hard right angle. Value: 0. A bound zero, NOT the absence of a token: this step says the corner is intentionally square, keeping the decision traceable and re-pointable. Bind this token for a square corner; never leave it untokenised or type 0 — a typed zero bypasses Core and loses the intent. Value coincides with a zero stroke width — pick by what the value is (a corner shape), never by the number. This group owns corner shape only — edge thickness → border/width/*, edge colour → color/border/*. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-none",
+    "name": "border-radius-0",
     "type": "number",
     "value": "0px"
   },
   {
-    "comment": "Pill sentinel — always fully rounded into a capsule, whatever the element&#39;s size. Value: 360 (clamps to a full capsule at any size). Distinct from the largest graduated step (xxl): a graduated step gives a fixed corner that becomes proportionally less round as the element grows; rounded always clamps to a full capsule. Bind this token for a capsule; never type 360 — a typed number bypasses Core and won&#39;t behave as the capsule does when the element resizes. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-rounded",
+    "comment": "Moderately rounded corner. Value: 4px. A clearly softened turn — the everyday rounded corner. Choose by how rounded the corner should read. Caution: shares the value 4 with border/width/xl — pick by what the value is (a corner shape), never by the number. Never type the literal 4 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-100",
     "type": "number",
-    "value": "360px"
+    "value": "4px"
   },
   {
-    "comment": "Slightly softened corner. Value: 3px. A small rounding — perceptibly soft but still close to square. Choose by how rounded the corner should read; between two steps, take the nearer. Never type the literal 3 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-sm",
+    "comment": "Generously rounded corner. Value: 6px. A clearly curved corner — noticeably softer than md. Choose by how rounded the corner should read; between two steps, take the nearer. Never type the literal 6 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-150",
     "type": "number",
-    "value": "3px"
+    "value": "6px"
   },
   {
     "comment": "Prominently rounded corner. Value: 8px. A strong rounding, clearly curved. Choose by how rounded the corner should read; between two steps, take the nearer. Never type the literal 8 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-xl",
+    "name": "border-radius-200",
     "type": "number",
     "value": "8px"
   },
   {
+    "comment": "Very prominently rounded corner. Value: 12px. The largest graduated step — strongly curved, just below the fully-rounded capsule endpoint. If the intent is a corner that is always a full capsule regardless of element size, use border/radius/rounded instead — xxl gives a fixed radius that reads only partly round on a tall element. Never type the literal 12 — bind this variable. This group owns corner shape only. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-300",
+    "type": "number",
+    "value": "12px"
+  },
+  {
+    "comment": "Very prominently rounded corner. Value: 12px. The largest graduated step — strongly curved, just below the fully-rounded capsule endpoint. If the intent is a corner that is always a full capsule regardless of element size, use border/radius/rounded instead — xxl gives a fixed radius that reads only partly round on a tall element. Never type the literal 12 — bind this variable. This group owns corner shape only. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-350",
+    "type": "number",
+    "value": "14px"
+  },
+  {
+    "comment": "Very prominently rounded corner. Value: 12px. The largest graduated step — strongly curved, just below the fully-rounded capsule endpoint. If the intent is a corner that is always a full capsule regardless of element size, use border/radius/rounded instead — xxl gives a fixed radius that reads only partly round on a tall element. Never type the literal 12 — bind this variable. This group owns corner shape only. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-400",
+    "type": "number",
+    "value": "16px"
+  },
+  {
     "comment": "Barely softened corner. Value: 2px. The gentlest rounding on the graduated ladder — only just taking the sharpness off a square corner. Choose by how rounded the corner should read: sharper sits lower, softer sits higher. Between two steps, take the nearer. Never type the literal 2 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-xs",
+    "name": "border-radius-50",
     "type": "number",
     "value": "2px"
   },
   {
     "comment": "Very prominently rounded corner. Value: 12px. The largest graduated step — strongly curved, just below the fully-rounded capsule endpoint. If the intent is a corner that is always a full capsule regardless of element size, use border/radius/rounded instead — xxl gives a fixed radius that reads only partly round on a tall element. Never type the literal 12 — bind this variable. This group owns corner shape only. Scoped to CORNER_RADIUS.",
-    "name": "border-radius-xxl",
+    "name": "border-radius-500",
     "type": "number",
-    "value": "12px"
+    "value": "20px"
+  },
+  {
+    "comment": "Very prominently rounded corner. Value: 12px. The largest graduated step — strongly curved, just below the fully-rounded capsule endpoint. If the intent is a corner that is always a full capsule regardless of element size, use border/radius/rounded instead — xxl gives a fixed radius that reads only partly round on a tall element. Never type the literal 12 — bind this variable. This group owns corner shape only. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-600",
+    "type": "number",
+    "value": "24px"
+  },
+  {
+    "comment": "Slightly softened corner. Value: 3px. A small rounding — perceptibly soft but still close to square. Choose by how rounded the corner should read; between two steps, take the nearer. Never type the literal 3 — bind this variable. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-75",
+    "type": "number",
+    "value": "3px"
+  },
+  {
+    "comment": "Pill sentinel — always fully rounded into a capsule, whatever the element&#39;s size. Value: 360 (clamps to a full capsule at any size). Distinct from the largest graduated step (xxl): a graduated step gives a fixed corner that becomes proportionally less round as the element grows; rounded always clamps to a full capsule. Bind this token for a capsule; never type 360 — a typed number bypasses Core and won&#39;t behave as the capsule does when the element resizes. This group owns corner shape only; thickness → border/width/*, colour → color/border/*. Scoped to CORNER_RADIUS.",
+    "name": "border-radius-max",
+    "type": "number",
+    "value": "360px"
   },
   {
     "comment": "Substantial stroke. Value: 3px. A clearly assertive edge — heavier and more prominent than md. Choose by how prominent the edge should be; between two steps, take the nearer. Never type the literal 3 — bind this variable. No published component currently binds this step — part of the scale, not spare stock. This group owns stroke thickness only; corner shape → border/radius/*, colour → color/border/*. Scoped to STROKE_FLOAT.",
@@ -1986,130 +2010,140 @@ export const tokens: TokenWithComment[] = [
     "value": "0 0 0 0 #00000000"
   },
   {
-    "comment": "Sizing. Value: 1px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 1 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-10",
-    "type": "number",
-    "value": "1px"
-  },
-  {
-    "comment": "Sizing. Value: 28px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 28 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "comment": "Sizing. Value: 4px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 4 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
     "name": "sizing-100",
     "type": "number",
-    "value": "28px"
-  },
-  {
-    "comment": "Sizing. Value: 30px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 30 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-110",
-    "type": "number",
-    "value": "30px"
-  },
-  {
-    "comment": "Sizing. Value: 32px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 32 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-120",
-    "type": "number",
-    "value": "32px"
-  },
-  {
-    "comment": "Sizing. Value: 34px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 34 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-125",
-    "type": "number",
-    "value": "34px"
-  },
-  {
-    "comment": "Sizing. Value: 38px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 38 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-130",
-    "type": "number",
-    "value": "38px"
+    "value": "4px"
   },
   {
     "comment": "Sizing. Value: 40px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 40 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-140",
+    "name": "sizing-1000",
     "type": "number",
     "value": "40px"
   },
   {
+    "name": "sizing-1100",
+    "type": "number",
+    "value": "44px"
+  },
+  {
     "comment": "Sizing. Value: 46px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 46 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-150",
+    "name": "sizing-1150",
     "type": "number",
     "value": "46px"
   },
   {
     "comment": "Sizing. Value: 48px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 48 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-160",
+    "name": "sizing-1200",
     "type": "number",
     "value": "48px"
   },
   {
     "comment": "Sizing. Value: 56px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 56 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-170",
+    "name": "sizing-1400",
     "type": "number",
     "value": "56px"
   },
   {
-    "comment": "Sizing. Value: 80px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 80 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-180",
-    "type": "number",
-    "value": "80px"
-  },
-  {
-    "comment": "Sizing. Value: 120px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 120 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-190",
-    "type": "number",
-    "value": "120px"
-  },
-  {
-    "comment": "Sizing. Value: 2px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 2 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-20",
-    "type": "number",
-    "value": "2px"
-  },
-  {
-    "comment": "Sizing. Value: 160px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 160 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-200",
-    "type": "number",
-    "value": "160px"
-  },
-  {
-    "comment": "Sizing. Value: 4px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 4 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-30",
-    "type": "number",
-    "value": "4px"
-  },
-  {
     "comment": "Sizing. Value: 6px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 6 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-40",
+    "name": "sizing-150",
     "type": "number",
     "value": "6px"
   },
   {
     "comment": "Sizing. Value: 8px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 8 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-50",
+    "name": "sizing-200",
     "type": "number",
     "value": "8px"
   },
   {
+    "comment": "Sizing. Value: 80px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 80 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-2000",
+    "type": "number",
+    "value": "80px"
+  },
+  {
+    "comment": "Sizing. Value: 1px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 1 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-25",
+    "type": "number",
+    "value": "1px"
+  },
+  {
     "comment": "Sizing. Value: 12px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 12 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-60",
+    "name": "sizing-300",
     "type": "number",
     "value": "12px"
   },
   {
+    "comment": "Sizing. Value: 120px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 120 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-3000",
+    "type": "number",
+    "value": "120px"
+  },
+  {
     "comment": "Sizing. Value: 16px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 16 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-70",
+    "name": "sizing-400",
     "type": "number",
     "value": "16px"
   },
   {
+    "comment": "Sizing. Value: 160px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 160 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-4000",
+    "type": "number",
+    "value": "160px"
+  },
+  {
+    "comment": "Sizing. Value: 2px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 2 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-50",
+    "type": "number",
+    "value": "2px"
+  },
+  {
     "comment": "Sizing. Value: 20px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 20 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-80",
+    "name": "sizing-500",
     "type": "number",
     "value": "20px"
   },
   {
     "comment": "Sizing. Value: 24px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 24 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
-    "name": "sizing-90",
+    "name": "sizing-600",
     "type": "number",
     "value": "24px"
+  },
+  {
+    "comment": "Sizing. Value: 28px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 28 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-700",
+    "type": "number",
+    "value": "28px"
+  },
+  {
+    "comment": "Sizing. Value: 30px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 30 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-750",
+    "type": "number",
+    "value": "30px"
+  },
+  {
+    "comment": "Sizing. Value: 32px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 32 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-800",
+    "type": "number",
+    "value": "32px"
+  },
+  {
+    "comment": "Sizing. Value: 34px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 34 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-850",
+    "type": "number",
+    "value": "34px"
+  },
+  {
+    "name": "sizing-900",
+    "type": "number",
+    "value": "36px"
+  },
+  {
+    "comment": "Sizing. Value: 38px. Sets the fixed extent of an element — a set width or height (a bar&#39;s height, a rail&#39;s width, a control&#39;s dimension). Component-derived scale: this step exists because a component needed this extent, but it serves any UI work requiring that dimension. Choose by the extent the element requires: name the dimension the thing must occupy and pick this step; between two steps, take the nearer.\n\nNever type the literal 38 — bind this variable. Not for gaps or padding — that is the spacing scale (GAP-scoped; same raw Core pool, different scale, different job). Scale is a flat run from smaller to larger extent — no bands, no per-step meaning; an unbound step is part of the scale, not spare stock. Off-scale values are never the answer — if a recurring extent truly goes unmet, the scale is extended at the system level. Scoped to WIDTH_HEIGHT.",
+    "name": "sizing-950",
+    "type": "number",
+    "value": "38px"
   },
   {
     "comment": "Spacing — Fine region. Value: 0px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 0 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
@@ -2118,202 +2152,202 @@ export const tokens: TokenWithComment[] = [
     "value": "0px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 1px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 1 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-10",
-    "type": "number",
-    "value": "1px"
-  },
-  {
-    "comment": "Spacing — Mid region. Value: 16px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 16 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "comment": "Spacing — Fine region. Value: 4px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 4 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
     "name": "spacing-100",
     "type": "number",
-    "value": "16px"
-  },
-  {
-    "comment": "Spacing — Mid region. Value: 20px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 20 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-110",
-    "type": "number",
-    "value": "20px"
-  },
-  {
-    "comment": "Spacing — Mid region. Value: 24px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 24 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-120",
-    "type": "number",
-    "value": "24px"
-  },
-  {
-    "comment": "Spacing — Mid region. Value: 28px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 28 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-130",
-    "type": "number",
-    "value": "28px"
-  },
-  {
-    "comment": "Spacing — Mid region. Value: 32px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 32 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-140",
-    "type": "number",
-    "value": "32px"
-  },
-  {
-    "comment": "Spacing — Mid region. Value: 36px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 36 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-150",
-    "type": "number",
-    "value": "36px"
+    "value": "4px"
   },
   {
     "comment": "Spacing — Mid region. Value: 40px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 40 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-160",
+    "name": "spacing-1000",
     "type": "number",
     "value": "40px"
   },
   {
     "comment": "Spacing — Mid region. Value: 44px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 44 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-170",
+    "name": "spacing-1100",
     "type": "number",
     "value": "44px"
   },
   {
     "comment": "Spacing — Mid region. Value: 48px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 48 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-180",
+    "name": "spacing-1200",
     "type": "number",
     "value": "48px"
   },
   {
     "comment": "Spacing — Mid region. Value: 52px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 52 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-190",
+    "name": "spacing-1300",
     "type": "number",
     "value": "52px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 2px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 2 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-20",
-    "type": "number",
-    "value": "2px"
-  },
-  {
     "comment": "Spacing — Mid region. Value: 56px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 56 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-200",
+    "name": "spacing-1400",
     "type": "number",
     "value": "56px"
   },
   {
+    "comment": "Spacing — Fine region. Value: 6px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 6 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-150",
+    "type": "number",
+    "value": "6px"
+  },
+  {
     "comment": "Spacing — Mid region. Value: 60px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 60 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-210",
+    "name": "spacing-1500",
     "type": "number",
     "value": "60px"
   },
   {
     "comment": "Spacing — Mid region. Value: 64px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 64 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-220",
+    "name": "spacing-1600",
     "type": "number",
     "value": "64px"
   },
   {
     "comment": "Spacing — Mid region. Value: 68px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 68 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-230",
+    "name": "spacing-1700",
     "type": "number",
     "value": "68px"
   },
   {
+    "comment": "Spacing — Fine region. Value: 7px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 7 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-175",
+    "type": "number",
+    "value": "7px"
+  },
+  {
     "comment": "Spacing — Mid region. Value: 72px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 72 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-240",
+    "name": "spacing-1800",
     "type": "number",
     "value": "72px"
   },
   {
     "comment": "Spacing — Mid region. Value: 76px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 76 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-250",
+    "name": "spacing-1900",
     "type": "number",
     "value": "76px"
   },
   {
+    "comment": "Spacing — Fine region. Value: 8px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 8 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-200",
+    "type": "number",
+    "value": "8px"
+  },
+  {
     "comment": "Spacing — Mid region. Value: 80px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 80 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-260",
+    "name": "spacing-2000",
     "type": "number",
     "value": "80px"
   },
   {
     "comment": "Spacing — Mid region. Value: 84px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 84 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-270",
+    "name": "spacing-2100",
     "type": "number",
     "value": "84px"
   },
   {
     "comment": "Spacing — Mid region. Value: 88px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 88 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-280",
+    "name": "spacing-2200",
     "type": "number",
     "value": "88px"
   },
   {
     "comment": "Spacing — Mid region. Value: 92px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 92 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-290",
+    "name": "spacing-2300",
     "type": "number",
     "value": "92px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 3px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 3 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-30",
-    "type": "number",
-    "value": "3px"
-  },
-  {
     "comment": "Spacing — Mid region. Value: 96px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 96 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-300",
+    "name": "spacing-2400",
     "type": "number",
     "value": "96px"
   },
   {
+    "comment": "Spacing — Fine region. Value: 1px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 1 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-25",
+    "type": "number",
+    "value": "1px"
+  },
+  {
+    "comment": "Spacing — Fine region. Value: 10px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 10 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-250",
+    "type": "number",
+    "value": "10px"
+  },
+  {
     "comment": "Spacing — Mid region. Value: 100px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 100 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-310",
+    "name": "spacing-2500",
     "type": "number",
     "value": "100px"
   },
   {
+    "comment": "Spacing — Fine region. Value: 12px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 12 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-300",
+    "type": "number",
+    "value": "12px"
+  },
+  {
     "comment": "Spacing — Coarse region. Value: 120px. Coarse region — takes larger jumps; section- and layout-level spacing where fine differences stop mattering. Steps here are lightly bound by components — they are part of the scale, drawn on where the relationship calls for a larger gap.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 120 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-320",
+    "name": "spacing-3000",
     "type": "number",
     "value": "120px"
   },
   {
     "comment": "Spacing — Coarse region. Value: 132px. Coarse region — takes larger jumps; section- and layout-level spacing where fine differences stop mattering. Steps here are lightly bound by components — they are part of the scale, drawn on where the relationship calls for a larger gap.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 132 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-330",
+    "name": "spacing-3300",
     "type": "number",
     "value": "132px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 4px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 4 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-40",
+    "comment": "Spacing — Mid region. Value: 16px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 16 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-400",
     "type": "number",
-    "value": "4px"
+    "value": "16px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 6px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 6 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "comment": "Spacing — Fine region. Value: 2px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 2 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
     "name": "spacing-50",
     "type": "number",
-    "value": "6px"
+    "value": "2px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 7px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 7 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-60",
+    "comment": "Spacing — Mid region. Value: 20px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 20 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-500",
     "type": "number",
-    "value": "7px"
+    "value": "20px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 8px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 8 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-70",
+    "comment": "Spacing — Mid region. Value: 24px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 24 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-600",
     "type": "number",
-    "value": "8px"
+    "value": "24px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 10px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 10 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-80",
+    "comment": "Spacing — Mid region. Value: 28px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 28 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-700",
     "type": "number",
-    "value": "10px"
+    "value": "28px"
   },
   {
-    "comment": "Spacing — Fine region. Value: 12px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 12 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
-    "name": "spacing-90",
+    "comment": "Spacing — Fine region. Value: 3px. Fine region — advances in very small sub-4px increments; use where small differences are perceptible (component-internal detail, icon-to-label gaps, tight insets).\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 3 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-75",
     "type": "number",
-    "value": "12px"
+    "value": "3px"
+  },
+  {
+    "comment": "Spacing — Mid region. Value: 32px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 32 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-800",
+    "type": "number",
+    "value": "32px"
+  },
+  {
+    "comment": "Spacing — Mid region. Value: 36px. Mid region — marches in exact +4px increments; everyday component-internal and tighter between-element spacing.\n\nChoose by the relationship the space expresses: things that belong together take a tighter step; things that stand apart take a larger step. Move along the scale to set density — denser sits lower, more open sits higher. Between two steps, take the nearer. Never type the literal 36 — bind this variable. Not for fixed extents (height/width) — that is the sizing scale.\nApplied as: item-spacing (gap between sibling elements in an auto-layout frame) OR padding (per-side inset within an element — each side chosen independently). Between-element gaps: step is governed by the composition model, not chosen here. Within-element padding: chosen here by the relationship rule. Scoped to GAP.",
+    "name": "spacing-900",
+    "type": "number",
+    "value": "36px"
   },
   {
     "name": "type-font-family-primary",

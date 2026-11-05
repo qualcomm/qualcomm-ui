@@ -7,8 +7,8 @@
   display: flex;
   flex-direction: column;
   font: var(--font-static-body-xs-default);
-  gap: var(--spacing-70);
-  padding: var(--spacing-110);
+  gap: var(--spacing-200);
+  padding: var(--spacing-500);
   position: relative;
   transform-origin: var(--transform-origin);
   z-index: calc(var(--z-index-popover) + var(--layer-index));

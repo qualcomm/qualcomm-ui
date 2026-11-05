@@ -1,5 +1,5 @@
 .qui-notification__root {
-  padding: var(--spacing-90) var(--spacing-100);
+  padding: var(--spacing-300) var(--spacing-400);
   position: relative;
   width: 100%;
 }
@@ -13,11 +13,11 @@
 
   background: var(--background-color);
   border-color: var(--border-color);
-  border-left: solid var(--sizing-40) var(--border-left-color);
-  border-radius: var(--border-radius-md);
+  border-left: solid var(--sizing-150) var(--border-left-color);
+  border-radius: var(--border-radius-100);
   border-style: solid;
   border-width: var(--border-width-sm) var(--border-width-sm)
-    var(--border-width-sm) var(--sizing-40);
+    var(--border-width-sm) var(--sizing-150);
   box-sizing: border-box;
 
   &[data-emphasis="success"] {
@@ -53,25 +53,25 @@
   }
 
   &:has(.qui-notification__close-button) {
-    padding-right: calc(var(--spacing-70) * 2 + var(--sizing-70) + var(--spacing-100));
+    padding-right: calc(var(--spacing-200) * 2 + var(--sizing-400) + var(--spacing-400));
   }
 
   &[data-orientation="horizontal"] {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-70);
+    gap: var(--spacing-200);
   }
 
   &[data-orientation="vertical"] {
     display: grid;
     --icon-col: 0;
     &:has(.qui-notification__icon) {
-      grid-template-columns: calc(var(--sizing-80) + var(--spacing-70)) 1fr;
+      grid-template-columns: calc(var(--sizing-500) + var(--spacing-200)) 1fr;
       --content-col: 2;
     }
     .qui-notification__close-button {
-      top: var(--spacing-90);
+      top: var(--spacing-300);
     }
   }
 }
@@ -106,5 +106,5 @@
 
 .qui-notification__close-button {
   position: absolute;
-  right: var(--spacing-70);
+  right: var(--spacing-200);
 }
