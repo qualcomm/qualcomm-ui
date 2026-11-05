@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
-import {getPreviewOptions, keyPathToKey} from "./node-conversion"
-import {getProp, isObj, typeOf} from "./shared"
+import {getPreviewOptions, keyPathToKey} from "./node-conversion.js"
+import {getProp, isObj, typeOf} from "./shared.js"
 import type {
   JsonDataTypeOptions,
   JsonNode,
@@ -14,8 +14,7 @@ import type {
   JsonNodeHastElement,
   JsonNodePreviewOptions,
   JsonNodeText,
-  JsonNodeType,
-} from "./types"
+} from "./types.js"
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1768,7 +1767,7 @@ export const PrimitiveType: JsonDataTypeOptions = dataType<any>({
   node({keyPath, value}) {
     return {
       keyPath,
-      type: typeof value as JsonNodeType,
+      type: typeof value,
       value,
     }
   },
@@ -1776,7 +1775,7 @@ export const PrimitiveType: JsonDataTypeOptions = dataType<any>({
     return jsx("span", {}, [txt(String(node.value))])
   },
   type(value) {
-    return typeof value as JsonNodeType
+    return typeof value
   },
 })
 

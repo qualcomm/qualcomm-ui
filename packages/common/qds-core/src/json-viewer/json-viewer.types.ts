@@ -7,7 +7,7 @@ import type {
   JsonNodeType,
 } from "@qualcomm-ui/utils/json-tree"
 
-import type {jsonViewerClasses} from "./json-viewer.classes"
+import type {jsonViewerClasses} from "./json-viewer.classes.js"
 
 type JsonViewerClasses = typeof jsonViewerClasses
 

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTreeContext} from "@qualcomm-ui/angular-core/tree"
@@ -26,9 +26,9 @@ export class JsonViewerTreeComponent {
   /**
    * Icon used for the branch expand/collapse trigger.
    *
-   * @default ChevronRight
+   * @default LucideChevronRight
    */
-  readonly arrow = input<LucideIconOrString>(ChevronRight)
+  readonly arrow = input<LucideIconOrString>(LucideChevronRight)
 
   /**
    * Whether to render vertical indent guidelines for nested levels.

@@ -1,10 +1,10 @@
-import {type JsonViewerProps, JsonViewerSimple} from "./json-viewer"
-import {JsonViewerRoot, type JsonViewerRootProps} from "./json-viewer-root"
 import {
   JsonViewerRootProvider,
   type JsonViewerRootProviderProps,
-} from "./json-viewer-root-provider"
-import {JsonViewerTree, type JsonViewerTreeProps} from "./json-viewer-tree"
+} from "./json-viewer-root-provider.js"
+import {JsonViewerRoot, type JsonViewerRootProps} from "./json-viewer-root.js"
+import {JsonViewerTree, type JsonViewerTreeProps} from "./json-viewer-tree.js"
+import {type JsonViewerProps, JsonViewerSimple} from "./json-viewer.js"
 
 export type {
   JsonViewerRootProps,
@@ -13,11 +13,14 @@ export type {
   JsonViewerTreeProps,
 }
 
-export type {JsonViewerOptions} from "./json-viewer-context"
-export type {JsonViewerNodeBaseProps} from "./json-viewer-node"
-export type {UseJsonViewerProps, UseJsonViewerReturn} from "./use-json-viewer"
+export type {JsonViewerOptions} from "./json-viewer-context.js"
+export type {JsonViewerNodeBaseProps} from "./json-viewer-node.js"
+export type {
+  UseJsonViewerProps,
+  UseJsonViewerReturn,
+} from "./use-json-viewer.js"
 
-export {useJsonViewer} from "./use-json-viewer"
+export {useJsonViewer} from "./use-json-viewer.js"
 
 type JsonViewerComponent = typeof JsonViewerSimple & {
   /**

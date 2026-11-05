@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {jsonToTree} from "./json-to-tree"
-import {defu, hash} from "./shared"
-import type {JsonNode, JsonNodePreviewOptions} from "./types"
+import {jsonToTree} from "./json-to-tree.js"
+import {defu, hash} from "./shared.js"
+import type {JsonNode, JsonNodePreviewOptions} from "./types.js"
 
 export const ROOT_KEY = "$"
 export const PATH_SEP = "."

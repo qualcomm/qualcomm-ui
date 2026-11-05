@@ -17,7 +17,7 @@ import {splitProps} from "@qualcomm-ui/utils/object"
 import {
   JSON_VIEWER_OPTION_KEYS,
   type JsonViewerOptions,
-} from "./json-viewer-context"
+} from "./json-viewer-context.js"
 
 export interface UseJsonViewerProps
   extends Omit<TreeApiProps<JsonNode>, "collection">, JsonViewerOptions {

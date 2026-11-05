@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {dataTypes, PrimitiveType} from "./data-type"
-import {getPreviewOptions, ROOT_KEY} from "./node-conversion"
-import type {JsonNode, JsonNodePreviewOptions} from "./types"
+import {dataTypes, PrimitiveType} from "./data-type.js"
+import {getPreviewOptions, ROOT_KEY} from "./node-conversion.js"
+import type {JsonNode, JsonNodePreviewOptions} from "./types.js"
 
 export interface JsonToTreeOptions {
   depth?: number | undefined

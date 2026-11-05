@@ -10,9 +10,9 @@ import {
   output,
 } from "@angular/core"
 
-import {provideQdsTreeContext} from "@qualcomm-ui/angular/tree"
 import {provideRenderStrategyContext} from "@qualcomm-ui/angular-core/presence"
 import {provideTreeContext} from "@qualcomm-ui/angular-core/tree"
+import {provideQdsTreeContext} from "@qualcomm-ui/angular/tree"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"

@@ -3,9 +3,9 @@
 
 import {computed, Directive, inject, type OnInit} from "@angular/core"
 
-import {QdsTreeContextService} from "@qualcomm-ui/angular/tree"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {CoreTreeRootDirective} from "@qualcomm-ui/angular-core/tree"
+import {QdsTreeContextService} from "@qualcomm-ui/angular/tree"
 import {createQdsTreeApi} from "@qualcomm-ui/qds-core/tree"
 import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
 

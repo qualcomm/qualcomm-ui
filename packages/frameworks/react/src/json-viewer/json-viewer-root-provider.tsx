@@ -7,11 +7,13 @@ import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
 import {Tree, type TreeRootProps} from "@qualcomm-ui/react/tree"
 import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
 
-import {JsonViewerOptionsProvider} from "./json-viewer-context"
-import type {UseJsonViewerReturn} from "./use-json-viewer"
+import {JsonViewerOptionsProvider} from "./json-viewer-context.js"
+import type {UseJsonViewerReturn} from "./use-json-viewer.js"
 
-export interface JsonViewerRootProviderProps
-  extends Omit<TreeRootProps<JsonNode>, "collection"> {
+export interface JsonViewerRootProviderProps extends Omit<
+  TreeRootProps<JsonNode>,
+  "collection"
+> {
   children?: ReactNode
 
   /**

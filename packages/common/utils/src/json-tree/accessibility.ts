@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getNodeTypeDescription} from "./data-type"
-import {keyPathToKey} from "./node-conversion"
-import type {JsonNode, JsonNodePreviewOptions} from "./types"
+import {getNodeTypeDescription} from "./data-type.js"
+import {keyPathToKey} from "./node-conversion.js"
+import type {JsonNode, JsonNodePreviewOptions} from "./types.js"
 
 const propertyWord = (count: number) =>
   count === 1 ? "property" : "properties"

@@ -5,7 +5,10 @@ import type {ReactElement} from "react"
 
 import {useTreeContext} from "@qualcomm-ui/react-core/tree"
 
-import {JsonViewerNode, type JsonViewerNodeBaseProps} from "./json-viewer-node"
+import {
+  JsonViewerNode,
+  type JsonViewerNodeBaseProps,
+} from "./json-viewer-node.js"
 
 export interface JsonViewerTreeProps extends JsonViewerNodeBaseProps {}
 

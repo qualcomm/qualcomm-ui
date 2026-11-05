@@ -10,12 +10,11 @@ import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
 import {
   type JsonViewerOptions,
   JsonViewerOptionsProvider,
-} from "./json-viewer-context"
-import {useJsonViewer} from "./use-json-viewer"
+} from "./json-viewer-context.js"
+import {useJsonViewer} from "./use-json-viewer.js"
 
 export interface JsonViewerRootProps
-  extends Omit<TreeRootProps<JsonNode>, "collection">,
-    JsonViewerOptions {
+  extends Omit<TreeRootProps<JsonNode>, "collection">, JsonViewerOptions {
   /**
    * The data to display in the JSON viewer. Accepts any JavaScript value.
    */

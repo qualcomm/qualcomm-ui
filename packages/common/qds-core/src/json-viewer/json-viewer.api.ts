@@ -4,7 +4,7 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {jsonViewerClasses} from "./json-viewer.classes"
+import {jsonViewerClasses} from "./json-viewer.classes.js"
 import type {
   QdsJsonViewerApi,
   QdsJsonViewerColonBindings,
@@ -12,7 +12,7 @@ import type {
   QdsJsonViewerKeyBindings,
   QdsJsonViewerValueBindingProps,
   QdsJsonViewerValueBindings,
-} from "./json-viewer.types"
+} from "./json-viewer.types.js"
 
 export function createQdsJsonViewerApi(
   normalize: PropNormalizer,

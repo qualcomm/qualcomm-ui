@@ -17,7 +17,7 @@ export function hash(str: string): string {
 }
 
 export function hasProp(value: any, key: string): boolean {
-  return Object.prototype.hasOwnProperty.call(value, key)
+  return Object.hasOwn(value, key)
 }
 
 export function getProp(value: object, key: string): unknown {

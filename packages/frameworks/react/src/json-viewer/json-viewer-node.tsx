@@ -3,9 +3,9 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {Tree} from "@qualcomm-ui/react/tree"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import {useTreeContext} from "@qualcomm-ui/react-core/tree"
+import {Tree} from "@qualcomm-ui/react/tree"
 import {
   getAccessibleDescription,
   getPreviewOptions,
@@ -15,9 +15,9 @@ import {
   keyPathToKey,
 } from "@qualcomm-ui/utils/json-tree"
 
-import {useJsonViewerOptions} from "./json-viewer-context"
-import {JsonViewerKeyNode} from "./json-viewer-key-node"
-import {JsonViewerValueNode} from "./json-viewer-value-node"
+import {useJsonViewerOptions} from "./json-viewer-context.js"
+import {JsonViewerKeyNode} from "./json-viewer-key-node.js"
+import {JsonViewerValueNode} from "./json-viewer-value-node.js"
 
 export interface JsonViewerNodeBaseProps {
   /**

@@ -5,11 +5,12 @@ import type {ReactElement} from "react"
 
 import {ChevronRight} from "lucide-react"
 
-import {JsonViewerRoot, type JsonViewerRootProps} from "./json-viewer-root"
-import {JsonViewerTree, type JsonViewerTreeProps} from "./json-viewer-tree"
+import {JsonViewerRoot, type JsonViewerRootProps} from "./json-viewer-root.js"
+import {JsonViewerTree, type JsonViewerTreeProps} from "./json-viewer-tree.js"
 
 export interface JsonViewerProps
-  extends Omit<JsonViewerRootProps, "children">,
+  extends
+    Omit<JsonViewerRootProps, "children">,
     Omit<JsonViewerTreeProps, "renderValue"> {
   /**
    * Props forwarded to the inner `JsonViewer.Tree` element.
