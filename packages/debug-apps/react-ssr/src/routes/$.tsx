@@ -1,4 +1,8 @@
-import {isRouteErrorResponse, LoaderFunction, useRouteError} from "react-router"
+import {
+  isRouteErrorResponse,
+  type LoaderFunction,
+  useRouteError,
+} from "react-router"
 
 export const loader: LoaderFunction = () => {
   throw new Response("Not Found", {status: 404}) as any

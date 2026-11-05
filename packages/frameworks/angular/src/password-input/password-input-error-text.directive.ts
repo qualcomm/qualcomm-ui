@@ -3,10 +3,10 @@
 
 import {Component, inject, input} from "@angular/core"
 
-import {useInputErrorText} from "@qualcomm-ui/angular/input"
 import {INPUT_FORM_CONTROL_CONTEXT} from "@qualcomm-ui/angular-core/input"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CorePasswordInputErrorTextDirective} from "@qualcomm-ui/angular-core/password-input"
+import {useInputErrorText} from "@qualcomm-ui/angular/input"
 
 @Component({
   selector: "[q-password-input-error-text]",
@@ -26,7 +26,7 @@ export class PasswordInputErrorTextDirective extends CorePasswordInputErrorTextD
   /**
    * Optional error indicator icon.
    */
-  readonly icon = input<LucideIcon | string>()
+  readonly icon = input<LucideIconOrString>()
 
   protected readonly errorTextContext = useInputErrorText()
 

@@ -25,20 +25,9 @@ const heading = instance.getString("heading") || "Notification heading"
 const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 const variantAttr = variant ? ` variant="${variant}"` : ""
 
-const buttonEmphasis = variant
-  ? "neutral"
-  : emphasis === "warning"
-    ? "black-persistent"
-    : "white-persistent"
 const buttonEl = hasButton
   ? `
-    <button
-      emphasis="${buttonEmphasis}"
-      q-alert-banner-action
-      q-button
-      size="sm"
-      variant="outline"
-    >
+    <button q-alert-banner-button>
       Button
     </button>`
   : ""
@@ -64,12 +53,7 @@ if (showIcon) {
   const closeButtonEl = dismissable
     ? `<button q-alert-banner-close-button></button>`
     : ""
-  const buttonActionEl = hasButton
-    ? `
-      <div q-alert-banner-action>
-        ${buttonEl}
-      </div>`
-    : ""
+  const buttonActionEl = hasButton ? buttonEl : ""
 
   example = figma.code`
     <div${emphasisAttr} q-alert-banner-root${variantAttr}>

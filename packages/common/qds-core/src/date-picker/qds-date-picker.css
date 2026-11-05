@@ -1,0 +1,573 @@
+.qui-date-picker__root {
+  display: flex;
+  flex-direction: column;
+}
+
+.qui-date-picker__control[data-disabled] {
+  pointer-events: none;
+}
+
+.qui-date-picker__control-group .qui-date-picker__input-group[data-size] {
+  min-width: min-content;
+
+  .qui-date-picker__input {
+    min-width: 3ch;
+  }
+}
+
+/* overload the shared input-group end padding */
+.qui-date-picker__control-group .qui-date-picker__input-group {
+  padding-inline-end: var(--spacing-70);
+
+  &[data-size="sm"] {
+    padding-inline-end: var(--spacing-50);
+  }
+
+  &[data-size="lg"] {
+    padding-inline-end: var(--spacing-80);
+  }
+}
+
+/* the lg field keeps the md gap */
+.qui-date-picker__input-group[data-size="lg"] {
+  --input-group-gap: var(--spacing-40);
+}
+
+.qui-date-picker__control-group .qui-date-picker__input-group[data-size]:has(.qui-date-picker__value-tags) {
+  align-items: center;
+  height: auto;
+  min-height: var(--sizing-140);
+
+  &[data-size="sm"] {
+    min-height: var(--sizing-120);
+  }
+
+  &[data-size="lg"] {
+    min-height: var(--sizing-160);
+  }
+}
+
+/* field state lives on the input, not the group: bridge via :has */
+
+.qui-date-picker__input-group:has(.qui-date-picker__input:focus) {
+  border-color: var(--color-utility-focus-border);
+  outline: solid 1px var(--color-utility-focus-border);
+}
+
+.qui-date-picker__input-group:has(.qui-date-picker__input[data-invalid]):not(
+  :has(.qui-date-picker__input:disabled)
+) {
+  border-color: var(--color-interactive-border-danger-idle);
+  outline: solid 1px var(--color-interactive-border-danger-idle);
+}
+
+.qui-date-picker__input-group:has(.qui-date-picker__input:read-only) {
+  background: var(--color-background-neutral-02);
+  border-color: var(--color-utility-disabled-border);
+}
+
+.qui-date-picker__input-group:has(.qui-date-picker__input:disabled) {
+  background: var(--color-utility-disabled-background);
+  border-color: var(--color-utility-disabled-border);
+  color: var(--color-utility-disabled-text);
+}
+
+/* in multiple mode the field is the trigger, so state lives on it directly */
+
+.qui-date-picker__input-group[role="combobox"] {
+  cursor: pointer;
+
+  &:focus,
+  &[data-state="open"] {
+    border-color: var(--color-utility-focus-border);
+    outline: solid 1px var(--color-utility-focus-border);
+  }
+
+  &[aria-invalid="true"]:not([data-state="open"], [data-disabled]) {
+    border-color: var(--color-interactive-border-danger-idle);
+    outline: solid 1px var(--color-interactive-border-danger-idle);
+  }
+
+  &[data-readonly] {
+    background: var(--color-background-neutral-02);
+    border-color: var(--color-utility-disabled-border);
+    cursor: default;
+  }
+
+  &[data-disabled] {
+    background: var(--color-utility-disabled-background);
+    border-color: var(--color-utility-disabled-border);
+    color: var(--color-utility-disabled-text);
+    cursor: default;
+    outline: none;
+  }
+}
+
+.qui-date-picker__input-icon {
+  --icon-size: 16px;
+
+  color: var(--color-icon-neutral-secondary);
+  flex: 0 0 auto;
+  pointer-events: none;
+}
+
+.qui-date-picker__input-group[data-disabled] .qui-date-picker__input-icon {
+  color: var(--color-utility-disabled-text);
+}
+
+.qui-date-picker__range-separator {
+  align-items: center;
+  align-self: stretch;
+  color: var(--color-text-neutral-secondary);
+  display: inline-flex;
+  padding-inline: var(--spacing-30);
+}
+
+.qui-date-picker__control-group .qui-date-picker__input-group[data-size]:has(.qui-date-picker__range-separator) {
+  min-width: min-content;
+
+  .qui-date-picker__input {
+    field-sizing: content;
+    flex: 0 0 auto;
+    font-variant-numeric: tabular-nums;
+    min-width: 9ch;
+    width: auto;
+  }
+
+  .qui-date-picker__range-separator + .qui-date-picker__input {
+    margin-inline-end: auto;
+  }
+}
+
+.qui-date-picker__value-tags {
+  align-items: center;
+  column-gap: var(--spacing-70);
+  display: inline-flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  font: var(--font-static-body-sm-default);
+  min-width: 0;
+  overflow: hidden;
+  padding-block: var(--spacing-30);
+  row-gap: var(--spacing-40);
+}
+
+.qui-date-picker__input-group[data-size="sm"] .qui-date-picker__value-tags {
+  font: var(--font-static-body-xs-default);
+}
+
+.qui-date-picker__input-group[data-size="lg"] .qui-date-picker__value-tags {
+  font: var(--font-static-body-md-default);
+}
+
+.qui-date-picker__value-tags[data-empty] {
+  color: var(--color-text-neutral-secondary);
+}
+
+.qui-date-picker__divider {
+  align-self: center;
+  background: var(--color-border-neutral-01);
+  display: none;
+  height: var(--sizing-70);
+  width: 1px;
+}
+
+.qui-date-picker__clear-trigger:not([hidden])+.qui-date-picker__divider {
+  display: block;
+}
+
+.qui-date-picker__input-group .qui-input__error-indicator {
+  align-self: center;
+}
+
+.qui-date-picker__root> :is(.qui-input__hint, .qui-input__error-text) {
+  margin-block-start: var(--spacing-40);
+}
+
+/* calendar pane */
+
+.qui-date-picker__content {
+  background: var(--color-surface-overlay);
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-medium);
+  inline-size: calc(7 * var(--sizing-120) + 2 * var(--spacing-100));
+  z-index: max(
+    calc(var(--z-index-dropdown) + var(--layer-index)),
+    calc(var(--layer-z-floor, 0) + 1)
+  );
+}
+
+.qui-date-picker__content[data-variant="inline"] {
+  border: 0;
+  box-shadow: none;
+}
+
+/* headline */
+
+.qui-date-picker__headline {
+  border-block-end: 1px solid var(--color-border-neutral-01);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-90) var(--spacing-100) var(--spacing-70) var(--spacing-120);
+  width: 100%;
+}
+
+.qui-date-picker__headline-label {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+}
+
+.qui-date-picker__headline-value {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-body-lg-bold);
+  overflow-wrap: break-word;
+}
+
+/* header */
+
+.qui-date-picker__view-control {
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+  padding: var(--spacing-100);
+
+  .qui-date-picker__prev-trigger {
+    grid-column-start: 4;
+  }
+
+  .qui-date-picker__next-trigger {
+    margin-inline-start: var(--spacing-40);
+  }
+}
+
+.qui-date-picker__view-control:has(.qui-date-picker__presets-trigger, .qui-date-picker__view-close-trigger) {
+  grid-template-columns: auto auto 1fr auto auto 1fr auto;
+
+  :is(.qui-date-picker__presets-trigger, .qui-date-picker__view-close-trigger) {
+    grid-column-start: 7;
+    margin-inline-end: var(--spacing-50);
+  }
+}
+
+.qui-date-picker__prev-trigger .qui-button__icon,
+.qui-date-picker__next-trigger .qui-button__icon {
+  --icon-height: var(--sizing-70);
+  --icon-width: var(--sizing-70);
+}
+
+/* footer actions */
+
+.qui-date-picker__actions {
+  border-block-start: 1px solid var(--color-border-neutral-01);
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--spacing-70);
+  justify-content: flex-end;
+  padding: var(--spacing-80) var(--spacing-100);
+  width: 100%;
+}
+
+/* presets panel */
+
+.qui-date-picker__content[data-presets-open] .qui-date-picker__table {
+  display: none;
+}
+
+.qui-date-picker__presets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+  max-block-size: calc(7 * var(--sizing-120));
+  overflow-y: auto;
+  padding: 0 var(--spacing-100) var(--spacing-100);
+}
+
+/* triggers look like menu items */
+.qui-date-picker__preset-trigger {
+  align-content: center;
+  background: var(--color-interactive-background-ghost-idle);
+  border: 0;
+  color: var(--color-text-neutral-primary);
+  cursor: pointer;
+  display: block;
+  font: var(--font-static-body-xs-default);
+  min-block-size: var(--sizing-120);
+  min-width: 0;
+  overflow: hidden;
+  padding-inline: var(--spacing-90);
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+
+  &:hover {
+    background: var(--color-interactive-background-ghost-hover);
+  }
+
+  &:active {
+    background: var(--color-interactive-background-ghost-pressed);
+  }
+
+  &:focus-visible {
+    outline: var(--sizing-20) solid var(--color-utility-focus-border);
+    outline-offset: calc(-1 * var(--sizing-20));
+  }
+}
+
+/* day/month/year table */
+
+.qui-date-picker__table {
+  border-collapse: collapse;
+  font: var(--font-static-body-xs-default);
+  margin: 0 var(--spacing-100) var(--spacing-100);
+  user-select: none;
+}
+
+.qui-date-picker__table-header,
+.qui-date-picker__table-cell {
+  box-sizing: border-box;
+  height: var(--sizing-120);
+  padding: var(--sizing-30);
+  width: var(--sizing-120);
+}
+
+.qui-date-picker__table-cell {
+  /* positioned ancestor for the trigger's hit-area pseudo */
+  position: relative;
+}
+
+.qui-date-picker__table-cell:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+.qui-date-picker__table-header {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-xs-default);
+}
+
+.qui-date-picker__table-cell-trigger {
+  align-items: center;
+  border-radius: var(--border-radius-rounded);
+  box-sizing: border-box;
+  color: var(--color-text-neutral-primary);
+  display: flex;
+  font: var(--font-static-body-xs-bold);
+  height: var(--sizing-90);
+  justify-content: center;
+  text-box: cap alphabetic;
+  width: var(--sizing-90);
+
+  /* stretch hitbox to the parent <td> */
+  &::after {
+    content: "";
+    inset: 0;
+    position: absolute;
+  }
+
+  &[data-selectable] {
+    &:hover {
+      background: var(--color-interactive-background-ghost-hover);
+    }
+
+    &:active {
+      background: var(--color-interactive-background-ghost-pressed);
+    }
+
+    &:hover[data-selected] {
+      background: var(--color-interactive-background-primary-hover);
+    }
+
+    &:active[data-selected] {
+      background: var(--color-interactive-background-primary-pressed);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--sizing-20) solid var(--color-utility-focus-border);
+    outline-offset: var(--spacing-10);
+  }
+
+  &[data-outside-range] {
+    color: var(--color-text-neutral-secondary);
+  }
+
+  &[data-today] {
+    border: var(--border-width-sm) solid var(--color-border-brand-primary);
+  }
+
+  &[data-selected] {
+    animation: qui-date-picker--selected-pop var(--animation-duration-fast) ease-out;
+    background: var(--color-interactive-background-primary-idle);
+    color: var(--color-utility-persistent-white);
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+
+    &[data-today] {
+      border: var(--border-width-sm) solid var(--color-utility-disabled-border);
+    }
+
+    &[data-selected] {
+      background: var(--color-utility-disabled-background-solid);
+      border: 0;
+      color: var(--color-utility-persistent-white);
+    }
+  }
+}
+
+/* hide days from adjacent months when hideOutsideDays is set */
+.qui-date-picker__root[data-hide-outside-days] .qui-date-picker__table-cell-trigger[data-view="day"][data-outside-range] {
+  visibility: hidden;
+}
+
+@keyframes qui-date-picker--selected-pop {
+  0% {
+    transform: scale(0.85);
+  }
+
+  60% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* month + year views use grid */
+
+.qui-date-picker__table[data-view="month"],
+.qui-date-picker__table[data-view="year"] {
+  display: grid;
+  gap: var(--spacing-90);
+  grid-template-columns: repeat(var(--columns, 4), 1fr);
+  /* match the 7-column day grid width so the pane stays a fixed width */
+  width: calc(7 * var(--sizing-120));
+}
+
+/* allow the cells to be direct grid items */
+:is(.qui-date-picker__table[data-view="month"],
+  .qui-date-picker__table[data-view="year"]) :is(.qui-date-picker__table-body, .qui-date-picker__table-row) {
+  display: contents;
+}
+
+:is(.qui-date-picker__table[data-view="month"],
+  .qui-date-picker__table[data-view="year"]) .qui-date-picker__table-cell {
+  height: auto;
+  padding: 0;
+  width: auto;
+}
+
+.qui-date-picker__table-cell-trigger[data-view="month"],
+.qui-date-picker__table-cell-trigger[data-view="year"] {
+  border: var(--border-width-sm) solid var(--color-interactive-border-neutral-idle);
+  color: var(--color-interactive-text-neutral-idle);
+  font: var(--font-static-body-xs-default);
+  height: var(--sizing-80);
+  padding-inline: var(--spacing-70);
+  width: 100%;
+
+  &[data-selected] {
+    border-color: transparent;
+    color: var(--color-utility-persistent-white);
+  }
+
+  &[data-disabled] {
+    border-color: var(--color-utility-disabled-border);
+    color: var(--color-utility-disabled-text);
+  }
+}
+
+/* range band */
+
+.qui-date-picker__table[data-view="day"] .qui-date-picker__table-cell {
+  &:has([data-in-range]) {
+    isolation: isolate;
+
+    &::before {
+      background: var(--color-background-brand-primary-subtle);
+      content: "";
+      inset-block: var(--sizing-30);
+      inset-inline: 0;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+
+  &:has([data-in-range][data-disabled]:not([data-outside-range]))::before {
+    background: var(--color-utility-disabled-background);
+  }
+
+  /* endpoints of a committed range fill only the half pointing into the range */
+  &:has([data-range-start]:not([data-range-end]))::before {
+    inset-inline-start: 50%;
+  }
+
+  &:has([data-range-end]:not([data-range-start]))::before {
+    inset-inline-end: 50%;
+  }
+
+  /* endpoints of an in-progress range fill whichever half matches the direction */
+  &:has([data-hover-range-start]:not([data-hover-range-end]))::before {
+    inset-inline: 50% 0;
+  }
+
+  &:has([data-hover-range-end]:not([data-hover-range-start]))::before {
+    inset-inline: 0 50%;
+  }
+
+  /* single cell (committed single date, or the anchor hovering itself): no band */
+  &:has([data-range-start][data-range-end])::before,
+  &:has([data-hover-range-start][data-hover-range-end])::before {
+    content: none;
+  }
+
+  /* multiline ranges need to extend to the card edges */
+  &:first-child:has([data-in-range]):not( :has( :where([data-hover-range-start],
+        [data-range-start]:not([data-hover-range-end]))))::before {
+    inset-inline-start: calc(-1 * var(--spacing-100));
+  }
+
+  &:last-child:has([data-in-range]):not(:has(:where([data-range-end], [data-hover-range-end])))::before {
+    inset-inline-end: calc(-1 * var(--spacing-100));
+  }
+
+  /* endpoint with no day-circle (hover/hidden outside month) draws its own rounded cap */
+  &:has([data-hover-range-end]:not(:hover):not([data-selected]))::before,
+  :where(.qui-date-picker__root[data-hide-outside-days]) &:has([data-outside-range][data-range-end]:not([data-range-start]))::before {
+    border-end-end-radius: var(--border-radius-rounded);
+    border-start-end-radius: var(--border-radius-rounded);
+    inset-inline-end: var(--sizing-30);
+  }
+
+  &:has([data-hover-range-start]:not(:hover):not([data-selected]))::before,
+  :where(.qui-date-picker__root[data-hide-outside-days]) &:has([data-outside-range][data-range-start]:not([data-range-end]))::before {
+    border-end-start-radius: var(--border-radius-rounded);
+    border-start-start-radius: var(--border-radius-rounded);
+    inset-inline-start: var(--sizing-30);
+  }
+}
+
+/* fix hover/active transparency showing the range band */
+.qui-date-picker__table-cell-trigger[data-view="day"][data-in-range][data-selectable]:not([data-selected]) {
+  &:hover {
+    background:
+      linear-gradient(var(--color-interactive-background-ghost-hover),
+        var(--color-interactive-background-ghost-hover)),
+      var(--color-surface-overlay);
+  }
+
+  &:active {
+    background:
+      linear-gradient(var(--color-interactive-background-ghost-pressed),
+        var(--color-interactive-background-ghost-pressed)),
+      var(--color-surface-overlay);
+  }
+}

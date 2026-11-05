@@ -8,7 +8,6 @@
 
 .qui-component-grid__item {
   align-items: center;
-  background: var(--color-background-neutral-03);
   border: solid 1px var(--color-border-neutral-03);
   border-radius: var(--border-radius-xxl);
   box-sizing: border-box;
@@ -19,6 +18,8 @@
   height: auto;
   justify-self: center;
   margin: 0;
+  max-width: 290px;
+  min-width: 290px;
   position: relative;
   text-decoration: inherit;
   transition: transform var(--animation-duration-moderate) ease;
@@ -70,7 +71,7 @@
 }
 
 .qui-component-grid__item-description {
-  background: var(--color-background-neutral-02);
+  background: var(--color-utility-opacity-neutral-02);
   border: solid 0;
   border-bottom-left-radius: var(--border-radius-xxl);
   border-bottom-right-radius: var(--border-radius-xxl);
@@ -84,5 +85,8 @@
 }
 
 .qui-component-grid__image {
+  background: #020b3f;
+  border-top-left-radius: var(--border-radius-xxl);
+  border-top-right-radius: var(--border-radius-xxl);
   min-height: 200px;
 }

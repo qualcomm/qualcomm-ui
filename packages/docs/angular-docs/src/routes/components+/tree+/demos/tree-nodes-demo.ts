@@ -1,8 +1,6 @@
 import {Component, computed, inject, input, type OnInit} from "@angular/core"
-import {FileText, FolderIcon} from "lucide-angular"
+import {LucideFileText, LucideFolder} from "@lucide/angular"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   provideTreeNodePropsContext,
@@ -11,6 +9,8 @@ import {
   TreeNodeStateContextService,
   useTreeContext,
 } from "@qualcomm-ui/angular-core/tree"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {TreeModule} from "@qualcomm-ui/angular/tree"
 import {createTreeCollection, type NodeProps} from "@qualcomm-ui/core/tree"
 
 interface FileNode {
@@ -77,7 +77,7 @@ const collection = createTreeCollection<FileNode>({
 @Component({
   imports: [TreeModule, IconDirective],
   providers: [
-    provideIcons({FileText, FolderIcon}),
+    provideIcons({LucideFileText, LucideFolder}),
     provideTreeNodePropsContext(),
     provideTreeNodeStateContext(),
   ],
@@ -89,7 +89,7 @@ const collection = createTreeCollection<FileNode>({
         <div q-tree-branch-node>
           <div q-tree-node-indicator></div>
           <div q-tree-branch-trigger></div>
-          <svg q-tree-node-icon qIcon="FolderIcon"></svg>
+          <svg q-tree-node-icon qIcon="LucideFolder"></svg>
           <span q-tree-node-text>
             {{ treeContext().collection.stringifyNode(node()) }}
           </span>
@@ -111,7 +111,7 @@ const collection = createTreeCollection<FileNode>({
     } @else {
       <div q-tree-leaf-node>
         <div q-tree-node-indicator></div>
-        <svg q-tree-node-icon qIcon="FileText"></svg>
+        <svg q-tree-node-icon qIcon="LucideFileText"></svg>
         <span q-tree-node-text>
           {{ treeContext().collection.stringifyNode(node()) }}
         </span>
@@ -142,7 +142,7 @@ export class TreeNodesRecursive implements OnInit {
 
 @Component({
   imports: [TreeModule, TreeNodesRecursive],
-  providers: [provideIcons({FileText, FolderIcon})],
+  providers: [provideIcons({LucideFileText, LucideFolder})],
   selector: "tree-nodes-demo",
   template: `
     <div class="w-full max-w-sm" q-tree-root [collection]="collection">

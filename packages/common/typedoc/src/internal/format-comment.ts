@@ -3,7 +3,7 @@
 
 import type {JSONOutput} from "typedoc"
 
-import {defaultPrintWidth, prettyType} from "./type-formatter"
+import {defaultPrintWidth, prettyType} from "./type-formatter.js"
 
 export function extractDefaultValueFromComment(
   comment: JSONOutput.Comment | undefined,
@@ -14,7 +14,9 @@ export function extractDefaultValueFromComment(
   return comment.blockTags?.find((tag) => tag.tag === "@default")
 }
 
-export async function formatDefault(comment: JSONOutput.Comment | undefined) {
+export async function formatDefault(
+  comment: JSONOutput.Comment | undefined,
+): Promise<string | undefined> {
   const defaultValue = extractDefaultValueFromComment(comment)
   if (!defaultValue) {
     return undefined

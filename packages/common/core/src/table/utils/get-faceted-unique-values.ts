@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {RowData, TableInstance} from "../types"
-import {memo} from "../utils"
+import type {RowData, TableInstance} from "../types.js"
+import {memo} from "../utils.js"
 
 export function getFacetedUniqueValues<TData extends RowData>(): (
   table: TableInstance<TData>,

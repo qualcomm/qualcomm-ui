@@ -21,7 +21,7 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {checkboxAnatomy} from "./checkbox.anatomy"
+import {checkboxAnatomy} from "./checkbox.anatomy.js"
 import type {
   CheckboxApi,
   CheckboxControlBindings,
@@ -33,8 +33,8 @@ import type {
   CheckboxLabelBindings,
   CheckboxRootBindings,
   CheckboxSchema,
-} from "./checkbox.types"
-import {domEls, domIds} from "./internal"
+} from "./checkbox.types.js"
+import {domEls, domIds} from "./internal/checkbox.dom.js"
 
 const parts = checkboxAnatomy.parts
 

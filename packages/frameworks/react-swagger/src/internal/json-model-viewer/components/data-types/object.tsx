@@ -26,7 +26,7 @@ function inspectMetadata(value: object) {
   if (value instanceof Map || value instanceof Set) {
     name = value[Symbol.toStringTag]
   }
-  if (Object.prototype.hasOwnProperty.call(value, Symbol.toStringTag)) {
+  if (Object.hasOwn(value, Symbol.toStringTag)) {
     name = (value as any)[Symbol.toStringTag]
   }
   return `${length} Items${name ? ` (${name})` : ""}`

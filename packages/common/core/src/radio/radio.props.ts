@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {RadioApiProps} from "./radio.types"
+import type {RadioApiProps} from "./radio.types.js"
 
 export const radioProps: (keyof RadioApiProps)[] = createProps<RadioApiProps>()(
   "defaultValue",

@@ -4,14 +4,14 @@
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {buttonClasses} from "./button.classes"
+import type {buttonClasses} from "./button.classes.js"
 import type {
   QdsButtonApiProps,
   QdsButtonDensity,
   QdsButtonSize,
   QdsButtonVariant,
-} from "./button.types"
-import type {iconButtonAnatomy} from "./icon-button.anatomy"
+} from "./button.types.js"
+import type {iconButtonAnatomy} from "./icon-button.anatomy.js"
 
 export type QdsIconButtonShape = "square" | "rounded"
 
@@ -47,4 +47,5 @@ export interface QdsIconButtonIconBindings extends Part<"icon"> {
 export interface QdsIconButtonApi {
   getIconBindings(): QdsIconButtonIconBindings
   getRootBindings(): QdsIconButtonRootBindings
+  size: QdsButtonSize
 }

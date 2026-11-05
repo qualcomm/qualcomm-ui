@@ -6,7 +6,7 @@
 
 import type {Coords, Middleware} from "@floating-ui/dom"
 
-import type {PlacementSide, TransformPoint} from "./types"
+import type {PlacementSide, TransformPoint} from "./types.js"
 
 /* -----------------------------------------------------------------------------
  * Shared middleware utils

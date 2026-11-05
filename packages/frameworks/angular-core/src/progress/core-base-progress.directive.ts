@@ -5,7 +5,7 @@ import {booleanAttribute, Directive, input, output} from "@angular/core"
 
 import {numberAttributeOrUndefined} from "@qualcomm-ui/angular-core/attributes"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {type ProgressApiProps} from "@qualcomm-ui/core/progress"
+import type {ProgressApiProps} from "@qualcomm-ui/core/progress"
 import type {Booleanish, NumberInput} from "@qualcomm-ui/utils/coercion"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 

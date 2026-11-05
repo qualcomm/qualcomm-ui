@@ -5,6 +5,8 @@ import type {Heading, Parent, Root} from "mdast"
 import type {Plugin} from "unified"
 import {EXIT, visit} from "unist-util-visit"
 
+export const PAGE_HEADER_COMPONENT_NAME = "PageHeader"
+
 /**
  * Replaces the first h1 heading in the document with a `PageHeader`
  * JSX element. This allows the page title to be enhanced with extra features
@@ -23,7 +25,7 @@ export const remarkFrontmatterTitle: Plugin<[], Root> = () => {
         const wrappedNode = {
           attributes: [],
           children: node.children,
-          name: "PageHeader",
+          name: PAGE_HEADER_COMPONENT_NAME,
           type: "mdxJsxFlowElement",
         }
 

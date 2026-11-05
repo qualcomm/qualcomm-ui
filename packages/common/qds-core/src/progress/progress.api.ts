@@ -1,9 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {progressClasses} from "./progress.classes"
+import {progressClasses} from "./progress.classes.js"
 import type {
   QdsProgressApi,
   QdsProgressApiProps,
@@ -14,7 +15,7 @@ import type {
   QdsProgressRootBindings,
   QdsProgressTrackBindings,
   QdsProgressValueTextBindings,
-} from "./progress.types"
+} from "./progress.types.js"
 
 export function createQdsProgressApi(
   props: QdsProgressApiProps,
@@ -22,6 +23,7 @@ export function createQdsProgressApi(
 ): QdsProgressApi {
   const emphasis = props.emphasis || "primary"
   const labelOrientation = props.labelOrientation || "top"
+  const shimmer = props.shimmer ?? true
   const size = props.size || "md"
 
   return {
@@ -31,6 +33,7 @@ export function createQdsProgressApi(
       return normalize.element({
         className: progressClasses.bar,
         "data-emphasis": emphasis,
+        "data-shimmer": booleanDataAttr(shimmer),
         "data-size": size,
       })
     },

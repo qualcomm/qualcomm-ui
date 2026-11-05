@@ -1,6 +1,9 @@
-export {getPlacement} from "./get-placement"
-export {getPlacementStyles, type GetPlacementStylesOptions} from "./get-styles"
-export {getPlacementSide, isValidPlacement} from "./placement"
+export {getPlacement} from "./get-placement.js"
+export {
+  getPlacementStyles,
+  type GetPlacementStylesOptions,
+} from "./get-styles.js"
+export {getPlacementSide, isValidPlacement} from "./placement.js"
 export type {
   AnchorRect,
   AutoUpdateOptions,
@@ -10,4 +13,4 @@ export type {
   PlacementAlign,
   PlacementSide,
   PositioningOptions,
-} from "./types"
+} from "./types.js"

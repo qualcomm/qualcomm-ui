@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {intersects} from "./intersection"
-import type {Point, Rect, RectSide} from "./types"
+import {intersects} from "./intersection.js"
+import type {Point, Rect, RectSide} from "./types.js"
 
 export interface DistanceValue extends Point {
   value: number

@@ -3,7 +3,7 @@
 
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {breadcrumbsClasses} from "./breadcrumbs.classes"
+import type {breadcrumbsClasses} from "./breadcrumbs.classes.js"
 
 export type QdsBreadcrumbsSize = "sm" | "md" | "lg"
 
@@ -58,6 +58,11 @@ export interface QdsBreadcrumbsItemTriggerBindings extends QdsBreadcrumbsCommonB
   "data-emphasis": QdsBreadcrumbsEmphasis
 }
 
+export interface QdsBreadcrumbsOverflowTriggerBindings extends QdsBreadcrumbsCommonBindings {
+  className: `${BreadcrumbsClasses["itemTrigger"]} ${BreadcrumbsClasses["overflowTrigger"]}`
+  "data-emphasis": QdsBreadcrumbsEmphasis
+}
+
 export interface QdsBreadcrumbsItemApiProps {
   /**
    * Controls the component's interactivity. If `true`, the component becomes
@@ -78,5 +83,6 @@ export interface QdsBreadcrumbsApi {
   getItemSeparatorBindings(): QdsBreadcrumbsItemSeparatorBindings
   getItemTriggerBindings(): QdsBreadcrumbsItemTriggerBindings
   getListBindings(): QdsBreadcrumbsListBindings
+  getOverflowTriggerBindings(): QdsBreadcrumbsOverflowTriggerBindings
   getRootBindings(): QdsBreadcrumbsRootBindings
 }

@@ -4,7 +4,7 @@
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {fieldsetAnatomy} from "./fieldset.anatomy"
+import type {fieldsetAnatomy} from "./fieldset.anatomy.js"
 
 export interface FieldsetApiProps {
   /**

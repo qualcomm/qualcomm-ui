@@ -6,16 +6,16 @@
 
 import {getDocument, setStyle, waitForElements} from "@qualcomm-ui/dom/query"
 
-import {layerStack} from "./layer-stack"
+import {layerStack} from "./layer-stack.js"
 
 let originalBodyPointerEvents: string
 
 export function assignPointerEventToLayers(): void {
-  layerStack.layers.forEach(({node}) => {
+  for (const {node} of layerStack.layers) {
     node.style.pointerEvents = layerStack.isBelowPointerBlockingLayer(node)
       ? "none"
       : "auto"
-  })
+  }
 }
 
 export function clearPointerEvent(node: HTMLElement): void {
@@ -59,6 +59,8 @@ export function disablePointerEventsOutside(
         doc.body.removeAttribute("style")
       }
     })
-    cleanups.forEach((fn) => fn())
+    for (const fn of cleanups) {
+      fn()
+    }
   }
 }

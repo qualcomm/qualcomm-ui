@@ -9,8 +9,8 @@ import type {
   QdsBadgeExtraSize,
   QdsBadgeSemanticEmphasis,
   QdsBaseBadgeProps,
-} from "./badge.types"
-import type {statusBadgeAnatomy} from "./status-badge.anatomy"
+} from "./badge.types.js"
+import type {statusBadgeAnatomy} from "./status-badge.anatomy.js"
 
 export type QdsStatusBadgeVariant = "filled" | "outlined"
 

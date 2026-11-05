@@ -9,8 +9,8 @@ import {
 import {isValueWithinRange} from "@qualcomm-ui/utils/number"
 import {maybeAccess} from "@qualcomm-ui/utils/object"
 
-import {isValidStepNavigation} from "./internal"
-import type {StepperSchema} from "./stepper.types"
+import {isValidStepNavigation} from "./internal/index.js"
+import type {StepperSchema} from "./stepper.types.js"
 
 const stepperMachineBase = {
   computed: {

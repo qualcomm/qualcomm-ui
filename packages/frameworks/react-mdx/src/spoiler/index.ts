@@ -1,1 +1,1 @@
-export * from "./spoiler"
+export * from "./spoiler.js"

@@ -10,6 +10,7 @@ import {TextInputModule} from "@qualcomm-ui/angular/text-input"
   template: `
     <div class="flex items-end gap-4">
       <q-text-input
+        aria-label="Controlled state"
         class="w-72"
         placeholder="Placeholder text"
         [(ngModel)]="value"

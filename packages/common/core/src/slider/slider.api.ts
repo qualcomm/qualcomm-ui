@@ -20,8 +20,8 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 import {getPercentValue, getValuePercent} from "@qualcomm-ui/utils/number"
 
-import {sliderAnatomy} from "./slider.anatomy"
-import {domIds, getFirstThumbEl} from "./slider.dom"
+import {sliderAnatomy} from "./slider.anatomy.js"
+import {domIds, getFirstThumbEl} from "./slider.dom.js"
 import {
   getControlStyle,
   getMarkerGroupStyle,
@@ -29,7 +29,7 @@ import {
   getRangeStyle,
   getRootStyle,
   getThumbStyle,
-} from "./slider.style"
+} from "./slider.style.js"
 import type {
   SliderApi,
   SliderControlBindings,
@@ -47,8 +47,8 @@ import type {
   SliderThumbIndicatorBindings,
   SliderTrackBindings,
   SliderValueTextBindings,
-} from "./slider.types"
-import {getRangeAtIndex} from "./slider.utils"
+} from "./slider.types.js"
+import {getRangeAtIndex} from "./slider.utils.js"
 
 export function createSliderApi(
   store: Machine<SliderSchema>,

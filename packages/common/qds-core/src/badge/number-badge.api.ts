@@ -4,13 +4,13 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {badgeClasses} from "./badge.classes"
-import {numberBadgeAnatomy} from "./number-badge.anatomy"
+import {badgeClasses} from "./badge.classes.js"
+import {numberBadgeAnatomy} from "./number-badge.anatomy.js"
 import type {
   QdsNumberBadgeApi,
   QdsNumberBadgeProps,
   QdsNumberBadgeRootBindings,
-} from "./number-badge.types"
+} from "./number-badge.types.js"
 
 const parts = numberBadgeAnatomy.parts
 

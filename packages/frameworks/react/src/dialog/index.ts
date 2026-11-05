@@ -1,34 +1,37 @@
-import {DialogBackdrop, type DialogBackdropProps} from "./dialog-backdrop"
-import {DialogBody, type DialogBodyProps} from "./dialog-body"
+import {DialogBackdrop, type DialogBackdropProps} from "./dialog-backdrop.js"
+import {DialogBody, type DialogBodyProps} from "./dialog-body.js"
 import {
   DialogCloseButton,
   type DialogCloseButtonProps,
-} from "./dialog-close-button"
+} from "./dialog-close-button.js"
 import {
   DialogCloseTrigger,
   type DialogCloseTriggerProps,
-} from "./dialog-close-trigger"
-import {DialogContent, type DialogContentProps} from "./dialog-content"
-import {DialogContext, type DialogContextProps} from "./dialog-context"
+} from "./dialog-close-trigger.js"
+import {DialogContent, type DialogContentProps} from "./dialog-content.js"
+import {DialogContext, type DialogContextProps} from "./dialog-context.js"
 import {
   DialogDescription,
   type DialogDescriptionProps,
-} from "./dialog-description"
+} from "./dialog-description.js"
 import {
   DialogFloatingPortal,
   type DialogFloatingPortalProps,
-} from "./dialog-floating-portal"
-import {DialogFooter, type DialogFooterProps} from "./dialog-footer"
-import {DialogHeading, type DialogHeadingProps} from "./dialog-heading"
+} from "./dialog-floating-portal.js"
+import {DialogFooter, type DialogFooterProps} from "./dialog-footer.js"
+import {DialogHeading, type DialogHeadingProps} from "./dialog-heading.js"
 import {
   DialogIndicatorIcon,
   type DialogIndicatorIconProps,
-} from "./dialog-indicator-icon"
-import {DialogPositioner, type DialogPositionerProps} from "./dialog-positioner"
-import {DialogRoot, type DialogRootProps} from "./dialog-root"
-import {DialogTrigger, type DialogTriggerProps} from "./dialog-trigger"
+} from "./dialog-indicator-icon.js"
+import {
+  DialogPositioner,
+  type DialogPositionerProps,
+} from "./dialog-positioner.js"
+import {DialogRoot, type DialogRootProps} from "./dialog-root.js"
+import {DialogTrigger, type DialogTriggerProps} from "./dialog-trigger.js"
 
-export * from "./qds-dialog-context"
+export * from "./qds-dialog-context.js"
 
 export type {
   DialogBackdropProps,

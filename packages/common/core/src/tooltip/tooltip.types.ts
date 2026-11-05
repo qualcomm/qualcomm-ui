@@ -16,7 +16,7 @@ import type {
   JSX,
 } from "@qualcomm-ui/utils/machine"
 
-import type {tooltipAnatomy} from "./tooltip.anatomy"
+import type {tooltipAnatomy} from "./tooltip.anatomy.js"
 
 export interface TooltipApiProps extends DirectionProperty {
   /**

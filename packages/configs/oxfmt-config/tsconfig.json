@@ -1,0 +1,4 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "include": ["index.d.ts"]
+}

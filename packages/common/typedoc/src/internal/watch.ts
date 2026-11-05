@@ -3,12 +3,12 @@
 
 import chokidar from "chokidar"
 
-import {TypeParser} from "../type-parser"
+import {TypeParser} from "../type-parser.js"
 
-import {build} from "./build"
-import {resolveConfigSync, resolveTsconfig} from "./config"
+import {build} from "./build.js"
+import {resolveConfigSync, resolveTsconfig} from "./config.js"
 
-export async function watch(configPath: string) {
+export async function watch(configPath: string): Promise<void> {
   const config = resolveConfigSync(configPath)
   const typeParser = new TypeParser(config)
   const tsconfigPath = typeParser.options.typedocOptions?.tsconfig ?? ""

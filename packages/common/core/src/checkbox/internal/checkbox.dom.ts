@@ -6,7 +6,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {CheckboxElementIds, CheckboxScope} from "../checkbox.types"
+import type {CheckboxElementIds, CheckboxScope} from "../checkbox.types.js"
 
 export const domIds: ScopeDomIds<CheckboxElementIds, CheckboxScope> = {
   control: (scope) => scope.ids.get("control"),

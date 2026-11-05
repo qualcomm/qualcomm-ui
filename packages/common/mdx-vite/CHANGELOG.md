@@ -1,5 +1,308 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 4.1.0
+
+Nov 2nd, 2026
+
+### Features
+
+* [shiki-themes]: use custom light theme ([2652e06](https://github.com/qualcomm/qualcomm-ui/commit/2652e06))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.7.0]
+
+## 4.0.1
+
+Oct 30th, 2026
+
+### Bug Fixes
+
+* [shiki]: handle vite's css minification in theme switcher ([4ead4b2](https://github.com/qualcomm/qualcomm-ui/commit/4ead4b2))
+
+## 4.0.0
+
+Oct 30th, 2026
+
+### BREAKING CHANGES
+
+* [mdx]: unwrap mdx paragraph child elements (images, JSX children) ([0296a44](https://github.com/qualcomm/qualcomm-ui/commit/0296a44))
+* [sectionizer]: collect h1 and surrounding elements into page intro section ([10e545c](https://github.com/qualcomm/qualcomm-ui/commit/10e545c))
+
+### Code Refactoring
+
+* [docs-plugin]: update link and page title linter, deprecate old settings ([6c3947f](https://github.com/qualcomm/qualcomm-ui/commit/6c3947f))
+* [alerts]: remove default titles from GFM alerts ([a183d43](https://github.com/qualcomm/qualcomm-ui/commit/a183d43))
+
+### Performance Improvements
+
+* [vite-plugins]: remove sourcemap from dev build, optimize virtual module size ([b193c46](https://github.com/qualcomm/qualcomm-ui/commit/b193c46))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.2]
+
+## 3.11.1
+
+Oct 20th, 2026
+
+### Bug Fixes
+
+* [ai-context]: pass routing strategy to exporter ([50d53a5](https://github.com/qualcomm/qualcomm-ui/commit/50d53a5))
+
+## 3.11.0
+
+Oct 12th, 2026
+
+### Features
+
+* add LaTeX support and guide ([10936f2](https://github.com/qualcomm/qualcomm-ui/commit/10936f2))
+* [nav-config]: add flattenChildren field and docs ([ce4a92a](https://github.com/qualcomm/qualcomm-ui/commit/ce4a92a))
+
+### Bug Fixes
+
+* account for inline math symbols in mdx parser ([0b0d1d7](https://github.com/qualcomm/qualcomm-ui/commit/0b0d1d7))
+* [extractor]: don't exit process on page extraction error ([a62927b](https://github.com/qualcomm/qualcomm-ui/commit/a62927b))
+
+### Code Refactoring
+
+* [side-nav]: remove route links from parent routes that are also pages ([a4166f7](https://github.com/qualcomm/qualcomm-ui/commit/a4166f7))
+
+## 3.10.1
+
+Sep 8th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: use stable unique identifier for section ids ([8c9b2c6](https://github.com/qualcomm/qualcomm-ui/commit/8c9b2c6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.1]
+
+## 3.10.0
+
+Aug 31st, 2026
+
+### Features
+
+* [search]: support semantic search knowledge exports ([9567b40](https://github.com/qualcomm/qualcomm-ui/commit/9567b40))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.0]
+
+## 3.9.4
+
+Aug 30th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: index component types for lookup without emitting rows ([76c57a8](https://github.com/qualcomm/qualcomm-ui/commit/76c57a8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.0]
+
+## 3.9.3
+
+Aug 18th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.4.0]
+
+## 3.9.2
+
+Aug 16th, 2026
+
+### Bug Fixes
+
+- [shiki-transformer]: support tailwindcss v4.3 syntax ([9bebf58](https://github.com/qualcomm/qualcomm-ui/commit/9bebf58))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3]
+
+## 3.9.1
+
+Aug 11th, 2026
+
+## Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/tailwind-plugin@1.10.0]
+
+## 3.9.0
+
+Aug 6th, 2026
+
+### Features
+
+- [ai-knowledge]: add section url hash data in page section exports ([55b7535](https://github.com/qualcomm/qualcomm-ui/commit/55b7535))
+
+### Code Refactoring
+
+- search types ([2beccfb](https://github.com/qualcomm/qualcomm-ui/commit/2beccfb))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common@2.5.0]
+
+## 3.8.7
+
+Jul 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/tailwind-plugin@1.9.0]
+
+## 3.8.6
+
+Jul 13th, 2026
+
+### Code Refactoring
+
+- remove unused internal functions ([7163ecc](https://github.com/qualcomm/qualcomm-ui/commit/7163ecc))
+
+## 3.8.5
+
+Jun 15th, 2026
+
+### Bug Fixes
+
+- [types]: downgrade to ES2023 for broader compatibility ([81854ec](https://github.com/qualcomm/qualcomm-ui/commit/81854ec))
+
+## 3.8.4
+
+Jun 10th, 2026
+
+### Bug Fixes
+
+- [shiki]: remove diffed code from copyable examples ([834d30a](https://github.com/qualcomm/qualcomm-ui/commit/834d30a))
+
+### Code Refactoring
+
+- [open-web-ui]: remove unused class ([96c6399](https://github.com/qualcomm/qualcomm-ui/commit/96c6399))
+- support nodenext resolution ([bb2a702](https://github.com/qualcomm/qualcomm-ui/commit/bb2a702))
+
+### Styles
+
+- apply lint updates ([a70177d](https://github.com/qualcomm/qualcomm-ui/commit/a70177d))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.0.8, @qualcomm-ui/utils@1.3.2, @qualcomm-ui/mdx-common@2.4.2]
+
+## 3.8.3
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/tailwind-plugin@1.7.3]
+
+## 3.8.2
+
+Jun 4th, 2026
+
+### Bug Fixes
+
+- [cli]: remove unused banner, fix build error ([e59ad99](https://github.com/qualcomm/qualcomm-ui/commit/e59ad99))
+- [generate-page-map]: use typeDocProps in url detection ([2a621a7](https://github.com/qualcomm/qualcomm-ui/commit/2a621a7))
+
+## 3.8.1
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/mdx-common, @qualcomm-ui/typedoc-common, @qualcomm-ui/utils]
+
+## 3.8.0
+
+May 29th, 2026
+
+### Features
+
+- [remark]: add serialize-jsx plugin ([521b200](https://github.com/qualcomm/qualcomm-ui/commit/521b200))
+- [docs-plugin]: add simplified directory routing strategy ([a7a622a](https://github.com/qualcomm/qualcomm-ui/commit/a7a622a))
+
+### Tests
+
+- [docs-plugin]: add tests for directory routes ([734463d](https://github.com/qualcomm/qualcomm-ui/commit/734463d))
+
+## 3.7.4
+
+May 14th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
+## 3.7.3
+
+May 14th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
+## 3.7.2
+
+May 10th, 2026
+
+### Bug Fixes
+
+- [docs-plugin]: trigger full reload when unloaded module is refreshed ([c45f9bb](https://github.com/qualcomm/qualcomm-ui/commit/c45f9bb))
+
+### Code Refactoring
+
+- [rehype-shiki]: add language class to code element ([d1eef70](https://github.com/qualcomm/qualcomm-ui/commit/d1eef70))
+
+## 3.7.1
+
+May 7th, 2026
+
+### Bug Fixes
+
+- [docs-plugin]: use plaintext code fallback ([2ecb4fa](https://github.com/qualcomm/qualcomm-ui/commit/2ecb4fa))
+
+## 3.7.0
+
+May 6th, 2026
+
+### Features
+
+- [docs-plugin]: support anchor IDs in link validation ([1b88e2b](https://github.com/qualcomm/qualcomm-ui/commit/1b88e2b))
+- [docs-plugin]: cache collected links in page cache for revalidation ([9868ee8](https://github.com/qualcomm/qualcomm-ui/commit/9868ee8))
+
+## 3.6.1
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils]
+
+## 3.6.0
+
+Apr 29th, 2026
+
+### Features
+
+- [knowledge]: add since field for version lookup ([ebe1d3a](https://github.com/qualcomm/qualcomm-ui/commit/ebe1d3a))
+
+### Miscellaneous Chores
+
+- update uuid ([f6e9c6c](https://github.com/qualcomm/qualcomm-ui/commit/f6e9c6c))
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
 ## 3.5.0
 
 Apr 23rd, 2026

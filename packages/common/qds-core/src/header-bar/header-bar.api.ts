@@ -4,8 +4,8 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {headerBarAnatomy} from "./header-bar.anatomy"
-import {headerBarClasses} from "./header-bar.classes"
+import {headerBarAnatomy} from "./header-bar.anatomy.js"
+import {headerBarClasses} from "./header-bar.classes.js"
 import type {
   QdsHeaderBarActionBarBindings,
   QdsHeaderBarApi,
@@ -18,7 +18,7 @@ import type {
   QdsHeaderBarRootBindings,
   QdsHeaderBarRootProps,
   QdsHeaderBarWindowControlsBindings,
-} from "./header-bar.types"
+} from "./header-bar.types.js"
 
 const parts = headerBarAnatomy.parts
 

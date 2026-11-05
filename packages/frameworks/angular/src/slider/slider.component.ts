@@ -3,10 +3,7 @@
 
 import {booleanAttribute, Component, input} from "@angular/core"
 
-import {
-  provideSliderContext,
-  useSliderContext,
-} from "@qualcomm-ui/angular-core/slider"
+import {provideSliderContext} from "@qualcomm-ui/angular-core/slider"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 import {provideQdsSliderContext} from "./qds-slider-context.service"
@@ -104,6 +101,4 @@ export class SliderComponent extends SliderRootDirective {
    * @default '—'
    */
   readonly display = input<string | ((value: number[]) => string) | undefined>()
-
-  private readonly sliderContext = useSliderContext()
 }

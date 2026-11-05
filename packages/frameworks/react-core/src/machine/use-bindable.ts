@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {useRef, useState} from "react"
-
 import {flushSync} from "react-dom"
 
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
@@ -32,6 +31,7 @@ export function useBindable<T, ChangeEvent extends EventDetails | void | null>(
   const prevValue = useRef(valueRef.current)
   useSafeLayoutEffect(() => {
     prevValue.current = valueRef.current
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [value, props().value])
 
   const setFn = (value: T | ((prev: T) => T), event: ChangeEvent) => {
@@ -39,6 +39,9 @@ export function useBindable<T, ChangeEvent extends EventDetails | void | null>(
     const next = isFunction(value) ? value(prev as T) : value
 
     if (!controlled) {
+      if (props().syncRead) {
+        valueRef.current = next
+      }
       setValue(next)
     }
     if (!eq(next, prev)) {

@@ -1,13 +1,11 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.vitest.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
     "moduleResolution": "bundler",
-    "types": [
-      "vitest",
-      "@vitest/browser/providers/playwright"
-    ],
+    "types": ["vitest"],
+    "outDir": "node_modules/.tmp/spec-out-tsc",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec"
   },
   "include": ["./src/**/*.spec.tsx"],
   "references": [

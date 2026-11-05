@@ -9,7 +9,7 @@ import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 import type {
   CollapsibleElementIds,
   CollapsibleScope,
-} from "../collapsible.types"
+} from "../collapsible.types.js"
 
 export const domIds: ScopeDomIds<CollapsibleElementIds, CollapsibleScope> = {
   content: (scope) => scope.ids.get("content"),

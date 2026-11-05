@@ -5,8 +5,8 @@ import type {ReactElement} from "react"
 
 import {Check, Copy} from "lucide-react"
 
-import {Button, type ButtonProps} from "@qualcomm-ui/react/button"
 import {useCopyToClipboard} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
+import {Button, type ButtonProps} from "@qualcomm-ui/react/button"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
 export interface CopyButtonProps extends Pick<

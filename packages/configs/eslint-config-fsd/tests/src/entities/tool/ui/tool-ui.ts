@@ -1,11 +1,11 @@
-import {Job} from "~entities/job" // fail
+import type {Job} from "~entities/job" // fail
 import {globalSideUi} from "~entities/job/ui" // fail
-import {ToolConfig} from "~shared/tool-config"
+import type {ToolConfig} from "~shared/tool-config"
 
 import {toolConfigUi} from "../../../shared/tool-config/ui" // fail
 import {getJob} from "../../job/api/get-job" // fail
 import {getJobInternal} from "../../job/api/internal/get-job-internal" // fail
-import {ToolModel} from "../model"
+import type {ToolModel} from "../model"
 
 import {internalToolUi} from "./internal"
 import {sideUi} from "./side-ui"

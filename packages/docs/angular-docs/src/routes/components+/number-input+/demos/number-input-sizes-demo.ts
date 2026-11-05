@@ -1,29 +1,32 @@
 import {Component} from "@angular/core"
-import {Sigma} from "lucide-angular"
+import {LucideSigma} from "@lucide/angular"
 
-import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
 
 @Component({
   imports: [NumberInputModule],
-  providers: [provideIcons({Sigma})],
+  providers: [provideIcons({LucideSigma})],
   selector: "number-input-sizes-demo",
   template: `
     <div class="flex flex-col items-start gap-4">
       <!-- preview -->
       <q-number-input
+        aria-label="Number input with size sm"
         class="w-56"
         placeholder="sm"
         size="sm"
         startIcon="Sigma"
       />
       <q-number-input
+        aria-label="Number input with size md"
         class="w-64"
         placeholder="md"
         size="md"
         startIcon="Sigma"
       />
       <q-number-input
+        aria-label="Number input with size lg"
         class="w-72"
         placeholder="lg"
         size="lg"

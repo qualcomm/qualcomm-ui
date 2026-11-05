@@ -8,7 +8,7 @@ import {compiler} from "markdown-to-jsx"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import type {QuiCommentDisplayPart} from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionInlineTag} from "./prop-description-inline-tag"
+import {PropDescriptionInlineTag} from "./prop-description-inline-tag.js"
 
 interface Props {
   summary: QuiCommentDisplayPart[]

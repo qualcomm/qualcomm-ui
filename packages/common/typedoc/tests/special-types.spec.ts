@@ -1,5 +1,5 @@
 import {readFileSync} from "node:fs"
-import {resolve} from "path"
+import {resolve} from "node:path"
 import {describe, expect, test} from "vitest"
 
 import type {ResolvedBuildOptions} from "../src"

@@ -7,7 +7,7 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {paginationAnatomy} from "./pagination.anatomy"
+import {paginationAnatomy} from "./pagination.anatomy.js"
 import type {
   PageItem,
   PaginationApi,
@@ -20,7 +20,7 @@ import type {
   PaginationPrevTriggerBindings,
   PaginationRootBindings,
   PaginationSchema,
-} from "./pagination.types"
+} from "./pagination.types.js"
 
 const parts = paginationAnatomy.parts
 
@@ -41,6 +41,36 @@ export function createPaginationApi(
   const isLastPage = page === pageCount
 
   return {
+    defaultPageSize: prop("defaultPageSize"),
+    goToFirstPage: () => {
+      send({type: "GO_TO_FIRST_PAGE"})
+    },
+
+    goToLastPage: () => send({type: "GO_TO_LAST_PAGE"}),
+    goToNextPage: () => send({type: "GO_TO_NEXT_PAGE"}),
+    goToPage: (page) =>
+      send({
+        page,
+        type: "GO_TO_PAGE",
+      }),
+    goToPrevPage: () => {
+      send({type: "GO_TO_PREV_PAGE"})
+    },
+    page,
+    pageCount,
+    pageEnd,
+    pageItems,
+    pageMetadata,
+    pageSize,
+    pageSizeLabelId: scope.ids.get("pageSizeLabel"),
+    pageStart,
+    setPageSize: (pageSize) =>
+      send({
+        pageSize,
+        type: "SET_PAGE_SIZE",
+      }),
+
+    // group: bindings
     getNextTriggerBindings(): PaginationNextTriggerBindings {
       const isDisabled = isLastPage
       return normalize.button({
@@ -126,36 +156,5 @@ export function createPaginationApi(
         ...parts.root,
       })
     },
-
-    // prevent key sorter from sorting these props above the getters
-    ...{},
-    defaultPageSize: prop("defaultPageSize"),
-    goToFirstPage: () => {
-      send({type: "GO_TO_FIRST_PAGE"})
-    },
-
-    goToLastPage: () => send({type: "GO_TO_LAST_PAGE"}),
-    goToNextPage: () => send({type: "GO_TO_NEXT_PAGE"}),
-    goToPage: (page) =>
-      send({
-        page,
-        type: "GO_TO_PAGE",
-      }),
-    goToPrevPage: () => {
-      send({type: "GO_TO_PREV_PAGE"})
-    },
-    page,
-    pageCount,
-    pageEnd,
-    pageItems,
-    pageMetadata,
-    pageSize,
-    pageSizeLabelId: scope.ids.get("pageSizeLabel"),
-    pageStart,
-    setPageSize: (pageSize) =>
-      send({
-        pageSize,
-        type: "SET_PAGE_SIZE",
-      }),
   }
 }

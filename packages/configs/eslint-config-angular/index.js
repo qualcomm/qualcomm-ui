@@ -1,17 +1,9 @@
-import baseTemplate from "./base-template.js"
-import baseTypescript from "./base-typescript.js"
-import templateAttributeOrder from "./template-attribute-order.js"
-import templatePrettier from "./template-prettier.js"
-import templateSelfClosingTags from "./template-self-closing-tags.js"
-import typescript from "./typescript.js"
+import templateRecommended from "./template-recommended.js"
+import typescriptRecommended from "./typescript-recommended.js"
 
 export default {
   configs: {
-    baseTemplate,
-    baseTypescript,
-    templateAttributeOrder,
-    templatePrettier,
-    templateSelfClosingTags,
-    typescript,
+    templateRecommended,
+    typescriptRecommended,
   },
 }

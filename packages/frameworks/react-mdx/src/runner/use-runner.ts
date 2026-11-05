@@ -9,8 +9,8 @@ import {
   useState,
 } from "react"
 
-import {Runner} from "./runner"
-import type {RunnerOptions} from "./types"
+import {Runner} from "./runner.js"
+import type {RunnerOptions} from "./types.js"
 
 export interface UseRunnerProps extends RunnerOptions {
   disableCache?: boolean

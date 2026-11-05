@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {isIos} from "./platform"
-import {nextTick, raf} from "./raf"
+import {isIos} from "./platform.js"
+import {nextTick, raf} from "./raf.js"
 
 type State = "default" | "disabled" | "restoring"
 
@@ -98,6 +98,8 @@ export function disableTextSelection(
     }),
   )
   return () => {
-    cleanups.forEach((fn) => fn?.())
+    for (const fn of cleanups) {
+      fn?.()
+    }
   }
 }

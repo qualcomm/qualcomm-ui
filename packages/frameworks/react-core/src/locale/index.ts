@@ -1,2 +1,2 @@
-export * from "./locale-context"
-export * from "./use-filter"
+export * from "./locale-context.js"
+export * from "./use-filter.js"

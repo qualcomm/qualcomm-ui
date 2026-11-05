@@ -6,7 +6,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {TreeElementIds, TreeScope} from "../tree.types"
+import type {TreeElementIds, TreeScope} from "../tree.types.js"
 
 export const domIds: ScopeDomIds<TreeElementIds, TreeScope> = {
   label: (scope) => scope.ids.get("label"),

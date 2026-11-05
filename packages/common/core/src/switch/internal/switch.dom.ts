@@ -6,7 +6,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {SwitchElementIds, SwitchScope} from "../switch.types"
+import type {SwitchElementIds, SwitchScope} from "../switch.types.js"
 
 export const domIds: ScopeDomIds<SwitchElementIds, SwitchScope> = {
   errorText: (scope) => scope.ids.get("errorText"),

@@ -5,8 +5,8 @@ import type {ComponentPropsWithRef, ReactNode} from "react"
 
 import type {QdsBrand} from "@qualcomm-ui/react/qds-theme"
 
-import {QdsDemoThemeSelector} from "./internal"
-import {ReactDemo, type ReactDemoProps} from "./react-demo"
+import {QdsDemoThemeSelector} from "./internal/index.js"
+import {ReactDemo, type ReactDemoProps} from "./react-demo.js"
 
 export interface ReactDemoRunnerProps extends ReactDemoProps {
   hideBrandSwitcher?: boolean

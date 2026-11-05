@@ -5,11 +5,11 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Check} from "lucide-react"
 
-import {Icon} from "@qualcomm-ui/react/icon"
 import {
   CoreCombobox,
   type CoreComboboxItemIndicatorProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {Icon} from "@qualcomm-ui/react/icon"
 
 export interface ComboboxItemIndicatorProps extends CoreComboboxItemIndicatorProps {
   /**

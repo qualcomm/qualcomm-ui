@@ -1,8 +1,9 @@
 import mdx from "@mdx-js/rollup"
 import {reactRouter} from "@react-router/dev/vite"
 import tailwindcss from "@tailwindcss/vite"
-import {defineConfig} from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
+import {dirname, resolve} from "node:path"
+import {fileURLToPath} from "node:url"
+import {defineConfig, type Plugin} from "vite"
 
 import {
   frontmatterHmrPlugin,
@@ -12,17 +13,44 @@ import {
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+function preserveRouteMdxSymlinks(): Plugin {
+  return {
+    enforce: "pre",
+    name: "preserve-route-mdx-symlinks",
+    resolveId(source) {
+      const [id, query] = source.split("?")
+      if (!id.includes("/src/routes/") || !id.endsWith(".mdx")) {
+        return
+      }
+
+      // React Router tracks route chunks by the symlinked route path.
+      // Preserve only route MDX symlinks so pnpm package symlinks still resolve
+      // normally.
+      const routeId = id.startsWith("/src/routes/")
+        ? resolve(__dirname, `.${id}`)
+        : id
+
+      return query ? `${routeId}?${query}` : routeId
+    },
+  }
+}
+
 export default defineConfig({
   clearScreen: false,
   optimizeDeps: {
     include: [
       "@faker-js/faker",
+      "@floating-ui/dom",
       "@floating-ui/react",
       "@hookform/resolvers/arktype",
+      "@internationalized/date",
       "@internationalized/number",
       "@mdx-js/react",
       "@shikijs/langs/angular-ts",
       "@shikijs/langs/angular-html",
+      "@shikijs/langs/markdown",
       "@shikijs/langs/shell",
       "@shikijs/langs/json",
       "@shikijs/langs/tsx",
@@ -37,15 +65,21 @@ export default defineConfig({
       "jotai",
       "lodash-es",
       "lucide-react",
+      "markdown-to-jsx",
+      "my-ua-parser",
+      "quick-lru",
+      "react/compiler-runtime",
       "react-device-detect",
       "react-hook-form",
       "react-shiki/core",
       "react-simple-code-editor",
       "react-transition-group",
       "shiki",
+      "sucrase",
     ],
   },
   plugins: [
+    preserveRouteMdxSymlinks(),
     tailwindcss(),
     mdx({
       providerImportSource: "@mdx-js/react",
@@ -53,9 +87,6 @@ export default defineConfig({
       remarkPlugins: [...getRemarkPlugins()],
     }),
     reactRouter(),
-    tsconfigPaths({
-      projects: ["./tsconfig.lib.json"],
-    }),
     quiDocsPlugin(),
     frontmatterHmrPlugin(),
     reactDemoPlugin({
@@ -81,10 +112,27 @@ export default defineConfig({
       transformTailwindStyles: true,
     }),
   ],
+  resolve: {
+    alias: {
+      // Shared MDX resolves provider imports from packages/docs/shared.
+      // Use this docs app's MDX runtime while preserving route symlinks above.
+      "@mdx-js/react": resolve(__dirname, "./node_modules/@mdx-js/react"),
+      "~components": resolve(__dirname, "./src/components"),
+      "~utils": resolve(__dirname, "./src/utils"),
+    },
+    tsconfigPaths: true,
+  },
   server: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 3100,
-    warmup: {
-      clientFiles: ["./src/root.tsx", "./src/components/**/*.tsx"],
-    },
+  },
+  ssr: {
+    // The semantic search route depends on onnxruntime-node, which loads its
+    // native binding via a path relative to its own package. Bundling it into
+    // build/server breaks that path.
+    external: [
+      "@qualcomm-ui/react-router-utils",
+      "@huggingface/transformers",
+      "@orama/orama",
+    ],
   },
 })

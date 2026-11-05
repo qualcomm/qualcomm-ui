@@ -1,0 +1,68 @@
+---
+title: Debug
+hidden: true
+---
+
+import {Demo} from "~components/demo"
+import {DocSwagger} from "~components/layout"
+import * as demos from "./_demos"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import petStore from "./pet-store.json"
+
+# {frontmatter.title}
+
+Test page for Tailwind inline style transformation.
+
+## Simple Inlineable Classes
+
+All utility classes are converted to inline styles.
+
+<Demo component={demos.InlineSimple} name="InlineSimple" />
+
+## Nested Elements
+
+Styles are applied to each element independently.
+
+<Demo component={demos.NestedElements} name="NestedElements" />
+
+## Responsive Variants
+
+Responsive classes (`sm:`, `md:`, `lg:`) are kept as CSS since they require media queries.
+
+<Demo component={demos.ResponsiveVariants} name="ResponsiveVariants" />
+
+## Interactive Variants
+
+Hover, focus, and active states require CSS pseudo-classes.
+
+<Demo component={demos.InteractiveVariants} name="InteractiveVariants" />
+
+## Arbitrary Values
+
+Bracket syntax values like `w-[100px]` are inlined.
+
+<Demo component={demos.ArbitraryValues} name="ArbitraryValues" />
+
+## Mixed Classes
+
+Combination of inlineable classes and variant classes.
+
+<Demo component={demos.MixedClasses} name="MixedClasses" />
+
+## Typedoc examples
+
+### Class
+
+<TypeDocProps name="CloudDocsSdk" />
+
+### TokenDetail
+
+<TypeDocProps partial name="TokenDetail" />
+
+### TokenManager
+
+<TypeDocProps partial name="TokenManager" />
+
+### Swagger Debug
+
+<DocSwagger spec={petStore} />

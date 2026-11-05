@@ -24,7 +24,7 @@ import {
 import type {Machine} from "@qualcomm-ui/utils/machine"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ToastContextProvider} from "./toast-context"
+import {ToastContextProvider} from "./toast-context.js"
 
 export interface CoreToasterProps
   extends

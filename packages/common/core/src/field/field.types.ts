@@ -9,7 +9,7 @@ import type {
 import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {IdRegistrationProps} from "@qualcomm-ui/utils/machine"
 
-import type {fieldAnatomy} from "./field.anatomy"
+import type {fieldAnatomy} from "./field.anatomy.js"
 
 /**
  * The field is primarily used to wire up accessibility for its elements.

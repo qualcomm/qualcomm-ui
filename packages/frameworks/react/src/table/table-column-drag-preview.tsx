@@ -6,8 +6,8 @@ import type {ReactElement} from "react"
 import type {Header} from "@qualcomm-ui/core/table"
 import {Portal} from "@qualcomm-ui/react-core/portal"
 
-import {flexRender} from "./dynamic-render"
-import {qdsTableApi} from "./qds-table-context"
+import {flexRender} from "./dynamic-render/index.js"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableColumnDragPreviewProps {
   container: HTMLElement

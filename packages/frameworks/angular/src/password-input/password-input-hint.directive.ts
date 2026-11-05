@@ -3,8 +3,8 @@
 
 import {Directive} from "@angular/core"
 
-import {useInputHint} from "@qualcomm-ui/angular/input"
 import {CorePasswordInputHintDirective} from "@qualcomm-ui/angular-core/password-input"
+import {useInputHint} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "[q-password-input-hint]",

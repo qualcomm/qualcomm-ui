@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsProgressRingContext} from "./qds-progress-ring-context"
+import {useQdsProgressRingContext} from "./qds-progress-ring-context.js"
 
 export interface ProgressRingCircleContainerProps extends ElementRenderProp<"div"> {
   /**

@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {AvatarApiProps} from "./avatar.types"
+import type {AvatarApiProps} from "./avatar.types.js"
 
 const avatarProps: (keyof AvatarApiProps)[] = createProps<AvatarApiProps>()(
   "dir",

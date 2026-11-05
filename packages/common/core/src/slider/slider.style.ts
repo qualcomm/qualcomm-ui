@@ -11,7 +11,7 @@ import {
   toPx,
 } from "@qualcomm-ui/utils/number"
 
-import type {SliderSchema} from "./slider.types"
+import type {SliderSchema} from "./slider.types.js"
 
 type Ctx = Params<SliderSchema>
 

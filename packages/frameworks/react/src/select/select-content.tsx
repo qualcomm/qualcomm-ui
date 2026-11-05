@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/select"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSelectContext} from "./qds-select-context"
+import {useQdsSelectContext} from "./qds-select-context.js"
 
 export interface SelectContentProps extends CoreSelectContentProps {
   /**

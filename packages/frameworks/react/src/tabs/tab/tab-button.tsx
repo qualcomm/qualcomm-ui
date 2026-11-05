@@ -3,15 +3,15 @@
 
 import {isValidElement, type ReactElement} from "react"
 
-import {Icon, IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {
   CoreTabs,
   type CoreTabsTabButtonProps,
 } from "@qualcomm-ui/react-core/tabs"
+import {Icon, IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsTabsContext} from "../qds-tabs-context"
+import {useQdsTabsContext} from "../qds-tabs-context.js"
 
 export interface TabButtonProps extends CoreTabsTabButtonProps {
   /**
@@ -61,7 +61,7 @@ export function TabButton({
           </span>
         )
       ) : null}
-      {children}
+      <span {...qdsContext.getTabButtonTextBindings()}>{children}</span>
       {endIcon ? (
         isValidElement(endIcon) ? (
           <IconOrNode icon={endIcon} {...qdsContext.getTabEndIconBindings()} />

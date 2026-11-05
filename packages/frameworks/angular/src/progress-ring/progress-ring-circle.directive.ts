@@ -15,6 +15,7 @@ import {useQdsProgressRingContext} from "./qds-progress-ring-context.service"
       <svg:circle q-progress-ring-track />
       <svg:circle q-progress-ring-bar />
     </ng-content>
+    <svg:circle q-progress-ring-shimmer />
   `,
 })
 export class ProgressRingCircleDirective extends CoreProgressRingCircleDirective {

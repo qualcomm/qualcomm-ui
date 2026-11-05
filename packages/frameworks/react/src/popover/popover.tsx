@@ -11,20 +11,20 @@ import {Portal, type PortalProps} from "@qualcomm-ui/react-core/portal"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {BindingRenderProp} from "@qualcomm-ui/react-core/system"
 
-import {PopoverAnchor, type PopoverAnchorProps} from "./popover-anchor"
-import {PopoverArrow, type PopoverArrowProps} from "./popover-arrow"
-import {PopoverContent, type PopoverContentProps} from "./popover-content"
+import {PopoverAnchor, type PopoverAnchorProps} from "./popover-anchor.js"
+import {PopoverArrow, type PopoverArrowProps} from "./popover-arrow.js"
+import {PopoverContent, type PopoverContentProps} from "./popover-content.js"
 import {
   PopoverDescription,
   type PopoverDescriptionProps,
-} from "./popover-description"
-import {PopoverLabel, type PopoverLabelProps} from "./popover-label"
+} from "./popover-description.js"
+import {PopoverLabel, type PopoverLabelProps} from "./popover-label.js"
 import {
   PopoverPositioner,
   type PopoverPositionerProps,
-} from "./popover-positioner"
-import {PopoverRoot, type PopoverRootProps} from "./popover-root"
-import {PopoverTrigger} from "./popover-trigger"
+} from "./popover-positioner.js"
+import {PopoverRoot, type PopoverRootProps} from "./popover-root.js"
+import {PopoverTrigger} from "./popover-trigger.js"
 
 export interface PopoverProps extends Omit<PopoverRootProps, "children"> {
   /**

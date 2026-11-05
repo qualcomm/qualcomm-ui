@@ -1,2 +1,2 @@
-export * from "./text-area-context"
-export * from "./use-text-area"
+export * from "./text-area-context.js"
+export * from "./use-text-area.js"

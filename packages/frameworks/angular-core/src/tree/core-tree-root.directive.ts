@@ -36,7 +36,7 @@ import {
   treeMachine,
 } from "@qualcomm-ui/core/tree"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
-import {TreeCollection, type TreeNode} from "@qualcomm-ui/utils/collection"
+import type {TreeCollection, TreeNode} from "@qualcomm-ui/utils/collection"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 

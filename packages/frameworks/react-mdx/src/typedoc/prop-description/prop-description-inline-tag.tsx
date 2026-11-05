@@ -5,7 +5,7 @@ import type {ReactNode} from "react"
 
 import type {QuiInlineTagDisplayPart} from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionLink} from "./prop-description-link"
+import {PropDescriptionLink} from "./prop-description-link.js"
 
 interface Props {
   inlineTag: QuiInlineTagDisplayPart

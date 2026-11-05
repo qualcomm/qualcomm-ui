@@ -3,8 +3,8 @@
 
 import type {ReactElement} from "react"
 
-import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 import {useTextInputHint} from "@qualcomm-ui/react-core/text-input"
+import {InputHint, type InputHintProps} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TextInputHintProps extends InputHintProps {}

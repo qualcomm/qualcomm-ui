@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {PageSection} from "../docs-plugin.types"
+import type {PageSection} from "../docs-plugin.types.js"
 
 export interface FormattedContent {
   content: string

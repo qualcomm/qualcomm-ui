@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {SelectApiProps} from "./select.types"
+import type {SelectApiProps} from "./select.types.js"
 
 const selectProps: (keyof SelectApiProps)[] = createProps<SelectApiProps>()(
   "closeOnSelect",

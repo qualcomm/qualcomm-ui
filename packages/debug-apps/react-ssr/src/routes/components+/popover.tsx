@@ -1,13 +1,13 @@
-import {PopoverCompositeDemo as CompositeDemo} from "@qualcomm-ui/react-docs/components+/popover+/demos/popover-composite-demo"
-import {PopoverSimpleDemo as SimpleDemo} from "@qualcomm-ui/react-docs/components+/popover+/demos/popover-simple-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: CompositeDemo, title: "Composite"},
-  {component: SimpleDemo, title: "Simple"},
-]
+const componentName = "popover"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/popover+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function PopoverDemos() {
-  return <DemoPageLayout componentName="popover" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

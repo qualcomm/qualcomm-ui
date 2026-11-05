@@ -3,7 +3,7 @@ import {mkdir, readFile, rm, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
 import {run as ncu} from "npm-check-updates"
-import {parseDocument, YAMLMap} from "yaml"
+import {parseDocument, type YAMLMap} from "yaml"
 
 const cli = program
   .name("check-catalog-versions")

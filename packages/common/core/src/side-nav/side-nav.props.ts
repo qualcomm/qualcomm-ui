@@ -3,7 +3,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {SideNavApiProps} from "./side-nav.types"
+import type {SideNavApiProps} from "./side-nav.types.js"
 
 export const sideNavProps: (keyof SideNavApiProps)[] =
   createProps<SideNavApiProps>()(

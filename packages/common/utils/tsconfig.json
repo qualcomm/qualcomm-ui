@@ -1,21 +1,14 @@
 {
-  "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      // fixes WebStorm usage detection, not used otherwise
-      "@qualcomm-ui/utils/*": ["./src/*/index.ts"]
-    },
-  },
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
     },
     {
       "path": "./tsconfig.spec.json"
     }
   ]
 }
-

@@ -1,5 +1,79 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.5.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-utils]: add calendar date utilities ([4937390](https://github.com/qualcomm/qualcomm-ui/commit/4937390))
+
+## 1.4.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Code Refactoring
+
+* [filter]: prefer locale-aware substring matches ([6cd18e0](https://github.com/qualcomm/qualcomm-ui/commit/6cd18e0))
+
+## 1.3.3
+
+Aug 16th, 2026
+
+### Bug Fixes
+
+- [machine]: add type polyfill for TS 6 compat ([70acec1](https://github.com/qualcomm/qualcomm-ui/commit/70acec1))
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+## 1.3.2
+
+Jun 10th, 2026
+
+### Styles
+
+- apply lint updates ([6245b86](https://github.com/qualcomm/qualcomm-ui/commit/6245b86))
+
+### Bug Fixes
+
+- properly account for index in forEach refactor ([eaf76b1](https://github.com/qualcomm/qualcomm-ui/commit/eaf76b1))
+
+### Code Refactoring
+
+- support nodenext resolution ([a4055d1](https://github.com/qualcomm/qualcomm-ui/commit/a4055d1))
+
+## 1.3.1
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+
+## 1.3.0
+
+May 14th, 2026
+
+### Features
+
+- [file-upload]: add shared file upload primitives ([c6f26f5](https://github.com/qualcomm/qualcomm-ui/commit/c6f26f5))
+
+## 1.2.4
+
+May 1st, 2026
+
+### Code Refactoring
+
+- [tree]: use replaceChildren instead of manual node spread in expandBranches ([4dc7f37](https://github.com/qualcomm/qualcomm-ui/commit/4dc7f37))
+
 ## 1.2.3
 
 Apr 19th, 2026

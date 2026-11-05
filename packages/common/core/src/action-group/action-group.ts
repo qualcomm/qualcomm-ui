@@ -3,7 +3,7 @@
 
 import type {AnatomyPart} from "@qualcomm-ui/utils/anatomy"
 
-import {actionGroupAnatomy} from "./action-group.anatomy"
+import {actionGroupAnatomy} from "./action-group.anatomy.js"
 
 /**
  * @deprecated

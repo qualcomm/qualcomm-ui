@@ -1,1 +1,1 @@
-export * from "./inline-notification.dom"
+export * from "./inline-notification.dom.js"

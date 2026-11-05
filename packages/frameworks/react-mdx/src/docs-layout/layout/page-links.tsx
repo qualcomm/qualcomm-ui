@@ -3,69 +3,42 @@
 
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
-import {ChevronLeft, ChevronRight} from "lucide-react"
-
 import type {NavItem} from "@qualcomm-ui/mdx-common"
-import {Link} from "@qualcomm-ui/react/link"
 import {
   bindingRenderProp,
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {
-  type MdxDocsContextValue,
-  useMdxDocsContext,
+  type DocsRuntimeContextValue,
+  useDocsRuntimeContext,
+  useDocsPageContext,
 } from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
-import {capitalCase} from "@qualcomm-ui/utils/change-case"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {TreeCollection} from "@qualcomm-ui/utils/collection"
 
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
-
 interface PageLinkProp {
-  currentPage?: NavItem | false
   pageLink: NavItem
   prev?: boolean
-  renderLink: MdxDocsContextValue["renderLink"]
+  renderLink: DocsRuntimeContextValue["renderLink"]
 }
 
 function PageLink({
-  currentPage,
   pageLink,
   prev,
   renderLink: RenderLink,
 }: PageLinkProp): ReactNode {
-  const pathSegments = currentPage ? currentPage.pathSegments : []
-  const nextPathSegments = pageLink.pathSegments
-  const pathSegment =
-    nextPathSegments[0] !== pathSegments[0]
-      ? capitalCase(nextPathSegments[0] ?? "")
-      : ""
-
   return bindingRenderProp(<RenderLink href={pageLink.pathname!} />, {
     children: (
       <>
-        <span className="qui-page-link__container">
-          {prev ? (
-            <Link render={<div />} startIcon={ChevronLeft}>
-              {pageLink.title}
-            </Link>
-          ) : (
-            <Link endIcon={ChevronRight} render={<div />}>
-              {pageLink.title}
-            </Link>
-          )}
-
-          {pathSegment && pathSegment !== pageLink.title ? (
-            <div
-              className="qui-page-link__adjacent-route-title"
-              data-next={booleanDataAttr(!prev)}
-            >
-              {pathSegment}
-            </div>
-          ) : null}
-        </span>
+        <div
+          className="qui-page-link__next-prev-label"
+          data-next={booleanDataAttr(!prev)}
+        >
+          {prev ? "Previous" : "Next"}
+        </div>
+        <div className="qui-page-link__title">{pageLink.title}</div>
       </>
     ),
     className: "qui-page-link__root",
@@ -76,8 +49,8 @@ function PageLink({
 export interface PageLinksProps extends ElementRenderProp<"div"> {}
 
 export function PageLinks({className, ...props}: PageLinksProps): ReactElement {
-  const {renderLink} = useMdxDocsContext()
-  const {navItems, pathname} = useMdxDocsLayoutContext()
+  const {renderLink} = useDocsRuntimeContext()
+  const {navItems, pathname} = useDocsPageContext()
 
   const flattenedItems = useMemo(
     () =>
@@ -97,7 +70,7 @@ export function PageLinks({className, ...props}: PageLinksProps): ReactElement {
         .filter((item) => item.pathname),
     [navItems],
   )
-  const [prevPage, nextPage, currentPage] = useMemo(
+  const [prevPage, nextPage] = useMemo(
     () => getPageLinks(flattenedItems, pathname),
     [flattenedItems, pathname],
   )
@@ -110,21 +83,12 @@ export function PageLinks({className, ...props}: PageLinksProps): ReactElement {
     >
       <div className="qui-page-links__link-wrapper">
         {prevPage ? (
-          <PageLink
-            currentPage={currentPage}
-            pageLink={prevPage}
-            prev
-            renderLink={renderLink}
-          />
+          <PageLink pageLink={prevPage} prev renderLink={renderLink} />
         ) : null}
       </div>
       <div className="qui-page-links__link-wrapper">
         {nextPage ? (
-          <PageLink
-            currentPage={currentPage}
-            pageLink={nextPage}
-            renderLink={renderLink}
-          />
+          <PageLink pageLink={nextPage} renderLink={renderLink} />
         ) : null}
       </div>
     </PolymorphicElement>

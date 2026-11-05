@@ -1,42 +1,42 @@
 import {
   PaginationContext,
   type PaginationContextProps,
-} from "./pagination-context"
+} from "./pagination-context.js"
 import {
   PaginationNextTrigger,
   type PaginationNextTriggerProps,
-} from "./pagination-next-trigger"
+} from "./pagination-next-trigger.js"
 import {
   PaginationPageButtons,
   type PaginationPageButtonsProps,
-} from "./pagination-page-buttons"
+} from "./pagination-page-buttons.js"
 import {
   PaginationPageItem,
   type PaginationPageItemProps,
-} from "./pagination-page-item"
+} from "./pagination-page-item.js"
 import {
   PaginationPageItems,
   type PaginationPageItemsProps,
-} from "./pagination-page-items"
+} from "./pagination-page-items.js"
 import {
   PaginationPageMetadata,
   type PaginationPageMetadataProps,
-} from "./pagination-page-metadata"
-import {
-  PaginationPageSize,
-  type PaginationPageSizeProps,
-} from "./pagination-page-size"
+} from "./pagination-page-metadata.js"
 import {
   PaginationPageSizeLabel,
   type PaginationPageSizeLabelProps,
-} from "./pagination-page-size-label"
+} from "./pagination-page-size-label.js"
+import {
+  PaginationPageSize,
+  type PaginationPageSizeProps,
+} from "./pagination-page-size.js"
 import {
   PaginationPrevTrigger,
   type PaginationPrevTriggerProps,
-} from "./pagination-prev-trigger"
-import {PaginationRoot, type PaginationRootProps} from "./pagination-root"
+} from "./pagination-prev-trigger.js"
+import {PaginationRoot, type PaginationRootProps} from "./pagination-root.js"
 
-export * from "./qds-pagination-context"
+export * from "./qds-pagination-context.js"
 
 export type {
   PaginationContextProps,

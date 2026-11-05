@@ -90,6 +90,7 @@ export const angularDemoConfig: ApplicationConfig = {
 
         function getQueryParams() {
           const params: Record<string, string> = {}
+          // oxlint-disable-next-line unicorn/no-array-for-each
           new URLSearchParams(window.location.search).forEach((value, key) => {
             params[key] = value
           })

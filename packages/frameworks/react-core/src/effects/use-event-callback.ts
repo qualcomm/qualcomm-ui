@@ -3,7 +3,7 @@
 
 import {useCallback, useRef} from "react"
 
-import {useSafeLayoutEffect} from "./use-safe-layout-effect"
+import {useSafeLayoutEffect} from "./use-safe-layout-effect.js"
 
 /**
  * Inspired by https://github.com/facebook/react/issues/14099#issuecomment-440013892

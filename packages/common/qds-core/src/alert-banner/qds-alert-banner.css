@@ -13,8 +13,8 @@
 
 /* Strong variant colors */
 .qui-alert-banner__root[data-variant="strong"] {
-  --text-color: var(--color-utility-persistent-white);
-  --icon-color: var(--color-utility-persistent-white);
+  --text-color: var(--color-text-neutral-inverse);
+  --icon-color: var(--color-icon-neutral-inverse);
 
   &[data-emphasis="info"] {
     background: var(--color-background-support-info);
@@ -102,7 +102,7 @@
 
 .qui-alert-banner__root .qui-alert-banner__close-button {
   flex-shrink: 0;
-  margin-inline-start: var(--spacing-120);
+  margin-inline-start: calc(var(--spacing-70) + var(--spacing-100));
 }
 
 /* Push action/close-button to the end when description is absent */

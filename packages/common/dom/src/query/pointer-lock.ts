@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {addDomEvent} from "./event"
+import {addDomEvent} from "./event.js"
 
 export function requestPointerLock(
   doc: Document,
@@ -43,7 +43,9 @@ export function requestPointerLock(
   ]
 
   return () => {
-    cleanup.forEach((cleanup) => cleanup())
+    for (const cleanup1 of cleanup) {
+      cleanup1()
+    }
     doc.exitPointerLock()
   }
 }

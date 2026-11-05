@@ -36,6 +36,8 @@ export class CoreMenuRadioItemDirective
   })
 
   ngOnInit() {
+    this.listenForSelect()
+
     this.trackBindings()
 
     this.menuOptionItemService.init(

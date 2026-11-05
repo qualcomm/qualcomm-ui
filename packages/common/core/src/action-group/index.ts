@@ -1,2 +1,2 @@
-export * from "./action-group"
-export * from "./action-group.anatomy"
+export * from "./action-group.js"
+export * from "./action-group.anatomy.js"

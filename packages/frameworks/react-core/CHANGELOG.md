@@ -1,5 +1,237 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.10.0
+
+Oct 20th, 2026
+
+### Features
+
+* add image-viewer component ([0cf432e](https://github.com/qualcomm/qualcomm-ui/commit/0cf432e))
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+
+### Code Refactoring
+
+* [image-viewer]: use popup approach for interactive image ([49b09e3](https://github.com/qualcomm/qualcomm-ui/commit/49b09e3))
+
+### Bug Fixes
+
+* [menu]: emit `selected`/`onSelect` on checkbox and radio items ([2817557](https://github.com/qualcomm/qualcomm-ui/commit/2817557bb3fbfb120171d71ef28b87df498b6ab6))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.0, @qualcomm-ui/dom@1.3.1]
+
+## 1.9.1
+
+Sep 29th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.1]
+
+## 1.9.0
+
+Sep 2nd, 2026
+
+### Features
+
+* [select]: add item group components ([58451e8](https://github.com/qualcomm/qualcomm-ui/commit/58451e8))
+
+## 1.8.0
+
+Aug 31st, 2026
+
+### Features
+
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
+## 1.7.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: add the React date picker ([326b218](https://github.com/qualcomm/qualcomm-ui/commit/326b218))
+
+### Bug Fixes
+
+* [machine]: only clear an element id when it is still the registered one ([19d0b82](https://github.com/qualcomm/qualcomm-ui/commit/19d0b82))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/dom@1.3.0]
+
+## 1.6.1
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
+## 1.6.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+
+### Documentation
+
+* [listbox]: document component usage ([200dad7](https://github.com/qualcomm/qualcomm-ui/commit/200dad7))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
+## 1.5.10
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- [types]: support TS 6.0 ([cb71a86](https://github.com/qualcomm/qualcomm-ui/commit/cb71a86))
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/dom@1.1.6]
+
+## 1.5.9
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7]
+
+## 1.5.8
+
+Jul 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/dom@1.1.5, @qualcomm-ui/core@1.11.6]
+
+## 1.5.7
+
+Jun 10th, 2026
+
+### Miscellaneous Chores
+
+- lint ([996b90a](https://github.com/qualcomm/qualcomm-ui/commit/996b90a))
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.2, @qualcomm-ui/dom@1.1.4, @qualcomm-ui/core@1.11.5]
+
+### Code Refactoring
+
+- support nodenext resolution ([067b4de](https://github.com/qualcomm/qualcomm-ui/commit/067b4de))
+
+### Styles
+
+- apply lint updates ([9fec50d](https://github.com/qualcomm/qualcomm-ui/commit/9fec50d))
+
+## 1.5.6
+
+Jun 5th, 2026
+
+### Bug Fixes
+
+- [useSegmentedControlItem]: add explicit return type ([0318e9d](https://github.com/qualcomm/qualcomm-ui/commit/0318e9d))
+
+## 1.5.5
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.4]
+
+## 1.5.4
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/dom, @qualcomm-ui/utils]
+
+## 1.5.3
+
+Jun 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.5.2
+
+May 29th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.5.1
+
+May 22nd, 2026
+
+### Miscellaneous Chores
+
+- update pnpm and test dependencies ([b175d6a](https://github.com/qualcomm/qualcomm-ui/commit/b175d6a))
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.5.0
+
+May 14th, 2026
+
+### Features
+
+- [file-upload]: add shared file upload primitives ([c6f26f5](https://github.com/qualcomm/qualcomm-ui/commit/c6f26f5))
+- [file-upload]: add framework core bindings ([fcec116](https://github.com/qualcomm/qualcomm-ui/commit/fcec116))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 1.4.7
+
+May 7th, 2026
+
+### Miscellaneous Chores
+
+- [deps]: allow lucide-react v1 ([510b95c](https://github.com/qualcomm/qualcomm-ui/commit/510b95c))
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.4.6
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 1.4.5
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
+## 1.4.4
+
+Apr 29th, 2026
+
+### Bug Fixes
+
+- [menu]: support disabled state for all item variants ([a55faf1](https://github.com/qualcomm/qualcomm-ui/commit/a55faf1))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core]
+
 ## 1.4.3
 
 Apr 23rd, 2026

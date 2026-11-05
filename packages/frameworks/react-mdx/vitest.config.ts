@@ -6,5 +6,8 @@ import {getReactTestConfig} from "@qualcomm-ui/react-test-utils"
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: getReactTestConfig(),
 })

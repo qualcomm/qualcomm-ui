@@ -7,9 +7,9 @@ const demos = [{component: ColumnSizingDemo, title: "Column Sizing"}]
 export default function ColumnSizing() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="column-sizing"
       demos={demos}
-      className="w-full"
     />
   )
 }

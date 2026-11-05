@@ -1,0 +1,7 @@
+interface:
+  display_name: "Behavior-Focused React Testing"
+  short_description: "Write React tests around public behavior"
+  default_prompt: "Use $behavior-focused-react-testing to write or review React component tests for public behavior."
+
+policy:
+  allow_implicit_invocation: true

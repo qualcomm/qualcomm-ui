@@ -6,7 +6,7 @@ import {
   ElementRef,
   inject,
   signal,
-  Type,
+  type Type,
   ViewEncapsulation,
 } from "@angular/core"
 

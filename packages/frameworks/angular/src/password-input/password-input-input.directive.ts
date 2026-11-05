@@ -3,8 +3,8 @@
 
 import {Directive} from "@angular/core"
 
-import {useInputInput} from "@qualcomm-ui/angular/input"
 import {CorePasswordInputInputDirective} from "@qualcomm-ui/angular-core/password-input"
+import {useInputInput} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "input[q-password-input-input]",

@@ -3,7 +3,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {PasswordInputApiProps} from "./password-input.types"
+import type {PasswordInputApiProps} from "./password-input.types.js"
 
 const passwordInputProps: (keyof PasswordInputApiProps)[] =
   createProps<PasswordInputApiProps>()(

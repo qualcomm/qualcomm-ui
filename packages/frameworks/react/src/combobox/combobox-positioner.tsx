@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/combobox"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsComboboxContext} from "./qds-combobox-context"
+import {useQdsComboboxContext} from "./qds-combobox-context.js"
 
 export interface ComboboxPositionerProps extends CoreComboboxPositionerProps {}
 

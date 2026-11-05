@@ -90,7 +90,7 @@ export function StepperSkippableStepsDemo(): ReactElement {
               <Stepper.Label>
                 {s.title}
                 {index === PROMO_STEP && (
-                  <Stepper.Hint>(optional)</Stepper.Hint>
+                  <Stepper.Hint> (optional)</Stepper.Hint>
                 )}
               </Stepper.Label>
             </Stepper.Trigger>

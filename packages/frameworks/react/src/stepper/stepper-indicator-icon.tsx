@@ -6,7 +6,7 @@ import type {ReactElement} from "react"
 import {IconOrNode, type IconOrNodeProps} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsStepperContext} from "./qds-stepper-context"
+import {useQdsStepperContext} from "./qds-stepper-context.js"
 
 export interface StepperIndicatorIconProps extends Omit<
   IconOrNodeProps,

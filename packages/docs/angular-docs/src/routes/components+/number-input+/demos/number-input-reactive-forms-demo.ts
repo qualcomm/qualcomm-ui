@@ -7,9 +7,9 @@ import {
   Validators,
 } from "@angular/forms"
 
+import {requiredNumberValidator} from "@qualcomm-ui/angular-core/number-input"
 import {ErrorTextComponent} from "@qualcomm-ui/angular/input"
 import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
-import {requiredNumberValidator} from "@qualcomm-ui/angular-core/number-input"
 
 function aspectRatioValidator(
   control: AbstractControl,

@@ -17,8 +17,8 @@ import {
   type MachineConfig,
 } from "@qualcomm-ui/utils/machine"
 
-import {domEls} from "./internal"
-import type {SwitchSchema} from "./switch.types"
+import {domEls} from "./internal/index.js"
+import type {SwitchSchema} from "./switch.types.js"
 
 const {not} = createGuards<SwitchSchema>()
 

@@ -4,9 +4,10 @@
 import type {TocHeading} from "@qualcomm-ui/mdx-common"
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
-import type {NavConfig} from "../nav-builder/types"
+import type {NavConfig} from "../nav-builder/types.js"
 
 export type RoutingStrategy =
+  | "react-router-directory-groups"
   | "vite-generouted"
   | ((filePath: string) => string[])
 
@@ -171,11 +172,24 @@ export interface SearchIndexerOptions {
   disableCache?: boolean
 
   /**
+   * Whether to disable the legacy built-in search indexer. This has been replaced
+   * with a new semantic search engine.
+   */
+  disableLegacySearchIndex?: boolean
+
+  /**
    * ToC headings.
    *
    * @default ['h2','h3','h4']
    */
   headings?: TocHeading[]
+
+  /**
+   * Lint rules applied to MDX pages during indexing.
+   *
+   * @inheritDoc
+   */
+  lint?: QuiDocsLintOptions
 
   /**
    * Optional property for defining nav item hierarchy and page metadata.
@@ -231,9 +245,37 @@ export interface SearchIndexerOptions {
    * have been assembled. Reports broken page links and fragment references to the
    * build console.
    *
+   * @deprecated use {@link QuiDocsLintOptions.brokenLinks} instead. `false` is
+   * equivalent to `lint.brokenLinks: "off"`.
+   *
    * @default true
    */
   validatePageLinks?: boolean
+}
+
+/**
+ * - `off`: the rule is disabled.
+ * - `warn`: issues are logged to the console.
+ * - `error`: issues are logged in development and fail the production build.
+ */
+export type LintSeverity = "off" | "warn" | "error"
+
+export interface QuiDocsLintOptions {
+  /**
+   * Validates internal links and fragment references after the page map and table
+   * of contents have been assembled.
+   *
+   * @default "warn"
+   */
+  brokenLinks?: LintSeverity
+
+  /**
+   * Requires every MDX page to start with a single h1 title, like
+   * `# {frontmatter.title}`, and reports any additional h1 headings.
+   *
+   * @default "warn"
+   */
+  pageTitle?: LintSeverity
 }
 
 export interface QuiDocsConfig extends Omit<
@@ -288,6 +330,7 @@ export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
    * full path to the cosmiconfig file.
    */
   filePath: string
+  lint: Required<QuiDocsLintOptions>
   pageDirectory: string
 }
 
@@ -296,7 +339,7 @@ export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
  */
 export interface PagesExportConfig {
   /**
-   * Output path for pages.json, relative to the public directory.
+   * Output path for pages.json, relative to the knowledge output directory.
    * @default 'pages.json'
    */
   outputPath?: string
@@ -319,7 +362,7 @@ export interface SectionExportConfig {
   minContentLength?: number
 
   /**
-   * Output path for sections.json, relative to the public directory.
+   * Output path for sections.json, relative to the knowledge output directory.
    * @default 'sections.json'
    */
   outputPath?: string

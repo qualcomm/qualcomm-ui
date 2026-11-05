@@ -3,7 +3,7 @@
 
 import type {AnatomyPart} from "@qualcomm-ui/utils/anatomy"
 
-import type {actionGroupClasses} from "./action-group.classes"
+import type {actionGroupClasses} from "./action-group.classes.js"
 
 export interface QdsActionGroupRootBindings extends AnatomyPart<
   "actionGroup",

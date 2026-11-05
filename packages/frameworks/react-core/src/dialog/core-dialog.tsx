@@ -35,7 +35,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {DialogContextProvider, useDialogContext} from "./dialog-context"
+import {DialogContextProvider, useDialogContext} from "./dialog-context.js"
 
 export interface CoreDialogRootProps extends DialogApiProps, PresenceApiProps {
   /**

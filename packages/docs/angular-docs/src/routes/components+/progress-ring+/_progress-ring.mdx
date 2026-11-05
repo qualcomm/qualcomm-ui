@@ -6,7 +6,7 @@ aliases:
   [circular progress, spinner, activity indicator, radial progress, ring loader]
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -23,9 +23,7 @@ import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 ## Overview
 
 ::: terms
-loading indicator
-busy
-wait
+loading indicator, busy, wait
 :::
 
 The progress ring can be in one of two states:
@@ -34,6 +32,8 @@ The progress ring can be in one of two states:
 - determinate: assumed when the [value](./#value) prop is passed.
 
 Indeterminate progress rings keep users informed that work is happening when timeframes are unknown.
+
+Determinate progress rings display a shimmer effect along the filled arc while loading after 8 seconds. It is suppressed for users who prefer reduced motion. Set the [shimmer](./#shimmer) prop to `false` to turn it off.
 
 ## Examples
 
@@ -78,11 +78,7 @@ Display the value text using the `q-progress-ring-value-text` directive. The val
 ### Sizes
 
 ::: terms
-extra small
-extra large
-small
-medium
-large
+extra small, extra large, small, medium, large
 :::
 
 Use the [size](./#size) prop to change the size of the circle.
@@ -92,18 +88,16 @@ Use the [size](./#size) prop to change the size of the circle.
 ### Thickness
 
 ::: terms
-stroke width
-stroke thickness
-track width
+stroke width, stroke thickness, track width
 :::
 
-Use the [thickness](./#thickness) prop to change the pixel width of the track and bar.
+Use the [thickness](./#thickness-1) prop to change the pixel width of the track and bar.
 
 <QdsDemo name="ProgressRingThicknessDemo" />
 
 ### Disabled
 
-Use the [disabled](./#disabled) prop to indicate that the progress indicator is inactive.
+Use the [disabled](./#disabled-1) prop to indicate that the progress indicator is inactive.
 
 <QdsDemo name="ProgressRingDisabledDemo" />
 
@@ -114,8 +108,24 @@ a11y
 :::
 
 - When the value is supplied, the component automatically provides the corresponding `aria-value*` attributes to the element.
-- The progress element is automatically marked with `role="progressbar"`.
-- The [label](./#label) is automatically associated with the progress ring. If you omit the [label](./#label) property, the `aria-label` of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+- The progress element is automatically marked with [`role="progressbar"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles).
+- The [label](./#label) is automatically associated with the progress ring. If you omit the [label](./#label) property, the [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-progress-ring"
+  name="ProgressRingExplorerDemo"
+  parts={[
+    "root",
+    "label",
+    "circle-container",
+    {name: "circle-track", link: "#q-progress-ring-track"},
+    {name: "circle-bar", link: "#q-progress-ring-bar"},
+    "value-text",
+  ]}
+  scope="progress"
+/>
 
 ## API
 

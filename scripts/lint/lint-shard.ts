@@ -6,7 +6,7 @@ import {dirname, resolve} from "node:path"
 import {cwd} from "node:process"
 import {fileURLToPath} from "node:url"
 
-import type {PackageTiming} from "./types"
+import type {PackageTiming} from "./types.js"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 

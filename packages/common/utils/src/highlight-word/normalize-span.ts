@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {HighlightSpan} from "./types"
+import type {HighlightSpan} from "./types.js"
 
 export function normalizeSpan(
   spans: HighlightSpan[],

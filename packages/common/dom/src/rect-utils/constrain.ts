@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {RectInit} from "./types"
+import type {RectInit} from "./types.js"
 
 // given a rect and a boundary, return a new rect that is constrained within the
 // boundary resize or reposition the rect so that it fits within the boundary

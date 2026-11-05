@@ -1,13 +1,13 @@
-import {InlineIconButtonShowcaseDemo as ShowcaseDemo} from "@qualcomm-ui/react-docs/components+/inline-icon-button+/demos/inline-icon-button-showcase-demo"
-import {InlineIconButtonVariantsDemo as VariantsDemo} from "@qualcomm-ui/react-docs/components+/inline-icon-button+/demos/inline-icon-button-variants-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: ShowcaseDemo, title: "Showcase"},
-  {component: VariantsDemo, title: "Variants"},
-]
+const componentName = "inline-icon-button"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/inline-icon-button+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function InlineIconButtonDemos() {
-  return <DemoPageLayout componentName="inline-icon-button" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

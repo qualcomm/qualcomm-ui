@@ -3,9 +3,9 @@
 
 import type {ElementType, ReactElement} from "react"
 
-import {PolymorphicAsElement} from "./polymorphic-as-element"
-import type {ElementRenderProp} from "./system.types"
-import {bindingRenderProp} from "./system.utils"
+import {PolymorphicAsElement} from "./polymorphic-as-element.js"
+import type {ElementRenderProp} from "./system.types.js"
+import {bindingRenderProp} from "./system.utils.js"
 
 /**
  * @interface

@@ -1,11 +1,7 @@
 import {sync} from "glob"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
-import {describe, expect, test, vi} from "vitest"
-
-vi.mock("node:child_process", () => ({
-  execSync: () => "",
-}))
+import {describe, expect, test} from "vitest"
 
 import {SearchIndexer} from "../search-indexer"
 

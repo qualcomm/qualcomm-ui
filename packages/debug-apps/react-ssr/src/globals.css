@@ -1,6 +1,7 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
+
 @import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 
 @import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
@@ -16,7 +17,6 @@
   font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   --q-font-mono: "Roboto Mono", monospace;
-  --qui-header-height: 48px;
   --q-font-family: "Roboto Flex", sans-serif;
 }
 
@@ -30,15 +30,24 @@
 
 body {
   background: var(--color-background-neutral-00);
-  display: flex;
   margin: 0;
+}
+
+.app-content {
+  display: flex;
   padding: 32px;
 }
 
 .page {
+  align-items: center;
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  width: 100%;
+
+  @media screen and (min-width: 1280px) {
+    align-items: start;
+  }
 }
 
 .section-title {

@@ -1,4 +1,5 @@
 export * from "./alert-banner-action.directive"
+export * from "./alert-banner-button.directive"
 export * from "./alert-banner-close-button.directive"
 export * from "./alert-banner-description.directive"
 export * from "./alert-banner-heading.directive"

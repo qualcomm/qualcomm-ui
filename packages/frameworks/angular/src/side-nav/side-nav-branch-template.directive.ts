@@ -36,7 +36,7 @@ export class SideNavBranchTemplateDirective<T extends TreeNode> {
   template = inject(TemplateRef)
 
   static ngTemplateContextGuard<T extends TreeNode>(
-    dir: SideNavBranchTemplateDirective<T>,
+    _dir: SideNavBranchTemplateDirective<T>,
     _ctx: unknown,
   ): _ctx is SideNavNodeTemplateContext<T> {
     return true

@@ -18,7 +18,7 @@ import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 
-import {usePaginationContext} from "./pagination-context"
+import {usePaginationContext} from "./pagination-context.js"
 
 export interface UsePaginationProps extends PaginationApiProps {}
 

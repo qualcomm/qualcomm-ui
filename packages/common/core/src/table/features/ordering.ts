@@ -4,17 +4,17 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {TableFeature} from "../core/table"
+import type {TableFeature} from "../core/table.js"
 import type {
   Column,
   OnChangeFn,
   RowData,
   TableInstance,
   Updater,
-} from "../types"
-import {makeStateUpdater, memo} from "../utils"
+} from "../types.js"
+import {makeStateUpdater, memo} from "../utils.js"
 
-import {orderColumns} from "./grouping"
+import {orderColumns} from "./grouping.js"
 
 export interface ColumnOrderTableState {
   columnOrder: ColumnOrderState

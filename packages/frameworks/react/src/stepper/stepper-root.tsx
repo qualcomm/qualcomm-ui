@@ -14,7 +14,7 @@ import {
 } from "@qualcomm-ui/react-core/stepper"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsStepperContextProvider} from "./qds-stepper-context"
+import {QdsStepperContextProvider} from "./qds-stepper-context.js"
 
 export interface StepperRootProps
   extends CoreStepperRootProps, QdsStepperApiProps {}

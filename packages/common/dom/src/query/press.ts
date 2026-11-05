@@ -6,10 +6,10 @@
 
 import {noop} from "@qualcomm-ui/utils/functions"
 
-import {addDomEvent, getEventPoint, getEventTarget} from "./event"
-import {contains, getDocument, getWindow} from "./node"
-import {pipe} from "./shared"
-import type {Point} from "./types"
+import {addDomEvent, getEventPoint, getEventTarget} from "./event.js"
+import {contains, getDocument, getWindow} from "./node.js"
+import {pipe} from "./shared.js"
+import type {Point} from "./types.js"
 
 export interface PressDetails {
   /**

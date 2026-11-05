@@ -32,15 +32,18 @@ import {
 import type {CollectionItem} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ComboboxContextProvider, useComboboxContext} from "./combobox-context"
+import {
+  ComboboxContextProvider,
+  useComboboxContext,
+} from "./combobox-context.js"
 import {
   ComboboxItemContextProvider,
   useComboboxItemContext,
-} from "./combobox-item-context"
+} from "./combobox-item-context.js"
 import {
   ComboboxItemGroupContextProvider,
   useComboboxItemGroupContext,
-} from "./combobox-item-group-context"
+} from "./combobox-item-group-context.js"
 
 export interface CoreComboboxRootProps<T extends CollectionItem>
   extends

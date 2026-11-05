@@ -9,8 +9,8 @@ import {
 } from "@qualcomm-ui/react-core/progress"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ProgressBar} from "./progress-bar"
-import {useQdsProgressContext} from "./qds-progress-context"
+import {ProgressBar} from "./progress-bar.js"
+import {useQdsProgressContext} from "./qds-progress-context.js"
 
 export interface ProgressTrackProps extends CoreProgressTrackProps {
   /**

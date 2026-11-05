@@ -1,1 +1,1 @@
-export * from "./use-no-memo"
+export * from "./use-no-memo.js"

@@ -5,7 +5,9 @@ import {cosmiconfig, type CosmiconfigResult, cosmiconfigSync} from "cosmiconfig"
 import {dirname} from "node:path"
 import ts, {type ParsedCommandLine} from "typescript"
 
-export async function loadConfig(configPath?: string) {
+export async function loadConfig(
+  configPath?: string,
+): Promise<CosmiconfigResult> {
   const explorer = cosmiconfig("qui-typedoc")
 
   const result: CosmiconfigResult | null = configPath
@@ -15,7 +17,7 @@ export async function loadConfig(configPath?: string) {
   return result
 }
 
-export function loadConfigSync(configPath?: string) {
+export function loadConfigSync(configPath?: string): CosmiconfigResult {
   const explorer = cosmiconfigSync("qui-typedoc")
 
   const result: CosmiconfigResult | null = configPath
@@ -26,7 +28,7 @@ export function loadConfigSync(configPath?: string) {
 }
 
 // TODO: validate config format with zod
-export async function resolveConfig(configPath?: string) {
+export async function resolveConfig(configPath?: string): Promise<any> {
   const config = await loadConfig(configPath)
   if (!config?.config) {
     throw new Error(
@@ -36,7 +38,7 @@ export async function resolveConfig(configPath?: string) {
   return config.config
 }
 
-export function resolveConfigSync(configPath?: string) {
+export function resolveConfigSync(configPath?: string): any {
   const config = loadConfigSync(configPath)
   if (!config?.config) {
     throw new Error(
@@ -61,7 +63,7 @@ export function resolveTsconfig(
       ts.sys,
       dirname(tsconfigPath),
     )
-  } catch (e) {
+  } catch {
     console.log("Failed to read tsconfig")
     return null
   }

@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {popoverClasses} from "./popover.classes"
+import type {popoverClasses} from "./popover.classes.js"
 
 export type QdsPopoverEmphasis = "neutral" | "brand"
 

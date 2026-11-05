@@ -1,10 +1,10 @@
 import {Component, signal} from "@angular/core"
-import {Plus} from "lucide-angular"
+import {LucidePlus} from "@lucide/angular"
 
-import {ButtonModule} from "@qualcomm-ui/angular/button"
-import {TabsModule} from "@qualcomm-ui/angular/tabs"
 import {LoremIpsumDirective} from "@qualcomm-ui/angular-core/lorem-ipsum"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {TabsModule} from "@qualcomm-ui/angular/tabs"
 
 interface Item {
   content: string
@@ -14,7 +14,7 @@ interface Item {
 
 @Component({
   imports: [TabsModule, LoremIpsumDirective, ButtonModule],
-  providers: [provideIcons({Plus})],
+  providers: [provideIcons({LucidePlus})],
   selector: "tabs-add-remove-demo",
   template: `
     <div

@@ -3,9 +3,9 @@
 
 import {Directive} from "@angular/core"
 
-import {useInputInput} from "@qualcomm-ui/angular/input"
 import {useForbiddenFormControlWarning} from "@qualcomm-ui/angular-core/forms"
 import {CoreTextInputInputDirective} from "@qualcomm-ui/angular-core/text-input"
+import {useInputInput} from "@qualcomm-ui/angular/input"
 
 /**
  * The text input element. Note: do not apply form control bindings like `ngModel`

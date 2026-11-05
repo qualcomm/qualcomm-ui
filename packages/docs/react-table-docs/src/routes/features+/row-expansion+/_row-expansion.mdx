@@ -3,29 +3,19 @@ title: Row Expansion
 component: Table
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 import {Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
 
 ::: terms
-ExpandedState
-getExpandedRowModel
-getSubRows
-RowExpandButton
-getToggleAllRowsExpandedHandler
-expandable rows
-collapsible rows
-tree table
-hierarchical table
-nested table rows
-drill-down
-accordion rows
+ExpandedState, getExpandedRowModel, getSubRows, RowExpandButton, getToggleAllRowsExpandedHandler, expandable rows, collapsible rows, tree table, hierarchical table, nested table rows, drill-down, accordion rows
 :::
 
 Row expansion enables tables to display hierarchical data by allowing rows to expand and reveal nested sub-rows. This is useful for representing parent-child relationships, grouped data, or tree structures within a table.
 
 The demo below shows a table with expandable rows containing nested data. Each row with children displays an expand button that toggles visibility of its sub-rows. The header includes an expand-all button that expands or collapses all rows at once. Visual indentation indicates the depth level of each row in the hierarchy.
+
+---
 
 <Demo expanded name="RowExpansionDemo" component={demos.RowExpansionDemo} />

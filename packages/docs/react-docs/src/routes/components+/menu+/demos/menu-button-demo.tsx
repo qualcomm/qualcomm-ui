@@ -10,8 +10,8 @@ import {
   Trash2,
 } from "lucide-react"
 
-import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Menu} from "@qualcomm-ui/react/menu"
 
 export function MenuButtonDemo(): ReactElement {
   return (
@@ -42,7 +42,7 @@ export function MenuButtonDemo(): ReactElement {
         </Portal>
       </Menu.Root>
 
-      <Menu.Root>
+      <Menu.Root size="sm">
         <Menu.Trigger>
           <Menu.IconButton
             aria-label="More actions"

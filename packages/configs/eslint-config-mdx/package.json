@@ -1,43 +1,78 @@
 {
   "name": "@qualcomm-ui/eslint-config-mdx",
-  "version": "2.0.1",
+  "version": "4.0.1",
   "description": "QUI ESLint config for consistent MDX code",
-  "author": "Ryan Bower",
+  "keywords": [
+    "config",
+    "eslint",
+    "react"
+  ],
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "files": [
+    "dist/",
+    ".remarkrc"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./remarkrc": {
+      "types": "./dist/remarkrc.d.ts",
+      "import": "./dist/remarkrc.js",
+      "default": "./dist/remarkrc.js"
+    },
+    "./remark-lint-code-format": {
+      "types": "./dist/remark-lint-code-format.d.ts",
+      "import": "./dist/remark-lint-code-format.js",
+      "default": "./dist/remark-lint-code-format.js"
+    },
+    "./remark-lint-mdx-jsx-format": {
+      "types": "./dist/remark-lint-mdx-jsx-format.d.ts",
+      "import": "./dist/remark-lint-mdx-jsx-format.js",
+      "default": "./dist/remark-lint-mdx-jsx-format.js"
+    },
+    "./remark-preserve-alert-markers": {
+      "types": "./dist/remark-preserve-alert-markers.d.ts",
+      "import": "./dist/remark-preserve-alert-markers.js",
+      "default": "./dist/remark-preserve-alert-markers.js"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
-  "sideEffects": false,
-  "files": [
-    "index.d.ts",
-    "index.js",
-    "recommended.js",
-    ".remarkrc"
-  ],
-  "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js",
-      "default": "./index.js"
-    },
-    "./remarkrc": {
-      "types": "./remarkrc.d.ts",
-      "import": "./remarkrc.js",
-      "default": "./remarkrc.js"
-    }
-  },
   "scripts": {
-    "prepublishOnly": "qui-cli pre-publish",
+    "build": "run-s clean build:js build:types",
+    "build:js": "vite build",
+    "build:types": "tsc -p tsconfig.lib.json",
+    "build:watch": "run-p watch:js watch:types",
+    "watch:js": "vite build -w",
+    "watch:types": "tsc -p tsconfig.lib.json -w --preserveWatchOutput",
+    "clean": "shx rm -rf dist node_modules/.tmp",
+    "lint": "eslint --quiet",
+    "test": "turbo build --filter @qualcomm-ui/eslint-config-mdx && vitest -c vitest.config.ts --run",
+    "test:unit:ci": "pnpm build && cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads --no-file-parallelism",
+    "prepublishOnly": "pnpm build && qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
     "@eslint/core": "^1.0.0",
     "@qualcomm-ui/cli": "catalog:",
+    "@qualcomm-ui/tsconfig": "catalog:",
+    "@qualcomm-ui/vite": "catalog:",
+    "cross-env": "^10.1.0",
+    "eslint": "catalog:",
     "eslint-mdx": "^3.7.0",
     "eslint-plugin-mdx": "^3.7.0",
     "eslint-plugin-react": "^7.37.5",
+    "npm-run-all2": "catalog:",
+    "oxfmt": "catalog:",
     "remark-frontmatter": "^5.0.0",
     "remark-lint-fenced-code-flag": "^4.2.0",
     "remark-lint-final-newline": "^3.0.1",
@@ -49,13 +84,19 @@
     "remark-lint-no-duplicate-headings-in-section": "^4.0.1",
     "remark-lint-no-heading-punctuation": "^4.0.1",
     "remark-lint-unordered-list-marker-style": "^4.0.1",
-    "unified": "^11.0.5"
+    "shx": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "unified": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "eslint": ">=9.37.0",
     "eslint-mdx": ">=3.7.0",
     "eslint-plugin-mdx": ">=3.7.0",
     "eslint-plugin-react": ">=7.37.5",
+    "oxfmt": ">=0.75.0",
     "remark-frontmatter": ">=5.0.0",
     "remark-lint-fenced-code-flag": ">=4.2.0",
     "remark-lint-final-newline": ">=3.0.1",
@@ -67,13 +108,8 @@
     "remark-lint-no-duplicate-headings-in-section": ">=4.0.1",
     "remark-lint-no-heading-punctuation": ">=4.0.1",
     "remark-lint-unordered-list-marker-style": ">=4.0.1",
-    "typescript": ">=5.9.3",
-    "typescript-eslint": ">=8.31.1",
+    "typescript": ">=6.0.3",
+    "typescript-eslint": ">=8.67.0",
     "unified": ">=11"
-  },
-  "keywords": [
-    "eslint",
-    "config",
-    "react"
-  ]
+  }
 }

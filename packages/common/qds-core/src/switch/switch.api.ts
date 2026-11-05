@@ -4,7 +4,7 @@
 import {inputClasses} from "@qualcomm-ui/qds-core/input"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {switchClasses} from "./switch.classes"
+import {switchClasses} from "./switch.classes.js"
 import type {
   QdsSwitchApi,
   QdsSwitchApiProps,
@@ -15,7 +15,7 @@ import type {
   QdsSwitchLabelBindings,
   QdsSwitchRootBindings,
   QdsSwitchThumbBindings,
-} from "./switch.types"
+} from "./switch.types.js"
 
 export function createQdsSwitchApi(
   props: QdsSwitchApiProps,

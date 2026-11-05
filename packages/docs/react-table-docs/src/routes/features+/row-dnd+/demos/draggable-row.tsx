@@ -1,5 +1,9 @@
 import {useEffect, useRef, useState} from "react"
 
+import {
+  attachClosestEdge,
+  extractClosestEdge,
+} from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge"
 import {combine} from "@atlaskit/pragmatic-drag-and-drop/combine"
 import {
   draggable,
@@ -7,10 +11,6 @@ import {
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 import {pointerOutsideOfPreview} from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview"
 import {setCustomNativeDragPreview} from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview"
-import {
-  attachClosestEdge,
-  extractClosestEdge,
-} from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge"
 
 import type {DragState} from "@qualcomm-ui/core/dnd"
 import type {Row} from "@qualcomm-ui/core/table"

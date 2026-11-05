@@ -12,7 +12,7 @@ import {type User, UserDataService} from "./user-data.service"
   selector: "app-editable-status-cell",
   template: `
     <q-select
-      aria-label="Account Status"
+      aria-label="Test select"
       clearable="false"
       size="sm"
       [collection]="collection"

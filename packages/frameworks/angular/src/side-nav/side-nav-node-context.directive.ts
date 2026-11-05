@@ -26,7 +26,7 @@ export class SideNavNodeContextDirective<
   }
 
   static ngTemplateContextGuard<T extends TreeNode>(
-    dir: SideNavNodeContextDirective<T>,
+    _dir: SideNavNodeContextDirective<T>,
     _ctx: unknown,
   ): _ctx is {$implicit: NodeState<T>} {
     return true

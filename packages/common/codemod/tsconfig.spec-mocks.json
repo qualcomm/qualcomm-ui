@@ -1,0 +1,17 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.vitest.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./src",
+    "noCheck": true,
+    "outDir": "node_modules/.tmp/out-spec-mocks",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec-mocks",
+    "types": ["node"]
+  },
+  "include": ["./src/**/mocks"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

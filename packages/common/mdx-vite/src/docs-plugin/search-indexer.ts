@@ -14,14 +14,19 @@ import type {
 import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 import {defined} from "@qualcomm-ui/utils/guard"
 
-import type {SearchIndexerOptions} from "./config"
-import {DocPropsIndexer} from "./doc-props"
 import {
+  type QuiDocsLintOptions,
+  resolveLintOptions,
+  type SearchIndexerOptions,
+} from "./config/index.js"
+import {DocPropsIndexer} from "./doc-props/index.js"
+import {
+  collectAnchorIds,
   type CollectedLink,
   collectLinks,
   reportInvalidLinks,
   validateLinks,
-} from "./link-validator"
+} from "./link-validator.js"
 import {
   buildGitMetadataMap,
   type CompiledMdxFile,
@@ -30,11 +35,11 @@ import {
   type IndexedPage,
   type IndexedSection,
   MdxFileReader,
-} from "./markdown"
+} from "./markdown/index.js"
 import {
   type PageInfo,
   SectionExtractor,
-} from "./markdown/knowledge/section-extractor"
+} from "./markdown/knowledge/section-extractor.js"
 import {
   filterFileGlob,
   getCategoriesFromPathSegments,
@@ -43,9 +48,23 @@ import {
   getRouteMeta,
   NavBuilder,
   transformRouteMetaArray,
-} from "./nav-builder"
-import type {RouteMetaInternal, RouteMetaNavInternal} from "./nav-builder/types"
-import {fixPath} from "./path-utils"
+} from "./nav-builder/index.js"
+import type {
+  RouteMetaInternal,
+  RouteMetaNavInternal,
+} from "./nav-builder/types.js"
+import {
+  type PageTitleIssue,
+  reportPageTitleIssues,
+  validatePageTitle,
+} from "./page-title-validator.js"
+import {fixPath} from "./path-utils.js"
+import {remarkSerializeJsxKnowledge} from "./remark/index.js"
+
+interface PageRoute {
+  filePath: string
+  pathSegments: string[]
+}
 
 export class SearchIndexer {
   private readonly docPropsIndexer: DocPropsIndexer
@@ -55,10 +74,24 @@ export class SearchIndexer {
   private readonly allowedHeadings: Set<string>
   private readonly metaJson: RouteMetaInternal
   private _collectedLinks: CollectedLink[] = []
+  private _anchorIds: Record<string, Set<string>> = {}
   private _docPropIds: Record<string, Set<string>> = {}
+  private _invalidLinkCount = 0
+  private _pageTitleIssues: PageTitleIssue[] = []
+  private readonly lint: Required<QuiDocsLintOptions>
   private readonly routeMetaNav: Record<string, RouteMetaNavInternal> = {}
   readonly config: SearchIndexerOptions
   logWarnings: boolean
+
+  /**
+   * Number of issues found by lint rules set to `"error"` during the last build.
+   */
+  get lintErrorCount(): number {
+    return (
+      (this.lint.brokenLinks === "error" ? this._invalidLinkCount : 0) +
+      (this.lint.pageTitle === "error" ? this._pageTitleIssues.length : 0)
+    )
+  }
 
   get cachedFileCount(): number {
     return this.mdxFileReader.cachedFileCount
@@ -73,6 +106,11 @@ export class SearchIndexer {
     return this._mdxFileCount
   }
   private _mdxFileCount: number = 0
+
+  get ignoredMdxFiles(): ReadonlySet<string> {
+    return this._ignoredMdxFiles
+  }
+  private _ignoredMdxFiles = new Set<string>()
 
   get navItems(): NavItem[] {
     return this.navBuilder.navItems
@@ -91,7 +129,12 @@ export class SearchIndexer {
   reset(): void {
     this.mdxFileReader.reset()
     this._collectedLinks = []
+    this._anchorIds = {}
     this._docPropIds = {}
+    this._invalidLinkCount = 0
+    this._pageTitleIssues = []
+    this._ignoredMdxFiles = new Set()
+    this._pageDocProps = {}
     this._pageMap = {}
     this._searchIndex = []
   }
@@ -108,6 +151,7 @@ export class SearchIndexer {
     } = {},
   ) {
     this.config = config
+    this.lint = resolveLintOptions(config)
     this.logWarnings = logWarnings
     this.allowedHeadings = new Set<string>(
       Array.from(config?.headings || ["h2", "h3", "h4"]),
@@ -141,16 +185,10 @@ export class SearchIndexer {
    * RouteMeta properties take precedence.
    */
   private getPageEntry(
-    filepath: string,
+    {filePath, pathSegments}: PageRoute,
     frontmatter: Partial<PageFrontmatter>,
   ): PageSection {
-    const pagePath = filepath.replace(this.config.srcDir, "")
-
-    const pathSegments = getPathSegmentsFromFileName(
-      pagePath,
-      this.config.pageDirectory,
-      this.config.routingStrategy,
-    )
+    const pagePath = filePath.replace(this.config.srcDir, "")
 
     const pathname = getPathnameFromPathSegments(pathSegments)
 
@@ -208,7 +246,8 @@ export class SearchIndexer {
    * Parses an MDX file to extract the site data for the nav items, doc props,
    * breadcrumbs, and search index.
    */
-  private compileMdxFile(filePath: string): CompiledMdxFile {
+  private compileMdxFile(route: PageRoute): CompiledMdxFile {
+    const {filePath} = route
     const {cached, fileContents, frontmatter} =
       this.mdxFileReader.readFileSync(filePath)
 
@@ -233,7 +272,7 @@ export class SearchIndexer {
 
     this.docPropsIndexer.reset()
 
-    const defaultSection: PageSection = this.getPageEntry(filePath, frontmatter)
+    const defaultSection: PageSection = this.getPageEntry(route, frontmatter)
     if (!defaultSection.categories.length && defaultSection.title) {
       defaultSection.categories = [defaultSection.title]
     }
@@ -245,10 +284,32 @@ export class SearchIndexer {
     this._pageMap[defaultSection.pathname] = defaultSection
 
     let indexedPage: IndexedPage
+    let collectedLinks: CollectedLink[] = []
+    const shouldValidateLinks = this.lint.brokenLinks !== "off"
 
     try {
+      if (shouldValidateLinks || this.lint.pageTitle !== "off") {
+        const rawTree = createRemarkProcessor({
+          frontmatter: true,
+          mdx: true,
+        }).parse(fileContents)
+        if (shouldValidateLinks) {
+          const anchorIds = collectAnchorIds(rawTree)
+          if (anchorIds.size) {
+            this._anchorIds[defaultSection.pathname] = anchorIds
+          }
+        }
+        if (this.lint.pageTitle !== "off") {
+          this._pageTitleIssues.push(
+            ...validatePageTitle(rawTree, filePath, defaultSection.pathname),
+          )
+        }
+      }
+
       if (cached?.page) {
         indexedPage = cached.page
+        collectedLinks = cached.collectedLinks
+        this._collectedLinks.push(...collectedLinks)
       } else {
         const processor = createRemarkProcessor({
           alerts: true,
@@ -257,15 +318,15 @@ export class SearchIndexer {
           gfm: true,
           interpolateFrontmatter: frontmatter,
           mdx: true,
+          plugins: [remarkSerializeJsxKnowledge],
           removeJsx: true,
           removeMermaidCodeBlocks: true,
         })
         const tree = processor.runSync(processor.parse(fileContents)) as Root
 
-        if (this.config.validatePageLinks) {
-          this._collectedLinks.push(
-            ...collectLinks(tree, filePath, defaultSection.pathname),
-          )
+        if (shouldValidateLinks) {
+          collectedLinks = collectLinks(tree, filePath, defaultSection.pathname)
+          this._collectedLinks.push(...collectedLinks)
         }
 
         const pageInfo: PageInfo = {
@@ -324,7 +385,7 @@ export class SearchIndexer {
     if (hasDocProps) {
       this._pageDocProps[defaultSection.pathname] = docProps
 
-      if (this.config.validatePageLinks) {
+      if (shouldValidateLinks) {
         const ids = new Set<string>()
         for (const section of docPropSections) {
           if (section.heading?.id) {
@@ -339,6 +400,7 @@ export class SearchIndexer {
 
     if (!cached) {
       this.mdxFileReader.updateCache(filePath, fileContents, {
+        collectedLinks,
         frontmatter,
         page: indexedPage,
         pageDocProps: docProps,
@@ -405,8 +467,8 @@ export class SearchIndexer {
     })
   }
 
-  private compileTsxFile(filepath: string) {
-    const entry = this.getPageEntry(filepath, {})
+  private compileTsxFile(route: PageRoute) {
+    const entry = this.getPageEntry(route, {})
 
     const routeMeta = getRouteMeta(
       entry.pathSegments.length === 0 ? ["_index"] : entry.pathSegments,
@@ -426,6 +488,17 @@ export class SearchIndexer {
     return entry
   }
 
+  private getPageRoute(filePath: string): PageRoute {
+    return {
+      filePath,
+      pathSegments: getPathSegmentsFromFileName(
+        filePath.replace(this.config.srcDir, ""),
+        this.config.pageDirectory,
+        this.config.routingStrategy,
+      ),
+    }
+  }
+
   buildIndex(
     inputFileGlob: string[],
     logWarnings: boolean = true,
@@ -437,14 +510,49 @@ export class SearchIndexer {
     this.navBuilder.reset()
     this.reset()
 
-    const mdxFileGlob = filterFileGlob(
+    const mdxRoutes = filterFileGlob(
       fileGlob,
       "mdx",
       this.config.srcDir,
       this.config.routingStrategy,
-    )
+    ).map((file) => this.getPageRoute(file))
 
-    this._mdxFileCount = mdxFileGlob.length
+    const tsxRoutes = filterFileGlob(
+      fileGlob,
+      "tsx",
+      this.config.srcDir,
+      this.config.routingStrategy,
+    )
+      .map((file) => this.getPageRoute(file))
+      .filter(({pathSegments}) =>
+        getRouteMeta(
+          pathSegments.length ? pathSegments : ["_index"],
+          this.metaJson,
+        ),
+      )
+
+    const parentPathnames = new Set<string>()
+    for (const {pathSegments} of [...mdxRoutes, ...tsxRoutes]) {
+      // Start at one segment to preserve the root home page.
+      for (let depth = 1; depth < pathSegments.length; depth++) {
+        parentPathnames.add(
+          getPathnameFromPathSegments(pathSegments.slice(0, depth)),
+        )
+      }
+    }
+
+    const isParentRoute = ({pathSegments}: PageRoute) =>
+      parentPathnames.has(getPathnameFromPathSegments(pathSegments))
+
+    const mdxPageRoutes = mdxRoutes.filter((route) => {
+      if (isParentRoute(route)) {
+        this._ignoredMdxFiles.add(route.filePath)
+        return false
+      }
+      return true
+    })
+
+    this._mdxFileCount = mdxPageRoutes.length
     if (
       !this.mdxFileReader.enabled ||
       this.mdxFileReader.gitMetadataMap.size === 0
@@ -455,30 +563,41 @@ export class SearchIndexer {
       )
     }
 
-    const compiledFiles = mdxFileGlob.map((file) => this.compileMdxFile(file))
+    const compiledFiles = mdxPageRoutes.map((route) =>
+      this.compileMdxFile(route),
+    )
 
     const mdxIndex = compiledFiles
       .map((fileData) => fileData.pageSections)
       .flat()
 
-    filterFileGlob(
-      fileGlob,
-      "tsx",
-      this.config.srcDir,
-      this.config.routingStrategy,
-    ).map((file) => this.compileTsxFile(file))
+    for (const route of tsxRoutes) {
+      if (!isParentRoute(route)) {
+        this.compileTsxFile(route)
+      }
+    }
 
-    this._searchIndex.push(...mdxIndex.filter((entry) => !entry.hideFromSearch))
+    if (!this.config.disableLegacySearchIndex) {
+      this._searchIndex.push(
+        ...mdxIndex.filter((entry) => !entry.hideFromSearch),
+      )
+    }
 
     this.navBuilder.build()
 
-    if (this.config.validatePageLinks) {
+    if (this.lint.brokenLinks !== "off") {
       const invalidLinks = validateLinks(
         this._collectedLinks,
         this._pageMap,
         this._docPropIds,
+        this._anchorIds,
       )
-      reportInvalidLinks(invalidLinks)
+      this._invalidLinkCount = invalidLinks.length
+      reportInvalidLinks(invalidLinks, this.lint.brokenLinks)
+    }
+
+    if (this.lint.pageTitle !== "off") {
+      reportPageTitleIssues(this._pageTitleIssues, this.lint.pageTitle)
     }
 
     return compiledFiles

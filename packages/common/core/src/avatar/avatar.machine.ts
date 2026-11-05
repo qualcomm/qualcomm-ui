@@ -7,8 +7,8 @@
 import {observeAttributes, observeChildren} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import type {AvatarSchema} from "./avatar.types"
-import {domEls} from "./internal"
+import type {AvatarSchema} from "./avatar.types.js"
+import {domEls} from "./internal/index.js"
 
 export const avatarMachine: MachineConfig<AvatarSchema> =
   createMachine<AvatarSchema>({

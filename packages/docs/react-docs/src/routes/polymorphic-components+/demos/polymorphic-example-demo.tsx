@@ -1,10 +1,10 @@
 import type {ReactElement, ReactNode} from "react"
 
-import {Button} from "@qualcomm-ui/react/button"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {Button} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 interface AlertButtonProps extends ElementRenderProp<"button"> {}

@@ -9,9 +9,9 @@ import {
 } from "@qualcomm-ui/react-core/number-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {NumberInputDecrementTrigger} from "./number-input-decrement-trigger"
-import {NumberInputIncrementTrigger} from "./number-input-increment-trigger"
-import {useQdsNumberInputContext} from "./qds-number-input-context"
+import {NumberInputDecrementTrigger} from "./number-input-decrement-trigger.js"
+import {NumberInputIncrementTrigger} from "./number-input-increment-trigger.js"
+import {useQdsNumberInputContext} from "./qds-number-input-context.js"
 
 export interface NumberInputControlProps extends CoreNumberInputControlProps {}
 

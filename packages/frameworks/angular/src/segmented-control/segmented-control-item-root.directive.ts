@@ -3,9 +3,9 @@
 
 import {computed, Directive} from "@angular/core"
 
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideCheckboxContext} from "@qualcomm-ui/angular-core/checkbox"
 import {CoreSegmentedControlItemDirective} from "@qualcomm-ui/angular-core/segmented-control"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 
 import {useQdsSegmentedControlContext} from "./qds-segmented-control-context.service"
 

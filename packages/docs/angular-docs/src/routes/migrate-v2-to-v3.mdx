@@ -1,0 +1,61 @@
+---
+title: Migrate from v2 to v3
+---
+
+# {frontmatter.title}
+
+Use this guide to upgrade an existing `@qualcomm-ui/angular` application from v2 to v3. QUI Angular v3 requires Angular 22.1 or later and replaces the deprecated `lucide-angular` package with `@lucide/angular`.
+
+## Prerequisites
+
+- Angular v22.1 or later.
+- TypeScript 6.0 or later (Angular v22 requirement)
+  - Visit [version compatibility](https://angular.dev/reference/versions) to learn more.
+- `@lucide/angular` v1.31.0 or later. [See below](./#lucide-v0-to-v1-migration)
+
+## Update the dependencies
+
+Update the Angular, QUI, and Lucide dependencies in `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@lucide/angular": "^1.31.0",
+    "@qualcomm-ui/angular": "^3.0.0",
+    "@qualcomm-ui/angular-core": "^3.0.0"
+  }
+}
+```
+
+## Lucide v0 to v1 migration
+
+Lucide v1 introduces breaking changes. Refer to their [migration guide](https://lucide.dev/guide/angular/migration) for more details. Some changes are covered below.
+
+- The lucide team made two significant changes in the v1 update:
+  - The npm package was renamed to `@lucide/angular`
+  - All icon imports are now prefixed with `Lucide`. i.e. they have been renamed from `<IconName>` to `Lucide<IconName>`
+
+### Migration
+
+Update each Lucide import and the corresponding `provideIcons` entry:
+
+```angular-ts
+import {Component} from "@angular/core"
+import {Search} from "lucide-angular" // [!code --]
+import {LucideSearch} from "@lucide/angular" // [!code ++]
+
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+
+@Component({
+  imports: [ButtonModule],
+  providers: [provideIcons({Search})], // [!code --]
+  providers: [provideIcons({LucideSearch})], // [!code ++]
+  template: `
+    <button q-button startIcon="Search">Search</button>
+  `,
+})
+export class SearchButton {}
+```
+
+Existing string icon values such as `startIcon="Search"` and `qIcon="Search"` will continue to work regardless of whether you add the `Lucide` prefix.

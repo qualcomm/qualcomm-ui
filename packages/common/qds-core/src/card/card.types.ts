@@ -7,8 +7,8 @@ import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 
-import type {cardAnatomy} from "./card.anatomy"
-import type {cardClasses} from "./card.classes"
+import type {cardAnatomy} from "./card.anatomy.js"
+import type {cardClasses} from "./card.classes.js"
 
 export type QdsCardVariant = "outline" | "outline-elevated" | "elevated"
 

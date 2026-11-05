@@ -3,8 +3,8 @@
 
 import {Directive, type OnInit} from "@angular/core"
 
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "[q-combobox-icon]",

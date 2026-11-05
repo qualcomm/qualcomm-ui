@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {PanelLeftClose, PanelLeftOpen} from "lucide-angular"
+import {LucidePanelLeftClose, LucidePanelLeftOpen} from "@lucide/angular"
 
-import {useIconButtonApi} from "@qualcomm-ui/angular/button"
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreSideNavTriggerDirective} from "@qualcomm-ui/angular-core/side-nav"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSideNavContext} from "./qds-side-nav-context.service"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({PanelLeftClose, PanelLeftOpen})],
+  providers: [provideIcons({LucidePanelLeftClose, LucidePanelLeftOpen})],
   selector: "[q-side-nav-collapse-trigger]",
   standalone: false,
   template: `

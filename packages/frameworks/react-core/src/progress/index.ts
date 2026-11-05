@@ -13,9 +13,9 @@ import {
   type CoreProgressTrackProps,
   CoreProgressValueText,
   type CoreProgressValueTextProps,
-} from "./core-progress"
+} from "./core-progress.js"
 
-export * from "./progress-context"
+export * from "./progress-context.js"
 
 export type {
   CoreProgressRootProps,

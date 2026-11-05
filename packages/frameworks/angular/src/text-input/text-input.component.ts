@@ -2,21 +2,19 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {booleanAttribute, Component, input} from "@angular/core"
-import {AlertCircle} from "lucide-angular"
 
-import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {provideTextInputContext} from "@qualcomm-ui/angular-core/text-input"
+import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 import {TextInputRootDirective} from "./text-input-root.directive"
 
 @Component({
-  providers: [
-    provideTextInputContext(),
-    provideQdsInputContext(),
-    provideIcons({AlertCircle}),
-  ],
+  host: {
+    "[attr.aria-label]": "undefined",
+    "[attr.aria-labelledby]": "undefined",
+  },
+  providers: [provideTextInputContext(), provideQdsInputContext()],
   selector: "q-text-input:not([q-text-input-root])",
   standalone: false,
   template: `
@@ -26,7 +24,12 @@ import {TextInputRootDirective} from "./text-input-root.directive"
       }
     </ng-content>
     <div q-text-input-input-group>
-      <input q-text-input-input [placeholder]="placeholder()" />
+      <input
+        q-text-input-input
+        [aria-label]="ariaLabel()"
+        [aria-labelledby]="ariaLabelledby()"
+        [placeholder]="placeholder()"
+      />
 
       <ng-content select="[q-text-input-clear-trigger]">
         @if (clearable()) {
@@ -56,6 +59,25 @@ import {TextInputRootDirective} from "./text-input-root.directive"
   `,
 })
 export class TextInputComponent extends TextInputRootDirective {
+  /**
+   * ARIA label applied to the input element. Use this if you omit the {@link
+   * label}
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the input element.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   /**
    * When `true`, renders a clear button that resets the input value on click.
    * The button only appears when the input has a value.

@@ -6,7 +6,7 @@ import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useInlineNotificationContext} from "./inline-notification-context"
+import {useInlineNotificationContext} from "./inline-notification-context.js"
 
 export function useInlineNotificationCloseTrigger({
   id,

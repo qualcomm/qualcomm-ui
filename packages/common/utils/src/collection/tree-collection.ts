@@ -23,7 +23,7 @@ import {
   remove,
   replace,
   visit,
-} from "./tree-visit"
+} from "./tree-visit.js"
 import type {
   DescendantOptions,
   FilePathTreeNode,
@@ -34,7 +34,7 @@ import type {
   TreeCollectionOptions,
   TreeNode,
   TreeSkipOptions,
-} from "./types"
+} from "./types.js"
 
 export class TreeCollection<T> {
   /**
@@ -543,7 +543,7 @@ export class TreeCollection<T> {
       return
     }
     const siblings = this.getNodeChildren(parentNode)
-    let idx = indexPath[indexPath.length - 1]
+    let idx = indexPath.at(-1)!
     while (--idx >= 0) {
       const sibling = siblings[idx]
       if (!this.getNodeDisabled(sibling)) {
@@ -565,7 +565,7 @@ export class TreeCollection<T> {
       return
     }
     const siblings = this.getNodeChildren(parentNode)
-    let idx = indexPath[indexPath.length - 1]
+    let idx = indexPath.at(-1)!
     while (++idx < siblings.length) {
       const sibling = siblings[idx]
       if (!this.getNodeDisabled(sibling)) {
@@ -769,6 +769,19 @@ export class TreeCollection<T> {
   }
 
   /**
+   * Replaces the children for the node at the specified index path.
+   * @param indexPath - Array of indices representing the path to the node
+   * @param children - Array of child nodes to set on the target node
+   */
+  replaceChildren: (indexPath: IndexPath, children: T[]) => TreeCollection<T> =
+    (indexPath: IndexPath, children: T[]): TreeCollection<T> => {
+      const node = this.at(indexPath)
+      return node
+        ? this._replace(this.rootNode, indexPath, this._create(node, children))
+        : this.copy(this.rootNode)
+    }
+
+  /**
    * Removes nodes at the specified index paths.
    * @param indexPaths - Array of index paths to remove
    */
@@ -812,10 +825,7 @@ export class TreeCollection<T> {
     if (!parentNode) {
       return
     }
-    const nextIndex = [
-      ...indexPath.slice(0, -1),
-      indexPath[indexPath.length - 1] + 1,
-    ]
+    const nextIndex = [...indexPath.slice(0, -1), indexPath.at(-1)! + 1]
     return this._insert(this.rootNode, nextIndex, nodes)
   }
 
@@ -901,16 +911,17 @@ export class TreeCollection<T> {
     const groupMap = new Map<string, Array<{indexPath: IndexPath; node: T}>>()
     const children = this.getNodeChildren(parentNode)
 
-    children.forEach((node, index) => {
-      const key = groupBy(node, index)
-      const indexPath = [...parentIndexPath, index]
+    for (let i = 0; i < children.length; i++) {
+      const node = children[i]
+      const key = groupBy(node, i)
+      const indexPath = [...parentIndexPath, i]
       const group = groupMap.get(key)
       if (!group) {
         groupMap.set(key, [{indexPath, node}])
       } else {
         group.push({indexPath, node})
       }
-    })
+    }
 
     const groups = Array.from(groupMap.entries()).map(([key, items]) => ({
       items,
@@ -965,9 +976,9 @@ export function flattenedToTree<T extends TreeNode>(
 
   // Create node map for quick lookup
   const nodeMap = new Map<number, FlatTreeNode<T>>()
-  nodes.forEach((node) => {
+  for (const node of nodes) {
     nodeMap.set(node._index, node)
-  })
+  }
 
   // Build the tree recursively
   const buildNode = (idx: number): T => {
@@ -980,9 +991,9 @@ export function flattenedToTree<T extends TreeNode>(
 
     // Recursively build children
     const children: T[] = []
-    _children?.forEach((childIndex) => {
+    for (const childIndex of _children ?? []) {
       children.push(buildNode(childIndex))
-    })
+    }
 
     return {
       ...cleanNode,
@@ -1009,11 +1020,12 @@ export function filePathToTree(
     value: "ROOT",
   }
 
-  paths.forEach((path) => {
+  for (const path of paths) {
     const parts = path.split("/")
     let currentNode = rootNode
 
-    parts.forEach((part, index) => {
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i]
       let childNode = currentNode.children?.find(
         (child: any) => child.text === part,
       )
@@ -1021,15 +1033,15 @@ export function filePathToTree(
       if (!childNode) {
         childNode = {
           text: part,
-          value: parts.slice(0, index + 1).join("/"),
+          value: parts.slice(0, i + 1).join("/"),
         }
         currentNode.children ||= []
         currentNode.children.push(childNode)
       }
 
       currentNode = childNode
-    })
-  })
+    }
+  }
 
   return new TreeCollection({rootNode})
 }

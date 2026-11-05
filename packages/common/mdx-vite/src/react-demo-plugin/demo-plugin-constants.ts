@@ -5,6 +5,7 @@ export const VIRTUAL_MODULE_IDS = {
   AUTO: "\0virtual:qui-demo-scope/auto",
   CONFIG: "\0virtual:qui-demo-scope/config",
   PAGE_PREFIX: "\0virtual:qui-demo-scope/page:",
+  STYLES: "\0virtual:qui-demo-scope/styles.css",
 } as const
 
 export const LOG_PREFIX = "@qualcomm-ui/mdx-vite/react-demo-plugin:"

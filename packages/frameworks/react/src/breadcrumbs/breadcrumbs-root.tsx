@@ -14,7 +14,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsBreadcrumbsContextProvider} from "./qds-breadcrumbs-context"
+import {QdsBreadcrumbsContextProvider} from "./qds-breadcrumbs-context.js"
 
 export interface BreadcrumbsRootProps
   extends QdsBreadcrumbsApiProps, ElementRenderProp<"nav"> {}

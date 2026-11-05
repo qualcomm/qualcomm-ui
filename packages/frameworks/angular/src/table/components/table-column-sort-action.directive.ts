@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input, type OnInit} from "@angular/core"
-import {ArrowDownUp, ArrowUp} from "lucide-angular"
+import {LucideArrowDownUp, LucideArrowUp} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {Header, SortDirection} from "@qualcomm-ui/core/table"
 import type {QdsTableColumnSortActionProps} from "@qualcomm-ui/qds-core/table"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -18,7 +18,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({ArrowDownUp, ArrowUp})],
+  providers: [provideIcons({LucideArrowDownUp, LucideArrowUp})],
   selector: "[q-table-column-sort-action]",
   standalone: false,
   template: `
@@ -26,6 +26,7 @@ import {qdsTableApi} from "./qds-table-api"
       <svg
         [q-bind]="inlineIconButtonApi().getIconBindings()"
         [qIcon]="sortIcon()"
+        [size]="inlineIconButtonApi().size"
       ></svg>
     }
   `,

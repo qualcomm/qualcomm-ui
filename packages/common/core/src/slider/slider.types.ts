@@ -21,7 +21,7 @@ import type {
   JSX,
 } from "@qualcomm-ui/utils/machine"
 
-import type {sliderAnatomy} from "./slider.anatomy"
+import type {sliderAnatomy} from "./slider.anatomy.js"
 
 export interface SliderElementIds {
   control: string

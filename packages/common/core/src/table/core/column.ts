@@ -12,8 +12,8 @@ import type {
   ColumnMeta,
   RowData,
   TableInstance,
-} from "../types"
-import {memo} from "../utils"
+} from "../types.js"
+import {memo} from "../utils.js"
 
 export interface CoreColumn<TData extends RowData, TValue, TColumnMeta> {
   /**
@@ -149,7 +149,7 @@ export function createColumn<
       () => {
         return [
           column as unknown as Column<TData, TValue>,
-          ...column.columns?.flatMap((d) => d.getFlatColumns()),
+          ...(column.columns?.flatMap((d) => d.getFlatColumns()) ?? []),
         ]
       },
       {

@@ -38,8 +38,9 @@ Even though the table instance will already manage the row selection state for y
 Use the `onRowSelectionChange` table option to hoist up the row selection state to your own scope. Then pass the row selection state back to the table instance using in the `state` table option.
 
 ```ts
-import {createAngularTable, type AngularTable} from "@qualcomm-ui/angular/table"
 import {signal} from "@angular/core"
+
+import {createAngularTable, type AngularTable} from "@qualcomm-ui/angular/table"
 import type {RowSelectionState} from "@qualcomm-ui/core/table"
 
 // ...

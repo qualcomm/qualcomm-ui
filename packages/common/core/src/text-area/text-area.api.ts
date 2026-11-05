@@ -14,8 +14,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
-import {textAreaAnatomy} from "./text-area.anatomy"
+import {domIds} from "./internal/index.js"
+import {textAreaAnatomy} from "./text-area.anatomy.js"
 import type {
   TextAreaApi,
   TextAreaCounterBindings,
@@ -25,7 +25,7 @@ import type {
   TextAreaLabelBindings,
   TextAreaRootBindings,
   TextAreaSchema,
-} from "./text-area.types"
+} from "./text-area.types.js"
 
 const parts = textAreaAnatomy.parts
 

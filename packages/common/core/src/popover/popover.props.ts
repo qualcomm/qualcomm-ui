@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {PopoverApiProps} from "./popover.types"
+import type {PopoverApiProps} from "./popover.types.js"
 
 const popoverProps: (keyof PopoverApiProps)[] = createProps<PopoverApiProps>()(
   "autoFocus",

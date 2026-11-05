@@ -1,7 +1,7 @@
 import type {ReactElement} from "react"
 
-import {Accordion} from "@qualcomm-ui/react/accordion"
 import {LoremIpsum} from "@qualcomm-ui/react-core/lorem-ipsum"
+import {Accordion} from "@qualcomm-ui/react/accordion"
 
 export function AccordionSimpleDemo(): ReactElement {
   return (

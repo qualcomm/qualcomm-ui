@@ -1,23 +1,13 @@
-import {DialogAlertDialogDemo as AlertDialogDemo} from "@qualcomm-ui/react-docs/components+/dialog+/demos/dialog-alert-dialog-demo"
-import {DialogControlledStateDemo as ControlledStateDemo} from "@qualcomm-ui/react-docs/components+/dialog+/demos/dialog-controlled-state-demo"
-import {DialogEmphasisDemo as EmphasisDemo} from "@qualcomm-ui/react-docs/components+/dialog+/demos/dialog-emphasis-demo"
-import {DialogInsideScrollDemo as InsideScrollDemo} from "@qualcomm-ui/react-docs/components+/dialog+/demos/dialog-inside-scroll-demo"
-import {DialogOutsideScrollDemo as OutsideScrollDemo} from "@qualcomm-ui/react-docs/components+/dialog+/demos/dialog-outside-scroll-demo"
-import {DialogPlacementDemo as PlacementDemo} from "@qualcomm-ui/react-docs/components+/dialog+/demos/dialog-placement-demo"
-import {DialogSizesDemo as SizesDemo} from "@qualcomm-ui/react-docs/components+/dialog+/demos/dialog-sizes-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: AlertDialogDemo, title: "Alert Dialog"},
-  {component: ControlledStateDemo, title: "Controlled State"},
-  {component: EmphasisDemo, title: "Emphasis"},
-  {component: InsideScrollDemo, title: "Inside Scroll"},
-  {component: OutsideScrollDemo, title: "Outside Scroll"},
-  {component: PlacementDemo, title: "Placement"},
-  {component: SizesDemo, title: "Sizes"},
-]
+const componentName = "dialog"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/dialog+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function DialogDemos() {
-  return <DemoPageLayout componentName="dialog" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

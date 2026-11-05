@@ -3,8 +3,8 @@ import {render} from "@testing-library/angular"
 import {describe, expect, test} from "vitest"
 import {page} from "vitest/browser"
 
-import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {comboboxCollection} from "@qualcomm-ui/core/combobox"
 
 import {type MultiComponentTest, runTests} from "~test-utils"
@@ -16,6 +16,50 @@ const stringCollection = comboboxCollection({
 const emptyCollection = comboboxCollection({
   items: [],
 })
+
+const groupedCollection = comboboxCollection({
+  groupBy: (item) => item.group,
+  itemLabel: (item) => item.label,
+  items: [
+    {group: "Available", label: "Item 1", value: "1"},
+    {group: "Available", label: "Item 2", value: "2"},
+    {group: "Onboarded", label: "Item 3", value: "3"},
+  ],
+  itemValue: (item) => item.value,
+})
+
+@Component({
+  imports: [ComboboxModule, PortalDirective],
+  template: `
+    <div defaultOpen q-combobox-root [collection]="collection">
+      <label q-combobox-label>Select option</label>
+      <div q-combobox-control>
+        <input q-combobox-input />
+        <button q-combobox-trigger></button>
+      </div>
+      <ng-template qPortal>
+        <div q-combobox-positioner>
+          <div q-combobox-content>
+            @for (group of collection.group(); track group[0]) {
+              <div q-combobox-item-group>
+                <div q-combobox-item-group-label>{{ group[0] }}</div>
+                @for (item of group[1]; track item.value) {
+                  <div q-combobox-item [item]="item">
+                    <span q-combobox-item-text>{{ item.label }}</span>
+                    <span q-combobox-item-indicator></span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  `,
+})
+class GroupedComboboxComponent {
+  collection = groupedCollection
+}
 
 const testIds = {
   clearTrigger: "combobox-clear-trigger",
@@ -79,6 +123,29 @@ const testCases: MultiComponentTest[] = [
 
         await expect.element(page.getByText("Combobox Label")).toBeVisible()
         await expect.element(page.getByRole("combobox")).toBeVisible()
+      })
+    },
+  },
+  {
+    simple() {
+      @Component({
+        imports: [ComboboxModule],
+        template: `
+          <q-combobox aria-label="City" [collection]="collection" />
+        `,
+      })
+      class SimpleComponent {
+        collection = stringCollection
+      }
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`aria-label labels the input — ${component.name}`, async () => {
+        await render(component)
+
+        await expect
+          .element(page.getByRole("combobox", {name: "City"}))
+          .toBeVisible()
       })
     },
   },
@@ -326,4 +393,71 @@ const testCases: MultiComponentTest[] = [
 
 describe("Combobox - Parts", () => {
   runTests(testCases)
+
+  test("item groups use their labels as accessible names", async () => {
+    await render(GroupedComboboxComponent)
+
+    const group = page.getByRole("group", {name: "Available"})
+    const label = page.getByText("Available")
+    const labelId = label.element().getAttribute("id")
+
+    expect(labelId).toBeTruthy()
+    await expect.element(group).toHaveAccessibleName("Available")
+    await expect.element(group).toHaveAttribute("aria-labelledby", labelId!)
+  })
+
+  test("options inside item groups remain selectable", async () => {
+    await render(GroupedComboboxComponent)
+
+    const input = page.getByRole("combobox", {name: "Select option"})
+    await page.getByRole("option", {name: "Item 2"}).click()
+
+    await expect.element(input).toHaveValue("Item 2")
+  })
+
+  test("context template exposes live combobox state", async () => {
+    @Component({
+      imports: [ComboboxModule, PortalDirective],
+      template: `
+        <div q-combobox-root [collection]="collection">
+          <label q-combobox-label>Context Label</label>
+          <ng-container *comboboxContext="let context">
+            <div data-test-id="combobox-context-state">
+              {{ context.open ? "open" : "closed" }}
+            </div>
+          </ng-container>
+          <div q-combobox-control>
+            <input q-combobox-input />
+            <button q-combobox-trigger></button>
+          </div>
+          <ng-template qPortal>
+            <div q-combobox-positioner>
+              <div q-combobox-content>
+                @for (item of collection.items; track item) {
+                  <div q-combobox-item [item]="item">
+                    <span q-combobox-item-text>
+                      {{ collection.stringifyItem(item) }}
+                    </span>
+                    <span q-combobox-item-indicator></span>
+                  </div>
+                }
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      `,
+    })
+    class ContextComponent {
+      collection = stringCollection
+    }
+
+    await render(ContextComponent)
+
+    const contextState = page.getByTestId("combobox-context-state")
+    await expect.element(contextState).toHaveTextContent("closed")
+
+    await page.getByRole("button", {name: /toggle suggestions/i}).click()
+
+    await expect.element(contextState).toHaveTextContent("open")
+  })
 })

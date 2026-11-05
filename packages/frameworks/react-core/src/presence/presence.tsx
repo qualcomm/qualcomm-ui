@@ -14,7 +14,7 @@ import {
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 
-import {usePresence} from "./use-presence"
+import {usePresence} from "./use-presence.js"
 
 export interface PresenceProps
   extends PresenceApiProps, RenderStrategyApiProps, ElementRenderProp<"div"> {

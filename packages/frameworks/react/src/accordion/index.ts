@@ -1,37 +1,37 @@
-import {AccordionItem, type AccordionItemProps} from "./accordion-item"
-import {
-  AccordionItemContent,
-  type AccordionItemContentProps,
-} from "./accordion-item-content"
 import {
   AccordionItemContentAnimator,
   type AccordionItemContentAnimatorProps,
-} from "./accordion-item-content-animator"
+} from "./accordion-item-content-animator.js"
 import {
   AccordionItemContentBody,
   type AccordionItemContentBodyProps,
-} from "./accordion-item-content-body"
+} from "./accordion-item-content-body.js"
+import {
+  AccordionItemContent,
+  type AccordionItemContentProps,
+} from "./accordion-item-content.js"
 import {
   AccordionItemIndicator,
   type AccordionItemIndicatorProps,
-} from "./accordion-item-indicator"
+} from "./accordion-item-indicator.js"
 import {
   AccordionItemRoot,
   type AccordionItemRootProps,
-} from "./accordion-item-root"
+} from "./accordion-item-root.js"
 import {
   AccordionItemSecondaryText,
   type AccordionItemSecondaryTextProps,
-} from "./accordion-item-secondary-text"
+} from "./accordion-item-secondary-text.js"
 import {
   AccordionItemText,
   type AccordionItemTextProps,
-} from "./accordion-item-text"
+} from "./accordion-item-text.js"
 import {
   AccordionItemTrigger,
   type AccordionItemTriggerProps,
-} from "./accordion-item-trigger"
-import {AccordionRoot, type AccordionRootProps} from "./accordion-root"
+} from "./accordion-item-trigger.js"
+import {AccordionItem, type AccordionItemProps} from "./accordion-item.js"
+import {AccordionRoot, type AccordionRootProps} from "./accordion-root.js"
 
 export type {
   AccordionItemContentAnimatorProps,

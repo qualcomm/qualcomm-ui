@@ -8,6 +8,7 @@ export const progressRingClasses = {
   errorText: "qui-progress-ring__error-text",
   label: "qui-progress-ring__label",
   root: "qui-progress-ring__root",
+  shimmer: "qui-progress-ring__shimmer",
   track: "qui-progress-ring__track",
   valueText: "qui-progress-ring__value-text",
 } as const

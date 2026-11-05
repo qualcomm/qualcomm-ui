@@ -6,15 +6,15 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {checkmarkAnatomy} from "./checkmark.anatomy"
-import {checkmarkClasses} from "./checkmark.classes"
+import {checkmarkAnatomy} from "./checkmark.anatomy.js"
+import {checkmarkClasses} from "./checkmark.classes.js"
 import type {
   QdsCheckmarkApi,
   QdsCheckmarkApiProps,
   QdsCheckmarkIconBindings,
   QdsCheckmarkIndicatorIconBindings,
   QdsCheckmarkRootBindings,
-} from "./checkmark.types"
+} from "./checkmark.types.js"
 
 const parts = checkmarkAnatomy.parts
 

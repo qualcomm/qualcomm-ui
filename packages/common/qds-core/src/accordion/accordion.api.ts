@@ -4,8 +4,11 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {accordionClasses} from "./accordion.classes"
-import type {QdsAccordionApiProps, QdsAccordionProps} from "./accordion.types"
+import {accordionClasses} from "./accordion.classes.js"
+import type {
+  QdsAccordionApiProps,
+  QdsAccordionProps,
+} from "./accordion.types.js"
 
 export function getQdsAccordionBindings(
   props: QdsAccordionApiProps,

@@ -1,16 +1,27 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {
+  QdsBadgeExtraSize,
+  QdsNumberBadgeEmphasis,
+  QdsNumberBadgeSize,
+} from "@qualcomm-ui/qds-core/badge"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {buttonAnatomy} from "./button.anatomy"
-import type {buttonClasses} from "./button.classes"
+import type {buttonAnatomy} from "./button.anatomy.js"
+import type {buttonClasses} from "./button.classes.js"
 
 /**
  * The QDS button variants
  */
 export type QdsButtonVariant = "fill" | "ghost" | "outline"
+
+/** @deprecated use "persistent-white" or "persistent-black" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsButtonEmphasis__deprecated =
+  | "white-persistent"
+  | "black-persistent"
 
 /**
  * The QDS button emphasis
@@ -19,9 +30,10 @@ export type QdsButtonEmphasis =
   | "neutral"
   | "primary"
   | "danger"
-  | "white-persistent"
-  | "black-persistent"
+  | "persistent-white"
+  | "persistent-black"
   | "inverse"
+  | QdsButtonEmphasis__deprecated
 
 export type QdsButtonSize = "sm" | "md" | "lg"
 
@@ -77,6 +89,7 @@ export interface QdsButtonRootBindings extends Part<"root"> {
   "data-kind": "text"
   "data-size": QdsButtonSize
   "data-variant": QdsButtonVariant
+  disabled: boolean | undefined
 }
 
 export interface QdsButtonStartIconBindings extends Part<"icon"> {
@@ -97,4 +110,26 @@ export interface QdsButtonApi {
   getEndIconBindings(): QdsButtonEndIconBindings
   getRootBindings(): QdsButtonRootBindings
   getStartIconBindings(): QdsButtonStartIconBindings
+  /**
+   * Default emphasis for a number badge.
+   *
+   * @since 1.39.0
+   */
+  numberBadgeEmphasis: QdsNumberBadgeEmphasis
+
+  /**
+   * Default size for a number badge.
+   *
+   * @since 1.39.0
+   */
+  numberBadgeSize: QdsNumberBadgeSize
+
+  size: QdsButtonSize
+
+  /**
+   * Default size for a status badge.
+   *
+   * @since 1.39.0
+   */
+  statusBadgeSize: QdsBadgeExtraSize
 }

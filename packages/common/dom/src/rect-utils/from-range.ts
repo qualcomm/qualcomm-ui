@@ -4,10 +4,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getElementRect} from "./from-element"
-import {createRect} from "./rect"
-import type {Rect} from "./types"
-import {union} from "./union"
+import {getElementRect} from "./from-element.js"
+import {createRect} from "./rect.js"
+import type {Rect} from "./types.js"
+import {union} from "./union.js"
 
 export function fromRange(range: Range): Rect {
   let rs: Rect[] = []
@@ -15,7 +15,7 @@ export function fromRange(range: Range): Rect {
 
   if (rects.length) {
     rs = rs.concat(rects.map(createRect))
-    return union.apply(undefined, rs)
+    return union(...rs)
   }
 
   let start: Node | ParentNode | null = range.startContainer
@@ -29,5 +29,5 @@ export function fromRange(range: Range): Rect {
     rs.push({...r, width: 0, x: r.maxX})
   }
 
-  return union.apply(undefined, rs)
+  return union(...rs)
 }

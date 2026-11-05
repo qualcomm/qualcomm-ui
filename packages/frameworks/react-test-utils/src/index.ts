@@ -1,2 +1,2 @@
 export * from "./get-react-test-config"
-export * from "./test.types"
+export type * from "./test.types"

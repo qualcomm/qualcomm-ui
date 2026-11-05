@@ -10,8 +10,8 @@ import type {
   QdsBadgeExtendedSize,
   QdsBadgeSemanticEmphasis,
   QdsBaseBadgeProps,
-} from "./badge.types"
-import type {iconBadgeAnatomy} from "./icon-badge.anatomy"
+} from "./badge.types.js"
+import type {iconBadgeAnatomy} from "./icon-badge.anatomy.js"
 
 export type QdsIconBadgeVariant = "default" | "subtle"
 
@@ -48,10 +48,10 @@ export interface QdsIconBadgeRootBindings extends Part<"root"> {
 
 export interface QdsIconBadgeIconBindings extends Part<"icon"> {
   className: BadgeClasses["icon"]
-  "data-size": QdsBadgeExtendedSize
 }
 
 export interface QdsIconBadgeApi {
   getIconBindings(): QdsIconBadgeIconBindings
   getRootBindings(): QdsIconBadgeRootBindings
+  size: QdsBadgeExtendedSize
 }

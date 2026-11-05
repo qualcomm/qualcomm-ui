@@ -8,8 +8,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
-import {sideNavAnatomy} from "./side-nav.anatomy"
+import {domIds} from "./internal/index.js"
+import {sideNavAnatomy} from "./side-nav.anatomy.js"
 import type {
   SideNavApi,
   SideNavFilterInputBindings,
@@ -20,7 +20,7 @@ import type {
   SideNavRootBindings,
   SideNavSchema,
   SideNavTriggerBindings,
-} from "./side-nav.types"
+} from "./side-nav.types.js"
 
 const parts = sideNavAnatomy.parts
 

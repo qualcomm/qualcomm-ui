@@ -1,2 +1,2 @@
-export * from "./model"
+export type * from "./model"
 export * from "./ui"

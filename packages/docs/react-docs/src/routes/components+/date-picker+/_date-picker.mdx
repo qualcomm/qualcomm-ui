@@ -1,0 +1,898 @@
+---
+title: Date Picker
+description: The date picker lets users select a single date, multiple dates, or a date range from a calendar, with day, month, and year views.
+component: DatePicker
+aliases: [calendar, datepicker, date input]
+badges:
+  - id: since
+    label: 1.29.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1290
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {TypeDocProps, TypeDocAttributes} from "@qualcomm-ui/react-mdx/typedoc"
+import {ComponentExplorer, Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {DatePicker} from "@qualcomm-ui/react/date-picker"
+```
+
+## Overview
+
+- The value is an array of `DateValue` from [@internationalized/date](https://react-spectrum.adobe.com/internationalized/date/), not a native `Date`. The type is re-exported from `@qualcomm-ui/react/date-picker`.
+- Build values with `parseDate("2026-08-14")` for fixed dates, or `today(getLocalTimeZone())` for relative ones. Both return a `CalendarDate`, a date with no time attached.
+- To keep a time alongside the date, start from a [`CalendarDateTime`](https://react-aria.adobe.com/internationalized/date/CalendarDateTime) or [`ZonedDateTime`](https://react-aria.adobe.com/internationalized/date/ZonedDateTime) instead. Picking a new day preserves the time.
+- Avoid converting a native `Date`. Only its local year, month, and day are read, so a UTC timestamp such as `new Date("2026-08-14T00:00:00Z")` becomes August 13 in time zones behind UTC. Pass the ISO date string to `parseDate` instead.
+
+## Examples
+
+### Single Date
+
+The default [selectionMode](./#selectionMode). Type a date into the field in the locale format, or pick one from the calendar.
+
+<Demo name="DatePickerSingleDemo" component={demos.DatePickerSingleDemo} />
+
+### Composite
+
+::: terms
+composite api, parts, anatomy
+:::
+
+Build with the composite API for granular control. The simple API `DatePicker` renders exactly this tree, including the three `DatePicker.View` blocks for the day, month, and year views.
+
+<Demo
+  name="DatePickerCompositeDemo"
+  component={demos.DatePickerCompositeDemo}
+/>
+
+### Range
+
+::: terms
+date range, start date, end date
+:::
+
+Set `selectionMode="range"` to collect a start and end date. Use the [`separator`](./#separator) prop on `DatePicker.InputGroup` to change the character between the two inputs; it defaults to `-`. The calendar shows a band between the two dates.
+
+A range can be partially filled, in which case the missing end is `null`.
+
+<Demo name="DatePickerRangeDemo" component={demos.DatePickerRangeDemo} />
+
+### Multiple
+
+::: terms
+multi select, multiple dates, tags
+:::
+
+Set `selectionMode="multiple"` to collect several dates, shown as dismissible tags in the field. The field is display-only in this mode, so dates are picked from the calendar rather than typed.
+
+Use [maxSelectedDates](./#maxSelectedDates) to cap how many dates can be selected.
+
+The popover always shows [action buttons](./#action-buttons) in this mode.
+
+<Demo
+  name="DatePickerMultipleDemo"
+  component={demos.DatePickerMultipleDemo}
+/>
+
+### Action Buttons
+
+::: terms
+cancel, ok, footer, apply
+:::
+
+Set [closeOnSelect](./#closeOnSelect) to `false` to add a footer with Cancel and OK buttons. `selectionMode="multiple"` always includes it.
+
+Selections apply as they are made. OK keeps them and closes the popover, while Cancel, `Escape`, and clicking outside all revert to the value the popover opened with. The field's clear button applies immediately and is not affected by Cancel.
+
+<Demo
+  name="DatePickerActionsDemo"
+  component={demos.DatePickerActionsDemo}
+/>
+
+### Open on Click
+
+::: terms
+click to expand, expand on click
+:::
+
+Set [openOnClick](./#openOnClick) to automatically open the popover when the user clicks the field. This keeps focus in it so typing continues.
+
+<Demo
+  name="DatePickerOpenOnClickDemo"
+  component={demos.DatePickerOpenOnClickDemo}
+/>
+
+### Presets
+
+::: terms
+shortcuts, quick select, relative dates
+:::
+
+Use the [presets](./#presets-1) prop to offer common selections, such as the last 7 days. A button in the day view header opens the presets panel.
+
+Each preset is a `{label, value}` pair, where `value` is either a named range such as `"next7Days"` or an explicit `DateValue[]`.
+
+<Demo
+  name="DatePickerPresetsDemo"
+  component={demos.DatePickerPresetsDemo}
+/>
+
+### Sizes
+
+::: terms
+small, medium, large
+:::
+
+This component supports three [size](./#size) options to accommodate different layout densities.
+
+The available sizes are `sm`, `md`, and `lg`. The default size is `md`. Size applies to the input field only; the calendar is unaffected.
+
+<Demo name="DatePickerSizesDemo" component={demos.DatePickerSizesDemo} />
+
+### Hint and Error Text
+
+::: terms
+helper text, validation message, error indicator
+:::
+
+Add a [hint](./#hint) to provide additional context below the field. When [invalid](./#invalid) is `true`, the [errorText](./#errorText) replaces it and the field shows an error indicator icon.
+
+<Demo name="DatePickerHintDemo" component={demos.DatePickerHintDemo} />
+
+### States
+
+::: terms
+disabled state, read-only, readonly, invalid state
+:::
+
+The date picker supports disabled, read-only, and invalid states.
+
+<Demo name="DatePickerStatesDemo" component={demos.DatePickerStatesDemo} />
+
+### Min and Max Dates
+
+::: terms
+date bounds, range limit
+:::
+
+Use the [min](./#min) and [max](./#max) props to bound the selectable dates. Dates outside the bounds are disabled, and typed values are clamped into range.
+
+<Demo name="DatePickerMinMaxDemo" component={demos.DatePickerMinMaxDemo} />
+
+### Outside Days
+
+::: terms
+adjacent months, leading days, trailing days
+:::
+
+Days from the previous and next month fill the first and last week of the grid. Set [hideOutsideDays](./#hideOutsideDays) to leave those cells empty instead.
+
+<Demo
+  name="DatePickerHideOutsideDaysDemo"
+  component={demos.DatePickerHideOutsideDaysDemo}
+/>
+
+### Unavailable Dates
+
+::: terms
+blocked dates, holidays, disabled dates
+:::
+
+Use the [isDateUnavailable](./#isDateUnavailable) prop to block individual dates that [min](./#min) and [max](./#max) cannot express, such as weekends or holidays.
+
+<Demo
+  name="DatePickerUnavailableDemo"
+  component={demos.DatePickerUnavailableDemo}
+/>
+
+### Locale
+
+::: terms
+internationalization, i18n, language, date format
+:::
+
+Use the [locale](./#locale-1) prop to change how dates are displayed and parsed. It takes a [BCP 47 language tag](https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag) and defaults to `en-US`. The month and weekday names, the first day of the week, the placeholder, and the separators the field accepts all follow from it. For example, `de-DE` gives a `dd.mm.yyyy` placeholder and accepts `.` as the separator.
+
+Use the [startOfWeek](./#startOfWeek) prop to override only the first day of the week.
+
+<Demo name="DatePickerLocaleDemo" component={demos.DatePickerLocaleDemo} />
+
+### Controlled State
+
+::: terms
+external state, react state, useState
+:::
+
+Set the initial value using the [`defaultValue`](./#defaultValue) prop, or use [`value`](./#value) and [`onValueChange`](./#onValueChange) to control the value manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+The value is always an array, and entries can be `null` when a range is partially filled.
+
+<Demo
+  name="DatePickerControlledStateDemo"
+  component={demos.DatePickerControlledStateDemo}
+/>
+
+### Inline
+
+::: terms
+always open, embedded calendar, flat
+:::
+
+Set [`variant`](./#variant) to `inline` to render an always-visible calendar with no field or popover. This variant never shows action buttons and has no inputs, so it does not submit a value with a native form; read the selection through [`value`](./#value) and [`onValueChange`](./#onValueChange).
+
+The inline variant shows a headline with the label and current value. Set [`headline`](./#headline) to `false` to remove it. Use [moreLabel](./#moreLabel) and [rangePlaceholder](./#rangePlaceholder) to customize it.
+
+<Demo name="DatePickerInlineDemo" component={demos.DatePickerInlineDemo} />
+
+### Custom Trigger
+
+::: terms
+render prop, button trigger, unstyled trigger, api, render prop
+:::
+
+[`DatePicker.Context`](./#date-picker-context) is a render prop that hands you the picker api, so you can drive your own presentation from the picker's state. Use it to read the current value, format your own label, or call actions such as `clearValue`.
+
+```tsx
+<DatePicker.Context>
+  {(api) => <span>{api.valueAsString[0] || "No date selected"}</span>}
+</DatePicker.Context>
+```
+
+[`DatePicker.Trigger`](./#date-picker-trigger) pairs with it to replace the field entirely. Pass `render` to supply your own element; it renders a plain `<button>` otherwise. Place it inside [`DatePicker.Control`](./#date-picker-control), which anchors the popover.
+
+```tsx
+<DatePicker.Context>
+  {(api) => (
+    <DatePicker.Trigger render={<Button variant="outline" />}>
+      {api.valueAsString[0] || "Pick a date"}
+    </DatePicker.Trigger>
+  )}
+</DatePicker.Context>
+```
+
+Accessibility attributes, focus restoration, and dismissal behavior come from the picker, so you do not write them yourself.
+
+<Demo
+  name="DatePickerCustomTriggerDemo"
+  component={demos.DatePickerCustomTriggerDemo}
+/>
+
+### Within Dialog
+
+::: terms
+modal, disable portal, portalProps.disabled
+:::
+
+Set [portalProps](./#portalProps) to `{disabled: true}` to render the calendar popover in place rather than at the end of `document.body`. This is required inside a [Dialog](/components/dialog) or [Popover](/components/popover).
+
+<Demo
+  name="DatePickerWithinDialogDemo"
+  component={demos.DatePickerWithinDialogDemo}
+/>
+
+## Forms
+
+::: terms
+formdata, native validation, submit, reset
+:::
+
+Choose the form library that fits your needs—we've built examples with React Hook Form and Tanstack Form to get you started.
+
+The selection is submitted under [name](./#name), and the number of entries follows the selection mode: one for a single date, two for a range, and one per date in `multiple` mode. Entries arrive in document order, so a range is always start then end.
+
+A range keeps the position of each end, so clearing only the start submits an empty first entry and the end date second. Read a range by position rather than by taking the first non-empty entry.
+
+Resetting the form restores the initial value.
+
+### React Hook Form
+
+::: terms
+rhf
+:::
+
+Use [React Hook Form](https://react-hook-form.com/) to handle the input state and validation. [ArkType](https://arktype.io/) works great for schema validation if you need it.
+
+<Demo
+  expanded
+  name="DatePickerHookFormDemo"
+  component={demos.DatePickerHookFormDemo}
+/>
+
+### Tanstack Form
+
+::: terms
+tanstack, tsform
+:::
+
+[Tanstack Form](https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts) handles validation with its built-in validators.
+
+<Demo
+  expanded
+  name="DatePickerTanstackFormDemo"
+  component={demos.DatePickerTanstackFormDemo}
+/>
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.DatePickerExplorerDemo}
+  linkPrefix="date-picker"
+  parts={[
+    "root",
+    "control",
+    "label",
+    "input-group",
+    "input",
+    "clear-trigger",
+    "trigger",
+    "hint",
+    "content",
+    "view-control",
+    "view-trigger",
+    "prev-trigger",
+    "next-trigger",
+    "table",
+    "table-cell-trigger",
+    "presets-trigger",
+    "presets",
+    "preset-trigger",
+  ]}
+  scope="date-picker"
+/>
+
+## API
+
+### \<DatePicker>
+
+The flattened date picker extends the [DatePicker.Root](./#date-picker-root) component with the following props:
+
+<TypeDocProps name="DatePickerProps" omitFrom="DatePickerRootProps" />
+
+## Composite API
+
+This section describes the elements of the DatePicker's composite API.
+
+### \<DatePicker.Root>
+
+<TypeDocProps name="DatePickerRootProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerRootBindings", "DatePickerRootBindings"]}
+/>
+
+### \<DatePicker.Label>
+
+<TypeDocProps name="DatePickerLabelProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerLabelBindings", "DatePickerLabelBindings"]}
+/>
+
+### \<DatePicker.Control>
+
+<TypeDocProps name="DatePickerControlProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerControlBindings", "DatePickerControlBindings"]}
+/>
+
+### \<DatePicker.InputGroup>
+
+See [Shortcuts](./#shortcuts) for the tree this renders in each selection mode.
+
+<TypeDocProps name="DatePickerInputGroupProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerControlGroupBindings",
+    "QdsDatePickerInputGroupBindings",
+    "DatePickerInputGroupBindings",
+    "DatePickerInputGroupTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.Input>
+
+A range picker renders two inputs, distinguished by `index`.
+
+<TypeDocProps name="DatePickerInputProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerInputBindings", "DatePickerInputBindings"]}
+/>
+
+### \<DatePicker.ValueTags>
+
+<TypeDocProps name="DatePickerValueTagsProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerValueTagsBindings", "DatePickerHiddenInputBindings"]}
+/>
+
+### \<DatePicker.ClearTrigger>
+
+<TypeDocProps name="DatePickerClearTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerClearTriggerBindings",
+    "DatePickerClearTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.InputClearTrigger>
+
+The styled clear trigger used inside `DatePicker.InputGroup`. Wraps `DatePicker.ClearTrigger` in a compact [IconButton](/components/icon-button).
+
+<TypeDocProps name="DatePickerInputClearTriggerProps" />
+
+### \<DatePicker.ErrorIndicator>
+
+<TypeDocProps name="DatePickerErrorIndicatorProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerErrorIndicatorBindings",
+    "DatePickerErrorIndicatorBindings",
+  ]}
+/>
+
+### \<DatePicker.Trigger>
+
+<TypeDocProps name="DatePickerTriggerProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerTriggerBindings", "DatePickerTriggerBindings"]}
+/>
+
+### \<DatePicker.InputTrigger>
+
+The styled calendar trigger used inside `DatePicker.InputGroup`. Wraps `DatePicker.Trigger` in a compact [IconButton](/components/icon-button).
+
+<TypeDocProps name="DatePickerInputTriggerProps" />
+
+### \<DatePicker.InputIcon>
+
+A non-interactive calendar icon. `DatePicker.InputGroup` renders it in place of `DatePicker.InputTrigger` in `multiple` mode, where the field itself carries the trigger bindings.
+
+### \<DatePicker.Hint>
+
+<TypeDocProps name="DatePickerHintProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerHintBindings", "DatePickerHintBindings"]}
+/>
+
+### \<DatePicker.ErrorText>
+
+<TypeDocProps name="DatePickerErrorTextProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerErrorTextBindings", "DatePickerErrorTextBindings"]}
+/>
+
+### \<DatePicker.Positioner>
+
+<TypeDocProps name="DatePickerPositionerProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerPositionerBindings", "DatePickerPositionerBindings"]}
+/>
+
+### \<DatePicker.Content>
+
+<TypeDocProps name="DatePickerContentProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerContentBindings", "DatePickerContentBindings"]}
+/>
+
+### \<DatePicker.Headline>
+
+<TypeDocProps name="DatePickerHeadlineProps" />
+
+<TypeDocAttributes name="QdsDatePickerHeadlineBindings" />
+
+### \<DatePicker.HeadlineLabel>
+
+The default caption is `Date range` in range mode and `Date` otherwise. Pass children to override it.
+
+<TypeDocProps name="DatePickerHeadlineLabelProps" />
+
+<TypeDocAttributes name="QdsDatePickerHeadlineLabelBindings" />
+
+### \<DatePicker.HeadlineValue>
+
+In `multiple` mode this shows up to two dates then appends a count suffix.
+
+<TypeDocProps name="DatePickerHeadlineValueProps" />
+
+<TypeDocAttributes name="QdsDatePickerHeadlineValueBindings" />
+
+### \<DatePicker.View>
+
+<TypeDocProps name="DatePickerViewProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerViewBindings", "DatePickerViewBindings"]}
+/>
+
+### \<DatePicker.ViewControl>
+
+<TypeDocProps name="DatePickerViewControlProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerViewControlBindings",
+    "DatePickerViewControlBindings",
+  ]}
+/>
+
+### \<DatePicker.ViewTrigger>
+
+<TypeDocProps name="DatePickerViewTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerViewTriggerBindings",
+    "DatePickerViewTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.ViewCloseTrigger>
+
+<TypeDocProps name="DatePickerViewCloseTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerViewCloseTriggerBindings",
+    "DatePickerViewCloseTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.PrevTrigger>
+
+Disabled when the previous page falls entirely outside `min`.
+
+<TypeDocProps name="DatePickerPrevTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerPrevTriggerBindings",
+    "DatePickerPrevTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.NextTrigger>
+
+Disabled when the next page falls entirely outside `max`.
+
+<TypeDocProps name="DatePickerNextTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerNextTriggerBindings",
+    "DatePickerNextTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.MonthText>
+
+<TypeDocProps name="DatePickerMonthTextProps" />
+
+### \<DatePicker.YearText>
+
+<TypeDocProps name="DatePickerYearTextProps" />
+
+### \<DatePicker.RangeText>
+
+<TypeDocProps name="DatePickerRangeTextProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerRangeTextBindings", "DatePickerRangeTextBindings"]}
+/>
+
+### \<DatePicker.Table>
+
+The column count is fixed per view.
+
+<TypeDocProps name="DatePickerTableProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerTableBindings", "DatePickerTableBindings"]}
+/>
+
+### \<DatePicker.TableHead>
+
+<TypeDocProps name="DatePickerTableHeadProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerTableHeadBindings", "DatePickerTableHeadBindings"]}
+/>
+
+### \<DatePicker.TableHeader>
+
+<TypeDocProps name="DatePickerTableHeaderProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerTableHeaderBindings",
+    "DatePickerTableHeaderBindings",
+  ]}
+/>
+
+### \<DatePicker.TableBody>
+
+<TypeDocProps name="DatePickerTableBodyProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerTableBodyBindings", "DatePickerTableBodyBindings"]}
+/>
+
+### \<DatePicker.TableRow>
+
+<TypeDocProps name="DatePickerTableRowProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerTableRowBindings", "DatePickerTableRowBindings"]}
+/>
+
+### \<DatePicker.TableCell>
+
+The bindings differ by the view the cell belongs to.
+
+<TypeDocProps name="DatePickerTableCellProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerTableCellBindings",
+    "DatePickerDayTableCellBindings",
+    "DatePickerMonthTableCellBindings",
+    "DatePickerYearTableCellBindings",
+  ]}
+/>
+
+### \<DatePicker.TableCellTrigger>
+
+The bindings differ by the view the cell belongs to.
+
+<TypeDocProps name="DatePickerTableCellTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerTableCellTriggerBindings",
+    "DatePickerDayTableCellTriggerBindings",
+    "DatePickerMonthTableCellTriggerBindings",
+    "DatePickerYearTableCellTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.DayGridHeader>
+
+<TypeDocProps name="DatePickerDayGridHeaderProps" />
+
+### \<DatePicker.DayGrid>
+
+<TypeDocProps name="DatePickerDayGridProps" />
+
+### \<DatePicker.MonthGrid>
+
+<TypeDocProps name="DatePickerMonthGridProps" />
+
+### \<DatePicker.YearGrid>
+
+Renders the year cells for the year view. Takes no props.
+
+### \<DatePicker.Presets>
+
+<TypeDocProps name="DatePickerPresetsProps" />
+
+<TypeDocAttributes
+  name={["QdsDatePickerPresetsBindings", "DatePickerPresetsBindings"]}
+/>
+
+### \<DatePicker.PresetsTrigger>
+
+<TypeDocProps name="DatePickerPresetsTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerPresetsTriggerBindings",
+    "DatePickerPresetsTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.PresetTrigger>
+
+<TypeDocProps name="DatePickerPresetTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsDatePickerPresetTriggerBindings",
+    "DatePickerPresetTriggerBindings",
+  ]}
+/>
+
+### \<DatePicker.Actions>
+
+<TypeDocProps name="DatePickerActionsProps" />
+
+<TypeDocAttributes name="QdsDatePickerActionsBindings" />
+
+### \<DatePicker.CancelTrigger>
+
+<TypeDocProps name="DatePickerCancelTriggerProps" />
+
+### \<DatePicker.OkTrigger>
+
+<TypeDocProps name="DatePickerOkTriggerProps" />
+
+### \<DatePicker.Context>
+
+<TypeDocProps name="DatePickerContextProps" />
+
+### DatePickerApi
+
+The api handed to the `DatePicker.Context` render prop.
+
+<TypeDocProps
+  name="DatePickerApi"
+  omit={[
+    "getClearTriggerBindings",
+    "getContentBindings",
+    "getControlBindings",
+    "getDayTableCellBindings",
+    "getDayTableCellTriggerBindings",
+    "getErrorIndicatorBindings",
+    "getErrorTextBindings",
+    "getHiddenInputBindings",
+    "getHintBindings",
+    "getInputBindings",
+    "getInputGroupBindings",
+    "getInputGroupTriggerBindings",
+    "getLabelBindings",
+    "getMonthTableCellBindings",
+    "getMonthTableCellTriggerBindings",
+    "getNextTriggerBindings",
+    "getPositionerBindings",
+    "getPresetTriggerBindings",
+    "getPresetsBindings",
+    "getPresetsTriggerBindings",
+    "getPrevTriggerBindings",
+    "getRangeTextBindings",
+    "getRootBindings",
+    "getTableBindings",
+    "getTableBodyBindings",
+    "getTableHeadBindings",
+    "getTableHeaderBindings",
+    "getTableRowBindings",
+    "getTriggerBindings",
+    "getViewBindings",
+    "getViewCloseTriggerBindings",
+    "getViewControlBindings",
+    "getViewTriggerBindings",
+    "getYearTableCellBindings",
+    "getYearTableCellTriggerBindings",
+  ]}
+  partial
+/>
+
+## Data Structures
+
+### DatePickerPositioningOptions
+
+<TypeDocProps name="DatePickerPositioningOptions" partial />
+
+## Shortcuts
+
+### \<DatePicker.InputGroup>
+
+Groups the field parts into one bordered control. For a single date picker it renders roughly this structure:
+
+```tsx
+<DatePicker.Label>{label}</DatePicker.Label>
+<div>
+  <DatePicker.Input index={0} />
+  <DatePicker.InputClearTrigger />
+  <span aria-hidden />
+  <DatePicker.ErrorIndicator />
+  <DatePicker.InputTrigger />
+</div>
+```
+
+`DatePicker.InputClearTrigger` and `DatePicker.InputTrigger` are the styled field triggers, each a compact [IconButton](/components/icon-button) wrapping `DatePicker.ClearTrigger` and `DatePicker.Trigger`. The empty span is the divider between the input and the triggers.
+
+In `range` mode it renders two inputs with the `separator` between them:
+
+```tsx
+<DatePicker.Input index={0} />
+<span aria-hidden>{separator}</span>
+<DatePicker.Input index={1} />
+```
+
+In `multiple` mode it renders `DatePicker.ValueTags` in place of the inputs:
+
+```tsx
+<DatePicker.ValueTags dismissLabel={dismissLabel} placeholder={placeholder} />
+```
+
+Multiple mode also replaces `DatePicker.InputTrigger` with `DatePicker.InputIcon`, a non-interactive calendar icon, because the field itself carries the trigger bindings.
+
+### \<DatePicker.DayGridHeader>
+
+Renders the weekday header row of the day view. This shortcut is equivalent to:
+
+```tsx
+<DatePicker.TableHead>
+  <DatePicker.TableRow>
+    {weekDays.map((weekDay, i) => (
+      <DatePicker.TableHeader key={i} aria-label={weekDay.long} scope="col">
+        {weekDay[format]}
+      </DatePicker.TableHeader>
+    ))}
+  </DatePicker.TableRow>
+</DatePicker.TableHead>
+```
+
+### \<DatePicker.DayGrid>
+
+Renders the day cells of the visible month. This shortcut is equivalent to:
+
+```tsx
+<DatePicker.TableBody>
+  {weeks.map((week, i) => (
+    <DatePicker.TableRow key={i}>
+      {week.map((day, idx) => (
+        <DatePicker.TableCell key={idx} value={day} visibleRange={visibleRange}>
+          <DatePicker.TableCellTrigger>{day.day}</DatePicker.TableCellTrigger>
+        </DatePicker.TableCell>
+      ))}
+    </DatePicker.TableRow>
+  ))}
+</DatePicker.TableBody>
+```
+
+### \<DatePicker.MonthGrid>
+
+Renders the month cells of the month view. This shortcut is equivalent to:
+
+```tsx
+<DatePicker.TableBody>
+  {getMonthsGrid({columns, format}).map((months, row) => (
+    <DatePicker.TableRow key={row}>
+      {months.map((month, index) => (
+        <DatePicker.TableCell key={index} value={month.value}>
+          <DatePicker.TableCellTrigger>
+            {month.label}
+          </DatePicker.TableCellTrigger>
+        </DatePicker.TableCell>
+      ))}
+    </DatePicker.TableRow>
+  ))}
+</DatePicker.TableBody>
+```
+
+### \<DatePicker.YearGrid>
+
+Renders the year cells of the year view. This shortcut is equivalent to:
+
+```tsx
+<DatePicker.TableBody>
+  {getYearsGrid({columns}).map((years, row) => (
+    <DatePicker.TableRow key={row}>
+      {years.map((year, index) => (
+        <DatePicker.TableCell key={index} value={year.value}>
+          <DatePicker.TableCellTrigger>{year.label}</DatePicker.TableCellTrigger>
+        </DatePicker.TableCell>
+      ))}
+    </DatePicker.TableRow>
+  ))}
+</DatePicker.TableBody>
+```

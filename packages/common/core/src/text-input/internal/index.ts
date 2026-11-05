@@ -1,1 +1,1 @@
-export * from "./text-input.dom"
+export * from "./text-input.dom.js"

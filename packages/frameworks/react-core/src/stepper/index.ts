@@ -27,11 +27,11 @@ import {
   type CoreStepperSeparatorProps,
   CoreStepperTrigger,
   type CoreStepperTriggerProps,
-} from "./core-stepper"
+} from "./core-stepper.js"
 
-export * from "./stepper-item-context"
-export * from "./use-steps"
-export * from "./stepper-context"
+export * from "./stepper-item-context.js"
+export * from "./use-steps.js"
+export * from "./stepper-context.js"
 
 export type {
   CoreStepperRootProviderProps,

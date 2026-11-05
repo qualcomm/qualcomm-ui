@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {ChevronDown} from "lucide-angular"
+import {LucideChevronDown} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTreeBranchTriggerDirective} from "@qualcomm-ui/angular-core/tree"
@@ -24,9 +24,9 @@ export class SideNavBranchTriggerDirective extends CoreTreeBranchTriggerDirectiv
   /**
    * The icon to display. This rotates by 180deg when the branch is expanded.
    *
-   * @default ChevronDown
+   * @default LucideChevronDown
    */
-  readonly icon = input<LucideIconOrString>(ChevronDown)
+  readonly icon = input<LucideIconOrString>(LucideChevronDown)
 
   protected qdsContext = useQdsSideNavContext()
 

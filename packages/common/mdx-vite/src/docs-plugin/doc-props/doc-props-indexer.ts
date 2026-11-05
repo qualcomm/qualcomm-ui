@@ -19,7 +19,10 @@ import type {
   QuiPropTypes,
 } from "@qualcomm-ui/typedoc-common"
 
-import {extractNamesFromAttribute, type IndexedSection} from "../markdown"
+import {
+  extractNamesFromAttribute,
+  type IndexedSection,
+} from "../markdown/index.js"
 
 function extractPickPropsRecord(
   node: MdxJsxAttribute,
@@ -76,6 +79,7 @@ export const docPropsJsxNodes: string[] = [
 ]
 
 interface DocPropEntry {
+  lookupOnly?: boolean
   name: string
   omitFrom?: string[]
 }
@@ -93,6 +97,7 @@ export class DocPropsIndexer {
   reset(): void {
     this.idService.reset()
     this.docPropsEntries = []
+    this.pageDocProps = {}
   }
 
   /**
@@ -120,7 +125,11 @@ export class DocPropsIndexer {
               this.docPropsEntries.push({name, omitFrom})
               if (name.endsWith("Props")) {
                 // also index the corresponding component for lookup on this page.
-                this.docPropsEntries.push({name: name.slice(0, -5), omitFrom})
+                this.docPropsEntries.push({
+                  lookupOnly: true,
+                  name: name.slice(0, -5),
+                  omitFrom,
+                })
               }
             }
           }
@@ -139,7 +148,7 @@ export class DocPropsIndexer {
                   })),
                 )
               }
-            } catch (e) {}
+            } catch {}
           }
         }
       })
@@ -169,6 +178,16 @@ export class DocPropsIndexer {
       .map((entry): IndexedSection[] => {
         const propTypes = this.props[entry.name]
         if (!propTypes) {
+          return []
+        }
+
+        if (entry.lookupOnly) {
+          if (!this.pageDocProps[entry.name]) {
+            this.pageDocProps[entry.name] = {
+              comment: propTypes.comment,
+              name: propTypes.name,
+            }
+          }
           return []
         }
 

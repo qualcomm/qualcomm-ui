@@ -31,7 +31,6 @@ import {
   type MachineSchema,
   MachineStatus,
   type Params,
-  type SendFn,
   type Transition,
   type ValueOrFn,
   type WatchParams,
@@ -83,6 +82,17 @@ export function useMachine<T extends MachineSchema>(
       return configIds?.[key]?.get?.()
     },
     register(key, valueOrParams, onDestroy?: any) {
+      /**
+       * A replacement element registers before the outgoing element's cleanup
+       * runs. Clearing unconditionally would discard the newer registration.
+       */
+      const clearIfCurrentId = (id: unknown) => () => {
+        if (configIds?.[key]?.get?.() !== id) {
+          return
+        }
+        configIds?.[key].set?.(undefined)
+      }
+
       if (
         typeof valueOrParams === "object" &&
         valueOrParams !== null &&
@@ -90,10 +100,10 @@ export function useMachine<T extends MachineSchema>(
       ) {
         const params = valueOrParams
         configIds?.[key].set?.(params.id)
-        params.onDestroy?.(() => configIds?.[key].set?.(undefined))
+        params.onDestroy?.(clearIfCurrentId(params.id))
       } else {
         configIds?.[key].set?.(valueOrParams)
-        onDestroy?.(() => configIds?.[key].set?.(undefined))
+        onDestroy?.(clearIfCurrentId(valueOrParams))
       }
     },
     set(key, value) {
@@ -250,7 +260,11 @@ export function useMachine<T extends MachineSchema>(
         cleanups.push(cleanup)
       }
     }
-    return () => cleanups.forEach((fn) => fn?.())
+    return () => {
+      for (const fn of cleanups) {
+        fn?.()
+      }
+    }
   }
 
   const state = bindable(() => ({
@@ -354,7 +368,7 @@ export function useMachine<T extends MachineSchema>(
     get scope() {
       return {...scope(), ids}
     },
-    send: send as SendFn<T>,
+    send,
     state: getState(),
     track: useTrack(injector),
   })
@@ -378,7 +392,9 @@ export function useMachine<T extends MachineSchema>(
 
         status = MachineStatus.STOPPED
 
-        effectsRef.forEach((fn) => fn())
+        for (const fn of effectsRef.values()) {
+          fn()
+        }
 
         effectsRef = new Map()
         transitionRef = null
@@ -397,7 +413,7 @@ export function useMachine<T extends MachineSchema>(
     get scope() {
       return {...scope(), ids}
     },
-    send: send as SendFn<T>,
+    send,
     state: getState(),
   }
 }

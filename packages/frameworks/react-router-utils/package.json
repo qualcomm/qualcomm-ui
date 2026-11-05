@@ -1,18 +1,16 @@
 {
   "name": "@qualcomm-ui/react-router-utils",
-  "version": "2.0.13",
+  "version": "3.1.0",
   "description": "Utilities for React Router",
-  "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "publishConfig": {
-    "access": "public"
-  },
+  "files": [
+    "dist",
+    "THIRD_PARTY_NOTICES.md"
+  ],
   "type": "module",
   "sideEffects": false,
-  "files": [
-    "dist"
-  ],
   "types": "./dist/stub.d.ts",
   "exports": {
     "./client": {
@@ -24,45 +22,54 @@
       "default": "./dist/node/index.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "run-s clean build:js build:ts",
-    "clean": "shx rm -rf dist/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
-    "build:js": "tsx build.ts",
+    "clean": "shx rm -rf node_modules/.tmp dist",
+    "build:js": "vite build",
     "build:ts": "tsc -b tsconfig.lib.json",
     "dev": "run-p watch:js watch:ts",
-    "watch:js": "tsx build.ts --watch",
+    "watch:js": "vite build -w",
     "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "lint": "eslint --quiet",
+    "test": "vitest --run -c vitest.config.ts",
+    "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
   },
   "dependencies": {
+    "@huggingface/transformers": "4.2.0",
+    "@orama/orama": "3.1.18",
     "my-ua-parser": "^2.0.4"
   },
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/esbuild": "catalog:",
-    "@qualcomm-ui/mdx-common": "workspace:^2.2.0",
-    "@qualcomm-ui/mdx-vite": "workspace:^3.5.0",
+    "@qualcomm-ui/mdx-common": "workspace:^2.7.0",
+    "@qualcomm-ui/mdx-vite": "workspace:^4.1.0",
     "@qualcomm-ui/tsconfig": "catalog:",
+    "@qualcomm-ui/vite": "catalog:",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "esbuild": "catalog:",
-    "minimatch": "^10.2.4",
+    "minimatch": "^11.0.4",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-router": "catalog:",
-    "shx": "^0.4.0",
+    "shx": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/mdx-common": "workspace:^2.2.0",
-    "@qualcomm-ui/mdx-vite": "workspace:^3.5.0",
+    "@qualcomm-ui/mdx-common": "workspace:^2.7.0",
+    "@qualcomm-ui/mdx-vite": "workspace:^4.1.0",
     "minimatch": ">=10.0.3",
-    "react-router": ">=7.0.2 <8",
     "react": ">=19.0.0",
-    "react-dom": ">=19.0.0"
+    "react-dom": ">=19.0.0",
+    "react-router": ">=7.0.2 <8"
   },
   "engines": {
     "node": ">=20"

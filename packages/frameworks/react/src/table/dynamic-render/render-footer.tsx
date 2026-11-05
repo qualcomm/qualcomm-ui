@@ -5,7 +5,7 @@ import type {ReactElement} from "react"
 
 import type {Header, RowData} from "@qualcomm-ui/core/table"
 
-import {flexRender} from "./flex-render"
+import {flexRender} from "./flex-render.js"
 
 interface Props<TData extends RowData = unknown, TValue = unknown> {
   footer: Header<TData, TValue>

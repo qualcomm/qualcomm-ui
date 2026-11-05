@@ -10,8 +10,8 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsSwitchContext} from "./qds-switch-context"
-import {SwitchThumb} from "./switch-thumb"
+import {useQdsSwitchContext} from "./qds-switch-context.js"
+import {SwitchThumb} from "./switch-thumb.js"
 
 export interface SwitchControlProps extends ElementRenderProp<"span"> {
   /**

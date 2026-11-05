@@ -10,25 +10,34 @@ import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
   SelectClearTrigger,
   type SelectClearTriggerProps,
-} from "./select-clear-trigger"
-import {SelectContent, type SelectContentProps} from "./select-content"
-import {SelectControl, type SelectControlProps} from "./select-control"
+} from "./select-clear-trigger.js"
+import {SelectContent, type SelectContentProps} from "./select-content.js"
+import {SelectControl, type SelectControlProps} from "./select-control.js"
 import {
   SelectErrorIndicator,
   type SelectErrorIndicatorProps,
-} from "./select-error-indicator"
-import {SelectErrorText, type SelectErrorTextProps} from "./select-error-text"
+} from "./select-error-indicator.js"
+import {
+  SelectErrorText,
+  type SelectErrorTextProps,
+} from "./select-error-text.js"
 import {
   SelectHiddenSelect,
   type SelectHiddenSelectProps,
-} from "./select-hidden-select"
-import {SelectHint, type SelectHintProps} from "./select-hint"
-import {SelectIndicator, type SelectIndicatorProps} from "./select-indicator"
-import {SelectItems} from "./select-items"
-import {SelectLabel, type SelectLabelProps} from "./select-label"
-import {SelectPositioner, type SelectPositionerProps} from "./select-positioner"
-import {SelectRoot, type SelectRootProps} from "./select-root"
-import {SelectValueText, type SelectValueTextProps} from "./select-value-text"
+} from "./select-hidden-select.js"
+import {SelectHint, type SelectHintProps} from "./select-hint.js"
+import {SelectIndicator, type SelectIndicatorProps} from "./select-indicator.js"
+import {SelectItems} from "./select-items.js"
+import {SelectLabel, type SelectLabelProps} from "./select-label.js"
+import {
+  SelectPositioner,
+  type SelectPositionerProps,
+} from "./select-positioner.js"
+import {SelectRoot, type SelectRootProps} from "./select-root.js"
+import {
+  SelectValueText,
+  type SelectValueTextProps,
+} from "./select-value-text.js"
 
 export interface SelectProps extends SelectRootProps {
   /**

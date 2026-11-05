@@ -1,1 +1,1 @@
-export * from "./app-docs-layout"
+export * from "./mdx-layout"

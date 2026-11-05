@@ -1,7 +1,7 @@
-import {AvatarContent, type AvatarContentProps} from "./avatar-content"
-import {AvatarImage, type AvatarImageProps} from "./avatar-image"
-import {AvatarRoot, type AvatarRootProps} from "./avatar-root"
-import {AvatarStatus, type AvatarStatusProps} from "./avatar-status"
+import {AvatarContent, type AvatarContentProps} from "./avatar-content.js"
+import {AvatarImage, type AvatarImageProps} from "./avatar-image.js"
+import {AvatarRoot, type AvatarRootProps} from "./avatar-root.js"
+import {AvatarStatus, type AvatarStatusProps} from "./avatar-status.js"
 
 export type {
   AvatarContentProps,

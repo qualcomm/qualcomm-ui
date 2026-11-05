@@ -94,7 +94,7 @@ function renderTabs(tabs: Tab[], parent: Parent): any[] {
     type: "mdxJsxFlowElement",
   }
 
-  tabs.forEach((tab) => {
+  for (const tab of tabs) {
     const codeNode = parent.children[tab.index] as Code
 
     const tabAttributes = [
@@ -129,7 +129,7 @@ function renderTabs(tabs: Tab[], parent: Parent): any[] {
     }
 
     tabsContainer.children.push(tabElement)
-  })
+  }
 
   return [tabsContainer]
 }

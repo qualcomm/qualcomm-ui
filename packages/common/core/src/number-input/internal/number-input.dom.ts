@@ -10,7 +10,7 @@ import type {
   HintValue,
   NumberInputElementIds,
   NumberInputScope,
-} from "../number-input.types"
+} from "../number-input.types.js"
 
 export const domIds: ScopeDomIds<NumberInputElementIds, NumberInputScope> = {
   decrementTrigger: (scope) => scope.ids.get("decrementTrigger"),

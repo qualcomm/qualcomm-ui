@@ -22,12 +22,12 @@ import {
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   createSelectApi,
-  type HighlightChangeDetails,
+  type SelectHighlightChangeDetails,
   type ScrollToIndexDetails,
   type SelectApiProps,
   selectMachine,
+  type SelectPositioningOptions,
 } from "@qualcomm-ui/core/select"
-import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {
   FocusOutsideEvent,
   InteractOutsideEvent,
@@ -145,7 +145,7 @@ export class CoreSelectRootDirective<T extends CollectionItem = CollectionItem>
    *
    * @inheritDoc
    */
-  readonly positioning = input<PositioningOptions | undefined>()
+  readonly positioning = input<SelectPositioningOptions | undefined>()
 
   /**
    * Function to scroll to a specific index
@@ -163,7 +163,7 @@ export class CoreSelectRootDirective<T extends CollectionItem = CollectionItem>
    * The callback fired when the highlighted item changes.
    */
   readonly highlightChanged = output<
-    {value: string | null} & HighlightChangeDetails<T>
+    {value: string | null} & SelectHighlightChangeDetails<T>
   >()
 
   /**

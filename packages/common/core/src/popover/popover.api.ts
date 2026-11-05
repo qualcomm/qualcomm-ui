@@ -13,8 +13,8 @@ import {
 } from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
-import {popoverAnatomy} from "./popover.anatomy"
+import {domIds} from "./internal/index.js"
+import {popoverAnatomy} from "./popover.anatomy.js"
 import type {
   PopoverAnchorBindings,
   PopoverApi,
@@ -29,7 +29,7 @@ import type {
   PopoverRootBindings,
   PopoverSchema,
   PopoverTriggerBindings,
-} from "./popover.types"
+} from "./popover.types.js"
 
 const parts = popoverAnatomy.parts
 

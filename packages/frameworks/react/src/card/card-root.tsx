@@ -14,7 +14,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsCardContextProvider} from "./qds-card-context"
+import {QdsCardContextProvider} from "./qds-card-context.js"
 
 export interface CardRootProps
   extends QdsCardApiProps, Omit<ElementRenderProp<"div">, "dir"> {

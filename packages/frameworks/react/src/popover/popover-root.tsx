@@ -23,7 +23,7 @@ import {
 } from "@qualcomm-ui/react-core/presence"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsPopoverContextProvider} from "./qds-popover-context"
+import {QdsPopoverContextProvider} from "./qds-popover-context.js"
 
 export interface PopoverRootProps
   extends PopoverApiProps, PresenceApiProps, QdsPopoverApiProps {

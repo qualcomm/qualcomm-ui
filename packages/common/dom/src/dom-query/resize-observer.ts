@@ -46,6 +46,8 @@ export function trackElementRect(
   }
   trigger([])
   const obs = new win.ResizeObserver(trigger)
-  elems.forEach((el) => obs.observe(el, {box}))
+  for (const el of elems) {
+    obs.observe(el, {box})
+  }
   return () => obs.disconnect()
 }

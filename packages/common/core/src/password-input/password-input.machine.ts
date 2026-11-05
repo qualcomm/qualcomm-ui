@@ -4,8 +4,8 @@
 import {raf, setElementValue, trackFormControl} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {domEls} from "./internal"
-import type {PasswordInputSchema} from "./password-input.types"
+import {domEls} from "./internal/index.js"
+import type {PasswordInputSchema} from "./password-input.types.js"
 
 export const passwordInputMachine: MachineConfig<PasswordInputSchema> =
   createMachine({

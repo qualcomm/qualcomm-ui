@@ -14,7 +14,7 @@ export const quiCustomDarkTheme: Record<string, any> = {
     "debugExceptionWidget.background": "#141414",
     "debugExceptionWidget.border": "#FFF",
     "debugToolBar.background": "#141414",
-    "editor.background": "#0A0A0A",
+    "editor.background": "#0f0f0f",
     "editor.foreground": "#d2d2d2",
     "editor.inactiveSelectionBackground": "#3a3d41",
     "editor.lineHighlightBackground": "#141414",

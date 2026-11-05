@@ -1,1 +1,1 @@
-export {CheckboxGroup, type CheckboxGroupProps} from "./checkbox-group"
+export {CheckboxGroup, type CheckboxGroupProps} from "./checkbox-group.js"

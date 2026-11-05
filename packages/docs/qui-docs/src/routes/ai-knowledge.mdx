@@ -1,0 +1,153 @@
+---
+title: AI Knowledge
+description: Generate structured JSON exports from documentation for LLM consumption and RAG pipelines.
+---
+
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+## Overview
+
+The knowledge system transforms MDX documentation into two JSON exports:
+
+- **`sections.json`** — Header-scoped sections for RAG pipelines and semantic search
+- **`pages.json`** — Full page content for LLM context windows and OpenWebUI upload
+
+Content processing includes:
+
+- Replacing `<TypeDocProps />` components with JSON property documentation
+- Inlining demo source code from referenced demo files
+- Converting theme tables to JSON data
+- Resolving relative imports and links
+
+Generation runs automatically during `buildStart` (production builds) and `configureServer` (dev server initialization). The `knowledge` field on `QuiDocsConfig` enables generation — no `enabled` flag is required.
+
+## Configuration
+
+Define the `knowledge` field in your `qui-docs.config.ts`:
+
+```typescript
+import {readFileSync} from "node:fs"
+import {resolve} from "node:path"
+
+import type {QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
+
+export default {
+  knowledge: {
+    // You'll need to set this to your deployed site's URL.
+    // This lets the agent link to your docs.
+    baseUrl: "https://docs.example.com",
+  },
+} satisfies QuiDocsConfig
+```
+
+Refer to the [API documentation](/api/ai-knowledge) to learn more about the available configuration options.
+
+## Page Header UI
+
+When `knowledge` is configured, each documentation page displays an action menu above the ToC:
+
+- **Copy Page** — Copies the page content as Markdown to the clipboard
+- **Download Page** — Downloads the page as a `.md` file
+
+Both actions fetch content from `pages.json` at runtime. They only appear on pages that have a corresponding entry in the generated output.
+
+## Output Structure
+
+Generated files are written to `{publicDir}/{outputPath}/`. The default output path is `exports`.
+
+<FileTree
+  className="mt-4"
+  expandedValue={["public", "exports"]}
+  onExpandedValueChange={() => {}}
+  items={[
+    {
+      name: "public",
+      items: [
+        {
+          name: "exports",
+          items: [{name: "pages.json"}, {name: "sections.json"}],
+        },
+      ],
+    },
+  ]}
+/>
+
+### sections.json
+
+Contains header-scoped section entries extracted from each documentation page. Each section includes a breadcrumb header path, prose content, code examples, and an MD5 hash for change detection.
+
+Intended for RAG pipelines and semantic search. Sections are scoped by heading depth (default: h1, h2, h3), producing granular chunks suitable for embedding and retrieval.
+
+Refer to the [API documentation](/api/ai-knowledge#knowledge-sections) for more details.
+
+### pages.json
+
+Contains the full rendered markdown content of each documentation page. Each entry includes the page title, route pathname, and an MD5 hash.
+
+Used by the page header UI for copy/download actions and by the `upload-knowledge` CLI for OpenWebUI uploads.
+
+## OpenWebUI Integration
+
+Upload generated knowledge to OpenWebUI instances. The upload command auto-detects `pages.json` in the output directory and uploads each page as an individual file.
+
+### Configuration
+
+Define integrations in the `knowledge.integrations.openWebUi` array:
+
+```typescript
+export default {
+  knowledge: {
+    baseUrl: "https://docs.example.com",
+    integrations: {
+      openWebUi: [{id: "production"}, {id: "staging", envFile: ".env.staging"}],
+    },
+  },
+} satisfies QuiDocsConfig
+```
+
+Each integration loads credentials from an env file. By convention, an integration with `id: "production"` loads `.env.production`. Override this with the `envFile` property.
+
+### OpenWebUiIntegration
+
+<TypeDocProps name="OpenWebUiIntegration" partial />
+
+### Credential Environment Variables
+
+Required variables in each env file:
+
+| Variable                   | Fallback       | Description                |
+| :------------------------- | :------------- | :------------------------- |
+| `OPEN_WEB_UI_URL`          | `WEB_UI_URL`   | OpenWebUI instance URL     |
+| `OPEN_WEB_UI_API_KEY`      | `WEB_UI_KEY`   | API key for authentication |
+| `OPEN_WEB_UI_KNOWLEDGE_ID` | `KNOWLEDGE_ID` | Target knowledge base ID   |
+
+### Upload Command
+
+```shell
+# Upload to all configured integrations
+qui-mdx-vite upload-knowledge
+
+# Upload to specific integrations
+qui-mdx-vite upload-knowledge -i production,staging
+
+# Override the knowledge file path
+qui-mdx-vite upload-knowledge -p ./custom/exports
+
+# Force upload even if content unchanged
+qui-mdx-vite upload-knowledge --force
+```
+
+#### CLI Options
+
+| Option                      | Description                               |
+| :-------------------------- | :---------------------------------------- |
+| `-p, --path <path>`         | Override knowledge file path              |
+| `-i, --integration <names>` | Comma-separated integrations to upload to |
+| `--force`                   | Force upload even if content unchanged    |
+
+When no integrations are configured, the upload command falls back to credentials from `OPEN_WEB_UI_*` environment variables.

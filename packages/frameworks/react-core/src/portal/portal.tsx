@@ -8,18 +8,21 @@ import {
   type RefObject,
   useState,
 } from "react"
-
 import {createPortal} from "react-dom"
 
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 
-import {usePortalContext} from "./portal-context"
+import {usePortalContext} from "./portal-context.js"
 
 export interface PortalProps {
   /**
    * Specify to override the container element.
    */
-  container?: RefObject<HTMLElement | null> | HTMLElement | null
+  container?:
+    | RefObject<HTMLElement | ShadowRoot | null>
+    | HTMLElement
+    | ShadowRoot
+    | null
 
   /**
    * Disable the portal conditionally. This causes the children to be rendered as-is.
@@ -65,5 +68,5 @@ export function Portal(
     return null
   }
 
-  return createPortal(children, mountNode as unknown as HTMLElement)
+  return createPortal(children, mountNode)
 }

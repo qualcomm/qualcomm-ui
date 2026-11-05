@@ -10,7 +10,7 @@ import {
 } from "@qualcomm-ui/react-mdx/spoiler"
 import type {QuiCommentTag} from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionSummary} from "./prop-description-summary"
+import {PropDescriptionSummary} from "./prop-description-summary.js"
 
 export interface PropDescriptionBlockTagsProps {
   tags: QuiCommentTag[]

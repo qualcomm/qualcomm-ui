@@ -9,10 +9,10 @@ import {
 } from "react"
 
 import type {SourceCodeData} from "@qualcomm-ui/mdx-common"
+import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import type {ColorScheme, QdsBrand} from "@qualcomm-ui/react/qds-theme"
-import {CopyToClipboardButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 import {
   booleanDataAttr,
   type WithDataAttributes,
@@ -23,7 +23,7 @@ import {
   DemoCodePanel,
   QdsDemoThemeSelector,
   useDemoSourceCode,
-} from "./internal"
+} from "./internal/index.js"
 
 export interface AngularDemoRunnerProps extends ComponentPropsWithRef<"div"> {
   /**

@@ -6,7 +6,7 @@
 
 import type {Placement} from "@floating-ui/dom"
 
-import type {PlacementAlign, PlacementSide} from "./types"
+import type {PlacementAlign, PlacementSide} from "./types.js"
 
 export function isValidPlacement(v: string): v is Placement {
   return /^(?:top|bottom|left|right)(?:-(?:start|end))?$/.test(v)

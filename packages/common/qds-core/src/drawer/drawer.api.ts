@@ -4,13 +4,13 @@
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {drawerClasses} from "./drawer.classes"
+import {drawerClasses} from "./drawer.classes.js"
 import type {
   QdsDrawerApi,
   QdsDrawerApiProps,
   QdsDrawerContentBindings,
   QdsDrawerPositionerBindings,
-} from "./drawer.types"
+} from "./drawer.types.js"
 
 export function createQdsDrawerApi(
   props: Explicit<QdsDrawerApiProps>,

@@ -1,5 +1,4 @@
 .qui-menu__button {
-  background: transparent;
   .qui-menu__indicator {
     transition: transform var(--animation-duration-faster) ease-out;
   }
@@ -11,18 +10,27 @@
   }
 }
 
+/* bare triggers only (e.g. header bar menu items) */
+.qui-menu__button:not(.qui-button__root) {
+  background: transparent;
+}
+
 /* icon-only menu button stuff */
 
 .qui-menu__button .qui-menu__indicator {
   &[data-size="sm"] {
-    --icon-size: 12px;
+    --icon-size: var(--sizing-60);
   }
   &[data-size="md"] {
-    --icon-size: 16px;
+    --icon-size: var(--sizing-70);
   }
   &[data-size="lg"] {
-    --icon-size: 20px;
+    --icon-size: var(--sizing-80);
   }
+}
+
+.qui-menu__button[data-density="compact"] .qui-menu__indicator {
+  --icon-size: var(--sizing-60);
 }
 
 .qui-menu__button[data-kind="icon"]:has(.qui-button__icon) {
@@ -40,8 +48,18 @@
     width: auto;
   }
 
+  /* compact overrides the square display and uses the inline padding above */
+  &[data-density="compact"] {
+    gap: var(--spacing-20);
+    &[data-size="sm"],
+    &[data-size="md"],
+    &[data-size="lg"] {
+      width: auto;
+    }
+  }
+
   .qui-menu__indicator {
-    --icon-size: 12px;
+    --icon-size: var(--sizing-60);
   }
 }
 
@@ -56,42 +74,140 @@
   flex-direction: column;
   outline: none;
   padding: var(--spacing-40) 0;
-  transform-origin: var(--transform-origin);
-  z-index: calc(var(--z-index-dropdown) + var(--layer-index));
+  z-index: max(
+    calc(var(--z-index-dropdown) + var(--layer-index)),
+    calc(var(--layer-z-floor, 0) + 1)
+  );
+}
 
-  &[data-state="open"] {
-    animation-duration: var(--animation-duration-fast);
-    &[data-placement^="top"] {
-      animation-name: slide-from-bottom, fade-in;
-    }
-    &[data-placement^="bottom"] {
-      animation-name: slide-from-top, fade-in;
-    }
-    &[data-placement^="left"] {
-      animation-name: slide-from-right, fade-in;
-    }
-    &[data-placement^="right"] {
-      animation-name: slide-from-left, fade-in;
-    }
+.qui-menu__positioner {
+  &[data-placement^="top"] {
+    --qui-menu-slide: 0 0.2rem;
   }
-  &[data-state="closed"] {
+  &[data-placement^="bottom"] {
+    --qui-menu-slide: 0 -0.2rem;
+  }
+  &[data-placement^="left"] {
+    --qui-menu-slide: 0.2rem 0;
+  }
+  &[data-placement^="right"] {
+    --qui-menu-slide: -0.2rem 0;
+  }
+  &[data-state="open"][data-placement] {
+    animation-duration: var(--animation-duration-fast);
+    animation-name: qui-menu-slide-in, fade-in;
+  }
+  &[data-state="closed"][data-placement] {
     animation-duration: var(--animation-duration-faster);
-    &[data-placement^="top"] {
-      animation-name: slide-to-bottom, fade-out;
-    }
-    &[data-placement^="bottom"] {
-      animation-name: slide-to-top, fade-out;
-    }
-    &[data-placement^="left"] {
-      animation-name: slide-to-right, fade-out;
-    }
-    &[data-placement^="right"] {
-      animation-name: slide-to-left, fade-out;
-    }
+    animation-name: qui-menu-slide-out, fade-out;
   }
   &[data-from="context-trigger"] {
     /* Fixes flicker on open or reposition from context-trigger */
     animation-duration: 60ms;
+  }
+
+  &:has(> .qui-menu__header, > .qui-menu__footer) {
+    background: var(--color-surface-overlay);
+    border: solid 1px var(--color-border-neutral-02);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-medium);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-height: var(--available-height);
+    padding: var(--spacing-40) 0;
+
+    &[hidden] {
+      display: none;
+    }
+
+    > .qui-menu__content {
+      background: none;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      display: flex;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 0;
+
+      > * {
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+/*
+ * Using `translate` to avoid overriding the positioner's inline `transform`.
+ */
+@keyframes qui-menu-slide-in {
+  from {
+    translate: var(--qui-menu-slide, 0 0);
+  }
+}
+@keyframes qui-menu-slide-out {
+  to {
+    translate: var(--qui-menu-slide, 0 0);
+  }
+}
+
+.qui-menu__header,
+.qui-menu__footer {
+  align-items: center;
+  display: flex;
+  flex: none;
+  gap: var(--spacing-50);
+  min-width: 0;
+  padding-inline: var(--spacing-100);
+
+  &[data-size="sm"] {
+    padding-inline: var(--spacing-90);
+  }
+}
+
+.qui-menu__header {
+  border-bottom: solid 1px var(--color-border-neutral-02);
+  margin-bottom: var(--spacing-20);
+  padding-block: var(--spacing-50) calc(var(--spacing-80) - 1px);
+
+  > .qui-button__root {
+    flex-shrink: 0;
+  }
+
+  &[data-size="sm"] {
+    padding-block: var(--spacing-30) calc(var(--spacing-60) - 1px);
+  }
+}
+
+.qui-menu__header-label {
+  color: var(--color-text-neutral-primary);
+  flex: 1;
+  font: var(--font-static-body-sm-bold);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-bold);
+  }
+}
+
+.qui-menu__footer {
+  border-top: solid 1px var(--color-border-neutral-02);
+  margin-top: var(--spacing-40);
+  padding-block: calc(var(--spacing-80) - 1px) var(--spacing-50);
+
+  &[data-size="sm"] {
+    padding-block: calc(var(--spacing-60) - 1px) var(--spacing-30);
+  }
+
+  > * {
+    flex: 1;
+    min-width: 0;
   }
 }
 
@@ -142,17 +258,33 @@
     grid-template-columns: auto auto 1fr repeat(3, auto);
   }
 
-  &:hover {
+  &[data-disabled] {
+    color: var(--color-utility-disabled-text);
+    --icon-color: var(--color-utility-disabled-icon);
+    pointer-events: none;
+
+    .qui-menu-item__command,
+    .qui-menu-item__indicator,
+    .qui-menu-item__description {
+      color: var(--color-utility-disabled-text);
+      .qui-icon__root {
+        color: var(--icon-color);
+      }
+    }
+  }
+
+  &:hover:not([data-disabled]) {
     background: var(--color-interactive-background-ghost-hover);
   }
 
-  &:active {
+  &:active:not([data-disabled]) {
     background: var(--color-interactive-background-ghost-pressed);
   }
 
   &[data-highlighted][data-focus-visible] {
     border-color: var(--color-utility-focus-border);
     outline: solid 1px var(--color-utility-focus-border);
+    outline-offset: -2px;
   }
 
   [data-state="unchecked"] {
@@ -163,6 +295,7 @@
 }
 
 .qui-menu-item__start-icon {
+  color: var(--icon-color, currentColor);
   margin-right: var(--spacing-50);
 }
 
@@ -210,9 +343,10 @@
 }
 
 .qui-menu__separator {
-  border-color: var(--color-border-neutral-01);
-  margin-top: var(--spacing-40);
-  padding-bottom: var(--spacing-40);
+  border: none;
+  border-top: solid 1px var(--color-border-neutral-01);
+  height: auto;
+  margin-block: var(--spacing-40);
   width: 100%;
 }
 
@@ -239,4 +373,82 @@
 
 [data-menu-part="item-control"] {
   margin-right: var(--spacing-50);
+}
+
+.qui-menu__split-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: var(--spacing-10);
+  width: fit-content;
+
+  & > .qui-button__root {
+    --button-radius: var(--component-button-global-border-radius);
+  }
+
+  & > :first-child {
+    border-end-end-radius: 0;
+    border-start-end-radius: 0;
+  }
+
+  & > :last-child {
+    border-end-start-radius: 0;
+    border-start-start-radius: 0;
+  }
+
+  &[data-variant="ghost"] {
+    --split-separator-height: var(--sizing-70);
+
+    &[data-size="sm"] {
+      --split-separator-height: var(--sizing-60);
+    }
+    &[data-size="lg"] {
+      --split-separator-height: var(--sizing-80);
+    }
+
+    & > .qui-button__root:first-child::after {
+      background: var(--color-interactive-border-neutral-idle);
+      content: "";
+      height: var(--split-separator-height);
+      position: absolute;
+      inset-inline-end: calc(-1 * var(--sizing-10));
+      top: 50%;
+      transform: translateY(-50%);
+      width: var(--sizing-10);
+    }
+
+    &:has(> .qui-button__root:is(:hover, :active, :focus-visible))
+      > .qui-button__root:first-child::after {
+      display: none;
+    }
+  }
+
+  /* outline split-button: adjacent buttons share a border, so:
+   - every button except the first has no inline-start border
+   - each button's inline-end border mirrors its next sibling's hover/active state
+   - on focus, a ::before fills in the missing inline-start edge
+   */
+  &[data-variant="outline"] {
+    gap: 0;
+
+    & > .qui-button__root:not(:first-child) {
+      border-inline-start-width: 0;
+    }
+
+    & > .qui-button__root:not(:focus-visible):has(+ .qui-button__root:hover) {
+      border-inline-end-color: var(--outline-border-hover);
+    }
+
+    & > .qui-button__root:not(:focus-visible):has(+ .qui-button__root:active) {
+      border-inline-end-color: var(--outline-border-pressed);
+    }
+
+    & > .qui-button__root:not(:first-child):focus-visible::before {
+      background: var(--color-utility-focus-border);
+      content: "";
+      inline-size: var(--border-width-sm);
+      inset-block: 0;
+      inset-inline-start: 0;
+      position: absolute;
+    }
+  }
 }

@@ -9,12 +9,20 @@ import {provideQdsRadioContext} from "./qds-radio-context.service"
 import {RadioRootDirective} from "./radio-root.directive"
 
 @Component({
+  host: {
+    "[attr.aria-label]": "undefined",
+    "[attr.aria-labelledby]": "undefined",
+  },
   providers: [provideRadioItemContext(), provideQdsRadioContext()],
   selector: "[q-radio]",
   standalone: false,
   template: `
     <ng-content select="[q-radio-hidden-input]">
-      <input q-radio-hidden-input />
+      <input
+        q-radio-hidden-input
+        [aria-label]="ariaLabel()"
+        [aria-labelledby]="ariaLabelledby()"
+      />
     </ng-content>
     <ng-content select="[q-radio-control]">
       <div q-radio-control></div>
@@ -36,6 +44,25 @@ import {RadioRootDirective} from "./radio-root.directive"
   `,
 })
 export class RadioComponent extends RadioRootDirective {
+  /**
+   * Accessible label applied to the generated hidden input when no visible label
+   * is provided.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external item label applied to the generated hidden input.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   /**
    * Optional hint text displayed below the radio. Hints are hidden when the
    * radio is invalid.

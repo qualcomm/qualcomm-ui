@@ -7,15 +7,18 @@ import type {TooltipTriggerBindings} from "@qualcomm-ui/core/tooltip"
 import {Portal, type PortalProps} from "@qualcomm-ui/react-core/portal"
 import type {BindingRenderProp} from "@qualcomm-ui/react-core/system"
 
-import {TooltipArrow, type TooltipArrowProps} from "./tooltip-arrow"
-import {TooltipArrowTip, type TooltipArrowTipProps} from "./tooltip-arrow-tip"
-import {TooltipContent, type TooltipContentProps} from "./tooltip-content"
+import {
+  TooltipArrowTip,
+  type TooltipArrowTipProps,
+} from "./tooltip-arrow-tip.js"
+import {TooltipArrow, type TooltipArrowProps} from "./tooltip-arrow.js"
+import {TooltipContent, type TooltipContentProps} from "./tooltip-content.js"
 import {
   TooltipPositioner,
   type TooltipPositionerProps,
-} from "./tooltip-positioner"
-import {TooltipRoot, type TooltipRootProps} from "./tooltip-root"
-import {TooltipTrigger} from "./tooltip-trigger"
+} from "./tooltip-positioner.js"
+import {TooltipRoot, type TooltipRootProps} from "./tooltip-root.js"
+import {TooltipTrigger} from "./tooltip-trigger.js"
 
 export interface TooltipProps extends Omit<TooltipRootProps, "children"> {
   /**

@@ -22,7 +22,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   InlineNotificationContextProvider,
   useInlineNotificationContext,
-} from "./inline-notification-context"
+} from "./inline-notification-context.js"
 
 export interface CoreInlineNotificationRootProps
   extends

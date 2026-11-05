@@ -9,7 +9,7 @@ import {Button, type ButtonProps} from "@qualcomm-ui/react/button"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsMenuContext} from "./qds-menu-context"
+import {useQdsMenuContext} from "./qds-menu-context.js"
 
 export interface MenuButtonProps extends Omit<ButtonProps, "endIcon"> {
   /**
@@ -19,19 +19,24 @@ export interface MenuButtonProps extends Omit<ButtonProps, "endIcon"> {
 }
 
 export function MenuButton({
+  badge,
   children,
+  density,
   size,
   ...props
 }: MenuButtonProps): ReactElement {
   const qdsMenuContext = useQdsMenuContext()
+  const resolvedSize = size ?? qdsMenuContext.size
+
   const mergedProps = mergeProps(qdsMenuContext.getButtonBindings(), props)
   return (
-    <Button {...mergedProps} size={size}>
+    <Button {...mergedProps} density={density} size={resolvedSize}>
       {children}
+      {badge}
       <Icon
         {...qdsMenuContext.getIndicatorBindings()}
         icon={ChevronDown}
-        size={size}
+        size={resolvedSize}
       />
     </Button>
   )

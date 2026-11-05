@@ -16,11 +16,7 @@ import {accordionClasses} from "@qualcomm-ui/qds-core/accordion"
   template: `
     <ng-content select="[q-accordion-item-icon]">
       @if (icon()) {
-        <svg
-          q-accordion-item-icon
-          [class]="accordionClasses.icon"
-          [qIcon]="icon()!"
-        ></svg>
+        <svg q-accordion-item-icon [qIcon]="icon()!"></svg>
       }
     </ng-content>
 

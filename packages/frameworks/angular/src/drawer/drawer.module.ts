@@ -5,8 +5,8 @@ import {CdkPortal} from "@angular/cdk/portal"
 import {NgTemplateOutlet} from "@angular/common"
 import {NgModule} from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
 
 import {DrawerBackdropDirective} from "./drawer-backdrop.directive"
 import {DrawerBodyComponent} from "./drawer-body.component"

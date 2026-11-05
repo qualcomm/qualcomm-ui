@@ -1,4 +1,5 @@
 export * from "./number-input-composite-demo"
+export * from "./number-input-explorer-demo"
 export * from "./number-input-controlled-demo"
 export * from "./number-input-error-text-demo"
 export * from "./number-input-min-max-demo"

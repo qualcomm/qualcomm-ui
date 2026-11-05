@@ -1,1 +1,1 @@
-export * from "./focus-visible"
+export * from "./focus-visible.js"

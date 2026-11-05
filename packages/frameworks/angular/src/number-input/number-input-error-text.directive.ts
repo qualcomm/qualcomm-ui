@@ -3,8 +3,8 @@
 
 import {computed, Directive} from "@angular/core"
 
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {CoreNumberInputErrorTextDirective} from "@qualcomm-ui/angular-core/number-input"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "[q-number-input-error-text]",

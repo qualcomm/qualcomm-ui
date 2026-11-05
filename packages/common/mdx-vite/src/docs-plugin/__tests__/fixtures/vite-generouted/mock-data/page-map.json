@@ -78,20 +78,6 @@
     ],
     "title": "Log In"
   },
-  "/getting-started": {
-    "categories": [
-      "Getting Started"
-    ],
-    "data": {
-      "title": "Getting Started"
-    },
-    "id": "/pages/getting-started/index.mdx",
-    "pathname": "/getting-started",
-    "pathSegments": [
-      "getting-started"
-    ],
-    "title": "Getting Started"
-  },
   "/getting-started/home": {
     "categories": [
       "Getting Started",

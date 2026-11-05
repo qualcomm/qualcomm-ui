@@ -34,8 +34,11 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {TabPropsContextProvider, useTabPropsContext} from "./tab-prop-context"
-import {TabsContextProvider, useTabsContext} from "./tabs-context"
+import {
+  TabPropsContextProvider,
+  useTabPropsContext,
+} from "./tab-prop-context.js"
+import {TabsContextProvider, useTabsContext} from "./tabs-context.js"
 
 export interface CoreTabsRootProps
   extends

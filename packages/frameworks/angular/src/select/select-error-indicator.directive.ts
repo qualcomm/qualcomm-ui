@@ -2,28 +2,28 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input} from "@angular/core"
-import {CircleAlert} from "lucide-angular"
+import {LucideCircleAlert} from "@lucide/angular"
 
-import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreSelectErrorIndicatorDirective} from "@qualcomm-ui/angular-core/select"
+import {useInputErrorIndicator} from "@qualcomm-ui/angular/input"
 
 @Component({
   selector: "[q-select-error-indicator]",
   standalone: false,
   template: `
     <ng-content>
-      <svg [qIcon]="icon()"></svg>
+      <svg [qIcon]="icon()!"></svg>
     </ng-content>
   `,
 })
 export class SelectErrorIndicatorDirective extends CoreSelectErrorIndicatorDirective {
   /**
-   * lucide-angular icon
+   * `@lucide/angular` icon
    *
-   * @default CircleAlert
+   * @default LucideCircleAlert
    */
-  readonly icon = input<LucideIconOrString>(CircleAlert)
+  readonly icon = input<LucideIconOrString>(LucideCircleAlert)
 
   protected readonly inputErrorIndicatorContext = useInputErrorIndicator()
 

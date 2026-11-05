@@ -19,7 +19,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {textInputAnatomy} from "./text-input.anatomy"
+import type {textInputAnatomy} from "./text-input.anatomy.js"
 
 export interface TextInputElementIds {
   errorText: string

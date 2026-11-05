@@ -1,1 +1,1 @@
-export * from "./use-descendants"
+export * from "./use-descendants.js"

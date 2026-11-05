@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {badgeClasses} from "./badge.classes"
+import type {badgeClasses} from "./badge.classes.js"
 
 export type BadgeClasses = typeof badgeClasses
 

@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getRectCorners, isRect} from "./rect"
-import type {Point, Rect} from "./types"
+import {getRectCorners, isRect} from "./rect.js"
+import type {Point, Rect} from "./types.js"
 
 export function containsPoint(r: Rect, p: Point): boolean {
   return r.minX <= p.x && p.x <= r.maxX && r.minY <= p.y && p.y <= r.maxY

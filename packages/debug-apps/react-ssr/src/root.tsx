@@ -1,21 +1,77 @@
-import "./globals.css"
-
 import {useState} from "react"
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
-import {Links, Meta, Outlet, Scripts, ScrollRestoration} from "react-router"
+import {
+  type LoaderFunctionArgs,
+  Links,
+  type LinksFunction,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "react-router"
 
-import {QuiRoot} from "@qualcomm-ui/react/qui-root"
+import {
+  isTheme,
+  PreventFlashOnWrongTheme,
+  Theme,
+  ThemeProvider,
+  useTheme,
+} from "@qualcomm-ui/react-router-utils/client"
 
-export default function App() {
+import {AppHeader} from "./components/app-header"
+import {themeCookie} from "./sessions.server"
+
+import "./globals.css"
+
+export const links: LinksFunction = () => [
+  {href: "https://fonts.googleapis.com", rel: "preconnect"},
+  {
+    crossOrigin: "anonymous",
+    href: "https://fonts.gstatic.com",
+    rel: "preconnect",
+  },
+  {
+    href: "https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap",
+    rel: "stylesheet",
+  },
+  {
+    href: "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap",
+    rel: "stylesheet",
+  },
+  {
+    href: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..500;1,400..500&display=swap",
+    rel: "stylesheet",
+  },
+  {
+    href: "https://use.typekit.net/nhs4wvu.css",
+    rel: "stylesheet",
+  },
+]
+
+interface RootLoaderData {
+  theme: Theme
+}
+
+export async function loader({
+  request,
+}: LoaderFunctionArgs): Promise<RootLoaderData> {
+  const theme = await themeCookie.parse(request.headers.get("cookie"))
+
+  return {theme: isTheme(theme) ? theme : Theme.DARK}
+}
+
+function App() {
   const [queryClient] = useState(new QueryClient())
+  const [theme] = useTheme()
 
   return (
     <html
-      lang="en"
-      data-theme="dark"
       data-brand="qualcomm"
-      style={{colorScheme: "dark"}}
+      data-theme={theme || Theme.DARK}
+      lang="en"
+      style={{colorScheme: theme || Theme.DARK}}
     >
       <head>
         <meta charSet="utf-8" />
@@ -23,32 +79,28 @@ export default function App() {
         <Meta />
         <Links />
         <title>QUI React SSR Debug</title>
-
-        <link href="https://fonts.googleapis.com" rel="preconnect" />
-        <link href="https://fonts.gstatic.com" rel="preconnect" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,110,400;8..144,110,560;8..144,114,400;8..144,114,500;8..144,114,520;8..144,114,660;8..144,114,680&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400..600;1,400..600&display=fallback"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..500;1,400..500&display=swap"
-          rel="stylesheet"
-        />
-        <link href="https://use.typekit.net/nhs4wvu.css" rel="stylesheet" />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <QuiRoot>
+          <AppHeader />
+          <main className="app-content">
             <Outlet />
-          </QuiRoot>
+          </main>
         </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
+  )
+}
+
+export default function AppWithProviders() {
+  const data = useLoaderData<RootLoaderData>()
+
+  return (
+    <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
+      <App />
+    </ThemeProvider>
   )
 }

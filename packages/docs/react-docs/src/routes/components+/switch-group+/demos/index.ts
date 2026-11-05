@@ -1,4 +1,5 @@
 export * from "./switch-group-composite-demo"
+export * from "./switch-group-explorer-demo"
 export * from "./switch-group-error-demo"
 export * from "./switch-group-hint-demo"
 export * from "./switch-group-orientation-demo"

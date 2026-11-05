@@ -5,6 +5,7 @@ import type {ReactElement} from "react"
 
 import {AlertCircle, Settings} from "lucide-react"
 
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Popover} from "@qualcomm-ui/react/popover"
@@ -12,7 +13,6 @@ import {type QdsBrand, useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {Select} from "@qualcomm-ui/react/select"
 import {Switch} from "@qualcomm-ui/react/switch"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 import {useGlobalConfigContext} from "./global-config-context"
@@ -31,7 +31,7 @@ const themeOptCollection = new ListCollection<{id: QdsBrand; label: string}>({
 export function GlobalConfig(): ReactElement {
   const {hideDemoBrandSwitcher, setHideDemoBrandSwitcher} =
     useGlobalConfigContext()
-  const {demoSettings, setDemoSettings} = useMdxDocsContext()
+  const {demoSettings, setDemoSettings} = useDocsRuntimeContext()
   const {brand, setBrand} = useQdsThemeContext()
 
   return (

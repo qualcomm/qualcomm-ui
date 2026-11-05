@@ -6,13 +6,13 @@ import type {ReactElement, ReactNode} from "react"
 import type {LucideIcon} from "lucide-react"
 
 import {accordionClasses} from "@qualcomm-ui/qds-core/accordion"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {useAccordionItemTrigger} from "@qualcomm-ui/react-core/accordion"
 import {
   type ElementRenderProp,
   type IdProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface AccordionItemTriggerProps

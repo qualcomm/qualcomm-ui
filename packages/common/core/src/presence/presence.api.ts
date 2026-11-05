@@ -6,7 +6,7 @@
 
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import type {PresenceApi, PresenceSchema} from "./presence.types"
+import type {PresenceApi, PresenceSchema} from "./presence.types.js"
 
 export function createPresenceApi(
   machine: Machine<PresenceSchema>,

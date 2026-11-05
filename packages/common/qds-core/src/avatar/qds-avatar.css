@@ -18,7 +18,9 @@
     --avatar-size: 24px;
     --avatar-content-font: var(--font-static-heading-xxs-bold);
     --avatar-status-size: 6px;
-    --avatar-status-border-size: var(--icon-stroke-xs);
+    --avatar-status-border-size: var(
+      --component-utility-icons-stroke-weight-xs
+    );
     --avatar-status-offset: 0px;
     & .qui-icon__root {
       --icon-size: 16px;
@@ -28,7 +30,9 @@
     --avatar-size: 32px;
     --avatar-content-font: var(--font-static-heading-xs-bold);
     --avatar-status-size: 8px;
-    --avatar-status-border-size: var(--icon-stroke-sm);
+    --avatar-status-border-size: var(
+      --component-utility-icons-stroke-weight-sm
+    );
     --avatar-status-offset: 1px;
     & .qui-icon__root {
       --icon-size: 20px;
@@ -39,7 +43,9 @@
     --avatar-size: 48px;
     --avatar-content-font: var(--font-static-heading-md-bold);
     --avatar-status-size: 12px;
-    --avatar-status-border-size: var(--icon-stroke-md);
+    --avatar-status-border-size: var(
+      --component-utility-icons-stroke-weight-md
+    );
     --avatar-status-offset: 1px;
     & .qui-icon__root {
       --icon-size: 24px;
@@ -49,7 +55,9 @@
     --avatar-size: 56px;
     --avatar-content-font: var(--font-static-heading-lg-bold);
     --avatar-status-size: 16px;
-    --avatar-status-border-size: var(--icon-stroke-lg);
+    --avatar-status-border-size: var(
+      --component-utility-icons-stroke-weight-lg
+    );
     --avatar-status-offset: 1px;
     & .qui-icon__root {
       --icon-size: 32px;
@@ -59,7 +67,9 @@
     --avatar-size: 80px;
     --avatar-content-font: var(--font-static-heading-xl);
     --avatar-status-size: 20px;
-    --avatar-status-border-size: var(--icon-stroke-xl);
+    --avatar-status-border-size: var(
+      --component-utility-icons-stroke-weight-xl
+    );
     --avatar-status-offset: 2px;
     & .qui-icon__root {
       --icon-size: 40px;

@@ -1,1 +1,1 @@
-export * from "./side-nav.dom"
+export * from "./side-nav.dom.js"

@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {CheckboxApiProps} from "./checkbox.types"
+import type {CheckboxApiProps} from "./checkbox.types.js"
 
 const checkboxProps: (keyof CheckboxApiProps)[] =
   createProps<CheckboxApiProps>()(

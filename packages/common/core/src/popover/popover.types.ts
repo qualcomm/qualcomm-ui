@@ -28,7 +28,7 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
-import type {popoverAnatomy} from "./popover.anatomy"
+import type {popoverAnatomy} from "./popover.anatomy.js"
 
 export interface PopoverApiProps
   extends

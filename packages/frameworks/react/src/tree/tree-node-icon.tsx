@@ -3,16 +3,16 @@
 
 import type {ReactElement} from "react"
 
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {
   useTreeContext,
   useTreeNodePropsContext,
 } from "@qualcomm-ui/react-core/tree"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsTreeContext} from "./qds-tree-context"
+import {useQdsTreeContext} from "./qds-tree-context.js"
 
 export interface TreeNodeIconProps extends ElementRenderProp<"span"> {
   /**

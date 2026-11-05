@@ -8,10 +8,6 @@ const figma = require("figma")
 
 const instance = figma.selectedInstance
 
-const icon = instance.getEnum("icon", {
-  only: "only",
-  start: "start",
-})
 const orientation = instance.getEnum("orientation", {
   vertical: "vertical",
 })
@@ -54,14 +50,6 @@ export default {
       ${panels}
     </div>`,
   id: "LineTabGroup",
-  imports: [
-    `import {TabsModule} from "@qualcomm-ui/angular/tabs"`,
-    ...(icon
-      ? [
-          `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {AArrowDown} from "lucide-angular"`,
-        ]
-      : []),
-  ],
+  imports: [`import {TabsModule} from "@qualcomm-ui/angular/tabs"`],
   metadata: {nestable: true},
 }

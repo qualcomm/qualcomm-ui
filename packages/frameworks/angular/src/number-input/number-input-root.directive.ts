@@ -2,19 +2,20 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {computed, Directive, inject, input, type OnInit} from "@angular/core"
+import type {LucideIcon} from "@lucide/angular"
 
-import {
-  provideQdsInputContext,
-  type QdsAngularInputApiProps,
-  QdsInputContextService,
-} from "@qualcomm-ui/angular/input"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
   CoreNumberInputRootDirective,
   provideNumberInputContext,
 } from "@qualcomm-ui/angular-core/number-input"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {
+  provideQdsInputContext,
+  type QdsAngularInputApiProps,
+  QdsInputContextService,
+} from "@qualcomm-ui/angular/input"
 import {createQdsInputApi, type QdsInputSize} from "@qualcomm-ui/qds-core/input"
 import {
   createQdsNumberInputApi,
@@ -55,7 +56,7 @@ export class NumberInputRootDirective
    * </div>
    * ```
    */
-  readonly endIcon = input<LucideIcon | string | undefined>()
+  readonly endIcon = input<LucideIconOrString | undefined>()
 
   /**
    * The size of the input field and its elements. Governs properties like font

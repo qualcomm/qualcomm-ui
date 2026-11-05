@@ -4,11 +4,26 @@ import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
 import {SliderModule} from "@qualcomm-ui/angular/slider"
+import type {
+  FocusChangeDetails,
+  ValueTextDetails,
+} from "@qualcomm-ui/core/slider"
 
 import {type MultiComponentTest, runTests} from "~test-utils"
 
 async function clickFocusTarget() {
   return page.getByText("Focus target").click()
+}
+
+async function focusSliderThumb(index = 0) {
+  await clickFocusTarget()
+  for (let i = 0; i <= index; i++) {
+    await userEvent.tab()
+  }
+
+  const thumb = page.getByRole("slider").nth(index)
+  await expect.element(thumb).toHaveFocus()
+  return thumb
 }
 
 const testIds = {
@@ -41,6 +56,7 @@ const testIds = {
       [defaultValue]="defaultValue()"
       [dir]="dir()"
       [disabled]="disabled()"
+      [display]="display()"
       [errorText]="errorText()"
       [getAriaValueText]="getAriaValueText()"
       [hint]="hint()"
@@ -56,6 +72,8 @@ const testIds = {
       [readOnly]="readOnly()"
       [sideMarkers]="sideMarkers()"
       [step]="step()"
+      [tooltip]="tooltip()"
+      (focusChanged)="focusChanged.emit($event)"
       (valueChanged)="valueChanged.emit($event)"
       (valueChangedEnd)="valueChangedEnd.emit($event)"
     />
@@ -70,7 +88,7 @@ class SimpleSliderComponent {
   readonly step = input<number | undefined>(undefined)
   readonly minStepsBetweenThumbs = input<number | undefined>(undefined)
   readonly orientation = input<"vertical" | "horizontal" | undefined>(undefined)
-  readonly ariaLabel = input<string | undefined>(undefined)
+  readonly ariaLabel = input<string | string[] | undefined>(undefined)
   readonly disabled = input<boolean | undefined>(undefined)
   readonly invalid = input<boolean | undefined>(undefined)
   readonly readOnly = input<boolean | undefined>(undefined)
@@ -81,11 +99,14 @@ class SimpleSliderComponent {
   readonly markers = input<number[] | undefined>(undefined)
   readonly sideMarkers = input<boolean | undefined>(undefined)
   readonly name = input<string | string[] | undefined>(undefined)
+  readonly tooltip = input<boolean | undefined>(undefined)
+  readonly display = input<string | ((value: number[]) => string) | undefined>()
   readonly getAriaValueText = input<
-    ((details: {value: number}) => string) | undefined
+    ((details: ValueTextDetails) => string) | undefined
   >(undefined)
   readonly origin = input<"start" | "center" | "end" | undefined>(undefined)
 
+  readonly focusChanged = output<FocusChangeDetails>()
   readonly valueChanged = output<{value: number[]}>()
   readonly valueChangedEnd = output<{value: number[]}>()
 }
@@ -113,6 +134,7 @@ class SimpleSliderComponent {
       [origin]="origin()"
       [readOnly]="readOnly()"
       [step]="step()"
+      (focusChanged)="focusChanged.emit($event)"
       (valueChanged)="valueChanged.emit($event)"
       (valueChangedEnd)="valueChangedEnd.emit($event)"
     >
@@ -124,6 +146,7 @@ class SimpleSliderComponent {
       <div
         q-slider-value-text
         [attr.data-test-id]="testIds.sliderValueText"
+        [display]="display()"
       ></div>
 
       @if (sideMarkers()) {
@@ -200,7 +223,7 @@ class CompositeSliderComponent {
   readonly step = input<number | undefined>(undefined)
   readonly minStepsBetweenThumbs = input<number | undefined>(undefined)
   readonly orientation = input<"vertical" | "horizontal" | undefined>(undefined)
-  readonly ariaLabel = input<string | undefined>(undefined)
+  readonly ariaLabel = input<string | string[] | undefined>(undefined)
   readonly disabled = input<boolean | undefined>(undefined)
   readonly invalid = input<boolean | undefined>(undefined)
   readonly readOnly = input<boolean | undefined>(undefined)
@@ -211,11 +234,13 @@ class CompositeSliderComponent {
   readonly markers = input<number[] | undefined>(undefined)
   readonly sideMarkers = input<boolean | undefined>(undefined)
   readonly name = input<string | string[] | undefined>(undefined)
+  readonly display = input<string | ((value: number[]) => string) | undefined>()
   readonly getAriaValueText = input<
-    ((details: {value: number}) => string) | undefined
+    ((details: ValueTextDetails) => string) | undefined
   >(undefined)
   readonly origin = input<"start" | "center" | "end" | undefined>(undefined)
 
+  readonly focusChanged = output<FocusChangeDetails>()
   readonly valueChanged = output<{value: number[]}>()
   readonly valueChangedEnd = output<{value: number[]}>()
 
@@ -415,6 +440,56 @@ const testCases: MultiComponentTest[] = [
     composite: () => CompositeSliderComponent,
     simple: () => SimpleSliderComponent,
     testCase(component) {
+      test(`vertical keyboard navigation uses up/down arrows — ${component.name}`, async () => {
+        const {container} = await render(component, {
+          inputs: {
+            defaultValue: [50],
+            orientation: "vertical",
+          },
+        })
+
+        const thumb = await focusSliderThumb()
+        const valueText =
+          component === SimpleSliderComponent
+            ? container.querySelector('[data-slider-part="value-text"]')
+            : page.getByTestId(testIds.sliderValueText)
+
+        await userEvent.keyboard("{ArrowRight}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+
+        await userEvent.keyboard("{ArrowUp}")
+        await expect.element(valueText).toHaveTextContent("51")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "51")
+
+        await userEvent.keyboard("{ArrowDown}")
+        await expect.element(valueText).toHaveTextContent("50")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`horizontal keyboard navigation ignores up/down arrows — ${component.name}`, async () => {
+        await render(component, {
+          inputs: {defaultValue: [50]},
+        })
+
+        const thumb = await focusSliderThumb()
+
+        await userEvent.keyboard("{ArrowUp}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+
+        await userEvent.keyboard("{ArrowDown}")
+        await expect.element(thumb).toHaveAttribute("aria-valuenow", "50")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
       test(`keyboard navigation - home/end keys — ${component.name}`, async () => {
         const {container} = await render(component, {
           inputs: {
@@ -556,6 +631,35 @@ const testCases: MultiComponentTest[] = [
     composite: () => CompositeSliderComponent,
     simple: () => SimpleSliderComponent,
     testCase(component) {
+      test(`range slider constrains the second thumb against the first thumb — ${component.name}`, async () => {
+        const {container} = await render(component, {
+          inputs: {
+            defaultValue: [30, 50],
+            minStepsBetweenThumbs: 10,
+          },
+        })
+
+        const secondThumb = await focusSliderThumb(1)
+
+        for (let i = 0; i < 20; i++) {
+          await userEvent.keyboard("{ArrowLeft}")
+        }
+
+        const valueText =
+          component === SimpleSliderComponent
+            ? container.querySelector('[data-slider-part="value-text"]')
+            : page.getByTestId(testIds.sliderValueText)
+
+        await expect.element(valueText).toHaveTextContent("30 - 40")
+        await expect.element(secondThumb).toHaveAttribute("aria-valuemin", "40")
+        await expect.element(secondThumb).toHaveAttribute("aria-valuenow", "40")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
       test(`aria-orientation — ${component.name}`, async () => {
         const {container} = await render(component, {
           inputs: {
@@ -609,6 +713,27 @@ const testCases: MultiComponentTest[] = [
     composite: () => CompositeSliderComponent,
     simple: () => SimpleSliderComponent,
     testCase(component) {
+      test(`supports separate accessible names for each thumb — ${component.name}`, async () => {
+        await render(component, {
+          inputs: {
+            ariaLabel: ["Minimum volume", "Maximum volume"],
+            defaultValue: [25, 75],
+          },
+        })
+
+        await expect
+          .element(page.getByRole("slider", {name: "Minimum volume"}))
+          .toHaveAttribute("aria-valuenow", "25")
+        await expect
+          .element(page.getByRole("slider", {name: "Maximum volume"}))
+          .toHaveAttribute("aria-valuenow", "75")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
       test(`focus state — ${component.name}`, async () => {
         const {container} = await render(component, {
           inputs: {defaultValue: [50]},
@@ -629,6 +754,36 @@ const testCases: MultiComponentTest[] = [
         await expect.element(thumb).toHaveFocus()
         await expect.element(thumb).toHaveAttribute("data-focus")
         await expect.element(root).toHaveAttribute("data-focus")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`calls focusChanged with the focused thumb and clears it on blur — ${component.name}`, async () => {
+        const focusChangedSpy = vi.fn()
+        await render(component, {
+          inputs: {defaultValue: [50]},
+          on: {
+            focusChanged: (event) => {
+              focusChangedSpy(event)
+            },
+          },
+        })
+
+        await focusSliderThumb()
+        await expect
+          .poll(() => focusChangedSpy.mock.calls.map(([details]) => details))
+          .toEqual([{focusedIndex: 0, value: [50]}])
+
+        await clickFocusTarget()
+        await expect
+          .poll(() => focusChangedSpy.mock.calls.map(([details]) => details))
+          .toEqual([
+            {focusedIndex: 0, value: [50]},
+            {focusedIndex: -1, value: [50]},
+          ])
       })
     },
   },
@@ -1187,6 +1342,31 @@ const testCases: MultiComponentTest[] = [
     composite: () => CompositeSliderComponent,
     simple: () => SimpleSliderComponent,
     testCase(component) {
+      test(`does not call valueChanged for readOnly keyboard input — ${component.name}`, async () => {
+        const valueChangedSpy = vi.fn()
+        await render(component, {
+          inputs: {
+            defaultValue: [50],
+            readOnly: true,
+          },
+          on: {
+            valueChanged: (event) => {
+              valueChangedSpy(event)
+            },
+          },
+        })
+
+        await focusSliderThumb()
+        await userEvent.keyboard("{ArrowRight}")
+
+        expect(valueChangedSpy).not.toHaveBeenCalled()
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
       test(`handles value at minimum boundary — ${component.name}`, async () => {
         const {container} = await render(component, {
           inputs: {defaultValue: [0]},
@@ -1324,6 +1504,54 @@ const testCases: MultiComponentTest[] = [
         await expect
           .element(thumb)
           .toHaveAttribute("aria-valuetext", "50 percent")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`customizes aria-valuetext for each range thumb — ${component.name}`, async () => {
+        const getAriaValueText = (details: ValueTextDetails) =>
+          `${details.index === 0 ? "Minimum" : "Maximum"} ${details.value} percent`
+
+        await render(component, {
+          inputs: {
+            defaultValue: [25, 75],
+            getAriaValueText,
+          },
+        })
+
+        await expect
+          .element(page.getByRole("slider").nth(0))
+          .toHaveAttribute("aria-valuetext", "Minimum 25 percent")
+        await expect
+          .element(page.getByRole("slider").nth(1))
+          .toHaveAttribute("aria-valuetext", "Maximum 75 percent")
+      })
+    },
+  },
+  {
+    composite: () => CompositeSliderComponent,
+    simple: () => SimpleSliderComponent,
+    testCase(component) {
+      test(`formats value text through the public display API — ${component.name}`, async () => {
+        const {container} = await render(component, {
+          inputs: {
+            defaultValue: [25, 75],
+            display: (value: number[]) =>
+              `Selected ${value[0]} through ${value[1]}`,
+          },
+        })
+
+        const valueText =
+          component === SimpleSliderComponent
+            ? container.querySelector('[data-slider-part="value-text"]')
+            : page.getByTestId(testIds.sliderValueText)
+
+        await expect
+          .element(valueText)
+          .toHaveTextContent("Selected 25 through 75")
       })
     },
   },

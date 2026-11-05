@@ -3,23 +3,23 @@
 
 import {type ReactNode, useCallback} from "react"
 
-import {Check, Copy, Download} from "lucide-react"
+import {Check, Copy, Download, Link2} from "lucide-react"
 
-import {Button} from "@qualcomm-ui/react/button"
-import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
-import {useSiteContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  useDocsManifestContext,
+  useDocsPageContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {useCopyToClipboard} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
-
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
+import {Menu} from "@qualcomm-ui/react/menu"
 
 export function pathnameToExportId(pathSegments: string[]): string {
   return pathSegments.join("-")
 }
 
 export function PageActions(): ReactNode {
-  const {exports, getPages, pageMap} = useSiteContext()
-  const {pageExport, pathname} = useMdxDocsLayoutContext()
+  const {exports, getPages, pageMap} = useDocsManifestContext()
+  const {pageExport, pathname} = useDocsPageContext()
   const page = pageMap[pathname]
   const exportId = pathnameToExportId(page?.pathSegments || [])
 
@@ -54,55 +54,51 @@ export function PageActions(): ReactNode {
     valueOrFn: getExportAsText,
   })
 
+  const {copyToClipboard: copyPageUrlToClipboard} = useCopyToClipboard({
+    valueOrFn: () => `${window.location.href}.md`,
+  })
+
   if (!page || !pageExport || !getPages) {
     return null
   }
 
   return (
     <div className="qui-docs__page-actions">
-      <div className="qui-docs__page-actions-buttons">
-        <Button
-          className="qui-docs__page-actions-copy-button"
+      <Menu.Root size="sm">
+        <Menu.SplitButton
           endIcon={isCopied ? Check : Copy}
           onClick={copyToClipboard}
           size="sm"
+          triggerProps={{"aria-label": "More page actions"}}
           variant="outline"
         >
-          Copy Page
-        </Button>
-        <Menu.Root size="sm">
-          <Menu.Trigger>
-            <Menu.IconButton
-              className="qui-docs__page-actions-menu-button"
-              size="sm"
-              variant="outline"
-            />
-          </Menu.Trigger>
-          <Portal>
-            <Menu.Positioner>
-              <Menu.Content>
-                <Menu.Item onClick={copyToClipboard} value="copy-page">
-                  <Menu.ItemStartIcon icon={Copy} />
-                  <Menu.ItemLabel>Copy Page</Menu.ItemLabel>
-                  <Menu.ItemDescription>
-                    Copy page as markdown for LLMs
-                  </Menu.ItemDescription>
-                </Menu.Item>
-                <Menu.Item
-                  onClick={() => void handleDownload()}
-                  value="download-page"
-                >
-                  <Menu.ItemStartIcon icon={Download} />
-                  <Menu.ItemLabel>Download Page</Menu.ItemLabel>
-                  <Menu.ItemDescription>
-                    Download page as markdown
-                  </Menu.ItemDescription>
-                </Menu.Item>
-              </Menu.Content>
-            </Menu.Positioner>
-          </Portal>
-        </Menu.Root>
-      </div>
+          Copy as markdown
+        </Menu.SplitButton>
+        <Portal>
+          <Menu.Positioner>
+            <Menu.Content>
+              <Menu.Item onClick={copyToClipboard} value="copy-page">
+                <Menu.ItemStartIcon icon={Copy} />
+                <Menu.ItemLabel>Copy as markdown</Menu.ItemLabel>
+              </Menu.Item>
+              <Menu.Item
+                onClick={copyPageUrlToClipboard}
+                value="copy-page-link"
+              >
+                <Menu.ItemStartIcon icon={Link2} />
+                <Menu.ItemLabel>Copy markdown link</Menu.ItemLabel>
+              </Menu.Item>
+              <Menu.Item
+                onClick={() => void handleDownload()}
+                value="download-page"
+              >
+                <Menu.ItemStartIcon icon={Download} />
+                <Menu.ItemLabel>Download markdown</Menu.ItemLabel>
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Positioner>
+        </Portal>
+      </Menu.Root>
     </div>
   )
 }

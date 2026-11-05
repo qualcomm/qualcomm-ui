@@ -13,7 +13,7 @@ import type {Direction, DirectionProperty} from "@qualcomm-ui/utils/direction"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {ActionSchema, JSX, MachineSchema} from "@qualcomm-ui/utils/machine"
 
-import type {toggleAnatomy} from "./toggle.anatomy"
+import type {toggleAnatomy} from "./toggle.anatomy.js"
 
 export interface ToggleApiProps extends DirectionProperty {
   /**

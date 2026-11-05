@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ItemToId} from "./query"
-import {getByText, type SearchableItem} from "./searchable"
+import type {ItemToId} from "./query.js"
+import {getByText, type SearchableItem} from "./searchable.js"
 
 export interface TypeaheadState {
   keysSoFar: string

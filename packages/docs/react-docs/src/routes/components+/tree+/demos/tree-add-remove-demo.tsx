@@ -3,8 +3,8 @@ import {type ReactElement, useState} from "react"
 import {FileText, FolderIcon, Plus, Trash} from "lucide-react"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
-import {Tree, type TreeNodeProviderProps} from "@qualcomm-ui/react/tree"
 import {useTreeContext} from "@qualcomm-ui/react-core/tree"
+import {Tree, type TreeNodeProviderProps} from "@qualcomm-ui/react/tree"
 
 interface Node {
   id: string

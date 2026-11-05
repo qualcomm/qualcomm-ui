@@ -6,11 +6,11 @@ import type {ReactElement} from "react"
 import {Ellipsis} from "lucide-react"
 
 import type {PaginationPageItemBindings} from "@qualcomm-ui/core/pagination"
-import {Icon} from "@qualcomm-ui/react/icon"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {Icon} from "@qualcomm-ui/react/icon"
 
 /**
  * @interface

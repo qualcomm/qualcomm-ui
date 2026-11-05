@@ -1,0 +1,37 @@
+{
+  "name": "qui-docs",
+  "version": "1.0.0",
+  "description": "QUI Docs workflows for documentation contributors.",
+  "author": {
+    "name": "Qualcomm UI Maintainers",
+    "url": "https://github.com/qualcomm/qualcomm-ui"
+  },
+  "homepage": "https://github.com/qualcomm/qualcomm-ui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "license": "BSD-3-Clause-Clear",
+  "keywords": [
+    "codex",
+    "documentation",
+    "mdx",
+    "qui-docs"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "QUI Documentation Authoring",
+    "shortDescription": "Write and review QUI Docs documentation.",
+    "longDescription": "Provides separate Codex skills for writing QUI Docs pages and reviewing documentation against authoring rules.",
+    "developerName": "Qualcomm UI Maintainers",
+    "category": "Documentation",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Review"
+    ],
+    "websiteURL": "https://github.com/qualcomm/qualcomm-ui",
+    "defaultPrompt": [
+      "Use $write-docs to draft a QUI Docs page.",
+      "Use $review-docs to review QUI Docs changes."
+    ],
+    "brandColor": "#2A2AEA"
+  }
+}

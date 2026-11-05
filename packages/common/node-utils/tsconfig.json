@@ -1,16 +1,11 @@
 {
-  "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@qualcomm-ui/node-utils/*": ["./src/*/index.ts"]
-    },
-  },
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
     },
     {
       "path": "./tsconfig.spec.json"

@@ -6,6 +6,6 @@ const demos = [{component: BasicDemo, title: "Basic"}]
 
 export default function Basic() {
   return (
-    <DemoPageLayout componentName="basic" demos={demos} className="w-full" />
+    <DemoPageLayout className="w-full" componentName="basic" demos={demos} />
   )
 }

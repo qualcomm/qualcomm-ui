@@ -5,7 +5,7 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {breadcrumbsClasses} from "./breadcrumbs.classes"
+import {breadcrumbsClasses} from "./breadcrumbs.classes.js"
 import type {
   QdsBreadcrumbsApi,
   QdsBreadcrumbsApiProps,
@@ -14,8 +14,9 @@ import type {
   QdsBreadcrumbsItemSeparatorBindings,
   QdsBreadcrumbsItemTriggerBindings,
   QdsBreadcrumbsListBindings,
+  QdsBreadcrumbsOverflowTriggerBindings,
   QdsBreadcrumbsRootBindings,
-} from "./breadcrumbs.types"
+} from "./breadcrumbs.types.js"
 
 export function createQdsBreadcrumbsApi(
   props: Explicit<QdsBreadcrumbsApiProps>,
@@ -50,7 +51,7 @@ export function createQdsBreadcrumbsApi(
       })
     },
     getItemTriggerBindings(): QdsBreadcrumbsItemTriggerBindings {
-      return normalize.button({
+      return normalize.element({
         className: breadcrumbsClasses.itemTrigger,
         "data-emphasis": emphasis,
         "data-size": size,
@@ -59,6 +60,13 @@ export function createQdsBreadcrumbsApi(
     getListBindings(): QdsBreadcrumbsListBindings {
       return normalize.element({
         className: breadcrumbsClasses.list,
+      })
+    },
+    getOverflowTriggerBindings(): QdsBreadcrumbsOverflowTriggerBindings {
+      return normalize.button({
+        className: `${breadcrumbsClasses.itemTrigger} ${breadcrumbsClasses.overflowTrigger}`,
+        "data-emphasis": emphasis,
+        "data-size": size,
       })
     },
     getRootBindings(): QdsBreadcrumbsRootBindings {

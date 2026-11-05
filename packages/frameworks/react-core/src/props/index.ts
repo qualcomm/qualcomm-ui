@@ -1,1 +1,1 @@
-export * from "./use-previous-props"
+export * from "./use-previous-props.js"

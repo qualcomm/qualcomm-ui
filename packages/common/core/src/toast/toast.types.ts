@@ -21,7 +21,7 @@ import type {
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
 
-import type {toastAnatomy} from "./toast.anatomy"
+import type {toastAnatomy} from "./toast.anatomy.js"
 
 export type ToastType =
   | "success"

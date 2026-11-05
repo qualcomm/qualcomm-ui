@@ -3,8 +3,8 @@
 import {Link, useLocation} from "react-router"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
-import {SideNav} from "@qualcomm-ui/react/side-nav"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
+import {SideNav} from "@qualcomm-ui/react/side-nav"
 
 import {QLogo} from "./q-logo"
 

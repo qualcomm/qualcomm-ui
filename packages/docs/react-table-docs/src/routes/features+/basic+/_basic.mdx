@@ -3,18 +3,17 @@ title: Basic
 component: Table
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 import {Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
 
 ::: terms
-simple table example
-table getting started
-column accessor
+simple table example, table getting started, column accessor
 :::
 
 This example demonstrates a minimal table setup with typed columns and data. Define columns using `createColumnHelper` with accessor functions, then pass them to `useReactTable` along with your data and `getCoreRowModel()` to create a table instance.
+
+---
 
 <Demo expanded name="BasicDemo" component={demos.BasicDemo} />

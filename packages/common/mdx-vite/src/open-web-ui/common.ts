@@ -3,8 +3,10 @@
 
 import {config} from "dotenv"
 
-import type {OpenWebUiIntegration} from "../docs-plugin"
-import {ConfigLoader} from "../docs-plugin/config"
+import {
+  ConfigLoader,
+  type OpenWebUiIntegration,
+} from "../docs-plugin/config/index.js"
 
 export interface OpenWebUiCredentials {
   apiKey: string

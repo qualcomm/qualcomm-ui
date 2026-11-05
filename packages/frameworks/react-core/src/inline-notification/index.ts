@@ -5,10 +5,10 @@ import {
   type CoreInlineNotificationLabelProps,
   CoreInlineNotificationRoot,
   type CoreInlineNotificationRootProps,
-} from "./core-inline-notification"
+} from "./core-inline-notification.js"
 
-export * from "./inline-notification-context"
-export * from "./use-inline-notification"
+export * from "./inline-notification-context.js"
+export * from "./use-inline-notification.js"
 
 export type {
   CoreInlineNotificationRootProps,

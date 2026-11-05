@@ -1,18 +1,15 @@
 {
   "name": "@qualcomm-ui/node-utils",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "A Node.js utility library",
-  "author": "Ryan Bower",
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
   "types": "./dist/stub.d.ts",
   "exports": {
     "./*": {
@@ -22,13 +19,16 @@
       "default": "./dist/*/index.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "run-s clean build:js build:ts",
-    "clean": "shx rm -rf node_modules/.tmp/tsbuildinfo dist/**/*.js dist/**/*.cjs dist/**/*.mjs dist/**/*.js.map",
-    "build:js": "tsx build.ts",
+    "clean": "shx rm -rf node_modules/.tmp dist",
+    "build:js": "vite build",
     "build:ts": "tsc -b tsconfig.lib.json",
     "dev": "run-p watch:js watch:ts",
-    "watch:js": "tsx build.ts --watch",
+    "watch:js": "vite build -w",
     "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
@@ -38,17 +38,17 @@
   },
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/esbuild": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@types/node": "~24.9.2",
-    "chalk": "^5.6.2",
-    "chokidar": "^5.0.0",
-    "esbuild": "catalog:",
+    "@qualcomm-ui/vite": "catalog:",
+    "@types/node": "catalog:",
+    "chalk": "catalog:",
+    "chokidar": "catalog:",
     "glob": "catalog:",
     "pretty-ms": "^9.3.0",
-    "shx": "^0.4.0",
+    "shx": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   }
 }

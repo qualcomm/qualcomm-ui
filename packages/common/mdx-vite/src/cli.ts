@@ -3,9 +3,9 @@
 
 import {program} from "@commander-js/extra-typings"
 
-import {addGeneratePageMapCommand} from "./docs-plugin/generate-page-map"
-import {addDownloadKnowledgeCommand} from "./open-web-ui/download-knowledge"
-import {addUploadKnowledgeCommand} from "./open-web-ui/upload-knowledge"
+import {addGeneratePageMapCommand} from "./docs-plugin/generate-page-map.js"
+import {addDownloadKnowledgeCommand} from "./open-web-ui/download-knowledge.js"
+import {addUploadKnowledgeCommand} from "./open-web-ui/upload-knowledge.js"
 
 function setupCli() {
   // global options

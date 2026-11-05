@@ -4,8 +4,8 @@
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {fieldGroupAnatomy} from "./field-group.anatomy"
-import type {fieldGroupClasses} from "./field-group.classes"
+import type {fieldGroupAnatomy} from "./field-group.anatomy.js"
+import type {fieldGroupClasses} from "./field-group.classes.js"
 
 export type QdsFieldGroupSize = "sm" | "md" | "lg"
 

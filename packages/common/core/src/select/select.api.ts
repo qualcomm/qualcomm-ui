@@ -26,8 +26,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domEls, domIds} from "./internal"
-import {selectAnatomy} from "./select.anatomy"
+import {domEls, domIds} from "./internal/index.js"
+import {selectAnatomy} from "./select.anatomy.js"
 import type {
   ItemProps,
   ItemState,
@@ -46,7 +46,7 @@ import type {
   SelectRootBindings,
   SelectSchema,
   SelectValueTextBindings,
-} from "./select.types"
+} from "./select.types.js"
 
 const parts = selectAnatomy.parts
 

@@ -10,7 +10,7 @@ import {
   ViewContainerRef,
 } from "@angular/core"
 
-import {BaseApiContextService} from "./api-context.service"
+import type {BaseApiContextService} from "./api-context.service"
 
 /**
  * Base directive for creating context-aware directives that render content
@@ -39,17 +39,30 @@ export abstract class ApiContextDirective<T extends object> {
       return
     }
 
-    effect(
-      () => {
-        this.viewContainerRef.clear()
-        const apiInstance = contextService.context()
+    /**
+     * A getter, not a snapshot: tracking the read inside the view lets Angular
+     * update on API change without destroying and rebuilding the DOM.
+     */
+    const viewContext = {
+      get $implicit() {
+        return contextService.context()
+      },
+      get [contextName]() {
+        return contextService.context()
+      },
+    }
 
-        if (apiInstance) {
-          this.viewContainerRef.createEmbeddedView(this.templateRef, {
-            $implicit: apiInstance,
-            [contextName]: apiInstance,
-          })
+    effect(
+      (onCleanup) => {
+        if (!contextService.initialized()) {
+          return
         }
+
+        const view = this.viewContainerRef.createEmbeddedView(
+          this.templateRef,
+          viewContext,
+        )
+        onCleanup(() => view.destroy())
       },
       {injector: this.injector},
     )

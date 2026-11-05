@@ -8,14 +8,14 @@ import {
   createQdsDrawerApi,
   type QdsDrawerApiProps,
 } from "@qualcomm-ui/qds-core/drawer"
-import {QdsDialogContextProvider} from "@qualcomm-ui/react/dialog"
 import {
   CoreDialog,
   type CoreDialogRootProps,
 } from "@qualcomm-ui/react-core/dialog"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
+import {QdsDialogContextProvider} from "@qualcomm-ui/react/dialog"
 
-import {QdsDrawerContextProvider} from "./qds-drawer-context"
+import {QdsDrawerContextProvider} from "./qds-drawer-context.js"
 
 export interface DrawerRootProps
   extends CoreDialogRootProps, QdsDrawerApiProps {

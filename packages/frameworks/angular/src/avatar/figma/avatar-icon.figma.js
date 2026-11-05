@@ -32,7 +32,7 @@ export default {
   imports: [
     `import {AvatarModule} from "@qualcomm-ui/angular/avatar"`,
     `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-    `import {User} from "lucide-angular"`,
+    `import {User} from "@lucide/angular"`,
   ],
   metadata: {nestable: true},
 }

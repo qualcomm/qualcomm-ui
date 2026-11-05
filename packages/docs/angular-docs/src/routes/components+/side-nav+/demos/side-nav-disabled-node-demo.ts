@@ -1,17 +1,17 @@
 import {Component} from "@angular/core"
 import {
-  Bell,
-  CircleUser,
-  CreditCard,
-  LayoutDashboard,
-  Network,
-  ShieldCheck,
-  User,
-} from "lucide-angular"
+  LucideBell,
+  LucideCircleUser,
+  LucideCreditCard,
+  LucideLayoutDashboard,
+  LucideNetwork,
+  LucideShieldCheck,
+  LucideUser,
+} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {SideNavModule} from "@qualcomm-ui/angular/side-nav"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 import {QLogoComponent} from "./q-logo.component"
@@ -78,13 +78,13 @@ const collection = createTreeCollection<SideNavItem>({
   imports: [SideNavModule, IconDirective, QLogoComponent],
   providers: [
     provideIcons({
-      Bell,
-      CircleUser,
-      CreditCard,
-      LayoutDashboard,
-      Network,
-      ShieldCheck,
-      User,
+      LucideBell,
+      LucideCircleUser,
+      LucideCreditCard,
+      LucideLayoutDashboard,
+      LucideNetwork,
+      LucideShieldCheck,
+      LucideUser,
     }),
   ],
   selector: "side-nav-disabled-node-demo",

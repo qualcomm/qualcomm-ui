@@ -1,4 +1,4 @@
-export * from "./stepper.api"
-export * from "./stepper.classes"
-export * from "./stepper.icons"
-export type * from "./stepper.types"
+export * from "./stepper.api.js"
+export * from "./stepper.classes.js"
+export * from "./stepper.icons.js"
+export type * from "./stepper.types.js"

@@ -5,12 +5,17 @@ env:
   TURBO_TOKEN: "turbo-cache-token"
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'packages/frameworks/react/**/*.figma.tsx'
-      - 'packages/frameworks/angular/**/*.figma.ts'
   workflow_dispatch:
+  workflow_call:
+    secrets:
+      TURBOREPO_REMOTE_CACHE_BUCKET_NAME:
+        required: true
+      TURBOREPO_REMOTE_CACHE_ACCESS_KEY:
+        required: true
+      TURBOREPO_REMOTE_CACHE_SECRET_KEY:
+        required: true
+      FIGMA_REST_TOKEN:
+        required: true
 
 jobs:
   publish-figma:
@@ -21,6 +26,8 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -30,8 +37,12 @@ jobs:
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
         turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
 
-    - run: pnpm build --filter @qualcomm-ui/react
+    - run: pnpm build --filter @qualcomm-ui/react --filter @qualcomm-ui/angular
 
     - run: pnpm react figma:publish-components
+      env:
+        FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_REST_TOKEN }}
+
+    - run: pnpm angular figma:publish-components
       env:
         FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_REST_TOKEN }}

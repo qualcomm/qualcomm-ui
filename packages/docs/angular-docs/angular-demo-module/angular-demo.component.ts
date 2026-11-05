@@ -6,16 +6,16 @@ import {
   ElementRef,
   inject,
   signal,
-  Type,
+  type Type,
   ViewEncapsulation,
 } from "@angular/core"
 
-import {QdsThemeService} from "@qualcomm-ui/angular/theme"
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {
   PORTAL_CONTAINER,
   PortalContextService,
 } from "@qualcomm-ui/angular-core/portal"
+import {QdsThemeService} from "@qualcomm-ui/angular/theme"
 
 import {MockedThemeService} from "./mocked-theme.service"
 

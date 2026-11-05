@@ -1,8 +1,8 @@
 import {Component, type OnInit} from "@angular/core"
 import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms"
 
-import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
 import {requiredNumberValidator} from "@qualcomm-ui/angular-core/number-input"
+import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
 
 @Component({
   imports: [NumberInputModule, ReactiveFormsModule],

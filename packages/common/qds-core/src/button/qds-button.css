@@ -103,6 +103,7 @@
     --button-icon-pressed: var(--color-interactive-icon-danger-pressed);
   }
 
+  &[data-emphasis="persistent-white"],
   &[data-emphasis="white-persistent"] {
     --button-text-idle: var(--color-utility-persistent-white);
     --button-text-hover: var(--color-utility-persistent-white);
@@ -118,6 +119,7 @@
     }
   }
 
+  &[data-emphasis="persistent-black"],
   &[data-emphasis="black-persistent"] {
     --button-text-idle: var(--color-utility-persistent-black);
     --button-text-hover: var(--color-utility-persistent-black);
@@ -153,7 +155,7 @@
 
     &[data-density="compact"] {
       height: var(--sizing-80);
-      padding: 0 var(--spacing-40);
+      padding: 0 var(--spacing-70);
     }
 
     &[data-kind="icon"] {
@@ -174,9 +176,8 @@
     padding: 0 var(--spacing-100);
 
     &[data-density="compact"] {
-      gap: var(--spacing-40);
       height: var(--sizing-90);
-      padding: 0 var(--spacing-50);
+      padding: 0 var(--spacing-80);
     }
 
     &[data-kind="icon"] {
@@ -197,9 +198,8 @@
     padding: 0 var(--spacing-110);
 
     &[data-density="compact"] {
-      gap: var(--spacing-50);
       height: var(--sizing-100);
-      padding: 0 var(--spacing-70);
+      padding: 0 var(--spacing-90);
     }
 
     &[data-kind="icon"] {
@@ -222,6 +222,7 @@
     font-family: var(--component-button-type-sm-font-family);
     font-size: var(--component-button-type-sm-font-size);
     font-weight: var(--component-button-type-sm-font-weight);
+    gap: var(--spacing-40);
     line-height: var(--component-button-type-sm-line-height);
   }
 
@@ -233,6 +234,7 @@
     --button-bg-pressed: var(--color-interactive-background-ghost-pressed);
     --button-bg-disabled: var(--color-interactive-background-ghost-idle);
 
+    &[data-emphasis="persistent-white"],
     &[data-emphasis="white-persistent"] {
       --button-bg-idle: var(
         --color-interactive-background-persistent-white-ghost-idle
@@ -248,6 +250,7 @@
       );
     }
 
+    &[data-emphasis="persistent-black"],
     &[data-emphasis="black-persistent"] {
       --button-bg-idle: var(
         --color-interactive-background-persistent-black-ghost-idle
@@ -284,8 +287,7 @@
   }
 
   &[data-variant="outline"] {
-    border: var(--component-button-variant-outline-border-width) solid
-      var(--outline-border-idle);
+    border: var(--border-width-sm) solid var(--outline-border-idle);
     box-shadow: 0 0 0 1px inset transparent;
 
     --outline-border-idle: var(
@@ -323,6 +325,7 @@
       );
     }
 
+    &[data-emphasis="persistent-white"],
     &[data-emphasis="white-persistent"] {
       --outline-border-idle: var(
         --color-interactive-border-persistent-white-idle
@@ -338,6 +341,7 @@
       );
     }
 
+    &[data-emphasis="persistent-black"],
     &[data-emphasis="black-persistent"] {
       --outline-border-idle: var(
         --color-interactive-border-persistent-black-idle
@@ -419,6 +423,7 @@
       }
     }
 
+    &[data-emphasis="persistent-white"],
     &[data-emphasis="white-persistent"] {
       --button-text-idle: var(--color-utility-persistent-black);
       --button-text-hover: var(--color-utility-persistent-black);
@@ -440,6 +445,7 @@
       );
     }
 
+    &[data-emphasis="persistent-black"],
     &[data-emphasis="black-persistent"] {
       --button-text-idle: var(--color-utility-persistent-white);
       --button-text-hover: var(--color-utility-persistent-white);
@@ -490,24 +496,30 @@
   min-width: var(--icon-width, var(--icon-size));
   width: var(--icon-width, var(--icon-size));
 
-  &[data-size="sm"] {
-    /* same size for default and compact densities */
-    --icon-size: 12px;
+  & > svg {
+    display: block;
+    height: 100%;
+    width: 100%;
   }
-  &[data-size="md"] {
-    --icon-size: 16px;
+
+  /* Scoped to the icon part so this scale outranks `.qui-icon__root[data-size]`
+     when a component icon routes through `<Icon>`. */
+  &[data-button-part="icon"] {
+    &[data-size="sm"] {
+      --icon-size: 12px;
+    }
+    &[data-size="md"] {
+      --icon-size: 16px;
+    }
+    &[data-size="lg"] {
+      --icon-size: 20px;
+    }
     &[data-density="compact"] {
       --icon-size: 12px;
     }
   }
-  &[data-size="lg"] {
-    --icon-size: 20px;
-    &[data-density="compact"] {
-      --icon-size: 16px;
-    }
-  }
 
-  &[data-icon-button-part="root"] {
+  &[data-icon-button-part="icon"] {
     &[data-size="sm"] {
       --icon-size: 16px;
       &[data-density="compact"] {
@@ -527,18 +539,10 @@
       }
     }
   }
-
-  /* For when the icon is declared as a node, i.e. `<ExternalLink />` */
-  .lucide {
-    height: var(--icon-size);
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    width: var(--icon-size);
-  }
 }
 
 .qui-button-group {
+  box-sizing: border-box;
   display: inline-flex;
 
   gap: var(--button-group-gap, var(--spacing-90));
@@ -566,4 +570,8 @@
   &[data-size="lg"] {
     --button-group-gap: var(--spacing-100);
   }
+}
+
+.qui-button__root > .qui-badge__root {
+  flex-shrink: 0;
 }

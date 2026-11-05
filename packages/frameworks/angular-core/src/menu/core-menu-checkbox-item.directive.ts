@@ -66,6 +66,8 @@ export class CoreMenuCheckboxItemDirective
   })
 
   ngOnInit() {
+    this.listenForSelect()
+
     this.menuOptionItemService.init(this.optionItemState)
     this.menuItemService.init(this.optionItemState)
 

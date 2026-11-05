@@ -7,13 +7,13 @@ import {
   createQdsLinkApi,
   type QdsLinkApiProps,
 } from "@qualcomm-ui/qds-core/link"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -32,6 +32,13 @@ export interface LinkProps
   endIcon?: LucideIconOrElement
 
   /**
+   * Controls whether the link inherits font size from its parent element.
+   *
+   * @since 1.22.0
+   */
+  inheritFontSize?: boolean | undefined
+
+  /**
    * Icon positioned before the text content.  If supplied as a `LucideIcon`,
    * the size will automatically match the {@link size} prop. Supply as a
    * `ReactElement` for additional customization.
@@ -48,12 +55,19 @@ export function Link({
   disabled,
   emphasis,
   endIcon,
+  inheritFontSize,
   size,
   startIcon,
   ...props
 }: LinkProps): ReactElement {
   const api = createQdsLinkApi(
-    {dir, disabled, emphasis, size} satisfies Explicit<QdsLinkApiProps>,
+    {
+      dir,
+      disabled,
+      emphasis,
+      inheritFontSize,
+      size,
+    } satisfies Explicit<QdsLinkApiProps>,
     normalizeProps,
   )
   const mergedProps = mergeProps(api.getRootBindings(), props)

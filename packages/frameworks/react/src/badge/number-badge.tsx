@@ -5,7 +5,7 @@ import type {ReactElement, ReactNode} from "react"
 
 import {
   createQdsNumberBadgeApi,
-  type QdsNumberBadgeProps as QdsNumberBadgeProps,
+  type QdsNumberBadgeProps,
 } from "@qualcomm-ui/qds-core/badge"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
@@ -13,6 +13,9 @@ import {
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+import {compact} from "@qualcomm-ui/utils/object"
+
+import {useBadgeContext} from "./badge-context.js"
 
 export interface NumberBadgeProps
   extends QdsNumberBadgeProps, ElementRenderProp<"span"> {
@@ -32,13 +35,17 @@ export function NumberBadge({
   value,
   ...restProps
 }: NumberBadgeProps): ReactElement {
+  const badgeContext = useBadgeContext()
   const qdsApi = createQdsNumberBadgeApi(
     {
-      disabled,
-      emphasis,
-      max,
-      size,
-      value,
+      ...badgeContext?.numberBadgeProps,
+      ...compact({
+        disabled,
+        emphasis,
+        max,
+        size,
+        value,
+      }),
     },
     normalizeProps,
   )

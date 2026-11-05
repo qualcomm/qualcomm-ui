@@ -5,6 +5,8 @@ import type {BlockContent, Heading, Root} from "mdast"
 import type {Plugin} from "unified"
 import {visit} from "unist-util-visit"
 
+export const STEPS_COMPONENT_NAME = "HeadingSteps"
+
 const defaultAllowedHeadings = new Set([2, 3, 4])
 
 /**
@@ -43,7 +45,7 @@ function getStepEndMatch(text: string) {
   return text.match(/^:::\s*\/steps\s*$/)
 }
 
-export function isStepBlock(text: string) {
+export function isStepBlock(text: string): boolean {
   return !!(getStepStartMatch(text) || getStepEndMatch(text))
 }
 
@@ -156,7 +158,7 @@ export const remarkSteps: Plugin<[], Root> = () => {
       const stepsNode: BlockContent = {
         attributes: [],
         children: contentNodes,
-        name: "HeadingSteps",
+        name: STEPS_COMPONENT_NAME,
         type: "mdxJsxFlowElement",
       }
 

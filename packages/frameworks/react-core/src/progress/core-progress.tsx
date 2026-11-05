@@ -19,7 +19,10 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ProgressContextProvider, useProgressContext} from "./progress-context"
+import {
+  ProgressContextProvider,
+  useProgressContext,
+} from "./progress-context.js"
 
 export interface CoreProgressRootProps
   extends

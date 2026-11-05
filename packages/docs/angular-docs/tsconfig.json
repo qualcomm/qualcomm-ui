@@ -1,17 +1,5 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "module": "esnext",
-    "target": "esnext",
-    "paths": {
-      "@qualcomm-ui/angular/*": ["../../frameworks/angular/src/*/index.ts"],
-      "@qualcomm-ui/angular-core/*": ["../../frameworks/angular-core/src/*/index.ts"],
-    }
-  },
-  "include": ["./src"],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
@@ -20,7 +8,7 @@
       "path": "./tsconfig.ng-demos.json"
     },
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.scripts.json"
     }
   ]
 }

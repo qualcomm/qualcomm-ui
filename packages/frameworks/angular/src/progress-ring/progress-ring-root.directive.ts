@@ -1,7 +1,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, inject, input} from "@angular/core"
+import {
+  booleanAttribute,
+  computed,
+  Directive,
+  inject,
+  input,
+} from "@angular/core"
 
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
@@ -15,6 +21,7 @@ import {
   type QdsProgressRingEmphasis,
   type QdsProgressRingSize,
 } from "@qualcomm-ui/qds-core/progress-ring"
+import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
 import {
@@ -37,6 +44,15 @@ export class ProgressRingRootDirective
    * @default 'primary'
    */
   readonly emphasis = input<QdsProgressRingEmphasis>()
+
+  /**
+   * Whether to display a shimmer effect on a loading determinate progress.
+   *
+   * @default true
+   */
+  readonly shimmer = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
 
   /**
    * Governs the height of the progress circle and track.
@@ -68,6 +84,7 @@ export class ProgressRingRootDirective
         createQdsProgressRingApi(
           {
             emphasis: this.emphasis(),
+            shimmer: this.shimmer(),
             size: this.size(),
             thickness: this.thickness(),
           } satisfies Explicit<QdsProgressRingApiProps>,

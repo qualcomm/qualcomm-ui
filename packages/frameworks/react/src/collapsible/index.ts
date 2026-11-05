@@ -1,16 +1,16 @@
 import {
   CollapsibleContent,
   type CollapsibleContentProps,
-} from "./collapsible-content"
+} from "./collapsible-content.js"
 import {
   CollapsibleContext,
   type CollapsibleContextProps,
-} from "./collapsible-context"
-import {CollapsibleRoot, type CollapsibleRootProps} from "./collapsible-root"
+} from "./collapsible-context.js"
+import {CollapsibleRoot, type CollapsibleRootProps} from "./collapsible-root.js"
 import {
   CollapsibleTrigger,
   type CollapsibleTriggerProps,
-} from "./collapsible-trigger"
+} from "./collapsible-trigger.js"
 
 export type {
   CollapsibleContentProps,

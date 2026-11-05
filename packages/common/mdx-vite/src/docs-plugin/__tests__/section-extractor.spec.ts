@@ -8,6 +8,8 @@ import {unified} from "unified"
 import {describe, expect, test} from "vitest"
 
 import {SectionExtractor} from "../markdown/knowledge/section-extractor"
+import {createRemarkProcessor} from "../markdown/remark-pipeline"
+import {remarkSerializeJsxKnowledge} from "../remark"
 
 function parseMarkdown(markdown: string): Root {
   return unified().use(remarkParse).parse(markdown)
@@ -93,7 +95,69 @@ Content here.
       const extractor = new SectionExtractor()
       const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
 
-      expect(sections[0].sectionId).toBe("test-page-getting-started")
+      expect(sections[0].sectionId).toBe("test-page#getting-started")
+    })
+
+    test("includes page identity in section IDs", () => {
+      const markdown = `
+# Shared Title
+
+## Configuration
+
+Content here.
+`
+      const extractor = new SectionExtractor()
+      const first = extractor.extract(parseMarkdown(markdown), {
+        ...pageInfo,
+        id: "first-page",
+        pathname: "/first-page",
+        title: "Shared Title",
+      })
+      const second = extractor.extract(parseMarkdown(markdown), {
+        ...pageInfo,
+        id: "second-page",
+        pathname: "/second-page",
+        title: "Shared Title",
+      })
+
+      expect(first.sections[0].sectionId).toBe("first-page#configuration")
+      expect(second.sections[0].sectionId).toBe("second-page#configuration")
+    })
+
+    test("uses unique page-local anchors for repeated headings", () => {
+      const markdown = `
+# Test Page
+
+## Configuration
+
+First section.
+
+## Configuration
+
+Second section.
+`
+      const extractor = new SectionExtractor()
+      const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
+
+      expect(sections.map((section) => section.sectionId)).toEqual([
+        "test-page#configuration",
+        "test-page#configuration-1",
+      ])
+    })
+
+    test("includes the page ID prefix exactly once", () => {
+      const markdown = `
+# Test Page
+
+## Getting Started
+
+Content here.
+`
+      const extractor = new SectionExtractor({pageIdPrefix: "site-"})
+      const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
+
+      expect(sections[0].pageId).toBe("site-test-page")
+      expect(sections[0].sectionId).toBe("site-test-page#getting-started")
     })
 
     test("generates correct section URLs", () => {
@@ -352,6 +416,61 @@ Outro text.
       expect(section.rawContent).toContain("Middle text.")
       expect(section.rawContent).toContain("Outro text.")
     })
+
+    test("builds Markdown-free search text with a local pathname", () => {
+      const markdown = `
+# Test Page
+
+## Search text
+
+Use [a local label](https://example.com/docs) and https://example.com/raw.
+
+- First list item
+- Second list item with \`inline code\`
+
+| Name | Meaning |
+| ---- | ------- |
+| API | Public interface |
+
+\`\`\`ts
+const excluded = "code block"
+\`\`\`
+`
+      const extractor = new SectionExtractor()
+      const {sections} = extractor.extract(parseGfmMarkdown(markdown), pageInfo)
+
+      expect(sections[0]).toMatchObject({
+        pathname: "/test-page",
+        searchText:
+          "Use a local label and . First list item Second list item with inline code Name Meaning API Public interface",
+      })
+      expect(sections[0].searchText).not.toContain("https://example.com")
+      expect(sections[0].searchText).not.toContain("excluded")
+      expect(sections[0].searchText).not.toContain("```")
+    })
+
+    test("omits local pathname and changes the section hash when routes differ", () => {
+      const markdown = `
+# Test Page
+
+## Search text
+
+Plain prose.
+`
+      const extractor = new SectionExtractor()
+      const tree = parseMarkdown(markdown)
+      const withoutPath = extractor.extract(tree, {
+        ...pageInfo,
+        pathname: undefined,
+      }).sections[0]
+      const withDifferentPath = extractor.extract(tree, {
+        ...pageInfo,
+        pathname: "/different-page",
+      }).sections[0]
+
+      expect(withoutPath.pathname).toBeUndefined()
+      expect(withoutPath.hash).not.toBe(withDifferentPath.hash)
+    })
   })
 
   describe("configuration options", () => {
@@ -504,8 +623,8 @@ More content.
       const {sections} = extractor.extract(parseMarkdown(markdown), pageInfo)
 
       expect(sections).toHaveLength(2)
-      expect(sections[0].sectionId).toBe("test-page-whats-new")
-      expect(sections[1].sectionId).toBe("test-page-api-reference-v20")
+      expect(sections[0].sectionId).toBe("test-page#whats-new")
+      expect(sections[1].sectionId).toBe("test-page#api-reference-v20")
     })
   })
 
@@ -684,5 +803,45 @@ Choose the library that fits your needs\u2014we've built examples.
       expect(sections[0].codeExamples?.[0]?.code).toContain("\u274C")
       expect(sections[0].codeExamples?.[0]?.code).toContain("\u2705")
     })
+  })
+})
+
+const searchPageInfo = {
+  frontmatter: {},
+  id: "test-page",
+  pathname: "/test-page",
+  title: "Test Page",
+  url: "https://docs.example.com/test-page",
+}
+
+describe("serialize-jsx directive in the search-index pipeline", () => {
+  function processForSearch(mdx: string): Root {
+    const processor = createRemarkProcessor({
+      mdx: true,
+      plugins: [remarkSerializeJsxKnowledge],
+      removeJsx: true,
+    })
+    return processor.runSync(processor.parse(mdx)) as Root
+  }
+
+  test("keeps prose and strips JSX and markers", () => {
+    const mdx = `## Section\n\n::: serialize-jsx\n\nThe demo shows reordering by array position.\n\n<NestedRouteOrderDemo />\n\n:::`
+    const tree = processForSearch(mdx)
+    const extractor = new SectionExtractor()
+    const {sections} = extractor.extract(tree, searchPageInfo)
+
+    expect(sections[0].content).toContain("The demo shows reordering")
+    expect(sections[0].content).not.toContain("::: serialize-jsx")
+    expect(sections[0].content).not.toContain("<NestedRouteOrderDemo")
+  })
+
+  test("leaves no marker text in rawContent", () => {
+    const mdx = `## Section\n\n::: serialize-jsx\n\nSome description.\n\n<SomeDemo />\n\n:::`
+    const tree = processForSearch(mdx)
+    const extractor = new SectionExtractor()
+    const {sections} = extractor.extract(tree, searchPageInfo)
+
+    expect(sections[0].rawContent).not.toContain("::: serialize-jsx")
+    expect(sections[0].rawContent).not.toContain(":::")
   })
 })

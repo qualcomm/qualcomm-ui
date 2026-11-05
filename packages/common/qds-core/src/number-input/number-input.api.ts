@@ -4,7 +4,7 @@
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {numberInputClasses} from "./number-input.classes"
+import {numberInputClasses} from "./number-input.classes.js"
 import type {
   QdsNumberInputApi,
   QdsNumberInputApiProps,
@@ -15,7 +15,7 @@ import type {
   QdsNumberInputInputBindings,
   QdsNumberInputInputGroupBindings,
   QdsNumberInputUnitSelectBindings,
-} from "./number-input.types"
+} from "./number-input.types.js"
 
 export function createQdsNumberInputApi(
   props: Explicit<QdsNumberInputApiProps>,

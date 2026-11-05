@@ -1,9 +1,9 @@
 import {Component, signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 
+import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {TagDirective} from "@qualcomm-ui/angular/tag"
-import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 import {countries} from "./country-list"

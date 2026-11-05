@@ -5,10 +5,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {getPlacementStyles} from "@qualcomm-ui/dom/floating-ui"
+import {FOCUS_TRAP_TAB_DELEGATE_ATTR} from "@qualcomm-ui/dom/focus-trap"
 import {
   getEventKey,
   getEventPoint,
   getEventTarget,
+  getTabbableEdges,
   isAnchorElement,
   isContextMenuEvent,
   isDownloadingEvent,
@@ -17,7 +19,6 @@ import {
   isOpeningInNewTab,
   isPrintableKey,
   isSelfTarget,
-  isValidTabEvent,
 } from "@qualcomm-ui/dom/query"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {cast} from "@qualcomm-ui/utils/functions"
@@ -38,8 +39,8 @@ import {
   getItemId,
   isTargetDisabled,
   itemSelectEvent,
-} from "./internal"
-import {menuAnatomy} from "./menu.anatomy"
+} from "./internal/index.js"
+import {menuAnatomy} from "./menu.anatomy.js"
 import type {
   GetOptionItemPropsReturn,
   ItemProps,
@@ -63,7 +64,7 @@ import type {
   MenuTriggerItemBindings,
   OptionItemProps,
   OptionItemState,
-} from "./menu.types"
+} from "./menu.types.js"
 
 export function createMenuApi(
   machine: Machine<MenuSchema>,
@@ -189,7 +190,7 @@ export function createMenuApi(
 
   return {
     addItemListener(props) {
-      const node = scope.getById(props.id)
+      const node = props.element ?? (props.id ? scope.getById(props.id) : null)
       if (!node) {
         return
       }
@@ -249,6 +250,14 @@ export function createMenuApi(
         dir: prop("dir"),
         hidden: !open,
         id: domIds.content(scope),
+        onBlur() {
+          send({type: "CONTENT_BLUR"})
+        },
+        onFocus(event) {
+          if (event.currentTarget.matches(":focus-visible")) {
+            send({type: "CONTENT_FOCUS_VISIBLE"})
+          }
+        },
         onKeyDown(event) {
           if (event.defaultPrevented) {
             return
@@ -264,14 +273,6 @@ export function createMenuApi(
             target === event.currentTarget
           if (!sameMenu) {
             return
-          }
-
-          if (event.key === "Tab") {
-            const valid = isValidTabEvent(event)
-            if (!valid) {
-              event.preventDefault()
-              return
-            }
           }
 
           const item = getItemEl(scope, highlightedValue)
@@ -506,8 +507,30 @@ export function createMenuApi(
       scope.ids.set("positioner", props.id)
       return normalize.element({
         ...parts.positioner,
+        "data-from": context.get("anchorPoint") ? "context-trigger" : "trigger",
+        "data-placement": currentPlacement,
         dir: prop("dir"),
+        [FOCUS_TRAP_TAB_DELEGATE_ATTR]: "",
         id: props.id,
+        onKeyDown(event: JSX.KeyboardEvent<HTMLElement>) {
+          if (event.key !== "Tab" || event.defaultPrevented) {
+            return
+          }
+          const target = getEventTarget<Element>(event)
+          if (
+            target?.closest(`[${FOCUS_TRAP_TAB_DELEGATE_ATTR}]`) !==
+            event.currentTarget
+          ) {
+            return
+          }
+          const [first, last] = getTabbableEdges(event.currentTarget)
+          const edge = event.shiftKey ? first : last
+          if (first && first !== last && target !== edge) {
+            return
+          }
+          event.preventDefault()
+          ;(event.shiftKey ? last : first)?.focus({preventScroll: true})
+        },
         style: popperStyles.floating,
       })
     },
@@ -625,7 +648,10 @@ export function createMenuApi(
 
     getTriggerItemBindings(childApi, props): MenuTriggerItemBindings {
       const triggerProps = childApi.getTriggerBindings(props)
-      return mergeProps(getItemBindings({value: triggerProps.id}), triggerProps)
+      return mergeProps(
+        getItemBindings({...props, value: triggerProps.id}),
+        triggerProps,
+      )
     },
   }
 }

@@ -1,9 +1,9 @@
 import {Component} from "@angular/core"
 
+import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {DialogModule} from "@qualcomm-ui/angular/dialog"
-import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 import {countries} from "./country-list"
@@ -22,7 +22,7 @@ import {countries} from "./country-list"
           <button q-dialog-close-button></button>
           <!-- preview -->
           <q-combobox
-            ariaLabel="Country"
+            aria-label="Country"
             class="w-48"
             disablePortal
             placeholder="Select a country"

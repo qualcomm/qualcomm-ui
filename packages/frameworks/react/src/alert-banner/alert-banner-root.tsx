@@ -17,7 +17,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   AlertBannerContextProvider,
   type AlertBannerContextValue,
-} from "./qds-alert-banner-context"
+} from "./qds-alert-banner-context.js"
 
 export interface AlertBannerRootProps
   extends QdsAlertBannerApiProps, Omit<ElementRenderProp<"div">, "dir"> {

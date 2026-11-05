@@ -21,7 +21,7 @@ import type {
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
 
-import type {tabsAnatomy} from "./tabs.anatomy"
+import type {tabsAnatomy} from "./tabs.anatomy.js"
 
 export interface IntlTranslations {
   listLabel?: string | undefined
@@ -141,7 +141,8 @@ export interface TabsSchema extends MachineSchema {
     indicatorTransition: boolean
     value: string | null
   }
-  effects: EffectSchema<"trackTabListElement">
+  effects: EffectSchema<"trackFocusVisible" | "trackTabListElement">
+  // TODO: migrate to new machine creation approach
   event: any
   guards: GuardSchema<"isIndicatorRendered" | "selectOnFocus">
   ids: TabsElementIds
@@ -205,6 +206,7 @@ export interface TabsPanelBindings extends Part<"panel"> {
   "data-selected": BooleanDataAttr
   hidden: boolean
   role: "tabpanel"
+  style: {display: "none"} | undefined
   tabIndex: 0 | -1
 }
 
@@ -250,6 +252,7 @@ export interface TabsTabDismissButtonBindings extends Part<"tabDismissButton"> {
   "aria-label": string
   onClick: JSX.MouseEventHandler
   role: "button"
+  tabIndex: -1
   type: "button"
 }
 

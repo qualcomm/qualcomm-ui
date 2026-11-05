@@ -5,9 +5,12 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Portal, type PortalProps} from "@qualcomm-ui/react-core/portal"
 
-import {DialogBackdrop, type DialogBackdropProps} from "./dialog-backdrop"
-import {DialogContent, type DialogContentProps} from "./dialog-content"
-import {DialogPositioner, type DialogPositionerProps} from "./dialog-positioner"
+import {DialogBackdrop, type DialogBackdropProps} from "./dialog-backdrop.js"
+import {DialogContent, type DialogContentProps} from "./dialog-content.js"
+import {
+  DialogPositioner,
+  type DialogPositionerProps,
+} from "./dialog-positioner.js"
 
 export interface DialogFloatingPortalProps extends PortalProps {
   /**

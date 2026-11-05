@@ -16,16 +16,42 @@ export class CoreComboboxInputDirective implements OnInit {
    */
   readonly id = input<string>()
 
+  /**
+   * ARIA label applied to the input.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the input.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   protected readonly comboboxContext = useComboboxContext()
   protected readonly hostId = computed(() => useId(this, this.id()))
   protected readonly onDestroy = useOnDestroy()
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.comboboxContext().getInputBindings({
+  protected readonly trackBindings = useTrackBindings(() => {
+    const bindings = this.comboboxContext().getInputBindings({
       id: this.hostId(),
       onDestroy: this.onDestroy,
-    }),
-  )
+    })
+    const ariaLabel = this.ariaLabel() ?? undefined
+    const ariaLabelledby = this.ariaLabelledby() ?? bindings["aria-labelledby"]
+
+    return {
+      ...bindings,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+    }
+  })
 
   ngOnInit() {
     this.trackBindings()

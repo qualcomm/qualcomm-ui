@@ -1,5 +1,212 @@
 # @qualcomm-ui/core Changelog
 
+## 1.14.0
+
+Oct 20th, 2026
+
+### Features
+
+* [menu]: add header and footer sections ([82f7153](https://github.com/qualcomm/qualcomm-ui/commit/82f7153e530462217f73152f38cc31fb58fc867a))
+* add image-viewer api and utils ([2e503ff](https://github.com/qualcomm/qualcomm-ui/commit/2e503ff))
+
+### Code Refactoring
+
+* [image-viewer]: use popup approach for interactive image ([49b09e3](https://github.com/qualcomm/qualcomm-ui/commit/49b09e3))
+
+### Bug Fixes
+
+* [menu]: emit the item `(selected)` output in Angular, including with `lazyMount` and `unmountOnExit` ([91e57d8](https://github.com/qualcomm/qualcomm-ui/commit/91e57d837e9e67e6d52e3da0b28364bcaf1914f8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/dom@1.3.1]
+
+## 1.13.1
+
+Sep 29th, 2026
+
+### Bug Fixes
+
+* [date-picker]: handle form submission with Enter ([6b52294](https://github.com/qualcomm/qualcomm-ui/commit/6b52294942686bd2703558b54dbb937f3faa1efb))
+
+## 1.13.0
+
+Aug 30th, 2026
+
+### Features
+
+* [date-picker]: improve screen reader announcements ([c6c1185](https://github.com/qualcomm/qualcomm-ui/commit/c6c1185))
+* [date-picker]: focus trap ([3a63bd1](https://github.com/qualcomm/qualcomm-ui/commit/3a63bd1))
+* [date-picker]: add the date picker state machine ([be92213](https://github.com/qualcomm/qualcomm-ui/commit/be92213))
+
+### Bug Fixes
+
+* proper positioning defaults in components and JSDoc ([cb9973e](https://github.com/qualcomm/qualcomm-ui/commit/cb9973e))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.0, @qualcomm-ui/dom@1.3.0]
+
+## 1.12.0
+
+Aug 18th, 2026
+
+### Features
+
+* [listbox]: add listbox core api and utilities ([e7502d6](https://github.com/qualcomm/qualcomm-ui/commit/e7502d6))
+* [progress/progress-ring]: add shimmer effect ([b5ad06c](https://github.com/qualcomm/qualcomm-ui/commit/b5ad06c))
+
+### Code Refactoring
+
+* [progress/progress-ring]: consolidate `--percent` & `--progress` ([3d5e2e5](https://github.com/qualcomm/qualcomm-ui/commit/3d5e2e5))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/dom@1.2.0, @qualcomm-ui/utils@1.4.0]
+
+## 1.11.8
+
+Aug 16th, 2026
+
+### Code Refactoring
+
+- [types]: support TS 6.0 ([4ed7651](https://github.com/qualcomm/qualcomm-ui/commit/4ed7651))
+
+### Miscellaneous Chores
+
+- [types]: support TS 6.0 ([cb71a86](https://github.com/qualcomm/qualcomm-ui/commit/cb71a86))
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.3, @qualcomm-ui/dom@1.1.6]
+
+## 1.11.7
+
+Jul 28th, 2026
+
+### Bug Fixes
+
+- [tabs]: apply focus-visible state on the first tab event into the tab list ([ddadab3](https://github.com/qualcomm/qualcomm-ui/commit/ddadab3))
+- [tabs]: remove dismiss buttons from tab order ([f3ece00](https://github.com/qualcomm/qualcomm-ui/commit/f3ece00))
+- [tabs]: clear focus when leaving the tab list and focusing another tab list ([7ab71c0](https://github.com/qualcomm/qualcomm-ui/commit/7ab71c0))
+
+## 1.11.6
+
+Jul 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/dom@1.1.5]
+
+## 1.11.5
+
+Jun 10th, 2026
+
+### Code Refactoring
+
+- support nodenext resolution ([5259f2e](https://github.com/qualcomm/qualcomm-ui/commit/5259f2e))
+
+### Styles
+
+- apply lint updates ([c37eff5](https://github.com/qualcomm/qualcomm-ui/commit/c37eff5))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils@1.3.2, @qualcomm-ui/dom@1.1.4]
+
+## 1.11.4
+
+Jun 5th, 2026
+
+### Bug Fixes
+
+- [menu]: prevent scroll in focus reclaim workaround ([2131276](https://github.com/qualcomm/qualcomm-ui/commit/2131276))
+
+## 1.11.3
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/dom, @qualcomm-ui/utils]
+
+## 1.11.2
+
+Jun 1st, 2026
+
+### Bug Fixes
+
+- [menu]: drop default positioning gutter ([e615b70](https://github.com/qualcomm/qualcomm-ui/commit/e615b70))
+
+## 1.11.1
+
+May 29th, 2026
+
+### Bug Fixes
+
+- [segmented-control]: use own component context for size and orientation selectors ([a9cda21](https://github.com/qualcomm/qualcomm-ui/commit/a9cda21))
+
+## 1.11.0
+
+May 22nd, 2026
+
+### Features
+
+- [number-input]: support aria labels ([cf182d6](https://github.com/qualcomm/qualcomm-ui/commit/cf182d6))
+- [select]: support aria labels ([e6f41e1](https://github.com/qualcomm/qualcomm-ui/commit/e6f41e1))
+- [combobox]: support aria labels ([cfaa97b](https://github.com/qualcomm/qualcomm-ui/commit/cfaa97b))
+
+## 1.10.0
+
+May 14th, 2026
+
+### Features
+
+- [file-upload]: add shared file upload primitives ([c6f26f5](https://github.com/qualcomm/qualcomm-ui/commit/c6f26f5))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 1.9.4
+
+May 7th, 2026
+
+### Tests
+
+- [table]: add regression tests ([8d93335](https://github.com/qualcomm/qualcomm-ui/commit/8d93335))
+
+## 1.9.3
+
+May 1st, 2026
+
+### Bug Fixes
+
+- [tree]: use booleanAriaAttr for aria-multiselectable in tree root bindings ([bf8f5e5](https://github.com/qualcomm/qualcomm-ui/commit/bf8f5e5))
+
+### Code Refactoring
+
+- [tree]: use replaceChildren instead of manual node spread in expandBranches ([4dc7f37](https://github.com/qualcomm/qualcomm-ui/commit/4dc7f37))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/utils, @qualcomm-ui/dom]
+
+## 1.9.2
+
+May 1st, 2026
+
+### Bug Fixes
+
+- [tabs]: hide non-selected panels and rework icon sizing ([885e7da](https://github.com/qualcomm/qualcomm-ui/commit/885e7da))
+
+## 1.9.1
+
+Apr 29th, 2026
+
+### Bug Fixes
+
+- [menu]: support disabled state for all item variants ([a55faf1](https://github.com/qualcomm/qualcomm-ui/commit/a55faf1))
+
 ## 1.9.0
 
 Apr 19th, 2026

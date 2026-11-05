@@ -8,10 +8,17 @@ import type {
 } from "@qualcomm-ui/mdx-vite"
 
 const navConfig: NavConfig[] = [
-  {sectionTitle: "Getting Started"},
   {
     hidden: true,
+    hideBreadcrumbs: true,
+    hidePageLinks: true,
+    hideSideNav: true,
+    hideToc: true,
     id: "_index",
+  },
+  {sectionTitle: "Getting Started"},
+  {
+    id: "introduction",
   },
   {
     id: "installation",
@@ -20,9 +27,31 @@ const navConfig: NavConfig[] = [
     id: "setup",
   },
   {
-    id: "integrations",
-    title: "Integrations & Configs",
+    id: "versioning",
   },
+  {separator: true},
+  {sectionTitle: "Integrations"},
+  {
+    children: [
+      {id: "mcp"},
+      {id: "claude-code"},
+      {id: "codex"},
+      {
+        children: [
+          {id: "qui-docs"},
+          {id: "qui-react-development"},
+          {id: "qui-angular-development"},
+          {id: "ui-testing"},
+        ],
+        id: "plugins",
+      },
+    ],
+    id: "ai-tools",
+    title: "AI Tools",
+  },
+  {id: "eslint"},
+  {id: "tailwind"},
+
   {separator: true},
   {sectionTitle: "Theming & Patterns"},
   {
@@ -45,9 +74,6 @@ const navConfig: NavConfig[] = [
     ],
     id: "patterns",
     title: "Patterns & Best Practices",
-  },
-  {
-    id: "developer-previews",
   },
   {separator: true},
   {
@@ -109,17 +135,19 @@ const navConfig: NavConfig[] = [
   },
 ]
 
+const packageDirectory = process.cwd()
+
 const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
-      resolve(__dirname, "../../frameworks/react/CHANGELOG.md"),
+      resolve(packageDirectory, "../../frameworks/react/CHANGELOG.md"),
       "utf-8",
     ),
     id: "react-changelog",
   },
   {
     contents: readFileSync(
-      resolve(__dirname, "../../common/core/CHANGELOG.md"),
+      resolve(packageDirectory, "../../common/core/CHANGELOG.md"),
       "utf-8",
     ),
     id: "core-changelog",
@@ -127,7 +155,7 @@ const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
       resolve(
-        __dirname,
+        packageDirectory,
         "../../frameworks/react-internal/files/component-list.md",
       ),
       "utf-8",
@@ -138,7 +166,7 @@ const extraFiles: KnowledgeExtraFile[] = [
   {
     contents: readFileSync(
       resolve(
-        __dirname,
+        packageDirectory,
         "../../frameworks/react-internal/files/mcp-server-setup.md",
       ),
       "utf-8",
@@ -149,8 +177,9 @@ const extraFiles: KnowledgeExtraFile[] = [
 
 export default {
   appDirectory: "src",
+  disableLegacySearchIndex: true,
   knowledge: {
-    baseUrl: "https://react-next.qui.qualcomm.com",
+    baseUrl: "https://react.qui.qualcomm.com",
     exclude: [
       "**/installation+/**",
       "index.mdx",

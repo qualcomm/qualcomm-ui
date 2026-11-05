@@ -12,6 +12,7 @@ RUN set -ex; \
    rm -rf /var/lib/apt/lists/*
 
 # install and build
+RUN npm i -g corepack
 RUN corepack enable
 RUN pnpm install --frozen-lockfile
 

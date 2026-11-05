@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {TableState, Updater} from "./types"
+import type {TableState, Updater} from "./types.js"
 
 export type PartialKeys<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 export type RequiredKeys<T, K extends keyof T> = Omit<T, K> &
@@ -130,13 +130,13 @@ export function flattenBy<TNode>(
   const flat: TNode[] = []
 
   const recurse = (subArr: TNode[]) => {
-    subArr.forEach((item) => {
+    for (const item of subArr) {
       flat.push(item)
       const children = getChildren(item)
       if (children?.length) {
         recurse(children)
       }
-    })
+    }
   }
 
   recurse(arr)

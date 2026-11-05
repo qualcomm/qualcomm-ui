@@ -9,12 +9,20 @@ import {provideQdsSwitchContext} from "./qds-switch-context.service"
 import {SwitchRootDirective} from "./switch-root.directive"
 
 @Component({
+  host: {
+    "[attr.aria-label]": "undefined",
+    "[attr.aria-labelledby]": "undefined",
+  },
   providers: [provideSwitchContext(), provideQdsSwitchContext()],
   selector: "[q-switch]",
   standalone: false,
   template: `
     <ng-content select="[q-switch-hidden-input]">
-      <input q-switch-hidden-input />
+      <input
+        q-switch-hidden-input
+        [aria-label]="ariaLabel()"
+        [aria-labelledby]="ariaLabelledby()"
+      />
     </ng-content>
     <ng-content select="[q-switch-control]">
       <div q-switch-control>
@@ -45,6 +53,25 @@ import {SwitchRootDirective} from "./switch-root.directive"
   `,
 })
 export class SwitchComponent extends SwitchRootDirective {
+  /**
+   * Accessible label applied to the generated hidden input when no visible label
+   * is provided.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the generated hidden input.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   /**
    * Optional error that describes the switch when the field is invalid. This
    * element is automatically associated with the switch for accessibility.

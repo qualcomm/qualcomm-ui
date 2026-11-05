@@ -1,8 +1,8 @@
 import {createContext, type ReactElement, useContext, useState} from "react"
 
 import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
 import {render, renderHook} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {
@@ -685,6 +685,120 @@ describe("basic", () => {
       .element(page.getByText(text.icon))
       .toHaveAttribute("aria-labelledby", "4")
   })
+
+  test.for([
+    ["positional overload", "positional"],
+    ["object overload", "object"],
+  ] as const)(
+    "ids: handing a part over to a different element keeps the new id (%s)",
+    async ([, overload]) => {
+      interface Schema extends MachineSchema {
+        ids: {
+          trigger: string
+        }
+        state: "idle"
+      }
+
+      const machineConfig = createMachine<Schema>({
+        ids: ({bindableId}) => ({
+          trigger: bindableId<string>(),
+        }),
+        initialState() {
+          return "idle"
+        },
+        states: {
+          idle: {},
+        },
+      })
+
+      const observedIds: (string | undefined)[] = []
+
+      function createApi(machine: Machine<Schema>) {
+        const {scope} = machine
+        return {
+          getRegisteredId: () => scope.ids.get("trigger"),
+          getTriggerProps: (
+            id: string,
+            onDestroy: (callback: () => void) => void,
+          ) => {
+            if (overload === "object") {
+              scope.ids.register("trigger", {id, onDestroy})
+            } else {
+              scope.ids.register("trigger", id, onDestroy)
+            }
+            return {id}
+          },
+        }
+      }
+
+      const ApiContext = createContext<ReturnType<typeof createApi> | null>(
+        null,
+      )
+
+      const text = {
+        button: "ButtonTrigger",
+        field: "FieldTrigger",
+        swap: "Swap",
+      }
+
+      function ButtonTrigger(): ReactElement {
+        const api = useContext(ApiContext)
+        const onDestroy = useOnDestroy()
+
+        return (
+          <button {...api!.getTriggerProps("button-trigger", onDestroy)}>
+            {text.button}
+          </button>
+        )
+      }
+
+      function FieldTrigger(): ReactElement {
+        const api = useContext(ApiContext)
+        const onDestroy = useOnDestroy()
+
+        return (
+          <div {...api!.getTriggerProps("field-trigger", onDestroy)}>
+            {text.field}
+          </div>
+        )
+      }
+
+      function TestComponent() {
+        const [asField, setAsField] = useState(false)
+        const machine = useMachine(machineConfig)
+        const api = createApi(machine)
+
+        observedIds.push(api.getRegisteredId())
+
+        return (
+          <ApiContext.Provider value={api}>
+            {asField ? <FieldTrigger /> : <ButtonTrigger />}
+
+            <button onClick={() => setAsField((prev) => !prev)}>
+              {text.swap}
+            </button>
+          </ApiContext.Provider>
+        )
+      }
+
+      await render(<TestComponent />)
+
+      observedIds.length = 0
+      await page.getByText(text.swap).click()
+      await expect.element(page.getByText(text.field)).toBeInTheDocument()
+
+      expect(observedIds.at(-1)).toBe("field-trigger")
+      // the outgoing element must never blank out the incoming registration
+      expect(observedIds).not.toContain(undefined)
+
+      observedIds.length = 0
+      await page.getByText(text.swap).click()
+      await expect.element(page.getByText(text.button)).toBeInTheDocument()
+
+      expect(observedIds.at(-1)).toBe("button-trigger")
+      expect(observedIds).not.toContain(undefined)
+    },
+  )
 
   test("ids: collection", async () => {
     interface Schema extends MachineSchema {

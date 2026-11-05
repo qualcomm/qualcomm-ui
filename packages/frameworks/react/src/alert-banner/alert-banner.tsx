@@ -8,21 +8,27 @@ import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import {
   AlertBannerActionContainer,
   type AlertBannerActionContainerProps,
-} from "./alert-banner-action-container"
+} from "./alert-banner-action-container.js"
 import {
   AlertBannerCloseButton,
   type AlertBannerCloseButtonProps,
-} from "./alert-banner-close-button"
+} from "./alert-banner-close-button.js"
 import {
   AlertBannerDescription,
   type AlertBannerDescriptionProps,
-} from "./alert-banner-description"
+} from "./alert-banner-description.js"
 import {
   AlertBannerHeading,
   type AlertBannerHeadingProps,
-} from "./alert-banner-heading"
-import {AlertBannerIcon, type AlertBannerIconProps} from "./alert-banner-icon"
-import {AlertBannerRoot, type AlertBannerRootProps} from "./alert-banner-root"
+} from "./alert-banner-heading.js"
+import {
+  AlertBannerIcon,
+  type AlertBannerIconProps,
+} from "./alert-banner-icon.js"
+import {
+  AlertBannerRoot,
+  type AlertBannerRootProps,
+} from "./alert-banner-root.js"
 
 export interface AlertBannerProps extends Omit<
   AlertBannerRootProps,

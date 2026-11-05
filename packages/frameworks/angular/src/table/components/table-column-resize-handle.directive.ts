@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input, type OnInit} from "@angular/core"
-import {UnfoldHorizontal} from "lucide-angular"
+import {LucideUnfoldHorizontal} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {Header} from "@qualcomm-ui/core/table"
 import type {QdsTableColumnResizerProps} from "@qualcomm-ui/qds-core/table"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -18,13 +18,14 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({UnfoldHorizontal})],
+  providers: [provideIcons({LucideUnfoldHorizontal})],
   selector: "[q-table-column-resize-handle]",
   standalone: false,
   template: `
     <svg
       [q-bind]="inlineIconButtonApi().getIconBindings()"
-      [qIcon]="icon()"
+      [qIcon]="icon()!"
+      [size]="inlineIconButtonApi().size"
     ></svg>
   `,
 })

@@ -2,59 +2,30 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {ESLintUtils} from "@typescript-eslint/utils"
-import {existsSync, readFileSync} from "node:fs"
-import {
-  dirname,
-  join,
-  parse,
-  posix as path,
-  resolve as resolvePath,
-} from "node:path"
-import ts from "typescript"
+import {existsSync} from "node:fs"
+import {dirname, posix as path, resolve as resolvePath} from "node:path"
+
+import {findTsconfig, getProjectTsconfigs} from "./tsconfig-references.js"
 
 const createRule = ESLintUtils.RuleCreator(
   (name) => `https://example.com/rule/${name}`,
 )
 
-const tsconfigCache = new Map()
 const dependencyGraphCache = new Map()
-
-function readTsconfig(tsconfigPath) {
-  if (tsconfigCache.has(tsconfigPath)) {
-    return tsconfigCache.get(tsconfigPath)
-  }
-  const {config, error} = ts.readConfigFile(tsconfigPath, (f) =>
-    readFileSync(f, "utf8"),
-  )
-  tsconfigCache.set(tsconfigPath, error ? null : config)
-  return error ? null : config
-}
-
-function findNearestTsconfig(file) {
-  let dir = dirname(file)
-  while (parse(dir).root !== dir) {
-    const p = join(dir, "tsconfig.json")
-    if (existsSync(p)) {
-      return p
-    }
-    dir = dirname(dir)
-  }
-  return null
-}
 
 function toPosix(p) {
   return path.normalize(p).replace(/\\/g, "/")
 }
 
-function resolvePathAlias(importPath, tsconfigDir, paths) {
-  for (const [alias, mappings] of Object.entries(paths)) {
+function resolvePathAlias(importPath, pathAliases) {
+  for (const {mappings, pattern, tsconfigDir} of pathAliases) {
     const mappingArray = Array.isArray(mappings) ? mappings : [mappings]
 
     for (const mapping of mappingArray) {
       let resolvedPath = null
 
-      if (alias.includes("*")) {
-        const [aliasPrefix, aliasSuffix = ""] = alias.split("*")
+      if (pattern.includes("*")) {
+        const [aliasPrefix, aliasSuffix = ""] = pattern.split("*")
         if (
           importPath.startsWith(aliasPrefix) &&
           importPath.endsWith(aliasSuffix)
@@ -65,7 +36,7 @@ function resolvePathAlias(importPath, tsconfigDir, paths) {
           )
           resolvedPath = mapping.replace("*", wildcardValue)
         }
-      } else if (importPath === alias) {
+      } else if (importPath === pattern) {
         resolvedPath = mapping
       }
 
@@ -83,14 +54,14 @@ function resolvePathAlias(importPath, tsconfigDir, paths) {
   return null
 }
 
-function resolveImportPath(importPath, currentFile, tsconfigDir, paths) {
+function resolveImportPath(importPath, currentFile, pathAliases) {
   // Handle relative imports
   if (importPath.startsWith(".")) {
     return toPosix(resolvePath(dirname(currentFile), importPath))
   }
 
   // Handle path aliases
-  const aliasResolved = resolvePathAlias(importPath, tsconfigDir, paths)
+  const aliasResolved = resolvePathAlias(importPath, pathAliases)
   if (aliasResolved) {
     return aliasResolved
   }
@@ -182,16 +153,26 @@ function isTypeOnlyImport(node) {
 export const noCircularPathAlias = createRule({
   create(context) {
     const fileName = context.getFilename()
-    const tsconfigPath = findNearestTsconfig(fileName)
+    const tsconfigPath = findTsconfig(fileName)
 
     if (!tsconfigPath) {
       return {}
     }
 
-    const tsconfigDir = dirname(tsconfigPath)
-    const tsconfig = readTsconfig(tsconfigPath) || {}
-    const paths =
-      (tsconfig.compilerOptions && tsconfig.compilerOptions.paths) || {}
+    const projectTsconfigs = getProjectTsconfigs(tsconfigPath)
+    if (projectTsconfigs.length === 0) {
+      return {}
+    }
+    const pathAliases = projectTsconfigs.flatMap(
+      ({path: configPath, tsconfig}) =>
+        Object.entries(tsconfig.compilerOptions?.paths || {}).map(
+          ([pattern, mappings]) => ({
+            mappings,
+            pattern,
+            tsconfigDir: dirname(configPath),
+          }),
+        ),
+    )
 
     // Get or create dependency graph for this project
     const cacheKey = tsconfigPath
@@ -206,8 +187,7 @@ export const noCircularPathAlias = createRule({
       const resolvedPath = resolveImportPath(
         importPath,
         fileName,
-        tsconfigDir,
-        paths,
+        pathAliases,
       )
 
       if (!resolvedPath) {
@@ -273,7 +253,7 @@ export const noCircularPathAlias = createRule({
       }
 
       // Only check path alias imports
-      if (resolvePathAlias(importPath, tsconfigDir, paths)) {
+      if (resolvePathAlias(importPath, pathAliases)) {
         addDependency(importPath, node)
       }
     }

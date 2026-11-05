@@ -22,7 +22,7 @@ import type {
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
 
-import type {radioAnatomy} from "./radio.anatomy"
+import type {radioAnatomy} from "./radio.anatomy.js"
 
 export type RadioOrientation = "horizontal" | "vertical"
 

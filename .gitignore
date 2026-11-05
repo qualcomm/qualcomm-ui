@@ -34,6 +34,7 @@ packages/docs/*/knowledge/
 packages/docs/*/public/exports
 .wireit
 .lint-cache
+.pnpm-store
 
 ###############################################################################
 # Framework-specific outputs
@@ -101,13 +102,17 @@ tsconfig.*.tsbuildinfo
 **/*\wsl.*
 **/coverage
 packages/**/.vitest-attachments
+.playwright-mcp/
+**/.vitest/attachments
 
 ###############################################################################
 # OS / editor / IDE files
 ###############################################################################
 .DS_Store
 .fleet/
-.idea/
+.idea/*
+!.idea/externalDependencies.xml
+!.idea/bookmarks.json
 .webstorm/backup
 .ai
 
@@ -115,7 +120,6 @@ packages/**/.vitest-attachments
 # Keep-tracked placeholder
 ###############################################################################
 !generated/.gitkeep
-!.idea/bookmarks.json
 !.aider.conf.yml
 
 .angular

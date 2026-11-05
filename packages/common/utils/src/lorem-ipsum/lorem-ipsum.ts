@@ -8,8 +8,8 @@ import {
   getStandardDeviation,
   randomFromRange,
   randomPositiveFromRange,
-} from "./utils"
-import {words} from "./words"
+} from "./utils.js"
+import {words} from "./words.js"
 
 class SeededRandom {
   private seed: number

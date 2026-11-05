@@ -1,0 +1,38 @@
+{
+  "name": "qui-react-development",
+  "version": "1.0.0",
+  "description": "QUI React best-practice workflows for application developers consuming @qualcomm-ui/react.",
+  "author": {
+    "name": "Qualcomm UI Maintainers",
+    "url": "https://github.com/qualcomm/qualcomm-ui"
+  },
+  "homepage": "https://github.com/qualcomm/qualcomm-ui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "license": "BSD-3-Clause-Clear",
+  "keywords": [
+    "codex",
+    "react",
+    "qualcomm-ui",
+    "accessibility",
+    "best-practices"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "QUI React Development",
+    "shortDescription": "Apply and audit QUI React best practices.",
+    "longDescription": "Provides separate Codex skills for applying QUI React best practices while writing application code and auditing existing React code that consumes @qualcomm-ui/react against the same rules enforced by @qualcomm-ui/eslint-plugin-react.",
+    "developerName": "Qualcomm UI Maintainers",
+    "category": "Development",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Review"
+    ],
+    "websiteURL": "https://github.com/qualcomm/qualcomm-ui",
+    "defaultPrompt": [
+      "Use $apply-qui-component-rules when writing or modifying React code that consumes @qualcomm-ui/react.",
+      "Use $audit-qui-component-rules to review React code for QUI best-practice violations."
+    ],
+    "brandColor": "#2A2AEA"
+  }
+}

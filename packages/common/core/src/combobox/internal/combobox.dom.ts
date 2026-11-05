@@ -7,7 +7,7 @@
 import {query} from "@qualcomm-ui/dom/query"
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {ComboboxElementIds, ComboboxScope} from "../combobox.types"
+import type {ComboboxElementIds, ComboboxScope} from "../combobox.types.js"
 
 export const domIds: ScopeDomIds<
   Omit<ComboboxElementIds, "itemGroupLabel">,

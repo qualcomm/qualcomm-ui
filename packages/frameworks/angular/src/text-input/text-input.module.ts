@@ -3,12 +3,12 @@
 
 import {NgModule} from "@angular/core"
 
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {
   InputEndIconComponent,
   InputStartIconComponent,
 } from "@qualcomm-ui/angular/input"
-import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 
 import {TextInputClearTriggerDirective} from "./text-input-clear-trigger.directive"
 import {TextInputErrorIndicatorDirective} from "./text-input-error-indicator.directive"

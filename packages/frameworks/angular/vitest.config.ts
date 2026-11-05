@@ -4,7 +4,6 @@ import {playwright} from "@vitest/browser-playwright"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import {defineConfig} from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -20,8 +19,10 @@ export default defineConfig(({mode}) => ({
     angular({
       tsconfig: resolve(__dirname, "./tsconfig.analog-vitest.json"),
     }),
-    tsconfigPaths({projects: ["./tsconfig.spec.json"]}),
   ],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     browser: {
       enabled: true,
@@ -45,6 +46,7 @@ export default defineConfig(({mode}) => ({
     },
     coverage: {
       allowExternal: true,
+      exclude: ["**common/utils/**/*"],
       provider: "v8",
       reportOnFailure: true,
     },
@@ -55,8 +57,7 @@ export default defineConfig(({mode}) => ({
       },
     },
     globals: true,
-    include: "src/**/*.spec.ts",
-    reporters: ["default"],
+    include: ["src/**/*.spec.ts"],
     setupFiles: ["test/test-setup.ts"],
   },
 }))

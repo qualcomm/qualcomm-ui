@@ -8,7 +8,7 @@ import type {VirtualElement} from "@floating-ui/dom"
 
 import {isHTMLElement} from "@qualcomm-ui/dom/query"
 
-import type {AnchorRect, MaybeRectElement} from "./types"
+import type {AnchorRect, MaybeRectElement} from "./types.js"
 
 export function createDOMRect(x = 0, y = 0, width = 0, height = 0): DOMRect {
   if (typeof DOMRect === "function") {
@@ -49,5 +49,5 @@ export function getAnchorElement(
       }
       return anchor.getBoundingClientRect()
     },
-  } as VirtualElement
+  }
 }

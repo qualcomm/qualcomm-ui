@@ -3,11 +3,11 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {InputLabel, type InputLabelProps} from "@qualcomm-ui/react/input"
 import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
 import {useNumberInputContext} from "@qualcomm-ui/react-core/number-input"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
+import {InputLabel, type InputLabelProps} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface NumberInputLabelProps extends IdProp, InputLabelProps {

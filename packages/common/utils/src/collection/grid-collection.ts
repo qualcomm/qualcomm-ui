@@ -6,8 +6,8 @@
 
 import {chunk, nextIndex, prevIndex} from "@qualcomm-ui/utils/array"
 
-import {ListCollection} from "./list-collection"
-import type {CollectionItem, ListCollectionOptions} from "./types"
+import {ListCollection} from "./list-collection.js"
+import type {CollectionItem, ListCollectionOptions} from "./types.js"
 
 export interface GridCollectionOptions<T> extends ListCollectionOptions<T> {
   columnCount: number

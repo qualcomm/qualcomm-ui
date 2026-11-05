@@ -3,7 +3,7 @@
 
 import {minimatch} from "minimatch"
 
-import type {KnowledgeFrontmatterConfig} from "../../config"
+import type {KnowledgeFrontmatterConfig} from "../../config/index.js"
 
 export function filterFrontmatter(
   frontmatter: Record<string, unknown>,

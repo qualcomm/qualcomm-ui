@@ -15,13 +15,15 @@ import {
 import {uniq} from "lodash-es"
 
 import type {TocHeading} from "@qualcomm-ui/mdx-common"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  useDocsRuntimeContext,
+  useDocsPageContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import {TocLink} from "../internal"
+import {TocLink} from "../internal/index.js"
 
-import {PageActions} from "./page-actions"
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
+import {PageActions} from "./page-actions.js"
 
 const HEADING_LEVELS: TocHeading[] = ["h2", "h3", "h4"]
 const SCROLL_DEBOUNCE_MS = 0
@@ -98,8 +100,8 @@ function useTocScrollSync(
 
 function useActiveHeading() {
   const [activeId, setActiveId] = useState<string | null>(null)
-  const {tocHighlightStrategy} = useMdxDocsContext()
-  const {mainContentElement, toc: headings} = useMdxDocsLayoutContext()
+  const {tocHighlightStrategy} = useDocsRuntimeContext()
+  const {mainContentElement, toc: headings} = useDocsPageContext()
 
   const calculateActive = useCallback(() => {
     if (!headings.length || !mainContentElement) {
@@ -115,15 +117,13 @@ function useActiveHeading() {
       return
     }
 
-    contentElement
-      .querySelectorAll(
-        uniq(HEADING_LEVELS)
-          .map((level) => `${level}:not(.qui-demo-runner__wrapper ${level})`)
-          .join(","),
-      )
-      .forEach((element) => {
-        headingElements.push(element)
-      })
+    for (const element of contentElement.querySelectorAll(
+      uniq(HEADING_LEVELS)
+        .map((level) => `${level}:not(.qui-demo-runner__wrapper ${level})`)
+        .join(","),
+    )) {
+      headingElements.push(element)
+    }
 
     let activeIndex: number | null = null
 
@@ -249,8 +249,8 @@ function useActiveHeading() {
 
 export function TableOfContents(): ReactNode {
   const containerRef = useRef<HTMLDivElement>(null)
-  const {renderLink: Link} = useMdxDocsContext()
-  const {showToc, toc: headings} = useMdxDocsLayoutContext()
+  const {renderLink: Link} = useDocsRuntimeContext()
+  const {showToc, toc: headings} = useDocsPageContext()
 
   const activeId = useActiveHeading()
   const linkRefs = useTocScrollSync(activeId, containerRef)
@@ -263,6 +263,7 @@ export function TableOfContents(): ReactNode {
     <div className="qui-toc">
       <div ref={containerRef} className="qui-toc__container">
         <PageActions />
+        <div className="qui-toc__label">On this page</div>
         <div className="qui-toc__links">
           {headings.map(({headingLevel, id, textContent}) => {
             const isActive = activeId === id
@@ -290,30 +291,11 @@ export function TableOfContents(): ReactNode {
                   } as CSSProperties
                 }
               >
-                {headingLevel > 2 ? (
-                  <>
-                    <div
-                      aria-hidden
-                      className="qui-toc__link-indent-guide"
-                      data-active={booleanDataAttr(
-                        isActive && headingLevel !== 4,
-                      )}
-                    />
-                    {headingLevel === 4 ? (
-                      <div
-                        aria-hidden
-                        className="qui-toc__link-indent-guide"
-                        data-active={booleanDataAttr(isActive)}
-                        style={
-                          {
-                            "--indent-depth": 1,
-                          } as CSSProperties
-                        }
-                      />
-                    ) : null}
-                  </>
-                ) : null}
-
+                <div
+                  aria-hidden
+                  className="qui-toc__link-indent-guide"
+                  data-active={booleanDataAttr(isActive)}
+                />
                 <Link href={`#${id}`}>{textContent}</Link>
               </TocLink>
             )

@@ -1,4 +1,4 @@
-import {Routes} from "@angular/router"
+import type {Routes} from "@angular/router"
 
 import {
   AccordionPage,
@@ -9,6 +9,7 @@ import {
   CheckboxPage,
   CollapsiblePage,
   ComboboxPage,
+  DatePickerPage,
   DialogPage,
   DividerPage,
   DrawerPage,
@@ -50,6 +51,7 @@ export const routes: Routes = [
   {component: CheckboxPage, path: "checkbox"},
   {component: CollapsiblePage, path: "collapsible"},
   {component: ComboboxPage, path: "combobox"},
+  {component: DatePickerPage, path: "date-picker"},
   {component: DialogPage, path: "dialog"},
   {component: DividerPage, path: "divider"},
   {component: DrawerPage, path: "drawer"},

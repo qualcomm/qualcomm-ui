@@ -6,8 +6,8 @@ import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {PolymorphicElement} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ButtonGroupContextProvider} from "./button-group-context"
-import type {ButtonGroupProps} from "./button.types"
+import {ButtonGroupContextProvider} from "./button-group-context.js"
+import type {ButtonGroupProps} from "./button.types.js"
 
 /**
  * A component for grouping related buttons. Renders as a `<div>` by default.

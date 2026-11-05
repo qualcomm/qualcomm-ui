@@ -5,14 +5,19 @@ import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 
-import type {linkAnatomy} from "./link.anatomy"
-import type {linkClasses} from "./link.classes"
+import type {linkAnatomy} from "./link.anatomy.js"
+import type {linkClasses} from "./link.classes.js"
+
+/** @deprecated use "persistent-white" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsLinkEmphasis__deprecated = "white-persistent"
 
 export type QdsLinkEmphasis =
   | "default"
   | "neutral"
   | "brand"
-  | "white-persistent"
+  | "persistent-white"
+  | QdsLinkEmphasis__deprecated
 
 export type QdsLinkSize = "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
 
@@ -31,8 +36,15 @@ export interface QdsLinkApiProps extends DirectionProperty {
   emphasis?: QdsLinkEmphasis
 
   /**
+   * Controls whether the link inherits font size from its parent element.
+   *
+   * @since 1.28.0
+   */
+  inheritFontSize?: boolean | undefined
+
+  /**
    * The size of the link and its elements. Governs properties like font size,
-   * item padding, and icon sizes.
+   * padding, and icon sizes.
    *
    * @default 'sm'
    */
@@ -48,6 +60,7 @@ export interface QdsLinkRootBindings extends Part<"root">, DirectionProperty {
   className: LinkClasses["root"]
   "data-disabled": BooleanDataAttr
   "data-emphasis": QdsLinkEmphasis
+  "data-inherit-font-size": BooleanDataAttr
   "data-size": QdsLinkSize
 }
 

@@ -15,7 +15,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsFieldGroupContextProvider} from "./qds-field-group-context"
+import {QdsFieldGroupContextProvider} from "./qds-field-group-context.js"
 
 export interface FieldGroupRootProps extends ElementRenderProp<"fieldset"> {
   /**

@@ -18,7 +18,7 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
-import type {sideNavAnatomy} from "./side-nav.anatomy"
+import type {sideNavAnatomy} from "./side-nav.anatomy.js"
 
 export interface SideNavApiProps extends CommonProperties, DirectionProperty {
   /**

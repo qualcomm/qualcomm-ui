@@ -8,6 +8,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@qualcomm-ui/core/table"
+import {useDebounce} from "@qualcomm-ui/react-core/effects"
 import {Button} from "@qualcomm-ui/react/button"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
 import {Pagination} from "@qualcomm-ui/react/pagination"
@@ -19,7 +20,6 @@ import {
   useTablePagination,
 } from "@qualcomm-ui/react/table"
 import {TextInput} from "@qualcomm-ui/react/text-input"
-import {useDebounce} from "@qualcomm-ui/react-core/effects"
 
 import {type User, useUserData} from "./use-data"
 

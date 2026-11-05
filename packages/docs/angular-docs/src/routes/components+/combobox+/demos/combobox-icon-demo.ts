@@ -1,21 +1,21 @@
 import {Component} from "@angular/core"
-import {MapPin} from "lucide-angular"
+import {LucideMapPin} from "@lucide/angular"
 
-import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 import {countries} from "./country-list"
 
 @Component({
   imports: [ComboboxModule],
-  providers: [provideIcons({MapPin})],
+  providers: [provideIcons({LucideMapPin})],
   selector: "combobox-icon-demo",
   template: `
     <!-- preview -->
     <q-combobox
-      ariaLabel="Country"
+      aria-label="Country"
       class="w-48"
       icon="MapPin"
       placeholder="Select a country"

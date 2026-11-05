@@ -6,6 +6,6 @@ const demos = [{component: GroupingDemo, title: "Grouping"}]
 
 export default function Grouping() {
   return (
-    <DemoPageLayout componentName="grouping" demos={demos} className="w-full" />
+    <DemoPageLayout className="w-full" componentName="grouping" demos={demos} />
   )
 }

@@ -1,5 +1,12 @@
 import {Accordion, type AccordionRootProps} from "@qualcomm-ui/react/accordion"
 
+export interface TestAccordionProps extends AccordionRootProps {
+  /**
+   * Values of items that should be rendered with `disabled` at the item level.
+   */
+  disabledValues?: string[]
+}
+
 const LoremIpsum =
   "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor"
 
@@ -31,13 +38,14 @@ export const testIds = {
   accordionTrigger: "accordion-trigger-",
 } as const
 
-export function TestAccordion(props: AccordionRootProps) {
+export function TestAccordion({disabledValues, ...props}: TestAccordionProps) {
   return (
     <Accordion.Root {...props}>
       {items.map((item) => (
         <Accordion.ItemRoot
           key={item.value}
           data-test-id={`${testIds.accordionItem}${item.value}`}
+          disabled={disabledValues?.includes(item.value)}
           value={item.value}
         >
           <h3>

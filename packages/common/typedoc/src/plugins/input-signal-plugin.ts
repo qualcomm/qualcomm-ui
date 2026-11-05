@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {readFileSync} from "fs"
+import {readFileSync} from "node:fs"
 import {
   type Application,
   type Context,
@@ -11,15 +11,15 @@ import {
   TypeScript,
 } from "typedoc"
 
-import {isInputSignal, isModelSignal, isOutputSignal} from "../guards"
+import {isInputSignal, isModelSignal, isOutputSignal} from "../guards.js"
 
-import {pluginFileCache} from "./shared"
+import {pluginFileCache} from "./shared.js"
 
 /**
  * typedoc removed decorator output in a recent version. We hook into the
  * serialization process via this plugin and manually add them here.
  */
-export function loadInputSignalPlugin(app: Readonly<Application>) {
+export function loadInputSignalPlugin(app: Readonly<Application>): void {
   app.converter.on(
     Converter.EVENT_CREATE_DECLARATION,
     addInputSignalRequiredFlags,

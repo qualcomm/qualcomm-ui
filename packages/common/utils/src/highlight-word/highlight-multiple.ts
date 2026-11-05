@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {escapeRegex} from "./escape-regex"
-import {normalizeSpan} from "./normalize-span"
-import type {HighlightChunk, HighlightWordProps} from "./types"
+import {escapeRegex} from "./escape-regex.js"
+import {normalizeSpan} from "./normalize-span.js"
+import type {HighlightChunk, HighlightWordProps} from "./types.js"
 
 function buildRegex(
   queryProp: string[],

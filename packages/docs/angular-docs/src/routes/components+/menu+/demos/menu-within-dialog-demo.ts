@@ -1,9 +1,9 @@
 import {Component} from "@angular/core"
 
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {DialogModule} from "@qualcomm-ui/angular/dialog"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
-import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
   imports: [MenuModule, ButtonModule, DialogModule, PortalDirective],

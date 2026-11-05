@@ -3,8 +3,8 @@
 
 import {Directive} from "@angular/core"
 
-import {useInputHint} from "@qualcomm-ui/angular/input"
 import {CoreSelectHintDirective} from "@qualcomm-ui/angular-core/select"
+import {useInputHint} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "[q-select-hint]",

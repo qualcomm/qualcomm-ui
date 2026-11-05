@@ -38,16 +38,24 @@ export function isUndefinedType(
   return type?.type === "intrinsic" && type?.name === "undefined"
 }
 
+const identifierName = /^[$A-Z_a-z][$\w]*$/
+
+export function formatObjectPropertyName(name: string): string {
+  return identifierName.test(name) ? name : JSON.stringify(name)
+}
+
 export function getTypeFromProperties(
   properties: SerializedType["properties"],
-) {
+): string {
   if (!properties?.length) {
     return ""
   }
   return properties
     .filter((property) => property.name && property.type)
     .map((property) => {
-      return `${property.name}${property.required ? "" : "?"}: ${
+      return `${formatObjectPropertyName(property.name)}${
+        property.required ? "" : "?"
+      }: ${
         property.inheritDoc
           ? property.type
           : (property.referencedType ?? property.type)
@@ -56,19 +64,27 @@ export function getTypeFromProperties(
     .join(" ")
 }
 
-export function isInputSignal(typeName: string | null | undefined) {
+export function isInputSignal(
+  typeName: string | null | undefined,
+): boolean | "" | null | undefined {
   return typeName && typeName.startsWith("InputSignal")
 }
 
-export function isModelSignal(typeName: string | null | undefined) {
+export function isModelSignal(
+  typeName: string | null | undefined,
+): boolean | "" | null | undefined {
   return typeName && typeName.startsWith("ModelSignal")
 }
 
-export function isOutputSignal(typeName: string | null | undefined) {
+export function isOutputSignal(
+  typeName: string | null | undefined,
+): boolean | "" | null | undefined {
   return typeName && typeName.startsWith("OutputEmitterRef")
 }
 
-export function isTypeOverride(comment: JSONOutput.Comment | undefined) {
+export function isTypeOverride(
+  comment: JSONOutput.Comment | undefined,
+): string {
   const customTypeOverride = (comment ?? {blockTags: []}).blockTags?.find(
     (tag) => tag.tag === "@custom",
   )

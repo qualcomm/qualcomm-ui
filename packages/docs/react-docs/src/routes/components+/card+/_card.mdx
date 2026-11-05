@@ -7,9 +7,6 @@ badges:
   - id: since
     label: 1.19.0
     url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1190
-  - id: developerPreview
-    label: Developer Preview
-    url: /developer-previews
 ---
 
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
@@ -57,7 +54,7 @@ interactive, hover, press, clickable, selectable
 Set [interactive](./#interactive-1) on `Card.Root` to enable hover and pressed visual states on the content area. Use the [render](./#render) prop to make the root element to a `<button>` so screen readers know that the element is interactive.
 
 > [!warning]
-> Interactive cards must not contain buttons, links, or input fields. React will yell at you if you nest interactive elements. Install the [QUI React ESLint Plugin](/integrations/eslint#plugin) to enforce this in your project.
+> Interactive cards must not contain buttons, links, or input fields. React will yell at you if you nest interactive elements. Install the [QUI React ESLint Plugin](/eslint#plugin) to enforce this in your project.
 
 <Demo name="CardInteractiveDemo" component={demos.CardInteractiveDemo} />
 
@@ -83,7 +80,7 @@ Use `Card.Badge` to place a badge within the card.
 alignment, start, center, centered, justify
 :::
 
-Set [alignment](./#alignment) on `Card.Root` to control horizontal positioning of heading and footer content. Defaults to `start`.
+Set [alignment](./#alignment-1) on `Card.Root` to control horizontal positioning of heading and footer content. Defaults to `start`.
 
 <Demo name="CardAlignmentDemo" component={demos.CardAlignmentDemo} />
 

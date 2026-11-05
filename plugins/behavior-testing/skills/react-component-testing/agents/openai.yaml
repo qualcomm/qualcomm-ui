@@ -1,0 +1,7 @@
+interface:
+  display_name: "React Component Testing"
+  short_description: "Write React component behavior tests"
+  default_prompt: "Use $react-component-testing to write or review React component tests around public behavior."
+
+policy:
+  allow_implicit_invocation: true

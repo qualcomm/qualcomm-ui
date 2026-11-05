@@ -1,18 +1,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {
-  AST_NODE_TYPES,
-  ESLintUtils,
-  type TSESTree,
-} from "@typescript-eslint/utils"
+import {AST_NODE_TYPES, type TSESTree} from "@typescript-eslint/utils"
 
-import {getJsxElementName, isQuiPackage} from "./utils"
-
-const createRule = ESLintUtils.RuleCreator(
-  (name) =>
-    `https://github.com/qualcomm/qualcomm-ui/tree/main/packages/configs/eslint-plugin-react#${name}`,
-)
+import {createRule, getJsxElementName, isQuiPackage} from "./utils.js"
 
 type MessageIds = "missingAlt"
 
@@ -46,81 +37,83 @@ function hasNonEmptyAlt(
   return false
 }
 
-export const avatarImageAlt = createRule<[], MessageIds>({
-  create(context) {
-    const importedAvatar = new Map<string, string>()
-    const namespaceImports = new Set<string>()
+export const avatarImageAlt: ReturnType<typeof createRule<[], MessageIds>> =
+  createRule<[], MessageIds>({
+    create(context) {
+      const importedAvatar = new Map<string, string>()
+      const namespaceImports = new Set<string>()
 
-    return {
-      ImportDeclaration(node) {
-        const source = node.source.value
-        if (typeof source !== "string" || !isQuiPackage(source)) {
-          return
-        }
-
-        for (const specifier of node.specifiers) {
-          if (specifier.type === AST_NODE_TYPES.ImportSpecifier) {
-            const importedName =
-              specifier.imported.type === AST_NODE_TYPES.Identifier
-                ? specifier.imported.name
-                : specifier.imported.value
-            const localName = specifier.local.name
-            if (importedName === "Avatar") {
-              importedAvatar.set(localName, importedName)
-            }
-          } else if (
-            specifier.type === AST_NODE_TYPES.ImportNamespaceSpecifier
-          ) {
-            namespaceImports.add(specifier.local.name)
+      return {
+        ImportDeclaration(node) {
+          const source = node.source.value
+          if (typeof source !== "string" || !isQuiPackage(source)) {
+            return
           }
-        }
-      },
 
-      JSXOpeningElement(node) {
-        const {identifier, namespace, property} = getJsxElementName(node.name)
+          for (const specifier of node.specifiers) {
+            if (specifier.type === AST_NODE_TYPES.ImportSpecifier) {
+              const importedName =
+                specifier.imported.type === AST_NODE_TYPES.Identifier
+                  ? specifier.imported.name
+                  : specifier.imported.value
+              const localName = specifier.local.name
+              if (importedName === "Avatar") {
+                importedAvatar.set(localName, importedName)
+              }
+            } else if (
+              specifier.type === AST_NODE_TYPES.ImportNamespaceSpecifier
+            ) {
+              namespaceImports.add(specifier.local.name)
+            }
+          }
+        },
 
-        let isAvatarImage = false
+        JSXOpeningElement(node) {
+          const {identifier, namespace, property} = getJsxElementName(node.name)
 
-        if (identifier && property === "Image" && !namespace) {
-          if (importedAvatar.has(identifier)) {
+          let isAvatarImage = false
+
+          if (identifier && property === "Image" && !namespace) {
+            if (importedAvatar.has(identifier)) {
+              isAvatarImage = true
+            }
+          }
+
+          if (
+            identifier &&
+            property === "Image" &&
+            namespace &&
+            namespaceImports.has(namespace) &&
+            identifier === "Avatar"
+          ) {
             isAvatarImage = true
           }
-        }
 
-        if (
-          identifier &&
-          property === "Image" &&
-          namespace &&
-          namespaceImports.has(namespace) &&
-          identifier === "Avatar"
-        ) {
-          isAvatarImage = true
-        }
+          if (!isAvatarImage) {
+            return
+          }
 
-        if (!isAvatarImage) {
-          return
-        }
-
-        if (!hasNonEmptyAlt(node.attributes)) {
-          context.report({
-            messageId: "missingAlt",
-            node,
-          })
-        }
+          if (!hasNonEmptyAlt(node.attributes)) {
+            context.report({
+              messageId: "missingAlt",
+              node,
+            })
+          }
+        },
+      }
+    },
+    defaultOptions: [],
+    meta: {
+      docs: {
+        description:
+          "Enforce that Avatar.Image components have an alt attribute for accessibility.",
       },
-    }
-  },
-  defaultOptions: [],
-  meta: {
-    docs: {
-      description:
-        "Enforce that Avatar.Image components have an alt attribute for accessibility.",
+      messages: {
+        missingAlt:
+          "Avatar.Image must have an alt attribute for accessibility.",
+      },
+      schema: [],
+      type: "problem",
     },
-    messages: {
-      missingAlt: "Avatar.Image must have an alt attribute for accessibility.",
-    },
-    schema: [],
-    type: "problem",
-  },
-  name: "avatar-image-alt",
-})
+    name: "avatar-image-alt",
+  })

@@ -15,10 +15,10 @@ import {
   CoreTabsTabDismissButton,
   type CoreTabsTabDismissButtonProps,
   type CoreTabsTabProps,
-} from "./core-tabs"
+} from "./core-tabs.js"
 
-export * from "./tab-prop-context"
-export * from "./tabs-context"
+export * from "./tab-prop-context.js"
+export * from "./tabs-context.js"
 
 export type {
   CoreTabsRootProps,

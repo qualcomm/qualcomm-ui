@@ -3,8 +3,8 @@
 
 import {computed, Directive} from "@angular/core"
 
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {CoreNumberInputHintDirective} from "@qualcomm-ui/angular-core/number-input"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 
 @Directive({
   selector: "[q-number-input-hint]",

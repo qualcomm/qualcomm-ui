@@ -1,12 +1,17 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
     "incremental": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "dist/tsbuildinfo"
+    "jsx": "react-jsx",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib"
   },
   "include": ["./src/node", "./src/client", "./src/stub.ts"],
+  "references": [
+    {
+      "path": "../../common/mdx-vite/tsconfig.lib.json"
+    }
+  ]
 }

@@ -3,9 +3,10 @@
 
 import type {Dispatch, SetStateAction} from "react"
 
+import type {QdsBrand} from "@qualcomm-ui/qds-core/theme"
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 
-export type QdsBrand = "qualcomm" | "snapdragon" | "dragonwing" | "arduino"
+export type {QdsBrand}
 
 export type ColorScheme = "light" | "dark"
 

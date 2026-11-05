@@ -9,13 +9,13 @@ import {highlightWord} from "@qualcomm-ui/utils/highlight-word"
 @Component({
   selector: "[q-highlight]",
   standalone: true,
-  // prevent prettier formatting from introducing whitespaces in the markup
-  // prettier-ignore
   template: `
     @for (chunk of chunks(); track $index) {
       @if (chunk.match) {
         <mark>{{ chunk.text }}</mark>
-      } @else {{{chunk.text}}}
+      } @else {
+        <ng-container>{{ chunk.text }}</ng-container>
+      }
     }
   `,
 })

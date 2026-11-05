@@ -3,8 +3,8 @@
 
 import type {ReactElement} from "react"
 
-import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Github} from "@qualcomm-ui/react-mdx/icons"
+import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 
 export function HeaderRepositoryLink(): ReactElement {
   return (

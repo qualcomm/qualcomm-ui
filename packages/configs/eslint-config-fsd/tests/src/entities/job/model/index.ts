@@ -1,1 +1,1 @@
-export * from "./job.types"
+export type * from "./job.types"

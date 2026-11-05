@@ -3,7 +3,7 @@
 
 import type {QdsInputSize} from "@qualcomm-ui/qds-core/input"
 
-import type {numberInputClasses} from "./number-input.classes"
+import type {numberInputClasses} from "./number-input.classes.js"
 
 export interface QdsNumberInputApiProps {
   /**

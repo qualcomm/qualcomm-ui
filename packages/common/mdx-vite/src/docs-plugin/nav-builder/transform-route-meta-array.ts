@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {NavConfig, NavMeta, RouteMeta, RouteMetaInternal} from "./types"
+import type {NavConfig, NavMeta, RouteMeta, RouteMetaInternal} from "./types.js"
 
 export function transformRouteMetaArray(
   meta: NavConfig[],
@@ -30,6 +30,7 @@ export function transformRouteMetaArray(
         ? transformRouteMetaArray(current.children, routeMetaNav)
         : undefined,
       expanded: current.expanded,
+      flattenChildren: current.flattenChildren,
       group: current.group,
       groupOrder: current.groupOrder,
       hidden: current.hidden,

@@ -5,12 +5,12 @@ import {
   type ComponentPropsWithRef,
   type ReactElement,
   type ReactNode,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react"
 
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 
 interface HighlightRect {
   height: number
@@ -52,6 +52,11 @@ export interface ComponentExplorerBaseProps extends ComponentPropsWithRef<"div">
   parts: ComponentPart[]
 
   /**
+   * Additional CSS class name for the preview container.
+   */
+  previewClassName?: string
+
+  /**
    * Scope name matching the component's namespaced attribute
    * (`data-<scope>-part`). When omitted, the explorer falls back to matching
    * any `data-*-part` attribute with the target part name — useful for demos
@@ -86,19 +91,19 @@ export function ComponentExplorerBase({
   children,
   linkPrefix,
   parts,
+  previewClassName,
   scope,
   ...props
 }: ComponentExplorerBaseProps): ReactElement {
-  const {renderLink: Link} = useMdxDocsContext()
+  const {renderLink: Link} = useDocsRuntimeContext()
   const previewRef = useRef<HTMLDivElement>(null)
   const [hoveredPart, setHoveredPart] = useState<string | null>(null)
   const [highlightRects, setHighlightRects] = useState<HighlightRect[]>([])
 
-  useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     const previewElement = previewRef.current
 
     if (!previewElement || !hoveredPart) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- DOM measurement requires post-render setState
       setHighlightRects([])
       return
     }
@@ -119,29 +124,31 @@ export function ComponentExplorerBase({
             ),
         )
 
-    if (targetElements.length === 0) {
-      setHighlightRects([])
-      return
-    }
-
     const previewRect = previewElement.getBoundingClientRect()
     const highlightOffset = 4
-    const rects = targetElements.map((targetElement) => {
-      const elementRect = targetElement.getBoundingClientRect()
-      return {
+    const rects = targetElements
+      .map((targetElement) => targetElement.getBoundingClientRect())
+      .filter((elementRect) => elementRect.width > 0 && elementRect.height > 0)
+      .map((elementRect) => ({
         height: elementRect.height + highlightOffset * 2,
         left: elementRect.left - previewRect.left - highlightOffset,
         top: elementRect.top - previewRect.top - highlightOffset,
         width: elementRect.width + highlightOffset * 2,
-      }
-    })
+      }))
 
     setHighlightRects(rects)
   }, [hoveredPart, scope])
 
   return (
     <div {...props} className="qui-component-explorer__root">
-      <div ref={previewRef} className="qui-component-explorer__preview">
+      <div
+        ref={previewRef}
+        className={
+          previewClassName
+            ? `qui-component-explorer__preview ${previewClassName}`
+            : "qui-component-explorer__preview"
+        }
+      >
         {children}
         {highlightRects.map((rect, index) => (
           <div

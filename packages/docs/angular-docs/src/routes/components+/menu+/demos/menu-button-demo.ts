@@ -1,22 +1,30 @@
 import {Component} from "@angular/core"
 import {
-  Copy,
-  Ellipsis,
-  File,
-  FileText,
-  FolderOpen,
-  Pencil,
-  Trash2,
-} from "lucide-angular"
+  LucideCopy,
+  LucideEllipsis,
+  LucideFile,
+  LucideFileText,
+  LucideFolderOpen,
+  LucidePencil,
+  LucideTrash2,
+} from "@lucide/angular"
 
-import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
+import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [MenuModule, PortalComponent],
   providers: [
-    provideIcons({Copy, Ellipsis, File, FileText, FolderOpen, Pencil, Trash2}),
+    provideIcons({
+      LucideCopy,
+      LucideEllipsis,
+      LucideFile,
+      LucideFileText,
+      LucideFolderOpen,
+      LucidePencil,
+      LucideTrash2,
+    }),
   ],
   selector: "menu-button-demo",
   template: `
@@ -27,7 +35,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
           <div q-menu-positioner>
             <div q-menu-content>
               <button q-menu-item value="new-text-file">
-                <div icon="FileText" q-menu-item-start-icon></div>
+                <div icon="LucideFileText" q-menu-item-start-icon></div>
                 New Text File
               </button>
               <button q-menu-item value="new-file">
@@ -43,7 +51,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
         </q-portal>
       </q-menu>
 
-      <q-menu>
+      <q-menu size="sm">
         <button
           aria-label="More actions"
           emphasis="primary"

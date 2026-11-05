@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 
-import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {useCheckboxGroup} from "@qualcomm-ui/angular-core/checkbox"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [MenuModule, PortalDirective],

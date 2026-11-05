@@ -5,7 +5,7 @@ import type {ShikiTransformer} from "shiki"
 
 import {dedent} from "@qualcomm-ui/utils/dedent"
 
-import {removeCodeAnnotations} from "./utils"
+import {removeCodeAnnotations} from "./utils.js"
 
 export type PreviewDisplayMode = "only-preview" | "full-code"
 

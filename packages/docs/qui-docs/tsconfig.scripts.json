@@ -1,0 +1,19 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.scripts.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "node_modules/.tmp/scripts-out-tsc",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-scripts"
+  },
+  "include": [
+    "*.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-vite/tsconfig.lib.json"
+    }
+  ]
+}

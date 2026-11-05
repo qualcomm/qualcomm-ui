@@ -1,3 +1,3 @@
-export * from "./accordion.classes"
-export type * from "./accordion.types"
-export * from "./accordion.api"
+export * from "./accordion.classes.js"
+export type * from "./accordion.types.js"
+export * from "./accordion.api.js"

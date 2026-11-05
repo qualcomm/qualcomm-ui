@@ -1,1 +1,1 @@
-export * from "./lorem-ipsum"
+export * from "./lorem-ipsum.js"

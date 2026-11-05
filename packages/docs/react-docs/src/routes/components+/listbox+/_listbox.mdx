@@ -1,0 +1,161 @@
+---
+title: Listbox
+description: Use a Listbox to present a persistent, keyboard-navigable set of options where users choose one or more items.
+component: Listbox
+badges:
+  - id: since
+    label: 1.28.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#1280
+  - id: alpha
+    label: Alpha
+    url: /versioning#alpha
+---
+
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {Listbox} from "@qualcomm-ui/react/listbox"
+```
+
+## Overview
+
+- Each listbox uses the `listCollection` helper to manage the list of items. This `ListCollection` instance is [documented below](./#data-structures).
+
+## Examples
+
+### Filtering
+
+Filter a single-select collection before rendering the Listbox items.
+
+<Demo name="ListboxFilteringDemo" component={demos.ListboxFilteringDemo} />
+
+### Multiple selection
+
+Set [selectionMode](./#selectionMode) to `multiple` when users can choose more than one option.
+
+<Demo
+  name="ListboxMultipleSelectionDemo"
+  component={demos.ListboxMultipleSelectionDemo}
+/>
+
+### Scrollable
+
+Set a maximum height and vertical overflow on `Listbox.Content` when the collection exceeds the available space.
+
+<Demo
+  name="ListboxScrollableDemo"
+  component={demos.ListboxScrollableDemo}
+/>
+
+### Controlled state
+
+Pass `value` and update it in `onValueChange` when the selected items change.
+
+<Demo
+  name="ListboxControlledStateDemo"
+  component={demos.ListboxControlledStateDemo}
+/>
+
+### Item customization
+
+Customize each item using the `List.Item` subcomponents.
+
+<Demo
+  name="ListboxItemCustomizationDemo"
+  component={demos.ListboxItemCustomizationDemo}
+/>
+
+## API
+
+### \<Listbox.Root>
+
+<TypeDocProps name="ListboxRootProps" />
+
+### \<Listbox.Label>
+
+<TypeDocProps name="ListboxLabelProps" />
+
+### \<Listbox.Content>
+
+<TypeDocProps name="ListboxContentProps" />
+
+### \<Listbox.Input>
+
+The `Listbox.Input` extends the [TextInput](/components/text-input) component with listbox accessibility like keyboard navigation.
+
+<TypeDocProps name="ListboxInputProps" />
+
+### \<Listbox.Item>
+
+<TypeDocProps name="ListboxItemProps" />
+
+### \<Listbox.ItemStartIcon>
+
+<TypeDocProps name="ListboxItemStartIconProps" />
+
+### \<Listbox.ItemControl>
+
+<TypeDocProps name="ListboxItemControlProps" />
+
+### \<Listbox.ItemLabel>
+
+<TypeDocProps name="ListboxItemLabelProps" />
+
+### \<Listbox.ItemDescription>
+
+<TypeDocProps name="ListboxItemDescriptionProps" />
+
+### \<Listbox.ItemSecondaryText>
+
+<TypeDocProps name="ListboxItemSecondaryTextProps" />
+
+### \<Listbox.ItemAccessory>
+
+<TypeDocProps name="ListboxItemAccessoryProps" />
+
+## Data Structures
+
+The following describes the member variables and methods of the `ListCollection` class. The Listbox component uses an instance of this class as input:
+
+```tsx
+interface ExampleItem {
+  label: string
+  value: string
+}
+
+const items: ExampleItem[] = [
+  // ...
+]
+
+function Component() {
+  const {fuzzyContains} = useFilter({sensitivity: "base"})
+  const {collection, filter} = useListCollection({
+    filter: fuzzyContains,
+    initialItems: items,
+    // the itemLabel is what the filter will use to compare items
+    itemLabel: (item) => item.label,
+    itemValue: (item) => item.value,
+  })
+  return <Listbox.Root collection={collection}>{/*...*/}</Listbox.Root>
+}
+```
+
+### useListCollection
+
+<TypeDocProps name="UseListCollectionProps" partial />
+
+### Filter Options
+
+The following predefined filters are available:
+
+<TypeDocProps name="FilterReturn" />
+
+### ListCollection
+
+<TypeDocProps name="ListCollection" partial />

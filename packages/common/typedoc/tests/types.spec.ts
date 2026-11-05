@@ -1,5 +1,5 @@
 import {readFileSync, writeFileSync} from "node:fs"
-import {resolve} from "path"
+import {resolve} from "node:path"
 import {describe, expect, test} from "vitest"
 
 import type {QuiPropTypes, SerializedType} from "@qualcomm-ui/typedoc-common"
@@ -60,6 +60,23 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
       {
         actual: interfaces.TestTemplateLiteral1.resolvedType.type,
         expected: "`${string}.${number}`",
+      },
+    ],
+    [
+      "DashCasedBindingProps",
+      {
+        actual: interfaces.DashCasedBindingProps.resolvedType.type,
+        expected:
+          "{\"data-disabled\": ''; \"data-stepper-part\": 'prev-trigger'; dir: 'ltr' | 'rtl'; disabled: boolean;}",
+      },
+    ],
+    [
+      "DashCasedRenderPropHost.children",
+      {
+        actual: findResolvedType(props.DashCasedRenderPropHost, "children")
+          .type,
+        expected:
+          "string | ((props: {\"data-disabled\": ''; \"data-stepper-part\": 'prev-trigger'; dir: 'ltr' | 'rtl'; disabled: boolean;}) => string)",
       },
     ],
     [

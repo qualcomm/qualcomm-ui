@@ -1,5 +1,31 @@
 # @qualcomm-ui/eslint-config-angular Changelog
 
+## 3.0.1
+
+Nov 4th, 2026
+
+### Miscellaneous Chores
+
+* update oxfmt peer dependency range ([1e7f32f](https://github.com/qualcomm/qualcomm-ui/commit/1e7f32f))
+
+## 3.0.0
+
+Aug 16th, 2026
+
+### BREAKING CHANGES
+
+- migrate to TS 6.0 ([637a29d](https://github.com/qualcomm/qualcomm-ui/commit/637a29d))
+
+## 2.0.0
+
+Jun 10th, 2026
+
+### BREAKING CHANGES
+
+- replace prettier with oxfmt ([48c10ec](https://github.com/qualcomm/qualcomm-ui/commit/48c10ec))
+- consolidate angular configs ([6290904](https://github.com/qualcomm/qualcomm-ui/commit/6290904))
+- update to angular-eslint v22 ([6d68c84](https://github.com/qualcomm/qualcomm-ui/commit/6d68c84))
+
 ## 1.1.1
 
 Apr 19th, 2026

@@ -17,8 +17,8 @@ import {
   type MachineConfig,
 } from "@qualcomm-ui/utils/machine"
 
-import type {CheckboxSchema} from "./checkbox.types"
-import {domEls} from "./internal"
+import type {CheckboxSchema} from "./checkbox.types.js"
+import {domEls} from "./internal/checkbox.dom.js"
 
 const {not} = createGuards<CheckboxSchema>()
 

@@ -1,66 +1,72 @@
-import {TableActionBar, type TableActionBarProps} from "./table-action-bar"
-import {TableBody, type TableBodyProps} from "./table-body"
-import {TableCell, type TableCellProps} from "./table-cell"
-import {TableCellAction, type TableCellActionProps} from "./table-cell-action"
+import {TableActionBar, type TableActionBarProps} from "./table-action-bar.js"
+import {TableBody, type TableBodyProps} from "./table-body.js"
+import {
+  TableCellAction,
+  type TableCellActionProps,
+} from "./table-cell-action.js"
+import {TableCell, type TableCellProps} from "./table-cell.js"
 import {
   TableColumnDragHandle,
   type TableColumnDragHandleProps,
-} from "./table-column-drag-handle"
+} from "./table-column-drag-handle.js"
 import {
   TableColumnDragPreview,
   type TableColumnDragPreviewProps,
-} from "./table-column-drag-preview"
+} from "./table-column-drag-preview.js"
 import {
   TableColumnDropIndicator,
   type TableColumnDropIndicatorProps,
-} from "./table-column-drop-indicator"
+} from "./table-column-drop-indicator.js"
 import {
   TableColumnFilterAction,
   type TableColumnFilterActionProps,
-} from "./table-column-filter-action"
+} from "./table-column-filter-action.js"
 import {
   TableColumnHeaderAction,
   type TableColumnHeaderActionProps,
-} from "./table-column-header-action"
-import {TableColumnResizeHandle} from "./table-column-resize-handle"
+} from "./table-column-header-action.js"
+import {TableColumnResizeHandle} from "./table-column-resize-handle.js"
 import {
   TableColumnSortAction,
   type TableColumnSortActionProps,
-} from "./table-column-sort-action"
-import {TableFooter, type TableFooterProps} from "./table-footer"
-import {TableHeader, type TableHeaderProps} from "./table-header"
-import {TableHeaderCell, type TableHeaderCellProps} from "./table-header-cell"
-import {TablePagination, type TablePaginationProps} from "./table-pagination"
-import {TableRoot, type TableRootProps} from "./table-root"
-import {TableRow, type TableRowProps} from "./table-row"
+} from "./table-column-sort-action.js"
+import {TableFooter, type TableFooterProps} from "./table-footer.js"
+import {
+  TableHeaderCell,
+  type TableHeaderCellProps,
+} from "./table-header-cell.js"
+import {TableHeader, type TableHeaderProps} from "./table-header.js"
+import {TablePagination, type TablePaginationProps} from "./table-pagination.js"
+import {TableRoot, type TableRootProps} from "./table-root.js"
 import {
   TableRowDragHandle,
   type TableRowDragHandleProps,
-} from "./table-row-drag-handle"
+} from "./table-row-drag-handle.js"
 import {
   TableRowDragPreview,
   type TableRowDragPreviewProps,
-} from "./table-row-drag-preview"
+} from "./table-row-drag-preview.js"
 import {
   TableRowDropIndicator,
   type TableRowDropIndicatorProps,
-} from "./table-row-drop-indicator"
+} from "./table-row-drop-indicator.js"
 import {
   TableRowExpandButton,
   type TableRowExpandButtonProps,
-} from "./table-row-expand-button"
+} from "./table-row-expand-button.js"
+import {TableRow, type TableRowProps} from "./table-row.js"
 import {
   TableScrollContainer,
   type TableScrollContainerProps,
-} from "./table-scroll-container"
-import {TableTable, type TableTableProps} from "./table-table"
-import {TableTitleBar, type TableTitleBarProps} from "./table-title-bar"
+} from "./table-scroll-container.js"
+import {TableTable, type TableTableProps} from "./table-table.js"
+import {TableTitleBar, type TableTitleBarProps} from "./table-title-bar.js"
 
-export * from "./dynamic-render"
-export * from "./qds-table-context"
-export * from "./use-react-table"
-export * from "./use-react-table-react-compiler-compat"
-export * from "./use-table-pagination"
+export * from "./dynamic-render/index.js"
+export * from "./qds-table-context.js"
+export * from "./use-react-table.js"
+export * from "./use-react-table-react-compiler-compat.js"
+export * from "./use-table-pagination.js"
 
 export type {
   TableActionBarProps,

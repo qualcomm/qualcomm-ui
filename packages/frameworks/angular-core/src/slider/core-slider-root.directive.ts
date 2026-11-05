@@ -10,7 +10,7 @@ import {
   type OnInit,
   output,
 } from "@angular/core"
-import {type ControlValueAccessor} from "@angular/forms"
+import type {ControlValueAccessor} from "@angular/forms"
 
 import {useId, useIsMounted} from "@qualcomm-ui/angular-core/common"
 import {AbstractBaseListCollectionFormControlDirective} from "@qualcomm-ui/angular-core/input"

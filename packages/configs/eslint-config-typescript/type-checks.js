@@ -3,19 +3,23 @@
 
 import {defineConfig} from "eslint/config"
 
+import {typescriptLanguageOptions, typescriptPlugins} from "./base.js"
+
 /**
- * This configuration is based on https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslintrc/recommended-type-checked.ts
+ * This configuration is based on
+ * https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslintrc/recommended-type-checked.ts
  *
- * There are some key differences, primarily regarding rules involving `any`. We set
- * most of these to either warn or off:
- * - Interop with untyped JS is a real pain point where `any` is pragmatic.
- * - Type gymnastics that satisfy the compiler but obscure intent can be worse than
- * `any`
- * - The ceremony of unknown + guards can be disproportionate to the actual risk.
- * - External libraries that use `any` can cause issues with our own types.
+ * There are some key differences, primarily regarding rules involving `any`. We
+ * set most of these to either warn or off: - Interop with untyped JS is a real
+ * pain point where `any` is pragmatic. - Type gymnastics that satisfy the
+ * compiler but obscure intent can be worse than `any` - The ceremony of unknown
+ * + guards can be disproportionate to the actual risk. - External libraries
+ * that use `any` can cause issues with our own types.
  */
 export default defineConfig({
+  languageOptions: typescriptLanguageOptions,
   name: "qui-typechecked-recommended",
+  plugins: {...typescriptPlugins},
   rules: {
     "@typescript-eslint/await-thenable": "error",
     "@typescript-eslint/ban-ts-comment": "warn", // Allow use of @ts-ignore, but warn
@@ -40,9 +44,9 @@ export default defineConfig({
     "@typescript-eslint/no-namespace": "error",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
     /**
-     * Some projects choose to occasionally intentionally include a redundant type
-     * constituent for documentation purposes. Like our icon, which is a union of:
-     * `"xs" | "sm" | "md" | "lg" | "xl" | string | number`
+     * Some projects choose to occasionally intentionally include a redundant
+     * type constituent for documentation purposes. Like our icon, which is a
+     * union of: `"xs" | "sm" | "md" | "lg" | "xl" | string | number`
      */
     "@typescript-eslint/no-redundant-type-constituents": "off",
     "@typescript-eslint/no-require-imports": "error",

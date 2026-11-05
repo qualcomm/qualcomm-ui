@@ -3,9 +3,9 @@
 
 import {Component, input} from "@angular/core"
 
-import {useInputErrorText} from "@qualcomm-ui/angular/input"
 import {CoreComboboxErrorTextDirective} from "@qualcomm-ui/angular-core/combobox"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {useInputErrorText} from "@qualcomm-ui/angular/input"
 
 @Component({
   selector: "[q-combobox-error-text]",
@@ -21,7 +21,7 @@ export class ComboboxErrorTextDirective extends CoreComboboxErrorTextDirective {
   /**
    * Optional error indicator icon.
    */
-  readonly icon = input<LucideIcon | string>()
+  readonly icon = input<LucideIconOrString>()
 
   protected readonly errorTextContext = useInputErrorText()
 

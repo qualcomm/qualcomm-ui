@@ -27,11 +27,11 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {StepperContextProvider, useStepperContext} from "./stepper-context"
+import {StepperContextProvider, useStepperContext} from "./stepper-context.js"
 import {
   StepperItemContextProvider,
   useStepperItemContext,
-} from "./stepper-item-context"
+} from "./stepper-item-context.js"
 
 export interface CoreStepperRootProviderProps extends ElementRenderProp<"div"> {
   value: StepperApi

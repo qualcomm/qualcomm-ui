@@ -14,7 +14,7 @@ import {
 } from "@qualcomm-ui/react-core/progress"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsProgressContextProvider} from "./qds-progress-context"
+import {QdsProgressContextProvider} from "./qds-progress-context.js"
 
 export interface ProgressRootProps
   extends CoreProgressRootProps, QdsProgressApiProps {}
@@ -25,6 +25,7 @@ export interface ProgressRootProps
 export function ProgressRoot({
   emphasis,
   labelOrientation,
+  shimmer,
   size,
   ...props
 }: ProgressRootProps): ReactElement {
@@ -34,11 +35,12 @@ export function ProgressRoot({
         {
           emphasis,
           labelOrientation,
+          shimmer,
           size,
         },
         normalizeProps,
       ),
-    [emphasis, labelOrientation, size],
+    [emphasis, labelOrientation, shimmer, size],
   )
 
   const rootProps = mergeProps(api.getRootBindings(), props)

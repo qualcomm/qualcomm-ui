@@ -26,9 +26,9 @@ import {
   createPopoverApi,
   type PopoverApiProps,
   popoverMachine,
+  type PopoverPositioningOptions,
 } from "@qualcomm-ui/core/popover"
 import type {LayerDismissEvent} from "@qualcomm-ui/dom/dismissable"
-import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {
   FocusOutsideEvent,
   InteractOutsideEvent,
@@ -70,7 +70,9 @@ export class CorePopoverRootDirective
    * The initial open state of the popover when rendered.
    * Use when you don't need to control the open state of the popover.
    */
-  readonly defaultOpen = input<boolean | undefined>()
+  readonly defaultOpen = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
 
   /**
    * The document's text/writing direction.
@@ -118,7 +120,7 @@ export class CorePopoverRootDirective
    *
    * @inheritDoc
    */
-  readonly positioning = input<PositioningOptions>()
+  readonly positioning = input<PopoverPositioningOptions>()
 
   /**
    * On close, restore focus to the element that triggered the open event.

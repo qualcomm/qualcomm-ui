@@ -46,6 +46,7 @@ export class Home {
     {name: "Checkbox", path: "/checkbox"},
     {name: "Collapsible", path: "/collapsible"},
     {name: "Combobox", path: "/combobox"},
+    {name: "Date Picker", path: "/date-picker"},
     {name: "Dialog", path: "/dialog"},
     {name: "Divider", path: "/divider"},
     {name: "Drawer", path: "/drawer"},

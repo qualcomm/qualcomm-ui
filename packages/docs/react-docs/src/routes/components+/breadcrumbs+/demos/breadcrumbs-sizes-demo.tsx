@@ -1,6 +1,7 @@
 import type {ReactElement} from "react"
 
 import {Home} from "lucide-react"
+import {Link} from "react-router"
 
 import {Breadcrumbs} from "@qualcomm-ui/react/breadcrumbs"
 
@@ -10,24 +11,36 @@ export function BreadcrumbsSizesDemo(): ReactElement {
       {/* preview */}
       <Breadcrumbs.Root aria-label="Breadcrumbs" size="sm">
         <Breadcrumbs.List>
-          <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
-          <Breadcrumbs.Item>Components</Breadcrumbs.Item>
+          <Breadcrumbs.Item icon={Home} render={<Link to="/" />}>
+            Home
+          </Breadcrumbs.Item>
+          <Breadcrumbs.Item render={<Link to="/components/overview" />}>
+            Components
+          </Breadcrumbs.Item>
           <Breadcrumbs.Item aria-current="page">Breadcrumbs</Breadcrumbs.Item>
         </Breadcrumbs.List>
       </Breadcrumbs.Root>
 
       <Breadcrumbs.Root aria-label="Breadcrumbs" size="md">
         <Breadcrumbs.List>
-          <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
-          <Breadcrumbs.Item>Components</Breadcrumbs.Item>
+          <Breadcrumbs.Item icon={Home} render={<Link to="/" />}>
+            Home
+          </Breadcrumbs.Item>
+          <Breadcrumbs.Item render={<Link to="/components/overview" />}>
+            Components
+          </Breadcrumbs.Item>
           <Breadcrumbs.Item aria-current="page">Breadcrumbs</Breadcrumbs.Item>
         </Breadcrumbs.List>
       </Breadcrumbs.Root>
 
       <Breadcrumbs.Root aria-label="Breadcrumbs" size="lg">
         <Breadcrumbs.List>
-          <Breadcrumbs.Item icon={Home}>Home</Breadcrumbs.Item>
-          <Breadcrumbs.Item>Components</Breadcrumbs.Item>
+          <Breadcrumbs.Item icon={Home} render={<Link to="/" />}>
+            Home
+          </Breadcrumbs.Item>
+          <Breadcrumbs.Item render={<Link to="/components/overview" />}>
+            Components
+          </Breadcrumbs.Item>
           <Breadcrumbs.Item aria-current="page">Breadcrumbs</Breadcrumbs.Item>
         </Breadcrumbs.List>
       </Breadcrumbs.Root>

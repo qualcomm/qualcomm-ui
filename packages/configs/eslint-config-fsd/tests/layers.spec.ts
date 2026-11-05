@@ -1,15 +1,31 @@
 import {describe, test} from "vitest"
 
-import {
-  assertBoundariesError,
-  assertInternalError,
-  assertNoErrors,
-} from "./assertions"
+import {assertDependenciesError, assertNoErrors} from "./assertions"
 import {dedent, getLinter, pathPrefix} from "./shared"
 
 const linter = getLinter()
 
 describe("FSD layers", () => {
+  test("higher-layer imports", async () => {
+    const result = await linter.lintText(
+      dedent`
+        import {createJob} from "~features/create-job/api/create-job"
+      `,
+      {filePath: `${pathPrefix}/entities/tool/ui/tool.ts`},
+    )
+    assertDependenciesError(result[0])
+  })
+
+  test("lower-layer imports", async () => {
+    const result = await linter.lintText(
+      dedent`
+        import {Tool} from "~entities/tool"
+      `,
+      {filePath: `${pathPrefix}/features/create-job/ui/create-job.ts`},
+    )
+    assertNoErrors(result[0])
+  })
+
   test("aliased same-layer imports", async () => {
     const result = await linter.lintText(
       dedent`
@@ -17,29 +33,27 @@ describe("FSD layers", () => {
       `,
       {filePath: `${pathPrefix}/entities/tool/ui/tool.ts`},
     )
-    assertBoundariesError(result[0])
+    assertDependenciesError(result[0])
   })
 
-  test("restricted same-layer internal imports", async () => {
+  test("restricted same-layer imports", async () => {
     const result = await linter.lintText(
       dedent`
         import {getJob} from "../../job/api/get-job"
       `,
       {filePath: `${pathPrefix}/entities/tool/ui/tool.ts`},
     )
-    assertBoundariesError(result[0])
-    assertInternalError(result[0])
+    assertDependenciesError(result[0])
   })
 
-  test("restricted same-layer internal imports", async () => {
+  test("restricted same-layer deep imports", async () => {
     const result = await linter.lintText(
       dedent`
         import {getJobInternal} from "../../job/api/internal/get-job-internal"
       `,
       {filePath: `${pathPrefix}/entities/tool/ui/tool.ts`},
     )
-    assertBoundariesError(result[0])
-    assertInternalError(result[0])
+    assertDependenciesError(result[0])
   })
 
   test("relative internal imports should not throw errors", async () => {
@@ -64,14 +78,14 @@ describe("FSD layers", () => {
     assertNoErrors(result[0])
   })
 
-  test("deep imports from unrestricted layers should throw errors", async () => {
+  test("deep imports from unrestricted layers should not throw errors", async () => {
     const result = await linter.lintText(
       dedent`
         import {ToolConfig} from "~shared/tool-config/ui"
       `,
       {filePath: `${pathPrefix}/entities/tool/ui/tool.ts`},
     )
-    assertInternalError(result[0])
+    assertNoErrors(result[0])
   })
 })
 
@@ -103,7 +117,7 @@ describe("Unrestricted layers", () => {
       `,
       {filePath: `${pathPrefix}/shared/slice-2/model/slice-2.model.ts`},
     )
-    assertBoundariesError(result[0])
+    assertDependenciesError(result[0])
   })
 
   test("shared layer restrictions 2", async () => {
@@ -113,7 +127,6 @@ describe("Unrestricted layers", () => {
       `,
       {filePath: `${pathPrefix}/shared/slice-2/model/slice-2.model.ts`},
     )
-    console.debug(result)
-    assertBoundariesError(result[0])
+    assertDependenciesError(result[0])
   })
 })

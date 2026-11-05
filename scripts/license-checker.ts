@@ -184,7 +184,7 @@ class LicenseHeaderManager {
     const header =
       config.type === "original"
         ? QUALCOMM_HEADER
-        : this.createModifiedHeader(config.sourceUrl, config.sourceLicense)
+        : this.createModifiedHeader(config.sourceUrl!, config.sourceLicense!)
 
     const {body, prefix} = this.parseFileForInsertion(strippedContent)
 
@@ -373,7 +373,7 @@ program
           message: "Source URL:",
           placeholder: "https://github.com/example/repo",
           validate: (value) => {
-            if (value.length === 0) {
+            if (!value?.length) {
               return "Source URL is required"
             }
             try {
@@ -410,7 +410,7 @@ program
           message: "Source license:",
           placeholder: "MIT License",
           validate: (value) =>
-            value.length === 0 ? "License is required" : undefined,
+            value?.length === 0 ? "License is required" : undefined,
         })
         if (isCancel(license)) {
           cancel("Operation cancelled")
@@ -468,9 +468,9 @@ program
     } else {
       const invalidFiles = results.filter((res) => !res.passed)
       console.error(`✗ ${invalidFiles.length} file(s):\n`)
-      invalidFiles.forEach((result) =>
-        console.error(`  ./${relative(directory, result.file)}`),
-      )
+      for (const result of invalidFiles) {
+        console.error(`  ./${relative(directory, result.file)}`)
+      }
       process.exit(1)
     }
   })

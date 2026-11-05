@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {isEditableElement, isElementVisible, isHTMLElement} from "./node"
+import {isEditableElement, isElementVisible, isHTMLElement} from "./node.js"
 
 type IncludeContainerType = boolean | "if-empty"
 
@@ -43,12 +43,13 @@ export function getFocusables(
 
   const focusableElements = elements.filter(isFocusable)
 
-  focusableElements.forEach((element, i) => {
+  for (let i = 0; i < focusableElements.length; i++) {
+    const element = focusableElements[i]
     if (isFrame(element) && element.contentDocument) {
       const frameBody = element.contentDocument.body
       focusableElements.splice(i, 1, ...getFocusables(frameBody))
     }
-  })
+  }
 
   return focusableElements
 }
@@ -86,13 +87,14 @@ export function getTabbables(
     tabbableElements.unshift(container)
   }
 
-  tabbableElements.forEach((element, i) => {
+  for (let i = 0; i < tabbableElements.length; i++) {
+    const element = tabbableElements[i]
     if (isFrame(element) && element.contentDocument) {
       const frameBody = element.contentDocument.body
       const allFrameTabbable = getTabbables(frameBody)
       tabbableElements.splice(i, 1, ...allFrameTabbable)
     }
-  })
+  }
 
   if (!tabbableElements.length && includeContainer) {
     return elements
@@ -121,7 +123,7 @@ export function getLastTabbable(
   includeContainer?: IncludeContainerType,
 ): HTMLElement | null {
   const elements = getTabbables(container, includeContainer)
-  return elements[elements.length - 1] || null
+  return elements.at(-1) || null
 }
 
 export function getTabbableEdges(
@@ -130,7 +132,7 @@ export function getTabbableEdges(
 ): [HTMLElement, HTMLElement] | [null, null] {
   const elements = getTabbables(container, includeContainer)
   const first = elements[0] || null
-  const last = elements[elements.length - 1] || null
+  const last = elements.at(-1)! || null
   return [first, last]
 }
 

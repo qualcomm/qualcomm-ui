@@ -13,19 +13,19 @@ import {
 } from "react"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
-import type {NavBadge, NavItem} from "@qualcomm-ui/mdx-common"
-import {Badge} from "@qualcomm-ui/react/badge"
-import {SideNav} from "@qualcomm-ui/react/side-nav"
+import type {NavItem} from "@qualcomm-ui/mdx-common"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {
+  useDocsRuntimeContext,
+  useDocsPageContext,
+} from "@qualcomm-ui/react-mdx/context"
+import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {matchSorter} from "@qualcomm-ui/utils/match-sorter"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
-
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
 
 export interface SidebarProps extends Omit<ElementRenderProp<"div">, "dir"> {
   /**
@@ -62,8 +62,9 @@ export function Sidebar({
   ...props
 }: SidebarProps): ReactElement {
   const ref = useRef<HTMLDivElement | null>(null)
-  const {navItems, pathname} = useMdxDocsLayoutContext()
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {navDensity, navItems, pathname} = useDocsPageContext()
+  const {layoutComponents, renderLink: RenderLink} = useDocsRuntimeContext()
+  const SideNavBadgesComponent = layoutComponents?.SideNavBadges
 
   const initialCollection = useMemo(
     () =>
@@ -122,6 +123,8 @@ export function Sidebar({
     if (node) {
       const parents = collection.getParentNodes(node.id)
       if (parents.length) {
+        // TODO: fix
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setExpandedValue((prev) => [...prev, ...parents.map((node) => node.id)])
       }
     }
@@ -213,7 +216,11 @@ export function Sidebar({
   }, [scrollIntoView])
 
   const mergedProps = mergeProps(
-    {className: "qui-docs-sidebar__root", ref},
+    {
+      className: "qui-docs-sidebar__root qui-docs__mdx-scrollbar",
+      "data-nav-density": navDensity,
+      ref,
+    },
     props,
   )
 
@@ -229,6 +236,7 @@ export function Sidebar({
           onSelectedValueChange(details.selectedValue)
         }}
         selectedValue={selectedValue}
+        size={navDensity === "compact" ? "sm" : "md"}
       >
         {children ? (
           <SideNav.Header data-sticky={booleanDataAttr(stickyHeader)}>
@@ -253,12 +261,7 @@ export function Sidebar({
             indexPath={[index]}
             node={item}
             renderBranch={({node}) => (
-              <SideNav.BranchNode
-                // TODO: deprecate route navigation from branch nodes (anti-pattern)
-                render={
-                  node.pathname ? <RenderLink href={node.pathname} /> : <div />
-                }
-              >
+              <SideNav.BranchNode>
                 <SideNav.NodeText>{node.title}</SideNav.NodeText>
                 <SideNav.BranchTrigger />
               </SideNav.BranchNode>
@@ -310,19 +313,15 @@ export function Sidebar({
                     )
                   }
                 >
-                  <SideNav.NodeIndicator />
                   <SideNav.NodeText>{node.title}</SideNav.NodeText>
-                  {node.badges ? (
+                  {SideNavBadgesComponent && node.badges ? (
                     <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">
-                      {node.badges.map((badge) => (
-                        <SidebarBadge key={badge.id} badge={badge} />
-                      ))}
+                      <SideNavBadgesComponent badges={node.badges} />
                     </SideNav.NodeAccessory>
                   ) : null}
                 </SideNav.LeafNode>
               )
             }}
-            showIndentGuide
           />
         ))}
       </SideNav.Root>
@@ -349,22 +348,4 @@ function getExpandedItems(items: NavItem[], pathname: string): string[] {
     }
     return [...acc, ...expandedChildren]
   }, [])
-}
-
-function SidebarBadge({badge}: {badge: NavBadge}): ReactElement | null {
-  if (badge.id === "developerPreview") {
-    return (
-      <Badge emphasis="purple" size="sm" variant="subtle">
-        Dev Preview
-      </Badge>
-    )
-  } else if (badge.id === "since") {
-    return null
-  }
-
-  return (
-    <Badge key={badge.id} size="sm" variant="subtle">
-      {badge.label}
-    </Badge>
-  )
 }

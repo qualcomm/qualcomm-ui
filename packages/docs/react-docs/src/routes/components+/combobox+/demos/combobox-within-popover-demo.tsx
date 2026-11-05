@@ -1,11 +1,11 @@
 import type {ReactElement} from "react"
 
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
+import {useListCollection} from "@qualcomm-ui/react-core/collection"
+import {useFilter} from "@qualcomm-ui/react-core/locale"
 import {Button} from "@qualcomm-ui/react/button"
 import {Combobox} from "@qualcomm-ui/react/combobox"
 import {Popover} from "@qualcomm-ui/react/popover"
-import {useListCollection} from "@qualcomm-ui/react-core/collection"
-import {useFilter} from "@qualcomm-ui/react-core/locale"
 
 import {countries} from "./country-list"
 

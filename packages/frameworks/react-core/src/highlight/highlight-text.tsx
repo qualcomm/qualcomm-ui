@@ -5,7 +5,7 @@ import {type ComponentProps, Fragment, type ReactElement} from "react"
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import {useHighlight, type UseHighlightProps} from "./use-highlight"
+import {useHighlight, type UseHighlightProps} from "./use-highlight.js"
 
 const highlightProps = createProps<UseHighlightProps>()(
   "exactMatch",

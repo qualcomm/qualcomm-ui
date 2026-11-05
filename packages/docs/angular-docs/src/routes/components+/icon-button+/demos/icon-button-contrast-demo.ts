@@ -1,33 +1,33 @@
 import {Component} from "@angular/core"
-import {ExternalLink} from "lucide-angular"
+import {LucideExternalLink} from "@lucide/angular"
 
-import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {ButtonModule} from "@qualcomm-ui/angular/button"
 
 @Component({
   imports: [ButtonModule],
-  providers: [provideIcons({ExternalLink})],
+  providers: [provideIcons({LucideExternalLink})],
   selector: "icon-button-contrast-demo",
   template: `
     <div class="flex flex-col gap-8">
       <div class="bg-persistent-black flex gap-8 rounded-md p-3">
         <button
           aria-label="External Link"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon="ExternalLink"
           q-icon-button
           variant="fill"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon="ExternalLink"
           q-icon-button
           variant="outline"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="white-persistent"
+          emphasis="persistent-white"
           icon="ExternalLink"
           q-icon-button
           variant="ghost"
@@ -37,21 +37,21 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
       <div class="bg-persistent-white flex gap-8 rounded-md p-3">
         <button
           aria-label="External Link"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon="ExternalLink"
           q-icon-button
           variant="fill"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon="ExternalLink"
           q-icon-button
           variant="outline"
         ></button>
         <button
           aria-label="External Link"
-          emphasis="black-persistent"
+          emphasis="persistent-black"
           icon="ExternalLink"
           q-icon-button
           variant="ghost"

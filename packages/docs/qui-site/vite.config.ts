@@ -1,8 +1,9 @@
 import mdx from "@mdx-js/rollup"
 import {reactRouter} from "@react-router/dev/vite"
 import tailwindcss from "@tailwindcss/vite"
+import {dirname, resolve} from "node:path"
+import {fileURLToPath} from "node:url"
 import {defineConfig} from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 import {
   getRehypePlugins,
@@ -10,6 +11,8 @@ import {
   quiDocsPlugin,
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [
@@ -20,11 +23,17 @@ export default defineConfig({
       remarkPlugins: [...getRemarkPlugins()],
     }),
     reactRouter(),
-    tsconfigPaths(),
     quiDocsPlugin(),
     reactDemoPlugin({
       demoPattern: "src/routes/**/*/demos/*.tsx",
       routesDir: "src/routes",
     }),
   ],
+  resolve: {
+    alias: {
+      "~components": resolve(__dirname, "./src/components"),
+      "~utils": resolve(__dirname, "./src/utils"),
+    },
+    tsconfigPaths: true,
+  },
 })

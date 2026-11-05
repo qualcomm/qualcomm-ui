@@ -48,6 +48,28 @@ const navConfig: NavConfig[] = [
     title: "Guides",
   },
   {
+    children: [
+      {
+        id: "table-composition",
+      },
+      {
+        id: "generic-table-abstractions",
+      },
+      {
+        id: "reusable-columns",
+      },
+      {
+        id: "state-and-workflows",
+      },
+      {
+        id: "loading-and-empty-states",
+      },
+    ],
+    expanded: true,
+    id: "best-practices",
+    title: "Best Practices",
+  },
+  {
     expanded: false,
     id: "feature-guides",
     title: "Feature Guides",
@@ -78,7 +100,7 @@ const navConfig: NavConfig[] = [
 export default {
   appDirectory: "src",
   knowledge: {
-    baseUrl: "https://react-table-next.qui.qualcomm.com",
+    baseUrl: "https://react-table.qui.qualcomm.com",
     exclude: ["installation.mdx", "index/_index.mdx"],
     integrations: {
       openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],

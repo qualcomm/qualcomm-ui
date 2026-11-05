@@ -29,8 +29,8 @@ import {
 import type {TreeNode} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {TreeContextProvider, useTreeContext} from "./tree-context"
-import {useTreeNodePropsContext} from "./tree-node-context"
+import {TreeContextProvider, useTreeContext} from "./tree-context.js"
+import {useTreeNodePropsContext} from "./tree-node-context.js"
 
 export interface CoreTreeRootProps<T extends TreeNode = TreeNode>
   extends

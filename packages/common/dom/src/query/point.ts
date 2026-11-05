@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {clamp} from "./shared"
-import type {Point} from "./types"
+import {clamp} from "./shared.js"
+import type {Point} from "./types.js"
 
 export interface PercentValueOptions {
   dir?: "ltr" | "rtl" | undefined

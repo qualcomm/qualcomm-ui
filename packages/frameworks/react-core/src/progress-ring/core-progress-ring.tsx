@@ -22,7 +22,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   ProgressRingContextProvider,
   useProgressRingContext,
-} from "./progress-ring-context"
+} from "./progress-ring-context.js"
 
 export interface CoreProgressRingRootProps
   extends

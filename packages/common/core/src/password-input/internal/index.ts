@@ -1,1 +1,1 @@
-export * from "./password.dom"
+export * from "./password.dom.js"

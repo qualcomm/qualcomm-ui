@@ -8,10 +8,6 @@ import {
   type TextInputApiProps,
 } from "@qualcomm-ui/core/text-input"
 import {createQdsInputApi} from "@qualcomm-ui/qds-core/input"
-import {
-  QdsInputContextProvider,
-  type QdsReactInputApiProps,
-} from "@qualcomm-ui/react/input"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
@@ -21,6 +17,10 @@ import {
   TextInputContextProvider,
   useTextInput,
 } from "@qualcomm-ui/react-core/text-input"
+import {
+  QdsInputContextProvider,
+  type QdsReactInputApiProps,
+} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TextInputRootProps

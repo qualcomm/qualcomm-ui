@@ -1,1 +1,1 @@
-export * from "./toast.dom"
+export * from "./toast.dom.js"

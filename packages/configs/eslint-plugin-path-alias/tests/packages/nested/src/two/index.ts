@@ -1,3 +1,3 @@
 export * from "./file"
-export * from "./two.types"
-export * from "./not-internal"
+export type * from "./two.types"
+export type * from "./not-internal"

@@ -1,4 +1,5 @@
 export * from "./app-logo"
+export * from "./header-bar-explorer-demo"
 export * from "./header-bar-menu-item-demo"
 export * from "./header-bar-padding-demo"
 export * from "./header-bar-showcase-demo"

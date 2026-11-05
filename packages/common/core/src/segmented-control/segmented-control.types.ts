@@ -13,7 +13,7 @@ import type {
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
 
-import type {segmentedControlAnatomy} from "./segmented-control.anatomy"
+import type {segmentedControlAnatomy} from "./segmented-control.anatomy.js"
 
 type PartName = AnatomyPartName<typeof segmentedControlAnatomy>
 
@@ -122,6 +122,7 @@ export interface SegmentedControlGroupBindings
 }
 
 export interface SegmentedControlItemBindings {
+  "data-orientation": SegmentedControlOrientation
   onKeyDown: JSX.KeyboardEventHandler<HTMLLabelElement>
 }
 
@@ -129,11 +130,13 @@ export interface SegmentedControlApi {
   defaultValue: string[] | null | undefined
   dir: Direction
   disabled: boolean | undefined
+  getName: () => string
+  handleChange: (itemValue: string, checked: boolean) => void
+  value: string[] | null | undefined
+
+  // group: bindings
   getGroupBindings: (
     params: IdRegistrationProps,
   ) => SegmentedControlGroupBindings
   getItemBindings: (id: IdParam) => SegmentedControlItemBindings
-  getName: () => string
-  handleChange: (itemValue: string, checked: boolean) => void
-  value: string[] | null | undefined
 }

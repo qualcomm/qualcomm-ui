@@ -2,26 +2,27 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, input, type OnInit} from "@angular/core"
-import {GripHorizontal} from "lucide-angular"
+import {LucideGripHorizontal} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({GripHorizontal})],
+  providers: [provideIcons({LucideGripHorizontal})],
   selector: "[q-table-row-drag-handle]",
   standalone: false,
   template: `
     <svg
       [q-bind]="inlineIconButtonApi().getIconBindings()"
-      [qIcon]="icon()"
+      [qIcon]="icon()!"
+      [size]="inlineIconButtonApi().size"
     ></svg>
   `,
 })

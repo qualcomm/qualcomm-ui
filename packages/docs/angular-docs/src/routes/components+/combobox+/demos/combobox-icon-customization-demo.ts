@@ -1,8 +1,8 @@
 import {Component, signal} from "@angular/core"
 
+import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
-import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 import {countries} from "./country-list"
@@ -13,7 +13,7 @@ import {countries} from "./country-list"
   template: `
     <!-- preview -->
     <q-combobox
-      ariaLabel="Country"
+      aria-label="Country"
       class="w-48"
       placeholder="Select a country"
       [collection]="listCollection.collection()"

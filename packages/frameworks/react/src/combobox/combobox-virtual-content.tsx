@@ -23,12 +23,12 @@ import {useMergedRef} from "@qualcomm-ui/react-core/refs"
 import type {CollectionItem} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {ComboboxContent, type ComboboxContentProps} from "./combobox-content"
-import {ComboboxItem} from "./combobox-item"
-import {ComboboxItemIndicator} from "./combobox-item-indicator"
-import {ComboboxItemText} from "./combobox-item-text"
-import type {ComboboxItemRenderProp} from "./combobox-items"
-import {useQdsComboboxContext} from "./qds-combobox-context"
+import {ComboboxContent, type ComboboxContentProps} from "./combobox-content.js"
+import {ComboboxItemIndicator} from "./combobox-item-indicator.js"
+import {ComboboxItemText} from "./combobox-item-text.js"
+import {ComboboxItem} from "./combobox-item.js"
+import type {ComboboxItemRenderProp} from "./combobox-items.js"
+import {useQdsComboboxContext} from "./qds-combobox-context.js"
 
 export interface ComboboxVirtualContentProps<
   T extends CollectionItem,
@@ -73,8 +73,13 @@ export function ComboboxVirtualContent<
   const mergedRef = useMergedRef(ref, localRef)
 
   useEffect(() => {
-    requestAnimationFrame(() => {
-      const positioner: HTMLDivElement | null = localRef.current.closest(
+    const frame = requestAnimationFrame(() => {
+      const content = localRef.current
+      if (!content) {
+        return
+      }
+
+      const positioner: HTMLDivElement | null = content.closest(
         `[data-combobox-part="positioner"]`,
       )
       if (!positioner) {
@@ -85,6 +90,7 @@ export function ComboboxVirtualContent<
         `${positioner.offsetWidth - positioner.clientWidth}px`,
       )
     })
+    return () => cancelAnimationFrame(frame)
   }, [inputValue, open])
 
   const virtualizer = useVirtualizer({
@@ -132,6 +138,9 @@ export function ComboboxVirtualContent<
       }
     }
     setScrollToIndexFn(handleScrollToIndexFn)
+    return () => {
+      clearTimeout(timerRef.current)
+    }
   }, [setScrollToIndexFn, virtualizer])
 
   const virtualItems = useNoMemo(() => virtualizer.getVirtualItems())

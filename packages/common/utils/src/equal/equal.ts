@@ -72,7 +72,7 @@ export function isEqual(a: any, b: any): boolean {
 
   // Check if every key in A exists in B and has the same value
   for (const key of keysA) {
-    if (!Object.prototype.hasOwnProperty.call(b, key)) {
+    if (!Object.hasOwn(b, key)) {
       return false
     }
 

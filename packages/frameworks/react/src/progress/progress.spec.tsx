@@ -1,19 +1,21 @@
-import {type HTMLAttributes, useState} from "react"
+import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {Progress} from "@qualcomm-ui/react/progress"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
 const testLabel = "Test Progress"
+const hintMessage = "Upload in progress"
 const errorMessage = "Error occurred"
 
 const testIds = {
   bar: "progress-bar",
   errorText: "progress-error-text",
+  hint: "progress-hint",
   label: "progress-label",
   root: "progress-root",
   track: "progress-track",
@@ -155,6 +157,68 @@ const tests: MultiComponentTestCase[] = [
   {
     composite() {
       return (
+        <Progress.Root value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar />
+          </Progress.Track>
+          <Progress.Hint>{hintMessage}</Progress.Hint>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return <Progress hint={hintMessage} label={testLabel} value={40} />
+    },
+    testCase: (getComponent) => {
+      test("Progress with hint text", async () => {
+        await render(getComponent())
+
+        const progressbar = page.getByLabelText(testLabel)
+        const hint = page.getByText(hintMessage)
+
+        await expect.element(hint).toBeVisible()
+        await expect
+          .element(progressbar)
+          .toHaveAttribute("aria-describedby", hint.element().id)
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Progress.Root invalid value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar />
+          </Progress.Track>
+          <Progress.Hint>{hintMessage}</Progress.Hint>
+          <Progress.ErrorText>{errorMessage}</Progress.ErrorText>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return (
+        <Progress
+          errorText={errorMessage}
+          hint={hintMessage}
+          invalid
+          label={testLabel}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Progress hides hint text while invalid", async () => {
+        await render(getComponent())
+
+        await expect.element(page.getByText(errorMessage)).toBeVisible()
+        await expect.element(page.getByText(hintMessage)).not.toBeVisible()
+      })
+    },
+  },
+  {
+    composite() {
+      return (
         <Progress.Root invalid>
           <Progress.Label>{testLabel}</Progress.Label>
           <Progress.Track>
@@ -279,6 +343,102 @@ const tests: MultiComponentTestCase[] = [
   {
     composite() {
       return (
+        <Progress.Root value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar data-test-id={testIds.bar} />
+          </Progress.Track>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return (
+        <Progress
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
+          label={testLabel}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer is enabled by default", async () => {
+        await render(getComponent())
+        await expect
+          .element(page.getByTestId(testIds.bar))
+          .toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Progress.Root shimmer value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar data-test-id={testIds.bar} />
+          </Progress.Track>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return (
+        <Progress
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
+          label={testLabel}
+          shimmer
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer enabled explicitly", async () => {
+        await render(getComponent())
+        await expect
+          .element(page.getByTestId(testIds.bar))
+          .toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Progress.Root shimmer={false} value={40}>
+          <Progress.Label>{testLabel}</Progress.Label>
+          <Progress.Track>
+            <Progress.Bar data-test-id={testIds.bar} />
+          </Progress.Track>
+        </Progress.Root>
+      )
+    },
+    simple() {
+      return (
+        <Progress
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
+          label={testLabel}
+          shimmer={false}
+          value={40}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("Shimmer disabled", async () => {
+        await render(getComponent())
+        await expect.element(page.getByTestId(testIds.bar)).toBeVisible()
+        await expect
+          .element(page.getByTestId(testIds.bar))
+          .not.toHaveAttribute("data-shimmer")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
         <Progress.Root data-test-id={testIds.root} invalid value={60}>
           <Progress.Label data-test-id={testIds.label}>
             {testLabel}
@@ -292,43 +452,40 @@ const tests: MultiComponentTestCase[] = [
           <Progress.ErrorText data-test-id={testIds.errorText}>
             {errorMessage}
           </Progress.ErrorText>
+          <Progress.Hint data-test-id={testIds.hint}>
+            {hintMessage}
+          </Progress.Hint>
         </Progress.Root>
       )
     },
     simple() {
       return (
         <Progress
-          barProps={
-            {
-              "data-test-id": testIds.bar,
-            } as HTMLAttributes<HTMLElement>
-          }
+          barProps={{
+            "data-test-id": testIds.bar,
+          }}
           data-test-id={testIds.root}
           errorText={errorMessage}
-          errorTextProps={
-            {
-              "data-test-id": testIds.errorText,
-            } as HTMLAttributes<HTMLElement>
-          }
+          errorTextProps={{
+            "data-test-id": testIds.errorText,
+          }}
+          hint={hintMessage}
+          hintProps={{
+            "data-test-id": testIds.hint,
+          }}
           invalid
           label={testLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as HTMLAttributes<HTMLElement>
-          }
-          trackProps={
-            {
-              "data-test-id": testIds.track,
-            } as HTMLAttributes<HTMLElement>
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
+          trackProps={{
+            "data-test-id": testIds.track,
+          }}
           value={60}
           valueText="60%"
-          valueTextProps={
-            {
-              "data-test-id": testIds.valueText,
-            } as HTMLAttributes<HTMLElement>
-          }
+          valueTextProps={{
+            "data-test-id": testIds.valueText,
+          }}
         />
       )
     },
@@ -341,6 +498,7 @@ const tests: MultiComponentTestCase[] = [
         await expect.element(page.getByTestId(testIds.track)).toBeVisible()
         await expect.element(page.getByTestId(testIds.bar)).toBeVisible()
         await expect.element(page.getByTestId(testIds.errorText)).toBeVisible()
+        await expect.element(page.getByTestId(testIds.hint)).not.toBeVisible()
       })
     },
   },

@@ -1,39 +1,42 @@
-import {ProgressRing as SimpleProgressRing} from "./progress-ring"
-import {ProgressRingBar, type ProgressRingBarProps} from "./progress-ring-bar"
 import {
-  ProgressRingCircle,
-  type ProgressRingCircleProps,
-} from "./progress-ring-circle"
+  ProgressRingBar,
+  type ProgressRingBarProps,
+} from "./progress-ring-bar.js"
 import {
   ProgressRingCircleContainer,
   type ProgressRingCircleContainerProps,
-} from "./progress-ring-circle-container"
+} from "./progress-ring-circle-container.js"
+import {
+  ProgressRingCircle,
+  type ProgressRingCircleProps,
+} from "./progress-ring-circle.js"
 import {
   ProgressRingContext,
   type ProgressRingContextProps,
-} from "./progress-ring-context"
+} from "./progress-ring-context.js"
 import {
   ProgressRingErrorText,
   type ProgressRingErrorTextProps,
-} from "./progress-ring-error-text"
+} from "./progress-ring-error-text.js"
 import {
   ProgressRingLabel,
   type ProgressRingLabelProps,
-} from "./progress-ring-label"
+} from "./progress-ring-label.js"
 import {
   ProgressRingRoot,
   type ProgressRingRootProps,
-} from "./progress-ring-root"
+} from "./progress-ring-root.js"
 import {
   ProgressRingTrack,
   type ProgressRingTrackProps,
-} from "./progress-ring-track"
+} from "./progress-ring-track.js"
 import {
   ProgressRingValueText,
   type ProgressRingValueTextProps,
-} from "./progress-ring-value-text"
+} from "./progress-ring-value-text.js"
+import {ProgressRing as SimpleProgressRing} from "./progress-ring.js"
 
-export * from "./qds-progress-ring-context"
+export * from "./qds-progress-ring-context.js"
 
 export type {
   ProgressRingBarProps,

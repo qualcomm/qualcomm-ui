@@ -7,9 +7,9 @@ import figma from "@figma/code-connect"
 import {ArrowBigUp, Command, Component} from "lucide-react"
 
 import type {QdsMenuSize} from "@qualcomm-ui/qds-core/menu"
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Menu} from "@qualcomm-ui/react/menu"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 const FIGMA_URL = "<FIGMA_COMPONENTS_BASE>?node-id=9054-20157"
 

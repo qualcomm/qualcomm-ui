@@ -6,16 +6,19 @@ import type {ReactElement, ReactNode} from "react"
 import {useOptionalContentId} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 
-import {SwitchControl, type SwitchControlProps} from "./switch-control"
-import {SwitchErrorText, type SwitchErrorTextProps} from "./switch-error-text"
+import {SwitchControl, type SwitchControlProps} from "./switch-control.js"
+import {
+  SwitchErrorText,
+  type SwitchErrorTextProps,
+} from "./switch-error-text.js"
 import {
   SwitchHiddenInput,
   type SwitchHiddenInputProps,
-} from "./switch-hidden-input"
-import {SwitchHint, type SwitchHintProps} from "./switch-hint"
-import {SwitchLabel, type SwitchLabelProps} from "./switch-label"
-import {SwitchRoot, type SwitchRootProps} from "./switch-root"
-import {SwitchThumb, type SwitchThumbProps} from "./switch-thumb"
+} from "./switch-hidden-input.js"
+import {SwitchHint, type SwitchHintProps} from "./switch-hint.js"
+import {SwitchLabel, type SwitchLabelProps} from "./switch-label.js"
+import {SwitchRoot, type SwitchRootProps} from "./switch-root.js"
+import {SwitchThumb, type SwitchThumbProps} from "./switch-thumb.js"
 
 export interface SwitchProps extends SwitchRootProps {
   /**

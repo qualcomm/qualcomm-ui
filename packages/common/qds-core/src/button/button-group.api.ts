@@ -5,12 +5,18 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {buttonGroupAnatomy} from "./button-group.anatomy"
+import {buttonGroupAnatomy} from "./button-group.anatomy.js"
 import type {
   QdsButtonGroupApiProps,
   QdsButtonGroupBindings,
-} from "./button-group.types"
-import {buttonClasses} from "./button.classes"
+} from "./button-group.types.js"
+import {buttonClasses} from "./button.classes.js"
+import type {QdsButtonApiProps} from "./button.types.js"
+
+export type ResolvableButtonGroupProps = Pick<
+  QdsButtonGroupApiProps,
+  keyof QdsButtonGroupApiProps & keyof QdsButtonApiProps
+>
 
 const parts = buttonGroupAnatomy.parts
 

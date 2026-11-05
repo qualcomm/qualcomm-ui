@@ -4,7 +4,7 @@
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {notificationClasses} from "./inline-notification.classes"
+import {notificationClasses} from "./inline-notification.classes.js"
 import type {
   QdsNotificationActionBindings,
   QdsNotificationApi,
@@ -14,7 +14,7 @@ import type {
   QdsNotificationIconBindings,
   QdsNotificationLabelBindings,
   QdsNotificationRootBindings,
-} from "./inline-notification.types"
+} from "./inline-notification.types.js"
 
 export function createQdsInlineNotificationApi(
   props: Explicit<QdsNotificationApiProps>,

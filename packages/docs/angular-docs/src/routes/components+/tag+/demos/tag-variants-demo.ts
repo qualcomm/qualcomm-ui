@@ -1,20 +1,22 @@
 import {Component} from "@angular/core"
-import {Link2} from "lucide-angular"
+import {RouterLink} from "@angular/router"
 
 import {TagDirective} from "@qualcomm-ui/angular/tag"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
-  imports: [TagDirective],
-  providers: [provideIcons({Link2})],
+  imports: [RouterLink, TagDirective],
   selector: "tag-variants-demo",
 
   template: `
     <div class="flex flex-col items-start gap-2">
       <!-- preview -->
-      <button endIcon="Link2" q-tag variant="link">link</button>
-      <button q-tag variant="selectable">selectable</button>
+      <span q-tag>read-only</span>
       <span q-tag variant="dismissable">dismissable</span>
+      <button q-tag variant="selectable">selectable</button>
+      <a q-tag routerLink="/">link</a>
+      <a active aria-current="true" q-tag routerLink="/components/tag">
+        active link
+      </a>
       <!-- preview -->
     </div>
   `,

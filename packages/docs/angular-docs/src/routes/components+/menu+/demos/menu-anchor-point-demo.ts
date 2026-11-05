@@ -1,7 +1,7 @@
 import {Component, computed, type ElementRef, viewChild} from "@angular/core"
 
-import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {MenuModule} from "@qualcomm-ui/angular/menu"
 import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 
 @Component({

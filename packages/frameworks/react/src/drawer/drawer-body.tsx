@@ -3,11 +3,11 @@
 
 import type {ReactElement} from "react"
 
+import {CoreDialog} from "@qualcomm-ui/react-core/dialog"
 import {
   type DialogBodyProps,
   useQdsDialogContext,
 } from "@qualcomm-ui/react/dialog"
-import {CoreDialog} from "@qualcomm-ui/react-core/dialog"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface DrawerBodyProps extends DialogBodyProps {}

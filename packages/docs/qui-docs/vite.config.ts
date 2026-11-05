@@ -1,8 +1,11 @@
 import mdx from "@mdx-js/rollup"
 import {reactRouter} from "@react-router/dev/vite"
 import tailwindcss from "@tailwindcss/vite"
+import {dirname, resolve} from "node:path"
+import {fileURLToPath} from "node:url"
+import rehypeKatex from "rehype-katex"
+import remarkMath from "remark-math"
 import {defineConfig} from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 import {
   frontmatterHmrPlugin,
@@ -11,6 +14,16 @@ import {
   quiDocsPlugin,
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
+import {
+  resolveSemanticSearchPaths,
+  semanticSearchDevPlugin,
+} from "@qualcomm-ui/react-router-utils/node"
+
+import quiDocsConfig from "./src/qui-docs.config.js"
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const quiDocsConfigFile = "./src/qui-docs.config.ts"
 
 export default defineConfig({
   define: {
@@ -20,20 +33,32 @@ export default defineConfig({
     tailwindcss(),
     mdx({
       providerImportSource: "@mdx-js/react",
-      rehypePlugins: [...getRehypePlugins()],
-      remarkPlugins: [...getRemarkPlugins()],
+      rehypePlugins: [
+        rehypeKatex,
+        ...getRehypePlugins({configFile: quiDocsConfigFile}),
+      ],
+      remarkPlugins: [...getRemarkPlugins(), remarkMath],
     }),
     reactRouter(),
-    tsconfigPaths({
-      projects: ["./tsconfig.lib.json"],
+    quiDocsPlugin({configFile: quiDocsConfigFile}),
+    semanticSearchDevPlugin({
+      outputDirectory: resolve(__dirname, "generated/semantic-search"),
+      sectionsPath: resolveSemanticSearchPaths(quiDocsConfig.knowledge)
+        .sectionsPath,
     }),
-    quiDocsPlugin(),
     frontmatterHmrPlugin(),
     reactDemoPlugin({
       demoPattern: "./src/routes/debug+/**/demos/*.tsx",
       transformTailwindStyles: true,
     }),
   ],
+  resolve: {
+    alias: {
+      "~components": resolve(__dirname, "./src/components"),
+      "~utils": resolve(__dirname, "./src/utils"),
+    },
+    tsconfigPaths: true,
+  },
   server: {
     port: 3500,
   },

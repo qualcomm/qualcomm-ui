@@ -171,7 +171,7 @@ class WebCrawler {
               state: "attached",
               timeout: 10000,
             })
-          } catch (waitError) {
+          } catch {
             console.warn(
               `[${url}] Element ${demoId}: angular-demo not found, trying without attribute`,
             )
@@ -327,5 +327,5 @@ async function crawlForDataAttribute(): Promise<void> {
 export {WebCrawler, type CrawlOptions, type FoundElement}
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  crawlForDataAttribute()
+  void crawlForDataAttribute()
 }

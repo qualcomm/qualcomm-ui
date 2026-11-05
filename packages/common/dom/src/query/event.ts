@@ -6,9 +6,9 @@
 
 import type {MaybeFn} from "@qualcomm-ui/utils/guard"
 
-import {contains} from "./node"
-import {isAndroid, isApple, isMac} from "./platform"
-import type {AnyPointerEvent, EventKeyOptions, NativeEvent} from "./types"
+import {contains} from "./node.js"
+import {isAndroid, isApple, isMac} from "./platform.js"
+import type {AnyPointerEvent, EventKeyOptions, NativeEvent} from "./types.js"
 
 export function getBeforeInputValue(
   event: Pick<InputEvent, "currentTarget">,
@@ -36,7 +36,7 @@ export function getEventTarget<T extends EventTarget>(
 export function isSelfTarget(
   event: Partial<Pick<UIEvent, "currentTarget" | "target" | "composedPath">>,
 ): boolean {
-  return contains(event.currentTarget as Node, getEventTarget(event))
+  return contains(event.currentTarget, getEventTarget(event))
 }
 
 export function isOpeningInNewTab(
@@ -229,4 +229,13 @@ export const addDomEvent = <K extends keyof DOMEventMap>(
   return (): void => {
     node?.removeEventListener(eventName, handler as any, options)
   }
+}
+
+export function isCtrlOrMetaKey(
+  e: Pick<KeyboardEvent, "ctrlKey" | "metaKey">,
+): boolean {
+  if (isMac()) {
+    return e.metaKey
+  }
+  return e.ctrlKey
 }

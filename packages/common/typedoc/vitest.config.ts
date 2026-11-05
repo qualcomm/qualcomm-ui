@@ -9,10 +9,5 @@ export default defineConfig({
     },
     css: false,
     include: ["tests/*.spec.ts"],
-    poolOptions: {
-      threads: {
-        singleThread: true,
-      },
-    },
   },
 })

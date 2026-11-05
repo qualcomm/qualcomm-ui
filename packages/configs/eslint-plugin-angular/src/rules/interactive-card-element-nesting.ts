@@ -1,14 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {ESLintUtils} from "@typescript-eslint/utils"
-
-import {hasDirective, type TemplateNode} from "./utils"
-
-const createRule = ESLintUtils.RuleCreator(
-  (name) =>
-    `https://github.com/qualcomm/qualcomm-ui/tree/main/packages/configs/eslint-plugin-angular#${name}`,
-)
+import {createRule, hasDirective, type TemplateNode} from "./utils.js"
 
 const NATIVE_INTERACTIVE_ELEMENTS = new Set([
   "a",
@@ -97,7 +90,9 @@ function getElementDisplayName(node: TemplateNode): string {
   return node.name ?? "unknown"
 }
 
-export const interactiveCardElementNesting = createRule<[], MessageIds>({
+export const interactiveCardElementNesting: ReturnType<
+  typeof createRule<[], MessageIds>
+> = createRule<[], MessageIds>({
   create(context) {
     const parserServices = context.sourceCode.parserServices as
       | {
@@ -153,15 +148,14 @@ export const interactiveCardElementNesting = createRule<[], MessageIds>({
       },
     }
   },
-  defaultOptions: [],
   meta: {
     docs: {
       description:
-        "Disallow interactive elements nested inside q-card with the interactive attribute.",
+        "Disallow interactive elements nested inside q-card with the interactive attribute",
     },
     messages: {
       noInteractiveChildren:
-        "{{elementName}} is an interactive element and should not be nested inside an interactive Card. This violates web standards. You should not nest interactive elements.",
+        "{{elementName}} is an interactive element and should not be nested inside an interactive Card. This violates web standards. You should not nest interactive elements",
     },
     schema: [],
     type: "problem",

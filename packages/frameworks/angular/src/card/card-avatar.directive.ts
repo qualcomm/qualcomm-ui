@@ -4,14 +4,14 @@
 import {computed, Directive, inject, type OnInit} from "@angular/core"
 
 import {
-  provideQdsAvatarContext,
-  QdsAvatarContextService,
-} from "@qualcomm-ui/angular/avatar"
-import {
   CoreAvatarRootDirective,
   provideAvatarContext,
 } from "@qualcomm-ui/angular-core/avatar"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
+import {
+  provideQdsAvatarContext,
+  QdsAvatarContextService,
+} from "@qualcomm-ui/angular/avatar"
 import {createQdsAvatarApi} from "@qualcomm-ui/qds-core/avatar"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 

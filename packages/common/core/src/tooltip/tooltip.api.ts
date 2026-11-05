@@ -8,7 +8,7 @@ import {getPlacementStyles} from "@qualcomm-ui/dom/floating-ui"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {tooltipAnatomy} from "./tooltip.anatomy"
+import {tooltipAnatomy} from "./tooltip.anatomy.js"
 import type {
   TooltipApi,
   TooltipArrowBindings,
@@ -18,7 +18,7 @@ import type {
   TooltipRootBindings,
   TooltipSchema,
   TooltipTriggerBindings,
-} from "./tooltip.types"
+} from "./tooltip.types.js"
 
 const parts = tooltipAnatomy.parts
 

@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {CollapsibleApiProps} from "./collapsible.types"
+import type {CollapsibleApiProps} from "./collapsible.types.js"
 
 export const collapsibleProps: (keyof CollapsibleApiProps)[] =
   createProps<CollapsibleApiProps>()(

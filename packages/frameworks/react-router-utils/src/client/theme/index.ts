@@ -1,7 +1,7 @@
 export {
   createThemeSessionResolver,
   type ThemeSessionResolver,
-} from "./theme-server"
+} from "./theme-server.js"
 export {
   ThemeProvider,
   useTheme,
@@ -9,7 +9,7 @@ export {
   Theme,
   isTheme,
   PreventFlashOnWrongTheme,
-} from "./theme-provider"
-export {createThemeAction} from "./create-theme-action"
+} from "./theme-provider.js"
+export {createThemeAction} from "./create-theme-action.js"
 
-export type {ThemeMetadata} from "./theme-provider"
+export type {ThemeMetadata} from "./theme-provider.js"

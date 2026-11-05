@@ -2,9 +2,9 @@ import type {ReactElement} from "react"
 
 import {Command, File, FileText, FolderOpen, ImageDown} from "lucide-react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Menu} from "@qualcomm-ui/react/menu"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 export function MenuItemCustomizationDemo(): ReactElement {
   return (

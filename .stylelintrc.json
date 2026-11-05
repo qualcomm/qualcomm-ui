@@ -5,15 +5,8 @@
     "**/dist/**",
     "node_modules/**"
   ],
-  "extends": ["stylelint-prettier/recommended"],
   "plugins": ["stylelint-order"],
   "rules": {
-    "order/properties-alphabetical-order": true,
-    "prettier/prettier": [
-      true, {
-        "singleQuote": false,
-        "tabWidth": 2
-      }
-    ]
+    "order/properties-alphabetical-order": true
   }
 }

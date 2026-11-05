@@ -6,13 +6,13 @@ import type {ReactElement} from "react"
 import {ChevronDown} from "lucide-react"
 
 import {accordionClasses} from "@qualcomm-ui/qds-core/accordion"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {useAccordionItemIndicator} from "@qualcomm-ui/react-core/accordion"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface AccordionItemIndicatorProps extends ElementRenderProp<"div"> {

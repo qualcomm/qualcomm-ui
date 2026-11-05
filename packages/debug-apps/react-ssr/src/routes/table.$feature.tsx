@@ -22,6 +22,14 @@ function kebabToTitle(str: string): string {
   return kebabToUppercased(str).join(" ")
 }
 
+function MissingDemo({componentName}: {componentName: string}) {
+  return (
+    <div className="text-danger" role="alert">
+      Missing demo export: {componentName}
+    </div>
+  )
+}
+
 export default function SingleDemoPage() {
   const {feature} = useParams()
 
@@ -63,16 +71,10 @@ export default function SingleDemoPage() {
     const demoComponent = module[componentName]
 
     if (!demoComponent) {
-      const MissingDemo: ComponentType = () => (
-        <div role="alert" className="text-danger">
-          Missing demo export: {componentName}
-        </div>
-      )
-
-      return {default: MissingDemo}
+      return {default: MissingDemo as ComponentType<{componentName: string}>}
     }
 
-    return {default: demoComponent}
+    return {default: demoComponent as ComponentType<{componentName: string}>}
   })
 
   return (
@@ -81,7 +83,7 @@ export default function SingleDemoPage() {
         <h1 className="section-title">{kebabToTitle(feature)}</h1>
         <div className="demo-container">
           <Suspense fallback={<div>Loading demo...</div>}>
-            <Demo />
+            <Demo componentName={componentName} />
           </Suspense>
         </div>
       </div>

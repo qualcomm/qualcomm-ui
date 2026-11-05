@@ -3,8 +3,8 @@
 
 import {Component, type ReactElement} from "react"
 
-import type {RunnerOptions, Scope} from "./types"
-import {generateElement} from "./utils"
+import type {RunnerOptions, Scope} from "./types.js"
+import {generateElement} from "./utils.js"
 
 export interface RunnerProps extends RunnerOptions {
   /**

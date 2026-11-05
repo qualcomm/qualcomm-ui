@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {SortingFn} from "./features/sorting"
+import type {SortingFn} from "./features/sorting.js"
 
 export const reSplitAlphaNumeric: RegExp = /([0-9]+)/gm
 

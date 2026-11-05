@@ -5,8 +5,8 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {fieldGroupAnatomy} from "./field-group.anatomy"
-import {fieldGroupClasses} from "./field-group.classes"
+import {fieldGroupAnatomy} from "./field-group.anatomy.js"
+import {fieldGroupClasses} from "./field-group.classes.js"
 import type {
   QdsFieldGroupApi,
   QdsFieldGroupApiProps,
@@ -15,7 +15,7 @@ import type {
   QdsFieldGroupItemsBindings,
   QdsFieldGroupLabelBindings,
   QdsFieldGroupRootBindings,
-} from "./field-group.types"
+} from "./field-group.types.js"
 
 const parts = fieldGroupAnatomy.parts
 

@@ -1,2 +1,2 @@
-export * from "./checkbox-context"
-export * from "./use-checkbox"
+export * from "./checkbox-context.js"
+export * from "./use-checkbox.js"

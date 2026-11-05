@@ -31,7 +31,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {comboboxAnatomy} from "./combobox.anatomy"
+import type {comboboxAnatomy} from "./combobox.anatomy.js"
 
 export interface ComboboxValueChangeDetails<
   T extends CollectionItem = CollectionItem,
@@ -347,12 +347,6 @@ export interface ComboboxApiProps<T extends CollectionItem = CollectionItem>
 }
 
 export interface ComboboxPositioningOptions extends PositioningOptions {
-  /**
-   * The main axis offset or gap between the reference and floating element
-   * @default 2
-   */
-  gutter?: number | undefined
-
   /**
    * The initial placement of the floating element
    * @default 'bottom-start'
@@ -817,6 +811,10 @@ export interface ComboboxInputBindings extends Part<"input"> {
   "aria-controls": string
   "aria-expanded": BooleanAriaAttr
   "aria-invalid": BooleanAriaAttr
+  /**
+   * @since 1.11.0
+   */
+  "aria-labelledby": string | undefined
   autoCapitalize: "none"
   autoComplete: "off"
   autoCorrect: "off"

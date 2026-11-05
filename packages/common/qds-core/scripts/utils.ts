@@ -16,13 +16,19 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export const styleOutputDir = resolve(__dirname, "../src/styles")
 
-export type Brand = "qualcomm" | "snapdragon" | "dragonwing" | "arduino"
+export type Brand =
+  | "qualcomm"
+  | "snapdragon"
+  | "dragonwing"
+  | "dragonfly"
+  | "arduino"
 export type Theme = "light" | "dark"
 
 export const brands: Brand[] = [
   "qualcomm",
   "snapdragon",
   "dragonwing",
+  "dragonfly",
   "arduino",
 ]
 export const themes: Theme[] = ["light", "dark"]

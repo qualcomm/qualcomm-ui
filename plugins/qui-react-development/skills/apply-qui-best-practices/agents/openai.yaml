@@ -1,0 +1,7 @@
+interface:
+  display_name: "Apply QUI Best Practices"
+  short_description: "Apply covered QUI component rules"
+  default_prompt: "Use $apply-qui-component-rules when writing or modifying covered QUI React components."
+
+policy:
+  allow_implicit_invocation: true

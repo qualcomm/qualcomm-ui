@@ -1,40 +1,40 @@
 import {
   HeaderBarActionBar,
   type HeaderBarActionBarProps,
-} from "./header-bar-action-bar"
+} from "./header-bar-action-bar.js"
 import {
   HeaderBarActionButton,
   type HeaderBarActionButtonProps,
-} from "./header-bar-action-button"
+} from "./header-bar-action-button.js"
 import {
   HeaderBarActionIconButton,
   type HeaderBarActionIconButtonProps,
-} from "./header-bar-action-icon-button"
+} from "./header-bar-action-icon-button.js"
 import {
   HeaderBarAppTitle,
   type HeaderBarAppTitleProps,
-} from "./header-bar-app-title"
+} from "./header-bar-app-title.js"
 import {
   HeaderBarDivider,
   type HeaderBarDividerProps,
-} from "./header-bar-divider"
-import {HeaderBarLogo, type HeaderBarLogoProps} from "./header-bar-logo"
+} from "./header-bar-divider.js"
+import {HeaderBarLogo, type HeaderBarLogoProps} from "./header-bar-logo.js"
 import {
   HeaderBarMenuItem,
   type HeaderBarMenuItemProps,
-} from "./header-bar-menu-item"
-import {HeaderBarNav, type HeaderBarNavProps} from "./header-bar-nav"
+} from "./header-bar-menu-item.js"
 import {
   HeaderBarNavItem,
   type HeaderBarNavItemProps,
-} from "./header-bar-nav-item"
-import {HeaderBarRoot, type HeaderBarRootProps} from "./header-bar-root"
+} from "./header-bar-nav-item.js"
+import {HeaderBarNav, type HeaderBarNavProps} from "./header-bar-nav.js"
+import {HeaderBarRoot, type HeaderBarRootProps} from "./header-bar-root.js"
 import {
   HeaderBarWindowControls,
   type HeaderBarWindowControlsProps,
-} from "./header-bar-window-controls"
+} from "./header-bar-window-controls.js"
 
-export * from "./qds-header-bar-context"
+export * from "./qds-header-bar-context.js"
 
 export type {
   HeaderBarActionBarProps,

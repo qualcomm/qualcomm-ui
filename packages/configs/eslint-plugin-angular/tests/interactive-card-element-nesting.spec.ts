@@ -1,7 +1,7 @@
 import {RuleTester} from "@typescript-eslint/rule-tester"
 import {afterAll, describe, it} from "vitest"
 
-import {interactiveCardElementNesting} from "../src/rules/interactive-card-element-nesting"
+import {interactiveCardElementNesting} from "../src/rules/interactive-card-element-nesting.js"
 
 RuleTester.afterAll = afterAll
 RuleTester.it = it

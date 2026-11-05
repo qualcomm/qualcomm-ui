@@ -4,14 +4,14 @@
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {inlineIconButtonAnatomy} from "./inline-icon-button.anatomy"
-import {inlineIconButtonClasses} from "./inline-icon-button.classes"
+import {inlineIconButtonAnatomy} from "./inline-icon-button.anatomy.js"
+import {inlineIconButtonClasses} from "./inline-icon-button.classes.js"
 import type {
   QdsInlineIconButtonApi,
   QdsInlineIconButtonApiProps,
   QdsInlineIconButtonIconBindings,
   QdsInlineIconButtonRootBindings,
-} from "./inline-icon-button.types"
+} from "./inline-icon-button.types.js"
 
 const parts = inlineIconButtonAnatomy.parts
 

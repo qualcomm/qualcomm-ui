@@ -3,8 +3,8 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {qdsInputAnatomy} from "./input.anatomy"
-import {inputClasses} from "./input.classes"
+import {qdsInputAnatomy} from "./input.anatomy.js"
+import {inputClasses} from "./input.classes.js"
 import type {
   QdsInputApi,
   QdsInputApiProps,
@@ -20,7 +20,7 @@ import type {
   QdsInputRootBindings,
   QdsInputSize,
   QdsInputStartIconBindings,
-} from "./input.types"
+} from "./input.types.js"
 
 const parts = qdsInputAnatomy.parts
 

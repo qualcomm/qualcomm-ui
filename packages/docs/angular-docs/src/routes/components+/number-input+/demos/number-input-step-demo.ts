@@ -7,7 +7,12 @@ import {NumberInputModule} from "@qualcomm-ui/angular/number-input"
   selector: "number-input-step-demo",
   template: `
     <!-- preview -->
-    <q-number-input class="w-72" placeholder="Enter a number" step="3" />
+    <q-number-input
+      aria-label="Number input with step"
+      class="w-72"
+      placeholder="Enter a number"
+      step="3"
+    />
     <!-- preview -->
   `,
 })

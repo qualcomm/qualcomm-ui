@@ -18,8 +18,8 @@ import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import {type FieldContextValue, useFieldContext} from "./field-context"
-import {useFieldsetContext} from "./fieldset-context"
+import {type FieldContextValue, useFieldContext} from "./field-context.js"
+import {useFieldsetContext} from "./fieldset-context.js"
 
 const parts = fieldAnatomy.parts
 

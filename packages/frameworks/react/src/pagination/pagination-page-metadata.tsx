@@ -13,7 +13,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsPaginationContext} from "./qds-pagination-context"
+import {useQdsPaginationContext} from "./qds-pagination-context.js"
 
 export interface PaginationPageMetadataProps extends Omit<
   ElementRenderProp<"div">,

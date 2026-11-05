@@ -1,5 +1,8 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "compilerOptions": {
+    "noCheck": true
+  },
   "include": [
     "./src/typedoc-example.ts",
     "./src/typedoc-debug.ts",

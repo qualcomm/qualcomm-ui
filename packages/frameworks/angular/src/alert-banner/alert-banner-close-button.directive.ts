@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, type OnInit} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
-import {useIconButtonApi} from "@qualcomm-ui/angular/button"
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsAlertBannerContext} from "./qds-alert-banner-context.service"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-alert-banner-close-button]",
   standalone: false,
   template: `

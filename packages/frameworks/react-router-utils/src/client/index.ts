@@ -1,2 +1,2 @@
-export * from "./site-state"
-export * from "./theme"
+export * from "./site-state/index.js"
+export * from "./theme/index.js"

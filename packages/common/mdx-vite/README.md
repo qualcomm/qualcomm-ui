@@ -6,7 +6,7 @@ This package provides Vite plugins for building documentation sites with MDX, in
 
 For documentation and usage guides:
 
-- [QUI Docs documentation](https://docs-next.qui.qualcomm.com/)
+- [QUI Docs documentation](https://docs.qui.qualcomm.com/)
 
 ## License
 

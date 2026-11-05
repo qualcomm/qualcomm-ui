@@ -1,3 +1,3 @@
-export * from "./jsdoc-comment"
-export * from "./prop-types.utils"
-export * from "./type-doc-function-content"
+export * from "./jsdoc-comment.js"
+export * from "./prop-types.utils.js"
+export * from "./type-doc-function-content.js"

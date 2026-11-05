@@ -1,9 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Code, Link, Parent, Root, RootContent, Text} from "mdast"
+import type {Code, Link, Parent, Root, RootContent} from "mdast"
 import {toString} from "mdast-util-to-string"
 import remarkGfm from "remark-gfm"
+import remarkMath from "remark-math"
 import remarkStringify from "remark-stringify"
 import {type Plugin, unified} from "unified"
 import {visit} from "unist-util-visit"
@@ -17,10 +18,10 @@ import type {
   SimplifiedProp,
 } from "@qualcomm-ui/mdx-common"
 
-import {isSpoilerBlock, isStepBlock} from "../../remark"
-import {SlugGenerator, slugify} from "../create-slug"
+import {isSpoilerBlock, isStepBlock} from "../../remark/index.js"
+import {SlugGenerator} from "../create-slug.js"
 
-import {computeMd5} from "./utils"
+import {computeMd5} from "./utils.js"
 
 export interface SectionExtractorOptions {
   /**
@@ -44,7 +45,7 @@ export interface SectionExtractorOptions {
 export interface PageInfo {
   frontmatter: Record<string, unknown>
   id: string
-  pathname: string
+  pathname?: string
   title: string
   url?: string
 }
@@ -75,7 +76,7 @@ function transformLinks(): Plugin {
   return () => (tree) => {
     visit(tree, "link", (node: Link) => {
       let text = ""
-      visit(node, "text", (textNode: Text) => {
+      visit(node, ["text", "inlineMath"] as const, (textNode) => {
         text += textNode.value
       })
 
@@ -89,12 +90,36 @@ function transformLinks(): Plugin {
   }
 }
 
-const rawProcessor = unified().use(remarkGfm).use(remarkStringify)
+const rawProcessor = unified()
+  .use(remarkGfm)
+  .use(remarkMath)
+  .use(remarkStringify)
 
 const contentProcessor = unified()
   .use(remarkGfm)
+  .use(remarkMath)
   .use(transformLinks())
   .use(remarkStringify)
+
+const excludedSearchNodeTypes = new Set([
+  "code",
+  "definition",
+  "html",
+  "mdxFlowExpression",
+  "mdxJsxFlowElement",
+  "mdxJsxTextElement",
+  "mdxTextExpression",
+  "mdxjsEsm",
+  "yaml",
+])
+
+const urlPattern = /\b(?:https?:\/\/|mailto:)[^\s<>()]+/giu
+
+interface SearchTextNode {
+  children?: SearchTextNode[]
+  type?: string
+  value?: string
+}
 
 /**
  * Extracts sections from processed markdown content, organized by headers.
@@ -221,18 +246,20 @@ export class SectionExtractor {
       return null
     }
 
+    const pageId = this.generatePageId(pageInfo.id)
+    const pathname = pageInfo.pathname ?? `/${pageInfo.id}`
     const hashData = {
       content,
-      pageId: `${this.pageIdPrefix}${pageInfo.id}`,
-      pathname: pageInfo.pathname,
+      pageId,
+      pathname,
     }
     const hash = computeMd5(JSON.stringify(hashData))
 
     return {
       content,
       hash,
-      pageId: `${this.pageIdPrefix}${pageInfo.id}`,
-      pathname: pageInfo.pathname,
+      pageId,
+      pathname,
       title: pageInfo.title,
     }
   }
@@ -250,12 +277,22 @@ export class SectionExtractor {
     for (const node of nodes) {
       if (node.type === "code") {
         const codeNode = node as Code & {
-          data?: {typeDocProps?: {name: string; props: SimplifiedProp[]}}
+          data?: {
+            typeDocProps?: {
+              name: string
+              props: SimplifiedProp[]
+              since?: string
+            }
+          }
         }
 
         if (codeNode.data?.typeDocProps) {
-          const {name, props} = codeNode.data.typeDocProps
-          sectionTypes.push({props, type: name})
+          const {name, props, since} = codeNode.data.typeDocProps
+          sectionTypes.push({
+            props,
+            since,
+            type: name,
+          })
         }
 
         codeExamples.push({
@@ -274,8 +311,10 @@ export class SectionExtractor {
 
     const rawContent = this.nodesToRawContent(nodes)
     const content = this.nodesToContent(contentNodes)
+    const searchText = this.nodesToSearchText(contentNodes)
 
-    const sectionId = this.generateSectionId(section.headerPath)
+    const pageId = this.generatePageId(pageInfo.id)
+    const sectionId = this.generateSectionId(pageId, section.anchorId)
     const url =
       pageInfo.url && section.anchorId
         ? `${pageInfo.url}#${section.anchorId}`
@@ -286,8 +325,10 @@ export class SectionExtractor {
       pageFrontmatter: Object.keys(pageInfo.frontmatter).length
         ? pageInfo.frontmatter
         : undefined,
-      pageId: `${this.pageIdPrefix}${pageInfo.id}`,
+      pageId,
+      pathname: pageInfo.pathname,
       rawContent: rawContent.trim(),
+      searchText,
       terms: terms.length ? terms : undefined,
       types: sectionTypes.length ? sectionTypes : undefined,
       url,
@@ -301,6 +342,7 @@ export class SectionExtractor {
       hash: sectionHash,
       headingLevel: section.headingLevel,
       sectionId,
+      sectionUrlHash: section.anchorId ? `#${section.anchorId}` : undefined,
     }
   }
 
@@ -367,7 +409,43 @@ export class SectionExtractor {
     return contentProcessor.stringify(transformed)
   }
 
-  private generateSectionId(headerPath: string[]): string {
-    return headerPath.map((h) => slugify(h)).join("-")
+  private nodesToSearchText(nodes: RootContent[]): string {
+    const text: string[] = []
+
+    const collect = (node: SearchTextNode): void => {
+      if (!node.type || excludedSearchNodeTypes.has(node.type)) {
+        return
+      }
+
+      if (
+        node.type === "text" ||
+        node.type === "inlineCode" ||
+        node.type === "inlineMath" ||
+        node.type === "math"
+      ) {
+        if (node.value) {
+          text.push(node.value)
+        }
+        return
+      }
+
+      for (const child of node.children ?? []) {
+        collect(child)
+      }
+    }
+
+    for (const node of nodes) {
+      collect(node)
+    }
+
+    return text.join(" ").replace(urlPattern, "").replace(/\s+/g, " ").trim()
+  }
+
+  private generatePageId(pageId: string): string {
+    return `${this.pageIdPrefix}${pageId}`
+  }
+
+  private generateSectionId(pageId: string, anchorId?: string): string {
+    return anchorId ? `${pageId}#${anchorId}` : pageId
   }
 }

@@ -8,7 +8,7 @@ interface GlobalCliOpts {
   env?: string
 }
 
-export function loadEnv() {
+export function loadEnv(): void {
   const options: GlobalCliOpts = program.optsWithGlobals()
   if (options.env) {
     config({path: options.env, quiet: true})

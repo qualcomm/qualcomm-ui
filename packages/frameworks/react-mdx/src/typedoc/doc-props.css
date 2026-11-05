@@ -115,6 +115,7 @@
 
       ul {
         list-style-type: circle;
+        margin: 0;
       }
     }
   }
@@ -161,6 +162,7 @@ pre.qui-docs-code {
 
   ul {
     list-style-type: circle;
+    margin: 0;
   }
 
   &.bottom-border {
@@ -244,7 +246,7 @@ pre.qui-docs-code {
 }
 
 .doc-props-description__root {
-  color: var(--color-text-neutral-primary);
+  color: var(--color-text-neutral-secondary);
   font: var(--font-static-body-sm-default);
   min-width: 250px;
 
@@ -268,6 +270,7 @@ pre.qui-docs-code {
 
   ul {
     list-style-type: disc;
+    margin: 0;
   }
 
   &.doc-props-table__description {

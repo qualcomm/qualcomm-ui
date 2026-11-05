@@ -8,8 +8,8 @@ import type {
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {checkmarkAnatomy} from "./checkmark.anatomy"
-import type {checkmarkClasses} from "./checkmark.classes"
+import type {checkmarkAnatomy} from "./checkmark.anatomy.js"
+import type {checkmarkClasses} from "./checkmark.classes.js"
 
 type PartName = AnatomyPartName<typeof checkmarkAnatomy>
 interface Part<P extends PartName> extends AnatomyPart<"checkmark", P> {}

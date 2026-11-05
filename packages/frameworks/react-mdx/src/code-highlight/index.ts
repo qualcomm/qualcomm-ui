@@ -1,1 +1,1 @@
-export * from "./code-highlight"
+export * from "./code-highlight.js"

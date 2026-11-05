@@ -18,9 +18,7 @@ import {Dialog} from "@qualcomm-ui/react/dialog"
 ```
 
 ::: terms
-interstitial
-blocking ui
-focus trap
+interstitial, blocking ui, focus trap
 :::
 
 ## Examples
@@ -28,34 +26,30 @@ focus trap
 ### Sizes
 
 ::: terms
-small
-medium
-dialog width
+small, medium, dialog width
 :::
 
 The dialog component has two sizes: `sm` and `md`. Size governs the width of the dialog, as well as the content's spacing, font size, and padding.
 
 <Demo name="DialogSizesDemo" component={demos.DialogSizesDemo} />
 
-### Indicator Emphasis
+### Indicator Icon
 
 ::: terms
-status
-severity
+status, severity, indicator
 :::
 
-Use the [emphasis](./#emphasis) prop to change the intent of the dialog's indicator icon.
+Set an indicator icon by providing the `<Dialog.IndicatorIcon />` component within the `<Dialog.Body>` component. Use the [emphasis](./#emphasis) prop on `<Dialog.Root>` to change its color.
 
-<Demo name="DialogEmphasisDemo" component={demos.DialogEmphasisDemo} />
+<Demo
+  name="DialogIndicatorIconDemo"
+  component={demos.DialogIndicatorIconDemo}
+/>
 
 ### Placement
 
 ::: terms
-position
-alignment
-top
-center
-bottom
+position, alignment, top, center, bottom
 :::
 
 Use the [placement](./#placement) prop to change the placement of the dialog.
@@ -65,9 +59,7 @@ Use the [placement](./#placement) prop to change the placement of the dialog.
 ### Controlled State
 
 ::: terms
-show
-hide
-programmatic
+show, hide, programmatic
 :::
 
 Dialog visibility can be controlled using the [open](./#open), [onOpenChange](./#onOpenChange) and [defaultOpen](./#defaultOpen) props. These props follow our [controlled state](/patterns/controlled-state) pattern.
@@ -80,8 +72,7 @@ Dialog visibility can be controlled using the [open](./#open), [onOpenChange](./
 ### Outside Scroll
 
 ::: terms
-overflow
-page scroll
+overflow, page scroll
 :::
 
 The default [scrollBehavior](./#scrollBehavior) is `outside`, which makes the entire page scrollable when modal content exceeds viewport height. The modal and backdrop move with the page scroll instead of creating an internal scroll area within the modal.
@@ -99,24 +90,27 @@ fixed height
 
 Set the [scrollBehavior](./#scrollBehavior) prop to `inside` to create an internal scroll area within the modal.
 
-<Demo name="DialogInsideScrollDemo" component={demos.DialogInsideScrollDemo} />
+<Demo
+  name="DialogInsideScrollDemo"
+  component={demos.DialogInsideScrollDemo}
+/>
 
 ### Alert Dialog
 
 ::: terms
-confirmation
-confirm prompt
-delete
-destructive
+confirmation, confirm prompt, delete, destructive
 :::
 
 Set the [role](./#role) prop to `alertdialog` to change the dialog component to an [alert dialog](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/alertdialog_role). This is recommended for situations where the dialog is used to notify users of urgent information that demands their immediate attention.
 
-<Demo name="DialogAlertDialogDemo" component={demos.DialogAlertDialogDemo} />
+<Demo
+  name="DialogAlertDialogDemo"
+  component={demos.DialogAlertDialogDemo}
+/>
 
 ## Shortcuts
 
-### \<Dialog.FloatingPortal\>
+### \<Dialog.FloatingPortal>
 
 A helper component that combines the portal, positioner, and content
 components. This shortcut is equivalent to:
@@ -132,11 +126,11 @@ components. This shortcut is equivalent to:
 
 ## API
 
-### \<Dialog.Root\>
+### \<Dialog.Root>
 
 <TypeDocProps name="DialogRootProps" />
 
-### \<Dialog.Backdrop\>
+### \<Dialog.Backdrop>
 
 <TypeDocProps name="DialogBackdropProps" />
 
@@ -144,13 +138,13 @@ components. This shortcut is equivalent to:
   name={["QdsDialogBackdropBindings", "DialogBackdropBindings"]}
 />
 
-### \<Dialog.Positioner\>
+### \<Dialog.Positioner>
 
 <TypeDocProps name="DialogPositionerProps" />
 
 <TypeDocAttributes name="QdsDialogPositionerBindings" />
 
-### \<Dialog.Content\>
+### \<Dialog.Content>
 
 <TypeDocProps name="DialogContentProps" />
 
@@ -158,13 +152,13 @@ components. This shortcut is equivalent to:
   name={["QdsDialogContentBindings", "DialogContentBindings"]}
 />
 
-### \<Dialog.Body\>
+### \<Dialog.Body>
 
 <TypeDocProps name="DialogBodyProps" />
 
 <TypeDocAttributes name={["QdsDialogBodyBindings", "DialogBodyBindings"]} />
 
-### \<Dialog.Heading\>
+### \<Dialog.Heading>
 
 <TypeDocProps name="DialogHeadingProps" />
 
@@ -172,19 +166,21 @@ components. This shortcut is equivalent to:
   name={["QdsDialogHeadingBindings", "DialogHeadingBindings"]}
 />
 
-### \<Dialog.Footer\>
+### \<Dialog.Footer>
 
 <TypeDocProps name="DialogFooterProps" />
 
-<TypeDocAttributes name={["QdsDialogFooterBindings", "DialogFooterBindings"]} />
+<TypeDocAttributes
+  name={["QdsDialogFooterBindings", "DialogFooterBindings"]}
+/>
 
-### \<Dialog.IndicatorIcon\>
+### \<Dialog.IndicatorIcon>
 
 <TypeDocProps name="DialogIndicatorIconProps" />
 
 <TypeDocAttributes name={["QdsDialogIndicatorIconBindings"]} />
 
-### \<Dialog.CloseButton\>
+### \<Dialog.CloseButton>
 
 <TypeDocProps name="DialogCloseButtonProps" />
 

@@ -2,22 +2,26 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {X} from "lucide-angular"
+import {LucideX} from "@lucide/angular"
 
-import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 import {CoreComboboxClearTriggerDirective} from "@qualcomm-ui/angular-core/combobox"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
 
 @Component({
-  providers: [provideIcons({X})],
+  providers: [provideIcons({LucideX})],
   selector: "[q-combobox-clear-trigger]",
   standalone: false,
   template: `
     <ng-content>
-      <svg qIcon="X" [q-bind]="clearTriggerContext.getIconBindings()"></svg>
+      <svg
+        qIcon="X"
+        [q-bind]="clearTriggerContext.getIconBindings()"
+        [size]="clearTriggerContext.size()"
+      ></svg>
     </ng-content>
   `,
 })

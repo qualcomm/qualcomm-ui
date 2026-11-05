@@ -3,8 +3,8 @@
 
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 
-import type {inlineIconButtonAnatomy} from "./inline-icon-button.anatomy"
-import type {inlineIconButtonClasses} from "./inline-icon-button.classes"
+import type {inlineIconButtonAnatomy} from "./inline-icon-button.anatomy.js"
+import type {inlineIconButtonClasses} from "./inline-icon-button.classes.js"
 
 export type QdsInlineIconButtonSize = "sm" | "md" | "lg"
 export type QdsInlineIconButtonEmphasis =

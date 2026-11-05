@@ -1,8 +1,8 @@
 import {Component, computed} from "@angular/core"
 import {injectQuery} from "@tanstack/angular-query-experimental"
 
-import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {useListCollection} from "@qualcomm-ui/angular-core/collection"
+import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 // TODO: virtual prop not yet implemented in Angular
@@ -13,8 +13,8 @@ import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
     <!-- preview -->
     <q-combobox
       class="w-56"
-      label="Country"
-      placeholder="Select a country"
+      label="Users"
+      placeholder="Search for a username"
       virtual
       [collection]="listCollection.collection()"
       (inputValueChanged)="onInputChange($event)"

@@ -18,7 +18,8 @@ export interface UseListCollectionProps<T> extends Omit<
    */
   filter?: (itemText: string, filterText: string, item: T) => boolean
   /**
-   * The initial items to display in the collection.
+   * The initial items to display in the collection (this is the initial state of
+   * the collection before filtering)
    */
   initialItems: T[]
   /**

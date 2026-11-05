@@ -131,13 +131,13 @@ export class DescendantsManager<
   }
 
   private assignIndex(descendants: Node[]) {
-    this.descendants.forEach((descendant) => {
+    for (const descendant of this.descendants.values()) {
       const index = descendants.indexOf(descendant.node)
       descendant.index = index
       if (descendant.node) {
         descendant.node.dataset["index"] = descendant.index.toString()
       }
-    })
+    }
   }
 
   count(): number {

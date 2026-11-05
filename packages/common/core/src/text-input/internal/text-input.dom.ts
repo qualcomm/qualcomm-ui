@@ -3,7 +3,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {TextInputElementIds, TextInputScope} from "../text-input.types"
+import type {TextInputElementIds, TextInputScope} from "../text-input.types.js"
 
 export const domIds: ScopeDomIds<TextInputElementIds, TextInputScope> = {
   errorText: (scope) => scope.ids.get("errorText"),

@@ -3,12 +3,12 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {InputStartIcon, useQdsInputContext} from "@qualcomm-ui/react/input"
 import {CorePasswordInput} from "@qualcomm-ui/react-core/password-input"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {InputStartIcon, useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputInputGroupProps extends ElementRenderProp<"div"> {

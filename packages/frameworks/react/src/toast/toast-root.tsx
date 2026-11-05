@@ -12,7 +12,7 @@ import {
 } from "@qualcomm-ui/react-core/toast"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsToastContextProvider} from "./qds-toast-context"
+import {QdsToastContextProvider} from "./qds-toast-context.js"
 
 export interface ToastRootProps extends CoreToastRootProps {}
 

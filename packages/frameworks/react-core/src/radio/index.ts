@@ -1,2 +1,2 @@
-export * from "./radio-context"
-export * from "./use-radio"
+export * from "./radio-context.js"
+export * from "./use-radio.js"

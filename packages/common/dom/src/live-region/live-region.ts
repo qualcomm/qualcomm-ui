@@ -13,7 +13,7 @@ export interface LiveRegionOptions {
 
 const ID = "__live-region__"
 
-interface LiveRegion {
+export interface LiveRegion {
   announce: (message: string, delay?: number) => void
   destroy: () => void
   toJSON(): string

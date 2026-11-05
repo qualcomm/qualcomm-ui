@@ -19,7 +19,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {passwordInputAnatomy} from "./password-input.anatomy"
+import type {passwordInputAnatomy} from "./password-input.anatomy.js"
 
 export interface PasswordInputIntlTranslations {
   visibilityTrigger?: ((visible: boolean) => string) | undefined

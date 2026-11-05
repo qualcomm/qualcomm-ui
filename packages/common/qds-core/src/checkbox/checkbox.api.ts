@@ -6,7 +6,7 @@ import {inputClasses} from "@qualcomm-ui/qds-core/input"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {checkboxClasses} from "./checkbox.classes"
+import {checkboxClasses} from "./checkbox.classes.js"
 import type {
   QdsCheckboxApi,
   QdsCheckboxApiProps,
@@ -17,7 +17,7 @@ import type {
   QdsCheckboxIndicatorBindings,
   QdsCheckboxLabelBindings,
   QdsCheckboxRootBindings,
-} from "./checkbox.types"
+} from "./checkbox.types.js"
 
 const parts = checkboxAnatomy.parts
 

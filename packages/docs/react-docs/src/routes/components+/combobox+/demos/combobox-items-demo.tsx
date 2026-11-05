@@ -1,9 +1,9 @@
 import type {ReactElement} from "react"
 
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
 import {useListCollection} from "@qualcomm-ui/react-core/collection"
 import {useFilter} from "@qualcomm-ui/react-core/locale"
+import {Combobox} from "@qualcomm-ui/react/combobox"
 
 export function ComboboxItemsDemo(): ReactElement {
   const {contains} = useFilter({sensitivity: "base"})

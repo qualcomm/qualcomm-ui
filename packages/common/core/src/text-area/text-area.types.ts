@@ -19,7 +19,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {textAreaAnatomy} from "./text-area.anatomy"
+import type {textAreaAnatomy} from "./text-area.anatomy.js"
 
 export interface TextAreaElementIds {
   counter: string

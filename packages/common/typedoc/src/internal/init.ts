@@ -5,10 +5,10 @@ import {confirm, intro, outro, select, text} from "@clack/prompts"
 import {writeFileSync} from "node:fs"
 import {resolve} from "node:path"
 
-import type {BuildOptions} from "../types"
+import type {BuildOptions} from "../types.js"
 
-import {getJsConfig, getJsonConfig, getTsConfig} from "./cli-file-templates"
-import {loadConfig} from "./config"
+import {getJsConfig, getJsonConfig, getTsConfig} from "./cli-file-templates.js"
+import {loadConfig} from "./config.js"
 
 enum ConfigType {
   JSON = "JSON",
@@ -22,7 +22,7 @@ enum DefaultConfigFile {
   TS = "qui-typedoc.config.ts",
 }
 
-export async function init() {
+export async function init(): Promise<void> {
   intro("Initialize TypeDoc Configuration")
 
   const currentConfig = await loadConfig()

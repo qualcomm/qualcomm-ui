@@ -19,7 +19,7 @@ figma.connect(Tooltip, "<FIGMA_COMPONENTS_BASE>?node-id=2288-3939", {
     )
   },
   props: {
-    placement: figma.enum<Placement>("position", {
+    placement: figma.enum<Placement>("placement", {
       bottom: "bottom",
       "bottom-left": "bottom-start",
       "bottom-right": "bottom-end",

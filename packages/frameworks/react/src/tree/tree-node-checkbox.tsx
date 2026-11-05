@@ -4,16 +4,16 @@
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
 import {createQdsCheckmarkApi} from "@qualcomm-ui/qds-core/checkmark"
-import {
-  CheckmarkCheckedIcon,
-  CheckmarkIndeterminateIcon,
-} from "@qualcomm-ui/react/checkmark"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   CoreTree,
   type CoreTreeNodeCheckboxProps,
   useTreeNodeStateContext,
 } from "@qualcomm-ui/react-core/tree"
+import {
+  CheckmarkCheckedIcon,
+  CheckmarkIndeterminateIcon,
+} from "@qualcomm-ui/react/checkmark"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface TreeNodeCheckboxProps extends CoreTreeNodeCheckboxProps {

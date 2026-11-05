@@ -14,8 +14,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
-import {textInputAnatomy} from "./text-input.anatomy"
+import {domIds} from "./internal/index.js"
+import {textInputAnatomy} from "./text-input.anatomy.js"
 import type {
   TextInputApi,
   TextInputClearTriggerBindings,
@@ -27,7 +27,7 @@ import type {
   TextInputLabelBindings,
   TextInputRootBindings,
   TextInputSchema,
-} from "./text-input.types"
+} from "./text-input.types.js"
 
 const parts = textInputAnatomy.parts
 

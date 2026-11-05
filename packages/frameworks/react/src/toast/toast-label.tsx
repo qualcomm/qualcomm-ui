@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/toast"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsToastContext} from "./qds-toast-context"
+import {useQdsToastContext} from "./qds-toast-context.js"
 
 export interface ToastLabelProps extends CoreToastLabelProps {}
 

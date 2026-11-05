@@ -1,11 +1,11 @@
 import {Component, output, signal} from "@angular/core"
+import {LucideCode, LucideFileText} from "@lucide/angular"
 import {render} from "@testing-library/angular"
-import {Code, FileText} from "lucide-angular"
 import {describe, expect, test, vi} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
-import {TabsModule} from "@qualcomm-ui/angular/tabs"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {TabsModule} from "@qualcomm-ui/angular/tabs"
 
 const tabItems = [
   {content: "Documents content", title: "Documents", value: "documents"},
@@ -246,8 +246,10 @@ describe("tabs", () => {
 
     await userEvent.tab()
     expect(documentsTab).toHaveFocus()
+    await expect.element(documentsTab).toHaveAttribute("data-focus-visible")
 
     await userEvent.keyboard("{ArrowRight}")
+    await expect.element(documentsTab).not.toHaveFocus()
     expect(productsTab).toHaveFocus()
 
     await userEvent.keyboard("{ArrowRight}")
@@ -374,13 +376,13 @@ describe("tabs", () => {
   test("tab button with startIcon", async () => {
     @Component({
       imports: [TabsModule],
-      providers: [provideIcons({FileText})],
+      providers: [provideIcons({LucideFileText})],
       template: `
         <div defaultValue="documents" q-tabs-root>
           <div q-tabs-list>
             <div q-tabs-indicator></div>
             <div q-tab-root value="documents">
-              <button q-tab-button startIcon="FileText">Documents</button>
+              <button q-tab-button startIcon="LucideFileText">Documents</button>
             </div>
           </div>
         </div>
@@ -398,7 +400,7 @@ describe("tabs", () => {
   test("tab button with endIcon", async () => {
     @Component({
       imports: [TabsModule],
-      providers: [provideIcons({Code})],
+      providers: [provideIcons({LucideCode})],
       template: `
         <div defaultValue="software" q-tabs-root>
           <div q-tabs-list>
@@ -422,13 +424,13 @@ describe("tabs", () => {
   test("tab button with both startIcon and endIcon", async () => {
     @Component({
       imports: [TabsModule],
-      providers: [provideIcons({Code, FileText})],
+      providers: [provideIcons({LucideCode, LucideFileText})],
       template: `
         <div defaultValue="documents" q-tabs-root>
           <div q-tabs-list>
             <div q-tabs-indicator></div>
             <div q-tab-root value="documents">
-              <button endIcon="Code" q-tab-button startIcon="FileText">
+              <button endIcon="Code" q-tab-button startIcon="LucideFileText">
                 Documents
               </button>
             </div>
@@ -657,13 +659,19 @@ describe("tabs", () => {
 
     await render(TestComponent)
 
-    await expect.element(page.getByText("Documents content")).toBeVisible()
+    await expect
+      .element(page.getByText("Documents content", {exact: false}))
+      .toBeVisible()
 
     await page.getByRole("button", {name: "Next"}).click()
-    await expect.element(page.getByText("Products content")).toBeVisible()
+    await expect
+      .element(page.getByText("Products content", {exact: false}))
+      .toBeVisible()
 
     await page.getByRole("button", {name: "Next"}).click()
-    await expect.element(page.getByText("Software content")).toBeVisible()
+    await expect
+      .element(page.getByText("Software content", {exact: false}))
+      .toBeVisible()
   })
 
   test("manual activation mode requires enter key to activate", async () => {

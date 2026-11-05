@@ -1,2 +1,2 @@
-export * from "./password-input.classes"
-export type * from "./password-input.types"
+export * from "./password-input.classes.js"
+export type * from "./password-input.types.js"

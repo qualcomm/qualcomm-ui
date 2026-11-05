@@ -4,13 +4,13 @@
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {popoverClasses} from "./popover.classes"
+import {popoverClasses} from "./popover.classes.js"
 import type {
   QdsPopoverApi,
   QdsPopoverApiProps,
   QdsPopoverArrowBindings,
   QdsPopoverContentBindings,
-} from "./popover.types"
+} from "./popover.types.js"
 
 export function createQdsPopoverApi(
   props: Explicit<QdsPopoverApiProps>,

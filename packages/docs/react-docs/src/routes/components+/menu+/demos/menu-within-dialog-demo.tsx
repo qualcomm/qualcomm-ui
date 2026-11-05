@@ -1,9 +1,9 @@
 import type {ReactElement} from "react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {Button} from "@qualcomm-ui/react/button"
 import {Dialog} from "@qualcomm-ui/react/dialog"
 import {Menu} from "@qualcomm-ui/react/menu"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 export function MenuWithinDialogDemo(): ReactElement {
   return (

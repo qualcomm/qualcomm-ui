@@ -3,7 +3,7 @@
 
 import {createContext, type Provider, useContext} from "react"
 
-import type {DocPropsLayout} from "./use-props-layout-context"
+import type {DocPropsLayout} from "./use-props-layout-context.js"
 
 export interface ColumnNames {
   defaultValue?: string

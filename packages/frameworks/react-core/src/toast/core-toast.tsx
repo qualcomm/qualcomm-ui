@@ -15,7 +15,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useToastContext} from "./toast-context"
+import {useToastContext} from "./toast-context.js"
 
 export interface CoreToastRootProps extends ElementRenderProp<"div"> {
   /**

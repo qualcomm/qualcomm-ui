@@ -3,14 +3,14 @@
 
 import type {ReactElement} from "react"
 
-import {InputStartIcon, useQdsInputContext} from "@qualcomm-ui/react/input"
 import {
   CoreCombobox,
   type CoreComboboxControlProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {InputStartIcon, useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsComboboxContext} from "./qds-combobox-context"
+import {useQdsComboboxContext} from "./qds-combobox-context.js"
 
 export interface ComboboxControlProps extends CoreComboboxControlProps {}
 

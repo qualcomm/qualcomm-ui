@@ -20,7 +20,7 @@ import {
   input,
   type OnInit,
   signal,
-  TemplateRef,
+  type TemplateRef,
   viewChild,
   ViewContainerRef,
 } from "@angular/core"

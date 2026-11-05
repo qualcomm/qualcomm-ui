@@ -3,21 +3,23 @@
 
 import {Component, computed, inject, input, type OnInit} from "@angular/core"
 
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   END_ICON_CONTEXT_TOKEN,
   type IconTokenContext,
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
-import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 
 import {BaseButtonDirective} from "./base-button.directive"
+import {provideQdsButtonBadgeContext} from "./button-badge.providers"
 import {provideQdsButtonContext} from "./qds-button-context.service"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
   providers: [
     provideQdsButtonContext(),
+    provideQdsButtonBadgeContext(),
     {
       provide: START_ICON_CONTEXT_TOKEN,
       useFactory: (): IconTokenContext => {
@@ -51,6 +53,8 @@ import {provideQdsButtonContext} from "./qds-button-context.service"
     </ng-content>
 
     <ng-content />
+
+    <ng-content select="[q-number-badge], [q-status-badge]" />
 
     <ng-content select="[q-end-icon]">
       @if (endIcon()) {

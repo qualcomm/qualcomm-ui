@@ -10,7 +10,7 @@ import {
 import {Link, type LinkProps} from "@qualcomm-ui/react/link"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsCardContext} from "./qds-card-context"
+import {useQdsCardContext} from "./qds-card-context.js"
 
 export interface CardLinkProps
   extends Omit<LinkProps, "emphasis" | "size">, QdsCardLinkApiProps {

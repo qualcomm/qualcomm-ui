@@ -1,1 +1,1 @@
-export * from "./popover.dom"
+export * from "./popover.dom.js"

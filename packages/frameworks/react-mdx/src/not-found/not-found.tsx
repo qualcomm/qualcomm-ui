@@ -3,8 +3,8 @@
 
 import type {HTMLAttributes, ReactNode} from "react"
 
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {Link} from "@qualcomm-ui/react/link"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface NotFoundProps extends Omit<
@@ -15,16 +15,20 @@ export interface NotFoundProps extends Omit<
 }
 
 export function NotFound({url, ...props}: NotFoundProps): ReactNode {
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
   const mergedProps = mergeProps({className: "qui-docs__not-found"}, props)
   return (
     <div {...mergedProps}>
-      <h1 className="mdx">Not Found</h1>
-      {url ? (
-        <p className="qui-docs__not-found-url">
-          The page at &#34;{url}&#34; does not exist.
-        </p>
-      ) : null}
+      <div className="qui-docs__page-intro">
+        <div className="qui-docs__page-header">
+          <h1 className="mdx">Not Found</h1>
+        </div>
+        {url ? (
+          <p className="qui-docs__not-found-url mdx">
+            The page at <code className="mdx">{url}</code> does not exist.
+          </p>
+        ) : null}
+      </div>
       <Link render={<RenderLink href="/" />} size="lg">
         Click here to return home
       </Link>

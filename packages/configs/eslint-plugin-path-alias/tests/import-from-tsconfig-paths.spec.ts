@@ -58,6 +58,12 @@ ruleTester.run("import-from-tsconfig-paths", importFromTsconfigPaths, {
       filename: "./tests/packages/nested/src/two/not-internal/file.ts",
       output: `import method from "@qualcomm-ui/nested/one"`,
     },
+    {
+      code: `import utils from "../../../shared/src/utils"`,
+      errors: [{messageId: "externalRelative"}],
+      filename: "./tests/project-references/app/src/button/file.ts",
+      output: `import utils from "@reference/shared/utils"`,
+    },
   ],
   valid: [
     {
@@ -112,6 +118,14 @@ import {useState} from "react"`,
     {
       code: `import helper from ".."`,
       filename: "./tests/packages/angular/radio/internal-to-radio/file.ts",
+    },
+    {
+      code: `import tabs from "../tabs/index"`,
+      filename: "./tests/project-references/app/src/button/file.spec.ts",
+    },
+    {
+      code: `import "./test-styles.css"`,
+      filename: "./tests/project-references/app/test/test-setup.ts",
     },
   ],
 })

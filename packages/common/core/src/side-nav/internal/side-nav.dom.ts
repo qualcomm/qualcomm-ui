@@ -3,7 +3,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {SideNavElementIds, SideNavScope} from "../side-nav.types"
+import type {SideNavElementIds, SideNavScope} from "../side-nav.types.js"
 
 export const domIds: ScopeDomIds<SideNavElementIds, SideNavScope> = {
   root: (scope) => scope.ids.get("root"),

@@ -22,7 +22,7 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useRadioContext, useRadioItemContext} from "./radio-context"
+import {useRadioContext, useRadioItemContext} from "./radio-context.js"
 
 export function useRadio(props: RadioApiProps): RadioApi {
   const machine = useMachine(radioMachine, props)

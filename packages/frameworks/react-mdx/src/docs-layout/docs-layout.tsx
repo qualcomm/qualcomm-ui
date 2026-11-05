@@ -5,9 +5,9 @@ import type {ReactNode} from "react"
 
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 
-import {Layout} from "./layout"
-import {UpdatedOn} from "./layout/updated-on"
-import type {DocsLayoutSettings} from "./types"
+import {Layout} from "./layout/index.js"
+import {UpdatedOn} from "./layout/updated-on.js"
+import type {DocsLayoutSettings} from "./types.js"
 
 export interface DocsLayoutProps extends DocsLayoutSettings {
   /**
@@ -44,9 +44,9 @@ export function DocsLayout({
 
                 {children}
 
-                <UpdatedOn />
-
                 {!hidePageLinks && <Layout.PageLinks />}
+
+                <UpdatedOn data-bottom />
               </Layout.MainContent>
 
               <Layout.TableOfContents />

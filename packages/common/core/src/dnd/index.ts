@@ -1,1 +1,1 @@
-export type * from "./dnd.types"
+export type * from "./dnd.types.js"

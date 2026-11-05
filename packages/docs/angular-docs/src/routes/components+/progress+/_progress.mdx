@@ -5,7 +5,7 @@ component: Progress
 aliases: [progress bar, loading bar]
 ---
 
-import {QdsDemo} from "~components/demo"
+import {ComponentExplorer, QdsDemo} from "~components/demo"
 import {
   TypeDocProps,
   TypeDocAngularAttributes,
@@ -26,7 +26,9 @@ The progress bar can be in one of two states:
 - indeterminate: the default state.
 - determinate: assumed when the [value](./#value) prop is passed.
 
-Indeterminate progress bar keep users informed that work is happening when timeframes are unknown.
+Indeterminate progress bars keep users informed that work is happening when timeframes are unknown.
+
+Determinate progress bars display a shimmer effect across the filled portion while loading after 8 seconds. It is suppressed for users who prefer reduced motion. Set the [shimmer](./#shimmer) prop to `false` to turn it off.
 
 ## Examples
 
@@ -61,9 +63,7 @@ Use the [labelOrientation](./#labelOrientation) property to change the positioni
 ### Sizes
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 <QdsDemo name="ProgressSizeDemo" />
@@ -74,7 +74,7 @@ large
 
 ### Disabled
 
-Use the [disabled](./#disabled) prop to indicate that the progress indicator is inactive.
+Use the [disabled](./#disabled-1) prop to indicate that the progress indicator is inactive.
 
 <QdsDemo name="ProgressDisabledDemo" />
 
@@ -104,14 +104,21 @@ The `q-progress-track` automatically renders a `q-progress-bar` when no children
 ## Accessibility
 
 ::: terms
-a11y
-screen reader
-wcag
+a11y, screen reader, wcag
 :::
 
 - When the value is supplied, the component automatically provides the corresponding `aria-value*` attributes to the element.
-- The progress element is automatically marked with `role="progressbar"`.
-- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the `aria-label` of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+- The progress element is automatically marked with [`role="progressbar"`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles).
+- The [label](./#label) is automatically associated with the progress bar. If you omit the [label](./#label) property, the [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) of the progress element defaults to the [value](./#value) when determinate, and "Loading" when indeterminate.
+
+## Explorer
+
+<ComponentExplorer
+  linkPrefix="q-progress"
+  name="ProgressExplorerDemo"
+  parts={["root", "label", "track", "bar", "value-text", "hint"]}
+  scope="progress"
+/>
 
 ## API
 

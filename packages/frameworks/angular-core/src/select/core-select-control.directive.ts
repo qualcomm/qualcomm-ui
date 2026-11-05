@@ -16,14 +16,40 @@ export class CoreSelectControlDirective implements OnInit {
    */
   readonly id = input<string>()
 
+  /**
+   * ARIA label applied to the control. Use this instead of `[attr.aria-label]`
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the control.
+   *
+   * @since 2.4.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   protected readonly selectContext = useSelectContext()
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.selectContext().getControlBindings({
+  protected readonly trackBindings = useTrackBindings(() => {
+    const bindings = this.selectContext().getControlBindings({
       id: this.hostId(),
       onDestroy: this.onDestroy,
-    }),
-  )
+    })
+    const ariaLabel = this.ariaLabel() ?? undefined
+    const ariaLabelledby = this.ariaLabelledby() ?? bindings["aria-labelledby"]
+
+    return {
+      ...bindings,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+    }
+  })
 
   protected readonly hostId = computed(() => useId(this, this.id()))
 

@@ -14,7 +14,7 @@ import type {
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
 
-import type {paginationAnatomy} from "./pagination.anatomy"
+import type {paginationAnatomy} from "./pagination.anatomy.js"
 
 export type PageItem =
   | {

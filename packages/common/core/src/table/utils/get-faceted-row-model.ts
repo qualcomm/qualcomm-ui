@@ -4,10 +4,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Row, RowData, RowModel, TableInstance} from "../types"
-import {memo} from "../utils"
+import type {Row, RowData, RowModel, TableInstance} from "../types.js"
+import {memo} from "../utils.js"
 
-import {filterRows} from "./filter-rows-utils"
+import {filterRows} from "./filter-rows-utils.js"
 
 export function getFacetedRowModel<TData extends RowData>(): (
   table: TableInstance<TData>,

@@ -11,12 +11,12 @@ import type {
   SerializedType,
 } from "@qualcomm-ui/typedoc-common"
 
-import {isInputSignal, isModelSignal, isOutputSignal} from "../guards"
-import type {BuildOptions, ImportResolverFn} from "../types"
+import {isInputSignal, isModelSignal, isOutputSignal} from "../guards.js"
+import type {BuildOptions, ImportResolverFn} from "../types.js"
 
-import {formatDefault} from "./format-comment"
-import {TypeSerializer} from "./type-serializer"
-import type {KnownInterfaces, QuiDeclarationReflection} from "./types"
+import {formatDefault} from "./format-comment.js"
+import {TypeSerializer} from "./type-serializer.js"
+import type {KnownInterfaces, QuiDeclarationReflection} from "./types.js"
 
 export interface PropBuilderParams extends Pick<
   BuildOptions,

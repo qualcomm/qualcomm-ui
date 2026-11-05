@@ -1,1 +1,1 @@
-export * from "./avatar.dom"
+export * from "./avatar.dom.js"

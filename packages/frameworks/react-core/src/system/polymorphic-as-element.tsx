@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import type {As, PolymorphicComponentPropsWithRef} from "./system.types"
+import type {As, PolymorphicComponentPropsWithRef} from "./system.types.js"
 
 /**
  * @interface

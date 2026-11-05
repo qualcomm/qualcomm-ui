@@ -13,8 +13,8 @@ import {preventBodyScroll} from "@qualcomm-ui/dom/remove-scroll"
 import {isDefined} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {domEls} from "./internal"
-import type {PopoverSchema} from "./popover.types"
+import {domEls} from "./internal/index.js"
+import type {PopoverSchema} from "./popover.types.js"
 
 export const popoverMachine: MachineConfig<PopoverSchema> =
   createMachine<PopoverSchema>({

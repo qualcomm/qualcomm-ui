@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {Root} from "mdast"
+import remarkMdx from "remark-mdx"
 import remarkParse from "remark-parse"
 import {unified} from "unified"
 import {describe, expect, test} from "vitest"
@@ -9,6 +10,7 @@ import {describe, expect, test} from "vitest"
 import type {PageMap} from "@qualcomm-ui/mdx-common"
 
 import {
+  collectAnchorIds,
   collectLinks,
   reportInvalidLinks,
   resolveLink,
@@ -19,6 +21,10 @@ import {createRemarkProcessor} from "../markdown/remark-pipeline"
 
 function parse(md: string): Root {
   return unified().use(remarkParse).parse(md)
+}
+
+function parseMdx(md: string): Root {
+  return unified().use(remarkParse).use(remarkMdx).parse(md)
 }
 
 function parseWithPipeline(md: string): Root {
@@ -168,6 +174,24 @@ describe("collectLinks", () => {
   })
 })
 
+describe("collectAnchorIds", () => {
+  test("collects literal IDs from MDX anchor elements", () => {
+    const tree = parseMdx(
+      [
+        '<a id="manual-anchor" />',
+        "",
+        '<a id="expanded-anchor"></a>',
+        "",
+        '<span id="not-an-anchor" />',
+      ].join("\n"),
+    )
+
+    expect(collectAnchorIds(tree)).toEqual(
+      new Set(["manual-anchor", "expanded-anchor"]),
+    )
+  })
+})
+
 describe("validateLinks", () => {
   const pageMap: PageMap = {
     "/components/button": {
@@ -288,6 +312,23 @@ describe("validateLinks", () => {
       "/components/button": new Set(["onClick", "disabled", "variant"]),
     }
     expect(validateLinks(links, pageMap, docPropIds)).toEqual([])
+  })
+
+  test("accepts fragment matching an explicit MDX anchor ID", () => {
+    const links = [
+      {
+        fragment: "manual-anchor",
+        sourceFile: "a.mdx",
+        sourcePathname: "/page",
+        targetPathname: "/components/button",
+        url: "/components/button#manual-anchor",
+      },
+    ]
+    const anchorIds = {
+      "/components/button": new Set(["manual-anchor"]),
+    }
+
+    expect(validateLinks(links, pageMap, undefined, anchorIds)).toEqual([])
   })
 
   test("still reports fragment-not-found when not in toc or doc props", () => {

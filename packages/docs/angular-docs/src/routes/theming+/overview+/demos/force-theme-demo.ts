@@ -1,5 +1,5 @@
 import {Component, computed, inject} from "@angular/core"
-import {Moon, Sun} from "lucide-angular"
+import {LucideMoon, LucideSun} from "@lucide/angular"
 
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {QdsThemeService} from "@qualcomm-ui/angular/theme"
@@ -12,7 +12,7 @@ import {QdsThemeService} from "@qualcomm-ui/angular/theme"
       <!-- preview -->
       <div class="dark" data-brand="qualcomm" data-theme="dark">
         <div
-          class="border-neutral-03 bg-neutral-01 flex w-full rounded-sm border px-3 py-2"
+          class="border-neutral-03 bg-neutral-01 box-border flex w-full rounded-sm border px-3 py-2"
         >
           <span class="text-neutral-primary">
             This section will always feature the dark theme regardless of the
@@ -40,6 +40,6 @@ export class ForceThemeDemo {
   protected readonly themeService = inject(QdsThemeService)
 
   protected readonly themeIcon = computed(() =>
-    this.themeService.theme() === "light" ? Sun : Moon,
+    this.themeService.theme() === "light" ? LucideSun : LucideMoon,
   )
 }

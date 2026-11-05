@@ -1,1 +1,1 @@
-export * from "./tool-model"
+export type * from "./tool-model"

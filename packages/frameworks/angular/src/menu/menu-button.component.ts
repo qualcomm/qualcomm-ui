@@ -2,10 +2,13 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, inject} from "@angular/core"
-import {ChevronDown} from "lucide-angular"
+import {LucideChevronDown} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
+import {CoreMenuTriggerDirective} from "@qualcomm-ui/angular-core/menu"
 import {
   BaseButtonDirective,
+  provideQdsButtonBadgeContext,
   provideQdsButtonContext,
 } from "@qualcomm-ui/angular/button"
 import {
@@ -13,8 +16,6 @@ import {
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {CoreMenuTriggerDirective} from "@qualcomm-ui/angular-core/menu"
 
 import {useQdsMenuContext} from "./qds-menu-context.service"
 
@@ -24,8 +25,9 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
     QuiPreloadDirective,
   ],
   providers: [
-    provideIcons({ChevronDown}),
+    provideIcons({LucideChevronDown}),
     provideQdsButtonContext(),
+    provideQdsButtonBadgeContext(),
     {
       provide: START_ICON_CONTEXT_TOKEN,
       useFactory: (): IconTokenContext => {
@@ -43,18 +45,27 @@ import {useQdsMenuContext} from "./qds-menu-context.service"
   template: `
     <ng-content select="[q-start-icon]" />
     @if (startIcon()) {
-      <svg q-start-icon [qIcon]="startIcon()!" [size]="size()"></svg>
+      <svg
+        q-start-icon
+        [qIcon]="startIcon()!"
+        [size]="buttonService.context().size"
+      ></svg>
     }
     <ng-content />
+    <ng-content select="[q-number-badge], [q-status-badge]" />
     <svg
-      qIcon="ChevronDown"
+      qIcon="LucideChevronDown"
       [q-bind]="indicatorBindings()"
-      [size]="size()"
+      [size]="buttonService.context().size"
     ></svg>
   `,
 })
 export class MenuButtonComponent extends BaseButtonDirective {
   protected qdsMenuContext = useQdsMenuContext()
+
+  protected override readonly ownSize = computed(
+    () => this.size() ?? this.qdsMenuContext().size,
+  )
 
   readonly indicatorBindings = computed(() =>
     this.qdsMenuContext().getIndicatorBindings(),

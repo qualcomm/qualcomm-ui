@@ -20,8 +20,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {getTabButtonEl, tabsDomIds} from "./internal"
-import {tabsAnatomy} from "./tabs.anatomy"
+import {getTabButtonEl, tabsDomIds} from "./internal/index.js"
+import {tabsAnatomy} from "./tabs.anatomy.js"
 import type {
   PanelProps,
   TabDismissButtonApiProps,
@@ -36,7 +36,7 @@ import type {
   TabsTabButtonBindings,
   TabsTabDismissButtonBindings,
   TabState,
-} from "./tabs.types"
+} from "./tabs.types.js"
 
 const parts = tabsAnatomy.parts
 
@@ -95,7 +95,9 @@ export function createTabsApi(
       return normalize.element({
         ...parts.indicator,
         "data-focus": booleanDataAttr(!!context.get("focusedValue")),
-        "data-focus-visible": booleanDataAttr(context.get("focusVisible")),
+        "data-focus-visible": booleanDataAttr(
+          context.get("focusVisible") || isFocusVisible(),
+        ),
         "data-orientation": prop("orientation"),
         id: props.id,
         style: {
@@ -207,6 +209,7 @@ export function createTabsApi(
         hidden: !selected,
         id,
         role: "tabpanel",
+        style: selected ? undefined : {display: "none"},
         tabIndex: composite ? 0 : -1,
       })
     },
@@ -239,7 +242,9 @@ export function createTabsApi(
         "aria-selected": booleanAriaAttr(tabState.selected),
         "data-disabled": booleanDataAttr(disabled),
         "data-focus": booleanDataAttr(tabState.focused),
-        "data-focus-visible": booleanDataAttr(context.get("focusVisible")),
+        "data-focus-visible": booleanDataAttr(
+          context.get("focusVisible") || isFocusVisible(),
+        ),
         "data-indicator-rendered": booleanDataAttr(
           context.get("indicatorRendered"),
         ),
@@ -251,7 +256,11 @@ export function createTabsApi(
         id,
         onBlur(event) {
           const target = event.relatedTarget as HTMLElement | null
-          if (target?.getAttribute("role") !== "tab") {
+          if (
+            !target ||
+            target.getAttribute("role") !== "tab" ||
+            target.getAttribute("data-ownedby") !== tabsDomIds.list(scope)
+          ) {
             send({type: "TAB_BLUR"})
           }
         },
@@ -291,6 +300,7 @@ export function createTabsApi(
           event.stopPropagation()
         },
         role: "button",
+        tabIndex: -1,
         type: "button",
       })
     },

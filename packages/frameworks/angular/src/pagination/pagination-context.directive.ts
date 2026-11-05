@@ -21,7 +21,7 @@ export class PaginationContextDirective extends ApiContextDirective<PaginationAp
    * Provides intellisense for the context in the template.
    */
   static ngTemplateContextGuard(
-    dir: PaginationContextDirective,
+    _dir: PaginationContextDirective,
     _ctx: unknown,
   ): _ctx is {$implicit: PaginationApi} {
     return true

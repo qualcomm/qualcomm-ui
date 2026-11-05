@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {TooltipApiProps} from "./tooltip.types"
+import type {TooltipApiProps} from "./tooltip.types.js"
 
 export const tooltipProps: (keyof TooltipApiProps)[] =
   createProps<TooltipApiProps>()(

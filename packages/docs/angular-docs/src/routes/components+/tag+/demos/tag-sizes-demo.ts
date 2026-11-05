@@ -11,6 +11,7 @@ import {TagDirective} from "@qualcomm-ui/angular/tag"
       <span q-tag size="sm" variant="dismissable">Label</span>
       <span q-tag size="md" variant="dismissable">Label</span>
       <span q-tag size="lg" variant="dismissable">Label</span>
+      <span q-tag size="xl" variant="dismissable">Label</span>
       <!-- preview -->
     </div>
   `,

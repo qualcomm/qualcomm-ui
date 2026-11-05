@@ -1,0 +1,35 @@
+<svg width="291" height="201" viewBox="0 0 291 201" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="291" height="200" fill="#020B3F"/>
+<path d="M154.818 68.5L154.818 36.5663C154.818 34.3572 156.609 32.5663 158.818 32.5663L168.5 32.5663C170.709 32.5663 172.5 30.7755 172.5 28.5663L172.5 0.124428" stroke="#5F82FF" stroke-width="0.5" stroke-dasharray="3 3"/>
+<path d="M218.846 200.306L218.846 137.579C218.846 135.369 220.637 133.579 222.846 133.579L233.647 133.579C235.857 133.579 237.647 131.788 237.647 129.579L237.647 122.269C237.647 120.06 235.857 118.269 233.647 118.269L213.889 118.269" stroke="#5F82FF" stroke-width="0.5" stroke-dasharray="3 3"/>
+<path d="M128.162 199.996L128.162 130.629" stroke="#5F82FF" stroke-width="0.5" stroke-dasharray="3 3"/>
+<path d="M172.5 16.4C173.991 16.4 175.2 15.1912 175.2 13.7C175.2 12.2088 173.991 11 172.5 11C171.009 11 169.8 12.2088 169.8 13.7C169.8 15.1912 171.009 16.4 172.5 16.4Z" fill="white"/>
+<path d="M128.161 170.513C129.653 170.513 130.861 169.304 130.861 167.813C130.861 166.322 129.653 165.113 128.161 165.113C126.67 165.113 125.461 166.322 125.461 167.813C125.461 169.304 126.67 170.513 128.161 170.513Z" fill="#5F82FF"/>
+<path d="M77.4999 91.5H48.3169C46.1078 91.5 44.3169 89.7091 44.3169 87.5L44.3169 0.553243" stroke="#5F82FF" stroke-width="0.5" stroke-dasharray="3 3"/>
+<g clip-path="url(#clip0_385_1431)">
+<rect x="79.625" y="39.65" width="131.75" height="120.7" rx="4.25" fill="#280872"/>
+<rect width="131.75" height="46.75" transform="translate(79.625 39.65)" fill="#0F1013"/>
+<circle cx="145.5" cy="63.025" r="11.475" fill="#0F1013" stroke="white" stroke-width="0.85"/>
+<rect x="187.575" y="44.75" width="18.7" height="8.5" rx="1.7" fill="#9747FF"/>
+<circle cx="145.229" cy="60.0412" r="3.02625" fill="#0F1013" stroke="white"/>
+<path d="M138.99 69.535C140.95 67.0787 146.189 63.6399 151.468 69.535" stroke="white"/>
+<rect x="79.625" y="86.4" width="131.75" height="0.85" fill="#5F82FF"/>
+<rect x="88.125" y="94.9" width="51" height="4.25" rx="0.85" fill="white"/>
+<circle cx="202.025" cy="95.75" r="0.85" fill="white"/>
+<circle cx="202.025" cy="99.15" r="0.85" fill="white"/>
+<circle cx="202.025" cy="102.55" r="0.85" fill="white"/>
+<rect x="88.125" y="105.95" width="34" height="2.55" rx="0.85" fill="#9747FF"/>
+<rect opacity="0.7" x="88.125" y="114.45" width="110.5" height="1.7" rx="0.85" fill="#5F82FF"/>
+<rect opacity="0.7" x="88.125" y="119.55" width="110.5" height="1.7" rx="0.85" fill="#5F82FF"/>
+<rect opacity="0.7" x="88.125" y="124.65" width="68" height="1.7" rx="0.85" fill="#5F82FF"/>
+<rect x="79.625" y="141.65" width="131.75" height="0.85" fill="#5F82FF"/>
+<rect x="175.25" y="145.475" width="28.9" height="10.2" rx="2.125" stroke="#843AFF" stroke-width="0.85"/>
+<rect x="182.05" y="149.725" width="15.3" height="1.7" rx="0.85" fill="#843AFF"/>
+</g>
+<rect x="80.1562" y="40.1812" width="130.688" height="119.637" rx="3.71875" stroke="#843AFF" stroke-width="1.0625"/>
+<defs>
+<clipPath id="clip0_385_1431">
+<rect x="79.625" y="39.65" width="131.75" height="120.7" rx="4.25" fill="white"/>
+</clipPath>
+</defs>
+</svg>

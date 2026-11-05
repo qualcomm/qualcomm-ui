@@ -3,13 +3,13 @@
 
 import {computed, Directive, inject, input} from "@angular/core"
 
-import {useQdsFieldGroupContext} from "@qualcomm-ui/angular/field-group"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   CoreSwitchRootDirective,
   provideSwitchContext,
 } from "@qualcomm-ui/angular-core/switch"
+import {useQdsFieldGroupContext} from "@qualcomm-ui/angular/field-group"
 import {
   createQdsSwitchApi,
   type QdsSwitchApiProps,

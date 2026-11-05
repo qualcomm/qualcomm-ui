@@ -1,0 +1,114 @@
+[
+  {
+    "depth": 1,
+    "expanded": false,
+    "id": "/",
+    "order": 1,
+    "pathname": "/",
+    "pathSegments": [],
+    "title": "Introduction"
+  },
+  {
+    "depth": 1,
+    "expanded": true,
+    "id": "/guide",
+    "items": [
+      {
+        "depth": 2,
+        "expanded": false,
+        "id": "/guide/markdown",
+        "items": [],
+        "order": 1,
+        "pathname": "/guide/markdown",
+        "pathSegments": [
+          "guide",
+          "markdown"
+        ],
+        "title": "Markdown"
+      },
+      {
+        "depth": 2,
+        "expanded": false,
+        "id": "/guide/page-setup",
+        "items": [],
+        "order": 2,
+        "pathname": "/guide/page-setup",
+        "pathSegments": [
+          "guide",
+          "page-setup"
+        ],
+        "title": "Page Setup"
+      },
+      {
+        "depth": 2,
+        "expanded": true,
+        "id": "/guide/advanced",
+        "items": [
+          {
+            "depth": 3,
+            "expanded": false,
+            "id": "/guide/advanced/deep-topic",
+            "items": [],
+            "order": 1,
+            "pathname": "/guide/advanced/deep-topic",
+            "pathSegments": [
+              "guide",
+              "advanced",
+              "deep-topic"
+            ],
+            "title": "Deep Topic"
+          }
+        ],
+        "order": 3,
+        "pathSegments": [
+          "guide",
+          "advanced"
+        ],
+        "title": "Advanced"
+      },
+      {
+        "depth": 2,
+        "expanded": false,
+        "id": "/guide/redirect",
+        "items": [],
+        "order": 4,
+        "pathname": "/guide/redirect",
+        "pathSegments": [
+          "guide",
+          "redirect"
+        ],
+        "title": "Redirect"
+      }
+    ],
+    "order": 2,
+    "pathSegments": [
+      "guide"
+    ],
+    "title": "Guide"
+  },
+  {
+    "depth": 1,
+    "expanded": false,
+    "id": "/api",
+    "items": [
+      {
+        "depth": 2,
+        "expanded": false,
+        "id": "/api/page-frontmatter",
+        "items": [],
+        "order": 1,
+        "pathname": "/api/page-frontmatter",
+        "pathSegments": [
+          "api",
+          "page-frontmatter"
+        ],
+        "title": "Page Frontmatter"
+      }
+    ],
+    "order": 3,
+    "pathSegments": [
+      "api"
+    ],
+    "title": "API"
+  }
+]

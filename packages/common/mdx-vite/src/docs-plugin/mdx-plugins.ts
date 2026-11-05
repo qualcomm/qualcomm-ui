@@ -15,27 +15,37 @@ import {merge} from "lodash-es"
 import type {ShikiTransformer} from "shiki"
 import type {PluggableList} from "unified"
 
-import {quiCustomDarkTheme} from "@qualcomm-ui/mdx-common"
+import {quiCustomDarkTheme, quiCustomLightTheme} from "@qualcomm-ui/mdx-common"
 
 import {
   rehypeMdxCodeProps,
   remarkFrontmatter,
   remarkGfm,
   remarkMdxFrontmatter,
-} from "../exports"
+} from "../exports.js"
 
-import {ConfigLoader, type ConfigLoaderOptions} from "./config"
-import {rehypeSectionize, rehypeSlug, type RehypeSlugOptions} from "./rehype"
+import {ConfigLoader, type ConfigLoaderOptions} from "./config/index.js"
+import {
+  rehypeSectionize,
+  rehypeSlug,
+  type RehypeSlugOptions,
+} from "./rehype/index.js"
 import {
   remarkAlerts,
   remarkCodeTabs,
   remarkFrontmatterDescription,
   remarkFrontmatterTitle,
+  remarkSerializeJsxRender,
   remarkSpoilers,
   remarkSteps,
-} from "./remark"
-import {remarkExtractMeta} from "./remark/remark-extract-meta"
-import {transformerCodeAttribute, transformerNotationHidden} from "./shiki"
+} from "./remark/index.js"
+import {remarkExtractMeta} from "./remark/remark-extract-meta.js"
+import {remarkMathCodeProtection} from "./remark/remark-math-code-protection.js"
+import {remarkUnwrapParagraphs} from "./remark/remark-unwrap-paragraphs.js"
+import {
+  transformerCodeAttribute,
+  transformerNotationHidden,
+} from "./shiki/index.js"
 
 export interface QuiRehypePluginOptions extends ConfigLoaderOptions {
   rehypeShikiOptions?: Partial<RehypeShikiOptions>
@@ -56,7 +66,7 @@ export function getShikiTransformers(): ShikiTransformer[] {
 
 /**
  * Used to retrieve all the rehype plugins required for QUI Docs MDX.
- * These should be passed to the `mdx` vite plugin from
+ * These should be passed to the `mdx` vite plugin.
  */
 export function getRehypePlugins(
   options: QuiRehypePluginOptions = {},
@@ -73,11 +83,14 @@ export function getRehypePlugins(
       rehypeShiki,
       merge(
         {
+          addLanguageClass: true,
           defaultColor: "light-dark()",
-          fallbackLanguage: "text",
+          defaultLanguage: "plaintext",
+          fallbackLanguage: "plaintext",
+          lazy: true,
           themes: {
             dark: quiCustomDarkTheme,
-            light: "github-light-high-contrast",
+            light: quiCustomLightTheme,
           },
           transformers: [...getShikiTransformers(), transformerCodeAttribute()],
         } satisfies RehypeShikiOptions,
@@ -106,6 +119,7 @@ export function getRehypePlugins(
  */
 export function getRemarkPlugins(): PluggableList {
   return [
+    remarkMathCodeProtection,
     remarkFrontmatter,
     remarkMdxFrontmatter,
     remarkGfm,
@@ -115,6 +129,8 @@ export function getRemarkPlugins(): PluggableList {
     remarkFrontmatterDescription,
     remarkSpoilers,
     remarkSteps,
+    remarkUnwrapParagraphs,
+    remarkSerializeJsxRender,
     remarkExtractMeta,
   ]
 }

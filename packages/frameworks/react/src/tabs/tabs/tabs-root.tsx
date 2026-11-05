@@ -11,7 +11,7 @@ import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {CoreTabs, type CoreTabsRootProps} from "@qualcomm-ui/react-core/tabs"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsTabsContextProvider} from "../qds-tabs-context"
+import {QdsTabsContextProvider} from "../qds-tabs-context.js"
 
 export interface TabsRootProps extends CoreTabsRootProps, QdsTabsApiProps {}
 

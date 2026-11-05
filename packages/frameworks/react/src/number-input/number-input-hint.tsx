@@ -3,11 +3,11 @@
 
 import type {ReactElement} from "react"
 
-import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {
   CoreNumberInput,
   type CoreNumberInputHintProps,
 } from "@qualcomm-ui/react-core/number-input"
+import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface NumberInputHintProps extends CoreNumberInputHintProps {}

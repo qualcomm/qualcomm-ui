@@ -21,11 +21,11 @@ import {
   type CoreTreeNodeTextProps,
   CoreTreeRoot,
   type CoreTreeRootProps,
-} from "./core-tree"
+} from "./core-tree.js"
 
-export * from "./tree-context"
-export * from "./tree-node-context"
-export * from "./use-tree"
+export * from "./tree-context.js"
+export * from "./tree-node-context.js"
+export * from "./use-tree.js"
 
 export type {
   CoreTreeRootProps,

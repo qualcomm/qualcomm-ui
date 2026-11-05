@@ -1,2 +1,2 @@
-export * from "./password-input-context"
-export * as CorePasswordInput from "./use-password-input"
+export * from "./password-input-context.js"
+export * as CorePasswordInput from "./use-password-input.js"

@@ -3,10 +3,12 @@
 
 import type {ActionFunctionArgs, Cookie} from "react-router"
 
-import {isTheme} from "./theme-provider"
+import {isTheme} from "./theme-provider.js"
 
-export function createThemeAction(themeCookie: Cookie) {
-  return async ({request}: ActionFunctionArgs) => {
+export function createThemeAction(
+  themeCookie: Cookie,
+): ({request}: ActionFunctionArgs) => Promise<Response> {
+  return async ({request}: ActionFunctionArgs): Promise<Response> => {
     const {theme} = await request.json()
 
     if (!isTheme(theme)) {

@@ -5,7 +5,7 @@ import type {checkboxAnatomy} from "@qualcomm-ui/core/checkbox"
 import type {inputClasses} from "@qualcomm-ui/qds-core/input"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 
-import type {checkboxClasses} from "./checkbox.classes"
+import type {checkboxClasses} from "./checkbox.classes.js"
 
 export type QdsCheckboxSize = "sm" | "md" | "lg"
 

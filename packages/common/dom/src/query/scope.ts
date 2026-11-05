@@ -6,7 +6,7 @@
 
 import type {Scope} from "@qualcomm-ui/utils/machine"
 
-import {getActiveElement, getDocument} from "./node"
+import {getActiveElement, getDocument} from "./node.js"
 
 export function createScope<T>(
   props: Pick<Scope, "getRootNode"> & T,

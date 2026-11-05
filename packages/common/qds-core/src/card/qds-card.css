@@ -8,6 +8,7 @@
     var(--color-surface-raised);
   border: 0;
   border-radius: var(--border-radius-md);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin: 0;

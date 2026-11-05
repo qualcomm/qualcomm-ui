@@ -1,46 +1,52 @@
-import {NumberInput as SimpleNumberInput} from "./number-input"
 import {
   NumberInputControl,
   type NumberInputControlProps,
-} from "./number-input-control"
+} from "./number-input-control.js"
 import {
   NumberInputDecrementTrigger,
   type NumberInputDecrementTriggerProps,
-} from "./number-input-decrement-trigger"
+} from "./number-input-decrement-trigger.js"
 import {
   NumberInputErrorIndicator,
   type NumberInputErrorIndicatorProps,
-} from "./number-input-error-indicator"
+} from "./number-input-error-indicator.js"
 import {
   NumberInputErrorText,
   type NumberInputErrorTextProps,
-} from "./number-input-error-text"
-import {NumberInputHint, type NumberInputHintProps} from "./number-input-hint"
+} from "./number-input-error-text.js"
+import {
+  NumberInputHint,
+  type NumberInputHintProps,
+} from "./number-input-hint.js"
 import {
   NumberInputIncrementTrigger,
   type NumberInputIncrementTriggerProps,
-} from "./number-input-increment-trigger"
-import {
-  NumberInputInput,
-  type NumberInputInputProps,
-} from "./number-input-input"
+} from "./number-input-increment-trigger.js"
 import {
   NumberInputInputGroup,
   type NumberInputInputGroupProps,
-} from "./number-input-input-group"
+} from "./number-input-input-group.js"
+import {
+  NumberInputInput,
+  type NumberInputInputProps,
+} from "./number-input-input.js"
 import {
   NumberInputLabel,
   type NumberInputLabelProps,
-} from "./number-input-label"
-import {NumberInputRoot, type NumberInputRootProps} from "./number-input-root"
+} from "./number-input-label.js"
+import {
+  NumberInputRoot,
+  type NumberInputRootProps,
+} from "./number-input-root.js"
 import {
   NumberInputUnitSelect,
   type NumberInputUnitSelectProps,
-} from "./number-input-unit-select"
+} from "./number-input-unit-select.js"
+import {NumberInput as SimpleNumberInput} from "./number-input.js"
 
 export type {UnitOption} from "@qualcomm-ui/core/number-input"
 
-export * from "./qds-number-input-context"
+export * from "./qds-number-input-context.js"
 
 export type {
   NumberInputControlProps,

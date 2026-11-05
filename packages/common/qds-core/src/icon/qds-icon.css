@@ -13,6 +13,7 @@
   width: var(--icon-width, var(--icon-size));
 
   svg.lucide {
+    display: block;
     height: var(--icon-height, var(--icon-size));
     stroke: currentColor;
     stroke-linecap: round;

@@ -1,9 +1,9 @@
 import {AArrowDownIcon, Layers2} from "lucide-react"
 
+import {Portal} from "@qualcomm-ui/react-core/portal"
 import {HeaderBar} from "@qualcomm-ui/react/header-bar"
 import {Icon} from "@qualcomm-ui/react/icon"
 import {Menu} from "@qualcomm-ui/react/menu"
-import {Portal} from "@qualcomm-ui/react-core/portal"
 
 export function HeaderBarMenuItemDemo() {
   return (

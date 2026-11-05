@@ -7,15 +7,15 @@
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {collapsibleAnatomy} from "./collapsible.anatomy"
+import {collapsibleAnatomy} from "./collapsible.anatomy.js"
 import type {
   CollapsibleApi,
   CollapsibleContentBindings,
   CollapsibleRootBindings,
   CollapsibleSchema,
   CollapsibleTriggerBindings,
-} from "./collapsible.types"
-import {domIds} from "./internal"
+} from "./collapsible.types.js"
+import {domIds} from "./internal/collapsible.dom.js"
 
 const parts = collapsibleAnatomy.parts
 

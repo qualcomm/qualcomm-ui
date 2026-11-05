@@ -1,2 +1,2 @@
-export * from "./avatar-context"
-export * from "./use-avatar"
+export * from "./avatar-context.js"
+export * from "./use-avatar.js"

@@ -1,9 +1,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {z, type ZodObject, type ZodSchema} from "zod"
+import {z, type ZodObject, type ZodSafeParseResult, type ZodSchema} from "zod"
 
-import type {NavMeta, RouteMeta} from "../nav-builder/types"
+import type {NavMeta, RouteMeta} from "../nav-builder/types.js"
 
 import type {
   KnowledgeConfig,
@@ -11,10 +11,23 @@ import type {
   OpenWebUiIntegration,
   PagesExportConfig,
   QuiDocsConfig,
+  QuiDocsLintOptions,
   QuiDocsTypeDocOptions,
   SectionExportConfig,
-} from "./types"
-import {implement} from "./zod"
+} from "./types.js"
+import type {Implements} from "./zod.js"
+
+function implement<Model = never>() {
+  return {
+    with: <
+      Schema extends Implements<Model> & {
+        [unknownKey in Exclude<keyof Schema, keyof Model>]: never
+      },
+    >(
+      schema: Schema,
+    ) => z.object(schema),
+  }
+}
 
 export const navMetaSchema: ZodObject<{}> = implement<NavMeta>().with({
   id: z.never().optional(),
@@ -26,6 +39,7 @@ export const routeMetaSchema: ZodSchema<RouteMeta> =
   implement<RouteMeta>().with({
     children: z.array(z.lazy(() => routeMetaSchema)).optional(),
     expanded: z.boolean().optional(),
+    flattenChildren: z.boolean().optional(),
     group: z.string().optional(),
     groupOrder: z.string().array().optional(),
     hidden: z.boolean().optional(),
@@ -92,9 +106,21 @@ const knowledgeConfigSchema = implement<KnowledgeConfig>().with({
   sections: sectionsExportsSchema.optional(),
 })
 
-export const configSchema = implement<QuiDocsConfig>().with({
+const lintSeveritySchema = z.union([
+  z.literal("off"),
+  z.literal("warn"),
+  z.literal("error"),
+])
+
+const lintSchema = implement<QuiDocsLintOptions>().with({
+  brokenLinks: lintSeveritySchema.optional(),
+  pageTitle: lintSeveritySchema.optional(),
+})
+
+const configSchema = implement<QuiDocsConfig>().with({
   appDirectory: z.string().optional(),
   disableCache: z.boolean().optional(),
+  disableLegacySearchIndex: z.boolean().optional(),
   headings: z
     .array(
       z.union([
@@ -109,6 +135,7 @@ export const configSchema = implement<QuiDocsConfig>().with({
     .optional(),
   hotUpdateIgnore: z.instanceof(RegExp).optional(),
   knowledge: knowledgeConfigSchema.optional(),
+  lint: lintSchema.optional(),
   navConfig: z.array(z.union([routeMetaSchema, navMetaSchema])).optional(),
   pageDirectory: z.string().optional(),
   pageTimestampMetadata: z
@@ -118,9 +145,19 @@ export const configSchema = implement<QuiDocsConfig>().with({
       z.literal("user-and-timestamp"),
     ])
     .optional(),
-  routingStrategy: z.union([z.literal("vite-generouted"), z.any()]).optional(),
+  routingStrategy: z
+    .union([
+      z.literal("vite-generouted"),
+      z.literal("react-router-directory-groups"),
+      z.any(),
+    ])
+    .optional(),
   throwOnError: z.boolean().optional(),
   typeDocProps: z.string().optional(),
   typeDocPropsOptions: typeDocPropsSchema.optional(),
   validatePageLinks: z.boolean().optional(),
 })
+
+export function parseSchema(data: unknown): ZodSafeParseResult<QuiDocsConfig> {
+  return configSchema.safeParse(data)
+}

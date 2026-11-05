@@ -6,39 +6,39 @@ import type {ReactElement, ReactNode} from "react"
 import {useOptionalContentId} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 
-import {PasswordInputClearTrigger} from "./password-input-clear-trigger"
+import {PasswordInputClearTrigger} from "./password-input-clear-trigger.js"
 import {
   PasswordInputErrorIndicator,
   type PasswordInputErrorIndicatorProps,
-} from "./password-input-error-indicator"
+} from "./password-input-error-indicator.js"
 import {
   PasswordInputErrorText,
   type PasswordInputErrorTextProps,
-} from "./password-input-error-text"
+} from "./password-input-error-text.js"
 import {
   PasswordInputHint,
   type PasswordInputHintProps,
-} from "./password-input-hint"
-import {
-  PasswordInputInput,
-  type PasswordInputInputProps,
-} from "./password-input-input"
+} from "./password-input-hint.js"
 import {
   PasswordInputInputGroup,
   type PasswordInputInputGroupProps,
-} from "./password-input-input-group"
+} from "./password-input-input-group.js"
+import {
+  PasswordInputInput,
+  type PasswordInputInputProps,
+} from "./password-input-input.js"
 import {
   PasswordInputLabel,
   type PasswordInputLabelProps,
-} from "./password-input-label"
+} from "./password-input-label.js"
 import {
   PasswordInputRoot,
   type PasswordInputRootProps,
-} from "./password-input-root"
+} from "./password-input-root.js"
 import {
   PasswordInputVisibilityTrigger,
   type PasswordInputVisibilityTriggerProps,
-} from "./password-input-visibility-trigger"
+} from "./password-input-visibility-trigger.js"
 
 export interface PasswordInputProps extends PasswordInputRootProps {
   /**

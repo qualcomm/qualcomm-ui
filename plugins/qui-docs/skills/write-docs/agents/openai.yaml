@@ -1,0 +1,7 @@
+interface:
+  display_name: "Write Docs"
+  short_description: "Write QUI Docs pages from authoring rules"
+  default_prompt: "Use $write-docs to draft or revise a QUI Docs page."
+
+policy:
+  allow_implicit_invocation: true

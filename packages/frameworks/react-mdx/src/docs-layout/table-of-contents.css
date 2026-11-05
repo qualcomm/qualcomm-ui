@@ -7,11 +7,10 @@
 }
 
 .qui-toc__container {
-  margin-left: 24px;
   max-height: calc(100vh - var(--qui-header-height) - 42px);
   overflow-x: hidden;
   overflow-y: auto;
-  padding-top: 16px;
+  padding: 48px 24px 0 0;
   position: sticky;
   scrollbar-width: none;
   top: 49px;
@@ -24,13 +23,19 @@
   position: relative;
 }
 
+.qui-toc__label {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-sm-default);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
 .qui-toc__link {
   color: var(--color-text-neutral-secondary);
-  font: var(--font-static-body-sm-bold);
+  font: var(--font-static-body-sm-default);
   font-size: 13px;
   padding: 4px 0;
   position: relative;
-  --root-indent-left-offset: 13px;
 
   a {
     color: inherit;
@@ -46,12 +51,13 @@
 .qui-toc__link-indent-guide {
   background: var(--color-border-neutral-01);
   height: 100%;
-  left: calc(var(--root-indent-left-offset) * var(--indent-depth, 1));
+  left: 0;
   position: absolute;
   top: 0;
   width: 1px;
 
   &[data-active] {
-    background: var(--color-border-neutral-03);
+    width: 2px;
+    background: var(--color-border-brand-primary);
   }
 }

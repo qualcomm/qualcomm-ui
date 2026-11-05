@@ -12,7 +12,7 @@ import type {
   ToastPlacement,
   ToastSchema,
   ToastType,
-} from "./toast.types"
+} from "./toast.types.js"
 
 export const defaultTimeouts: Record<ToastType, number> = {
   danger: 5000,

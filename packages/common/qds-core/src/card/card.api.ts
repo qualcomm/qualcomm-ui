@@ -6,8 +6,8 @@ import type {QdsLinkApiProps} from "@qualcomm-ui/qds-core/link"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {cardAnatomy} from "./card.anatomy"
-import {cardClasses} from "./card.classes"
+import {cardAnatomy} from "./card.anatomy.js"
+import {cardClasses} from "./card.classes.js"
 import type {
   QdsCardApi,
   QdsCardApiProps,
@@ -27,7 +27,7 @@ import type {
   QdsCardParagraphTextBindings,
   QdsCardRootBindings,
   QdsCardSubheadingTextBindings,
-} from "./card.types"
+} from "./card.types.js"
 
 const parts = cardAnatomy.parts
 

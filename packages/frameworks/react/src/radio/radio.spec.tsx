@@ -1,8 +1,8 @@
-import {type HTMLAttributes, useState} from "react"
+import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
@@ -10,6 +10,9 @@ import {Radio} from "./index"
 import {RadioGroup} from "./radio-group"
 
 const demoGroupLabel = "Radio Group Label"
+const demoGroupError = "Demo Group Error"
+const demoGroupHint = "Demo Group Hint"
+const demoHint = "Demo Hint"
 const demoLabel = "Demo Label"
 const demoValue = "demo-value"
 
@@ -207,6 +210,128 @@ const tests: MultiComponentTestCase[] = [
   },
   {
     composite() {
+      return (
+        <RadioGroup.Root>
+          <RadioGroup.Label>{demoGroupLabel}</RadioGroup.Label>
+          <RadioGroup.Items>
+            {radioOptions.map((option) => (
+              <Radio
+                key={option.value}
+                label={option.label}
+                value={option.value}
+              />
+            ))}
+          </RadioGroup.Items>
+          <RadioGroup.Hint>{demoGroupHint}</RadioGroup.Hint>
+        </RadioGroup.Root>
+      )
+    },
+    testCase: (getComponent) => {
+      test("group hint text describes the radio group while valid", async () => {
+        await render(getComponent())
+
+        const group = page.getByRole("radiogroup")
+        const hint = page.getByText(demoGroupHint)
+
+        await expect.element(hint).toBeVisible()
+        await expect.element(hint).not.toHaveAttribute("hidden")
+        await expect.element(group).not.toHaveAttribute("aria-invalid", "true")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <RadioGroup.Root invalid>
+          <RadioGroup.Label>{demoGroupLabel}</RadioGroup.Label>
+          <RadioGroup.Items>
+            {radioOptions.map((option) => (
+              <Radio
+                key={option.value}
+                label={option.label}
+                value={option.value}
+              />
+            ))}
+          </RadioGroup.Items>
+          <RadioGroup.Hint>{demoGroupHint}</RadioGroup.Hint>
+          <RadioGroup.ErrorText>{demoGroupError}</RadioGroup.ErrorText>
+        </RadioGroup.Root>
+      )
+    },
+    testCase: (getComponent) => {
+      test("group error text replaces hint while invalid", async () => {
+        await render(getComponent())
+
+        const group = page.getByRole("radiogroup")
+        const errorText = page.getByText(demoGroupError)
+
+        await expect.element(errorText).toBeVisible()
+        await expect.element(page.getByText(demoGroupHint)).not.toBeVisible()
+        await expect.element(group).toHaveAttribute("aria-invalid", "true")
+        await expect
+          .element(group)
+          .toHaveAttribute("aria-describedby", errorText.element().id)
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <RadioGroup.Root defaultValue="option1">
+          <RadioGroup.Label>{demoGroupLabel}</RadioGroup.Label>
+          <RadioGroup.RadioContext>
+            {(context) => (
+              <div data-test-id="radio-context-value">
+                {context.value ?? "none"}
+              </div>
+            )}
+          </RadioGroup.RadioContext>
+          <RadioGroup.Items>
+            {radioOptions.map((option) => (
+              <Radio
+                key={option.value}
+                label={option.label}
+                value={option.value}
+              />
+            ))}
+          </RadioGroup.Items>
+        </RadioGroup.Root>
+      )
+    },
+    simple() {
+      return (
+        <RadioGroup defaultValue="option1" label={demoGroupLabel}>
+          <RadioGroup.RadioContext>
+            {(context) => (
+              <div data-test-id="radio-context-value">
+                {context.value ?? "none"}
+              </div>
+            )}
+          </RadioGroup.RadioContext>
+          {radioOptions.map((option) => (
+            <Radio
+              key={option.value}
+              label={option.label}
+              value={option.value}
+            />
+          ))}
+        </RadioGroup>
+      )
+    },
+    testCase: (getComponent) => {
+      test("context render prop exposes the selected value", async () => {
+        await render(getComponent())
+
+        const contextValue = page.getByTestId("radio-context-value")
+        await expect.element(contextValue).toHaveTextContent("option1")
+
+        await page.getByText("Option 3").click()
+        await expect.element(contextValue).toHaveTextContent("option3")
+      })
+    },
+  },
+  {
+    composite() {
       function Component() {
         const [value, setValue] = useState<string | null>("option1")
         return (
@@ -284,17 +409,13 @@ const tests: MultiComponentTestCase[] = [
         <RadioGroup
           data-test-id={testIds.group}
           defaultValue="option1"
-          itemsProps={
-            {
-              "data-test-id": testIds.items,
-            } as HTMLAttributes<HTMLElement>
-          }
+          itemsProps={{
+            "data-test-id": testIds.items,
+          }}
           label={demoGroupLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.groupLabel,
-            } as HTMLAttributes<HTMLElement>
-          }
+          labelProps={{
+            "data-test-id": testIds.groupLabel,
+          }}
         >
           {radioOptions.map((option) => (
             <Radio
@@ -484,23 +605,17 @@ const tests: MultiComponentTestCase[] = [
       return (
         <RadioGroup defaultValue={demoValue}>
           <Radio
-            controlProps={
-              {
-                "data-test-id": testIds.control,
-              } as HTMLAttributes<HTMLElement>
-            }
+            controlProps={{
+              "data-test-id": testIds.control,
+            }}
             data-test-id={testIds.root}
-            hiddenInputProps={
-              {
-                "data-test-id": testIds.hiddenInput,
-              } as HTMLAttributes<HTMLElement>
-            }
+            hiddenInputProps={{
+              "data-test-id": testIds.hiddenInput,
+            }}
             label={demoLabel}
-            labelProps={
-              {
-                "data-test-id": testIds.label,
-              } as HTMLAttributes<HTMLElement>
-            }
+            labelProps={{
+              "data-test-id": testIds.label,
+            }}
             value={demoValue}
           />
         </RadioGroup>
@@ -515,6 +630,33 @@ const tests: MultiComponentTestCase[] = [
         await expect
           .element(page.getByTestId(testIds.hiddenInput))
           .toBeInTheDocument()
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <RadioGroup.Root name="group">
+          <Radio.Root value={demoValue}>
+            <Radio.HiddenInput />
+            <Radio.Control />
+            <Radio.Label>{demoLabel}</Radio.Label>
+            <Radio.Hint>{demoHint}</Radio.Hint>
+          </Radio.Root>
+        </RadioGroup.Root>
+      )
+    },
+    simple() {
+      return (
+        <RadioGroup>
+          <Radio hint={demoHint} label={demoLabel} value={demoValue} />
+        </RadioGroup>
+      )
+    },
+    testCase: (getComponent) => {
+      test("hint is visible", async () => {
+        await render(getComponent())
+        await expect.element(page.getByText(demoHint)).toBeVisible()
       })
     },
   },

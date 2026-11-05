@@ -4,8 +4,8 @@
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {headerBarAnatomy} from "./header-bar.anatomy"
-import type {headerBarClasses} from "./header-bar.classes"
+import type {headerBarAnatomy} from "./header-bar.anatomy.js"
+import type {headerBarClasses} from "./header-bar.classes.js"
 
 export type QdsHeaderBarSize = "sm" | "lg"
 

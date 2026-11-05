@@ -1,9 +1,9 @@
 import {Component} from "@angular/core"
 
+import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
 import {PopoverModule} from "@qualcomm-ui/angular/popover"
-import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 import {countries} from "./country-list"

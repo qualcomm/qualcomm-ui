@@ -4,9 +4,9 @@
 import {NgModule} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 
+import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {MenuModule} from "@qualcomm-ui/angular/menu"
-import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
 
 import {PaginationContextDirective} from "./pagination-context.directive"
 import {PaginationNextTriggerComponent} from "./pagination-next-trigger.component"

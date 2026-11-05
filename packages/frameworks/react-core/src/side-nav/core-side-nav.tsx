@@ -30,7 +30,7 @@ import {CoreTree} from "@qualcomm-ui/react-core/tree"
 import type {TreeNode} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {SideNavContextProvider, useSideNavContext} from "./side-nav-context"
+import {SideNavContextProvider, useSideNavContext} from "./side-nav-context.js"
 
 export interface CoreSideNavRootProps<T = TreeNode>
   extends

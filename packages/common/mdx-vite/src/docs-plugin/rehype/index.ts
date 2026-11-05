@@ -1,2 +1,2 @@
-export * from "./rehype-sectionize"
-export * from "./rehype-slug"
+export * from "./rehype-sectionize.js"
+export * from "./rehype-slug.js"

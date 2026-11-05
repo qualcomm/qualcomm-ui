@@ -1,9 +1,9 @@
-import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 import {
   ComponentExplorerBase,
   type ComponentExplorerBaseProps,
 } from "@qualcomm-ui/react-mdx/component-explorer"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
+import {useQdsThemeContext} from "@qualcomm-ui/react/qds-theme"
 
 import {QdsDemo} from "./qds-demo"
 

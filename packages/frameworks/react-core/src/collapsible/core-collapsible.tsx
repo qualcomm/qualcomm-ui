@@ -25,7 +25,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   CollapsibleContextProvider,
   useCollapsibleContext,
-} from "./collapsible-context"
+} from "./collapsible-context.js"
 
 export interface CoreCollapsibleRootProviderProps extends CollapsibleApiProps {
   /**

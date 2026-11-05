@@ -13,8 +13,8 @@ import {
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {domEls, domIds} from "./internal"
-import {radioAnatomy} from "./radio.anatomy"
+import {domEls, domIds} from "./internal/index.js"
+import {radioAnatomy} from "./radio.anatomy.js"
 import type {
   ItemState,
   RadioApi,
@@ -31,7 +31,7 @@ import type {
   RadioItemHintBindings,
   RadioItemLabelBindings,
   RadioSchema,
-} from "./radio.types"
+} from "./radio.types.js"
 
 const parts = radioAnatomy.parts
 

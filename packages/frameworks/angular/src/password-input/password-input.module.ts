@@ -3,9 +3,9 @@
 
 import {NgModule} from "@angular/core"
 
+import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {InputStartIconComponent} from "@qualcomm-ui/angular/input"
-import {QBindDirective} from "@qualcomm-ui/angular-core/machine"
 
 import {PasswordInputClearTriggerDirective} from "./password-input-clear-trigger.directive"
 import {PasswordInputErrorIndicatorDirective} from "./password-input-error-indicator.directive"

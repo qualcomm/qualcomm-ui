@@ -9,28 +9,23 @@ import type {
   QdsBadgeCategoryEmphasis,
   QdsBadgeSemanticEmphasis,
 } from "@qualcomm-ui/qds-core/badge"
-import type {BreadcrumbsItemProps} from "@qualcomm-ui/react/breadcrumbs"
 import type {
   DemoSettings,
-  MdxDocsContextValue,
+  DocsRuntimeContextValue,
   PackageManager,
   RouteDemoState,
 } from "@qualcomm-ui/react-mdx/context"
+import type {BreadcrumbsItemProps} from "@qualcomm-ui/react/breadcrumbs"
 
 export type TocHighlightStrategy = "nearest" | "viewport"
 
 /**
  * The function used to render the application's clientside link component.
- *
- * @public
  */
 export type RenderLink = (
   props: HTMLAttributes<HTMLAnchorElement> & {href: string},
 ) => ReactNode
 
-/**
- * @public
- */
 export interface DocPropsSettings {
   /**
    * URL for the changelog, used by the `@since` tags.
@@ -38,12 +33,11 @@ export interface DocPropsSettings {
   changelogUrl?: string
 }
 
-/**
- * @public
- */
+export type NavDensity = "compact" | "comfy"
+
 export interface DocsLayoutSettings extends Pick<
-  MdxDocsContextValue,
-  "demoSettings" | "packageManager" | "ssrUserAgent"
+  DocsRuntimeContextValue,
+  "demoSettings" | "layoutComponents" | "packageManager" | "ssrUserAgent"
 > {
   /**
    * Demo state for each route, typically persisted via localStorage or a session
@@ -80,6 +74,16 @@ export interface DocsLayoutSettings extends Pick<
    * @inheritDoc
    */
   mdxComponents?: ReturnType<typeof useMDXComponents>
+
+  /**
+   * Governs sidebar nav item padding and size.
+   *
+   * @option `compact`: sidebar nav items render with reduced padding.
+   * @option 'comfy': sidebar nav items render with increased padding.
+   *
+   * @default 'compact'
+   */
+  navDensity?: NavDensity
 
   /**
    * Function fired when the demo settings change.

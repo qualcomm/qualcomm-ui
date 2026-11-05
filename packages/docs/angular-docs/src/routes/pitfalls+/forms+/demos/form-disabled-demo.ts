@@ -7,8 +7,13 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms"
   standalone: true,
   template: `
     <form class="grid justify-center gap-2">
-      <div class="border-neutral-02 border-1">
-        <input name="field-1" [disabled]="true" [formControl]="formControl" />
+      <div class="border-neutral-02 border-1 border-solid p-1">
+        <input
+          class="w-full border-0 bg-transparent outline-none"
+          name="field-1"
+          [disabled]="true"
+          [formControl]="formControl"
+        />
       </div>
     </form>
   `,

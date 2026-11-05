@@ -1,7 +1,7 @@
 import {type ReactElement, useState} from "react"
 
-import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Menu} from "@qualcomm-ui/react/menu"
 
 const items: {label: string; value: string}[] = [
   {label: "Option 1", value: "item-1"},

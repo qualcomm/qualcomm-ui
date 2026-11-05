@@ -6,7 +6,7 @@ import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 import type {
   PasswordInputElementIds,
   PasswordInputScope,
-} from "../password-input.types"
+} from "../password-input.types.js"
 
 export const domIds: ScopeDomIds<PasswordInputElementIds, PasswordInputScope> =
   {

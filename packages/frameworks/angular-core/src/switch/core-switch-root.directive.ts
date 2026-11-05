@@ -10,7 +10,7 @@ import {
   input,
   type OnInit,
 } from "@angular/core"
-import {type ControlValueAccessor} from "@angular/forms"
+import type {ControlValueAccessor} from "@angular/forms"
 
 import {AbstractCheckboxFormControlDirective} from "@qualcomm-ui/angular-core/checkbox"
 import {useId} from "@qualcomm-ui/angular-core/common"
@@ -20,7 +20,7 @@ import {
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {type CheckboxApiProps} from "@qualcomm-ui/core/checkbox"
+import type {CheckboxApiProps} from "@qualcomm-ui/core/checkbox"
 import {
   createSwitchApi,
   type SwitchApiProps,

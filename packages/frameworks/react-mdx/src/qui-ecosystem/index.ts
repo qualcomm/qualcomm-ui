@@ -1,1 +1,1 @@
-export * from "./qui-ecosystem"
+export * from "./qui-ecosystem.js"

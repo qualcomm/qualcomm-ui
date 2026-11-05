@@ -7,7 +7,7 @@
 import {ariaAttr, booleanAriaAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {dialogAnatomy} from "./dialog.anatomy"
+import {dialogAnatomy} from "./dialog.anatomy.js"
 import type {
   DialogApi,
   DialogBackdropBindings,
@@ -20,8 +20,8 @@ import type {
   DialogPositionerBindings,
   DialogSchema,
   DialogTriggerBindings,
-} from "./dialog.types"
-import {domIds} from "./internal"
+} from "./dialog.types.js"
+import {domIds} from "./internal/dialog.dom.js"
 
 const parts = dialogAnatomy.parts
 

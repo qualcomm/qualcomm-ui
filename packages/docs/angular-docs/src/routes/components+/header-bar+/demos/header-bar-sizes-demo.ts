@@ -1,15 +1,22 @@
 import {NgTemplateOutlet} from "@angular/common"
 import {Component} from "@angular/core"
-import {Layers2, LayoutGrid, Moon, Settings} from "lucide-angular"
+import {
+  LucideLayers2,
+  LucideLayoutGrid,
+  LucideMoon,
+  LucideSettings,
+} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
 import {HeaderBarModule} from "@qualcomm-ui/angular/header-bar"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [HeaderBarModule, AvatarModule, IconDirective, NgTemplateOutlet],
-  providers: [provideIcons({Layers2, LayoutGrid, Moon, Settings})],
+  providers: [
+    provideIcons({LucideLayers2, LucideLayoutGrid, LucideMoon, LucideSettings}),
+  ],
   selector: "header-bar-sizes-demo",
   template: `
     <div class="flex w-full flex-col gap-4">
@@ -37,8 +44,16 @@ import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
         </nav>
 
         <div class="hidden @min-[285px]:flex" q-header-bar-action-bar>
-          <button icon="Moon" q-header-bar-action-icon-button></button>
-          <button icon="Settings" q-header-bar-action-icon-button></button>
+          <button
+            aria-label="Toggle theme"
+            icon="Moon"
+            q-header-bar-action-icon-button
+          ></button>
+          <button
+            aria-label="Open settings"
+            icon="Settings"
+            q-header-bar-action-icon-button
+          ></button>
           <button
             class="hidden @min-[450px]:inline-flex"
             q-header-bar-action-button

@@ -3,7 +3,7 @@
 
 import type {ESLint, Linter} from "eslint"
 
-import {config, plugin, rules} from "./plugin"
+import {config, plugin, rules} from "./plugin.js"
 
 interface QuiEslintPluginReact {
   config: Linter.Config[]
@@ -14,7 +14,7 @@ interface QuiEslintPluginReact {
 const defaultExport: QuiEslintPluginReact = {
   config,
   plugin,
-  rules: rules as unknown as QuiEslintPluginReact["rules"],
+  rules,
 }
 
 export default defaultExport

@@ -1,11 +1,13 @@
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import {playwright} from "@vitest/browser-playwright"
-import viteTsconfigPaths from "vite-tsconfig-paths"
 import {defineConfig} from "vitest/config"
 
 export default defineConfig({
-  plugins: [tailwindcss(), viteTsconfigPaths(), react({}) as any],
+  plugins: [tailwindcss(), react({compiler: true})],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     browser: {
       enabled: true,
@@ -13,6 +15,7 @@ export default defineConfig({
       instances: [
         {
           browser: "chromium",
+          testTimeout: 8000,
         },
       ],
       locators: {
@@ -27,6 +30,7 @@ export default defineConfig({
     },
     coverage: {
       allowExternal: true,
+      exclude: ["**common/utils/**/*"],
       provider: "v8",
       reportOnFailure: true,
     },

@@ -3,7 +3,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {TextInputApiProps} from "./text-input.types"
+import type {TextInputApiProps} from "./text-input.types.js"
 
 const textInputProps: (keyof TextInputApiProps)[] =
   createProps<TextInputApiProps>()(

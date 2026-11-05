@@ -88,6 +88,7 @@
     }
   }
 
+  &[data-emphasis="persistent-white"],
   &[data-emphasis="white-persistent"] {
     color: var(--color-utility-persistent-white);
 
@@ -140,6 +141,11 @@
   &[data-size="xxl"] {
     font: var(--font-static-body-xxl-bold);
     gap: var(--spacing-70);
+  }
+
+  &[data-inherit-font-size] {
+    font-size: inherit;
+    line-height: inherit;
   }
 }
 

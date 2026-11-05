@@ -26,7 +26,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {
   NumberInputContextProvider,
   useNumberInputContext,
-} from "./number-input-context"
+} from "./number-input-context.js"
 
 export interface CoreNumberInputRootProps
   extends

@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, input, type OnInit} from "@angular/core"
+import {computed, Directive, input, type OnInit, output} from "@angular/core"
 
 import {useId, useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
@@ -15,6 +15,11 @@ export class CoreMenuTriggerItemDirective
   implements OnInit
 {
   /**
+   * @deprecated never emitted. Use `(openChanged)` on the submenu instead.
+   */
+  override readonly selected = output()
+
+  /**
    * {@link https://www.w3schools.com/html/html_id.asp id attribute}. If
    * omitted, a unique identifier will be generated for accessibility.
    */
@@ -25,6 +30,7 @@ export class CoreMenuTriggerItemDirective
   protected readonly trackBindings = useTrackBindings(() => {
     return (
       this.menuTriggerContext()({
+        ...this.itemProps(),
         id: this.hostId(),
         onDestroy: this.onDestroy,
       }) ?? {}

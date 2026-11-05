@@ -3,11 +3,11 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {InputLabel, type InputLabelProps} from "@qualcomm-ui/react/input"
 import {
   CorePasswordInput,
   usePasswordInputContext,
 } from "@qualcomm-ui/react-core/password-input"
+import {InputLabel, type InputLabelProps} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputLabelProps extends InputLabelProps {

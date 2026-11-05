@@ -1,7 +1,6 @@
 .qui-inline-icon-button__root {
   --button-size: var(--sizing-90);
   align-items: center;
-  /* note: the background color is wrong */
   background: var(--color-interactive-background-ghost-idle);
   border: var(--border-width-sm) solid transparent;
   border-radius: var(--border-radius-sm);
@@ -76,6 +75,12 @@
         --color-interactive-background-persistent-black-ghost-pressed
       );
     }
+
+    &:disabled {
+      background: var(
+        --color-interactive-background-persistent-black-ghost-idle
+      );
+    }
   }
 
   &[data-emphasis="persistent-white"] {
@@ -93,10 +98,16 @@
         --color-interactive-background-persistent-white-ghost-pressed
       );
     }
+
+    &:disabled {
+      background: var(
+        --color-interactive-background-persistent-white-ghost-idle
+      );
+    }
   }
 
   &:disabled {
-    background: var(--color-utility-disabled-background);
+    background: var(--color-interactive-background-ghost-idle);
     color: var(--color-utility-disabled-icon);
   }
 }

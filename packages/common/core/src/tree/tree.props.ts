@@ -7,7 +7,7 @@
 import type {TreeNode} from "@qualcomm-ui/utils/collection"
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {NodeProps, TreeApiProps} from "./tree.types"
+import type {NodeProps, TreeApiProps} from "./tree.types.js"
 
 export const treeProps: (keyof TreeApiProps<TreeNode>)[] = createProps<
   TreeApiProps<TreeNode>

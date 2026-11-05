@@ -7,25 +7,25 @@ export function ButtonContrastDemo(): ReactElement {
     <div className="flex flex-col gap-8">
       {/* preview */}
       <div className="bg-persistent-black flex gap-8 rounded-md p-3">
-        <Button emphasis="white-persistent" variant="fill">
+        <Button emphasis="persistent-white" variant="fill">
           Action
         </Button>
-        <Button emphasis="white-persistent" variant="outline">
+        <Button emphasis="persistent-white" variant="outline">
           Action
         </Button>
-        <Button emphasis="white-persistent" variant="ghost">
+        <Button emphasis="persistent-white" variant="ghost">
           Action
         </Button>
       </div>
 
       <div className="bg-persistent-white flex gap-8 rounded-md p-3">
-        <Button emphasis="black-persistent" variant="fill">
+        <Button emphasis="persistent-black" variant="fill">
           Action
         </Button>
-        <Button emphasis="black-persistent" variant="outline">
+        <Button emphasis="persistent-black" variant="outline">
           Action
         </Button>
-        <Button emphasis="black-persistent" variant="ghost">
+        <Button emphasis="persistent-black" variant="ghost">
           Action
         </Button>
       </div>

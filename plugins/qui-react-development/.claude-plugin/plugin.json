@@ -1,0 +1,13 @@
+{
+  "name": "qui-react-development",
+  "description": "QUI React best-practice workflows for application developers consuming @qualcomm-ui/react.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Qualcomm UI Maintainers",
+    "url": "https://github.com/qualcomm/qualcomm-ui"
+  },
+  "homepage": "https://github.com/qualcomm/qualcomm-ui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "license": "BSD-3-Clause-Clear",
+  "keywords": ["claude-code", "react", "qualcomm-ui", "accessibility", "best-practices"]
+}

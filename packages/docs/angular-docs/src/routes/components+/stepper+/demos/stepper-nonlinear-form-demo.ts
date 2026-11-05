@@ -1,15 +1,15 @@
 import {Component, inject, signal} from "@angular/core"
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms"
-import {ChevronLeft, ChevronRight} from "lucide-angular"
+import {LucideChevronLeft, LucideChevronRight} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {StepperModule} from "@qualcomm-ui/angular/stepper"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [StepperModule, ButtonModule, TextInputModule, ReactiveFormsModule],
-  providers: [provideIcons({ChevronLeft, ChevronRight})],
+  providers: [provideIcons({LucideChevronLeft, LucideChevronRight})],
   selector: "stepper-nonlinear-form-demo",
   template: `
     <!-- preview -->

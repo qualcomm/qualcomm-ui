@@ -1,4 +1,8 @@
-import {isRouteErrorResponse, LoaderFunction, useRouteError} from "react-router"
+import {
+  isRouteErrorResponse,
+  type LoaderFunction,
+  useRouteError,
+} from "react-router"
 
 import {NotFound} from "@qualcomm-ui/react-mdx/not-found"
 

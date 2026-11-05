@@ -4,7 +4,7 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {tableClasses} from "./table.classes"
+import {tableClasses} from "./table.classes.js"
 import type {
   QdsTableActionBarBindings,
   QdsTableApi,
@@ -40,7 +40,7 @@ import type {
   QdsTableScrollContainerBindings,
   QdsTableTableBindings,
   QdsTableTitleBarBindings,
-} from "./table.types"
+} from "./table.types.js"
 
 export function createQdsTableApi(normalize: PropNormalizer): QdsTableApi {
   return {

@@ -1,1 +1,1 @@
-export * from "./text-area.dom"
+export * from "./text-area.dom.js"

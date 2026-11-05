@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-core/stepper"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsStepperContext} from "./qds-stepper-context"
+import {useQdsStepperContext} from "./qds-stepper-context.js"
 
 export interface StepperSeparatorProps extends CoreStepperSeparatorProps {}
 

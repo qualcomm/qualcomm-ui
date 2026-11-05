@@ -2,26 +2,30 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {Eye, EyeOff} from "lucide-angular"
+import {LucideEye, LucideEyeOff} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
-import {useQdsInputContext} from "@qualcomm-ui/angular/input"
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {CorePasswordInputVisibilityTriggerDirective} from "@qualcomm-ui/angular-core/password-input"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useQdsInputContext} from "@qualcomm-ui/angular/input"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {passwordInputClasses} from "@qualcomm-ui/qds-core/password-input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({Eye, EyeOff})],
+  providers: [provideIcons({LucideEye, LucideEyeOff})],
   selector: "[q-password-input-visibility-trigger]",
   standalone: false,
   template: `
-    <svg [q-bind]="buttonApi().getIconBindings()" [qIcon]="icon()"></svg>
+    <svg
+      [q-bind]="buttonApi().getIconBindings()"
+      [qIcon]="icon()!"
+      [size]="buttonApi().size"
+    ></svg>
   `,
 })
 export class PasswordInputVisibilityTriggerDirective extends CorePasswordInputVisibilityTriggerDirective {

@@ -1,3 +1,3 @@
-export * from "./breadcrumbs.api"
-export * from "./breadcrumbs.classes"
-export type * from "./breadcrumbs.types"
+export * from "./breadcrumbs.api.js"
+export * from "./breadcrumbs.classes.js"
+export type * from "./breadcrumbs.types.js"

@@ -23,7 +23,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {checkboxAnatomy} from "./checkbox.anatomy"
+import type {checkboxAnatomy} from "./checkbox.anatomy.js"
 
 export interface CheckboxApiProps
   extends FieldApiProps, CommonProperties, DirectionProperty {

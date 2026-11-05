@@ -1,15 +1,15 @@
 import {Component} from "@angular/core"
-import {ChevronDown, ChevronRight} from "lucide-angular"
+import {LucideChevronDown, LucideChevronRight} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   HeaderComponentContextDirective,
   TableModule,
 } from "@qualcomm-ui/angular/table"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [TableModule],
-  providers: [provideIcons({ChevronDown, ChevronRight})],
+  providers: [provideIcons({LucideChevronDown, LucideChevronRight})],
   selector: "app-username-header-1",
   template: `
     <div class="flex items-center gap-2">

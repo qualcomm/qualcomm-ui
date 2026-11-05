@@ -3,7 +3,7 @@
 
 import type {inputClasses} from "@qualcomm-ui/qds-core/input"
 
-import type {switchClasses} from "./switch.classes"
+import type {switchClasses} from "./switch.classes.js"
 
 export type QdsSwitchSize = "sm" | "md" | "lg"
 

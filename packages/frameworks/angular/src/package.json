@@ -1,10 +1,10 @@
 {
   "name": "@qualcomm-ui/angular",
-  "description": "QUI Angular Components",
   "version": "0.0.0",
-  "author": "Ryan Bower",
+  "description": "QUI Angular Components",
   "license": "BSD-3-Clause-Clear",
+  "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
-  "sideEffects": false,
-  "type": "module"
+  "type": "module",
+  "sideEffects": false
 }

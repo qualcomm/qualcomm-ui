@@ -1,17 +1,13 @@
-import {HeaderBarMenuItemDemo as MenuItemDemo} from "@qualcomm-ui/react-docs/components+/header-bar+/demos/header-bar-menu-item-demo"
-import {HeaderBarShowcaseDemo as ShowcaseDemo} from "@qualcomm-ui/react-docs/components+/header-bar+/demos/header-bar-showcase-demo"
-import {HeaderBarSizesDemo as SizesDemo} from "@qualcomm-ui/react-docs/components+/header-bar+/demos/header-bar-sizes-demo"
-import {HeaderBarSurfacesDemo as SurfacesDemo} from "@qualcomm-ui/react-docs/components+/header-bar+/demos/header-bar-surfaces-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: MenuItemDemo, title: "Menu Item"},
-  {component: ShowcaseDemo, title: "Showcase"},
-  {component: SizesDemo, title: "Sizes"},
-  {component: SurfacesDemo, title: "Surfaces"},
-]
+const componentName = "header-bar"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/header-bar+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function HeaderBarDemos() {
-  return <DemoPageLayout componentName="header-bar" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

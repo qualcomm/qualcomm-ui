@@ -8,7 +8,7 @@ import type {
 } from "@qualcomm-ui/utils/attributes"
 import type {JSX} from "@qualcomm-ui/utils/machine"
 
-import type {inputAnatomy} from "./input.anatomy"
+import type {inputAnatomy} from "./input.anatomy.js"
 
 type PartName = AnatomyPartName<typeof inputAnatomy>
 interface Part<P extends PartName> extends AnatomyPart<"input", P> {}

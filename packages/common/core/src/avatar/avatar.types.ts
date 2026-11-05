@@ -14,7 +14,7 @@ import type {
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
 
-import type {avatarAnatomy} from "./avatar.anatomy"
+import type {avatarAnatomy} from "./avatar.anatomy.js"
 
 export interface AvatarApiProps extends DirectionProperty {
   onStateChange?: (event: {state: string | null}) => void

@@ -31,8 +31,8 @@ import {
   getCheckedValueMap,
   getNodeId,
   getNodeTextId,
-} from "./internal"
-import {treeAnatomy} from "./tree.anatomy"
+} from "./internal/index.js"
+import {treeAnatomy} from "./tree.anatomy.js"
 import type {
   NodeProps,
   NodeState,
@@ -52,7 +52,7 @@ import type {
   TreeNodeTextBindings,
   TreeRootBindings,
   TreeSchema,
-} from "./tree.types"
+} from "./tree.types.js"
 
 const parts = treeAnatomy.parts
 
@@ -452,8 +452,10 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
         ...parts.root,
         "aria-label": "Tree View",
         "aria-labelledby": domIds.label(scope),
-        "aria-multiselectable":
-          prop("selectionMode") === "multiple" || undefined,
+        "aria-multiselectable": booleanAriaAttr(
+          prop("selectionMode") === "multiple",
+          null,
+        ),
         dir: prop("dir") || "ltr",
         id: props.id,
         onKeyDown(event) {

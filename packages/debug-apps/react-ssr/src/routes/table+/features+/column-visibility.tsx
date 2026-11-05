@@ -7,9 +7,9 @@ const demos = [{component: ColumnVisibilityDemo, title: "Column Visibility"}]
 export default function ColumnVisibility() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="column-visibility"
       demos={demos}
-      className="w-full"
     />
   )
 }

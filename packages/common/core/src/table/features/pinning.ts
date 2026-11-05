@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {TableFeature} from "../core/table"
+import type {TableFeature} from "../core/table.js"
 import type {
   Cell,
   Column,
@@ -14,8 +14,8 @@ import type {
   RowData,
   TableInstance,
   Updater,
-} from "../types"
-import {makeStateUpdater, memo} from "../utils"
+} from "../types.js"
+import {makeStateUpdater, memo} from "../utils.js"
 
 export type ColumnPinningPosition = false | "left" | "right"
 export type RowPinningPosition = false | "top" | "bottom"
@@ -438,8 +438,8 @@ export const Pinning: TableFeature = {
       ],
       (allCells, left) => {
         const cells = (left ?? [])
-          .map(
-            (columnId) => allCells.find((cell) => cell.column.id === columnId)!,
+          .map((columnId) =>
+            allCells.find((cell) => cell.column.id === columnId)!,
           )
           .filter(Boolean)
           .map((d) => ({...d, position: "left"}) as Cell<TData, unknown>)
@@ -456,8 +456,8 @@ export const Pinning: TableFeature = {
       () => [row._getAllVisibleCells(), table.getState().columnPinning.right],
       (allCells, right) => {
         const cells = (right ?? [])
-          .map(
-            (columnId) => allCells.find((cell) => cell.column.id === columnId)!,
+          .map((columnId) =>
+            allCells.find((cell) => cell.column.id === columnId)!,
           )
           .filter(Boolean)
           .map((d) => ({...d, position: "right"}) as Cell<TData, unknown>)
@@ -497,8 +497,8 @@ export const Pinning: TableFeature = {
       () => [table.getAllLeafColumns(), table.getState().columnPinning.left],
       (allColumns, left) => {
         return (left ?? [])
-          .map(
-            (columnId) => allColumns.find((column) => column.id === columnId)!,
+          .map((columnId) =>
+            allColumns.find((column) => column.id === columnId)!,
           )
           .filter(Boolean)
       },
@@ -512,8 +512,8 @@ export const Pinning: TableFeature = {
       () => [table.getAllLeafColumns(), table.getState().columnPinning.right],
       (allColumns, right) => {
         return (right ?? [])
-          .map(
-            (columnId) => allColumns.find((column) => column.id === columnId)!,
+          .map((columnId) =>
+            allColumns.find((column) => column.id === columnId)!,
           )
           .filter(Boolean)
       },
@@ -572,8 +572,8 @@ export const Pinning: TableFeature = {
                   return row.getIsAllParentsExpanded() ? row : null
                 })
               : // else get only visible rows that are pinned
-                (pinnedRowIds ?? []).map(
-                  (rowId) => visibleRows.find((row) => row.id === rowId)!,
+                (pinnedRowIds ?? []).map((rowId) =>
+                  visibleRows.find((row) => row.id === rowId)!,
                 )
 
           return rows

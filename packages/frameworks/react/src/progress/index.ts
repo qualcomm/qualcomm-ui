@@ -1,20 +1,20 @@
-import {Progress as SimpleProgress} from "./progress"
-import {ProgressBar, type ProgressBarProps} from "./progress-bar"
-import {ProgressContext, type ProgressContextProps} from "./progress-context"
+import {ProgressBar, type ProgressBarProps} from "./progress-bar.js"
+import {ProgressContext, type ProgressContextProps} from "./progress-context.js"
 import {
   ProgressErrorText,
   type ProgressErrorTextProps,
-} from "./progress-error-text"
-import {ProgressHint, type ProgressHintProps} from "./progress-hint"
-import {ProgressLabel, type ProgressLabelProps} from "./progress-label"
-import {ProgressRoot, type ProgressRootProps} from "./progress-root"
-import {ProgressTrack, type ProgressTrackProps} from "./progress-track"
+} from "./progress-error-text.js"
+import {ProgressHint, type ProgressHintProps} from "./progress-hint.js"
+import {ProgressLabel, type ProgressLabelProps} from "./progress-label.js"
+import {ProgressRoot, type ProgressRootProps} from "./progress-root.js"
+import {ProgressTrack, type ProgressTrackProps} from "./progress-track.js"
 import {
   ProgressValueText,
   type ProgressValueTextProps,
-} from "./progress-value-text"
+} from "./progress-value-text.js"
+import {Progress as SimpleProgress} from "./progress.js"
 
-export * from "./qds-progress-context"
+export * from "./qds-progress-context.js"
 
 export type {
   ProgressBarProps,

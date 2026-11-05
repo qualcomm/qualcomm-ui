@@ -3,14 +3,14 @@
 
 import {Fragment, type ReactNode} from "react"
 
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {Link} from "@qualcomm-ui/react/link"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
 import type {
   QuiCommentDisplayPart,
   QuiCommentTag,
 } from "@qualcomm-ui/typedoc-common"
 
-import {PropDescriptionSummary} from "./prop-description-summary"
+import {PropDescriptionSummary} from "./prop-description-summary.js"
 
 function isSingleLinkTag(tag: QuiCommentTag) {
   return (
@@ -58,7 +58,7 @@ interface Props {
 }
 
 export function PropDescriptionSeeTags({hideTitle, seeTags}: Props): ReactNode {
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
   return (
     <div className="doc-props-description__see-tags">
       {hideTitle ? null : <div>Related symbols:</div>}

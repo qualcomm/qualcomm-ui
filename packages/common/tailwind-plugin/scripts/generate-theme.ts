@@ -1,8 +1,7 @@
 import {writeFileSync} from "node:fs"
-import {dirname} from "node:path"
+import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
-import {resolve} from "path"
-import type {ThemeConfig} from "tailwindcss/types/config"
+import type {ThemeConfig} from "tailwindcss/plugin"
 
 import {knownVariables} from "./known-variables"
 
@@ -103,10 +102,7 @@ function resolveShadows(
     // Split the variable into parts
     const parts = variable.replace("--vscode-", "").split("-")
 
-    if (
-      parts[parts.length - 1] === "shadow" ||
-      parts[parts.length - 1].endsWith("Shadow")
-    ) {
+    if (parts.at(-1) === "shadow" || parts.at(-1)!.endsWith("Shadow")) {
       parts.pop()
     }
 
@@ -119,7 +115,7 @@ function resolveShadows(
 function resolveRecursiveThemeObject(variables: string[]): ThemeObject {
   const theme: any = {}
 
-  variables.forEach((variable) => {
+  for (const variable of variables) {
     const parts = variable.replace("--vscode-", "").split("-")
     let current = theme
 
@@ -130,7 +126,7 @@ function resolveRecursiveThemeObject(variables: string[]): ThemeObject {
 
     const lastPart = parts.pop()
     current[lastPart!] = {default: `var(${variable})`}
-  })
+  }
 
   return simplifyTheme(theme)
 }

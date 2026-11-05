@@ -14,8 +14,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
-import {passwordInputAnatomy} from "./password-input.anatomy"
+import {domIds} from "./internal/index.js"
+import {passwordInputAnatomy} from "./password-input.anatomy.js"
 import type {
   PasswordInputApi,
   PasswordInputClearTriggerBindings,
@@ -28,7 +28,7 @@ import type {
   PasswordInputRootBindings,
   PasswordInputSchema,
   PasswordInputVisibilityTriggerBindings,
-} from "./password-input.types"
+} from "./password-input.types.js"
 
 const parts = passwordInputAnatomy.parts
 

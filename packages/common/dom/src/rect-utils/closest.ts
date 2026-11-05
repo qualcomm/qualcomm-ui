@@ -4,13 +4,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {distance} from "./distance"
-import type {Point, Rect, RectSide} from "./types"
+import {distance} from "./distance.js"
+import type {Point, Rect, RectSide} from "./types.js"
 
 export function closest(...pts: Point[]): (a: Point) => Point {
   return (a: Point): Point => {
     const ds = pts.map((b) => distance(b, a))
-    const c = Math.min.apply(Math, ds)
+    const c = Math.min(...ds)
     return pts[ds.indexOf(c)]
   }
 }

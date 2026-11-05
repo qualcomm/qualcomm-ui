@@ -1,9 +1,9 @@
 {
   "name": "@qualcomm-ui/angular-core",
-  "description": "QUI Angular Core",
   "version": "0.0.0",
-  "author": "Ryan Bower",
+  "description": "QUI Angular Core",
   "license": "BSD-3-Clause-Clear",
-  "sideEffects": false,
-  "type": "module"
+  "author": "Ryan Bower",
+  "type": "module",
+  "sideEffects": false
 }

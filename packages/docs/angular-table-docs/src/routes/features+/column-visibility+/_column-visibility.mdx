@@ -7,13 +7,11 @@ import {QdsDemo} from "~components/demo"
 # {frontmatter.title}
 
 ::: terms
-show hide
-hidden
-column.toggleVisibility
-column.getIsVisible
-table.getIsAllColumnsVisible
+show hide, hidden, column.toggleVisibility, column.getIsVisible, table.getIsAllColumnsVisible
 :::
 
 Use the `columnVisibility` state and `onColumnVisibilityChange` callback to control which columns are visible. The table instance provides methods like `toggleAllColumnsVisible()` and `getAllLeafColumns()` for building column picker interfaces.
+
+---
 
 <QdsDemo expanded name="ColumnVisibilityDemo" />

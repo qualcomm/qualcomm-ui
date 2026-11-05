@@ -1,19 +1,22 @@
 import {
   ToastActionButton,
   type ToastActionButtonProps,
-} from "./toast-action-button"
+} from "./toast-action-button.js"
 import {
   ToastCloseButton,
   type ToastCloseButtonProps,
-} from "./toast-close-button"
-import {ToastDescription, type ToastDescriptionProps} from "./toast-description"
-import {ToastIcon, type ToastIconProps} from "./toast-icon"
-import {ToastLabel, type ToastLabelProps} from "./toast-label"
-import {ToastRoot, type ToastRootProps} from "./toast-root"
+} from "./toast-close-button.js"
+import {
+  ToastDescription,
+  type ToastDescriptionProps,
+} from "./toast-description.js"
+import {ToastIcon, type ToastIconProps} from "./toast-icon.js"
+import {ToastLabel, type ToastLabelProps} from "./toast-label.js"
+import {ToastRoot, type ToastRootProps} from "./toast-root.js"
 
-export * from "./create-toaster"
-export * from "./qds-toast-context"
-export * from "./toaster"
+export * from "./create-toaster.js"
+export * from "./qds-toast-context.js"
+export * from "./toaster.js"
 
 export type {
   ToastActionButtonProps,

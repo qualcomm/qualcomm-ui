@@ -1,16 +1,16 @@
 import {Component} from "@angular/core"
 import {
-  Bell,
-  CreditCard,
-  LayoutDashboard,
-  ShieldCheck,
-  User,
-} from "lucide-angular"
+  LucideBell,
+  LucideCreditCard,
+  LucideLayoutDashboard,
+  LucideShieldCheck,
+  LucideUser,
+} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {SideNavModule} from "@qualcomm-ui/angular/side-nav"
 import {TooltipModule} from "@qualcomm-ui/angular/tooltip"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 interface SideNavItem {
@@ -64,7 +64,13 @@ const collection = createTreeCollection<SideNavItem>({
 @Component({
   imports: [SideNavModule, IconDirective, TooltipModule],
   providers: [
-    provideIcons({Bell, CreditCard, LayoutDashboard, ShieldCheck, User}),
+    provideIcons({
+      LucideBell,
+      LucideCreditCard,
+      LucideLayoutDashboard,
+      LucideShieldCheck,
+      LucideUser,
+    }),
   ],
   selector: "side-nav-tooltip-demo",
   template: `

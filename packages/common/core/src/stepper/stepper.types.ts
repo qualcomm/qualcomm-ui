@@ -19,7 +19,7 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
-import type {stepperAnatomy} from "./stepper.anatomy"
+import type {stepperAnatomy} from "./stepper.anatomy.js"
 
 export type StepperOrientation =
   | "horizontal"

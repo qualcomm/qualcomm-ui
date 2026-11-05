@@ -5,13 +5,22 @@ import type {Text} from "mdast"
 import type {Plugin} from "unified"
 import {visit} from "unist-util-visit"
 
-import {isSpoilerBlock, isStepBlock} from "../../../remark"
+import {
+  isSerializeJsxBlock,
+  isSpoilerBlock,
+  isStepBlock,
+} from "../../../remark/index.js"
 
 export const filterTextDirectives: Plugin = () => {
   return (tree, _file, done) => {
     visit(tree, "text", (node: Text) => {
       const value = node.value?.trim?.()
-      if (value && (isStepBlock(value) || isSpoilerBlock(value))) {
+      if (
+        value &&
+        (isStepBlock(value) ||
+          isSpoilerBlock(value) ||
+          isSerializeJsxBlock(value))
+      ) {
         Object.assign(node, {
           value: ``,
         })

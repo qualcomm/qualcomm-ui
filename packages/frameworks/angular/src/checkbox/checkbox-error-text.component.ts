@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input} from "@angular/core"
-import {CircleAlert} from "lucide-angular"
+import {LucideCircleAlert} from "@lucide/angular"
 
 import {CoreCheckboxErrorTextDirective} from "@qualcomm-ui/angular-core/checkbox"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
@@ -24,9 +24,9 @@ export class CheckboxErrorTextComponent extends CoreCheckboxErrorTextDirective {
   /**
    * Error indicator icon.
    *
-   * @default CircleAlert
+   * @default LucideCircleAlert
    */
-  readonly icon = input<LucideIconOrString>(CircleAlert)
+  readonly icon = input<LucideIconOrString>(LucideCircleAlert)
 
   protected readonly qdsCheckboxContext = useQdsCheckboxContext()
 

@@ -1,13 +1,16 @@
-import {Tooltip as SimpleTooltip} from "./tooltip"
-import {TooltipArrow, type TooltipArrowProps} from "./tooltip-arrow"
-import {TooltipArrowTip, type TooltipArrowTipProps} from "./tooltip-arrow-tip"
-import {TooltipContent, type TooltipContentProps} from "./tooltip-content"
+import {
+  TooltipArrowTip,
+  type TooltipArrowTipProps,
+} from "./tooltip-arrow-tip.js"
+import {TooltipArrow, type TooltipArrowProps} from "./tooltip-arrow.js"
+import {TooltipContent, type TooltipContentProps} from "./tooltip-content.js"
 import {
   TooltipPositioner,
   type TooltipPositionerProps,
-} from "./tooltip-positioner"
-import {TooltipRoot, type TooltipRootProps} from "./tooltip-root"
-import {TooltipTrigger, type TooltipTriggerProps} from "./tooltip-trigger"
+} from "./tooltip-positioner.js"
+import {TooltipRoot, type TooltipRootProps} from "./tooltip-root.js"
+import {TooltipTrigger, type TooltipTriggerProps} from "./tooltip-trigger.js"
+import {Tooltip as SimpleTooltip} from "./tooltip.js"
 
 export type {
   TooltipArrowTipProps,

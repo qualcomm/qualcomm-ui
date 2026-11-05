@@ -34,9 +34,9 @@ export function callAll<T extends (...a: any[]) => void>(
   ...fns: (T | null | undefined)[]
 ) {
   return (...a: Parameters<T>): void => {
-    fns.forEach(function (fn) {
+    for (const fn of fns) {
       fn?.(...a)
-    })
+    }
   }
 }
 

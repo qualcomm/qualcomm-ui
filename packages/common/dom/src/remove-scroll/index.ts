@@ -1,1 +1,1 @@
-export * from "./remove-scroll"
+export * from "./remove-scroll.js"

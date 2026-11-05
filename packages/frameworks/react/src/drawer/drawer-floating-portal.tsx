@@ -5,9 +5,12 @@ import type {ReactElement, ReactNode} from "react"
 
 import {Portal, type PortalProps} from "@qualcomm-ui/react-core/portal"
 
-import {DrawerBackdrop, type DrawerBackdropProps} from "./drawer-backdrop"
-import {DrawerContent, type DrawerContentProps} from "./drawer-content"
-import {DrawerPositioner, type DrawerPositionerProps} from "./drawer-positioner"
+import {DrawerBackdrop, type DrawerBackdropProps} from "./drawer-backdrop.js"
+import {DrawerContent, type DrawerContentProps} from "./drawer-content.js"
+import {
+  DrawerPositioner,
+  type DrawerPositionerProps,
+} from "./drawer-positioner.js"
 
 export interface DrawerFloatingPortalProps extends PortalProps {
   /**

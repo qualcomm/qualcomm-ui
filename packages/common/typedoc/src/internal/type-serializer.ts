@@ -24,12 +24,12 @@ import {
   isTypeOverride,
   isUndefinedType,
   isUnionType,
-} from "../guards"
+} from "../guards.js"
 
-import {customTypes, ignoredTypes} from "./custom-types"
-import {formatDefault} from "./format-comment"
-import {ImportBuilder} from "./import-builder"
-import type {PropBuilderParams} from "./prop-builder"
+import {customTypes, ignoredTypes} from "./custom-types.js"
+import {formatDefault} from "./format-comment.js"
+import {ImportBuilder} from "./import-builder.js"
+import type {PropBuilderParams} from "./prop-builder.js"
 import {
   defaultPrintWidth,
   extractDocLink,
@@ -38,8 +38,8 @@ import {
   getName,
   prettyType,
   TypeFormatter,
-} from "./type-formatter"
-import type {KnownInterfaces, QuiDeclarationReflection} from "./types"
+} from "./type-formatter.js"
+import type {KnownInterfaces, QuiDeclarationReflection} from "./types.js"
 
 function isDeprecated(comment?: JSONOutput.Comment) {
   return comment?.blockTags?.some?.((r) => r.tag === "@deprecated") || undefined
@@ -120,7 +120,7 @@ export class TypeSerializer {
 
   resolveReflectionComment(
     prop: QuiDeclarationReflection & {type: JSONOutput.ReflectionType},
-  ) {
+  ): JSONOutput.Comment {
     const comment: JSONOutput.Comment = cloneDeep(prop.comment) ?? {
       blockTags: [],
       summary: [],
@@ -432,15 +432,15 @@ export class TypeSerializer {
               return {
                 ...content,
                 docLink: knownType?.resolvedType?.docLink,
-              } as QuiCommentDisplayPart
+              }
             }
-            return content as QuiCommentDisplayPart
+            return content
           }),
         }
       }
       // the additional properties in QuiCommentTag and its derivative types are all
       // optional, so this cast is fine.
-      return tag as QuiCommentTag
+      return tag
     })
   }
 
@@ -694,7 +694,7 @@ export class TypeSerializer {
    */
   async serializeSignature(
     signature: JSONOutput.SignatureReflection,
-    printWidth = defaultPrintWidth,
+    printWidth: number = defaultPrintWidth,
   ): Promise<SerializedType> {
     // the return type of the signature.
     const {inheritDoc, isCustomOverride, type} = this.parseType(signature)

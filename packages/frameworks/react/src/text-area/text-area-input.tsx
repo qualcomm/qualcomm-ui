@@ -7,7 +7,7 @@ import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {useTextAreaInput} from "@qualcomm-ui/react-core/text-area"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsTextAreaContext} from "./qds-text-area-context"
+import {useQdsTextAreaContext} from "./qds-text-area-context.js"
 
 export interface TextAreaInputProps
   extends ComponentPropsWithRef<"textarea">, IdProp {}

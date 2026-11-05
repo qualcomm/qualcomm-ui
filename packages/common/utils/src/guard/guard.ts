@@ -63,7 +63,7 @@ export function isNull(v: any): v is null | undefined {
 export const hasProp = <T extends string>(
   obj: any,
   prop: T,
-): obj is Record<T, any> => Object.prototype.hasOwnProperty.call(obj, prop)
+): obj is Record<T, any> => Object.hasOwn(obj, prop)
 
 function baseGetTag(v: any) {
   return Object.prototype.toString.call(v)

@@ -37,7 +37,7 @@ export class TreeBranchTemplateDirective<T extends TreeNode> {
   template = inject(TemplateRef)
 
   static ngTemplateContextGuard<T extends TreeNode>(
-    dir: TreeBranchTemplateDirective<T>,
+    _dir: TreeBranchTemplateDirective<T>,
     _ctx: unknown,
   ): _ctx is TreeNodeTemplateContext<T> {
     return true

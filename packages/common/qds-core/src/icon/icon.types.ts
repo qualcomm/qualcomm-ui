@@ -3,7 +3,7 @@
 
 import type {JSX} from "@qualcomm-ui/utils/machine"
 
-import type {iconClasses} from "./icon.classes"
+import type {iconClasses} from "./icon.classes.js"
 
 export type QdsIconSize = "xs" | "sm" | "md" | "lg" | "xl" | string | number
 

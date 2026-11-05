@@ -3,7 +3,7 @@
 
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import type {InlineNotificationSchema} from "./inline-notification.types"
+import type {InlineNotificationSchema} from "./inline-notification.types.js"
 
 export const inlineNotificationMachine: MachineConfig<InlineNotificationSchema> =
   createMachine<InlineNotificationSchema>({

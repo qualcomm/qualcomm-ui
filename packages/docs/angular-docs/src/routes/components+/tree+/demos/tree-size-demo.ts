@@ -1,10 +1,10 @@
 import {NgTemplateOutlet} from "@angular/common"
 import {Component} from "@angular/core"
-import {FileText, FolderIcon} from "lucide-angular"
+import {LucideFileText, LucideFolder} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
 import {TreeModule} from "@qualcomm-ui/angular/tree"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 interface FileNode {
@@ -70,7 +70,7 @@ const collection = createTreeCollection<FileNode>({
 
 @Component({
   imports: [TreeModule, IconDirective, NgTemplateOutlet],
-  providers: [provideIcons({FileText, FolderIcon})],
+  providers: [provideIcons({LucideFileText, LucideFolder})],
   selector: "tree-size-demo",
   template: `
     <div class="flex w-full flex-col gap-4">
@@ -118,7 +118,7 @@ const collection = createTreeCollection<FileNode>({
             <div q-tree-branch-node>
               <div q-tree-node-indicator></div>
               <div q-tree-branch-trigger></div>
-              <svg q-tree-node-icon qIcon="FolderIcon"></svg>
+              <svg q-tree-node-icon qIcon="LucideFolder"></svg>
               <span q-tree-node-text>{{ branch.node.name }}</span>
             </div>
           </ng-template>
@@ -130,7 +130,7 @@ const collection = createTreeCollection<FileNode>({
           >
             <div q-tree-leaf-node>
               <div q-tree-node-indicator></div>
-              <svg q-tree-node-icon qIcon="FileText"></svg>
+              <svg q-tree-node-icon qIcon="LucideFileText"></svg>
               <span q-tree-node-text>{{ leaf.node.name }}</span>
             </div>
           </ng-template>

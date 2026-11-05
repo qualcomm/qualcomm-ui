@@ -21,7 +21,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsPaginationContextProvider} from "./qds-pagination-context"
+import {QdsPaginationContextProvider} from "./qds-pagination-context.js"
 
 export interface PaginationRootProps
   extends UsePaginationProps, QdsPaginationApiProps, ElementRenderProp<"nav"> {

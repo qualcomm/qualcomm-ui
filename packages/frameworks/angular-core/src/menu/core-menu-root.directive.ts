@@ -26,6 +26,7 @@ import {
   type MenuApiProps,
   menuMachine,
   type MenuNavigateDetails,
+  type MenuPositioningOptions,
 } from "@qualcomm-ui/core/menu"
 import {
   createPresenceApi,
@@ -33,7 +34,6 @@ import {
   presenceMachine,
 } from "@qualcomm-ui/core/presence"
 import type {LayerDismissEvent} from "@qualcomm-ui/dom/dismissable"
-import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {
   FocusOutsideEvent,
   InteractOutsideEvent,
@@ -43,7 +43,6 @@ import type {Point} from "@qualcomm-ui/dom/rect-utils"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 import {type Explicit, isDefined} from "@qualcomm-ui/utils/guard"
-import type {IdRegistrationProps} from "@qualcomm-ui/utils/machine"
 
 import {MenuContextService, useMenuContext} from "./menu-context.service"
 import {
@@ -138,7 +137,7 @@ export class CoreMenuRootDirective
    * The options used to dynamically position the menu
    * @inheritDoc
    */
-  readonly positioning = input<PositioningOptions | undefined>()
+  readonly positioning = input<MenuPositioningOptions | undefined>()
 
   /**
    * Whether the pressing printable characters should trigger typeahead navigation
@@ -289,7 +288,7 @@ export class CoreMenuRootDirective
 
     this.menuTriggerService.init(
       computed(() => {
-        return (params: IdRegistrationProps) => {
+        return (params) => {
           return this.parentMenuContext?.()?.getTriggerItemBindings?.(
             menuApi(),
             params,

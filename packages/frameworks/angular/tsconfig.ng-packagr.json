@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "paths": {
+      "@qualcomm-ui/angular/*": ["./src/*/index.ts"],
+      // required for compilation
+      "@qualcomm-ui/angular-core/*": ["./node_modules/@qualcomm/ui/angular-core/src/*/index.ts"]
+    }
+  },
+}

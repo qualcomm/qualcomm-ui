@@ -8,9 +8,9 @@ import {trackDismissableBranch} from "@qualcomm-ui/dom/dismissable"
 import {addDomEvent} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {getRegionEl} from "./internal"
-import {getToastUuid} from "./toast.store"
-import type {ToastGroupSchema} from "./toast.types"
+import {getRegionEl} from "./internal/index.js"
+import {getToastUuid} from "./toast.store.js"
+import type {ToastGroupSchema} from "./toast.types.js"
 
 export const toastGroupMachine: MachineConfig<ToastGroupSchema> =
   createMachine<ToastGroupSchema>({

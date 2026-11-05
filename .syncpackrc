@@ -13,35 +13,10 @@
       "isIgnored": true
     },
     {
-      "label": "No wildcards",
+      "label": "Highest Semver",
       "preferVersion": "highestSemver",
       "dependencyTypes": ["dev", "prod"]
     }
   ],
-  "sortAz": [],
-  "sortFirst": [
-    "name",
-    "version",
-    "description",
-    "author",
-    "license",
-    "repository",
-    "private",
-    "publishConfig",
-    "type",
-    "bin",
-    "sideEffects",
-    "files",
-    "main",
-    "module",
-    "typings",
-    "types",
-    "exports",
-    "scripts",
-    "dependencies",
-    "devDependencies",
-    "peerDependencies",
-    "optionalDependencies",
-    "resolutions"
-  ]
+  "sortPackages": false
 }

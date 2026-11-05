@@ -11,24 +11,24 @@ import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
 import {
   AccordionItemContent,
   type AccordionItemContentProps,
-} from "./accordion-item-content"
+} from "./accordion-item-content.js"
 import {
   AccordionItemIndicator,
   type AccordionItemIndicatorProps,
-} from "./accordion-item-indicator"
-import {AccordionItemRoot} from "./accordion-item-root"
+} from "./accordion-item-indicator.js"
+import {AccordionItemRoot} from "./accordion-item-root.js"
 import {
   AccordionItemSecondaryText,
   type AccordionItemSecondaryTextProps,
-} from "./accordion-item-secondary-text"
+} from "./accordion-item-secondary-text.js"
 import {
   AccordionItemText,
   type AccordionItemTextProps,
-} from "./accordion-item-text"
+} from "./accordion-item-text.js"
 import {
   AccordionItemTrigger,
   type AccordionItemTriggerProps,
-} from "./accordion-item-trigger"
+} from "./accordion-item-trigger.js"
 
 export interface AccordionItemProps
   extends AccordionItemApiProps, IdProp, ElementRenderProp<"div"> {

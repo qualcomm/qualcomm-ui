@@ -15,31 +15,8 @@ const sharedProps = {
   }),
 }
 
-// Shared props for table-bar variants
-const tableBarProps = {
-  ...sharedProps,
-  pageMetadata: figma.boolean("range", {
-    false: undefined,
-    true: (
-      <Pagination.PageMetadata>
-        {({count, pageEnd, pageStart}) =>
-          `${pageStart} - ${pageEnd} of ${count} results`
-        }
-      </Pagination.PageMetadata>
-    ),
-  }),
-  pageSize: figma.boolean("items", {
-    false: undefined,
-    true: (
-      <Pagination.PageSize options={[10, 25, 50, 100]}>
-        <Pagination.PageSizeLabel>Items per page</Pagination.PageSizeLabel>
-      </Pagination.PageSize>
-    ),
-  }),
-}
-
 /**
- * Pagination Nav - Simple page buttons only
+ * Basic - Simple page buttons only
  */
 figma.connect(Pagination.Root, FIGMA_URL, {
   example: ({size}) => (
@@ -48,37 +25,35 @@ figma.connect(Pagination.Root, FIGMA_URL, {
     </Pagination.Root>
   ),
   props: sharedProps,
-  variant: {control: "none", type: "pagination-nav"},
+  variant: {variant: "basic"},
 })
 
 /**
- * Table Bar - Controls on left
+ * Advanced
  * Layout: [PageSize] [PageMetadata] ... [PageButtons]
  */
 figma.connect(Pagination.Root, FIGMA_URL, {
-  example: ({pageMetadata, pageSize, size}) => (
+  example: ({pageSize, size}) => (
     <Pagination.Root count={360} defaultPageSize={100} size={size}>
       {pageSize}
-      {pageMetadata}
+      <Pagination.PageMetadata>
+        {({count, pageEnd, pageStart}) =>
+          `${pageStart} - ${pageEnd} of ${count} results`
+        }
+      </Pagination.PageMetadata>
       <Pagination.PageButtons />
     </Pagination.Root>
   ),
-  props: tableBarProps,
-  variant: {control: "left", type: "table-bar"},
-})
-
-/**
- * Table Bar - Controls on right
- * Layout: [PageButtons] ... [PageSize] [PageMetadata]
- */
-figma.connect(Pagination.Root, FIGMA_URL, {
-  example: ({pageMetadata, pageSize, size}) => (
-    <Pagination.Root count={360} defaultPageSize={100} size={size}>
-      <Pagination.PageButtons />
-      {pageSize}
-      {pageMetadata}
-    </Pagination.Root>
-  ),
-  props: tableBarProps,
-  variant: {control: "right", type: "table-bar"},
+  props: {
+    ...sharedProps,
+    pageSize: figma.boolean("itemsPerPage", {
+      false: undefined,
+      true: (
+        <Pagination.PageSize options={[10, 25, 50, 100]}>
+          <Pagination.PageSizeLabel>Items per page</Pagination.PageSizeLabel>
+        </Pagination.PageSize>
+      ),
+    }),
+  },
+  variant: {variant: "advanced"},
 })

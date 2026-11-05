@@ -1,18 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {AST_NODE_TYPES, type TSESTree} from "@typescript-eslint/utils"
+
 import {
-  AST_NODE_TYPES,
-  ESLintUtils,
-  type TSESTree,
-} from "@typescript-eslint/utils"
-
-import {getAttributeValue, getJsxElementName, isQuiPackage} from "./utils"
-
-const createRule = ESLintUtils.RuleCreator(
-  (name) =>
-    `https://github.com/qualcomm/qualcomm-ui/tree/main/packages/configs/eslint-plugin-react#${name}`,
-)
+  createRule,
+  getAttributeValue,
+  getJsxElementName,
+  isQuiPackage,
+} from "./utils.js"
 
 const NATIVE_INTERACTIVE_ELEMENTS = new Set([
   "a",
@@ -45,7 +41,9 @@ const QUI_INTERACTIVE_COMPONENTS = new Set([
 
 type MessageIds = "noInteractiveChildren"
 
-export const interactiveCardElementNesting = createRule<[], MessageIds>({
+export const interactiveCardElementNesting: ReturnType<
+  typeof createRule<[], MessageIds>
+> = createRule<[], MessageIds>({
   create(context) {
     const importedCard = new Map<string, string>()
     const importedQuiInteractive = new Map<string, string>()

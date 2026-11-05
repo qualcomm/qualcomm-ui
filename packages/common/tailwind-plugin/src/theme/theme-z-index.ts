@@ -1,14 +1,38 @@
+/* eslint-disable */
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {BasicThemeData} from "./theme.types"
+/** This file was generated automatically. Do not edit it directly. */
+
+import type {BasicThemeData} from "./theme.types.js"
 
 export const themeZIndex: BasicThemeData[] = [
-  {variable: "--z-index-dropdown"},
-  {variable: "--z-index-banner"},
-  {variable: "--z-index-overlay"},
-  {variable: "--z-index-dialog"},
-  {variable: "--z-index-popover"},
-  {variable: "--z-index-toast"},
-  {variable: "--z-index-tooltip"},
+  {
+    tailwindClasses: [],
+    variable: "--z-index-dropdown",
+  },
+  {
+    tailwindClasses: [],
+    variable: "--z-index-banner",
+  },
+  {
+    tailwindClasses: [],
+    variable: "--z-index-overlay",
+  },
+  {
+    tailwindClasses: [],
+    variable: "--z-index-dialog",
+  },
+  {
+    tailwindClasses: [],
+    variable: "--z-index-popover",
+  },
+  {
+    tailwindClasses: [],
+    variable: "--z-index-toast",
+  },
+  {
+    tailwindClasses: [],
+    variable: "--z-index-tooltip",
+  },
 ]

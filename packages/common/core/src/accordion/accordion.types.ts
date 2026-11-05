@@ -19,7 +19,7 @@ import type {
   MachineSchema,
 } from "@qualcomm-ui/utils/machine"
 
-import type {accordionAnatomy} from "./accordion.anatomy"
+import type {accordionAnatomy} from "./accordion.anatomy.js"
 
 export interface AccordionApiProps extends DirectionProperty {
   /**

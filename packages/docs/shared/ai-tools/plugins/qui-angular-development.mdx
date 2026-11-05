@@ -1,0 +1,26 @@
+---
+title: QUI Angular Best Practices
+---
+
+# {frontmatter.title}
+
+Use the QUI Angular Development plugin when writing or reviewing Angular templates that consume `@qualcomm-ui/angular`. The plugin loads the covered component contracts into the agent so it can apply or audit the same best-practice categories enforced by `@qualcomm-ui/eslint-plugin-angular`.
+
+The plugin provides two Angular-specific skills:
+
+- **apply-qui-component-rules**: guidelines for writing or modifying covered QUI Angular template usage
+- **audit-qui-component-rules**: guidelines for reviewing covered QUI Angular template usage
+
+## Installation
+
+- Enable the QUI plugin marketplace for your agent
+  - [Claude Code](/ai-tools/claude-code)
+  - [Codex](/ai-tools/codex)
+- Browse the agent's plugin repository and enable **qui-angular-development**.
+- Start a fresh session after enabling **qui-angular-development** so the skills load into the conversation.
+
+Refer to the [plugin source code](https://github.com/qualcomm/qualcomm-ui/tree/main/plugins/qui-angular-development/references) to learn more.
+
+## Troubleshoot plugin usage
+
+If the agent does not load a `qui-angular-development:*` skill, confirm that **qui-angular-development** is enabled in the agent's plugin repository. Then start a fresh session.

@@ -1,1 +1,1 @@
-export * from "./component-explorer-base"
+export * from "./component-explorer-base.js"

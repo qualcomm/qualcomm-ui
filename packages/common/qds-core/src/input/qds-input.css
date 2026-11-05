@@ -186,11 +186,6 @@
     --icon-width: var(--sizing-80);
     margin-right: calc(var(--spacing-80) - var(--input-group-gap));
   }
-
-  svg.lucide {
-    height: var(--icon-height);
-    width: var(--icon-width);
-  }
 }
 
 .qui-input__clear-button {

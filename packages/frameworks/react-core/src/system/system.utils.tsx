@@ -11,7 +11,7 @@ import {
 
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import type {BindingRenderProp, RenderProp} from "./system.types"
+import type {BindingRenderProp, RenderProp} from "./system.types.js"
 
 interface BindingRenderPropConfig {
   /**

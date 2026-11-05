@@ -2,10 +2,10 @@ import {Component, type Signal} from "@angular/core"
 import {FormsModule} from "@angular/forms"
 import {injectQuery} from "@tanstack/angular-query-experimental"
 
-import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
-import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 import {useListCollection} from "@qualcomm-ui/angular-core/collection"
 import type {AngularVirtualizerOptions} from "@qualcomm-ui/angular-core/virtual"
+import {ComboboxModule} from "@qualcomm-ui/angular/combobox"
+import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
 import type {ComboboxInputValueChangeDetails} from "@qualcomm-ui/core/combobox"
 
 interface Starship {

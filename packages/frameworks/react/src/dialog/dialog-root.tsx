@@ -13,7 +13,7 @@ import {
 } from "@qualcomm-ui/react-core/dialog"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 
-import {QdsDialogContextProvider} from "./qds-dialog-context"
+import {QdsDialogContextProvider} from "./qds-dialog-context.js"
 
 export interface DialogRootProps
   extends CoreDialogRootProps, QdsDialogApiProps {

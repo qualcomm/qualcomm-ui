@@ -3,7 +3,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {TextAreaApiProps} from "./text-area.types"
+import type {TextAreaApiProps} from "./text-area.types.js"
 
 const textAreaProps: (keyof TextAreaApiProps)[] =
   createProps<TextAreaApiProps>()(

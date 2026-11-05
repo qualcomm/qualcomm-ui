@@ -21,7 +21,7 @@ export class PopoverContextDirective extends ApiContextDirective<PopoverApi> {
    * Provides intellisense for the context in the template.
    */
   static ngTemplateContextGuard(
-    dir: PopoverContextDirective,
+    _dir: PopoverContextDirective,
     _ctx: unknown,
   ): _ctx is {$implicit: PopoverApi} {
     return true

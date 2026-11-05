@@ -1,10 +1,11 @@
 import {Component, computed, effect, signal} from "@angular/core"
 import {toObservable, toSignal} from "@angular/core/rxjs-interop"
 import {FormsModule} from "@angular/forms"
+import {LucideSearch} from "@lucide/angular"
 import {injectQuery} from "@tanstack/angular-query-experimental"
-import {Search} from "lucide-angular"
 import {debounceTime} from "rxjs"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {PaginationModule} from "@qualcomm-ui/angular/pagination"
 import {PopoverModule} from "@qualcomm-ui/angular/popover"
 import {ProgressRingModule} from "@qualcomm-ui/angular/progress-ring"
@@ -15,7 +16,6 @@ import {
   TableModule,
 } from "@qualcomm-ui/angular/table"
 import {TextInputModule} from "@qualcomm-ui/angular/text-input"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {
   type ColumnFiltersState,
   getCoreRowModel,
@@ -36,13 +36,14 @@ import {TableColumnFilter} from "./table-column-filter"
     PopoverModule,
     TableColumnFilter,
   ],
-  providers: [provideIcons({Search})],
+  providers: [provideIcons({LucideSearch})],
   selector: "filters-server-side-demo",
   template: `
     <div class="flex w-full flex-col gap-4 p-2">
       <div q-table-root>
         <div q-table-action-bar>
           <q-text-input
+            aria-label="Search columns"
             class="w-56"
             placeholder="Search all columns..."
             size="sm"

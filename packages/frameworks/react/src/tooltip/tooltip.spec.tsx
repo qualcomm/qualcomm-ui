@@ -1,8 +1,8 @@
-import {type ComponentPropsWithoutRef, useState} from "react"
+import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
-import {page, userEvent} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page, userEvent} from "vitest/browser"
 
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 
@@ -41,7 +41,9 @@ const tests: MultiComponentTestCase[] = [
       test("not visible by default", async () => {
         await render(getComponent())
         await expect.element(page.getByText(triggerText)).toBeVisible()
-        await expect.element(page.getByRole("tooltip")).not.toBeInTheDocument()
+        await expect
+          .element(page.getByRole("tooltip", {includeHidden: true}))
+          .not.toBeVisible()
       })
     },
   },
@@ -529,18 +531,10 @@ const tests: MultiComponentTestCase[] = [
     simple() {
       return (
         <Tooltip
-          arrowProps={
-            {"data-test-id": "arrow"} as ComponentPropsWithoutRef<"div">
-          }
-          arrowTipProps={
-            {"data-test-id": "arrow-tip"} as ComponentPropsWithoutRef<"div">
-          }
-          contentProps={
-            {"data-test-id": "content"} as ComponentPropsWithoutRef<"div">
-          }
-          positionerProps={
-            {"data-test-id": "positioner"} as ComponentPropsWithoutRef<"div">
-          }
+          arrowProps={{"data-test-id": "arrow"}}
+          arrowTipProps={{"data-test-id": "arrow-tip"}}
+          contentProps={{"data-test-id": "content"}}
+          positionerProps={{"data-test-id": "positioner"}}
           trigger={(props) => <button {...props}>{triggerText}</button>}
         >
           {tooltipContent}
@@ -621,6 +615,7 @@ const tests: MultiComponentTestCase[] = [
         const trigger = page.getByText(triggerText)
         await expect.element(trigger).not.toHaveAttribute("aria-describedby")
         await trigger.hover()
+        await expect.element(page.getByText(tooltipContent)).toBeVisible()
         await expect.element(trigger).toHaveAttribute("aria-describedby")
       })
     },

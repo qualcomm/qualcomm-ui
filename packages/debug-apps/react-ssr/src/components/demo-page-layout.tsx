@@ -26,11 +26,11 @@ export function DemoPageLayout({
       {demos.map(({component: Demo, title}) => {
         const demoSlug = kebabCase(title)
         return (
-          <div className="section" key={title}>
+          <div key={title} className="section">
             <h2 className="section-title">
               <Link
-                to={`/components/${componentName}/${demoSlug}`}
                 className="hover:underline"
+                to={`/components/${componentName}/${demoSlug}`}
               >
                 {title}
               </Link>

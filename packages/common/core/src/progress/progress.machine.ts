@@ -8,7 +8,7 @@ import {isDefined, isNumber} from "@qualcomm-ui/utils/guard"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 import {getRoundedValuePercent} from "@qualcomm-ui/utils/number"
 
-import type {ProgressSchema} from "./progress.types"
+import type {ProgressSchema} from "./progress.types.js"
 
 export const progressMachine: MachineConfig<ProgressSchema> =
   createMachine<ProgressSchema>({

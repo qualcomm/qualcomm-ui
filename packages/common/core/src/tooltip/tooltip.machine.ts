@@ -8,8 +8,8 @@ import {trackEscapeKeydown} from "@qualcomm-ui/dom/dismissable"
 import {getPlacement, type Placement} from "@qualcomm-ui/dom/floating-ui"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {store} from "./tooltip.store"
-import type {TooltipSchema} from "./tooltip.types"
+import {store} from "./tooltip.store.js"
+import type {TooltipSchema} from "./tooltip.types.js"
 
 export const tooltipMachine: MachineConfig<TooltipSchema> =
   createMachine<TooltipSchema>({

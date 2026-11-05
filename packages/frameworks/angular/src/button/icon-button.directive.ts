@@ -11,14 +11,14 @@ import {
   type OnInit,
 } from "@angular/core"
 
-import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {
   normalizeProps,
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {IconDirective} from "@qualcomm-ui/angular/icon"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {
   createQdsIconButtonApi,
   type QdsButtonDensity,
@@ -27,9 +27,12 @@ import {
   type QdsButtonVariant,
   type QdsIconButtonApiProps,
   type QdsIconButtonShape,
+  resolveButtonProps,
 } from "@qualcomm-ui/qds-core/button"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
+import {useQdsButtonGroupContext} from "./qds-button-group-context.service"
+import {useQdsButtonPropsContext} from "./qds-button-props-context.service"
 import {
   provideQdsIconButtonContext,
   QdsIconButtonContextService,
@@ -43,7 +46,11 @@ import {
   template: `
     <ng-content #ref select="svg[qIcon]" />
     @if (icon()) {
-      <svg [q-bind]="iconProps()" [qIcon]="icon()!"></svg>
+      <svg
+        [q-bind]="iconProps()"
+        [qIcon]="icon()!"
+        [size]="iconButtonContext.context().size"
+      ></svg>
     }
   `,
 })
@@ -113,23 +120,41 @@ export class IconButtonDirective
   )
 
   protected readonly iconButtonContext = inject(QdsIconButtonContextService)
+  protected readonly buttonGroupContext = useQdsButtonGroupContext({
+    optional: true,
+  })
+  protected readonly buttonPropsContext = useQdsButtonPropsContext({
+    optional: true,
+  })
+
+  /**
+   * The button's own size, before group and context defaults are applied.
+   * Subclasses may supply a fallback.
+   */
+  protected readonly ownSize = computed(() => this.size())
 
   readonly iconChild = contentChild(IconDirective)
 
   ngOnInit() {
-    const buttonApi = computed(() => {
-      return createQdsIconButtonApi(
-        {
-          density: this.density(),
-          disabled: this.disabled(),
-          emphasis: this.emphasis(),
-          shape: this.shape(),
-          size: this.size(),
-          variant: this.variant(),
-        },
+    const buttonApi = computed(() =>
+      createQdsIconButtonApi(
+        resolveButtonProps(
+          {
+            density: this.density(),
+            disabled: this.disabled(),
+            emphasis: this.emphasis(),
+            shape: this.shape(),
+            size: this.ownSize(),
+            variant: this.variant(),
+          },
+          {
+            defaults: this.buttonPropsContext?.(),
+            group: this.buttonGroupContext?.(),
+          },
+        ),
         normalizeProps,
-      )
-    })
+      ),
+    )
 
     this.iconButtonContext.init(buttonApi)
 

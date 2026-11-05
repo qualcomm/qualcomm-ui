@@ -47,6 +47,8 @@ echo "Extracting site data"
 
 mkdir -p ./scripts/temp
 
+pnpm build:typedoc
+
 pnpm generate-page-map
 
 echo "Building application..."

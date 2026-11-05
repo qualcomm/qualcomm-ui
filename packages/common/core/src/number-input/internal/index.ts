@@ -1,1 +1,1 @@
-export * from "./number-input.dom"
+export * from "./number-input.dom.js"

@@ -1,12 +1,12 @@
 import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
 import {comboboxCollection} from "@qualcomm-ui/core/combobox"
-import {Combobox} from "@qualcomm-ui/react/combobox"
 import {Portal} from "@qualcomm-ui/react-core/portal"
+import {Combobox} from "@qualcomm-ui/react/combobox"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 

@@ -17,7 +17,7 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useTooltipContext} from "./tooltip-context"
+import {useTooltipContext} from "./tooltip-context.js"
 
 export function useTooltip(props: TooltipApiProps): TooltipApi {
   const config = useMachine(tooltipMachine, props)

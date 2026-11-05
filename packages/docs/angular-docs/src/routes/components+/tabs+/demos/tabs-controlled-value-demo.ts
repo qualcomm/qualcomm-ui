@@ -1,13 +1,13 @@
 import {Component, signal} from "@angular/core"
-import {ChevronLeft, ChevronRight} from "lucide-angular"
+import {LucideChevronLeft, LucideChevronRight} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {TabsModule} from "@qualcomm-ui/angular/tabs"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [TabsModule, ButtonModule],
-  providers: [provideIcons({ChevronLeft, ChevronRight})],
+  providers: [provideIcons({LucideChevronLeft, LucideChevronRight})],
   selector: "tabs-controlled-value-demo",
   template: `
     <div q-tabs-root [value]="value()" (valueChanged)="value.set($event)">

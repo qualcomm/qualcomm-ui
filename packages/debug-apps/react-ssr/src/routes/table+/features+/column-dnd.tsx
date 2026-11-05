@@ -7,9 +7,9 @@ const demos = [{component: ColumnDndDemo, title: "Column Dnd"}]
 export default function ColumnDnd() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="column-dnd"
       demos={demos}
-      className="w-full"
     />
   )
 }

@@ -27,7 +27,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {menuAnatomy} from "./menu.anatomy"
+import type {menuAnatomy} from "./menu.anatomy.js"
 
 type PartName = AnatomyPartName<typeof menuAnatomy>
 interface Part<P extends PartName> extends AnatomyPart<"menu", P> {}
@@ -62,9 +62,14 @@ export interface ItemProps {
 
 export interface ItemListenerProps {
   /**
+   * The item element. Takes precedence over {@link id}.
+   */
+  element?: HTMLElement | null | undefined
+
+  /**
    * The id of the item. Can be obtained from the `getItemState` function.
    */
-  id: string
+  id?: string | undefined
 
   /**
    * Function called when the item is selected
@@ -164,7 +169,7 @@ interface ItemApi {
 }
 
 export type MenuTriggerContextValue = (
-  props: IdRegistrationProps,
+  props: ItemProps & IdRegistrationProps,
 ) => MenuTriggerItemBindings | undefined
 
 export interface MenuApiProps
@@ -245,13 +250,22 @@ export interface MenuApiProps
    * The options used to dynamically position the menu
    * @inheritDoc
    */
-  positioning?: PositioningOptions | undefined
+  positioning?: MenuPositioningOptions | undefined
 
   /**
    * Whether the pressing printable characters should trigger typeahead navigation
    * @default true
    */
   typeahead?: boolean | undefined
+}
+
+export interface MenuPositioningOptions extends PositioningOptions {
+  /**
+   * The initial placement of the floating element
+   *
+   * @default 'bottom-start'
+   */
+  placement?: Placement | undefined
 }
 
 type PropsWithDefault =
@@ -302,6 +316,8 @@ type MenuEvent =
         | "POINTER_MOVED_AWAY_FROM_SUBMENU"
         | "HIGHLIGHTED.RESTORE"
         | "BLUR"
+        | "CONTENT_BLUR"
+        | "CONTENT_FOCUS_VISIBLE"
     }
   | {fromArrowKey: boolean; type: "FOCUS_MENU"}
   | {fromArrowKey: boolean; type: "OPEN_AUTOFOCUS"}
@@ -361,6 +377,8 @@ export interface MenuSchema extends MachineSchema {
     | "resumePointer"
     | "setHighlightedItem"
     | "clearHighlightedItem"
+    | "clearItemFocusVisible"
+    | "setItemFocusVisible"
     | "focusMenu"
     | "highlightFirstItem"
     | "highlightLastItem"
@@ -465,8 +483,12 @@ export interface MenuTriggerBindings extends Part<"trigger"> {
 }
 
 export interface MenuPositionerBindings extends Part<"positioner"> {
+  "data-focus-trap-tab-delegate": ""
+  "data-from": "context-trigger" | "trigger"
+  "data-placement": Placement | undefined
   dir: Direction
   id: string
+  onKeyDown: JSX.KeyboardEventHandler
   style: JSX.CSSProperties
 }
 
@@ -489,6 +511,8 @@ export interface MenuContentBindings extends Part<"content"> {
   dir: Direction
   hidden: boolean
   id: string
+  onBlur: JSX.FocusEventHandler
+  onFocus: JSX.FocusEventHandler
   onKeyDown: JSX.KeyboardEventHandler
   onPointerEnter: JSX.PointerEventHandler
   role: "menu" | "dialog"
@@ -633,6 +657,6 @@ export interface MenuApi {
   getTriggerBindings: (props: IdRegistrationProps) => MenuTriggerBindings
   getTriggerItemBindings: <Api extends ItemApi>(
     childApi: Api,
-    props: IdRegistrationProps,
+    props: ItemProps & IdRegistrationProps,
   ) => MenuTriggerItemBindings
 }

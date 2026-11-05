@@ -5,8 +5,8 @@ import {fromLength} from "@qualcomm-ui/utils/array"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {domIds, isValidStepNavigation} from "./internal"
-import {stepperAnatomy} from "./stepper.anatomy"
+import {domIds, isValidStepNavigation} from "./internal/index.js"
+import {stepperAnatomy} from "./stepper.anatomy.js"
 import type {
   StepperApi,
   StepperCompletedContentBindings,
@@ -24,7 +24,7 @@ import type {
   StepperSchema,
   StepperSeparatorBindings,
   StepperTriggerBindings,
-} from "./stepper.types"
+} from "./stepper.types.js"
 
 export function createStepperApi(
   machine: Machine<StepperSchema>,

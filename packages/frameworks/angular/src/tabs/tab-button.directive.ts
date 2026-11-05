@@ -3,13 +3,13 @@
 
 import {Component, computed, inject, input} from "@angular/core"
 
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {CoreTabButtonDirective} from "@qualcomm-ui/angular-core/tabs"
 import {
   END_ICON_CONTEXT_TOKEN,
   type IconTokenContext,
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
-import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
-import {CoreTabButtonDirective} from "@qualcomm-ui/angular-core/tabs"
 
 import {useQdsTabsContext} from "./qds-tabs-context.service"
 
@@ -46,17 +46,21 @@ import {useQdsTabsContext} from "./qds-tabs-context.service"
         <svg
           [q-bind]="qdsContext().getTabStartIconBindings()"
           [qIcon]="startIcon()!"
+          [size]="qdsContext().size"
         />
       }
     </ng-content>
 
-    <ng-content />
+    <span [q-bind]="qdsContext().getTabButtonTextBindings()">
+      <ng-content />
+    </span>
 
     <ng-content select="[q-end-icon]">
       @if (endIcon()) {
         <svg
           [q-bind]="qdsContext().getTabEndIconBindings()"
           [qIcon]="endIcon()!"
+          [size]="qdsContext().size"
         />
       }
     </ng-content>

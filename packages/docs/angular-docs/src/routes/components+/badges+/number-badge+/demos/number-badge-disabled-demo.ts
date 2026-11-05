@@ -8,8 +8,8 @@ import {NumberBadgeDirective} from "@qualcomm-ui/angular/badge"
   template: `
     <div class="flex flex-wrap items-center gap-4">
       <!-- preview -->
-      <span q-number-badge variant="brand" [value]="5"></span>
-      <span q-number-badge variant="brand" [disabled]="true" [value]="5"></span>
+      <span emphasis="brand" q-number-badge [value]="5"></span>
+      <span disabled emphasis="brand" q-number-badge [value]="5"></span>
       <!-- preview -->
     </div>
   `,

@@ -1,27 +1,36 @@
 import type {FunctionComponent} from "react"
 
-import {CardAvatar, type CardAvatarProps} from "./card-avatar"
-import {CardBadge, type CardBadgeProps} from "./card-badge"
-import {CardButton, type CardButtonProps} from "./card-button"
-import {CardContent, type CardContentProps} from "./card-content"
-import {CardEyebrowText, type CardEyebrowTextProps} from "./card-eyebrow-text"
-import {CardFooter, type CardFooterProps} from "./card-footer"
-import {CardHeading, type CardHeadingProps} from "./card-heading"
-import {CardHeadingText, type CardHeadingTextProps} from "./card-heading-text"
-import {CardLink, type CardLinkProps} from "./card-link"
-import {CardMedia, type CardMediaProps} from "./card-media"
-import {CardMenuTrigger, type CardMenuTriggerProps} from "./card-menu-trigger"
+import {CardAvatar, type CardAvatarProps} from "./card-avatar.js"
+import {CardBadge, type CardBadgeProps} from "./card-badge.js"
+import {CardButton, type CardButtonProps} from "./card-button.js"
+import {CardContent, type CardContentProps} from "./card-content.js"
+import {
+  CardEyebrowText,
+  type CardEyebrowTextProps,
+} from "./card-eyebrow-text.js"
+import {CardFooter, type CardFooterProps} from "./card-footer.js"
+import {
+  CardHeadingText,
+  type CardHeadingTextProps,
+} from "./card-heading-text.js"
+import {CardHeading, type CardHeadingProps} from "./card-heading.js"
+import {CardLink, type CardLinkProps} from "./card-link.js"
+import {CardMedia, type CardMediaProps} from "./card-media.js"
+import {
+  CardMenuTrigger,
+  type CardMenuTriggerProps,
+} from "./card-menu-trigger.js"
 import {
   CardParagraphText,
   type CardParagraphTextProps,
-} from "./card-paragraph-text"
-import {CardRoot, type CardRootProps} from "./card-root"
+} from "./card-paragraph-text.js"
+import {CardRoot, type CardRootProps} from "./card-root.js"
 import {
   CardSubheadingText,
   type CardSubheadingTextProps,
-} from "./card-subheading-text"
+} from "./card-subheading-text.js"
 
-export * from "./qds-card-context"
+export * from "./qds-card-context.js"
 export type {
   CardAvatarProps,
   CardBadgeProps,

@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation} from "@angular/core"
 
+import {ButtonBadgeDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-badge-demo"
 import {ButtonContrastDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-contrast-demo"
 import {ButtonDensityDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-density-demo"
 import {ButtonEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/button+/demos/button-emphasis-demo"
@@ -11,6 +12,7 @@ import {ButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/button+/
 @Component({
   encapsulation: ViewEncapsulation.None,
   imports: [
+    ButtonBadgeDemo,
     ButtonContrastDemo,
     ButtonDensityDemo,
     ButtonEmphasisDemo,
@@ -22,6 +24,12 @@ import {ButtonVariantsDemo} from "@qualcomm-ui/angular-docs/components+/button+/
   selector: "app-button",
   template: `
     <div class="container">
+      <div class="section">
+        <h2 class="section-title">Badge</h2>
+        <div class="demo-container">
+          <button-badge-demo />
+        </div>
+      </div>
       <div class="section">
         <h2 class="section-title">Contrast</h2>
         <div class="demo-container">

@@ -3,13 +3,13 @@
 
 import {computed, Directive, inject, input} from "@angular/core"
 
-import {useQdsFieldGroupContext} from "@qualcomm-ui/angular/field-group"
 import {
   CoreCheckboxRootDirective,
   provideCheckboxContext,
 } from "@qualcomm-ui/angular-core/checkbox"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {useQdsFieldGroupContext} from "@qualcomm-ui/angular/field-group"
 import {
   createQdsCheckboxApi,
   type QdsCheckboxApiProps,

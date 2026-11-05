@@ -3,8 +3,8 @@
 
 import {Component, computed} from "@angular/core"
 
-import {useInputGroup} from "@qualcomm-ui/angular/input"
 import {CoreNumberInputInputGroupDirective} from "@qualcomm-ui/angular-core/number-input"
+import {useInputGroup} from "@qualcomm-ui/angular/input"
 
 import {useQdsNumberInputContext} from "./qds-number-input-context.service"
 

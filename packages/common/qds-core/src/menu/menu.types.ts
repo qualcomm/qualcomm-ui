@@ -1,13 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
 import type {checkboxClasses} from "@qualcomm-ui/qds-core/checkbox"
 import type {radioClasses} from "@qualcomm-ui/qds-core/radio"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 
-import type {menuItemClasses} from "./menu-item.classes"
-import type {qdsMenuAnatomy} from "./menu.anatomy"
-import type {menuClasses} from "./menu.classes"
+import type {menuItemClasses} from "./menu-item.classes.js"
+import type {qdsMenuAnatomy} from "./menu.anatomy.js"
+import type {menuClasses} from "./menu.classes.js"
 
 type PartName = AnatomyPartName<typeof qdsMenuAnatomy>
 interface Part<P extends PartName> extends AnatomyPart<"menu", P> {}
@@ -19,6 +20,26 @@ export type QdsMenuSize = "sm" | "md"
 
 export interface QdsMenuApiProps {
   size?: QdsMenuSize
+}
+
+export interface QdsMenuFooterBindings extends Part<"footer"> {
+  className: MenuClasses["footer"]
+  "data-size": QdsMenuSize
+}
+
+export interface QdsMenuHeaderBindings extends Part<"header"> {
+  className: MenuClasses["header"]
+  "data-size": QdsMenuSize
+}
+
+export interface QdsMenuHeaderLabelBindings extends Part<"headerLabel"> {
+  className: MenuClasses["headerLabel"]
+  "data-size": QdsMenuSize
+}
+
+export interface QdsMenuPositionerBindings {
+  className: MenuClasses["positioner"]
+  "data-size": QdsMenuSize
 }
 
 export interface QdsMenuContentBindings {
@@ -101,10 +122,17 @@ export interface QdsMenuIndicatorBindings {
 export interface QdsMenuApi {
   size: QdsMenuSize
 
+  // group: prop translations
+  getFooterButtonProps(): QdsButtonApiProps
+  getHeaderButtonProps(): QdsButtonApiProps
+
   // group: bindings
   getButtonBindings(): QdsMenuButtonBindings
   getCheckboxItemControlBindings(): QdsMenuCheckboxItemControlBindings
   getContentBindings(): QdsMenuContentBindings
+  getFooterBindings(): QdsMenuFooterBindings
+  getHeaderBindings(): QdsMenuHeaderBindings
+  getHeaderLabelBindings(): QdsMenuHeaderLabelBindings
   getIndicatorBindings(): QdsMenuIndicatorBindings
   getItemBindings(): QdsMenuItemBindings
   getItemCommandBindings(): QdsMenuItemCommandBindings
@@ -115,6 +143,7 @@ export interface QdsMenuApi {
   getItemStartIconBindings(): QdsMenuItemStartIconBindings
   getMenuItemAccessoryBindings(): QdsMenuItemAccessoryBindings
   getMenuItemDescriptionBindings(): QdsMenuDescriptionBindings
+  getPositionerBindings(): QdsMenuPositionerBindings
   getRadioItemBindings(): QdsMenuRadioItemBindings
   getRadioItemControlBindings(): QdsMenuRadioItemControlBindings
   getSeparatorBindings(): QdsMenuSeparatorBindings

@@ -4,14 +4,14 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {badgeClasses} from "./badge.classes"
-import {iconBadgeAnatomy} from "./icon-badge.anatomy"
+import {badgeClasses} from "./badge.classes.js"
+import {iconBadgeAnatomy} from "./icon-badge.anatomy.js"
 import type {
   QdsIconBadgeApi,
   QdsIconBadgeIconBindings,
   QdsIconBadgeProps,
   QdsIconBadgeRootBindings,
-} from "./icon-badge.types"
+} from "./icon-badge.types.js"
 
 const parts = iconBadgeAnatomy.parts
 
@@ -21,11 +21,13 @@ export function createQdsIconBadgeApi(
 ): QdsIconBadgeApi {
   const size = props.size || "md"
   return {
+    size,
+
+    // group: bindings
     getIconBindings(): QdsIconBadgeIconBindings {
       return normalize.element({
         ...parts.icon,
         className: badgeClasses.icon,
-        "data-size": size,
       })
     },
     getRootBindings(): QdsIconBadgeRootBindings {

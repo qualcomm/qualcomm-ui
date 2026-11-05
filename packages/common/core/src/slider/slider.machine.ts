@@ -22,8 +22,8 @@ import {
   getOffsetRect,
   getPointValue,
   getThumbEls,
-} from "./slider.dom"
-import type {SliderSchema} from "./slider.types"
+} from "./slider.dom.js"
+import type {SliderSchema} from "./slider.types.js"
 import {
   constrainValue,
   decrement,
@@ -33,7 +33,7 @@ import {
   isEqualSize,
   normalize,
   normalizeValues,
-} from "./slider.utils"
+} from "./slider.utils.js"
 
 export const sliderMachine: MachineConfig<SliderSchema> =
   createMachine<SliderSchema>({

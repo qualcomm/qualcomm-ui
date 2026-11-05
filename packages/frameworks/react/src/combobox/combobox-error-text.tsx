@@ -4,13 +4,13 @@
 import type {ReactElement} from "react"
 
 import {
-  InputErrorText,
-  type InputErrorTextProps,
-} from "@qualcomm-ui/react/input"
-import {
   CoreCombobox,
   type CoreComboboxErrorTextProps,
 } from "@qualcomm-ui/react-core/combobox"
+import {
+  InputErrorText,
+  type InputErrorTextProps,
+} from "@qualcomm-ui/react/input"
 
 export interface ComboboxErrorTextProps
   extends CoreComboboxErrorTextProps, InputErrorTextProps {}

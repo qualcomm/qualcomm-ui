@@ -86,7 +86,9 @@ export function walkTreeOutside(
     keep(el.parentNode)
   }
 
-  targets.forEach(keep)
+  for (const el of targets) {
+    keep(el)
+  }
 
   const deep = (parent: Element | null) => {
     if (!parent || elementsToStop.has(parent)) {
@@ -143,7 +145,7 @@ export function walkTreeOutside(
   lockCount++
 
   return () => {
-    hiddenNodes.forEach((node) => {
+    for (const node of hiddenNodes) {
       const counterValue = (counterMap.get(node) ?? 0) - 1
       const markerValue = (markerCounter.get(node) ?? 0) - 1
 
@@ -160,7 +162,7 @@ export function walkTreeOutside(
       if (!markerValue) {
         node.removeAttribute(markerName)
       }
-    })
+    }
 
     lockCount--
 

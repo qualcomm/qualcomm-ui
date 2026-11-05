@@ -11,8 +11,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
-import {progressAnatomy} from "./progress.anatomy"
+import {domIds} from "./internal/index.js"
+import {progressAnatomy} from "./progress.anatomy.js"
 import type {
   ProgressApi,
   ProgressBarBindings,
@@ -27,7 +27,7 @@ import type {
   ProgressSchema,
   ProgressTrackBindings,
   ProgressValueTextBindings,
-} from "./progress.types"
+} from "./progress.types.js"
 
 const parts = progressAnatomy.parts
 
@@ -65,7 +65,7 @@ export function createProgressApi(
       "data-value": value ?? undefined,
       dir: prop("dir"),
       style: {
-        "--percent": `${computed("valuePercent")}%`,
+        "--percent": computed("valuePercent"),
       },
     })
   }
@@ -108,9 +108,6 @@ export function createProgressApi(
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
         "data-state": state,
-        style: {
-          "--percent": `${computed("valuePercent")}%`,
-        },
       })
     },
     getErrorTextBindings(
@@ -147,10 +144,6 @@ export function createProgressApi(
         "data-invalid": booleanDataAttr(prop("invalid")),
         "data-max": max,
         "data-state": state,
-        style: {
-          "--percent": `${computed("valuePercent")}%`,
-          "--progress": context.get("value"),
-        },
       })
     },
     getRingCircleBindings(

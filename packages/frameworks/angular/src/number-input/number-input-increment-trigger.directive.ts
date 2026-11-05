@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed} from "@angular/core"
-import {Plus} from "lucide-angular"
+import {LucidePlus} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
-import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreNumberInputIncrementTriggerDirective} from "@qualcomm-ui/angular-core/number-input"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsNumberInputContext} from "./qds-number-input-context.service"
 
 @Component({
   hostDirectives: [QuiPreloadDirective],
-  providers: [provideIcons({Plus})],
+  providers: [provideIcons({LucidePlus})],
   selector: "[q-number-input-increment-trigger]",
   standalone: false,
   template: `
@@ -22,12 +22,14 @@ import {useQdsNumberInputContext} from "./qds-number-input-context.service"
       <svg
         qIcon="Plus"
         [q-bind]="inlineIconButtonApi().getIconBindings()"
+        [size]="inlineIconButtonApi().size"
       ></svg>
     </ng-content>
   `,
 })
 export class NumberInputIncrementTriggerDirective extends CoreNumberInputIncrementTriggerDirective {
   protected readonly qdsNumberInputContext = useQdsNumberInputContext()
+
   protected readonly inlineIconButtonApi = useInlineIconButtonApi({
     emphasis: "neutral",
     size: computed(() => this.qdsNumberInputContext().size),

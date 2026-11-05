@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {defaultKeyAttributes, getMatchRanking, Rankings} from "./utils"
+import {defaultKeyAttributes, getMatchRanking, Rankings} from "./utils.js"
 
 export type AccessorAttributes = {
   maxRanking: Rankings

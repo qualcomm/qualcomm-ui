@@ -15,7 +15,7 @@ import {
   snapValueToStep,
 } from "@qualcomm-ui/utils/number"
 
-import type {Size, SliderSchema} from "./slider.types"
+import type {Size, SliderSchema} from "./slider.types.js"
 
 type Ctx = Params<SliderSchema>
 

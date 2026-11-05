@@ -5,14 +5,14 @@ import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {buttonClasses} from "./button.classes"
-import {iconButtonAnatomy} from "./icon-button.anatomy"
+import {buttonClasses} from "./button.classes.js"
+import {iconButtonAnatomy} from "./icon-button.anatomy.js"
 import type {
   QdsIconButtonApi,
   QdsIconButtonApiProps,
   QdsIconButtonIconBindings,
   QdsIconButtonRootBindings,
-} from "./icon-button.types"
+} from "./icon-button.types.js"
 
 const parts = iconButtonAnatomy.parts
 
@@ -28,6 +28,9 @@ export function createQdsIconButtonApi(
   const variant = props.variant || "fill"
 
   return {
+    size,
+
+    // group: bindings
     getIconBindings(): QdsIconButtonIconBindings {
       return normalize.element({
         ...parts.icon,

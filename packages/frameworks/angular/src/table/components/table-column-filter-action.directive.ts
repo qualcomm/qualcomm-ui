@@ -8,15 +8,15 @@ import {
   input,
   type OnInit,
 } from "@angular/core"
-import {Funnel} from "lucide-angular"
+import {LucideFunnel} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {Header} from "@qualcomm-ui/core/table"
 import type {QdsTableColumnFilterProps} from "@qualcomm-ui/qds-core/table"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
@@ -25,14 +25,15 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({Funnel})],
+  providers: [provideIcons({LucideFunnel})],
   selector: "[q-table-column-filter-action]",
   standalone: false,
   template: `
     @if (filterable()) {
       <svg
         [q-bind]="inlineIconButtonApi().getIconBindings()"
-        [qIcon]="icon()"
+        [qIcon]="icon()!"
+        [size]="inlineIconButtonApi().size"
       ></svg>
     }
   `,

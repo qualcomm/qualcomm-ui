@@ -3,7 +3,7 @@
 
 import type {ScopeDomElements, ScopeDomIds} from "@qualcomm-ui/utils/machine"
 
-import type {TextAreaElementIds, TextAreaScope} from "../text-area.types"
+import type {TextAreaElementIds, TextAreaScope} from "../text-area.types.js"
 
 export const domIds: ScopeDomIds<TextAreaElementIds, TextAreaScope> = {
   counter: (scope) => scope.ids.get("counter"),

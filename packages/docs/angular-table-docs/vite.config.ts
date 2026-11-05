@@ -5,7 +5,6 @@ import {access, readFile} from "node:fs/promises"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import {defineConfig} from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 import {
   angularDemoPlugin,
@@ -14,6 +13,12 @@ import {
   getRemarkPlugins,
   quiDocsPlugin,
 } from "@qualcomm-ui/mdx-vite"
+import {
+  resolveSemanticSearchPaths,
+  semanticSearchDevPlugin,
+} from "@qualcomm-ui/react-router-utils/node"
+
+import quiDocsConfig from "./qui-docs.config.js"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -69,12 +74,14 @@ export default defineConfig({
       ],
       remarkPlugins: [...getRemarkPlugins()],
     }),
-    tsconfigPaths({
-      projects: ["./tsconfig.lib.json"],
-    }),
     reactRouter(),
     quiDocsPlugin(),
     frontmatterHmrPlugin(),
+    semanticSearchDevPlugin({
+      outputDirectory: resolve(__dirname, "generated/semantic-search"),
+      sectionsPath: resolveSemanticSearchPaths(quiDocsConfig.knowledge)
+        .sectionsPath,
+    }),
     angularDemoPlugin({
       demoPattern: [
         // these paths must also be accounted for in
@@ -87,6 +94,13 @@ export default defineConfig({
       transformTailwindStyles: true,
     }),
   ],
+  resolve: {
+    alias: {
+      "~components": resolve(__dirname, "./src/components"),
+      "~utils": resolve(__dirname, "./src/utils"),
+    },
+    tsconfigPaths: true,
+  },
   server: {
     port: 4200,
     warmup: {

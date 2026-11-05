@@ -8,9 +8,9 @@ import {
 } from "lucide-react"
 
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
-import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 
 interface SideNavItem {
   disabled?: boolean

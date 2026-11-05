@@ -22,7 +22,7 @@ export class ProgressRingContextDirective extends ApiContextDirective<ProgressAp
    * template.
    */
   static ngTemplateContextGuard(
-    dir: ProgressRingContextDirective,
+    _dir: ProgressRingContextDirective,
     _ctx: unknown,
   ): _ctx is {$implicit: ProgressApi} {
     return true

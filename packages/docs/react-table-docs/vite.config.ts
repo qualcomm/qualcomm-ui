@@ -4,7 +4,6 @@ import tailwindcss from "@tailwindcss/vite"
 import {dirname, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import {defineConfig} from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 import {
   frontmatterHmrPlugin,
@@ -13,6 +12,12 @@ import {
   quiDocsPlugin,
   reactDemoPlugin,
 } from "@qualcomm-ui/mdx-vite"
+import {
+  resolveSemanticSearchPaths,
+  semanticSearchDevPlugin,
+} from "@qualcomm-ui/react-router-utils/node"
+
+import quiDocsConfig from "./qui-docs.config.js"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -56,11 +61,13 @@ export default defineConfig({
       remarkPlugins: [...getRemarkPlugins()],
     }),
     reactRouter(),
-    tsconfigPaths({
-      projects: ["./tsconfig.lib.json"],
-    }),
     quiDocsPlugin(),
     frontmatterHmrPlugin(),
+    semanticSearchDevPlugin({
+      outputDirectory: resolve(__dirname, "generated/semantic-search"),
+      sectionsPath: resolveSemanticSearchPaths(quiDocsConfig.knowledge)
+        .sectionsPath,
+    }),
     reactDemoPlugin({
       demoPattern: "src/routes/**/*/demos/*.tsx",
       transformTailwindStyles: true,
@@ -82,7 +89,23 @@ export default defineConfig({
           "./node_modules/@atlaskit/pragmatic-drag-and-drop-hitbox/dist/esm",
         ),
       },
+      {
+        find: "@atlaskit/pragmatic-drag-and-drop",
+        replacement: resolve(
+          root,
+          "./node_modules/@atlaskit/pragmatic-drag-and-drop/dist/esm/entry-point",
+        ),
+      },
+      {
+        find: "~components",
+        replacement: resolve("./src/components"),
+      },
+      {
+        find: "~utils",
+        replacement: resolve("./src/utils"),
+      },
     ],
+    tsconfigPaths: true,
   },
   server: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 3200,

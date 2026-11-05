@@ -5,12 +5,12 @@ import type {ReactElement, ReactNode} from "react"
 
 import {X} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {useInlineNotificationCloseTrigger} from "@qualcomm-ui/react-core/inline-notification"
 import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsInlineNotificationContext} from "./qds-inline-notification-context"
+import {useQdsInlineNotificationContext} from "./qds-inline-notification-context.js"
 
 export interface InlineNotificationCloseButtonProps
   extends IdProp, ElementRenderProp<"button"> {
@@ -38,8 +38,14 @@ export function InlineNotificationCloseButton({
   )
 
   return (
-    <InlineIconButton icon={X} size="md" {...mergedProps}>
+    <IconButton
+      density="compact"
+      icon={X}
+      size="md"
+      variant="ghost"
+      {...mergedProps}
+    >
       {children}
-    </InlineIconButton>
+    </IconButton>
   )
 }

@@ -1,5 +1,91 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.7.0
+
+Nov 2nd, 2026
+
+### Features
+
+* [shiki-themes]: use custom light theme ([2652e06](https://github.com/qualcomm/qualcomm-ui/commit/2652e06))
+
+## 2.6.2
+
+Oct 30th, 2026
+
+### Code Refactoring
+
+* [qui-shiki-theme]: update background color ([fa35830](https://github.com/qualcomm/qualcomm-ui/commit/fa35830))
+
+## 2.6.1
+
+Sep 8th, 2026
+
+### Bug Fixes
+
+* [docs-plugin]: use stable unique identifier for section ids ([8c9b2c6](https://github.com/qualcomm/qualcomm-ui/commit/8c9b2c6))
+
+## 2.6.0
+
+Aug 31st, 2026
+
+### Features
+
+* [search]: add semantic search types and section search fields ([05791c0](https://github.com/qualcomm/qualcomm-ui/commit/05791c0))
+
+## 2.5.0
+
+Aug 6th, 2026
+
+### Features
+
+- [ai-knowledge]: add section url hash data in page section exports ([55b7535](https://github.com/qualcomm/qualcomm-ui/commit/55b7535))
+
+### Code Refactoring
+
+- search types ([2beccfb](https://github.com/qualcomm/qualcomm-ui/commit/2beccfb))
+
+## 2.4.2
+
+Jun 10th, 2026
+
+### Styles
+
+- apply lint updates ([4826561](https://github.com/qualcomm/qualcomm-ui/commit/4826561))
+
+### Code Refactoring
+
+- support nodenext resolution ([4056254](https://github.com/qualcomm/qualcomm-ui/commit/4056254))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.0.8]
+
+## 2.4.1
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/typedoc-common]
+
+## 2.4.0
+
+May 14th, 2026
+
+### Features
+
+- [docs-layout]: add configurable badge renderers ([b2e87d5](https://github.com/qualcomm/qualcomm-ui/commit/b2e87d5))
+
+## 2.3.0
+
+Apr 29th, 2026
+
+### Features
+
+- [docs-plugin]: add since field to SimplifiedProp and SectionTypes ([c853f18](https://github.com/qualcomm/qualcomm-ui/commit/c853f18))
+
 ## 2.2.0
 
 Apr 23rd, 2026

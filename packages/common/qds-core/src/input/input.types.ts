@@ -3,8 +3,8 @@
 
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 
-import type {qdsInputAnatomy} from "./input.anatomy"
-import type {inputClasses} from "./input.classes"
+import type {qdsInputAnatomy} from "./input.anatomy.js"
+import type {inputClasses} from "./input.classes.js"
 
 export type QdsInputSize = "sm" | "md" | "lg"
 

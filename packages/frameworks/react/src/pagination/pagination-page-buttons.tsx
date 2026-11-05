@@ -8,7 +8,7 @@ import {
   type ActionGroupProps,
 } from "@qualcomm-ui/react/action-group"
 
-import {Pagination} from "./index"
+import {Pagination} from "./index.js"
 
 export interface PaginationPageButtonsProps extends Omit<
   ActionGroupProps,

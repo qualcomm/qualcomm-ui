@@ -1,4 +1,4 @@
-import {ActionFunction} from "react-router"
+import type {ActionFunction} from "react-router"
 
 import {createUpdateAction} from "@qualcomm-ui/react-router-utils/client"
 

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Audit QUI Angular Best Practices"
+  short_description: "Review covered QUI Angular component rules"
+  default_prompt: "Use $audit-qui-component-rules to review covered QUI Angular template usage before a PR."
+
+policy:
+  allow_implicit_invocation: true

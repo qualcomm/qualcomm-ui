@@ -120,6 +120,7 @@ import {
   SetStateAction,
   ReactNode,
 } from "react"
+
 import {QdsBrand, QdsTheme} from "@qualcomm-ui/qds-core/theme"
 
 export const appThemeKey = "my-qui-app-theme-key"
@@ -203,9 +204,11 @@ Finally, wrap your root element with the `<ThemeProvider>` to enable theme switc
 ```tsx
 import {StrictMode} from "react"
 import {createRoot} from "react-dom/client"
-import {ThemeProvider} from "./theme-provider"
-import "./index.css"
+
 import App from "./App.tsx"
+import {ThemeProvider} from "./theme-provider"
+
+import "./index.css"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -245,27 +248,31 @@ Your `<html>` element should look something like this:
 ></html>
 ```
 
-Note that you need to import the corresponding CSS for the brand you've selected:
+#### Import Brand CSS
+
+You need to import the CSS for the brand you've selected:
 
 ```css tabs="css-brand" label="Qualcomm"
 @import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css";
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
+@import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
 ```css tabs="css-brand" label="Snapdragon"
 @import "@qualcomm-ui/qds-core/themes/snapdragon-dark.css";
 @import "@qualcomm-ui/qds-core/themes/snapdragon-light.css";
+@import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
 ```css tabs="css-brand" label="Dragonwing"
 @import "@qualcomm-ui/qds-core/themes/dragonwing-dark.css";
 @import "@qualcomm-ui/qds-core/themes/dragonwing-light.css";
+@import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
-> [!tip/Component Styles]
-> Always import component styles, regardless of the chosen brand.
-
-```css
+```css tabs="css-brand" label="Dragonfly"
+@import "@qualcomm-ui/qds-core/themes/dragonfly-dark.css";
+@import "@qualcomm-ui/qds-core/themes/dragonfly-light.css";
 @import "@qualcomm-ui/qds-core/styles/components.css";
 ```
 
@@ -283,5 +290,6 @@ NextGen is independent of the legacy `@qui/react` package. Both can be installed
 @import "@qualcomm-ui/qds-core/themes/qualcomm-light.css";
 ```
 
-> [!note]
-> We're working on a codemod script to automate the migration process. Check back regularly for updates!
+#### AI Migration
+
+You can use QUI MCP to migrate from legacy `@qui/react`. Follow the [setup guide](https://qui-ai.qualcomm.com/docs/mcp/setup), then create two separate MCP entries in your agent configuration: one for QUI React NextGen, and another for QUI React Legacy. Then prompt the LLM to migrate. For optimal results, only migrate a few components at a time.

@@ -4,8 +4,8 @@
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {DirectionProperty} from "@qualcomm-ui/utils/direction"
 
-import type {alertBannerAnatomy} from "./alert-banner.anatomy"
-import type {alertBannerClasses} from "./alert-banner.classes"
+import type {alertBannerAnatomy} from "./alert-banner.anatomy.js"
+import type {alertBannerClasses} from "./alert-banner.classes.js"
 
 export type QdsAlertBannerEmphasis =
   | "info"
@@ -74,7 +74,7 @@ export interface QdsAlertBannerCloseButtonBindings extends Part<"closeButton"> {
 }
 
 export type QdsAlertBannerCloseButtonEmphasis =
-  | "black-persistent"
+  | "persistent-black"
   | "inverse"
   | "neutral"
 

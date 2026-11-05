@@ -13,7 +13,7 @@ import {
 } from "@qualcomm-ui/core/fieldset"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import type {FieldsetContextValue} from "./fieldset-context"
+import type {FieldsetContextValue} from "./fieldset-context.js"
 
 const parts = fieldsetAnatomy.parts
 

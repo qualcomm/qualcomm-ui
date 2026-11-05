@@ -3,8 +3,13 @@
 
 import {defineConfig} from "eslint/config"
 
+import {reactPlugins, reactSettings} from "./base.js"
+
 export default defineConfig({
   name: "qui-react-strict",
+  plugins: {
+    ...reactPlugins,
+  },
   rules: {
     "react-hooks/component-hook-factories": "error",
     "react-hooks/config": "error",
@@ -22,4 +27,5 @@ export default defineConfig({
     "react-hooks/unsupported-syntax": "warn",
     "react-hooks/use-memo": "error",
   },
+  settings: {...reactSettings},
 })

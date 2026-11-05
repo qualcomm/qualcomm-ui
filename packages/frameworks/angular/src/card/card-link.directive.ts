@@ -3,17 +3,17 @@
 
 import {Component, computed, inject, input} from "@angular/core"
 
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {
+  normalizeProps,
+  useTrackBindings,
+} from "@qualcomm-ui/angular-core/machine"
 import {
   END_ICON_CONTEXT_TOKEN,
   type IconTokenContext,
   START_ICON_CONTEXT_TOKEN,
 } from "@qualcomm-ui/angular/icon"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
-import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
-import {
-  normalizeProps,
-  useTrackBindings,
-} from "@qualcomm-ui/angular-core/machine"
 import {
   type QdsCardLinkVariant,
   translateCardLinkProps,

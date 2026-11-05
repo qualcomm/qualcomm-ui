@@ -12,8 +12,8 @@ import {
   getDescriptionId,
   getRootId,
   getTitleId,
-} from "./internal"
-import {toastAnatomy} from "./toast.anatomy"
+} from "./internal/index.js"
+import {toastAnatomy} from "./toast.anatomy.js"
 import type {
   ToastActionTriggerBindings,
   ToastAlign,
@@ -26,12 +26,12 @@ import type {
   ToastRootBindings,
   ToastSchema,
   ToastSide,
-} from "./toast.types"
+} from "./toast.types.js"
 import {
   getGhostAfterStyle,
   getGhostBeforeStyle,
   getPlacementStyle,
-} from "./toast.utils"
+} from "./toast.utils.js"
 
 const parts = toastAnatomy.parts
 

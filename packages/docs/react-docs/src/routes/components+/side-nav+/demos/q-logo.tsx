@@ -6,6 +6,7 @@ export function QLogo(props: QLogoProps): ReactElement {
   return (
     <>
       <svg
+        className="block"
         fill="none"
         height={24}
         width={21}

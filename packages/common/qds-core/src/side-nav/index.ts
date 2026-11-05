@@ -1,3 +1,3 @@
-export * from "./side-nav.api"
-export * from "./side-nav.classes"
-export type * from "./side-nav.types"
+export * from "./side-nav.api.js"
+export * from "./side-nav.classes.js"
+export type * from "./side-nav.types.js"

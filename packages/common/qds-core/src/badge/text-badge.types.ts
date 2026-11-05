@@ -10,8 +10,8 @@ import type {
   QdsBadgeCategoryEmphasis,
   QdsBadgeSemanticEmphasis,
   QdsBaseBadgeProps,
-} from "./badge.types"
-import type {textBadgeAnatomy} from "./text-badge.anatomy"
+} from "./badge.types.js"
+import type {textBadgeAnatomy} from "./text-badge.anatomy.js"
 
 export type QdsTextBadgeVariant = "default" | "subtle"
 

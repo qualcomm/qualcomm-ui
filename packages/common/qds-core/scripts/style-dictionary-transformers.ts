@@ -4,10 +4,10 @@
 import type {RGBA} from "@figma/rest-api-spec"
 import JSON5 from "json5"
 import {readFile} from "node:fs/promises"
+import {StyleDictionary} from "style-dictionary-utils"
 import {transformTypes} from "style-dictionary/enums"
 import type {PlatformConfig} from "style-dictionary/types"
 import {resolveReferences, usesReferences} from "style-dictionary/utils"
-import {StyleDictionary} from "style-dictionary-utils"
 
 import type {
   ColorRawValue,
@@ -309,7 +309,9 @@ export function registerCustomTransformsForDtcg({
   StyleDictionary.registerTransformGroup({
     name: "custom/css-extended",
     transforms: [
-      ...StyleDictionary.hooks.transformGroups.css,
+      ...StyleDictionary.hooks.transformGroups.css.filter(
+        (transform) => transform !== "color/css",
+      ),
       "web/transform-opacity",
       "web/expand-shadows",
       "web/font-family-fallback",

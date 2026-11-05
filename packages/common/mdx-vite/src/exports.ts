@@ -6,7 +6,7 @@ import remarkFrontmatter from "remark-frontmatter"
 import remarkGfm from "remark-gfm"
 import remarkMdxFrontmatter from "remark-mdx-frontmatter"
 
-import {rehypeSlug} from "./docs-plugin/rehype/rehype-slug"
+import {rehypeSlug} from "./docs-plugin/rehype/rehype-slug.js"
 
 // Re-export these peerDependencies for more convenient imports.
 // Some of these are not included in the bundled JS, so the user must install them

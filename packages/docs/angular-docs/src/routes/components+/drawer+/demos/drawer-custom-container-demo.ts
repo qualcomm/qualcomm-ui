@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 
+import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {DrawerModule} from "@qualcomm-ui/angular/drawer"
-import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
 
 @Component({
   imports: [DrawerModule, ButtonModule, PortalComponent],
@@ -17,7 +17,7 @@ import {PortalComponent} from "@qualcomm-ui/angular-core/portal"
     >
       <div
         #containerRef
-        class="border-neutral-03 relative flex h-96 w-[600px] overflow-hidden border p-8"
+        class="border-neutral-03 relative box-border flex h-96 w-[600px] overflow-hidden border p-8"
       >
         <button emphasis="primary" q-button q-drawer-trigger variant="fill">
           Open Drawer

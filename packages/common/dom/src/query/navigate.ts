@@ -4,8 +4,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {isFirefox} from "./platform"
-import {queueBeforeEvent} from "./raf"
+import {isFirefox} from "./platform.js"
+import {queueBeforeEvent} from "./raf.js"
 
 export function clickIfLink(el: HTMLAnchorElement): void {
   const click = () => el.click()

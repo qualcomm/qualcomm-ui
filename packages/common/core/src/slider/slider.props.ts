@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {SliderApiProps} from "./slider.types"
+import type {SliderApiProps} from "./slider.types.js"
 
 export const sliderProps: (keyof SliderApiProps)[] =
   createProps<SliderApiProps>()(

@@ -1,7 +1,7 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
   "compilerOptions": {
-    "baseUrl": "./"
+    "types": ["node"]
   },
   "include": ["./tests/src", "node_modules/cosmiconfig"],
 }

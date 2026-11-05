@@ -8,7 +8,7 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {inlineNotificationAnatomy} from "./inline-notification.anatomy"
+import {inlineNotificationAnatomy} from "./inline-notification.anatomy.js"
 import type {
   InlineNotificationActionBindings,
   InlineNotificationApi,
@@ -18,8 +18,8 @@ import type {
   InlineNotificationLabelBindings,
   InlineNotificationRootBindings,
   InlineNotificationSchema,
-} from "./inline-notification.types"
-import {domIds} from "./internal"
+} from "./inline-notification.types.js"
+import {domIds} from "./internal/index.js"
 
 const parts = inlineNotificationAnatomy.parts
 

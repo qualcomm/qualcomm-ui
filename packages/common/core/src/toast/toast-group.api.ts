@@ -7,16 +7,16 @@
 import {contains} from "@qualcomm-ui/dom/query"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {getRegionId} from "./internal"
-import {toastAnatomy} from "./toast.anatomy"
+import {getRegionId} from "./internal/index.js"
+import {toastAnatomy} from "./toast.anatomy.js"
 import type {
   ToastAlign,
   ToastGroupApi,
   ToastGroupBindings,
   ToastGroupSchema,
   ToastSide,
-} from "./toast.types"
-import {getGroupPlacementStyle} from "./toast.utils"
+} from "./toast.types.js"
+import {getGroupPlacementStyle} from "./toast.utils.js"
 
 const parts = toastAnatomy.parts
 

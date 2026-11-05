@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {selectClasses} from "./select.classes"
+import {selectClasses} from "./select.classes.js"
 import type {
   QdsSelectApi,
   QdsSelectApiProps,
@@ -14,13 +14,15 @@ import type {
   QdsSelectIconBindings,
   QdsSelectIndicatorBindings,
   QdsSelectItemBindings,
+  QdsSelectItemGroupBindings,
+  QdsSelectItemGroupLabelBindings,
   QdsSelectItemIndicatorBindings,
   QdsSelectItemTextBindings,
   QdsSelectLabelBindings,
   QdsSelectPositionerBindings,
   QdsSelectRootBindings,
   QdsSelectValueTextBindings,
-} from "./select.types"
+} from "./select.types.js"
 
 export function createQdsSelectApi(
   props: QdsSelectApiProps,
@@ -71,6 +73,18 @@ export function createQdsSelectApi(
       return normalize.element({
         className: selectClasses.item,
         "data-selection-indicator": selectionIndicator,
+        "data-size": size,
+      })
+    },
+    getItemGroupBindings(): QdsSelectItemGroupBindings {
+      return normalize.element({
+        className: selectClasses.itemGroup,
+        "data-size": size,
+      })
+    },
+    getItemGroupLabelBindings(): QdsSelectItemGroupLabelBindings {
+      return normalize.element({
+        className: selectClasses.itemGroupLabel,
         "data-size": size,
       })
     },

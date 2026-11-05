@@ -1,0 +1,7 @@
+interface:
+  display_name: "Apply QUI Angular Best Practices"
+  short_description: "Apply covered QUI Angular component rules"
+  default_prompt: "Use $apply-qui-component-rules when writing or modifying covered QUI Angular templates."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,4 +1,5 @@
 export * from "./alert-banner-action-demo"
+export * from "./alert-banner-explorer-demo"
 export * from "./alert-banner-composite-demo"
 export * from "./alert-banner-dismissable-demo"
 export * from "./alert-banner-emphasis-demo"

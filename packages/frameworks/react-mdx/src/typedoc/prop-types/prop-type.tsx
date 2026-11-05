@@ -4,15 +4,15 @@
 import type {ReactNode} from "react"
 
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
-import {useTypeDocContext} from "../use-typedoc-context"
+import {useTypeDocContext} from "../use-typedoc-context.js"
 
-import {Reference} from "./reference"
-import {Reflection} from "./reflection"
-import {SimpleType} from "./simple-type"
-import {TypeInfoPopup} from "./type-info-popup"
+import {Reference} from "./reference.js"
+import {Reflection} from "./reflection.js"
+import {SimpleType} from "./simple-type.js"
+import {TypeInfoPopup} from "./type-info-popup.js"
 
 interface Props {
   /**
@@ -25,7 +25,7 @@ interface Props {
 
 export function PropType({disableReferenceExpansion, prop}: Props): ReactNode {
   const {layout} = useTypeDocContext()
-  const {renderLink: Link} = useMdxDocsContext()
+  const {renderLink: Link} = useDocsRuntimeContext()
 
   if (!prop.resolvedType) {
     console.debug("unsupported type", prop.type)

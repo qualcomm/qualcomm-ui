@@ -3,9 +3,9 @@
 
 import type {ComponentPropsWithRef, ReactElement} from "react"
 
-import {Menu} from "@qualcomm-ui/react/menu"
 import {Portal} from "@qualcomm-ui/react-core/portal"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
+import {Menu} from "@qualcomm-ui/react/menu"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface DemoStyleToggleProps extends ComponentPropsWithRef<"div"> {
@@ -16,7 +16,7 @@ export function DemoStyleToggle({
   onValueChange,
   ...props
 }: DemoStyleToggleProps): ReactElement {
-  const {demoSettings} = useMdxDocsContext()
+  const {demoSettings} = useDocsRuntimeContext()
 
   const currentValue = demoSettings?.transformTailwindClasses
     ? "inline"

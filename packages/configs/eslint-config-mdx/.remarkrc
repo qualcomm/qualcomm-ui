@@ -10,7 +10,10 @@
     "remark-lint-no-consecutive-blank-lines",
     "remark-lint-no-duplicate-headings-in-section",
     ["remark-lint-no-heading-punctuation", ",.:;"],
-    ["remark-lint-unordered-list-marker-style", "-"]
+    ["remark-lint-unordered-list-marker-style", "-"],
+    "./dist/remark-lint-code-format.js",
+    "./dist/remark-lint-mdx-jsx-format.js",
+    "./dist/remark-preserve-alert-markers.js"
   ],
   "settings": {
     "bullet": "-",

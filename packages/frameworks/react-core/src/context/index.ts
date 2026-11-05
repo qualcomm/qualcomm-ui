@@ -1,2 +1,3 @@
-export * from "./create-guarded-context"
-export * from "./use-context-id"
+export type * from "./context.types.js"
+export * from "./create-guarded-context.js"
+export * from "./use-context-id.js"

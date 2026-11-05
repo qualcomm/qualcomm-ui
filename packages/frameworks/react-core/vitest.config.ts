@@ -6,15 +6,9 @@ import {getReactTestConfig} from "@qualcomm-ui/react-test-utils"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    react({
-      babel: {
-        plugins: ["babel-plugin-react-compiler"],
-      },
-    }) as any,
-  ],
-  test: getReactTestConfig({
-    include: "src/**/*.spec.tsx",
-  }),
+  plugins: [tailwindcss(), react({compiler: true})],
+  resolve: {
+    tsconfigPaths: true,
+  },
+  test: getReactTestConfig(),
 })

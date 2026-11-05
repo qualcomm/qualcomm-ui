@@ -1,2 +1,2 @@
-export * from "./popover-context"
-export * from "./use-popover"
+export * from "./popover-context.js"
+export * from "./use-popover.js"

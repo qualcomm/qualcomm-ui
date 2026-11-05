@@ -6,9 +6,6 @@ aliases: [tile, panel, content card, media card, container]
 badges:
   - id: since
     label: 2.4.0
-  - id: developerPreview
-    label: Developer Preview
-    url: /developer-previews
 ---
 
 import {
@@ -55,7 +52,7 @@ Two types of actions are supported in cards: `q-card-button` and `q-card-link`.
 interactive, hover, press, clickable, selectable
 :::
 
-Set [interactive](./#interactive) on `q-card` to enable hover and pressed visual states on the content area. Place the directive on a `<button>` element so screen readers know that the element is interactive.
+Set [interactive](./#interactive-1) on `q-card` to enable hover and pressed visual states on the content area. Place the directive on a `<button>` element so screen readers know that the element is interactive.
 
 > [!warning]
 > Interactive cards must not contain buttons, links, or input fields. Nesting interactive elements produces invalid HTML and breaks assistive technology.
@@ -84,7 +81,7 @@ Use the `q-card-badge` directive to position a badge within the card.
 alignment, start, center, centered, justify
 :::
 
-Set [alignment](./#alignment) on `q-card` to control horizontal positioning of heading and footer content. Defaults to `start`.
+Set [alignment](./#alignment-1) on `q-card` to control horizontal positioning of heading and footer content. Defaults to `start`.
 
 <QdsDemo name="CardAlignmentDemo" />
 
@@ -104,7 +101,7 @@ Cards support `sm`, `md`, and `lg` sizes that control internal spacing and typog
   linkPrefix="q-card"
   name="CardExplorerDemo"
   parts={[
-    "root",
+    {name: "root", link: "#q-card"},
     "badge",
     "media",
     "avatar",

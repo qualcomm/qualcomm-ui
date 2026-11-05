@@ -10,9 +10,9 @@ import {
   input,
 } from "@angular/core"
 
-import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 import {provideComboboxContext} from "@qualcomm-ui/angular-core/combobox"
 import {providePresenceContext} from "@qualcomm-ui/angular-core/presence"
+import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 import {ComboboxContentDirective} from "./combobox-content.directive"
@@ -22,6 +22,10 @@ import {provideQdsComboboxContext} from "./qds-combobox-context.service"
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    "[attr.aria-label]": "undefined",
+    "[attr.aria-labelledby]": "undefined",
+  },
   providers: [
     provideComboboxContext(),
     provideQdsComboboxContext(),
@@ -38,10 +42,15 @@ import {provideQdsComboboxContext} from "./qds-combobox-context.service"
     </ng-content>
 
     <ng-content select="[q-combobox-control]">
-      <div q-combobox-control [attr.aria-label]="ariaLabel()">
+      <div q-combobox-control>
         <ng-content select="[q-combobox-icon]" />
         <ng-content select="[q-combobox-input]">
-          <input q-combobox-input [placeholder]="placeholder()" />
+          <input
+            q-combobox-input
+            [aria-label]="ariaLabel()"
+            [aria-labelledby]="ariaLabelledby()"
+            [placeholder]="placeholder()"
+          />
         </ng-content>
         <ng-content select="[q-combobox-clear-trigger]">
           @if (clearable()) {
@@ -147,8 +156,21 @@ export class ComboboxComponent extends ComboboxRootDirective {
   /**
    * ARIA label applied to the control element. Use this if you omit the {@link
    * label}
+   *
+   * @since 2.9.0
    */
-  readonly ariaLabel = input<string | undefined>()
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the input element.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
 
   /**
    * When `true`, renders a clear button that resets the input value on click.

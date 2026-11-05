@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {treeClasses} from "./tree.classes"
+import type {treeClasses} from "./tree.classes.js"
 
 export type QdsTreeSize = "sm" | "md"
 

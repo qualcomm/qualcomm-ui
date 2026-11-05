@@ -3,13 +3,17 @@
 
 import {Component, input} from "@angular/core"
 
-import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 import {provideNumberInputContext} from "@qualcomm-ui/angular-core/number-input"
+import {provideQdsInputContext} from "@qualcomm-ui/angular/input"
 
 import {NumberInputRootDirective} from "./number-input-root.directive"
 import {provideQdsNumberInputContext} from "./qds-number-input-context.service"
 
 @Component({
+  host: {
+    "[attr.aria-label]": "undefined",
+    "[attr.aria-labelledby]": "undefined",
+  },
   providers: [
     provideNumberInputContext(),
     provideQdsInputContext(),
@@ -27,7 +31,12 @@ import {provideQdsNumberInputContext} from "./qds-number-input-context.service"
       @if (unitOptions()?.length) {
         <q-number-input-unit-select />
       }
-      <input q-number-input-input [placeholder]="placeholder()" />
+      <input
+        q-number-input-input
+        [aria-label]="ariaLabel()"
+        [aria-labelledby]="ariaLabelledby()"
+        [placeholder]="placeholder()"
+      />
 
       <ng-content select="[q-number-input-control]">
         <div q-number-input-control></div>
@@ -55,6 +64,25 @@ import {provideQdsNumberInputContext} from "./qds-number-input-context.service"
   `,
 })
 export class NumberInputComponent extends NumberInputRootDirective {
+  /**
+   * ARIA label applied to the input element. Use this if you omit the {@link
+   * label}
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID reference for an external label applied to the input element.
+   *
+   * @since 2.9.0
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
   /**
    * Optional error that describes the element when {@link invalid} is true.
    *

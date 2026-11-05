@@ -8,6 +8,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@qualcomm-ui/core/table"
+import {useDebounce} from "@qualcomm-ui/react-core/effects"
 import {Button} from "@qualcomm-ui/react/button"
 import {Pagination} from "@qualcomm-ui/react/pagination"
 import {Popover} from "@qualcomm-ui/react/popover"
@@ -19,7 +20,6 @@ import {
   useTablePagination,
 } from "@qualcomm-ui/react/table"
 import {TextInput} from "@qualcomm-ui/react/text-input"
-import {useDebounce} from "@qualcomm-ui/react-core/effects"
 
 import {TableColumnFilter} from "./filters"
 import {type User, type UserColumnMeta, useUserData} from "./use-data"
@@ -81,7 +81,7 @@ export function FiltersClientSideDemo() {
 
   const table = useReactTable<User>({
     columns: userColumns,
-    data,
+    data: useMemo(() => data, [data]),
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

@@ -28,11 +28,12 @@ function main() {
           bundle: true,
           entryPoints: [resolve(__dirname, "../dist/browser/main.js")],
           format: "esm",
+          logLevel: "warning",
           minify: false,
           outfile: resolve(__dirname, "../public/main.js"),
           sourcemap: false,
-        }).catch()
-      }, 100)
+        }).catch(() => {})
+      }, 1500)
     })
 }
 

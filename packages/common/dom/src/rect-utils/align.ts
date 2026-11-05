@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {AlignOptions, HAlign, Rect, VAlign} from "./types"
+import type {AlignOptions, HAlign, Rect, VAlign} from "./types.js"
 
 function hAlign(a: Rect, ref: Rect, h: HAlign): Rect {
   let x = ref.minX

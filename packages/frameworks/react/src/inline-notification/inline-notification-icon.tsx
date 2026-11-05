@@ -12,14 +12,14 @@ import {
 } from "lucide-react"
 
 import type {QdsNotificationEmphasis} from "@qualcomm-ui/qds-core/inline-notification"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
-import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {useInlineNotificationContext} from "@qualcomm-ui/react-core/inline-notification"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsInlineNotificationContext} from "./qds-inline-notification-context"
+import {useQdsInlineNotificationContext} from "./qds-inline-notification-context.js"
 
 export interface InlineNotificationIconProps extends ElementRenderProp<"span"> {
   /**

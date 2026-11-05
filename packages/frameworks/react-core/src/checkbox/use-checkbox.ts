@@ -15,7 +15,7 @@ import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 
-import {useCheckboxContext} from "./checkbox-context"
+import {useCheckboxContext} from "./checkbox-context.js"
 
 export function useCheckbox(props: CheckboxApiProps): CheckboxApi {
   const machine = useMachine(checkboxMachine, props)

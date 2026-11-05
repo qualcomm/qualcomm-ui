@@ -3,11 +3,11 @@
 
 import type {ReactElement} from "react"
 
-import {Link} from "@qualcomm-ui/react/link"
 import {
   DocsFooter,
   type DocsFooterProps,
 } from "@qualcomm-ui/react-mdx/docs-layout"
+import {Link} from "@qualcomm-ui/react/link"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface FooterProps extends DocsFooterProps {}
@@ -20,14 +20,10 @@ export function Footer(props: FooterProps): ReactElement {
 
   return (
     <DocsFooter {...mergedProps}>
-      Copyright © 2026 QUALCOMM incorporated. All rights reserved.{" "}
+      Copyright © 2027 QUALCOMM incorporated. All rights reserved.{" "}
       <span>
         This site is built with{" "}
-        <Link
-          href="https://docs-next.qui.qualcomm.com/"
-          size="md"
-          target="_blank"
-        >
+        <Link href="https://docs.qui.qualcomm.com/" size="md" target="_blank">
           QUI Docs
         </Link>
         . Head over to the{" "}

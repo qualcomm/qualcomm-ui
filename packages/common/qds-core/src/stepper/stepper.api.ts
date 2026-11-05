@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {stepperClasses} from "./stepper.classes"
+import {stepperClasses} from "./stepper.classes.js"
 import type {
   QdsStepperApi,
   QdsStepperApiProps,
@@ -20,7 +20,7 @@ import type {
   QdsStepperRootBindings,
   QdsStepperSeparatorBindings,
   QdsStepperTriggerBindings,
-} from "./stepper.types"
+} from "./stepper.types.js"
 
 export function createQdsStepperApi(
   props: QdsStepperApiProps,

@@ -4,8 +4,8 @@
 import {raf, setElementValue, trackFormControl} from "@qualcomm-ui/dom/query"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 
-import {domEls} from "./internal"
-import type {TextInputSchema} from "./text-input.types"
+import {domEls} from "./internal/index.js"
+import type {TextInputSchema} from "./text-input.types.js"
 
 export const textInputMachine: MachineConfig<TextInputSchema> = createMachine({
   actions: {

@@ -7,23 +7,25 @@ import {
   CodeHighlight,
   type HighlightedReference,
 } from "@qualcomm-ui/react-mdx/code-highlight"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
-import {useMdxDocsLayoutContext} from "@qualcomm-ui/react-mdx/docs-layout"
+import {
+  useDocsPageContext,
+  useDocsRuntimeContext,
+} from "@qualcomm-ui/react-mdx/context"
 import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
-import {usePropsContext} from "../use-props-context"
+import {usePropsContext} from "../use-props-context.js"
 
-import {TypeInfoPopup} from "./type-info-popup"
+import {TypeInfoPopup} from "./type-info-popup.js"
 
 export interface ReflectionProps {
   prop: QuiPropDeclaration
 }
 
 export function Reflection({prop}: ReflectionProps): ReactElement {
-  const {renderLink} = useMdxDocsContext()
+  const {renderLink} = useDocsRuntimeContext()
   const {resolvedType} = prop
-  const {toc} = useMdxDocsLayoutContext()
+  const {toc} = useDocsPageContext()
   const props = usePropsContext()
   const prettyType = resolvedType.prettyType ?? ""
 

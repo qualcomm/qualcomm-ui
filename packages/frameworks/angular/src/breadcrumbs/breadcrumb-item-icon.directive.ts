@@ -8,6 +8,9 @@ import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {useQdsBreadcrumbsContext} from "./qds-breadcrumbs-context.service"
 
 @Directive({
+  host: {
+    "[attr.data-size]": "qdsContext().size",
+  },
   selector: "[q-breadcrumb-item-icon]",
   standalone: false,
 })

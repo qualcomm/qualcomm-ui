@@ -5,15 +5,15 @@ import type {ReactElement, ReactNode} from "react"
 
 import {
   createQdsIconBadgeApi,
-  type QdsIconBadgeProps as QdsIconBadgeProps,
+  type QdsIconBadgeProps,
 } from "@qualcomm-ui/qds-core/badge"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface IconBadgeProps

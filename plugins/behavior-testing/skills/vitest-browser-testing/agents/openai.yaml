@@ -1,0 +1,7 @@
+interface:
+  display_name: "Vitest Browser Testing"
+  short_description: "Write Vitest Browser behavior tests"
+  default_prompt: "Use $vitest-browser-testing to write or review Vitest Browser tests around public behavior."
+
+policy:
+  allow_implicit_invocation: true

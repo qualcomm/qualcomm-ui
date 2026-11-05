@@ -1,19 +1,21 @@
 import {useState} from "react"
 
 import {describe, expect, test} from "vitest"
-import {page} from "vitest/browser"
 import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
-import {Checkbox} from "@qualcomm-ui/react/checkbox"
 import type {MultiComponentTestCase} from "@qualcomm-ui/react-test-utils"
-import type {DataAttributes} from "@qualcomm-ui/utils/attributes"
+import {Checkbox} from "@qualcomm-ui/react/checkbox"
 
 const demoLabel = "Demo Label"
+const demoHint = "Demo Hint"
+const demoError = "Demo Error"
 
 const testIds = {
   control: "switch-control",
   errorText: "error-text",
   hiddenInput: "switch-hidden-input",
+  hint: "hint",
   indicator: "switch-indicator",
   label: "switch-label",
   root: "switch-root",
@@ -71,6 +73,72 @@ const tests: MultiComponentTestCase[] = [
       return (
         <Checkbox.Root>
           <Checkbox.HiddenInput />
+          <Checkbox.Control />
+          <Checkbox.Label>{demoLabel}</Checkbox.Label>
+          <Checkbox.Hint>{demoHint}</Checkbox.Hint>
+        </Checkbox.Root>
+      )
+    },
+    simple() {
+      return <Checkbox hint={demoHint} label={demoLabel} />
+    },
+    testCase: (getComponent) => {
+      test("hint text describes the checkbox while valid", async () => {
+        await render(getComponent())
+
+        const hint = page.getByText(demoHint)
+
+        await expect.element(hint).toBeVisible()
+        await expect.element(hint).not.toHaveAttribute("hidden")
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Checkbox.Root invalid>
+          <Checkbox.HiddenInput />
+          <Checkbox.Control />
+          <Checkbox.Label>{demoLabel}</Checkbox.Label>
+          <Checkbox.Hint>{demoHint}</Checkbox.Hint>
+          <Checkbox.ErrorText>{demoError}</Checkbox.ErrorText>
+        </Checkbox.Root>
+      )
+    },
+    simple() {
+      return (
+        <Checkbox
+          errorText={demoError}
+          hint={demoHint}
+          invalid
+          label={demoLabel}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("error text replaces hint while invalid", async () => {
+        await render(getComponent())
+
+        const input = page.getByLabelText(demoLabel)
+        const errorText = page.getByText(demoError)
+
+        await expect.element(errorText).toBeVisible()
+        await expect.element(page.getByText(demoHint)).not.toBeVisible()
+        await expect.element(input).toHaveAttribute("aria-invalid", "true")
+        await expect
+          .element(input)
+          .toHaveAttribute(
+            "aria-labelledby",
+            expect.stringContaining(errorText.element().id),
+          )
+      })
+    },
+  },
+  {
+    composite() {
+      return (
+        <Checkbox.Root>
+          <Checkbox.HiddenInput />
           <Checkbox.Control>
             <Checkbox.Indicator data-test-id="checkbox-indicator" />
           </Checkbox.Control>
@@ -81,11 +149,9 @@ const tests: MultiComponentTestCase[] = [
     simple() {
       return (
         <Checkbox
-          indicatorProps={
-            {
-              "data-test-id": "checkbox-indicator",
-            } as DataAttributes
-          }
+          indicatorProps={{
+            "data-test-id": "checkbox-indicator",
+          }}
           label={demoLabel}
         />
       )
@@ -235,35 +301,32 @@ const tests: MultiComponentTestCase[] = [
           <Checkbox.Label data-test-id={testIds.label}>
             {demoLabel}
           </Checkbox.Label>
+          <Checkbox.Hint data-test-id={testIds.hint}>{demoHint}</Checkbox.Hint>
         </Checkbox.Root>
       )
     },
     simple() {
       return (
         <Checkbox
-          controlProps={
-            {
-              "data-test-id": testIds.control,
-            } as DataAttributes
-          }
+          controlProps={{
+            "data-test-id": testIds.control,
+          }}
           data-test-id={testIds.root}
           defaultChecked
-          hiddenInputProps={
-            {
-              "data-test-id": testIds.hiddenInput,
-            } as DataAttributes
-          }
-          indicatorProps={
-            {
-              "data-test-id": testIds.indicator,
-            } as DataAttributes
-          }
+          hiddenInputProps={{
+            "data-test-id": testIds.hiddenInput,
+          }}
+          hint={demoHint}
+          hintProps={{
+            "data-test-id": testIds.hint,
+          }}
+          indicatorProps={{
+            "data-test-id": testIds.indicator,
+          }}
           label={demoLabel}
-          labelProps={
-            {
-              "data-test-id": testIds.label,
-            } as DataAttributes
-          }
+          labelProps={{
+            "data-test-id": testIds.label,
+          }}
         />
       )
     },
@@ -272,6 +335,7 @@ const tests: MultiComponentTestCase[] = [
         await render(getComponent())
         await expect.element(page.getByTestId(testIds.root)).toBeVisible()
         await expect.element(page.getByTestId(testIds.label)).toBeVisible()
+        await expect.element(page.getByTestId(testIds.hint)).toBeVisible()
         await expect.element(page.getByTestId(testIds.control)).toBeVisible()
         await expect.element(page.getByTestId(testIds.indicator)).toBeVisible()
         await expect

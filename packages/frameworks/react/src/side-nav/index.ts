@@ -1,70 +1,79 @@
-import {SideNavBranch, type SideNavBranchProps} from "./side-nav-branch"
 import {
   SideNavBranchContent,
   type SideNavBranchContentProps,
-} from "./side-nav-branch-content"
+} from "./side-nav-branch-content.js"
 import {
   SideNavBranchIndentGuide,
   type SideNavBranchIndentGuideProps,
-} from "./side-nav-branch-indent-guide"
+} from "./side-nav-branch-indent-guide.js"
 import {
   SideNavBranchNode,
   type SideNavBranchNodeProps,
-} from "./side-nav-branch-node"
+} from "./side-nav-branch-node.js"
 import {
   SideNavBranchTrigger,
   type SideNavBranchTriggerProps,
-} from "./side-nav-branch-trigger"
+} from "./side-nav-branch-trigger.js"
+import {SideNavBranch, type SideNavBranchProps} from "./side-nav-branch.js"
 import {
   SideNavCollapseTrigger,
   type SideNavCollapseTriggerProps,
-} from "./side-nav-collapse-trigger"
-import {SideNavDivider, type SideNavDividerProps} from "./side-nav-divider"
+} from "./side-nav-collapse-trigger.js"
+import {SideNavDivider, type SideNavDividerProps} from "./side-nav-divider.js"
 import {
   SideNavFilterInput,
   type SideNavFilterInputProps,
-} from "./side-nav-filter-input"
-import {SideNavGroup, type SideNavGroupProps} from "./side-nav-group"
+} from "./side-nav-filter-input.js"
 import {
   SideNavGroupLabel,
   type SideNavGroupLabelProps,
-} from "./side-nav-group-label"
-import {SideNavHeader, type SideNavHeaderProps} from "./side-nav-header"
+} from "./side-nav-group-label.js"
+import {SideNavGroup, type SideNavGroupProps} from "./side-nav-group.js"
 import {
   SideNavHeaderAction,
   type SideNavHeaderActionProps,
-} from "./side-nav-header-action"
+} from "./side-nav-header-action.js"
 import {
   SideNavHeaderLogo,
   type SideNavHeaderLogoProps,
-} from "./side-nav-header-logo"
+} from "./side-nav-header-logo.js"
 import {
   SideNavHeaderTitle,
   type SideNavHeaderTitleProps,
-} from "./side-nav-header-title"
-import {SideNavLeafNode, type SideNavLeafNodeProps} from "./side-nav-leaf-node"
+} from "./side-nav-header-title.js"
+import {SideNavHeader, type SideNavHeaderProps} from "./side-nav-header.js"
+import {
+  SideNavLeafNode,
+  type SideNavLeafNodeProps,
+} from "./side-nav-leaf-node.js"
 import {
   SideNavNodeAccessory,
   type SideNavNodeAccessoryProps,
-} from "./side-nav-node-accessory"
+} from "./side-nav-node-accessory.js"
 import {
   SideNavNodeAction,
   type SideNavNodeActionProps,
-} from "./side-nav-node-action"
-import {SideNavNodeIcon, type SideNavNodeIconProps} from "./side-nav-node-icon"
+} from "./side-nav-node-action.js"
+import {
+  SideNavNodeIcon,
+  type SideNavNodeIconProps,
+} from "./side-nav-node-icon.js"
 import {
   SideNavNodeIndicator,
   type SideNavNodeIndicatorProps,
-} from "./side-nav-node-indicator"
+} from "./side-nav-node-indicator.js"
 import {
   SideNavNodeProvider,
   type SideNavNodeProviderProps,
-} from "./side-nav-node-provider"
-import {SideNavNodeText, type SideNavNodeTextProps} from "./side-nav-node-text"
-import {SideNavNodes, type SideNavNodesProps} from "./side-nav-nodes"
-import {SideNavRoot, type SideNavRootProps} from "./side-nav-root"
+} from "./side-nav-node-provider.js"
+import {
+  SideNavNodeText,
+  type SideNavNodeTextProps,
+} from "./side-nav-node-text.js"
+import {SideNavNodes, type SideNavNodesProps} from "./side-nav-nodes.js"
+import {SideNavRoot, type SideNavRootProps} from "./side-nav-root.js"
 
-export * from "./qds-side-nav-context"
+export * from "./qds-side-nav-context.js"
 
 export type {
   SideNavBranchContentProps,

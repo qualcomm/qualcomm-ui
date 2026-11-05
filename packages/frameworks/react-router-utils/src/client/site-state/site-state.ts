@@ -9,13 +9,13 @@ export interface SiteState {
 
 export function updateSiteState<
   T extends NonNullable<unknown> = NonNullable<unknown>,
->(stateAction: string, state: T) {
+>(stateAction: string, state: T): Promise<Response> {
   return fetch(stateAction, {body: JSON.stringify(state), method: "POST"})
 }
 
 // a simple cookie used to store arbitrary state for the SSR request
 export function createUpdateAction(cookie: Cookie) {
-  return async ({request}: ActionFunctionArgs) => {
+  return async ({request}: ActionFunctionArgs): Promise<Response> => {
     const currentState = await cookie.parse(request.headers.get("cookie"))
     const state = await request.json()
 

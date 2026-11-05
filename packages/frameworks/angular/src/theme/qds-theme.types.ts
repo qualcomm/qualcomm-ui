@@ -1,8 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-export type Brand = "qualcomm" | "snapdragon" | "dragonwing"
-export type Theme = "light" | "dark"
+import type {QdsBrand, QdsTheme} from "@qualcomm-ui/qds-core/theme"
+
+export type Brand = QdsBrand
+export type Theme = QdsTheme
 
 export interface QdsThemeProviderOptions {
   /**

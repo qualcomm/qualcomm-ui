@@ -23,7 +23,7 @@ import type {
   ScopeWithIds,
 } from "@qualcomm-ui/utils/machine"
 
-import type {switchAnatomy} from "./switch.anatomy"
+import type {switchAnatomy} from "./switch.anatomy.js"
 
 export interface SwitchApiProps
   extends FieldApiProps, CommonProperties, DirectionProperty {

@@ -1,8 +1,8 @@
 import {Component} from "@angular/core"
 
+import {LoremIpsumDirective} from "@qualcomm-ui/angular-core/lorem-ipsum"
 import {ButtonModule} from "@qualcomm-ui/angular/button"
 import {DialogModule} from "@qualcomm-ui/angular/dialog"
-import {LoremIpsumDirective} from "@qualcomm-ui/angular-core/lorem-ipsum"
 
 @Component({
   imports: [DialogModule, ButtonModule, LoremIpsumDirective],

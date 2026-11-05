@@ -3,7 +3,7 @@ import {
   FormControl,
   FormGroup,
   FormsModule,
-  NgForm,
+  type NgForm,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms"
@@ -16,10 +16,16 @@ import {RadioModule} from "@qualcomm-ui/angular/radio"
 import {type MultiComponentTest, runTests} from "~test-utils"
 
 const groupLabel = "Group Label"
+const demoGroupError = "Demo Group Error"
+const demoGroupHint = "Demo Group Hint"
+const demoHint = "Demo Hint"
 const demoLabel1 = "Option 1"
 const demoLabel2 = "Option 2"
 
 const labels = {
+  demoGroupError,
+  demoGroupHint,
+  demoHint,
   demoLabel1,
   demoLabel2,
   groupLabel,
@@ -58,13 +64,23 @@ const testCases: MultiComponentTest[] = [
         template: `
           <fieldset name="group" q-radio-group>
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
           </fieldset>
         `,
       })
-      class SimpleComponent {}
+      class SimpleComponent {
+        readonly labels = labels
+      }
       return SimpleComponent
     },
     testCase(component) {
@@ -84,6 +100,241 @@ const testCases: MultiComponentTest[] = [
         await userEvent.click(page.getByText(demoLabel2))
         expect(radio1).not.toBeChecked()
         expect(radio2).toBeChecked()
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [RadioModule],
+        template: `
+          <fieldset name="group" q-radio-group>
+            <div q-radio-group-label>{{ labels.groupLabel }}</div>
+            <div q-radio-group-items>
+              <label q-radio value="option1">
+                <input q-radio-hidden-input />
+                <div q-radio-control></div>
+                <span q-radio-label>{{ labels.demoLabel1 }}</span>
+              </label>
+              <label q-radio value="option2">
+                <input q-radio-hidden-input />
+                <div q-radio-control></div>
+                <span q-radio-label>{{ labels.demoLabel2 }}</span>
+              </label>
+            </div>
+            <div q-radio-group-hint>{{ demoGroupHint }}</div>
+          </fieldset>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly labels = labels
+        protected readonly demoGroupHint = demoGroupHint
+      }
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [RadioModule],
+        template: `
+          <fieldset name="group" q-radio-group>
+            <div q-radio-group-label>{{ labels.groupLabel }}</div>
+            <div q-radio-group-items>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
+            </div>
+            <div q-radio-group-hint>{{ labels.demoGroupHint }}</div>
+          </fieldset>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly labels = labels
+      }
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`group hint text describes the radio group while valid — ${component.name}`, async () => {
+        await render(component)
+
+        await expect.element(page.getByText(demoGroupHint)).toBeVisible()
+        await expect
+          .element(page.getByText(demoGroupHint))
+          .not.toHaveAttribute("hidden")
+        await expect
+          .element(page.getByLabelText(groupLabel))
+          .not.toHaveAttribute("aria-invalid", "true")
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [RadioModule, ReactiveFormsModule],
+        template: `
+          <form [formGroup]="form">
+            <fieldset
+              formControlName="selectedOption"
+              name="group"
+              q-radio-group
+            >
+              <div q-radio-group-label>{{ labels.groupLabel }}</div>
+              <div q-radio-group-items>
+                <label q-radio value="option1">
+                  <input q-radio-hidden-input />
+                  <div q-radio-control></div>
+                  <span q-radio-label>{{ labels.demoLabel1 }}</span>
+                </label>
+                <label q-radio value="option2">
+                  <input q-radio-hidden-input />
+                  <div q-radio-control></div>
+                  <span q-radio-label>{{ labels.demoLabel2 }}</span>
+                </label>
+              </div>
+              <div q-radio-group-hint>{{ demoGroupHint }}</div>
+              <div q-radio-group-error-text>{{ demoGroupError }}</div>
+            </fieldset>
+            <button type="submit">Submit</button>
+          </form>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly labels = labels
+        protected readonly demoGroupHint = demoGroupHint
+        protected readonly demoGroupError = demoGroupError
+        form = new FormGroup({
+          selectedOption: new FormControl("", Validators.required),
+        })
+      }
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [RadioModule, ReactiveFormsModule],
+        template: `
+          <form [formGroup]="form">
+            <fieldset
+              formControlName="selectedOption"
+              name="group"
+              q-radio-group
+            >
+              <div q-radio-group-label>{{ labels.groupLabel }}</div>
+              <div q-radio-group-items>
+                <label
+                  q-radio
+                  value="option1"
+                  [label]="labels.demoLabel1"
+                ></label>
+                <label
+                  q-radio
+                  value="option2"
+                  [label]="labels.demoLabel2"
+                ></label>
+              </div>
+              <div q-radio-group-hint>{{ labels.demoGroupHint }}</div>
+              <div q-radio-group-error-text>{{ labels.demoGroupError }}</div>
+            </fieldset>
+            <button type="submit">Submit</button>
+          </form>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly labels = labels
+        form = new FormGroup({
+          selectedOption: new FormControl("", Validators.required),
+        })
+      }
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`group error text replaces hint while invalid — ${component.name}`, async () => {
+        await render(component)
+
+        await expect.element(page.getByText(demoGroupHint)).toBeVisible()
+        await expect.element(page.getByText(demoGroupError)).not.toBeVisible()
+
+        await userEvent.click(page.getByText("Submit"))
+
+        await expect.element(page.getByText(demoGroupError)).toBeVisible()
+        await expect.element(page.getByText(demoGroupHint)).not.toBeVisible()
+        await expect
+          .element(page.getByLabelText(groupLabel))
+          .toHaveAttribute("aria-invalid", "true")
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [RadioModule, FormsModule],
+        template: `
+          <fieldset name="group" q-radio-group [(ngModel)]="selectedValue">
+            <div q-radio-group-label>{{ labels.groupLabel }}</div>
+            <output>{{ selectedValue() || "none" }}</output>
+            <div q-radio-group-items>
+              <label q-radio value="option1">
+                <input q-radio-hidden-input />
+                <div q-radio-control></div>
+                <span q-radio-label>{{ labels.demoLabel1 }}</span>
+              </label>
+              <label q-radio value="option2">
+                <input q-radio-hidden-input />
+                <div q-radio-control></div>
+                <span q-radio-label>{{ labels.demoLabel2 }}</span>
+              </label>
+            </div>
+          </fieldset>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly labels = labels
+        readonly selectedValue = signal("option1")
+      }
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [RadioModule, FormsModule],
+        template: `
+          <fieldset name="group" q-radio-group [(ngModel)]="selectedValue">
+            <div q-radio-group-label>{{ labels.groupLabel }}</div>
+            <output>{{ selectedValue() || "none" }}</output>
+            <div q-radio-group-items>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
+            </div>
+          </fieldset>
+        `,
+      })
+      class SimpleComponent {
+        protected readonly labels = labels
+        readonly selectedValue = signal("option1")
+      }
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`bound selected value reflects radio selection — ${component.name}`, async () => {
+        await render(component)
+
+        await expect.element(page.getByText("option1")).toBeVisible()
+
+        await userEvent.click(page.getByText(demoLabel2))
+
+        await expect.element(page.getByText("option2")).toBeVisible()
       })
     },
   },
@@ -121,16 +372,22 @@ const testCases: MultiComponentTest[] = [
             <div q-radio-group-items>
               <label
                 disabled
-                label="${demoLabel1}"
                 q-radio
                 value="option1"
+                [label]="labels.demoLabel1"
               ></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
           </fieldset>
         `,
       })
-      class SimpleComponent {}
+      class SimpleComponent {
+        readonly labels = labels
+      }
       return SimpleComponent
     },
     testCase(component) {
@@ -181,17 +438,19 @@ const testCases: MultiComponentTest[] = [
         template: `
           <fieldset q-radio-group>
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1">
+              <label q-radio value="option1" [label]="labels.demoLabel1">
                 <input id="radio1" q-radio-hidden-input />
               </label>
-              <label label="${demoLabel2}" q-radio value="option2">
+              <label q-radio value="option2" [label]="labels.demoLabel2">
                 <input id="radio2" q-radio-hidden-input />
               </label>
             </div>
           </fieldset>
         `,
       })
-      class SimpleComponent {}
+      class SimpleComponent {
+        readonly labels = labels
+      }
       return SimpleComponent
     },
     testCase(component) {
@@ -246,13 +505,22 @@ const testCases: MultiComponentTest[] = [
             (valueChanged)="changed.emit($event)"
           >
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
           </fieldset>
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         formControl = new FormControl("option1")
         changed = output<string>()
       }
@@ -317,14 +585,23 @@ const testCases: MultiComponentTest[] = [
         template: `
           <fieldset q-radio-group [formControl]="formControl">
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
             <div q-radio-group-error-text>Please select an option</div>
           </fieldset>
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         formControl = new FormControl("", Validators.required)
       }
       return SimpleComponent
@@ -383,13 +660,22 @@ const testCases: MultiComponentTest[] = [
         template: `
           <fieldset q-radio-group [formControl]="formControl">
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
           </fieldset>
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         formControl = new FormControl({disabled: true, value: "option1"})
       }
       return SimpleComponent
@@ -471,8 +757,8 @@ const testCases: MultiComponentTest[] = [
             [formControl]="formControl"
             (valueChanged)="changed.emit($event)"
           >
-            <label label="${demoLabel1}" q-radio value="option1"></label>
-            <label label="${demoLabel2}" q-radio value="option2"></label>
+            <label q-radio value="option1" [label]="labels.demoLabel1"></label>
+            <label q-radio value="option2" [label]="labels.demoLabel2"></label>
           </div>
           <button data-test-id="set-option1" (click)="setValue('option1')">
             Set Option 1
@@ -483,6 +769,7 @@ const testCases: MultiComponentTest[] = [
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         formControl = new FormControl("")
         changed = output<string>()
 
@@ -563,8 +850,16 @@ const testCases: MultiComponentTest[] = [
           <form [formGroup]="form">
             <fieldset formControlName="selectedOption" q-radio-group>
               <div q-radio-group-items>
-                <label label="${demoLabel1}" q-radio value="option1"></label>
-                <label label="${demoLabel2}" q-radio value="option2"></label>
+                <label
+                  q-radio
+                  value="option1"
+                  [label]="labels.demoLabel1"
+                ></label>
+                <label
+                  q-radio
+                  value="option2"
+                  [label]="labels.demoLabel2"
+                ></label>
               </div>
             </fieldset>
             <button data-test-id="reset" type="button" (click)="resetForm()">
@@ -575,6 +870,7 @@ const testCases: MultiComponentTest[] = [
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         form = new FormGroup({
           selectedOption: new FormControl("option1", Validators.required),
         })
@@ -644,12 +940,13 @@ const testCases: MultiComponentTest[] = [
             [(ngModel)]="selectedValue"
             (valueChanged)="changed.emit($event)"
           >
-            <label label="${demoLabel1}" q-radio value="option1"></label>
-            <label label="${demoLabel2}" q-radio value="option2"></label>
+            <label q-radio value="option1" [label]="labels.demoLabel1"></label>
+            <label q-radio value="option2" [label]="labels.demoLabel2"></label>
           </div>
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         selectedValue = "option1"
         changed = output<string>()
       }
@@ -727,8 +1024,16 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-radio-group-label>{{ labels.groupLabel }}</div>
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
           </fieldset>
         `,
@@ -806,8 +1111,16 @@ const testCases: MultiComponentTest[] = [
           >
             <div q-radio-group-label>{{ labels.groupLabel }}</div>
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
           </fieldset>
         `,
@@ -889,8 +1202,8 @@ const testCases: MultiComponentTest[] = [
             [(ngModel)]="selectedValue"
             (valueChanged)="changed.emit($event)"
           >
-            <label label="${demoLabel1}" q-radio value="option1"></label>
-            <label label="${demoLabel2}" q-radio value="option2"></label>
+            <label q-radio value="option1" [label]="labels.demoLabel1"></label>
+            <label q-radio value="option2" [label]="labels.demoLabel2"></label>
           </div>
           <button data-test-id="set-option1" (click)="setValue('option1')">
             Set Option 1
@@ -901,6 +1214,7 @@ const testCases: MultiComponentTest[] = [
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         selectedValue = ""
         changed = output<string>()
         setValue(value: string) {
@@ -984,8 +1298,16 @@ const testCases: MultiComponentTest[] = [
               [ngModelOptions]="{updateOn: 'blur'}"
               [(ngModel)]="selectedValue"
             >
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
               <div q-radio-group-error-text>Please select an option</div>
             </div>
             <div data-test-id="status">
@@ -996,6 +1318,7 @@ const testCases: MultiComponentTest[] = [
         `,
       })
       class SimpleComponent {
+        readonly labels = labels
         readonly selectedValue = signal("")
       }
       return SimpleComponent
@@ -1062,13 +1385,23 @@ const testCases: MultiComponentTest[] = [
         template: `
           <fieldset defaultValue="option2" q-radio-group>
             <div q-radio-group-items>
-              <label label="${demoLabel1}" q-radio value="option1"></label>
-              <label label="${demoLabel2}" q-radio value="option2"></label>
+              <label
+                q-radio
+                value="option1"
+                [label]="labels.demoLabel1"
+              ></label>
+              <label
+                q-radio
+                value="option2"
+                [label]="labels.demoLabel2"
+              ></label>
             </div>
           </fieldset>
         `,
       })
-      class SimpleComponent {}
+      class SimpleComponent {
+        readonly labels = labels
+      }
       return SimpleComponent
     },
     testCase(component) {
@@ -1080,6 +1413,54 @@ const testCases: MultiComponentTest[] = [
 
         await expect.element(radio1).not.toBeChecked()
         await expect.element(radio2).toBeChecked()
+      })
+    },
+  },
+  {
+    composite() {
+      @Component({
+        imports: [RadioModule],
+        template: `
+          <fieldset name="group" q-radio-group>
+            <label q-radio value="option1">
+              <input q-radio-hidden-input />
+              <div q-radio-control></div>
+              <span q-radio-label>{{ demoLabel1 }}</span>
+              <span q-radio-hint>{{ demoHint }}</span>
+            </label>
+          </fieldset>
+        `,
+      })
+      class CompositeComponent {
+        protected readonly demoLabel1 = demoLabel1
+        protected readonly demoHint = demoHint
+      }
+      return CompositeComponent
+    },
+    simple() {
+      @Component({
+        imports: [RadioModule],
+        template: `
+          <fieldset name="group" q-radio-group>
+            <label
+              hint="${demoHint}"
+              q-radio
+              value="option1"
+              [label]="labels.demoLabel1"
+            ></label>
+          </fieldset>
+        `,
+      })
+      class SimpleComponent {
+        readonly labels = labels
+      }
+      return SimpleComponent
+    },
+    testCase(component) {
+      test(`hint is visible — ${component.name}`, async () => {
+        await render(component)
+
+        await expect.element(page.getByText(demoHint)).toBeVisible()
       })
     },
   },
@@ -1166,9 +1547,9 @@ const testCases: MultiComponentTest[] = [
                 required
                 [(ngModel)]="selectedAnswer"
               >
-                <label label="${option1}" q-radio value="yes"></label>
-                <label label="${option2}" q-radio value="no"></label>
-                <label label="${option3}" q-radio value="maybe"></label>
+                <label q-radio value="yes" [label]="labels.option1"></label>
+                <label q-radio value="no" [label]="labels.option2"></label>
+                <label q-radio value="maybe" [label]="labels.option3"></label>
                 <div q-radio-group-error-text>{{ labels.errorText }}</div>
               </div>
               <button data-test-id="submit-button" type="submit">
@@ -1321,9 +1702,21 @@ const testCases: MultiComponentTest[] = [
                 q-radio-group
               >
                 <div q-radio-group-items>
-                  <label label="${option1}" q-radio value="optionA"></label>
-                  <label label="${option2}" q-radio value="optionB"></label>
-                  <label label="${option3}" q-radio value="optionC"></label>
+                  <label
+                    q-radio
+                    value="optionA"
+                    [label]="labels.option1"
+                  ></label>
+                  <label
+                    q-radio
+                    value="optionB"
+                    [label]="labels.option2"
+                  ></label>
+                  <label
+                    q-radio
+                    value="optionC"
+                    [label]="labels.option3"
+                  ></label>
                 </div>
                 <div q-radio-group-error-text>{{ labels.errorText }}</div>
               </div>
@@ -1401,4 +1794,133 @@ const testCases: MultiComponentTest[] = [
 
 describe("radio", () => {
   runTests(testCases)
+
+  test("simple component forwards static aria-label to the generated input only", async () => {
+    @Component({
+      imports: [RadioModule],
+      template: `
+        <fieldset name="notifications" q-radio-group>
+          <div q-radio-group-items>
+            <label
+              aria-label="Email notifications"
+              q-radio
+              value="email"
+            ></label>
+            <label label="SMS notifications" q-radio value="sms"></label>
+          </div>
+        </fieldset>
+      `,
+    })
+    class SimpleAriaLabelComponent {}
+
+    const {container} = await render(SimpleAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("radio", {name: "Email notifications"}))
+      .toBeVisible()
+    expect(container.querySelector("label[q-radio]")).not.toHaveAttribute(
+      "aria-label",
+    )
+  })
+
+  test("simple component forwards static aria-labelledby to the generated input only", async () => {
+    @Component({
+      imports: [RadioModule],
+      template: `
+        <span id="external-label">External label</span>
+        <fieldset name="notifications" q-radio-group>
+          <div q-radio-group-items>
+            <label
+              aria-labelledby="external-label"
+              label="Internal label"
+              q-radio
+              value="email"
+            ></label>
+          </div>
+        </fieldset>
+      `,
+    })
+    class SimpleAriaLabelledbyComponent {}
+
+    const {container} = await render(SimpleAriaLabelledbyComponent)
+
+    const radio = page.getByRole("radio", {name: "External label"})
+    await expect.element(radio).not.toHaveAttribute("aria-label")
+    await expect
+      .element(radio)
+      .toHaveAttribute("aria-labelledby", "external-label")
+    expect(container.querySelector("label[q-radio]")).not.toHaveAttribute(
+      "aria-labelledby",
+    )
+  })
+
+  test("simple component forwards dynamic aria-label to the generated input", async () => {
+    @Component({
+      imports: [RadioModule],
+      template: `
+        <fieldset name="notifications" q-radio-group>
+          <div q-radio-group-items>
+            <label q-radio value="email" [aria-label]="radioLabel()"></label>
+          </div>
+        </fieldset>
+        <button (click)="radioLabel.set('Updated label')">Update</button>
+      `,
+    })
+    class DynamicSimpleAriaLabelComponent {
+      readonly radioLabel = signal("Initial label")
+    }
+
+    await render(DynamicSimpleAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("radio", {name: "Initial label"}))
+      .toBeVisible()
+
+    await userEvent.click(page.getByRole("button", {name: "Update"}))
+
+    await expect
+      .element(page.getByRole("radio", {name: "Updated label"}))
+      .toBeVisible()
+  })
+
+  test("hidden input forwards static and dynamic native aria labels", async () => {
+    @Component({
+      imports: [RadioModule],
+      template: `
+        <fieldset name="notifications" q-radio-group>
+          <div q-radio-group-items>
+            <label q-radio value="email">
+              <input aria-label="Static label" q-radio-hidden-input />
+              <div q-radio-control></div>
+            </label>
+            <label q-radio value="sms">
+              <input q-radio-hidden-input [aria-label]="dynamicLabel()" />
+              <div q-radio-control></div>
+            </label>
+          </div>
+        </fieldset>
+        <button (click)="dynamicLabel.set('Dynamic label updated')">
+          Update
+        </button>
+      `,
+    })
+    class HiddenInputAriaLabelComponent {
+      readonly dynamicLabel = signal("Dynamic label")
+    }
+
+    await render(HiddenInputAriaLabelComponent)
+
+    await expect
+      .element(page.getByRole("radio", {name: "Static label"}))
+      .toBeVisible()
+    await expect
+      .element(page.getByRole("radio", {name: "Dynamic label"}))
+      .toBeVisible()
+
+    await userEvent.click(page.getByRole("button", {name: "Update"}))
+
+    await expect
+      .element(page.getByRole("radio", {name: "Dynamic label updated"}))
+      .toBeVisible()
+  })
 })

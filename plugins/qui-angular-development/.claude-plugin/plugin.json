@@ -1,0 +1,13 @@
+{
+  "name": "qui-angular-development",
+  "description": "QUI Angular best-practice workflows for application developers consuming @qualcomm-ui/angular.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Qualcomm UI Maintainers",
+    "url": "https://github.com/qualcomm/qualcomm-ui"
+  },
+  "homepage": "https://github.com/qualcomm/qualcomm-ui",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "license": "BSD-3-Clause-Clear",
+  "keywords": ["claude-code", "angular", "qualcomm-ui", "accessibility", "best-practices"]
+}

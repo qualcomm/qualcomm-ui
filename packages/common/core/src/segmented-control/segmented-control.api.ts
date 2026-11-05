@@ -4,12 +4,12 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {domIds} from "./internal"
-import {segmentedControlAnatomy} from "./segmented-control.anatomy"
+import {domIds} from "./internal/index.js"
+import {segmentedControlAnatomy} from "./segmented-control.anatomy.js"
 import type {
   SegmentedControlApi,
   SegmentedControlSchema,
-} from "./segmented-control.types"
+} from "./segmented-control.types.js"
 
 const parts = segmentedControlAnatomy.parts
 
@@ -51,6 +51,7 @@ export function createSegmentedControlApi(
     },
     getItemBindings({id}) {
       return normalize.element({
+        "data-orientation": prop("orientation"),
         onKeyDown(event) {
           if (event.defaultPrevented) {
             return

@@ -1,17 +1,13 @@
-import {BreadcrumbsDisabledDemo as DisabledDemo} from "@qualcomm-ui/react-docs/components+/breadcrumbs+/demos/breadcrumbs-disabled-demo"
-import {BreadcrumbsEmphasisDemo as EmphasisDemo} from "@qualcomm-ui/react-docs/components+/breadcrumbs+/demos/breadcrumbs-emphasis-demo"
-import {BreadcrumbsLinksDemo as LinksDemo} from "@qualcomm-ui/react-docs/components+/breadcrumbs+/demos/breadcrumbs-links-demo"
-import {BreadcrumbsSizesDemo as SizesDemo} from "@qualcomm-ui/react-docs/components+/breadcrumbs+/demos/breadcrumbs-sizes-demo"
-
 import {DemoPageLayout} from "~/components/demo-page-layout"
+import {getDemos, type DemoComponent} from "~/utils/demos"
 
-const demos = [
-  {component: DisabledDemo, title: "Disabled"},
-  {component: EmphasisDemo, title: "Emphasis"},
-  {component: LinksDemo, title: "Links"},
-  {component: SizesDemo, title: "Sizes"},
-]
+const componentName = "breadcrumbs"
+const demoModules = import.meta.glob<Record<string, DemoComponent>>(
+  "../../../../../docs/react-docs/src/routes/components+/breadcrumbs+/demos/*-demo.tsx",
+  {eager: true},
+)
+const demos = getDemos(componentName, demoModules)
 
 export default function BreadcrumbsDemos() {
-  return <DemoPageLayout componentName="breadcrumbs" demos={demos} />
+  return <DemoPageLayout componentName={componentName} demos={demos} />
 }

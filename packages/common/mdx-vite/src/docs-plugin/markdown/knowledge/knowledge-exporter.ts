@@ -13,6 +13,7 @@ import type {
   KnowledgeSections,
   PageEntry,
   PageFrontmatter,
+  PageMap,
   SectionEntry,
 } from "@qualcomm-ui/mdx-common"
 
@@ -20,30 +21,33 @@ import type {
   KnowledgeExtraFile,
   KnowledgeFrontmatterConfig,
   PagesExportConfig,
+  RoutingStrategy,
   SectionExportConfig,
-} from "../../config"
+} from "../../config/index.js"
 import {
   getPathnameFromPathSegments,
   getPathSegmentsFromFileName,
-} from "../../nav-builder"
-import type {MdxFileReader} from "../markdown-file-reader"
-import {createRemarkProcessor} from "../remark-pipeline"
+} from "../../nav-builder/index.js"
+import {fixPath} from "../../path-utils.js"
+import {remarkSerializeJsxKnowledge} from "../../remark/index.js"
+import type {MdxFileReader} from "../markdown-file-reader.js"
+import {createRemarkProcessor} from "../remark-pipeline.js"
 
-import {filterFrontmatter} from "./filter-frontmatter"
+import {filterFrontmatter} from "./filter-frontmatter.js"
 import {
   filterTextDirectives,
   formatDemos,
   formatNpmInstallTabs,
   formatThemeNodes,
   PropFormatter,
-} from "./plugins"
-import {SectionExtractor} from "./section-extractor"
+} from "./plugins/index.js"
+import {SectionExtractor} from "./section-extractor.js"
 import type {
   KnowledgePageCache,
   MdxFlowExpression,
   ProcessedPage,
-} from "./types"
-import {computeMd5} from "./utils"
+} from "./types.js"
+import {computeMd5} from "./utils.js"
 
 export interface KnowledgeExporterConfig {
   baseUrl?: string
@@ -51,9 +55,13 @@ export interface KnowledgeExporterConfig {
   exclude?: string[]
   extraFiles?: KnowledgeExtraFile[]
   frontmatter?: KnowledgeFrontmatterConfig
+  /** Absolute MDX file paths excluded by the docs indexer. */
+  ignoredMdxFiles?: ReadonlySet<string>
   pageIdPrefix?: string
+  pageMap?: PageMap
   pages?: PagesExportConfig
   routeDir: string
+  routingStrategy?: RoutingStrategy
   sections?: SectionExportConfig
   verbose?: boolean
 }
@@ -163,6 +171,12 @@ export class KnowledgeExporter {
           processed.sectionAst,
           pageInfo,
         )
+        const pageMetadata = this.config.pageMap?.[page.pathname]
+        if (pageMetadata?.hidden || pageMetadata?.hideFromSearch) {
+          for (const section of pageSections) {
+            section.excludeFromSearch = true
+          }
+        }
         allSections.push(...pageSections)
 
         const pageEntry = extractor.extractPage(processed.sectionAst, pageInfo)
@@ -178,8 +192,7 @@ export class KnowledgeExporter {
           sections: pageSections,
         })
       } catch (error) {
-        console.error(`Failed to process page: ${page.name}`)
-        throw error
+        console.error(`Failed to process page: ${page.url}, skipping`)
       }
     }
 
@@ -228,6 +241,9 @@ export class KnowledgeExporter {
     const excludePatterns = this.config.exclude ?? []
 
     const shouldExclude = (absolutePath: string): boolean => {
+      if (this.config.ignoredMdxFiles?.has(fixPath(absolutePath))) {
+        return true
+      }
       if (excludePatterns.length === 0) {
         return false
       }
@@ -263,6 +279,7 @@ export class KnowledgeExporter {
         const segments = getPathSegmentsFromFileName(
           join(dirPath, mdxFile.name),
           this.config.routeDir,
+          this.config.routingStrategy,
         )
         const url = getPathnameFromPathSegments(segments)
 
@@ -371,6 +388,7 @@ export class KnowledgeExporter {
       gfm: true,
       mdx: true,
       plugins: [
+        remarkSerializeJsxKnowledge,
         formatNpmInstallTabs,
         this.propFormatter.propsToMarkdownList(),
         this.formatFrontmatterExpressions(frontmatter),
@@ -468,7 +486,6 @@ export class KnowledgeExporter {
         const pageInfo = {
           frontmatter: {},
           id: extraFile.id,
-          pathname: `/${extraFile.id}`,
           title: extraFile.title || extraFile.id,
         }
 

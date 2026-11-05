@@ -3,7 +3,7 @@
 
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {sideNavClasses} from "./side-nav.classes"
+import {sideNavClasses} from "./side-nav.classes.js"
 import type {
   QdsSideNavApi,
   QdsSideNavBranchBindings,
@@ -27,7 +27,7 @@ import type {
   QdsSideNavNodeIndicatorBindings,
   QdsSideNavRootBindings,
   QdsSideNavRootProps,
-} from "./side-nav.types"
+} from "./side-nav.types.js"
 
 export function createQdsSideNavApi(normalize: PropNormalizer): QdsSideNavApi {
   return {
@@ -130,6 +130,7 @@ export function createQdsSideNavApi(normalize: PropNormalizer): QdsSideNavApi {
     getRootBindings(props: QdsSideNavRootProps): QdsSideNavRootBindings {
       return normalize.element({
         className: sideNavClasses.root,
+        "data-size": props.size || "md",
         "data-surface": props.surface || "primary",
       })
     },

@@ -1,3 +1,3 @@
-export * from "./config-loader"
-export * from "./config-schema"
-export * from "./types"
+export * from "./config-loader.js"
+export * from "./lint.js"
+export type * from "./types.js"

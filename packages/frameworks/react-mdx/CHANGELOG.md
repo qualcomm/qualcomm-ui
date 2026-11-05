@@ -1,5 +1,510 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.2.0
+
+Nov 2nd, 2026
+
+### Features
+
+* [shiki-themes]: use custom light theme ([2652e06](https://github.com/qualcomm/qualcomm-ui/commit/2652e06))
+
+### Bug Fixes
+
+* update shiki background colors ([99aeedf](https://github.com/qualcomm/qualcomm-ui/commit/99aeedf))
+* adjust shiki line padding ([228033c](https://github.com/qualcomm/qualcomm-ui/commit/228033c))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.7.0]
+
+## 3.1.0
+
+Oct 30th, 2026
+
+### Features
+
+* [context]: adjust context names for clarity, deprecate old symbols ([25563a1](https://github.com/qualcomm/qualcomm-ui/commit/25563a1))
+
+## 3.0.0
+
+Oct 30th, 2026
+
+### BREAKING CHANGES
+
+* [heading-steps]: render steps indent guide as an element ([0c5e86d](https://github.com/qualcomm/qualcomm-ui/commit/0c5e86d))
+* [docs-layout]: replace grid layout with constrained flex layout ([cc7b326](https://github.com/qualcomm/qualcomm-ui/commit/cc7b326))
+* [docs-layout]: redesign page footer links and updated-on date ([9fe9e24](https://github.com/qualcomm/qualcomm-ui/commit/9fe9e24))
+
+### Features
+
+* [toc]: add "On this page" label and brand active indicator ([bb0a32a](https://github.com/qualcomm/qualcomm-ui/commit/bb0a32a))
+* [mdx]: update content typography and vertical rhythm ([e8a042d](https://github.com/qualcomm/qualcomm-ui/commit/e8a042d))
+* [code-highlight]: increase code block padding and copy button offset ([7c4eeab](https://github.com/qualcomm/qualcomm-ui/commit/7c4eeab))
+
+### Code Refactoring
+
+* [not-found]: use page intro layout ([1d80fe3](https://github.com/qualcomm/qualcomm-ui/commit/1d80fe3))
+* [page-actions]: shorten menu labels and drop descriptions ([159dd68](https://github.com/qualcomm/qualcomm-ui/commit/159dd68))
+* [page-header]: render page header as a header element ([7a19315](https://github.com/qualcomm/qualcomm-ui/commit/7a19315))
+
+### Bug Fixes
+
+* [breadcrumbs]: disable breadcrumb items without a route ([0b32aa5](https://github.com/qualcomm/qualcomm-ui/commit/0b32aa5))
+* [qui-ecosystem]: point ecosystem links to production domains ([1759bf8](https://github.com/qualcomm/qualcomm-ui/commit/1759bf8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.2, @qualcomm-ui/react@1.32.1]
+
+## 2.14.0
+
+Oct 20th, 2026
+
+### Features
+
+* [markdown]: add ImageViewer component for markdown images ([a6236b8](https://github.com/qualcomm/qualcomm-ui/commit/a6236b8))
+
+### Code Refactoring
+
+* distinguish inline code style from links ([e6c32f8](https://github.com/qualcomm/qualcomm-ui/commit/e6c32f8))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.0, @qualcomm-ui/react@1.32.0, @qualcomm-ui/react-core@1.10.0]
+
+## 2.13.0
+
+Oct 12th, 2026
+
+### Features
+
+* increase mdx inline alert top and bottom margins ([a86073b](https://github.com/qualcomm/qualcomm-ui/commit/a86073b))
+* [page-actions]: add raw markdown link menu option ([108465a](https://github.com/qualcomm/qualcomm-ui/commit/108465a))
+
+### Code Refactoring
+
+* [sidebar]: show vertical scrollbar only on hover ([209fd32](https://github.com/qualcomm/qualcomm-ui/commit/209fd32))
+* [side-nav]: remove indent guide from nav entries ([22fa6a6](https://github.com/qualcomm/qualcomm-ui/commit/22fa6a6))
+* adjust H1 margins based on surrounding content ([a86073b](https://github.com/qualcomm/qualcomm-ui/commit/a86073b))
+* [side-nav]: remove route links from parent routes that are also pages ([a4166f7](https://github.com/qualcomm/qualcomm-ui/commit/a4166f7))
+
+### Bug Fixes
+
+* [side-nav]: support item height expansion ([9509101](https://github.com/qualcomm/qualcomm-ui/commit/9509101))
+* add margin to H1's outside of the page-header ([4046b0b](https://github.com/qualcomm/qualcomm-ui/commit/4046b0b))
+
+## 2.12.4
+
+Sep 29th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.1, @qualcomm-ui/react@1.31.2, @qualcomm-ui/react-core@1.9.1]
+
+## 2.12.3
+
+Sep 25th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react@1.31.1]
+
+## 2.12.2
+
+Sep 8th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.1]
+
+## 2.12.1
+
+Sep 2nd, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react@1.31.0, @qualcomm-ui/react-core@1.9.0]
+
+## 2.12.0
+
+Aug 31st, 2026
+
+### Features
+
+* [semantic-search]: add reusable global search component ([188e188](https://github.com/qualcomm/qualcomm-ui/commit/188e188))
+* migrate build from babel to vite react-compiler ([1b2b8f9](https://github.com/qualcomm/qualcomm-ui/commit/1b2b8f9))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.6.0, @qualcomm-ui/react@1.30.0, @qualcomm-ui/react-core@1.8.0]
+
+## 2.11.9
+
+Aug 30th, 2026
+
+### Bug Fixes
+
+* [component-explorer]: skip highlighting parts that have no visible box ([65935ff](https://github.com/qualcomm/qualcomm-ui/commit/65935ff))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.13.0, @qualcomm-ui/utils@1.5.0, @qualcomm-ui/react@1.29.0, @qualcomm-ui/react-core@1.7.0]
+
+## 2.11.8
+
+Aug 20th, 2026
+
+### Bug Fixes
+
+* [build]: adjust "use client" banner ([c4c648a](https://github.com/qualcomm/qualcomm-ui/commit/c4c648a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react@1.28.1, @qualcomm-ui/react-core@1.6.1]
+
+## 2.11.7
+
+Aug 18th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.12.0, @qualcomm-ui/react@1.28.0, @qualcomm-ui/utils@1.4.0, @qualcomm-ui/react-core@1.6.0]
+
+## 2.11.6
+
+Aug 16th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.5, @qualcomm-ui/utils@1.3.3, @qualcomm-ui/core@1.11.8, @qualcomm-ui/react-core@1.5.10]
+
+## 2.11.5
+
+Aug 12th, 2026
+
+### Bug Fixes
+
+- [updated-on-date]: use fixed time zone to prevent SSR hydration issue ([626f72a](https://github.com/qualcomm/qualcomm-ui/commit/626f72a))
+
+## 2.11.4
+
+Aug 11th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.4]
+
+## 2.11.3
+
+Aug 6th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.3, @qualcomm-ui/mdx-common@2.5.0]
+
+## 2.11.2
+
+Jul 28th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.7, @qualcomm-ui/react@1.27.2, @qualcomm-ui/react-core@1.5.9]
+
+## 2.11.1
+
+Jul 27th, 2026
+
+### Styles
+
+- [demos]: account for new bottom border in tab list ([ad9771a](https://github.com/qualcomm/qualcomm-ui/commit/ad9771a))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.1]
+
+## 2.11.0
+
+Jul 23rd, 2026
+
+### Features
+
+- update design tokens and add dragonfly theme ([9913cf8](https://github.com/qualcomm/qualcomm-ui/commit/9913cf8))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.27.0]
+
+## 2.10.1
+
+Jul 17th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.26.1]
+
+## 2.10.0
+
+Jul 16th, 2026
+
+### Features
+
+- [docs-layout]: match sidebar size to navigation density ([68e7229](https://github.com/qualcomm/qualcomm-ui/commit/68e7229))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.26.0, @qualcomm-ui/react-core@1.5.8]
+
+## 2.9.13
+
+Jul 13th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.5]
+
+## 2.9.12
+
+Jul 10th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.4]
+
+## 2.9.11
+
+Jul 7th, 2026
+
+### Bug Fixes
+
+- [shiki]: override user agent monospace with design system mono font ([6862340](https://github.com/qualcomm/qualcomm-ui/commit/6862340))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.3]
+
+## 2.9.10
+
+Jul 2nd, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.2]
+
+## 2.9.9
+
+Jul 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.1, @qualcomm-ui/core@1.11.6, @qualcomm-ui/react-core@1.5.8]
+
+## 2.9.8
+
+Jun 29th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.25.0]
+
+## 2.9.7
+
+Jun 10th, 2026
+
+### Code Refactoring
+
+- support nodenext resolution ([c65ce97](https://github.com/qualcomm/qualcomm-ui/commit/c65ce97))
+
+### Styles
+
+- apply lint updates ([a4aa073](https://github.com/qualcomm/qualcomm-ui/commit/a4aa073))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core@1.5.7, @qualcomm-ui/utils@1.3.2, @qualcomm-ui/mdx-common@2.4.2, @qualcomm-ui/react@1.24.4, @qualcomm-ui/core@1.11.5]
+
+## 2.9.6
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react-core@1.5.6, @qualcomm-ui/react@1.24.3]
+
+## 2.9.5
+
+Jun 5th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core@1.11.4, @qualcomm-ui/react@1.24.2, @qualcomm-ui/react-core@1.5.5]
+
+## 2.9.4
+
+Jun 4th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react@1.24.1]
+
+## 2.9.3
+
+Jun 4th, 2026
+
+### Code Refactoring
+
+- [react-mdx]: use split button in docs ([bdb60d2](https://github.com/qualcomm/qualcomm-ui/commit/bdb60d2))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react]
+
+## 2.9.2
+
+Jun 3rd, 2026
+
+### Miscellaneous Chores
+
+- clean up dependencies and remove legacy build scripts ([961e1bb](https://github.com/qualcomm/qualcomm-ui/commit/961e1bb))
+- migrate to vite for library bundling ([2216473](https://github.com/qualcomm/qualcomm-ui/commit/2216473))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/mdx-common, @qualcomm-ui/utils, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
+## 2.9.1
+
+Jun 1st, 2026
+
+### Code Refactoring
+
+- [ComponentExplorer]: use useSafeLayoutEffect for SSR safety ([c00b6bd](https://github.com/qualcomm/qualcomm-ui/commit/c00b6bd))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
+## 2.9.0
+
+May 29th, 2026
+
+### Features
+
+- [demo]: add simple react demo component ([7f50925](https://github.com/qualcomm/qualcomm-ui/commit/7f50925))
+
+### Documentation
+
+- [qui-docs]: update authoring and configuration guides ([433731f](https://github.com/qualcomm/qualcomm-ui/commit/433731f))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
+## 2.8.3
+
+May 23rd, 2026
+
+### Styles
+
+- [scrollbars]: make corner background transparent ([2e063eb](https://github.com/qualcomm/qualcomm-ui/commit/2e063eb))
+- unify scrollbar styles for tables, code blocks, and side nav ([f5a7e0e](https://github.com/qualcomm/qualcomm-ui/commit/f5a7e0e))
+
+## 2.8.2
+
+May 22nd, 2026
+
+### Miscellaneous Chores
+
+- update pnpm and test dependencies ([b175d6a](https://github.com/qualcomm/qualcomm-ui/commit/b175d6a))
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
+## 2.8.1
+
+May 14th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/react-core]
+
+## 2.8.0
+
+May 14th, 2026
+
+### Features
+
+- [docs-layout]: add configurable badge renderers ([b2e87d5](https://github.com/qualcomm/qualcomm-ui/commit/b2e87d5))
+
+### Styles
+
+- [docs-layout]: style adjacent route labels ([847de13](https://github.com/qualcomm/qualcomm-ui/commit/847de13))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/mdx-common]
+
+## 2.7.3
+
+May 10th, 2026
+
+### Styles
+
+- [blockquotes]: use inline notification info styles for default blockquotes ([e6c21a5](https://github.com/qualcomm/qualcomm-ui/commit/e6c21a5))
+- [shiki]: soft-wrap rendered markdown examples in code fences ([f491c33](https://github.com/qualcomm/qualcomm-ui/commit/f491c33))
+
+### Bug Fixes
+
+- [docs-layout]: add spacing after list item code blocks ([8a80339](https://github.com/qualcomm/qualcomm-ui/commit/8a80339))
+- [docs-layout]: add spacing between blockquote paragraphs ([b27e3ea](https://github.com/qualcomm/qualcomm-ui/commit/b27e3ea))
+
+## 2.7.2
+
+May 7th, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/react-core, @qualcomm-ui/react]
+
+## 2.7.1
+
+May 1st, 2026
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/core, @qualcomm-ui/utils, @qualcomm-ui/react, @qualcomm-ui/react-core]
+
+## 2.7.0
+
+May 1st, 2026
+
+### Features
+
+- [react-mdx]: add previewClassName prop to ComponentExplorer ([5a84818](https://github.com/qualcomm/qualcomm-ui/commit/5a84818))
+
+### Bug Fixes
+
+- [docs]: scope tailwind layers and reset defaults ([af2b476](https://github.com/qualcomm/qualcomm-ui/commit/af2b476))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
+## 2.6.1
+
+Apr 29th, 2026
+
+### Code Refactoring
+
+- [breadcrumbs]: change default item trigger to anchor element ([f08b622](https://github.com/qualcomm/qualcomm-ui/commit/f08b622))
+
+### Miscellaneous Chores
+
+- **deps:** update dependencies [@qualcomm-ui/react, @qualcomm-ui/mdx-common, @qualcomm-ui/core, @qualcomm-ui/react-core]
+
+## 2.6.0
+
+Apr 28th, 2026
+
+### Features
+
+- [docs-layout]: add NavDensity type and prop, defaults to "compact" ([4cd65b5](https://github.com/qualcomm/qualcomm-ui/commit/4cd65b5))
+- [sidebar]: integrate navDensity from context ([9636533](https://github.com/qualcomm/qualcomm-ui/commit/9636533))
+
 ## 2.5.0
 
 Apr 23rd, 2026

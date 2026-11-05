@@ -1,12 +1,15 @@
 {
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.super-strict.json",
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "./",
     "incremental": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "tsBuildInfoFile": "dist/tsbuildinfo"
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib",
+    "types": ["node"],
+    "paths": {
+      "@qualcomm-ui/core/*": ["./src/*/index.ts"],
+    }
   },
   "include": ["./src"],
   "exclude": ["./src/**/*.spec.ts", "./src/**/__tests__/**/*.ts"],

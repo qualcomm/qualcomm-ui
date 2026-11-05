@@ -28,6 +28,7 @@ import {
   type ComboboxInputValueChangeDetails,
   comboboxMachine,
   type ComboboxOpenChangeDetails,
+  type ComboboxPositioningOptions,
   type ComboboxScrollToIndexDetails,
   createComboboxApi,
 } from "@qualcomm-ui/core/combobox"
@@ -36,7 +37,6 @@ import {
   type PresenceApiProps,
   presenceMachine,
 } from "@qualcomm-ui/core/presence"
-import type {PositioningOptions} from "@qualcomm-ui/dom/floating-ui"
 import type {
   FocusOutsideEvent,
   InteractOutsideEvent,
@@ -261,7 +261,7 @@ export class CoreComboboxRootDirective<
    *
    * @inheritDoc
    */
-  readonly positioning = input<PositioningOptions | undefined>()
+  readonly positioning = input<ComboboxPositioningOptions | undefined>()
 
   /**
    * The controlled presence of the node.

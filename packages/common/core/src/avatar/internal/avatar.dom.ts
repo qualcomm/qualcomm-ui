@@ -6,7 +6,7 @@
 
 import type {ScopeDomIds, ScopeWithIds} from "@qualcomm-ui/utils/machine"
 
-import type {AvatarElementIds, AvatarSchema} from "../avatar.types"
+import type {AvatarElementIds, AvatarSchema} from "../avatar.types.js"
 
 type Scope = ScopeWithIds<AvatarSchema>
 

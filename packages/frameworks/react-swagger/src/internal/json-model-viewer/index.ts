@@ -1,7 +1,7 @@
 export * from "./json-model-viewer"
 export * from "./components/data-types/define-easy-type"
 export * from "./theme/base16"
-export * from "./type"
+export type * from "./type"
 export {
   applyValue,
   createDataType,

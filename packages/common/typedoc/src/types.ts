@@ -3,7 +3,7 @@
 
 import type {JSONOutput, TypeDocOptions} from "typedoc"
 
-import type {ImportBuilder} from "./internal/import-builder"
+import type {ImportBuilder} from "./internal/import-builder.js"
 
 export type PackageType = "angular" | "react" | "node"
 

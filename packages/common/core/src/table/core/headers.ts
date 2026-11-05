@@ -11,10 +11,10 @@ import type {
   HeaderGroup,
   RowData,
   TableInstance,
-} from "../types"
-import {memo} from "../utils"
+} from "../types.js"
+import {memo} from "../utils.js"
 
-import type {TableFeature} from "./table"
+import type {TableFeature} from "./table.js"
 
 export interface CoreHeaderGroup<TData extends RowData> {
   depth: number
@@ -288,9 +288,9 @@ function createHeader<TData extends RowData, TValue, TColumnMeta = ColumnMeta>(
     subHeaders: [],
   }
 
-  table._features.forEach((feature) => {
+  for (const feature of table._features) {
     feature.createHeader?.(header, table)
-  })
+  }
 
   return header as Header<TData, TValue, TColumnMeta>
 }
@@ -581,6 +581,7 @@ export function buildHeaderGroups<TData extends RowData>(
 
     columns
       .filter((column) => column.getIsVisible())
+      // oxlint-disable-next-line unicorn/no-array-for-each
       .forEach((column) => {
         if (column.columns?.length) {
           findMaxDepth(column.columns, depth + 1)
@@ -607,7 +608,7 @@ export function buildHeaderGroups<TData extends RowData>(
     const pendingParentHeaders: Header<TData, unknown>[] = []
 
     // Scan each column for parents
-    headersToGroup.forEach((headerToGroup) => {
+    for (const headerToGroup of headersToGroup) {
       // What is the latest (last) parent column?
 
       const latestPendingParentHeader = [...pendingParentHeaders].reverse()[0]
@@ -657,7 +658,7 @@ export function buildHeaderGroups<TData extends RowData>(
 
       headerGroup.headers.push(headerToGroup)
       headerToGroup.headerGroup = headerGroup
-    })
+    }
 
     headerGroups.push(headerGroup)
 
@@ -696,12 +697,13 @@ export function buildHeaderGroups<TData extends RowData>(
       if (header.subHeaders && header.subHeaders.length) {
         childRowSpans = []
 
-        recurseHeadersForSpans(header.subHeaders).forEach(
-          ({colSpan: childColSpan, rowSpan: childRowSpan}) => {
-            colSpan += childColSpan
-            childRowSpans.push(childRowSpan)
-          },
-        )
+        for (const {
+          colSpan: childColSpan,
+          rowSpan: childRowSpan,
+        } of recurseHeadersForSpans(header.subHeaders)) {
+          colSpan += childColSpan
+          childRowSpans.push(childRowSpan)
+        }
       } else {
         colSpan = 1
       }

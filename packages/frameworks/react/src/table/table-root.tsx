@@ -11,7 +11,7 @@ import {
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context"
+import {qdsTableApi} from "./qds-table-context.js"
 
 export interface TableRootProps
   extends ElementRenderProp<"div">, QdsTableApiProps {}

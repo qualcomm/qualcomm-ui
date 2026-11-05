@@ -6,7 +6,6 @@ import type {ReactElement} from "react"
 import {Check, createLucideIcon, type IconNode} from "lucide-react"
 
 import {StepperIndicatorAlert} from "@qualcomm-ui/qds-core/stepper"
-import {IconOrNode} from "@qualcomm-ui/react/icon"
 import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {
   CoreStepper,
@@ -14,9 +13,10 @@ import {
   useStepperContext,
   useStepperItemContext,
 } from "@qualcomm-ui/react-core/stepper"
+import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsStepperContext} from "./qds-stepper-context"
+import {useQdsStepperContext} from "./qds-stepper-context.js"
 
 export interface StepperIndicatorProps extends CoreStepperIndicatorProps {
   /**

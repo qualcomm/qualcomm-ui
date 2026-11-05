@@ -7,13 +7,13 @@
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {toggleAnatomy} from "./toggle.anatomy"
+import {toggleAnatomy} from "./toggle.anatomy.js"
 import type {
   ToggleApi,
   ToggleIndicatorBindings,
   ToggleRootBindings,
   ToggleSchema,
-} from "./toggle.types"
+} from "./toggle.types.js"
 
 const parts = toggleAnatomy.parts
 

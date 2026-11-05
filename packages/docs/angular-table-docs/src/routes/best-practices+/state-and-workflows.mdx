@@ -1,0 +1,199 @@
+---
+title: Use Columns for Row Behavior
+---
+
+# {frontmatter.title}
+
+A column should describe what a record means in this table: the label a person sees and the action available for that record.
+
+## Start With the Result
+
+Consider a package-management table. A disabled package needs an explanation and may still offer `View details` while `Publish` is unavailable.
+
+| Package state | Status cell                | Actions cell                                 |
+|---------------|----------------------------|----------------------------------------------|
+| `Ready`       | `Ready to publish`         | `Publish` is available                       |
+| `Disabled`    | `Disabled` with its reason | `View details` is shown instead of `Publish` |
+
+## Define the Row Behavior
+
+The following column definitions use the same package data for the status and actions cells. `onPublish` and `onViewDetails` come from the owning workflow and are passed to the actions cell through column metadata.
+
+```angular-ts
+import {Component, computed} from "@angular/core"
+
+import {ButtonModule} from "@qualcomm-ui/angular/button"
+import {CellComponentContextDirective} from "@qualcomm-ui/angular/table"
+import {createColumnHelper, type ColumnDef} from "@qualcomm-ui/core/table"
+
+interface Package {
+  name: string
+  status: "Ready" | "Disabled"
+  statusHelpText?: string
+}
+
+interface PackageActionsColumnMeta {
+  onPublish: (pkg: Package) => void
+  onViewDetails: (pkg: Package) => void
+}
+
+@Component({
+  selector: "package-status-cell",
+  template: `<span>{{ label() }}</span>`,
+})
+export class PackageStatusCell extends CellComponentContextDirective<
+  Package,
+  Package["status"]
+> {
+  readonly label = computed(() => {
+    const pkg = this.context().row.original
+    const status = pkg.status === "Ready" ? "Ready to publish" : "Disabled"
+
+    return pkg.statusHelpText ? `${status}: ${pkg.statusHelpText}` : status
+  })
+}
+
+@Component({
+  imports: [ButtonModule],
+  selector: "package-actions-cell",
+  template: `
+    @if (package().status === "Disabled") {
+      <button q-button size="sm" variant="outline" (click)="viewDetails()">
+        View details
+      </button>
+    } @else {
+      <button q-button size="sm" variant="outline" (click)="publish()">
+        Publish
+      </button>
+    }
+  `,
+})
+export class PackageActionsCell extends CellComponentContextDirective<
+  Package,
+  unknown,
+  PackageActionsColumnMeta
+> {
+  readonly package = computed(() => this.context().row.original)
+
+  protected publish() {
+    this.context().column.columnDef.meta?.onPublish(this.package())
+  }
+
+  protected viewDetails() {
+    this.context().column.columnDef.meta?.onViewDetails(this.package())
+  }
+}
+
+const columnHelper = createColumnHelper<Package>()
+
+export function createPackageColumns(
+  onPublish: (pkg: Package) => void,
+  onViewDetails: (pkg: Package) => void,
+): ColumnDef<Package>[] {
+  return [
+    {
+      accessorKey: "name",
+      header: "Package",
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: () => PackageStatusCell,
+    },
+    columnHelper.display({
+      id: "actions",
+      header: "Actions",
+      cell: () => PackageActionsCell,
+      meta: {
+        onPublish,
+        onViewDetails,
+      } satisfies PackageActionsColumnMeta,
+    }),
+  ]
+}
+```
+
+The `status` column turns a stored value into the label and help text needed by this table. The actions column reads the package status and chooses the matching action and callback.
+
+This is business logic in columns: rules that determine a row's visible state and available interaction.
+
+## Consume the Column Factory
+
+Pass the table screen's two action handlers to `createPackageColumns`, then pass its result directly to `createAngularTable`.
+
+```angular-ts
+import {Component, computed, input} from "@angular/core"
+
+import {createAngularTable, TableModule} from "@qualcomm-ui/angular/table"
+import {getCoreRowModel} from "@qualcomm-ui/core/table"
+
+@Component({
+  imports: [TableModule],
+  selector: "packages-table",
+  template: `
+    <div q-table-root>
+      <div q-table-scroll-container>
+        <table q-table-table>
+          <thead q-table-header>
+            @for (headerGroup of table.getHeaderGroups(); track headerGroup.id) {
+              <tr q-table-row>
+                @for (header of headerGroup.headers; track header.id) {
+                  <th q-table-header-cell [attr.colspan]="header.colSpan">
+                    @if (!header.isPlaceholder) {
+                      <ng-container *renderHeader="header; let value">
+                        {{ value }}
+                      </ng-container>
+                    }
+                  </th>
+                }
+              </tr>
+            }
+          </thead>
+          <tbody q-table-body>
+            @for (row of table.getRowModel().rows; track row.id) {
+              <tr q-table-row>
+                @for (cell of row.getVisibleCells(); track cell.id) {
+                  <td q-table-cell>
+                    <ng-container *renderCell="cell; let value">
+                      {{ value }}
+                    </ng-container>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `,
+})
+export class PackagesTable {
+  readonly packages = input.required<Package[]>()
+  readonly onPublish = input.required<(pkg: Package) => void>()
+  readonly onViewDetails = input.required<(pkg: Package) => void>()
+
+  readonly columns = computed(() =>
+    createPackageColumns(this.onPublish(), this.onViewDetails()),
+  )
+
+  readonly table = createAngularTable<Package>(() => ({
+    columns: this.columns(),
+    data: this.packages(),
+    getCoreRowModel: getCoreRowModel(),
+  }))
+}
+```
+
+The component that calls `usePackagesTable` renders the returned table with the usual table markup. When a person chooses an action, the cell calls the matching handler with the exact `Package` supplied by the screen.
+
+## Keep the Workflow Behind the Callback
+
+The callback's business logic does not need to live in the column. `onPublish` can open a confirmation dialog, start a request, report an error, and refresh the table data. `onViewDetails` can navigate to the package page.
+
+The column needs only the rule and the typed callback.
+
+## Related Guides
+
+- [Column Definitions](/guides/column-definitions)
+- [Reusable Columns](/best-practices/reusable-columns)
+- [Rows](/guides/rows)

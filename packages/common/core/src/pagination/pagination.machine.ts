@@ -8,7 +8,7 @@ import {range} from "@qualcomm-ui/utils/array"
 import {createMachine, type MachineConfig} from "@qualcomm-ui/utils/machine"
 import {memo} from "@qualcomm-ui/utils/memo"
 
-import type {PageItem, PaginationSchema} from "./pagination.types"
+import type {PageItem, PaginationSchema} from "./pagination.types.js"
 
 export const paginationMachine: MachineConfig<PaginationSchema> =
   createMachine<PaginationSchema>({

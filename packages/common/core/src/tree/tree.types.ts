@@ -29,7 +29,7 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
-import type {treeAnatomy} from "./tree.anatomy"
+import type {treeAnatomy} from "./tree.anatomy.js"
 
 export interface FocusChangeDetails<T extends TreeNode = TreeNode> {
   /**
@@ -417,7 +417,7 @@ interface Part<P extends PartName> extends AnatomyPart<"tree", P> {}
 export interface TreeRootBindings extends Part<"root"> {
   "aria-label": string
   "aria-labelledby": string | undefined
-  "aria-multiselectable": boolean | undefined
+  "aria-multiselectable": BooleanAriaAttr
   dir: Direction
   id: string
   onKeyDown: JSX.KeyboardEventHandler<HTMLElement>

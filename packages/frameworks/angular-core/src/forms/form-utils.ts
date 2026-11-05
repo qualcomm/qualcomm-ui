@@ -145,7 +145,7 @@ export function allEventsObservable<T>(
         } satisfies FormEventData<T>
       }),
     ),
-  ) as Observable<FormEventData<T>>
+  )
 }
 
 export function allEventsSignal<T>(

@@ -8,7 +8,7 @@ import type {QuiComment} from "@qualcomm-ui/typedoc-common"
 import {
   PropDescriptionBlockTags,
   PropDescriptionSummary,
-} from "../prop-description"
+} from "../prop-description/index.js"
 
 export interface JsdocCommentProps {
   comment?: QuiComment | null

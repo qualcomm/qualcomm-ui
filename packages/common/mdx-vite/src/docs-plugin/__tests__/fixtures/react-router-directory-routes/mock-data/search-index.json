@@ -1,0 +1,145 @@
+[
+  {
+    "categories": [
+      "Introduction"
+    ],
+    "data": {
+      "id": "_index",
+      "title": "Introduction"
+    },
+    "id": "/routes/_index.mdx-0",
+    "pathname": "/",
+    "pathSegments": [],
+    "title": "Introduction",
+    "content": "Directory routes use plain folders for nested URLs.",
+    "heading": "Introduction",
+    "headingLevel": 1,
+    "href": "/"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide/page-setup.mdx-0",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "Create pages by adding files under the routes directory.",
+    "heading": "Page Setup",
+    "headingLevel": 1,
+    "href": "/guide/page-setup"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Page Setup"
+    ],
+    "data": {
+      "title": "Page Setup"
+    },
+    "id": "/routes/guide/page-setup.mdx-1",
+    "pathname": "/guide/page-setup",
+    "pathSegments": [
+      "guide",
+      "page-setup"
+    ],
+    "title": "Page Setup",
+    "content": "Plain folders become URL segments in directory mode.",
+    "heading": "Nested Folders",
+    "headingLevel": 2,
+    "href": "/guide/page-setup#nested-folders"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Author Markdown content in directory routes."
+    },
+    "description": "Author Markdown content in directory routes.",
+    "id": "/routes/guide/markdown.mdx-0",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Markdown pages can live in nested folders without a trailing plus sign.",
+    "heading": "Markdown",
+    "headingLevel": 1,
+    "href": "/guide/markdown"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Markdown"
+    ],
+    "data": {
+      "title": "Markdown",
+      "description": "Author Markdown content in directory routes."
+    },
+    "description": "Author Markdown content in directory routes.",
+    "id": "/routes/guide/markdown.mdx-1",
+    "pathname": "/guide/markdown",
+    "pathSegments": [
+      "guide",
+      "markdown"
+    ],
+    "title": "Markdown",
+    "content": "Frontmatter still supplies page metadata.",
+    "heading": "Frontmatter",
+    "headingLevel": 2,
+    "href": "/guide/markdown#frontmatter"
+  },
+  {
+    "categories": [
+      "Guide",
+      "Advanced",
+      "Deep Topic"
+    ],
+    "data": {
+      "title": "Deep Topic"
+    },
+    "id": "/routes/guide/advanced/deep-topic.mdx-0",
+    "pathname": "/guide/advanced/deep-topic",
+    "pathSegments": [
+      "guide",
+      "advanced",
+      "deep-topic"
+    ],
+    "title": "Deep Topic",
+    "content": "Multiple nested folders resolve to multiple URL segments.",
+    "heading": "Deep Topic",
+    "headingLevel": 1,
+    "href": "/guide/advanced/deep-topic"
+  },
+  {
+    "categories": [
+      "API",
+      "Page Frontmatter"
+    ],
+    "data": {
+      "title": "Page Frontmatter"
+    },
+    "id": "/routes/api/page-frontmatter.mdx-0",
+    "pathname": "/api/page-frontmatter",
+    "pathSegments": [
+      "api",
+      "page-frontmatter"
+    ],
+    "title": "Page Frontmatter",
+    "content": "API pages can also be organized with regular folders.",
+    "heading": "Page Frontmatter",
+    "headingLevel": 1,
+    "href": "/api/page-frontmatter"
+  }
+]

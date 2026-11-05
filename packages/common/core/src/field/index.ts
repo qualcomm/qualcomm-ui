@@ -1,2 +1,2 @@
-export * from "./field.anatomy"
-export type * from "./field.types"
+export * from "./field.anatomy.js"
+export type * from "./field.types.js"

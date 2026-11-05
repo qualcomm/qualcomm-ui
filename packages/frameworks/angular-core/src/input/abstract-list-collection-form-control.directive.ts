@@ -31,8 +31,8 @@ import {
 import {useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {allEventsSignal} from "@qualcomm-ui/angular-core/forms"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
-import {
-  type CollectionItem,
+import type {
+  CollectionItem,
   ListCollection,
 } from "@qualcomm-ui/utils/collection"
 import {defined, isDefined} from "@qualcomm-ui/utils/guard"
@@ -316,14 +316,17 @@ export abstract class AbstractBaseListCollectionFormControlDirective<
 
   registerOnChange(fn: (value: any) => void): void {
     this.onChange = (_value) => {
-      fn(_value)
+      // set first: a parent's rollback in `valueChanges` must land last
       this.value.set(_value ?? [])
+      fn(_value)
     }
   }
 
   protected onTouched = () => {}
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn
+    // let descendant parts that own a focusable element report blur
+    this.formControlContext.onTouched = fn
   }
 
   /**

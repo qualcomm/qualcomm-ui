@@ -23,7 +23,7 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
-import type {collapsibleAnatomy} from "./collapsible.anatomy"
+import type {collapsibleAnatomy} from "./collapsible.anatomy.js"
 
 export interface CollapsibleApiProps
   extends CommonProperties, DirectionProperty {

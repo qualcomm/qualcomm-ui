@@ -131,11 +131,15 @@ export function hostBinding<T, S extends Signal<T> | WritableSignal<T>>(
         case "class":
           if (!property) {
             if (prevClasses.length) {
-              prevClasses.forEach((k) => renderer.removeClass(element, k))
+              for (const k of prevClasses) {
+                renderer.removeClass(element, k)
+              }
             }
             prevClasses =
               typeof value === "string" ? value.split(" ").filter(Boolean) : []
-            prevClasses.forEach((k) => renderer.addClass(element, k))
+            for (const k of prevClasses) {
+              renderer.addClass(element, k)
+            }
           } else {
             if (value) {
               renderer.addClass(element, property)

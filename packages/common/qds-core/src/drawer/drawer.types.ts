@@ -6,7 +6,7 @@ import type {
   QdsDialogSize,
 } from "@qualcomm-ui/qds-core/dialog"
 
-import type {drawerClasses} from "./drawer.classes"
+import type {drawerClasses} from "./drawer.classes.js"
 
 export type QdsDrawerPlacement = "start" | "end"
 

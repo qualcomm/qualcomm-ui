@@ -4,9 +4,9 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {SortingFn} from "../features/sorting"
-import type {Row, RowData, RowModel, TableInstance} from "../types"
-import {memo} from "../utils"
+import type {SortingFn} from "../features/sorting.js"
+import type {Row, RowData, RowModel, TableInstance} from "../types.js"
+import {memo} from "../utils.js"
 
 export function getSortedRowModel<TData extends RowData>(): (
   table: TableInstance<TData>,
@@ -37,10 +37,10 @@ export function getSortedRowModel<TData extends RowData>(): (
           }
         > = {}
 
-        availableSorting.forEach((sortEntry) => {
+        for (const sortEntry of availableSorting) {
           const column = table.getColumn(sortEntry.id)
           if (!column) {
-            return
+            continue
           }
 
           columnInfoById[sortEntry.id] = {
@@ -48,7 +48,7 @@ export function getSortedRowModel<TData extends RowData>(): (
             sortingFn: column.getSortingFn(),
             sortUndefined: column.columnDef.sortUndefined,
           }
-        })
+        }
 
         const sortData = (rows: Row<TData>[]) => {
           // This will also perform a stable sorting using the row index
@@ -103,12 +103,12 @@ export function getSortedRowModel<TData extends RowData>(): (
           })
 
           // If there are sub-rows, sort them
-          sortedData.forEach((row) => {
+          for (const row of sortedData) {
             sortedFlatRows.push(row)
             if (row.subRows?.length) {
               row.subRows = sortData(row.subRows)
             }
-          })
+          }
 
           return sortedData
         }

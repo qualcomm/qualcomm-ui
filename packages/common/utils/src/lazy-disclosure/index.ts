@@ -1,1 +1,1 @@
-export * from "./lazy-disclosure"
+export * from "./lazy-disclosure.js"

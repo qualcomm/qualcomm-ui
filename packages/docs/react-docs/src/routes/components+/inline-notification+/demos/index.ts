@@ -1,4 +1,5 @@
 export * from "./inline-notification-action-demo"
+export * from "./inline-notification-explorer-demo"
 export * from "./inline-notification-composite-demo"
 export * from "./inline-notification-dismissable-demo"
 export * from "./inline-notification-emphasis-demo"

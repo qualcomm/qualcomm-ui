@@ -6,6 +6,7 @@ export const breadcrumbsClasses = {
   itemIcon: "qui-breadcrumbs__item-icon",
   itemTrigger: "qui-breadcrumbs__item-trigger",
   list: "qui-breadcrumbs__list",
+  overflowTrigger: "qui-breadcrumbs__overflow-trigger",
   root: "qui-breadcrumbs__root",
   separator: "qui-breadcrumbs__separator",
 } as const

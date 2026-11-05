@@ -3,12 +3,12 @@
 
 import type {ReactElement} from "react"
 
-import {Tab, Tabs, type TabsRootProps} from "@qualcomm-ui/react/tabs"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {
   type PackageManager,
-  useMdxDocsContext,
+  useDocsRuntimeContext,
 } from "@qualcomm-ui/react-mdx/context"
+import {Tab, Tabs, type TabsRootProps} from "@qualcomm-ui/react/tabs"
 import {ensureArray} from "@qualcomm-ui/utils/array"
 
 /**
@@ -35,7 +35,7 @@ export function NpmInstallTabs({
 }: NpmCommandTabsProps): ReactElement {
   const packages = ensureArray(packagesProp).join(" ")
 
-  const {packageManager = "npm", setPackageManager} = useMdxDocsContext()
+  const {packageManager = "npm", setPackageManager} = useDocsRuntimeContext()
 
   const copyCommands = {
     npm: `npm i${dev ? " --save-dev" : ""} ${packages}`,
@@ -45,6 +45,7 @@ export function NpmInstallTabs({
 
   return (
     <Tabs.Root
+      className="mdx"
       onValueChange={(value) => {
         setPackageManager?.(value as PackageManager)
       }}
@@ -71,6 +72,7 @@ export function NpmInstallTabs({
           code={copyCommands.pnpm}
           language="shell"
           preProps={{
+            className: "qui-docs__mdx-scrollbar",
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
           }}
         />
@@ -82,6 +84,7 @@ export function NpmInstallTabs({
           code={copyCommands.npm}
           language="shell"
           preProps={{
+            className: "qui-docs__mdx-scrollbar",
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
           }}
         />
@@ -93,6 +96,7 @@ export function NpmInstallTabs({
           code={copyCommands.yarn}
           language="shell"
           preProps={{
+            className: "qui-docs__mdx-scrollbar",
             style: {borderTopLeftRadius: 0, borderTopRightRadius: 0},
           }}
         />

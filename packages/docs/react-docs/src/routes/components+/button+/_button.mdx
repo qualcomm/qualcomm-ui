@@ -22,9 +22,7 @@ import {Button} from "@qualcomm-ui/react/button"
 ### Variants
 
 ::: terms
-solid button
-bordered button
-transparent button
+solid button, bordered button, transparent button
 :::
 
 Buttons come in three variants: `fill`, `outline`, and `ghost`. Customize these with the [variant](./#variant) property.
@@ -34,20 +32,17 @@ Buttons come in three variants: `fill`, `outline`, and `ghost`. Customize these 
 ### Emphasis
 
 ::: terms
-destructive button
-delete button
+destructive button, delete button
 :::
 
-Control the visual [emphasis](./#emphasis) with different colors: `neutral`, `primary`, and `danger`.
+Control the visual [emphasis](./#emphasis-1) with different colors: `neutral`, `primary`, and `danger`.
 
 <Demo name="ButtonEmphasisDemo" component={demos.ButtonEmphasisDemo} />
 
 ### Sizes and Icons
 
 ::: terms
-small
-medium
-large
+small, medium, large
 :::
 
 Control dimensions with the [size](./#size) prop. Icons are supplied using the [startIcon](./#startIcon) and [endIcon](./#endIcon) props.
@@ -57,9 +52,7 @@ Control dimensions with the [size](./#size) prop. Icons are supplied using the [
 ### Compact Density
 
 ::: terms
-condensed button
-slim button
-tight button
+condensed button, slim button, tight button
 :::
 
 Use the [density](./#density) prop to reduce the padding and height of the button. The options are `default` and `compact`.
@@ -69,9 +62,7 @@ Use the [density](./#density) prop to reduce the padding and height of the butto
 ### Variant Combinations
 
 ::: terms
-button grid
-button matrix
-all button styles
+button grid, button matrix, all button styles
 :::
 
 This grid shows all button combinations across variants and emphasis levels. The bottom row demonstrates the disabled state, which grays out the button regardless of variant or emphasis.
@@ -81,20 +72,70 @@ This grid shows all button combinations across variants and emphasis levels. The
 ### Contrast Colors
 
 ::: terms
-high contrast button
-button on dark background
-inverted button
+high contrast button, button on dark background, inverted button
 :::
 
-Use `white-persistent` for buttons on dark backgrounds and `black-persistent` for buttons on light backgrounds. These emphasis values maintain consistent contrast regardless of the active theme.
+Use `persistent-white` for buttons on dark backgrounds and `persistent-black` for buttons on light backgrounds. These emphasis values maintain consistent contrast regardless of the active theme.
 
 <Demo name="ButtonContrastDemo" component={demos.ButtonContrastDemo} />
 
 ### Inverse Contrast
 
-To flip contrast against the active theme, set [emphasis](./#emphasis) to `inverse`.
+To flip contrast against the active theme, set [emphasis](./#emphasis-1) to `inverse`.
 
 <Demo component={demos.ButtonInverseDemo} name="ButtonInverseDemo" />
+
+### Badge
+
+::: terms
+count badge, notification count, status indicator
+:::
+
+Supply a [NumberBadge](/components/badges/number-badge) or [StatusBadge](/components/badges/status-badge) with the [badge](./#badge-1) prop. The badge renders after the label and before the end icon.
+
+The button passes these defaults to its badge:
+
+- A disabled button disables its badge.
+- Badge size follows the button size.
+- `NumberBadge` emphasis follows the button's `variant` and `emphasis`.
+- `StatusBadge` emphasis is not changed.
+
+Props set on the badge take precedence over these defaults.
+
+| Button size | `NumberBadge` size | `StatusBadge` size |
+| ----------- | ------------------ | ------------------ |
+| `sm`        | `xs`               | `sm`               |
+| `md`        | `xs`               | `sm`               |
+| `lg`        | `sm`               | `md`               |
+
+| Button emphasis    | `NumberBadge` emphasis on `fill` | `NumberBadge` emphasis on `outline` and `ghost` |
+| ------------------ | -------------------------------- | ----------------------------------------------- |
+| `neutral`          | `persistent-white`               | `neutral`                                       |
+| `primary`          | `persistent-white`               | `brand`                                         |
+| `danger`           | `persistent-white`               | `danger`                                        |
+| `persistent-white` | `persistent-white`               | `persistent-white`                              |
+| `persistent-black` | `persistent-black`               | `persistent-black`                              |
+| `inverse`          | `neutral`                        | `neutral`                                       |
+
+The `badge` prop is also available on [Menu.Button](/components/menu#menu-button), and on [Menu.SplitButton](/components/menu#split-button) through `actionProps.badge`.
+
+<Demo name="ButtonBadgeDemo" component={demos.ButtonBadgeDemo} />
+
+### Menu Button
+
+::: terms
+menu trigger, dropdown button, icon menu button
+:::
+
+For a button that opens a dropdown, use [`Menu.Button`](/components/menu#menu-button) for a labeled trigger or [`Menu.IconButton`](/components/menu#menu-button) for an icon-only trigger.
+
+### Split Button
+
+::: terms
+split action, dropdown button, secondary actions
+:::
+
+For a button that pairs a primary action with a dropdown of related actions, use [`Menu.SplitButton`](/components/menu#split-button).
 
 ## API
 
@@ -107,8 +148,7 @@ To flip contrast against the active theme, set [emphasis](./#emphasis) to `inver
 ### Start Icon
 
 ::: terms
-leading icon
-icon before text
+leading icon, icon before text
 :::
 
 Provided via the [startIcon](./#startIcon) prop.
@@ -118,8 +158,7 @@ Provided via the [startIcon](./#startIcon) prop.
 ### End Icon
 
 ::: terms
-trailing icon
-icon after text
+trailing icon, icon after text
 :::
 
 Provided via the [endIcon](./#endIcon) prop.

@@ -1,0 +1,26 @@
+---
+title: QUI React Best Practices
+---
+
+# {frontmatter.title}
+
+Use the QUI React Development plugin when writing or reviewing React code that consumes `@qualcomm-ui/react`. The plugin loads the covered component contracts into the agent so it can apply or audit the same best-practice categories enforced by `@qualcomm-ui/eslint-plugin-react`.
+
+The plugin provides two React-specific skills:
+
+- **apply-qui-component-rules**: guidelines for writing or modifying covered QUI React component usage
+- **audit-qui-component-rules**: guidelines for reviewing covered QUI React component usage
+
+## Installation
+
+- Enable the QUI plugin marketplace for your agent
+  - [Claude Code](/ai-tools/claude-code)
+  - [Codex](/ai-tools/codex)
+- Browse the agent's plugin repository and enable **qui-react-development**.
+- Start a fresh session after enabling **qui-react-development** so the skills load into the conversation.
+
+Refer to the [plugin source code](https://github.com/qualcomm/qualcomm-ui/tree/main/plugins/qui-react-development/references) to learn more.
+
+## Troubleshoot plugin usage
+
+If the agent does not load a `qui-react-development:*` skill, confirm that **qui-react-development** is enabled in the agent's plugin repository. Then start a fresh session.

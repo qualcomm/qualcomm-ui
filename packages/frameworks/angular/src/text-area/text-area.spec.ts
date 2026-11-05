@@ -10,6 +10,7 @@ import {describe, expect, test} from "vitest"
 import {page, userEvent} from "vitest/browser"
 
 import {TextAreaModule} from "@qualcomm-ui/angular/text-area"
+import type {Direction} from "@qualcomm-ui/utils/direction"
 
 import {type MultiComponentTest, runTests} from "~test-utils"
 
@@ -68,7 +69,7 @@ class SimpleTextAreaComponent {
 
   readonly counter = input<boolean | undefined>(undefined)
   readonly defaultValue = input<string | undefined>(undefined)
-  readonly dir = input<string | undefined>(undefined)
+  readonly dir = input<Direction | undefined>(undefined)
   readonly disabled = input<boolean | undefined>(undefined)
   readonly errorText = input<string | undefined>(undefined)
   readonly hint = input<string | undefined>(undefined)

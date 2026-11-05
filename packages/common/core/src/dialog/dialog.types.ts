@@ -25,7 +25,7 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
-import type {dialogAnatomy} from "./dialog.anatomy"
+import type {dialogAnatomy} from "./dialog.anatomy.js"
 
 export interface DialogApiProps
   extends

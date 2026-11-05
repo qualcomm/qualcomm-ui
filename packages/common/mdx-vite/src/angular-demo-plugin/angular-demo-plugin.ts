@@ -19,17 +19,18 @@ import type {Plugin, ViteDevServer} from "vite"
 import {
   type AngularDemoInfo,
   quiCustomDarkTheme,
+  quiCustomLightTheme,
   type SourceCodeData,
 } from "@qualcomm-ui/mdx-common"
 import {dedent} from "@qualcomm-ui/utils/dedent"
 
-import {getShikiTransformers} from "../docs-plugin"
+import {getShikiTransformers} from "../docs-plugin/index.js"
 import {
   extractPreviewFromHighlightedHtml,
   transformerCodeAttribute,
   transformerPreviewBlock,
-} from "../docs-plugin/shiki"
-import {createShikiTailwindTransformer} from "../docs-plugin/shiki/internal"
+} from "../docs-plugin/shiki/index.js"
+import {createShikiTailwindTransformer} from "../docs-plugin/shiki/internal/index.js"
 
 export interface AngularDemoPluginOptions {
   demoPattern?: string | string[]
@@ -98,7 +99,7 @@ export function angularDemoPlugin({
   routesDir = "src/routes",
   theme = {
     dark: quiCustomDarkTheme,
-    light: "github-light-high-contrast",
+    light: quiCustomLightTheme,
   },
   transformTailwindStyles,
 }: AngularDemoPluginOptions = {}): Plugin {
@@ -184,7 +185,7 @@ export function angularDemoPlugin({
         const module = server.moduleGraph.getModuleById(VIRTUAL_MODULE_ID)
         if (module) {
           server.moduleGraph.invalidateModule(module)
-          server.reloadModule(module)
+          void server.reloadModule(module)
         }
       })
     },
@@ -270,7 +271,13 @@ export function angularDemoPlugin({
     },
     load(id) {
       if (id === VIRTUAL_MODULE_ID) {
-        return generateRegistryModule()
+        /**
+         * The module is a generated Map of highlighted source strings, so a
+         * source map has nothing useful to point at. Without an explicit empty
+         * map, Vite generates a hires identity map that is several times larger
+         * than the module itself.
+         */
+        return {code: generateRegistryModule(), map: {mappings: ""}}
       }
     },
     name: "angular-demo-plugin",
@@ -838,7 +845,7 @@ export function angularDemoPlugin({
         })
 
         entries.push(entry)
-      } catch (error) {
+      } catch {
         logDev(
           `${chalk.blue.bold(LOG_PREFIX)} ${chalk.yellowBright("Failed to process relative import:")} ${chalk.cyan(resolvedPath)}`,
         )
@@ -1017,7 +1024,7 @@ export function getAngularDemoInfo(demoId) {
           }
 
           return pathAliases
-        } catch (error) {
+        } catch {
           currentDir = dirname(currentDir)
           continue
         }
@@ -1100,7 +1107,7 @@ export function getAngularDemoInfo(demoId) {
     if (mainModule) {
       devServer.moduleGraph.invalidateModule(mainModule)
       mainModule.lastHMRTimestamp = Date.now()
-      devServer.reloadModule(mainModule)
+      void devServer.reloadModule(mainModule)
     }
   }
 }

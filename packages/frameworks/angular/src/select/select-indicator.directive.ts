@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {Component, computed, input, type OnInit} from "@angular/core"
-import {ChevronDown} from "lucide-angular"
+import {LucideChevronDown} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {useSelectContext} from "@qualcomm-ui/angular-core/select"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context.service"
@@ -16,16 +16,20 @@ import {useQdsSelectContext} from "./qds-select-context.service"
   selector: "[q-select-indicator]",
   standalone: false,
   template: `
-    <svg [q-bind]="inlineIconButtonApi().getIconBindings()" [qIcon]="icon()" />
+    <svg
+      [q-bind]="inlineIconButtonApi().getIconBindings()"
+      [qIcon]="icon()!"
+      [size]="inlineIconButtonApi().size"
+    />
   `,
 })
 export class SelectIndicatorDirective implements OnInit {
   /**
    * Indicator icon.
    *
-   * @default ChevronDown
+   * @default LucideChevronDown
    */
-  readonly icon = input<LucideIconOrString>(ChevronDown)
+  readonly icon = input<LucideIconOrString>(LucideChevronDown)
 
   protected readonly qdsSelectContext = useQdsSelectContext()
   protected readonly selectContext = useSelectContext()

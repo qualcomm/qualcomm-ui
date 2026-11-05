@@ -3,14 +3,14 @@
 
 import type Fuzzysort from "fuzzysort"
 
-import type {PageSection} from "../docs-plugin.types"
+import type {PageSection} from "../docs-plugin.types.js"
 
 import type {
   FormattedContent,
   SearchResult,
   SearchResultFields,
   SearchResultType,
-} from "./search.types"
+} from "./search.types.js"
 
 function findWordBoundary(
   text: string,

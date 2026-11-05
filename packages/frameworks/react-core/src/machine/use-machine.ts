@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {type RefObject, useMemo, useRef, useState} from "react"
-
 import {flushSync} from "react-dom"
 
 import {createScope} from "@qualcomm-ui/dom/query"
@@ -29,17 +28,16 @@ import {
   MachineStatus,
   type Params,
   type PropsParams,
-  type SendFn,
   type ValueOrFn,
   type WatchParams,
 } from "@qualcomm-ui/utils/machine"
 import {compact} from "@qualcomm-ui/utils/object"
 
-import {useBindable} from "./use-bindable"
-import {useBindableId} from "./use-bindable-id"
-import {useBindableIdCollection} from "./use-bindable-id-collection"
-import {useLiveRef, useProp} from "./use-prop"
-import {useTrack} from "./use-track"
+import {useBindableIdCollection} from "./use-bindable-id-collection.js"
+import {useBindableId} from "./use-bindable-id.js"
+import {useBindable} from "./use-bindable.js"
+import {useLiveRef, useProp} from "./use-prop.js"
+import {useTrack} from "./use-track.js"
 
 export interface UseMachineOpts {
   /**
@@ -88,6 +86,21 @@ export function useMachine<T extends MachineSchema>(
       return idsRef.current?.[key].get()
     },
     register(key, valueOrParams, onDestroy?: any) {
+      /**
+       * A replacement element registers during render, before the outgoing
+       * element's cleanup runs at commit. Clearing unconditionally would
+       * discard the newer registration.
+       */
+      const clearIfCurrentId = (id: unknown) => () => {
+        if (idsRef.current?.[key].get() !== id) {
+          return
+        }
+        idsRef.current?.[key].set(undefined, {
+          cleanup: true,
+          immediate: true,
+        })
+      }
+
       if (
         typeof valueOrParams === "object" &&
         valueOrParams !== null &&
@@ -95,20 +108,10 @@ export function useMachine<T extends MachineSchema>(
       ) {
         const params = valueOrParams
         idsRef.current?.[key].set(params.id)
-        params.onDestroy?.(() =>
-          idsRef.current?.[key].set(undefined, {
-            cleanup: true,
-            immediate: true,
-          }),
-        )
+        params.onDestroy?.(clearIfCurrentId(params.id))
       } else {
         idsRef.current?.[key].set(valueOrParams)
-        onDestroy?.(() =>
-          idsRef.current?.[key].set(undefined, {
-            cleanup: true,
-            immediate: true,
-          }),
-        )
+        onDestroy?.(clearIfCurrentId(valueOrParams))
       }
     },
     set(key, value) {
@@ -247,7 +250,11 @@ export function useMachine<T extends MachineSchema>(
         cleanups.push(cleanup)
       }
     }
-    return () => cleanups.forEach((fn) => fn?.())
+    return () => {
+      for (const fn of cleanups) {
+        fn?.()
+      }
+    }
   }
 
   const action = (keys: ActionsOrFn<T> | undefined) => {
@@ -385,33 +392,34 @@ export function useMachine<T extends MachineSchema>(
       debug("unmounting...")
       hydratedStateRef.current = currentState
       statusRef.current = MachineStatus.STOPPED
-      fns.forEach((fn) => fn?.())
+      for (const fn of fns.values()) {
+        fn?.()
+      }
       effects.current = new Map()
       transitionRef.current = null
       queueMicrotask(() => {
         action(config.onDestroy?.actions)
       })
     }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getParams = useRef(
-    (): Params<T> => ({
-      action,
-      actions,
-      choose,
-      computed,
-      context,
-      event: getEvent(),
-      flush,
-      guard,
-      prop,
-      refs,
-      scope: {...scope, ids: ids.current},
-      send: send as SendFn<T>,
-      state: getState(),
-      track: useTrack,
-    }),
-  )
+  const getParams = useRef((): Params<T> => ({
+    action,
+    actions,
+    choose,
+    computed,
+    context,
+    event: getEvent(),
+    flush,
+    guard,
+    prop,
+    refs,
+    scope: {...scope, ids: ids.current},
+    send,
+    state: getState(),
+    track: useTrack,
+  }))
 
   config.watch?.(getParams.current() as WatchParams<T>)
 
@@ -422,7 +430,7 @@ export function useMachine<T extends MachineSchema>(
     prop,
     refs,
     scope: {...scope, ids: ids.current},
-    send: send as SendFn<T>,
+    send,
     state: getState(),
   }
 }

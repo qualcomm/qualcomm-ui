@@ -4,10 +4,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Row, RowData, RowModel, TableInstance} from "../types"
-import {memo} from "../utils"
+import type {Row, RowData, RowModel, TableInstance} from "../types.js"
+import {memo} from "../utils.js"
 
-import {expandRows} from "./get-expanded-row-model"
+import {expandRows} from "./get-expanded-row-model.js"
 
 export function getPaginationRowModel<TData extends RowData>(): (
   table: TableInstance<TData>,
@@ -54,12 +54,17 @@ export function getPaginationRowModel<TData extends RowData>(): (
 
         const handleRow = (row: Row<TData>) => {
           paginatedRowModel.flatRows.push(row)
-          if (row.subRows.length) {
-            row.subRows.forEach(handleRow)
+          const subRows: Row<TData>[] = row.subRows
+          if (subRows.length) {
+            for (const row of subRows) {
+              handleRow(row)
+            }
           }
         }
 
-        paginatedRowModel.rows.forEach(handleRow)
+        for (const row of paginatedRowModel.rows) {
+          handleRow(row)
+        }
 
         return paginatedRowModel
       },

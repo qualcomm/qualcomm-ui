@@ -3,38 +3,17 @@ import type {ConfigObject} from "@eslint/core"
 interface AngularConfigExport {
   configs: {
     /**
-     * Base configuration for Angular HTML templates.
-     * Required for all template configs to work.
+     * Formatting for Angular templates with Angular parser. Enforces alphabetical
+     * ordering of Angular template attributes, template formatting with oxfmt
+     * (`prettier` alternative), and self-closing component tags.
      */
-    baseTemplate: ConfigObject
-
-    /**
-     * Base configuration for Angular TypeScript files.
-     * Required for Angular TypeScript rules to work.
-     */
-    baseTypescript: ConfigObject
-
-    /**
-     * Enforce alphabetical ordering of Angular template attributes
-     * (structural directives, template refs, bindings, etc).
-     */
-    templateAttributeOrder: ConfigObject
-
-    /**
-     * Prettier formatting for Angular templates with Angular parser.
-     */
-    templatePrettier: ConfigObject
-
-    /**
-     * Enforce self-closing tags in Angular templates where applicable.
-     */
-    templateSelfClosingTags: ConfigObject
+    templateRecommended: ConfigObject[]
 
     /**
      * TypeScript rules for Angular components and services.
      * Includes inline template processing.
      */
-    typescript: ConfigObject
+    typescriptRecommended: ConfigObject[]
   }
 }
 

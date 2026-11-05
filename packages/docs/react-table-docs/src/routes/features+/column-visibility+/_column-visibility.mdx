@@ -3,18 +3,13 @@ title: Column Visibility
 component: Table
 ---
 
-import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 import {Demo} from "~components/demo"
 import * as demos from "./demos"
 
 # {frontmatter.title}
 
 ::: terms
-show hide
-hidden
-column.toggleVisibility
-column.getIsVisible
-table.getIsAllColumnsVisible
+show hide, hidden, column.toggleVisibility, column.getIsVisible, table.getIsAllColumnsVisible
 :::
 
 Use the `columnVisibility` state and `onColumnVisibilityChange` callback to control which columns are visible. The table instance provides methods like `toggleAllColumnsVisible()` and `getAllLeafColumns()` for building column picker interfaces.

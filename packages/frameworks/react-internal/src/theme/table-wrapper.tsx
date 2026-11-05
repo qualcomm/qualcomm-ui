@@ -24,7 +24,7 @@ export function TableWrapper({
   )
   return (
     <Table.Root size="sm" {...mergedProps}>
-      <Table.ScrollContainer>
+      <Table.ScrollContainer className="qui-docs__mdx-scrollbar">
         <Table.Table>{children}</Table.Table>
       </Table.ScrollContainer>
     </Table.Root>

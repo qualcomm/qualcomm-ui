@@ -1,13 +1,13 @@
 import {Component} from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {BadgeDirective} from "@qualcomm-ui/angular/badge"
 import {CardModule} from "@qualcomm-ui/angular/card"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [CardModule, BadgeDirective],
-  providers: [provideIcons({ChevronRight})],
+  providers: [provideIcons({LucideChevronRight})],
   selector: "card-badge-demo",
   template: `
     <div class="flex flex-wrap gap-6">

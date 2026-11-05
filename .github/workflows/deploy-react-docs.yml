@@ -2,13 +2,14 @@ name: Deploy React Docs
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - main
-    paths:
-    - packages/common/**
-    - packages/frameworks/react*/**
-    - packages/docs/react-docs/**
+  workflow_call:
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY:
+        required: true
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY:
+        required: true
+      PROD_QUI_DOCS_ECR_REGISTRY_URL:
+        required: true
 
 jobs:
   deploy:
@@ -16,4 +17,7 @@ jobs:
     with:
       dockerfile: dockerfiles/dockerfile-react-docs
       ecr-repository-name: react-docs
-    secrets: inherit
+    secrets:
+      PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
+      PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
+      PROD_QUI_DOCS_ECR_REGISTRY_URL: ${{ secrets.PROD_QUI_DOCS_ECR_REGISTRY_URL }}

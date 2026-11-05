@@ -3,12 +3,12 @@
 
 import type {ReactNode} from "react"
 
-import {SegmentedControlHiddenInput} from "./segmented-control-hidden-input"
+import {SegmentedControlHiddenInput} from "./segmented-control-hidden-input.js"
 import {
   SegmentedControlItemRoot,
   type SegmentedControlItemRootProps,
-} from "./segmented-control-item-root"
-import {SegmentedControlItemText} from "./segmented-control-item-text"
+} from "./segmented-control-item-root.js"
+import {SegmentedControlItemText} from "./segmented-control-item-text.js"
 
 export interface SegmentedControlItemProps extends SegmentedControlItemRootProps {
   /**

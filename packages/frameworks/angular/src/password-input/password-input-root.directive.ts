@@ -3,19 +3,19 @@
 
 import {computed, Directive, inject, input, type OnInit} from "@angular/core"
 
-import {
-  provideQdsInputContext,
-  type QdsAngularInputApiProps,
-  QdsInputContextService,
-} from "@qualcomm-ui/angular/input"
 import {INPUT_FORM_CONTROL_CONTEXT} from "@qualcomm-ui/angular-core/input"
-import type {LucideIcon} from "@qualcomm-ui/angular-core/lucide"
+import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {
   CorePasswordInputRootDirective,
   providePasswordInputContext,
 } from "@qualcomm-ui/angular-core/password-input"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {
+  provideQdsInputContext,
+  type QdsAngularInputApiProps,
+  QdsInputContextService,
+} from "@qualcomm-ui/angular/input"
 import {createQdsInputApi, type QdsInputSize} from "@qualcomm-ui/qds-core/input"
 
 @Directive({
@@ -60,7 +60,7 @@ export class PasswordInputRootDirective
    * </div>
    * ```
    */
-  readonly startIcon = input<LucideIcon | string | undefined>()
+  readonly startIcon = input<LucideIconOrString | undefined>()
 
   protected readonly qdsInputService = inject(QdsInputContextService)
 

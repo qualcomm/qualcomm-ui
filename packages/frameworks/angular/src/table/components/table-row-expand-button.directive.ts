@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {booleanAttribute, Component, input, type OnInit} from "@angular/core"
-import {ChevronRight} from "lucide-angular"
+import {LucideChevronRight} from "@lucide/angular"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {
   type LucideIconOrString,
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {Row} from "@qualcomm-ui/core/table"
 import type {QdsTableRowExpandButtonProps} from "@qualcomm-ui/qds-core/table"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
@@ -19,13 +19,14 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-api"
 
 @Component({
-  providers: [provideIcons({ChevronRight})],
+  providers: [provideIcons({LucideChevronRight})],
   selector: "[q-table-row-expand-button]",
   standalone: false,
   template: `
     <svg
       [q-bind]="inlineIconButtonApi().getIconBindings()"
-      [qIcon]="icon()"
+      [qIcon]="icon()!"
+      [size]="inlineIconButtonApi().size"
     ></svg>
   `,
 })
@@ -55,9 +56,9 @@ export class TableRowExpandButtonDirective
   /**
    * Lucide icon to display inside the button.
    *
-   * @default "ChevronRight"
+   * @default "LucideChevronRight"
    */
-  readonly icon = input<LucideIconOrString>("ChevronRight")
+  readonly icon = input<LucideIconOrString>("LucideChevronRight")
 
   protected readonly inlineIconButtonApi = useInlineIconButtonApi({
     emphasis: "neutral",

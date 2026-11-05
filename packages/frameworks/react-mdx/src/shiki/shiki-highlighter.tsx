@@ -10,7 +10,11 @@ import type {CodeToHastOptions} from "shiki/types"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {dummyTypeName, shikiHighlighter, supportedLangs} from "./shiki-instance"
+import {
+  dummyTypeName,
+  shikiHighlighter,
+  supportedLangs,
+} from "./shiki-instance.js"
 
 export interface ShikiHighlighterProps extends ElementRenderProp<"pre"> {
   cache?: boolean

@@ -7,7 +7,7 @@
 import {nextById, prevById, queryAll} from "@qualcomm-ui/dom/query"
 import type {ScopeDomIds, ScopeWithIds} from "@qualcomm-ui/utils/machine"
 
-import type {AccordionElementIds, AccordionSchema} from "../accordion.types"
+import type {AccordionElementIds, AccordionSchema} from "../accordion.types.js"
 
 type Scope = ScopeWithIds<AccordionSchema>
 

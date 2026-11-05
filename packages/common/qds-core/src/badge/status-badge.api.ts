@@ -4,13 +4,13 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {badgeClasses} from "./badge.classes"
-import {statusBadgeAnatomy} from "./status-badge.anatomy"
+import {badgeClasses} from "./badge.classes.js"
+import {statusBadgeAnatomy} from "./status-badge.anatomy.js"
 import type {
   QdsStatusBadgeApi,
   QdsStatusBadgeProps,
   QdsStatusBadgeRootBindings,
-} from "./status-badge.types"
+} from "./status-badge.types.js"
 
 const parts = statusBadgeAnatomy.parts
 

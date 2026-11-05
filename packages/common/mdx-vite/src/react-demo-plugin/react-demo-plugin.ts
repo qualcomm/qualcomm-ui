@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {transformerStyleToClass} from "@shikijs/transformers"
 import chalk from "chalk"
 import {glob} from "glob"
 import {readFile} from "node:fs/promises"
@@ -11,21 +12,22 @@ import type {Plugin} from "vite"
 
 import {
   quiCustomDarkTheme,
+  quiCustomLightTheme,
   type ReactDemoData,
   type SourceCodeData,
 } from "@qualcomm-ui/mdx-common"
 import {dedent} from "@qualcomm-ui/utils/dedent"
 
-import {getShikiTransformers} from "../docs-plugin"
+import {getShikiTransformers} from "../docs-plugin/index.js"
 import {
   extractPreviewFromHighlightedHtml,
   transformerCodeAttribute,
   transformerPreviewBlock,
-} from "../docs-plugin/shiki"
-import {createShikiTailwindTransformer} from "../docs-plugin/shiki/internal"
+} from "../docs-plugin/shiki/index.js"
+import {createShikiTailwindTransformer} from "../docs-plugin/shiki/internal/index.js"
 
-import {LOG_PREFIX, VIRTUAL_MODULE_IDS} from "./demo-plugin-constants"
-import type {QuiDemoPluginOptions} from "./demo-plugin-types"
+import {LOG_PREFIX, VIRTUAL_MODULE_IDS} from "./demo-plugin-constants.js"
+import type {QuiDemoPluginOptions} from "./demo-plugin-types.js"
 import {
   createDemoName,
   extractFileImports,
@@ -33,7 +35,7 @@ import {
   getScriptKind,
   isCssAsset,
   isDemoFile,
-} from "./demo-plugin-utils"
+} from "./demo-plugin-utils.js"
 
 interface HandleUpdateOptions {
   demoName?: string
@@ -42,7 +44,7 @@ interface HandleUpdateOptions {
 
 interface HighlightCodeResult {
   full: string
-  preview?: string | null
+  preview?: string
 }
 
 interface ExtractedSourceCode {
@@ -58,6 +60,27 @@ const pageFiles = new Map<string, string[]>()
 const relativeImportDependents = new Map<string, Set<string>>()
 
 /**
+ * Highlighted demos repeat a few dozen distinct token styles hundreds of
+ * thousands of times. Hoisting them into classes keeps the registry module small
+ * enough for Vite to transform and the browser to parse quickly.
+ *
+ * Module-level for the same reason as `demoRegistry`: the registry is only
+ * collected once per process, so a second plugin instance must see the same
+ * classes.
+ */
+const styleToClass = transformerStyleToClass({classPrefix: "qui-demo-"})
+
+/**
+ * Only token styles are converted. The `<pre>` background stays inline so that
+ * it keeps overriding the docs layout rules that also set a background on code
+ * blocks.
+ */
+const tokenStyleToClass: ShikiTransformer = {
+  name: "qui-demo:token-style-to-class",
+  tokens: styleToClass.tokens,
+}
+
+/**
  * Generates virtual modules for React demo components. Virtual modules contain
  * highlighted source code and metadata about each demo.
  */
@@ -66,7 +89,7 @@ export function reactDemoPlugin({
   routesDir = "src/routes",
   theme = {
     dark: quiCustomDarkTheme,
-    light: "github-light-high-contrast",
+    light: quiCustomLightTheme,
   },
   transformers = [],
   transformLine,
@@ -122,6 +145,7 @@ export function reactDemoPlugin({
       }
 
       const updatedDemoNames: string[] = []
+      const styleCountBefore = styleToClass.getClassRegistry().size
 
       if (isDemoFile(file)) {
         await handleDemoAdditionOrUpdate({filePath: file})
@@ -161,12 +185,43 @@ export function reactDemoPlugin({
         }
       }
 
+      const stylesModule = server.moduleGraph.getModuleById(
+        VIRTUAL_MODULE_IDS.STYLES,
+      )
+      if (
+        stylesModule &&
+        styleToClass.getClassRegistry().size !== styleCountBefore
+      ) {
+        return [stylesModule]
+      }
+
       return []
     },
 
     load(id) {
       if (id === VIRTUAL_MODULE_IDS.AUTO) {
-        return generateAutoScopeModule()
+        /**
+         * The module is a generated Map of highlighted source strings, so a
+         * source map has nothing useful to point at. Without an explicit empty
+         * map, Vite generates a hires identity map that is several times larger
+         * than the module itself.
+         */
+        return {code: generateAutoScopeModule(), map: {mappings: ""}}
+      }
+      if (id === VIRTUAL_MODULE_IDS.STYLES) {
+        /**
+         * Token colors use `light-dark()`. Unlike the inline styles they
+         * replace, this module goes through the consumer's CSS pipeline, and
+         * lightningcss (Vite 8's default minifier) lowers `light-dark()` to a
+         * polyfill keyed on `prefers-color-scheme`. That ignores the
+         * `color-scheme` set by the docs theme switcher, so code always follows
+         * the OS theme. Lightningcss leaves rules inside a matching `@supports`
+         * untouched, which keeps native `light-dark()` evaluation.
+         */
+        return {
+          code: `@supports (color: light-dark(#000, #fff)) {\n${styleToClass.getCSS()}\n}`,
+          map: {mappings: ""},
+        }
       }
     },
 
@@ -175,6 +230,9 @@ export function reactDemoPlugin({
     resolveId(id) {
       if (id === "virtual:qui-demo-scope/auto") {
         return VIRTUAL_MODULE_IDS.AUTO
+      }
+      if (id === "virtual:qui-demo-scope/styles.css") {
+        return VIRTUAL_MODULE_IDS.STYLES
       }
     },
 
@@ -277,14 +335,15 @@ export function reactDemoPlugin({
             },
           },
           ...transformers,
+          tokenStyleToClass,
         ],
       })
 
       return {
         full: highlightedCode,
         preview: previewCode
-          ? extractPreviewFromHighlightedHtml(highlightedCode)
-          : null,
+          ? (extractPreviewFromHighlightedHtml(highlightedCode) ?? undefined)
+          : undefined,
       }
     } catch (error) {
       console.warn(
@@ -335,6 +394,7 @@ export function reactDemoPlugin({
     const registryCode = generateDemoRegistry(demoRegistry)
     const parts = [
       "// Auto-generated demo scope resolver",
+      `import "virtual:qui-demo-scope/styles.css"`,
       registryCode,
       generateExportedFunctions(),
     ]
@@ -530,7 +590,7 @@ export function reactDemoPlugin({
         }
         return code.slice(range.start, endPos).trim()
       })
-    } catch (error) {
+    } catch {
       return []
     }
   }

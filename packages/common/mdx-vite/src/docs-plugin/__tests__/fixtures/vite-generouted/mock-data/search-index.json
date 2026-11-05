@@ -88,24 +88,6 @@
   },
   {
     "categories": [
-      "Getting Started"
-    ],
-    "data": {
-      "title": "Getting Started"
-    },
-    "id": "/pages/getting-started/index.mdx-0",
-    "pathname": "/getting-started",
-    "pathSegments": [
-      "getting-started"
-    ],
-    "title": "Getting Started",
-    "content": "Body\n\n`test code`",
-    "heading": "Getting Started",
-    "headingLevel": 1,
-    "href": "/getting-started"
-  },
-  {
-    "categories": [
       "Getting Started",
       "Home"
     ],

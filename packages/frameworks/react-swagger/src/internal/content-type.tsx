@@ -9,8 +9,8 @@ import {useEffect, useMemo} from "react"
 import immutable from "immutable"
 
 import {selectCollection} from "@qualcomm-ui/core/select"
-import {Select} from "@qualcomm-ui/react/select"
 import {useEffectOnce} from "@qualcomm-ui/react-core/effects"
+import {Select} from "@qualcomm-ui/react/select"
 
 export interface ContentTypeProps {
   ariaControls?: string

@@ -53,7 +53,7 @@
   }
 
   &:has(.qui-notification__close-button) {
-    padding-right: calc(var(--spacing-70) * 2 + var(--sizing-80));
+    padding-right: calc(var(--spacing-70) * 2 + var(--sizing-70) + var(--spacing-100));
   }
 
   &[data-orientation="horizontal"] {

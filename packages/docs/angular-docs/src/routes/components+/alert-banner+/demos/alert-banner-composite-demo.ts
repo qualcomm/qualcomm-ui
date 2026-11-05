@@ -12,16 +12,7 @@ import {ButtonModule} from "@qualcomm-ui/angular/button"
       <span q-alert-banner-icon></span>
       <div q-alert-banner-heading>Heading</div>
       <div q-alert-banner-description>Description</div>
-      <div q-alert-banner-action>
-        <button
-          emphasis="white-persistent"
-          q-button
-          size="sm"
-          variant="outline"
-        >
-          Action
-        </button>
-      </div>
+      <button q-alert-banner-button>Action</button>
       <button q-alert-banner-close-button></button>
     </div>
     <!-- preview -->

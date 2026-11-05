@@ -3,8 +3,8 @@
 
 import type {ReactElement} from "react"
 
-import {Checkmark, type CheckmarkProps} from "@qualcomm-ui/react/checkmark"
 import {useSelectItemContext} from "@qualcomm-ui/react-core/select"
+import {Checkmark, type CheckmarkProps} from "@qualcomm-ui/react/checkmark"
 
 export interface SelectItemCheckboxProps extends Omit<
   CheckmarkProps,

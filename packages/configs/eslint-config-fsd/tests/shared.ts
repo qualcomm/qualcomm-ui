@@ -2,7 +2,7 @@ import {ESLint} from "eslint"
 import {defineConfig} from "eslint/config"
 import {type InfiniteDepthConfigWithExtends, parser} from "typescript-eslint"
 
-import fsdPlugin from "../index"
+import fsdPlugin from "../src"
 
 export const pathPrefix = "./tests/src"
 
@@ -23,15 +23,10 @@ const flatConfig: InfiniteDepthConfigWithExtends[] = [
     },
   },
   {
-    extends: [fsdPlugin.configs.publicApi],
-    files: ["**/*.ts"],
-  },
-  {
-    extends: [fsdPlugin.configs.layers, fsdPlugin.configs.segments],
-    files: ["**/*.ts"],
+    extends: [fsdPlugin.configs.recommended],
+    files: ["**/*.{ts,tsx}"],
     rules: {
       "import/order": "off",
-      "prettier/prettier": "off",
       "unused-imports/no-unused-imports": "off",
     },
     settings: {
@@ -91,9 +86,10 @@ export function dedent(
   // 5. Perform interpolation.
   let string = strings[0]
 
-  values.forEach((value, i) => {
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i]
     string += (value as string) + strings[i + 1]
-  })
+  }
 
   return string
 }

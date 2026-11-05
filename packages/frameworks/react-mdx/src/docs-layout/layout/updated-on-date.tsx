@@ -3,16 +3,15 @@
 
 import type {ComponentPropsWithoutRef, ReactElement} from "react"
 
+import {useDocsPageContext} from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
-
-import {useMdxDocsLayoutContext} from "./use-mdx-docs-layout"
 
 export interface UpdatedOnDateProps extends ComponentPropsWithoutRef<"span"> {}
 
 export function UpdatedOnDate({
   ...props
 }: UpdatedOnDateProps): ReactElement | null {
-  const docsLayoutData = useMdxDocsLayoutContext()
+  const docsLayoutData = useDocsPageContext()
   const pageData = docsLayoutData?.pageMap?.[docsLayoutData.pathname]
   const updatedOn = pageData?.updatedOn
 
@@ -22,11 +21,12 @@ export function UpdatedOnDate({
 
   return (
     <span {...mergeProps({className: "qui-docs__updated-on-date"}, props)}>
-      Last updated on{" "}
+      Updated{" "}
       <time className="qui-docs__updated-on-time">
         {new Date(updatedOn).toLocaleDateString("en-US", {
           day: "numeric",
           month: "short",
+          timeZone: "UTC",
           year: "numeric",
         })}
       </time>

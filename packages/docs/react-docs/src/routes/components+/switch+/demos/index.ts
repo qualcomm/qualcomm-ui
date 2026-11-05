@@ -1,4 +1,5 @@
 export * from "./switch-composite-layout-demo"
+export * from "./switch-explorer-demo"
 export * from "./switch-controlled-demo"
 export * from "./switch-disabled-demo"
 export * from "./switch-hint-demo"

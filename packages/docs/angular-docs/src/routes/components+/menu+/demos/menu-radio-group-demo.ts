@@ -1,7 +1,7 @@
 import {Component} from "@angular/core"
 
-import {MenuModule} from "@qualcomm-ui/angular/menu"
 import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
+import {MenuModule} from "@qualcomm-ui/angular/menu"
 
 @Component({
   imports: [MenuModule, PortalDirective],
@@ -15,20 +15,18 @@ import {PortalDirective} from "@qualcomm-ui/angular-core/portal"
             <!-- preview -->
             <div q-menu-radio-item-group>
               <label q-menu-item-group-label>Choose an option</label>
-              <div q-menu-radio-item-group>
-                <button q-menu-radio-item value="option-1">
-                  Option 1
-                  <div q-menu-item-indicator></div>
-                </button>
-                <button q-menu-radio-item value="option-2">
-                  Option 2
-                  <div q-menu-item-indicator></div>
-                </button>
-                <button q-menu-radio-item value="option-3">
-                  Option 3
-                  <div q-menu-item-indicator></div>
-                </button>
-              </div>
+              <button q-menu-radio-item value="one">
+                <div q-menu-radio-item-control></div>
+                <div q-menu-item-label>Option 1</div>
+              </button>
+              <button q-menu-radio-item value="two">
+                <div q-menu-radio-item-control></div>
+                <div q-menu-item-label>Option 2</div>
+              </button>
+              <button q-menu-radio-item value="three">
+                <div q-menu-radio-item-control></div>
+                <div q-menu-item-label>Option 3</div>
+              </button>
             </div>
             <!-- preview -->
           </div>

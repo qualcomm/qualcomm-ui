@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {segmentedControlClasses} from "./segmented-control.classes"
+import type {segmentedControlClasses} from "./segmented-control.classes.js"
 
 export type QdsSegmentedControlSize = "sm" | "md" | "lg"
 
@@ -45,6 +45,7 @@ export interface QdsSegmentedControlGroupBindings {
 
 export interface QdsSegmentedControlItemBindings {
   className: SegmentedControlClasses["item"]
+  "data-size": QdsSegmentedControlSize
 }
 
 export interface QdsSegmentedControlItemTextBindings {

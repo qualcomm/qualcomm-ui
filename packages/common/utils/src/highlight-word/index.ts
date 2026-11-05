@@ -1,2 +1,6 @@
-export {highlightWord} from "./highlight"
-export type {HighlightChunk, HighlightWordProps, HighlightSpan} from "./types"
+export * from "./escape-regex.js"
+export * from "./highlight-first.js"
+export * from "./highlight-multiple.js"
+export * from "./highlight.js"
+export * from "./normalize-span.js"
+export type * from "./types.js"

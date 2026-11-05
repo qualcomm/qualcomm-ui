@@ -8,7 +8,7 @@ import {getEventKey, isSafari} from "@qualcomm-ui/dom/query"
 import {booleanAriaAttr, booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {accordionAnatomy} from "./accordion.anatomy"
+import {accordionAnatomy} from "./accordion.anatomy.js"
 import type {
   AccordionApi,
   AccordionItemApiProps,
@@ -21,8 +21,8 @@ import type {
   AccordionItemTriggerBindings,
   AccordionRootBindings,
   AccordionSchema,
-} from "./accordion.types"
-import {domIds} from "./internal"
+} from "./accordion.types.js"
+import {domIds} from "./internal/index.js"
 
 const parts = accordionAnatomy.parts
 

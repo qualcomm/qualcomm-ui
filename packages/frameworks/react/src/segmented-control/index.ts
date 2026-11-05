@@ -1,25 +1,25 @@
 import {
   SegmentedControlHiddenInput as HiddenInput,
   type SegmentedControlHiddenInputProps,
-} from "./segmented-control-hidden-input"
-import {
-  SegmentedControlItem as Item,
-  type SegmentedControlItemProps,
-} from "./segmented-control-item"
+} from "./segmented-control-hidden-input.js"
 import {
   SegmentedControlItemRoot as ItemRoot,
   type SegmentedControlItemRootProps,
-} from "./segmented-control-item-root"
+} from "./segmented-control-item-root.js"
 import {
   SegmentedControlItemText as ItemText,
   type SegmentedControlItemTextProps,
-} from "./segmented-control-item-text"
+} from "./segmented-control-item-text.js"
+import {
+  SegmentedControlItem as Item,
+  type SegmentedControlItemProps,
+} from "./segmented-control-item.js"
 import {
   SegmentedControlRoot as Root,
   type SegmentedControlRootProps,
-} from "./segmented-control-root"
+} from "./segmented-control-root.js"
 
-export * from "./qds-segmented-control-context"
+export * from "./qds-segmented-control-context.js"
 
 export type {
   SegmentedControlHiddenInputProps,

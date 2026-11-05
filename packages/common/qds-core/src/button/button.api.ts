@@ -1,25 +1,84 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {QdsNumberBadgeEmphasis} from "@qualcomm-ui/qds-core/badge"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {buttonAnatomy} from "./button.anatomy"
-import {buttonClasses} from "./button.classes"
+import type {ResolvableButtonGroupProps} from "./button-group.api.js"
+import {buttonAnatomy} from "./button.anatomy.js"
+import {buttonClasses} from "./button.classes.js"
 import type {
   QdsButtonApi,
   QdsButtonApiProps,
+  QdsButtonEmphasis,
   QdsButtonEndIconBindings,
   QdsButtonRootBindings,
   QdsButtonStartIconBindings,
-} from "./button.types"
+} from "./button.types.js"
 
 const parts = buttonAnatomy.parts
 
 const sharedDefaults = {
   size: "md",
 } satisfies Pick<QdsButtonApiProps, "size">
+
+export interface ButtonPropsSources {
+  /**
+   * Contextual defaults, e.g. from a menu header. Lowest priority.
+   */
+  defaults?: QdsButtonApiProps | null | undefined
+
+  /**
+   * Button-group values.
+   */
+  group?: ResolvableButtonGroupProps | null | undefined
+}
+
+/**
+ * Resolves a button's props against its group and contextual defaults.
+ *
+ * - `density`, `disabled`, `size` are non-overridable: group, then the button's
+ *   own props, then defaults.
+ * - `emphasis`, `variant` are overridable per-button: the button's own props,
+ *   then group, then defaults.
+ */
+export function resolveButtonProps<T extends ResolvableButtonGroupProps>(
+  props: T,
+  {defaults, group}: ButtonPropsSources = {},
+): T {
+  return {
+    ...props,
+    density: group?.density ?? props.density ?? defaults?.density,
+    disabled: group?.disabled ?? props.disabled ?? defaults?.disabled,
+    emphasis: props.emphasis ?? group?.emphasis ?? defaults?.emphasis,
+    size: group?.size ?? props.size ?? defaults?.size,
+    variant: props.variant ?? group?.variant ?? defaults?.variant,
+  }
+}
+
+const filledBadgeEmphasis: Record<QdsButtonEmphasis, QdsNumberBadgeEmphasis> = {
+  "black-persistent": "persistent-white",
+  danger: "persistent-white",
+  inverse: "neutral",
+  neutral: "persistent-white",
+  "persistent-black": "persistent-black",
+  "persistent-white": "persistent-white",
+  primary: "persistent-white",
+  "white-persistent": "persistent-black",
+}
+
+const badgeEmphasis: Record<QdsButtonEmphasis, QdsNumberBadgeEmphasis> = {
+  "black-persistent": "persistent-black",
+  danger: "danger",
+  inverse: "neutral",
+  neutral: "neutral",
+  "persistent-black": "persistent-black",
+  "persistent-white": "persistent-white",
+  primary: "brand",
+  "white-persistent": "persistent-white",
+}
 
 export function createQdsButtonApi(
   props: Explicit<QdsButtonApiProps>,
@@ -30,6 +89,8 @@ export function createQdsButtonApi(
   const emphasis = props.emphasis || "neutral"
   const size = props.size || sharedDefaults.size
   const variant = props.variant || "fill"
+
+  const isLarge = size === "lg"
 
   return {
     getEndIconBindings(): QdsButtonEndIconBindings {
@@ -54,6 +115,7 @@ export function createQdsButtonApi(
         disabled,
       })
     },
+
     getStartIconBindings(): QdsButtonStartIconBindings {
       return normalize.element({
         ...parts.icon,
@@ -63,5 +125,12 @@ export function createQdsButtonApi(
         "data-size": size,
       })
     },
+    numberBadgeEmphasis:
+      variant === "fill"
+        ? filledBadgeEmphasis[emphasis]
+        : badgeEmphasis[emphasis],
+    numberBadgeSize: isLarge ? "sm" : "xs",
+    size,
+    statusBadgeSize: isLarge ? "md" : "sm",
   }
 }

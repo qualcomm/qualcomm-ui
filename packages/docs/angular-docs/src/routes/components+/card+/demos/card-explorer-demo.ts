@@ -1,14 +1,14 @@
 import {Component} from "@angular/core"
-import {User} from "lucide-angular"
+import {LucideUser} from "@lucide/angular"
 
+import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {AvatarModule} from "@qualcomm-ui/angular/avatar"
 import {CardModule} from "@qualcomm-ui/angular/card"
 import {IconDirective} from "@qualcomm-ui/angular/icon"
-import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 
 @Component({
   imports: [CardModule, AvatarModule, IconDirective],
-  providers: [provideIcons({User})],
+  providers: [provideIcons({LucideUser})],
   selector: "card-explorer-demo",
   template: `
     <div class="w-72" q-card variant="outline">

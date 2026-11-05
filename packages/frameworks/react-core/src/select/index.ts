@@ -6,6 +6,10 @@ import {
   CoreSelectHiddenSelect,
   type CoreSelectHiddenSelectProps,
   CoreSelectItem,
+  CoreSelectItemGroup,
+  CoreSelectItemGroupLabel,
+  type CoreSelectItemGroupLabelProps,
+  type CoreSelectItemGroupProps,
   CoreSelectItemIndicator,
   type CoreSelectItemIndicatorProps,
   type CoreSelectItemProps,
@@ -15,10 +19,11 @@ import {
   type CoreSelectPositionerProps,
   CoreSelectRoot,
   type CoreSelectRootProps,
-} from "./core-select"
+} from "./core-select.js"
 
-export * from "./select-context"
-export * from "./use-select"
+export * from "./select-context.js"
+export * from "./select-item-group-context.js"
+export * from "./use-select.js"
 
 export type {
   CoreSelectRootProps,
@@ -27,6 +32,8 @@ export type {
   CoreSelectPositionerProps,
   CoreSelectControlProps,
   CoreSelectItemProps,
+  CoreSelectItemGroupProps,
+  CoreSelectItemGroupLabelProps,
   CoreSelectItemTextProps,
   CoreSelectItemIndicatorProps,
 }
@@ -36,6 +43,8 @@ type CoreSelectComponent = {
   Control: typeof CoreSelectControl
   HiddenSelect: typeof CoreSelectHiddenSelect
   Item: typeof CoreSelectItem
+  ItemGroup: typeof CoreSelectItemGroup
+  ItemGroupLabel: typeof CoreSelectItemGroupLabel
   ItemIndicator: typeof CoreSelectItemIndicator
   ItemText: typeof CoreSelectItemText
   Positioner: typeof CoreSelectPositioner
@@ -47,6 +56,8 @@ export const CoreSelect: CoreSelectComponent = {
   Control: CoreSelectControl,
   HiddenSelect: CoreSelectHiddenSelect,
   Item: CoreSelectItem,
+  ItemGroup: CoreSelectItemGroup,
+  ItemGroupLabel: CoreSelectItemGroupLabel,
   ItemIndicator: CoreSelectItemIndicator,
   ItemText: CoreSelectItemText,
   Positioner: CoreSelectPositioner,

@@ -74,20 +74,27 @@ Note that `<q-side-nav-nodes>` automatically renders child nodes for branches, s
 ### Grouping
 
 ::: terms
-section divider
-categorize items
-navigation sections
+section divider, categorize items, navigation sections
 :::
 
 Group nodes using the collection's [groupChildren](./#groupChildren) method. This should be called on the top-level node of your SideNav. Nested groups are not supported.
 
 <QdsDemo name="SideNavGroupsDemo" />
 
+### Sizes
+
+::: terms
+compact, density, small, medium
+:::
+
+Use the [size](./#size) input to control item padding, height, spacing, font size, and icon size. The available sizes are `sm` and `md` (default).
+
+<QdsDemo name="SideNavSizeDemo" />
+
 ### Default Expanded
 
 ::: terms
-initially open
-pre-expanded
+initially open, pre-expanded
 :::
 
 Expand nodes by default using the [defaultExpandedValue](./#defaultExpandedValue) input. Or use [expandedValue](./#expandedValue) and [expandedValueChanged](./#expandedValueChanged) to control the expansion manually. These inputs follow our [controlled state](/patterns/controlled-state) pattern.
@@ -108,11 +115,7 @@ You can disable nodes by setting the `disabled` property on the node object.
 ### Collapsed
 
 ::: terms
-minimize
-icon-only
-compact
-hamburger
-drawer menu
+minimize, icon-only, compact, hamburger, drawer menu
 :::
 
 Side Nav can be collapsed to render only the top-level icons.
@@ -134,9 +137,7 @@ Here's an example that filters the items using `matchSorter`.
 ### Links
 
 ::: terms
-routerLink
-angular router
-router integration
+routerLink, angular router, router integration
 :::
 
 Side Nav nodes can be links. Apply the `q-side-nav-leaf-node` directive to an anchor element with `routerLink` to create navigable links.
@@ -146,8 +147,7 @@ Side Nav nodes can be links. Apply the `q-side-nav-leaf-node` directive to an an
 ### Surface
 
 ::: terms
-dark background
-light background
+dark background, light background
 :::
 
 Use the `surface` input to change the background color of the Side Nav.
@@ -157,8 +157,7 @@ Use the `surface` input to change the background color of the Side Nav.
 ### Tooltips
 
 ::: terms
-hover hints
-icon labels
+hover hints, icon labels
 :::
 
 Consider wrapping collapsed nodes with the [Tooltip](/components/tooltip) component to provide context about each item. This is also useful for describing disabled nodes.

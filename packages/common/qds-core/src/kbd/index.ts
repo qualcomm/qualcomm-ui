@@ -1,1 +1,1 @@
-export * from "./kbd.api"
+export * from "./kbd.api.js"

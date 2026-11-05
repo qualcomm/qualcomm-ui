@@ -13,7 +13,7 @@ import {
  * typedoc removed decorator output in a recent version. We hook into the
  * serialization process via this plugin and manually add them here.
  */
-export function loadDecoratorPlugin(app: Readonly<Application>) {
+export function loadDecoratorPlugin(app: Readonly<Application>): void {
   app.converter.on(Converter.EVENT_CREATE_DECLARATION, addDecoratorInfo)
 
   // Add decorator info to serialized json

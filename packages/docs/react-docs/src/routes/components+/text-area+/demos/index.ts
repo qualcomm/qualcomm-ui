@@ -1,4 +1,5 @@
 export * from "./text-area-composite-demo"
+export * from "./text-area-explorer-demo"
 export * from "./text-area-simple-demo"
 export * from "./text-area-sizes-demo"
 export * from "./text-area-states-demo"

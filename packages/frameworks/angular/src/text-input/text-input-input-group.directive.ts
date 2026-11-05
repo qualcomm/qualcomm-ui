@@ -3,8 +3,8 @@
 
 import {Component} from "@angular/core"
 
-import {useInputGroup} from "@qualcomm-ui/angular/input"
 import {CoreTextInputInputGroupDirective} from "@qualcomm-ui/angular-core/text-input"
+import {useInputGroup} from "@qualcomm-ui/angular/input"
 
 /**
  * Container that wraps the input element and optional icons.

@@ -11,8 +11,8 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {PopoverArrowTip} from "./popover-arrow-tip"
-import {useQdsPopoverContext} from "./qds-popover-context"
+import {PopoverArrowTip} from "./popover-arrow-tip.js"
+import {useQdsPopoverContext} from "./qds-popover-context.js"
 
 export interface PopoverArrowProps extends IdProp, ElementRenderProp<"div"> {
   /**

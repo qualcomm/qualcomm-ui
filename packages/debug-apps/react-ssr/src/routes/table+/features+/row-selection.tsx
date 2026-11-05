@@ -7,9 +7,9 @@ const demos = [{component: RowSelectionDemo, title: "Row Selection"}]
 export default function RowSelection() {
   return (
     <DemoPageLayout
+      className="w-full"
       componentName="row-selection"
       demos={demos}
-      className="w-full"
     />
   )
 }

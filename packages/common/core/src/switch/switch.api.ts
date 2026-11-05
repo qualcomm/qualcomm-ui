@@ -21,8 +21,8 @@ import type {
   PropNormalizer,
 } from "@qualcomm-ui/utils/machine"
 
-import {domEls, domIds} from "./internal"
-import {switchAnatomy} from "./switch.anatomy"
+import {domEls, domIds} from "./internal/index.js"
+import {switchAnatomy} from "./switch.anatomy.js"
 import type {
   SwitchApi,
   SwitchControlBindings,
@@ -34,7 +34,7 @@ import type {
   SwitchRootBindings,
   SwitchSchema,
   SwitchThumbBindings,
-} from "./switch.types"
+} from "./switch.types.js"
 
 const parts = switchAnatomy.parts
 

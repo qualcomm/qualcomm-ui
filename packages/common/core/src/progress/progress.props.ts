@@ -6,7 +6,7 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {ProgressApiProps} from "./progress.types"
+import type {ProgressApiProps} from "./progress.types.js"
 
 export const progressProps: (keyof ProgressApiProps)[] =
   createProps<ProgressApiProps>()(

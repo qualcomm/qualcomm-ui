@@ -8,11 +8,6 @@ const figma = require("figma")
 
 const instance = figma.selectedInstance
 
-const icon = instance.getEnum("icon", {
-  none: "none",
-  only: "only",
-  start: "start",
-})
 const layout = instance.getEnum("width", {
   fill: "fill",
 })
@@ -49,8 +44,6 @@ const children = items.reduce(
   figma.code``,
 )
 
-const needsIcon = icon === "start" || icon === "only"
-
 export default {
   example: figma.code`
     <fieldset${layoutAttr}${orientationAttr} q-segmented-control${sizeAttr}${variantAttr}
@@ -62,12 +55,6 @@ export default {
   id: "SegmentedControl",
   imports: [
     `import {SegmentedControlModule} from "@qualcomm-ui/angular/segmented-control"`,
-    ...(needsIcon
-      ? [
-          `import {IconDirective} from "@qualcomm-ui/angular/icon"`,
-          `import {AArrowDown} from "lucide-angular"`,
-        ]
-      : []),
   ],
   metadata: {nestable: true},
 }

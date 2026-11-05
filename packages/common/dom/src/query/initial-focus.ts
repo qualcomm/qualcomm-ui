@@ -4,7 +4,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {getTabbableEdges, getTabbables} from "./tabbable"
+import {getTabbableEdges, getTabbables} from "./tabbable.js"
 
 /**
  * Represents options for managing the initial focus within a focusable area.
@@ -43,7 +43,7 @@ export function getInitialFocus(
 
   if (!node) {
     const tabbables = getTabbables(root)
-    node = filter ? tabbables.filter(filter)[0] : tabbables[0]
+    node = filter ? tabbables.find(filter) : tabbables[0]
   }
 
   return node || root || undefined

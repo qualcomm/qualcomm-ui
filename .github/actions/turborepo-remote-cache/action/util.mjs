@@ -97,7 +97,7 @@ export async function checkHealth(host, port, retries = 20) {
       if (response.ok) {
         return true
       }
-    } catch (error) {
+    } catch {
       // Connection refused, timeout, etc - server not ready yet
       // Continue to next attempt
     }

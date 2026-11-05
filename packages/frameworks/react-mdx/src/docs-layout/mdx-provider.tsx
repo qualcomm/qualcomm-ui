@@ -5,19 +5,25 @@ import {type ReactNode, useMemo} from "react"
 
 import {MDXProvider, type useMDXComponents} from "@mdx-js/react"
 
-import {Link} from "@qualcomm-ui/react/link"
-import {Table} from "@qualcomm-ui/react/table"
-import {useMdxDocsContext} from "@qualcomm-ui/react-mdx/context"
+import {useDocsRuntimeContext} from "@qualcomm-ui/react-mdx/context"
 import {HeadingSteps} from "@qualcomm-ui/react-mdx/heading-steps"
 import {
   SpoilerContent,
   SpoilerRoot,
   SpoilerSummary,
 } from "@qualcomm-ui/react-mdx/spoiler"
+import {Link} from "@qualcomm-ui/react/link"
+import {Table} from "@qualcomm-ui/react/table"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {AnchorHeader, CodeTabs, PageHeader, ShikiPre} from "./internal"
+import {
+  AnchorHeader,
+  CodeTabs,
+  Image,
+  PageHeader,
+  ShikiPre,
+} from "./internal/index.js"
 
 interface Props {
   /**
@@ -62,7 +68,7 @@ interface Props {
  * For a list of each supported component, visit the {@link https://mdxjs.com/table-of-components/ docs}.
  */
 export function MdxProvider({children, components}: Props): ReactNode {
-  const {renderLink: RenderLink} = useMdxDocsContext()
+  const {renderLink: RenderLink} = useDocsRuntimeContext()
 
   return (
     <MDXProvider
@@ -158,7 +164,7 @@ export function MdxProvider({children, components}: Props): ReactNode {
           ),
           HeadingSteps,
           hr: (props) => <hr className="mdx" {...props} />,
-          img: (props) => <img className="mdx" {...props} />,
+          img: (props) => <Image className="mdx" imgProps={props} />,
           li: (props) => <li className="mdx" {...props} />,
           ol: (props) => <ol className="mdx" {...props} />,
           p: ({className, ...props}) => (

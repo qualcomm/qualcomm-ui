@@ -4,11 +4,15 @@
 import {booleanAttribute, Component, input} from "@angular/core"
 
 import {provideTooltipContext} from "@qualcomm-ui/angular-core/tooltip"
+import {tooltipClasses} from "@qualcomm-ui/qds-core/tooltip"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 
 import {TooltipRootDirective} from "./tooltip-root.directive"
 
 @Component({
+  host: {
+    "[class]": "tooltipClasses.root",
+  },
   providers: [provideTooltipContext()],
   selector: "[q-tooltip]",
   standalone: false,
@@ -30,6 +34,8 @@ import {TooltipRootDirective} from "./tooltip-root.directive"
   `,
 })
 export class TooltipDirective extends TooltipRootDirective {
+  protected readonly tooltipClasses = tooltipClasses
+
   /**
    * If true, the tooltip will not be rendered in a DOM portal.
    */

@@ -4,15 +4,15 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
-import {linkAnatomy} from "./link.anatomy"
-import {linkClasses} from "./link.classes"
+import {linkAnatomy} from "./link.anatomy.js"
+import {linkClasses} from "./link.classes.js"
 import type {
   QdsLinkApi,
   QdsLinkApiProps,
   QdsLinkEndIconBindings,
   QdsLinkRootBindings,
   QdsLinkStartIconBindings,
-} from "./link.types"
+} from "./link.types.js"
 
 export function createQdsLinkApi(
   props: QdsLinkApiProps,
@@ -40,6 +40,7 @@ export function createQdsLinkApi(
         className: linkClasses.root,
         "data-disabled": booleanDataAttr(props.disabled),
         "data-emphasis": emphasis,
+        "data-inherit-font-size": booleanDataAttr(props.inheritFontSize),
         "data-size": size,
         dir: props.dir || "ltr",
       })

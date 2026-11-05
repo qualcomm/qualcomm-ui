@@ -1,1 +1,1 @@
-export * from "./react-logo"
+export * from "./react-logo.js"

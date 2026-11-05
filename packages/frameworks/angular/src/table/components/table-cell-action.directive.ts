@@ -3,9 +3,9 @@
 
 import {Component, input, type OnInit} from "@angular/core"
 
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-api"
@@ -16,7 +16,8 @@ import {qdsTableApi} from "./qds-table-api"
   template: `
     <svg
       [q-bind]="inlineIconButtonApi().getIconBindings()"
-      [qIcon]="icon()"
+      [qIcon]="icon()!"
+      [size]="inlineIconButtonApi().size"
     ></svg>
   `,
 })

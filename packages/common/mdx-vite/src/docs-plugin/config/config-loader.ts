@@ -1,12 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import chalk from "chalk"
 import {type Config, type CosmiconfigResult, cosmiconfigSync} from "cosmiconfig"
 
-import {removeTrailingSlash} from "../path-utils"
+import {removeTrailingSlash} from "../path-utils.js"
 
-import {configSchema} from "./config-schema"
-import type {ResolvedQuiDocsConfig} from "./types"
+import {parseSchema} from "./config-schema.js"
+import {resolveLintOptions} from "./lint.js"
+import type {ResolvedQuiDocsConfig} from "./types.js"
 
 interface LoadedCosmicConfig {
   config: Config
@@ -48,20 +50,25 @@ export class ConfigLoader {
   private resolveConfigFromCosmiconfig(
     config: CosmiconfigResult,
   ): ResolvedQuiDocsConfig {
-    const parsed = configSchema.safeParse(config!.config)
+    const parsed = parseSchema(config!.config)
     if (!parsed.success) {
       console.dir(parsed.error.issues, {depth: 10})
       throw new Error("Failed to parse config file.")
     }
     const conf = parsed.data
+    if (conf.validatePageLinks !== undefined) {
+      console.warn(
+        `${chalk.yellowBright.bold("Deprecated:")} \`validatePageLinks\` will be removed in a future release. Use \`lint.brokenLinks\` instead.`,
+      )
+    }
     return {
       ...conf,
       appDirectory: conf.appDirectory || "app",
       filePath: config!.filepath,
+      lint: resolveLintOptions(conf),
       pageDirectory: conf.pageDirectory
         ? removeTrailingSlash(conf.pageDirectory)
         : "routes",
-      validatePageLinks: conf.validatePageLinks ?? true,
     }
   }
 

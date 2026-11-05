@@ -1,5 +1,3 @@
-import "./globals.css"
-
 import {useEffect, useMemo, useRef, useState} from "react"
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
@@ -7,6 +5,7 @@ import {Provider} from "jotai"
 import {
   isRouteErrorResponse,
   Links,
+  type LinksFunction,
   type LoaderFunctionArgs,
   Outlet,
   Scripts,
@@ -20,13 +19,6 @@ import {getPages} from "@qualcomm-ui/docs-plugin/markdown-content"
 import type {SiteData} from "@qualcomm-ui/mdx-common"
 import {siteData} from "@qualcomm-ui/mdx-vite-plugin"
 import {
-  isQdsBrand,
-  type QdsBrand,
-  QdsThemeContextProvider,
-  type QdsThemeContextValue,
-  useQdsThemeContext,
-} from "@qualcomm-ui/react/qds-theme"
-import {
   GlobalConfigContextProvider,
   type GlobalConfigContextValue,
 } from "@qualcomm-ui/react-internal/layout"
@@ -34,7 +26,7 @@ import {
   type DemoSettings,
   type PackageManager,
   type RouteDemoState,
-  SiteContextProvider,
+  DocsManifestProvider,
 } from "@qualcomm-ui/react-mdx/context"
 import {
   type DocPropsLayout,
@@ -50,14 +42,48 @@ import {
   updateSiteState,
   useTheme,
 } from "@qualcomm-ui/react-router-utils/client"
+import {
+  isQdsBrand,
+  type QdsBrand,
+  QdsThemeContextProvider,
+  type QdsThemeContextValue,
+  useQdsThemeContext,
+} from "@qualcomm-ui/react/qds-theme"
 
-import {AppDocsLayout} from "./components"
+import {MdxLayout} from "./components"
 import {
   demoStateCookie,
   qdsBrandCookie,
   siteStateCookie,
   themeCookie,
 } from "./sessions.server"
+
+import "./globals.css"
+
+export const links: LinksFunction = () => [
+  {href: "https://fonts.googleapis.com", rel: "preconnect"},
+  {
+    crossOrigin: "anonymous",
+    href: "https://fonts.gstatic.com",
+    rel: "preconnect",
+  },
+  {
+    href: "https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap",
+    rel: "stylesheet",
+  },
+  {
+    href: "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap",
+    rel: "stylesheet",
+  },
+  {
+    href: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..500;1,400..500&display=swap",
+    rel: "stylesheet",
+  },
+  {
+    href: "https://use.typekit.net/nhs4wvu.css",
+    rel: "stylesheet",
+  },
+]
 
 const siteDataFallback: SiteData = {navItems: [], pageMap: {}, searchIndex: []}
 
@@ -154,27 +180,11 @@ function App() {
         <link href="/favicon/site.webmanifest" rel="manifest" />
 
         <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
-
-        <link href="https://fonts.googleapis.com" rel="preconnect" />
-        <link href="https://fonts.gstatic.com" rel="preconnect" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,400..600&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400..500&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400..500;1,400..500&display=swap"
-          rel="stylesheet"
-        />
-        <link href="https://use.typekit.net/nhs4wvu.css" rel="stylesheet" />
       </head>
       <body>
         <GlobalConfigContextProvider value={globalConfigContext}>
           <QueryClientProvider client={queryClient}>
-            <AppDocsLayout
+            <MdxLayout
               demoSettings={data.demoSettings}
               demoState={data.demoState}
               onDemoSettingsChange={(nextValue) => {
@@ -195,7 +205,7 @@ function App() {
               ssrUserAgent={data.ssrUserAgent}
             >
               <Outlet />
-            </AppDocsLayout>
+            </MdxLayout>
           </QueryClientProvider>
         </GlobalConfigContextProvider>
         <ScrollRestoration />
@@ -270,7 +280,7 @@ export default function AppWithProviders() {
   }, [docsSiteData])
 
   return (
-    <SiteContextProvider value={siteContext}>
+    <DocsManifestProvider value={siteContext}>
       <PropsLayoutProvider value={propsLayoutContext}>
         <ThemeProvider theme={data.theme} themeAction="/action/set-theme">
           <QdsThemeContextProvider value={qdsThemeContext}>
@@ -280,7 +290,7 @@ export default function AppWithProviders() {
           </QdsThemeContextProvider>
         </ThemeProvider>
       </PropsLayoutProvider>
-    </SiteContextProvider>
+    </DocsManifestProvider>
   )
 }
 

@@ -14,7 +14,7 @@ import type {
   Scope,
 } from "@qualcomm-ui/utils/machine"
 
-import type {inlineNotificationAnatomy} from "./inline-notification.anatomy"
+import type {inlineNotificationAnatomy} from "./inline-notification.anatomy.js"
 
 export interface InlineNotificationApiProps
   extends CommonProperties, DirectionProperty {

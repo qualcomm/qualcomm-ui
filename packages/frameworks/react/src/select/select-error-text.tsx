@@ -3,12 +3,12 @@
 
 import type {ReactElement} from "react"
 
+import {useSelectErrorText} from "@qualcomm-ui/react-core/select"
+import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {
   InputErrorText,
   type InputErrorTextProps,
 } from "@qualcomm-ui/react/input"
-import {useSelectErrorText} from "@qualcomm-ui/react-core/select"
-import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface SelectErrorTextProps extends IdProp, InputErrorTextProps {}

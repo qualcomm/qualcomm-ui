@@ -1,2 +1,2 @@
-export * from "./tooltip-context"
-export * from "./use-tooltip"
+export * from "./tooltip-context.js"
+export * from "./use-tooltip.js"

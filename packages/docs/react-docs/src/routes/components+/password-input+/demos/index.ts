@@ -1,4 +1,5 @@
 export * from "./password-input-composite-demo"
+export * from "./password-input-explorer-demo"
 export * from "./password-input-controlled-value-demo"
 export * from "./password-input-controlled-visibility-demo"
 export * from "./password-input-icons-demo"

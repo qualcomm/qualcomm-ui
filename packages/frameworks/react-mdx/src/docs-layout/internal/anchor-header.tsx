@@ -5,13 +5,13 @@ import {type ReactElement, type ReactNode, useState} from "react"
 
 import {Link2} from "lucide-react"
 
-import {Icon} from "@qualcomm-ui/react/icon"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
+import {Icon} from "@qualcomm-ui/react/icon"
 
-import type {RenderLink} from "../types"
+import type {RenderLink} from "../types.js"
 
 export type AnchorHeaderProps = ElementRenderProp<"span"> & {
   /**

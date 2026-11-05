@@ -17,7 +17,7 @@ import {
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {QdsRadioContextProvider} from "../qds-radio-context"
+import {QdsRadioContextProvider} from "../qds-radio-context.js"
 
 export interface RadioGroupRootProps
   extends

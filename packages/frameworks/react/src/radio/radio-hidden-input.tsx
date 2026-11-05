@@ -7,7 +7,7 @@ import {useRadioItemHiddenInput} from "@qualcomm-ui/react-core/radio"
 import type {IdProp} from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsRadioContext} from "./qds-radio-context"
+import {useQdsRadioContext} from "./qds-radio-context.js"
 
 export interface RadioHiddenInputProps
   extends ComponentPropsWithRef<"input">, IdProp {}

@@ -9,7 +9,7 @@ import {IconButton, type IconButtonProps} from "@qualcomm-ui/react/button"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useCopyToClipboard} from "./use-copy-to-clipboard"
+import {useCopyToClipboard} from "./use-copy-to-clipboard.js"
 
 export interface CopyToClipboardProps extends Omit<IconButtonProps, "icon"> {
   valueOrFn: string | (() => string)

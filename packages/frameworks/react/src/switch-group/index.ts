@@ -1,1 +1,1 @@
-export {SwitchGroup, type SwitchGroupProps} from "./switch-group"
+export {SwitchGroup, type SwitchGroupProps} from "./switch-group.js"

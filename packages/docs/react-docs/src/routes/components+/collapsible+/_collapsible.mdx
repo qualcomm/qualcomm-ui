@@ -5,7 +5,7 @@ component: Collapsible
 aliases: [disclosure, expandable]
 ---
 
-import {Demo} from "~components/demo"
+import {ComponentExplorer, Demo} from "~components/demo"
 import * as demos from "./demos"
 import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
@@ -43,6 +43,15 @@ Control the collapsible's open/closed state using the [open](./#open) and [onOpe
 <Demo
   name="CollapsibleControlledStateDemo"
   component={demos.CollapsibleControlledStateDemo}
+/>
+
+## Explorer
+
+<ComponentExplorer
+  component={demos.CollapsibleExplorerDemo}
+  linkPrefix="collapsible"
+  parts={["root", "trigger", "content"]}
+  scope="collapsible"
 />
 
 ## API

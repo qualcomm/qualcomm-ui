@@ -3,8 +3,12 @@
 
 import {defineConfig} from "eslint/config"
 
+import {typescriptLanguageOptions, typescriptPlugins} from "./base.js"
+
 export default defineConfig({
+  languageOptions: typescriptLanguageOptions,
   name: "qui-typechecked-naming-convention",
+  plugins: {...typescriptPlugins},
   rules: {
     "@typescript-eslint/naming-convention": [
       "error",

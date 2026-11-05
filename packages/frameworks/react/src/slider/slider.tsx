@@ -3,22 +3,28 @@
 
 import type {ReactElement, ReactNode} from "react"
 
-import {SliderControl, type SliderControlProps} from "./slider-control"
-import {SliderErrorText, type SliderErrorTextProps} from "./slider-error-text"
-import type {SliderHiddenInputProps} from "./slider-hidden-input"
-import {SliderHint, type SliderHintProps} from "./slider-hint"
-import {SliderLabel, type SliderLabelProps} from "./slider-label"
-import type {SliderMarkerProps} from "./slider-marker"
-import type {SliderMarkerGroupProps} from "./slider-marker-group"
-import {SliderMarkers} from "./slider-markers"
-import {SliderMax, type SliderMaxProps} from "./slider-max"
-import {SliderMin, type SliderMinProps} from "./slider-min"
-import {SliderRange, type SliderRangeProps} from "./slider-range"
-import {SliderRoot, type SliderRootProps} from "./slider-root"
-import type {SliderThumbProps} from "./slider-thumb"
-import {SliderThumbs} from "./slider-thumbs"
-import {SliderTrack, type SliderTrackProps} from "./slider-track"
-import {SliderValueText, type SliderValueTextProps} from "./slider-value-text"
+import {SliderControl, type SliderControlProps} from "./slider-control.js"
+import {
+  SliderErrorText,
+  type SliderErrorTextProps,
+} from "./slider-error-text.js"
+import type {SliderHiddenInputProps} from "./slider-hidden-input.js"
+import {SliderHint, type SliderHintProps} from "./slider-hint.js"
+import {SliderLabel, type SliderLabelProps} from "./slider-label.js"
+import type {SliderMarkerGroupProps} from "./slider-marker-group.js"
+import type {SliderMarkerProps} from "./slider-marker.js"
+import {SliderMarkers} from "./slider-markers.js"
+import {SliderMax, type SliderMaxProps} from "./slider-max.js"
+import {SliderMin, type SliderMinProps} from "./slider-min.js"
+import {SliderRange, type SliderRangeProps} from "./slider-range.js"
+import {SliderRoot, type SliderRootProps} from "./slider-root.js"
+import type {SliderThumbProps} from "./slider-thumb.js"
+import {SliderThumbs} from "./slider-thumbs.js"
+import {SliderTrack, type SliderTrackProps} from "./slider-track.js"
+import {
+  SliderValueText,
+  type SliderValueTextProps,
+} from "./slider-value-text.js"
 
 export interface SliderProps extends SliderRootProps {
   /**

@@ -5,14 +5,14 @@ import type {ReactElement} from "react"
 
 import {X} from "lucide-react"
 
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {
   CoreTabs,
   type CoreTabsTabDismissButtonProps,
 } from "@qualcomm-ui/react-core/tabs"
+import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {useQdsTabsContext} from "../qds-tabs-context"
+import {useQdsTabsContext} from "../qds-tabs-context.js"
 
 export interface TabDismissButtonProps extends CoreTabsTabDismissButtonProps {}
 
