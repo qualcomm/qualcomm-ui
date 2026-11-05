@@ -7,17 +7,23 @@ import {readFileSync} from "node:fs"
 import {dirname, resolve} from "node:path"
 
 import type {OpenApiDocument} from "./get-operations.js"
+import {getRemoteSpec, isRemoteSpec} from "./remote-specs.js"
 
 /**
  * Reads the spec referenced by an MDX page and upgrades it to OpenAPI 3.2.
- * Synchronous because the search indexer that calls it is.
+ * Synchronous because the search indexer that calls it is, so remote specs
+ * must be downloaded beforehand with `prefetchRemoteSpecs`.
  */
 export function loadOpenApiSpec(
   mdxFilePath: string,
   specPath: string,
 ): OpenApiDocument {
-  const absolutePath = resolve(dirname(mdxFilePath), specPath)
-  const raw = JSON.parse(readFileSync(absolutePath, "utf-8"))
+  const source = isRemoteSpec(specPath)
+    ? specPath
+    : resolve(dirname(mdxFilePath), specPath)
+  const raw = isRemoteSpec(specPath)
+    ? getRemoteSpec(specPath)
+    : JSON.parse(readFileSync(source, "utf-8"))
 
   const {diagnostics, document} = upgrade(raw, "3.2", {
     onIncompatible: "collect",
@@ -27,7 +33,7 @@ export function loadOpenApiSpec(
   }
 
   console.warn(
-    `${chalk.yellow.bold("OpenAPI spec could not be upgraded losslessly:")} ${absolutePath}`,
+    `${chalk.yellow.bold("OpenAPI spec could not be upgraded losslessly:")} ${source}`,
   )
   for (const diagnostic of diagnostics) {
     console.warn(`- ${diagnostic.message}`)

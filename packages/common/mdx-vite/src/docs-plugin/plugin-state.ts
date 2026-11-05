@@ -24,6 +24,7 @@ import {type CompiledMdxFile, MdxFileReader} from "./markdown/index.js"
 import {KnowledgeExporter} from "./markdown/knowledge/index.js"
 import {PropFormatter} from "./markdown/knowledge/plugins/index.js"
 import type {KnowledgePageCache} from "./markdown/knowledge/types.js"
+import {prefetchRemoteSpecs} from "./open-api/remote-specs.js"
 import {fixPath} from "./path-utils.js"
 import {SearchIndexer} from "./search-indexer.js"
 
@@ -157,7 +158,7 @@ export class PluginState {
     }
   }
 
-  buildIndex(shouldLog: boolean): CompiledMdxFile[] {
+  async buildIndex(shouldLog: boolean): Promise<CompiledMdxFile[]> {
     const files = glob.sync(
       [`${this.routesDir}/**/*.mdx`, `${this.routesDir}/**/*.tsx`],
       {
@@ -169,6 +170,8 @@ export class PluginState {
     if (!files.length) {
       return []
     }
+
+    await prefetchRemoteSpecs(files)
 
     const startTime = Date.now()
 
@@ -199,8 +202,16 @@ export class PluginState {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
       this.buildIndex(true)
-      this.sendUpdate()
-      opts?.onComplete?.()
+        .then(() => {
+          this.sendUpdate()
+          opts?.onComplete?.()
+        })
+        .catch((error: unknown) => {
+          console.error(
+            chalk.redBright.bold("Failed to rebuild the page data:"),
+            error,
+          )
+        })
     }, 300)
   }
 

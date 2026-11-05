@@ -53,7 +53,7 @@ describe("PluginState knowledge exports", () => {
       },
     })
     const exportPathnames = async () => {
-      state.buildIndex(false)
+      await state.buildIndex(false)
       await state.generateKnowledge(publicDirectory)
       return state.pages!.pages.map((page) => page.pathname).sort()
     }
@@ -157,7 +157,7 @@ describe("PluginState knowledge exports", () => {
         messages: [],
       },
     })
-    state.buildIndex(false)
+    await state.buildIndex(false)
 
     await state.generateKnowledge(publicDirectory)
 
