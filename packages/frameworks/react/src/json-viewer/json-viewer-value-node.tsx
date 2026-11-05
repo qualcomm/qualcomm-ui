@@ -22,7 +22,6 @@ export function JsonViewerValueNode({
     return <>{renderValue?.(node) ?? node.value}</>
   }
 
-  const Element = node.tagName
   const isRoot = node.properties.root || node.properties.nodeType != null
   const bindings = qdsApi.getValueBindings({
     kind: node.properties.kind,
@@ -31,7 +30,7 @@ export function JsonViewerValueNode({
   })
 
   return (
-    <Element {...bindings}>
+    <span {...bindings}>
       {node.children.map((child, index) => (
         <JsonViewerValueNode
           key={index}
@@ -39,6 +38,6 @@ export function JsonViewerValueNode({
           renderValue={renderValue}
         />
       ))}
-    </Element>
+    </span>
   )
 }

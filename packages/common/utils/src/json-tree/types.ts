@@ -65,7 +65,6 @@ export type JsonNodeSyntaxKind =
   | "operator"
   | "error-stack"
 
-// Hast-compatible element interface
 export interface JsonNodeElement {
   children: Array<JsonNodeElement | JsonNodeText>
   properties: {
@@ -74,7 +73,6 @@ export interface JsonNodeElement {
     nodeType?: JsonNodeType
     root?: boolean
   }
-  tagName: "span" | "div" | "a"
   type: "element"
 }
 

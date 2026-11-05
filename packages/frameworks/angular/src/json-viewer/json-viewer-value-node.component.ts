@@ -16,29 +16,11 @@ const qdsApi = createQdsJsonViewerApi(normalizeProps)
     @if (isText()) {
       {{ textValue() }}
     } @else {
-      @switch (tagName()) {
-        @case ("a") {
-          <a [q-bind]="bindings()">
-            @for (child of children(); track $index) {
-              <q-json-viewer-value-node [node]="child" />
-            }
-          </a>
+      <span [q-bind]="bindings()">
+        @for (child of children(); track $index) {
+          <q-json-viewer-value-node [node]="child" />
         }
-        @case ("div") {
-          <div [q-bind]="bindings()">
-            @for (child of children(); track $index) {
-              <q-json-viewer-value-node [node]="child" />
-            }
-          </div>
-        }
-        @default {
-          <span [q-bind]="bindings()">
-            @for (child of children(); track $index) {
-              <q-json-viewer-value-node [node]="child" />
-            }
-          </span>
-        }
-      }
+      </span>
     }
   `,
 })
@@ -50,11 +32,6 @@ export class JsonViewerValueNodeComponent {
   protected readonly textValue = computed(() => {
     const node = this.node()
     return node.type === "text" ? node.value : undefined
-  })
-
-  protected readonly tagName = computed(() => {
-    const node = this.node()
-    return node.type === "element" ? node.tagName : undefined
   })
 
   protected readonly children = computed(() => {

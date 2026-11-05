@@ -24,7 +24,6 @@ const generatePreviewText = (items: string[], hasMore: boolean): string => {
 
 const ENTRIES_KEY = "[[Entries]]"
 
-// Helper functions for creating hast-compatible nodes
 const txt = (
   value: string | number | boolean | null | undefined,
 ): JsonNodeText => ({
@@ -33,13 +32,11 @@ const txt = (
 })
 
 const jsx = (
-  tagName: "span" | "div" | "a",
   properties: JsonNodeElement["properties"] = {},
   children: Array<JsonNodeElement | JsonNodeText> = [],
 ): JsonNodeElement => ({
   children,
   properties,
-  tagName,
   type: "element",
 })
 
@@ -127,7 +124,7 @@ export const NullType: JsonDataTypeOptions<null> = dataType<null>({
     }
   },
   previewElement() {
-    return jsx("span", {}, [txt("null")])
+    return jsx({}, [txt("null")])
   },
   type: "null",
 })
@@ -148,7 +145,7 @@ export const UndefinedType: JsonDataTypeOptions<undefined> =
       }
     },
     previewElement() {
-      return jsx("span", {}, [txt("undefined")])
+      return jsx({}, [txt("undefined")])
     },
     type: "undefined",
   })
@@ -170,7 +167,7 @@ export const SymbolType: JsonDataTypeOptions<symbol> = dataType<symbol>({
     }
   },
   previewElement(node) {
-    return jsx("span", {}, [txt(node.value.toString())])
+    return jsx({}, [txt(node.value.toString())])
   },
   type: "symbol",
 })
@@ -192,7 +189,7 @@ export const BigIntType: JsonDataTypeOptions<bigint> = dataType<bigint>({
     }
   },
   previewElement(node) {
-    return jsx("span", {}, [txt(`${node.value}n`)])
+    return jsx({}, [txt(`${node.value}n`)])
   },
   type: "bigint",
 })
@@ -235,15 +232,15 @@ export const SetType: JsonDataTypeOptions<Set<unknown>> = dataType<
     const size = node.value.size
 
     const children: Array<JsonNodeElement | JsonNodeText> = [
-      jsx("span", {kind: "constructor"}, [txt(`Set(${size})`)]),
-      jsx("span", {kind: "brace"}, [txt(" {")]),
+      jsx({kind: "constructor"}, [txt(`Set(${size})`)]),
+      jsx({kind: "brace"}, [txt(" {")]),
     ]
     if (preview) {
-      children.push(jsx("span", {kind: "preview-text"}, [txt(preview)]))
+      children.push(jsx({kind: "preview-text"}, [txt(preview)]))
     }
-    children.push(jsx("span", {kind: "brace"}, [txt("}")]))
+    children.push(jsx({kind: "brace"}, [txt("}")]))
 
-    return jsx("span", {}, children)
+    return jsx({}, children)
   },
   previewText(node, opts) {
     const maxItems = opts.maxPreviewItems
@@ -272,11 +269,11 @@ export const WeakSetType: JsonDataTypeOptions<WeakSet<WeakKey>> = dataType<
     }
   },
   previewElement() {
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [txt("WeakSet")]),
-      jsx("span", {kind: "brace"}, [txt(" {")]),
-      jsx("span", {kind: "preview"}, [txt(" [[Entries]]: not enumerable ")]),
-      jsx("span", {kind: "brace"}, [txt("}")]),
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt("WeakSet")]),
+      jsx({kind: "brace"}, [txt(" {")]),
+      jsx({kind: "preview"}, [txt(" [[Entries]]: not enumerable ")]),
+      jsx({kind: "brace"}, [txt("}")]),
     ])
   },
   type: "weakset",
@@ -298,11 +295,11 @@ export const WeakMapType: JsonDataTypeOptions<WeakMap<WeakKey, WeakKey>> =
       }
     },
     previewElement() {
-      return jsx("span", {}, [
-        jsx("span", {kind: "constructor"}, [txt("WeakMap")]),
-        jsx("span", {kind: "brace"}, [txt(" {")]),
-        jsx("span", {kind: "preview"}, [txt(" [[Entries]]: not enumerable ")]),
-        jsx("span", {kind: "brace"}, [txt("}")]),
+      return jsx({}, [
+        jsx({kind: "constructor"}, [txt("WeakMap")]),
+        jsx({kind: "brace"}, [txt(" {")]),
+        jsx({kind: "preview"}, [txt(" [[Entries]]: not enumerable ")]),
+        jsx({kind: "brace"}, [txt("}")]),
       ])
     },
     type: "weakmap",
@@ -342,7 +339,7 @@ export const RegexType: JsonDataTypeOptions<RegExp> = dataType<RegExp>({
     }
   },
   previewElement(node) {
-    return jsx("span", {}, [txt(String(node.value))])
+    return jsx({}, [txt(String(node.value))])
   },
   type: "regex",
 })
@@ -372,17 +369,15 @@ export const DataViewType: JsonDataTypeOptions<DataView<ArrayBufferLike>> =
     },
     previewElement(node) {
       const dataView = node.value
-      return jsx("span", {}, [
-        jsx("span", {kind: "constructor"}, [
-          txt(`DataView(${dataView.byteLength})`),
-        ]),
-        jsx("span", {kind: "brace"}, [txt(" { ")]),
-        jsx("span", {kind: "preview"}, [
+      return jsx({}, [
+        jsx({kind: "constructor"}, [txt(`DataView(${dataView.byteLength})`)]),
+        jsx({kind: "brace"}, [txt(" { ")]),
+        jsx({kind: "preview"}, [
           txt(
             ` buffer: ArrayBuffer(${dataView.buffer.byteLength}), byteOffset: ${dataView.byteOffset} `,
           ),
         ]),
-        jsx("span", {kind: "brace"}, [txt(" }")]),
+        jsx({kind: "brace"}, [txt(" }")]),
       ])
     },
     type: "dataview",
@@ -427,13 +422,11 @@ export const UrlType: JsonDataTypeOptions<URL> = dataType<URL>({
     const previewKeys = URL_KEYS.slice(0, maxItems)
     const preview = previewKeys.map((key) => `${key}: '${url[key]}'`).join(", ")
     const hasMore = URL_KEYS.length > maxItems
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [txt("URL")]),
-      jsx("span", {kind: "brace"}, [txt(" { ")]),
-      jsx("span", {kind: "preview-text"}, [
-        txt(` ${preview}${hasMore ? ", …" : ""} `),
-      ]),
-      jsx("span", {kind: "brace"}, [txt(" }")]),
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt("URL")]),
+      jsx({kind: "brace"}, [txt(" { ")]),
+      jsx({kind: "preview-text"}, [txt(` ${preview}${hasMore ? ", …" : ""} `)]),
+      jsx({kind: "brace"}, [txt(" }")]),
     ])
   },
   type: "url",
@@ -483,11 +476,11 @@ export const URLSearchParamsType: JsonDataTypeOptions<URLSearchParams> =
     previewElement(node) {
       const params = node.value
       const paramsArray = Array.from(params.entries())
-      return jsx("span", {}, [
-        jsx("span", {kind: "constructor"}, [txt("URLSearchParams")]),
-        jsx("span", {kind: "brace"}, [txt(" { ")]),
-        jsx("span", {kind: "preview"}, [txt(`size: ${paramsArray.length}`)]),
-        jsx("span", {kind: "brace"}, [txt(" }")]),
+      return jsx({}, [
+        jsx({kind: "constructor"}, [txt("URLSearchParams")]),
+        jsx({kind: "brace"}, [txt(" { ")]),
+        jsx({kind: "preview"}, [txt(`size: ${paramsArray.length}`)]),
+        jsx({kind: "brace"}, [txt(" }")]),
       ])
     },
     type: "urlsearchparams",
@@ -521,15 +514,15 @@ export const BlobType: JsonDataTypeOptions<Blob> = dataType<Blob>({
   },
   previewElement(node) {
     const blob = node.value
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [txt("Blob")]),
-      jsx("span", {kind: "brace"}, [txt(" { ")]),
-      jsx("span", {kind: "preview"}, [
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt("Blob")]),
+      jsx({kind: "brace"}, [txt(" { ")]),
+      jsx({kind: "preview"}, [
         txt(
           `size: ${blob.size}, type: '${blob.type || "application/octet-stream"}'`,
         ),
       ]),
-      jsx("span", {kind: "brace"}, [txt(" }")]),
+      jsx({kind: "brace"}, [txt(" }")]),
     ])
   },
   type: "blob",
@@ -565,15 +558,15 @@ export const FileType: JsonDataTypeOptions<File> = dataType<File>({
     const file = node.value
     const maxItems = 2
     const hasMore = FILE_KEYS.length > maxItems
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [txt("File")]),
-      jsx("span", {kind: "brace"}, [txt(" { ")]),
-      jsx("span", {kind: "preview"}, [
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt("File")]),
+      jsx({kind: "brace"}, [txt(" { ")]),
+      jsx({kind: "preview"}, [
         txt(
           `name: '${file.name}', lastModified: ${file.lastModified}${hasMore ? ", …" : ""}`,
         ),
       ]),
-      jsx("span", {kind: "brace"}, [txt(" }")]),
+      jsx({kind: "brace"}, [txt(" }")]),
     ])
   },
   type: "file",
@@ -700,9 +693,9 @@ export const FunctionType: JsonDataTypeOptions<Function> = dataType<Function>({
       functionTypePrefix += "ƒ "
     }
 
-    return jsx("span", {}, [
-      jsx("span", {kind: "function-type"}, [txt(functionTypePrefix)]),
-      jsx("span", {kind: "function-body"}, [txt(preview)]),
+    return jsx({}, [
+      jsx({kind: "function-type"}, [txt(functionTypePrefix)]),
+      jsx({kind: "function-body"}, [txt(preview)]),
     ])
   },
   type: "function",
@@ -726,7 +719,7 @@ export const ArrayBufferType: JsonDataTypeOptions<ArrayBuffer> =
       }
     },
     previewElement(node) {
-      return jsx("span", {nodeType: "arraybuffer"}, [
+      return jsx({nodeType: "arraybuffer"}, [
         txt(`ArrayBuffer(${node.value.byteLength})`),
       ])
     },
@@ -754,9 +747,7 @@ export const SharedArrayBufferType: JsonDataTypeOptions<SharedArrayBuffer> =
       }
     },
     previewElement() {
-      return jsx("span", {nodeType: "sharedarraybuffer"}, [
-        txt("sharedarraybuffer"),
-      ])
+      return jsx({nodeType: "sharedarraybuffer"}, [txt("sharedarraybuffer")])
     },
     type: "sharedarraybuffer",
   })
@@ -784,13 +775,11 @@ export const BufferType: JsonDataTypeOptions<Buffer<ArrayBufferLike>> =
         .map((byte) => byte.toString(16).padStart(2, "0"))
         .join(" ")
       const hasMore = buffer.length > 8
-      return jsx("span", {}, [
-        jsx("span", {kind: "constructor"}, [txt(`Buffer(${buffer.length})`)]),
-        jsx("span", {kind: "brace"}, [txt(" ['")]),
-        jsx("span", {kind: "preview-text"}, [
-          txt(preview + (hasMore ? " …" : "")),
-        ]),
-        jsx("span", {kind: "brace"}, [txt("']")]),
+      return jsx({}, [
+        jsx({kind: "constructor"}, [txt(`Buffer(${buffer.length})`)]),
+        jsx({kind: "brace"}, [txt(" ['")]),
+        jsx({kind: "preview-text"}, [txt(preview + (hasMore ? " …" : ""))]),
+        jsx({kind: "brace"}, [txt("']")]),
       ])
     },
     type: "buffer",
@@ -813,7 +802,7 @@ export const DateType: JsonDataTypeOptions<Date> = dataType<Date>({
     }
   },
   previewElement(node) {
-    return jsx("span", {}, [txt(node.value.toISOString())])
+    return jsx({}, [txt(node.value.toISOString())])
   },
   type: "date",
 })
@@ -866,15 +855,15 @@ export const MapType: JsonDataTypeOptions<Map<unknown, unknown>> = dataType<
     const size = node.value.size
 
     const children: Array<JsonNodeElement | JsonNodeText> = [
-      jsx("span", {kind: "constructor"}, [txt(`Map(${size})`)]),
-      jsx("span", {kind: "brace"}, [txt(" {")]),
+      jsx({kind: "constructor"}, [txt(`Map(${size})`)]),
+      jsx({kind: "brace"}, [txt(" {")]),
     ]
     if (preview) {
-      children.push(jsx("span", {kind: "preview-text"}, [txt(preview)]))
+      children.push(jsx({kind: "preview-text"}, [txt(preview)]))
     }
-    children.push(jsx("span", {kind: "brace"}, [txt("}")]))
+    children.push(jsx({kind: "brace"}, [txt("}")]))
 
-    return jsx("span", {}, children)
+    return jsx({}, children)
   },
   previewText(node, opts) {
     const maxItems = opts.maxPreviewItems
@@ -926,10 +915,10 @@ export const ErrorType: JsonDataTypeOptions<Error> = dataType<Error>({
   },
   previewElement(node) {
     const err = node.value
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [txt(err.name)]),
-      jsx("span", {kind: "colon"}, [txt(": ")]),
-      jsx("span", {}, [txt(err.message)]),
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt(err.name)]),
+      jsx({kind: "colon"}, [txt(": ")]),
+      jsx({}, [txt(err.message)]),
     ])
   },
   type: "error",
@@ -938,19 +927,17 @@ export const ErrorType: JsonDataTypeOptions<Error> = dataType<Error>({
 function errorStackToElement(stack: string): JsonNodeElement {
   const stackLines = stack?.split("\n").filter((line) => line.trim()) || []
   return jsx(
-    "span",
     {},
     stackLines.map((line, index) => {
       const appendNewLine = index < stackLines.length - 1
       return jsx(
-        "span",
         {
           kind: "error-stack",
           nodeType: "string",
         },
         [
-          jsx("span", {}, [txt(line + (appendNewLine ? "\\n" : ""))]),
-          jsx("span", {kind: "operator"}, [txt(appendNewLine ? " +" : "")]),
+          jsx({}, [txt(line + (appendNewLine ? "\\n" : ""))]),
+          jsx({kind: "operator"}, [txt(appendNewLine ? " +" : "")]),
         ],
       )
     }),
@@ -1002,15 +989,11 @@ export const HeadersType: JsonDataTypeOptions<Headers> = dataType<Headers>({
       .map(([key, value]) => `${key}: ${value}`)
       .join(", ")
     const hasMore = entriesArray.length > 2
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [
-        txt(`Headers(${entriesArray.length})`),
-      ]),
-      jsx("span", {kind: "brace"}, [txt(" {")]),
-      jsx("span", {kind: "preview-text"}, [
-        txt(` ${preview}${hasMore ? ", …" : ""} `),
-      ]),
-      jsx("span", {kind: "brace"}, [txt("}")]),
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt(`Headers(${entriesArray.length})`)]),
+      jsx({kind: "brace"}, [txt(" {")]),
+      jsx({kind: "preview-text"}, [txt(` ${preview}${hasMore ? ", …" : ""} `)]),
+      jsx({kind: "brace"}, [txt("}")]),
     ])
   },
   type: "headers",
@@ -1069,15 +1052,11 @@ export const FormDataType: JsonDataTypeOptions<FormData> = dataType<FormData>({
 
     const hasMore = entriesArray.length > 2
 
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [
-        txt(`FormData(${entriesArray.length})`),
-      ]),
-      jsx("span", {kind: "brace"}, [txt(" {")]),
-      jsx("span", {kind: "preview-text"}, [
-        txt(` ${preview}${hasMore ? ", …" : ""} `),
-      ]),
-      jsx("span", {kind: "brace"}, [txt("}")]),
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt(`FormData(${entriesArray.length})`)]),
+      jsx({kind: "brace"}, [txt(" {")]),
+      jsx({kind: "preview-text"}, [txt(` ${preview}${hasMore ? ", …" : ""} `)]),
+      jsx({kind: "brace"}, [txt("}")]),
     ])
   },
   type: "formdata",
@@ -1190,15 +1169,15 @@ export const ArrayType: JsonDataTypeOptions<unknown[]> = dataType<
 
     const children: Array<JsonNodeElement | JsonNodeText> = []
     if (count > 0) {
-      children.push(jsx("span", {kind: "constructor"}, [txt(`(${count}) `)]))
+      children.push(jsx({kind: "constructor"}, [txt(`(${count}) `)]))
     }
-    children.push(jsx("span", {kind: "brace"}, [txt("[")]))
+    children.push(jsx({kind: "brace"}, [txt("[")]))
     if (preview) {
-      children.push(jsx("span", {kind: "preview-text"}, [txt(preview)]))
+      children.push(jsx({kind: "preview-text"}, [txt(preview)]))
     }
-    children.push(jsx("span", {kind: "brace"}, [txt("]")]))
+    children.push(jsx({kind: "brace"}, [txt("]")]))
 
-    return jsx("span", {}, children)
+    return jsx({}, children)
   },
   previewText(node, opts) {
     const maxItems = opts.maxPreviewItems
@@ -1280,15 +1259,13 @@ export const TypedArrayType: JsonDataTypeOptions = dataType<any>({
     const constructorName = typedArray.constructor.name
     const preview = Array.from(typedArray).slice(0, 5).join(", ")
     const hasMore = typedArray.length > 5
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [
+    return jsx({}, [
+      jsx({kind: "constructor"}, [
         txt(`${constructorName}(${typedArray.length})`),
       ]),
-      jsx("span", {kind: "brace"}, [txt(" [ ")]),
-      jsx("span", {kind: "preview-text"}, [
-        txt(preview + (hasMore ? ", …" : "")),
-      ]),
-      jsx("span", {kind: "brace"}, [txt(" ]")]),
+      jsx({kind: "brace"}, [txt(" [ ")]),
+      jsx({kind: "preview-text"}, [txt(preview + (hasMore ? ", …" : ""))]),
+      jsx({kind: "brace"}, [txt(" ]")]),
     ])
   },
   type: (value) => Reflect.get(typedArrayConstructors, value.constructor.name),
@@ -1342,15 +1319,15 @@ export const IterableType: JsonDataTypeOptions = dataType<any>({
     const size = node.value.size ?? node.value.length ?? entriesArray.length
 
     const children: Array<JsonNodeElement | JsonNodeText> = [
-      jsx("span", {kind: "constructor"}, [txt(`Iterable(${size})`)]),
-      jsx("span", {kind: "brace"}, [txt(" {")]),
+      jsx({kind: "constructor"}, [txt(`Iterable(${size})`)]),
+      jsx({kind: "brace"}, [txt(" {")]),
     ]
     if (preview) {
-      children.push(jsx("span", {kind: "preview-text"}, [txt(preview)]))
+      children.push(jsx({kind: "preview-text"}, [txt(preview)]))
     }
-    children.push(jsx("span", {kind: "brace"}, [txt("}")]))
+    children.push(jsx({kind: "brace"}, [txt("}")]))
 
-    return jsx("span", {}, children)
+    return jsx({}, children)
   },
   type: "iterable",
 })
@@ -1451,16 +1428,16 @@ export const ObjectType: JsonDataTypeOptions<object> = dataType<object>({
 
     if (node.constructorName) {
       children.push(
-        jsx("span", {kind: "constructor"}, [txt(`${node.constructorName} `)]),
+        jsx({kind: "constructor"}, [txt(`${node.constructorName} `)]),
       )
     }
-    children.push(jsx("span", {kind: "brace"}, [txt("{")]))
+    children.push(jsx({kind: "brace"}, [txt("{")]))
     if (preview) {
-      children.push(jsx("span", {kind: "preview-text"}, [txt(preview)]))
+      children.push(jsx({kind: "preview-text"}, [txt(preview)]))
     }
-    children.push(jsx("span", {kind: "brace"}, [txt("}")]))
+    children.push(jsx({kind: "brace"}, [txt("}")]))
 
-    return jsx("span", {}, children)
+    return jsx({}, children)
   },
   previewText(node, opts) {
     const maxItems = opts.maxPreviewItems
@@ -1546,10 +1523,10 @@ export const ElementType: JsonDataTypeOptions<SVGElement | HTMLElement> =
       const el = node.value as Element
       const classList = Array.from(el.classList).slice(0, 3)
 
-      return jsx("span", {}, [
-        jsx("span", {kind: "constructor"}, [txt(el.constructor.name)]),
-        jsx("span", {}, [txt(" ")]),
-        jsx("span", {kind: "preview-text"}, [
+      return jsx({}, [
+        jsx({kind: "constructor"}, [txt(el.constructor.name)]),
+        jsx({}, [txt(" ")]),
+        jsx({kind: "preview-text"}, [
           txt(
             `<${el.localName}${el.id ? `#${el.id}` : ""}${classList.length > 0 ? `.${classList.join(".")}` : ""}>`,
           ),
@@ -1592,9 +1569,9 @@ export const DocumentType: JsonDataTypeOptions<Document> = dataType<Document>({
   previewElement(node) {
     const doc = node.value
     const url = doc.URL || "unknown"
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [txt("#document")]),
-      jsx("span", {kind: "preview-text"}, [txt(` (${url})`)]),
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt("#document")]),
+      jsx({kind: "preview-text"}, [txt(` (${url})`)]),
     ])
   },
 
@@ -1634,9 +1611,9 @@ export const WindowType: JsonDataTypeOptions<Window> = dataType<Window>({
   },
 
   previewElement() {
-    return jsx("span", {}, [
-      jsx("span", {kind: "constructor"}, [txt("Window")]),
-      jsx("span", {kind: "preview-text"}, [txt(" { … }")]),
+    return jsx({}, [
+      jsx({kind: "constructor"}, [txt("Window")]),
+      jsx({kind: "preview-text"}, [txt(" { … }")]),
     ])
   },
 
@@ -1689,14 +1666,14 @@ export const ReactElementType: JsonDataTypeOptions = dataType<any>({
     const props = Object.entries(el.props)
     const hasMore = props.length > opts.maxPreviewItems
 
-    return jsx("span", {}, [
+    return jsx({}, [
       txt(`<${elName} `),
       ...props.slice(0, opts.maxPreviewItems).reduce((acc, [key, value]) => {
         if (key === "children") {
           return acc
         }
         acc.push(
-          jsx("span", {}, [
+          jsx({}, [
             txt(
               ` ${key}=${typeof value === "string" ? `"${value}"` : `{${formatValue(value)}}`}`,
             ),
@@ -1740,7 +1717,7 @@ export const StringType: JsonDataTypeOptions<string> = dataType<string>({
       STRING_ESCAPE_REGEXP,
       (_: string) => map[_],
     )
-    return jsx("span", {}, [txt(`"${serialised}"`)])
+    return jsx({}, [txt(`"${serialised}"`)])
   },
   previewText(node, opts) {
     const serialised = node.value.replace(
@@ -1772,7 +1749,7 @@ export const PrimitiveType: JsonDataTypeOptions = dataType<any>({
     }
   },
   previewElement(node) {
-    return jsx("span", {}, [txt(String(node.value))])
+    return jsx({}, [txt(String(node.value))])
   },
   type(value) {
     return typeof value
@@ -1841,7 +1818,7 @@ export const jsonNodeToElement = (
 
   const dataType = dataTypes.find((dataType) => dataType.check(node.value))
   if (!dataType) {
-    return jsx("span", {}, [txt(String(node.value))])
+    return jsx({}, [txt(String(node.value))])
   }
 
   const element = dataType.previewElement(node, options)
