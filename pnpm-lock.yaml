@@ -855,9 +855,6 @@ importers:
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
-      dotenv:
-        specifier: ^17.2.3
-        version: 17.4.2
       hastscript:
         specifier: ^9.0.0
         version: 9.0.1
@@ -867,9 +864,6 @@ importers:
       minimatch:
         specifier: ^11.0.4
         version: 11.0.4
-      ora:
-        specifier: ^9.0.0
-        version: 9.4.1
       rehype-mdx-code-props:
         specifier: ^3.0.0
         version: 3.0.1(supports-color@10.2.2)
