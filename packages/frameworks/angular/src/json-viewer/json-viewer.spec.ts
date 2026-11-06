@@ -25,6 +25,86 @@ const variants = [
 
 describe("JSON viewer", () => {
   test.each(variants)(
+    "$name hides complex previews and function signatures only when expanded",
+    async ({template}) => {
+      await render(template, {
+        componentProperties: {
+          data: {
+            callback: function onUpdate() {},
+            searchParams: new URLSearchParams({page: "1"}),
+          },
+        },
+        imports: [JsonViewerModule],
+      })
+
+      const callback = page.getByRole("button", {
+        name: /^callback: ƒ onUpdate\(\),/,
+      })
+      const searchParams = page.getByRole("button", {
+        name: /^searchParams: URLSearchParams,/,
+      })
+      const signature = callback.getByText("onUpdate()", {exact: true})
+      const preview = searchParams.getByText("size: 1", {exact: true})
+
+      await expect.element(signature).not.toBeVisible()
+      await expect.element(preview).not.toBeVisible()
+      await expect.element(callback.getByText("ƒ", {exact: true})).toBeVisible()
+      await expect
+        .element(searchParams.getByText("URLSearchParams", {exact: true}))
+        .toBeVisible()
+
+      await callback.click()
+      await expect.element(signature).toBeVisible()
+      await expect.element(preview).not.toBeVisible()
+
+      await searchParams.click()
+      await expect.element(preview).toBeVisible()
+
+      await callback.click()
+      await expect.element(signature).not.toBeVisible()
+      await expect.element(preview).toBeVisible()
+
+      await searchParams.click()
+      await expect.element(preview).not.toBeVisible()
+    },
+  )
+
+  test.each(variants)(
+    "$name hides expanded previews and restores them when collapsed",
+    async ({template}) => {
+      await render(template, {
+        componentProperties: {
+          data: {items: ["one", "two"], settings: {theme: "dark"}},
+        },
+        imports: [JsonViewerModule],
+      })
+
+      const objectPreview = page.getByText('theme: "dark"', {exact: true})
+      const arrayPreview = page.getByText('"one", "two"', {exact: true})
+      const settings = page.getByText("settings", {exact: true})
+      const items = page.getByText("items", {exact: true})
+
+      await expect.element(objectPreview).not.toBeVisible()
+      await expect.element(arrayPreview).not.toBeVisible()
+      await expect
+        .element(page.getByText('"dark"', {exact: true}))
+        .toBeVisible()
+      await expect.element(page.getByText('"one"', {exact: true})).toBeVisible()
+
+      await settings.click()
+      await expect.element(objectPreview).toBeVisible()
+      await expect.element(arrayPreview).not.toBeVisible()
+
+      await items.click()
+      await expect.element(arrayPreview).toBeVisible()
+
+      await settings.click()
+      await expect.element(objectPreview).not.toBeVisible()
+      await expect.element(arrayPreview).toBeVisible()
+    },
+  )
+
+  test.each(variants)(
     "$name renders default expansion and toggles nested values",
     async ({template}) => {
       await render(template, {

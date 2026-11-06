@@ -40,7 +40,6 @@
   }
 }
 
-
 .qui-json-viewer__root {
   font: var(--font-static-code-sm-default);
   width: 100%;
@@ -48,10 +47,10 @@
 
 /* Compact row height - override tree node defaults */
 .qui-json-viewer__root .qui-tree__node-root {
+  font: var(--font-static-code-sm-default);
   gap: var(--spacing-30);
   height: auto;
   min-height: unset;
-  font: var(--font-static-code-sm-default);
 }
 
 .qui-json-viewer__value[data-type="string"] {
@@ -126,6 +125,17 @@
 
 .qui-json-viewer__value [data-kind="preview-text"] {
   color: var(--json-viewer-color-preview);
+}
+
+.qui-json-viewer__root
+  .qui-tree__node-root[data-state="open"]
+  .qui-json-viewer__value
+  :is(
+    [data-kind="preview"],
+    [data-kind="preview-text"],
+    [data-kind="function-body"]
+  ) {
+  display: none;
 }
 
 .qui-json-viewer__value [data-kind="function-type"] {
