@@ -93,9 +93,9 @@ Compatibility routes redirect or delegate only. They do not duplicate page conte
 
 Before opening a PR:
 
-- Run `pnpm qui-docs lint`.
+- Run `pnpm qui-docs lint` for ESLint checks.
 - Run or compile every code snippet you add when the snippet is meant to execute.
-- Validate links and fragments through the docs build when a build is appropriate for the checkout.
+- Validate links and fragments with [`qui-docs lint`](./configuration.mdx#cli-linting) without a Vite build.
 - Before running a docs build in this repo, read the configured docs port from `vite.config.ts` and check whether it is occupied.
 - If the configured port is occupied, assume the docs dev server is already running and skip the routine build unless the task explicitly requires it.
 - Manually review the new or moved route, its parent section, and any linked authoring pages for sidebar order, headings, links, and tone.

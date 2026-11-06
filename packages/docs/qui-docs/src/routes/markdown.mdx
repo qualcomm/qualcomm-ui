@@ -199,7 +199,7 @@ File links work in GitHub's Markdown viewer and editors that follow file paths, 
 
 GitHub generates its own lowercase heading anchors. A fragment such as `#navConfig` opens the file but does not scroll to GitHub's `#navconfig` heading.
 
-Root-relative and URL-relative links continue to work. No migration is required. Enable the `fileLinks` [lint rule](configuration.mdx#lint) to report URL-path links with suggested relative `.mdx` replacements.
+Root-relative and URL-relative links continue to work. The `fileLinks` [lint rule](./configuration.mdx#lint) defaults to `"warn"`. It reports URL-path links to MDX pages with suggested relative `.mdx` replacements during development and build. Run [`qui-docs lint`](./configuration.mdx#cli-linting) to validate links without a Vite build. Use [`qui-docs fix-links`](#migrating-existing-links) to apply the replacements.
 
 #### Migrating Existing Links
 

@@ -62,7 +62,7 @@ When moving an existing route:
    }
    ```
 
-3. Fix all broken links, including missing `.mdx` target files and fragments. The `brokenLinks` lint rule logs them via vite:
+3. Fix all broken links, including missing `.mdx` target files and fragments. The `brokenLinks` lint rule logs them during development, build, and [`qui-docs lint`](./configuration.mdx#cli-linting):
    ```console
    Found 1 broken link:
 
@@ -72,7 +72,13 @@ When moving an existing route:
 
 ## Lint
 
-QUI Docs validates broken links and page titles during development and build. Rules set to `"error"` fail the production build (`vite build`). Both `pageTitle` and `brokenLinks` default to `"warn"`. `fileLinks` defaults to `"off"`. Enable it to report URL-path links to MDX pages with suggested relative `.mdx` replacements. Configure severity with the [`lint` option](./configuration.mdx#lint) in `qui-docs.config.ts`.
+QUI Docs validates links and page titles during development and build. Configure severity with the [`lint` option](./configuration.mdx#lint) in `qui-docs.config.ts`.
+
+- `brokenLinks`, `fileLinks`, and `pageTitle` default to `"warn"`.
+- Rules set to `"error"` fail the production build (`vite build`).
+- `fileLinks` logs URL-path links to MDX pages as warnings by default. Run [`qui-docs fix-links`](./markdown.mdx#migrating-existing-links) to convert them to relative `.mdx` file links. Use `--dry-run` to preview the replacements.
+
+Run [`qui-docs lint`](./configuration.mdx#cli-linting) to validate pages without a Vite build. The command reports every enabled rule's issues as errors by default.
 
 ## Frontmatter
 
