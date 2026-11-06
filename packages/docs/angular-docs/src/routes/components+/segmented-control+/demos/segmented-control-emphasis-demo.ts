@@ -1,19 +1,19 @@
 import {Component} from "@angular/core"
 
 import {SegmentedControlModule} from "@qualcomm-ui/angular/segmented-control"
-import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-control"
+import type {QdsSegmentedControlEmphasis} from "@qualcomm-ui/qds-core/segmented-control"
 
 @Component({
   imports: [SegmentedControlModule],
-  selector: "segmented-control-variant-demo",
+  selector: "segmented-control-emphasis-demo",
   template: `
     <div class="flex w-full flex-col items-center gap-4">
       <!-- preview -->
-      @for (variant of variants; track variant) {
+      @for (emphasis of emphases; track emphasis) {
         <fieldset
           q-segmented-control
           [defaultValue]="['chart']"
-          [variant]="variant"
+          [emphasis]="emphasis"
         >
           <label q-segmented-control-item text="Chart" value="chart"></label>
           <label q-segmented-control-item text="Table" value="table"></label>
@@ -24,6 +24,6 @@ import type {QdsSegmentedControlVariant} from "@qualcomm-ui/qds-core/segmented-c
     </div>
   `,
 })
-export class SegmentedControlVariantDemo {
-  protected variants: QdsSegmentedControlVariant[] = ["primary", "neutral"]
+export class SegmentedControlEmphasisDemo {
+  protected emphases: QdsSegmentedControlEmphasis[] = ["brand", "neutral"]
 }

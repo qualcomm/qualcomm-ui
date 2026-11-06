@@ -18,14 +18,14 @@ const size = instance.getEnum("size", {
   lg: "lg",
   sm: "sm",
 })
-const variant = instance.getEnum("emphasis", {
-  primary: "primary",
+const emphasis = instance.getEnum("emphasis", {
+  neutral: "neutral",
 })
 
 const layoutAttr = layout ? ` layout="${layout}"` : ""
 const orientationAttr = orientation ? ` orientation="${orientation}"` : ""
 const sizeAttr = size ? ` size="${size}"` : ""
-const variantAttr = variant ? ` variant="${variant}"` : ""
+const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 
 const items = instance.findConnectedInstances((node) => {
   const s = node.getEnum("state", {
@@ -46,7 +46,7 @@ const children = items.reduce(
 
 export default {
   example: figma.code`
-    <fieldset${layoutAttr}${orientationAttr} q-segmented-control${sizeAttr}${variantAttr}
+    <fieldset${layoutAttr}${orientationAttr} q-segmented-control${emphasisAttr}${sizeAttr}
       [defaultValue]="['section-1']"
     >
       <!-- Provide a unique value for each item -->

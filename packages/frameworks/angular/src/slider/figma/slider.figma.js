@@ -27,7 +27,7 @@ const sideMarkers = instance.getEnum("valuePosition", {
 const size = instance.getEnum("size", {
   sm: "sm",
 })
-const variant = instance.getEnum("emphasis", {
+const emphasis = instance.getEnum("emphasis", {
   neutral: "neutral",
 })
 const isRange = instance.getEnum("variant", {
@@ -42,6 +42,7 @@ const value = parseInt(valueText, 10)
 const defaultValue = isRange ? `[${rangeMin}, ${rangeMax}]` : `[${value}]`
 
 const defaultValueAttr = ` [defaultValue]="${defaultValue}"`
+const emphasisAttr = emphasis ? ` emphasis="${emphasis}"` : ""
 const disabledAttr = disabled ? " disabled" : ""
 const errorTextAttr = errorText ? ` errorText="${errorText}"` : ""
 const hintAttr = hint ? ` hint="${hint}"` : ""
@@ -49,11 +50,10 @@ const invalidAttr = invalid ? " invalid" : ""
 const labelAttr = label ? ` label="${label}"` : ""
 const sideMarkersAttr = sideMarkers ? " sideMarkers" : ""
 const sizeAttr = size ? ` size="${size}"` : ""
-const variantAttr = variant ? ` variant="${variant}"` : ""
 
 export default {
   example: figma.code`
-    <q-slider${defaultValueAttr}${disabledAttr}${errorTextAttr}${hintAttr}${invalidAttr}${labelAttr}${sideMarkersAttr}${sizeAttr}${variantAttr}>
+    <q-slider${defaultValueAttr}${disabledAttr}${emphasisAttr}${errorTextAttr}${hintAttr}${invalidAttr}${labelAttr}${sideMarkersAttr}${sizeAttr}>
     </q-slider>`,
   id: "Slider",
   imports: [`import {SliderModule} from "@qualcomm-ui/angular/slider"`],

@@ -10,14 +10,25 @@ import type {
 import type {tagAnatomy} from "./tag.anatomy.js"
 import type {tagClasses} from "./tag.classes.js"
 
-/** @deprecated use "lime" */
+/**
+ * @deprecated `kiwi`: use `lime`. `outline-brand`: use `brand-outline`.
+ * `outline-neutral`: use `neutral-outline`.
+ */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export type QdsTagEmphasis__deprecated = "kiwi"
-
-export type QdsTagEmphasis =
+export type QdsTagEmphasis__deprecated =
+  | "kiwi"
   | "outline-brand"
   | "outline-neutral"
+
+export type QdsTagEmphasis =
+  | "brand-outline"
+  | "neutral-outline"
+  | "neutral-outline-brand"
   | "neutral"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger"
   | "amber"
   | "blue"
   | "cyan"
@@ -66,8 +77,10 @@ export interface QdsTagApiProps {
   dismissLabel?: string
 
   /**
-   * Governs the color of the tag.
-   * @default 'outline-brand'
+   * Governs the color of the tag. `neutral-outline-brand` looks like
+   * `neutral-outline`, except when selected, where it looks like
+   * `brand-outline`.
+   * @default 'brand-outline'
    */
   emphasis?: QdsTagEmphasis
 

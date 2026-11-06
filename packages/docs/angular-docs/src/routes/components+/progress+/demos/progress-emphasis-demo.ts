@@ -8,7 +8,7 @@ import {ProgressModule} from "@qualcomm-ui/angular/progress"
   template: `
     <div class="flex w-64 flex-col gap-6">
       <!-- preview -->
-      <div emphasis="primary" q-progress></div>
+      <div emphasis="brand" q-progress></div>
       <div emphasis="neutral" q-progress></div>
       <!-- preview -->
     </div>

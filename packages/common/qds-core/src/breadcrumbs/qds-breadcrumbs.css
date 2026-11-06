@@ -18,6 +18,7 @@
       display: none;
     }
     .qui-breadcrumbs__item-trigger {
+      &[data-emphasis="brand"],
       &[data-emphasis="primary"] {
         color: var(--color-interactive-text-primary-pressed);
         --icon-color: var(--color-interactive-icon-primary-pressed);
@@ -77,6 +78,7 @@
     outline-offset: -1px;
   }
 
+  &[data-emphasis="brand"],
   &[data-emphasis="primary"] {
     color: var(--color-interactive-text-primary-idle);
     --icon-color: var(--color-interactive-icon-primary-idle);

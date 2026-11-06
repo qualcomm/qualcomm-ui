@@ -10,6 +10,7 @@ import {
 import {
   createQdsSegmentedControlApi,
   type QdsSegmentedControlApiProps,
+  type QdsSegmentedControlEmphasis,
 } from "@qualcomm-ui/qds-core/segmented-control"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
@@ -34,6 +35,14 @@ export interface SegmentedControlRootProps
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
   children?: ReactNode
+
+  /**
+   * Governs the color of the segmented control.
+   *
+   * @default 'brand'
+   * @since next-release
+   */
+  emphasis?: QdsSegmentedControlEmphasis
 }
 
 /**
@@ -41,6 +50,7 @@ export interface SegmentedControlRootProps
  */
 export function SegmentedControlRoot({
   children,
+  emphasis,
   id,
   layout,
   size,
@@ -50,8 +60,12 @@ export function SegmentedControlRoot({
   const [segmentedControlProps, localProps] = splitSegmentedControlProps(props)
   const context = useSegmentedControl(segmentedControlProps)
   const qdsContext = useMemo(
-    () => createQdsSegmentedControlApi({layout, size, variant}, normalizeProps),
-    [layout, size, variant],
+    () =>
+      createQdsSegmentedControlApi(
+        {emphasis, layout, size, variant},
+        normalizeProps,
+      ),
+    [emphasis, layout, size, variant],
   )
   const mergedProps = mergeProps(
     context.getGroupBindings({id: useControlledId(id)}),

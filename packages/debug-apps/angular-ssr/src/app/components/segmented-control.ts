@@ -3,6 +3,7 @@ import {Component} from "@angular/core"
 import {SegmentedControlCompositeDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-composite-demo"
 import {SegmentedControlControlledDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-controlled-demo"
 import {SegmentedControlDisabledDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-disabled-demo"
+import {SegmentedControlEmphasisDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-emphasis-demo"
 import {SegmentedControlIconDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-icon-demo"
 import {SegmentedControlIconOnlyDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-icon-only-demo"
 import {SegmentedControlLayoutDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-layout-demo"
@@ -10,7 +11,6 @@ import {SegmentedControlMultipleDemo} from "@qualcomm-ui/angular-docs/components
 import {SegmentedControlOrientationDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-orientation-demo"
 import {SegmentedControlSimpleDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-simple-demo"
 import {SegmentedControlSizeDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-size-demo"
-import {SegmentedControlVariantDemo} from "@qualcomm-ui/angular-docs/components+/segmented-control+/demos/segmented-control-variant-demo"
 
 @Component({
   imports: [
@@ -24,7 +24,7 @@ import {SegmentedControlVariantDemo} from "@qualcomm-ui/angular-docs/components+
     SegmentedControlOrientationDemo,
     SegmentedControlSimpleDemo,
     SegmentedControlSizeDemo,
-    SegmentedControlVariantDemo,
+    SegmentedControlEmphasisDemo,
   ],
   selector: "app-segmented-control",
   template: `
@@ -90,9 +90,9 @@ import {SegmentedControlVariantDemo} from "@qualcomm-ui/angular-docs/components+
         </div>
       </div>
       <div class="section">
-        <h2 class="section-title">Variant</h2>
+        <h2 class="section-title">Emphasis</h2>
         <div class="demo-container">
-          <segmented-control-variant-demo />
+          <segmented-control-emphasis-demo />
         </div>
       </div>
     </div>

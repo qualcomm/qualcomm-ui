@@ -89,6 +89,7 @@
     );
   }
 
+  &[data-emphasis="brand"],
   &[data-emphasis="primary"] {
     --progress-color: var(--color-background-brand-primary);
   }

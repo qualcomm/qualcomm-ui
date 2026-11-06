@@ -7,6 +7,7 @@ import {type SliderApiProps, splitSliderProps} from "@qualcomm-ui/core/slider"
 import {
   createQdsSliderApi,
   type QdsSliderApiProps,
+  type QdsSliderEmphasis,
 } from "@qualcomm-ui/qds-core/slider"
 import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {SliderContextProvider, useSlider} from "@qualcomm-ui/react-core/slider"
@@ -31,6 +32,14 @@ export interface SliderRootProps
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
   children?: ReactNode
+
+  /**
+   * Governs the color of the slider.
+   *
+   * @default 'brand'
+   * @since next-release
+   */
+  emphasis?: QdsSliderEmphasis
 }
 
 /**
@@ -39,6 +48,7 @@ export interface SliderRootProps
  */
 export function SliderRoot({
   children,
+  emphasis,
   id,
   size,
   variant,
@@ -47,8 +57,8 @@ export function SliderRoot({
   const [sliderProps, localProps] = splitSliderProps(props)
   const context = useSlider(sliderProps)
   const qdsContext = useMemo(
-    () => createQdsSliderApi({size, variant}, normalizeProps),
-    [size, variant],
+    () => createQdsSliderApi({emphasis, size, variant}, normalizeProps),
+    [emphasis, size, variant],
   )
   const mergedProps = mergeProps(
     context.getRootBindings({id: useControlledId(id)}),

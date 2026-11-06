@@ -43,7 +43,7 @@ export class ProgressRootDirective
   /**
    * Governs the color of the progress bar.
    *
-   * @default 'primary'
+   * @default 'brand'
    */
   readonly emphasis = input<QdsProgressEmphasis>()
 

@@ -20,19 +20,20 @@ export function createQdsSegmentedControlApi(
 ): QdsSegmentedControlApi {
   const size = props.size || "md"
   const layout = props.layout || "hug"
-  const variant = props.variant || "primary"
+  const emphasis = props.emphasis || props.variant || "brand"
   return {
+    emphasis,
     layout,
     size,
-    variant,
+    variant: emphasis,
 
     // group: bindings
     getGroupBindings(): QdsSegmentedControlGroupBindings {
       return normalize.element({
         className: segmentedControlClasses.group,
+        "data-emphasis": emphasis,
         "data-layout": layout,
         "data-size": size,
-        "data-variant": variant,
       })
     },
     getItemBindings(): QdsSegmentedControlItemBindings {

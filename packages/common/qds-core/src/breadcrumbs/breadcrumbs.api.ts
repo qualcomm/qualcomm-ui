@@ -23,7 +23,7 @@ export function createQdsBreadcrumbsApi(
   normalize: PropNormalizer,
 ): QdsBreadcrumbsApi {
   const size = props.size || "md"
-  const emphasis = props.emphasis || "primary"
+  const emphasis = props.emphasis || "brand"
 
   return {
     emphasis,
