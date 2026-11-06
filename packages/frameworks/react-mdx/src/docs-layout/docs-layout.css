@@ -321,7 +321,8 @@ pre.qui-docs-code {
 
 .qui-docs-sidebar__root {
   box-sizing: border-box;
-  min-width: 264px;
+  max-width: 274px;
+  min-width: 274px;
   .qui-side-nav__root {
     box-sizing: border-box;
     min-width: 240px;
