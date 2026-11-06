@@ -26,7 +26,7 @@ Pass any JavaScript value to `data`. Use `defaultExpandedDepth` to control how m
 
 ### Composite
 
-Use the composite API when you need to render additional content alongside the tree.
+Apply `q-json-viewer-root` to a containing element to configure the viewer. Apply `q-json-viewer-tree` to a child element to render the data. Use the composite API to render additional content alongside the tree.
 
 <QdsDemo name="JsonViewerCompositeDemo" />
 
@@ -36,11 +36,11 @@ The viewer renders values with type-specific coloring for strings, numbers, bool
 
 <QdsDemo name="JsonViewerDataTypesDemo" />
 
-### Root Provider
+### Controlled Expansion
 
-Use `createJsonViewerState` with `q-json-viewer-root-provider` to control the viewer state externally, such as expanding or collapsing all nodes programmatically.
+Use `expandedValue` and `expandedValueChange` to control expansion. Export the root as `jsonViewerRoot` to access its collection. Call `collection().getBranchValues()` to expand all branches, or set `expandedValue` to an empty array to collapse them.
 
-<QdsDemo name="JsonViewerRootProviderDemo" />
+<QdsDemo name="JsonViewerControlledDemo" />
 
 ### Complex Types
 
@@ -52,29 +52,19 @@ Maps, Sets, Headers, URLSearchParams, URLs, Errors, and functions are all suppor
 
 ### \<q-json-viewer>
 
-The simple JSON viewer extends the [q-json-viewer-root](./#q-json-viewer-root) component with the following inputs:
+The `q-json-viewer` component uses the [q-json-viewer-root](/components/json-viewer#q-json-viewer-root) directive and adds the following inputs:
 
 <TypeDocProps
   name="JsonViewerComponent"
-  omitFrom="JsonViewerRootComponent"
+  omitFrom="JsonViewerRootDirective"
 />
 
 ## Composite API
 
-### \<q-json-viewer-root>
+### q-json-viewer-root
 
-<TypeDocProps name="JsonViewerRootComponent" />
+<TypeDocProps name="JsonViewerRootDirective" />
 
-### \<q-json-viewer-root-provider>
+### q-json-viewer-tree
 
-<TypeDocProps name="JsonViewerRootProviderComponent" />
-
-### \<q-json-viewer-tree>
-
-<TypeDocProps name="JsonViewerTreeComponent" />
-
-### createJsonViewerState
-
-<TypeDocProps name="CreateJsonViewerStateOptions" />
-
-<TypeDocProps name="JsonViewerState" />
+<TypeDocProps name="JsonViewerTreeDirective" />

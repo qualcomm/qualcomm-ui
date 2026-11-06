@@ -35,7 +35,7 @@ export function createQdsJsonViewerApi(
       props: QdsJsonViewerValueBindingProps,
     ): QdsJsonViewerValueBindings {
       return normalize.element({
-        className: props.root ? jsonViewerClasses.value : undefined,
+        ...(props.root ? {className: jsonViewerClasses.value} : {}),
         "data-kind": props.kind,
         "data-root": booleanDataAttr(props.root),
         "data-type": props.nodeType,

@@ -8,10 +8,8 @@ import {TreeModule} from "@qualcomm-ui/angular/tree"
 
 import {JsonViewerKeyNodeComponent} from "./json-viewer-key-node.component"
 import {JsonViewerNodeComponent} from "./json-viewer-node.component"
-import {JsonViewerRootProviderComponent} from "./json-viewer-root-provider.component"
-import {JsonViewerRootComponent} from "./json-viewer-root.component"
-import {JsonViewerTreeRootDirective} from "./json-viewer-tree-root.directive"
-import {JsonViewerTreeComponent} from "./json-viewer-tree.component"
+import {JsonViewerRootDirective} from "./json-viewer-root.directive"
+import {JsonViewerTreeDirective} from "./json-viewer-tree.directive"
 import {JsonViewerValueNodeComponent} from "./json-viewer-value-node.component"
 import {JsonViewerComponent} from "./json-viewer.component"
 
@@ -20,17 +18,14 @@ import {JsonViewerComponent} from "./json-viewer.component"
     JsonViewerComponent,
     JsonViewerKeyNodeComponent,
     JsonViewerNodeComponent,
-    JsonViewerRootComponent,
-    JsonViewerRootProviderComponent,
-    JsonViewerTreeComponent,
-    JsonViewerTreeRootDirective,
+    JsonViewerRootDirective,
+    JsonViewerTreeDirective,
     JsonViewerValueNodeComponent,
   ],
   exports: [
     JsonViewerComponent,
-    JsonViewerRootComponent,
-    JsonViewerRootProviderComponent,
-    JsonViewerTreeComponent,
+    JsonViewerRootDirective,
+    JsonViewerTreeDirective,
   ],
   imports: [QBindDirective, TreeModule],
 })

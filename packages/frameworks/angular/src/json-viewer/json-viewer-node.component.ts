@@ -30,7 +30,7 @@ import {useJsonViewerOptionsContext} from "./json-viewer-options-context.service
       <div q-tree-branch>
         <div q-tree-branch-node [attr.aria-label]="description()">
           @if (arrow()) {
-            <button q-tree-branch-trigger [icon]="arrow()!"></button>
+            <div q-tree-branch-trigger [icon]="arrow()!"></div>
           }
           <span q-tree-node-text>
             @if (key()) {

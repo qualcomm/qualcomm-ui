@@ -21,9 +21,9 @@ const data = {
   selector: "json-viewer-composite-demo",
   template: `
     <!-- preview -->
-    <q-json-viewer-root [data]="data" [defaultExpandedDepth]="3">
-      <q-json-viewer-tree />
-    </q-json-viewer-root>
+    <div q-json-viewer-root [data]="data" [defaultExpandedDepth]="3">
+      <div q-json-viewer-tree></div>
+    </div>
     <!-- preview -->
   `,
 })

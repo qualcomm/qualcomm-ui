@@ -22,7 +22,7 @@ export interface QdsJsonViewerKeyBindingProps {
 }
 
 export interface QdsJsonViewerValueBindings {
-  className: JsonViewerClasses["value"] | undefined
+  className?: JsonViewerClasses["value"]
   "data-kind"?: JsonNodeSyntaxKind
   "data-root"?: BooleanDataAttr
   "data-type"?: JsonNodeType

@@ -9,7 +9,7 @@ import {useTreeContext} from "@qualcomm-ui/angular-core/tree"
 import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
 
 @Component({
-  selector: "q-json-viewer-tree",
+  selector: "[q-json-viewer-tree]",
   standalone: false,
   template: `
     @for (child of children(); let i = $index; track trackChild(child)) {
@@ -22,7 +22,7 @@ import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
     }
   `,
 })
-export class JsonViewerTreeComponent {
+export class JsonViewerTreeDirective {
   /**
    * Icon used for the branch expand/collapse trigger.
    *
