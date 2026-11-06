@@ -84,6 +84,7 @@ Controls content validation rules. Each rule accepts a severity:
 ```ts
 lint: {
   brokenLinks: "warn",
+  fileLinks: "off",
   pageTitle: "warn",
 }
 ```
@@ -91,7 +92,23 @@ lint: {
 Rules:
 
 - `brokenLinks`: validates internal MDX links and fragment references after the page map and table of contents are built. Default: `"warn"`.
+- `fileLinks`: reports internal links to MDX pages that use URL paths instead of relative `.mdx` file paths. Default: `"off"`.
 - `pageTitle`: validates the h1 page title of every MDX page. Default: `"warn"`.
+
+The `fileLinks` rule is opt-in. Set it to `"warn"` or `"error"` to report URL-path links with suggested relative `.mdx` replacements. See [Relative Links](/markdown#relative-links) for file-link syntax.
+
+- Same-page links such as `./#size` are reported with `#size` as the replacement.
+- Links to TSX pages, public directory files, and missing pages are skipped. The `brokenLinks` rule reports missing pages.
+
+Issues are grouped by source page:
+
+```console
+Found 2 links that should use a relative .mdx file path:
+
+  /api/nav-config
+    x /api/qui-docs-config#navConfig — use ./qui-docs-config.mdx#navConfig
+    x ./#size — use #size
+```
 
 The `pageTitle` rule reports:
 

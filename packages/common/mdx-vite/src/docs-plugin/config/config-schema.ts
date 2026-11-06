@@ -114,6 +114,7 @@ const lintSeveritySchema = z.union([
 
 const lintSchema = implement<QuiDocsLintOptions>().with({
   brokenLinks: lintSeveritySchema.optional(),
+  fileLinks: lintSeveritySchema.optional(),
   pageTitle: lintSeveritySchema.optional(),
 })
 

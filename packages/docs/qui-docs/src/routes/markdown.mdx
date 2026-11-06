@@ -134,6 +134,49 @@ import {Link} from "react-router"
 Click <Link prefetch="viewport" to="/introduction">here</Link> to learn more.
 ```
 
+### Relative Links
+
+> [!note]
+> This feature was added in [@qualcomm-ui/mdx-vite@4.2.0](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/common/mdx-vite/CHANGELOG.md#420)
+
+A Markdown link with a relative path ending in `.mdx` is a file link. It resolves against the source MDX file on disk, not the page URL. Paths starting with `/`, `#`, or a URL scheme are not file links.
+
+From `api/nav-config.mdx`, link to the sibling file:
+
+```markdown
+[Navigation configuration](./qui-docs-config.mdx#navConfig)
+```
+
+The link compiles to:
+
+```html
+<a href="/api/qui-docs-config#navConfig">Navigation configuration</a>
+```
+
+The `./` prefix is optional. `qui-docs-config.mdx` links to the same sibling file without a fragment.
+
+From `components+/button+/_button.mdx`, link through the parent directory:
+
+```markdown
+[Tooltip](../tooltip+/_tooltip.mdx)
+```
+
+With the default routing strategy, the link compiles to:
+
+```html
+<a href="/components/tooltip">Tooltip</a>
+```
+
+File links work in GitHub's Markdown viewer and editors that follow file paths, so prefer them over root-relative links such as `/api/qui-docs-config`.
+
+- The `brokenLinks` [lint rule](configuration.mdx#lint) validates file links. A missing target file is reported as "page not found". Fragments are checked against the target page's headings.
+- [Knowledge exports](configuration.mdx#knowledge-export) rewrite file links to site URLs.
+- Only `.mdx` targets are rewritten. Links to TSX route pages and public files use URL paths.
+
+GitHub generates its own lowercase heading anchors. A fragment such as `#navConfig` opens the file but does not scroll to GitHub's `#navconfig` heading.
+
+Root-relative and URL-relative links continue to work. No migration is required. Enable the `fileLinks` [lint rule](configuration.mdx#lint) to report URL-path links with suggested relative `.mdx` replacements.
+
 ### External Links
 
 Similarly, all links starting with `https://` are converted to external links.

@@ -62,7 +62,7 @@ When moving an existing route:
    }
    ```
 
-3. Fix all broken links. The `brokenLinks` lint rule logs them via vite:
+3. Fix all broken links, including missing `.mdx` target files and fragments. The `brokenLinks` lint rule logs them via vite:
    ```console
    Found 1 broken link:
 
@@ -72,7 +72,7 @@ When moving an existing route:
 
 ## Lint
 
-QUI Docs validates broken links and page titles during development and build. Rules set to `"error"` fail the production build (`vite build`). Both `pageTitle` and `brokenLinks` default to `"warn"`. Configure severity with the [`lint` option](/configuration#lint) in `qui-docs.config.ts`.
+QUI Docs validates broken links and page titles during development and build. Rules set to `"error"` fail the production build (`vite build`). Both `pageTitle` and `brokenLinks` default to `"warn"`. `fileLinks` defaults to `"off"`. Enable it to report URL-path links to MDX pages with suggested relative `.mdx` replacements. Configure severity with the [`lint` option](/configuration#lint) in `qui-docs.config.ts`.
 
 ## Frontmatter
 
@@ -148,7 +148,9 @@ Detail goes in the paragraphs below the heading.
 
 ## Links
 
-- Use root-relative links for docs pages: `/api-reference/users/list-users`. Do not use relative paths or old-style absolute paths.
+- Use relative `.mdx` file links for MDX pages: `./api/qui-docs-config.mdx#navConfig`. See [Relative Links](/markdown#relative-links).
+- Use `#fragment` for same-page links, not `./#fragment`.
+- Use root-relative URL paths only for TSX route pages and public files. Do not use old-style absolute paths.
 - Use descriptive link text that names the target task, concept, or reference.
 - Banned link text: `click here`, `below`, `this page`, `more details`.
 - Do not link to pages that have been replaced by compatibility `.ts` redirects.
@@ -286,7 +288,7 @@ If generated reference material is large, put the usage path first and move the 
 
 - Keep compatibility `.ts` modules small. They redirect or delegate, they do not duplicate page content.
 - Remove the stale `.mdx` after the new page exists and the compatibility route is in place.
-- Do not link to pages that are now `.ts` redirects — link to the new canonical route.
+- Do not link to pages that are now `.ts` redirects. Link to the canonical `.mdx` file or the canonical TSX route's URL path.
 
 ## Reviewer rejection gates
 
@@ -316,7 +318,7 @@ Before opening the PR, confirm each item:
 - No emojis in page content.
 - Spelling and grammar are proofread; no chat shorthand.
 - Terminology matches the canonical glossary; acronyms use canonical casing.
-- Links are root-relative and use descriptive text.
+- Links use relative `.mdx` file paths for MDX pages, `#fragment` for same-page links, and root-relative URL paths for TSX route pages and public files. Link text is descriptive.
 - Filenames and routes are kebab-case, no camelCase, no typos.
 - No section `index.mdx` pages. Use a sorted `overview.mdx` page only when it explains what the section is about.
 - Frontmatter has `title`, H1 is `# {frontmatter.title}`, and a brief description follows the H1.

@@ -14,6 +14,7 @@ export function resolveLintOptions(
     brokenLinks:
       config.lint?.brokenLinks ??
       (config.validatePageLinks === false ? "off" : "warn"),
+    fileLinks: config.lint?.fileLinks ?? "off",
     pageTitle: config.lint?.pageTitle ?? "warn",
   }
 }

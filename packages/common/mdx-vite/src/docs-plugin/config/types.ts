@@ -276,6 +276,16 @@ export interface QuiDocsLintOptions {
   brokenLinks?: LintSeverity
 
   /**
+   * Reports internal links to MDX pages that use URL paths, like
+   * `/components/button` or `./#size`, instead of relative `.mdx` file paths like
+   * `../button+/_button.mdx` or `#size`. URL paths don't resolve in GitHub's
+   * markdown viewer.
+   *
+   * @default "off"
+   */
+  fileLinks?: LintSeverity
+
+  /**
    * Requires every MDX page to start with a single h1 title, like
    * `# {frontmatter.title}`, and reports any additional h1 headings.
    *

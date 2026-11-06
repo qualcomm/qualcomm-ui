@@ -51,6 +51,7 @@ describe("ConfigLoader", () => {
 
     expect(loader.loadConfig().lint).toEqual({
       brokenLinks: "warn",
+      fileLinks: "off",
       pageTitle: "warn",
     })
   })

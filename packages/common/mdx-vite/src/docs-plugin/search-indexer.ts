@@ -3,6 +3,7 @@
 
 import chalk from "chalk"
 import type {Root} from "mdast"
+import {join} from "node:path"
 
 import type {
   NavItem,
@@ -24,6 +25,8 @@ import {
   collectAnchorIds,
   type CollectedLink,
   collectLinks,
+  findNonFileLinks,
+  reportFileLinkIssues,
   reportInvalidLinks,
   validateLinks,
 } from "./link-validator.js"
@@ -40,6 +43,7 @@ import {
   type PageInfo,
   SectionExtractor,
 } from "./markdown/knowledge/section-extractor.js"
+import {isInRoutesDir, type MdxFileLinkOptions} from "./mdx-file-links.js"
 import {
   filterFileGlob,
   getCategoriesFromPathSegments,
@@ -58,7 +62,7 @@ import {
   reportPageTitleIssues,
   validatePageTitle,
 } from "./page-title-validator.js"
-import {fixPath} from "./path-utils.js"
+import {fixPath, realPath} from "./path-utils.js"
 import {remarkSerializeJsxKnowledge} from "./remark/index.js"
 
 interface PageRoute {
@@ -77,6 +81,9 @@ export class SearchIndexer {
   private _anchorIds: Record<string, Set<string>> = {}
   private _docPropIds: Record<string, Set<string>> = {}
   private _invalidLinkCount = 0
+  private _fileLinkIssueCount = 0
+  private _pageFiles: Record<string, string> = {}
+  private readonly fileLinkOptions: MdxFileLinkOptions
   private _pageTitleIssues: PageTitleIssue[] = []
   private readonly lint: Required<QuiDocsLintOptions>
   private readonly routeMetaNav: Record<string, RouteMetaNavInternal> = {}
@@ -94,6 +101,7 @@ export class SearchIndexer {
   get lintErrorCount(): number {
     return (
       (this.lint.brokenLinks === "error" ? this._invalidLinkCount : 0) +
+      (this.lint.fileLinks === "error" ? this._fileLinkIssueCount : 0) +
       (this.lint.pageTitle === "error" ? this._pageTitleIssues.length : 0)
     )
   }
@@ -121,6 +129,17 @@ export class SearchIndexer {
     return this.navBuilder.navItems
   }
 
+  get fileLinkRoutesDir(): string {
+    return this.fileLinkOptions.routesDir
+  }
+
+  /**
+   * MDX source file path for each indexed page pathname.
+   */
+  get pageFiles(): Readonly<Record<string, string>> {
+    return this._pageFiles
+  }
+
   get pageMap(): PageMap {
     return this._pageMap
   }
@@ -137,6 +156,8 @@ export class SearchIndexer {
     this._anchorIds = {}
     this._docPropIds = {}
     this._invalidLinkCount = 0
+    this._fileLinkIssueCount = 0
+    this._pageFiles = {}
     this._pageTitleIssues = []
     this._ignoredMdxFiles = new Set()
     this._pageDocProps = {}
@@ -159,6 +180,10 @@ export class SearchIndexer {
     this.lint = resolveLintOptions(config)
     this.logWarnings = logWarnings
     this.publicDir = config.publicDir
+    this.fileLinkOptions = {
+      routesDir: realPath(join(config.srcDir, config.pageDirectory)),
+      routingStrategy: config.routingStrategy,
+    }
     this.allowedHeadings = new Set<string>(
       Array.from(config?.headings || ["h2", "h3", "h4"]),
     )
@@ -288,10 +313,13 @@ export class SearchIndexer {
     }
 
     this._pageMap[defaultSection.pathname] = defaultSection
+    this._pageFiles[defaultSection.pathname] = filePath
 
     let indexedPage: IndexedPage
     let collectedLinks: CollectedLink[] = []
     const shouldValidateLinks = this.lint.brokenLinks !== "off"
+    const shouldCollectLinks =
+      shouldValidateLinks || this.lint.fileLinks !== "off"
 
     try {
       if (shouldValidateLinks || this.lint.pageTitle !== "off") {
@@ -330,8 +358,13 @@ export class SearchIndexer {
         })
         const tree = processor.runSync(processor.parse(fileContents)) as Root
 
-        if (shouldValidateLinks) {
-          collectedLinks = collectLinks(tree, filePath, defaultSection.pathname)
+        if (shouldCollectLinks) {
+          collectedLinks = collectLinks(
+            tree,
+            filePath,
+            defaultSection.pathname,
+            this.fileLinkOptions,
+          )
           this._collectedLinks.push(...collectedLinks)
         }
 
@@ -601,6 +634,22 @@ export class SearchIndexer {
       )
       this._invalidLinkCount = invalidLinks.length
       reportInvalidLinks(invalidLinks, this.lint.brokenLinks)
+    }
+
+    if (this.lint.fileLinks !== "off") {
+      const sharedSourceFiles = new Set(
+        Object.values(this._pageFiles).filter(
+          (file) => !isInRoutesDir(file, this.fileLinkOptions.routesDir),
+        ),
+      )
+      const fileLinkIssues = findNonFileLinks(
+        this._collectedLinks.filter(
+          (link) => !sharedSourceFiles.has(link.sourceFile),
+        ),
+        this._pageFiles,
+      )
+      this._fileLinkIssueCount = fileLinkIssues.length
+      reportFileLinkIssues(fileLinkIssues, this.lint.fileLinks)
     }
 
     if (this.lint.pageTitle !== "off") {

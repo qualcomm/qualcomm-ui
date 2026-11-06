@@ -15,8 +15,18 @@ import {visit} from "unist-util-visit"
 import type {PageMap} from "@qualcomm-ui/mdx-common"
 
 import type {LintSeverity} from "./config/index.js"
+import {
+  isMdxFileLink,
+  type MdxFileLinkOptions,
+  resolveMdxFileLink,
+} from "./mdx-file-links.js"
+import {realPath} from "./path-utils.js"
 
 export interface CollectedLink {
+  /**
+   * Whether the link was authored as a relative path to an `.mdx` file.
+   */
+  fileLink?: boolean
   fragment?: string
   sourceFile: string
   sourcePathname: string
@@ -26,6 +36,13 @@ export interface CollectedLink {
 
 export interface InvalidLink extends CollectedLink {
   reason: "fragment-not-found" | "page-not-found"
+}
+
+export interface FileLinkIssue extends CollectedLink {
+  /**
+   * Equivalent link that uses a relative `.mdx` file path.
+   */
+  suggestion: string
 }
 
 const externalPrefixes = ["https://", "http://", "mailto:", "tel:"]
@@ -70,22 +87,31 @@ export function resolveLink(
 }
 
 /**
- * Walks the AST and collects all internal links from a parsed MDX page.
+ * Walks the AST and collects all internal links from a parsed MDX page. When
+ * `fileLinkOptions` is provided, relative `.mdx` file links resolve against
+ * `sourceFile` instead of the page URL.
  */
 export function collectLinks(
   tree: Root,
   sourceFile: string,
   sourcePathname: string,
+  fileLinkOptions?: MdxFileLinkOptions,
 ): CollectedLink[] {
   const links: CollectedLink[] = []
+  const realSourceFile = fileLinkOptions ? realPath(sourceFile) : sourceFile
 
   visit(tree, "link", (node: Link) => {
-    const resolved = resolveLink(node.url, sourcePathname)
+    const fileLink = !!fileLinkOptions && isMdxFileLink(node.url)
+    const resolved =
+      (fileLink &&
+        resolveMdxFileLink(node.url, realSourceFile, fileLinkOptions)) ||
+      resolveLink(node.url, sourcePathname)
     if (!resolved) {
       return
     }
 
     links.push({
+      fileLink: fileLink || undefined,
       fragment: resolved.fragment,
       sourceFile,
       sourcePathname,
@@ -191,6 +217,109 @@ export function validateLinks(
   }
 
   return invalid
+}
+
+/**
+ * Returns the relative `.mdx` file path equivalent of a URL-path link to an MDX
+ * page, like `../button+/_button.mdx#size` for `/components/button#size`, or
+ * `#size` for `./#size` on the same page. Returns null for file links, bare
+ * fragments, and links to TSX pages, public files, or missing pages, which have
+ * no `.mdx` file equivalent.
+ *
+ * @param pageFiles MDX source file path for each page pathname.
+ */
+export function getFileLinkSuggestion(
+  link: Pick<
+    CollectedLink,
+    | "fileLink"
+    | "fragment"
+    | "sourceFile"
+    | "sourcePathname"
+    | "targetPathname"
+    | "url"
+  >,
+  pageFiles: Record<string, string>,
+): string | null {
+  if (link.fileLink || link.url.startsWith("#")) {
+    return null
+  }
+
+  const fragment = link.fragment ? `#${link.fragment}` : ""
+
+  if (link.targetPathname === link.sourcePathname && fragment) {
+    return fragment
+  }
+
+  const targetFile = pageFiles[link.targetPathname]
+  if (!targetFile) {
+    return null
+  }
+
+  const relativePath = encodeURI(
+    posix.relative(posix.dirname(link.sourceFile), targetFile),
+  )
+  const filePath = relativePath.startsWith("../")
+    ? relativePath
+    : `./${relativePath}`
+  return `${filePath}${fragment}`
+}
+
+/**
+ * Finds internal links to MDX pages that use URL paths, like `/components/button`
+ * or `./#size`, instead of relative file paths. URL paths don't resolve in
+ * GitHub's markdown viewer.
+ *
+ * @param pageFiles MDX source file path for each page pathname.
+ */
+export function findNonFileLinks(
+  links: CollectedLink[],
+  pageFiles: Record<string, string>,
+): FileLinkIssue[] {
+  const issues: FileLinkIssue[] = []
+
+  for (const link of links) {
+    const suggestion = getFileLinkSuggestion(link, pageFiles)
+    if (suggestion) {
+      issues.push({...link, suggestion})
+    }
+  }
+
+  return issues
+}
+
+/**
+ * Logs links reported by {@link findNonFileLinks} grouped by source page.
+ */
+export function reportFileLinkIssues(
+  issues: FileLinkIssue[],
+  severity: LintSeverity = "warn",
+): void {
+  if (issues.length === 0) {
+    return
+  }
+
+  const grouped = new Map<string, FileLinkIssue[]>()
+  for (const issue of issues) {
+    const existing = grouped.get(issue.sourcePathname) ?? []
+    existing.push(issue)
+    grouped.set(issue.sourcePathname, existing)
+  }
+
+  const color = severity === "error" ? chalk.redBright : chalk.yellowBright
+  console.debug(
+    `\n${color.bold(`Found ${issues.length} link${issues.length === 1 ? "" : "s"} that should use a relative .mdx file path:`)}`,
+  )
+
+  for (const [sourcePathname, pageIssues] of grouped) {
+    console.debug(`\n  ${chalk.blueBright.bold(sourcePathname)}`)
+    for (const issue of pageIssues) {
+      console.debug(
+        `    ${chalk.red("x")} ${issue.url} — use ${chalk.greenBright(issue.suggestion)}`,
+      )
+    }
+  }
+
+  console.debug("")
 }
 
 /**
