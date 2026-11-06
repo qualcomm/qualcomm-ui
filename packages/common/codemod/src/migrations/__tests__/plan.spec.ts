@@ -42,6 +42,23 @@ describe("planMigration", () => {
     expect(planMigration([v3ToV4], new Map([["pkg", 2]])).steps).toEqual([])
   })
 
+  test("includes every codemod when forced", () => {
+    const plan = planMigration([v2ToV3, v3ToV4], new Map([["pkg", 1]]), {
+      force: true,
+    })
+    expect(plan.steps.map((step) => step.codemod.name)).toEqual(["a", "b"])
+    expect(plan.steps.every((step) => step.packages.size === 0)).toBe(true)
+    expect(plan.majors.get("pkg")).toBe(1)
+  })
+
+  test("still advances detected packages when forced", () => {
+    const plan = planMigration([v2ToV3, v3ToV4], new Map([["pkg", 3]]), {
+      force: true,
+    })
+    expect(plan.steps[0].packages.get("pkg")?.current).toBe(3)
+    expect(plan.majors.get("pkg")).toBe(4)
+  })
+
   test("only includes the packages at or past the from version", () => {
     const multi = codemod("multi", {
       other: {from: 3, to: 4},

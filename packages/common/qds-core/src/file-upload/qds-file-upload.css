@@ -1,7 +1,7 @@
 .qui-file-upload__root {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-70);
+  gap: var(--spacing-200);
   width: 100%;
 }
 
@@ -25,12 +25,12 @@
   background: var(--color-surface-secondary);
   border: var(--border-width-sm) solid
     var(--color-interactive-border-neutral-idle);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-70);
+  gap: var(--spacing-200);
   justify-content: center;
   outline: none;
   position: relative;
@@ -49,17 +49,17 @@
 
   &[data-size="sm"] {
     height: 144px;
-    padding: var(--spacing-140);
+    padding: var(--spacing-800);
   }
 
   &[data-size="md"] {
     height: 172px;
-    padding: var(--spacing-160) var(--spacing-140);
+    padding: var(--spacing-1000) var(--spacing-800);
   }
 
   &[data-size="lg"] {
     height: 188px;
-    padding: var(--spacing-180) var(--spacing-140);
+    padding: var(--spacing-1200) var(--spacing-800);
   }
 
   &:hover {
@@ -177,7 +177,7 @@
 
 .qui-file-upload__item-group {
   border: var(--border-width-sm) solid var(--color-border-neutral-02);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -211,10 +211,10 @@
   background: var(--color-interactive-background-ghost-idle);
   box-sizing: border-box;
   display: grid;
-  grid-column-gap: var(--spacing-70);
+  grid-column-gap: var(--spacing-200);
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
-  padding: var(--spacing-50) var(--spacing-70);
+  padding: var(--spacing-150) var(--spacing-200);
   transition: background-color var(--animation-duration-faster) ease-out;
   width: 100%;
 
@@ -226,15 +226,15 @@
   }
 
   &[data-size="sm"] {
-    padding: var(--spacing-70) var(--spacing-90);
+    padding: var(--spacing-200) var(--spacing-300);
   }
 
   &[data-size="md"] {
-    padding: var(--spacing-90) var(--spacing-100);
+    padding: var(--spacing-300) var(--spacing-400);
   }
 
   &[data-size="lg"] {
-    padding: var(--spacing-100);
+    padding: var(--spacing-400);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -245,7 +245,7 @@
 .qui-file-upload__item-preview {
   align-items: center;
   border: var(--border-width-sm) solid var(--color-border-neutral-02);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-75);
   display: flex;
   flex-shrink: 0;
   grid-column: 1;
@@ -285,7 +285,7 @@
     align-items: center;
     color: var(--color-text-support-danger);
     display: flex;
-    gap: var(--spacing-40);
+    gap: var(--spacing-100);
   }
 }
 

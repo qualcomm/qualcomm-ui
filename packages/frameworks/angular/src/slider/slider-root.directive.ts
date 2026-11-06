@@ -10,6 +10,7 @@ import {
 } from "@qualcomm-ui/angular-core/slider"
 import {
   createQdsSliderApi,
+  type QdsSliderEmphasis,
   type QdsSliderSize,
   type QdsSliderVariant,
 } from "@qualcomm-ui/qds-core/slider"
@@ -26,12 +27,20 @@ import {
 })
 export class SliderRootDirective extends CoreSliderRootDirective {
   /**
+   * Governs the color of the slider.
+   *
+   * @default 'brand'
+   * @since next-release
+   */
+  readonly emphasis = input<QdsSliderEmphasis>()
+
+  /**
    * The size of the slider.
    */
   readonly size = input<QdsSliderSize>()
 
   /**
-   * The variant of the slider.
+   * @deprecated use {@link emphasis} instead
    */
   readonly variant = input<QdsSliderVariant>()
 
@@ -43,7 +52,11 @@ export class SliderRootDirective extends CoreSliderRootDirective {
     this.qdsSliderService.init(
       computed(() =>
         createQdsSliderApi(
-          {size: this.size(), variant: this.variant()},
+          {
+            emphasis: this.emphasis(),
+            size: this.size(),
+            variant: this.variant(),
+          },
           normalizeProps,
         ),
       ),

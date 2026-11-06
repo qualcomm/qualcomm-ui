@@ -6,7 +6,7 @@ export function ProgressEmphasisDemo(): ReactElement {
   return (
     <div className="flex w-64 flex-col gap-6">
       {/* preview */}
-      <Progress emphasis="primary" />
+      <Progress emphasis="brand" />
       <Progress emphasis="neutral" />
       {/* preview */}
     </div>

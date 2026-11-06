@@ -70,7 +70,7 @@
   font: var(--font-static-body-xs-bold);
   position: relative;
   --dismiss-spacing-offset: 0px;
-  --dismiss-mask-width: calc(var(--sizing-80) + var(--spacing-70));
+  --dismiss-mask-width: calc(var(--sizing-500) + var(--spacing-200));
   --tab-text-mask-alpha: 1;
 
   &[data-variant="contained"] {
@@ -81,7 +81,7 @@
 
   &[data-variant="line"] {
     &:has(.qui-tab__dismiss-button) {
-      --dismiss-spacing-offset: calc(var(--sizing-80) + var(--spacing-50));
+      --dismiss-spacing-offset: calc(var(--sizing-500) + var(--spacing-150));
     }
   }
 
@@ -105,25 +105,25 @@
   }
 
   &[data-size="sm"] {
-    --tab-initial-spacing-x: var(--spacing-50);
-    --tab-spacing-y: var(--spacing-50);
+    --tab-initial-spacing-x: var(--spacing-150);
+    --tab-spacing-y: var(--spacing-150);
   }
 
   &[data-size="md"] {
-    --tab-initial-spacing-x: var(--spacing-70);
-    --tab-spacing-y: var(--spacing-70);
+    --tab-initial-spacing-x: var(--spacing-200);
+    --tab-spacing-y: var(--spacing-200);
   }
 
   &[data-size="lg"] {
     font: var(--font-static-body-sm-bold);
-    --tab-initial-spacing-x: var(--spacing-80);
-    --tab-spacing-y: var(--spacing-80);
+    --tab-initial-spacing-x: var(--spacing-250);
+    --tab-spacing-y: var(--spacing-250);
   }
 
   &[data-size="xl"] {
     font: var(--font-static-body-sm-bold);
-    --tab-initial-spacing-x: var(--spacing-90);
-    --tab-spacing-y: var(--spacing-90);
+    --tab-initial-spacing-x: var(--spacing-300);
+    --tab-spacing-y: var(--spacing-300);
   }
 }
 
@@ -132,7 +132,7 @@
     to right,
     black 0,
     black 12px,
-    rgb(0 0 0 / var(--tab-text-mask-alpha)) calc(100% - var(--sizing-60)),
+    rgb(0 0 0 / var(--tab-text-mask-alpha)) calc(100% - var(--sizing-300)),
     rgb(0 0 0 / var(--tab-text-mask-alpha)) 100%
   );
   transition: --tab-text-mask-alpha 0.2s ease-in-out;
@@ -156,7 +156,7 @@
   color: var(--color-interactive-text-neutral-idle);
   display: inline-flex;
   font: var(--font-static-body-xs-bold);
-  gap: var(--spacing-50);
+  gap: var(--spacing-150);
   margin: 0;
   opacity: 1;
   outline: none;
@@ -247,37 +247,37 @@
     }
 
     &[data-size="sm"] {
-      --tab-initial-spacing-x: var(--spacing-90);
-      --tab-spacing-y: var(--spacing-60);
+      --tab-initial-spacing-x: var(--spacing-300);
+      --tab-spacing-y: var(--spacing-175);
     }
 
     &[data-size="md"] {
-      --tab-initial-spacing-x: var(--spacing-90);
-      --tab-spacing-y: var(--spacing-80);
+      --tab-initial-spacing-x: var(--spacing-300);
+      --tab-spacing-y: var(--spacing-250);
     }
   }
 
   &[data-orientation="vertical"] {
     &[data-size="sm"] {
-      --tab-initial-spacing-x: var(--spacing-80);
-      --tab-spacing-y: var(--spacing-50);
+      --tab-initial-spacing-x: var(--spacing-250);
+      --tab-spacing-y: var(--spacing-150);
     }
 
     &[data-size="md"] {
-      --tab-initial-spacing-x: var(--spacing-90);
-      --tab-spacing-y: var(--spacing-70);
+      --tab-initial-spacing-x: var(--spacing-300);
+      --tab-spacing-y: var(--spacing-200);
     }
 
     &[data-size="lg"] {
       font: var(--font-static-body-sm-bold);
-      --tab-initial-spacing-x: var(--spacing-100);
-      --tab-spacing-y: var(--spacing-80);
+      --tab-initial-spacing-x: var(--spacing-400);
+      --tab-spacing-y: var(--spacing-250);
     }
 
     &[data-size="xl"] {
       font: var(--font-static-body-sm-bold);
-      --tab-initial-spacing-x: var(--spacing-100);
-      --tab-spacing-y: var(--spacing-90);
+      --tab-initial-spacing-x: var(--spacing-400);
+      --tab-spacing-y: var(--spacing-300);
     }
   }
 }
@@ -313,36 +313,36 @@
 .qui-tabs__panel {
   color: var(--color-text-neutral-primary);
   &[data-orientation="horizontal"] {
-    padding-top: var(--spacing-90);
+    padding-top: var(--spacing-300);
   }
   &[data-orientation="vertical"] {
-    padding-left: var(--spacing-90);
+    padding-left: var(--spacing-300);
   }
 }
 
 .qui-tab__icon {
-  border-radius: var(--border-radius-xs);
+  border-radius: var(--border-radius-50);
 
   &[data-size="sm"] {
     &[data-icon-variant="ghost"] {
-      --icon-size: var(--sizing-60);
+      --icon-size: var(--sizing-300);
     }
 
     &[data-icon-variant="filled"] {
-      --icon-size: var(--sizing-60);
-      padding: var(--spacing-20);
+      --icon-size: var(--sizing-300);
+      padding: var(--spacing-50);
     }
   }
   &[data-size="md"],
   &[data-size="lg"],
   &[data-size="xl"] {
     &[data-icon-variant="ghost"] {
-      --icon-size: var(--sizing-70);
+      --icon-size: var(--sizing-400);
     }
 
     &[data-icon-variant="filled"] {
-      --icon-size: var(--sizing-60);
-      padding: var(--spacing-30);
+      --icon-size: var(--sizing-300);
+      padding: var(--spacing-75);
     }
   }
 

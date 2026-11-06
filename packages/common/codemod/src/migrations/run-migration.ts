@@ -13,7 +13,7 @@ import {
   readPackageJson,
 } from "./detect-versions.js"
 import {type MigrationPlan, planMigration, type StepPackage} from "./plan.js"
-import type {CodemodFileResult, MigrationGroup} from "./types.js"
+import type {Codemod, CodemodFileResult, MigrationGroup} from "./types.js"
 
 export interface RunMigrationOptions {
   /** The project root containing package.json. */
@@ -23,6 +23,13 @@ export interface RunMigrationOptions {
    * @default false
    */
   dryRun?: boolean
+  /**
+   * Run every codemod in the group, even if its packages aren't installed or
+   * are older than the codemod's `from` version. Only detected packages at or
+   * past `from` are updated in package.json.
+   * @default false
+   */
+  force?: boolean
   /**
    * @default "info"
    */
@@ -50,6 +57,22 @@ function formatAppliesTo(packages: Map<string, StepPackage>): string {
       ([name, {bump, current}]) =>
         `${chalk.cyan(name)} v${bump.from} to v${bump.to} ${chalk.dim(`(detected v${current})`)}`,
     )
+    .join(", ")
+}
+
+/**
+ * Describes a codemod included by `force`, whose packages weren't detected at
+ * or past their `from` version.
+ */
+function formatForced(
+  codemod: Codemod,
+  detected: Map<string, DetectedPackage>,
+): string {
+  return Object.entries(codemod.versions)
+    .map(([name, bump]) => {
+      const pkg = detected.get(name)
+      return `${chalk.cyan(name)} v${bump!.from} to v${bump!.to} ${chalk.dim(`(forced, ${pkg ? `detected v${pkg.major}` : "not installed"})`)}`
+    })
     .join(", ")
 }
 
@@ -178,6 +201,7 @@ export async function runMigration(
 ): Promise<void> {
   const cwd = resolve(options.dir)
   const dryRun = options.dryRun ?? false
+  const force = options.force ?? false
   const verbose = options.logMode === "verbose"
   const packageJsonPath = join(cwd, "package.json")
 
@@ -189,6 +213,13 @@ export async function runMigration(
 
   if (dryRun) {
     console.log(chalk.yellow("Dry run: no files will be modified.\n"))
+  }
+  if (force) {
+    console.log(
+      chalk.yellow(
+        "Forced: every codemod runs, whatever package versions are detected.\n",
+      ),
+    )
   }
 
   const packageJson = readPackageJson(packageJsonPath)
@@ -206,6 +237,7 @@ export async function runMigration(
   const plan = planMigration(
     group.codemods,
     new Map(Array.from(detected, ([name, {major}]) => [name, major])),
+    {force},
   )
 
   if (!plan.steps.length) {
@@ -221,7 +253,9 @@ export async function runMigration(
     console.log(
       `\n${chalk.dim(`[${index + 1}/${plan.steps.length}]`)} ${chalk.bold(codemod.title)}`,
     )
-    console.log(`  ${chalk.dim("for")} ${formatAppliesTo(packages)}`)
+    console.log(
+      `  ${chalk.dim("for")} ${packages.size ? formatAppliesTo(packages) : formatForced(codemod, detected)}`,
+    )
     logFileResults(
       await codemod.run({cwd, dryRun}),
       codemod.noMatchMessage,
@@ -235,7 +269,9 @@ export async function runMigration(
   const filesUpdated = tally.updated
   updateDependencies(
     packageJsonPath,
-    packageJson,
+    // Codemods may edit package.json, so don't write back the copy read before
+    // they ran.
+    readPackageJson(packageJsonPath),
     detected,
     plan,
     dryRun,

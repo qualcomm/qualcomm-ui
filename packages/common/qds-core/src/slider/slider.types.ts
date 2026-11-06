@@ -5,16 +5,36 @@ import type {sliderClasses} from "@qualcomm-ui/qds-core/slider"
 
 export type QdsSliderSize = "sm" | "md"
 
-export type QdsSliderVariant = "primary" | "neutral"
+/** @deprecated use "brand" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsSliderEmphasis__deprecated = "primary"
+
+export type QdsSliderEmphasis =
+  | "brand"
+  | "neutral"
+  | QdsSliderEmphasis__deprecated
+
+/**
+ * @deprecated use {@link QdsSliderEmphasis} instead
+ */
+export type QdsSliderVariant = QdsSliderEmphasis
 
 export interface QdsSliderApiProps {
+  /**
+   * Governs the color of the slider.
+   *
+   * @default 'brand'
+   * @since next-release
+   */
+  emphasis?: QdsSliderEmphasis
+
   /**
    * The size of the slider.
    */
   size?: QdsSliderSize
 
   /**
-   * The variant of the slider.
+   * @deprecated use {@link emphasis} instead
    */
   variant?: QdsSliderVariant
 }
@@ -53,8 +73,8 @@ export interface QdsSliderRangeBindings {
 }
 export interface QdsSliderRootBindings {
   className: SliderClasses["root"]
+  "data-emphasis": QdsSliderEmphasis
   "data-size": QdsSliderSize
-  "data-variant": QdsSliderVariant
 }
 export interface QdsSliderThumbBindings {
   className: SliderClasses["thumb"]

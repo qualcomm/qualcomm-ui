@@ -21,7 +21,7 @@ export function createQdsProgressApi(
   props: QdsProgressApiProps,
   normalize: PropNormalizer,
 ): QdsProgressApi {
-  const emphasis = props.emphasis || "primary"
+  const emphasis = props.emphasis || "brand"
   const labelOrientation = props.labelOrientation || "top"
   const shimmer = props.shimmer ?? true
   const size = props.size || "md"

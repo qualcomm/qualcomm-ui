@@ -148,20 +148,20 @@
     font-family: var(--component-button-type-sm-font-family);
     font-size: var(--component-button-type-sm-font-size);
     font-weight: var(--component-button-type-sm-font-weight);
-    gap: var(--spacing-40);
-    height: var(--sizing-120);
+    gap: var(--spacing-100);
+    height: var(--sizing-800);
     line-height: var(--component-button-type-sm-line-height);
-    padding: 0 var(--spacing-90);
+    padding: 0 var(--spacing-300);
 
     &[data-density="compact"] {
-      height: var(--sizing-80);
-      padding: 0 var(--spacing-70);
+      height: var(--sizing-500);
+      padding: 0 var(--spacing-200);
     }
 
     &[data-kind="icon"] {
-      width: var(--sizing-120);
+      width: var(--sizing-800);
       &[data-density="compact"] {
-        width: var(--sizing-80);
+        width: var(--sizing-500);
       }
     }
   }
@@ -170,20 +170,20 @@
     font-family: var(--component-button-type-md-font-family);
     font-size: var(--component-button-type-md-font-size);
     font-weight: var(--component-button-type-md-font-weight);
-    gap: var(--spacing-70);
-    height: var(--sizing-140);
+    gap: var(--spacing-200);
+    height: var(--sizing-1000);
     line-height: var(--component-button-type-md-line-height);
-    padding: 0 var(--spacing-100);
+    padding: 0 var(--spacing-400);
 
     &[data-density="compact"] {
-      height: var(--sizing-90);
-      padding: 0 var(--spacing-80);
+      height: var(--sizing-600);
+      padding: 0 var(--spacing-250);
     }
 
     &[data-kind="icon"] {
-      width: var(--sizing-140);
+      width: var(--sizing-1000);
       &[data-density="compact"] {
-        width: var(--sizing-90);
+        width: var(--sizing-600);
       }
     }
   }
@@ -192,29 +192,29 @@
     font-family: var(--component-button-type-lg-font-family);
     font-size: var(--component-button-type-lg-font-size);
     font-weight: var(--component-button-type-lg-font-weight);
-    gap: var(--spacing-90);
-    height: var(--sizing-160);
+    gap: var(--spacing-300);
+    height: var(--sizing-1200);
     line-height: var(--component-button-type-lg-line-height);
-    padding: 0 var(--spacing-110);
+    padding: 0 var(--spacing-500);
 
     &[data-density="compact"] {
-      height: var(--sizing-100);
-      padding: 0 var(--spacing-90);
+      height: var(--sizing-700);
+      padding: 0 var(--spacing-300);
     }
 
     &[data-kind="icon"] {
-      width: var(--sizing-160);
+      width: var(--sizing-1200);
       &[data-density="compact"] {
-        width: var(--sizing-100);
+        width: var(--sizing-700);
       }
     }
   }
 
   &[data-kind="icon"] {
-    --button-radius: var(--border-radius-md);
+    --button-radius: var(--border-radius-100);
 
     &[data-shape="rounded"] {
-      --button-radius: var(--border-radius-rounded);
+      --button-radius: var(--border-radius-max);
     }
   }
 
@@ -222,7 +222,7 @@
     font-family: var(--component-button-type-sm-font-family);
     font-size: var(--component-button-type-sm-font-size);
     font-weight: var(--component-button-type-sm-font-weight);
-    gap: var(--spacing-40);
+    gap: var(--spacing-100);
     line-height: var(--component-button-type-sm-line-height);
   }
 
@@ -545,7 +545,7 @@
   box-sizing: border-box;
   display: inline-flex;
 
-  gap: var(--button-group-gap, var(--spacing-90));
+  gap: var(--button-group-gap, var(--spacing-300));
 
   &[data-layout="fill"],
   &[data-layout="start"],
@@ -565,10 +565,10 @@
     }
   }
   &[data-size="sm"] {
-    --button-group-gap: var(--spacing-80);
+    --button-group-gap: var(--spacing-250);
   }
   &[data-size="lg"] {
-    --button-group-gap: var(--spacing-100);
+    --button-group-gap: var(--spacing-400);
   }
 }
 

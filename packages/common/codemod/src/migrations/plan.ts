@@ -11,8 +11,20 @@ export interface StepPackage {
 
 export interface MigrationStep {
   codemod: Codemod
-  /** The packages that this step applies to, keyed by package name. */
+  /**
+   * The packages that this step applies to, keyed by package name. Empty for
+   * codemods included by `force`.
+   */
   packages: Map<string, StepPackage>
+}
+
+export interface PlanMigrationOptions {
+  /**
+   * Include every codemod, even when none of its packages are detected at or
+   * past the bump's `from` version.
+   * @default false
+   */
+  force?: boolean
 }
 
 export interface MigrationPlan {
@@ -30,10 +42,14 @@ export interface MigrationPlan {
  * Codemods are evaluated in order, and each applied codemod advances the
  * versions of the packages it bumps, so consecutive codemods (e.g. v2 → v3 and
  * v3 → v4) chain together in a single run.
+ *
+ * With `force`, every codemod runs. Only the packages detected at or past a
+ * bump's `from` version are advanced.
  */
 export function planMigration(
   codemods: Codemod[],
   detectedMajors: ReadonlyMap<string, number>,
+  {force = false}: PlanMigrationOptions = {},
 ): MigrationPlan {
   const majors = new Map(detectedMajors)
   const steps: MigrationStep[] = []
@@ -46,7 +62,7 @@ export function planMigration(
         packages.set(name, {bump, current})
       }
     }
-    if (!packages.size) {
+    if (!packages.size && !force) {
       continue
     }
     for (const [name, {bump, current}] of packages) {

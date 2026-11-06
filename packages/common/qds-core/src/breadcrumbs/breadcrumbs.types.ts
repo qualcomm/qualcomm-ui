@@ -7,12 +7,19 @@ import type {breadcrumbsClasses} from "./breadcrumbs.classes.js"
 
 export type QdsBreadcrumbsSize = "sm" | "md" | "lg"
 
-export type QdsBreadcrumbsEmphasis = "primary" | "neutral"
+/** @deprecated use "brand" */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export type QdsBreadcrumbsEmphasis__deprecated = "primary"
+
+export type QdsBreadcrumbsEmphasis =
+  | "brand"
+  | "neutral"
+  | QdsBreadcrumbsEmphasis__deprecated
 
 export interface QdsBreadcrumbsApiProps {
   /**
    * Governs the color of the breadcrumb item text and icon.
-   * @default 'primary'
+   * @default 'brand'
    */
   emphasis?: QdsBreadcrumbsEmphasis
 

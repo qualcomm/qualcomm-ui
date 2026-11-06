@@ -15,15 +15,15 @@
   cursor: pointer;
   display: flex;
   font: var(--font-static-body-sm-default);
-  gap: var(--spacing-50);
+  gap: var(--spacing-150);
   height: 40px;
   min-height: 40px;
   outline: none;
   padding-left: calc(
     var(--depth, 1) * var(--indent-spacing) - var(--branch-trigger-width) +
-      var(--spacing-100)
+      var(--spacing-400)
   );
-  padding-right: var(--spacing-100);
+  padding-right: var(--spacing-400);
   position: relative;
   text-decoration: inherit;
 
@@ -41,7 +41,7 @@
   }
 
   &:has([data-tree-part="branch-trigger"]) {
-    --branch-trigger-width: calc(16px + var(--spacing-50));
+    --branch-trigger-width: calc(16px + var(--spacing-150));
   }
 
   &[data-size="sm"] {
@@ -96,7 +96,7 @@
 
 .qui-tree__label {
   font: var(--font-static-body-md-default);
-  margin-bottom: var(--spacing-40);
+  margin-bottom: var(--spacing-100);
 
   &[data-size="sm"] {
     font: var(--font-static-body-sm-default);
@@ -105,10 +105,10 @@
 
 .qui-icon__root.qui-tree__node-icon {
   &[data-size="sm"] {
-    --icon-size: var(--sizing-70);
+    --icon-size: var(--sizing-400);
   }
   &[data-size="md"] {
-    --icon-size: var(--sizing-80);
+    --icon-size: var(--sizing-500);
   }
 }
 

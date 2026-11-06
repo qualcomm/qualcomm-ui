@@ -114,5 +114,11 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "qui": {
+    "note": "Managed by @qualcomm-ui/codemod to track applied migrations. Do not edit or remove.",
+    "completedMigrations": [
+      "qds-v2-tokens"
+    ]
   }
 }

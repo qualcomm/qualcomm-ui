@@ -13,7 +13,7 @@ import {IconDirective} from "@qualcomm-ui/angular/icon"
   template: `
     <div class="flex flex-col gap-4">
       <!-- preview -->
-      <nav aria-label="Breadcrumbs" emphasis="primary" q-breadcrumbs-root>
+      <nav aria-label="Breadcrumbs" emphasis="brand" q-breadcrumbs-root>
         <ol q-breadcrumbs-list>
           <li q-breadcrumb-item>
             <a q-breadcrumb-item-trigger routerLink="/">
