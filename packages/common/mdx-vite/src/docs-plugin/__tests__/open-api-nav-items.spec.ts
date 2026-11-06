@@ -46,13 +46,13 @@ describe("getOpenApiNavItems", () => {
     expect(leaves.map((item) => item.id)).toEqual(["a/getPet", "b/getPet"])
   })
 
-  test("falls back to method and path without a summary", () => {
+  test("falls back to the path without a summary", () => {
     const [, item] = getOpenApiNavItems(intro, [operation("pets", [])])
-    expect(item.title).toBe("GET /pets")
+    expect(item.title).toBe("/pets")
   })
 
-  test("adds the HTTP method as a badge", () => {
+  test("carries the HTTP method", () => {
     const [, item] = getOpenApiNavItems(intro, [operation("pets", [])])
-    expect(item.badges).toEqual([{id: "get", label: "GET"}])
+    expect(item.method).toBe("get")
   })
 })

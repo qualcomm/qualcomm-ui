@@ -1,14 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {type ReactNode, useMemo, useState} from "react"
+import {type ReactNode, useMemo} from "react"
 
-import {selectCollection} from "@qualcomm-ui/core/select"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
-import {Select} from "@qualcomm-ui/react/select"
+import {CopyToClipboardIconButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
 
 import {type CodeSampleInput, getCodeSamples} from "./code-samples.js"
 import {isJsonMediaType} from "./get-example.js"
+import {OptionPicker, usePickedOption} from "./option-picker.js"
 import {getResponseExamples} from "./response-examples.js"
 
 interface ExampleOption {
@@ -23,44 +23,43 @@ interface ExampleOption {
 function ExampleBlock({
   options,
   pickerLabel,
+  remember,
   title,
 }: {
   options: ExampleOption[]
   pickerLabel: string
+  remember?: boolean
   title: string
 }): ReactNode {
-  const collection = useMemo(
-    () =>
-      selectCollection({
-        items: options.map(({label}) => ({label, value: label})),
-      }),
-    [options],
-  )
-  const [value, setValue] = useState([options[0]?.label ?? ""])
-  const option = options.find(({label}) => label === value[0]) ?? options[0]
+  const labels = useMemo(() => options.map(({label}) => label), [options])
+  const picked = usePickedOption(labels, {remember})
+  const option = options[picked.index]
   if (!option) {
     return null
   }
 
   return (
     <div className="qui-docs-openapi__example">
-      <div className="qui-docs-openapi__samples-header">
-        <span>{title}</span>
-        <Select
-          clearable={false}
-          collection={collection}
-          controlProps={{"aria-label": pickerLabel}}
-          onValueChange={(next) => next.length && setValue(next)}
-          size="sm"
-          value={[option.label]}
+      <div className="qui-docs-openapi__example-header">
+        <span className="qui-docs-openapi__example-title">{title}</span>
+        <OptionPicker
+          aria-label={pickerLabel}
+          labels={labels}
+          picked={picked}
         />
+        {option.code === null ? null : (
+          <CopyToClipboardIconButton
+            emphasis="neutral"
+            valueOrFn={option.code}
+          />
+        )}
       </div>
       {option.code === null ? (
-        <p className="mdx">No content</p>
+        <p className="qui-docs-openapi__example-empty">No content</p>
       ) : (
         <CodeHighlight
-          className="mdx"
           code={option.code}
+          disableCopy
           language={option.language}
           preProps={{className: "qui-docs__mdx-scrollbar"}}
         />
@@ -97,6 +96,7 @@ export function CodeSamplesPanel({
       <ExampleBlock
         options={requests}
         pickerLabel="Language"
+        remember
         title="Example request"
       />
       <ExampleBlock

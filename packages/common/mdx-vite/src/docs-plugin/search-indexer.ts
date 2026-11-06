@@ -75,7 +75,7 @@ import {
   getOperationDetails,
   type OpenApiOperationDetails,
 } from "./open-api/get-operation-details.js"
-import {getOperations} from "./open-api/get-operations.js"
+import {getOperations, getOperationTitle} from "./open-api/get-operations.js"
 import {loadOpenApiSpec} from "./open-api/load-spec.js"
 import {
   type PageTitleIssue,
@@ -382,9 +382,7 @@ export class SearchIndexer {
     for (const operation of operations) {
       const pathname = `${intro.pathname}/${operation.slug}`
       this._openApiOperations[pathname] = getOperationDetails(spec, operation)
-      const title =
-        operation.summary ??
-        `${operation.method.toUpperCase()} ${operation.path}`
+      const title = getOperationTitle(operation)
       this._pageMap[pathname] = {
         categories: [...intro.categories, title],
         data: {},

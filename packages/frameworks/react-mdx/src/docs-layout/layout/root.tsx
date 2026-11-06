@@ -70,9 +70,10 @@ export function Root({
   const {exports, navItems, openApiNav, pageDocProps, pageMap} =
     useDocsManifestContext()
 
-  const openApiPathname = Object.keys(openApiNav ?? {}).find(
-    (key) => pathname === key || pathname.startsWith(`${key}/`),
-  )
+  // The longest match wins when one API's intro page is nested under another's.
+  const openApiPathname = Object.keys(openApiNav ?? {})
+    .filter((key) => pathname === key || pathname.startsWith(`${key}/`))
+    .sort((a, b) => b.length - a.length)[0]
 
   const [lastDocsPathname, setLastDocsPathname] = useState<string | null>(null)
   if (!openApiPathname && lastDocsPathname !== pathname) {
@@ -147,6 +148,7 @@ export function Root({
     const pageProps = pageDocProps?.[pathname] || {}
 
     return {
+      fullWidth: !!openApiPathname,
       hidePageLinks,
       hideSideNav,
       mainContentElement,

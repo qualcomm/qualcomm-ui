@@ -36,7 +36,7 @@ export function NavSwitcher({navSwitcher}: NavSwitcherProps): ReactElement {
       </Menu.Trigger>
       <Portal>
         <Menu.Positioner>
-          <Menu.Content>
+          <Menu.Content className="qui-docs-sidebar__nav-switcher-content">
             {entries.map((entry) => (
               <Menu.Item
                 key={entry.pathname}
@@ -44,7 +44,8 @@ export function NavSwitcher({navSwitcher}: NavSwitcherProps): ReactElement {
                 render={<RenderLink href={entry.pathname} />}
                 value={entry.pathname}
               >
-                {entry.label}
+                <Menu.ItemLabel>{entry.label}</Menu.ItemLabel>
+                {entry === active ? <Menu.ItemIndicator /> : null}
               </Menu.Item>
             ))}
           </Menu.Content>

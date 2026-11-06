@@ -32,6 +32,7 @@ export interface NavSwitcherState {
  * @since 3.1.0
  */
 export interface DocsPageContextValue {
+  fullWidth: boolean
   hidePageLinks: boolean
   hideSideNav: boolean
   mainContentElement: HTMLElement | null

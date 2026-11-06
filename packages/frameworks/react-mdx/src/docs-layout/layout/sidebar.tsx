@@ -22,7 +22,6 @@ import {
   useDocsRuntimeContext,
   useDocsPageContext,
 } from "@qualcomm-ui/react-mdx/context"
-import {Badge} from "@qualcomm-ui/react/badge"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
 import {Tooltip} from "@qualcomm-ui/react/tooltip"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
@@ -31,7 +30,7 @@ import {isDefined} from "@qualcomm-ui/utils/guard"
 import {matchSorter} from "@qualcomm-ui/utils/match-sorter"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {httpMethodBadges} from "../http-method-badges.js"
+import {HttpMethod} from "../http-method.js"
 
 import {NavSwitcher} from "./nav-switcher.js"
 
@@ -351,13 +350,8 @@ function SidebarTree({
                 >
                   <SideNav.NodeText>{node.title}</SideNav.NodeText>
                   {node.method ? (
-                    <SideNav.NodeAccessory
-                      className="qui-docs-sidebar__item-badges"
-                      data-align="end"
-                    >
-                      <Badge size="sm" {...httpMethodBadges[node.method]}>
-                        {node.method.toUpperCase()}
-                      </Badge>
+                    <SideNav.NodeAccessory className="qui-docs-sidebar__item-method">
+                      <HttpMethod method={node.method} />
                     </SideNav.NodeAccessory>
                   ) : SideNavBadgesComponent && node.badges?.length ? (
                     <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">

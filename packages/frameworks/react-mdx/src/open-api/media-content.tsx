@@ -1,10 +1,15 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {Fragment, type ReactNode} from "react"
+import {type ReactNode, useMemo} from "react"
 
 import {getVariants} from "./get-variants.js"
 import {mergeAllOf} from "./merge-all-of.js"
+import {
+  OptionPicker,
+  type PickedOption,
+  usePickedOption,
+} from "./option-picker.js"
 import {
   SchemaProperties,
   SchemaProperty,
@@ -69,50 +74,79 @@ export function groupMediaTypes(
   return [...groups.values()]
 }
 
+export interface MediaTypesState {
+  group: MediaTypeGroup | undefined
+  groups: MediaTypeGroup[]
+  labels: string[]
+  picked: PickedOption
+}
+
 /**
- * The schemas of a request or response body: one block per distinct schema,
- * labelled with every media type that uses it.
+ * The media types of a body, grouped by schema, with the group being shown.
  */
-export function MediaContent({
-  content,
-  required,
+export function useMediaTypes(content?: OpenApiContent): MediaTypesState {
+  const groups = useMemo(() => groupMediaTypes(content), [content])
+  const labels = useMemo(
+    () => groups.map(({mediaTypes}) => mediaTypes.join(", ")),
+    [groups],
+  )
+  const picked = usePickedOption(labels, {remember: true})
+  return {group: groups[picked.index], groups, labels, picked}
+}
+
+function isDefaultMediaType(groups: MediaTypeGroup[]): boolean {
+  return (
+    groups.length === 1 &&
+    groups[0].mediaTypes.length === 1 &&
+    groups[0].mediaTypes[0] === "application/json"
+  )
+}
+
+/**
+ * The media types of a body: nothing for plain JSON, a label when they share
+ * one schema, and a picker when their schemas differ.
+ */
+export function MediaTypePicker({
+  state: {groups, labels, picked},
 }: {
-  content?: OpenApiContent
-  required?: boolean
+  state: MediaTypesState
 }): ReactNode {
-  const groups = groupMediaTypes(content)
-  if (!groups.length) {
+  if (!groups.length || isDefaultMediaType(groups)) {
     return null
   }
+  if (groups.length === 1) {
+    return <code className="qui-docs-openapi__media-types">{labels[0]}</code>
+  }
+  return (
+    <OptionPicker aria-label="Media type" labels={labels} picked={picked} />
+  )
+}
+
+/**
+ * The schema of the media type group being shown.
+ */
+export function MediaSchema({
+  group,
+}: {
+  group: MediaTypeGroup | undefined
+}): ReactNode {
+  if (!group) {
+    return null
+  }
+  const schema = group.schema && mergeAllOf(group.schema)
+  const variants = schema && getVariants(schema)
 
   return (
     <>
-      {required ? <p className="mdx">Required.</p> : null}
-      {groups.map(({mediaTypes, schema: rawSchema}) => {
-        const schema = rawSchema && mergeAllOf(rawSchema)
-        const variants = schema && getVariants(schema)
-        return (
-          <Fragment key={mediaTypes.join()}>
-            <p className="mdx">
-              {mediaTypes.map((mediaType, index) => (
-                <Fragment key={mediaType}>
-                  {index ? ", " : null}
-                  <code className="qui-docs-code">{mediaType}</code>
-                </Fragment>
-              ))}
-            </p>
-            {variants ? (
-              <SchemaVariants schema={schema} variants={variants} />
-            ) : schema?.properties ? (
-              <SchemaProperties schema={schema} />
-            ) : (
-              <div className="doc-props-list__root">
-                <SchemaProperty name="body" schema={schema} />
-              </div>
-            )}
-          </Fragment>
-        )
-      })}
+      {variants ? (
+        <SchemaVariants schema={schema} variants={variants} />
+      ) : schema?.properties ? (
+        <SchemaProperties schema={schema} />
+      ) : (
+        <div className="qui-docs-openapi__fields">
+          <SchemaProperty name="body" schema={schema} />
+        </div>
+      )}
     </>
   )
 }

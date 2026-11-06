@@ -42,6 +42,14 @@ export interface OpenApiOperation {
 }
 
 /**
+ * The operation's summary, else its path. The method is shown next to the title
+ * wherever it appears.
+ */
+export function getOperationTitle(operation: OpenApiOperation): string {
+  return operation.summary ?? operation.path
+}
+
+/**
  * Fumadocs' fallback, joined into one URL segment so operation URLs stay flat:
  * `GET /planets/{planetId}` → `planets-planetid-get`.
  */

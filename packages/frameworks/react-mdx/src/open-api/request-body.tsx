@@ -3,7 +3,12 @@
 
 import type {ReactNode} from "react"
 
-import {MediaContent, type OpenApiContent} from "./media-content.js"
+import {
+  MediaSchema,
+  MediaTypePicker,
+  type OpenApiContent,
+  useMediaTypes,
+} from "./media-content.js"
 
 export interface OpenApiRequestBody {
   content?: OpenApiContent
@@ -12,17 +17,30 @@ export interface OpenApiRequestBody {
 }
 
 export function RequestBody({body}: {body?: OpenApiRequestBody}): ReactNode {
-  if (!Object.keys(body?.content ?? {}).length) {
+  const mediaTypes = useMediaTypes(body?.content)
+  if (!mediaTypes.groups.length) {
     return null
   }
 
   return (
     <section>
-      <h2 className="mdx">Request body</h2>
+      <div className="qui-docs-openapi__section-header">
+        <h2 className="mdx">
+          Request body
+          {body?.required ? (
+            <span className="doc-props-item__required-indicator qui-docs-openapi__heading-required">
+              *
+            </span>
+          ) : null}
+        </h2>
+        <MediaTypePicker state={mediaTypes} />
+      </div>
       {body?.description ? (
         <p className="qui-docs-openapi__description mdx">{body.description}</p>
       ) : null}
-      <MediaContent content={body?.content} required={body?.required} />
+      <div className="qui-docs-openapi__section-body">
+        <MediaSchema group={mediaTypes.group} />
+      </div>
     </section>
   )
 }

@@ -3,7 +3,7 @@
 
 import type {ReactNode} from "react"
 
-import {httpMethodBadges, PageHeader} from "@qualcomm-ui/react-mdx/docs-layout"
+import {HttpMethod, PageHeader} from "@qualcomm-ui/react-mdx/docs-layout"
 import {Badge} from "@qualcomm-ui/react/badge"
 
 import {CodeSamplesPanel} from "./code-samples-panel.js"
@@ -30,6 +30,33 @@ export interface OperationPageProps {
   loaderData: OpenApiOperationData | null
 }
 
+function Endpoint({
+  badgeSize,
+  deprecated,
+  method,
+  path,
+}: Pick<OpenApiOperationData, "deprecated" | "method" | "path"> & {
+  badgeSize: "md" | "lg"
+}): ReactNode {
+  return (
+    <>
+      <HttpMethod method={method} />
+      <code className="qui-docs-openapi__path">
+        {path.split(/(\{[^}]+\})/).map((segment, index) =>
+          index % 2 ? (
+            <span key={index} className="qui-docs-openapi__path-param">
+              {segment}
+            </span>
+          ) : (
+            segment
+          ),
+        )}
+      </code>
+      {deprecated ? <Badge size={badgeSize}>Deprecated</Badge> : null}
+    </>
+  )
+}
+
 /**
  * Renders an OpenAPI operation from the data of the loader exported by
  * `@qualcomm-ui/docs-plugin/openapi`.
@@ -53,15 +80,28 @@ export function OperationPage({loaderData}: OperationPageProps): ReactNode {
 
   return (
     <div className="qui-docs-openapi__operation">
-      <PageHeader>{summary ?? `${method.toUpperCase()} ${path}`}</PageHeader>
-
-      <div className="qui-docs-openapi__endpoint">
-        <Badge size="lg" {...httpMethodBadges[method]}>
-          {method.toUpperCase()}
-        </Badge>
-        <code className="qui-docs-openapi__path">{path}</code>
-        {deprecated ? <Badge size="lg">Deprecated</Badge> : null}
-      </div>
+      {summary ? (
+        <>
+          <PageHeader>{summary}</PageHeader>
+          <div className="qui-docs-openapi__endpoint">
+            <Endpoint
+              badgeSize="md"
+              deprecated={deprecated}
+              method={method}
+              path={path}
+            />
+          </div>
+        </>
+      ) : (
+        <PageHeader className="qui-docs-openapi__endpoint-title">
+          <Endpoint
+            badgeSize="lg"
+            deprecated={deprecated}
+            method={method}
+            path={path}
+          />
+        </PageHeader>
+      )}
 
       {description ? (
         <p className="qui-docs-openapi__description mdx">{description}</p>

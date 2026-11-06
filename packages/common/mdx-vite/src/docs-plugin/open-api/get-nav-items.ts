@@ -3,7 +3,11 @@
 
 import type {NavItem} from "@qualcomm-ui/mdx-common"
 
-import type {OpenApiOperation, TagObject} from "./get-operations.js"
+import {
+  getOperationTitle,
+  type OpenApiOperation,
+  type TagObject,
+} from "./get-operations.js"
 
 interface ApiIntroPage {
   pathname: string
@@ -22,15 +26,12 @@ function toNavItem(
 ): NavItem {
   const pathname = `${intro.pathname}/${operation.slug}`
   return {
-    badges: [{id: operation.method, label: operation.method.toUpperCase()}],
     depth: 1,
     id: `${idPrefix}${operation.slug}`,
     method: operation.method,
     pathname,
     pathSegments: pathname.split("/").filter(Boolean),
-    title:
-      operation.summary ??
-      `${operation.method.toUpperCase()} ${operation.path}`,
+    title: getOperationTitle(operation),
   }
 }
 
