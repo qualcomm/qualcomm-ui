@@ -82,6 +82,11 @@ export class SearchIndexer {
   private readonly routeMetaNav: Record<string, RouteMetaNavInternal> = {}
   readonly config: SearchIndexerOptions
   logWarnings: boolean
+  /**
+   * Resolved path to the Vite public directory. Links to files in this directory
+   * pass link validation.
+   */
+  publicDir: string | undefined
 
   /**
    * Number of issues found by lint rules set to `"error"` during the last build.
@@ -153,6 +158,7 @@ export class SearchIndexer {
     this.config = config
     this.lint = resolveLintOptions(config)
     this.logWarnings = logWarnings
+    this.publicDir = config.publicDir
     this.allowedHeadings = new Set<string>(
       Array.from(config?.headings || ["h2", "h3", "h4"]),
     )
@@ -591,6 +597,7 @@ export class SearchIndexer {
         this._pageMap,
         this._docPropIds,
         this._anchorIds,
+        this.publicDir,
       )
       this._invalidLinkCount = invalidLinks.length
       reportInvalidLinks(invalidLinks, this.lint.brokenLinks)

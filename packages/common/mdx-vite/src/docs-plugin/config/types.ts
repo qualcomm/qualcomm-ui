@@ -212,6 +212,12 @@ export interface SearchIndexerOptions {
   pageTimestampMetadata?: PageTimestampMetadataMode
 
   /**
+   * Resolved path to the Vite public directory. Links to files in this directory
+   * pass link validation. Set by the plugin from the resolved Vite config.
+   */
+  publicDir?: string
+
+  /**
    * Strategy to use for building each route's path segments.  Omit this property if
    * you are using the default {@link https://github.com/kiliman/remix-flat-routes
    * remix-flat-routes} configuration.
@@ -280,7 +286,7 @@ export interface QuiDocsLintOptions {
 
 export interface QuiDocsConfig extends Omit<
   SearchIndexerOptions,
-  "srcDir" | "pageDirectory" | "typeDocProps"
+  "srcDir" | "pageDirectory" | "publicDir" | "typeDocProps"
 > {
   /**
    * Root app directory. NOT the full path to the directory.
