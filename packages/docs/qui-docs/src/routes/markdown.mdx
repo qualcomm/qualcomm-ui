@@ -177,6 +177,49 @@ GitHub generates its own lowercase heading anchors. A fragment such as `#navConf
 
 Root-relative and URL-relative links continue to work. No migration is required. Enable the `fileLinks` [lint rule](configuration.mdx#lint) to report URL-path links with suggested relative `.mdx` replacements.
 
+#### Migrating Existing Links
+
+Run `qui-mdx-vite fix-links` to convert URL-path links to relative `.mdx` file links. It applies the same replacements reported by the `fileLinks` lint rule:
+
+- From `components+/button+/_button.mdx`, `/components/tooltip#placement` becomes `../tooltip+/_tooltip.mdx#placement`.
+- Same-page `./#size` becomes `#size`.
+
+Run the command from the docs site's package directory. Preview changes with `--dry-run`:
+
+```shell
+qui-mdx-vite fix-links --dry-run
+```
+
+Example output:
+
+```console
+  src/routes/pages.mdx
+    30: /markdown -> ./markdown.mdx
+    75: /rules#frontmatter -> ./rules.mdx#frontmatter
+
+Would fix 2 links in 1 file.
+```
+
+Apply the changes and review the diff:
+
+```shell
+qui-mdx-vite fix-links
+```
+
+Options:
+
+- `-c, --config-file <configFile>`: path to the QUI Docs config file. The file is auto-detected if omitted.
+- `--dry-run`: reports changes without writing files.
+
+For a config file under `src`, use `--config-file src/qui-docs.config.ts`.
+
+The command only edits link destinations. Link text, titles, and the rest of each file remain unchanged.
+
+- Links inside fenced code blocks and raw HTML `<a href>` tags are not changed.
+- Links to TSX route pages, public directory files, missing pages, and external URLs are not changed.
+- Pages symlinked from outside the routes directory are skipped and listed. Shared pages must keep using URL paths.
+- Destinations that cannot be rewritten automatically, such as those containing escapes or character references, are listed for manual fixes.
+
 ### External Links
 
 Similarly, all links starting with `https://` are converted to external links.
