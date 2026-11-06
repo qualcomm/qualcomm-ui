@@ -29,6 +29,9 @@ const navConfig: NavConfig[] = [
   {
     id: "versioning",
   },
+  {
+    id: "migrate-v1-to-v2",
+  },
   {separator: true},
   {sectionTitle: "Integrations"},
   {

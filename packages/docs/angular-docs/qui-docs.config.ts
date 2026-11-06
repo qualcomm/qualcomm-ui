@@ -27,6 +27,9 @@ const navConfig: NavConfig[] = [
     id: "versioning",
   },
   {
+    id: "migrate-v3-to-v4",
+  },
+  {
     id: "migrate-v2-to-v3",
   },
 
