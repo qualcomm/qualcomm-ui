@@ -24,7 +24,8 @@ export const quiDocs: MigrationGroup<QuiDocsPackage> = {
     removeOpenWebUi,
     validatePageLinks,
   ],
-  description: "QUI documentation sites built with React Router",
+  description:
+    "Upgrades a QUI documentation site built with React Router to the latest @qualcomm-ui/mdx-vite, @qualcomm-ui/react-mdx, and @qualcomm-ui/react-router-utils. Adds the fallback route and its NotFound component, renames the deprecated docs context exports, and replaces removed qui-docs config options.",
   name: "qui-docs",
   packages: [
     "@qualcomm-ui/mdx-vite",

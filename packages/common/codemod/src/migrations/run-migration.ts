@@ -12,6 +12,7 @@ import {
   type PackageJson,
   readPackageJson,
 } from "./detect-versions.js"
+import {MigrationCancelledError} from "./migration-cancelled-error.js"
 import {type MigrationPlan, planMigration, type StepPackage} from "./plan.js"
 import type {Codemod, CodemodFileResult, MigrationGroup} from "./types.js"
 
@@ -26,7 +27,8 @@ export interface RunMigrationOptions {
   /**
    * Run every codemod in the group, even if its packages aren't installed or
    * are older than the codemod's `from` version. Only detected packages at or
-   * past `from` are updated in package.json.
+   * past `from` are updated in package.json. Also skips the codemods' safety
+   * checks, which cancel the migration otherwise.
    * @default false
    */
   force?: boolean
@@ -211,13 +213,16 @@ export async function runMigration(
     return
   }
 
+  if (group.warning) {
+    console.warn(`${ICONS.manual} ${chalk.yellow(group.warning)}\n`)
+  }
   if (dryRun) {
     console.log(chalk.yellow("Dry run: no files will be modified.\n"))
   }
   if (force) {
     console.log(
       chalk.yellow(
-        "Forced: every codemod runs, whatever package versions are detected.\n",
+        "Forced: every codemod runs, whatever package versions are detected, and safety checks are skipped.\n",
       ),
     )
   }
@@ -256,13 +261,20 @@ export async function runMigration(
     console.log(
       `  ${chalk.dim("for")} ${packages.size ? formatAppliesTo(packages) : formatForced(codemod, detected)}`,
     )
-    logFileResults(
-      await codemod.run({cwd, dryRun}),
-      codemod.noMatchMessage,
-      cwd,
-      verbose,
-      tally,
-    )
+    let results: CodemodFileResult[]
+    try {
+      results = await codemod.run({cwd, dryRun, force})
+    } catch (error) {
+      if (!(error instanceof MigrationCancelledError)) {
+        throw error
+      }
+      console.error(
+        `\n${chalk.bold.red("Migration cancelled:")} ${error.message}`,
+      )
+      process.exitCode = 1
+      return
+    }
+    logFileResults(results, codemod.noMatchMessage, cwd, verbose, tally)
   }
 
   console.log(`\n${chalk.bold("Dependencies:")}`)

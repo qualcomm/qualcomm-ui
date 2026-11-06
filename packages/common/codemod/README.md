@@ -12,13 +12,13 @@ npx @qualcomm-ui/codemod@latest migrate qui-docs
 
 The CLI detects the major version of each package in the migration and runs every codemod for those versions, including on projects that are already upgraded. It then updates `package.json` to the new versions.
 
-With `--force`, every codemod runs regardless of detected versions, including in packages that use migrated code without listing the migrated packages as dependencies. Updates to dependencies in `package.json` remain limited to packages detected at or past a codemod's starting version; `--force` never adds dependencies or bypasses run-record checks for already-migrated files.
+With `--force`, every codemod runs regardless of detected versions, including in packages that use migrated code without listing the migrated packages as dependencies. It skips safety checks that cancel the migration. Updates to dependencies in `package.json` remain limited to packages detected at or past a codemod's starting version; `--force` never adds dependencies or bypasses run-record checks for already-migrated files.
 
-| Option            | Description                                                                                              |
-| ----------------- | -------------------------------------------------------------------------------------------------------- |
-| `-d, --dir <dir>` | Project root containing `package.json` (default: `.`)                                                    |
-| `--dry-run`       | Preview changes without writing files                                                                    |
-| `--force`         | Run every codemod, even if its packages aren't installed or are older than the versions it migrates from |
+| Option            | Description                                                                                        |
+| ----------------- | -------------------------------------------------------------------------------------------------- |
+| `-d, --dir <dir>` | Project root containing `package.json` (default: `.`)                                              |
+| `--dry-run`       | Preview changes without writing files                                                              |
+| `--force`         | Run every codemod regardless of detected versions and skip safety checks that cancel the migration |
 
 Run the following command to see the available migrations and options:
 
@@ -34,14 +34,14 @@ Packages: `@qualcomm-ui/mdx-vite`, `@qualcomm-ui/react-mdx`, `@qualcomm-ui/react
 
 | Codemod                     | Versions                                  | Description                                                                                                                                                                            |
 | --------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fallback-route`            | `@qualcomm-ui/react-router-utils` v2 → v3 | Creates the fallback route (`$.tsx`) or adds its missing `createFallbackRouteLoader` export                                                                                            |
+| `fallback-route`            | `@qualcomm-ui/react-router-utils` v1 → v3 | Creates the fallback route (`$.tsx`) or adds its missing `createFallbackRouteLoader` export                                                                                            |
 | `not-found-route`           | `@qualcomm-ui/react-router-utils` v2 → v3 | Adds the `NotFound` component to the fallback route (`$.tsx`) that uses `createFallbackRouteLoader`                                                                                    |
 | `fallback-route-middleware` | `@qualcomm-ui/react-router-utils` v3      | Adds `createFallbackRouteMiddleware` to the fallback route (`$.tsx`) with the loader's arguments and extracts inline arguments into a shared `fallbackRouteArgs` constant              |
 | `docs-context-names`        | `@qualcomm-ui/react-mdx` v3               | Renames the deprecated docs context exports to their replacements and moves the page context imports from `@qualcomm-ui/react-mdx/docs-layout` to `@qualcomm-ui/react-mdx/context`     |
 | `remove-open-web-ui`        | `@qualcomm-ui/mdx-vite` v4                | Removes the `knowledge.integrations` field from `qui-docs.config.*`                                                                                                                    |
 | `validate-page-links`       | `@qualcomm-ui/mdx-vite` v4 → v5           | Replaces the removed `validatePageLinks` option with the `lint.brokenLinks` rule: `false` becomes `brokenLinks: "off"` unless `lint.brokenLinks` is already set, and `true` is removed |
 
-`fallback-route` runs first and reads `appDirectory` (default: `app`) and `pageDirectory` (default: `routes`) from each `qui-docs.config.{ts,mts,cts,js,mjs,cjs}` in the project. It targets `<appDirectory>/<pageDirectory>/$.tsx`, resolving `appDirectory` from the project root. Config objects are followed through `satisfies`/`as`, wrapper calls, and same-file variables. The loader reuses the identifier passed to `createFallbackRouteMiddleware` or an existing `fallbackRouteArgs` constant. Otherwise it uses `{exports: siteData.exports, getPages, getSections}`, adding required imports and reusing aliases. The loader goes after the middleware export or, without middleware, after the imports. Manual updates are reported for a different exported loader, an unexported `loader` binding, inline middleware arguments, conflicting `getPages`/`getSections`/`siteData` bindings, or config directories that cannot be read statically. Subsequent codemods add the `NotFound` default export and middleware in the same run. In `--dry-run`, a missing file is not created, so those codemods report no matching route and their changes to the new file are not shown. For an existing file, they read the original file without the proposed loader.
+`fallback-route` runs first and reads `appDirectory` (default: `app`) and `pageDirectory` (default: `routes`) from each `qui-docs.config.{ts,mts,cts,js,mjs,cjs}` in the project. It targets `<appDirectory>/<pageDirectory>/$.tsx`, resolving `appDirectory` from the project root. Config objects are followed through `satisfies`/`as`, wrapper calls, and same-file variables. The loader reuses the identifier passed to `createFallbackRouteMiddleware` or an existing `fallbackRouteArgs` constant. Otherwise it uses `{exports: siteData.exports, getPages, getSections}`, adding required imports and reusing aliases. The loader goes after the middleware export or, without middleware, after the imports. Manual updates are reported for a different exported loader, such as the legacy loader that throws a 404 response, an unexported `loader` binding, inline middleware arguments, conflicting `getPages`/`getSections`/`siteData` bindings, or config directories that cannot be read statically. Subsequent codemods add the `NotFound` default export and middleware in the same run. In `--dry-run`, a missing file is not created, so those codemods report no matching route and their changes to the new file are not shown. For an existing file, they read the original file without the proposed loader.
 
 `fallback-route-middleware` requires `createFallbackRouteMiddleware` and `FallbackRouteArgs`, added to `@qualcomm-ui/react-router-utils` in the minor release after 3.0.2. The migration does not update `@qualcomm-ui/react-router-utils` in `package.json` for 3.x projects, so projects on 3.0.x must upgrade it before running the codemod, or the new imports will not resolve. This codemod is required for sites with a `NotFound` default export. Without the middleware, React Router renders the loader's `*.md`, `pages.json`, and `sections.json` responses as HTML.
 
@@ -68,7 +68,15 @@ The codemod rewrites TS and JS files only, not MDX. It does not reformat edited 
 
 Packages: `@qualcomm-ui/qds-core`, `@qualcomm-ui/tailwind-plugin`
 
-This one-time migration applies to projects using legacy QDS tokens, not projects that started on `@qualcomm-ui/qds-core` v2. Without a record, v2 projects using only shared steps such as `--spacing-100` would have them renamed as legacy tokens. Future QDS codemods will use a separate migration.
+> [!WARNING]
+> Only run this one-time migration if you know both conditions apply:
+>
+> - You upgraded from `@qualcomm-ui/qds-core` v1 to v2.
+> - You used QDS spacing, sizing, or border radius tokens directly as Tailwind utilities (such as `p-qds-40`) or CSS variables (such as `var(--spacing-40)`, `--border-radius-*`, or `--sizing-*`).
+>
+> Do not run it on projects that started on v2 or never referenced these tokens directly. Some legacy and new steps share names with different pixel values: legacy `--spacing-100` is 16px, while new `--spacing-100` is 4px. Without a migration record, files using only shared steps are treated as legacy. The codemod can rename tokens that are already correct.
+
+The CLI displays this warning before running. Future QDS codemods will use a separate migration.
 
 | Codemod         | Versions                                                                       | Description                                                                                                                                                                            |
 | --------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -94,11 +102,13 @@ The codemod scans css, scss, sass, less, pcss, html, ts, tsx, mts, cts, js, jsx,
 
 Some legacy steps are valid new steps with different pixel values. The legacy `--spacing-100` is 16px and becomes `--spacing-400`. The new `--spacing-100` is 4px. Each scale is renamed in a single pass, so a token is never renamed twice in one run.
 
-Migration detection is per file and scale. Steps found only in the legacy scale are renamed, including in recorded files. Shared steps are renamed in legacy files. A file with new-only steps and no legacy-only steps is treated as migrated, so its shared steps are preserved.
+Before writing anything, `qds-v2-tokens` checks every scanned file. If any contains steps found only in v2 (new-only steps), such as `--spacing-25`, `--sizing-900`, or `p-qds-1000`, the entire migration is cancelled, including dry runs. No files are changed. Dependencies and the record in `package.json` are not updated. The CLI exits with code 1. The error lists up to 10 files with their v2-only tokens. It explains the pixel-value differences between shared legacy and v2 steps and suggests `--force`. Files covered by a `qui.completedMigrations` record are checked too. Reruns on migrated projects and monorepo-root runs after a package migration are cancelled when scanned files contain v2-only steps. `--force` skips this check.
+
+After the check passes or is skipped with `--force`, migration detection is per file and scale. Steps found only in the legacy scale are renamed, including in recorded files. Shared steps are renamed in legacy files. A file with new-only steps and no legacy-only steps is treated as migrated, so its shared steps are preserved.
 
 A file that mixes legacy-only, new-only, and shared steps within the same scale is reported for a manual update with suggested replacements. That scale is not rewritten.
 
-A project without a record is treated as migrated by hand when a scale uses new-only steps and no legacy-only steps. Shared steps in that scale are left unchanged. Without a record or new-only steps, files containing only shared steps are treated as legacy.
+With `--force`, a project without a record is treated as migrated by hand when a scale uses new-only steps and no legacy-only steps. Shared steps in that scale are left unchanged. Without a record or new-only steps, files containing only shared steps are treated as legacy.
 
 After renaming tokens, `qds-v2-tokens` adds its name to `qui.completedMigrations`, an array of codemod names in the `package.json` of the directory passed to `-d` (default: the current directory). No record is added if that directory or an ancestor already records the codemod. Entries that aren't strings, and a `completedMigrations` value that isn't an array, are ignored. The `note` field marks the record as managed:
 
@@ -109,7 +119,7 @@ After renaming tokens, `qds-v2-tokens` adds its name to `qui.completedMigrations
 }
 ```
 
-On later runs, a file counts as recorded when the `package.json` of its directory or any ancestor directory up to the filesystem root records the codemod. Recorded files keep their shared steps unless they contain legacy-only steps. Running in a monorepo package (`-d packages/app`) and then from the root, or in the reverse order, does not rename the package's migrated tokens again.
+On later runs, a file counts as recorded when the `package.json` of its directory or any ancestor directory up to the filesystem root records the codemod. Recorded files keep their shared steps unless they contain legacy-only steps. Running in a monorepo package (`-d packages/app`) and then from the root, or in the reverse order, does not rename the package's migrated tokens again. Such runs require `--force` when scanned files contain v2-only steps.
 
 Commit the `qui` field and do not edit or remove it. Removing it from a project whose files contain only shared steps causes a later run to rename those tokens again.
 

@@ -7,7 +7,8 @@ import {angularEmphasisProps} from "./emphasis-props/emphasis-props.js"
 
 export const angular: MigrationGroup<"@qualcomm-ui/angular"> = {
   codemods: [angularEmphasisProps],
-  description: "Projects that use @qualcomm-ui/angular",
+  description:
+    "Upgrades @qualcomm-ui/angular from v3 to v4. Replaces the deprecated emphasis props and values.",
   name: "angular",
   packages: ["@qualcomm-ui/angular"],
 }

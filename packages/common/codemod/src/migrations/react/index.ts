@@ -7,7 +7,8 @@ import {reactEmphasisProps} from "./emphasis-props/emphasis-props.js"
 
 export const react: MigrationGroup<"@qualcomm-ui/react"> = {
   codemods: [reactEmphasisProps],
-  description: "Projects that use @qualcomm-ui/react",
+  description:
+    "Upgrades @qualcomm-ui/react from v1 to v2. Replaces the deprecated emphasis props and values.",
   name: "react",
   packages: ["@qualcomm-ui/react"],
 }
