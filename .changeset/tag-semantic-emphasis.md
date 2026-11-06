@@ -3,3 +3,5 @@
 ---
 
 feat(tag): add the `info`, `success`, `warning`, and `danger` emphasis
+
+commit: 72b5955
