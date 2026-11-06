@@ -145,7 +145,6 @@ const configSchema = implement<QuiDocsConfig>().with({
   throwOnError: z.boolean().optional(),
   typeDocProps: z.string().optional(),
   typeDocPropsOptions: typeDocPropsSchema.optional(),
-  validatePageLinks: z.boolean().optional(),
 })
 
 export function parseSchema(data: unknown): ZodSafeParseResult<QuiDocsConfig> {

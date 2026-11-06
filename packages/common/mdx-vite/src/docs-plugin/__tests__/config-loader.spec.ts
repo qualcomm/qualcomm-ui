@@ -56,29 +56,6 @@ describe("ConfigLoader", () => {
     })
   })
 
-  test("maps the deprecated validatePageLinks: false to brokenLinks: off", () => {
-    const filePath = writeConfigFile(
-      `module.exports = {validatePageLinks: false}`,
-    )
-    const loader = new ConfigLoader({configFile: filePath})
-    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
-
-    expect(loader.loadConfig().lint.brokenLinks).toBe("off")
-    expect(warnSpy.mock.calls.flat().join("\n")).toContain(
-      "`validatePageLinks` will be removed",
-    )
-  })
-
-  test("prefers lint.brokenLinks over validatePageLinks", () => {
-    const filePath = writeConfigFile(
-      `module.exports = {lint: {brokenLinks: "error"}, validatePageLinks: false}`,
-    )
-    const loader = new ConfigLoader({configFile: filePath})
-    vi.spyOn(console, "warn").mockImplementation(() => {})
-
-    expect(loader.loadConfig().lint.brokenLinks).toBe("error")
-  })
-
   test("rejects unknown lint severities", () => {
     const filePath = writeConfigFile(
       `module.exports = {lint: {pageTitle: "fatal"}}`,

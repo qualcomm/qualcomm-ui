@@ -218,18 +218,6 @@ export interface SearchIndexerOptions {
    * Options for TypeDoc property documentation.
    */
   typeDocPropsOptions?: QuiDocsTypeDocOptions
-
-  /**
-   * Validate internal links in MDX pages after the page map and table of contents
-   * have been assembled. Reports broken page links and fragment references to the
-   * build console.
-   *
-   * @deprecated use {@link QuiDocsLintOptions.brokenLinks} instead. `false` is
-   * equivalent to `lint.brokenLinks: "off"`.
-   *
-   * @default true
-   */
-  validatePageLinks?: boolean
 }
 
 /**
