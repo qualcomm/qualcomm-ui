@@ -28,7 +28,8 @@
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "generate-page-map": "qui-docs generate-page-map -o ./scripts/temp/site-data.json",
-    "build-demo-html": "tsx scripts/build-demo-html.ts"
+    "build-demo-html": "tsx scripts/build-demo-html.ts",
+    "lint-docs": "qui-docs lint --file-links off"
   },
   "dependencies": {
     "@angular/animations": "catalog:",
@@ -43,7 +44,7 @@
     "@angular/router": "catalog:",
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.1.0",
-    "@faker-js/faker": "~9.6.0",
+    "@faker-js/faker": "catalog:",
     "@floating-ui/dom": "^1.7.0",
     "@floating-ui/react": "^0.27.3",
     "@hookform/resolvers": "^5.2.2",

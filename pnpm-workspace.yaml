@@ -47,6 +47,7 @@ catalog:
   "@angular/ssr": ~22.2.5
   "@commander-js/extra-typings": 14.0.0
   "@eslint/js": 9.39.4
+  '@faker-js/faker': 10.6.0
   "@lucide/angular": 1.31.0
   "@mdx-js/react": 3.1.1
   "@mdx-js/rollup": 3.1.1

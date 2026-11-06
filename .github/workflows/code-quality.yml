@@ -23,9 +23,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: clone
-      id: install
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -45,8 +43,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: checkout
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -69,8 +66,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: checkout
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -93,8 +89,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: checkout
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -125,8 +120,7 @@ jobs:
       cancel-in-progress: true
     timeout-minutes: 10
     steps:
-    - name: checkout
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -157,8 +151,7 @@ jobs:
       group: PR Angular Core Tests - ${{matrix.shardIndex}} - ${{github.head_ref}}
       cancel-in-progress: true
     steps:
-    - name: checkout
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -186,8 +179,7 @@ jobs:
       group: PR Angular Tests - ${{matrix.shardIndex}} - ${{matrix.shardTotal}} - ${{github.head_ref}}
       cancel-in-progress: true
     steps:
-    - name: checkout
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -211,10 +203,25 @@ jobs:
       group: PR copyright-license-check - ${{github.head_ref}}
       cancel-in-progress: true
     steps:
-    - name: Checkout PR head
-      uses: actions/checkout@v6
+    - uses: actions/checkout@v6
 
     - uses: ./.github/actions/init-node-and-install
 
     - name: Run copyright/license checker
       run: node --import=tsx scripts/license-checker lint
+
+  check-docs:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: PR lint-docs - ${{github.head_ref}}
+      cancel-in-progress: true
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: ./.github/actions/init-node-and-install
+
+    - name: build dependencies
+      run: pnpm turbo run build --filter '@qualcomm-ui/mdx-vite'
+
+    - name: lint docs
+      run: pnpm turbo run lint-docs

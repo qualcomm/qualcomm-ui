@@ -16,10 +16,11 @@
     "dev:app": "react-router typegen && vite -c vite.config.ts",
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
-    "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput"
+    "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
+    "lint-docs": "qui-docs lint --file-links error"
   },
   "dependencies": {
-    "@faker-js/faker": "~9.6.0",
+    "@faker-js/faker": "catalog:",
     "@floating-ui/react": "^0.27.3",
     "@hookform/resolvers": "^5.2.2",
     "@internationalized/number": "^3.6.4",
