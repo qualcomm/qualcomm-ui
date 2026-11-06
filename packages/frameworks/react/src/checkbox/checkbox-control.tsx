@@ -30,7 +30,7 @@ export interface CheckboxControlProps
  * default.
  */
 export function CheckboxControl({
-  children = <CheckboxIndicator />,
+  children,
   id,
   ...props
 }: CheckboxControlProps): ReactElement {
@@ -44,7 +44,7 @@ export function CheckboxControl({
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      {children}
+      {children ?? <CheckboxIndicator />}
     </PolymorphicElement>
   )
 }

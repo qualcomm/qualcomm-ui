@@ -27,7 +27,7 @@ export interface SwitchControlProps extends ElementRenderProp<"span"> {
  * default.
  */
 export function SwitchControl({
-  children = <SwitchThumb />,
+  children,
   ...props
 }: SwitchControlProps): ReactElement {
   const contextProps = useSwitchControl()
@@ -40,7 +40,7 @@ export function SwitchControl({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      {children}
+      {children ?? <SwitchThumb />}
     </PolymorphicElement>
   )
 }

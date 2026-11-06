@@ -25,7 +25,7 @@ export interface TooltipArrowProps extends ElementRenderProp<"div"> {
  * `<Tooltip.ArrowTip/>` by default if no children are provided.
  */
 export function TooltipArrow({
-  children = <TooltipArrowTip />,
+  children,
   id,
   ...props
 }: TooltipArrowProps): ReactElement {
@@ -38,7 +38,7 @@ export function TooltipArrow({
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      {children}
+      {children ?? <TooltipArrowTip />}
     </PolymorphicElement>
   )
 }

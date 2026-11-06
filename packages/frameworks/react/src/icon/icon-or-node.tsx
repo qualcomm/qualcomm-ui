@@ -47,7 +47,6 @@ export interface IconOrNodeProps extends Omit<
 export function IconOrNode({
   className,
   icon: iconOrNode,
-  ref,
   size,
   skipWrapper,
   ...props
@@ -58,11 +57,10 @@ export function IconOrNode({
     return skipWrapper ? (
       cloneElement(
         iconOrNode,
-        mergeProps({className, ref}, props, iconOrNode?.props ?? {}),
+        mergeProps({className}, props, iconOrNode?.props ?? {}),
       )
     ) : (
       <PolymorphicElement
-        ref={ref}
         as="span"
         className={className}
         data-test-id="qui-icon"
@@ -74,7 +72,6 @@ export function IconOrNode({
   }
   return (
     <Icon
-      ref={ref as any}
       className={className}
       data-test-id="qui-icon"
       icon={iconOrNode as LucideIcon}

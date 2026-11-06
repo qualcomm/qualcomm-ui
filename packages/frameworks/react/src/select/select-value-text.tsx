@@ -22,11 +22,15 @@ export interface SelectValueTextProps extends ElementRenderProp<"span"> {
   dismissLabel?: (itemText: string) => string
 }
 
+function defaultDismissLabel(itemText: string): string {
+  return `Remove ${itemText}`
+}
+
 /**
  * Displays the currently selected value(s). Renders a `<span>` element by default.
  */
 export function SelectValueText({
-  dismissLabel = (itemText) => `Remove ${itemText}`,
+  dismissLabel,
   ...props
 }: SelectValueTextProps): ReactElement {
   const {getValueTextBindings, multiple, placeholder, valueAsString} =
@@ -44,7 +48,7 @@ export function SelectValueText({
       {!multiple ? (
         valueAsString || placeholder
       ) : (
-        <SelectTags dismissLabel={dismissLabel} />
+        <SelectTags dismissLabel={dismissLabel ?? defaultDismissLabel} />
       )}
     </PolymorphicElement>
   )

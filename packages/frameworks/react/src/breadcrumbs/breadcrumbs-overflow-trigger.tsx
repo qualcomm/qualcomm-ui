@@ -42,7 +42,7 @@ export interface BreadcrumbsOverflowTriggerProps extends ElementRenderProp<"butt
  * @since 1.21.0
  */
 export function BreadcrumbsOverflowTrigger({
-  children = "\u2026",
+  children,
   icon,
   itemIconProps,
   ...props
@@ -53,7 +53,7 @@ export function BreadcrumbsOverflowTrigger({
   return (
     <PolymorphicElement as="button" {...mergedProps}>
       {icon ? <BreadcrumbsItemIcon icon={icon} {...itemIconProps} /> : null}
-      {children}
+      {children ?? "\u2026"}
     </PolymorphicElement>
   )
 }
