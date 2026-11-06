@@ -432,7 +432,7 @@ export class SearchIndexer {
       defaultSection.categories = [defaultSection.title]
     }
 
-    if (!defaultSection.hidden) {
+    if (!defaultSection.hidden && !frontmatter.openApi) {
       this.navBuilder.add(defaultSection, frontmatter)
     }
 

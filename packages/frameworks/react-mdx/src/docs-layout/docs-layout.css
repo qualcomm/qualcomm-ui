@@ -384,6 +384,12 @@ pre.qui-docs-code {
     left: calc(1px + var(--indent-spacing) * var(--depth));
   }
 
+  .qui-docs-sidebar__nav-switcher {
+    justify-content: space-between;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+
   .qui-docs-sidebar__group-separator {
     margin-top: 16px;
 

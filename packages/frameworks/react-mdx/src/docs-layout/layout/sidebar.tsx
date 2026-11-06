@@ -33,6 +33,8 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {httpMethodBadges} from "../http-method-badges.js"
 
+import {NavSwitcher} from "./nav-switcher.js"
+
 export interface SidebarProps extends Omit<ElementRenderProp<"div">, "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -90,7 +92,8 @@ function SidebarTree({
   ...props
 }: SidebarProps): ReactElement {
   const ref = useRef<HTMLDivElement | null>(null)
-  const {navDensity, navItems, pageMap, pathname} = useDocsPageContext()
+  const {navDensity, navItems, navSwitcher, pageMap, pathname} =
+    useDocsPageContext()
   const {layoutComponents, renderLink: RenderLink} = useDocsRuntimeContext()
   const SideNavBadgesComponent = layoutComponents?.SideNavBadges
 
@@ -271,6 +274,8 @@ function SidebarTree({
             {children}
           </SideNav.Header>
         ) : null}
+
+        {navSwitcher ? <NavSwitcher navSwitcher={navSwitcher} /> : null}
 
         {filterable ? (
           <>
