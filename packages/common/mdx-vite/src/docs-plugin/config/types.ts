@@ -44,22 +44,6 @@ export interface QuiDocsTypeDocOptions {
 }
 
 /**
- * OpenWebUI integration configuration.
- */
-export interface OpenWebUiIntegration {
-  /**
-   * Path to env file containing `OPEN_WEB_UI_*` variables. Defaults to
-   * `.env.{id}` by convention.
-   */
-  envFile?: string
-
-  /**
-   * Unique identifier for this integration.
-   */
-  id: string
-}
-
-/**
  * Extra content to include in knowledge output. Assumed to be Markdown.
  */
 export interface KnowledgeExtraFile {
@@ -121,17 +105,6 @@ export interface KnowledgeConfig {
    * @inheritDoc
    */
   frontmatter?: KnowledgeFrontmatterConfig
-
-  /**
-   * Platform-specific integration configurations for uploading generated
-   * knowledge to external services.
-   */
-  integrations?: {
-    /**
-     * @inheritDoc
-     */
-    openWebUi?: OpenWebUiIntegration[]
-  }
 
   /**
    * Output directory for generated knowledge files, relative to the public dir.

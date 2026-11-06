@@ -5,15 +5,8 @@ import {program} from "@commander-js/extra-typings"
 
 import {addFixLinksCommand} from "./docs-plugin/fix-links.js"
 import {addGeneratePageMapCommand} from "./docs-plugin/generate-page-map.js"
-import {addDownloadKnowledgeCommand} from "./open-web-ui/download-knowledge.js"
-import {addUploadKnowledgeCommand} from "./open-web-ui/upload-knowledge.js"
 
 function setupCli() {
-  // global options
-  program.option("--env <envFile>", "relative path to the env file to use")
-
-  addUploadKnowledgeCommand()
-  addDownloadKnowledgeCommand()
   addGeneratePageMapCommand()
   addFixLinksCommand()
 
