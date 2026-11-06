@@ -113,5 +113,5 @@ angular-demo:not([data-demo-rendered]) {
     linear-gradient(var(--color-border-neutral-01) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-border-neutral-01) 1px, transparent 1px);
   background-position: -1px -1px;
-  background-size: var(--sizing-70) var(--sizing-70);
+  background-size: var(--sizing-400) var(--sizing-400);
 }

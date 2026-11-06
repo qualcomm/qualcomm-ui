@@ -10,8 +10,8 @@
   position: relative;
   text-align: left;
   text-decoration: inherit;
-  --list-item-padding-x: var(--spacing-100);
-  --list-item-padding-y: var(--spacing-80);
+  --list-item-padding-x: var(--spacing-400);
+  --list-item-padding-y: var(--spacing-250);
 
   &::after {
     border-block-end: 1px solid var(--color-border-neutral-01);
@@ -23,12 +23,12 @@
 
   &[data-size="sm"] {
     font: var(--font-static-body-xs-default);
-    --list-item-padding-x: var(--spacing-90);
-    --list-item-padding-y: var(--spacing-50);
+    --list-item-padding-x: var(--spacing-300);
+    --list-item-padding-y: var(--spacing-150);
   }
 
   &[data-size="lg"] {
-    --list-item-padding-y: var(--spacing-90);
+    --list-item-padding-y: var(--spacing-300);
   }
 
   &[data-interactive] {
@@ -102,7 +102,7 @@
 /* Grid */
 .qui-list-item__root {
   align-items: center;
-  column-gap: var(--spacing-70);
+  column-gap: var(--spacing-200);
   display: grid;
   grid-auto-columns: max-content;
   grid-auto-flow: column;
@@ -163,7 +163,7 @@
 .qui-list-item__accessory {
   align-items: center;
   display: flex;
-  gap: var(--spacing-20);
+  gap: var(--spacing-50);
 }
 
 .qui-list-item__control {

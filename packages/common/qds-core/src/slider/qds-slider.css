@@ -1,11 +1,11 @@
 .qui-slider__root {
-  --slider-track-thickness: var(--sizing-30);
+  --slider-track-thickness: var(--sizing-100);
 
   &[data-size="sm"] {
-    --slider-thumb-size: var(--sizing-60);
+    --slider-thumb-size: var(--sizing-300);
   }
   &[data-size="md"] {
-    --slider-thumb-size: var(--sizing-70);
+    --slider-thumb-size: var(--sizing-400);
   }
 
   --slider-label-color: var(--color-text-neutral-secondary);
@@ -62,7 +62,7 @@
   &[data-orientation="horizontal"] {
     grid-template-columns: auto 1fr 1fr auto;
     grid-template-rows: [label] auto [control] auto [markers] auto [hint error] auto;
-    --row-gap: var(--spacing-70);
+    --row-gap: var(--spacing-200);
   }
   &[data-orientation="vertical"] {
     grid-template-columns: [label control] 1fr [value markers] 1fr;
@@ -103,7 +103,7 @@
   color: var(--slider-marker-color);
   font: var(--font-static-body-xs-default);
   grid-row: control;
-  margin-block-start: var(--spacing-50);
+  margin-block-start: var(--spacing-150);
   user-select: none;
 }
 
@@ -163,7 +163,7 @@
 .qui-slider__thumb {
   aspect-ratio: 1;
   background-color: var(--slider-thumb-color);
-  border-radius: var(--border-radius-rounded);
+  border-radius: var(--border-radius-max);
   position: relative;
   width: var(--slider-thumb-size);
 
@@ -190,7 +190,7 @@
 
   /* hitbox */
   &::after {
-    border-radius: var(--border-radius-rounded);
+    border-radius: var(--border-radius-max);
     bottom: -8px;
     content: "";
     left: -8px;
@@ -202,7 +202,7 @@
 
 .qui-slider__track {
   background-color: var(--cross-component-track-default);
-  border-radius: var(--border-radius-rounded);
+  border-radius: var(--border-radius-max);
   overflow: hidden;
 
   &[data-orientation="horizontal"] {
@@ -232,7 +232,7 @@
 .qui-slider__marker-group {
   &[data-orientation="horizontal"] {
     height: 20px;
-    margin-block-start: var(--spacing-50);
+    margin-block-start: var(--spacing-150);
     width: 100%;
   }
   &[data-orientation="vertical"] {
@@ -265,12 +265,12 @@
 
 .qui-slider__root[data-invalid] .qui-slider__error-text {
   display: flex;
-  gap: var(--spacing-40);
+  gap: var(--spacing-100);
 }
 
 .qui-slider__thumb-indicator {
   background-color: var(--color-background-neutral-10);
-  border-radius: var(--border-radius-xs);
+  border-radius: var(--border-radius-50);
   bottom: calc(100% + 10px);
   box-shadow: var(--shadow-high);
   color: var(--color-text-neutral-inverse);
@@ -279,8 +279,8 @@
   left: 50%;
 
   opacity: 0;
-  padding-block: var(--spacing-40);
-  padding-inline: var(--spacing-70);
+  padding-block: var(--spacing-100);
+  padding-inline: var(--spacing-200);
   pointer-events: none;
   transition:
     opacity 130ms ease-in-out,

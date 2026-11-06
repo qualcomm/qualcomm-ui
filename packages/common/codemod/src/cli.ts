@@ -24,6 +24,11 @@ const dryRunOption = new Option(
   "Preview changes without writing files",
 )
 
+const forceOption = new Option(
+  "--force",
+  "Run every codemod, even if its packages aren't installed or are older than the versions it migrates from",
+)
+
 const nameWidth = Math.max(...migrationGroups.map((group) => group.name.length))
 
 const availableMigrations = migrationGroups
@@ -42,6 +47,7 @@ program
   .addOption(directoryOption)
   .addOption(logModeOpt)
   .addOption(dryRunOption)
+  .addOption(forceOption)
   .usage("[options] <migration>")
   .summary("Run migrations for QUI packages")
   .description(
@@ -50,14 +56,16 @@ program
 Package versions are detected from package.json (falling back to the installed
 version). Every codemod for the detected versions is applied in order, including
 on projects that are already upgraded, and package.json is updated to the new
-major versions.
+major versions. Use --force to run every codemod whatever versions are detected,
+e.g. in a package that doesn't list the migrated packages as dependencies.
 
 Available migrations:
 ${availableMigrations}
 
 Examples:
   npx @qualcomm-ui/codemod@latest migrate qui-docs
-  npx @qualcomm-ui/codemod@latest migrate qui-docs -d apps/docs --dry-run`,
+  npx @qualcomm-ui/codemod@latest migrate qui-docs -d apps/docs --dry-run
+  npx @qualcomm-ui/codemod@latest migrate qds-v2-tokens --force`,
   )
   .action(async (migration, opts, command) => {
     if (!migration) {
@@ -67,6 +75,7 @@ Examples:
     await runMigration(group, {
       dir: opts.dir,
       dryRun: opts.dryRun ?? false,
+      force: opts.force ?? false,
       logMode: opts.logMode,
     })
   })

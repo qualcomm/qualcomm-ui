@@ -47,9 +47,38 @@ for (const {comment, name} of tokens) {
   }
 }
 
+/**
+ * Tailwind radius name for each QDS radius step. The names from before the QDS
+ * radius tokens were renamed to numeric steps keep their steps (`md` is still
+ * 4px), so existing utilities render the same. The steps added since then
+ * continue the scale in order.
+ */
+const RADIUS_NAMES: Record<string, string> = {
+  "border-radius-0": "none",
+  "border-radius-50": "xs",
+  "border-radius-75": "sm",
+  "border-radius-100": "md",
+  "border-radius-150": "lg",
+  "border-radius-200": "xl",
+  "border-radius-300": "xxl",
+  "border-radius-350": "2xl",
+  "border-radius-400": "3xl",
+  "border-radius-500": "4xl",
+  "border-radius-600": "5xl",
+  "border-radius-max": "rounded",
+}
+
 const TOKEN_MAPPINGS: TokenMapping[] = [
   {
-    nameTransform: (name) => name.replace(/^border-radius-/, ""),
+    nameTransform: (name) => {
+      const radiusName = RADIUS_NAMES[name]
+      if (!radiusName) {
+        throw new Error(
+          `No Tailwind radius name for ${name}. Add it to RADIUS_NAMES.`,
+        )
+      }
+      return radiusName
+    },
     pattern: "border-radius-*",
     themeKey: "radius",
   },

@@ -1,26 +1,26 @@
 .qui-badge__root[data-status-badge-part="root"] {
   &[data-size="xxs"] {
-    --status-size: var(--sizing-40);
+    --status-size: var(--sizing-150);
   }
   &[data-size="xs"] {
-    --status-size: var(--sizing-40);
+    --status-size: var(--sizing-150);
   }
   &[data-size="sm"] {
-    --status-size: var(--sizing-50);
+    --status-size: var(--sizing-200);
   }
   &[data-size="md"] {
-    --status-size: var(--sizing-60);
+    --status-size: var(--sizing-300);
   }
   &[data-size="lg"] {
-    --status-size: var(--sizing-70);
+    --status-size: var(--sizing-400);
   }
   &[data-size="xl"] {
-    --status-size: var(--sizing-80);
+    --status-size: var(--sizing-500);
   }
 
   background: var(--badge-background);
   border: solid var(--border-size, 0) var(--badge-background);
-  border-radius: var(--border-radius-rounded);
+  border-radius: var(--border-radius-max);
   color: var(--badge-text);
   height: var(--status-size);
   min-width: var(--status-size);

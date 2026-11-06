@@ -1,27 +1,27 @@
 .qui-badge__root[data-icon-badge-part="root"] {
   &[data-size="xxs"] {
-    --icon-radius: var(--border-radius-xs);
-    --badge-icon-size: var(--sizing-60);
+    --icon-radius: var(--border-radius-50);
+    --badge-icon-size: var(--sizing-300);
   }
   &[data-size="xs"] {
-    --icon-radius: var(--border-radius-md);
-    --badge-icon-size: var(--sizing-70);
+    --icon-radius: var(--border-radius-100);
+    --badge-icon-size: var(--sizing-400);
   }
   &[data-size="sm"] {
-    --icon-radius: var(--border-radius-md);
-    --badge-icon-size: var(--sizing-80);
+    --icon-radius: var(--border-radius-100);
+    --badge-icon-size: var(--sizing-500);
   }
   &[data-size="md"] {
-    --icon-radius: var(--border-radius-md);
-    --badge-icon-size: var(--sizing-90);
+    --icon-radius: var(--border-radius-100);
+    --badge-icon-size: var(--sizing-600);
   }
   &[data-size="lg"] {
-    --icon-radius: var(--border-radius-md);
-    --badge-icon-size: var(--sizing-120);
+    --icon-radius: var(--border-radius-100);
+    --badge-icon-size: var(--sizing-800);
   }
   &[data-size="xl"] {
-    --icon-radius: var(--border-radius-md);
-    --badge-icon-size: var(--sizing-140);
+    --icon-radius: var(--border-radius-100);
+    --badge-icon-size: var(--sizing-1000);
   }
 
   background: var(--badge-background);
@@ -32,19 +32,19 @@
   &[data-size="xxs"],
   &[data-size="xs"],
   &[data-size="sm"] {
-    padding: var(--spacing-20);
-  }
-
-  &[data-size="md"] {
-    padding: var(--spacing-40);
-  }
-
-  &[data-size="lg"] {
     padding: var(--spacing-50);
   }
 
+  &[data-size="md"] {
+    padding: var(--spacing-100);
+  }
+
+  &[data-size="lg"] {
+    padding: var(--spacing-150);
+  }
+
   &[data-size="xl"] {
-    padding: var(--spacing-60);
+    padding: var(--spacing-175);
   }
 }
 

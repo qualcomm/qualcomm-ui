@@ -1,12 +1,12 @@
 .qui-checkbox__root {
   align-items: center;
   -webkit-box-align: center;
-  column-gap: var(--spacing-70);
+  column-gap: var(--spacing-200);
   display: grid;
   grid-template-columns: auto 1fr;
   justify-content: start;
   position: relative;
-  row-gap: var(--spacing-50);
+  row-gap: var(--spacing-150);
   vertical-align: top;
   width: fit-content;
 
@@ -31,7 +31,7 @@
   background: var(--color-background-neutral-00);
   border: var(--border-width-sm, 1px) solid
     var(--color-interactive-border-neutral-idle);
-  border-radius: var(--border-radius-xs, 2px);
+  border-radius: var(--border-radius-50, 2px);
   box-sizing: border-box;
   color: var(--color-utility-persistent-white);
   display: inline-flex;
@@ -40,13 +40,13 @@
   max-width: var(--control-size);
   min-height: var(--control-size);
   min-width: var(--control-size);
-  --control-size: var(--sizing-70);
+  --control-size: var(--sizing-400);
 
   &[data-size="md"] {
-    --control-size: var(--sizing-80);
+    --control-size: var(--sizing-500);
   }
   &[data-size="lg"] {
-    --control-size: var(--sizing-90);
+    --control-size: var(--sizing-600);
   }
 
   &[data-focus-visible] {

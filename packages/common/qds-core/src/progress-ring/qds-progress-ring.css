@@ -2,13 +2,13 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-30);
+  gap: var(--spacing-75);
   justify-content: center;
   position: relative;
 
   &[data-size="lg"],
   &[data-size="xl"] {
-    gap: var(--spacing-40);
+    gap: var(--spacing-100);
   }
 }
 
@@ -30,32 +30,32 @@
   --circumference: calc(2 * 3.14159 * var(--radius));
 
   &[data-size="xxs"] {
-    --circle-size: var(--sizing-60);
+    --circle-size: var(--sizing-300);
     --thickness: 2px;
   }
 
   &[data-size="xs"] {
-    --circle-size: var(--sizing-70);
+    --circle-size: var(--sizing-400);
     --thickness: 2px;
   }
 
   &[data-size="sm"] {
-    --circle-size: var(--sizing-80);
+    --circle-size: var(--sizing-500);
     --thickness: 3px;
   }
 
   &[data-size="md"] {
-    --circle-size: var(--sizing-120);
+    --circle-size: var(--sizing-800);
     --thickness: 4px;
   }
 
   &[data-size="lg"] {
     --thickness: 5px;
-    --circle-size: var(--sizing-160);
+    --circle-size: var(--sizing-1200);
   }
 
   &[data-size="xl"] {
-    --circle-size: var(--sizing-180);
+    --circle-size: var(--sizing-2000);
     --thickness: 6px;
   }
 

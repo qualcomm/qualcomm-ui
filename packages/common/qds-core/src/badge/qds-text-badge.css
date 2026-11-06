@@ -8,26 +8,26 @@
   color: var(--badge-text);
 
   &[data-size="sm"] {
-    border-radius: var(--border-radius-xs);
+    border-radius: var(--border-radius-50);
     font: var(--font-static-body-xs-default);
-    min-height: var(--sizing-80);
-    min-width: var(--sizing-80);
-    padding: var(--spacing-0) var(--spacing-50);
+    min-height: var(--sizing-500);
+    min-width: var(--sizing-500);
+    padding: var(--spacing-0) var(--spacing-150);
   }
 
   &[data-size="md"] {
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-75);
     font: var(--font-static-body-sm-default);
-    min-height: var(--sizing-90);
-    min-width: var(--sizing-90);
-    padding: var(--spacing-0) var(--spacing-70);
+    min-height: var(--sizing-600);
+    min-width: var(--sizing-600);
+    padding: var(--spacing-0) var(--spacing-200);
   }
 
   &[data-size="lg"] {
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-75);
     font: var(--font-static-body-md-default);
-    min-height: var(--sizing-120);
-    min-width: var(--sizing-120);
-    padding: var(--spacing-0) var(--spacing-70);
+    min-height: var(--sizing-800);
+    min-width: var(--sizing-800);
+    padding: var(--spacing-0) var(--spacing-200);
   }
 }

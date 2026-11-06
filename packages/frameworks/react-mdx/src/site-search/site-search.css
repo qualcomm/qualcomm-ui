@@ -11,7 +11,7 @@
 .qui-site-search__floating-panel-mobile {
   background: var(--color-background-neutral-00);
   border: solid 1px var(--color-border-neutral-01);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-100);
   border-top-width: 0;
   flex-direction: column;
   max-height: 400px;

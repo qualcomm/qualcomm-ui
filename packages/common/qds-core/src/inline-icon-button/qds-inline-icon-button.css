@@ -1,9 +1,9 @@
 .qui-inline-icon-button__root {
-  --button-size: var(--sizing-90);
+  --button-size: var(--sizing-600);
   align-items: center;
   background: var(--color-interactive-background-ghost-idle);
   border: var(--border-width-sm) solid transparent;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-75);
   color: var(--color-interactive-icon-neutral-idle);
   display: inline-flex;
   height: var(--button-size);
@@ -30,11 +30,11 @@
   }
 
   &[data-size="sm"] {
-    --button-size: var(--sizing-80);
+    --button-size: var(--sizing-500);
   }
 
   &[data-size="lg"] {
-    --button-size: var(--sizing-100);
+    --button-size: var(--sizing-700);
   }
 
   .qui-icon__root.qui-inline-icon-button__icon {

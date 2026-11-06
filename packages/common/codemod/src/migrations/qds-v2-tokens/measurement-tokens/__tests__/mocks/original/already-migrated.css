@@ -1,0 +1,6 @@
+.qds-example {
+  padding: var(--spacing-100) var(--spacing-25);
+  width: var(--sizing-900);
+  height: var(--sizing-100);
+  border-radius: var(--border-radius-max);
+}

@@ -1,11 +1,11 @@
 .qui-stepper__root {
-  --step-indicator-size: var(--sizing-100);
-  --step-list-gap: var(--spacing-40);
-  --step-item-gap: var(--spacing-50);
+  --step-indicator-size: var(--sizing-700);
+  --step-list-gap: var(--spacing-100);
+  --step-item-gap: var(--spacing-150);
 
   &[data-size="sm"] {
-    --step-indicator-size: var(--sizing-80);
-    --step-list-gap: var(--spacing-20);
+    --step-indicator-size: var(--sizing-500);
+    --step-list-gap: var(--spacing-50);
   }
 }
 
@@ -108,7 +108,7 @@
   width: var(--step-indicator-size);
 
   .qui-icon__root[data-size] {
-    --icon-size: var(--sizing-70);
+    --icon-size: var(--sizing-400);
   }
 
   &[data-size="sm"] {
@@ -116,7 +116,7 @@
     margin-bottom: var(--step-item-gap);
 
     .qui-icon__root[data-size] {
-      --icon-size: var(--sizing-60);
+      --icon-size: var(--sizing-300);
     }
   }
 
@@ -344,7 +344,7 @@
   anchor-name: var(--anchor-name, --stepper-indicator);
   display: flex;
   justify-content: center;
-  margin-bottom: var(--spacing-70);
+  margin-bottom: var(--spacing-200);
 
   &[data-orientation="horizontal-inline"],
   &[data-orientation="vertical-inline"] {
