@@ -74,9 +74,9 @@ describe("transformQuiDocsConfig", () => {
   test("leaves unrelated integrations properties alone", () => {
     const content = `export default {navConfig: [{id: "integrations"}], other: {integrations: []}}\n`
     expect(transformQuiDocsConfig(content)).toEqual({
+      changed: [],
       content,
       manual: [],
-      removed: [],
       status: "unchanged",
     })
   })

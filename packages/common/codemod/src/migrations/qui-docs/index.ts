@@ -8,6 +8,7 @@ import {fallbackRouteMiddleware} from "./fallback-route-middleware/fallback-rout
 import {fallbackRoute} from "./fallback-route/fallback-route.js"
 import {notFoundRoute} from "./not-found-route/not-found-route.js"
 import {removeOpenWebUi} from "./remove-open-web-ui/remove-open-web-ui.js"
+import {validatePageLinks} from "./validate-page-links/validate-page-links.js"
 
 export type QuiDocsPackage =
   | "@qualcomm-ui/mdx-vite"
@@ -21,6 +22,7 @@ export const quiDocs: MigrationGroup<QuiDocsPackage> = {
     docsContextNames,
     fallbackRouteMiddleware,
     removeOpenWebUi,
+    validatePageLinks,
   ],
   description: "QUI documentation sites built with React Router",
   name: "qui-docs",
