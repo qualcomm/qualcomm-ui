@@ -192,3 +192,116 @@ Border radius replacements apply only to `--border-radius-*`:
 | `xl`      | `200` |
 | `xs`      | `50`  |
 | `xxl`     | `300` |
+
+### react
+
+Packages: `@qualcomm-ui/react`
+
+| Codemod          | Versions                     | Description                                                                                                                                            |
+| ---------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `emphasis-props` | `@qualcomm-ui/react` v1 → v2 | Replaces the deprecated `variant` prop of Slider and SegmentedControl with `emphasis`, deprecated `emphasis` values, and deprecated variant type names |
+
+Run the migration:
+
+```shell
+npx @qualcomm-ui/codemod@latest migrate react
+```
+
+The deprecated props, values, and types remain supported in v2, so run the codemod before or after upgrading. Detected v1 dependencies are updated to v2 in `package.json`. Running it again makes no changes.
+
+`emphasis-props` matches `Slider`, `Slider.Root`, `SegmentedControl.Root`, `Tag`, `Breadcrumbs.Root`, `Progress`, `Progress.Root`, `ProgressRing`, and `ProgressRing.Root` imported from their `@qualcomm-ui/react/<component>` entry points. Aliased and namespace imports are supported. Same-name components from other libraries are ignored.
+
+Prop replacements:
+
+| Components               | Deprecated | Replacement |
+| ------------------------ | ---------- | ----------- |
+| Slider, SegmentedControl | `variant`  | `emphasis`  |
+
+Value replacements apply to `emphasis` and the deprecated `variant` prop:
+
+| Components                                                    | Deprecated        | Replacement       |
+| ------------------------------------------------------------- | ----------------- | ----------------- |
+| Slider, SegmentedControl, Breadcrumbs, Progress, ProgressRing | `primary`         | `brand`           |
+| Tag                                                           | `outline-brand`   | `brand-outline`   |
+| Tag                                                           | `outline-neutral` | `neutral-outline` |
+| Tag                                                           | `kiwi`            | `lime`            |
+
+Tag's own `variant` values (`selectable`, `link`, `dismissable`) are unrelated and unchanged.
+
+Type replacements apply to `@qualcomm-ui/qds-core/slider` and `@qualcomm-ui/qds-core/segmented-control`:
+
+| Deprecated                   | Replacement                   |
+| ---------------------------- | ----------------------------- |
+| `QdsSliderVariant`           | `QdsSliderEmphasis`           |
+| `QdsSegmentedControlVariant` | `QdsSegmentedControlEmphasis` |
+
+Type imports, re-exports, and their references are renamed. Aliased imports and re-exports keep their local or exported name. If the replacement name is already imported, the old import keeps its local name (`QdsSliderEmphasis as QdsSliderVariant`).
+
+Values are replaced in string literals, conditional branches (`a ? "primary" : "neutral"`), operands of `??` or `||`, and the right operand of `&&`. Other expressions, such as `variant={value}`, only have the prop renamed. `emphasis` accepts deprecated values, so behavior does not change.
+
+Slider or SegmentedControl elements with both `variant` and `emphasis` are left unchanged and reported for manual update. Remove `variant`; `emphasis` takes precedence at runtime.
+
+Spread props, prop objects or arrays built elsewhere, direct qds-core API usage (`createQdsSliderApi`, `api.variant`), and CSS are not rewritten. Slider and SegmentedControl render `data-emphasis` instead of `data-variant`. Update custom CSS targeting `[data-variant]` on those components manually.
+
+The codemod scans ts, tsx, mts, cts, js, jsx, mjs, and cjs files. It ignores `node_modules`, `dist`, `build`, `coverage`, and `.react-router`. Edits preserve formatting. Edited props are not re-sorted, so run your formatter afterward.
+
+### angular
+
+Packages: `@qualcomm-ui/angular`
+
+| Codemod          | Versions                       | Description                                                                                                                                            |
+| ---------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `emphasis-props` | `@qualcomm-ui/angular` v3 → v4 | Replaces the deprecated `variant` prop of Slider and SegmentedControl with `emphasis`, deprecated `emphasis` values, and deprecated variant type names |
+
+Run the migration:
+
+```shell
+npx @qualcomm-ui/codemod@latest migrate angular
+```
+
+The deprecated props, values, and types remain supported in v4, so run the codemod before or after upgrading. Detected v3 dependencies are updated to v4 in `package.json`. Running it again makes no changes.
+
+`emphasis-props` matches `<q-slider>`, `[q-slider-root]`, `[q-segmented-control]`, `[q-tag]`, `[q-breadcrumbs-root]`, `[q-progress]`, `[q-progress-root]`, `[q-progress-ring]`, and `[q-progress-ring-root]` selectors.
+
+The codemod rewrites external `.html` templates and inline `template` strings in `@Component` decorators. This includes elements inside `@if` and `@for` blocks, `ng-template`, and structural directives. It handles static attributes (`variant="primary"`), property bindings (`[variant]="'primary'"`, `bind-variant`), and interpolations (`variant="{{ 'primary' }}"`). `[attr.variant]` is unchanged.
+
+Prop replacements:
+
+| Components               | Deprecated | Replacement |
+| ------------------------ | ---------- | ----------- |
+| Slider, SegmentedControl | `variant`  | `emphasis`  |
+
+Value replacements apply to `emphasis` and the deprecated `variant` prop:
+
+| Components                                                    | Deprecated        | Replacement       |
+| ------------------------------------------------------------- | ----------------- | ----------------- |
+| Slider, SegmentedControl, Breadcrumbs, Progress, ProgressRing | `primary`         | `brand`           |
+| Tag                                                           | `outline-brand`   | `brand-outline`   |
+| Tag                                                           | `outline-neutral` | `neutral-outline` |
+| Tag                                                           | `kiwi`            | `lime`            |
+
+Tag's own `variant` values (`selectable`, `link`, `dismissable`) are unrelated and unchanged.
+
+Type replacements apply to `@qualcomm-ui/qds-core/slider` and `@qualcomm-ui/qds-core/segmented-control`:
+
+| Deprecated                   | Replacement                   |
+| ---------------------------- | ----------------------------- |
+| `QdsSliderVariant`           | `QdsSliderEmphasis`           |
+| `QdsSegmentedControlVariant` | `QdsSegmentedControlEmphasis` |
+
+Type imports, re-exports, and their references are renamed. Aliased imports and re-exports keep their local or exported name. If the replacement name is already imported, the old import keeps its local name (`QdsSliderEmphasis as QdsSliderVariant`).
+
+Values are replaced in string literals, conditional branches (`a ? 'primary' : 'neutral'`), operands of `??` or `||`, and the right operand of `&&`. Other expressions, such as `[variant]="value"`, only have the prop renamed. `emphasis` accepts deprecated values, so behavior does not change.
+
+It reports the following for manual update instead of rewriting them:
+
+- Inline templates that aren't plain strings, including template literals with `${}` substitutions
+- Inline templates containing escape sequences
+- Templates that fail to parse
+- Slider or SegmentedControl elements with both `variant` and `emphasis`
+
+For elements with both props, remove `variant`; `emphasis` takes precedence at runtime.
+
+Spread props, prop objects or arrays built elsewhere, direct qds-core API usage (`createQdsSliderApi`, `api.variant`), and CSS are not rewritten. Slider and SegmentedControl render `data-emphasis` instead of `data-variant`. Update custom CSS targeting `[data-variant]` on those components manually.
+
+The codemod scans ts, mts, cts, and html files. It ignores `node_modules`, `dist`, `build`, `coverage`, and `.angular`. Edits preserve formatting. Edited props are not re-sorted, so run your formatter afterward.
