@@ -7,6 +7,8 @@ import {addFixLinksCommand} from "./docs-plugin/fix-links.js"
 import {addGeneratePageMapCommand} from "./docs-plugin/generate-page-map.js"
 
 function setupCli() {
+  program.name("qui-docs")
+
   addGeneratePageMapCommand()
   addFixLinksCommand()
 
