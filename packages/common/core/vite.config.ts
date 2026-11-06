@@ -23,5 +23,5 @@ export default defineConfig({
     sourcemap: true,
     ssr: true,
   },
-  plugins: [libraryEntriesPlugin()],
+  plugins: [libraryEntriesPlugin({logTotalBundleSize: true})],
 })

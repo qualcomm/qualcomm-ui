@@ -28,5 +28,8 @@ export default defineConfig({
     },
     sourcemap: true,
   },
-  plugins: [react({compiler: true}), libraryEntriesPlugin()],
+  plugins: [
+    react({compiler: true}),
+    libraryEntriesPlugin({logTotalBundleSize: true}),
+  ],
 })
