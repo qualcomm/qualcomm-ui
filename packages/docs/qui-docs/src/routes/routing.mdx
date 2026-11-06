@@ -4,7 +4,7 @@ title: Routing
 
 # {frontmatter.title}
 
-Use this contract when you create, move, validate, or review route pages in a QUI Docs site. For the filename-to-URL model, see [Routing Conventions](/routing-conventions). For the guided setup walkthrough, see [Page Configuration](/pages). For writing principles and reviewer gates, see [Principles](/principles) and [Rules](/rules).
+Use this contract when you create, move, validate, or review route pages in a QUI Docs site. For the filename-to-URL model, see [Routing Conventions](./routing-conventions.mdx). For the guided setup walkthrough, see [Page Configuration](./pages.mdx). For writing principles and reviewer gates, see [Principles](./principles.mdx) and [Rules](./rules.mdx).
 
 ## Before editing
 
@@ -12,8 +12,8 @@ Inspect the existing docs surface before adding or moving a page:
 
 - Open `qui-docs.config.ts` and check the section order, existing `navConfig` entries, and any configured `knowledge` exclusions.
 - Read nearby sibling routes so the new page matches the section's naming, tone, heading depth, and link style.
-- Read [Principles](/principles) before writing the content shape.
-- Read [Rules](/rules) before choosing filenames, frontmatter, links, screenshots, or examples.
+- Read [Principles](./principles.mdx) before writing the content shape.
+- Read [Rules](./rules.mdx) before choosing filenames, frontmatter, links, screenshots, or examples.
 
 ## Page file contract
 
@@ -38,7 +38,7 @@ title: Page Authoring
 
 - Keep one H1 per page, always `# {frontmatter.title}`.
 - Use optional frontmatter fields only when they have a specific page behavior. Common fields include `description`, `sideNavTitle`, `hidden`, `hideFromSearch`, `hideToc`, `hideSideNav`, `hideBreadcrumbs`, and `hidePageLinks`.
-- Check [PageFrontmatter](/api/page-frontmatter) before adding metadata fields. Do not invent frontmatter keys for behavior the platform does not read.
+- Check [PageFrontmatter](./api/page-frontmatter.mdx) before adding metadata fields. Do not invent frontmatter keys for behavior the platform does not read.
 - Use H2 sections for primary tasks or concepts. Use H3 and H4 only when they add useful hierarchy.
 - Do not skip heading levels, style heading text with bold or italics, or end headings with trailing punctuation.
 - Use root-relative links for docs pages. Example: `[Rules](/rules)`.
@@ -57,7 +57,7 @@ Use `navConfig` when a page's order, nesting, initial expanded state, label, or 
 - Use `hidden` only for pages that should stay out of the side navigation and adjacent page links.
 - Prefer stable section order over alphabetical fallback for authored documentation sections.
 
-Properties defined in `navConfig` take precedence over overlapping page frontmatter. Check [NavConfig](/api/nav-config) before adding route metadata.
+Properties defined in `navConfig` take precedence over overlapping page frontmatter. Check [NavConfig](./api/nav-config.mdx) before adding route metadata.
 
 ## Search and knowledge contract
 
@@ -65,7 +65,7 @@ Properties defined in `navConfig` take precedence over overlapping page frontmat
 - Use `.tsx` routes sparingly. TSX pages can appear in navigation when configured, but their rendered content is not indexed for search by default. MDX allows you to use React components in your pages, so prefer MDX routes even for pages with more complex content.
 - Set `hideFromSearch: true` in frontmatter or `navConfig` when the page content should be excluded from search.
 - Check the `knowledge` field in `qui-docs.config.ts` before assuming a page is included in AI knowledge exports. The config can exclude route globs and add extra files.
-- For generated knowledge behavior, output files, and upload workflows, see [AI Knowledge](/ai-knowledge).
+- For generated knowledge behavior, output files, and upload workflows, see [AI Knowledge](./ai-knowledge.mdx).
 
 ## Move and rename contract
 
@@ -104,9 +104,9 @@ Before opening a PR:
 
 Before review, confirm:
 
-- The page has one clear primary type from [Principles](/principles).
+- The page has one clear primary type from [Principles](./principles.mdx).
 - The first paragraph states what the reader can do after reading.
-- Filename, route path, frontmatter, H1, headings, and links follow [Rules](/rules).
+- Filename, route path, frontmatter, H1, headings, and links follow [Rules](./rules.mdx).
 - The page is in `navConfig` when order, nesting, label, expansion, or visibility matters.
 - Search and AI knowledge behavior are intentional.
 - Moved or renamed pages have compatibility redirects and updated canonical inbound links.

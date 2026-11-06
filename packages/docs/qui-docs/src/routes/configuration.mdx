@@ -65,11 +65,11 @@ Combined, pages live at `<process.cwd()>/<appDirectory>/<pageDirectory>`. With d
 
 ### routingStrategy
 
-Controls how file paths map to URL segments. This is explored in detail on the [Routing Conventions](/routing-conventions) page.
+Controls how file paths map to URL segments. This is explored in detail on the [Routing Conventions](./routing-conventions.mdx) page.
 
 ## Navigation
 
-The `navConfig` array controls sidebar order, section groupings, initial expanded state, and per-route display properties. For how to define and nest `navConfig` entries, see [Page Configuration](/pages#nav-config). For the full option reference, see [NavConfig](/api/nav-config).
+The `navConfig` array controls sidebar order, section groupings, initial expanded state, and per-route display properties. For how to define and nest `navConfig` entries, see [Page Configuration](./pages.mdx#nav-config). For the full option reference, see [NavConfig](./api/nav-config.mdx).
 
 ## Content and Validation
 
@@ -95,7 +95,7 @@ Rules:
 - `fileLinks`: reports internal links to MDX pages that use URL paths instead of relative `.mdx` file paths. Default: `"off"`.
 - `pageTitle`: validates the h1 page title of every MDX page. Default: `"warn"`.
 
-The `fileLinks` rule is opt-in. Set it to `"warn"` or `"error"` to report URL-path links with suggested relative `.mdx` replacements. See [Relative Links](/markdown#relative-links) for file-link syntax.
+The `fileLinks` rule is opt-in. Set it to `"warn"` or `"error"` to report URL-path links with suggested relative `.mdx` replacements. See [Relative Links](./markdown.mdx#relative-links) for file-link syntax.
 
 - Same-page links such as `./#size` are reported with `#size` as the replacement.
 - Links to TSX pages, public directory files, and missing pages are skipped. The `brokenLinks` rule reports missing pages.
@@ -134,7 +134,7 @@ Controls which heading depths are included in the in-page table of contents and 
 
 ### typeDocProps
 
-Relative path to the generated `doc-props.json` file. Required for the `<TypeDocProps />` component to render property documentation in MDX pages. See [TypeDoc](/typedoc) for the full setup. Ignore if you aren't using the `<TypeDocProps />` component.
+Relative path to the generated `doc-props.json` file. Required for the `<TypeDocProps />` component to render property documentation in MDX pages. See [TypeDoc](./typedoc.mdx) for the full setup. Ignore if you aren't using the `<TypeDocProps />` component.
 
 ## Page Metadata
 
@@ -152,4 +152,4 @@ The `knowledge` field enables AI knowledge export to `pages.json` and `sections.
 
 ## Full Reference
 
-The [QuiDocsConfig API reference](/api/qui-docs-config) lists all configuration options, including advanced build knobs (`disableCache`, `throwOnError`, `hotUpdateIgnore`) and `typeDocPropsOptions`.
+The [QuiDocsConfig API reference](./api/qui-docs-config.mdx) lists all configuration options, including advanced build knobs (`disableCache`, `throwOnError`, `hotUpdateIgnore`) and `typeDocPropsOptions`.

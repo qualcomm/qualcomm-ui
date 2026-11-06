@@ -10,7 +10,7 @@ These rules apply to MDX route files, the QUI Docs navigation config, and asset 
 
 This guide is intended for Qualcomm developers and QUI contributors.
 
-Use [Routing Guidelines](/routing) for the operational contract that applies these rules when creating, moving, validating, or reviewing route pages.
+Use [Routing Guidelines](./routing.mdx) for the operational contract that applies these rules when creating, moving, validating, or reviewing route pages.
 
 ## File and folder naming
 
@@ -72,7 +72,7 @@ When moving an existing route:
 
 ## Lint
 
-QUI Docs validates broken links and page titles during development and build. Rules set to `"error"` fail the production build (`vite build`). Both `pageTitle` and `brokenLinks` default to `"warn"`. `fileLinks` defaults to `"off"`. Enable it to report URL-path links to MDX pages with suggested relative `.mdx` replacements. Configure severity with the [`lint` option](/configuration#lint) in `qui-docs.config.ts`.
+QUI Docs validates broken links and page titles during development and build. Rules set to `"error"` fail the production build (`vite build`). Both `pageTitle` and `brokenLinks` default to `"warn"`. `fileLinks` defaults to `"off"`. Enable it to report URL-path links to MDX pages with suggested relative `.mdx` replacements. Configure severity with the [`lint` option](./configuration.mdx#lint) in `qui-docs.config.ts`.
 
 ## Frontmatter
 
@@ -148,7 +148,7 @@ Detail goes in the paragraphs below the heading.
 
 ## Links
 
-- Use relative `.mdx` file links for MDX pages: `./api/qui-docs-config.mdx#navConfig`. See [Relative Links](/markdown#relative-links).
+- Use relative `.mdx` file links for MDX pages: `./api/qui-docs-config.mdx#navConfig`. See [Relative Links](./markdown.mdx#relative-links).
 - Use `#fragment` for same-page links, not `./#fragment`.
 - Use root-relative URL paths only for TSX route pages and public files. Do not use old-style absolute paths.
 - Use descriptive link text that names the target task, concept, or reference.
@@ -239,7 +239,7 @@ Weak (chat shorthand):
 
 Better (complete sentence):
 
-> For more details, see [Authentication setup]().
+> For more details, see [Authentication setup](./rules.mdx).
 
 ## Examples must prove the workflow
 

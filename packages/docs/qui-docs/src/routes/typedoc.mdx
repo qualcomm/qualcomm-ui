@@ -200,7 +200,7 @@ export default {
 
 1. We recommend that you point typedoc at the compiled TypeScript types to improve compilation time. This is why we point our entryPoints at files in `dist`.
 2. For Angular packages, the output types strip away necessary type information, so we target the package's src root instead, i.e. `./src/index.ts`.
-3. Sometimes it is desirable to prevent the expansion of deeply nested types, like an interface that recursively references itself. We've enhanced the [@inheritDoc](https://typedoc.org/tags/inheritDoc/) tag for this purpose. Refer to the [JSDoc Tags](./#jsdoc-tags) section to learn more.
+3. Sometimes it is desirable to prevent the expansion of deeply nested types, like an interface that recursively references itself. We've enhanced the [@inheritDoc](https://typedoc.org/tags/inheritDoc/) tag for this purpose. Refer to the [JSDoc Tags](#jsdoc-tags) section to learn more.
 
 ### Reference Types
 

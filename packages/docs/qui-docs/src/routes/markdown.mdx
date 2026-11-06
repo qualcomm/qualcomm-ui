@@ -43,9 +43,9 @@ title: Example Page
 This is the content of my page.
 ```
 
-The page title must be the only h1 on the page. The `pageTitle` [lint rule](/configuration#lint) enforces this.
+The page title must be the only h1 on the page. The `pageTitle` [lint rule](./configuration.mdx#lint) enforces this.
 
-For a list of each available property, refer to the [PageFrontmatter API](/api/page-frontmatter).
+For a list of each available property, refer to the [PageFrontmatter API](./api/page-frontmatter.mdx).
 
 ## Autolink Headings
 
@@ -206,12 +206,10 @@ Apply the changes and review the diff:
 qui-mdx-vite fix-links
 ```
 
-Options:
+::: spoiler Options
 
 - `-c, --config-file <configFile>`: path to the QUI Docs config file. The file is auto-detected if omitted.
 - `--dry-run`: reports changes without writing files.
-
-For a config file under `src`, use `--config-file src/qui-docs.config.ts`.
 
 The command only edits link destinations. Link text, titles, and the rest of each file remain unchanged.
 
@@ -219,6 +217,8 @@ The command only edits link destinations. Link text, titles, and the rest of eac
 - Links to TSX route pages, public directory files, missing pages, and external URLs are not changed.
 - Pages symlinked from outside the routes directory are skipped and listed. Shared pages must keep using URL paths.
 - Destinations that cannot be rewritten automatically, such as those containing escapes or character references, are listed for manual fixes.
+
+:::
 
 ### External Links
 

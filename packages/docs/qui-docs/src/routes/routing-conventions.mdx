@@ -140,7 +140,7 @@ Use this approach to create your own file-based routing strategy.
 
 React Router's [Framework Mode](https://reactrouter.com/home#react-router-as-a-framework) supports manually defined route definitions. When you use manual routes, QUI Docs can still discover MDX files, but it cannot infer the page URL from React Router's route config.
 
-Add a [routingStrategy](/api/qui-docs-config#routingStrategy) so QUI Docs can map each discovered page file to the same URL React Router uses.
+Add a [routingStrategy](./api/qui-docs-config.mdx#routingStrategy) so QUI Docs can map each discovered page file to the same URL React Router uses.
 
 ### Example Routes
 
@@ -226,4 +226,4 @@ The home route returns an empty array because it renders at `/`.
 
 The `routingStrategy` should describe the same URLs as `routes.ts`. If the React Router route config changes, update the strategy in the same PR so navigation, page links, breadcrumbs, and search results continue to point to the rendered page.
 
-For the default file-based convention, omit `routingStrategy` and follow the naming rules in [Page Configuration](/pages).
+For the default file-based convention, omit `routingStrategy` and follow the naming rules in [Page Configuration](./pages.mdx).
