@@ -109,9 +109,6 @@ export default {
   knowledge: {
     baseUrl: "https://angular-table.qui.qualcomm.com",
     exclude: ["installation.mdx", "index/_index.mdx"],
-    integrations: {
-      openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}],
-    },
     pageIdPrefix: "table",
   },
   navConfig,

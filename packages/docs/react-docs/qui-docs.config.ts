@@ -188,9 +188,6 @@ export default {
     ],
     extraFiles,
     frontmatter: {exclude: ["url"], include: ["*"]},
-    integrations: {
-      openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],
-    },
   },
   navConfig,
   pageDirectory: "routes",
