@@ -4,6 +4,7 @@ description: Learn about how QUI Docs can enhance your Markdown authoring experi
 ---
 
 import {Button} from "@qualcomm-ui/react/button"
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
 
 # {frontmatter.title}
 
@@ -120,7 +121,7 @@ Lists denote nesting with alternating list styles based on the nesting level.
 
 ## Links
 
-All relative Markdown links are automatically converted to Remix or React Router links. This means that the target page will be prefetched. When you click on a link, the page will be loaded on the client-side, without making a full page load (SPA routing). For example:
+All Markdown links are automatically converted to clientside links. This means that the target page will be prefetched. When you click on a link, the page will be loaded on the client-side, without making a full page load (SPA routing). For example:
 
 ```markdown
 Click [here](/introduction) to learn more.
@@ -137,34 +138,57 @@ Click <Link prefetch="viewport" to="/introduction">here</Link> to learn more.
 ### Relative Links
 
 > [!note]
-> This feature was added in [@qualcomm-ui/mdx-vite@4.2.0](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/common/mdx-vite/CHANGELOG.md#420)
+> This feature was added in [@qualcomm-ui/mdx-vite@5.0.0](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/common/mdx-vite/CHANGELOG.md#500)
 
-A Markdown link with a relative path ending in `.mdx` is a file link. It resolves against the source MDX file on disk, not the page URL. Paths starting with `/`, `#`, or a URL scheme are not file links.
+A Markdown link with a relative path ending in `.mdx` is a file link. It resolves against the source MDX file on disk and automatically maps to the corresponding route in the site.
 
-From `api/nav-config.mdx`, link to the sibling file:
+These examples use this `src/routes` tree with the default routing strategy:
+
+<FileTree
+  className="mt-4"
+  expandedValue={["src", "routes", "components+", "guides+"]}
+  onExpandedValueChange={() => {}}
+  items={[
+    {
+      name: "src",
+      items: [
+        {
+          name: "routes",
+          items: [
+            {
+              name: "components+",
+              items: [{name: "button.mdx"}, {name: "tooltip.mdx"}],
+            },
+            {
+              name: "guides+",
+              items: [{name: "installation.mdx"}, {name: "theming.mdx"}],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+| File path | Page URL |
+| --- | --- |
+| `components+/button.mdx` | `/components/button` |
+| `components+/tooltip.mdx` | `/components/tooltip` |
+| `guides+/installation.mdx` | `/guides/installation` |
+| `guides+/theming.mdx` | `/guides/theming` |
+
+From `guides+/theming.mdx`, link to the sibling file `guides+/installation.mdx`:
 
 ```markdown
-[Navigation configuration](./qui-docs-config.mdx#navConfig)
+[Installation guide](./installation.mdx#requirements)
 ```
 
-The link compiles to:
+The `./` prefix is optional: `installation.mdx#requirements` resolves to the same file.
 
-```html
-<a href="/api/qui-docs-config#navConfig">Navigation configuration</a>
-```
-
-The `./` prefix is optional. `qui-docs-config.mdx` links to the same sibling file without a fragment.
-
-From `components+/button+/_button.mdx`, link through the parent directory:
+From the same file, go up one level with `../` and link to `components+/button.mdx`:
 
 ```markdown
-[Tooltip](../tooltip+/_tooltip.mdx)
-```
-
-With the default routing strategy, the link compiles to:
-
-```html
-<a href="/components/tooltip">Tooltip</a>
+[Button](../components+/button.mdx)
 ```
 
 File links work in GitHub's Markdown viewer and editors that follow file paths, so prefer them over root-relative links such as `/api/qui-docs-config`.
@@ -179,7 +203,7 @@ Root-relative and URL-relative links continue to work. No migration is required.
 
 #### Migrating Existing Links
 
-Run `qui-mdx-vite fix-links` to convert URL-path links to relative `.mdx` file links. It applies the same replacements reported by the `fileLinks` lint rule:
+Run `qui-docs fix-links` to convert URL-path links to relative `.mdx` file links. It applies the same replacements reported by the `fileLinks` lint rule:
 
 - From `components+/button+/_button.mdx`, `/components/tooltip#placement` becomes `../tooltip+/_tooltip.mdx#placement`.
 - Same-page `./#size` becomes `#size`.
@@ -187,7 +211,7 @@ Run `qui-mdx-vite fix-links` to convert URL-path links to relative `.mdx` file l
 Run the command from the docs site's package directory. Preview changes with `--dry-run`:
 
 ```shell
-qui-mdx-vite fix-links --dry-run
+qui-docs fix-links --dry-run
 ```
 
 Example output:
@@ -203,7 +227,7 @@ Would fix 2 links in 1 file.
 Apply the changes and review the diff:
 
 ```shell
-qui-mdx-vite fix-links
+qui-docs fix-links
 ```
 
 ::: spoiler Options
