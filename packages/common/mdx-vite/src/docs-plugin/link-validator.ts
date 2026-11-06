@@ -319,6 +319,9 @@ export function reportFileLinkIssues(
     }
   }
 
+  console.debug(
+    `\nRun ${chalk.cyanBright("qui-docs fix-links")} to apply these replacements, or ${chalk.cyanBright("qui-docs fix-links --dry-run")} to preview them.`,
+  )
   console.debug("")
 }
 

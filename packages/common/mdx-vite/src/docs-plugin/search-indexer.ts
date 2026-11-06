@@ -106,6 +106,17 @@ export class SearchIndexer {
     )
   }
 
+  /**
+   * Number of issues found by lint rules set to `"warn"` during the last build.
+   */
+  get lintWarningCount(): number {
+    return (
+      (this.lint.brokenLinks === "warn" ? this._invalidLinkCount : 0) +
+      (this.lint.fileLinks === "warn" ? this._fileLinkIssueCount : 0) +
+      (this.lint.pageTitle === "warn" ? this._pageTitleIssues.length : 0)
+    )
+  }
+
   get cachedFileCount(): number {
     return this.mdxFileReader.cachedFileCount
   }

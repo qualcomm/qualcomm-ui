@@ -242,7 +242,7 @@ export interface QuiDocsLintOptions {
    * `../button+/_button.mdx` or `#size`. URL paths don't resolve in GitHub's
    * markdown viewer.
    *
-   * @default "off"
+   * @default "warn"
    */
   fileLinks?: LintSeverity
 
