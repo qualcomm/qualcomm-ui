@@ -1,0 +1,239 @@
+---
+title: Migrate from v1 to v2
+---
+
+# {frontmatter.title}
+
+Use this guide to upgrade `@qualcomm-ui/react` from 1.x to 2.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types. Continue reading to learn how to migrate with our published codemods.
+
+## Update the dependencies
+
+Update the QUI dependencies in `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@qualcomm-ui/react": "^2.0.0",
+    "@qualcomm-ui/qds-core": "^2.0.0",
+    "@qualcomm-ui/tailwind-plugin": "^2.0.0"
+  }
+}
+```
+
+- `@qualcomm-ui/qds-core` is a peer dependency and must be on v2.
+- Update `@qualcomm-ui/tailwind-plugin` only if your application uses tailwind.
+
+## Migrate measurement tokens
+
+`@qualcomm-ui/qds-core` v2 and `@qualcomm-ui/tailwind-plugin` v2 rename the spacing, sizing, and border radius tokens. This is the breaking change in this release.
+
+QUI's component CSS already uses the new tokens. Components render at the same sizes. Only application code that references these tokens directly requires migration:
+
+- CSS variables: `--spacing-*`, `--sizing-*`, and `--border-radius-*`.
+- Tailwind spacing utilities, such as `p-qds-40`.
+- Tailwind theme variables: `--spacing-qds-*`.
+
+> [!warning]
+> Some token names exist in both scales with different pixel values. Legacy `--spacing-100` is 16px. The new `--spacing-100` is 4px. Unchanged references can resolve to incorrect sizes without an error.
+
+### Token codemod
+
+Run this one-time migration only if you upgraded from `@qualcomm-ui/qds-core` v1 and referenced the measurement tokens directly. Do not run it on projects that started on v2 or never used these tokens directly.
+
+Run from your project root:
+
+```shell
+npx @qualcomm-ui/codemod@latest migrate qds-v2-tokens
+```
+
+- The migration cancels without writing files if any scanned file contains v2-only tokens. `--force` skips this check. Review mixed legacy and v2 references before using it.
+- Detected v1 dependencies on `@qualcomm-ui/qds-core` and `@qualcomm-ui/tailwind-plugin` are updated to v2.
+- The codemod adds a `qui.completedMigrations` record and a `note` field to `package.json`. Commit the `qui` field. Do not edit or remove it. Removing the record can cause tokens to be renamed again.
+
+Update runtime-built names, such as `` `--spacing-${step}` ``, and bare names without the `--` prefix manually. These are not rewritten.
+
+Refer to the [codemod README](https://github.com/qualcomm/qualcomm-ui/tree/main/packages/common/codemod) for migration details.
+
+### Manual token migration
+
+Replace each legacy token with the new token that preserves its pixel value:
+
+```css
+.panel {
+  padding: var(--spacing-40); /* [!code --] */
+  padding: var(--spacing-100); /* [!code ++] */
+  width: var(--sizing-70); /* [!code --] */
+  width: var(--sizing-400); /* [!code ++] */
+  border-radius: var(--border-radius-md); /* [!code --] */
+  border-radius: var(--border-radius-100); /* [!code ++] */
+}
+```
+
+Update Tailwind spacing utilities:
+
+```tsx
+<div className="p-qds-40">Content</div> // [!code --]
+<div className="p-qds-100">Content</div> // [!code ++]
+```
+
+::: spoiler Spacing token replacements
+
+These replacements apply to `--spacing-*`, Tailwind spacing utilities, and `--spacing-qds-*`.
+
+| Legacy | New    |
+| ------ | ------ |
+| `0`    | `0`    |
+| `10`   | `25`   |
+| `20`   | `50`   |
+| `30`   | `75`   |
+| `40`   | `100`  |
+| `50`   | `150`  |
+| `60`   | `175`  |
+| `70`   | `200`  |
+| `80`   | `250`  |
+| `90`   | `300`  |
+| `100`  | `400`  |
+| `110`  | `500`  |
+| `120`  | `600`  |
+| `130`  | `700`  |
+| `140`  | `800`  |
+| `150`  | `900`  |
+| `160`  | `1000` |
+| `170`  | `1100` |
+| `180`  | `1200` |
+| `190`  | `1300` |
+| `200`  | `1400` |
+| `210`  | `1500` |
+| `220`  | `1600` |
+| `230`  | `1700` |
+| `240`  | `1800` |
+| `250`  | `1900` |
+| `260`  | `2000` |
+| `270`  | `2100` |
+| `280`  | `2200` |
+| `290`  | `2300` |
+| `300`  | `2400` |
+| `310`  | `2500` |
+| `320`  | `3000` |
+| `330`  | `3300` |
+
+:::
+
+::: spoiler Sizing token replacements
+
+These replacements apply to `--sizing-*`.
+
+| Legacy | New    |
+| ------ | ------ |
+| `10`   | `25`   |
+| `20`   | `50`   |
+| `30`   | `100`  |
+| `40`   | `150`  |
+| `50`   | `200`  |
+| `60`   | `300`  |
+| `70`   | `400`  |
+| `80`   | `500`  |
+| `90`   | `600`  |
+| `100`  | `700`  |
+| `110`  | `750`  |
+| `120`  | `800`  |
+| `125`  | `850`  |
+| `130`  | `950`  |
+| `140`  | `1000` |
+| `150`  | `1150` |
+| `160`  | `1200` |
+| `170`  | `1400` |
+| `180`  | `2000` |
+| `190`  | `3000` |
+| `200`  | `4000` |
+
+:::
+
+::: spoiler Border radius replacements
+
+These replacements apply only to `--border-radius-*`.
+
+| Legacy    | New   |
+| --------- | ----- |
+| `xs`      | `50`  |
+| `sm`      | `75`  |
+| `md`      | `100` |
+| `lg`      | `150` |
+| `xl`      | `200` |
+| `xxl`     | `300` |
+| `none`    | `0`   |
+| `rounded` | `max` |
+
+:::
+
+Tailwind `rounded-*` utilities and `--radius-*` variables keep their existing names and pixel values. The plugin adds `rounded-2xl` (14px), `rounded-3xl` (16px), `rounded-4xl` (20px), and `rounded-5xl` (24px).
+
+## Replace deprecated props
+
+This step is optional. The deprecated props, values, and types remain supported in v2.
+
+Run the React codemod:
+
+```shell
+npx @qualcomm-ui/codemod@latest migrate react
+```
+
+The codemod can run before or after upgrading. It updates detected `@qualcomm-ui/react` v1 dependencies to v2 in `package.json`. It is idempotent. Run your formatter afterward; the codemod does not reformat files.
+
+### Props and values
+
+Replace `variant` with `emphasis` on Slider and SegmentedControl. Use `brand` or `neutral`; the default is `brand`. If both props are set, `emphasis` takes precedence.
+
+| Components                                                    | Deprecated        | Replacement       |
+| ------------------------------------------------------------- | ----------------- | ----------------- |
+| Slider, SegmentedControl, Breadcrumbs, Progress, ProgressRing | `primary`         | `brand`           |
+| Tag                                                           | `outline-brand`   | `brand-outline`   |
+| Tag                                                           | `outline-neutral` | `neutral-outline` |
+| Tag                                                           | `kiwi`            | `lime`            |
+
+```tsx
+import {Slider} from "@qualcomm-ui/react/slider"
+import {Tag} from "@qualcomm-ui/react/tag"
+
+<Slider label="Volume" variant="primary" /> // [!code --]
+<Slider emphasis="brand" label="Volume" /> // [!code ++]
+
+<Tag emphasis="outline-brand">Label</Tag> // [!code --]
+<Tag emphasis="brand-outline">Label</Tag> // [!code ++]
+```
+
+Tag's `variant` values (`selectable`, `link`, `dismissable`) are unrelated and unchanged by this migration. Its default `emphasis` is `brand-outline`.
+
+Tag adds `info`, `success`, `warning`, and `danger` emphasis values. It adds `neutral-outline-brand`, which looks like `neutral-outline` until selected, then looks like `brand-outline`.
+
+### Types
+
+Update type imports from `@qualcomm-ui/qds-core/slider` and `@qualcomm-ui/qds-core/segmented-control`:
+
+| Deprecated                   | Replacement                   |
+| ---------------------------- | ----------------------------- |
+| `QdsSliderVariant`           | `QdsSliderEmphasis`           |
+| `QdsSegmentedControlVariant` | `QdsSegmentedControlEmphasis` |
+
+### Manual updates
+
+The codemod matches components imported from `@qualcomm-ui/react/<component>` entry points. Aliased and namespace imports are supported.
+
+Review these cases manually:
+
+- Spread props and prop objects built elsewhere are not rewritten.
+- Non-literal expressions such as `variant={value}` have the prop renamed, but the value source still requires review.
+- Elements with both `variant` and `emphasis` are reported without changes. Remove `variant`.
+- Direct qds-core API usage and CSS are not rewritten.
+
+## Review custom CSS
+
+The prop codemod does not update CSS selectors. Update selectors that depend on the renamed attributes or default emphasis values:
+
+| Components                          | Previous default attribute      | New default attribute           |
+| ----------------------------------- | ------------------------------- | ------------------------------- |
+| Slider, SegmentedControl            | `data-variant="primary"`        | `data-emphasis="brand"`         |
+| Breadcrumbs, Progress, ProgressRing | `data-emphasis="primary"`       | `data-emphasis="brand"`         |
+| Tag                                 | `data-emphasis="outline-brand"` | `data-emphasis="brand-outline"` |
+
+Slider and SegmentedControl render `data-emphasis` instead of `data-variant`, including when the deprecated `variant` prop is used. Update selectors for both `primary` and `neutral` variants on these components.

@@ -102,9 +102,6 @@ export default {
   knowledge: {
     baseUrl: "https://react-table.qui.qualcomm.com",
     exclude: ["installation.mdx", "index/_index.mdx"],
-    integrations: {
-      openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],
-    },
     pageIdPrefix: "table-",
   },
   navConfig,

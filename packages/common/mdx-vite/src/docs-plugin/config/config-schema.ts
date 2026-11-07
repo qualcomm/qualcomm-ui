@@ -8,7 +8,6 @@ import type {NavMeta, RouteMeta} from "../nav-builder/types.js"
 import type {
   KnowledgeConfig,
   KnowledgeExtraFile,
-  OpenWebUiIntegration,
   PagesExportConfig,
   QuiDocsConfig,
   QuiDocsLintOptions,
@@ -85,21 +84,11 @@ const sectionsExportsSchema = implement<SectionExportConfig>().with({
   outputPath: z.string().optional(),
 })
 
-const openWebUiIntegrationSchema = implement<OpenWebUiIntegration>().with({
-  envFile: z.string().optional(),
-  id: z.string(),
-})
-
 const knowledgeConfigSchema = implement<KnowledgeConfig>().with({
   baseUrl: z.string().optional(),
   exclude: z.array(z.string()).optional(),
   extraFiles: z.array(knowledgeExtraFileSchema).optional(),
   frontmatter: frontmatterConfigSchema,
-  integrations: z
-    .object({
-      openWebUi: z.array(openWebUiIntegrationSchema).optional(),
-    })
-    .optional(),
   outputPath: z.string().optional(),
   pageIdPrefix: z.string().optional(),
   pages: pagesExportsSchema.optional(),
@@ -114,6 +103,7 @@ const lintSeveritySchema = z.union([
 
 const lintSchema = implement<QuiDocsLintOptions>().with({
   brokenLinks: lintSeveritySchema.optional(),
+  fileLinks: lintSeveritySchema.optional(),
   pageTitle: lintSeveritySchema.optional(),
 })
 
@@ -155,7 +145,6 @@ const configSchema = implement<QuiDocsConfig>().with({
   throwOnError: z.boolean().optional(),
   typeDocProps: z.string().optional(),
   typeDocPropsOptions: typeDocPropsSchema.optional(),
-  validatePageLinks: z.boolean().optional(),
 })
 
 export function parseSchema(data: unknown): ZodSafeParseResult<QuiDocsConfig> {

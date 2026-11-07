@@ -3,16 +3,21 @@
 
 import {glob} from "glob"
 import {readFileSync, writeFileSync} from "node:fs"
-import {
-  type ImportDeclaration,
-  type ImportSpecifierStructure,
-  Node,
-  type OptionalKind,
-  Project,
-  type SourceFile,
-  SyntaxKind,
+import type {
+  ImportDeclaration,
+  ImportSpecifierStructure,
+  OptionalKind,
+  SourceFile,
 } from "ts-morph"
 
+import {
+  applyEdits,
+  type Edit,
+  getNamespaceMembers,
+  getTopLevelBindings,
+  parseSource,
+  renameReferences,
+} from "../../shared/source-edits.js"
 import type {
   Codemod,
   CodemodFileResult,
@@ -68,21 +73,6 @@ export interface DocsContextNamesResult {
   status: CodemodFileStatus
 }
 
-interface Edit {
-  end: number
-  start: number
-  text: string
-}
-
-function parse(content: string, filePath: string): SourceFile {
-  return new Project({
-    manipulationSettings: {
-      insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: false,
-    },
-    useInMemoryFileSystem: true,
-  }).createSourceFile(filePath, content, {overwrite: true})
-}
-
 function isRenamed(name: string): boolean {
   return Object.hasOwn(DOCS_CONTEXT_RENAMES, name)
 }
@@ -94,99 +84,6 @@ function isDeprecatedExport(module: string, name: string): boolean {
   return module === CONTEXT_MODULE
     ? isRenamed(name)
     : module === DOCS_LAYOUT_MODULE && DOCS_LAYOUT_NAMES.has(name)
-}
-
-function getTopLevelBindings(sourceFile: SourceFile): Set<string> {
-  const names = new Set<string>()
-  for (const decl of sourceFile.getImportDeclarations()) {
-    for (const specifier of decl.getNamedImports()) {
-      names.add(specifier.getAliasNode()?.getText() ?? specifier.getName())
-    }
-    const namespace = decl.getNamespaceImport()?.getText()
-    if (namespace) {
-      names.add(namespace)
-    }
-    const defaultImport = decl.getDefaultImport()?.getText()
-    if (defaultImport) {
-      names.add(defaultImport)
-    }
-  }
-  for (const statement of sourceFile.getStatements()) {
-    if (Node.isVariableStatement(statement)) {
-      for (const declaration of statement.getDeclarations()) {
-        names.add(declaration.getName())
-      }
-    } else if (
-      Node.isFunctionDeclaration(statement) ||
-      Node.isClassDeclaration(statement) ||
-      Node.isInterfaceDeclaration(statement) ||
-      Node.isTypeAliasDeclaration(statement) ||
-      Node.isEnumDeclaration(statement)
-    ) {
-      const name = statement.getName()
-      if (name) {
-        names.add(name)
-      }
-    }
-  }
-  return names
-}
-
-/**
- * Renames every reference to an import binding. Shorthand properties and local
- * exports keep their original key and exported name, so the file's own API
- * doesn't change.
- */
-function renameReferences(
-  nameNode: Node,
-  oldName: string,
-  newName: string,
-  edits: Edit[],
-): void {
-  const sourceFile = nameNode.getSourceFile()
-  for (const node of nameNode
-    .asKindOrThrow(SyntaxKind.Identifier)
-    .findReferencesAsNodes()) {
-    if (
-      node.getSourceFile() !== sourceFile ||
-      node.getFirstAncestorByKind(SyntaxKind.ImportDeclaration)
-    ) {
-      continue
-    }
-    const parent = node.getParent()
-    let text = newName
-    if (Node.isShorthandPropertyAssignment(parent)) {
-      text = `${oldName}: ${newName}`
-    } else if (Node.isExportSpecifier(parent) && !parent.getAliasNode()) {
-      text = `${newName} as ${oldName}`
-    }
-    edits.push({end: node.getEnd(), start: node.getStart(), text})
-  }
-}
-
-/**
- * Returns the `ns.Name` property accesses and qualified type names in the file
- * whose namespace is `namespace`.
- */
-function getNamespaceMembers(
-  sourceFile: SourceFile,
-  namespace: string,
-): Node[] {
-  const members: Node[] = []
-  sourceFile.forEachDescendant((node) => {
-    if (
-      Node.isPropertyAccessExpression(node) &&
-      node.getExpression().getText() === namespace
-    ) {
-      members.push(node.getNameNode())
-    } else if (
-      Node.isQualifiedName(node) &&
-      node.getLeft().getText() === namespace
-    ) {
-      members.push(node.getRight())
-    }
-  })
-  return members
 }
 
 function renameDeprecatedNames(
@@ -277,14 +174,6 @@ function renameDeprecatedNames(
     manual,
     renamed,
   }
-}
-
-function applyEdits(content: string, edits: Edit[]): string {
-  let result = content
-  for (const edit of edits.sort((a, b) => b.start - a.start)) {
-    result = `${result.slice(0, edit.start)}${edit.text}${result.slice(edit.end)}`
-  }
-  return result
 }
 
 function printSpecifier(
@@ -418,7 +307,7 @@ export function transformDocsContextNames(
   content: string,
   filePath = "file.tsx",
 ): DocsContextNamesResult {
-  const sourceFile = parse(content, filePath)
+  const sourceFile = parseSource(content, filePath)
   const importsEntry = [
     ...sourceFile.getImportDeclarations(),
     ...sourceFile.getExportDeclarations(),
@@ -433,7 +322,8 @@ export function transformDocsContextNames(
   const result = renameDeprecatedNames(sourceFile)
   if (result.renamed) {
     result.content =
-      movePageContextImports(parse(result.content, filePath)) ?? result.content
+      movePageContextImports(parseSource(result.content, filePath)) ??
+      result.content
   }
 
   const status: CodemodFileStatus = result.manual.length

@@ -13,6 +13,12 @@ export interface CodemodContext {
   cwd: string
   /** Preview changes without writing files. */
   dryRun: boolean
+  /**
+   * Skip the codemod's safety checks, such as cancelling the migration when the
+   * project looks already migrated.
+   * @default false
+   */
+  force?: boolean
 }
 
 export type CodemodFileStatus =
@@ -65,4 +71,9 @@ export interface MigrationGroup<TPackage extends string = string> {
   name: string
   /** The packages whose versions are detected for this group. */
   packages: readonly TPackage[]
+  /**
+   * Shown before the migration runs, e.g. to describe the projects that
+   * shouldn't run it.
+   */
+  warning?: string
 }

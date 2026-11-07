@@ -17,10 +17,10 @@
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
-    "upload-knowledge": "qui-mdx-vite upload-knowledge"
+    "lint-docs": "qui-docs lint"
   },
   "dependencies": {
-    "@faker-js/faker": "~9.6.0",
+    "@faker-js/faker": "catalog:",
     "@floating-ui/react": "^0.27.3",
     "@hookform/resolvers": "^5.2.2",
     "@internationalized/number": "^3.6.4",

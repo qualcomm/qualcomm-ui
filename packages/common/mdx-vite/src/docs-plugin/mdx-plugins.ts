@@ -12,6 +12,7 @@ import {
   transformerRenderIndentGuides,
 } from "@shikijs/transformers"
 import {merge} from "lodash-es"
+import {resolve} from "node:path"
 import type {ShikiTransformer} from "shiki"
 import type {PluggableList} from "unified"
 
@@ -25,6 +26,8 @@ import {
 } from "../exports.js"
 
 import {ConfigLoader, type ConfigLoaderOptions} from "./config/index.js"
+import {rehypeMdxFileLinks} from "./mdx-file-links.js"
+import {realPath} from "./path-utils.js"
 import {
   rehypeSectionize,
   rehypeSlug,
@@ -79,6 +82,13 @@ export function getRehypePlugins(
       {allowedHeadings: config.headings} satisfies RehypeSlugOptions,
     ],
     rehypeSectionize,
+    [
+      rehypeMdxFileLinks,
+      {
+        routesDir: realPath(resolve(config.appDirectory, config.pageDirectory)),
+        routingStrategy: config.routingStrategy,
+      },
+    ],
     [
       rehypeShiki,
       merge(

@@ -58,6 +58,7 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
     },
     configResolved(resolved) {
       viteConfig = resolved
+      state.setPublicDir(resolved.publicDir)
     },
     configureServer: async (server) => {
       if (!isDev) {

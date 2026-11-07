@@ -1,0 +1,27 @@
+<div q-slider-root emphasis="brand"></div>
+<q-slider [emphasis]="'neutral'"></q-slider>
+<fieldset
+  q-segmented-control
+  [defaultValue]="['chart']"
+  [emphasis]="variant"
+></fieldset>
+@if (show) {
+<div q-progress emphasis="brand"></div>
+} @for (item of items; track item.value) {
+<span
+  q-tag
+  variant="selectable"
+  [emphasis]="item.selected ? 'brand-outline' : 'neutral-outline'"
+>
+  {{ item.label }}
+</span>
+}
+<ng-template>
+  <div q-progress-ring-root emphasis="brand"></div>
+</ng-template>
+<nav *ngIf="crumbs" emphasis="brand" q-breadcrumbs-root></nav>
+<div bind-emphasis="'brand'" q-progress-ring></div>
+<span emphasis="lime" q-tag [attr.variant]="'primary'"></span>
+<div q-slider-root emphasis="{{ 'brand' }}"></div>
+<div q-progress-root [emphasis]="emphasis ?? 'brand'"></div>
+<button variant="primary">primary</button>

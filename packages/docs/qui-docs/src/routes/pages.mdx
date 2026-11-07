@@ -27,19 +27,19 @@ npx tiged https://github.com/qualcomm/qualcomm-ui-templates/templates/react-qui-
 
 ## Related Guides
 
-- [Markdown](/markdown): Markdown authoring conventions and extended features.
-- [Routing Conventions](/routing-conventions): how filenames and folders map to URLs and layouts.
-- [Routing Guidelines](/routing): the operational contract for production docs pages, navigation, and search.
+- [Markdown](./markdown.mdx): Markdown authoring conventions and extended features.
+- [Routing Conventions](./routing-conventions.mdx): how filenames and folders map to URLs and layouts.
+- [Routing Guidelines](./routing.mdx): the operational contract for production docs pages, navigation, and search.
 
 ## Overview
 
 The following guide assumes that you're using the file-based routing configuration for QUI Docs. This is the configuration used by the template.
 
-- QUI Docs reads pages from the configured [appDirectory](/api/qui-docs-config#appDirectory) and [pageDirectory](/api/qui-docs-config#pageDirectory). The template uses this configuration: `src/routes`.
+- QUI Docs reads pages from the configured [appDirectory](./api/qui-docs-config.mdx#appDirectory) and [pageDirectory](./api/qui-docs-config.mdx#pageDirectory). The template uses this configuration: `src/routes`.
 - An `.mdx` file under `src/routes` creates a docs page and is included in search by default.
 - A page's URL comes from its file path relative to `src/routes`. Under the default strategy, folders ending in `+` organize regular page files into nested URL segments.
-- The `"react-router-directory-groups"` strategy also discovers regular page files in plain folders. See [Routing Conventions](/routing-conventions) for the complete comparison.
-- If you define routes manually with React Router, see [Custom Routing](/routing-conventions#custom-file-based-routing).
+- The `"react-router-directory-groups"` strategy also discovers regular page files in plain folders. See [Routing Conventions](./routing-conventions.mdx) for the complete comparison.
+- If you define routes manually with React Router, see [Custom Routing](./routing-conventions.mdx#custom-file-based-routing).
 
 ## URL Mapping
 
@@ -54,7 +54,7 @@ Each page URL is derived from the file path relative to `pageDirectory`.
 
 The `.mdx` file extension is removed from the URL. A folder ending in `+` contributes a URL segment without the `+` character.
 
-See [Routing Conventions](/routing-conventions) for index routes, layouts, parameters, parent overrides, and private folders.
+See [Routing Conventions](./routing-conventions.mdx) for index routes, layouts, parameters, parent overrides, and private folders.
 
 ## Page Structure
 
@@ -72,7 +72,7 @@ Resolve common build and deployment errors.
 
 To keep the description in frontmatter, declare `description` and render it with `{frontmatter.description}` in place of the paragraph.
 
-See [Frontmatter](/rules#frontmatter) for the full rules.
+See [Frontmatter](./rules.mdx#frontmatter) for the full rules.
 
 ## Nested Pages
 
@@ -101,7 +101,7 @@ This convention lets related pages share a folder without repeating the full rou
 
 For MDX pages, we define the title in the page's frontmatter. Our plugin extracts this title and incorporates it into the sidebar data. However, for path segments without associated pages (like folders), we can't do this because there is no MDX file to provide frontmatter.
 
-We expose a [navConfig](/api/qui-docs-config#navConfig) property on the configuration object for this purpose. The following example demonstrate how to customize this config.
+We expose a [navConfig](./api/qui-docs-config.mdx#navConfig) property on the configuration object for this purpose. The following example demonstrate how to customize this config.
 
 ### Sidebar Order
 
@@ -252,7 +252,7 @@ Group entries are top-level only and are not supported inside `children`.
 
 ### Expanded State
 
-Folders in the sidebar are closed by default. To open a folder by default, set the [expanded](/api/nav-config#expanded) property to true.
+Folders in the sidebar are closed by default. To open a folder by default, set the [expanded](./api/nav-config.mdx#expanded) property to true.
 
 ::: serialize-jsx
 
@@ -310,10 +310,10 @@ Use `.tsx` routes sparingly. TSX pages can appear in navigation when configured,
 
 ## Custom Routes
 
-React Router's [Framework Mode](https://reactrouter.com/home#react-router-as-a-framework) supports manually defined route definitions. When you define routes manually, add a [routingStrategy](/api/qui-docs-config#routingStrategy) so QUI Docs can map each discovered page file to its site URL.
+React Router's [Framework Mode](https://reactrouter.com/home#react-router-as-a-framework) supports manually defined route definitions. When you define routes manually, add a [routingStrategy](./api/qui-docs-config.mdx#routingStrategy) so QUI Docs can map each discovered page file to its site URL.
 
-See [Custom Routing](/routing-conventions#custom-file-based-routing) for the full setup.
+See [Custom Routing](./routing-conventions.mdx#custom-file-based-routing) for the full setup.
 
 ## Next Steps
 
-Refer to the [Markdown](/markdown) page to learn more about authoring content.
+Refer to the [Markdown](./markdown.mdx) page to learn more about authoring content.

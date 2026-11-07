@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {Argument, Option, program} from "@commander-js/extra-typings"
+import {Argument, Help, Option, program} from "@commander-js/extra-typings"
 
 import {migrationGroups, runMigration} from "./migrations/index.js"
 
@@ -26,19 +26,26 @@ const dryRunOption = new Option(
 
 const forceOption = new Option(
   "--force",
-  "Run every codemod, even if its packages aren't installed or are older than the versions it migrates from",
+  "Run every codemod, even if its packages aren't installed or are older than the versions it migrates from, and skip safety checks that cancel the migration",
 )
 
-const nameWidth = Math.max(...migrationGroups.map((group) => group.name.length))
+const help = new Help()
+
+function indent(text: string, spaces: number): string {
+  return text.replace(/^/gm, " ".repeat(spaces))
+}
 
 const availableMigrations = migrationGroups
   .map((group) =>
     [
-      `  ${group.name.padEnd(nameWidth)}  ${group.description}`,
-      ...group.packages.map((name) => `${" ".repeat(nameWidth + 4)}- ${name}`),
+      `  ${group.name}`,
+      indent(help.boxWrap(group.description, 76), 4),
+      ...(group.warning
+        ? [indent(help.boxWrap(`Warning: ${group.warning}`, 76), 4)]
+        : []),
     ].join("\n"),
   )
-  .join("\n")
+  .join("\n\n")
 
 program
   .name("npx @qualcomm-ui/codemod@latest")
@@ -58,8 +65,14 @@ version). Every codemod for the detected versions is applied in order, including
 on projects that are already upgraded, and package.json is updated to the new
 major versions. Use --force to run every codemod whatever versions are detected,
 e.g. in a package that doesn't list the migrated packages as dependencies.
-
+--force also skips safety checks, such as qds-v2-tokens cancelling the
+migration when the project already uses v2 tokens.`,
+  )
+  .addHelpText(
+    "after",
+    `
 Available migrations:
+
 ${availableMigrations}
 
 Examples:

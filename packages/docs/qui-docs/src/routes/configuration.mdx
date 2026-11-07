@@ -65,25 +65,28 @@ Combined, pages live at `<process.cwd()>/<appDirectory>/<pageDirectory>`. With d
 
 ### routingStrategy
 
-Controls how file paths map to URL segments. This is explored in detail on the [Routing Conventions](/routing-conventions) page.
+Controls how file paths map to URL segments. This is explored in detail on the [Routing Conventions](./routing-conventions.mdx) page.
 
 ## Navigation
 
-The `navConfig` array controls sidebar order, section groupings, initial expanded state, and per-route display properties. For how to define and nest `navConfig` entries, see [Page Configuration](/pages#nav-config). For the full option reference, see [NavConfig](/api/nav-config).
+The `navConfig` array controls sidebar order, section groupings, initial expanded state, and per-route display properties. For how to define and nest `navConfig` entries, see [Page Configuration](./pages.mdx#nav-config). For the full option reference, see [NavConfig](./api/nav-config.mdx).
 
 ## Content and Validation
 
 ### lint
 
-Controls content validation rules. Each rule accepts a severity:
+Controls content validation rules. Each rule accepts a severity for development and build:
 
 - `"off"`: disables the rule.
 - `"warn"`: logs issues to the console.
-- `"error"`: logs issues in development and fails the production build (`vite build`).
+- `"error"`: logs issues in development. Issues fail the production build (`vite build`).
+
+Enable `fileLinks` with `"warn"` or `"error"` in `qui-docs.config.ts`:
 
 ```ts
 lint: {
   brokenLinks: "warn",
+  fileLinks: "warn",
   pageTitle: "warn",
 }
 ```
@@ -91,7 +94,25 @@ lint: {
 Rules:
 
 - `brokenLinks`: validates internal MDX links and fragment references after the page map and table of contents are built. Default: `"warn"`.
+- `fileLinks`: reports internal links to MDX pages that use URL paths instead of relative `.mdx` file paths. Default: `"off"`.
 - `pageTitle`: validates the h1 page title of every MDX page. Default: `"warn"`.
+
+With `fileLinks: "warn"`, the rule logs URL-path links to MDX pages as warnings during development and build. Run [`qui-docs fix-links`](./markdown.mdx#migrating-existing-links) to convert them to relative `.mdx` file links. Use `--dry-run` to preview the replacements. See [Relative Links](./markdown.mdx#relative-links) for file-link syntax.
+
+- Same-page links such as `./#size` are reported with `#size` as the replacement.
+- Links to TSX pages, public directory files, and missing pages are skipped. The `brokenLinks` rule reports missing pages.
+
+Issues are grouped by source page:
+
+```console
+Found 2 links that should use a relative .mdx file path:
+
+  /api/nav-config
+    x /api/qui-docs-config#navConfig — use ./qui-docs-config.mdx#navConfig
+    x ./#size — use #size
+
+Run qui-docs fix-links to apply these replacements, or qui-docs fix-links --dry-run to preview them.
+```
 
 The `pageTitle` rule reports:
 
@@ -108,8 +129,58 @@ Found 2 page title issues:
     x src/routes/getting-started.mdx:20 — only the page title may be an h1, use h2 or lower
 ```
 
-> [!note]
-> `validatePageLinks` is deprecated. `validatePageLinks: false` is equivalent to `lint: {brokenLinks: "off"}`. An explicit `lint.brokenLinks` value takes precedence.
+#### CLI Linting
+
+`qui-docs lint` runs enabled `brokenLinks`, `fileLinks`, and `pageTitle` rules against every MDX page without a Vite build. Use it in CI to fail on lint errors.
+
+- Every enabled rule reports errors by default, even if its configured or default severity is `"warn"`.
+- Rules with a configured or default severity of `"off"` are skipped.
+
+Rules added in later releases run in existing CI scripts without changes unless their configured or default severity is `"off"`.
+
+Run the command from the docs app root. `appDirectory`, `typeDocProps`, and public directory paths resolve from the current working directory.
+
+```shell
+qui-docs lint
+```
+
+The command logs issues in the same format as the Vite plugin. It lists skipped rules before the summary. With the default config:
+
+```console
+Skipped 1 rule:
+  fileLinks (disabled by default)
+Checked 89 pages: 0 errors, 0 warnings.
+```
+
+Rules set to `"off"` in the config are labeled `(disabled from config file)`. Rules omitted from the config with a default of `"off"` are labeled `(disabled by default)`. Rules disabled by a per-rule option are labeled `(disabled from command flag)`.
+
+- Exit code `1`: any errors, or a configuration/load failure.
+- Exit code `0`: no errors. Warnings do not fail the command.
+
+::: spoiler Options
+
+- `-c, --config-file <configFile>`: path to the QUI Docs config file. The file is auto-detected if omitted. For a config under `src`, use `--config-file src/qui-docs.config.ts`.
+- `-p, --public-dir <publicDir>`: static asset directory. Default: `public`. Links to files in this directory pass validation. Pass this option when Vite uses a different `publicDir`.
+- `--broken-links <severity>`: overrides the `brokenLinks` rule's severity.
+- `--file-links <severity>`: overrides the `fileLinks` rule's severity.
+- `--page-title <severity>`: overrides the `pageTitle` rule's severity.
+- `--warn`: reports issues from enabled rules as warnings. It exits with code `0` unless a per-rule option reports errors or a configuration/load failure occurs. Rules configured as `"off"` stay disabled.
+
+Per-rule options accept `off`, `warn`, or `error`. They take precedence over the config and `--warn`. Use `warn` or `error` to enable a rule configured as `"off"`.
+
+Disable one rule for a run:
+
+```shell
+qui-docs lint --file-links off
+```
+
+Report one rule's issues without failing on that rule:
+
+```shell
+qui-docs lint --file-links warn
+```
+
+:::
 
 ### headings
 
@@ -117,7 +188,7 @@ Controls which heading depths are included in the in-page table of contents and 
 
 ### typeDocProps
 
-Relative path to the generated `doc-props.json` file. Required for the `<TypeDocProps />` component to render property documentation in MDX pages. See [TypeDoc](/typedoc) for the full setup. Ignore if you aren't using the `<TypeDocProps />` component.
+Relative path to the generated `doc-props.json` file. Required for the `<TypeDocProps />` component to render property documentation in MDX pages. See [TypeDoc](./typedoc.mdx) for the full setup. Ignore if you aren't using the `<TypeDocProps />` component.
 
 ## Page Metadata
 
@@ -131,8 +202,8 @@ This data is surfaced on each page (typically in the page footer) and can be inc
 
 ## Knowledge Export
 
-The `knowledge` field configures AI knowledge export: `pages.json` and `sections.json` files that can be uploaded to LLM integrations. Presence of this field enables export. See [AI Knowledge](/ai-knowledge) for the full setup, including `baseUrl`, `exclude` globs, `extraFiles`, and OpenWebUI integration.
+The `knowledge` field enables AI knowledge export to `pages.json` and `sections.json`. These files support LLM consumption, RAG pipelines, and semantic search. See [AI Knowledge](./ai-knowledge.mdx) for configuration, including `baseUrl`, `exclude` globs, and `extraFiles`.
 
 ## Full Reference
 
-The [QuiDocsConfig API reference](/api/qui-docs-config) lists all configuration options, including advanced build knobs (`disableCache`, `throwOnError`, `hotUpdateIgnore`) and `typeDocPropsOptions`.
+The [QuiDocsConfig API reference](./api/qui-docs-config.mdx) lists all configuration options, including advanced build knobs (`disableCache`, `throwOnError`, `hotUpdateIgnore`) and `typeDocPropsOptions`.

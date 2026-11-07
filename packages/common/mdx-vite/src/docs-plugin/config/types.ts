@@ -44,22 +44,6 @@ export interface QuiDocsTypeDocOptions {
 }
 
 /**
- * OpenWebUI integration configuration.
- */
-export interface OpenWebUiIntegration {
-  /**
-   * Path to env file containing `OPEN_WEB_UI_*` variables. Defaults to
-   * `.env.{id}` by convention.
-   */
-  envFile?: string
-
-  /**
-   * Unique identifier for this integration.
-   */
-  id: string
-}
-
-/**
  * Extra content to include in knowledge output. Assumed to be Markdown.
  */
 export interface KnowledgeExtraFile {
@@ -121,17 +105,6 @@ export interface KnowledgeConfig {
    * @inheritDoc
    */
   frontmatter?: KnowledgeFrontmatterConfig
-
-  /**
-   * Platform-specific integration configurations for uploading generated
-   * knowledge to external services.
-   */
-  integrations?: {
-    /**
-     * @inheritDoc
-     */
-    openWebUi?: OpenWebUiIntegration[]
-  }
 
   /**
    * Output directory for generated knowledge files, relative to the public dir.
@@ -212,6 +185,12 @@ export interface SearchIndexerOptions {
   pageTimestampMetadata?: PageTimestampMetadataMode
 
   /**
+   * Resolved path to the Vite public directory. Links to files in this directory
+   * pass link validation. Set by the plugin from the resolved Vite config.
+   */
+  publicDir?: string
+
+  /**
    * Strategy to use for building each route's path segments.  Omit this property if
    * you are using the default {@link https://github.com/kiliman/remix-flat-routes
    * remix-flat-routes} configuration.
@@ -239,18 +218,6 @@ export interface SearchIndexerOptions {
    * Options for TypeDoc property documentation.
    */
   typeDocPropsOptions?: QuiDocsTypeDocOptions
-
-  /**
-   * Validate internal links in MDX pages after the page map and table of contents
-   * have been assembled. Reports broken page links and fragment references to the
-   * build console.
-   *
-   * @deprecated use {@link QuiDocsLintOptions.brokenLinks} instead. `false` is
-   * equivalent to `lint.brokenLinks: "off"`.
-   *
-   * @default true
-   */
-  validatePageLinks?: boolean
 }
 
 /**
@@ -270,6 +237,16 @@ export interface QuiDocsLintOptions {
   brokenLinks?: LintSeverity
 
   /**
+   * Reports internal links to MDX pages that use URL paths, like
+   * `/components/button` or `./#size`, instead of relative `.mdx` file paths like
+   * `../button+/_button.mdx` or `#size`. URL paths don't resolve in GitHub's
+   * markdown viewer.
+   *
+   * @default "off"
+   */
+  fileLinks?: LintSeverity
+
+  /**
    * Requires every MDX page to start with a single h1 title, like
    * `# {frontmatter.title}`, and reports any additional h1 headings.
    *
@@ -280,7 +257,7 @@ export interface QuiDocsLintOptions {
 
 export interface QuiDocsConfig extends Omit<
   SearchIndexerOptions,
-  "srcDir" | "pageDirectory" | "typeDocProps"
+  "srcDir" | "pageDirectory" | "publicDir" | "typeDocProps"
 > {
   /**
    * Root app directory. NOT the full path to the directory.
@@ -326,6 +303,10 @@ export interface QuiDocsConfig extends Omit<
 
 export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
   appDirectory: string
+  /**
+   * The `lint` option as written in the config file, before defaults are applied.
+   */
+  configuredLint: QuiDocsLintOptions
   /**
    * full path to the cosmiconfig file.
    */

@@ -58,6 +58,7 @@ export class PluginState {
   knowledgeConfig: ResolvedQuiDocsConfig["knowledge"] = undefined
   private knowledgePageCache: KnowledgePageCache = new Map()
   pages: KnowledgePages | null = null
+  publicDir: string = ""
   sections: KnowledgeSections | null = null
   routesDir!: string
   servers: ViteDevServer[] = []
@@ -73,6 +74,17 @@ export class PluginState {
 
   getCwd(): string {
     return this.cwd
+  }
+
+  /**
+   * The Vite public directory is only known after the Vite config resolves, which
+   * happens after the indexer is first created.
+   */
+  setPublicDir(publicDir: string): void {
+    this.publicDir = publicDir
+    if (this.indexer) {
+      this.indexer.publicDir = publicDir
+    }
   }
 
   get docPropsDirectory(): string {
@@ -126,6 +138,7 @@ export class PluginState {
     this.knowledgeConfig = config.knowledge
     this.indexer = new SearchIndexer({
       ...config,
+      publicDir: this.publicDir,
       srcDir: fixPath(resolve(this.cwd, config.appDirectory)),
       typeDocProps: this.resolveDocProps(),
     })

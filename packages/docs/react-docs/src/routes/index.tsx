@@ -94,8 +94,16 @@ export default function HomePage(): ReactNode {
           >
             <img
               alt="Qualcomm Design System Gen 3.0"
-              className="block"
-              src="/images/home/qds.avif"
+              className="qui-docs__theme-image"
+              data-theme="dark"
+              src="/images/home/qds-dark.avif"
+              width="100%"
+            />
+            <img
+              alt="Qualcomm Design System Gen 3.0"
+              className="qui-docs__theme-image"
+              data-theme="light"
+              src="/images/home/qds-light.avif"
               width="100%"
             />
           </LinkOverlayPanel>

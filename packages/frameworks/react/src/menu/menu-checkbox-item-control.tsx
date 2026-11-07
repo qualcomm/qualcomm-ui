@@ -23,7 +23,7 @@ export interface MenuCheckboxItemControlProps extends ElementRenderProp<"div"> {
 }
 
 export function MenuCheckboxItemControl({
-  children = <CheckmarkIcon indeterminate={false} />,
+  children,
   ...props
 }: MenuCheckboxItemControlProps): ReactElement {
   const contextProps = useMenuOptionItemControl()
@@ -36,7 +36,7 @@ export function MenuCheckboxItemControl({
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      {children}
+      {children ?? <CheckmarkIcon indeterminate={false} />}
     </PolymorphicElement>
   )
 }

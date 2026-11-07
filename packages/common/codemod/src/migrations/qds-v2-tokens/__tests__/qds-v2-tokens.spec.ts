@@ -9,6 +9,7 @@ import {tmpdir} from "node:os"
 import {dirname, join} from "node:path"
 import {afterEach, beforeEach, describe, expect, test} from "vitest"
 
+import {MigrationCancelledError} from "../../migration-cancelled-error.js"
 import {qdsV2TokensCodemod} from "../qds-v2-tokens.js"
 
 describe("qdsV2Tokens codemod", () => {
@@ -122,11 +123,61 @@ describe("qdsV2Tokens codemod", () => {
     )
   })
 
-  test("keeps ambiguous steps in projects migrated by hand", async () => {
+  test("cancels the migration when a file uses steps unique to the new scale", async () => {
+    const card = join(cwd, "src/card.tsx")
+    writeFileSync(card, `<div className="md:-mt-qds-1000 p-qds-40" />\n`)
+    writeFileSync(
+      join(cwd, "src/other.css"),
+      `a { gap: var(--spacing-25); width: var(--sizing-900); }\n`,
+    )
+
+    const run = qdsV2TokensCodemod.run({cwd, dryRun: false})
+
+    await expect(run).rejects.toThrow(MigrationCancelledError)
+    await expect(run).rejects.toThrow(
+      "src/card.tsx: md:-mt-qds-1000\n  src/other.css: --spacing-25, --sizing-900\n",
+    )
+    expect(readFileSync(sourceFile, "utf-8")).toBe(
+      `a { gap: var(--spacing-40); }\n`,
+    )
+    expect(readFileSync(card, "utf-8")).toBe(
+      `<div className="md:-mt-qds-1000 p-qds-40" />\n`,
+    )
+    expect(readFileSync(join(cwd, "package.json"), "utf-8")).toBe(packageJson)
+  })
+
+  test("cancels the migration in dry-run mode", async () => {
+    writeFileSync(join(cwd, "src/other.css"), `a { gap: var(--spacing-25); }\n`)
+
+    await expect(qdsV2TokensCodemod.run({cwd, dryRun: true})).rejects.toThrow(
+      MigrationCancelledError,
+    )
+  })
+
+  test("cancels the migration for steps unique to the new scale in recorded files", async () => {
+    writeFileSync(
+      join(cwd, "package.json"),
+      JSON.stringify({qui: {completedMigrations: ["qds-v2-tokens"]}}),
+    )
+    writeFileSync(join(cwd, "src/other.css"), `a { gap: var(--spacing-25); }\n`)
+
+    await expect(qdsV2TokensCodemod.run({cwd, dryRun: false})).rejects.toThrow(
+      MigrationCancelledError,
+    )
+    expect(readFileSync(sourceFile, "utf-8")).toBe(
+      `a { gap: var(--spacing-40); }\n`,
+    )
+  })
+
+  test("keeps ambiguous steps in projects migrated by hand with force", async () => {
     writeFileSync(sourceFile, `a { gap: var(--spacing-100); }\n`)
     writeFileSync(join(cwd, "src/other.css"), `a { gap: var(--spacing-25); }\n`)
 
-    const results = await qdsV2TokensCodemod.run({cwd, dryRun: false})
+    const results = await qdsV2TokensCodemod.run({
+      cwd,
+      dryRun: false,
+      force: true,
+    })
 
     expect(results.map((result) => result.status)).toEqual([
       "unchanged",

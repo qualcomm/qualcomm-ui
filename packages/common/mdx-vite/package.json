@@ -6,7 +6,7 @@
   "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "bin": {
-    "qui-mdx-vite": "./lib/cli.js"
+    "qui-docs": "./lib/cli.js"
   },
   "files": [
     "dist",
@@ -103,11 +103,9 @@
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
     "cross-env": "^10.1.0",
-    "dotenv": "^17.2.3",
     "hastscript": "^9.0.0",
     "lodash-es": "catalog:",
     "minimatch": "^11.0.4",
-    "ora": "^9.0.0",
     "rehype-mdx-code-props": "^3.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",

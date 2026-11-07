@@ -177,7 +177,7 @@ pre.shiki.has-diff {
     &::before {
       color: var(--color-icon-support-danger);
       content: "-";
-      left: 3px;
+      left: 7px;
       position: absolute;
     }
   }
@@ -186,7 +186,7 @@ pre.shiki.has-diff {
     &::before {
       color: var(--color-icon-support-success);
       content: "+";
-      left: 3px;
+      left: 7px;
       position: absolute;
     }
   }

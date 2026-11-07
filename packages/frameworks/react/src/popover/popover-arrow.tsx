@@ -22,7 +22,7 @@ export interface PopoverArrowProps extends IdProp, ElementRenderProp<"div"> {
 }
 
 export function PopoverArrow({
-  children = <PopoverArrowTip />,
+  children,
   id,
   ...props
 }: PopoverArrowProps): ReactElement {
@@ -36,7 +36,7 @@ export function PopoverArrow({
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      {children}
+      {children ?? <PopoverArrowTip />}
     </PolymorphicElement>
   )
 }

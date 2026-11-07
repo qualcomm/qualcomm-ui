@@ -24,13 +24,17 @@ export interface DatePickerValueTagsProps {
   placeholder?: string
 }
 
+function defaultDismissLabel(dateText: string): string {
+  return `Remove ${dateText}`
+}
+
 /**
  * Displays the dates selected in `multiple` mode as dismissible tags. Renders a
  * visually-hidden input per selected date so the selection participates in form
  * submission under the picker's `name`.
  */
 export function DatePickerValueTags({
-  dismissLabel = (dateText) => `Remove ${dateText}`,
+  dismissLabel,
   placeholder = "Select dates",
 }: DatePickerValueTagsProps): ReactElement {
   const qdsContext = useQdsDatePickerContext()
@@ -69,7 +73,7 @@ export function DatePickerValueTags({
         <Tag
           key={date.toString()}
           disabled={disabled || readOnly}
-          dismissLabel={dismissLabel(label)}
+          dismissLabel={(dismissLabel ?? defaultDismissLabel)(label)}
           emphasis="neutral"
           // the field is the calendar trigger; tags must not toggle it
           onClick={(event) => event.stopPropagation()}

@@ -24,11 +24,12 @@ import type {
   RoutingStrategy,
   SectionExportConfig,
 } from "../../config/index.js"
+import {remarkMdxFileLinks} from "../../mdx-file-links.js"
 import {
   getPathnameFromPathSegments,
   getPathSegmentsFromFileName,
 } from "../../nav-builder/index.js"
-import {fixPath} from "../../path-utils.js"
+import {fixPath, realPath} from "../../path-utils.js"
 import {remarkSerializeJsxKnowledge} from "../../remark/index.js"
 import type {MdxFileReader} from "../markdown-file-reader.js"
 import {createRemarkProcessor} from "../remark-pipeline.js"
@@ -395,6 +396,10 @@ export class KnowledgeExporter {
         themePlugin,
         formatDemos(pageInfo.demosFolder, this.config.verbose),
         filterTextDirectives,
+        remarkMdxFileLinks(pageInfo.mdxFile, {
+          routesDir: realPath(this.config.routeDir),
+          routingStrategy: this.config.routingStrategy,
+        }),
         this.transformRelativeUrls(),
       ],
     })

@@ -41,5 +41,8 @@ export default defineConfig({
   define: {
     __QUI_DEV___: mode === "development" ? "true" : "false",
   },
-  plugins: [react({compiler: true}), libraryEntriesPlugin()],
+  plugins: [
+    react({compiler: true}),
+    libraryEntriesPlugin({logTotalBundleSize: true}),
+  ],
 })

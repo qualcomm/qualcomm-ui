@@ -35,6 +35,7 @@
     "postpublish": "qui-cli post-publish"
   },
   "devDependencies": {
+    "@angular/compiler": "catalog:",
     "@commander-js/extra-typings": "catalog:",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/esbuild": "catalog:",
