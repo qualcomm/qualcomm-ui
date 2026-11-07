@@ -27,9 +27,9 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -49,9 +49,9 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -74,9 +74,9 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -99,11 +99,11 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-playwright
+    - uses: $/.github/actions/init-playwright
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -132,11 +132,11 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-playwright
+    - uses: $/.github/actions/init-playwright
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -165,11 +165,11 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-playwright
+    - uses: $/.github/actions/init-playwright
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -195,11 +195,11 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
-    - uses: ./.github/actions/init-playwright
+    - uses: $/.github/actions/init-playwright
 
-    - uses: ./.github/actions/init-remote-cache
+    - uses: $/.github/actions/init-remote-cache
       with:
         turborepo-remote-cache-bucket-name: ${{ secrets.TURBOREPO_REMOTE_CACHE_BUCKET_NAME }}
         turborepo-remote-cache-access-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_ACCESS_KEY }}
@@ -221,7 +221,7 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
     - name: Run copyright/license checker
       run: node --import=tsx scripts/license-checker lint
@@ -236,7 +236,7 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: ./.github/actions/init-node-and-install
+    - uses: $/.github/actions/init-node-and-install
 
     - name: build dependencies
       run: pnpm turbo run build --filter '@qualcomm-ui/mdx-vite'
