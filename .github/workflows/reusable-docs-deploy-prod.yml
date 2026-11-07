@@ -33,10 +33,6 @@ jobs:
         fetch-depth: 0 # full history for docs site builds
         persist-credentials: false
 
-    - name: Log in to ECR
-      run: |
-        aws ecr get-login-password --region "$AWS_REGION" | \
-          docker login --username AWS --password-stdin "$ECR_REGISTRY_URL"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_QUI_DOCS_AWS_ECR_SECRET_ACCESS_KEY }}
