@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/codemod",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Codemod utilities for automatic QUI package migrations",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",

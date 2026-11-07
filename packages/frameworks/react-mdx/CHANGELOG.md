@@ -1,5 +1,28 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.3.0
+
+Nov 7th, 2026
+
+### Features
+
+* [design-tokens]: migrate to qds v2 ([99fc9ac](https://github.com/qualcomm/qualcomm-ui/commit/99fc9ac))
+
+### Bug Fixes
+
+* [side-nav]: reduce left padding ([8e59cef](https://github.com/qualcomm/qualcomm-ui/commit/8e59cef))
+* [side-nav]: cap width ([64be843](https://github.com/qualcomm/qualcomm-ui/commit/64be843))
+
+### Code Refactoring
+
+* [mdx]: update spoiler trigger style ([3233959](https://github.com/qualcomm/qualcomm-ui/commit/3233959))
+* [shiki-diff-notation]: adjust left offset of diff symbols ([9fcb3e8](https://github.com/qualcomm/qualcomm-ui/commit/9fcb3e8))
+
+### Miscellaneous Chores
+
+* trigger styles ([b0d4b89](https://github.com/qualcomm/qualcomm-ui/commit/b0d4b89))
+* **deps:** update dependencies [@qualcomm-ui/react@2.0.0]
+
 ## 3.2.0
 
 Nov 2nd, 2026
