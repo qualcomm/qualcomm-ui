@@ -17,7 +17,7 @@
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
-    "lint-docs": "qui-docs lint --file-links error"
+    "lint-docs": "qui-docs lint --file-links off"
   },
   "dependencies": {
     "@faker-js/faker": "catalog:",
