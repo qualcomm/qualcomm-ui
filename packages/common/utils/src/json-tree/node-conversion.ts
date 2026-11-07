@@ -17,8 +17,16 @@ export function isRootKeyPath(keyPath: Array<string | number>): boolean {
   return keyPath.length === 1 && keyPath[0] === ROOT_KEY
 }
 
+/**
+ * Serializes a node path, escaping dots and backslashes within each segment
+ * so a property named "a.b" stays distinct from nested properties a.b
+ */
 export function keyPathToId(keyPath: Array<string | number>): string {
-  return keyPath.join(PATH_SEP)
+  return keyPath
+    .map((segment) =>
+      String(segment).replaceAll("\\", "\\\\").replaceAll(PATH_SEP, "\\."),
+    )
+    .join(PATH_SEP)
 }
 
 export function keyPathToKey(
@@ -38,6 +46,10 @@ export function nodeToValue(node: JsonNode): string {
   return hash(keyPathToId(node.keyPath))
 }
 
+/**
+ * Returns the node value for an escaped path produced by keyPathToId.
+ * Use keyPathToId when property names contain dots or backslashes.
+ */
 export function jsonPathToValue(path: string): string {
   return hash(path)
 }
@@ -79,5 +91,13 @@ export const getPreviewOptions = (
   if (!opts) {
     return DEFAULT_PREVIEW_OPTIONS
   }
-  return defu(DEFAULT_PREVIEW_OPTIONS, opts)
+  const options = defu(DEFAULT_PREVIEW_OPTIONS, opts)
+  if (
+    !Number.isInteger(options.groupArraysAfterLength) ||
+    options.groupArraysAfterLength < 0
+  ) {
+    options.groupArraysAfterLength =
+      DEFAULT_PREVIEW_OPTIONS.groupArraysAfterLength
+  }
+  return options
 }

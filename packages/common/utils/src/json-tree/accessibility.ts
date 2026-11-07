@@ -44,7 +44,7 @@ export const getAccessibleDescription = (
 
   // For leaf nodes, include the actual value for primitives
   if (isPrimitive(node)) {
-    if (key === "stack") {
+    if (key === "stack" && typeof node.value === "string") {
       return format(node.value.split("\n")[1]?.trim() || "trace")
     }
 

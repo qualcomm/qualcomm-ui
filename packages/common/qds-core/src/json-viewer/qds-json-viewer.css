@@ -93,7 +93,8 @@
   color: var(--json-viewer-color-bigint);
 }
 
-.qui-json-viewer__value[data-type="error"] {
+.qui-json-viewer__value[data-type="error"],
+.qui-json-viewer__value [data-kind="invalid"] {
   color: var(--json-viewer-color-error);
 }
 

@@ -85,7 +85,7 @@ const formatValue = (value: unknown): string => {
     return String(value)
   }
   if (value instanceof Date) {
-    return value.toISOString()
+    return Number.isNaN(value.getTime()) ? "Invalid Date" : value.toISOString()
   }
   if (value instanceof Set) {
     return `Set(${value.size})`
@@ -102,6 +102,26 @@ const formatValue = (value: unknown): string => {
   // eslint-disable-next-line @typescript-eslint/no-base-to-string
   return String(value)
 }
+
+const formatValueElement = (
+  value: unknown,
+  text = formatValue(value),
+): JsonNodeHastElement => {
+  if (value instanceof Date && Number.isNaN(value.getTime())) {
+    return jsx({kind: "invalid"}, [txt(text)])
+  }
+  return txt(text)
+}
+
+const generatePreviewElement = (
+  items: JsonNodeHastElement[],
+  hasMore: boolean,
+): JsonNodeElement =>
+  jsx({kind: "preview-text"}, [
+    txt(" "),
+    ...items.flatMap((item, index) => (index > 0 ? [txt(", "), item] : [item])),
+    txt(hasMore ? ", … " : " "),
+  ])
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -228,16 +248,20 @@ export const SetType: JsonDataTypeOptions<Set<unknown>> = dataType<
     }
   },
   previewElement(node, opts) {
-    const preview = this.previewText?.(node, opts) ?? ""
+    const entries = Array.from(node.value)
+    const preview = generatePreviewElement(
+      entries
+        .slice(0, opts.maxPreviewItems)
+        .map((value) => formatValueElement(value)),
+      entries.length > opts.maxPreviewItems,
+    )
     const size = node.value.size
 
     const children: Array<JsonNodeElement | JsonNodeText> = [
       jsx({kind: "constructor"}, [txt(`Set(${size})`)]),
       jsx({kind: "brace"}, [txt(" {")]),
     ]
-    if (preview) {
-      children.push(jsx({kind: "preview-text"}, [txt(preview)]))
-    }
+    children.push(preview)
     children.push(jsx({kind: "brace"}, [txt("}")]))
 
     return jsx({}, children)
@@ -443,9 +467,8 @@ export const URLSearchParamsType: JsonDataTypeOptions<URLSearchParams> =
     node({createNode, keyPath, value}) {
       const entriesChildren = Array.from(value.entries()).map(
         ([key, value], index): JsonNode => {
-          const keyStr = String(key)
-          const keyNode = createNode([ENTRIES_KEY, keyStr, "key"], key)
-          const valueNode = createNode([ENTRIES_KEY, keyStr, "value"], value)
+          const keyNode = createNode([ENTRIES_KEY, index, "key"], key)
+          const valueNode = createNode([ENTRIES_KEY, index, "value"], value)
 
           return {
             children: [keyNode, valueNode],
@@ -802,7 +825,7 @@ export const DateType: JsonDataTypeOptions<Date> = dataType<Date>({
     }
   },
   previewElement(node) {
-    return jsx({}, [txt(node.value.toISOString())])
+    return jsx({}, [formatValueElement(node.value)])
   },
   type: "date",
 })
@@ -822,8 +845,8 @@ export const MapType: JsonDataTypeOptions<Map<unknown, unknown>> = dataType<
     const entriesChildren = Array.from(value.entries()).map(
       ([key, value], index): JsonNode => {
         const keyStr = String(key)
-        const keyNode = createNode([ENTRIES_KEY, keyStr, "key"], key)
-        const valueNode = createNode([ENTRIES_KEY, keyStr, "value"], value)
+        const keyNode = createNode([ENTRIES_KEY, index, "key"], key)
+        const valueNode = createNode([ENTRIES_KEY, index, "value"], value)
         return {
           children: [keyNode, valueNode],
           keyPath: [...keyPath, ENTRIES_KEY, index],
@@ -851,16 +874,29 @@ export const MapType: JsonDataTypeOptions<Map<unknown, unknown>> = dataType<
     }
   },
   previewElement(node, opts) {
-    const preview = this.previewText?.(node, opts) || ""
+    const entries = Array.from(node.value.entries())
+    const preview = generatePreviewElement(
+      entries
+        .slice(0, opts.maxPreviewItems)
+        .map(([key, value]) =>
+          jsx({}, [
+            formatValueElement(
+              key,
+              typeof key === "string" ? `"${key}"` : String(key),
+            ),
+            txt(" => "),
+            formatValueElement(value),
+          ]),
+        ),
+      entries.length > opts.maxPreviewItems,
+    )
     const size = node.value.size
 
     const children: Array<JsonNodeElement | JsonNodeText> = [
       jsx({kind: "constructor"}, [txt(`Map(${size})`)]),
       jsx({kind: "brace"}, [txt(" {")]),
     ]
-    if (preview) {
-      children.push(jsx({kind: "preview-text"}, [txt(preview)]))
-    }
+    children.push(preview)
     children.push(jsx({kind: "brace"}, [txt("}")]))
 
     return jsx({}, children)
@@ -954,9 +990,8 @@ export const HeadersType: JsonDataTypeOptions<Headers> = dataType<Headers>({
   node({createNode, keyPath, value}) {
     const entriesChildren = Array.from(value.entries()).map(
       ([key, value], index): JsonNode => {
-        const keyStr = String(key)
-        const keyNode = createNode([ENTRIES_KEY, keyStr, "key"], key)
-        const valueNode = createNode([ENTRIES_KEY, keyStr, "value"], value)
+        const keyNode = createNode([ENTRIES_KEY, index, "key"], key)
+        const valueNode = createNode([ENTRIES_KEY, index, "value"], value)
         return {
           children: [keyNode, valueNode],
           keyPath: [...keyPath, ENTRIES_KEY, index],
@@ -1195,6 +1230,19 @@ export const ArrayType: JsonDataTypeOptions<unknown[]> = dataType<
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
+type TypedArray =
+  | BigInt64Array
+  | BigUint64Array
+  | Float32Array
+  | Float64Array
+  | Int8Array
+  | Int16Array
+  | Int32Array
+  | Uint8Array
+  | Uint8ClampedArray
+  | Uint16Array
+  | Uint32Array
+
 const typedArrayConstructors = {
   BigInt64Array: "bigint64array",
   BigUint64Array: "biguint64array",
@@ -1207,69 +1255,86 @@ const typedArrayConstructors = {
   Uint8ClampedArray: "uint8clampedarray",
   Uint16Array: "uint16array",
   Uint32Array: "uint32array",
+} as const
+
+const getTypedArrayName = (value: unknown): string => {
+  if (!isObj(value)) {
+    return ""
+  }
+  const constructor = getProp(value, "constructor")
+  return typeof constructor === "function" ? constructor.name : ""
 }
 
-const revertTypedArrayConstructors = Object.fromEntries(
-  Object.entries(typedArrayConstructors).map(([key, value]) => [value, key]),
-)
+const TYPED_ARRAY_KEYS = [
+  "length",
+  "byteLength",
+  "byteOffset",
+  "buffer",
+] as const
 
-const TYPED_ARRAY_KEYS = ["length", "byteLength", "byteOffset", "buffer"]
+export const TypedArrayType: JsonDataTypeOptions<TypedArray> =
+  dataType<TypedArray>({
+    check(value) {
+      return (
+        ArrayBuffer.isView(value) &&
+        Object.hasOwn(typedArrayConstructors, getTypedArrayName(value))
+      )
+    },
+    description(node) {
+      const typedArray = node.value
+      return `${getTypedArrayName(typedArray)}(${typedArray.length})`
+    },
+    node({createNode, keyPath, options, value}) {
+      const typedArray = value
+      const enumerableProperties = TYPED_ARRAY_KEYS.map((key) => ({
+        key,
+        value: typedArray[key],
+      }))
 
-export const TypedArrayType: JsonDataTypeOptions = dataType<any>({
-  check(value) {
-    return isObj(value) && value.constructor.name in typedArrayConstructors
-  },
-  description(node) {
-    const typedArray = node.value
-    const constructorName = typedArray.constructor.name
-    return `${revertTypedArrayConstructors[constructorName]}(${typedArray.length})`
-  },
-  node({createNode, keyPath, options, value}) {
-    const typedArray = value
-    const enumerableProperties = TYPED_ARRAY_KEYS.map((key) => ({
-      key,
-      value: Reflect.get(typedArray, key),
-    }))
+      const enumerableChildren = enumerableProperties.map(({key, value}) =>
+        createNode([key], value),
+      )
 
-    const enumerableChildren = enumerableProperties.map(({key, value}) =>
-      createNode([key], value),
-    )
+      const nonEnumerableChildren = options?.showNonenumerable
+        ? (() => {
+            // Show first few values
+            const values = [...typedArray].slice(0, 100) // Limit for performance
+            const node = createNode(["[[Values]]"], values)
+            node.isNonEnumerable = true
+            return [node]
+          })()
+        : []
 
-    const nonEnumerableChildren = options?.showNonenumerable
-      ? (() => {
-          // Show first few values
-          const values = Array.from(typedArray).slice(0, 100) // Limit for performance
-          const node = createNode(["[[Values]]"], values)
-          node.isNonEnumerable = true
-          return [node]
-        })()
-      : []
+      const children = [...enumerableChildren, ...nonEnumerableChildren]
 
-    const children = [...enumerableChildren, ...nonEnumerableChildren]
-
-    return {
-      children,
-      keyPath,
-      type: Reflect.get(typedArrayConstructors, value.constructor.name),
-      value,
-    }
-  },
-  previewElement(node) {
-    const typedArray = node.value
-    const constructorName = typedArray.constructor.name
-    const preview = Array.from(typedArray).slice(0, 5).join(", ")
-    const hasMore = typedArray.length > 5
-    return jsx({}, [
-      jsx({kind: "constructor"}, [
-        txt(`${constructorName}(${typedArray.length})`),
-      ]),
-      jsx({kind: "brace"}, [txt(" [ ")]),
-      jsx({kind: "preview-text"}, [txt(preview + (hasMore ? ", …" : ""))]),
-      jsx({kind: "brace"}, [txt(" ]")]),
-    ])
-  },
-  type: (value) => Reflect.get(typedArrayConstructors, value.constructor.name),
-})
+      return {
+        children,
+        keyPath,
+        type: typedArrayConstructors[
+          getTypedArrayName(value) as keyof typeof typedArrayConstructors
+        ],
+        value,
+      }
+    },
+    previewElement(node) {
+      const typedArray = node.value
+      const constructorName = getTypedArrayName(typedArray)
+      const preview = [...typedArray].slice(0, 5).join(", ")
+      const hasMore = typedArray.length > 5
+      return jsx({}, [
+        jsx({kind: "constructor"}, [
+          txt(`${constructorName}(${typedArray.length})`),
+        ]),
+        jsx({kind: "brace"}, [txt(" [ ")]),
+        jsx({kind: "preview-text"}, [txt(preview + (hasMore ? ", …" : ""))]),
+        jsx({kind: "brace"}, [txt(" ]")]),
+      ])
+    },
+    type: (value) =>
+      typedArrayConstructors[
+        getTypedArrayName(value) as keyof typeof typedArrayConstructors
+      ],
+  })
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1334,19 +1399,21 @@ export const IterableType: JsonDataTypeOptions = dataType<any>({
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
-export const ClassType: JsonDataTypeOptions = dataType<any>({
+export const ClassType: JsonDataTypeOptions<object> = dataType<object>({
   check(value) {
-    return (
-      typeof value === "object" &&
-      value !== null &&
-      value.constructor !== Object
-    )
+    if (!isObj(value)) {
+      return false
+    }
+    const constructor = getProp(value, "constructor")
+    return typeof constructor === "function" && constructor !== Object
   },
   description(node) {
     return node.constructorName || "Object"
   },
   node({createNode, keyPath, options, value}) {
-    const constructorName = value.constructor.name
+    const constructor = getProp(value, "constructor")
+    const constructorName =
+      typeof constructor === "function" ? constructor.name : undefined
     const allPropertyNames = Object.getOwnPropertyNames(value)
     const enumerableKeys = Object.keys(value)
     const nonEnumerableKeys = allPropertyNames.filter(

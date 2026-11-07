@@ -99,6 +99,7 @@ export class JsonViewerRootDirective implements OnInit {
 
   /**
    * Groups array entries into chunks when the array length exceeds this value.
+   * Use a positive integer, or 0 to disable grouping. Invalid values default to 100.
    *
    * @default 100
    */

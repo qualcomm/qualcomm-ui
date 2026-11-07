@@ -19,11 +19,18 @@ function createDemoError<T extends Error>(error: T): T {
 
 const data = {
   binary: new ArrayBuffer(16),
+  booleanStack: {stack: false},
   callback: function onUpdate() {},
+  dateMap: new Map([
+    ["valid", new Date("2025-01-01T00:00:00.000Z")],
+    ["invalid", new Date(NaN)],
+  ]),
+  dateSet: new Set([new Date("2025-01-01T00:00:00.000Z"), new Date(NaN)]),
   errors: [
     createDemoError(new Error("Connection timeout")),
     createDemoError(new TypeError("Expected string, received number")),
   ],
+  invalidDate: new Date(NaN),
   metadata: {
     endpoint: new URL("https://api.example.com/v1/users?active=true"),
     headers: new Headers({
@@ -32,7 +39,13 @@ const data = {
     }),
     params: new URLSearchParams({limit: "20", page: "1", sort: "name"}),
   },
+  nullConstructor: {constructor: null, name: "value"},
+  nullPrototype: Object.assign(Object.create(null) as Record<string, unknown>, {
+    name: "value",
+  }),
+  numericStack: {stack: 42},
   tags,
+  typedArray: new Uint8Array([1, 2]),
   users,
 }
 

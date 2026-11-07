@@ -64,6 +64,7 @@ export type JsonNodeSyntaxKind =
   | "circular"
   | "operator"
   | "error-stack"
+  | "invalid"
 
 export interface JsonNodeElement {
   children: Array<JsonNodeElement | JsonNodeText>
@@ -107,6 +108,7 @@ export interface JsonNodePreviewOptions {
 
   /**
    * Groups array entries into chunks when the array length exceeds this value.
+   * Use a positive integer, or 0 to disable grouping. Invalid values default to 100.
    *
    * @default 100
    */
