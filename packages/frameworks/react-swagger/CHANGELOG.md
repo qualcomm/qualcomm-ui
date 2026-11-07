@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-swagger Changelog
 
+## 1.4.0
+
+Nov 7th, 2026
+
+### Features
+
+* [design-tokens]: migrate to qds v2 ([a1cb9dd](https://github.com/qualcomm/qualcomm-ui/commit/a1cb9dd))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@2.0.0]
+
 ## 1.3.37
 
 Oct 20th, 2026
