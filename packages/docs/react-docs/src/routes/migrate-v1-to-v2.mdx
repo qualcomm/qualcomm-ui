@@ -4,7 +4,7 @@ title: Migrate from v1 to v2
 
 # {frontmatter.title}
 
-Use this guide to upgrade an existing `@qualcomm-ui/react` application from 1.x to 2.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types.
+Use this guide to upgrade `@qualcomm-ui/react` from 1.x to 2.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types. Continue reading to learn how to migrate with our published codemods.
 
 ## Update the dependencies
 
@@ -22,7 +22,6 @@ Update the QUI dependencies in `package.json`:
 
 - `@qualcomm-ui/qds-core` is a peer dependency and must be on v2.
 - Update `@qualcomm-ui/tailwind-plugin` only if your application uses it.
-- React 19 or later is still required. `@qualcomm-ui/react-core` and the other peer dependency requirements are unchanged.
 
 ## Migrate measurement tokens
 

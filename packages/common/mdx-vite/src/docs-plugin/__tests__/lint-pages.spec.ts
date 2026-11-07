@@ -57,7 +57,7 @@ describe("lintPages", () => {
     const {result} = await lint()
 
     expect(result).toEqual({
-      disabledRules: [],
+      disabledRules: [{rule: "fileLinks", source: "default"}],
       errorCount: 0,
       pageCount: 2,
       warningCount: 0,
@@ -85,10 +85,10 @@ describe("lintPages", () => {
     expect(result.errorCount).toBe(2)
   })
 
-  test("reports URL-path links to MDX pages", async () => {
+  test("reports URL-path links to MDX pages when fileLinks is enabled", async () => {
     writeFile("app/routes/index.mdx", "# Home\n\n[Guide](/guide)")
 
-    const {output, result} = await lint()
+    const {output, result} = await lint({lint: {fileLinks: "warn"}})
 
     expect(result.errorCount).toBe(1)
     expect(output).toContain("should use a relative .mdx file path")
@@ -98,7 +98,7 @@ describe("lintPages", () => {
     writeFile("app/routes/broken.mdx", brokenPage)
 
     const {output, result} = await lint({
-      lint: {brokenLinks: "off", pageTitle: "off"},
+      lint: {brokenLinks: "off", fileLinks: "warn", pageTitle: "off"},
     })
 
     expect(result).toEqual({
@@ -132,6 +132,7 @@ describe("lintPages", () => {
 
     expect(result.errorCount).toBe(1)
     expect(result.disabledRules).toEqual([
+      {rule: "fileLinks", source: "default"},
       {rule: "pageTitle", source: "option"},
     ])
   })
@@ -168,7 +169,14 @@ describe("lintPages", () => {
 })
 
 describe("resolveLintCommandRules", () => {
-  const defaults = resolveLintOptions({})
+  const defaults = resolveLintOptions({lint: {fileLinks: "warn"}})
+
+  test("keeps fileLinks off by default", () => {
+    expect(resolveLintCommandRules({})).toEqual({
+      disabledRules: [{rule: "fileLinks", source: "default"}],
+      lint: {brokenLinks: "error", fileLinks: "off", pageTitle: "error"},
+    })
+  })
 
   test("promotes every enabled rule to error", () => {
     expect(resolveLintCommandRules(defaults).lint).toEqual({

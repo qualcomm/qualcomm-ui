@@ -271,25 +271,25 @@ describe("SearchIndexer file links", () => {
     expect(indexer.lintErrorCount).toBe(2)
   })
 
-  test("warns about URL links by default", () => {
-    const {indexer, output} = buildIndex({
+  test("does not report URL links by default", () => {
+    const {output} = buildIndex({
       "api+/source.mdx": page("[a](/api/target)"),
       "api+/target.mdx": target,
     })
-    expect(output).toContain("relative .mdx file path")
-    expect(output).toContain("qui-docs fix-links")
-    expect(indexer.lintErrorCount).toBe(0)
+    expect(output).not.toContain("relative .mdx file path")
   })
 
-  test("does not report URL links when fileLinks is off", () => {
-    const {output} = buildIndex(
+  test("warns about URL links when fileLinks is warn", () => {
+    const {indexer, output} = buildIndex(
       {
         "api+/source.mdx": page("[a](/api/target)"),
         "api+/target.mdx": target,
       },
-      {lint: {fileLinks: "off"}},
+      {lint: {fileLinks: "warn"}},
     )
-    expect(output).not.toContain("relative .mdx file path")
+    expect(output).toContain("relative .mdx file path")
+    expect(output).toContain("qui-docs fix-links")
+    expect(indexer.lintErrorCount).toBe(0)
   })
 
   test("resolves file links in symlinked pages against the real file", () => {

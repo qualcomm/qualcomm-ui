@@ -74,9 +74,9 @@ When moving an existing route:
 
 QUI Docs validates links and page titles during development and build. Configure severity with the [`lint` option](./configuration.mdx#lint) in `qui-docs.config.ts`.
 
-- `brokenLinks`, `fileLinks`, and `pageTitle` default to `"warn"`.
+- `brokenLinks` and `pageTitle` default to `"warn"`. `fileLinks` defaults to `"off"`.
 - Rules set to `"error"` fail the production build (`vite build`).
-- `fileLinks` logs URL-path links to MDX pages as warnings by default. Run [`qui-docs fix-links`](./markdown.mdx#migrating-existing-links) to convert them to relative `.mdx` file links. Use `--dry-run` to preview the replacements.
+- `fileLinks` logs URL-path links to MDX pages when enabled. Run [`qui-docs fix-links`](./markdown.mdx#migrating-existing-links) to convert them to relative `.mdx` file links. Use `--dry-run` to preview the replacements.
 
 Run [`qui-docs lint`](./configuration.mdx#cli-linting) to validate pages without a Vite build. The command reports every enabled rule's issues as errors by default.
 

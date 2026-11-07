@@ -242,7 +242,7 @@ export interface QuiDocsLintOptions {
    * `../button+/_button.mdx` or `#size`. URL paths don't resolve in GitHub's
    * markdown viewer.
    *
-   * @default "warn"
+   * @default "off"
    */
   fileLinks?: LintSeverity
 
@@ -303,6 +303,10 @@ export interface QuiDocsConfig extends Omit<
 
 export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
   appDirectory: string
+  /**
+   * The `lint` option as written in the config file, before defaults are applied.
+   */
+  configuredLint: QuiDocsLintOptions
   /**
    * full path to the cosmiconfig file.
    */

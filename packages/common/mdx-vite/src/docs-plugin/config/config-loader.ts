@@ -58,6 +58,7 @@ export class ConfigLoader {
     return {
       ...conf,
       appDirectory: conf.appDirectory || "app",
+      configuredLint: conf.lint ?? {},
       filePath: config!.filepath,
       lint: resolveLintOptions(conf),
       pageDirectory: conf.pageDirectory

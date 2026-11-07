@@ -11,7 +11,7 @@ export function resolveLintOptions(
 ): Required<QuiDocsLintOptions> {
   return {
     brokenLinks: config.lint?.brokenLinks ?? "warn",
-    fileLinks: config.lint?.fileLinks ?? "warn",
+    fileLinks: config.lint?.fileLinks ?? "off",
     pageTitle: config.lint?.pageTitle ?? "warn",
   }
 }

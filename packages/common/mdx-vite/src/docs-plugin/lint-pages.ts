@@ -11,6 +11,7 @@ import {
   ConfigLoader,
   type LintSeverity,
   type QuiDocsLintOptions,
+  resolveLintOptions,
 } from "./config/index.js"
 import {resolveDocProps} from "./generate-page-map.js"
 import {fixPath} from "./path-utils.js"
@@ -26,8 +27,11 @@ const lintRules = [
 
 export interface DisabledLintRule {
   rule: LintRule
-  /** Where the rule was turned off. */
-  source: "config" | "option"
+  /**
+   * Where the rule was turned off: the rule's default, the config file, or a
+   * command option.
+   */
+  source: "config" | "default" | "option"
 }
 
 export interface LintPagesOptions {
@@ -72,16 +76,18 @@ export interface LintPagesResult {
 }
 
 /**
- * Resolves the severity of each rule for the `lint` command. Every rule that
- * isn't turned off in the config reports errors, so rules added in later
- * releases run without changes to existing scripts. Per-rule options take
- * precedence over the config and `warn`.
+ * Resolves the severity of each rule for the `lint` command from the `lint`
+ * option as written in the config file. Every rule that isn't turned off in the
+ * config or by default reports errors, so rules added in later releases run
+ * without changes to existing scripts. Per-rule options take precedence over
+ * the config and `warn`.
  */
 export function resolveLintCommandRules(
-  configured: Required<QuiDocsLintOptions>,
+  configured: QuiDocsLintOptions,
   options: Pick<LintPagesOptions, "rules" | "warn"> = {},
 ): {disabledRules: DisabledLintRule[]; lint: Required<QuiDocsLintOptions>} {
   const enabledSeverity: LintSeverity = options.warn ? "warn" : "error"
+  const resolved = resolveLintOptions({lint: configured})
   const disabledRules: DisabledLintRule[] = []
   const lint = {} as Required<QuiDocsLintOptions>
 
@@ -90,10 +96,13 @@ export function resolveLintCommandRules(
     if (override) {
       lint[rule] = override
     } else {
-      lint[rule] = configured[rule] === "off" ? "off" : enabledSeverity
+      lint[rule] = resolved[rule] === "off" ? "off" : enabledSeverity
     }
     if (lint[rule] === "off") {
-      disabledRules.push({rule, source: override ? "option" : "config"})
+      disabledRules.push({
+        rule,
+        source: override ? "option" : configured[rule] ? "config" : "default",
+      })
     }
   }
 
@@ -112,7 +121,7 @@ export async function lintPages(
     configFile: options.configFile,
   }).loadConfig()
   const {disabledRules, lint} = resolveLintCommandRules(
-    resolvedConfig.lint,
+    resolvedConfig.configuredLint,
     options,
   )
   const routesDir = fixPath(
@@ -140,6 +149,12 @@ export async function lintPages(
 }
 
 const severities = ["off", "warn", "error"] as const satisfies LintSeverity[]
+
+const disabledRuleLabels: Record<DisabledLintRule["source"], string> = {
+  config: "(disabled from config file)",
+  default: "(disabled by default)",
+  option: "(disabled from command flag)",
+}
 
 function lintRuleOption<Flags extends string>(flags: Flags, rule: LintRule) {
   return new Option(
@@ -195,9 +210,7 @@ export function addLintCommand(): void {
             ),
           )
           for (const {rule, source} of disabledRules) {
-            console.log(
-              `  ${rule} ${chalk.dim(source === "config" ? "(disabled from config file)" : "(disabled from command flag)")}`,
-            )
+            console.log(`  ${rule} ${chalk.dim(disabledRuleLabels[source])}`)
           }
         }
 
