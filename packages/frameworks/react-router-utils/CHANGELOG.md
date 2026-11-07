@@ -1,5 +1,14 @@
 # @qualcomm-ui/react-router-utils Changelog
 
+## 3.1.1
+
+Nov 7th, 2026
+
+### Miscellaneous Chores
+
+* expand peer range for v8 compat ([0b33a82](https://github.com/qualcomm/qualcomm-ui/commit/0b33a82))
+* **deps:** update dependencies [@qualcomm-ui/mdx-vite@5.0.0]
+
 ## 3.1.0
 
 Nov 3rd, 2026

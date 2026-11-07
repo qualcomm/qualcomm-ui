@@ -30,7 +30,7 @@ export class SliderRootDirective extends CoreSliderRootDirective {
    * Governs the color of the slider.
    *
    * @default 'brand'
-   * @since next-release
+   * @since 4.0.0
    */
   readonly emphasis = input<QdsSliderEmphasis>()
 

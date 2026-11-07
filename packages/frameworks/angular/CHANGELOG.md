@@ -1,5 +1,29 @@
 # @qualcomm-ui/angular Changelog
 
+## 4.0.0
+
+Nov 7th, 2026
+
+Upgrade automatically with our codemod. Learn more [here](https://angular.qui.qualcomm.com/migrate-v3-to-v4)
+
+### BREAKING CHANGES
+
+* [design-tokens]: apply new measurement scales from qds ([93310a9](https://github.com/qualcomm/qualcomm-ui/commit/93310a9))
+
+### Features
+
+* [tag]: align emphasis with QDS v2 ([72b5955](https://github.com/qualcomm/qualcomm-ui/commit/72b5955))
+* [design-tokens]: migrate to qds v2 ([3968a0a](https://github.com/qualcomm/qualcomm-ui/commit/3968a0a))
+* [progress]: rename primary emphasis to brand ([9673b56](https://github.com/qualcomm/qualcomm-ui/commit/9673b56))
+* [segmented-control]: add the `emphasis` prop with `brand` and `neutral` values, `variant` and the `primary` value are deprecated ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [slider]: add the `emphasis` prop with `brand` and `neutral` values, `variant` and the `primary` value are deprecated ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [slider,segmented-control]: deprecate variant in favor of emphasis ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [breadcrumbs]: rename primary emphasis to brand ([c38b8b4](https://github.com/qualcomm/qualcomm-ui/commit/c38b8b4))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@2.0.0, @qualcomm-ui/angular-core@3.4.0]
+
 ## 3.4.1
 
 Oct 30th, 2026

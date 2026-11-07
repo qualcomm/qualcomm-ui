@@ -1,5 +1,20 @@
 # @qualcomm-ui/codemod Changelog
 
+## 1.4.0
+
+Nov 7th, 2026
+
+### Features
+
+* add codemod for v2 deprecated props ([13d562f](https://github.com/qualcomm/qualcomm-ui/commit/13d562f))
+* [qui-docs]: add config migration ([ba638b4](https://github.com/qualcomm/qualcomm-ui/commit/ba638b4))
+* add config migration for validatePageLinks ([cc30b64](https://github.com/qualcomm/qualcomm-ui/commit/cc30b64))
+* add qds v2 tokens codemod ([9ad6a62](https://github.com/qualcomm/qualcomm-ui/commit/9ad6a62))
+
+### Code Refactoring
+
+* improve command descriptions ([56fdb28](https://github.com/qualcomm/qualcomm-ui/commit/56fdb28))
+
 ## 1.3.0
 
 Nov 3rd, 2026

@@ -24,7 +24,7 @@ export interface QdsSliderApiProps {
    * Governs the color of the slider.
    *
    * @default 'brand'
-   * @since next-release
+   * @since 2.0.0
    */
   emphasis?: QdsSliderEmphasis
 

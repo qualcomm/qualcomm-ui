@@ -1,5 +1,31 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 2.0.0
+
+Nov 7th, 2026
+
+### BREAKING CHANGES
+
+* [design-tokens]: apply new measurement scales from qds ([93310a9](https://github.com/qualcomm/qualcomm-ui/commit/93310a9))
+* [design-tokens]: apply new measurement scales from qds ([93310a9](https://github.com/qualcomm/qualcomm-ui/commit/93310a9))
+
+### Features
+
+* [breadcrumbs]: rename the `primary` emphasis to `brand`, `primary` is deprecated ([c38b8b4](https://github.com/qualcomm/qualcomm-ui/commit/c38b8b4))
+* [tag]: align emphasis with QDS v2 ([72b5955](https://github.com/qualcomm/qualcomm-ui/commit/72b5955))
+* [design-tokens]: migrate to qds v2 ([3968a0a](https://github.com/qualcomm/qualcomm-ui/commit/3968a0a))
+* [progress]: rename primary emphasis to brand ([9673b56](https://github.com/qualcomm/qualcomm-ui/commit/9673b56))
+* [progress]: rename the `primary` emphasis to `brand`, `primary` is deprecated ([9673b56](https://github.com/qualcomm/qualcomm-ui/commit/9673b56))
+* [progress-ring]: rename the `primary` emphasis to `brand`, `primary` is deprecated ([9673b56](https://github.com/qualcomm/qualcomm-ui/commit/9673b56))
+* [segmented-control]: add the `emphasis` prop with `brand` and `neutral` values, `variant` and the `primary` value are deprecated ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [design-tokens]: migrate to qds v2 ([3968a0a](https://github.com/qualcomm/qualcomm-ui/commit/3968a0a))
+* [slider]: add the `emphasis` prop with `brand` and `neutral` values, `variant` and the `primary` value are deprecated ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [slider,segmented-control]: deprecate variant in favor of emphasis ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [tag]: add the `neutral-outline-brand` emphasis, which looks like `neutral-outline` except when selected ([72b5955](https://github.com/qualcomm/qualcomm-ui/commit/72b5955))
+* [tag]: rename the `outline-brand` and `outline-neutral` emphasis to `brand-outline` and `neutral-outline`, the old values are deprecated ([72b5955](https://github.com/qualcomm/qualcomm-ui/commit/72b5955))
+* [tag]: add the `info`, `success`, `warning`, and `danger` emphasis ([72b5955](https://github.com/qualcomm/qualcomm-ui/commit/72b5955))
+* [breadcrumbs]: rename primary emphasis to brand ([c38b8b4](https://github.com/qualcomm/qualcomm-ui/commit/c38b8b4))
+
 ## 1.39.0
 
 Oct 20th, 2026

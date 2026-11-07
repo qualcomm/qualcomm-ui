@@ -1,5 +1,14 @@
 # @qualcomm-ui/tailwind-plugin Changelog
 
+## 2.0.0
+
+Nov 7th, 2026
+
+### BREAKING CHANGES
+
+* [design-tokens]: apply new measurement scales from qds ([93310a9](https://github.com/qualcomm/qualcomm-ui/commit/93310a9))
+* [design-tokens]: apply new measurement scales from qds ([93310a9](https://github.com/qualcomm/qualcomm-ui/commit/93310a9))
+
 ## 1.10.0
 
 Aug 11th, 2026
