@@ -4,6 +4,8 @@
 
 Nov 7th, 2026
 
+Upgrade automatically with our codemod. Learn more [here](https://react.qui.qualcomm.com/migrate-v1-to-v2)
+
 ### BREAKING CHANGES
 
 * [design-tokens]: apply new measurement scales from qds ([93310a9](https://github.com/qualcomm/qualcomm-ui/commit/93310a9))
