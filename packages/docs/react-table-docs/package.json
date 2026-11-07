@@ -17,7 +17,7 @@
     "lint": "eslint --quiet",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "typecheck": "tsc -b tsconfig.lib.json -w --preserveWatchOutput",
-    "lint-docs": "qui-docs lint --file-links off"
+    "lint-docs": "qui-docs lint"
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",

@@ -63,6 +63,9 @@ jobs:
     - name: typedoc
       run: pnpm doc-gen
 
+    - name: lint docs
+      run: pnpm turbo run lint-docs
+
   unit-test:
     runs-on: ubuntu-latest
     concurrency:
@@ -225,21 +228,3 @@ jobs:
 
     - name: Run copyright/license checker
       run: node --import=tsx scripts/license-checker lint
-
-  check-docs:
-    runs-on: ubuntu-latest
-    concurrency:
-      group: PR lint-docs - ${{github.head_ref}}
-      cancel-in-progress: true
-    steps:
-    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-      with:
-        persist-credentials: false
-
-    - uses: $/.github/actions/init-node-and-install
-
-    - name: build dependencies
-      run: pnpm turbo run build --filter '@qualcomm-ui/mdx-vite'
-
-    - name: lint docs
-      run: pnpm turbo run lint-docs

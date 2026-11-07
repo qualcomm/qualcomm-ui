@@ -30,7 +30,7 @@
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "generate-page-map": "qui-docs generate-page-map -o ./scripts/temp/site-data.json",
     "build-demo-html": "tsx scripts/build-demo-html.ts",
-    "lint-docs": "qui-docs lint --file-links off"
+    "lint-docs": "qui-docs lint"
   },
   "dependencies": {
     "@angular/animations": "catalog:",
