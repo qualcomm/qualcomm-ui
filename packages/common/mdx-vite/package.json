@@ -105,7 +105,7 @@
     "cross-env": "^10.1.0",
     "hastscript": "^9.0.0",
     "lodash-es": "catalog:",
-    "minimatch": "^11.0.4",
+    "minimatch": "^11.0.5",
     "rehype-mdx-code-props": "^3.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",
