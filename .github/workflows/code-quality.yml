@@ -24,6 +24,8 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -44,6 +46,8 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -67,6 +71,8 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -90,6 +96,8 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -121,6 +129,8 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -152,6 +162,8 @@ jobs:
       cancel-in-progress: true
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -180,6 +192,8 @@ jobs:
       cancel-in-progress: true
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -204,6 +218,8 @@ jobs:
       cancel-in-progress: true
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
@@ -217,6 +233,8 @@ jobs:
       cancel-in-progress: true
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - uses: ./.github/actions/init-node-and-install
 
