@@ -13,7 +13,7 @@ permissions:
 jobs:
   preflight:
     name: Run QC Preflight Checks
-    uses: qualcomm/qcom-reusable-workflows/.github/workflows/reusable-qcom-preflight-checks-orchestrator.yml@v2
+    uses: qualcomm/qcom-reusable-workflows/.github/workflows/reusable-qcom-preflight-checks-orchestrator.yml@679cc01079b0b47a4cac819f2adf814ff9b7fff0 # v2.0.16
     with:
       enable-semgrep-scan: true
       enable-dependency-review: true
