@@ -520,12 +520,13 @@ hr.mdx {
 .mdx-spoiler__root {
   border: solid 1px var(--color-border-neutral-01);
   border-radius: var(--border-radius-100);
-  margin-top: var(--qui-docs-content-spacing-xs);
+  margin: var(--qui-docs-content-spacing-sm) 0;
 }
 
 .mdx-spoiler__trigger {
   align-items: center;
   background: var(--color-utility-opacity-neutral-01);
+  border: none;
   color: var(--color-text-neutral-primary);
   display: flex;
   font: var(--font-static-heading-xs-default);
@@ -534,6 +535,11 @@ hr.mdx {
   gap: 8px;
   padding: 24px;
   width: 100%;
+
+  &:focus-visible {
+    border-radius: var(--border-radius-100);
+    outline: solid 1px var(--color-utility-focus-border);
+  }
 
   p.mdx {
     margin-top: 0;
