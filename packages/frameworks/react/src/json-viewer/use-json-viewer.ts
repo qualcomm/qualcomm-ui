@@ -69,10 +69,27 @@ export function useJsonViewer(props: UseJsonViewerProps): UseJsonViewerReturn {
   const [jsonOptions, treeProps] = splitProps(rest, [
     ...JSON_VIEWER_OPTION_KEYS,
   ])
+  const {
+    collapseStringsAfterLength,
+    groupArraysAfterLength,
+    maxPreviewItems,
+    showNonenumerable,
+  } = jsonOptions
 
   const previewOptions = useMemo(
-    () => getPreviewOptions(jsonOptions),
-    [jsonOptions],
+    () =>
+      getPreviewOptions({
+        collapseStringsAfterLength,
+        groupArraysAfterLength,
+        maxPreviewItems,
+        showNonenumerable,
+      }),
+    [
+      collapseStringsAfterLength,
+      groupArraysAfterLength,
+      maxPreviewItems,
+      showNonenumerable,
+    ],
   )
 
   const collection = useMemo(
