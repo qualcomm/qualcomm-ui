@@ -27,7 +27,7 @@ Update the QUI dependencies in `package.json`:
 
 ## Migrate measurement tokens
 
-`@qualcomm-ui/qds-core` v2 and `@qualcomm-ui/tailwind-plugin` v2 rename the spacing, sizing, and border radius steps. This is the breaking change in this release.
+`@qualcomm-ui/qds-core` v2 and `@qualcomm-ui/tailwind-plugin` v2 rename the spacing, sizing, and border radius tokens. This is the breaking change in this release.
 
 QUI's component CSS already uses the new tokens. Components render at the same sizes. Only application code that references these tokens directly requires migration:
 
@@ -36,7 +36,7 @@ QUI's component CSS already uses the new tokens. Components render at the same s
 - Tailwind theme variables: `--spacing-qds-*`.
 
 > [!warning]
-> Some step names exist in both scales with different pixel values. Legacy `--spacing-100` is 16px. The new `--spacing-100` is 4px. Unchanged references can resolve to incorrect sizes without an error.
+> Some tokens exist in both scales with different pixel values. Legacy `--spacing-100` is 16px. The new `--spacing-100` is 4px. Unchanged references can resolve to incorrect sizes without an error.
 
 ### Token codemod
 
@@ -50,7 +50,7 @@ npx @qualcomm-ui/codemod@latest migrate qds-v2-tokens
 
 - Use `--dry-run` to preview changes without writing files.
 - Use `-d <dir>` to select a project directory containing `package.json`.
-- The migration cancels without writing files if any scanned file contains v2-only steps. `--force` skips this check. Review mixed legacy and v2 references before using it.
+- The migration cancels without writing files if any scanned file contains v2-only tokens. `--force` skips this check. Review mixed legacy and v2 references before using it.
 - Detected v1 dependencies on `@qualcomm-ui/qds-core` and `@qualcomm-ui/tailwind-plugin` are updated to v2.
 - The codemod adds a `qui.completedMigrations` record and a `note` field to `package.json`. Commit the `qui` field. Do not edit or remove it. Removing the record can cause tokens to be renamed again.
 
@@ -60,7 +60,7 @@ Refer to the [codemod README](https://github.com/qualcomm/qualcomm-ui/tree/main/
 
 ### Manual token migration
 
-Replace each legacy step with the new step that preserves its pixel value:
+Replace each legacy token with the new token that preserves its pixel value:
 
 ```css
 .panel {
@@ -80,7 +80,7 @@ Update Tailwind spacing utilities:
 <div class="p-qds-100">Content</div> <!-- [!code ++] -->
 ```
 
-::: spoiler Spacing step replacements
+::: spoiler Spacing token replacements
 
 These replacements apply to `--spacing-*`, Tailwind spacing utilities, and `--spacing-qds-*`.
 
@@ -123,7 +123,7 @@ These replacements apply to `--spacing-*`, Tailwind spacing utilities, and `--sp
 
 :::
 
-::: spoiler Sizing step replacements
+::: spoiler Sizing token replacements
 
 These replacements apply to `--sizing-*`.
 
