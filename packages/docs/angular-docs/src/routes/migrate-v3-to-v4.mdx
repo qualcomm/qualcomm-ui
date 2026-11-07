@@ -4,7 +4,7 @@ title: Migrate from v3 to v4
 
 # {frontmatter.title}
 
-Use this guide to upgrade an existing `@qualcomm-ui/angular` application from 3.x to 4.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types.
+Use this guide to upgrade `@qualcomm-ui/angular` from 3.x to 4.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types. Continue reading to learn how to migrate with our published codemods.
 
 ## Update the dependencies
 
@@ -21,9 +21,7 @@ Update the QUI dependencies in `package.json`:
 ```
 
 - `@qualcomm-ui/qds-core` is a peer dependency and must be on v2.
-- Update `@qualcomm-ui/tailwind-plugin` only if your application uses it.
-- Keep `@qualcomm-ui/angular-core` on 3.x. It does not move to v4.
-- Angular 22.1 or later is still required. Framework requirements are unchanged from QUI Angular v3.
+- Update `@qualcomm-ui/tailwind-plugin` only if your application uses tailwind.
 
 ## Migrate measurement tokens
 
@@ -48,8 +46,6 @@ Run from your project root:
 npx @qualcomm-ui/codemod@latest migrate qds-v2-tokens
 ```
 
-- Use `--dry-run` to preview changes without writing files.
-- Use `-d <dir>` to select a project directory containing `package.json`.
 - The migration cancels without writing files if any scanned file contains v2-only tokens. `--force` skips this check. Review mixed legacy and v2 references before using it.
 - Detected v1 dependencies on `@qualcomm-ui/qds-core` and `@qualcomm-ui/tailwind-plugin` are updated to v2.
 - The codemod adds a `qui.completedMigrations` record and a `note` field to `package.json`. Commit the `qui` field. Do not edit or remove it. Removing the record can cause tokens to be renamed again.
