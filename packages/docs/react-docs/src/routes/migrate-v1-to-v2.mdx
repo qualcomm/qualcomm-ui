@@ -2,43 +2,79 @@
 title: Migrate from v1 to v2
 ---
 
+import {Tabs, Tab} from "@qualcomm-ui/react/tabs"
+
 # {frontmatter.title}
 
-Use this guide to upgrade `@qualcomm-ui/react` from 1.x to 2.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types. Continue reading to learn how to migrate with our published codemods.
+Use this guide to upgrade `@qualcomm-ui/react` from 1.x to 2.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types.
 
-## Update the dependencies
+## Automatic migration
 
-Update the QUI dependencies in `package.json`:
+::: steps h3
 
-```json
-{
-  "dependencies": {
-    "@qualcomm-ui/react": "^2.0.0",
-    "@qualcomm-ui/qds-core": "^2.0.0",
-    "@qualcomm-ui/tailwind-plugin": "^2.0.0"
-  }
-}
-```
+### Update dependencies
 
-- `@qualcomm-ui/qds-core` is a peer dependency and must be on v2.
-- Update `@qualcomm-ui/tailwind-plugin` only if your application uses tailwind.
+<Tabs.Root defaultValue="automatic">
+  <Tabs.List>
+    <Tabs.Indicator />
+    <Tab.Root value="automatic">
+      <Tab.Button>Automatic</Tab.Button>
+    </Tab.Root>
+    <Tab.Root value="manual">
+      <Tab.Button>Manual</Tab.Button>
+    </Tab.Root>
+  </Tabs.List>
+  <Tabs.Panel value="automatic">
+    Use `npm-check-updates`:
+
+    ```shell
+    npx npm-check-updates@latest --filter '@qualcomm-ui/*' --deep -u
+    ```
+
+    This command updates all `package.json` entries for `@qualcomm-ui/*` dependencies to the latest release. Run your package manager's install command after to update the dependencies.
+  </Tabs.Panel>
+  <Tabs.Panel value="manual">
+    Update your `package.json`:
+    ```json
+    {
+      "dependencies": {
+        "@qualcomm-ui/react": "^2.0.0",
+        "@qualcomm-ui/qds-core": "^2.0.0",
+        "@qualcomm-ui/tailwind-plugin": "^2.0.0"
+      }
+    }
+    ```
+
+    - `@qualcomm-ui/qds-core` is a peer dependency and must be on v2.
+    - Update `@qualcomm-ui/tailwind-plugin` only if your application uses tailwind.
+  </Tabs.Panel>
+</Tabs.Root>
+
+### Apply codemods
+
+Continue reading below to automatically migrate your codebase.
+
+- [Migrate measurement tokens](#migrate-measurement-tokens)
+- [Migrate deprecated props](#migrate-deprecated-props)
+
+::: /steps
 
 ## Migrate measurement tokens
 
 `@qualcomm-ui/qds-core` v2 and `@qualcomm-ui/tailwind-plugin` v2 rename the spacing, sizing, and border radius tokens. This is the breaking change in this release.
 
-QUI's component CSS already uses the new tokens. Components render at the same sizes. Only application code that references these tokens directly requires migration:
+QUI's component CSS already uses the new tokens. Components render at the same sizes. Only application code that references these tokens directly must be migrated:
 
 - CSS variables: `--spacing-*`, `--sizing-*`, and `--border-radius-*`.
 - Tailwind spacing utilities, such as `p-qds-40`.
 - Tailwind theme variables: `--spacing-qds-*`.
 
 > [!warning]
-> Some token names exist in both scales with different pixel values. Legacy `--spacing-100` is 16px. The new `--spacing-100` is 4px. Unchanged references can resolve to incorrect sizes without an error.
+> Some token names exist in both scales with different pixel values. Legacy `--spacing-100` is 16px. The new `--spacing-100` is 4px.
 
 ### Token codemod
 
-Run this one-time migration only if you upgraded from `@qualcomm-ui/qds-core` v1 and referenced the measurement tokens directly. Do not run it on projects that started on v2 or never used these tokens directly.
+Before running this command, check your codebase for references to the legacy tokens. Chances are you never used these directly. Do not run it on projects that started on `@qualcomm-ui/qds-core` v2.
 
 Run from your project root:
 
@@ -46,6 +82,7 @@ Run from your project root:
 npx @qualcomm-ui/codemod@latest migrate qds-v2-tokens
 ```
 
+- Use `--dry-run` to preview changes without writing files.
 - The migration cancels without writing files if any scanned file contains v2-only tokens. `--force` skips this check. Review mixed legacy and v2 references before using it.
 - Detected v1 dependencies on `@qualcomm-ui/qds-core` and `@qualcomm-ui/tailwind-plugin` are updated to v2.
 - The codemod adds a `qui.completedMigrations` record and a `note` field to `package.json`. Commit the `qui` field. Do not edit or remove it. Removing the record can cause tokens to be renamed again.
@@ -166,11 +203,11 @@ These replacements apply only to `--border-radius-*`.
 
 :::
 
-Tailwind `rounded-*` utilities and `--radius-*` variables keep their existing names and pixel values. The plugin adds `rounded-2xl` (14px), `rounded-3xl` (16px), `rounded-4xl` (20px), and `rounded-5xl` (24px).
+`rounded-*` utilities and `--radius-*` variables from `@qualcomm-ui/tailwind-plugin` keep their existing names and pixel values. The plugin adds `rounded-2xl` (14px), `rounded-3xl` (16px), `rounded-4xl` (20px), and `rounded-5xl` (24px) in this update.
 
-## Replace deprecated props
+## Migrate deprecated props
 
-This step is optional. The deprecated props, values, and types remain supported in v2.
+This step is optional, but recommended. The deprecated props, values, and types remain supported in v2.
 
 Run the React codemod:
 
@@ -178,11 +215,11 @@ Run the React codemod:
 npx @qualcomm-ui/codemod@latest migrate react
 ```
 
-The codemod can run before or after upgrading. It updates detected `@qualcomm-ui/react` v1 dependencies to v2 in `package.json`. It is idempotent. Run your formatter afterward; the codemod does not reformat files.
+The codemod can run before or after upgrading. It updates detected `@qualcomm-ui/react` v1 dependencies to v2 in `package.json`. It is idempotent, so there is no risk of it breaking something if it runs more than once. Run your formatter afterward, the codemod does not reformat files.
 
 ### Props and values
 
-Replace `variant` with `emphasis` on Slider and SegmentedControl. Use `brand` or `neutral`; the default is `brand`. If both props are set, `emphasis` takes precedence.
+The `emphasis` prop has changed for these components:
 
 | Components                                                    | Deprecated        | Replacement       |
 | ------------------------------------------------------------- | ----------------- | ----------------- |
@@ -191,29 +228,14 @@ Replace `variant` with `emphasis` on Slider and SegmentedControl. Use `brand` or
 | Tag                                                           | `outline-neutral` | `neutral-outline` |
 | Tag                                                           | `kiwi`            | `lime`            |
 
-```tsx
-import {Slider} from "@qualcomm-ui/react/slider"
-import {Tag} from "@qualcomm-ui/react/tag"
-
-<Slider label="Volume" variant="primary" /> // [!code --]
-<Slider emphasis="brand" label="Volume" /> // [!code ++]
-
-<Tag emphasis="outline-brand">Label</Tag> // [!code --]
-<Tag emphasis="brand-outline">Label</Tag> // [!code ++]
-```
-
-Tag's `variant` values (`selectable`, `link`, `dismissable`) are unrelated and unchanged by this migration. Its default `emphasis` is `brand-outline`.
-
-Tag adds `info`, `success`, `warning`, and `danger` emphasis values. It adds `neutral-outline-brand`, which looks like `neutral-outline` until selected, then looks like `brand-outline`.
-
 ### Types
 
-Update type imports from `@qualcomm-ui/qds-core/slider` and `@qualcomm-ui/qds-core/segmented-control`:
+The codemod renames these types in imports, re-exports, and their references:
 
-| Deprecated                   | Replacement                   |
-| ---------------------------- | ----------------------------- |
-| `QdsSliderVariant`           | `QdsSliderEmphasis`           |
-| `QdsSegmentedControlVariant` | `QdsSegmentedControlEmphasis` |
+| Package| Deprecated                   | Replacement                   |
+| -----------------------------------------| ---------------------------- | ----------------------------- |
+| `@qualcomm-ui/qds-core/slider` | `QdsSliderVariant`           | `QdsSliderEmphasis`           |
+| `@qualcomm-ui/qds-core/segmented-control` | `QdsSegmentedControlVariant` | `QdsSegmentedControlEmphasis` |
 
 ### Manual updates
 
@@ -228,7 +250,7 @@ Review these cases manually:
 
 ## Review custom CSS
 
-The prop codemod does not update CSS selectors. Update selectors that depend on the renamed attributes or default emphasis values:
+The prop codemod does not update CSS selectors. If you customized CSS manually for our components, check your CSS files for the following:
 
 | Components                          | Previous default attribute      | New default attribute           |
 | ----------------------------------- | ------------------------------- | ------------------------------- |
