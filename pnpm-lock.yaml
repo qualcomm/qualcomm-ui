@@ -539,8 +539,8 @@ importers:
   packages/common/codemod:
     dependencies:
       '@qualcomm-ui/utils':
-        specifier: ^1.1.0
-        version: 1.5.0(@internationalized/date@3.12.3)
+        specifier: workspace:^1
+        version: link:../utils
     devDependencies:
       '@angular/compiler':
         specifier: 'catalog:'
@@ -8935,11 +8935,6 @@ packages:
     resolution: {integrity: sha512-0xb3mn4C8IcqXU+SPCIO8oXMrX8gN0ZNkK8NJzgWlJQCxe/FF8HbqKKVilx3zVu7wv009+onhEzUO9vqDmJbFg==}
     peerDependencies:
       typescript: '>=6.0.3'
-
-  '@qualcomm-ui/utils@1.5.0':
-    resolution: {integrity: sha512-vOLbU5HXVITo7bFYWXkJwWFzyXXgcLT1Cibd5uUqMi0+fXk29pOMMnd/C72LbKQxWfWMWK2Hs9AspBHGhWTs9g==}
-    peerDependencies:
-      '@internationalized/date': '>=3.6.4'
 
   '@qualcomm-ui/vite@2.0.0':
     resolution: {integrity: sha512-pOyiwGLFfoRZEFLZxgMvJfr2YzSNHOKlhgakm/68KYDiWStE/ewrPziVbRPq41f/XuS3hVnD2HDLJfu4kgOEZw==}
@@ -22089,10 +22084,6 @@ snapshots:
   '@qualcomm-ui/tsconfig@3.0.0(typescript@6.0.3)':
     dependencies:
       typescript: 6.0.3
-
-  '@qualcomm-ui/utils@1.5.0(@internationalized/date@3.12.3)':
-    dependencies:
-      '@internationalized/date': 3.12.3
 
   '@qualcomm-ui/vite@2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
