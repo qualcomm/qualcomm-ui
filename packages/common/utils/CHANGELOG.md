@@ -1,5 +1,13 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.5.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+
 ## 1.5.0
 
 Aug 30th, 2026

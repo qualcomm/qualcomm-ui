@@ -1,5 +1,14 @@
 # @qualcomm-ui/codemod Changelog
 
+## 1.4.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update codemod dependency to local workspace ([8b4e69d](https://github.com/qualcomm/qualcomm-ui/commit/8b4e69d))
+* **deps:** update dependencies [@qualcomm-ui/utils@1.5.1]
+
 ## 1.4.0
 
 Nov 7th, 2026

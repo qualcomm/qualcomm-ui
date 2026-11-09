@@ -1,5 +1,13 @@
 # @qualcomm-ui/eslint-config-mdx Changelog
 
+## 4.0.2
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+
 ## 4.0.1
 
 Nov 4th, 2026
