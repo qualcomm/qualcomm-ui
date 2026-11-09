@@ -2,16 +2,20 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {Root} from "mdast"
+import {mkdirSync, mkdtempSync, rmSync, writeFileSync} from "node:fs"
+import {tmpdir} from "node:os"
+import {join} from "node:path"
 import remarkMdx from "remark-mdx"
 import remarkParse from "remark-parse"
 import {unified} from "unified"
-import {describe, expect, test} from "vitest"
+import {afterAll, beforeAll, describe, expect, test} from "vitest"
 
 import type {PageMap} from "@qualcomm-ui/mdx-common"
 
 import {
   collectAnchorIds,
   collectLinks,
+  isPublicFile,
   reportInvalidLinks,
   resolveLink,
   validateLinks,
@@ -372,6 +376,78 @@ describe("validateLinks", () => {
     const invalid = validateLinks(links, sparsePageMap)
     expect(invalid).toHaveLength(1)
     expect(invalid[0].reason).toBe("fragment-not-found")
+  })
+})
+
+describe("public directory links", () => {
+  let publicDir: string
+
+  beforeAll(() => {
+    publicDir = mkdtempSync(join(tmpdir(), "qui-mdx-vite-public-"))
+    mkdirSync(join(publicDir, "files"))
+    writeFileSync(join(publicDir, "files", "guide.pdf"), "")
+    writeFileSync(join(publicDir, "logo file.svg"), "")
+  })
+
+  afterAll(() => {
+    rmSync(publicDir, {force: true, recursive: true})
+  })
+
+  function link(url: string, sourcePathname = "/page") {
+    const resolved = resolveLink(url, sourcePathname)!
+    return {
+      fragment: resolved.fragment,
+      sourceFile: "a.mdx",
+      sourcePathname,
+      targetPathname: resolved.pathname,
+      url,
+    }
+  }
+
+  test("accepts links to files in the public directory", () => {
+    const links = [link("/files/guide.pdf"), link("/files/guide.pdf#page=2")]
+    expect(validateLinks(links, {}, {}, {}, publicDir)).toEqual([])
+  })
+
+  test("accepts relative links to files in the public directory", () => {
+    const links = [link("../files/guide.pdf", "/components/button")]
+    expect(validateLinks(links, {}, {}, {}, publicDir)).toEqual([])
+  })
+
+  test("accepts URL-encoded public file paths", () => {
+    const links = [link("/logo%20file.svg")]
+    expect(validateLinks(links, {}, {}, {}, publicDir)).toEqual([])
+  })
+
+  test("reports page-not-found for missing public files", () => {
+    const invalid = validateLinks(
+      [link("/files/missing.pdf")],
+      {},
+      {},
+      {},
+      publicDir,
+    )
+    expect(invalid).toHaveLength(1)
+    expect(invalid[0].reason).toBe("page-not-found")
+  })
+
+  test("reports page-not-found without a public directory", () => {
+    const invalid = validateLinks([link("/files/guide.pdf")], {})
+    expect(invalid).toHaveLength(1)
+    expect(invalid[0].reason).toBe("page-not-found")
+  })
+
+  test("does not treat public directories as files", () => {
+    expect(isPublicFile(publicDir, "/files")).toBe(false)
+  })
+
+  test("does not resolve paths outside the public directory", () => {
+    const outside = `/../${publicDir.split(/[\\/]/).pop()}/files/guide.pdf`
+    expect(isPublicFile(join(publicDir, "files"), outside)).toBe(false)
+  })
+
+  test("rejects malformed URL encoding", () => {
+    expect(isPublicFile(publicDir, "/%E0%A4%A")).toBe(false)
   })
 })
 

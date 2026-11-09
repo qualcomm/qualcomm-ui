@@ -3,17 +3,16 @@
 
 import {program} from "@commander-js/extra-typings"
 
+import {addFixLinksCommand} from "./docs-plugin/fix-links.js"
 import {addGeneratePageMapCommand} from "./docs-plugin/generate-page-map.js"
-import {addDownloadKnowledgeCommand} from "./open-web-ui/download-knowledge.js"
-import {addUploadKnowledgeCommand} from "./open-web-ui/upload-knowledge.js"
+import {addLintCommand} from "./docs-plugin/lint-pages.js"
 
 function setupCli() {
-  // global options
-  program.option("--env <envFile>", "relative path to the env file to use")
+  program.name("qui-docs")
 
-  addUploadKnowledgeCommand()
-  addDownloadKnowledgeCommand()
   addGeneratePageMapCommand()
+  addFixLinksCommand()
+  addLintCommand()
 
   program.parse()
 }

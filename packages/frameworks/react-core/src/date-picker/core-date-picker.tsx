@@ -606,7 +606,7 @@ export function CoreDatePickerViewTrigger({
 
 export interface CoreDatePickerContextProps {
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props Render Prop}
    * that provides the current {@link DatePickerApi} context.
    *
    * @inheritDoc

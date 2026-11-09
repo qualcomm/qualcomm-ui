@@ -3,8 +3,9 @@
 
 import {glob} from "glob"
 import {readFile, writeFile} from "node:fs/promises"
-import {dirname, join} from "node:path"
+import {dirname, join, relative} from "node:path"
 
+import {MigrationCancelledError} from "../migration-cancelled-error.js"
 import {
   addMigrationRecord,
   createMigrationRecordLookup,
@@ -467,6 +468,44 @@ function isMigratedProject(
 }
 
 /**
+ * Lists the tokens of a scale whose step only exists in the new scale, e.g.
+ * `--spacing-25` or `md:p-qds-1000`.
+ */
+function findMigratedTokens(content: string, scale: TokenScale): string[] {
+  const tokens = new Set<string>()
+  for (const match of content.matchAll(scale.pattern)) {
+    const [token, , step] = match
+    if (!Object.hasOwn(scale.renames, step) && scale.steps.includes(step)) {
+      // Tailwind matches start at `-qds-`, so prepend the utility and variants.
+      const utility = /[\w:-]*$/.exec(content.slice(0, match.index))![0]
+      tokens.add(`${utility}${token}`)
+    }
+  }
+  return Array.from(tokens)
+}
+
+const MAX_LISTED_FILES = 10
+
+function describeMigratedFiles(
+  cwd: string,
+  files: readonly {file: string; tokens: string[]}[],
+): string {
+  const listed = files
+    .slice(0, MAX_LISTED_FILES)
+    .map(({file, tokens}) => `  ${relative(cwd, file)}: ${tokens.join(", ")}`)
+  if (files.length > MAX_LISTED_FILES) {
+    listed.push(`  and ${files.length - MAX_LISTED_FILES} more files`)
+  }
+  return `found tokens that only exist in the @qualcomm-ui/qds-core v2 scale, so the project looks already migrated. No files were changed.
+
+${listed.join("\n")}
+
+Some legacy and v2 steps share a name but not a pixel value (the legacy --spacing-100 is 16px, the v2 --spacing-100 is 4px). Running this migration on migrated files can rename tokens that are already correct.
+
+If the project still has legacy tokens to rename, run again with --force. Files that use v2-only steps then keep their shared steps, and files that mix legacy, v2-only, and shared steps are reported for a manual update.`
+}
+
+/**
  * Renames the legacy tokens of each scale in every source file of the project.
  *
  * Renaming isn't idempotent (the legacy `--spacing-40` becomes `--spacing-100`,
@@ -476,9 +515,13 @@ function isMigratedProject(
  *
  * These codemods are never revised: a recorded name means the file is
  * migrated.
+ *
+ * Unless `force` is set, the migration is cancelled when any file uses steps
+ * unique to the new scale, since the project was likely started on the new
+ * scale or already migrated.
  */
 export async function runScaleCodemod(
-  {cwd, dryRun}: CodemodContext,
+  {cwd, dryRun, force}: CodemodContext,
   name: string,
   scales: readonly TokenScale[],
 ): Promise<CodemodFileResult[]> {
@@ -502,6 +545,17 @@ export async function runScaleCodemod(
     }
   }
 
+  if (!force) {
+    const migrated = sources.flatMap(({content, file}) => {
+      const tokens = scales.flatMap((scale) =>
+        findMigratedTokens(content, scale),
+      )
+      return tokens.length ? [{file, tokens}] : []
+    })
+    if (migrated.length) {
+      throw new MigrationCancelledError(describeMigratedFiles(cwd, migrated))
+    }
+  }
   const unrecorded = sources.filter((source) => !source.recorded)
   const ambiguous: Record<string, AmbiguousMode> = {}
   for (const scale of scales) {

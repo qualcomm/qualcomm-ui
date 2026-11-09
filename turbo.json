@@ -79,6 +79,12 @@
         "!ng-doc/**"
       ],
       "outputLogs": "new-only"
+    },
+    "lint-docs": {
+      "inputs": [
+        "**/*.{md,mdx}"
+      ],
+      "outputLogs": "new-only"
     }
   }
 }

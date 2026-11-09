@@ -313,7 +313,7 @@ export function CoreStepperPrevTrigger({
 
 export interface CoreStepperContextProps {
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props Render Prop}
    * that provides the current {@link StepperApi} context.
    *
    * @inheritDoc

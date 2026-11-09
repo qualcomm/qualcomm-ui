@@ -1,0 +1,264 @@
+---
+title: Migrate from v3 to v4
+---
+
+import {Tabs, Tab} from "@qualcomm-ui/react/tabs"
+
+# {frontmatter.title}
+
+Use this guide to upgrade `@qualcomm-ui/angular` from 3.x to 4.0.0. This release adopts the QDS v2 measurement scales and deprecates several component props, values, and types.
+
+## Automatic migration
+
+::: steps h3
+
+### Update dependencies
+
+<Tabs.Root defaultValue="automatic">
+  <Tabs.List>
+    <Tabs.Indicator />
+    <Tab.Root value="automatic">
+      <Tab.Button>Automatic</Tab.Button>
+    </Tab.Root>
+    <Tab.Root value="manual">
+      <Tab.Button>Manual</Tab.Button>
+    </Tab.Root>
+  </Tabs.List>
+  <Tabs.Panel value="automatic">
+    Use `npm-check-updates`:
+
+    ```shell
+    npx npm-check-updates@latest --filter '@qualcomm-ui/*' --deep -u
+    ```
+
+    This command updates all `package.json` entries for `@qualcomm-ui/*` dependencies to the latest release. Run your package manager's install command after to update the dependencies.
+  </Tabs.Panel>
+  <Tabs.Panel value="manual">
+    Update your `package.json`:
+    ```json
+    {
+      "dependencies": {
+        "@qualcomm-ui/angular": "^4.0.0",
+        "@qualcomm-ui/qds-core": "^2.0.0",
+        "@qualcomm-ui/tailwind-plugin": "^2.0.0"
+      }
+    }
+    ```
+
+    - `@qualcomm-ui/qds-core` is a peer dependency and must be on v2.
+    - Update `@qualcomm-ui/tailwind-plugin` only if your application uses tailwind.
+  </Tabs.Panel>
+</Tabs.Root>
+
+### Apply codemods
+
+Continue reading below to automatically migrate your codebase.
+
+- [Migrate measurement tokens](#migrate-measurement-tokens)
+- [Migrate deprecated props](#migrate-deprecated-props)
+
+::: /steps
+
+## Migrate measurement tokens
+
+`@qualcomm-ui/qds-core` v2 and `@qualcomm-ui/tailwind-plugin` v2 rename the spacing, sizing, and border radius tokens. This is the breaking change in this release.
+
+QUI's component CSS already uses the new tokens. Components render at the same sizes. Only application code that references these tokens directly must be migrated:
+
+- CSS variables: `--spacing-*`, `--sizing-*`, and `--border-radius-*`.
+- Tailwind spacing utilities, such as `p-qds-40`.
+- Tailwind theme variables: `--spacing-qds-*`.
+
+> [!warning]
+> Some token names exist in both scales with different pixel values. Legacy `--spacing-100` is 16px. The new `--spacing-100` is 4px.
+
+### Token codemod
+
+Before running this command, check your codebase for references to the legacy tokens. Chances are you never used these directly. Do not run it on projects that started on `@qualcomm-ui/qds-core` v2.
+
+Run from your project root:
+
+```shell
+npx @qualcomm-ui/codemod@latest migrate qds-v2-tokens
+```
+
+- Use `--dry-run` to preview changes without writing files.
+- The migration cancels without writing files if any scanned file contains v2-only tokens. `--force` skips this check. Review mixed legacy and v2 references before using it.
+- Detected v1 dependencies on `@qualcomm-ui/qds-core` and `@qualcomm-ui/tailwind-plugin` are updated to v2.
+- The codemod adds a `qui.completedMigrations` record and a `note` field to `package.json`. Commit the `qui` field. Do not edit or remove it. Removing the record can cause tokens to be renamed again.
+
+Update runtime-built names, such as `` `--spacing-${step}` ``, and bare names without the `--` prefix manually. These are not rewritten.
+
+Refer to the [codemod README](https://github.com/qualcomm/qualcomm-ui/tree/main/packages/common/codemod) for migration details.
+
+### Manual token migration
+
+Replace each legacy token with the new token that preserves its pixel value:
+
+```css
+.panel {
+  padding: var(--spacing-40); /* [!code --] */
+  padding: var(--spacing-100); /* [!code ++] */
+  width: var(--sizing-70); /* [!code --] */
+  width: var(--sizing-400); /* [!code ++] */
+  border-radius: var(--border-radius-md); /* [!code --] */
+  border-radius: var(--border-radius-100); /* [!code ++] */
+}
+```
+
+Update Tailwind spacing utilities:
+
+```angular-html
+<div class="p-qds-40">Content</div> <!-- [!code --] -->
+<div class="p-qds-100">Content</div> <!-- [!code ++] -->
+```
+
+::: spoiler Spacing token replacements
+
+These replacements apply to `--spacing-*`, Tailwind spacing utilities, and `--spacing-qds-*`.
+
+| Legacy | New    |
+| ------ | ------ |
+| `0`    | `0`    |
+| `10`   | `25`   |
+| `20`   | `50`   |
+| `30`   | `75`   |
+| `40`   | `100`  |
+| `50`   | `150`  |
+| `60`   | `175`  |
+| `70`   | `200`  |
+| `80`   | `250`  |
+| `90`   | `300`  |
+| `100`  | `400`  |
+| `110`  | `500`  |
+| `120`  | `600`  |
+| `130`  | `700`  |
+| `140`  | `800`  |
+| `150`  | `900`  |
+| `160`  | `1000` |
+| `170`  | `1100` |
+| `180`  | `1200` |
+| `190`  | `1300` |
+| `200`  | `1400` |
+| `210`  | `1500` |
+| `220`  | `1600` |
+| `230`  | `1700` |
+| `240`  | `1800` |
+| `250`  | `1900` |
+| `260`  | `2000` |
+| `270`  | `2100` |
+| `280`  | `2200` |
+| `290`  | `2300` |
+| `300`  | `2400` |
+| `310`  | `2500` |
+| `320`  | `3000` |
+| `330`  | `3300` |
+
+:::
+
+::: spoiler Sizing token replacements
+
+These replacements apply to `--sizing-*`.
+
+| Legacy | New    |
+| ------ | ------ |
+| `10`   | `25`   |
+| `20`   | `50`   |
+| `30`   | `100`  |
+| `40`   | `150`  |
+| `50`   | `200`  |
+| `60`   | `300`  |
+| `70`   | `400`  |
+| `80`   | `500`  |
+| `90`   | `600`  |
+| `100`  | `700`  |
+| `110`  | `750`  |
+| `120`  | `800`  |
+| `125`  | `850`  |
+| `130`  | `950`  |
+| `140`  | `1000` |
+| `150`  | `1150` |
+| `160`  | `1200` |
+| `170`  | `1400` |
+| `180`  | `2000` |
+| `190`  | `3000` |
+| `200`  | `4000` |
+
+:::
+
+::: spoiler Border radius replacements
+
+These replacements apply only to `--border-radius-*`.
+
+| Legacy    | New   |
+| --------- | ----- |
+| `xs`      | `50`  |
+| `sm`      | `75`  |
+| `md`      | `100` |
+| `lg`      | `150` |
+| `xl`      | `200` |
+| `xxl`     | `300` |
+| `none`    | `0`   |
+| `rounded` | `max` |
+
+:::
+
+`rounded-*` utilities and `--radius-*` variables from `@qualcomm-ui/tailwind-plugin` keep their existing names and pixel values. The plugin adds `rounded-2xl` (14px), `rounded-3xl` (16px), `rounded-4xl` (20px), and `rounded-5xl` (24px) in this update.
+
+## Migrate deprecated props
+
+This step is optional, but recommended. The deprecated props, values, and types remain supported in v4.
+
+Run the Angular codemod:
+
+```shell
+npx @qualcomm-ui/codemod@latest migrate angular
+```
+
+The codemod can run before or after upgrading. It updates detected `@qualcomm-ui/angular` v3 dependencies to v4 in `package.json`. It is idempotent, so there is no risk of it breaking something if it runs more than once. Run your formatter afterward, the codemod does not reformat files.
+
+> [!note]
+> `migrate angular` only updates `@qualcomm-ui/angular`. Update `@qualcomm-ui/qds-core` with `qds-v2-tokens` or manually.
+
+### Props and values
+
+The `emphasis` prop has changed for these components:
+
+| Components                                                    | Deprecated        | Replacement       |
+| ------------------------------------------------------------- | ----------------- | ----------------- |
+| Slider, SegmentedControl, Breadcrumbs, Progress, ProgressRing | `primary`         | `brand`           |
+| Tag                                                           | `outline-brand`   | `brand-outline`   |
+| Tag                                                           | `outline-neutral` | `neutral-outline` |
+| Tag                                                           | `kiwi`            | `lime`            |
+
+### Types
+
+The codemod renames these types in imports, re-exports, and their references:
+
+| Package| Deprecated                   | Replacement                   |
+| -----------------------------------------| ---------------------------- | ----------------------------- |
+| `@qualcomm-ui/qds-core/slider` | `QdsSliderVariant`           | `QdsSliderEmphasis`           |
+| `@qualcomm-ui/qds-core/segmented-control` | `QdsSegmentedControlVariant` | `QdsSegmentedControlEmphasis` |
+
+### Manual updates
+
+The codemod handles external `.html` templates and inline `template` strings. It rewrites static attributes, `[variant]` bindings, and interpolations on QUI selectors.
+
+Review these cases manually:
+
+- Non-literal expressions such as `[variant]="value"` have the prop renamed, but the value source still requires review.
+- Elements with both `variant` and `emphasis` are reported without changes. Remove `variant`.
+- Inline templates with `${}` substitutions or escape sequences, and templates that fail to parse, are reported without changes.
+- Prop objects built elsewhere, direct qds-core API usage, and CSS are not rewritten.
+
+## Review custom CSS
+
+The prop codemod does not update CSS selectors. If you customized CSS manually for our components, check your CSS files for the following:
+
+| Components                          | Previous default attribute      | New default attribute           |
+| ----------------------------------- | ------------------------------- | ------------------------------- |
+| Slider, SegmentedControl            | `data-variant="primary"`        | `data-emphasis="brand"`         |
+| Breadcrumbs, Progress, ProgressRing | `data-emphasis="primary"`       | `data-emphasis="brand"`         |
+| Tag                                 | `data-emphasis="outline-brand"` | `data-emphasis="brand-outline"` |
+
+Slider and SegmentedControl render `data-emphasis` instead of `data-variant`, including when the deprecated `variant` prop is used. Update selectors for both `primary` and `neutral` variants on these components.

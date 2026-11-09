@@ -15,7 +15,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 export interface TooltipTriggerProps extends IdProp {
   /**
    * React children {@link
-   * https://react-next.qui.qualcomm.com/render-props#binding-render-prop
+   * https://react.qui.qualcomm.com/render-props#binding-render-prop
    * Render Prop}
    *
    * @inheritDoc

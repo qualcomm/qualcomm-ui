@@ -1,5 +1,14 @@
 # @qualcomm-ui/typedoc Changelog
 
+## 1.1.8
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+* **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.0.9]
+
 ## 1.1.7
 
 Aug 16th, 2026

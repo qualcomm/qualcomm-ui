@@ -12,7 +12,7 @@ import {AccordionItemRootComponent} from "./accordion-item-root.component"
 /**
  * The simple form of the Accordion Item component. Use properties for
  * customization like the {@link text} and {@link icon}. The content of the panel is
- * provided via the default slot. Refer to the {@link https://angular-next.qui.qualcomm.com/components/accordion documentation} to learn more.
+ * provided via the default slot. Refer to the {@link https://angular.qui.qualcomm.com/components/accordion documentation} to learn more.
  *
  * @example
  * ```angular-html

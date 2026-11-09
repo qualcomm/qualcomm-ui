@@ -1,5 +1,14 @@
 # @qualcomm-ui/core Changelog
 
+## 1.14.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+* **deps:** update dependencies [@qualcomm-ui/dom@1.3.2, @qualcomm-ui/utils@1.5.1]
+
 ## 1.14.0
 
 Oct 20th, 2026

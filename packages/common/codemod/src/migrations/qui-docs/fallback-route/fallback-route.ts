@@ -342,7 +342,7 @@ export function transformFallbackRoute(
     }
     return {
       content,
-      reason: `replace the existing loader with ${LOADER_IMPORT}(...)`,
+      reason: `replace the existing loader with ${LOADER_IMPORT}(...) and add ${MIDDLEWARE_IMPORT}(...) to the middleware export, both with the same arguments`,
       status: "conflict",
     }
   }
@@ -465,6 +465,6 @@ export const fallbackRoute: Codemod<"@qualcomm-ui/react-router-utils"> = {
   },
   title: `Add the fallback route loader (${ROUTE_FILE})`,
   versions: {
-    "@qualcomm-ui/react-router-utils": {from: 2, to: 3},
+    "@qualcomm-ui/react-router-utils": {from: 1, to: 3},
   },
 }

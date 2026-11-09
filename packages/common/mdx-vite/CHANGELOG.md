@@ -1,5 +1,33 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 5.0.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.7.1, @qualcomm-ui/typedoc-common@1.0.9, @qualcomm-ui/utils@1.5.1]
+
+## 5.0.0
+
+Nov 7th, 2026
+
+### BREAKING CHANGES
+
+* remove open-webui integration ([2c31f3c](https://github.com/qualcomm/qualcomm-ui/commit/2c31f3c))
+* remove legacy validatePageLinks command ([b9f6cfa](https://github.com/qualcomm/qualcomm-ui/commit/b9f6cfa))
+* [cli]: rename to `qui-docs` ([1dd4dda](https://github.com/qualcomm/qualcomm-ui/commit/1dd4dda))
+
+### Features
+
+* [cli]: add lint command ([053e889](https://github.com/qualcomm/qualcomm-ui/commit/053e889))
+* support relative markdown links ([8256824](https://github.com/qualcomm/qualcomm-ui/commit/8256824))
+* [lint]: disable file-links rule by default ([8ae30ba](https://github.com/qualcomm/qualcomm-ui/commit/8ae30ba))
+
+### Bug Fixes
+
+* [link-validator]: resolve references to public dir files ([212fbd0](https://github.com/qualcomm/qualcomm-ui/commit/212fbd0))
+
 ## 4.1.0
 
 Nov 2nd, 2026

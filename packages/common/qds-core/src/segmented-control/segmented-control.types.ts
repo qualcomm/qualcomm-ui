@@ -28,7 +28,7 @@ export interface QdsSegmentedControlApiProps {
    * Governs the color of the segmented control.
    *
    * @default 'brand'
-   * @since next-release
+   * @since 2.0.0
    */
   emphasis?: QdsSegmentedControlEmphasis
 

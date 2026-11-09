@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/tailwind-plugin",
-  "version": "1.10.0",
+  "version": "2.0.1",
   "description": "Qualcomm UI Tailwind Plugin",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/css-utils": "catalog:",
-    "@qualcomm-ui/qds-core": "workspace:^1.39.0",
+    "@qualcomm-ui/qds-core": "workspace:^2.0.1",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/vite": "catalog:",
     "shx": "catalog:",

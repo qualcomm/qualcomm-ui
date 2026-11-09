@@ -233,6 +233,9 @@ catalogs:
     '@eslint/js':
       specifier: 9.39.4
       version: 9.39.4
+    '@faker-js/faker':
+      specifier: 10.6.0
+      version: 10.6.0
     '@lucide/angular':
       specifier: 1.31.0
       version: 1.31.0
@@ -255,8 +258,8 @@ catalogs:
       specifier: 3.0.0
       version: 3.0.0
     '@qualcomm-ui/vite':
-      specifier: 1.1.2
-      version: 1.1.2
+      specifier: 2.0.0
+      version: 2.0.0
     '@react-router/dev':
       specifier: 8.4.0
       version: 8.4.0
@@ -536,9 +539,12 @@ importers:
   packages/common/codemod:
     dependencies:
       '@qualcomm-ui/utils':
-        specifier: ^1.1.0
-        version: 1.5.0(@internationalized/date@3.12.3)
+        specifier: workspace:^1.5.1
+        version: link:../utils
     devDependencies:
+      '@angular/compiler':
+        specifier: 'catalog:'
+        version: 22.2.4
       '@commander-js/extra-typings':
         specifier: 'catalog:'
         version: 14.0.0(commander@14.0.3)
@@ -603,8 +609,8 @@ importers:
   packages/common/core:
     devDependencies:
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@internationalized/date':
         specifier: ^3.6.4
         version: 3.12.3
@@ -615,17 +621,17 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.3.1
+        specifier: workspace:^1.3.2
         version: link:../dom
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/node':
         specifier: 'catalog:'
         version: 24.9.2
@@ -663,11 +669,11 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/node':
         specifier: 'catalog:'
         version: 24.9.2
@@ -693,11 +699,11 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1.0.8
+        specifier: workspace:^1.0.9
         version: link:../typedoc-common
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       fuzzysort:
         specifier: ^3.0.1
         version: 3.1.0
@@ -820,20 +826,20 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/mdx-common':
-        specifier: workspace:^2.7.0
+        specifier: workspace:^2.7.1
         version: link:../mdx-common
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1.0.8
+        specifier: workspace:^1.0.9
         version: link:../typedoc-common
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.5
@@ -855,9 +861,6 @@ importers:
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
-      dotenv:
-        specifier: ^17.2.3
-        version: 17.4.2
       hastscript:
         specifier: ^9.0.0
         version: 9.0.1
@@ -867,9 +870,6 @@ importers:
       minimatch:
         specifier: ^11.0.4
         version: 11.0.4
-      ora:
-        specifier: ^9.0.0
-        version: 9.4.1
       rehype-mdx-code-props:
         specifier: ^3.0.0
         version: 3.0.1(supports-color@10.2.2)
@@ -905,7 +905,7 @@ importers:
         version: 4.4.3
     optionalDependencies:
       '@qualcomm-ui/tailwind-plugin':
-        specifier: workspace:^1.10.0
+        specifier: workspace:^2.0.1
         version: link:../tailwind-plugin
       postcss:
         specifier: ^8.5.6
@@ -927,7 +927,7 @@ importers:
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/node':
         specifier: 'catalog:'
         version: 24.9.2
@@ -968,7 +968,7 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/core':
-        specifier: workspace:^1.14.0
+        specifier: workspace:^1.14.1
         version: link:../core
       '@qualcomm-ui/css-utils':
         specifier: 'catalog:'
@@ -977,11 +977,11 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/culori':
         specifier: ^4.0.0
         version: 4.0.1
@@ -1034,14 +1034,14 @@ importers:
         specifier: 'catalog:'
         version: 1.1.3(@commander-js/extra-typings@14.0.0(commander@14.0.3))(cosmiconfig@9.0.2(typescript@6.0.3))
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.39.0
+        specifier: workspace:^2.0.1
         version: link:../qds-core
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       shx:
         specifier: 'catalog:'
         version: 0.4.0
@@ -1062,7 +1062,7 @@ importers:
     dependencies:
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       typescript:
         specifier: '>=5.3.3 <7'
         version: 6.0.3
@@ -1083,7 +1083,7 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1.0.8
+        specifier: workspace:^1.0.9
         version: link:../typedoc-common
       '@types/lodash-es':
         specifier: 'catalog:'
@@ -1144,7 +1144,7 @@ importers:
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -1174,7 +1174,7 @@ importers:
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/node':
         specifier: 'catalog:'
         version: 24.9.2
@@ -1291,7 +1291,7 @@ importers:
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -1485,7 +1485,7 @@ importers:
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@typescript-eslint/rule-tester':
         specifier: 'catalog:'
         version: 8.67.0(eslint@9.39.4(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
@@ -1558,7 +1558,7 @@ importers:
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@typescript-eslint/rule-tester':
         specifier: 'catalog:'
         version: 8.67.0(eslint@9.39.4(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
@@ -1615,7 +1615,7 @@ importers:
         version: link:../../common/utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -1768,8 +1768,8 @@ importers:
         specifier: 'catalog:'
         version: 22.2.5(fd7f89e0dca6e8f44dccff36d069dc01)
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@lucide/angular':
         specifier: 'catalog:'
         version: 1.31.0(@angular/common@22.2.4(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))
@@ -1835,8 +1835,8 @@ importers:
   packages/debug-apps/react-ssr:
     dependencies:
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/react':
         specifier: ^0.27.3
         version: 0.27.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -2094,8 +2094,8 @@ importers:
         specifier: 'catalog:'
         version: 22.2.4(@angular/common@22.2.4(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))(@angular/platform-browser@22.2.4(@angular/animations@22.2.4(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2)))(@angular/common@22.2.4(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2)))(rxjs@7.8.2)
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/dom':
         specifier: ^1.7.0
         version: 1.8.0
@@ -2407,8 +2407,8 @@ importers:
         specifier: ^1.1.0
         version: 1.2.0
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/dom':
         specifier: ^1.7.0
         version: 1.8.0
@@ -2684,8 +2684,8 @@ importers:
   packages/docs/qui-docs:
     dependencies:
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/react':
         specifier: ^0.27.3
         version: 0.27.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -2895,8 +2895,8 @@ importers:
   packages/docs/qui-site:
     dependencies:
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/react':
         specifier: ^0.27.3
         version: 0.27.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -3088,8 +3088,8 @@ importers:
   packages/docs/react-docs:
     dependencies:
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/react':
         specifier: ^0.27.3
         version: 0.27.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -3344,8 +3344,8 @@ importers:
         specifier: ^6.3.1
         version: 6.3.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/react':
         specifier: ^0.27.3
         version: 0.27.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -3619,8 +3619,8 @@ importers:
         specifier: 'catalog:'
         version: 22.2.5(fd7f89e0dca6e8f44dccff36d069dc01)
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@figma/code-connect':
         specifier: ^1.4.4
         version: 1.5.3(supports-color@10.2.2)
@@ -3637,28 +3637,28 @@ importers:
         specifier: 0.21.2
         version: 0.21.2(@rspack/core@2.1.10(@module-federation/runtime-tools@0.21.2)(@swc/helpers@0.5.23))(debug@4.4.3(supports-color@10.2.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(supports-color@10.2.2)(typescript@6.0.3)(webpack@5.112.0(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28)(sharp@0.34.5)(uglify-js@3.19.3))
       '@qualcomm-ui/angular-core':
-        specifier: workspace:^3.4.0
+        specifier: workspace:^3.4.1
         version: link:../angular-core
       '@qualcomm-ui/cli':
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/core':
-        specifier: workspace:^1.14.0
+        specifier: workspace:^1.14.1
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.3.1
+        specifier: workspace:^1.3.2
         version: link:../../common/dom
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.39.0
+        specifier: workspace:^2.0.1
         version: link:../../common/qds-core
       '@qualcomm-ui/tailwind-plugin':
-        specifier: workspace:^1.10.0
+        specifier: workspace:^2.0.1
         version: link:../../common/tailwind-plugin
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../../common/utils
       '@tailwindcss/vite':
         specifier: 'catalog:'
@@ -3793,8 +3793,8 @@ importers:
         specifier: 'catalog:'
         version: 22.2.5(fd7f89e0dca6e8f44dccff36d069dc01)
       '@faker-js/faker':
-        specifier: ~9.6.0
-        version: 9.6.0
+        specifier: 'catalog:'
+        version: 10.6.0
       '@floating-ui/dom':
         specifier: ^1.7.0
         version: 1.8.0
@@ -3811,19 +3811,19 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/core':
-        specifier: workspace:^1.14.0
+        specifier: workspace:^1.14.1
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.3.1
+        specifier: workspace:^1.3.2
         version: link:../../common/dom
       '@qualcomm-ui/tailwind-plugin':
-        specifier: workspace:^1.10.0
+        specifier: workspace:^2.0.1
         version: link:../../common/tailwind-plugin
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../../common/utils
       '@tailwindcss/vite':
         specifier: 'catalog:'
@@ -3901,16 +3901,16 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/core':
-        specifier: workspace:^1.14.0
+        specifier: workspace:^1.14.1
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.3.1
+        specifier: workspace:^1.3.2
         version: link:../../common/dom
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.39.0
+        specifier: workspace:^2.0.1
         version: link:../../common/qds-core
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.10.0
+        specifier: workspace:^1.10.1
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6
@@ -3919,11 +3919,11 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../../common/utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.3.3(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
@@ -4012,10 +4012,10 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/core':
-        specifier: workspace:^1.14.0
+        specifier: workspace:^1.14.1
         version: link:../../common/core
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.3.1
+        specifier: workspace:^1.3.2
         version: link:../../common/dom
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6
@@ -4024,11 +4024,11 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../../common/utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.3.3(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
@@ -4142,7 +4142,7 @@ importers:
         version: link:../../common/utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.7
@@ -4211,25 +4211,25 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/core':
-        specifier: workspace:^1.14.0
+        specifier: workspace:^1.14.1
         version: link:../../common/core
       '@qualcomm-ui/css-utils':
         specifier: 'catalog:'
         version: 1.1.3(@commander-js/extra-typings@14.0.0(commander@14.0.3))(cosmiconfig@9.0.2(typescript@6.0.3))
       '@qualcomm-ui/dom':
-        specifier: workspace:^1.3.1
+        specifier: workspace:^1.3.2
         version: link:../../common/dom
       '@qualcomm-ui/mdx-common':
-        specifier: workspace:^2.7.0
+        specifier: workspace:^2.7.1
         version: link:../../common/mdx-common
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.39.0
+        specifier: workspace:^2.0.1
         version: link:../../common/qds-core
       '@qualcomm-ui/react':
-        specifier: workspace:^1.32.1
+        specifier: workspace:^2.0.1
         version: link:../react
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.10.0
+        specifier: workspace:^1.10.1
         version: link:../react-core
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6
@@ -4238,14 +4238,14 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/typedoc-common':
-        specifier: workspace:^1.0.8
+        specifier: workspace:^1.0.9
         version: link:../../common/typedoc-common
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../../common/utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@shikijs/langs':
         specifier: ^3.13.0
         version: 3.23.0
@@ -4345,17 +4345,17 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/mdx-common':
-        specifier: workspace:^2.7.0
+        specifier: workspace:^2.7.1
         version: link:../../common/mdx-common
       '@qualcomm-ui/mdx-vite':
-        specifier: workspace:^4.1.0
+        specifier: workspace:^5.0.1
         version: link:../../common/mdx-vite
       '@qualcomm-ui/tsconfig':
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@types/node':
         specifier: 'catalog:'
         version: 24.9.2
@@ -4402,22 +4402,22 @@ importers:
         specifier: 'catalog:'
         version: 1.0.7
       '@qualcomm-ui/core':
-        specifier: workspace:^1.14.0
+        specifier: workspace:^1.14.1
         version: link:../../common/core
       '@qualcomm-ui/css-utils':
         specifier: 'catalog:'
         version: 1.1.3(@commander-js/extra-typings@14.0.0(commander@14.0.3))(cosmiconfig@9.0.2(typescript@6.0.3))
       '@qualcomm-ui/qds-core':
-        specifier: workspace:^1.39.0
+        specifier: workspace:^2.0.1
         version: link:../../common/qds-core
       '@qualcomm-ui/react':
-        specifier: workspace:^1.32.1
+        specifier: workspace:^2.0.1
         version: link:../react
       '@qualcomm-ui/react-core':
-        specifier: workspace:^1.10.0
+        specifier: workspace:^1.10.1
         version: link:../react-core
       '@qualcomm-ui/react-mdx':
-        specifier: workspace:^3.2.0
+        specifier: workspace:^3.3.1
         version: link:../react-mdx
       '@qualcomm-ui/react-test-utils':
         specifier: workspace:^1.0.6
@@ -4426,11 +4426,11 @@ importers:
         specifier: 'catalog:'
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/utils':
-        specifier: workspace:^1.5.0
+        specifier: workspace:^1.5.1
         version: link:../../common/utils
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.3.3(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
@@ -4580,7 +4580,7 @@ importers:
         version: 3.0.0(typescript@6.0.3)
       '@qualcomm-ui/vite':
         specifier: 'catalog:'
-        version: 1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
+        version: 2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.3.3(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))
@@ -6686,9 +6686,9 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@faker-js/faker@9.6.0':
-    resolution: {integrity: sha512-3vm4by+B5lvsFPSyep3ELWmZfE3kicDtmemVpuwl1yH7tqtnHdsA6hG8fbXedMVdkzgtvzWoRgjSB4Q+FHnZiw==}
-    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
+  '@faker-js/faker@10.6.0':
+    resolution: {integrity: sha512-3RQHgEtvL1Frl/d1cSreo7qhJ3Gk1OdNUai/CtZ8G+wYeRQnJih3s9xJ9/kgYekPQRdwgh0HXRPqMlzWGwivIQ==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -8936,13 +8936,8 @@ packages:
     peerDependencies:
       typescript: '>=6.0.3'
 
-  '@qualcomm-ui/utils@1.5.0':
-    resolution: {integrity: sha512-vOLbU5HXVITo7bFYWXkJwWFzyXXgcLT1Cibd5uUqMi0+fXk29pOMMnd/C72LbKQxWfWMWK2Hs9AspBHGhWTs9g==}
-    peerDependencies:
-      '@internationalized/date': '>=3.6.4'
-
-  '@qualcomm-ui/vite@1.1.2':
-    resolution: {integrity: sha512-HXPKDQOeEl8xJ3w7AtLQIy4mxlecqCpGoGUjMJ3tPbh+/YK0w/P+4nh1NePAAOCTNx6/X5+YucNorl0c8W+m5A==}
+  '@qualcomm-ui/vite@2.0.0':
+    resolution: {integrity: sha512-pOyiwGLFfoRZEFLZxgMvJfr2YzSNHOKlhgakm/68KYDiWStE/ewrPziVbRPq41f/XuS3hVnD2HDLJfu4kgOEZw==}
     peerDependencies:
       vite: '>=8.0.0'
 
@@ -18229,7 +18224,7 @@ snapshots:
 
   '@angular/compiler@22.2.4':
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.8.1
 
   '@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2)':
     dependencies:
@@ -20062,7 +20057,7 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@faker-js/faker@9.6.0': {}
+  '@faker-js/faker@10.6.0': {}
 
   '@fastify/busboy@2.1.1': {}
 
@@ -22090,11 +22085,7 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  '@qualcomm-ui/utils@1.5.0(@internationalized/date@3.12.3)':
-    dependencies:
-      '@internationalized/date': 3.12.3
-
-  '@qualcomm-ui/vite@1.1.2(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))':
+  '@qualcomm-ui/vite@2.0.0(vite@8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       chokidar: 4.0.3
       vite: 8.3.5(@types/node@24.9.2)(esbuild@0.28.2)(jiti@2.7.0)(less@4.8.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.102.0)(stylus@0.62.0(supports-color@10.2.2))(terser@5.51.2)(tsx@4.21.0)(yaml@2.9.0)

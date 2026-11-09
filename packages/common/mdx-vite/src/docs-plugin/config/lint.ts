@@ -4,16 +4,14 @@
 import type {QuiDocsLintOptions, SearchIndexerOptions} from "./types.js"
 
 /**
- * Applies lint defaults. The deprecated `validatePageLinks: false` maps to
- * `brokenLinks: "off"` unless `lint.brokenLinks` is set explicitly.
+ * Applies lint defaults.
  */
 export function resolveLintOptions(
-  config: Pick<SearchIndexerOptions, "lint" | "validatePageLinks">,
+  config: Pick<SearchIndexerOptions, "lint">,
 ): Required<QuiDocsLintOptions> {
   return {
-    brokenLinks:
-      config.lint?.brokenLinks ??
-      (config.validatePageLinks === false ? "off" : "warn"),
+    brokenLinks: config.lint?.brokenLinks ?? "warn",
+    fileLinks: config.lint?.fileLinks ?? "off",
     pageTitle: config.lint?.pageTitle ?? "warn",
   }
 }

@@ -4,6 +4,7 @@ description: Learn about how QUI Docs can enhance your Markdown authoring experi
 ---
 
 import {Button} from "@qualcomm-ui/react/button"
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
 
 # {frontmatter.title}
 
@@ -43,9 +44,9 @@ title: Example Page
 This is the content of my page.
 ```
 
-The page title must be the only h1 on the page. The `pageTitle` [lint rule](/configuration#lint) enforces this.
+The page title must be the only h1 on the page. The `pageTitle` [lint rule](./configuration.mdx#lint) enforces this.
 
-For a list of each available property, refer to the [PageFrontmatter API](/api/page-frontmatter).
+For a list of each available property, refer to the [PageFrontmatter API](./api/page-frontmatter.mdx).
 
 ## Autolink Headings
 
@@ -120,7 +121,7 @@ Lists denote nesting with alternating list styles based on the nesting level.
 
 ## Links
 
-All relative Markdown links are automatically converted to Remix or React Router links. This means that the target page will be prefetched. When you click on a link, the page will be loaded on the client-side, without making a full page load (SPA routing). For example:
+All Markdown links are automatically converted to clientside links. This means that the target page will be prefetched. When you click on a link, the page will be loaded on the client-side, without making a full page load (SPA routing). For example:
 
 ```markdown
 Click [here](/introduction) to learn more.
@@ -133,6 +134,115 @@ import {Link} from "react-router"
 
 Click <Link prefetch="viewport" to="/introduction">here</Link> to learn more.
 ```
+
+### Relative Links
+
+> [!note]
+> This feature was added in [@qualcomm-ui/mdx-vite@5.0.0](https://github.com/qualcomm/qualcomm-ui/blob/main/packages/common/mdx-vite/CHANGELOG.md#500)
+
+A Markdown link with a relative path ending in `.mdx` is a file link. It resolves against the source MDX file on disk and automatically maps to the corresponding route in the site.
+
+These examples use this `src/routes` tree with the default routing strategy:
+
+<FileTree
+  className="mt-4"
+  expandedValue={["src", "routes", "components+", "guides+"]}
+  onExpandedValueChange={() => {}}
+  items={[
+    {
+      name: "src",
+      items: [
+        {
+          name: "routes",
+          items: [
+            {
+              name: "components+",
+              items: [{name: "button.mdx"}, {name: "tooltip.mdx"}],
+            },
+            {
+              name: "guides+",
+              items: [{name: "installation.mdx"}, {name: "theming.mdx"}],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+| File path | Page URL |
+| --- | --- |
+| `components+/button.mdx` | `/components/button` |
+| `components+/tooltip.mdx` | `/components/tooltip` |
+| `guides+/installation.mdx` | `/guides/installation` |
+| `guides+/theming.mdx` | `/guides/theming` |
+
+From `guides+/theming.mdx`, link to the sibling file `guides+/installation.mdx`:
+
+```markdown
+[Installation guide](./installation.mdx#requirements)
+```
+
+The `./` prefix is optional: `installation.mdx#requirements` resolves to the same file.
+
+From the same file, go up one level with `../` and link to `components+/button.mdx`:
+
+```markdown
+[Button](../components+/button.mdx)
+```
+
+File links work in GitHub's Markdown viewer and editors that follow file paths, so prefer them over root-relative links such as `/api/qui-docs-config`.
+
+- The `brokenLinks` [lint rule](configuration.mdx#lint) validates file links. A missing target file is reported as "page not found". Fragments are checked against the target page's headings.
+- [Knowledge exports](configuration.mdx#knowledge-export) rewrite file links to site URLs.
+- Only `.mdx` targets are rewritten. Links to TSX route pages and public files use URL paths.
+
+GitHub generates its own lowercase heading anchors. A fragment such as `#navConfig` opens the file but does not scroll to GitHub's `#navconfig` heading.
+
+Root-relative and URL-relative links continue to work. The `fileLinks` [lint rule](./configuration.mdx#lint) defaults to `"off"`. When enabled, it reports URL-path links to MDX pages with suggested relative `.mdx` replacements during development and build. Run [`qui-docs lint`](./configuration.mdx#cli-linting) to validate links without a Vite build. Use [`qui-docs fix-links`](#migrating-existing-links) to apply the replacements.
+
+#### Migrating Existing Links
+
+Run `qui-docs fix-links` to convert URL-path links to relative `.mdx` file links. It applies the same replacements reported by the `fileLinks` lint rule:
+
+- From `components+/button+/_button.mdx`, `/components/tooltip#placement` becomes `../tooltip+/_tooltip.mdx#placement`.
+- Same-page `./#size` becomes `#size`.
+
+Run the command from the docs site's package directory. Preview changes with `--dry-run`:
+
+```shell
+qui-docs fix-links --dry-run
+```
+
+Example output:
+
+```console
+  src/routes/pages.mdx
+    30: /markdown -> ./markdown.mdx
+    75: /rules#frontmatter -> ./rules.mdx#frontmatter
+
+Would fix 2 links in 1 file.
+```
+
+Apply the changes and review the diff:
+
+```shell
+qui-docs fix-links
+```
+
+::: spoiler Options
+
+- `-c, --config-file <configFile>`: path to the QUI Docs config file. The file is auto-detected if omitted.
+- `--dry-run`: reports changes without writing files.
+
+The command only edits link destinations. Link text, titles, and the rest of each file remain unchanged.
+
+- Links inside fenced code blocks and raw HTML `<a href>` tags are not changed.
+- Links to TSX route pages, public directory files, missing pages, and external URLs are not changed.
+- Pages symlinked from outside the routes directory are skipped and listed. Shared pages must keep using URL paths.
+- Destinations that cannot be rewritten automatically, such as those containing escapes or character references, are listed for manual fixes.
+
+:::
 
 ### External Links
 

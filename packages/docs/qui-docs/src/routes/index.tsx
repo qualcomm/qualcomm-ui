@@ -11,7 +11,8 @@ import mdxDark from "../assets/images/mdx-dark.svg"
 import mdxLight from "../assets/images/mdx-light.svg"
 import darkDocs from "../assets/images/new-design-dark.avif"
 import lightDocs from "../assets/images/new-design-light.avif"
-import qds from "../assets/images/qds.avif"
+import qdsDark from "../assets/images/qds-dark.avif"
+import qdsLight from "../assets/images/qds-light.avif"
 import routingDark from "../assets/images/routing-dark.avif"
 import routingLight from "../assets/images/routing-light.avif"
 import vite from "../assets/images/vite.svg"
@@ -111,8 +112,16 @@ export default function HomePage(): ReactNode {
           >
             <img
               alt="Qualcomm Design System Gen 3.0"
-              className="block"
-              src={qds}
+              className="qui-docs__theme-image"
+              data-theme="dark"
+              src={qdsDark}
+              width="100%"
+            />
+            <img
+              alt="Qualcomm Design System Gen 3.0"
+              className="qui-docs__theme-image"
+              data-theme="light"
+              src={qdsLight}
               width="100%"
             />
           </LinkOverlayPanel>

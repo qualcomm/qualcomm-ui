@@ -12,6 +12,7 @@ import {dirname, join, resolve} from "node:path"
 import {fileURLToPath} from "node:url"
 import {afterEach, beforeEach, describe, expect, test} from "vitest"
 
+import {planMigration} from "../../../plan.js"
 import {quiDocs} from "../../index.js"
 import {
   fallbackRoute,
@@ -120,7 +121,8 @@ describe("transformFallbackRoute", () => {
 `
     expect(transformFallbackRoute(content)).toEqual({
       content,
-      reason: "replace the existing loader with createFallbackRouteLoader(...)",
+      reason:
+        "replace the existing loader with createFallbackRouteLoader(...) and add createFallbackRouteMiddleware(...) to the middleware export, both with the same arguments",
       status: "conflict",
     })
   })
@@ -297,4 +299,37 @@ describe("fallbackRoute codemod", () => {
       )
     },
   )
+})
+
+describe("qui-docs migration plan", () => {
+  test.each([1, 2, 3])(
+    "runs the fallback route codemods for react-router-utils v%i",
+    (major) => {
+      const plan = planMigration(
+        quiDocs.codemods,
+        new Map([["@qualcomm-ui/react-router-utils", major]]),
+      )
+      expect(plan.steps.map((step) => step.codemod.name)).toEqual([
+        "fallback-route",
+        "not-found-route",
+        "fallback-route-middleware",
+      ])
+      expect(plan.majors.get("@qualcomm-ui/react-router-utils")).toBe(3)
+    },
+  )
+
+  test("skips the fallback route codemods without react-router-utils", () => {
+    const plan = planMigration(
+      quiDocs.codemods,
+      new Map([
+        ["@qualcomm-ui/mdx-vite", 4],
+        ["@qualcomm-ui/react-mdx", 3],
+      ]),
+    )
+    expect(plan.steps.map((step) => step.codemod.name)).toEqual([
+      "docs-context-names",
+      "remove-open-web-ui",
+      "validate-page-links",
+    ])
+  })
 })

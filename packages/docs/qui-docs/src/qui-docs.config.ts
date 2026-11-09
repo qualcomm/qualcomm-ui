@@ -60,6 +60,9 @@ const config: QuiDocsConfig = {
       },
     ],
   },
+  lint: {
+    fileLinks: "warn",
+  },
   navConfig,
   pageDirectory: "routes",
   pageTimestampMetadata: "user-and-timestamp",

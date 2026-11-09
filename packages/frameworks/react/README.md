@@ -2,7 +2,7 @@
 
 QUI React components implementing the Qualcomm Design System.
 
-For comprehensive documentation, examples, and usage guides, visit the [React documentation](https://react-next.qui.qualcomm.com/).
+For comprehensive documentation, examples, and usage guides, visit the [React documentation](https://react.qui.qualcomm.com/).
 
 ## License
 

@@ -1,5 +1,36 @@
 # @qualcomm-ui/react Changelog
 
+## 2.0.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.1, @qualcomm-ui/qds-core@2.0.1, @qualcomm-ui/utils@1.5.1, @qualcomm-ui/react-core@1.10.1]
+
+## 2.0.0
+
+Nov 7th, 2026
+
+Upgrade automatically with our codemod. Learn more [here](https://react.qui.qualcomm.com/migrate-v1-to-v2)
+
+### BREAKING CHANGES
+
+* [design-tokens]: apply new measurement scales from qds ([93310a9](https://github.com/qualcomm/qualcomm-ui/commit/93310a9))
+
+### Features
+
+* [design-tokens]: migrate to qds v2 ([3968a0a](https://github.com/qualcomm/qualcomm-ui/commit/3968a0a))
+* [segmented-control]: add the `emphasis` prop with `brand` and `neutral` values, `variant` and the `primary` value are deprecated ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [slider]: add the `emphasis` prop with `brand` and `neutral` values, `variant` and the `primary` value are deprecated ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+* [slider,segmented-control]: deprecate variant in favor of emphasis ([4c5a341](https://github.com/qualcomm/qualcomm-ui/commit/4c5a341))
+
+### Miscellaneous Chores
+
+* [react-compiler]: optimize components, fix warnings ([41e2d48](https://github.com/qualcomm/qualcomm-ui/commit/41e2d48))
+* **deps:** update dependencies [@qualcomm-ui/qds-core@2.0.0]
+
 ## 1.32.1
 
 Oct 30th, 2026

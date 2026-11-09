@@ -61,7 +61,7 @@ export function CoreToastDescription(
 
 export interface CoreToastCloseTriggerProps {
   /**
-   * Child element or {@link https://react-next.qui.qualcomm.com/render-props#binding-render-prop render function}
+   * Child element or {@link https://react.qui.qualcomm.com/render-props#binding-render-prop render function}
    * that receives merged props.
    * @inheritDoc
    */
@@ -80,7 +80,7 @@ export function CoreToastCloseTrigger({
 
 export interface CoreToastActionTriggerProps {
   /**
-   * Child element or {@link https://react-next.qui.qualcomm.com/render-props#binding-render-prop render function}
+   * Child element or {@link https://react.qui.qualcomm.com/render-props#binding-render-prop render function}
    * that receives merged props.
    * @inheritDoc
    */

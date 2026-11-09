@@ -29,6 +29,9 @@ const navConfig: NavConfig[] = [
   {
     id: "versioning",
   },
+  {
+    id: "migrate-v1-to-v2",
+  },
   {separator: true},
   {sectionTitle: "Integrations"},
   {
@@ -188,9 +191,6 @@ export default {
     ],
     extraFiles,
     frontmatter: {exclude: ["url"], include: ["*"]},
-    integrations: {
-      openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}, {id: "saga-ai-test"}],
-    },
   },
   navConfig,
   pageDirectory: "routes",

@@ -14,15 +14,16 @@ import type {ResolvedQuiDocsConfig} from "./config/types.js"
 import {fixPath} from "./path-utils.js"
 import {SearchIndexer} from "./search-indexer.js"
 
-async function resolveDocProps(
+export async function resolveDocProps(
   config: ResolvedQuiDocsConfig,
+  rootDir: string = cwd(),
 ): Promise<Record<string, QuiPropTypes>> {
   if (!config.typeDocProps) {
     return {}
   }
 
   try {
-    const docPropsPath = fixPath(resolve(cwd(), config.typeDocProps))
+    const docPropsPath = fixPath(resolve(rootDir, config.typeDocProps))
     const docProps = JSON.parse(await readFile(docPropsPath, "utf-8"))
     return docProps?.props ?? {}
   } catch {

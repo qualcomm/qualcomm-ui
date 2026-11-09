@@ -27,6 +27,9 @@ const navConfig: NavConfig[] = [
     id: "versioning",
   },
   {
+    id: "migrate-v3-to-v4",
+  },
+  {
     id: "migrate-v2-to-v3",
   },
 
@@ -143,9 +146,6 @@ export default {
     ],
     extraFiles,
     frontmatter: {exclude: ["title", "description", "group"], include: ["*"]},
-    integrations: {
-      openWebUi: [{id: "qui-ai"}, {id: "saga-ai"}],
-    },
   },
   navConfig,
   pageDirectory: "routes",

@@ -39,7 +39,7 @@ export class SegmentedControlDirective
    * Governs the color of the segmented control.
    *
    * @default 'brand'
-   * @since next-release
+   * @since 4.0.0
    */
   readonly emphasis = input<QdsSegmentedControlEmphasis | undefined>()
 
