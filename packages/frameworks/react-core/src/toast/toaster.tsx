@@ -31,7 +31,7 @@ export interface CoreToasterProps
     Omit<ElementRenderProp<"div">, "children" | "dir">,
     Omit<ToastGroupProps, "store" | "id"> {
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#render-prop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#render-prop Render Prop}
    * that provides the {@link ToastOptions}.
    *
    * @inheritDoc

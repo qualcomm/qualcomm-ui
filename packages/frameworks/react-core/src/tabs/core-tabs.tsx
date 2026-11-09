@@ -248,7 +248,7 @@ export function CoreTabsIndicator({
 
 export interface CoreTabsContextProps {
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props Render Prop}
    * that provides the current {@link TabsApi} context.
    *
    * @inheritDoc

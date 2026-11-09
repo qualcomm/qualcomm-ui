@@ -100,7 +100,7 @@ export interface ProgressRingProps extends ProgressRingRootProps {
 
   /**
    * Value text {@link
-   * https://react-next.qui.qualcomm.com/render-props#binding-render-prop
+   * https://react.qui.qualcomm.com/render-props#binding-render-prop
    * Render Prop}
    *
    * @inheritDoc

@@ -113,7 +113,7 @@ export function CoreSideNavTrigger({
 export interface CoreSideNavContextProps {
   /**
    * {@link
-   * https://react-next.qui.qualcomm.com/render-props#render-prop
+   * https://react.qui.qualcomm.com/render-props#render-prop
    * Render Prop}
    *
    * @inheritDoc

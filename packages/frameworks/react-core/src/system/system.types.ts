@@ -114,7 +114,7 @@ export type ElementRenderProp<
   Props = object,
 > = ComponentPropsWithRef<DefaultTagName> & {
   /**
-   * Allows you to replace the component's HTML element with a different tag or component. {@link https://react-next.qui.qualcomm.com/polymorphic-components Learn more}
+   * Allows you to replace the component's HTML element with a different tag or component. {@link https://react.qui.qualcomm.com/polymorphic-components Learn more}
    */
   render?: BindingRenderProp<Props, ReactElement>
 }

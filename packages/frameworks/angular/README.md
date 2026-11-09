@@ -2,7 +2,7 @@
 
 QUI Angular components implementing the Qualcomm Design System.
 
-For comprehensive documentation, examples, and usage guides, visit the [Angular documentation](https://angular-next.qui.qualcomm.com/).
+For comprehensive documentation, examples, and usage guides, visit the [Angular documentation](https://angular.qui.qualcomm.com/).
 
 ## License
 

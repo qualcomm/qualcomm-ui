@@ -2,7 +2,7 @@
 
 Design-agnostic Angular building blocks and utilities.
 
-This package provides low-level Angular primitives that power the QUI component library. For comprehensive documentation and usage guides, visit the [Angular documentation](https://angular-next.qui.qualcomm.com/).
+This package provides low-level Angular primitives that power the QUI component library. For comprehensive documentation and usage guides, visit the [Angular documentation](https://angular.qui.qualcomm.com/).
 
 ## License
 
