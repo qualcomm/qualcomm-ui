@@ -10,7 +10,7 @@ import {
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import type {Row} from "@qualcomm-ui/core/table"
 import type {QdsTableRowExpandButtonProps} from "@qualcomm-ui/qds-core/table"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
@@ -60,10 +60,11 @@ export class TableRowExpandButtonDirective
    */
   readonly icon = input<LucideIconOrString>("LucideChevronRight")
 
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly inlineIconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: "sm",
-    variant: "fixed",
+    variant: "ghost",
   })
 
   protected readonly trackBindings = useTrackBindings(() =>

@@ -15,6 +15,9 @@ import {
 } from "@qualcomm-ui/qds-core/inline-icon-button"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
+/**
+ * @deprecated since next-release, migrate to `useIconButtonApi` with `density: "compact"`
+ */
 export function useInlineIconButtonApi({
   emphasis,
   size,

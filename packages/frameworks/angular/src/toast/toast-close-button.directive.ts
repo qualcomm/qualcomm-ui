@@ -6,7 +6,7 @@ import {LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreToastCloseTriggerDirective} from "@qualcomm-ui/angular-core/toast"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsToastContext} from "./qds-toast-context.service"
@@ -17,15 +17,16 @@ import {useQdsToastContext} from "./qds-toast-context.service"
   standalone: false,
   template: `
     <ng-content>
-      <svg qIcon="X" [q-bind]="inlineIconButtonApi().getIconBindings()"></svg>
+      <svg qIcon="X" [q-bind]="iconButtonApi().getIconBindings()"></svg>
     </ng-content>
   `,
 })
 export class ToastCloseButtonDirective extends CoreToastCloseTriggerDirective {
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly iconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: "md",
-    variant: "fixed",
+    variant: "ghost",
   })
 
   protected readonly qdsContext = useQdsToastContext()
@@ -36,7 +37,7 @@ export class ToastCloseButtonDirective extends CoreToastCloseTriggerDirective {
       computed(() =>
         mergeProps(
           this.qdsContext().getCloseButtonBindings(),
-          this.inlineIconButtonApi().getRootBindings(),
+          this.iconButtonApi().getRootBindings(),
         ),
       ),
     )

@@ -6,7 +6,7 @@ import {LucideX} from "@lucide/angular"
 
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTabDismissButtonDirective} from "@qualcomm-ui/angular-core/tabs"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsTabsContext} from "./qds-tabs-context.service"
@@ -22,10 +22,11 @@ import {useQdsTabsContext} from "./qds-tabs-context.service"
 export class TabDismissButtonDirective extends CoreTabDismissButtonDirective {
   protected readonly qdsContext = useQdsTabsContext()
 
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly inlineIconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: "md",
-    variant: "fixed",
+    variant: "ghost",
   })
 
   constructor() {

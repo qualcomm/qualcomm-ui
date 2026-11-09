@@ -7,7 +7,7 @@ import {LucideChevronDown} from "@lucide/angular"
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import {useSelectContext} from "@qualcomm-ui/angular-core/select"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context.service"
@@ -33,10 +33,11 @@ export class SelectIndicatorDirective implements OnInit {
 
   protected readonly qdsSelectContext = useQdsSelectContext()
   protected readonly selectContext = useSelectContext()
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly inlineIconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: computed(() => (this.qdsSelectContext().size === "sm" ? "sm" : "md")),
-    variant: "scale",
+    variant: "ghost",
   })
 
   protected readonly trackBindings = useTrackBindings(() =>

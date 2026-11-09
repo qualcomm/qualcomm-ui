@@ -9,7 +9,7 @@ import {
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-api"
@@ -34,10 +34,11 @@ export class TableRowDragHandleDirective implements OnInit {
    */
   readonly icon = input<LucideIconOrString>("GripHorizontal")
 
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly inlineIconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: "sm",
-    variant: "fixed",
+    variant: "ghost",
   })
 
   protected readonly trackBindings = useTrackBindings(() =>
