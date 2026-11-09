@@ -12,7 +12,7 @@ import {
   usePasswordInputContext,
 } from "@qualcomm-ui/react-core/password-input"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputVisibilityTriggerProps extends ElementRenderProp<"button"> {
@@ -52,11 +52,13 @@ export function PasswordInputVisibilityTrigger({
   )
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
+      variant="ghost"
       icon={context.visible ? iconOff : iconOn}
       {...mergedProps}
     >
       {children}
-    </InlineIconButton>
+    </IconButton>
   )
 }

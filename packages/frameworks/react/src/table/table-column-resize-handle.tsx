@@ -8,7 +8,7 @@ import {UnfoldHorizontal} from "lucide-react"
 import type {QdsTableColumnResizerProps} from "@qualcomm-ui/qds-core/table"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context.js"
@@ -38,10 +38,11 @@ export function TableColumnResizeHandle({
   )
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
       icon={UnfoldHorizontal}
       size="sm"
-      variant="fixed"
+      variant="ghost"
       {...mergedProps}
     />
   )

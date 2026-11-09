@@ -7,7 +7,7 @@ import {ChevronRight} from "lucide-react"
 
 import type {QdsTableRowExpandButtonProps} from "@qualcomm-ui/qds-core/table"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context.js"
@@ -30,10 +30,11 @@ export function TableRowExpandButton({
   )
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
       icon={ChevronRight}
       size="sm"
-      variant="fixed"
+      variant="ghost"
       {...mergedProps}
     />
   )

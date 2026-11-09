@@ -7,7 +7,7 @@ import {X} from "lucide-react"
 
 import {useSelectClearTrigger} from "@qualcomm-ui/react-core/select"
 import type {ElementRenderProp, IdProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context.js"
@@ -32,8 +32,8 @@ export function SelectClearTrigger({
   )
 
   return (
-    <InlineIconButton icon={X} variant="scale" {...mergedProps}>
+    <IconButton density="compact" icon={X} variant="ghost" {...mergedProps}>
       {children}
-    </InlineIconButton>
+    </IconButton>
   )
 }

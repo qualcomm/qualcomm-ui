@@ -7,7 +7,7 @@ import {GripVertical} from "lucide-react"
 
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context.js"
@@ -34,10 +34,11 @@ export function TableColumnDragHandle(
   const mergedProps = mergeProps(qdsTableApi.getDragHandleBindings(), props)
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
       icon={GripVertical}
       size="sm"
-      variant="fixed"
+      variant="ghost"
       {...mergedProps}
     />
   )

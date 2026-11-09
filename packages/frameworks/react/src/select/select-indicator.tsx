@@ -7,7 +7,7 @@ import {ChevronDown, type LucideIcon} from "lucide-react"
 
 import {useSelectIndicator} from "@qualcomm-ui/react-core/select"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsSelectContext} from "./qds-select-context.js"
@@ -38,10 +38,11 @@ export function SelectIndicator({
   )
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
       icon={icon}
       size={qdsSelectContext.size === "sm" ? "sm" : "md"}
-      variant="scale"
+      variant="ghost"
       {...mergedProps}
     />
   )

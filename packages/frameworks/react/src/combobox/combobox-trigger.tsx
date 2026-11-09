@@ -9,7 +9,7 @@ import {
   CoreCombobox,
   type CoreComboboxTriggerProps,
 } from "@qualcomm-ui/react-core/combobox"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.js"
@@ -39,11 +39,12 @@ export function ComboboxTrigger({
   return (
     <CoreCombobox.Trigger
       render={
-        <InlineIconButton
+        <IconButton
+          density="compact"
           icon={icon}
           render={render}
           size={qdsContext.size === "sm" ? "sm" : "md"}
-          variant="scale"
+          variant="ghost"
         />
       }
       {...mergedProps}

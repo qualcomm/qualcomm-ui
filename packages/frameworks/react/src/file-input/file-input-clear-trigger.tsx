@@ -9,7 +9,7 @@ import {
   type CoreFileUploadClearTriggerProps,
   useFileUploadContext,
 } from "@qualcomm-ui/react-core/file-upload"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -27,10 +27,11 @@ export function FileInputClearTrigger(
   )
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
       icon={X}
       size={qdsContext.size}
-      variant="scale"
+      variant="ghost"
       {...mergedProps}
     />
   )

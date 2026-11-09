@@ -7,7 +7,7 @@ import {Minus} from "lucide-react"
 
 import {CoreNumberInput} from "@qualcomm-ui/react-core/number-input"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsNumberInputContext} from "./qds-number-input-context.js"
@@ -25,7 +25,7 @@ export function NumberInputDecrementTrigger(
 
   return (
     <CoreNumberInput.DecrementTrigger {...mergedProps}>
-      <InlineIconButton icon={Minus} />
+      <IconButton density="compact" variant="ghost" icon={Minus} />
     </CoreNumberInput.DecrementTrigger>
   )
 }
