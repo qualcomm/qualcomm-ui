@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 5.0.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.7.1, @qualcomm-ui/typedoc-common@1.0.9, @qualcomm-ui/utils@1.5.1]
+
 ## 5.0.0
 
 Nov 7th, 2026

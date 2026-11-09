@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/mdx-common",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "MDX common types and utilities",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.0.8",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.9",
     "@qualcomm-ui/vite": "catalog:",
     "fuzzysort": "^3.0.1",
     "shx": "catalog:",
@@ -45,7 +45,7 @@
     "vite": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/typedoc-common": "workspace:^1.0.8",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.9",
     "fuzzysort": ">=3"
   }
 }

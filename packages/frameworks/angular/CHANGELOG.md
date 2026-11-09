@@ -1,5 +1,14 @@
 # @qualcomm-ui/angular Changelog
 
+## 4.0.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.1, @qualcomm-ui/qds-core@2.0.1, @qualcomm-ui/utils@1.5.1, @qualcomm-ui/angular-core@3.4.1]
+
 ## 4.0.0
 
 Nov 7th, 2026
