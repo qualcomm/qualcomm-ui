@@ -5,7 +5,7 @@ import type {ReactElement} from "react"
 
 import {GripHorizontal} from "lucide-react"
 
-import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -21,7 +21,7 @@ export interface TableRowDragHandleProps extends Omit<
    *
    * @default GripHorizontal
    */
-  icon?: LucideIconOrNode
+  icon?: LucideIconOrElement
 }
 
 /**

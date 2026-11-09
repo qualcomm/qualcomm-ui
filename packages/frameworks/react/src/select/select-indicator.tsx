@@ -1,10 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactElement, ReactNode} from "react"
+import type {ReactElement} from "react"
 
-import {ChevronDown, type LucideIcon} from "lucide-react"
+import {ChevronDown} from "lucide-react"
 
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import {useSelectIndicator} from "@qualcomm-ui/react-core/select"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {IconButton} from "@qualcomm-ui/react/button"
@@ -18,7 +19,7 @@ export interface SelectIndicatorProps extends ElementRenderProp<"button"> {
    *
    * @default ChevronDown
    */
-  icon?: ReactNode | LucideIcon
+  icon?: LucideIconOrElement
 }
 
 /**

@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -17,7 +17,7 @@ export interface TableColumnHeaderActionProps extends Omit<
   /**
    * Lucide icon to display inside the button.
    */
-  icon: LucideIconOrNode
+  icon: LucideIconOrElement
 }
 
 /**
@@ -32,5 +32,7 @@ export function TableColumnHeaderAction(
     props,
   )
 
-  return <IconButton density="compact" size="sm" variant="ghost" {...mergedProps} />
+  return (
+    <IconButton density="compact" size="sm" variant="ghost" {...mergedProps} />
+  )
 }
