@@ -6,8 +6,8 @@ This package provides shared types and utilities for working with MDX documentat
 
 For documentation and usage guides:
 
-- [React documentation](https://react-next.qui.qualcomm.com/)
-- [Angular documentation](https://angular-next.qui.qualcomm.com/)
+- [React documentation](https://react.qui.qualcomm.com/)
+- [Angular documentation](https://angular.qui.qualcomm.com/)
 
 ## License
 

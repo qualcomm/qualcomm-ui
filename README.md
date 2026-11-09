@@ -5,20 +5,20 @@
 <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/qualcomm/qualcomm-ui/code-quality.yml">
 </a>
 
-<a target="_blank" href="https://react-next.qui.qualcomm.com" style="text-decoration: none">
-  <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Freact-next.qui.qualcomm.com&up_message=online&label=React%20Docs">
+<a target="_blank" href="https://react.qui.qualcomm.com" style="text-decoration: none">
+  <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Freact.qui.qualcomm.com&up_message=online&label=React%20Docs">
 </a>
 
-<a target="_blank" href="https://angular-next.qui.qualcomm.com" style="text-decoration: none">
-  <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fangular-next.qui.qualcomm.com&up_message=online&label=Angular%20Docs">
+<a target="_blank" href="https://angular.qui.qualcomm.com" style="text-decoration: none">
+  <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fangular.qui.qualcomm.com&up_message=online&label=Angular%20Docs">
 </a>
 
 # Qualcomm UI (QUI)
 
 QUI is a collection of high-quality, reusable UI components that can be used to build beautiful and responsive web applications. It features a cross-framework core layer for unification of styling and behavior, as well as framework adapters for React and Angular.
 
-- [React documentation](https://react-next.qui.qualcomm.com/)
-- [Angular documentation](https://angular-next.qui.qualcomm.com/)
+- [React documentation](https://react.qui.qualcomm.com/)
+- [Angular documentation](https://angular.qui.qualcomm.com/)
 
 ## Branches
 

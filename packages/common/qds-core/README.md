@@ -4,8 +4,8 @@ Qualcomm Design System (QDS) core components and design tokens.
 
 For documentation and usage guides:
 
-- [React documentation](https://react-next.qui.qualcomm.com/)
-- [Angular documentation](https://angular-next.qui.qualcomm.com/)
+- [React documentation](https://react.qui.qualcomm.com/)
+- [Angular documentation](https://angular.qui.qualcomm.com/)
 
 ## Design Tokens
 

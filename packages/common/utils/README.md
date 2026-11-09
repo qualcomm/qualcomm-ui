@@ -4,8 +4,8 @@ A comprehensive utility library providing essential functions for array manipula
 
 For documentation and usage guides:
 
-- [React documentation](https://react-next.qui.qualcomm.com/)
-- [Angular documentation](https://angular-next.qui.qualcomm.com/)
+- [React documentation](https://react.qui.qualcomm.com/)
+- [Angular documentation](https://angular.qui.qualcomm.com/)
 
 ## License
 

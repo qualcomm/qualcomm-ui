@@ -17,7 +17,7 @@ import {ToastRoot} from "./toast-root.js"
 
 export interface ToasterProps extends Omit<CoreToasterProps, "children"> {
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#functionrenderprop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#functionrenderprop Render Prop}
    * that provides the {@link ToastOptions}.
    *
    * @inheritDoc

@@ -55,7 +55,7 @@ export interface BreadcrumbsItemProps extends BreadcrumbsItemRootProps {
   /**
    * Replaces the trigger element with an anchor, a router Link, or any other
    * component. Omitting it renders a plain `<span>` (e.g. the current page).
-   * {@link https://react-next.qui.qualcomm.com/polymorphic-components Learn more}
+   * {@link https://react.qui.qualcomm.com/polymorphic-components Learn more}
    */
   render?: BindingRenderProp<object>
 

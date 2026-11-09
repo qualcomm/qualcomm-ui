@@ -30,7 +30,7 @@ export interface TreeNodesProps<T> extends Omit<
   indentGuideProps?: TreeBranchIndentGuideProps
 
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#render-prop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#render-prop Render Prop}
    * for the tree's branch items. Use this prop to supply the content of the branch
    * item like the text, indicator, or icon.
    *
@@ -39,7 +39,7 @@ export interface TreeNodesProps<T> extends Omit<
   renderBranch: RenderProp<TreeNodesProps<T>>
 
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#render-prop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#render-prop Render Prop}
    * for the tree's leaf items. Use this prop to supply the content of the leaf item
    * like the text, indicator, or icon.
    *

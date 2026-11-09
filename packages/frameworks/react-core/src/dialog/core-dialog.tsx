@@ -106,7 +106,7 @@ export function CoreDialogContent({
 
 export interface CoreDialogCloseTriggerProps extends IdProp {
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#binding-render-prop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#binding-render-prop Render Prop}
    * that provides or binds the event handlers and attributes to the child element.
    *
    * @inheritDoc
@@ -270,7 +270,7 @@ export function CoreDialogPositioner({
 
 export interface CoreDialogTriggerProps extends IdProp {
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#binding-render-prop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#binding-render-prop Render Prop}
    * used to wire up the dialog open behavior.
    *
    * @inheritDoc

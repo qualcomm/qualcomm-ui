@@ -32,7 +32,7 @@ export interface SideNavNodesProps<T> extends Omit<
   indentGuideProps?: SideNavBranchIndentGuideProps
 
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#render-prop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#render-prop Render Prop}
    * for the tree's branch nodes. Use this prop to supply the content of the branch
    * node like the text, indicator, or icon.
    *
@@ -41,7 +41,7 @@ export interface SideNavNodesProps<T> extends Omit<
   renderBranch: RenderProp<SideNavNodesProps<T>>
 
   /**
-   * {@link https://react-next.qui.qualcomm.com/render-props#render-prop Render Prop}
+   * {@link https://react.qui.qualcomm.com/render-props#render-prop Render Prop}
    * for the tree's leaf nodes. Use this prop to supply the content of the leaf node
    * like the text, indicator, or icon.
    *
