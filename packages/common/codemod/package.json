@@ -58,6 +58,6 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/utils": "^1.1.0"
+    "@qualcomm-ui/utils": "workspace:^1"
   }
 }
