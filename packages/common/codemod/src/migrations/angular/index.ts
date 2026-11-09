@@ -4,11 +4,12 @@
 import type {MigrationGroup} from "../types.js"
 
 import {angularEmphasisProps} from "./emphasis-props/emphasis-props.js"
+import {angularInlineIconButton} from "./inline-icon-button/inline-icon-button.js"
 
 export const angular: MigrationGroup<"@qualcomm-ui/angular"> = {
-  codemods: [angularEmphasisProps],
+  codemods: [angularEmphasisProps, angularInlineIconButton],
   description:
-    "Upgrades @qualcomm-ui/angular from v3 to v4. Replaces the deprecated emphasis props and values.",
+    "Upgrades @qualcomm-ui/angular from v3 to v4. Replaces the deprecated emphasis props and values, and InlineIconButton.",
   name: "angular",
   packages: ["@qualcomm-ui/angular"],
 }
