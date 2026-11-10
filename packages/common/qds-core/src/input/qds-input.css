@@ -67,7 +67,39 @@
   ) {
     .qui-input__clear-trigger {
       display: none;
+      &[data-combobox-part="clear-trigger"]::after {
+        display: none;
+      }
     }
+  }
+}
+
+/* Pseudo-elements can't be flex items, so the trailing margin reserves room for
+ * the divider plus a second gap, and the divider is positioned into that space:
+ * [clear-trigger] gap [divider] gap [next item] */
+.qui-input__clear-trigger[data-combobox-part="clear-trigger"] {
+  margin-inline-end: calc(var(--input-group-gap) + 1px);
+
+  &[data-size="md"],
+  &[data-size="lg"] {
+    &::after {
+      height: var(--sizing-400);
+    }
+  }
+
+  &::after {
+    background: var(--color-border-neutral-01);
+    content: " ";
+    display: block;
+    height: 12px;
+    inset-block-start: 50%;
+    inset-inline-start: calc(
+      100% + var(--border-width-sm) + var(--input-group-gap)
+    );
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(-50%);
+    width: 1px;
   }
 }
 
@@ -233,6 +265,7 @@
   color: var(--color-text-support-danger);
   --icon-height: var(--sizing-400);
   --icon-width: var(--sizing-400);
+  margin-left: var(--spacing-100);
 
   &[data-size="lg"] {
     --icon-height: var(--sizing-500);
