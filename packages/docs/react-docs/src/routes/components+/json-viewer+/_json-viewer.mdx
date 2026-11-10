@@ -27,6 +27,8 @@ import {JsonViewer} from "@qualcomm-ui/react/json-viewer"
 
 Select a `.json` file with [File Input](/components/file-input) to view its contents as a tree. Invalid JSON displays an error. Clear the selected file to reset the viewer.
 
+> This example is intended for smaller JSON files, typically under 100 KB. The `lazyMount` option reduces initial rendering work for larger files by deferring branch content until expansion. Expanding all nodes programmatically renders the entire tree and can reduce responsiveness for large datasets.
+
 <Demo
   name="JsonViewerInteractiveDemo"
   component={demos.JsonViewerInteractiveDemo}
