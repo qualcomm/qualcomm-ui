@@ -18,29 +18,33 @@ import type {
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
-const generatePreviewText = (items: string[], hasMore: boolean): string => {
+const ENTRIES_KEY = "[[Entries]]"
+
+function generatePreviewText(items: string[], hasMore: boolean): string {
   return ` ${items.join(", ")}${hasMore ? ", … " : " "}`
 }
 
-const ENTRIES_KEY = "[[Entries]]"
-
-const txt = (
+function txt(
   value: string | number | boolean | null | undefined,
-): JsonNodeText => ({
-  type: "text",
-  value,
-})
+): JsonNodeText {
+  return {
+    type: "text",
+    value,
+  }
+}
 
-const jsx = (
+function jsx(
   properties: JsonNodeElement["properties"] = {},
   children: Array<JsonNodeElement | JsonNodeText> = [],
-): JsonNodeElement => ({
-  children,
-  properties,
-  type: "element",
-})
+): JsonNodeElement {
+  return {
+    children,
+    properties,
+    type: "element",
+  }
+}
 
-const formatValueMini = (child: JsonNode): string => {
+function formatValueMini(child: JsonNode): string {
   if (child.type === "string") {
     return `"${child.value}"`
   }
@@ -71,7 +75,7 @@ const formatValueMini = (child: JsonNode): string => {
   return String(child.value)
 }
 
-const formatValue = (value: unknown): string => {
+function formatValue(value: unknown): string {
   if (value === null) {
     return "null"
   }
@@ -103,25 +107,26 @@ const formatValue = (value: unknown): string => {
   return String(value)
 }
 
-const formatValueElement = (
+function formatValueElement(
   value: unknown,
   text = formatValue(value),
-): JsonNodeHastElement => {
+): JsonNodeHastElement {
   if (value instanceof Date && Number.isNaN(value.getTime())) {
     return jsx({kind: "invalid"}, [txt(text)])
   }
   return txt(text)
 }
 
-const generatePreviewElement = (
+function generatePreviewElement(
   items: JsonNodeHastElement[],
   hasMore: boolean,
-): JsonNodeElement =>
-  jsx({kind: "preview-text"}, [
+): JsonNodeElement {
+  return jsx({kind: "preview-text"}, [
     txt(" "),
     ...items.flatMap((item, index) => (index > 0 ? [txt(", "), item] : [item])),
     txt(hasMore ? ", … " : " "),
   ])
+}
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -597,7 +602,7 @@ export const FileType: JsonDataTypeOptions<File> = dataType<File>({
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
-const getFunctionString = (func: Function): string => {
+function getFunctionString(func: Function): string {
   try {
     return func.toString()
   } catch {
@@ -617,7 +622,7 @@ const getFunctionString = (func: Function): string => {
 const FUNCTION_SIGNATURE_REGEX =
   /(?:async\s+)?(?:function\s*\*?\s*)?([^(]*\([^)]*\))/
 
-const getFunctionSignature = (func: Function): string => {
+function getFunctionSignature(func: Function): string {
   const funcString = getFunctionString(func)
   const signatureMatch = funcString.match(FUNCTION_SIGNATURE_REGEX)
   return signatureMatch ? signatureMatch[1] : `${func.name || "anonymous"}()`
@@ -1253,7 +1258,7 @@ const typedArrayConstructors = {
   Uint32Array: "uint32array",
 } as const
 
-const getTypedArrayName = (value: unknown): string => {
+function getTypedArrayName(value: unknown): string {
   if (!isObj(value)) {
     return ""
   }
@@ -1395,7 +1400,7 @@ export const IterableType: JsonDataTypeOptions = dataType<any>({
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
-const getPropertyValue = (value: object, key: string): unknown => {
+function getPropertyValue(value: object, key: string): unknown {
   try {
     return getProp(value, key)
   } catch {
@@ -1541,13 +1546,19 @@ const ELEMENT_KEYS = [
   "tagName",
 ]
 
-const isSvg = (el: Element): el is SVGSVGElement =>
-  typeof el === "object" &&
-  el.tagName === "svg" &&
-  el.namespaceURI === "http://www.w3.org/2000/svg"
+function isSvg(el: Element): el is SVGSVGElement {
+  return (
+    typeof el === "object" &&
+    el.tagName === "svg" &&
+    el.namespaceURI === "http://www.w3.org/2000/svg"
+  )
+}
 
-const isHTML = (el: Element): el is HTMLElement =>
-  typeof el === "object" && el.namespaceURI === "http://www.w3.org/1999/xhtml"
+function isHTML(el: Element): el is HTMLElement {
+  return (
+    typeof el === "object" && el.namespaceURI === "http://www.w3.org/1999/xhtml"
+  )
+}
 
 export const ElementType: JsonDataTypeOptions<SVGElement | HTMLElement> =
   dataType<SVGElement | HTMLElement>({
@@ -1695,7 +1706,7 @@ export const WindowType: JsonDataTypeOptions<Window> = dataType<Window>({
 
 const REACT_ELEMENT_KEYS = ["$$typeof", "type", "key", "ref", "props"]
 
-const getElementTypeName = (type: any): string => {
+function getElementTypeName(type: any): string {
   if (typeof type === "string") {
     return type
   }
@@ -1876,10 +1887,10 @@ export const dataTypes: JsonDataTypeOptions<any>[] = [
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
-export const jsonNodeToElement = (
+export function jsonNodeToElement(
   node: JsonNode,
   opts?: Partial<JsonNodePreviewOptions>,
-): JsonNodeHastElement => {
+): JsonNodeHastElement {
   const options = getPreviewOptions(opts)
   const key = keyPathToKey(node.keyPath, {excludeRoot: true})
 
@@ -1909,10 +1920,10 @@ export const jsonNodeToElement = (
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
-export const getNodeTypeDescription = (
+export function getNodeTypeDescription(
   node: JsonNode,
   opts?: Partial<JsonNodePreviewOptions>,
-): string => {
+): string {
   const options = getPreviewOptions(opts)
   const dataType = dataTypes.find((dataType) => dataType.check(node.value))
   if (dataType) {
