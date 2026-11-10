@@ -32,7 +32,13 @@ export function SelectClearTrigger({
   )
 
   return (
-    <IconButton density="compact" icon={X} variant="ghost" {...mergedProps}>
+    <IconButton
+      density="compact"
+      icon={X}
+      size={qdsSelectContext.size === "sm" ? "sm" : "md"}
+      variant="ghost"
+      {...mergedProps}
+    >
       {children}
     </IconButton>
   )
