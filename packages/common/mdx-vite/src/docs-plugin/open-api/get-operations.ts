@@ -12,6 +12,7 @@ const httpMethods = [
   "head",
   "patch",
   "trace",
+  "query",
 ] as const
 
 export type HttpMethod = (typeof httpMethods)[number]

@@ -45,6 +45,13 @@ describe("getOperations", () => {
     expect(operations.map((op) => op.slug)).toEqual(["listPets", "createPet"])
   })
 
+  test("lists QUERY operations from OpenAPI 3.2", () => {
+    const operations = getOperations({
+      paths: {"/pets/search": {query: {operationId: "searchPets"}}},
+    })
+    expect(operations).toMatchObject([{method: "query", slug: "searchPets"}])
+  })
+
   test("lists operations of a path item that is a ref", () => {
     const operations = getOperations({
       components: {pathItems: {Pets: {get: {operationId: "listPets"}}}},
