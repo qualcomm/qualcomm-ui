@@ -15,6 +15,9 @@ import type {
 
 const parts = inlineIconButtonAnatomy.parts
 
+/**
+ * @deprecated in next-release, migrate to the inline-icon-button with `density: "compact"`
+ */
 export function createQdsInlineIconButtonApi(
   props: Explicit<QdsInlineIconButtonApiProps>,
   normalize: PropNormalizer,

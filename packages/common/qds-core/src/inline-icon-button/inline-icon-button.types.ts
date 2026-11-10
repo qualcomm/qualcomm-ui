@@ -13,6 +13,9 @@ export type QdsInlineIconButtonEmphasis =
   | "persistent-black"
 export type QdsInlineIconButtonVariant = "fixed" | "scale"
 
+/**
+ * @deprecated in next-release, migrate to the {@link IconButton} with `density="compact"`
+ */
 export interface QdsInlineIconButtonApiProps {
   /**
    * The style variant of the button. Governs color.
@@ -59,6 +62,9 @@ export interface QdsInlineIconButtonIconBindings extends Part<"icon"> {
   "data-variant": QdsInlineIconButtonVariant
 }
 
+/**
+ * @deprecated in next-release, migrate to `IconButton` with `density="compact"`
+ */
 export interface QdsInlineIconButtonApi {
   emphasis: QdsInlineIconButtonEmphasis
   size: QdsInlineIconButtonSize
