@@ -1,9 +1,10 @@
-import {useState} from "react"
+import {type CSSProperties, useState} from "react"
 
 import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
 import {page} from "vitest/browser"
 
+import {CoreCollapsible} from "@qualcomm-ui/react-core/collapsible"
 import {Collapsible} from "@qualcomm-ui/react/collapsible"
 
 import {type MultiComponentTest, runTests} from "~test-utils/runner"
@@ -188,5 +189,159 @@ const tests: MultiComponentTest[] = [
 ]
 
 describe("Collapsible", () => {
+  describe.each(["root", "provider"] as const)(
+    "%s render strategy",
+    (variant) => {
+      test.each([
+        {lazyMount: undefined, name: "defaults", unmountOnExit: undefined},
+        {lazyMount: true, name: "lazy mounting", unmountOnExit: false},
+        {lazyMount: false, name: "unmount on exit", unmountOnExit: true},
+        {lazyMount: true, name: "both enabled", unmountOnExit: true},
+      ])(
+        "$name controls content mounting",
+        async ({lazyMount, unmountOnExit}) => {
+          const Root =
+            variant === "root" ? Collapsible.Root : CoreCollapsible.RootProvider
+          await render(
+            <Root lazyMount={lazyMount} unmountOnExit={unmountOnExit}>
+              <Collapsible.Trigger>{triggerLabel}</Collapsible.Trigger>
+              <Collapsible.Content aria-label="Details" role="region">
+                {contentText}
+              </Collapsible.Content>
+            </Root>,
+          )
+
+          const content = page.getByLabelText("Details")
+          const trigger = page.getByRole("button", {name: triggerLabel})
+          if (lazyMount) {
+            await expect.element(content).not.toBeInTheDocument()
+          } else {
+            await expect.element(content).toBeInTheDocument()
+            await expect.element(content).not.toBeVisible()
+          }
+
+          await trigger.click()
+          await expect.element(content).toBeVisible()
+          await trigger.click()
+          if (unmountOnExit) {
+            await expect.element(content).not.toBeInTheDocument()
+          } else {
+            await expect.element(content).toBeInTheDocument()
+            await expect.element(content).not.toBeVisible()
+          }
+
+          await trigger.click()
+          await expect.element(content).toBeVisible()
+        },
+      )
+    },
+  )
+
+  test.each([false, true])(
+    "unmountOnExit=%s determines whether local input state survives collapse",
+    async (unmountOnExit) => {
+      await render(
+        <Collapsible.Root lazyMount unmountOnExit={unmountOnExit}>
+          <Collapsible.Trigger>{triggerLabel}</Collapsible.Trigger>
+          <Collapsible.Content>
+            <input aria-label="Notes" defaultValue="initial" />
+          </Collapsible.Content>
+        </Collapsible.Root>,
+      )
+
+      const trigger = page.getByRole("button", {name: triggerLabel})
+      const input = page.getByLabelText("Notes")
+      await trigger.click()
+      await input.fill("edited")
+      await trigger.click()
+      if (unmountOnExit) {
+        await expect.element(input).not.toBeInTheDocument()
+      } else {
+        await expect.element(input).not.toBeVisible()
+      }
+      await trigger.click()
+      await expect
+        .element(input)
+        .toHaveValue(unmountOnExit ? "initial" : "edited")
+    },
+  )
+
+  test("unmounts after the collapse animation and reports exit completion", async () => {
+    const onExitComplete = vi.fn()
+    const exitAnimations: Animation[] = []
+    const pauseExitAnimation = (event: {target: EventTarget | null}) => {
+      if (event.target instanceof HTMLElement) {
+        for (const animation of event.target.getAnimations()) {
+          if (!exitAnimations.includes(animation)) {
+            animation.pause()
+            exitAnimations.push(animation)
+          }
+        }
+      }
+    }
+    await render(
+      <Collapsible.Root
+        defaultOpen
+        lazyMount
+        onAnimationStart={pauseExitAnimation}
+        onExitComplete={onExitComplete}
+        style={{"--animation-duration-moderate": "60s"} as CSSProperties}
+        unmountOnExit
+      >
+        <Collapsible.Trigger>{triggerLabel}</Collapsible.Trigger>
+        <Collapsible.Content>{contentText}</Collapsible.Content>
+      </Collapsible.Root>,
+    )
+
+    const content = page.getByText(contentText)
+    await expect.element(content).toBeVisible()
+    await page.getByRole("button", {name: triggerLabel}).click()
+    await expect.poll(() => exitAnimations.length).toBeGreaterThan(0)
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+    })
+    await expect.element(content).toBeInTheDocument()
+    expect(onExitComplete).not.toHaveBeenCalled()
+    for (const animation of exitAnimations) {
+      animation.play()
+      animation.finish()
+    }
+    await expect.element(content).not.toBeInTheDocument()
+    await expect.poll(() => onExitComplete).toHaveBeenCalledOnce()
+  })
+
+  test("controlled content mounts and unmounts on trigger and external updates", async () => {
+    function ControlledViewer() {
+      const [open, setOpen] = useState(false)
+      return (
+        <>
+          <button onClick={() => setOpen(true)}>Open externally</button>
+          <button onClick={() => setOpen(false)}>Close externally</button>
+          <Collapsible.Root
+            lazyMount
+            onOpenChange={setOpen}
+            open={open}
+            unmountOnExit
+          >
+            <Collapsible.Trigger>{triggerLabel}</Collapsible.Trigger>
+            <Collapsible.Content>{contentText}</Collapsible.Content>
+          </Collapsible.Root>
+        </>
+      )
+    }
+
+    await render(<ControlledViewer />)
+    const content = page.getByText(contentText)
+    await expect.element(content).not.toBeInTheDocument()
+    await page.getByRole("button", {name: "Open externally"}).click()
+    await expect.element(content).toBeVisible()
+    await page.getByRole("button", {name: triggerLabel}).click()
+    await expect.element(content).not.toBeInTheDocument()
+    await page.getByRole("button", {name: triggerLabel}).click()
+    await expect.element(content).toBeVisible()
+    await page.getByRole("button", {name: "Close externally"}).click()
+    await expect.element(content).not.toBeInTheDocument()
+  })
+
   runTests(tests)
 })

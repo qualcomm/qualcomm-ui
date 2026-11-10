@@ -1,12 +1,15 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, input, type OnInit} from "@angular/core"
+import {computed, Directive, inject, input, type OnInit} from "@angular/core"
 
 import {useId, useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 
-import {useCollapsibleContext} from "./collapsible-context.service"
+import {
+  CollapsibleContextService,
+  useCollapsibleContext,
+} from "./collapsible-context.service"
 
 @Directive()
 export class CoreCollapsibleContentDirective implements OnInit {
@@ -15,6 +18,15 @@ export class CoreCollapsibleContentDirective implements OnInit {
    * omitted, a unique identifier will be generated for accessibility.
    */
   readonly id = input<string>()
+
+  private readonly collapsibleService = inject(CollapsibleContextService)
+
+  /**
+   * Whether descendants should be rendered. Wrap content in
+   * `@if (content.shouldRender())` to defer creating its components and to
+   * destroy them after collapse when the render strategy requires it.
+   */
+  readonly shouldRender = computed(() => !this.collapsibleService.isUnmounted())
 
   protected readonly collapsibleContext = useCollapsibleContext()
 

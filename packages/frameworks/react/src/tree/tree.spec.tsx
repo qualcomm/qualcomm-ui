@@ -105,6 +105,58 @@ function renderTestTree({
 }
 
 describe("Tree", () => {
+  test.each([
+    {lazyMount: undefined, name: "defaults", unmountOnExit: undefined},
+    {lazyMount: true, name: "lazy mounting", unmountOnExit: false},
+    {lazyMount: false, name: "unmount on exit", unmountOnExit: true},
+    {lazyMount: true, name: "both enabled", unmountOnExit: true},
+  ])(
+    "$name controls branch descendant mounting",
+    async ({lazyMount, unmountOnExit}) => {
+      await renderTestTree({rootProps: {lazyMount, unmountOnExit}})
+      const documents = page.getByText("Documents", {exact: true})
+      const child = page.getByText("Document 1.pdf", {exact: true})
+
+      if (lazyMount) {
+        await expect.element(child).not.toBeInTheDocument()
+      } else {
+        await expect.element(child).toBeInTheDocument()
+        await expect.element(child).not.toBeVisible()
+      }
+
+      await documents.click()
+      await expect.element(child).toBeVisible()
+      await documents.click()
+      if (unmountOnExit) {
+        await expect.element(child).not.toBeInTheDocument()
+      } else {
+        await expect.element(child).toBeInTheDocument()
+        await expect.element(child).not.toBeVisible()
+      }
+
+      await documents.click()
+      await expect.element(child).toBeVisible()
+    },
+  )
+
+  test("retains nested expansion when a parent unmounts its descendants", async () => {
+    await renderTestTree({
+      rootProps: {
+        defaultExpandedValue: ["documents", "reports"],
+        lazyMount: true,
+        unmountOnExit: true,
+      },
+    })
+
+    const documents = page.getByText("Documents", {exact: true})
+    const report = page.getByText("Report 1.docx", {exact: true})
+    await expect.element(report).toBeVisible()
+    await documents.click()
+    await expect.element(report).not.toBeInTheDocument()
+    await documents.click()
+    await expect.element(report).toBeVisible()
+  })
+
   test("renders all tree nodes correctly", async () => {
     const collection = createTestCollection()
 

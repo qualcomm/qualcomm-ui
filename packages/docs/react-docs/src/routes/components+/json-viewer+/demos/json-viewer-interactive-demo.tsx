@@ -62,7 +62,12 @@ export function JsonViewerInteractiveDemo(): ReactElement {
 
       {result ? (
         <div className="max-h-96 overflow-auto">
-          <JsonViewer data={result.data} defaultExpandedDepth={1} />
+          <JsonViewer
+            data={result.data}
+            defaultExpandedDepth={1}
+            lazyMount
+            unmountOnExit
+          />
         </div>
       ) : selection && !error ? (
         <p aria-live="polite" className="text-neutral-secondary font-body-sm">

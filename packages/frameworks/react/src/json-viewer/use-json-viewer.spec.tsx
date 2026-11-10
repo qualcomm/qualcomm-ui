@@ -35,6 +35,8 @@ describe("JSON viewer collection memoization", () => {
     {name: "direction", props: {dir: "rtl" as const}},
     {name: "CSS class", props: {className: "w-full"}},
     {name: "quoted keys", props: {quotesOnKeys: true}},
+    {name: "lazy mounting", props: {lazyMount: true}},
+    {name: "unmount on exit", props: {unmountOnExit: true}},
   ])("preserves the collection when $name changes", async ({props}) => {
     const hook = await renderHook(
       (props = initialProps) => useJsonViewer(props),

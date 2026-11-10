@@ -1,7 +1,7 @@
 import {signal} from "@angular/core"
 import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
-import {page} from "vitest/browser"
+import {page, userEvent} from "vitest/browser"
 
 import {JsonViewerModule} from "@qualcomm-ui/angular/json-viewer"
 import {nodeToValue} from "@qualcomm-ui/utils/json-tree"
@@ -24,6 +24,153 @@ const variants = [
 ]
 
 describe("JSON viewer", () => {
+  describe.each(variants)("$name render strategy", ({template}) => {
+    test.each([
+      {lazyMount: undefined, name: "defaults", unmountOnExit: undefined},
+      {lazyMount: true, name: "lazy mounting", unmountOnExit: false},
+      {lazyMount: false, name: "unmount on exit", unmountOnExit: true},
+      {lazyMount: true, name: "both enabled", unmountOnExit: true},
+    ])(
+      "$name controls descendant mounting",
+      async ({lazyMount, name, unmountOnExit}) => {
+        const mountingInputs =
+          name === "defaults"
+            ? ""
+            : '[lazyMount]="lazyMount" [unmountOnExit]="unmountOnExit"'
+        await render(
+          template
+            .replace('[data]="data"', `[data]="data" ${mountingInputs}`)
+            .replace('defaultExpandedDepth]="2"', 'defaultExpandedDepth]="1"'),
+          {
+            componentProperties: {data, lazyMount, unmountOnExit},
+            imports: [JsonViewerModule],
+          },
+        )
+
+        const settings = page.getByRole("button", {name: /^settings:/})
+        const theme = page.getByText('"dark"', {exact: true})
+
+        if (lazyMount) {
+          await expect.element(theme).not.toBeInTheDocument()
+        } else {
+          await expect.element(theme).toBeInTheDocument()
+          await expect.element(theme).not.toBeVisible()
+        }
+
+        await settings.click()
+        await expect.element(theme).toBeVisible()
+        await settings.click()
+
+        if (unmountOnExit) {
+          await expect.element(theme).not.toBeInTheDocument()
+        } else {
+          await expect.element(theme).toBeInTheDocument()
+          await expect.element(theme).not.toBeVisible()
+        }
+
+        await settings.click()
+        await expect.element(theme).toBeVisible()
+      },
+    )
+  })
+
+  test.each(variants)(
+    "$name restores nested expansion after a parent is collapsed and reopened",
+    async ({template}) => {
+      await render(
+        template
+          .replace('[data]="data"', '[data]="data" lazyMount unmountOnExit')
+          .replace('defaultExpandedDepth]="2"', 'defaultExpandedDepth]="3"'),
+        {
+          componentProperties: {
+            data: {settings: {appearance: {theme: "dark"}}},
+          },
+          imports: [JsonViewerModule],
+        },
+      )
+
+      const settings = page.getByRole("button", {name: /^settings:/})
+      const theme = page.getByRole("treeitem", {name: 'theme: "dark"'})
+
+      await expect.element(theme).toBeVisible()
+      await settings.click()
+      await expect.element(theme).not.toBeInTheDocument()
+      await settings.click()
+      await expect.element(theme).toBeVisible()
+    },
+  )
+
+  test.each(variants)(
+    "$name keeps descendants mounted until the collapse animation completes",
+    async ({template}) => {
+      const exitAnimations: Animation[] = []
+      const pauseExitAnimation = (event: {target: EventTarget | null}) => {
+        if (event.target instanceof HTMLElement) {
+          for (const animation of event.target.getAnimations()) {
+            if (!exitAnimations.includes(animation)) {
+              animation.pause()
+              exitAnimations.push(animation)
+            }
+          }
+        }
+      }
+      await render(
+        `<div style="--animation-duration-moderate: 60s" (animationstart)="pauseExitAnimation($event)">
+          ${template.replace('[data]="data"', '[data]="data" lazyMount unmountOnExit')}
+        </div>`,
+        {
+          componentProperties: {data, pauseExitAnimation},
+          imports: [JsonViewerModule],
+        },
+      )
+
+      const theme = page.getByText('"dark"', {exact: true})
+      await expect.element(theme).toBeVisible()
+      await page.getByRole("button", {name: /^settings:/}).click()
+      await expect.poll(() => exitAnimations.length).toBeGreaterThan(0)
+      await new Promise<void>((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+      })
+      await expect.element(theme).toBeInTheDocument()
+      for (const animation of exitAnimations) {
+        animation.play()
+        animation.finish()
+      }
+      await expect.element(theme).not.toBeInTheDocument()
+    },
+  )
+
+  test.each(variants)(
+    "$name moves keyboard focus into newly expanded branches and back to their parent",
+    async ({template}) => {
+      await render(
+        template
+          .replace('[data]="data"', '[data]="data" lazyMount unmountOnExit')
+          .replace('defaultExpandedDepth]="2"', 'defaultExpandedDepth]="1"'),
+        {
+          componentProperties: {data},
+          imports: [JsonViewerModule],
+        },
+      )
+
+      const settings = page.getByRole("button", {name: /^settings:/})
+      const theme = page.getByRole("treeitem", {name: 'theme: "dark"'})
+
+      await userEvent.tab()
+      await userEvent.keyboard("{ArrowDown}")
+      await expect.element(settings).toHaveFocus()
+      await userEvent.keyboard("{ArrowRight}")
+      await expect.element(theme).toBeVisible()
+      await userEvent.keyboard("{ArrowRight}")
+      await expect.element(theme).toHaveFocus()
+      await userEvent.keyboard("{ArrowLeft}")
+      await expect.element(settings).toHaveFocus()
+      await userEvent.keyboard("{ArrowLeft}")
+      await expect.element(theme).not.toBeInTheDocument()
+      await expect.element(settings).toHaveFocus()
+    },
+  )
+
   test.each(variants)(
     "$name hides complex previews and function signatures only when expanded",
     async ({template}) => {

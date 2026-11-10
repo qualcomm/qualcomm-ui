@@ -24,6 +24,7 @@ import {
   collapsibleMachine,
   createCollapsibleApi,
 } from "@qualcomm-ui/core/collapsible"
+import type {RenderStrategyApiProps} from "@qualcomm-ui/core/presence"
 import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import type {Direction} from "@qualcomm-ui/utils/direction"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
@@ -32,7 +33,10 @@ import {CollapsibleContextService} from "./collapsible-context.service"
 
 @Directive()
 export class CoreCollapsibleRootDirective
-  implements OnInit, SignalifyInput<CollapsibleApiProps>
+  implements
+    OnInit,
+    SignalifyInput<CollapsibleApiProps>,
+    SignalifyInput<RenderStrategyApiProps>
 {
   /**
    * The initial open state of the collapsible when rendered.
@@ -66,6 +70,26 @@ export class CoreCollapsibleRootDirective
    * The controlled open state of the collapsible
    */
   readonly open = input<boolean | undefined>()
+
+  /**
+   * Whether to defer creating content until the first expansion.
+   * Apply `shouldRender()` from the content directive to its template.
+   *
+   * @default false
+   */
+  readonly lazyMount = input<boolean, Booleanish>(false, {
+    transform: booleanAttribute,
+  })
+
+  /**
+   * Whether to destroy content after the collapse animation finishes.
+   * Apply `shouldRender()` from the content directive to its template.
+   *
+   * @default false
+   */
+  readonly unmountOnExit = input<boolean, Booleanish>(false, {
+    transform: booleanAttribute,
+  })
 
   /**
    * Function called when the animation ends in the closed state
@@ -106,7 +130,13 @@ export class CoreCollapsibleRootDirective
       createCollapsibleApi(machine, normalizeProps),
     )
 
-    this.collapsibleService.init(collapsibleApi)
+    this.collapsibleService.init(
+      collapsibleApi,
+      computed(() => ({
+        lazyMount: this.lazyMount(),
+        unmountOnExit: this.unmountOnExit(),
+      })),
+    )
 
     this.trackBindings()
   }

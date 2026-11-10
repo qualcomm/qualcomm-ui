@@ -42,21 +42,23 @@ import {useJsonViewerOptionsContext} from "./json-viewer-options-context.service
             <q-json-viewer-value-node [node]="hastElement()" />
           </span>
         </div>
-        <div q-tree-branch-content>
+        <div #content="treeBranchContent" q-tree-branch-content>
           @if (indentGuide()) {
             <div q-tree-branch-indent-guide></div>
           }
-          @for (
-            child of childNodes();
-            let i = $index;
-            track trackChild(child)
-          ) {
-            <q-json-viewer-node
-              [arrow]="arrow()"
-              [indentGuide]="indentGuide()"
-              [indexPath]="getChildIndexPath(i)"
-              [node]="child"
-            />
+          @if (content.shouldRender()) {
+            @for (
+              child of childNodes();
+              let i = $index;
+              track trackChild(child)
+            ) {
+              <q-json-viewer-node
+                [arrow]="arrow()"
+                [indentGuide]="indentGuide()"
+                [indexPath]="getChildIndexPath(i)"
+                [node]="child"
+              />
+            }
           }
         </div>
       </div>

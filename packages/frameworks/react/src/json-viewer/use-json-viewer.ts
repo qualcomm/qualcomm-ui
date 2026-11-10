@@ -3,6 +3,7 @@
 
 import {useMemo} from "react"
 
+import type {RenderStrategyApiProps} from "@qualcomm-ui/core/presence"
 import {createTreeCollection, type TreeApiProps} from "@qualcomm-ui/core/tree"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {
@@ -20,7 +21,10 @@ import {
 } from "./json-viewer-context.js"
 
 export interface UseJsonViewerProps
-  extends Omit<TreeApiProps<JsonNode>, "collection">, JsonViewerOptions {
+  extends
+    Omit<TreeApiProps<JsonNode>, "collection">,
+    JsonViewerOptions,
+    RenderStrategyApiProps {
   /**
    * The data to display in the JSON viewer. Accepts any JavaScript value.
    */
@@ -61,7 +65,7 @@ export interface UseJsonViewerReturn {
    *
    * @inheritDoc
    */
-  treeProps: Omit<TreeApiProps<JsonNode>, "collection">
+  treeProps: Omit<TreeApiProps<JsonNode>, "collection"> & RenderStrategyApiProps
 }
 
 export function useJsonViewer(props: UseJsonViewerProps): UseJsonViewerReturn {

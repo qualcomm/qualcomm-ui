@@ -3,6 +3,7 @@
 
 import {DOCUMENT} from "@angular/common"
 import {
+  booleanAttribute,
   computed,
   Directive,
   inject,
@@ -38,6 +39,7 @@ import {
 } from "@qualcomm-ui/core/tree"
 import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
 import {createQdsTreeApi} from "@qualcomm-ui/qds-core/tree"
+import type {Booleanish} from "@qualcomm-ui/utils/coercion"
 import {
   getPreviewOptions,
   getRootNode,
@@ -111,6 +113,25 @@ export class JsonViewerRootDirective implements OnInit {
    * @default true
    */
   readonly showNonenumerable = input<boolean>()
+
+  /**
+   * Whether to defer mounting branch descendants until the first expansion.
+   *
+   * @default false
+   */
+  readonly lazyMount = input<boolean, Booleanish>(false, {
+    transform: booleanAttribute,
+  })
+
+  /**
+   * Whether to unmount branch descendants after the collapse animation finishes.
+   * Expansion state is preserved when descendants are unmounted.
+   *
+   * @default false
+   */
+  readonly unmountOnExit = input<boolean, Booleanish>(false, {
+    transform: booleanAttribute,
+  })
 
   protected readonly options = computed<JsonViewerOptions>(() => {
     const opts: JsonViewerOptions = {}
@@ -219,7 +240,10 @@ export class JsonViewerRootDirective implements OnInit {
       computed(() => createTreeApi(machine, normalizeProps)),
     )
     this.renderStrategyService.init(
-      computed(() => ({lazyMount: undefined, unmountOnExit: undefined})),
+      computed(() => ({
+        lazyMount: this.lazyMount(),
+        unmountOnExit: this.unmountOnExit(),
+      })),
     )
     this.trackBindings()
   }

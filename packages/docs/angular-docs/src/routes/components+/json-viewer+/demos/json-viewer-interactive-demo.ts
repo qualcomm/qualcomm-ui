@@ -22,7 +22,12 @@ import type {FileDetails} from "@qualcomm-ui/core/file-upload"
 
       @if (result(); as result) {
         <div class="max-h-96 overflow-auto">
-          <q-json-viewer [data]="result.data" [defaultExpandedDepth]="1" />
+          <q-json-viewer
+            lazyMount
+            unmountOnExit
+            [data]="result.data"
+            [defaultExpandedDepth]="1"
+          />
         </div>
       } @else if (selection() && !error()) {
         <p aria-live="polite" class="text-neutral-secondary font-body-sm">
