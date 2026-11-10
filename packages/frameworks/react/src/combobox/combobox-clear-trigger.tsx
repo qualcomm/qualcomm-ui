@@ -27,7 +27,15 @@ export function ComboboxClearTrigger({
 
   return (
     <CoreCombobox.ClearTrigger
-      render={<IconButton density="compact" icon={X} render={render} variant="ghost" />}
+      render={
+        <IconButton
+          density="compact"
+          icon={X}
+          render={render}
+          size={qdsContext.size === "sm" ? "sm" : "md"}
+          variant="ghost"
+        />
+      }
       {...mergedProps}
     />
   )
