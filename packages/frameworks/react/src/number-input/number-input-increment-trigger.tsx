@@ -25,7 +25,12 @@ export function NumberInputIncrementTrigger(
 
   return (
     <CoreNumberInput.IncrementTrigger {...mergedProps}>
-      <IconButton density="compact" icon={Plus} variant="ghost" />
+      <IconButton
+        density="compact"
+        icon={Plus}
+        size={qdsContext.size}
+        variant="ghost"
+      />
     </CoreNumberInput.IncrementTrigger>
   )
 }
