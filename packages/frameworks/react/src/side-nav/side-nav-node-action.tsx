@@ -24,7 +24,9 @@ export function SideNavNodeAction(props: SideNavNodeActionProps): ReactElement {
 
   return (
     <CoreTree.NodeAction
-      render={<IconButton density="compact" variant="ghost" icon={props.icon} />}
+      render={
+        <IconButton density="compact" icon={props.icon} variant="ghost" />
+      }
       {...mergedProps}
     />
   )

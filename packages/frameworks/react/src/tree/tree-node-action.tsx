@@ -13,9 +13,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsTreeContext} from "./qds-tree-context.js"
 
 export interface TreeNodeActionProps
-  extends
-    CoreTreeNodeActionProps,
-    Pick<IconButtonProps, "icon" | "size"> {}
+  extends CoreTreeNodeActionProps, Pick<IconButtonProps, "icon" | "size"> {}
 
 /**
  * An action button within a tree item's interactive area. Renders a `<button>`
@@ -27,7 +25,9 @@ export function TreeNodeAction(props: TreeNodeActionProps): ReactElement {
 
   return (
     <CoreTree.NodeAction
-      render={<IconButton density="compact" variant="ghost" icon={props.icon} />}
+      render={
+        <IconButton density="compact" icon={props.icon} variant="ghost" />
+      }
       {...mergedProps}
     />
   )

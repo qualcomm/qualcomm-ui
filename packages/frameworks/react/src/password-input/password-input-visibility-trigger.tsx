@@ -54,8 +54,8 @@ export function PasswordInputVisibilityTrigger({
   return (
     <IconButton
       density="compact"
-      variant="ghost"
       icon={context.visible ? iconOff : iconOn}
+      variant="ghost"
       {...mergedProps}
     >
       {children}

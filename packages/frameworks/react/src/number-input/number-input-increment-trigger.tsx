@@ -25,7 +25,7 @@ export function NumberInputIncrementTrigger(
 
   return (
     <CoreNumberInput.IncrementTrigger {...mergedProps}>
-      <IconButton density="compact" variant="ghost" icon={Plus} />
+      <IconButton density="compact" icon={Plus} variant="ghost" />
     </CoreNumberInput.IncrementTrigger>
   )
 }

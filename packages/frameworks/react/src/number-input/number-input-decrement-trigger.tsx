@@ -25,7 +25,7 @@ export function NumberInputDecrementTrigger(
 
   return (
     <CoreNumberInput.DecrementTrigger {...mergedProps}>
-      <IconButton density="compact" variant="ghost" icon={Minus} />
+      <IconButton density="compact" icon={Minus} variant="ghost" />
     </CoreNumberInput.DecrementTrigger>
   )
 }

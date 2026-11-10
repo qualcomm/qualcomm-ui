@@ -31,7 +31,14 @@ export function TabDismissButton({
 
   return (
     <CoreTabs.TabDismissButton
-      render={<IconButton density="compact" variant="ghost" icon={X} render={render} />}
+      render={
+        <IconButton
+          density="compact"
+          icon={X}
+          render={render}
+          variant="ghost"
+        />
+      }
       {...mergedProps}
     />
   )

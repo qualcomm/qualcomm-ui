@@ -24,5 +24,7 @@ export function PasswordInputClearTrigger(
     props,
   )
 
-  return <IconButton density="compact" variant="ghost" icon={X} {...mergedProps} />
+  return (
+    <IconButton density="compact" icon={X} variant="ghost" {...mergedProps} />
+  )
 }
