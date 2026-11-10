@@ -23,6 +23,15 @@ import {JsonViewer} from "@qualcomm-ui/react/json-viewer"
 
 ## Examples
 
+### Interactive
+
+Select a `.json` file with [File Input](/components/file-input) to view its contents as a tree. Invalid JSON displays an error. Clear the selected file to reset the viewer.
+
+<Demo
+  name="JsonViewerInteractiveDemo"
+  component={demos.JsonViewerInteractiveDemo}
+/>
+
 ### Simple
 
 Pass any JavaScript value to `data`. Use `defaultExpandedDepth` to control how many levels are expanded initially.
