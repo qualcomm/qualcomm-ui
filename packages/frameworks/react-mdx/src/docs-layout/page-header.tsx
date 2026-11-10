@@ -9,7 +9,7 @@ import {
 } from "@qualcomm-ui/react-mdx/context"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import type {FrontmatterBadge} from "../types.js"
+import type {FrontmatterBadge} from "./types.js"
 
 export interface PageHeaderProps extends ComponentPropsWithRef<"h1"> {}
 
