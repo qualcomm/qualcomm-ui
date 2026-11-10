@@ -47,7 +47,7 @@ const formatValueMini = (child: JsonNode): string => {
   if (child.type === "null") {
     return "null"
   }
-  if (child.type === "undefined" || child.type === "symbol") {
+  if (child.type === "undefined") {
     return "undefined"
   }
   if (child.type === "object") {
@@ -565,7 +565,7 @@ export const FileType: JsonDataTypeOptions<File> = dataType<File>({
   node({createNode, keyPath, value}) {
     const fileProperties = FILE_KEYS.map((key) => ({
       key,
-      value: getProp(value, key) || "",
+      value: getProp(value, key) ?? "",
     }))
     const children = fileProperties.map(({key, value}) =>
       createNode([key], value),
@@ -844,14 +844,13 @@ export const MapType: JsonDataTypeOptions<Map<unknown, unknown>> = dataType<
   node({createNode, keyPath, value}) {
     const entriesChildren = Array.from(value.entries()).map(
       ([key, value], index): JsonNode => {
-        const keyStr = String(key)
         const keyNode = createNode([ENTRIES_KEY, index, "key"], key)
         const valueNode = createNode([ENTRIES_KEY, index, "value"], value)
         return {
           children: [keyNode, valueNode],
           keyPath: [...keyPath, ENTRIES_KEY, index],
           type: "object",
-          value: {[keyStr]: value},
+          value: {key, value},
         }
       },
     )
@@ -880,10 +879,7 @@ export const MapType: JsonDataTypeOptions<Map<unknown, unknown>> = dataType<
         .slice(0, opts.maxPreviewItems)
         .map(([key, value]) =>
           jsx({}, [
-            formatValueElement(
-              key,
-              typeof key === "string" ? `"${key}"` : String(key),
-            ),
+            formatValueElement(key),
             txt(" => "),
             formatValueElement(value),
           ]),
@@ -906,7 +902,7 @@ export const MapType: JsonDataTypeOptions<Map<unknown, unknown>> = dataType<
     const entries = Array.from(node.value.entries())
     const previews = entries.slice(0, maxItems).map(([key, value]) => {
       const valueDesc = formatValue(value)
-      const keyStr = typeof key === "string" ? `"${key}"` : String(key)
+      const keyStr = formatValue(key)
       return `${keyStr} => ${valueDesc}`
     })
     const hasMore = entries.length > maxItems
@@ -1298,7 +1294,7 @@ export const TypedArrayType: JsonDataTypeOptions<TypedArray> =
       const nonEnumerableChildren = options?.showNonenumerable
         ? (() => {
             // Show first few values
-            const values = [...typedArray].slice(0, 100) // Limit for performance
+            const values = [...typedArray.subarray(0, 100)] // Limit for performance
             const node = createNode(["[[Values]]"], values)
             node.isNonEnumerable = true
             return [node]
@@ -1319,7 +1315,7 @@ export const TypedArrayType: JsonDataTypeOptions<TypedArray> =
     previewElement(node) {
       const typedArray = node.value
       const constructorName = getTypedArrayName(typedArray)
-      const preview = [...typedArray].slice(0, 5).join(", ")
+      const preview = [...typedArray.subarray(0, 5)].join(", ")
       const hasMore = typedArray.length > 5
       return jsx({}, [
         jsx({kind: "constructor"}, [
@@ -1399,6 +1395,14 @@ export const IterableType: JsonDataTypeOptions = dataType<any>({
 
 // /////////////////////////////////////////////////////////////////////////////////////////
 
+const getPropertyValue = (value: object, key: string): unknown => {
+  try {
+    return getProp(value, key)
+  } catch {
+    return "[Property access threw]"
+  }
+}
+
 export const ClassType: JsonDataTypeOptions<object> = dataType<object>({
   check(value) {
     if (!isObj(value)) {
@@ -1421,12 +1425,12 @@ export const ClassType: JsonDataTypeOptions<object> = dataType<object>({
     )
 
     const enumerableChildren = enumerableKeys.map((key) =>
-      createNode([key], Reflect.get(value, key)),
+      createNode([key], getPropertyValue(value, key)),
     )
     const nonEnumerableChildren = options?.showNonenumerable
       ? nonEnumerableKeys.map((key) => {
           const descriptor = Object.getOwnPropertyDescriptor(value, key)
-          const node = createNode([`[[${key}]]`], getProp(value, key))
+          const node = createNode([`[[${key}]]`], getPropertyValue(value, key))
           node.isNonEnumerable = true
           node.propertyDescriptor = descriptor
           return node
@@ -1468,12 +1472,12 @@ export const ObjectType: JsonDataTypeOptions<object> = dataType<object>({
     )
 
     const enumerableChildren = enumerableKeys.map((key) =>
-      createNode([key], getProp(value, key)),
+      createNode([key], getPropertyValue(value, key)),
     )
     const nonEnumerableChildren = options?.showNonenumerable
       ? nonEnumerableKeys.map((key) => {
           const descriptor = Object.getOwnPropertyDescriptor(value, key)
-          const node = createNode([`[[${key}]]`], getProp(value, key))
+          const node = createNode([`[[${key}]]`], getPropertyValue(value, key))
           node.isNonEnumerable = true
           node.propertyDescriptor = descriptor
           return node
