@@ -1,5 +1,14 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.3.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+* **deps:** update dependencies [@qualcomm-ui/core@1.14.1, @qualcomm-ui/mdx-common@2.7.1, @qualcomm-ui/utils@1.5.1, @qualcomm-ui/react@2.0.1, @qualcomm-ui/react-core@1.10.1]
+
 ## 3.3.0
 
 Nov 7th, 2026

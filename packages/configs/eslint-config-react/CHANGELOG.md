@@ -1,5 +1,13 @@
 # @qualcomm-ui/eslint-config-react Changelog
 
+## 2.0.1
+
+Nov 9th, 2026
+
+### Miscellaneous Chores
+
+* update documentation link in readme ([eecc3d8](https://github.com/qualcomm/qualcomm-ui/commit/eecc3d8))
+
 ## 2.0.0
 
 Jun 10th, 2026

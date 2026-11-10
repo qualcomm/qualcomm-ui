@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/typedoc",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Documentation generation utilities",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -44,7 +44,7 @@
     "@commander-js/extra-typings": "catalog:",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.0.8",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.9",
     "@types/lodash-es": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
@@ -64,7 +64,7 @@
   },
   "peerDependencies": {
     "@commander-js/extra-typings": ">=13.1.0",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.0.8",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.0.9",
     "@qualcomm-ui/vite": "catalog:",
     "cosmiconfig": ">=9.0.0",
     "oxfmt": ">=0.51.0",

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/eslint-config-react",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "QUI ESLint config for consistent React code",
   "keywords": [
     "config",
