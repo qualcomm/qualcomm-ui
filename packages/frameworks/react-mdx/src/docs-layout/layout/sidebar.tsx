@@ -12,6 +12,8 @@ import {
   useState,
 } from "react"
 
+import {CircleAlert} from "lucide-react"
+
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import type {NavItem} from "@qualcomm-ui/mdx-common"
 import {useSafeLayoutEffect} from "@qualcomm-ui/react-core/effects"
@@ -21,6 +23,7 @@ import {
   useDocsPageContext,
 } from "@qualcomm-ui/react-mdx/context"
 import {SideNav} from "@qualcomm-ui/react/side-nav"
+import {Tooltip} from "@qualcomm-ui/react/tooltip"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {isDefined} from "@qualcomm-ui/utils/guard"
@@ -62,7 +65,7 @@ export function Sidebar({
   ...props
 }: SidebarProps): ReactElement {
   const ref = useRef<HTMLDivElement | null>(null)
-  const {navDensity, navItems, pathname} = useDocsPageContext()
+  const {navDensity, navItems, pageMap, pathname} = useDocsPageContext()
   const {layoutComponents, renderLink: RenderLink} = useDocsRuntimeContext()
   const SideNavBadgesComponent = layoutComponents?.SideNavBadges
 
@@ -303,6 +306,9 @@ export function Sidebar({
                 )
               }
 
+              const page = node?.pathname ? pageMap[node.pathname] : undefined
+              const deprecated = page?.data?.deprecated
+
               return (
                 <SideNav.LeafNode
                   render={
@@ -317,6 +323,15 @@ export function Sidebar({
                   {SideNavBadgesComponent && node.badges ? (
                     <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">
                       <SideNavBadgesComponent badges={node.badges} />
+                    </SideNav.NodeAccessory>
+                  ) : null}
+                  {deprecated ? (
+                    <SideNav.NodeAccessory>
+                      <Tooltip
+                        trigger={<SideNav.NodeIcon icon={CircleAlert} />}
+                      >
+                        Deprecated
+                      </Tooltip>
                     </SideNav.NodeAccessory>
                   ) : null}
                 </SideNav.LeafNode>
