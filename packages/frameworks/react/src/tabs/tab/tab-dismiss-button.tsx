@@ -36,6 +36,7 @@ export function TabDismissButton({
           density="compact"
           icon={X}
           render={render}
+          size="sm"
           variant="ghost"
         />
       }
