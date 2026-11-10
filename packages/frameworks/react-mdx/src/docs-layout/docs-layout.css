@@ -99,6 +99,10 @@
     --content-padding-right: 48px;
     --content-padding-bottom: 120px;
     --content-padding-left: 48px;
+
+    &:has(.qui-docs__breadcrumbs) {
+      --content-padding-top: 32px;
+    }
   }
 }
 
