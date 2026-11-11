@@ -25,6 +25,9 @@ const headerBadges: Record<string, BadgeProps> = {
   beta: {
     emphasis: "purple",
   },
+  deprecated: {
+    emphasis: "warning",
+  },
   since: {
     emphasis: "brand",
   },
