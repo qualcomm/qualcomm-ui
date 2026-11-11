@@ -118,7 +118,7 @@ function App() {
 
   const location = useLocation()
   const title = siteData.pageMap[location.pathname]?.title || ""
-  const appTitle = title ? `QUI | ${title}` : "QUI React"
+  const appTitle = title ? `QUI | ${title}` : "QUI Angular Table"
   const [hideDemoBrandSwitcher, setHideDemoBrandSwitcher] = useState<boolean>(
     data.hideDemoBrandSwitcher,
   )
