@@ -1,8 +1,12 @@
 ---
 title: Inline Icon Button
-description: Inline icon buttons provide a compact, icon-only action trigger designed for use within text content or tight spaces where a full button would be too prominent.
 component: InlineIconButton
 aliases: [mini icon button, compact button]
+deprecated: true
+badges:
+  - id: deprecated
+    label: Deprecated
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#210
 ---
 
 import {Demo} from "~components/demo"
@@ -11,7 +15,9 @@ import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
 
 # {frontmatter.title}
 
-{frontmatter.description}
+This component was deprecated in v2.1.0. Migrate to the [IconButton](../icon-button+/_icon-button.mdx#compact-density) component.
+
+Inline icon buttons provide a compact, icon-only action trigger designed for use within text content or tight spaces where a full button would be too prominent.
 
 ```tsx
 import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
@@ -52,7 +58,7 @@ The `emphasis` prop controls button rendering. The default adapts to the current
 
 ## API
 
-### \<InlineIconButton\>
+### \<InlineIconButton>
 
 <TypeDocProps name="InlineIconButtonProps" />
 
@@ -60,6 +66,6 @@ The `emphasis` prop controls button rendering. The default adapts to the current
 
 ### Icon
 
-The inner icon element is rendered with the icon passed to the [icon](./#icon) prop.
+The inner icon element is rendered with the icon passed to the [icon](#icon-1) prop.
 
 <TypeDocAttributes name="QdsInlineIconButtonIconBindings" />
