@@ -1,25 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {computed, Directive, inject, input, type OnInit} from "@angular/core"
+import {Directive, input} from "@angular/core"
 
-import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {provideRenderStrategyContext} from "@qualcomm-ui/angular-core/presence"
-import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {
-  CoreTreeRootDirective,
-  provideTreeContext,
-} from "@qualcomm-ui/angular-core/tree"
-import {
-  createQdsTreeApi,
-  type QdsTreeApiProps,
-  type QdsTreeSize,
-} from "@qualcomm-ui/qds-core/tree"
+import {provideTreeContext} from "@qualcomm-ui/angular-core/tree"
+import type {TreeCollection, TreeNode} from "@qualcomm-ui/utils/collection"
 
-import {
-  provideQdsTreeContext,
-  QdsTreeContextService,
-} from "./qds-tree-context.service"
+import {provideQdsTreeContext} from "./qds-tree-context.service"
+import {QdsTreeRootBaseDirective} from "./qds-tree-root-base.directive"
 
 @Directive({
   exportAs: "treeRoot",
@@ -31,32 +20,10 @@ import {
   selector: "[q-tree-root]",
   standalone: false,
 })
-export class TreeRootDirective
-  extends CoreTreeRootDirective
-  implements SignalifyInput<QdsTreeApiProps>, OnInit
-{
+export class TreeRootDirective extends QdsTreeRootBaseDirective {
   /**
-   * The size of the tree and its elements. Governs properties like font size,
-   * item padding, and icon sizes.
-   *
-   * @default 'md'
+   * The tree collection data
+   * @inheritDoc
    */
-  readonly size = input<QdsTreeSize>()
-
-  protected readonly qdsTreeService = inject(QdsTreeContextService)
-
-  constructor() {
-    super()
-    this.trackBindings.extendWith(
-      computed(() => this.qdsTreeService.context().getRootBindings()),
-    )
-  }
-
-  override ngOnInit() {
-    this.qdsTreeService.init(
-      computed(() => createQdsTreeApi({size: this.size()}, normalizeProps)),
-    )
-
-    super.ngOnInit()
-  }
+  override readonly collection = input<TreeCollection<TreeNode>>()
 }

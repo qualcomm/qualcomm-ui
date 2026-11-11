@@ -1,4 +1,5 @@
 export * from "./qds-tree-context.service"
+export * from "./qds-tree-root-base.directive"
 export * from "./tree-branch-content.directive"
 export * from "./tree-branch-indent-guide.directive"
 export * from "./tree-branch-node.directive"

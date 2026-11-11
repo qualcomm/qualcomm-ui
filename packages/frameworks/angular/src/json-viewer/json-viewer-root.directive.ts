@@ -1,55 +1,25 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {DOCUMENT} from "@angular/common"
-import {
-  booleanAttribute,
-  computed,
-  Directive,
-  inject,
-  Injector,
-  input,
-  type OnInit,
-  output,
-} from "@angular/core"
+import {computed, Directive, inject, input, type OnInit} from "@angular/core"
 
-import {useId, useIsMounted} from "@qualcomm-ui/angular-core/common"
-import {
-  normalizeProps,
-  useMachine,
-  useTrackBindings,
-} from "@qualcomm-ui/angular-core/machine"
-import {
-  provideRenderStrategyContext,
-  RenderStrategyContextService,
-} from "@qualcomm-ui/angular-core/presence"
-import {
-  provideTreeContext,
-  TreeContextService,
-} from "@qualcomm-ui/angular-core/tree"
+import {provideRenderStrategyContext} from "@qualcomm-ui/angular-core/presence"
+import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import {provideTreeContext} from "@qualcomm-ui/angular-core/tree"
 import {
   provideQdsTreeContext,
-  QdsTreeContextService,
+  QdsTreeRootBaseDirective,
 } from "@qualcomm-ui/angular/tree"
 import {
-  createTreeApi,
-  createTreeCollection,
-  type TreeApiProps,
-  treeMachine,
-} from "@qualcomm-ui/core/tree"
-import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
-import {createQdsTreeApi} from "@qualcomm-ui/qds-core/tree"
-import type {Booleanish} from "@qualcomm-ui/utils/coercion"
-import {
-  getPreviewOptions,
-  getRootNode,
-  type JsonNode,
-  nodeToString,
-  nodeToValue,
-} from "@qualcomm-ui/utils/json-tree"
+  createJsonViewerCollection,
+  getJsonViewerDefaultExpandedValue,
+  jsonViewerClasses,
+  type QdsJsonViewerApiProps,
+  type QdsJsonViewerOptions,
+} from "@qualcomm-ui/qds-core/json-viewer"
+import {getPreviewOptions, type JsonNode} from "@qualcomm-ui/utils/json-tree"
 
 import {
-  type JsonViewerOptions,
   JsonViewerOptionsContextService,
   provideJsonViewerOptionsContext,
 } from "./json-viewer-options-context.service"
@@ -65,14 +35,20 @@ import {
   selector: "[q-json-viewer-root]",
   standalone: false,
 })
-export class JsonViewerRootDirective implements OnInit {
+export class JsonViewerRootDirective
+  extends QdsTreeRootBaseDirective<JsonNode>
+  implements SignalifyInput<QdsJsonViewerApiProps>, OnInit
+{
   /**
    * The data to display in the JSON viewer. Accepts any JavaScript value.
    */
   readonly data = input.required<unknown>()
 
   /**
-   * The default depth to expand the tree to.
+   * Expands branches up to this depth initially, without requiring explicit
+   * node IDs in `defaultExpandedValue`.
+   *
+   * Ignored when `defaultExpandedValue` is provided.
    *
    * @default 0
    */
@@ -114,27 +90,8 @@ export class JsonViewerRootDirective implements OnInit {
    */
   readonly showNonenumerable = input<boolean>()
 
-  /**
-   * Whether to defer mounting branch descendants until the first expansion.
-   *
-   * @default false
-   */
-  readonly lazyMount = input<boolean, Booleanish>(false, {
-    transform: booleanAttribute,
-  })
-
-  /**
-   * Whether to unmount branch descendants after the collapse animation finishes.
-   * Expansion state is preserved when descendants are unmounted.
-   *
-   * @default false
-   */
-  readonly unmountOnExit = input<boolean, Booleanish>(false, {
-    transform: booleanAttribute,
-  })
-
-  protected readonly options = computed<JsonViewerOptions>(() => {
-    const opts: JsonViewerOptions = {}
+  protected readonly options = computed<QdsJsonViewerOptions>(() => {
+    const opts: QdsJsonViewerOptions = {}
     const quotesOnKeys = this.quotesOnKeys()
     const maxPreviewItems = this.maxPreviewItems()
     const collapseStringsAfterLength = this.collapseStringsAfterLength()
@@ -168,83 +125,29 @@ export class JsonViewerRootDirective implements OnInit {
    * The collection of JSON nodes. Access through `jsonViewerRoot` for
    * programmatic operations such as expanding all branches.
    */
-  readonly collection = computed(() =>
-    createTreeCollection<JsonNode>({
-      nodeChildren: "children",
-      nodeText: nodeToString,
-      nodeValue: nodeToValue,
-      rootNode: getRootNode(this.data(), this.previewOptions()),
-    }),
+  override readonly collection = computed(() =>
+    createJsonViewerCollection(this.data(), this.previewOptions()),
   )
 
-  protected readonly defaultExpandedValue = computed(() => {
-    return this.collection().getBranchValues(undefined, {
-      depth: (nodeDepth) => nodeDepth <= this.defaultExpandedDepth(),
-    })
-  })
+  protected override readonly resolvedDefaultExpandedValue = computed(
+    () =>
+      this.defaultExpandedValue() ??
+      getJsonViewerDefaultExpandedValue(
+        this.collection(),
+        this.defaultExpandedDepth(),
+      ),
+  )
 
-  /**
-   * Controlled expanded values. When set, overrides internal expansion state.
-   */
-  readonly expandedValue = input<string[]>()
-
-  /**
-   * Emits the updated expanded values when the expansion state changes.
-   */
-  readonly expandedValueChange = output<string[]>()
-
-  private readonly document = inject(DOCUMENT)
-  private readonly injector = inject(Injector)
-  private readonly isMounted = useIsMounted()
-  private readonly hostId = computed(() => useId(this, undefined))
-  private readonly treeService = inject(TreeContextService)
-  private readonly qdsTreeService = inject(QdsTreeContextService)
-  private readonly renderStrategyService = inject(RenderStrategyContextService)
   private readonly optionsService = inject(JsonViewerOptionsContextService)
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.treeService.context().getRootBindings({id: this.hostId()}),
-  )
-
   constructor() {
-    this.trackBindings.extendWith(() =>
-      this.qdsTreeService.context().getRootBindings(),
-    )
+    super()
     this.trackBindings.extendWith(() => ({class: jsonViewerClasses.root}))
   }
 
-  ngOnInit() {
+  override ngOnInit() {
     this.optionsService.init(this.options)
-    this.qdsTreeService.init(
-      computed(() => createQdsTreeApi({size: undefined}, normalizeProps)),
-    )
 
-    const machine = useMachine(
-      treeMachine,
-      computed<TreeApiProps<JsonNode>>(() => ({
-        collection: this.collection(),
-        defaultExpandedValue: this.defaultExpandedValue(),
-        expandedValue: this.expandedValue(),
-        getRootNode: () => this.document,
-        onExpandedValueChange: ({expandedValue}) => {
-          if (this.isMounted()) {
-            this.expandedValueChange.emit(expandedValue)
-          }
-        },
-        typeahead: false,
-      })),
-      this.injector,
-    )
-
-    this.treeService.init(
-      computed(() => createTreeApi(machine, normalizeProps)),
-    )
-    this.renderStrategyService.init(
-      computed(() => ({
-        lazyMount: this.lazyMount(),
-        unmountOnExit: this.unmountOnExit(),
-      })),
-    )
-    this.trackBindings()
+    super.ngOnInit()
   }
 }

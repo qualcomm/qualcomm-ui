@@ -13,7 +13,6 @@ export type {
   JsonViewerTreeProps,
 }
 
-export type {JsonViewerOptions} from "./json-viewer-context.js"
 export type {JsonViewerNodeBaseProps} from "./json-viewer-node.js"
 export type {
   UseJsonViewerProps,

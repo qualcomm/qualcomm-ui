@@ -75,6 +75,35 @@ describe("JSON viewer", () => {
   })
 
   test.each(variants)(
+    "$name prioritizes explicit default expanded values over the default depth",
+    async ({template}) => {
+      const rootValue = nodeToValue({
+        keyPath: ["$"],
+        type: "object",
+        value: data,
+      })
+      await render(
+        template.replace(
+          '[data]="data"',
+          '[data]="data" [defaultExpandedValue]="defaultExpandedValue"',
+        ),
+        {
+          componentProperties: {data, defaultExpandedValue: [rootValue]},
+          imports: [JsonViewerModule],
+        },
+      )
+
+      const settings = page.getByRole("button", {name: /^settings:/})
+      const theme = page.getByText('"dark"', {exact: true})
+
+      await expect.element(settings).toBeVisible()
+      await expect.element(theme).not.toBeVisible()
+      await settings.click()
+      await expect.element(theme).toBeVisible()
+    },
+  )
+
+  test.each(variants)(
     "$name restores nested expansion after a parent is collapsed and reopened",
     async ({template}) => {
       await render(
@@ -283,7 +312,7 @@ describe("JSON viewer", () => {
           #viewer
           [data]="data"
           [expandedValue]="expandedValue()"
-          (expandedValueChange)="expandedValue.set($event); onExpandedValueChange($event)"
+          (expandedValueChanged)="expandedValue.set($event.expandedValue); onExpandedValueChanged($event)"
         />
       `,
     },
@@ -295,7 +324,7 @@ describe("JSON viewer", () => {
           #viewer="jsonViewerRoot"
           [data]="data"
           [expandedValue]="expandedValue()"
-          (expandedValueChange)="expandedValue.set($event); onExpandedValueChange($event)"
+          (expandedValueChanged)="expandedValue.set($event.expandedValue); onExpandedValueChanged($event)"
         >
           <div q-json-viewer-tree></div>
         </div>
@@ -305,7 +334,7 @@ describe("JSON viewer", () => {
     "$name exposes its collection and follows controlled expansion",
     async ({template}) => {
       const expandedValue = signal<string[]>([])
-      const onExpandedValueChange = vi.fn()
+      const onExpandedValueChanged = vi.fn()
       const rootValue = nodeToValue({
         keyPath: ["$"],
         type: "object",
@@ -321,7 +350,11 @@ describe("JSON viewer", () => {
           ${template}
         `,
         {
-          componentProperties: {data, expandedValue, onExpandedValueChange},
+          componentProperties: {
+            data,
+            expandedValue,
+            onExpandedValueChanged,
+          },
           imports: [JsonViewerModule],
         },
       )
@@ -333,8 +366,10 @@ describe("JSON viewer", () => {
 
       await page.getByText("settings", {exact: true}).click()
       await expect
-        .poll(() => onExpandedValueChange)
-        .toHaveBeenCalledWith([rootValue])
+        .poll(() => onExpandedValueChanged)
+        .toHaveBeenCalledWith(
+          expect.objectContaining({expandedValue: [rootValue]}),
+        )
       await expect.element(theme).not.toBeVisible()
 
       await page.getByText("settings", {exact: true}).click()

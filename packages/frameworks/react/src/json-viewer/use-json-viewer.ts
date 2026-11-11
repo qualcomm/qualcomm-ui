@@ -4,39 +4,23 @@
 import {useMemo} from "react"
 
 import type {RenderStrategyApiProps} from "@qualcomm-ui/core/presence"
-import {createTreeCollection, type TreeApiProps} from "@qualcomm-ui/core/tree"
-import type {TreeCollection} from "@qualcomm-ui/utils/collection"
+import type {TreeApiProps} from "@qualcomm-ui/core/tree"
 import {
-  getPreviewOptions,
-  getRootNode,
-  type JsonNode,
-  nodeToString,
-  nodeToValue,
-} from "@qualcomm-ui/utils/json-tree"
-import {splitProps} from "@qualcomm-ui/utils/object"
-
-import {
+  createJsonViewerCollection,
+  getJsonViewerDefaultExpandedValue,
   JSON_VIEWER_OPTION_KEYS,
-  type JsonViewerOptions,
-} from "./json-viewer-context.js"
+  type QdsJsonViewerApiProps,
+  type QdsJsonViewerOptions,
+} from "@qualcomm-ui/qds-core/json-viewer"
+import type {TreeCollection} from "@qualcomm-ui/utils/collection"
+import {getPreviewOptions, type JsonNode} from "@qualcomm-ui/utils/json-tree"
+import {splitProps} from "@qualcomm-ui/utils/object"
 
 export interface UseJsonViewerProps
   extends
     Omit<TreeApiProps<JsonNode>, "collection">,
-    JsonViewerOptions,
-    RenderStrategyApiProps {
-  /**
-   * The data to display in the JSON viewer. Accepts any JavaScript value.
-   */
-  data: unknown
-
-  /**
-   * The default depth to expand the tree to.
-   *
-   * @default 0
-   */
-  defaultExpandedDepth?: number
-}
+    QdsJsonViewerApiProps,
+    RenderStrategyApiProps {}
 
 export interface UseJsonViewerReturn {
   /**
@@ -48,8 +32,9 @@ export interface UseJsonViewerReturn {
   collection: TreeCollection<JsonNode>
 
   /**
-   * Array of node values to expand by default, derived from `defaultExpandedDepth`.
-   * Pass to `[expandedValue]` as the initial controlled value.
+   * Initial expanded node values. Uses an explicit `defaultExpandedValue` when
+   * provided, otherwise derives the values from `defaultExpandedDepth`.
+   * Use as the initial controlled `expandedValue`.
    */
   defaultExpandedValue: string[] | undefined
 
@@ -58,7 +43,7 @@ export interface UseJsonViewerReturn {
    *
    * @inheritDoc
    */
-  options: JsonViewerOptions
+  options: QdsJsonViewerOptions
 
   /**
    * Consumed by `JsonViewer.RootProvider` and forwarded to the underlying tree root.
@@ -69,7 +54,12 @@ export interface UseJsonViewerReturn {
 }
 
 export function useJsonViewer(props: UseJsonViewerProps): UseJsonViewerReturn {
-  const {data, defaultExpandedDepth = 0, ...rest} = props
+  const {
+    data,
+    defaultExpandedDepth = 0,
+    defaultExpandedValue: defaultExpandedValueProp,
+    ...rest
+  } = props
   const [jsonOptions, treeProps] = splitProps(rest, [
     ...JSON_VIEWER_OPTION_KEYS,
   ])
@@ -97,24 +87,15 @@ export function useJsonViewer(props: UseJsonViewerProps): UseJsonViewerReturn {
   )
 
   const collection = useMemo(
-    () =>
-      createTreeCollection<JsonNode>({
-        nodeChildren: "children",
-        nodeText: nodeToString,
-        nodeValue: nodeToValue,
-        rootNode: getRootNode(data, previewOptions),
-      }),
+    () => createJsonViewerCollection(data, previewOptions),
     [data, previewOptions],
   )
 
   const defaultExpandedValue = useMemo(
     () =>
-      defaultExpandedDepth != null
-        ? collection.getBranchValues(undefined, {
-            depth: (nodeDepth) => nodeDepth <= defaultExpandedDepth,
-          })
-        : undefined,
-    [collection, defaultExpandedDepth],
+      defaultExpandedValueProp ??
+      getJsonViewerDefaultExpandedValue(collection, defaultExpandedDepth),
+    [collection, defaultExpandedDepth, defaultExpandedValueProp],
   )
 
   return {

@@ -1,5 +1,4 @@
 export {JsonViewerComponent} from "./json-viewer.component"
 export {JsonViewerModule} from "./json-viewer.module"
-export type {JsonViewerOptions} from "./json-viewer-options-context.service"
 export {JsonViewerRootDirective} from "./json-viewer-root.directive"
 export {JsonViewerTreeDirective} from "./json-viewer-tree.directive"

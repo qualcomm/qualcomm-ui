@@ -72,6 +72,15 @@ describe("JSON viewer collection memoization", () => {
     )
   })
 
+  test("returns explicit initial expansion values instead of deriving them from depth", async () => {
+    const defaultExpandedValue: string[] = []
+    const hook = await renderHook(() =>
+      useJsonViewer({data, defaultExpandedDepth: 3, defaultExpandedValue}),
+    )
+
+    expect(hook.result.current.defaultExpandedValue).toEqual([])
+  })
+
   test("rebuilds the collection when data changes", async () => {
     const hook = await renderHook(
       (props = initialProps) => useJsonViewer(props),

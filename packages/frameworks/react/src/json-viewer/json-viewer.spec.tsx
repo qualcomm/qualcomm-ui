@@ -5,11 +5,155 @@ import {render} from "vitest-browser-react"
 import {page, userEvent} from "vitest/browser"
 
 import {JsonViewer, useJsonViewer} from "@qualcomm-ui/react/json-viewer"
+import {nodeToValue} from "@qualcomm-ui/utils/json-tree"
 
 const data = {settings: {theme: "dark"}}
 const variants = ["simple", "composite"] as const
 
 describe("JSON viewer", () => {
+  test.each([...variants, "provider"])(
+    "%s prioritizes explicit default expanded values over the default depth",
+    async (variant) => {
+      const rootValue = nodeToValue({
+        keyPath: ["$"],
+        type: "object",
+        value: data,
+      })
+      const props = {
+        data,
+        defaultExpandedDepth: 2,
+        defaultExpandedValue: [rootValue],
+      }
+
+      function TestViewer() {
+        const viewer = useJsonViewer(props)
+        return (
+          <JsonViewer.RootProvider value={viewer}>
+            <JsonViewer.Tree />
+          </JsonViewer.RootProvider>
+        )
+      }
+
+      await render(
+        variant === "simple" ? (
+          <JsonViewer {...props} />
+        ) : variant === "composite" ? (
+          <JsonViewer.Root {...props}>
+            <JsonViewer.Tree />
+          </JsonViewer.Root>
+        ) : (
+          <TestViewer />
+        ),
+      )
+
+      const settings = page.getByRole("button", {name: /^settings:/})
+      const theme = page.getByText('"dark"', {exact: true})
+      await expect.element(settings).toBeVisible()
+      await expect.element(theme).not.toBeVisible()
+      await settings.click()
+      await expect.element(theme).toBeVisible()
+    },
+  )
+
+  test.each(variants)(
+    "%s uses the default depth when default expanded values are undefined",
+    async (variant) => {
+      const props = {
+        data,
+        defaultExpandedDepth: 2,
+        defaultExpandedValue: undefined,
+      }
+      await render(
+        variant === "simple" ? (
+          <JsonViewer {...props} />
+        ) : (
+          <JsonViewer.Root {...props}>
+            <JsonViewer.Tree />
+          </JsonViewer.Root>
+        ),
+      )
+
+      await expect
+        .element(page.getByRole("treeitem", {name: 'theme: "dark"'}))
+        .toBeVisible()
+    },
+  )
+
+  test.each(variants)(
+    "%s updates key quotes when preview options change",
+    async (variant) => {
+      function TestViewer() {
+        const [quotesOnKeys, setQuotesOnKeys] = useState(false)
+        const props = {data, defaultExpandedDepth: 2, quotesOnKeys}
+        return (
+          <>
+            <button onClick={() => setQuotesOnKeys(true)}>Quote keys</button>
+            {variant === "simple" ? (
+              <JsonViewer {...props} />
+            ) : (
+              <JsonViewer.Root {...props}>
+                <JsonViewer.Tree />
+              </JsonViewer.Root>
+            )}
+          </>
+        )
+      }
+
+      await render(<TestViewer />)
+      await expect.element(page.getByText("theme", {exact: true})).toBeVisible()
+      await page.getByRole("button", {name: "Quote keys"}).click()
+      await expect
+        .element(page.getByText('"theme"', {exact: true}))
+        .toBeVisible()
+    },
+  )
+
+  test.each([...variants, "provider", "provider hook"])(
+    "%s preserves preview visibility when a custom class is supplied",
+    async (variant) => {
+      const className = "custom-json-viewer"
+      const props = {
+        className,
+        data,
+        defaultExpandedDepth: 2,
+      }
+
+      function TestViewer() {
+        const viewer = useJsonViewer(
+          variant === "provider hook" ? props : {data, defaultExpandedDepth: 2},
+        )
+        return (
+          <JsonViewer.RootProvider
+            className={variant === "provider" ? className : undefined}
+            value={viewer}
+          >
+            <JsonViewer.Tree />
+          </JsonViewer.RootProvider>
+        )
+      }
+
+      await render(
+        variant === "simple" ? (
+          <JsonViewer {...props} />
+        ) : variant === "composite" ? (
+          <JsonViewer.Root {...props}>
+            <JsonViewer.Tree />
+          </JsonViewer.Root>
+        ) : (
+          <TestViewer />
+        ),
+      )
+
+      const settings = page.getByRole("button", {name: /^settings:/})
+      const preview = settings.getByText('theme: "dark"', {exact: true})
+      await expect.element(preview).not.toBeVisible()
+      await settings.click()
+      await expect.element(preview).toBeVisible()
+      await settings.click()
+      await expect.element(preview).not.toBeVisible()
+    },
+  )
+
   describe.each(variants)("%s render strategy", (variant) => {
     test.each([
       {lazyMount: undefined, name: "defaults", unmountOnExit: undefined},

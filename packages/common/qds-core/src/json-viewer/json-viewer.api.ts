@@ -34,10 +34,11 @@ export function createQdsJsonViewerApi(
     getValueBindings(
       props: QdsJsonViewerValueBindingProps,
     ): QdsJsonViewerValueBindings {
+      const root = props.root || props.nodeType != null
       return normalize.element({
-        ...(props.root ? {className: jsonViewerClasses.value} : {}),
+        ...(root ? {className: jsonViewerClasses.value} : {}),
         "data-kind": props.kind,
-        "data-root": booleanDataAttr(props.root),
+        "data-root": booleanDataAttr(root),
         "data-type": props.nodeType,
       })
     },

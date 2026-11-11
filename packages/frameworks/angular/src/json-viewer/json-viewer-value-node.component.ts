@@ -44,11 +44,10 @@ export class JsonViewerValueNodeComponent {
     if (node.type !== "element") {
       return qdsApi.getValueBindings({})
     }
-    const isRoot = node.properties.root || node.properties.nodeType != null
     return qdsApi.getValueBindings({
       kind: node.properties.kind,
       nodeType: node.properties.nodeType,
-      root: isRoot,
+      root: node.properties.root,
     })
   })
 }

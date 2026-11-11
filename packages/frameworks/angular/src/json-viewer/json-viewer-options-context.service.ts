@@ -8,25 +8,16 @@ import {
   BaseApiContextService,
   createApiContext,
 } from "@qualcomm-ui/angular-core/machine"
-import type {JsonNodePreviewOptions} from "@qualcomm-ui/utils/json-tree"
-
-export interface JsonViewerOptions extends Partial<JsonNodePreviewOptions> {
-  /**
-   * Whether to wrap property keys in double quotes.
-   *
-   * @default false
-   */
-  quotesOnKeys?: boolean
-}
+import type {QdsJsonViewerOptions} from "@qualcomm-ui/qds-core/json-viewer"
 
 @Injectable()
-export class JsonViewerOptionsContextService extends BaseApiContextService<JsonViewerOptions> {}
+export class JsonViewerOptionsContextService extends BaseApiContextService<QdsJsonViewerOptions> {}
 
 export const [
   JSON_VIEWER_OPTIONS_CONTEXT,
   useJsonViewerOptionsContext,
   provideJsonViewerOptionsContext,
-]: ApiContext<JsonViewerOptions> = createApiContext<JsonViewerOptions>(
+]: ApiContext<QdsJsonViewerOptions> = createApiContext<QdsJsonViewerOptions>(
   "JsonViewerOptionsContext",
   JsonViewerOptionsContextService,
 )

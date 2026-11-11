@@ -3,44 +3,36 @@
 
 import type {ReactElement} from "react"
 
-import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
+import {
+  jsonViewerClasses,
+  type QdsJsonViewerApiProps,
+} from "@qualcomm-ui/qds-core/json-viewer"
 import {Tree, type TreeRootProps} from "@qualcomm-ui/react/tree"
 import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {
-  type JsonViewerOptions,
-  JsonViewerOptionsProvider,
-} from "./json-viewer-context.js"
+import {JsonViewerOptionsProvider} from "./json-viewer-context.js"
 import {useJsonViewer} from "./use-json-viewer.js"
 
 export interface JsonViewerRootProps
-  extends Omit<TreeRootProps<JsonNode>, "collection">, JsonViewerOptions {
-  /**
-   * The data to display in the JSON viewer. Accepts any JavaScript value.
-   */
-  data: unknown
-
-  /**
-   * The default depth to expand the tree to.
-   *
-   * @default 0
-   */
-  defaultExpandedDepth?: number
-}
+  extends Omit<TreeRootProps<JsonNode>, "collection">, QdsJsonViewerApiProps {}
 
 export function JsonViewerRoot(props: JsonViewerRootProps): ReactElement {
   const {collection, defaultExpandedValue, options, treeProps} =
     useJsonViewer(props)
 
+  const mergedProps = mergeProps(
+    {
+      className: jsonViewerClasses.root,
+      collection,
+      defaultExpandedValue,
+    },
+    treeProps,
+  )
+
   return (
     <JsonViewerOptionsProvider value={options}>
-      <Tree.Root<JsonNode>
-        className={jsonViewerClasses.root}
-        collection={collection}
-        defaultExpandedValue={defaultExpandedValue}
-        typeahead={false}
-        {...treeProps}
-      />
+      <Tree.Root<JsonNode> {...mergedProps} />
     </JsonViewerOptionsProvider>
   )
 }

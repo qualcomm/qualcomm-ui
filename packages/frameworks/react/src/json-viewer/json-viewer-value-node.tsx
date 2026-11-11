@@ -22,11 +22,10 @@ export function JsonViewerValueNode({
     return <>{renderValue?.(node) ?? node.value}</>
   }
 
-  const isRoot = node.properties.root || node.properties.nodeType != null
   const bindings = qdsApi.getValueBindings({
     kind: node.properties.kind,
     nodeType: node.properties.nodeType,
-    root: isRoot,
+    root: node.properties.root,
   })
 
   return (

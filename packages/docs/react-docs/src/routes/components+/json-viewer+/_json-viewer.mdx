@@ -60,7 +60,7 @@ The viewer renders values with type-specific coloring for strings, numbers, bool
 
 ### Root Provider
 
-Use `useJsonViewer` with `JsonViewer.RootProvider` to control the viewer state externally, such as expanding or collapsing all nodes programmatically.
+Use `useJsonViewer` with `JsonViewer.RootProvider` to control expansion through `expandedValue` and `onExpandedValueChange`. Call `collection.getBranchValues()` to expand all branches, or set `expandedValue` to an empty array to collapse them.
 
 <Demo
   name="JsonViewerRootProviderDemo"

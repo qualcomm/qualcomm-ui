@@ -4,8 +4,11 @@
 import {Component, computed, input} from "@angular/core"
 
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
-import {createQdsJsonViewerApi} from "@qualcomm-ui/qds-core/json-viewer"
-import {type JsonNode, keyPathToKey} from "@qualcomm-ui/utils/json-tree"
+import {
+  createQdsJsonViewerApi,
+  getJsonViewerKeyText,
+} from "@qualcomm-ui/qds-core/json-viewer"
+import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
 
 const qdsApi = createQdsJsonViewerApi(normalizeProps)
 
@@ -29,8 +32,7 @@ export class JsonViewerKeyNodeComponent {
     qdsApi.getKeyBindings({isNonEnumerable: this.node().isNonEnumerable}),
   )
 
-  protected readonly displayKey = computed(() => {
-    const key = keyPathToKey(this.node().keyPath)
-    return this.showQuotes() ? `"${key}"` : key
-  })
+  protected readonly displayKey = computed(() =>
+    getJsonViewerKeyText(this.node(), this.showQuotes()),
+  )
 }

@@ -23,7 +23,7 @@ import {JsonViewerModule} from "@qualcomm-ui/angular/json-viewer"
         q-json-viewer-root
         [data]="data"
         [expandedValue]="expanded"
-        (expandedValueChange)="expanded = $event"
+        (expandedValueChanged)="expanded = $event.expandedValue"
       >
         <div q-json-viewer-tree></div>
       </div>
