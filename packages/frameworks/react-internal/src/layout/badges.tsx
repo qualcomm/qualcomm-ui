@@ -38,7 +38,7 @@ export function SideNavBadges({badges}: {badges: NavBadge[]}): ReactNode {
     <>
       {badges
         .filter((badge) => {
-          if (!navBadges[badge.id]) {
+          if (!navBadges[badge.id] || badge.hideFromNav) {
             return false
           }
           if (defined(badge.sideNavLabel) && !badge.sideNavLabel) {
@@ -65,6 +65,9 @@ export function PageHeaderBadges({badges}: {badges: NavBadge[]}): ReactNode {
     <>
       {badges
         .filter((badge) => {
+          if (!headerBadges[badge.id]) {
+            return false
+          }
           return headerBadges[badge.id]
         })
         .map((badge) => {

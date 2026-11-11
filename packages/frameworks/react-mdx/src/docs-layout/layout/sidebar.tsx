@@ -320,7 +320,7 @@ export function Sidebar({
                   }
                 >
                   <SideNav.NodeText>{node.title}</SideNav.NodeText>
-                  {SideNavBadgesComponent && node.badges ? (
+                  {SideNavBadgesComponent && node.badges?.length ? (
                     <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">
                       <SideNavBadgesComponent badges={node.badges} />
                     </SideNav.NodeAccessory>
