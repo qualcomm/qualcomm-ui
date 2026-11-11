@@ -37,9 +37,17 @@ h4 {
   }
 }
 
-&:has(.qui-docs__page-header > h1.mdx) {
-  .qui-docs__breadcrumbs {
-    margin-bottom: 0;
+.qui-docs__main-content {
+  &:has(.qui-docs__page-header > h1.mdx) {
+    .qui-docs__breadcrumbs {
+      margin-bottom: 0;
+    }
+  }
+
+  &:has(.qui-docs__page-intro + section.heading[data-heading-rank]) {
+    .qui-docs__page-intro {
+      border-bottom: none;
+    }
   }
 }
 
