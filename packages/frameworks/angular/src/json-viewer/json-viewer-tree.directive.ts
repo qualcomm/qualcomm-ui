@@ -6,19 +6,66 @@ import {LucideChevronRight} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {useTreeContext} from "@qualcomm-ui/angular-core/tree"
-import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
+import type {TreeApi} from "@qualcomm-ui/core/tree"
+import {
+  getAccessibleDescription,
+  getPreviewOptions,
+  type JsonNode,
+  type JsonNodeHastElement,
+  jsonNodeToElement,
+  keyPathToKey,
+} from "@qualcomm-ui/utils/json-tree"
+
+import {useJsonViewerOptionsContext} from "./json-viewer-options-context.service"
 
 @Component({
   selector: "[q-json-viewer-tree]",
   standalone: false,
   template: `
     @for (child of children(); let i = $index; track trackChild(child)) {
-      <q-json-viewer-node
-        [arrow]="arrow()"
-        [indentGuide]="indentGuide()"
+      <q-tree-nodes
         [indexPath]="[i]"
         [node]="child"
-      />
+        [showIndentGuide]="indentGuide()"
+      >
+        <ng-template
+          let-branch
+          q-tree-branch-template
+          [rootNode]="collection().rootNode"
+        >
+          <div q-tree-branch-node [attr.aria-label]="describe(branch.node)">
+            @if (arrow()) {
+              <div q-tree-branch-trigger [icon]="arrow()"></div>
+            }
+            <span q-tree-node-text>
+              @if (hasKey(branch.node)) {
+                <q-json-viewer-key-node
+                  [node]="branch.node"
+                  [showQuotes]="showQuotes()"
+                />
+              }
+              <q-json-viewer-value-node [node]="toElement(branch.node)" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template
+          let-leaf
+          q-tree-leaf-template
+          [rootNode]="collection().rootNode"
+        >
+          <div q-tree-leaf-node [attr.aria-label]="describe(leaf.node)">
+            <span q-tree-node-text>
+              @if (hasKey(leaf.node)) {
+                <q-json-viewer-key-node
+                  [node]="leaf.node"
+                  [showQuotes]="showQuotes()"
+                />
+              }
+              <q-json-viewer-value-node [node]="toElement(leaf.node)" />
+            </span>
+          </div>
+        </ng-template>
+      </q-tree-nodes>
     }
   `,
 })
@@ -37,7 +84,19 @@ export class JsonViewerTreeDirective {
    */
   readonly indentGuide = input<boolean>(true)
 
-  protected readonly treeContext = useTreeContext()
+  protected readonly treeContext = useTreeContext() as () => TreeApi<JsonNode>
+
+  protected readonly collection = computed(() => this.treeContext().collection)
+
+  protected readonly jsonOptions = useJsonViewerOptionsContext()
+
+  protected readonly previewOptions = computed(() =>
+    getPreviewOptions(this.jsonOptions() ?? {}),
+  )
+
+  protected readonly showQuotes = computed(
+    () => this.jsonOptions()?.quotesOnKeys,
+  )
 
   protected readonly children = computed(() => {
     const ctx = this.treeContext()
@@ -45,6 +104,18 @@ export class JsonViewerTreeDirective {
   })
 
   protected trackChild(child: JsonNode): string {
-    return this.treeContext().collection.getNodeValue(child)
+    return this.collection().getNodeValue(child)
+  }
+
+  protected hasKey(node: JsonNode): boolean {
+    return !!keyPathToKey(node.keyPath, {excludeRoot: true})
+  }
+
+  protected describe(node: JsonNode): string {
+    return getAccessibleDescription(node, this.previewOptions())
+  }
+
+  protected toElement(node: JsonNode): JsonNodeHastElement {
+    return jsonNodeToElement(node, this.previewOptions())
   }
 }

@@ -5,12 +5,51 @@ import {render} from "vitest-browser-react"
 import {page, userEvent} from "vitest/browser"
 
 import {JsonViewer, useJsonViewer} from "@qualcomm-ui/react/json-viewer"
-import {nodeToValue} from "@qualcomm-ui/utils/json-tree"
+import {
+  type JsonNodeHastElement,
+  nodeToValue,
+} from "@qualcomm-ui/utils/json-tree"
 
 const data = {settings: {theme: "dark"}}
 const variants = ["simple", "composite"] as const
 
 describe("JSON viewer", () => {
+  test.each(variants)(
+    "%s renders custom nested values after collapsing and reopening a branch",
+    async (variant) => {
+      function renderValue(node: JsonNodeHastElement) {
+        return node.type === "text" && node.value === '"dark"'
+          ? "Custom theme"
+          : undefined
+      }
+
+      const props = {
+        data,
+        defaultExpandedDepth: 2,
+        lazyMount: true,
+        unmountOnExit: true,
+      }
+
+      await render(
+        variant === "simple" ? (
+          <JsonViewer {...props} treeProps={{renderValue}} />
+        ) : (
+          <JsonViewer.Root {...props}>
+            <JsonViewer.Tree renderValue={renderValue} />
+          </JsonViewer.Root>
+        ),
+      )
+
+      const theme = page.getByRole("treeitem", {name: 'theme: "dark"'})
+      const settings = page.getByRole("button", {name: /^settings:/})
+      await expect.element(theme.getByText("Custom theme")).toBeVisible()
+      await settings.click()
+      await expect.element(theme).not.toBeInTheDocument()
+      await settings.click()
+      await expect.element(theme.getByText("Custom theme")).toBeVisible()
+    },
+  )
+
   test.each([...variants, "provider"])(
     "%s prioritizes explicit default expanded values over the default depth",
     async (variant) => {
