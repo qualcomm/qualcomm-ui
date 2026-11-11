@@ -1,5 +1,30 @@
 # @qualcomm-ui/react Changelog
 
+## 2.1.0
+
+Nov 11th, 2026
+
+### Features
+
+* migrate internal InlineIconButton usage ([e2ef646](https://github.com/qualcomm/qualcomm-ui/commit/e2ef646))
+
+### Bug Fixes
+
+* [combobox]: use correct clear trigger size for sm variant ([cdb704a](https://github.com/qualcomm/qualcomm-ui/commit/cdb704a))
+* [number-input]: update trigger sizes ([ced64a1](https://github.com/qualcomm/qualcomm-ui/commit/ced64a1))
+* [tabs]: update dismiss button size ([73fa784](https://github.com/qualcomm/qualcomm-ui/commit/73fa784))
+* [password-input]: update trigger sizes for sm variant ([687516e](https://github.com/qualcomm/qualcomm-ui/commit/687516e))
+* [select]: use correct clear trigger size size for sm variant ([e95d554](https://github.com/qualcomm/qualcomm-ui/commit/e95d554))
+* update input type for icon component props ([cb68807](https://github.com/qualcomm/qualcomm-ui/commit/cb68807))
+
+### Documentation
+
+* [inline-icon-button]: add deprecation comment ([a43eb07](https://github.com/qualcomm/qualcomm-ui/commit/a43eb07))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@2.0.2]
+
 ## 2.0.1
 
 Nov 9th, 2026

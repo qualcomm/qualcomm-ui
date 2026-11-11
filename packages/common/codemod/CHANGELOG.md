@@ -1,5 +1,13 @@
 # @qualcomm-ui/codemod Changelog
 
+## 1.5.0
+
+Nov 11th, 2026
+
+### Features
+
+* add InlineIconButton codemod ([3ed7bd8](https://github.com/qualcomm/qualcomm-ui/commit/3ed7bd8))
+
 ## 1.4.1
 
 Nov 9th, 2026

@@ -17,7 +17,7 @@ import {IconOrNode} from "@qualcomm-ui/react/icon"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 /**
- * @deprecated in next-release, migrate to `<IconButton density="compact" />
+ * @deprecated in 2.1.0, migrate to `<IconButton density="compact" />
  */
 export interface InlineIconButtonProps
   extends QdsInlineIconButtonApiProps, ElementRenderProp<"button"> {
@@ -32,7 +32,7 @@ export interface InlineIconButtonProps
  * within input fields, menu items, or other components that require a small action
  * button. Renders a `<button>` element by default.
  *
- * @deprecated in next-release, migrate to `<IconButton density="compact" />`
+ * @deprecated in 2.1.0, migrate to `<IconButton density="compact" />`
  */
 export function InlineIconButton({
   emphasis,

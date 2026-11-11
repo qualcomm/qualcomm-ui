@@ -1,5 +1,26 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.4.0
+
+Nov 11th, 2026
+
+### Features
+
+* [sidebar]: support `deprecated` boolean in frontmatter ([017f450](https://github.com/qualcomm/qualcomm-ui/commit/017f450))
+
+### Bug Fixes
+
+* [sidebar]: hide badges container when empty ([e1af74c](https://github.com/qualcomm/qualcomm-ui/commit/e1af74c))
+
+### Code Refactoring
+
+* [layout]: hide page-intro border conditionally ([28a56cd](https://github.com/qualcomm/qualcomm-ui/commit/28a56cd))
+* [layout]: align topmost elements on docs pages ([91ce87a](https://github.com/qualcomm/qualcomm-ui/commit/91ce87a))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react@2.1.0]
+
 ## 3.3.1
 
 Nov 9th, 2026
