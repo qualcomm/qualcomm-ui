@@ -25,6 +25,12 @@ export function PasswordInputClearTrigger(
   )
 
   return (
-    <IconButton density="compact" icon={X} variant="ghost" {...mergedProps} />
+    <IconButton
+      density="compact"
+      icon={X}
+      size={qdsContext.size === "sm" ? "sm" : "md"}
+      variant="ghost"
+      {...mergedProps}
+    />
   )
 }

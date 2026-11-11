@@ -13,6 +13,7 @@ import {
 } from "@qualcomm-ui/react-core/password-input"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {IconButton} from "@qualcomm-ui/react/button"
+import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 export interface PasswordInputVisibilityTriggerProps extends ElementRenderProp<"button"> {
@@ -45,6 +46,7 @@ export function PasswordInputVisibilityTrigger({
 }: PasswordInputVisibilityTriggerProps): ReactElement {
   const context = usePasswordInputContext()
   const contextProps = CorePasswordInput.usePasswordInputVisibilityTrigger({id})
+  const qdsContext = useQdsInputContext()
   const mergedProps = mergeProps(
     contextProps,
     {className: passwordInputClasses.visibilityTrigger},
@@ -55,6 +57,7 @@ export function PasswordInputVisibilityTrigger({
     <IconButton
       density="compact"
       icon={context.visible ? iconOff : iconOn}
+      size={qdsContext.size === "sm" ? "sm" : "md"}
       variant="ghost"
       {...mergedProps}
     >
