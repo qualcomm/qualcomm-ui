@@ -10,7 +10,7 @@
   max-height: calc(100vh - var(--qui-header-height) - 42px);
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 48px 24px 0 0;
+  padding: 32px 24px 0 0;
   position: sticky;
   scrollbar-width: none;
   top: 49px;
@@ -57,7 +57,7 @@
   width: 1px;
 
   &[data-active] {
-    width: 2px;
     background: var(--color-border-brand-primary);
+    width: 2px;
   }
 }

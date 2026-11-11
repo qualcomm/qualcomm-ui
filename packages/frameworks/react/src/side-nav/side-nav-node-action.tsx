@@ -7,16 +7,13 @@ import {
   CoreTree,
   type CoreTreeNodeActionProps,
 } from "@qualcomm-ui/react-core/tree"
-import {
-  InlineIconButton,
-  type InlineIconButtonProps,
-} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton, type IconButtonProps} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsSideNavApi} from "./qds-side-nav-context.js"
 
 export interface SideNavNodeActionProps
-  extends CoreTreeNodeActionProps, Omit<InlineIconButtonProps, "variant"> {}
+  extends CoreTreeNodeActionProps, Omit<IconButtonProps, "variant"> {}
 
 /**
  * An action button within a tree node's interactive area. Renders a `<button>`
@@ -27,7 +24,9 @@ export function SideNavNodeAction(props: SideNavNodeActionProps): ReactElement {
 
   return (
     <CoreTree.NodeAction
-      render={<InlineIconButton icon={props.icon} />}
+      render={
+        <IconButton density="compact" icon={props.icon} variant="ghost" />
+      }
       {...mergedProps}
     />
   )

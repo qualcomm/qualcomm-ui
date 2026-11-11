@@ -1,15 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactElement, ReactNode} from "react"
+import type {ReactElement} from "react"
 
-import {ChevronDown, type LucideIcon} from "lucide-react"
+import {ChevronDown} from "lucide-react"
 
 import {
   CoreCombobox,
   type CoreComboboxTriggerProps,
 } from "@qualcomm-ui/react-core/combobox"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.js"
@@ -21,7 +22,7 @@ export interface ComboboxTriggerProps extends CoreComboboxTriggerProps {
    *
    * @default ChevronDown
    */
-  icon?: ReactNode | LucideIcon
+  icon?: LucideIconOrElement
 }
 
 /**
@@ -39,11 +40,12 @@ export function ComboboxTrigger({
   return (
     <CoreCombobox.Trigger
       render={
-        <InlineIconButton
+        <IconButton
+          density="compact"
           icon={icon}
           render={render}
           size={qdsContext.size === "sm" ? "sm" : "md"}
-          variant="scale"
+          variant="ghost"
         />
       }
       {...mergedProps}

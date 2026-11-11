@@ -57,11 +57,11 @@ import {provideQdsComboboxContext} from "./qds-combobox-context.service"
             <button q-combobox-clear-trigger></button>
           }
         </ng-content>
-        <ng-content select="[q-combobox-trigger]">
-          <button q-combobox-trigger></button>
-        </ng-content>
         <ng-content select="[q-combobox-error-indicator]">
           <div q-combobox-error-indicator></div>
+        </ng-content>
+        <ng-content select="[q-combobox-trigger]">
+          <button q-combobox-trigger></button>
         </ng-content>
       </div>
     </ng-content>

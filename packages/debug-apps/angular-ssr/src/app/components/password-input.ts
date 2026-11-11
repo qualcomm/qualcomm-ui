@@ -9,6 +9,7 @@ import {PasswordInputReactiveFormsDemo} from "@qualcomm-ui/angular-docs/componen
 import {PasswordInputRequiredTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-required-template-forms-demo"
 import {PasswordInputSimpleDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-simple-demo"
 import {PasswordInputSimpleIconsDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-simple-icons-demo"
+import {PasswordInputSizesDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-sizes-demo"
 import {PasswordInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/components+/password-input+/demos/password-input-template-forms-demo"
 
 @Component({
@@ -22,6 +23,7 @@ import {PasswordInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/componen
     PasswordInputRequiredTemplateFormsDemo,
     PasswordInputSimpleDemo,
     PasswordInputSimpleIconsDemo,
+    PasswordInputSizesDemo,
     PasswordInputTemplateFormsDemo,
   ],
   selector: "app-password-input",
@@ -79,6 +81,12 @@ import {PasswordInputTemplateFormsDemo} from "@qualcomm-ui/angular-docs/componen
         <h2 class="section-title">Simple Icons</h2>
         <div class="demo-container">
           <password-input-simple-icons-demo />
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title">Sizes</h2>
+        <div class="demo-container">
+          <password-input-sizes-demo />
         </div>
       </div>
       <div class="section">

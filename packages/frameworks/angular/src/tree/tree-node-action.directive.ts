@@ -5,7 +5,7 @@ import {Component, computed, input} from "@angular/core"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
 import {CoreTreeNodeActionDirective} from "@qualcomm-ui/angular-core/tree"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import type {QdsInlineIconButtonSize} from "@qualcomm-ui/qds-core/inline-icon-button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -38,10 +38,11 @@ export class TreeNodeActionDirective extends CoreTreeNodeActionDirective {
    */
   readonly size = input<QdsInlineIconButtonSize>("md")
 
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly inlineIconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: this.size(),
-    variant: "fixed",
+    variant: "ghost",
   })
 
   protected readonly qdsContext = useQdsTreeContext()

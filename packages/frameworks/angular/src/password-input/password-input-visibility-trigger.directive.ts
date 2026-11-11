@@ -9,7 +9,7 @@ import {
   provideIcons,
 } from "@qualcomm-ui/angular-core/lucide"
 import {CorePasswordInputVisibilityTriggerDirective} from "@qualcomm-ui/angular-core/password-input"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {useQdsInputContext} from "@qualcomm-ui/angular/input"
 import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
 import {passwordInputClasses} from "@qualcomm-ui/qds-core/password-input"
@@ -49,10 +49,11 @@ export class PasswordInputVisibilityTriggerDirective extends CorePasswordInputVi
 
   protected readonly qdsContext = useQdsInputContext()
 
-  protected readonly buttonApi = useInlineIconButtonApi({
+  protected readonly buttonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: computed(() => this.qdsContext().size),
-    variant: "scale",
+    variant: "ghost",
   })
 
   constructor() {

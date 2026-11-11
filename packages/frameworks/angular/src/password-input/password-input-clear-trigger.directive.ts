@@ -13,7 +13,11 @@ import {useInputClearTrigger} from "@qualcomm-ui/angular/input"
   selector: "[q-password-input-clear-trigger]",
   standalone: false,
   template: `
-    <svg qIcon="X" [q-bind]="clearTriggerContext.getIconBindings()"></svg>
+    <svg
+      qIcon="X"
+      [q-bind]="clearTriggerContext.getIconBindings()"
+      [size]="clearTriggerContext.size()"
+    ></svg>
   `,
 })
 export class PasswordInputClearTriggerDirective extends CorePasswordInputClearTriggerDirective {

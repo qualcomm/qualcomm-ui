@@ -10,7 +10,7 @@ import {
 } from "@qualcomm-ui/angular-core/lucide"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import type {Header} from "@qualcomm-ui/core/table"
 import type {QdsTableColumnResizerProps} from "@qualcomm-ui/qds-core/table"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
@@ -44,10 +44,11 @@ export class TableColumnResizeHandleDirective
    */
   readonly icon = input<LucideIconOrString>("UnfoldHorizontal")
 
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly inlineIconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: "sm",
-    variant: "fixed",
+    variant: "ghost",
   })
 
   protected readonly trackBindings = useTrackBindings(() =>

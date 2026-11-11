@@ -99,6 +99,10 @@
     --content-padding-right: 48px;
     --content-padding-bottom: 120px;
     --content-padding-left: 48px;
+
+    &:has(.qui-docs__breadcrumbs) {
+      --content-padding-top: 32px;
+    }
   }
 }
 
@@ -152,6 +156,11 @@
     flex-wrap: wrap;
     gap: var(--spacing-175);
     margin-left: 4px;
+
+    /* The SideNavBadges renderer may filter out every badge for the node. */
+    &:empty {
+      display: none;
+    }
   }
 
   .qui-side-nav__root {

@@ -3,15 +3,12 @@
 
 import type {ReactElement} from "react"
 
-import {
-  InlineIconButton,
-  type InlineIconButtonProps,
-} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton, type IconButtonProps} from "@qualcomm-ui/react/button"
 
-export interface MenuInlineIconButtonProps extends InlineIconButtonProps {}
+export interface MenuInlineIconButtonProps extends IconButtonProps {}
 
 export function MenuInlineIconButton(
   props: MenuInlineIconButtonProps,
 ): ReactElement {
-  return <InlineIconButton {...props} />
+  return <IconButton density="compact" variant="ghost" {...props} />
 }

@@ -1,0 +1,15 @@
+<div class="flex gap-2">
+  <button aria-label="Close" q-icon-button density="compact" variant="ghost" icon="X"></button>
+  <button
+    *ngIf="clearable"
+    aria-label="Clear"
+    emphasis="persistent-black"
+    q-icon-button
+    density="compact"
+    size="lg"
+    variant="ghost"
+    [icon]="clearIcon"
+  ></button>
+  <button aria-label="Expand" variant="ghost" q-icon-button density="compact" icon="ChevronDown"></button>
+  <button aria-label="Info" q-icon-button density="compact" variant="ghost" icon="Info" [attr.variant]="variant"></button>
+</div>

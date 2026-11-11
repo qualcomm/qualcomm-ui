@@ -9,7 +9,7 @@ import {
   CoreToast,
   type CoreToastCloseTriggerProps,
 } from "@qualcomm-ui/react-core/toast"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsToastContext} from "./qds-toast-context.js"
@@ -33,7 +33,7 @@ export function ToastCloseButton({
 
   return (
     <CoreToast.CloseTrigger {...mergedProps}>
-      <InlineIconButton icon={icon || X} variant="fixed" />
+      <IconButton density="compact" icon={icon || X} variant="ghost" />
     </CoreToast.CloseTrigger>
   )
 }
