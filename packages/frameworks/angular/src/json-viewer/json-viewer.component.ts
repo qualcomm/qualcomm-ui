@@ -13,13 +13,14 @@ import {provideJsonViewerOptionsContext} from "./json-viewer-options-context.ser
 import {JsonViewerRootDirective} from "./json-viewer-root.directive"
 
 @Component({
+  exportAs: "jsonViewerRoot",
   providers: [
     provideTreeContext(),
     provideRenderStrategyContext(),
     provideQdsTreeContext(),
     provideJsonViewerOptionsContext(),
   ],
-  selector: "q-json-viewer",
+  selector: "[q-json-viewer]",
   standalone: false,
   template: `
     <div

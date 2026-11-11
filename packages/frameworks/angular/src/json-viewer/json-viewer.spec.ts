@@ -11,7 +11,7 @@ const data = {settings: {theme: "dark"}}
 const variants = [
   {
     name: "simple",
-    template: `<q-json-viewer [data]="data" [defaultExpandedDepth]="2" />`,
+    template: `<div q-json-viewer [data]="data" [defaultExpandedDepth]="2"></div>`,
   },
   {
     name: "composite",
@@ -308,12 +308,13 @@ describe("JSON viewer", () => {
     {
       name: "simple",
       template: `
-        <q-json-viewer
-          #viewer
+        <div
+          q-json-viewer
+          #viewer="jsonViewerRoot"
           [data]="data"
           [expandedValue]="expandedValue()"
           (expandedValueChanged)="expandedValue.set($event.expandedValue); onExpandedValueChanged($event)"
-        />
+        ></div>
       `,
     },
     {
@@ -389,7 +390,7 @@ describe("JSON viewer", () => {
       await render(
         `
         <button (click)="data.set('after')">Replace data</button>
-        ${variant === "simple" ? '<q-json-viewer [data]="data()" />' : '<div q-json-viewer-root [data]="data()"><div q-json-viewer-tree></div></div>'}
+        ${variant === "simple" ? '<div q-json-viewer [data]="data()"></div>' : '<div q-json-viewer-root [data]="data()"><div q-json-viewer-tree></div></div>'}
       `,
         {
           componentProperties: {data: signal("before")},
@@ -416,7 +417,7 @@ describe("JSON viewer", () => {
       await render(
         `
         <button (click)="quotesOnKeys.set(true)">Quote keys</button>
-        ${variant === "simple" ? '<q-json-viewer [data]="data" [defaultExpandedDepth]="2" [quotesOnKeys]="quotesOnKeys()" />' : '<div q-json-viewer-root [data]="data" [defaultExpandedDepth]="2" [quotesOnKeys]="quotesOnKeys()"><div q-json-viewer-tree></div></div>'}
+        ${variant === "simple" ? '<div q-json-viewer [data]="data" [defaultExpandedDepth]="2" [quotesOnKeys]="quotesOnKeys()"></div>' : '<div q-json-viewer-root [data]="data" [defaultExpandedDepth]="2" [quotesOnKeys]="quotesOnKeys()"><div q-json-viewer-tree></div></div>'}
       `,
         {
           componentProperties: {data, quotesOnKeys: signal(false)},

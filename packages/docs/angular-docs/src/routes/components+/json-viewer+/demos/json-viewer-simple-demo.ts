@@ -26,13 +26,14 @@ const data = {
   selector: "json-viewer-simple-demo",
   template: `
     <!-- preview -->
-    <q-json-viewer
+    <div
+      q-json-viewer
       [collapseStringsAfterLength]="50"
       [data]="data"
       [defaultExpandedDepth]="0"
       [maxPreviewItems]="7"
       [quotesOnKeys]="true"
-    />
+    ></div>
     <!-- preview -->
   `,
 })

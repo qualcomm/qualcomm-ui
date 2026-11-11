@@ -54,7 +54,7 @@ const data = {
   selector: "json-viewer-complex-types-demo",
   template: `
     <!-- preview -->
-    <q-json-viewer [data]="data" [defaultExpandedDepth]="2" />
+    <div q-json-viewer [data]="data" [defaultExpandedDepth]="2"></div>
     <!-- preview -->
   `,
 })
