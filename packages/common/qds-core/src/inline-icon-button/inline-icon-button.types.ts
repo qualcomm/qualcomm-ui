@@ -14,7 +14,7 @@ export type QdsInlineIconButtonEmphasis =
 export type QdsInlineIconButtonVariant = "fixed" | "scale"
 
 /**
- * @deprecated in next-release, migrate to the {@link IconButton} with `density="compact"`
+ * @deprecated in 2.0.2, migrate to the {@link IconButton} with `density="compact"`
  */
 export interface QdsInlineIconButtonApiProps {
   /**
@@ -63,7 +63,7 @@ export interface QdsInlineIconButtonIconBindings extends Part<"icon"> {
 }
 
 /**
- * @deprecated in next-release, migrate to `IconButton` with `density="compact"`
+ * @deprecated in 2.0.2, migrate to `IconButton` with `density="compact"`
  */
 export interface QdsInlineIconButtonApi {
   emphasis: QdsInlineIconButtonEmphasis

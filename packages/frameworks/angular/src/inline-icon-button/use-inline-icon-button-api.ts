@@ -16,7 +16,7 @@ import {
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 
 /**
- * @deprecated in next-release, migrate to `useIconButtonApi` with `density: "compact"`
+ * @deprecated in 4.1.0, migrate to `useIconButtonApi` with `density: "compact"`
  */
 export function useInlineIconButtonApi({
   emphasis,
