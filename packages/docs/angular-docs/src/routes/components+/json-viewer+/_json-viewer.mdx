@@ -28,11 +28,12 @@ Select a `.json` file with [File Input](/components/file-input) to view its cont
 
 > [!tip]
 > This example is intended for smaller JSON files, typically under 100 KB. The [lazyMount](#lazyMount) option reduces initial rendering work for larger files by deferring branch content until expansion. Expanding all nodes programmatically renders the entire tree and can reduce responsiveness for large datasets.
+
 <QdsDemo name="JsonViewerInteractiveDemo" />
 
 ### Simple
 
-Pass any JavaScript value to `data`. Use `defaultExpandedDepth` to control how many levels are expanded initially.
+Pass any JavaScript value to [data](#data). Use [defaultExpandedDepth](#defaultExpandedDepth) to control how many levels are expanded initially.
 
 <QdsDemo name="JsonViewerSimpleDemo" />
 
@@ -44,7 +45,7 @@ The viewer renders values with type-specific coloring for strings, numbers, bool
 
 ### Controlled Expansion
 
-Use `expandedValue` and `expandedValueChanged` to control expansion. Call `collection().getBranchValues()` to expand all branches, or set `expandedValue` to an empty array to collapse them.
+Use [expandedValue](#expandedValue) and [expandedValueChanged](#expandedValueChanged) to control expansion. Call [collection().getBranchValues()](/components/tree#getBranchValues) to expand all branches, or set [expandedValue](#expandedValue) to an empty array to collapse them.
 
 <QdsDemo name="JsonViewerControlledDemo" />
 
@@ -58,7 +59,7 @@ Maps, Sets, Headers, URLSearchParams, URLs, Errors, and functions are all suppor
 
 ### q-json-viewer
 
-Apply `q-json-viewer` to a host element to render the viewer. The component uses the [q-json-viewer-root](/components/json-viewer#q-json-viewer-root) directive and adds the following inputs:
+Apply [q-json-viewer](#q-json-viewer) to a host element to render the viewer. The component uses the [q-json-viewer-root](#q-json-viewer-root) directive and adds the following inputs:
 
 <TypeDocProps
   name="JsonViewerComponent"
