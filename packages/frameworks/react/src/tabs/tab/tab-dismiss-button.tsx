@@ -9,7 +9,7 @@ import {
   CoreTabs,
   type CoreTabsTabDismissButtonProps,
 } from "@qualcomm-ui/react-core/tabs"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsTabsContext} from "../qds-tabs-context.js"
@@ -31,7 +31,15 @@ export function TabDismissButton({
 
   return (
     <CoreTabs.TabDismissButton
-      render={<InlineIconButton icon={X} render={render} />}
+      render={
+        <IconButton
+          density="compact"
+          icon={X}
+          render={render}
+          size="sm"
+          variant="ghost"
+        />
+      }
       {...mergedProps}
     />
   )

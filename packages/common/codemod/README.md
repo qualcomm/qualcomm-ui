@@ -207,9 +207,10 @@ Border radius replacements apply only to `--border-radius-*`:
 
 Packages: `@qualcomm-ui/react`
 
-| Codemod          | Versions                     | Description                                                                                                                                            |
-| ---------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `emphasis-props` | `@qualcomm-ui/react` v1 → v2 | Replaces the deprecated `variant` prop of Slider and SegmentedControl with `emphasis`, deprecated `emphasis` values, and deprecated variant type names |
+| Codemod              | Versions                     | Description                                                                                                                                            |
+| -------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `emphasis-props`     | `@qualcomm-ui/react` v1 → v2 | Replaces the deprecated `variant` prop of Slider and SegmentedControl with `emphasis`, deprecated `emphasis` values, and deprecated variant type names |
+| `inline-icon-button` | `@qualcomm-ui/react` v1 → v2 | Replaces the deprecated InlineIconButton with the compact ghost IconButton (`<IconButton density="compact" variant="ghost">`)                          |
 
 Run the migration:
 
@@ -217,7 +218,9 @@ Run the migration:
 npx @qualcomm-ui/codemod@latest migrate react
 ```
 
-The deprecated props, values, and types remain supported in v2, so run the codemod before or after upgrading. Detected v1 dependencies are updated to v2 in `package.json`. Running it again makes no changes.
+The deprecated props, values, types, and InlineIconButton remain supported in v2. Run both codemods before or after upgrading. Detected v1 dependencies are updated to v2 in `package.json`. Running them again makes no changes.
+
+#### emphasis-props
 
 `emphasis-props` matches `Slider`, `Slider.Root`, `SegmentedControl.Root`, `Tag`, `Breadcrumbs.Root`, `Progress`, `Progress.Root`, `ProgressRing`, and `ProgressRing.Root` imported from their `@qualcomm-ui/react/<component>` entry points. Aliased and namespace imports are supported. Same-name components from other libraries are ignored.
 
@@ -253,15 +256,31 @@ Slider or SegmentedControl elements with both `variant` and `emphasis` are left 
 
 Spread props, prop objects or arrays built elsewhere, direct qds-core API usage (`createQdsSliderApi`, `api.variant`), and CSS are not rewritten. Slider and SegmentedControl render `data-emphasis` instead of `data-variant`. Update custom CSS targeting `[data-variant]` on those components manually.
 
-The codemod scans ts, tsx, mts, cts, js, jsx, mjs, and cjs files. It ignores `node_modules`, `dist`, `build`, `coverage`, and `.react-router`. Edits preserve formatting. Edited props are not re-sorted, so run your formatter afterward.
+#### inline-icon-button
+
+`inline-icon-button` renames `InlineIconButton` to `IconButton` and `InlineIconButtonProps` to `IconButtonProps`, including their references. It moves the imports from `@qualcomm-ui/react/inline-icon-button` to `@qualcomm-ui/react/button`, merging into an existing import. Aliased imports keep their local name. An existing `IconButton` import, aliased or not, is reused. If another declaration uses `IconButton`, the import keeps the old local name (`IconButton as InlineIconButton`).
+
+JSX elements get `density="compact"` after the tag name. Any `variant` value or expression is replaced with `variant="ghost"`, or the attribute is added if missing. InlineIconButton is ghost-styled, but IconButton defaults to `variant="fill"`. The old `variant` (`fixed` or `scale`) controls icon size and has no equivalent. A compact IconButton's icon size follows `size`. `emphasis`, `size`, and `icon` are kept as is. Their values are valid on IconButton.
+
+References outside JSX, such as passing the component as a value or `export {InlineIconButton}`, are renamed and reported for manual update. Add the density and variant at their render sites.
+
+It reports the following for manual update instead of rewriting them:
+
+- Namespace imports of `@qualcomm-ui/react/inline-icon-button`
+- Re-exports from `@qualcomm-ui/react/inline-icon-button`
+
+`Menu.InlineIconButton` is not deprecated and is not rewritten. Spread props are not rewritten. A spread containing InlineIconButton's `variant` fails type checking against IconButton. CSS targeting InlineIconButton classes or data attributes is not rewritten. Update it manually.
+
+Both codemods scan ts, tsx, mts, cts, js, jsx, mjs, and cjs files. They ignore `node_modules`, `dist`, `build`, `coverage`, and `.react-router`. Edits preserve formatting. New attributes go on their own lines when the element's attributes are already on separate lines. Edited props are not re-sorted, so run your formatter afterward.
 
 ### angular
 
 Packages: `@qualcomm-ui/angular`
 
-| Codemod          | Versions                       | Description                                                                                                                                            |
-| ---------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `emphasis-props` | `@qualcomm-ui/angular` v3 → v4 | Replaces the deprecated `variant` prop of Slider and SegmentedControl with `emphasis`, deprecated `emphasis` values, and deprecated variant type names |
+| Codemod              | Versions                       | Description                                                                                                                                            |
+| -------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `emphasis-props`     | `@qualcomm-ui/angular` v3 → v4 | Replaces the deprecated `variant` prop of Slider and SegmentedControl with `emphasis`, deprecated `emphasis` values, and deprecated variant type names |
+| `inline-icon-button` | `@qualcomm-ui/angular` v3 → v4 | Replaces the deprecated InlineIconButton with the compact ghost IconButton (`q-icon-button`)                                                           |
 
 Run the migration:
 
@@ -269,11 +288,15 @@ Run the migration:
 npx @qualcomm-ui/codemod@latest migrate angular
 ```
 
-The deprecated props, values, and types remain supported in v4, so run the codemod before or after upgrading. Detected v3 dependencies are updated to v4 in `package.json`. Running it again makes no changes.
+The deprecated props, values, types, and InlineIconButton remain supported in v4. Run both codemods before or after upgrading. Detected v3 dependencies are updated to v4 in `package.json`. Running them again makes no changes.
+
+Both codemods rewrite external `.html` templates and inline `template` strings in `@Component` decorators. This includes elements inside `@if` and `@for` blocks, `ng-template`, and structural directives. `[attr.variant]` is unchanged.
+
+#### emphasis-props
 
 `emphasis-props` matches `<q-slider>`, `[q-slider-root]`, `[q-segmented-control]`, `[q-tag]`, `[q-breadcrumbs-root]`, `[q-progress]`, `[q-progress-root]`, `[q-progress-ring]`, and `[q-progress-ring-root]` selectors.
 
-The codemod rewrites external `.html` templates and inline `template` strings in `@Component` decorators. This includes elements inside `@if` and `@for` blocks, `ng-template`, and structural directives. It handles static attributes (`variant="primary"`), property bindings (`[variant]="'primary'"`, `bind-variant`), and interpolations (`variant="{{ 'primary' }}"`). `[attr.variant]` is unchanged.
+It handles static attributes (`variant="primary"`), property bindings (`[variant]="'primary'"`, `bind-variant`), and interpolations (`variant="{{ 'primary' }}"`).
 
 Prop replacements:
 
@@ -314,4 +337,33 @@ For elements with both props, remove `variant`; `emphasis` takes precedence at r
 
 Spread props, prop objects or arrays built elsewhere, direct qds-core API usage (`createQdsSliderApi`, `api.variant`), and CSS are not rewritten. Slider and SegmentedControl render `data-emphasis` instead of `data-variant`. Update custom CSS targeting `[data-variant]` on those components manually.
 
-The codemod scans ts, mts, cts, and html files. It ignores `node_modules`, `dist`, `build`, `coverage`, and `.angular`. Edits preserve formatting. Edited props are not re-sorted, so run your formatter afterward.
+#### inline-icon-button
+
+`inline-icon-button` replaces the `q-inline-icon-button` attribute with `q-icon-button`, followed by `density="compact"` and `variant="ghost"`. Static `variant`, `[variant]`, `bind-variant`, and interpolated `variant` are replaced with `variant="ghost"`, regardless of the value or expression.
+
+InlineIconButton is ghost-styled, but IconButton defaults to `variant="fill"`. The old `variant` (`fixed` or `scale`) controls icon size and has no equivalent. A compact IconButton's icon size follows `size`. `emphasis`, `size`, and `icon` are kept as is. Their values are valid on IconButton.
+
+`q-inline-icon-button` renders an X icon when no icon is set. `q-icon-button` has no default icon, and string icons throw unless registered with `provideIcons`. Elements without `icon` or `[icon]` get `icon="X"`. The component that owns the template gets `provideIcons({LucideX})` in `providers`:
+
+- `LucideX` is added to an existing `provideIcons` call, or a call is appended to the `providers` array. A missing `providers` property is added.
+- `LucideX` is imported from `@lucide/angular`. `provideIcons` is imported from `@qualcomm-ui/angular-core/lucide`.
+- An existing provider that registers the icon under `LucideX`, `X`, or `XIcon` is left unchanged.
+- For `.html` templates, the owning component is the one whose `templateUrl` points to the file. Templates with no owner among scanned components are reported so the provider can be added manually.
+
+If `LucideX` is registered app-wide, remove the redundant provider added by the codemod.
+
+`InlineIconButtonComponent` in `imports` and `exports` arrays is replaced with `ButtonModule`. This applies to `@Component`, `@NgModule`, and object literals such as `TestBed.configureTestingModule`. An existing `ButtonModule` is not duplicated. The import moves from `@qualcomm-ui/angular/inline-icon-button` to `@qualcomm-ui/angular/button`.
+
+It reports the following for manual update instead of rewriting them:
+
+- Other references to `InlineIconButtonComponent`, such as `viewChild(InlineIconButtonComponent)`. Replace them with `IconButtonDirective`. The import is kept.
+- `useInlineIconButtonApi`. Replace it with `useIconButtonApi` and pass density `"compact"` and variant `"ghost"`.
+- Namespace imports of `@qualcomm-ui/angular/inline-icon-button` and re-exports from it
+- Inline templates that aren't plain strings (including template literals with `${}`), templates containing escape sequences, and templates that fail to parse. The component keeps `InlineIconButtonComponent` in its imports.
+- Components whose `templateUrl` can't be read, such as a template outside the scanned files. Their imports are left unchanged.
+- `providers` values that aren't array literals
+- Files that already declare `ButtonModule`, `LucideX`, or `provideIcons` from another module, such as PrimeNG's `ButtonModule`. These files are left unchanged.
+
+CSS targeting InlineIconButton classes or data attributes is not rewritten. Update it manually.
+
+Both codemods scan ts, mts, cts, and html files. They ignore `node_modules`, `dist`, `build`, `coverage`, and `.angular`. Edits preserve formatting. New attributes go on their own lines when the element's attributes are already on separate lines. Edited props are not re-sorted, so run your formatter afterward.

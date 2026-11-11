@@ -6,9 +6,9 @@ import type {ReactElement} from "react"
 import {Funnel} from "lucide-react"
 
 import type {QdsTableColumnFilterProps} from "@qualcomm-ui/qds-core/table"
-import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context.js"
@@ -22,7 +22,7 @@ export interface TableColumnFilterActionProps
    *
    * @default Funnel
    */
-  icon?: LucideIconOrNode
+  icon?: LucideIconOrElement
 }
 
 /**
@@ -47,10 +47,11 @@ export function TableColumnFilterAction({
   )
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
       icon={Funnel}
       size="sm"
-      variant="fixed"
+      variant="ghost"
       {...mergedProps}
     />
   )

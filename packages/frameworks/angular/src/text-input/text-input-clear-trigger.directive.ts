@@ -18,7 +18,11 @@ import {QuiPreloadDirective} from "@qualcomm-ui/angular/transitions"
   selector: "[q-text-input-clear-trigger]",
   standalone: false,
   template: `
-    <svg qIcon="X" [q-bind]="clearTriggerContext.getIconBindings()"></svg>
+    <svg
+      qIcon="X"
+      [q-bind]="clearTriggerContext.getIconBindings()"
+      [size]="clearTriggerContext.size()"
+    ></svg>
   `,
 })
 export class TextInputClearTriggerDirective extends CoreTextInputClearTriggerDirective {

@@ -6,7 +6,7 @@ import {LucideChevronDown} from "@lucide/angular"
 
 import {CoreComboboxTriggerDirective} from "@qualcomm-ui/angular-core/combobox"
 import {provideIcons} from "@qualcomm-ui/angular-core/lucide"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsComboboxContext} from "./qds-combobox-context.service"
@@ -27,12 +27,13 @@ import {useQdsComboboxContext} from "./qds-combobox-context.service"
 })
 export class ComboboxTriggerDirective extends CoreComboboxTriggerDirective {
   protected readonly qdsComboboxContext = useQdsComboboxContext()
-  protected readonly inlineIconButtonApi = useInlineIconButtonApi({
+  protected readonly inlineIconButtonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: computed(() =>
       this.qdsComboboxContext().size === "sm" ? "sm" : "md",
     ),
-    variant: "scale",
+    variant: "ghost",
   })
 
   constructor() {

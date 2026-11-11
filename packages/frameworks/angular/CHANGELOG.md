@@ -1,5 +1,28 @@
 # @qualcomm-ui/angular Changelog
 
+## 4.1.0
+
+Nov 11th, 2026
+
+### Features
+
+* migrate internal inline-icon-button usage ([d9b7f8c](https://github.com/qualcomm/qualcomm-ui/commit/d9b7f8c))
+
+### Bug Fixes
+
+* [text-input]: use correct clear trigger size for sm variant ([c5e04c3](https://github.com/qualcomm/qualcomm-ui/commit/c5e04c3))
+* [combobox]: move dropdown indicator to rightmost position ([829fcd6](https://github.com/qualcomm/qualcomm-ui/commit/829fcd6))
+* [file-input]: use correct clear trigger size for sm variant ([60f116b](https://github.com/qualcomm/qualcomm-ui/commit/60f116b))
+* [password-input]: use correct clear trigger size for sm variant ([5c77d8b](https://github.com/qualcomm/qualcomm-ui/commit/5c77d8b))
+
+### Documentation
+
+* [inline-icon-button]: add deprecation comment ([a43eb07](https://github.com/qualcomm/qualcomm-ui/commit/a43eb07))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@2.0.2]
+
 ## 4.0.1
 
 Nov 9th, 2026

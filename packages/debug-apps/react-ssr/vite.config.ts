@@ -73,10 +73,10 @@ export default defineConfig({
         ),
       },
       {
-        find: "@qualcomm-ui/react/inline-icon-button",
+        find: "@qualcomm-ui/react/button",
         replacement: resolve(
           __dirname,
-          "../../frameworks/react/dist/inline-icon-button/index.js",
+          "../../frameworks/react/dist/button/index.js",
         ),
       },
     ],

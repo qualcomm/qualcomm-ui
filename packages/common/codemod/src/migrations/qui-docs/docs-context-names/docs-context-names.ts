@@ -3,18 +3,14 @@
 
 import {glob} from "glob"
 import {readFileSync, writeFileSync} from "node:fs"
-import type {
-  ImportDeclaration,
-  ImportSpecifierStructure,
-  OptionalKind,
-  SourceFile,
-} from "ts-morph"
+import type {SourceFile} from "ts-morph"
 
 import {
   applyEdits,
   type Edit,
   getNamespaceMembers,
   getTopLevelBindings,
+  moveNamedImports,
   parseSource,
   renameReferences,
 } from "../../shared/source-edits.js"
@@ -176,128 +172,6 @@ function renameDeprecatedNames(
   }
 }
 
-function printSpecifier(
-  {alias, isTypeOnly, name}: OptionalKind<ImportSpecifierStructure>,
-  typePrefix: boolean,
-): string {
-  return `${typePrefix && isTypeOnly ? "type " : ""}${name}${alias ? ` as ${alias}` : ""}`
-}
-
-/**
- * Appends specifiers after the last named import, one per line if the import
- * is already split across lines.
- */
-function addSpecifiers(
-  target: ImportDeclaration,
-  specifiers: OptionalKind<ImportSpecifierStructure>[],
-): Edit | undefined {
-  const named = target.getNamedImports()
-  const existing = new Set(
-    named.map((s) => `${s.getName()} as ${s.getAliasNode()?.getText()}`),
-  )
-  const additions = specifiers
-    .filter((s) => !existing.has(`${s.name} as ${s.alias}`))
-    .map((s) => printSpecifier(s, !target.isTypeOnly()))
-  if (!additions.length) {
-    return
-  }
-  const last = named[named.length - 1]
-  const indent = target
-    .getSourceFile()
-    .getFullText()
-    .slice(last.getStartLinePos(), last.getStart())
-  const separator = /^\s*$/.test(indent) ? `,\n${indent}` : ", "
-  return {
-    end: last.getEnd(),
-    start: last.getEnd(),
-    text: `${separator}${additions.join(separator)}`,
-  }
-}
-
-/**
- * Moves the page context imports from the docs-layout entry to the context
- * entry, which is the only entry that exports the new names. Returns
- * `undefined` if there's nothing to move.
- */
-function movePageContextImports(sourceFile: SourceFile): string | undefined {
-  const moved: OptionalKind<ImportSpecifierStructure>[] = []
-  const emptied: ImportDeclaration[] = []
-  let first: ImportDeclaration | undefined
-
-  for (const decl of sourceFile.getImportDeclarations()) {
-    if (decl.getModuleSpecifierValue() !== DOCS_LAYOUT_MODULE) {
-      continue
-    }
-    for (const specifier of decl.getNamedImports()) {
-      if (!PAGE_CONTEXT_NAMES.has(specifier.getName())) {
-        continue
-      }
-      moved.push({
-        alias: specifier.getAliasNode()?.getText(),
-        isTypeOnly: specifier.isTypeOnly() || decl.isTypeOnly(),
-        name: specifier.getName(),
-      })
-      first ??= decl
-      specifier.remove()
-    }
-    if (!decl.getNamedImports().length && !decl.getDefaultImport()) {
-      emptied.push(decl)
-    }
-  }
-
-  if (!first) {
-    return
-  }
-
-  const content = sourceFile.getFullText()
-  const edits: Edit[] = []
-  const hasValue = moved.some((specifier) => !specifier.isTypeOnly)
-  const target = sourceFile
-    .getImportDeclarations()
-    .find(
-      (decl) =>
-        decl.getModuleSpecifierValue() === CONTEXT_MODULE &&
-        decl.getNamedImports().length > 0 &&
-        (!hasValue || !decl.isTypeOnly()),
-    )
-
-  let replacement: string | undefined
-  if (target) {
-    const edit = addSpecifiers(target, moved)
-    if (edit) {
-      edits.push(edit)
-    }
-  } else {
-    const specifiers = moved.map((s) => printSpecifier(s, hasValue))
-    replacement = `import ${hasValue ? "" : "type "}{${specifiers.join(", ")}} from "${CONTEXT_MODULE}"`
-    // "context" sorts before "docs-layout", so this keeps sorted imports sorted.
-    if (!emptied.includes(first)) {
-      const start = first.getStart()
-      edits.push({end: start, start, text: `${replacement}\n`})
-    }
-  }
-
-  for (const decl of emptied) {
-    if (decl === first && replacement) {
-      edits.push({
-        end: decl.getEnd(),
-        start: decl.getStart(),
-        text: replacement,
-      })
-    } else {
-      // Include the trailing newline so that no blank line is left behind.
-      const end = decl.getEnd()
-      edits.push({
-        end: content[end] === "\n" ? end + 1 : end,
-        start: decl.getStart(),
-        text: "",
-      })
-    }
-  }
-
-  return applyEdits(content, edits)
-}
-
 /**
  * Replaces the deprecated docs context exports of `@qualcomm-ui/react-mdx` with
  * their replacements, and moves page context imports from the docs-layout entry
@@ -321,9 +195,14 @@ export function transformDocsContextNames(
 
   const result = renameDeprecatedNames(sourceFile)
   if (result.renamed) {
+    // The page context replacements are only exported from the context entry.
     result.content =
-      movePageContextImports(parseSource(result.content, filePath)) ??
-      result.content
+      moveNamedImports(
+        parseSource(result.content, filePath),
+        DOCS_LAYOUT_MODULE,
+        CONTEXT_MODULE,
+        (name) => PAGE_CONTEXT_NAMES.has(name),
+      ) ?? result.content
   }
 
   const status: CodemodFileStatus = result.manual.length

@@ -4,12 +4,12 @@
 import {computed, type Signal} from "@angular/core"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
-import {useInlineIconButtonApi} from "@qualcomm-ui/angular/inline-icon-button"
-import type {QdsIconSize} from "@qualcomm-ui/qds-core/icon"
+import {useIconButtonApi} from "@qualcomm-ui/angular/button"
 import type {
-  QdsInlineIconButtonIconBindings,
-  QdsInlineIconButtonRootBindings,
-} from "@qualcomm-ui/qds-core/inline-icon-button"
+  QdsIconButtonIconBindings,
+  QdsIconButtonRootBindings,
+} from "@qualcomm-ui/qds-core/button"
+import type {QdsIconSize} from "@qualcomm-ui/qds-core/icon"
 import type {
   QdsInputClearTriggerBindings,
   QdsInputErrorIndicatorBindings,
@@ -39,9 +39,9 @@ export function useInputInput(): UseInputInputReturn {
 }
 
 export interface UseInputClearTriggerReturn {
-  getIconBindings: Signal<QdsInlineIconButtonIconBindings>
+  getIconBindings: Signal<QdsIconButtonIconBindings>
   getRootBindings: Signal<
-    MergeProps<[QdsInlineIconButtonRootBindings, QdsInputClearTriggerBindings]>
+    MergeProps<[QdsIconButtonRootBindings, QdsInputClearTriggerBindings]>
   >
   size: Signal<QdsIconSize>
 }
@@ -53,10 +53,11 @@ export interface UseInputClearTriggerReturn {
  */
 export function useInputClearTrigger(): UseInputClearTriggerReturn {
   const qdsContext = useQdsInputContext()
-  const buttonApi = useInlineIconButtonApi({
+  const buttonApi = useIconButtonApi({
+    density: "compact",
     emphasis: "neutral",
     size: computed(() => qdsContext().size),
-    variant: "scale",
+    variant: "ghost",
   })
 
   return {

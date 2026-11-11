@@ -7,7 +7,7 @@ import {X} from "lucide-react"
 
 import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {useTextInputClearTrigger} from "@qualcomm-ui/react-core/text-input"
-import {InlineIconButton} from "@qualcomm-ui/react/inline-icon-button"
+import {IconButton} from "@qualcomm-ui/react/button"
 import {useQdsInputContext} from "@qualcomm-ui/react/input"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -28,10 +28,11 @@ export function TextInputClearTrigger(
   )
 
   return (
-    <InlineIconButton
+    <IconButton
+      density="compact"
       icon={X}
       size={qdsContext.size}
-      variant="scale"
+      variant="ghost"
       {...mergedProps}
     />
   )

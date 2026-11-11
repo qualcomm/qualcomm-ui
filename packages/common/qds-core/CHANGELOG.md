@@ -1,5 +1,17 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 2.0.2
+
+Nov 11th, 2026
+
+### Documentation
+
+* [inline-icon-button]: add deprecation comment ([a43eb07](https://github.com/qualcomm/qualcomm-ui/commit/a43eb07))
+
+### Bug Fixes
+
+* [combobox]: add divider between clear trigger and indicators ([f09284d](https://github.com/qualcomm/qualcomm-ui/commit/f09284d))
+
 ## 2.0.1
 
 Nov 9th, 2026
