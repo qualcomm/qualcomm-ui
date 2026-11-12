@@ -4,12 +4,18 @@
 import chalk from "chalk"
 import {glob} from "glob"
 import {readFileSync} from "node:fs"
-import {dirname, relative} from "node:path"
-import type {z} from "zod"
+import {dirname} from "node:path"
 
 import {navFileSchema} from "../config/config-schema.js"
 import type {RoutingStrategy} from "../config/types.js"
+import {formatSchemaIssue} from "../config/zod.js"
 import {fixPath} from "../path-utils.js"
+import {
+  type FileIssues,
+  formatPath,
+  pluralize,
+  reportFileIssues,
+} from "../report-file-issues.js"
 
 import {getRouteKey} from "./get-route-meta.js"
 import {getFolderPathSegments, getPathnameFromPathSegments} from "./page-map.js"
@@ -17,7 +23,10 @@ import type {FolderNavConfig, NavConfig, RouteMeta} from "./types.js"
 
 export const NAV_FILE_NAME = "_nav.json"
 
-const ROOT_CONFIG_SOURCE = "navConfig"
+/**
+ * Identifies the qui-docs config's `navConfig` in issues and claims.
+ */
+export const ROOT_NAV_CONFIG_SOURCE = "navConfig"
 
 export interface FolderNavOptions {
   /**
@@ -36,11 +45,36 @@ export interface FolderNavOptions {
   throwOnError?: boolean
 }
 
+/**
+ * A nav entry that references a route by its `id`.
+ */
+export interface ListedNavRoute {
+  /**
+   * Location of the entry in its source, like `children[0]`.
+   */
+  path: string
+  pathSegments: string[]
+  /**
+   * The `_nav.json` file path, or {@link ROOT_NAV_CONFIG_SOURCE}.
+   */
+  source: string
+}
+
 export interface FolderNavResult {
   /**
    * Number of `_nav.json` files that were skipped because they are invalid.
    */
   errorCount: number
+  /**
+   * Number of `_nav.json` files found in the page directory, including invalid
+   * and ignored files.
+   */
+  fileCount: number
+  /**
+   * Entries from the root nav config and every valid `_nav.json` file, ordered
+   * so that parents precede their children.
+   */
+  listedRoutes: ListedNavRoute[]
   /**
    * The root nav config merged with every valid `_nav.json` file.
    */
@@ -60,11 +94,6 @@ export interface FolderNavResult {
 interface NavFile {
   filePath: string
   pathSegments: string[]
-}
-
-interface NavFileIssues {
-  filePath: string
-  messages: string[]
 }
 
 interface PropertyClaim {
@@ -116,19 +145,28 @@ function findDuplicateIds(
   }
 }
 
-function formatPath(filePath: string): string {
-  return fixPath(relative(process.cwd(), filePath))
-}
-
-function formatSchemaIssue(issue: z.core.$ZodIssue): string {
-  const path = issue.path
-    .map((key, index) =>
-      typeof key === "number"
-        ? `[${key}]`
-        : `${index === 0 ? "" : "."}${String(key)}`,
+function collectListedRoutes(
+  entries: NavConfig[] | RouteMeta[] | undefined,
+  parentSegments: string[],
+  parentPath: string,
+  source: string,
+  listedRoutes: ListedNavRoute[],
+): void {
+  entries?.forEach((entry, index) => {
+    if (!("id" in entry) || !entry.id) {
+      return
+    }
+    const path = `${parentPath}[${index}]`
+    const pathSegments = [...parentSegments, entry.id]
+    listedRoutes.push({path, pathSegments, source})
+    collectListedRoutes(
+      entry.children,
+      pathSegments,
+      `${path}.children`,
+      source,
+      listedRoutes,
     )
-    .join("")
-  return path ? `${path}: ${issue.message}` : issue.message
+  })
 }
 
 function readNavFile(
@@ -186,24 +224,6 @@ function getOrCreateEntry(
   return entry!
 }
 
-function reportIssues(
-  issues: NavFileIssues[],
-  title: string,
-  color: typeof chalk.redBright,
-): void {
-  if (!issues.length) {
-    return
-  }
-  console.debug(`\n${color.bold(title)}`)
-  for (const {filePath, messages} of issues) {
-    console.debug(`\n  ${chalk.blueBright.bold(formatPath(filePath))}`)
-    for (const message of messages) {
-      console.debug(`    ${color("x")} ${message}`)
-    }
-  }
-  console.debug("")
-}
-
 /**
  * Merges the `_nav.json` files in the page directory into the nav config. Each
  * file describes the route of the folder that contains it. A property of a
@@ -220,6 +240,8 @@ export function loadFolderNavConfig(
   const {pageDirectory, routesDir, routingStrategy, srcDir} = options
   const result: FolderNavResult = {
     errorCount: 0,
+    fileCount: 0,
+    listedRoutes: [],
     navConfig: structuredClone(rootNavConfig),
     structuralRoutes: new Set(),
     unorderedRoutes: new Set(),
@@ -228,12 +250,20 @@ export function loadFolderNavConfig(
   const filePaths = glob
     .sync(`**/${NAV_FILE_NAME}`, {absolute: true, cwd: routesDir})
     .map(fixPath)
+  collectListedRoutes(
+    rootNavConfig,
+    [],
+    ROOT_NAV_CONFIG_SOURCE,
+    ROOT_NAV_CONFIG_SOURCE,
+    result.listedRoutes,
+  )
+  result.fileCount = filePaths.length
   if (!filePaths.length) {
     return result
   }
 
-  const errors: NavFileIssues[] = []
-  const warnings: NavFileIssues[] = []
+  const errors: FileIssues[] = []
+  const warnings: FileIssues[] = []
   const navFiles: NavFile[] = []
 
   for (const filePath of filePaths) {
@@ -293,7 +323,7 @@ export function loadFolderNavConfig(
   for (const item of rootNavConfig) {
     if ("id" in item && item.id) {
       for (const claim of collectClaims(item, [item.id])) {
-        owners.set(getClaimKey(claim), ROOT_CONFIG_SOURCE)
+        owners.set(getClaimKey(claim), ROOT_NAV_CONFIG_SOURCE)
       }
     }
   }
@@ -326,23 +356,32 @@ export function loadFolderNavConfig(
     for (const claim of claims) {
       owners.set(getClaimKey(claim), source)
     }
+    collectListedRoutes(
+      entry.children,
+      pathSegments,
+      "children",
+      source,
+      result.listedRoutes,
+    )
   }
 
   result.errorCount = errors.length
-  reportIssues(
-    warnings,
-    `Ignored ${warnings.length} ${NAV_FILE_NAME} file${warnings.length === 1 ? "" : "s"}:`,
+  const formatIssues = (issues: FileIssues[]) =>
+    issues.map((issue) => ({...issue, filePath: formatPath(issue.filePath)}))
+  reportFileIssues(
+    formatIssues(warnings),
+    `Ignored ${pluralize(warnings.length, `${NAV_FILE_NAME} file`)}:`,
     chalk.yellowBright,
   )
-  reportIssues(
-    errors,
-    `Skipped ${errors.length} invalid ${NAV_FILE_NAME} file${errors.length === 1 ? "" : "s"}:`,
+  reportFileIssues(
+    formatIssues(errors),
+    `Skipped ${pluralize(errors.length, `invalid ${NAV_FILE_NAME} file`)}:`,
     chalk.redBright,
   )
 
   if (errors.length && options.throwOnError) {
     throw new Error(
-      `Found ${errors.length} invalid ${NAV_FILE_NAME} file${errors.length === 1 ? "" : "s"}.`,
+      `Found ${pluralize(errors.length, `invalid ${NAV_FILE_NAME} file`)}.`,
     )
   }
 

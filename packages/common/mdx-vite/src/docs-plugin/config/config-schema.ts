@@ -190,6 +190,7 @@ const lintSeveritySchema = z.union([
 
 const lintSchema = implement<QuiDocsLintOptions>().with({
   brokenLinks: lintSeveritySchema.optional(),
+  configs: lintSeveritySchema.optional(),
   fileLinks: lintSeveritySchema.optional(),
   pageTitle: lintSeveritySchema.optional(),
 })
@@ -236,4 +237,45 @@ const configSchema = implement<QuiDocsConfig>().with({
 
 export function parseSchema(data: unknown): ZodSafeParseResult<QuiDocsConfig> {
   return configSchema.safeParse(data)
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
+}
+
+/**
+ * Finds the properties that {@link parseSchema} stripped from the config because
+ * it doesn't recognize them. The schema strips rather than rejects them so that
+ * configs keep loading across versions, but they're usually typos.
+ *
+ * Compares the config to its parsed output instead of using strict schemas so
+ * that union members, like the `navConfig` entry types, report the keys that
+ * the matching member doesn't recognize. Values that the schema passes through
+ * unchanged, like `routingStrategy`, are returned by reference and skipped.
+ */
+export function findUnrecognizedKeys(
+  input: unknown,
+  output: unknown,
+  path: PropertyKey[] = [],
+): Pick<z.core.$ZodIssue, "message" | "path">[] {
+  if (input === output) {
+    return []
+  }
+  if (Array.isArray(input) && Array.isArray(output)) {
+    return input.flatMap((item, index) =>
+      findUnrecognizedKeys(item, output[index], [...path, index]),
+    )
+  }
+  if (!isObject(input) || !isObject(output)) {
+    return []
+  }
+  return Object.keys(input).flatMap((key) => {
+    if (key in output) {
+      return findUnrecognizedKeys(input[key], output[key], [...path, key])
+    }
+    // keys set to `undefined` have no effect, so they aren't worth reporting.
+    return input[key] === undefined
+      ? []
+      : [{message: `Unrecognized key: "${key}"`, path}]
+  })
 }

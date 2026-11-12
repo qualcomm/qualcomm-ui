@@ -16,6 +16,13 @@ import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 import {defined} from "@qualcomm-ui/utils/guard"
 
 import {
+  collectRouteKeys,
+  type ConfigIssues,
+  countConfigIssues,
+  reportConfigIssues,
+  validateNavRoutes,
+} from "./config-validator.js"
+import {
   type QuiDocsLintOptions,
   resolveLintOptions,
   type SearchIndexerOptions,
@@ -54,7 +61,10 @@ import {
   NavBuilder,
   transformRouteMetaArray,
 } from "./nav-builder/index.js"
-import {loadFolderNavConfig} from "./nav-builder/load-folder-nav.js"
+import {
+  type ListedNavRoute,
+  loadFolderNavConfig,
+} from "./nav-builder/load-folder-nav.js"
 import type {
   RouteMetaEntryInternal,
   RouteMetaInternal,
@@ -88,6 +98,8 @@ export class SearchIndexer {
   private _pageFiles: Record<string, string> = {}
   private readonly fileLinkOptions: MdxFileLinkOptions
   private _pageTitleIssues: PageTitleIssue[] = []
+  private _configIssueCount = 0
+  private readonly listedNavRoutes: ListedNavRoute[]
   private readonly lint: Required<QuiDocsLintOptions>
   private readonly routeMetaNav: Record<string, RouteMetaNavInternal> = {}
   private readonly structuralRoutes: ReadonlySet<string>
@@ -105,6 +117,7 @@ export class SearchIndexer {
   get lintErrorCount(): number {
     return (
       (this.lint.brokenLinks === "error" ? this._invalidLinkCount : 0) +
+      (this.lint.configs === "error" ? this._configIssueCount : 0) +
       (this.lint.fileLinks === "error" ? this._fileLinkIssueCount : 0) +
       (this.lint.pageTitle === "error" ? this._pageTitleIssues.length : 0)
     )
@@ -116,6 +129,7 @@ export class SearchIndexer {
   get lintWarningCount(): number {
     return (
       (this.lint.brokenLinks === "warn" ? this._invalidLinkCount : 0) +
+      (this.lint.configs === "warn" ? this._configIssueCount : 0) +
       (this.lint.fileLinks === "warn" ? this._fileLinkIssueCount : 0) +
       (this.lint.pageTitle === "warn" ? this._pageTitleIssues.length : 0)
     )
@@ -128,6 +142,14 @@ export class SearchIndexer {
     return this._navConfigErrorCount
   }
   private readonly _navConfigErrorCount: number
+
+  /**
+   * Number of `_nav.json` files in the page directory, including invalid files.
+   */
+  get navFileCount(): number {
+    return this._navFileCount
+  }
+  private readonly _navFileCount: number
 
   get cachedFileCount(): number {
     return this.mdxFileReader.cachedFileCount
@@ -182,6 +204,7 @@ export class SearchIndexer {
     this._fileLinkIssueCount = 0
     this._pageFiles = {}
     this._pageTitleIssues = []
+    this._configIssueCount = 0
     this._ignoredMdxFiles = new Set()
     this._pageDocProps = {}
     this._pageMap = {}
@@ -218,6 +241,8 @@ export class SearchIndexer {
       throwOnError: config.throwOnError,
     })
     this._navConfigErrorCount = folderNav.errorCount
+    this._navFileCount = folderNav.fileCount
+    this.listedNavRoutes = folderNav.listedRoutes
     this.structuralRoutes = folderNav.structuralRoutes
     this.metaJson = transformRouteMetaArray(
       folderNav.navConfig,
@@ -613,14 +638,15 @@ export class SearchIndexer {
       this.config.routingStrategy,
     ).map((file) => this.getPageRoute(file))
 
-    const tsxRoutes = filterFileGlob(
+    const allTsxRoutes = filterFileGlob(
       fileGlob,
       "tsx",
       this.config.srcDir,
       this.config.routingStrategy,
+    ).map((file) => this.getPageRoute(file))
+    const tsxRoutes = allTsxRoutes.filter(({pathSegments}) =>
+      this.getTsxRouteMeta(pathSegments),
     )
-      .map((file) => this.getPageRoute(file))
-      .filter(({pathSegments}) => this.getTsxRouteMeta(pathSegments))
 
     const parentPathnames = new Set<string>()
     for (const {pathSegments} of [...mdxRoutes, ...tsxRoutes]) {
@@ -706,6 +732,19 @@ export class SearchIndexer {
 
     if (this.lint.pageTitle !== "off") {
       reportPageTitleIssues(this._pageTitleIssues, this.lint.pageTitle)
+    }
+
+    if (this.lint.configs !== "off") {
+      const configIssues: ConfigIssues = {
+        // .tsx pages without a nav entry still exist, so every route file counts.
+        navRoutes: validateNavRoutes(
+          this.listedNavRoutes,
+          collectRouteKeys([...mdxRoutes, ...allTsxRoutes]),
+        ),
+        unrecognizedKeys: this.config.unrecognizedConfigKeys,
+      }
+      this._configIssueCount = countConfigIssues(configIssues)
+      reportConfigIssues(configIssues, this.lint.configs)
     }
 
     return compiledFiles

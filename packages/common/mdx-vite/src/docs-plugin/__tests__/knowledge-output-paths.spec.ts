@@ -42,10 +42,15 @@ describe("PluginState knowledge exports", () => {
       knowledge: {},
       lint: {
         brokenLinks: "warn",
+        configs: "warn",
         fileLinks: "off",
         pageTitle: "warn",
       },
       pageDirectory: "routes",
+      unrecognizedConfigKeys: {
+        filePath: join(temporaryDirectory, "qui-docs.config.ts"),
+        messages: [],
+      },
     })
     const exportPathnames = async () => {
       state.buildIndex(false)
@@ -137,6 +142,7 @@ describe("PluginState knowledge exports", () => {
       knowledge: {outputPath: "knowledge"},
       lint: {
         brokenLinks: "warn",
+        configs: "warn",
         fileLinks: "off",
         pageTitle: "warn",
       },
@@ -146,6 +152,10 @@ describe("PluginState knowledge exports", () => {
       ],
       pageDirectory: "routes",
       routingStrategy: "react-router-directory-groups",
+      unrecognizedConfigKeys: {
+        filePath: join(temporaryDirectory, "qui-docs.config.ts"),
+        messages: [],
+      },
     })
     state.buildIndex(false)
 
