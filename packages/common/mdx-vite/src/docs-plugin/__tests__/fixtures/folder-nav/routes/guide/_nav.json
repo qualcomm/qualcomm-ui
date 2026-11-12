@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../../dist/schemas/nav.schema.json",
+  "children": [
+    {"id": "markdown"},
+    {"id": "page-setup"},
+    {"id": "advanced"},
+    {"id": "redirect", "title": "Redirect"}
+  ],
+  "expanded": true,
+  "title": "Guide"
+}

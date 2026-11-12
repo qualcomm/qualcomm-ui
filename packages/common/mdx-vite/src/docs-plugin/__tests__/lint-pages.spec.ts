@@ -137,6 +137,16 @@ describe("lintPages", () => {
     ])
   })
 
+  test("reports invalid _nav.json files as errors with warn", async () => {
+    writeFile("app/routes/docs/_nav.json", JSON.stringify({titel: "Docs"}))
+    writeFile("app/routes/docs/intro.mdx", "# Intro")
+
+    const {output, result} = await lint({}, {warn: true})
+
+    expect(result.errorCount).toBe(1)
+    expect(output).toContain(`Unrecognized key: "titel"`)
+  })
+
   test("validates fragments against page headings", async () => {
     writeFile(
       "app/routes/index.mdx",

@@ -49,11 +49,14 @@ import {
   getCategoriesFromPathSegments,
   getPathnameFromPathSegments,
   getPathSegmentsFromFileName,
+  getRouteKey,
   getRouteMeta,
   NavBuilder,
   transformRouteMetaArray,
 } from "./nav-builder/index.js"
+import {loadFolderNavConfig} from "./nav-builder/load-folder-nav.js"
 import type {
+  RouteMetaEntryInternal,
   RouteMetaInternal,
   RouteMetaNavInternal,
 } from "./nav-builder/types.js"
@@ -87,6 +90,7 @@ export class SearchIndexer {
   private _pageTitleIssues: PageTitleIssue[] = []
   private readonly lint: Required<QuiDocsLintOptions>
   private readonly routeMetaNav: Record<string, RouteMetaNavInternal> = {}
+  private readonly structuralRoutes: ReadonlySet<string>
   readonly config: SearchIndexerOptions
   logWarnings: boolean
   /**
@@ -116,6 +120,14 @@ export class SearchIndexer {
       (this.lint.pageTitle === "warn" ? this._pageTitleIssues.length : 0)
     )
   }
+
+  /**
+   * Number of invalid `_nav.json` files. These are skipped when building the nav.
+   */
+  get navConfigErrorCount(): number {
+    return this._navConfigErrorCount
+  }
+  private readonly _navConfigErrorCount: number
 
   get cachedFileCount(): number {
     return this.mdxFileReader.cachedFileCount
@@ -198,9 +210,19 @@ export class SearchIndexer {
     this.allowedHeadings = new Set<string>(
       Array.from(config?.headings || ["h2", "h3", "h4"]),
     )
+    const folderNav = loadFolderNavConfig(this.config.navConfig ?? [], {
+      pageDirectory: config.pageDirectory,
+      routesDir: fixPath(join(config.srcDir, config.pageDirectory)),
+      routingStrategy: config.routingStrategy,
+      srcDir: config.srcDir,
+      throwOnError: config.throwOnError,
+    })
+    this._navConfigErrorCount = folderNav.errorCount
+    this.structuralRoutes = folderNav.structuralRoutes
     this.metaJson = transformRouteMetaArray(
-      this.config.navConfig ?? [],
+      folderNav.navConfig,
       this.routeMetaNav,
+      folderNav.unorderedRoutes,
     )
 
     const headingDepths = Array.from(this.allowedHeadings).map((h) =>
@@ -220,6 +242,20 @@ export class SearchIndexer {
         process.env.NODE_ENV === "development" && !this.config.disableCache,
         this.config.pageTimestampMetadata,
       )
+  }
+
+  /**
+   * `.tsx` pages are only added to the nav when they have a nav config entry.
+   * Ancestors created only to reach a nested `_nav.json` don't count.
+   */
+  private getTsxRouteMeta(
+    pathSegments: string[],
+  ): RouteMetaEntryInternal | undefined | null {
+    const segments = pathSegments.length ? pathSegments : ["_index"]
+    if (this.structuralRoutes.has(getRouteKey(segments))) {
+      return undefined
+    }
+    return getRouteMeta(segments, this.metaJson)
   }
 
   /**
@@ -520,10 +556,7 @@ export class SearchIndexer {
   private compileTsxFile(route: PageRoute) {
     const entry = this.getPageEntry(route, {})
 
-    const routeMeta = getRouteMeta(
-      entry.pathSegments.length === 0 ? ["_index"] : entry.pathSegments,
-      this.metaJson,
-    )
+    const routeMeta = this.getTsxRouteMeta(entry.pathSegments)
 
     if (!routeMeta) {
       return null
@@ -574,12 +607,7 @@ export class SearchIndexer {
       this.config.routingStrategy,
     )
       .map((file) => this.getPageRoute(file))
-      .filter(({pathSegments}) =>
-        getRouteMeta(
-          pathSegments.length ? pathSegments : ["_index"],
-          this.metaJson,
-        ),
-      )
+      .filter(({pathSegments}) => this.getTsxRouteMeta(pathSegments))
 
     const parentPathnames = new Set<string>()
     for (const {pathSegments} of [...mdxRoutes, ...tsxRoutes]) {

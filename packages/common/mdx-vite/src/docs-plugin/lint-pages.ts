@@ -142,7 +142,8 @@ export async function lintPages(
 
   return {
     disabledRules,
-    errorCount: indexer.lintErrorCount,
+    // invalid _nav.json files aren't a lint rule, so --warn doesn't apply to them.
+    errorCount: indexer.lintErrorCount + indexer.navConfigErrorCount,
     pageCount: indexer.mdxFileCount,
     warningCount: indexer.lintWarningCount,
   }

@@ -199,6 +199,18 @@ export class PluginState {
     }, 300)
   }
 
+  /**
+   * Recreates the indexer to pick up `_nav.json` changes. This also clears the
+   * MDX cache, which holds section data derived from the previous nav titles.
+   */
+  reloadIndexer(opts: ChangeOptions = {}): void {
+    if (!this.config) {
+      return
+    }
+    this.createIndexer(this.config)
+    this.handleChange(opts)
+  }
+
   initWatchers(configFile?: string): void {
     if (this.watching) {
       return

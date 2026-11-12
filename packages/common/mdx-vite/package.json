@@ -28,7 +28,8 @@
     },
     "./react-demo-plugin": {
       "types": "./dist/react-demo-plugin/virtual.d.ts"
-    }
+    },
+    "./schemas/nav.schema.json": "./dist/schemas/nav.schema.json"
   },
   "publishConfig": {
     "access": "public"
@@ -38,7 +39,7 @@
     "compile": "run-s build:js build:types",
     "clean": "shx rm -rf node_modules/.tmp dist",
     "build:js": "vite build",
-    "build:types": "tsc -b tsconfig.lib.json",
+    "build:types": "tsc -b",
     "dev": "run-p watch:js watch:types",
     "watch:js": "vite build -w",
     "watch:types": "pnpm build:types -w --preserveWatchOutput",

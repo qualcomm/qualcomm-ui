@@ -6,5 +6,10 @@
     "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-scripts",
     "types": ["node"]
   },
-  "include": ["*.ts"]
+  "include": ["*.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
 }

@@ -4,6 +4,13 @@
 import type {RouteMetaEntryInternal, RouteMetaInternal} from "./types.js"
 
 /**
+ * Identifies a route by its path segments in lookup sets and maps.
+ */
+export function getRouteKey(pathSegments: string[]): string {
+  return pathSegments.join("/")
+}
+
+/**
  * Retrieves the route metadata for a given path based on its path segments.
  */
 export function getRouteMeta(

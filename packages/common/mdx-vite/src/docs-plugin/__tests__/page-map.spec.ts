@@ -5,6 +5,7 @@ import {describe, expect, test} from "vitest"
 
 import {
   filterFileGlob,
+  getFolderPathSegments,
   getPathSegmentsFromFileName,
 } from "../nav-builder/page-map"
 
@@ -118,5 +119,88 @@ describe("filterFileGlob", () => {
       "/src/routes/guide/page.mdx",
       "/src/routes/components/button/_button.mdx",
     ])
+  })
+})
+
+describe("getFolderPathSegments", () => {
+  const srcDir = "/app/src"
+
+  test("default strategy: resolves nested + folders", () => {
+    expect(
+      getFolderPathSegments(
+        "/app/src/routes/components+/button+",
+        srcDir,
+        "routes",
+      ),
+    ).toEqual(["components", "button"])
+  })
+
+  test("default strategy: resolves a plain folder as a single route", () => {
+    expect(
+      getFolderPathSegments("/app/src/routes/guide", srcDir, "routes"),
+    ).toEqual(["guide"])
+  })
+
+  test("default strategy: excludes dynamic route folders", () => {
+    expect(
+      getFolderPathSegments("/app/src/routes/blog+/$slug+", srcDir, "routes"),
+    ).toBeUndefined()
+  })
+
+  test("react-router-directory-groups strategy: resolves nested plain folders", () => {
+    expect(
+      getFolderPathSegments(
+        "/app/src/routes/guide/advanced",
+        srcDir,
+        "routes",
+        "react-router-directory-groups",
+      ),
+    ).toEqual(["guide", "advanced"])
+  })
+
+  test("react-router-directory-groups strategy: excludes private folders", () => {
+    expect(
+      getFolderPathSegments(
+        "/app/src/routes/guide/_demos",
+        srcDir,
+        "routes",
+        "react-router-directory-groups",
+      ),
+    ).toBeUndefined()
+  })
+
+  test("vite-generouted strategy: drops group folders", () => {
+    expect(
+      getFolderPathSegments(
+        "/app/src/routes/(auth)/docs",
+        srcDir,
+        "routes",
+        "vite-generouted",
+      ),
+    ).toEqual(["docs"])
+  })
+
+  test("vite-generouted strategy: excludes + folders", () => {
+    expect(
+      getFolderPathSegments(
+        "/app/src/routes/+private",
+        srcDir,
+        "routes",
+        "vite-generouted",
+      ),
+    ).toBeUndefined()
+  })
+
+  test("resolves the page directory to the root route", () => {
+    expect(getFolderPathSegments("/app/src/routes", srcDir, "routes")).toEqual(
+      [],
+    )
+  })
+
+  test("passes the synthetic index page to a custom strategy", () => {
+    const strategy = (filePath: string) => [filePath]
+    expect(
+      getFolderPathSegments("/app/src/routes/docs", srcDir, "routes", strategy),
+    ).toEqual(["docs/index.mdx"])
   })
 })

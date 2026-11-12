@@ -298,6 +298,34 @@ export function getPathSegmentsFromFileName(
   }
 }
 
+/**
+ * Resolves a folder's route path segments by resolving a synthetic index page
+ * inside it, so that every routing strategy, including custom functions, maps
+ * the folder the same way it maps the folder's pages. Returns `undefined` if
+ * the strategy excludes the folder's pages from the page map.
+ */
+export function getFolderPathSegments(
+  folderPath: string,
+  srcDir: string,
+  pageDirectory: string,
+  strategy?: RoutingStrategy,
+): string[] | undefined {
+  const [indexFile] = filterFileGlob(
+    [`${folderPath}/index.mdx`],
+    "mdx",
+    srcDir,
+    strategy,
+  )
+  if (!indexFile) {
+    return undefined
+  }
+  return getPathSegmentsFromFileName(
+    indexFile.replace(srcDir, ""),
+    pageDirectory,
+    strategy,
+  )
+}
+
 export function filterFileGlob(
   fileGlob: string[],
   ext: string,

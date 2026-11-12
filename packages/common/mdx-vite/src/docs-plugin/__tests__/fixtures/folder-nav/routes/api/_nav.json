@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../../dist/schemas/nav.schema.json",
+  "children": [{"id": "page-frontmatter"}],
+  "title": "API"
+}

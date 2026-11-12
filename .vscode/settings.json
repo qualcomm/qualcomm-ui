@@ -29,6 +29,12 @@
     "typescriptreact"
   ],
   "eslint.format.enable": true,
+  "json.schemas": [
+    {
+      "fileMatch": ["**/routes/**/_nav.json"],
+      "url": "./packages/common/mdx-vite/dist/schemas/nav.schema.json"
+    }
+  ],
   "vs-code-prettier-eslint.prettierLast": true,
   "squarl.groups": [
     {

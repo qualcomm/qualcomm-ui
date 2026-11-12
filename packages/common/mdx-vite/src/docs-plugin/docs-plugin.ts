@@ -1,12 +1,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {join} from "node:path"
-import type {PluginOption, ResolvedConfig} from "vite"
+import {basename, join} from "node:path"
+import type {PluginOption, ResolvedConfig, ViteDevServer} from "vite"
 
 import {dedent} from "@qualcomm-ui/utils/dedent"
 
 import {ConfigLoader, type QuiDocsPluginOptions} from "./config/index.js"
+import {NAV_FILE_NAME} from "./nav-builder/load-folder-nav.js"
 import {fixPath} from "./path-utils.js"
 import {
   CONFIG_VIRTUAL_MODULE_ID,
@@ -34,6 +35,22 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
     return viteConfig.publicDir || join(state.getCwd(), "public")
   }
 
+  function isNavFile(file: string) {
+    return (
+      basename(file) === NAV_FILE_NAME &&
+      fixPath(file).startsWith(`${state.routesDir}/`)
+    )
+  }
+
+  function reloadNavConfig(server: ViteDevServer) {
+    state.reloadIndexer({
+      onComplete: () => {
+        server.ws.send({type: "full-reload"})
+        state.debouncedGenerateKnowledge(getPublicDir())
+      },
+    })
+  }
+
   return {
     apply(config, env) {
       return (
@@ -44,6 +61,13 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
     buildStart: async () => {
       state.buildIndex(state.buildCount > 0)
       state.buildCount++
+
+      const navConfigErrorCount = state.indexer.navConfigErrorCount
+      if (!isDev && navConfigErrorCount) {
+        throw new Error(
+          `@qualcomm-ui/mdx-vite: found ${navConfigErrorCount} invalid ${NAV_FILE_NAME} file${navConfigErrorCount === 1 ? "" : "s"}. See the output above.`,
+        )
+      }
 
       const lintErrorCount = state.indexer.lintErrorCount
       if (!isDev && lintErrorCount) {
@@ -81,7 +105,9 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       })
 
       server.watcher.on("add", (path: string) => {
-        if (path.endsWith(".mdx")) {
+        if (isNavFile(path)) {
+          reloadNavConfig(server)
+        } else if (path.endsWith(".mdx")) {
           state.handleChange({
             onComplete: () => {
               server.ws.send({type: "full-reload"})
@@ -91,7 +117,9 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
         }
       })
       server.watcher.on("unlink", (path: string) => {
-        if (path.endsWith(".mdx")) {
+        if (isNavFile(path)) {
+          reloadNavConfig(server)
+        } else if (path.endsWith(".mdx")) {
           state.handleChange({
             onComplete: () => {
               server.ws.send({type: "full-reload"})
@@ -115,6 +143,11 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           state.docPropsDirectory &&
           file.startsWith(state.docPropsFilePath)
         ) {
+          return []
+        }
+
+        if (isNavFile(file)) {
+          reloadNavConfig(server)
           return []
         }
 
