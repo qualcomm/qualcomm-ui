@@ -86,6 +86,7 @@ Enable `fileLinks` with `"warn"` or `"error"` in `qui-docs.config.ts`:
 ```ts
 lint: {
   brokenLinks: "warn",
+  configs: "warn",
   fileLinks: "warn",
   pageTitle: "warn",
 }
@@ -94,6 +95,7 @@ lint: {
 Rules:
 
 - `brokenLinks`: validates internal MDX links and fragment references after the page map and table of contents are built. Default: `"warn"`.
+- `configs`: validates the QUI Docs config and `_nav.json` files. Default: `"warn"`.
 - `fileLinks`: reports internal links to MDX pages that use URL paths instead of relative `.mdx` file paths. Default: `"off"`.
 - `pageTitle`: validates the h1 page title of every MDX page. Default: `"warn"`.
 
@@ -129,9 +131,29 @@ Found 2 page title issues:
     x src/routes/getting-started.mdx:20 — only the page title may be an h1, use h2 or lower
 ```
 
+The `configs` rule reports:
+
+- Properties the config does not recognize, such as misspelled options. Nested objects and `navConfig` entries are checked.
+- Entries in `navConfig` and in `_nav.json` `children` whose `id` does not match a page or folder, such as a renamed or removed route. Entries nested under an unmatched entry are not reported separately.
+
+A folder `id` matches if the folder contains pages. `.tsx` route files count as pages. Issues are grouped by file. Issues from the root `navConfig` are listed under the config file path:
+
+```console
+Found 3 config issues:
+
+  qui-docs.config.ts
+    x lint: Unrecognized key: "pageTitel"
+    x navConfig[1].id: "missing" doesn't match a page or folder (/missing)
+
+  src/routes/docs+/_nav.json
+    x children[1].id: "gone" doesn't match a page or folder (/docs/gone)
+```
+
+Config values that fail validation, such as `lint: {pageTitle: "fatal"}`, are not part of the `configs` rule. They always fail. The Vite plugin throws `Failed to parse config file.` followed by the config file path and the issues. Invalid `_nav.json` files are not part of the rule either. See [`_nav.json` validation](./pages.mdx#validation).
+
 #### CLI Linting
 
-`qui-docs lint` runs enabled `brokenLinks`, `fileLinks`, and `pageTitle` rules against every MDX page without a Vite build. Use it in CI to fail on lint errors.
+`qui-docs lint` validates the config and `_nav.json` files, then runs enabled `brokenLinks`, `fileLinks`, and `pageTitle` rules against every MDX page without a Vite build. Config validation includes the `configs` rule. Use it in CI to fail on lint errors.
 
 - Every enabled rule reports errors by default, even if its configured or default severity is `"warn"`.
 - Rules with a configured or default severity of `"off"` are skipped.
@@ -149,7 +171,18 @@ The command logs issues in the same format as the Vite plugin. It lists skipped 
 ```console
 Skipped 1 rule:
   fileLinks (disabled by default)
-Checked 89 pages: 0 errors, 0 warnings.
+Checked qui-docs.config.ts, 1 _nav.json file, and 20 pages: 0 errors, 0 warnings.
+```
+
+The summary lists the config file name, the number of `_nav.json` files, and the number of MDX pages.
+
+Config values that fail validation stop the command before pages are checked. They are listed under the config file path:
+
+```console
+Found 1 invalid config value:
+
+  qui-docs.config.ts
+    x lint.pageTitle: Invalid input
 ```
 
 Rules set to `"off"` in the config are labeled `(disabled from config file)`. Rules omitted from the config with a default of `"off"` are labeled `(disabled by default)`. Rules disabled by a per-rule option are labeled `(disabled from command flag)`.
@@ -162,6 +195,7 @@ Rules set to `"off"` in the config are labeled `(disabled from config file)`. Ru
 - `-c, --config-file <configFile>`: path to the QUI Docs config file. The file is auto-detected if omitted. For a config under `src`, use `--config-file src/qui-docs.config.ts`.
 - `-p, --public-dir <publicDir>`: static asset directory. Default: `public`. Links to files in this directory pass validation. Pass this option when Vite uses a different `publicDir`.
 - `--broken-links <severity>`: overrides the `brokenLinks` rule's severity.
+- `--configs <severity>`: overrides the `configs` rule's severity.
 - `--file-links <severity>`: overrides the `fileLinks` rule's severity.
 - `--page-title <severity>`: overrides the `pageTitle` rule's severity.
 - `--warn`: reports issues from enabled rules as warnings. It exits with code `0` unless a per-rule option reports errors, a configuration/load failure occurs, or a `_nav.json` file is invalid. Rules configured as `"off"` stay disabled.

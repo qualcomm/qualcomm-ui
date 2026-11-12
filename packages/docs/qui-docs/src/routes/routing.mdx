@@ -49,7 +49,7 @@ title: Page Authoring
 Use `navConfig` when a page's order, nesting, initial expanded state, label, or visibility matters. Routes without entries still appear, but their order falls back to route discovery.
 
 - Add section children in the exact sidebar order reviewers should see.
-- For each route entry, set `id` to the path segment at that nesting level. A page at `/page-authoring` uses `id: "authoring"` at the top level and `id: "page-authoring"` inside `children`.
+- For each route entry, set `id` to the path segment at that nesting level. A page at `/page-authoring` uses `id: "authoring"` at the top level and `id: "page-authoring"` inside `children`. The [`configs` lint rule](./configuration.mdx#lint) reports ids that don't match a page or folder.
 - Use `children` for nested route entries.
 - Use `expanded: true` only when a section should be open on initial load.
 - Use `title` when a folder or route needs a sidebar label that cannot come from MDX frontmatter.

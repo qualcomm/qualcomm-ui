@@ -209,6 +209,7 @@ Editing, adding, or removing `_nav.json` rebuilds navigation and reloads the pag
 - Unknown properties are errors.
 - Development logs and skips invalid files without stopping the server. Setting `throwOnError: true` makes invalid files throw.
 - Production builds and [`qui-docs lint`](./configuration.mdx#cli-linting) fail if any file is invalid.
+- The [`configs` lint rule](./configuration.mdx#lint) reports `navConfig` and `_nav.json` `children` ids that don't match a page or folder.
 
 ### Flatten Nested Routes
 
