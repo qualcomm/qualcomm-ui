@@ -89,4 +89,56 @@ describe("SearchIndexer link validation cache", () => {
     expect(output).toContain("/target#target-anchor")
     expect(output).toContain('fragment "#target-anchor" not found')
   })
+
+  test("reports cached anchor IDs and page title issues without re-parsing", () => {
+    tmpDir = mkdtempSync(join(tmpdir(), "qui-mdx-vite-"))
+    const routesDir = join(tmpDir, "routes")
+    mkdirSync(routesDir)
+
+    const sourceFile = createMdxFile(
+      join(routesDir, "source.mdx"),
+      [
+        "---",
+        "title: Source",
+        "---",
+        "",
+        "# Source",
+        "",
+        "See the [custom anchor](/target#custom-anchor).",
+      ].join("\n"),
+    )
+    const targetFile = createMdxFile(
+      join(routesDir, "target.mdx"),
+      [
+        "---",
+        "title: Target",
+        "---",
+        "",
+        '<a id="custom-anchor" />',
+        "",
+        "Target content without a title heading.",
+      ].join("\n"),
+    )
+
+    vi.spyOn(console, "debug").mockImplementation(() => {})
+    const indexer = new SearchIndexer(
+      {
+        lint: {brokenLinks: "error", pageTitle: "warn"},
+        navConfig: [],
+        pageDirectory: "routes",
+        srcDir: tmpDir,
+      },
+      true,
+      {mdxFileReader: new MdxFileReader(true)},
+    )
+
+    indexer.buildIndex([sourceFile, targetFile])
+    expect(indexer.lintErrorCount).toBe(0)
+    expect(indexer.lintWarningCount).toBe(1)
+
+    indexer.buildIndex([sourceFile, targetFile])
+    expect(indexer.cachedFileCount).toBe(2)
+    expect(indexer.lintErrorCount).toBe(0)
+    expect(indexer.lintWarningCount).toBe(1)
+  })
 })

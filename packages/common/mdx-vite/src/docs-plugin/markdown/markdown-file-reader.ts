@@ -17,6 +17,7 @@ import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import type {PageTimestampMetadataMode} from "../config/index.js"
 import type {CollectedLink} from "../link-validator.js"
+import type {PageTitleIssue} from "../page-title-validator.js"
 
 import {frontmatterSchema} from "./frontmatter-schema.js"
 import type {IndexedPage, IndexedSection} from "./markdown.types.js"
@@ -74,12 +75,14 @@ export function buildGitMetadataMap(
 }
 
 interface PageCache {
+  anchorIds: Set<string>
   collectedLinks: CollectedLink[]
   frontmatter: PageFrontmatter
   md5: string
   page: IndexedPage
   pageDocProps: Record<string, QuiPropTypes>
   pageDocPropSections: IndexedSection[]
+  pageTitleIssues: PageTitleIssue[]
 }
 
 export class MdxFileReader {
@@ -123,11 +126,13 @@ export class MdxFileReader {
     this.cachedFileCount++
 
     return {
+      anchorIds: cached.anchorIds,
       collectedLinks: cached.collectedLinks,
       frontmatter: cached.frontmatter,
       page: cached.page,
       pageDocProps: cached.pageDocProps,
       pageDocPropSections: cached.pageDocPropSections,
+      pageTitleIssues: cached.pageTitleIssues,
     }
   }
 

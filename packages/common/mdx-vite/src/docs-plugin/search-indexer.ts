@@ -364,32 +364,28 @@ export class SearchIndexer {
 
     let indexedPage: IndexedPage
     let collectedLinks: CollectedLink[] = []
+    let anchorIds = new Set<string>()
+    let pageTitleIssues: PageTitleIssue[] = []
     const shouldValidateLinks = this.lint.brokenLinks !== "off"
     const shouldCollectLinks =
       shouldValidateLinks || this.lint.fileLinks !== "off"
 
-    try {
-      if (shouldValidateLinks || this.lint.pageTitle !== "off") {
-        const rawTree = createRemarkProcessor({
-          frontmatter: true,
-          mdx: true,
-        }).parse(fileContents)
-        if (shouldValidateLinks) {
-          const anchorIds = collectAnchorIds(rawTree)
-          if (anchorIds.size) {
-            this._anchorIds[defaultSection.pathname] = anchorIds
-          }
-        }
-        if (this.lint.pageTitle !== "off") {
-          this._pageTitleIssues.push(
-            ...validatePageTitle(rawTree, filePath, defaultSection.pathname),
-          )
-        }
+    const addLintResults = () => {
+      if (shouldValidateLinks && anchorIds.size) {
+        this._anchorIds[defaultSection.pathname] = anchorIds
       }
+      if (this.lint.pageTitle !== "off") {
+        this._pageTitleIssues.push(...pageTitleIssues)
+      }
+    }
 
+    try {
       if (cached?.page) {
         indexedPage = cached.page
         collectedLinks = cached.collectedLinks
+        anchorIds = cached.anchorIds
+        pageTitleIssues = cached.pageTitleIssues
+        addLintResults()
         this._collectedLinks.push(...collectedLinks)
       } else {
         const processor = createRemarkProcessor({
@@ -403,7 +399,20 @@ export class SearchIndexer {
           removeJsx: true,
           removeMermaidCodeBlocks: true,
         })
-        const tree = processor.runSync(processor.parse(fileContents)) as Root
+        const rawTree = processor.parse(fileContents)
+        /**
+         * The anchor and page title rules read the raw MDX tree, before the
+         * transforms remove JSX. The results are cached regardless of lint
+         * settings so that cache hits never need to re-parse.
+         */
+        anchorIds = collectAnchorIds(rawTree)
+        pageTitleIssues = validatePageTitle(
+          rawTree,
+          filePath,
+          defaultSection.pathname,
+        )
+        addLintResults()
+        const tree = processor.runSync(rawTree) as Root
 
         if (shouldCollectLinks) {
           collectedLinks = collectLinks(
@@ -486,11 +495,13 @@ export class SearchIndexer {
 
     if (!cached) {
       this.mdxFileReader.updateCache(filePath, fileContents, {
+        anchorIds,
         collectedLinks,
         frontmatter,
         page: indexedPage,
         pageDocProps: docProps,
         pageDocPropSections: docPropSections,
+        pageTitleIssues,
       })
     }
 
