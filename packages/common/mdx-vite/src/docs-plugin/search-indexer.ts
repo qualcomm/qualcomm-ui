@@ -401,9 +401,9 @@ export class SearchIndexer {
         })
         const rawTree = processor.parse(fileContents)
         /**
-         * The anchor and page title rules read the raw MDX tree, before the
-         * transforms remove JSX. The results are cached regardless of lint
-         * settings so that cache hits never need to re-parse.
+         * The anchor and page title rules and the doc props entries read the raw
+         * MDX tree, before the transforms remove JSX. The lint results are cached
+         * regardless of lint settings so that cache hits never need to re-parse.
          */
         anchorIds = collectAnchorIds(rawTree)
         pageTitleIssues = validatePageTitle(
@@ -412,6 +412,9 @@ export class SearchIndexer {
           defaultSection.pathname,
         )
         addLintResults()
+        if (this.config.typeDocProps) {
+          this.docPropsIndexer.collectEntries(rawTree)
+        }
         const tree = processor.runSync(rawTree) as Root
 
         if (shouldCollectLinks) {
@@ -470,8 +473,7 @@ export class SearchIndexer {
 
     if (this.config.typeDocProps) {
       docPropSections =
-        cached?.pageDocPropSections ||
-        (this.docPropsIndexer.build(fileContents, toc) ?? [])
+        cached?.pageDocPropSections || (this.docPropsIndexer.build(toc) ?? [])
       docProps = cached?.pageDocProps || this.docPropsIndexer.getDocProps()
     }
 
