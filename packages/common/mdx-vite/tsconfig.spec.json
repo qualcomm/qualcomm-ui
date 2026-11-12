@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    "lib": ["DOM", "DOM.Iterable", "ES2025"],
     "outDir": "node_modules/.tmp/spec-out-tsc",
     "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec"
   },

@@ -33,8 +33,18 @@ describe("PluginState knowledge exports", () => {
     state.init(temporaryDirectory)
     state.createIndexer({
       appDirectory: temporaryDirectory,
+      configuredLint: {
+        brokenLinks: "warn",
+        fileLinks: "off",
+        pageTitle: "warn",
+      },
       filePath: join(temporaryDirectory, "qui-docs.config.ts"),
       knowledge: {},
+      lint: {
+        brokenLinks: "warn",
+        fileLinks: "off",
+        pageTitle: "warn",
+      },
       pageDirectory: "routes",
     })
     const exportPathnames = async () => {
@@ -118,8 +128,18 @@ describe("PluginState knowledge exports", () => {
     state.init(temporaryDirectory)
     state.createIndexer({
       appDirectory: temporaryDirectory,
+      configuredLint: {
+        brokenLinks: "warn",
+        fileLinks: "off",
+        pageTitle: "warn",
+      },
       filePath: join(temporaryDirectory, "qui-docs.config.ts"),
       knowledge: {outputPath: "knowledge"},
+      lint: {
+        brokenLinks: "warn",
+        fileLinks: "off",
+        pageTitle: "warn",
+      },
       navConfig: [
         {hidden: true, id: "hidden-by-nav"},
         {hidden: false, id: "visible-by-nav"},
@@ -136,7 +156,7 @@ describe("PluginState knowledge exports", () => {
     )) as KnowledgeSections
     const sectionsByPathname = Map.groupBy(
       sections.sections,
-      (section) => section.pathname,
+      (section: any) => section.pathname,
     )
 
     expect(sectionsByPathname.get("/hidden-by-frontmatter")).toEqual([
