@@ -1,5 +1,28 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 5.1.0
+
+Nov 12th, 2026
+
+### Features
+
+* [lint]: add configs rule for unknown keys and unmatched nav ids ([6bfb624](https://github.com/qualcomm/qualcomm-ui/commit/6bfb624))
+* [nav-builder]: support _nav.json files in route folders ([49feeac](https://github.com/qualcomm/qualcomm-ui/commit/49feeac))
+
+### Performance Improvements
+
+* [indexer]: parse MDX once per page and cache lint results ([9f78797](https://github.com/qualcomm/qualcomm-ui/commit/9f78797))
+* [indexer]: reuse parsed MDX AST for typedoc builder ([37366b2](https://github.com/qualcomm/qualcomm-ui/commit/37366b2))
+* [knowledge-exporter]: optimize content extraction parsing ([d31c0f6](https://github.com/qualcomm/qualcomm-ui/commit/d31c0f6))
+
+### Tests
+
+* [docs-plugin]: fix type errors in spec files ([abf9e0b](https://github.com/qualcomm/qualcomm-ui/commit/abf9e0b))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.0]
+
 ## 5.0.1
 
 Nov 9th, 2026

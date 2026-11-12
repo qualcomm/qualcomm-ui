@@ -1,5 +1,24 @@
 # @qualcomm-ui/angular Changelog
 
+## 4.2.0
+
+Nov 12th, 2026
+
+### Features
+
+* [collapsible]: add lazyMount and unmountOnExit support ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+* implement JSON Viewer component ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+* [tree]: add renderBranchEnd prop for content rendered after a branch's children ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+* [tree]: extract reusable tree root base directives ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+
+### Bug Fixes
+
+* [tree]: honor lazyMount and unmountOnExit for branch content ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.15.0, @qualcomm-ui/angular-core@3.5.0, @qualcomm-ui/utils@1.6.0, @qualcomm-ui/qds-core@2.1.0]
+
 ## 4.1.0
 
 Nov 11th, 2026

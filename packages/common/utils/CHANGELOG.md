@@ -1,5 +1,13 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.6.0
+
+Nov 12th, 2026
+
+### Features
+
+* implement JSON Viewer component ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+
 ## 1.5.1
 
 Nov 9th, 2026
