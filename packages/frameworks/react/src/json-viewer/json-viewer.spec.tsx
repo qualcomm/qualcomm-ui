@@ -185,11 +185,141 @@ describe("JSON viewer", () => {
 
       const settings = page.getByRole("button", {name: /^settings:/})
       const preview = settings.getByText('theme: "dark"', {exact: true})
+      const openingBrace = settings.getByText("{", {exact: true})
+      const closingBrace = settings.getByText("}", {exact: true})
+      const branchEnd = page
+        .getByRole("treeitem", {name: /^settings:/})
+        .getByRole("group")
+        .getByText("}", {exact: true})
       await expect.element(preview).not.toBeVisible()
+      await expect.element(openingBrace).toBeVisible()
+      await expect.element(closingBrace).not.toBeVisible()
+      await expect.element(branchEnd).toBeVisible()
       await settings.click()
       await expect.element(preview).toBeVisible()
+      await expect.element(openingBrace).toBeVisible()
+      await expect.element(closingBrace).toBeVisible()
       await settings.click()
       await expect.element(preview).not.toBeVisible()
+      await expect.element(openingBrace).toBeVisible()
+      await expect.element(closingBrace).not.toBeVisible()
+      await expect.element(branchEnd).toBeVisible()
+    },
+  )
+
+  test.each(variants)(
+    "%s renders array brackets around expanded children",
+    async (variant) => {
+      const props = {
+        data: {items: ["one", "two"]},
+        defaultExpandedDepth: 2,
+        lazyMount: true,
+        unmountOnExit: true,
+      }
+
+      await render(
+        variant === "simple" ? (
+          <JsonViewer {...props} />
+        ) : (
+          <JsonViewer.Root {...props}>
+            <JsonViewer.Tree />
+          </JsonViewer.Root>
+        ),
+      )
+
+      const items = page.getByRole("button", {name: /^items:/})
+      const preview = items.getByText('"one", "two"', {exact: true})
+      const openingBracket = items.getByText("[", {exact: true})
+      const closingBracket = items.getByText("]", {exact: true})
+      const branchEnd = page
+        .getByRole("treeitem", {name: /^items:/})
+        .getByRole("group")
+        .getByText("]", {exact: true})
+
+      await expect.element(preview).not.toBeVisible()
+      await expect.element(openingBracket).toBeVisible()
+      await expect.element(closingBracket).not.toBeVisible()
+      await expect.element(branchEnd).toBeVisible()
+      await expect.element(page.getByText('"one"', {exact: true})).toBeVisible()
+
+      await items.click()
+      await expect.element(preview).toBeVisible()
+      await expect.element(openingBracket).toBeVisible()
+      await expect.element(closingBracket).toBeVisible()
+      await expect
+        .element(page.getByText('"one"', {exact: true}))
+        .not.toBeInTheDocument()
+
+      await items.click()
+      await expect.element(preview).not.toBeVisible()
+      await expect.element(openingBracket).toBeVisible()
+      await expect.element(closingBracket).not.toBeVisible()
+      await expect.element(branchEnd).toBeVisible()
+      await expect.element(page.getByText('"one"', {exact: true})).toBeVisible()
+    },
+  )
+
+  test.each([...variants, "provider"])(
+    "%s toggles expanded brackets without changing collapsed previews",
+    async (variant) => {
+      function TestViewer() {
+        const [showExpandedBrackets, setShowExpandedBrackets] = useState(false)
+        const props = {
+          data: {items: ["one"], settings: {theme: "dark"}},
+          defaultExpandedDepth: 2,
+          showExpandedBrackets,
+        }
+        const viewer = useJsonViewer(props)
+
+        return (
+          <>
+            <button onClick={() => setShowExpandedBrackets((value) => !value)}>
+              Toggle brackets
+            </button>
+            {variant === "simple" ? (
+              <JsonViewer {...props} />
+            ) : variant === "composite" ? (
+              <JsonViewer.Root {...props}>
+                <JsonViewer.Tree />
+              </JsonViewer.Root>
+            ) : (
+              <JsonViewer.RootProvider value={viewer}>
+                <JsonViewer.Tree />
+              </JsonViewer.RootProvider>
+            )}
+          </>
+        )
+      }
+
+      await render(<TestViewer />)
+
+      for (const [key, opening, closing] of [
+        ["settings", "{", "}"],
+        ["items", "[", "]"],
+      ] as const) {
+        const branch = page.getByRole("button", {name: new RegExp(`^${key}:`)})
+        const openingBracket = branch.getByText(opening, {exact: true})
+        const closingBracket = branch.getByText(closing, {exact: true})
+        const branchEnd = page
+          .getByRole("treeitem", {name: new RegExp(`^${key}:`)})
+          .getByRole("group")
+          .getByText(closing, {exact: true})
+        const toggle = page.getByRole("button", {name: "Toggle brackets"})
+
+        await expect.element(openingBracket).not.toBeVisible()
+        await expect.element(branchEnd).not.toBeInTheDocument()
+        await toggle.click()
+        await expect.element(openingBracket).toBeVisible()
+        await expect.element(closingBracket).not.toBeVisible()
+        await expect.element(branchEnd).toBeVisible()
+        await toggle.click()
+        await expect.element(openingBracket).not.toBeVisible()
+        await expect.element(branchEnd).not.toBeInTheDocument()
+
+        await branch.click()
+        await expect.element(openingBracket).toBeVisible()
+        await expect.element(closingBracket).toBeVisible()
+      }
     },
   )
 

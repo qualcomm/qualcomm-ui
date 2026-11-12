@@ -5,8 +5,13 @@ import {Component, computed, input} from "@angular/core"
 import {LucideChevronRight} from "@lucide/angular"
 
 import type {LucideIconOrString} from "@qualcomm-ui/angular-core/lucide"
+import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
 import {useTreeContext} from "@qualcomm-ui/angular-core/tree"
 import type {TreeApi} from "@qualcomm-ui/core/tree"
+import {
+  createQdsJsonViewerApi,
+  getJsonViewerClosingBracket,
+} from "@qualcomm-ui/qds-core/json-viewer"
 import {
   getAccessibleDescription,
   getPreviewOptions,
@@ -18,14 +23,26 @@ import {
 
 import {useJsonViewerOptionsContext} from "./json-viewer-options-context.service"
 
+const qdsApi = createQdsJsonViewerApi(normalizeProps)
+
 @Component({
   selector: "[q-json-viewer-tree]",
   standalone: false,
   template: `
+    <ng-template #branchEnd let-branch>
+      @if (showExpandedBrackets()) {
+        @if (closingBracket(branch.node); as bracket) {
+          <div aria-hidden="true" [q-bind]="closingBracketBindings">
+            <q-json-viewer-value-node [node]="bracket" />
+          </div>
+        }
+      }
+    </ng-template>
     @for (child of children(); let i = $index; track trackChild(child)) {
       <q-tree-nodes
         [indexPath]="[i]"
         [node]="child"
+        [renderBranchEnd]="branchEnd"
         [showIndentGuide]="indentGuide()"
       >
         <ng-template
@@ -37,7 +54,10 @@ import {useJsonViewerOptionsContext} from "./json-viewer-options-context.service
             @if (arrow()) {
               <div q-tree-branch-trigger [icon]="arrow()"></div>
             }
-            <span q-tree-node-text>
+            <span
+              q-tree-node-text
+              [attr.data-show-expanded-brackets]="showExpandedBrackets()"
+            >
               @if (hasKey(branch.node)) {
                 <q-json-viewer-key-node
                   [node]="branch.node"
@@ -84,6 +104,8 @@ export class JsonViewerTreeDirective {
    */
   readonly indentGuide = input<boolean>(true)
 
+  protected readonly closingBracketBindings = qdsApi.getClosingBracketBindings()
+
   protected readonly treeContext = useTreeContext() as () => TreeApi<JsonNode>
 
   protected readonly collection = computed(() => this.treeContext().collection)
@@ -96,6 +118,10 @@ export class JsonViewerTreeDirective {
 
   protected readonly showQuotes = computed(
     () => this.jsonOptions()?.quotesOnKeys,
+  )
+
+  protected readonly showExpandedBrackets = computed(
+    () => this.jsonOptions()?.showExpandedBrackets ?? true,
   )
 
   protected readonly children = computed(() => {
@@ -117,5 +143,9 @@ export class JsonViewerTreeDirective {
 
   protected toElement(node: JsonNode): JsonNodeHastElement {
     return jsonNodeToElement(node, this.previewOptions())
+  }
+
+  protected closingBracket(node: JsonNode): JsonNodeHastElement | undefined {
+    return getJsonViewerClosingBracket(this.toElement(node))
   }
 }

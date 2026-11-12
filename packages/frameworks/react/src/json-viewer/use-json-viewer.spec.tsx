@@ -35,6 +35,7 @@ describe("JSON viewer collection memoization", () => {
     {name: "direction", props: {dir: "rtl" as const}},
     {name: "CSS class", props: {className: "w-full"}},
     {name: "quoted keys", props: {quotesOnKeys: true}},
+    {name: "expanded brackets", props: {showExpandedBrackets: false}},
     {name: "lazy mounting", props: {lazyMount: true}},
     {name: "unmount on exit", props: {unmountOnExit: true}},
   ])("preserves the collection when $name changes", async ({props}) => {

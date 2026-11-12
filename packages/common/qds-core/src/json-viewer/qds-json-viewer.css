@@ -120,7 +120,7 @@
   color: var(--json-viewer-color-constructor);
 }
 
-.qui-json-viewer__value [data-kind="brace"] {
+.qui-json-viewer__value :is([data-kind="brace"], [data-kind="closing-brace"]) {
   color: var(--json-viewer-color-brace);
 }
 
@@ -134,9 +134,26 @@
   :is(
     [data-kind="preview"],
     [data-kind="preview-text"],
-    [data-kind="function-body"]
+    [data-kind="function-body"],
+    [data-kind="closing-brace"]
   ) {
   display: none;
+}
+
+.qui-json-viewer__root
+  .qui-tree__node-root[data-state="open"]
+  [data-show-expanded-brackets="false"]
+  .qui-json-viewer__value
+  [data-kind="brace"] {
+  display: none;
+}
+
+.qui-json-viewer__closing-bracket {
+  color: var(--json-viewer-color-brace);
+  padding-left: calc(
+    var(--depth, 1) * var(--indent-spacing) + var(--spacing-400) +
+      var(--spacing-75) - var(--spacing-150)
+  );
 }
 
 .qui-json-viewer__value [data-kind="function-type"] {

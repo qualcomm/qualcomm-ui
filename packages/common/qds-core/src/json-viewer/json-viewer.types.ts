@@ -19,6 +19,14 @@ export interface QdsJsonViewerOptions extends Partial<JsonNodePreviewOptions> {
    * @default false
    */
   quotesOnKeys?: boolean
+
+  /**
+   * Whether to show opening and closing brackets around expanded branches.
+   * Does not affect collapsed previews.
+   *
+   * @default true
+   */
+  showExpandedBrackets?: boolean
 }
 
 export interface QdsJsonViewerApiProps extends QdsJsonViewerOptions {
@@ -64,7 +72,12 @@ export interface QdsJsonViewerColonBindings {
   className: JsonViewerClasses["colon"]
 }
 
+export interface QdsJsonViewerClosingBracketBindings {
+  className: JsonViewerClasses["closingBracket"]
+}
+
 export interface QdsJsonViewerApi {
+  getClosingBracketBindings(): QdsJsonViewerClosingBracketBindings
   getColonBindings(): QdsJsonViewerColonBindings
   getKeyBindings(props: QdsJsonViewerKeyBindingProps): QdsJsonViewerKeyBindings
   getValueBindings(

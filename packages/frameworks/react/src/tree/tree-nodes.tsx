@@ -39,6 +39,11 @@ export interface TreeNodesProps<T> extends Omit<
   renderBranch: RenderProp<TreeNodesProps<T>>
 
   /**
+   * Content rendered after a branch's children, inside its collapsible content.
+   */
+  renderBranchEnd?: RenderProp<TreeNodesProps<T>>
+
+  /**
    * {@link https://react.qui.qualcomm.com/render-props#render-prop Render Prop}
    * for the tree's leaf items. Use this prop to supply the content of the leaf item
    * like the text, indicator, or icon.
@@ -68,6 +73,7 @@ export function TreeNodes<
     indexPath,
     node,
     renderBranch,
+    renderBranchEnd,
     renderLeaf,
     showIndentGuide,
   } = props
@@ -90,10 +96,12 @@ export function TreeNodes<
                 indexPath={[...indexPath, index]}
                 node={childNode}
                 renderBranch={props.renderBranch}
+                renderBranchEnd={renderBranchEnd}
                 renderLeaf={props.renderLeaf}
                 showIndentGuide={showIndentGuide}
               />
             ))}
+            {renderBranchEnd ? renderProp(renderBranchEnd, props) : null}
           </TreeBranchContent>
         </TreeBranch>
       ) : (

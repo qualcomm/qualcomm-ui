@@ -56,6 +56,7 @@ export type JsonNodeKeyPath = (string | number)[]
 export type JsonNodeSyntaxKind =
   | "constructor"
   | "brace"
+  | "closing-brace"
   | "preview"
   | "preview-text"
   | "function-type"

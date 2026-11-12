@@ -7,6 +7,7 @@ import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 import {jsonViewerClasses} from "./json-viewer.classes.js"
 import type {
   QdsJsonViewerApi,
+  QdsJsonViewerClosingBracketBindings,
   QdsJsonViewerColonBindings,
   QdsJsonViewerKeyBindingProps,
   QdsJsonViewerKeyBindings,
@@ -18,6 +19,11 @@ export function createQdsJsonViewerApi(
   normalize: PropNormalizer,
 ): QdsJsonViewerApi {
   return {
+    getClosingBracketBindings(): QdsJsonViewerClosingBracketBindings {
+      return normalize.element({
+        className: jsonViewerClasses.closingBracket,
+      })
+    },
     getColonBindings(): QdsJsonViewerColonBindings {
       return normalize.element({
         className: jsonViewerClasses.colon,

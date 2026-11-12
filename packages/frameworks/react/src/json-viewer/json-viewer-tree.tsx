@@ -3,7 +3,12 @@
 
 import type {ReactElement, ReactNode} from "react"
 
+import {
+  createQdsJsonViewerApi,
+  getJsonViewerClosingBracket,
+} from "@qualcomm-ui/qds-core/json-viewer"
 import type {LucideIconOrNode} from "@qualcomm-ui/react-core/lucide"
+import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {useTreeContext} from "@qualcomm-ui/react-core/tree"
 import {Tree} from "@qualcomm-ui/react/tree"
 import {
@@ -18,6 +23,8 @@ import {
 import {useJsonViewerOptions} from "./json-viewer-context.js"
 import {JsonViewerKeyNode} from "./json-viewer-key-node.js"
 import {JsonViewerValueNode} from "./json-viewer-value-node.js"
+
+const qdsApi = createQdsJsonViewerApi(normalizeProps)
 
 export interface JsonViewerTreeProps {
   /**
@@ -53,7 +60,9 @@ export function JsonViewerTree({
     const key = keyPathToKey(node.keyPath, {excludeRoot: true})
 
     return (
-      <Tree.NodeText>
+      <Tree.NodeText
+        data-show-expanded-brackets={jsonOptions.showExpandedBrackets}
+      >
         {key && (
           <JsonViewerKeyNode
             node={node}
@@ -83,6 +92,22 @@ export function JsonViewerTree({
               {renderNodeText(node)}
             </Tree.BranchNode>
           )}
+          renderBranchEnd={({node}) => {
+            if (jsonOptions.showExpandedBrackets === false) {
+              return null
+            }
+            const closingBracket = getJsonViewerClosingBracket(
+              jsonNodeToElement(node, previewOptions),
+            )
+            return closingBracket ? (
+              <div aria-hidden="true" {...qdsApi.getClosingBracketBindings()}>
+                <JsonViewerValueNode
+                  node={closingBracket}
+                  renderValue={renderValue}
+                />
+              </div>
+            ) : null
+          }}
           renderLeaf={({node}) => (
             <Tree.LeafNode
               aria-label={getAccessibleDescription(node, previewOptions)}

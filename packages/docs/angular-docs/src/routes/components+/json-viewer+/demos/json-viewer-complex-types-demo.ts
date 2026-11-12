@@ -1,6 +1,8 @@
-import {Component} from "@angular/core"
+import {Component, signal} from "@angular/core"
+import {FormsModule} from "@angular/forms"
 
 import {JsonViewerModule} from "@qualcomm-ui/angular/json-viewer"
+import {SwitchModule} from "@qualcomm-ui/angular/switch"
 
 const users = new Map([
   ["alice", {active: true, role: "admin"}],
@@ -50,14 +52,27 @@ const data = {
 }
 
 @Component({
-  imports: [JsonViewerModule],
+  imports: [JsonViewerModule, SwitchModule, FormsModule],
   selector: "json-viewer-complex-types-demo",
   template: `
     <!-- preview -->
-    <div q-json-viewer [data]="data" [defaultExpandedDepth]="2"></div>
+    <div class="flex w-full flex-col gap-3">
+      <label
+        label="Show expanded brackets"
+        q-switch
+        [(ngModel)]="showExpandedBrackets"
+      ></label>
+      <div
+        q-json-viewer
+        [data]="data"
+        [defaultExpandedDepth]="2"
+        [showExpandedBrackets]="showExpandedBrackets()"
+      ></div>
+    </div>
     <!-- preview -->
   `,
 })
 export class JsonViewerComplexTypesDemo {
   data = data
+  readonly showExpandedBrackets = signal(true)
 }

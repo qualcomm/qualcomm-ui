@@ -63,8 +63,16 @@ import {TreeLeafTemplateDirective} from "./tree-leaf-template.directive"
                 [indexPath]="getChildIndexPath(i)"
                 [node]="child"
                 [renderBranch]="branchTemplate()"
+                [renderBranchEnd]="renderBranchEnd()"
                 [renderLeaf]="leafTemplate()"
                 [showIndentGuide]="showIndentGuide()"
+              />
+            }
+            @if (renderBranchEnd()) {
+              <ng-template
+                [ngTemplateOutlet]="renderBranchEnd()!"
+                [ngTemplateOutletContext]="templateContext()"
+                [ngTemplateOutletInjector]="injector"
               />
             }
           }
@@ -95,6 +103,11 @@ export class TreeNodesComponent<T extends TreeNode>
   readonly node = input.required<T>()
 
   readonly renderBranch = input<TemplateRef<TreeBranchTemplateDirective<T>>>()
+
+  /**
+   * Content rendered after a branch's children, inside its collapsible content.
+   */
+  readonly renderBranchEnd = input<TemplateRef<TreeNodeTemplateContext<T>>>()
 
   readonly renderLeaf = input<TemplateRef<TreeLeafTemplateDirective<T>>>()
 

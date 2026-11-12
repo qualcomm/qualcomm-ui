@@ -6,6 +6,8 @@ import type {TreeCollection} from "@qualcomm-ui/utils/collection"
 import {
   getRootNode,
   type JsonNode,
+  type JsonNodeElement,
+  type JsonNodeHastElement,
   type JsonNodePreviewOptions,
   keyPathToKey,
   nodeToString,
@@ -20,6 +22,7 @@ export const JSON_VIEWER_OPTION_KEYS: readonly (keyof QdsJsonViewerOptions)[] =
     "groupArraysAfterLength",
     "maxPreviewItems",
     "quotesOnKeys",
+    "showExpandedBrackets",
     "showNonenumerable",
   ]
 
@@ -60,4 +63,21 @@ export function getJsonViewerKeyText(
 ): string {
   const key = keyPathToKey(node.keyPath)
   return quotesOnKeys ? `"${key}"` : key
+}
+
+/**
+ * Returns the preview's closing bracket for rendering after expanded children.
+ * Previews without an outer bracket do not need a closing row.
+ */
+export function getJsonViewerClosingBracket(
+  element: JsonNodeHastElement,
+): JsonNodeElement | undefined {
+  if (element.type !== "element") {
+    return undefined
+  }
+  const lastChild = element.children.at(-1)
+  return lastChild?.type === "element" &&
+    lastChild.properties.kind === "closing-brace"
+    ? lastChild
+    : undefined
 }

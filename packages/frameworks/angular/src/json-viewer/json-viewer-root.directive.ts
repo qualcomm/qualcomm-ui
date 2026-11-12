@@ -62,6 +62,14 @@ export class JsonViewerRootDirective
   readonly quotesOnKeys = input<boolean>()
 
   /**
+   * Whether to show opening and closing brackets around expanded branches.
+   * Does not affect collapsed previews.
+   *
+   * @default true
+   */
+  readonly showExpandedBrackets = input<boolean>(true)
+
+  /**
    * Maximum number of items shown in a collapsed container preview.
    *
    * @default 3
@@ -93,6 +101,7 @@ export class JsonViewerRootDirective
   protected readonly options = computed<QdsJsonViewerOptions>(() => {
     const opts: QdsJsonViewerOptions = {}
     const quotesOnKeys = this.quotesOnKeys()
+    const showExpandedBrackets = this.showExpandedBrackets()
     const maxPreviewItems = this.maxPreviewItems()
     const collapseStringsAfterLength = this.collapseStringsAfterLength()
     const groupArraysAfterLength = this.groupArraysAfterLength()
@@ -101,6 +110,7 @@ export class JsonViewerRootDirective
     if (quotesOnKeys != null) {
       opts.quotesOnKeys = quotesOnKeys
     }
+    opts.showExpandedBrackets = showExpandedBrackets
     if (maxPreviewItems != null) {
       opts.maxPreviewItems = maxPreviewItems
     }

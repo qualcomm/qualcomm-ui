@@ -1904,6 +1904,10 @@ export function jsonNodeToElement(
   }
 
   const element = dataType.previewElement(node, options)
+  const lastChild = element.children.at(-1)
+  if (lastChild?.type === "element" && lastChild.properties.kind === "brace") {
+    lastChild.properties.kind = "closing-brace"
+  }
 
   if (!key) {
     element.properties.root = true

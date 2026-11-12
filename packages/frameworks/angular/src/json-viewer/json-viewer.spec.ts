@@ -257,11 +257,29 @@ describe("JSON viewer", () => {
 
       const objectPreview = page.getByText('theme: "dark"', {exact: true})
       const arrayPreview = page.getByText('"one", "two"', {exact: true})
-      const settings = page.getByText("settings", {exact: true})
-      const items = page.getByText("items", {exact: true})
+      const settings = page.getByRole("button", {name: /^settings:/})
+      const items = page.getByRole("button", {name: /^items:/})
+      const openingBrace = settings.getByText("{", {exact: true})
+      const closingBrace = settings.getByText("}", {exact: true})
+      const openingBracket = items.getByText("[", {exact: true})
+      const closingBracket = items.getByText("]", {exact: true})
+      const objectEnd = page
+        .getByRole("treeitem", {name: /^settings:/})
+        .getByRole("group")
+        .getByText("}", {exact: true})
+      const arrayEnd = page
+        .getByRole("treeitem", {name: /^items:/})
+        .getByRole("group")
+        .getByText("]", {exact: true})
 
       await expect.element(objectPreview).not.toBeVisible()
       await expect.element(arrayPreview).not.toBeVisible()
+      await expect.element(openingBrace).toBeVisible()
+      await expect.element(closingBrace).not.toBeVisible()
+      await expect.element(objectEnd).toBeVisible()
+      await expect.element(openingBracket).toBeVisible()
+      await expect.element(closingBracket).not.toBeVisible()
+      await expect.element(arrayEnd).toBeVisible()
       await expect
         .element(page.getByText('"dark"', {exact: true}))
         .toBeVisible()
@@ -269,14 +287,71 @@ describe("JSON viewer", () => {
 
       await settings.click()
       await expect.element(objectPreview).toBeVisible()
+      await expect.element(openingBrace).toBeVisible()
+      await expect.element(closingBrace).toBeVisible()
       await expect.element(arrayPreview).not.toBeVisible()
 
       await items.click()
       await expect.element(arrayPreview).toBeVisible()
+      await expect.element(openingBracket).toBeVisible()
+      await expect.element(closingBracket).toBeVisible()
 
       await settings.click()
       await expect.element(objectPreview).not.toBeVisible()
+      await expect.element(openingBrace).toBeVisible()
+      await expect.element(closingBrace).not.toBeVisible()
+      await expect.element(objectEnd).toBeVisible()
       await expect.element(arrayPreview).toBeVisible()
+    },
+  )
+
+  test.each(variants)(
+    "$name toggles expanded brackets without changing collapsed previews",
+    async ({template}) => {
+      await render(
+        `
+          <button (click)="showBrackets.set(!showBrackets())">Toggle brackets</button>
+          ${template.replace(
+            '[data]="data"',
+            '[data]="data" [showExpandedBrackets]="showBrackets()"',
+          )}
+        `,
+        {
+          componentProperties: {
+            data: {items: ["one"], settings: {theme: "dark"}},
+            showBrackets: signal(false),
+          },
+          imports: [JsonViewerModule],
+        },
+      )
+
+      for (const [key, opening, closing] of [
+        ["settings", "{", "}"],
+        ["items", "[", "]"],
+      ] as const) {
+        const branch = page.getByRole("button", {name: new RegExp(`^${key}:`)})
+        const openingBracket = branch.getByText(opening, {exact: true})
+        const closingBracket = branch.getByText(closing, {exact: true})
+        const branchEnd = page
+          .getByRole("treeitem", {name: new RegExp(`^${key}:`)})
+          .getByRole("group")
+          .getByText(closing, {exact: true})
+        const toggle = page.getByRole("button", {name: "Toggle brackets"})
+
+        await expect.element(openingBracket).not.toBeVisible()
+        await expect.element(branchEnd).not.toBeInTheDocument()
+        await toggle.click()
+        await expect.element(openingBracket).toBeVisible()
+        await expect.element(closingBracket).not.toBeVisible()
+        await expect.element(branchEnd).toBeVisible()
+        await toggle.click()
+        await expect.element(openingBracket).not.toBeVisible()
+        await expect.element(branchEnd).not.toBeInTheDocument()
+
+        await branch.click()
+        await expect.element(openingBracket).toBeVisible()
+        await expect.element(closingBracket).toBeVisible()
+      }
     },
   )
 

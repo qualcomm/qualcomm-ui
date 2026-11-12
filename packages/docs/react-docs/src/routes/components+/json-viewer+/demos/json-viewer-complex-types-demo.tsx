@@ -1,6 +1,7 @@
-import type {ReactElement} from "react"
+import {type ReactElement, useState} from "react"
 
 import {JsonViewer} from "@qualcomm-ui/react/json-viewer"
+import {Switch} from "@qualcomm-ui/react/switch"
 
 const users = new Map([
   ["alice", {active: true, role: "admin"}],
@@ -50,9 +51,22 @@ const data = {
 }
 
 export function JsonViewerComplexTypesDemo(): ReactElement {
+  const [showExpandedBrackets, setShowExpandedBrackets] = useState(true)
+
   return (
     // preview
-    <JsonViewer data={data} defaultExpandedDepth={2} />
+    <div className="flex w-full flex-col gap-3">
+      <Switch
+        checked={showExpandedBrackets}
+        label="Show expanded brackets"
+        onCheckedChange={setShowExpandedBrackets}
+      />
+      <JsonViewer
+        data={data}
+        defaultExpandedDepth={2}
+        showExpandedBrackets={showExpandedBrackets}
+      />
+    </div>
     // preview
   )
 }
