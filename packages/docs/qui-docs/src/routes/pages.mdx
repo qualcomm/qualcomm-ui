@@ -174,6 +174,42 @@ export default {
 
 :::
 
+### Folder Nav Files
+
+Place `_nav.json` in a route folder to configure its route and descendants. For `/help`, create `src/routes/help+/_nav.json`:
+
+```json
+{
+  "$schema": "../../../node_modules/@qualcomm-ui/mdx-vite/dist/schemas/nav.schema.json",
+  "title": "Help",
+  "expanded": true,
+  "children": [
+    {"id": "overview"},
+    {"id": "troubleshooting"},
+    {"id": "advanced", "children": [{"id": "deep-topic"}]}
+  ]
+}
+```
+
+List `{id: "help"}` in the root `navConfig` or the parent folder's `_nav.json` `children` array to set the folder's position. Without that reference, the folder follows listed siblings in alphabetical order.
+
+Define each route property in only one place across `navConfig` and `_nav.json` files. A duplicate invalidates the entire file, even for `children: []` or `expanded: false`. Entries containing only `id` do not conflict.
+
+Editing, adding, or removing `_nav.json` rebuilds navigation and reloads the page.
+
+#### Editor Schema
+
+- Set `$schema` to the packaged schema path relative to each `_nav.json` file for validation, property descriptions, and autocomplete.
+- To configure validation without `$schema` in each file, map `**/routes/**/_nav.json` to `./node_modules/@qualcomm-ui/mdx-vite/dist/schemas/nav.schema.json` in VS Code's `json.schemas`.
+
+#### Validation
+
+- `_nav.json` at the `pageDirectory` root is invalid.
+- Files in folders excluded by the routing strategy are ignored with a warning.
+- Unknown properties are errors.
+- Development logs and skips invalid files without stopping the server. Setting `throwOnError: true` makes invalid files throw.
+- Production builds and [`qui-docs lint`](./configuration.mdx#cli-linting) fail if any file is invalid.
+
 ### Flatten Nested Routes
 
 Set `flattenChildren: true` on a top-level route entry to place its immediate children at the parent route's position in the sidebar. The parent entry is removed from the sidebar. Child routes keep their nested children, and route URLs remain unchanged.
@@ -300,7 +336,7 @@ Note the following about the home route:
 
 ## React Pages
 
-You may also use a `.tsx` file to render a React page, but its content will not show up in the sidebar by default. To show React pages, you must add them to the sidebar via the navConfig. Note that these pages will not be picked up by the search indexer.
+Use a `.tsx` file to render a React page. Add its route to `navConfig` or a folder's `_nav.json` `children` array to include it in the sidebar. These pages are not picked up by the search indexer.
 
 ## MDX and TSX Routes
 

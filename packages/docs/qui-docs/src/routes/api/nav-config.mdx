@@ -23,6 +23,12 @@ Metadata that describes a route.
 
 <TypeDocProps name="RouteMeta" />
 
+### FolderNavConfig
+
+The root of a [`_nav.json` file](../pages.mdx#folder-nav-files) accepts [RouteMeta](./nav-config.mdx#route-meta) properties without `id`, `sectionTitle`, or `separator`. Its `children` entries require `id`.
+
+<TypeDocProps name="FolderNavConfig" pick={["$schema"]} />
+
 ### NavMeta
 
 Metadata describing a nav item without an associated route. These entries are used to render separators or section titles between other nav items.

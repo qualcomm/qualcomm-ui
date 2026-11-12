@@ -69,7 +69,7 @@ Controls how file paths map to URL segments. This is explored in detail on the [
 
 ## Navigation
 
-The `navConfig` array controls sidebar order, section groupings, initial expanded state, and per-route display properties. For how to define and nest `navConfig` entries, see [Page Configuration](./pages.mdx#nav-config). For the full option reference, see [NavConfig](./api/nav-config.mdx).
+The `navConfig` array controls sidebar order, section groupings, initial expanded state, and per-route display properties. For how to define and nest `navConfig` entries, see [Page Configuration](./pages.mdx#nav-config). Define folder entries in [`_nav.json` files](./pages.mdx#folder-nav-files) to keep them with their routes. For the full option reference, see [NavConfig](./api/nav-config.mdx).
 
 ## Content and Validation
 
@@ -164,7 +164,7 @@ Rules set to `"off"` in the config are labeled `(disabled from config file)`. Ru
 - `--broken-links <severity>`: overrides the `brokenLinks` rule's severity.
 - `--file-links <severity>`: overrides the `fileLinks` rule's severity.
 - `--page-title <severity>`: overrides the `pageTitle` rule's severity.
-- `--warn`: reports issues from enabled rules as warnings. It exits with code `0` unless a per-rule option reports errors or a configuration/load failure occurs. Rules configured as `"off"` stay disabled.
+- `--warn`: reports issues from enabled rules as warnings. It exits with code `0` unless a per-rule option reports errors, a configuration/load failure occurs, or a `_nav.json` file is invalid. Rules configured as `"off"` stay disabled.
 
 Per-rule options accept `off`, `warn`, or `error`. They take precedence over the config and `--warn`. Use `warn` or `error` to enable a rule configured as `"off"`.
 
