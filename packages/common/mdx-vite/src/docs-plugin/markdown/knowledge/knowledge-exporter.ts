@@ -77,19 +77,26 @@ export class KnowledgeExporter {
   private readonly fileReader: MdxFileReader
   private readonly propFormatter: PropFormatter
 
+  /**
+   * @param propFormatter reuse a formatter across exports to skip reloading the
+   * doc props file. Defaults to a new formatter for `config.docPropsPath`.
+   */
   constructor(
     config: KnowledgeExporterConfig,
     fileReader: MdxFileReader,
     cache?: KnowledgePageCache,
+    propFormatter?: PropFormatter,
   ) {
     this.cache = cache ?? new Map()
     this.config = config
     this.fileReader = fileReader
-    this.propFormatter = new PropFormatter({
-      docPropsPath: config.docPropsPath,
-      routeDir: config.routeDir,
-      verbose: config.verbose,
-    })
+    this.propFormatter =
+      propFormatter ??
+      new PropFormatter({
+        docPropsPath: config.docPropsPath,
+        routeDir: config.routeDir,
+        verbose: config.verbose,
+      })
   }
 
   async generate(): Promise<{
@@ -189,7 +196,6 @@ export class KnowledgeExporter {
         this.cache.set(page.mdxFile, {
           contentHash,
           pageEntry: pageEntry ?? null,
-          processedPage: processed,
           sections: pageSections,
         })
       } catch (error) {
@@ -197,21 +203,21 @@ export class KnowledgeExporter {
       }
     }
 
-    // Prune cache entries for deleted files
-    for (const key of this.cache.keys()) {
-      if (!currentFiles.has(key)) {
-        this.cache.delete(key)
-      }
-    }
-
-    // Process extra files
     if (this.config.extraFiles?.length) {
       await this.processExtraFiles(
         this.config.extraFiles,
         extractor,
         allSections,
         allPages,
+        currentFiles,
       )
+    }
+
+    // Prune cache entries for deleted files and removed extra files
+    for (const key of this.cache.keys()) {
+      if (!currentFiles.has(key)) {
+        this.cache.delete(key)
+      }
     }
 
     const sectionsHash = computeMd5(JSON.stringify(allSections))
@@ -342,6 +348,7 @@ export class KnowledgeExporter {
             })
           } else {
             parent.children.splice(index, 1)
+            return index
           }
         },
       )
@@ -427,81 +434,89 @@ export class KnowledgeExporter {
       frontmatter: true,
       gfm: true,
       mdx: true,
-      output: "md",
       removeJsx: true,
     })
     const sectionAst = jsxAndMetaProcessor.runSync(ast) as Root
-    const processed = String(jsxAndMetaProcessor.stringify(sectionAst))
-    const rawContent = processed
-      .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "")
-      .replace(/(^#{1,6} .*\\<[^>]+)>/gm, "$1\\>")
-
-    // Strip meta blocks from raw content for the prose-only field
-    const stripMetaProcessor = createRemarkProcessor({
-      extractMeta: {},
-      output: "md",
-    })
-    const strippedContent = String(await stripMetaProcessor.process(rawContent))
 
     const title = (frontmatter.title as string) || pageInfo.name
 
     return {
-      content: strippedContent.trim(),
       frontmatter: frontmatter as unknown as Record<string, unknown>,
-      rawContent: rawContent.trim(),
       sectionAst,
       title,
       url: pageInfo.url,
     }
   }
 
+  /**
+   * Processes extra files in config order. Results are cached under keys added to
+   * `cacheKeys`, so the entries survive cache pruning.
+   */
   private async processExtraFiles(
     extraFiles: KnowledgeExtraFile[],
     extractor: SectionExtractor,
     allSections: SectionEntry[],
     allPages: PageEntry[],
+    cacheKeys: Set<string>,
   ): Promise<void> {
-    await Promise.all(
-      extraFiles.map(async (extraFile) => {
-        let contents = extraFile.contents
-        if (extraFile.processAsMdx) {
-          const removeJsxProcessor = createRemarkProcessor({
-            frontmatter: true,
-            gfm: true,
-            mdx: true,
-            output: "md",
-            plugins: [this.transformRelativeUrls()],
-            removeJsx: true,
-          })
+    for (const extraFile of extraFiles) {
+      const cacheKey = `extra-file:${extraFile.id}`
+      const contentHash = computeMd5(JSON.stringify(extraFile))
+      cacheKeys.add(cacheKey)
 
-          contents = String(await removeJsxProcessor.process(contents))
+      const cached = this.cache.get(cacheKey)
+      if (cached && cached.contentHash === contentHash) {
+        allSections.push(...cached.sections)
+        if (cached.pageEntry) {
+          allPages.push(cached.pageEntry)
         }
+        continue
+      }
 
-        const lines: string[] = []
-        if (extraFile.title) {
-          lines.push(`# ${extraFile.title}`)
-          lines.push("")
-        }
-        lines.push(contents)
-        const content = lines.join("\n")
+      let contents = extraFile.contents
+      if (extraFile.processAsMdx) {
+        const removeJsxProcessor = createRemarkProcessor({
+          frontmatter: true,
+          gfm: true,
+          mdx: true,
+          output: "md",
+          plugins: [this.transformRelativeUrls()],
+          removeJsx: true,
+        })
 
-        const processor = createRemarkProcessor({gfm: true, output: "md"})
-        const tree = processor.parse(content)
+        contents = String(await removeJsxProcessor.process(contents))
+      }
 
-        const pageInfo = {
-          frontmatter: {},
-          id: extraFile.id,
-          title: extraFile.title || extraFile.id,
-        }
+      const lines: string[] = []
+      if (extraFile.title) {
+        lines.push(`# ${extraFile.title}`)
+        lines.push("")
+      }
+      lines.push(contents)
+      const content = lines.join("\n")
 
-        const {sections: pageSections} = extractor.extract(tree, pageInfo)
-        allSections.push(...pageSections)
+      const processor = createRemarkProcessor({gfm: true, output: "md"})
+      const tree = processor.parse(content)
 
-        const pageEntry = extractor.extractPage(tree, pageInfo)
-        if (pageEntry) {
-          allPages.push(pageEntry)
-        }
-      }),
-    )
+      const pageInfo = {
+        frontmatter: {},
+        id: extraFile.id,
+        title: extraFile.title || extraFile.id,
+      }
+
+      const {sections: pageSections} = extractor.extract(tree, pageInfo)
+      allSections.push(...pageSections)
+
+      const pageEntry = extractor.extractPage(tree, pageInfo)
+      if (pageEntry) {
+        allPages.push(pageEntry)
+      }
+
+      this.cache.set(cacheKey, {
+        contentHash,
+        pageEntry: pageEntry ?? null,
+        sections: pageSections,
+      })
+    }
   }
 }

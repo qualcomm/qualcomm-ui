@@ -116,8 +116,21 @@ export function formatDemos(
         if (!demoName) {
           if (parent && index !== undefined) {
             parent.children.splice(index, 1)
+            return index
           }
           return
+        }
+
+        /**
+         * Demos resolve concurrently, and a demo that resolves first may insert
+         * sibling nodes for its imports. The index from the visit can be stale by
+         * the time this demo resolves, so look the node up again.
+         */
+        const replaceNode = (nodes: Code[]) => {
+          const currentIndex = parent?.children.indexOf(node) ?? -1
+          if (parent && currentIndex >= 0) {
+            parent.children.splice(currentIndex, 1, ...nodes)
+          }
         }
 
         promises.push(
@@ -129,9 +142,7 @@ export function formatDemos(
               if (verbose) {
                 console.log(`  No demos folder for ${demoName}`)
               }
-              if (parent && index !== undefined) {
-                parent.children.splice(index, 1)
-              }
+              replaceNode([])
               return
             }
 
@@ -146,9 +157,7 @@ export function formatDemos(
                 demoFilePath = join(demosFolder, filePath)
               } else {
                 console.log(`  Demo not found ${demoName}`)
-                if (parent && index !== undefined) {
-                  parent.children.splice(index, 1)
-                }
+                replaceNode([])
                 return
               }
             }
@@ -175,11 +184,7 @@ export function formatDemos(
                 verbose,
               )
 
-              if (
-                importedModules.length === 0 ||
-                !parent ||
-                index === undefined
-              ) {
+              if (importedModules.length === 0 || !parent) {
                 Object.assign(node, demoCodeBlock)
               } else {
                 const nodesToInsert: Code[] = [demoCodeBlock]
@@ -195,7 +200,7 @@ export function formatDemos(
                   })
                 }
 
-                parent.children.splice(index, 1, ...nodesToInsert)
+                replaceNode(nodesToInsert)
 
                 if (verbose) {
                   console.log(
@@ -207,9 +212,7 @@ export function formatDemos(
               if (verbose) {
                 console.log(`Error reading demo ${demoName}`, error)
               }
-              if (parent && index !== undefined) {
-                parent.children.splice(index, 1)
-              }
+              replaceNode([])
             }
           })(),
         )
