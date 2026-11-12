@@ -1,0 +1,97 @@
+---
+title: JSON Viewer
+description: JSON Viewer renders JavaScript data as an expandable, collapsible tree with syntax-colored values.
+component: JsonViewer
+aliases: [json, json-tree, data viewer, object viewer]
+badges:
+  - id: alpha
+    label: Alpha
+    url: /versioning#alpha
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {JsonViewer} from "@qualcomm-ui/react/json-viewer"
+```
+
+## Examples
+
+### Interactive
+
+Select a `.json` file with [File Input](/components/file-input) to view its contents as a tree. Invalid JSON displays an error. Clear the selected file to reset the viewer.
+
+> [!tip]
+> This example is intended for smaller JSON files, typically under 100 KB. The [lazyMount](#lazyMount) option reduces initial rendering work for larger files by deferring branch content until expansion. Expanding all nodes programmatically renders the entire tree and can reduce responsiveness for large datasets.
+
+<Demo
+  name="JsonViewerInteractiveDemo"
+  component={demos.JsonViewerInteractiveDemo}
+/>
+
+### Simple
+
+Pass any JavaScript value to [data](#data). Use [defaultExpandedDepth](#defaultExpandedDepth) to control how many levels are expanded initially.
+
+<Demo name="JsonViewerSimpleDemo" component={demos.JsonViewerSimpleDemo} />
+
+### Data Types
+
+The viewer renders values with type-specific coloring for strings, numbers, booleans, null, undefined, dates, regex, and more.
+
+<Demo
+  name="JsonViewerDataTypesDemo"
+  component={demos.JsonViewerDataTypesDemo}
+/>
+
+### Root Provider
+
+Use [useJsonViewer](#use-json-viewer) with [JsonViewer.RootProvider](#json-viewer-root-provider) to control expansion through [expandedValue](#expandedValue) and [onExpandedValueChange](#onExpandedValueChange). Call [collection.getBranchValues()](/components/tree#getBranchValues) to expand all branches, or set [expandedValue](#expandedValue) to an empty array to collapse them.
+
+<Demo
+  name="JsonViewerRootProviderDemo"
+  component={demos.JsonViewerRootProviderDemo}
+/>
+
+### Complex Types
+
+Maps, Sets, Headers, URLSearchParams, URLs, Errors, and functions are all supported.
+
+<Demo
+  name="JsonViewerComplexTypesDemo"
+  component={demos.JsonViewerComplexTypesDemo}
+/>
+
+## API
+
+### \<JsonViewer>
+
+The simple JSON viewer extends the [JsonViewer.Root](#json-viewer-root) component with the following props:
+
+<TypeDocProps name="JsonViewerProps" omitFrom="JsonViewerRootProps" />
+
+## Composite API
+
+### \<JsonViewer.Root>
+
+<TypeDocProps name="JsonViewerRootProps" />
+
+### \<JsonViewer.RootProvider>
+
+<TypeDocProps name="JsonViewerRootProviderProps" />
+
+### \<JsonViewer.Tree>
+
+<TypeDocProps name="JsonViewerTreeProps" />
+
+### useJsonViewer
+
+<TypeDocProps name="UseJsonViewerProps" />
+
+<TypeDocProps name="UseJsonViewerReturn" />

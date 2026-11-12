@@ -7,6 +7,7 @@ import {CoreCollapsibleContentDirective} from "@qualcomm-ui/angular-core/collaps
 import {collapsibleClasses} from "@qualcomm-ui/qds-core/collapsible"
 
 @Directive({
+  exportAs: "collapsibleContent",
   host: {
     "[class]": "collapsibleClasses.content",
   },

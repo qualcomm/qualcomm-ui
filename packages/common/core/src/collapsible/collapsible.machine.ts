@@ -31,10 +31,22 @@ export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
 
           const hidden = contentEl.hidden
 
-          // block any animations/transitions so the element renders at its full
-          // dimensions
-          contentEl.style.animationName = "none"
-          contentEl.style.animationDuration = "0s"
+          /**
+           * Nested branches can open in the same frame.
+           * Example: using programmatic 'Expand All'.
+           * Measure their natural heights so a parent does not clip expanding
+           * children to a partially expanded height.
+           */
+          const elements = [
+            contentEl,
+            ...contentEl.querySelectorAll<HTMLElement>(
+              '[data-collapsible][data-state="open"]',
+            ),
+          ]
+          for (const element of elements) {
+            element.style.animationName = "none"
+            element.style.animationDuration = "0s"
+          }
           contentEl.hidden = false
 
           const rect = contentEl.getBoundingClientRect()
@@ -44,8 +56,10 @@ export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
           // kick off any animations/transitions that were originally set up if it
           // isn't the initial mount
           if (context.get("initial")) {
-            contentEl.style.animationName = ""
-            contentEl.style.animationDuration = ""
+            for (const element of elements) {
+              element.style.animationName = ""
+              element.style.animationDuration = ""
+            }
           }
           contentEl.hidden = hidden
         })

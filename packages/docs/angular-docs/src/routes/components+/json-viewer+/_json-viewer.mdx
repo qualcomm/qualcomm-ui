@@ -1,0 +1,77 @@
+---
+title: JSON Viewer
+description: JSON Viewer renders JavaScript data as an expandable, collapsible tree with syntax-colored values.
+component: JsonViewer
+aliases: [json, json-tree, data viewer, object viewer]
+badges:
+  - id: alpha
+    label: Alpha
+    url: /versioning#alpha
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```ts
+import {JsonViewerModule} from "@qualcomm-ui/angular/json-viewer"
+```
+
+## Examples
+
+### Interactive
+
+Select a `.json` file with [File Input](/components/file-input) to view its contents as a tree. Invalid JSON displays an error. Clear the selected file to reset the viewer.
+
+> [!tip]
+> This example is intended for smaller JSON files, typically under 100 KB. The [lazyMount](#lazyMount) option reduces initial rendering work for larger files by deferring branch content until expansion. Expanding all nodes programmatically renders the entire tree and can reduce responsiveness for large datasets.
+
+<QdsDemo name="JsonViewerInteractiveDemo" />
+
+### Simple
+
+Pass any JavaScript value to [data](#data). Use [defaultExpandedDepth](#defaultExpandedDepth) to control how many levels are expanded initially.
+
+<QdsDemo name="JsonViewerSimpleDemo" />
+
+### Data Types
+
+The viewer renders values with type-specific coloring for strings, numbers, booleans, null, undefined, dates, regex, and more.
+
+<QdsDemo name="JsonViewerDataTypesDemo" />
+
+### Controlled Expansion
+
+Use [expandedValue](#expandedValue) and [expandedValueChanged](#expandedValueChanged) to control expansion. Call [collection().getBranchValues()](/components/tree#getBranchValues) to expand all branches, or set [expandedValue](#expandedValue) to an empty array to collapse them.
+
+<QdsDemo name="JsonViewerControlledDemo" />
+
+### Complex Types
+
+Maps, Sets, Headers, URLSearchParams, URLs, Errors, and functions are all supported.
+
+<QdsDemo name="JsonViewerComplexTypesDemo" />
+
+## API
+
+### q-json-viewer
+
+Apply [q-json-viewer](#q-json-viewer) to a host element to render the viewer. The component uses the [q-json-viewer-root](#q-json-viewer-root) directive and adds the following inputs:
+
+<TypeDocProps
+  name="JsonViewerComponent"
+  omitFrom="JsonViewerRootDirective"
+/>
+
+## Composite API
+
+### q-json-viewer-root
+
+<TypeDocProps name="JsonViewerRootDirective" />
+
+### q-json-viewer-tree
+
+<TypeDocProps name="JsonViewerTreeDirective" />

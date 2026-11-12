@@ -1,0 +1,49 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import type {ReactElement, ReactNode} from "react"
+
+import {jsonViewerClasses} from "@qualcomm-ui/qds-core/json-viewer"
+import {Tree, type TreeRootProps} from "@qualcomm-ui/react/tree"
+import type {JsonNode} from "@qualcomm-ui/utils/json-tree"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+
+import {JsonViewerOptionsProvider} from "./json-viewer-context.js"
+import type {UseJsonViewerReturn} from "./use-json-viewer.js"
+
+export interface JsonViewerRootProviderProps extends Omit<
+  TreeRootProps<JsonNode>,
+  "collection"
+> {
+  children?: ReactNode
+
+  /**
+   * Pre-computed state from `useJsonViewer`. Use this when you need to
+   * access the viewer state outside the component tree.
+   */
+  value: UseJsonViewerReturn
+}
+
+export function JsonViewerRootProvider({
+  children,
+  value,
+  ...props
+}: JsonViewerRootProviderProps): ReactElement {
+  const {collection, defaultExpandedValue, options, treeProps} = value
+
+  const mergedProps = mergeProps(
+    {
+      className: jsonViewerClasses.root,
+      collection,
+      defaultExpandedValue,
+    },
+    treeProps,
+    props,
+  )
+
+  return (
+    <JsonViewerOptionsProvider value={options}>
+      <Tree.Root<JsonNode> {...mergedProps}>{children}</Tree.Root>
+    </JsonViewerOptionsProvider>
+  )
+}

@@ -49,22 +49,32 @@ import {TreeLeafTemplateDirective} from "./tree-leaf-template.directive"
           [ngTemplateOutletInjector]="injector"
         />
 
-        <div q-tree-branch-content>
-          @if (showIndentGuide()) {
-            <div q-tree-branch-indent-guide></div>
-          }
-          @for (
-            child of childNodes();
-            let i = $index;
-            track treeContext().collection.getNodeValue(child)
-          ) {
-            <q-tree-nodes
-              [indexPath]="getChildIndexPath(i)"
-              [node]="child"
-              [renderBranch]="branchTemplate()"
-              [renderLeaf]="leafTemplate()"
-              [showIndentGuide]="showIndentGuide()"
-            />
+        <div #content="treeBranchContent" q-tree-branch-content>
+          @if (content.shouldRender()) {
+            @if (showIndentGuide()) {
+              <div q-tree-branch-indent-guide></div>
+            }
+            @for (
+              child of childNodes();
+              let i = $index;
+              track treeContext().collection.getNodeValue(child)
+            ) {
+              <q-tree-nodes
+                [indexPath]="getChildIndexPath(i)"
+                [node]="child"
+                [renderBranch]="branchTemplate()"
+                [renderBranchEnd]="renderBranchEnd()"
+                [renderLeaf]="leafTemplate()"
+                [showIndentGuide]="showIndentGuide()"
+              />
+            }
+            @if (renderBranchEnd()) {
+              <ng-template
+                [ngTemplateOutlet]="renderBranchEnd()!"
+                [ngTemplateOutletContext]="templateContext()"
+                [ngTemplateOutletInjector]="injector"
+              />
+            }
           }
         </div>
       </div>
@@ -93,6 +103,11 @@ export class TreeNodesComponent<T extends TreeNode>
   readonly node = input.required<T>()
 
   readonly renderBranch = input<TemplateRef<TreeBranchTemplateDirective<T>>>()
+
+  /**
+   * Content rendered after a branch's children, inside its collapsible content.
+   */
+  readonly renderBranchEnd = input<TemplateRef<TreeNodeTemplateContext<T>>>()
 
   readonly renderLeaf = input<TemplateRef<TreeLeafTemplateDirective<T>>>()
 

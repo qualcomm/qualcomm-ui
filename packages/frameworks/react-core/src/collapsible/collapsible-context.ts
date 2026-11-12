@@ -4,8 +4,15 @@
 import type {CollapsibleApi} from "@qualcomm-ui/core/collapsible"
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 
+export interface CollapsibleContextValue extends CollapsibleApi {
+  /**
+   * Whether content should be unmounted according to the render strategy.
+   */
+  isUnmounted?: boolean
+}
+
 export const [CollapsibleContextProvider, useCollapsibleContext] =
-  createGuardedContext<CollapsibleApi>({
+  createGuardedContext<CollapsibleContextValue>({
     hookName: "useCollapsibleContext",
     providerName: "<CollapsibleContextProvider>",
     strict: true,

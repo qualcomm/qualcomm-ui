@@ -1,23 +1,19 @@
 {
   "angular.forceStrictTemplates": true,
-  "stylelint.snippet": [
-    "css",
-    "less",
-    "postcss",
-    "scss"
-  ],
-  "stylelint.validate": [
-    "css",
-    "less",
-    "postcss",
-    "scss"
-  ],
+  "stylelint.snippet": ["css", "less", "postcss", "scss"],
+  "stylelint.validate": ["css", "less", "postcss", "scss"],
   "stylelint.enable": true,
   "[css]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   "[scss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "css.format.enable": false,
   "scss.format.enable": false,
