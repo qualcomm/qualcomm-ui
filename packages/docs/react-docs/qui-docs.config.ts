@@ -18,9 +18,6 @@ const navConfig: NavConfig[] = [
   },
   {sectionTitle: "Getting Started"},
   {
-    id: "introduction",
-  },
-  {
     id: "installation",
   },
   {
@@ -98,43 +95,6 @@ const navConfig: NavConfig[] = [
     expanded: true,
     id: "components",
     title: "Components",
-  },
-  {separator: true},
-  {
-    children: [
-      {
-        id: "getting-started",
-      },
-      {
-        id: "overview",
-      },
-      {
-        id: "component-authoring",
-      },
-      {
-        id: "base-component",
-      },
-      {
-        id: "react-component",
-      },
-      {
-        id: "react-documentation",
-      },
-      {
-        id: "testing-guidelines",
-      },
-    ],
-    id: "contribution-guidelines",
-  },
-  {
-    id: "troubleshooting",
-  },
-  {
-    hidden: true,
-    hideBreadcrumbs: true,
-    hidePageLinks: true,
-    hideSideNav: true,
-    id: "debug",
   },
 ]
 
