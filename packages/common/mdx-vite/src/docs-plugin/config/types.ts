@@ -218,6 +218,14 @@ export interface SearchIndexerOptions {
    * Options for TypeDoc property documentation.
    */
   typeDocPropsOptions?: QuiDocsTypeDocOptions
+
+  /**
+   * Properties in the qui-docs config that the config schema doesn't recognize.
+   * These are reported by the `configs` lint rule.
+   *
+   * @internal
+   */
+  unrecognizedConfigKeys?: UnrecognizedConfigKeys
 }
 
 /**
@@ -235,6 +243,16 @@ export interface QuiDocsLintOptions {
    * @default "warn"
    */
   brokenLinks?: LintSeverity
+
+  /**
+   * Validates the qui-docs config and `_nav.json` files. Reports properties that
+   * the config doesn't recognize, like misspelled options, and nav entries whose
+   * `id` doesn't match a page or folder, like a route that was renamed or
+   * removed.
+   *
+   * @default "warn"
+   */
+  configs?: LintSeverity
 
   /**
    * Reports internal links to MDX pages that use URL paths, like
@@ -257,7 +275,11 @@ export interface QuiDocsLintOptions {
 
 export interface QuiDocsConfig extends Omit<
   SearchIndexerOptions,
-  "srcDir" | "pageDirectory" | "publicDir" | "typeDocProps"
+  | "srcDir"
+  | "pageDirectory"
+  | "publicDir"
+  | "typeDocProps"
+  | "unrecognizedConfigKeys"
 > {
   /**
    * Root app directory. NOT the full path to the directory.
@@ -313,6 +335,18 @@ export interface ResolvedQuiDocsConfig extends QuiDocsConfig {
   filePath: string
   lint: Required<QuiDocsLintOptions>
   pageDirectory: string
+  /**
+   * Properties in the config file that the config schema doesn't recognize.
+   */
+  unrecognizedConfigKeys: UnrecognizedConfigKeys
+}
+
+export interface UnrecognizedConfigKeys {
+  /**
+   * full path to the cosmiconfig file.
+   */
+  filePath: string
+  messages: string[]
 }
 
 /**

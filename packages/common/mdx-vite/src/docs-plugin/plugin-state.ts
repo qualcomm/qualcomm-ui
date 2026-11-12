@@ -22,6 +22,7 @@ import {ConfigLoader} from "./config/config-loader.js"
 import type {ResolvedQuiDocsConfig} from "./config/index.js"
 import {type CompiledMdxFile, MdxFileReader} from "./markdown/index.js"
 import {KnowledgeExporter} from "./markdown/knowledge/index.js"
+import {PropFormatter} from "./markdown/knowledge/plugins/index.js"
 import type {KnowledgePageCache} from "./markdown/knowledge/types.js"
 import {fixPath} from "./path-utils.js"
 import {SearchIndexer} from "./search-indexer.js"
@@ -57,6 +58,7 @@ export class PluginState {
   configLoader: ConfigLoader | null = null
   knowledgeConfig: ResolvedQuiDocsConfig["knowledge"] = undefined
   private knowledgePageCache: KnowledgePageCache = new Map()
+  private knowledgePropFormatter: PropFormatter | undefined
   pages: KnowledgePages | null = null
   publicDir: string = ""
   sections: KnowledgeSections | null = null
@@ -129,6 +131,7 @@ export class PluginState {
 
   createIndexer(config: ResolvedQuiDocsConfig): void {
     this.knowledgePageCache.clear()
+    this.knowledgePropFormatter = undefined
     this.config = config
     this.configFilePath = config.filePath
     this.docPropsFilePath = config.typeDocProps
@@ -199,6 +202,18 @@ export class PluginState {
     }, 300)
   }
 
+  /**
+   * Recreates the indexer to pick up `_nav.json` changes. This also clears the
+   * MDX cache, which holds section data derived from the previous nav titles.
+   */
+  reloadIndexer(opts: ChangeOptions = {}): void {
+    if (!this.config) {
+      return
+    }
+    this.createIndexer(this.config)
+    this.handleChange(opts)
+  }
+
   initWatchers(configFile?: string): void {
     if (this.watching) {
       return
@@ -244,6 +259,10 @@ export class PluginState {
     const startTime = Date.now()
 
     const fileReader = new MdxFileReader(isDev)
+    this.knowledgePropFormatter ??= new PropFormatter({
+      docPropsPath: this.docPropsFilePath || undefined,
+      routeDir: this.routesDir,
+    })
     const exporter = new KnowledgeExporter(
       {
         baseUrl: this.knowledgeConfig.baseUrl,
@@ -261,6 +280,7 @@ export class PluginState {
       },
       fileReader,
       this.knowledgePageCache,
+      this.knowledgePropFormatter,
     )
 
     const result = await exporter.generate()

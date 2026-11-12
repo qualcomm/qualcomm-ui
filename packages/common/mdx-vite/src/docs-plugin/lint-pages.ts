@@ -4,7 +4,7 @@
 import {Option, program} from "@commander-js/extra-typings"
 import chalk from "chalk"
 import {glob} from "glob"
-import {resolve} from "node:path"
+import {basename, resolve} from "node:path"
 import {cwd as processCwd} from "node:process"
 
 import {
@@ -14,13 +14,16 @@ import {
   resolveLintOptions,
 } from "./config/index.js"
 import {resolveDocProps} from "./generate-page-map.js"
+import {NAV_FILE_NAME} from "./nav-builder/load-folder-nav.js"
 import {fixPath} from "./path-utils.js"
+import {formatPath, pluralize, reportFileIssues} from "./report-file-issues.js"
 import {SearchIndexer} from "./search-indexer.js"
 
 export type LintRule = keyof QuiDocsLintOptions
 
 const lintRules = [
   "brokenLinks",
+  "configs",
   "fileLinks",
   "pageTitle",
 ] as const satisfies LintRule[]
@@ -65,11 +68,18 @@ export interface LintPagesOptions {
 }
 
 export interface LintPagesResult {
+  /** Path to the qui-docs config file. */
+  configFile: string
   /** Rules that were skipped because they're turned off. */
   disabledRules: DisabledLintRule[]
   /** Number of issues reported as errors. */
   errorCount: number
-  /** Number of indexed MDX pages. */
+  /** Number of `_nav.json` files in the page directory. */
+  navFileCount: number
+  /**
+   * Number of indexed MDX pages. Pages aren't checked when the config has
+   * invalid values.
+   */
   pageCount: number
   /** Number of issues reported as warnings. */
   warningCount: number
@@ -110,16 +120,36 @@ export function resolveLintCommandRules(
 }
 
 /**
- * Runs the rules from the qui-docs config's `lint` option against every MDX
- * page without a Vite build. Issues are logged as they're found.
+ * Validates the qui-docs config and `_nav.json` files, then runs the rules from
+ * the config's `lint` option against every MDX page without a Vite build.
+ * Issues are logged as they're found.
  */
 export async function lintPages(
   options: LintPagesOptions = {},
 ): Promise<LintPagesResult> {
   const cwd = options.cwd ?? processCwd()
-  const resolvedConfig = new ConfigLoader({
+  const {
+    config: resolvedConfig,
+    filePath: configFile,
+    messages: configMessages,
+  } = new ConfigLoader({
     configFile: options.configFile,
-  }).loadConfig()
+  }).lintConfig()
+  if (!resolvedConfig) {
+    reportFileIssues(
+      [{filePath: formatPath(configFile), messages: configMessages}],
+      `Found ${pluralize(configMessages.length, "invalid config value")}:`,
+      chalk.redBright,
+    )
+    return {
+      configFile,
+      disabledRules: [],
+      errorCount: configMessages.length,
+      navFileCount: 0,
+      pageCount: 0,
+      warningCount: 0,
+    }
+  }
   const {disabledRules, lint} = resolveLintCommandRules(
     resolvedConfig.configuredLint,
     options,
@@ -141,8 +171,11 @@ export async function lintPages(
   indexer.buildIndex(files, false)
 
   return {
+    configFile,
     disabledRules,
-    errorCount: indexer.lintErrorCount,
+    // invalid _nav.json files aren't a lint rule, so --warn doesn't apply to them.
+    errorCount: indexer.lintErrorCount + indexer.navConfigErrorCount,
+    navFileCount: indexer.navFileCount,
     pageCount: indexer.mdxFileCount,
     warningCount: indexer.lintWarningCount,
   }
@@ -163,15 +196,11 @@ function lintRuleOption<Flags extends string>(flags: Flags, rule: LintRule) {
   ).choices(severities)
 }
 
-function pluralize(count: number, word: string): string {
-  return `${count} ${word}${count === 1 ? "" : "s"}`
-}
-
 export function addLintCommand(): void {
   program
     .command("lint")
     .description(
-      "Runs the rules from the config's lint option against every MDX page. Issues from rules that aren't turned off are errors and exit with code 1",
+      "Validates the config and _nav.json files, then runs the rules from the config's lint option against every MDX page. Issues from rules that aren't turned off are errors and exit with code 1",
     )
     .option(
       "-c, --config-file <configFile>",
@@ -183,6 +212,7 @@ export function addLintCommand(): void {
       "public",
     )
     .addOption(lintRuleOption("--broken-links <severity>", "brokenLinks"))
+    .addOption(lintRuleOption("--configs <severity>", "configs"))
     .addOption(lintRuleOption("--file-links <severity>", "fileLinks"))
     .addOption(lintRuleOption("--page-title <severity>", "pageTitle"))
     .option(
@@ -191,17 +221,24 @@ export function addLintCommand(): void {
     )
     .action(async (options) => {
       try {
-        const {disabledRules, errorCount, pageCount, warningCount} =
-          await lintPages({
-            configFile: options.configFile,
-            publicDir: options.publicDir,
-            rules: {
-              brokenLinks: options.brokenLinks,
-              fileLinks: options.fileLinks,
-              pageTitle: options.pageTitle,
-            },
-            warn: options.warn,
-          })
+        const {
+          configFile,
+          disabledRules,
+          errorCount,
+          navFileCount,
+          pageCount,
+          warningCount,
+        } = await lintPages({
+          configFile: options.configFile,
+          publicDir: options.publicDir,
+          rules: {
+            brokenLinks: options.brokenLinks,
+            configs: options.configs,
+            fileLinks: options.fileLinks,
+            pageTitle: options.pageTitle,
+          },
+          warn: options.warn,
+        })
 
         if (disabledRules.length) {
           console.log(
@@ -214,7 +251,7 @@ export function addLintCommand(): void {
           }
         }
 
-        const summary = `Checked ${pluralize(pageCount, "page")}: ${pluralize(errorCount, "error")}, ${pluralize(warningCount, "warning")}.`
+        const summary = `Checked ${basename(configFile)}, ${pluralize(navFileCount, `${NAV_FILE_NAME} file`)}, and ${pluralize(pageCount, "page")}: ${pluralize(errorCount, "error")}, ${pluralize(warningCount, "warning")}.`
         if (errorCount) {
           console.error(chalk.redBright.bold(summary))
           process.exit(1)

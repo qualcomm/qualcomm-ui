@@ -1,7 +1,22 @@
-import {defineConfig} from "vite"
+import {defineConfig, type Plugin} from "vite"
 import {viteStaticCopy} from "vite-plugin-static-copy"
 
 import {dependenciesToExternal} from "@qualcomm-ui/vite"
+
+import {getNavFileJsonSchema} from "./src/docs-plugin/config/config-schema.js"
+
+function navFileJsonSchemaPlugin(): Plugin {
+  return {
+    generateBundle() {
+      this.emitFile({
+        fileName: "schemas/nav.schema.json",
+        source: `${JSON.stringify(getNavFileJsonSchema(), null, 2)}\n`,
+        type: "asset",
+      })
+    },
+    name: "nav-file-json-schema",
+  }
+}
 
 export default defineConfig({
   build: {
@@ -28,6 +43,7 @@ export default defineConfig({
     sourcemap: true,
   },
   plugins: [
+    navFileJsonSchemaPlugin(),
     viteStaticCopy({
       targets: [
         ...["docs-plugin", "angular-demo-plugin", "react-demo-plugin"].map(

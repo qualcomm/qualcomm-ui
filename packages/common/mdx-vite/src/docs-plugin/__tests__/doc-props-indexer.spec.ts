@@ -3,13 +3,23 @@
 
 import {describe, expect, test} from "vitest"
 
-import type {PagePropType} from "@qualcomm-ui/mdx-common"
+import type {PageHeading, PagePropType} from "@qualcomm-ui/mdx-common"
 import type {
   QuiPropDeclaration,
   QuiPropTypes,
 } from "@qualcomm-ui/typedoc-common"
 
 import {DocPropsIndexer} from "../doc-props/doc-props-indexer"
+import {createRemarkProcessor} from "../markdown"
+
+function buildFromMdx(
+  indexer: DocPropsIndexer,
+  contents: string,
+  toc: PageHeading[],
+) {
+  indexer.collectEntries(createRemarkProcessor({mdx: true}).parse(contents))
+  return indexer.build(toc)
+}
 
 function createProp(name: string): QuiPropDeclaration {
   return {
@@ -50,7 +60,8 @@ describe("DocPropsIndexer", () => {
       },
     }
     const indexer = new DocPropsIndexer(props)
-    const sections = indexer.build(
+    const sections = buildFromMdx(
+      indexer,
       [
         '<TypeDocProps name="DatePickerProps" omitFrom="DatePickerRootProps" />',
         '<TypeDocProps name="DatePickerRootProps" />',
@@ -91,7 +102,8 @@ describe("DocPropsIndexer", () => {
     }
     const indexer = new DocPropsIndexer(props)
 
-    indexer.build(
+    buildFromMdx(
+      indexer,
       [
         '<TypeDocProps name="Widget" />',
         '<TypeDocProps name="WidgetProps" />',
@@ -124,7 +136,7 @@ describe("DocPropsIndexer", () => {
     }
     const indexer = new DocPropsIndexer(props)
 
-    indexer.build('<TypeDocProps name="Widget" />', [])
+    buildFromMdx(indexer, '<TypeDocProps name="Widget" />', [])
     expect(
       indexer.getDocProps().Widget.resolvedType?.functionParameters,
     ).toBeDefined()
@@ -132,7 +144,7 @@ describe("DocPropsIndexer", () => {
     // A later page references only `WidgetProps`, which indexes `Widget` as
     // lookup-only. It must get the lean entry, not the previous page's.
     indexer.reset()
-    indexer.build('<TypeDocProps name="WidgetProps" />', [])
+    buildFromMdx(indexer, '<TypeDocProps name="WidgetProps" />', [])
 
     expect(indexer.getDocProps().Widget).toEqual({
       comment: props.Widget.comment,

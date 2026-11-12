@@ -57,8 +57,10 @@ describe("lintPages", () => {
     const {result} = await lint()
 
     expect(result).toEqual({
+      configFile: join(tempDir, "qui-docs.config.js"),
       disabledRules: [{rule: "fileLinks", source: "default"}],
       errorCount: 0,
+      navFileCount: 0,
       pageCount: 2,
       warningCount: 0,
     })
@@ -102,11 +104,13 @@ describe("lintPages", () => {
     })
 
     expect(result).toEqual({
+      configFile: join(tempDir, "qui-docs.config.js"),
       disabledRules: [
         {rule: "brokenLinks", source: "config"},
         {rule: "pageTitle", source: "config"},
       ],
       errorCount: 0,
+      navFileCount: 0,
       pageCount: 3,
       warningCount: 0,
     })
@@ -135,6 +139,16 @@ describe("lintPages", () => {
       {rule: "fileLinks", source: "default"},
       {rule: "pageTitle", source: "option"},
     ])
+  })
+
+  test("reports invalid _nav.json files as errors with warn", async () => {
+    writeFile("app/routes/docs/_nav.json", JSON.stringify({titel: "Docs"}))
+    writeFile("app/routes/docs/intro.mdx", "# Intro")
+
+    const {output, result} = await lint({}, {warn: true})
+
+    expect(result.errorCount).toBe(1)
+    expect(output).toContain(`Unrecognized key: "titel"`)
   })
 
   test("validates fragments against page headings", async () => {
@@ -168,19 +182,116 @@ describe("lintPages", () => {
   })
 })
 
+describe("lintPages config validation", () => {
+  test("stops before checking pages when the config has invalid values", async () => {
+    const {output, result} = await lint({lint: {pageTitle: "fatal"}})
+
+    expect(result).toEqual({
+      configFile: join(tempDir, "qui-docs.config.js"),
+      disabledRules: [],
+      errorCount: 1,
+      navFileCount: 0,
+      pageCount: 0,
+      warningCount: 0,
+    })
+    expect(output).toContain("Found 1 invalid config value")
+    expect(output).toContain("lint.pageTitle: ")
+  })
+
+  test("reports unrecognized config keys under the config file", async () => {
+    const {output, result} = await lint({titel: "Docs"})
+
+    expect(result.errorCount).toBe(1)
+    expect(output).toContain("Found 1 config issue")
+    expect(output).toContain("qui-docs.config.js")
+    expect(output).toContain(`Unrecognized key: "titel"`)
+  })
+
+  test("reports navConfig ids that don't match a page or folder", async () => {
+    const {output, result} = await lint({
+      navConfig: [{id: "guide"}, {children: [{id: "nested"}], id: "missing"}],
+    })
+
+    expect(result.errorCount).toBe(1)
+    expect(output).toContain(
+      `navConfig[1].id: "missing" doesn't match a page or folder (/missing)`,
+    )
+    expect(output).not.toContain("nested")
+  })
+
+  test("reports _nav.json children that don't match a page", async () => {
+    writeFile("app/routes/docs+/intro.mdx", "# Intro")
+    writeFile(
+      "app/routes/docs+/_nav.json",
+      JSON.stringify({children: [{id: "intro"}, {id: "gone"}]}),
+    )
+
+    const {output, result} = await lint()
+
+    expect(result.navFileCount).toBe(1)
+    expect(result.errorCount).toBe(1)
+    expect(output).toContain("docs+/_nav.json")
+    expect(output).toContain(
+      `children[1].id: "gone" doesn't match a page or folder (/docs/gone)`,
+    )
+  })
+
+  test("accepts ids of folders and .tsx pages", async () => {
+    writeFile("app/routes/docs+/intro.mdx", "# Intro")
+    writeFile(
+      "app/routes/playground.tsx",
+      "export default function Playground() {\n  return null\n}\n",
+    )
+
+    const {output, result} = await lint({
+      navConfig: [{id: "docs"}, {id: "playground"}],
+    })
+
+    expect(result.errorCount).toBe(0)
+    expect(output).not.toContain("config issue")
+  })
+
+  test("reports config issues as warnings with warn", async () => {
+    const {result} = await lint({titel: "Docs"}, {warn: true})
+
+    expect(result.errorCount).toBe(0)
+    expect(result.warningCount).toBe(1)
+  })
+
+  test("skips config issues when configs is turned off", async () => {
+    const {output, result} = await lint(
+      {navConfig: [{id: "missing"}], titel: "Docs"},
+      {rules: {configs: "off"}},
+    )
+
+    expect(result.disabledRules).toContainEqual({
+      rule: "configs",
+      source: "option",
+    })
+    expect(result.errorCount).toBe(0)
+    expect(output).not.toContain("config issue")
+  })
+})
+
 describe("resolveLintCommandRules", () => {
   const defaults = resolveLintOptions({lint: {fileLinks: "warn"}})
 
   test("keeps fileLinks off by default", () => {
     expect(resolveLintCommandRules({})).toEqual({
       disabledRules: [{rule: "fileLinks", source: "default"}],
-      lint: {brokenLinks: "error", fileLinks: "off", pageTitle: "error"},
+      lint: {
+        brokenLinks: "error",
+        configs: "error",
+        fileLinks: "off",
+        pageTitle: "error",
+      },
     })
   })
 
   test("promotes every enabled rule to error", () => {
     expect(resolveLintCommandRules(defaults).lint).toEqual({
       brokenLinks: "error",
+      configs: "error",
       fileLinks: "error",
       pageTitle: "error",
     })
@@ -189,6 +300,7 @@ describe("resolveLintCommandRules", () => {
   test("uses warn for enabled rules with warn", () => {
     expect(resolveLintCommandRules(defaults, {warn: true}).lint).toEqual({
       brokenLinks: "warn",
+      configs: "warn",
       fileLinks: "warn",
       pageTitle: "warn",
     })
@@ -199,7 +311,12 @@ describe("resolveLintCommandRules", () => {
       resolveLintCommandRules({...defaults, fileLinks: "off"}, {warn: true}),
     ).toEqual({
       disabledRules: [{rule: "fileLinks", source: "config"}],
-      lint: {brokenLinks: "warn", fileLinks: "off", pageTitle: "warn"},
+      lint: {
+        brokenLinks: "warn",
+        configs: "warn",
+        fileLinks: "off",
+        pageTitle: "warn",
+      },
     })
   })
 
@@ -211,7 +328,12 @@ describe("resolveLintCommandRules", () => {
       ),
     ).toEqual({
       disabledRules: [{rule: "pageTitle", source: "option"}],
-      lint: {brokenLinks: "warn", fileLinks: "error", pageTitle: "off"},
+      lint: {
+        brokenLinks: "warn",
+        configs: "warn",
+        fileLinks: "error",
+        pageTitle: "off",
+      },
     })
   })
 })

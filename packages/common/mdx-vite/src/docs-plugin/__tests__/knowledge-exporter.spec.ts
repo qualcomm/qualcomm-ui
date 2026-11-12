@@ -7,6 +7,7 @@ import {join} from "node:path"
 import {afterEach, describe, expect, test} from "vitest"
 
 import {KnowledgeExporter} from "../markdown/knowledge/knowledge-exporter"
+import type {KnowledgePageCache} from "../markdown/knowledge/types"
 import {MdxFileReader} from "../markdown/markdown-file-reader"
 import {SearchIndexer} from "../search-indexer"
 
@@ -178,6 +179,48 @@ $$`,
     expect(indexer.searchIndex).toEqual([
       expect.objectContaining({content: alignedMath}),
     ])
+  })
+})
+
+describe("KnowledgeExporter extra files", () => {
+  test("exports extra files in config order and refreshes changed files from the cache", async () => {
+    const directory = await writeMathPage("Page content.")
+    const cache: KnowledgePageCache = new Map()
+    const generate = (secondContents: string) =>
+      new KnowledgeExporter(
+        {
+          extraFiles: [
+            {
+              contents: "Processed as MDX.",
+              id: "first",
+              processAsMdx: true,
+              title: "First",
+            },
+            {contents: secondContents, id: "second", title: "Second"},
+          ],
+          routeDir: directory,
+        },
+        new MdxFileReader(false),
+        cache,
+      ).generate()
+
+    const initial = await generate("Original content.")
+    const unchanged = await generate("Original content.")
+    const changed = await generate("Updated content.")
+
+    expect(initial.pages.pages.map((page) => page.pageId)).toEqual([
+      "latex",
+      "first",
+      "second",
+    ])
+    expect(unchanged.pages.pages).toEqual(initial.pages.pages)
+    expect(unchanged.sections.sections).toEqual(initial.sections.sections)
+    expect(changed.pages.pages.at(-1)).toEqual(
+      expect.objectContaining({
+        content: "# Second\n\nUpdated content.",
+        pageId: "second",
+      }),
+    )
   })
 })
 

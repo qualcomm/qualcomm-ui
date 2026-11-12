@@ -51,6 +51,7 @@ describe("ConfigLoader", () => {
 
     expect(loader.loadConfig().lint).toEqual({
       brokenLinks: "warn",
+      configs: "warn",
       fileLinks: "off",
       pageTitle: "warn",
     })
@@ -62,7 +63,59 @@ describe("ConfigLoader", () => {
     )
     const loader = new ConfigLoader({configFile: filePath})
 
-    vi.spyOn(console, "dir").mockImplementation(() => {})
-    expect(() => loader.loadConfig()).toThrow("Failed to parse config file.")
+    expect(() => loader.loadConfig()).toThrow(
+      /Failed to parse config file\.\n.*qui-docs\.config\.js\n {2}lint\.pageTitle: /,
+    )
+  })
+
+  test("returns invalid values from lintConfig instead of throwing", () => {
+    const filePath = writeConfigFile(
+      `module.exports = {lint: {pageTitle: "fatal"}}`,
+    )
+    const loader = new ConfigLoader({configFile: filePath})
+
+    const result = loader.lintConfig()
+
+    expect(result.config).toBeUndefined()
+    expect(result.filePath).toBe(filePath)
+    expect(result.messages).toEqual([
+      expect.stringMatching(/^lint\.pageTitle: /),
+    ])
+  })
+
+  test("lists unrecognized keys, including keys in navConfig entries", () => {
+    const filePath = writeConfigFile(
+      `module.exports = {
+        lint: {pageTitel: "warn"},
+        navConfig: [{id: "guide", childen: []}, {sectionTitle: "API", titel: "x"}],
+        titel: "Docs",
+      }`,
+    )
+    const loader = new ConfigLoader({configFile: filePath})
+
+    expect(loader.loadConfig().unrecognizedConfigKeys).toEqual({
+      filePath,
+      messages: [
+        `lint: Unrecognized key: "pageTitel"`,
+        `navConfig[0]: Unrecognized key: "childen"`,
+        `navConfig[1]: Unrecognized key: "titel"`,
+        `Unrecognized key: "titel"`,
+      ],
+    })
+  })
+
+  test("doesn't flag recognized or undefined keys", () => {
+    const filePath = writeConfigFile(
+      `module.exports = {
+        hotUpdateIgnore: /\\.tmp$/,
+        navConfig: [{id: "guide", children: [{id: "intro"}]}],
+        pageDirectory: undefined,
+        routingStrategy: "react-router-directory-groups",
+      }`,
+    )
+    const loader = new ConfigLoader({configFile: filePath})
+
+    expect(loader.loadConfig().unrecognizedConfigKeys.messages).toEqual([])
+    expect(loader.lintConfig()).toMatchObject({messages: []})
   })
 })

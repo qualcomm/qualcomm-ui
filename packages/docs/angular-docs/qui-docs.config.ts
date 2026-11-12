@@ -18,9 +18,6 @@ const navConfig: NavConfig[] = [
   },
   {sectionTitle: "Getting Started"},
   {
-    id: "introduction",
-  },
-  {
     id: "installation",
   },
   {

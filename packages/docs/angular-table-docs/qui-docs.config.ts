@@ -90,11 +90,6 @@ const navConfig: NavConfig[] = [
     id: "api",
     title: "API",
   },
-  {
-    expanded: true,
-    id: "components",
-    title: "Components",
-  },
 ]
 
 export default {

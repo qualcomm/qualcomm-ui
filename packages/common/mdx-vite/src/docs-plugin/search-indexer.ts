@@ -16,6 +16,13 @@ import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 import {defined} from "@qualcomm-ui/utils/guard"
 
 import {
+  collectRouteKeys,
+  type ConfigIssues,
+  countConfigIssues,
+  reportConfigIssues,
+  validateNavRoutes,
+} from "./config-validator.js"
+import {
   type QuiDocsLintOptions,
   resolveLintOptions,
   type SearchIndexerOptions,
@@ -49,11 +56,17 @@ import {
   getCategoriesFromPathSegments,
   getPathnameFromPathSegments,
   getPathSegmentsFromFileName,
+  getRouteKey,
   getRouteMeta,
   NavBuilder,
   transformRouteMetaArray,
 } from "./nav-builder/index.js"
+import {
+  type ListedNavRoute,
+  loadFolderNavConfig,
+} from "./nav-builder/load-folder-nav.js"
 import type {
+  RouteMetaEntryInternal,
   RouteMetaInternal,
   RouteMetaNavInternal,
 } from "./nav-builder/types.js"
@@ -85,8 +98,11 @@ export class SearchIndexer {
   private _pageFiles: Record<string, string> = {}
   private readonly fileLinkOptions: MdxFileLinkOptions
   private _pageTitleIssues: PageTitleIssue[] = []
+  private _configIssueCount = 0
+  private readonly listedNavRoutes: ListedNavRoute[]
   private readonly lint: Required<QuiDocsLintOptions>
   private readonly routeMetaNav: Record<string, RouteMetaNavInternal> = {}
+  private readonly structuralRoutes: ReadonlySet<string>
   readonly config: SearchIndexerOptions
   logWarnings: boolean
   /**
@@ -101,6 +117,7 @@ export class SearchIndexer {
   get lintErrorCount(): number {
     return (
       (this.lint.brokenLinks === "error" ? this._invalidLinkCount : 0) +
+      (this.lint.configs === "error" ? this._configIssueCount : 0) +
       (this.lint.fileLinks === "error" ? this._fileLinkIssueCount : 0) +
       (this.lint.pageTitle === "error" ? this._pageTitleIssues.length : 0)
     )
@@ -112,10 +129,27 @@ export class SearchIndexer {
   get lintWarningCount(): number {
     return (
       (this.lint.brokenLinks === "warn" ? this._invalidLinkCount : 0) +
+      (this.lint.configs === "warn" ? this._configIssueCount : 0) +
       (this.lint.fileLinks === "warn" ? this._fileLinkIssueCount : 0) +
       (this.lint.pageTitle === "warn" ? this._pageTitleIssues.length : 0)
     )
   }
+
+  /**
+   * Number of invalid `_nav.json` files. These are skipped when building the nav.
+   */
+  get navConfigErrorCount(): number {
+    return this._navConfigErrorCount
+  }
+  private readonly _navConfigErrorCount: number
+
+  /**
+   * Number of `_nav.json` files in the page directory, including invalid files.
+   */
+  get navFileCount(): number {
+    return this._navFileCount
+  }
+  private readonly _navFileCount: number
 
   get cachedFileCount(): number {
     return this.mdxFileReader.cachedFileCount
@@ -170,6 +204,7 @@ export class SearchIndexer {
     this._fileLinkIssueCount = 0
     this._pageFiles = {}
     this._pageTitleIssues = []
+    this._configIssueCount = 0
     this._ignoredMdxFiles = new Set()
     this._pageDocProps = {}
     this._pageMap = {}
@@ -198,9 +233,21 @@ export class SearchIndexer {
     this.allowedHeadings = new Set<string>(
       Array.from(config?.headings || ["h2", "h3", "h4"]),
     )
+    const folderNav = loadFolderNavConfig(this.config.navConfig ?? [], {
+      pageDirectory: config.pageDirectory,
+      routesDir: fixPath(join(config.srcDir, config.pageDirectory)),
+      routingStrategy: config.routingStrategy,
+      srcDir: config.srcDir,
+      throwOnError: config.throwOnError,
+    })
+    this._navConfigErrorCount = folderNav.errorCount
+    this._navFileCount = folderNav.fileCount
+    this.listedNavRoutes = folderNav.listedRoutes
+    this.structuralRoutes = folderNav.structuralRoutes
     this.metaJson = transformRouteMetaArray(
-      this.config.navConfig ?? [],
+      folderNav.navConfig,
       this.routeMetaNav,
+      folderNav.unorderedRoutes,
     )
 
     const headingDepths = Array.from(this.allowedHeadings).map((h) =>
@@ -220,6 +267,20 @@ export class SearchIndexer {
         process.env.NODE_ENV === "development" && !this.config.disableCache,
         this.config.pageTimestampMetadata,
       )
+  }
+
+  /**
+   * `.tsx` pages are only added to the nav when they have a nav config entry.
+   * Ancestors created only to reach a nested `_nav.json` don't count.
+   */
+  private getTsxRouteMeta(
+    pathSegments: string[],
+  ): RouteMetaEntryInternal | undefined | null {
+    const segments = pathSegments.length ? pathSegments : ["_index"]
+    if (this.structuralRoutes.has(getRouteKey(segments))) {
+      return undefined
+    }
+    return getRouteMeta(segments, this.metaJson)
   }
 
   /**
@@ -328,32 +389,28 @@ export class SearchIndexer {
 
     let indexedPage: IndexedPage
     let collectedLinks: CollectedLink[] = []
+    let anchorIds = new Set<string>()
+    let pageTitleIssues: PageTitleIssue[] = []
     const shouldValidateLinks = this.lint.brokenLinks !== "off"
     const shouldCollectLinks =
       shouldValidateLinks || this.lint.fileLinks !== "off"
 
-    try {
-      if (shouldValidateLinks || this.lint.pageTitle !== "off") {
-        const rawTree = createRemarkProcessor({
-          frontmatter: true,
-          mdx: true,
-        }).parse(fileContents)
-        if (shouldValidateLinks) {
-          const anchorIds = collectAnchorIds(rawTree)
-          if (anchorIds.size) {
-            this._anchorIds[defaultSection.pathname] = anchorIds
-          }
-        }
-        if (this.lint.pageTitle !== "off") {
-          this._pageTitleIssues.push(
-            ...validatePageTitle(rawTree, filePath, defaultSection.pathname),
-          )
-        }
+    const addLintResults = () => {
+      if (shouldValidateLinks && anchorIds.size) {
+        this._anchorIds[defaultSection.pathname] = anchorIds
       }
+      if (this.lint.pageTitle !== "off") {
+        this._pageTitleIssues.push(...pageTitleIssues)
+      }
+    }
 
+    try {
       if (cached?.page) {
         indexedPage = cached.page
         collectedLinks = cached.collectedLinks
+        anchorIds = cached.anchorIds
+        pageTitleIssues = cached.pageTitleIssues
+        addLintResults()
         this._collectedLinks.push(...collectedLinks)
       } else {
         const processor = createRemarkProcessor({
@@ -367,7 +424,23 @@ export class SearchIndexer {
           removeJsx: true,
           removeMermaidCodeBlocks: true,
         })
-        const tree = processor.runSync(processor.parse(fileContents)) as Root
+        const rawTree = processor.parse(fileContents)
+        /**
+         * The anchor and page title rules and the doc props entries read the raw
+         * MDX tree, before the transforms remove JSX. The lint results are cached
+         * regardless of lint settings so that cache hits never need to re-parse.
+         */
+        anchorIds = collectAnchorIds(rawTree)
+        pageTitleIssues = validatePageTitle(
+          rawTree,
+          filePath,
+          defaultSection.pathname,
+        )
+        addLintResults()
+        if (this.config.typeDocProps) {
+          this.docPropsIndexer.collectEntries(rawTree)
+        }
+        const tree = processor.runSync(rawTree) as Root
 
         if (shouldCollectLinks) {
           collectedLinks = collectLinks(
@@ -425,8 +498,7 @@ export class SearchIndexer {
 
     if (this.config.typeDocProps) {
       docPropSections =
-        cached?.pageDocPropSections ||
-        (this.docPropsIndexer.build(fileContents, toc) ?? [])
+        cached?.pageDocPropSections || (this.docPropsIndexer.build(toc) ?? [])
       docProps = cached?.pageDocProps || this.docPropsIndexer.getDocProps()
     }
 
@@ -450,11 +522,13 @@ export class SearchIndexer {
 
     if (!cached) {
       this.mdxFileReader.updateCache(filePath, fileContents, {
+        anchorIds,
         collectedLinks,
         frontmatter,
         page: indexedPage,
         pageDocProps: docProps,
         pageDocPropSections: docPropSections,
+        pageTitleIssues,
       })
     }
 
@@ -520,10 +594,7 @@ export class SearchIndexer {
   private compileTsxFile(route: PageRoute) {
     const entry = this.getPageEntry(route, {})
 
-    const routeMeta = getRouteMeta(
-      entry.pathSegments.length === 0 ? ["_index"] : entry.pathSegments,
-      this.metaJson,
-    )
+    const routeMeta = this.getTsxRouteMeta(entry.pathSegments)
 
     if (!routeMeta) {
       return null
@@ -567,19 +638,15 @@ export class SearchIndexer {
       this.config.routingStrategy,
     ).map((file) => this.getPageRoute(file))
 
-    const tsxRoutes = filterFileGlob(
+    const allTsxRoutes = filterFileGlob(
       fileGlob,
       "tsx",
       this.config.srcDir,
       this.config.routingStrategy,
+    ).map((file) => this.getPageRoute(file))
+    const tsxRoutes = allTsxRoutes.filter(({pathSegments}) =>
+      this.getTsxRouteMeta(pathSegments),
     )
-      .map((file) => this.getPageRoute(file))
-      .filter(({pathSegments}) =>
-        getRouteMeta(
-          pathSegments.length ? pathSegments : ["_index"],
-          this.metaJson,
-        ),
-      )
 
     const parentPathnames = new Set<string>()
     for (const {pathSegments} of [...mdxRoutes, ...tsxRoutes]) {
@@ -665,6 +732,19 @@ export class SearchIndexer {
 
     if (this.lint.pageTitle !== "off") {
       reportPageTitleIssues(this._pageTitleIssues, this.lint.pageTitle)
+    }
+
+    if (this.lint.configs !== "off") {
+      const configIssues: ConfigIssues = {
+        // .tsx pages without a nav entry still exist, so every route file counts.
+        navRoutes: validateNavRoutes(
+          this.listedNavRoutes,
+          collectRouteKeys([...mdxRoutes, ...allTsxRoutes]),
+        ),
+        unrecognizedKeys: this.config.unrecognizedConfigKeys,
+      }
+      this._configIssueCount = countConfigIssues(configIssues)
+      reportConfigIssues(configIssues, this.lint.configs)
     }
 
     return compiledFiles

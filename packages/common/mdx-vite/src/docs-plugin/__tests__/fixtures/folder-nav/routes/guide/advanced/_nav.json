@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../../../dist/schemas/nav.schema.json",
+  "children": [{"id": "deep-topic"}],
+  "expanded": true,
+  "title": "Advanced"
+}

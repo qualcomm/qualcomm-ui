@@ -3,7 +3,7 @@
 
 import {z, type ZodObject, type ZodSafeParseResult, type ZodSchema} from "zod"
 
-import type {NavMeta, RouteMeta} from "../nav-builder/types.js"
+import type {FolderNavConfig, NavMeta, RouteMeta} from "../nav-builder/types.js"
 
 import type {
   KnowledgeConfig,
@@ -34,27 +34,114 @@ export const navMetaSchema: ZodObject<{}> = implement<NavMeta>().with({
   separator: z.boolean().optional(),
 })
 
+/**
+ * Descriptions are included in the generated `_nav.json` JSON Schema, which
+ * editors show on hover and in autocomplete. Keep them in sync with the JSDoc in
+ * `nav-builder/types.ts`.
+ */
+const routeMetaFields = {
+  expanded: z.boolean().optional().meta({
+    description:
+      "If `true`, the side nav item will be expanded on initial load. Does nothing if the entry is a leaf node.",
+  }),
+  flattenChildren: z.boolean().optional().meta({
+    description:
+      "Replace a top-level side nav folder with its immediate children. Deeper nesting and route URLs are preserved. The parent label is removed. Add a separate `sectionTitle` entry before the route to display a heading. Has no effect on nested routes or leaf pages.",
+  }),
+  group: z.string().optional().meta({
+    description:
+      "Used for grouping pages at the same level under a common section heading.",
+  }),
+  groupOrder: z.string().array().optional().meta({
+    description: "Order for the groups within this item's hierarchy.",
+  }),
+  hidden: z.boolean().optional().meta({
+    description:
+      "If `true`, this route will not be shown in the side navigation or adjacent routes' page links.",
+  }),
+  hideBreadcrumbs: z.boolean().optional().meta({
+    description: "If `true`, the breadcrumbs will not render on this route.",
+  }),
+  hideFromSearch: z.boolean().optional().meta({
+    description:
+      "If `true`, this page's contents will not be added to the search index.",
+  }),
+  hidePageLinks: z.boolean().optional().meta({
+    description: "If `true`, the page links will be hidden on this route.",
+  }),
+  hideSideNav: z.boolean().optional().meta({
+    description: "If `true`, the side navigation will be hidden on this route.",
+  }),
+  hideToc: z.boolean().optional().meta({
+    description:
+      "If `true`, the table of contents will be hidden on this route.",
+  }),
+  ignoreRouteMetaOrder: z.boolean().optional().meta({
+    description:
+      "By default, pages with a RouteMeta are ordered before pages that are not defined. Set this property to `true` to disable that behavior.",
+  }),
+  restricted: z.boolean().optional().meta({
+    description:
+      "If `true`, the route will be flagged as restricted. This flag does nothing internally. You will need to handle this in your application.",
+  }),
+  sideNavTitle: z.string().optional().meta({
+    description:
+      "Title for the page in the side nav. Takes precedence over `title`.",
+  }),
+  title: z.string().optional().meta({
+    description:
+      "The title of the item in the side nav. Will be parsed from the page's frontmatter if it is not defined in the RouteMeta.",
+  }),
+} satisfies Implements<
+  Omit<RouteMeta, "children" | "id" | "sectionTitle" | "separator">
+>
+
+const childrenDescription = "Nested routes."
+
 export const routeMetaSchema: ZodSchema<RouteMeta> =
   implement<RouteMeta>().with({
+    ...routeMetaFields,
     children: z.array(z.lazy(() => routeMetaSchema)).optional(),
-    expanded: z.boolean().optional(),
-    flattenChildren: z.boolean().optional(),
-    group: z.string().optional(),
-    groupOrder: z.string().array().optional(),
-    hidden: z.boolean().optional(),
-    hideBreadcrumbs: z.boolean().optional(),
-    hideFromSearch: z.boolean().optional(),
-    hidePageLinks: z.boolean().optional(),
-    hideSideNav: z.boolean().optional(),
-    hideToc: z.boolean().optional(),
     id: z.string(),
-    ignoreRouteMetaOrder: z.boolean().optional(),
-    restricted: z.boolean().optional(),
     sectionTitle: z.never().optional(),
     separator: z.never().optional(),
-    sideNavTitle: z.string().optional(),
-    title: z.string().optional(),
   })
+
+/**
+ * Unlike {@link routeMetaSchema}, `_nav.json` entries reject unknown properties
+ * so that typos are reported instead of silently ignored.
+ */
+const navFileRouteMetaSchema: ZodSchema<RouteMeta> = z.strictObject({
+  ...routeMetaFields,
+  children: z
+    .array(z.lazy(() => navFileRouteMetaSchema))
+    .optional()
+    .meta({description: childrenDescription}),
+  id: z.string().meta({description: "The path segment for this route."}),
+})
+
+export const navFileSchema: ZodSchema<FolderNavConfig> = z.strictObject({
+  ...routeMetaFields,
+  $schema: z.string().optional().meta({
+    description:
+      "Path or URL of the JSON Schema for this file. Editors use it for validation and autocomplete.",
+  }),
+  children: z
+    .array(navFileRouteMetaSchema)
+    .optional()
+    .meta({description: childrenDescription}),
+})
+
+/**
+ * The JSON Schema for `_nav.json` files, shipped as
+ * `@qualcomm-ui/mdx-vite/schemas/nav.schema.json`.
+ */
+export function getNavFileJsonSchema(): Record<string, unknown> {
+  return z.toJSONSchema(navFileSchema, {
+    io: "input",
+    target: "draft-2020-12",
+  })
+}
 
 const typeDocPropsSchema = implement<QuiDocsTypeDocOptions>().with({
   includeInSearchIndex: z.boolean().optional(),
@@ -103,6 +190,7 @@ const lintSeveritySchema = z.union([
 
 const lintSchema = implement<QuiDocsLintOptions>().with({
   brokenLinks: lintSeveritySchema.optional(),
+  configs: lintSeveritySchema.optional(),
   fileLinks: lintSeveritySchema.optional(),
   pageTitle: lintSeveritySchema.optional(),
 })
@@ -149,4 +237,45 @@ const configSchema = implement<QuiDocsConfig>().with({
 
 export function parseSchema(data: unknown): ZodSafeParseResult<QuiDocsConfig> {
   return configSchema.safeParse(data)
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
+}
+
+/**
+ * Finds the properties that {@link parseSchema} stripped from the config because
+ * it doesn't recognize them. The schema strips rather than rejects them so that
+ * configs keep loading across versions, but they're usually typos.
+ *
+ * Compares the config to its parsed output instead of using strict schemas so
+ * that union members, like the `navConfig` entry types, report the keys that
+ * the matching member doesn't recognize. Values that the schema passes through
+ * unchanged, like `routingStrategy`, are returned by reference and skipped.
+ */
+export function findUnrecognizedKeys(
+  input: unknown,
+  output: unknown,
+  path: PropertyKey[] = [],
+): Pick<z.core.$ZodIssue, "message" | "path">[] {
+  if (input === output) {
+    return []
+  }
+  if (Array.isArray(input) && Array.isArray(output)) {
+    return input.flatMap((item, index) =>
+      findUnrecognizedKeys(item, output[index], [...path, index]),
+    )
+  }
+  if (!isObject(input) || !isObject(output)) {
+    return []
+  }
+  return Object.keys(input).flatMap((key) => {
+    if (key in output) {
+      return findUnrecognizedKeys(input[key], output[key], [...path, key])
+    }
+    // keys set to `undefined` have no effect, so they aren't worth reporting.
+    return input[key] === undefined
+      ? []
+      : [{message: `Unrecognized key: "${key}"`, path}]
+  })
 }

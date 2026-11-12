@@ -271,6 +271,7 @@ export class PropFormatter {
           if (!this.docProps || !nameAttr) {
             if (parent && index !== undefined) {
               parent.children.splice(index, 1)
+              return index
             }
             return
           }
@@ -278,6 +279,7 @@ export class PropFormatter {
           if (propsNames.length === 0) {
             if (parent && index !== undefined) {
               parent.children.splice(index, 1)
+              return index
             }
             return
           }
@@ -289,6 +291,7 @@ export class PropFormatter {
             }
             if (parent && index !== undefined) {
               parent.children.splice(index, 1)
+              return index
             }
             return
           }
@@ -325,6 +328,7 @@ export class PropFormatter {
           if (!markdownContent) {
             if (parent && index !== undefined) {
               parent.children.splice(index, 1)
+              return index
             }
             return
           }

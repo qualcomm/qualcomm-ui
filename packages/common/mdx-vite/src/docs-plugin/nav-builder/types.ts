@@ -128,3 +128,19 @@ export interface RouteMeta extends Omit<
    */
   ignoreRouteMetaOrder?: boolean
 }
+
+/**
+ * The contents of a `_nav.json` file. Describes the route of the folder that
+ * contains the file. The route's `id` is inferred from the folder, and its
+ * position among its siblings is set by the parent's nav config.
+ */
+export interface FolderNavConfig extends Omit<
+  RouteMeta,
+  "id" | "sectionTitle" | "separator"
+> {
+  /**
+   * Path or URL of the JSON Schema for this file. Editors use it for validation
+   * and autocomplete.
+   */
+  $schema?: string
+}

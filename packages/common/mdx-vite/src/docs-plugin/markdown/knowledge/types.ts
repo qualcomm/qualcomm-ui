@@ -38,10 +38,7 @@ export interface PropInfo {
 }
 
 export interface ProcessedPage {
-  content: string
   frontmatter: Record<string, unknown>
-  /** Content before meta blocks are stripped, used for section extraction */
-  rawContent: string
   /** AST with data nodes preserved, used for section extraction */
   sectionAst: Root
   title: string
@@ -56,7 +53,6 @@ export interface MdxFlowExpression {
 export interface KnowledgePageCacheEntry {
   contentHash: string
   pageEntry: PageEntry | null
-  processedPage: ProcessedPage
   sections: SectionEntry[]
 }
 

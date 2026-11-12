@@ -100,4 +100,13 @@ Then import it in your code.`
       "```shell\nnpm install react@18.2.0 typescript@^5.0.0\n```",
     )
   })
+
+  test("transforms an element that directly follows a removed element", async () => {
+    const input = [
+      "<NpmInstallTabs packages={[]} />",
+      '<NpmInstallTabs packages={["react"]} />',
+    ].join("\n")
+    const result = await processContent(input)
+    expect(result).toBe("```shell\nnpm install react\n```")
+  })
 })

@@ -271,7 +271,11 @@ describe("parent pages", () => {
             props: [
               {
                 name: "value",
-                resolvedType: {prettyType: "boolean", type: "boolean"},
+                resolvedType: {
+                  name: "some-type",
+                  prettyType: "boolean",
+                  type: "boolean",
+                },
               },
             ],
           },

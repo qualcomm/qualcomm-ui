@@ -1,11 +1,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {Root} from "mdast"
 import type {MdxJsxAttribute} from "mdast-util-mdx-jsx"
-import remarkMdx from "remark-mdx"
-import remarkParse from "remark-parse"
-import remarkStringify from "remark-stringify"
-import {type Plugin, unified} from "unified"
 import {visit} from "unist-util-visit"
 
 import {
@@ -102,70 +99,59 @@ export class DocPropsIndexer {
 
   /**
    * Finds all JSX `<TypeDocProps />` nodes on the current page and adds their names
-   * to an array. Once all nodes have been collected, we process them into
-   * `PageSection` entries for the search index.
+   * to an array. Once all nodes have been collected, {@link build} processes them
+   * into `PageSection` entries for the search index. Expects the raw MDX tree,
+   * before JSX is removed.
    */
-  getTypeDocPropsNodes: Plugin = () => {
-    return (tree, _file, done) => {
-      visit(tree, "mdxJsxFlowElement", (node: any) => {
-        if (node && "name" in node && docPropsJsxNodes.includes(node.name)) {
-          const nameAttr = node.attributes?.find(
-            (attr: MdxJsxAttribute) => attr.name === "name",
-          )
-          const omitFromAttr = node.attributes?.find(
-            (attr: MdxJsxAttribute) => attr.name === "omitFrom",
-          )
-          const omitFrom = omitFromAttr
-            ? extractNamesFromAttribute(omitFromAttr)
-            : undefined
+  collectEntries(tree: Root): void {
+    visit(tree, "mdxJsxFlowElement", (node: any) => {
+      if (node && "name" in node && docPropsJsxNodes.includes(node.name)) {
+        const nameAttr = node.attributes?.find(
+          (attr: MdxJsxAttribute) => attr.name === "name",
+        )
+        const omitFromAttr = node.attributes?.find(
+          (attr: MdxJsxAttribute) => attr.name === "omitFrom",
+        )
+        const omitFrom = omitFromAttr
+          ? extractNamesFromAttribute(omitFromAttr)
+          : undefined
 
-          if (nameAttr) {
-            const names = extractNamesFromAttribute(nameAttr)
-            for (const name of names) {
-              this.docPropsEntries.push({name, omitFrom})
-              if (name.endsWith("Props")) {
-                // also index the corresponding component for lookup on this page.
-                this.docPropsEntries.push({
-                  lookupOnly: true,
-                  name: name.slice(0, -5),
-                  omitFrom,
-                })
-              }
+        if (nameAttr) {
+          const names = extractNamesFromAttribute(nameAttr)
+          for (const name of names) {
+            this.docPropsEntries.push({name, omitFrom})
+            if (name.endsWith("Props")) {
+              // also index the corresponding component for lookup on this page.
+              this.docPropsEntries.push({
+                lookupOnly: true,
+                name: name.slice(0, -5),
+                omitFrom,
+              })
             }
           }
-
-          const unionWithPickAttr: MdxJsxAttribute = node.attributes?.find(
-            (attr: MdxJsxAttribute) => attr.name === "unionWithPick",
-          )
-          if (unionWithPickAttr) {
-            try {
-              const unionWithPick = extractPickPropsRecord(unionWithPickAttr)
-              if (unionWithPick) {
-                this.docPropsEntries.push(
-                  ...Object.keys(unionWithPick).map((entry) => ({
-                    name: entry,
-                    omitFrom,
-                  })),
-                )
-              }
-            } catch {}
-          }
         }
-      })
-      done()
-    }
+
+        const unionWithPickAttr: MdxJsxAttribute = node.attributes?.find(
+          (attr: MdxJsxAttribute) => attr.name === "unionWithPick",
+        )
+        if (unionWithPickAttr) {
+          try {
+            const unionWithPick = extractPickPropsRecord(unionWithPickAttr)
+            if (unionWithPick) {
+              this.docPropsEntries.push(
+                ...Object.keys(unionWithPick).map((entry) => ({
+                  name: entry,
+                  omitFrom,
+                })),
+              )
+            }
+          } catch {}
+        }
+      }
+    })
   }
 
-  build(fileContents: string, toc: PageHeading[]): IndexedSection[] | null {
-    // parse the Markdown into an AST
-    unified()
-      .use(remarkMdx)
-      // find the TypeDocProp nodes
-      .use(this.getTypeDocPropsNodes)
-      .use(remarkParse)
-      .use(remarkStringify)
-      .processSync(fileContents)
-
+  build(toc: PageHeading[]): IndexedSection[] | null {
     if (!this.docPropsEntries.length) {
       return null
     }
