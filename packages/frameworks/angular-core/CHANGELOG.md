@@ -1,5 +1,19 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 3.5.0
+
+Nov 12th, 2026
+
+### Features
+
+* [collapsible]: add lazyMount and unmountOnExit support ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+* implement JSON Viewer component ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+* [tree]: extract reusable tree root base directives ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.15.0, @qualcomm-ui/utils@1.6.0, @qualcomm-ui/dom@1.3.3]
+
 ## 3.4.1
 
 Nov 9th, 2026

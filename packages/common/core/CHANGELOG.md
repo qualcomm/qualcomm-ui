@@ -1,5 +1,21 @@
 # @qualcomm-ui/core Changelog
 
+## 1.15.0
+
+Nov 12th, 2026
+
+### Features
+
+* implement JSON Viewer component ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+
+### Bug Fixes
+
+* [collapsible]: prevent clipping of nested collapsible elements during expansion ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.0, @qualcomm-ui/dom@1.3.3]
+
 ## 1.14.1
 
 Nov 9th, 2026

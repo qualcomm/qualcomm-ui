@@ -1,5 +1,17 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 2.1.0
+
+Nov 12th, 2026
+
+### Features
+
+* implement JSON Viewer component ([82004ca](https://github.com/qualcomm/qualcomm-ui/commit/82004ca))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/core@1.15.0, @qualcomm-ui/utils@1.6.0]
+
 ## 2.0.2
 
 Nov 11th, 2026
