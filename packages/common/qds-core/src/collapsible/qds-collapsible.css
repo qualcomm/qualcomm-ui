@@ -7,9 +7,9 @@
   }
 
   &[data-state="closed"] {
-    animation-name: collapse-height, fade-out;
+    animation-name: qui-collapse-height, qui-fade-out;
   }
   &[data-state="open"] {
-    animation-name: expand-height, fade-in;
+    animation-name: qui-expand-height, qui-fade-in;
   }
 }
