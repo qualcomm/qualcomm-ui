@@ -50,11 +50,11 @@
     border-top-left-radius: var(--border-radius-100);
 
     &[data-state="open"] {
-      animation: slide-from-right-full 0.2s ease;
+      animation: qui-slide-from-right-full 0.2s ease;
     }
 
     &[data-state="closed"] {
-      animation: slide-to-right-full 0.25s ease;
+      animation: qui-slide-to-right-full 0.25s ease;
     }
   }
 
@@ -63,11 +63,11 @@
     border-top-right-radius: var(--border-radius-100);
 
     &[data-state="open"] {
-      animation: slide-from-left-full 0.2s ease;
+      animation: qui-slide-from-left-full 0.2s ease;
     }
 
     &[data-state="closed"] {
-      animation: slide-to-left-full 0.25s ease;
+      animation: qui-slide-to-left-full 0.25s ease;
     }
   }
 }
