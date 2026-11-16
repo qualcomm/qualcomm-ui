@@ -1,21 +1,37 @@
-FROM public.ecr.aws/docker/library/node:lts-slim
+FROM public.ecr.aws/docker/library/node:lts-slim AS build
 
 WORKDIR /app
-
-COPY . .
 
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 RUN apt update && apt install -y git && rm -rf /var/lib/apt/lists/*
 
-# install and build
 RUN npm i -g corepack
 RUN corepack enable
+
+COPY . .
+
+# The build needs the full dependency tree; only the final stage is prod-only.
 RUN pnpm install --frozen-lockfile
 RUN pnpm run build:react
 RUN pnpm react-table-docs build
+
+# Copies the site with only its production dependencies. Workspace packages are
+# copied in rather than symlinked, so the output does not depend on the monorepo.
+RUN pnpm --filter @qualcomm-ui/react-table-docs deploy --prod /deploy
+
+FROM public.ecr.aws/docker/library/node:lts-slim
+
+WORKDIR /app
+
 ENV NODE_ENV=production
+
+COPY --from=build /deploy/package.json ./
+COPY --from=build /deploy/node_modules ./node_modules
+COPY --from=build /deploy/build ./build
+
+USER node
 
 EXPOSE 3000
 
-CMD ["pnpm", "run", "-C", "packages/docs/react-table-docs", "start"]
+CMD ["node_modules/.bin/react-router-serve", "./build/server/index.js"]

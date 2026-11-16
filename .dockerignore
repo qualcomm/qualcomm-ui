@@ -1,11 +1,11 @@
-dist/
-build/
+**/dist/
+**/build/
 .dockerignore
-node_modules
+**/node_modules
 **/.DS_Store
 *.md
 .gitignore
-.env*
+**/.env*
 coverage
 .angular
 .turbo
