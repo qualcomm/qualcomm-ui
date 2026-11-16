@@ -1,5 +1,8 @@
 {
   "angular.forceStrictTemplates": true,
+  "CSSNavigation.alwaysIncludeGlobPatterns": [
+    "packages/common/vscode-core/src/styles/*.css"
+  ],
   "stylelint.snippet": ["css", "less", "postcss", "scss"],
   "stylelint.validate": ["css", "less", "postcss", "scss"],
   "stylelint.enable": true,

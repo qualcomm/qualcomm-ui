@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "*.json",
+        "*.ts",
+        "src/**"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    }
+  }
+}
+

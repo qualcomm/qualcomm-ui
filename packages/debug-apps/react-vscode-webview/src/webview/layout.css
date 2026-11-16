@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+}
+
+.sample {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 24px;
+
+  p {
+    max-width: 65ch;
+  }
+
+  form,
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-block: 24px;
+    max-width: 320px;
+  }
+}

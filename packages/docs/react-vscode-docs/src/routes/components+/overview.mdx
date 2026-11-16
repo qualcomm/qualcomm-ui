@@ -1,0 +1,20 @@
+---
+title: Overview
+description: Build VS Code extension interfaces with shared QUI behavior and host-specific styling.
+---
+
+# {frontmatter.title}
+
+Use React VS Code for extension webview interfaces that follow the user's editor colors and fonts. The package builds on the design-agnostic QUI core and React bindings, with component styling and appearance props defined for VS Code.
+
+## Package availability
+
+The package is under development. The scaffold exports a host stylesheet; CSS typography utilities are available; React components are not available yet. [Typography](/components/typography) documents the scale and text colors.
+
+Follow [Installation](/installation) to build the package and documentation from the workspace.
+
+## Choose the appropriate library
+
+Use `@qualcomm-ui/react-vscode` for VS Code host styling. Use `@qualcomm-ui/react` for QDS brand styling. The packages share behavior through `core` and `react-core`, while defining appearance independently.
+
+React VS Code covers the components needed by extension interfaces. It does not include every component in QUI React. Component documentation will include supported props, host token mappings, usage examples, and differences from QDS as each implementation is delivered.

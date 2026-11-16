@@ -1,0 +1,10 @@
+:where(.qui-vscode) {
+  color: var(--qui-vscode-color-text-normal);
+  font-family: var(--qui-vscode-font-family);
+  font-size: var(--qui-vscode-font-size);
+  font-weight: var(--qui-vscode-font-weight);
+}
+
+:where(.qui-vscode) :where(button, input, select, textarea) {
+  font: inherit;
+}

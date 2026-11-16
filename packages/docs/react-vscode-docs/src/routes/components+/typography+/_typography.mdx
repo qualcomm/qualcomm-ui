@@ -1,0 +1,131 @@
+---
+title: Typography
+description: Apply host fonts, a scalable text hierarchy, and semantic text colors to VS Code webviews.
+---
+
+import {VscodeDemo} from "../../../components/demo/vscode-demo"
+import {TypographyScaleDemo} from "./demos/typography-scale-demo"
+import {TypographyTailwindDemo} from "./demos/typography-tailwind-demo"
+import {TypographyColorsDemo} from "./demos/typography-colors-demo"
+
+# {frontmatter.title}
+
+Use semantic HTML with the React VS Code typography classes to apply the editor's fonts and a consistent text hierarchy. Typography is CSS-only; no React `Text` component is required.
+
+## Load the typography styles
+
+Import the public stylesheet in your React entry point and apply `qui-vscode` to the application container. Complete [Installation](/installation) to build the workspace package.
+
+```tsx
+import "@qualcomm-ui/vscode-core/styles/components.css"
+
+export function WebviewContent() {
+  return (
+    <main className="qui-vscode">
+      <h1 className="qui-vscode-heading-1">Build configuration</h1>
+      <p className="qui-vscode-body-1">Choose an output directory.</p>
+      <p className="qui-vscode-text-sm qui-vscode-text-muted">
+        The build uses your current workspace.
+      </p>
+      <code className="qui-vscode-code">pnpm react-vscode build</code>
+    </main>
+  )
+}
+```
+
+Classes select presentation, not HTML semantics. Use heading elements in document order, associate labels with controls, and use `code` or `pre` for code content. Typography classes do not add margins or change the DOM.
+
+## Understand package ownership
+
+`vscode-core` defines framework-independent host token mappings, typography CSS, and presentation bindings, matching the role of `qds-core`. Its token metadata is exported through `@qualcomm-ui/vscode-core/tokens`; the generated CSS defines `--qui-vscode-*` values inside the application container. The existing Tailwind package provides an optional utility adapter over those values.
+
+`react-vscode` composes React components from design-agnostic `react-core` behavior and `vscode-core` presentation. Its `styles.css` entry remains a convenience bundle of shared styles. The typography scale is defined once in `vscode-core`, not independently in the React and Tailwind packages.
+
+## Use the legacy scale with host sizing
+
+The starting scale comes from the legacy QUI `tailwind-plugin/src/vscode-plugin.ts`. NextGen preserves its proportions and weights while calculating sizes from `--vscode-font-size`. At the host's 13px base, the sizes match the legacy values. If the host base becomes 16px, `qui-vscode-heading-1` becomes 32px.
+
+These sizes are QUI conventions, not typography roles prescribed by Microsoft. The smaller 8px and 9px legacy roles remain available as reference styles; avoid them for essential instructions or interactive labels. Design review may revise those roles before release.
+
+All named scale classes use the host UI font family, their listed weight, and `line-height: normal`. They use a 13px base and a system font if the host variables are absent.
+
+| Legacy `text-*` suffix | NextGen CSS class | Size at 13px base | Weight |
+| --- | --- | --- | --- |
+| `body-1` | `qui-vscode-body-1` | 13px | 500 |
+| `body-2` | `qui-vscode-body-2` | 12px | 500 |
+| `label-1` | `qui-vscode-label-1` | 14px | 500 |
+| `label-2` | `qui-vscode-label-2` | 12px | 700 |
+| `label-3` | `qui-vscode-label-3` | 11px | 500 |
+| `label-4` | `qui-vscode-label-4` | 9px | 700 |
+| `heading-1` | `qui-vscode-heading-1` | 26px | 600 |
+| `heading-2` | `qui-vscode-heading-2` | 14px | 500 |
+| `heading-3` | `qui-vscode-heading-3` | 13px | 800 |
+| `heading-4` | `qui-vscode-heading-4` | 11px | 700 |
+| `heading-5` | `qui-vscode-heading-5` | 11px | 500 |
+| `heading-6` | `qui-vscode-heading-6` | 11px | 800 |
+| `markdown-1` | `qui-vscode-markdown-1` | 26px | 600 |
+| `markdown-2` | `qui-vscode-markdown-2` | 20px | 600 |
+| `markdown-3` | `qui-vscode-markdown-3` | 15px | 600 |
+| `markdown-4` | `qui-vscode-markdown-4` | 13px | 800 |
+| `markdown-5` | `qui-vscode-markdown-5` | 11px | 800 |
+| `markdown-6` | `qui-vscode-markdown-6` | 8px | 800 |
+| `paragraph` | `qui-vscode-paragraph` | 13px | 500 |
+
+The separate `qui-vscode-text-xs`, `qui-vscode-text-sm`, and `qui-vscode-text-md` classes scale from 11px, 12px, and 13px respectively. They set size and normal line height while inheriting family and weight.
+
+<VscodeDemo name="TypographyScaleDemo" component={TypographyScaleDemo} />
+
+## Inherit the editor font for code
+
+`qui-vscode-code` reads `--vscode-editor-font-family`, `--vscode-editor-font-size`, and `--vscode-editor-font-weight`. Code follows the user's editor settings independently of the UI scale. Its fallbacks are `ui-monospace, monospace`, the host UI size or 13px, and normal weight.
+
+The legacy Tailwind plugin hard-coded Menlo for `font-mono`. NextGen uses the editor font variables instead. Do not download QDS fonts or substitute Roboto Mono for the host's code font.
+
+## Apply text colors
+
+Combine a scale class with a color class. Each color utility reads a host variable; optional values fall back to `--vscode-foreground`.
+
+| Class | Host variable | Mapping |
+| --- | --- | --- |
+| `qui-vscode-text-normal` | `--vscode-foreground` | Default interface text |
+| `qui-vscode-text-muted` | `--vscode-descriptionForeground` | Supporting descriptions |
+| `qui-vscode-text-success` | `--vscode-testing-iconPassed` | QUI reuses the passed-test color for success text |
+| `qui-vscode-text-warning` | `--vscode-editorWarning-foreground` | QUI reuses the editor warning color for warning text |
+| `qui-vscode-text-error` | `--vscode-errorForeground` | Error messages |
+
+VS Code does not define generic success and warning prose tokens. Those two mappings are library choices and require contrast review against the consuming surface. The utilities do not set a background. Include words or icons that communicate status rather than relying on color alone.
+
+<VscodeDemo name="TypographyColorsDemo" component={TypographyColorsDemo} />
+
+## Use optional Tailwind utilities
+
+For Tailwind 4 applications, import the optional adapter after the shared styles. Install `@qualcomm-ui/vscode-core` alongside `@qualcomm-ui/tailwind-plugin` when using this entry.
+
+```css
+@import "tailwindcss";
+@import "@qualcomm-ui/vscode-core/styles/components.css";
+@import "@qualcomm-ui/tailwind-plugin/vscode.css";
+```
+
+Use `font-vscode-body-1` or `font-vscode-heading-1` for the named scale, `font-vscode-code` for editor typography, and `text-vscode-xs`, `text-vscode-sm`, or `text-vscode-md` for sizes. Text colors use `text-vscode-normal`, `text-vscode-muted`, `text-vscode-success`, `text-vscode-warning`, and `text-vscode-error`.
+
+Keep the same `qui-vscode` application container. The adapter reads shared tokens and does not install QDS themes or override Tailwind's general font scale.
+
+<VscodeDemo
+  name="TypographyTailwindDemo"
+  component={TypographyTailwindDemo}
+/>
+
+## Migrate from the legacy plugin
+
+Replace legacy `text-body-1` with `qui-vscode-body-1`, following the mapping table for the remaining named styles. Replace `font-mono` with `qui-vscode-code` when displaying editor-style code. Import the public stylesheet rather than configuring the legacy Tailwind plugin.
+
+The CSS classes work without Tailwind. They are scoped to descendants of `qui-vscode`, and their prefix prevents collisions with QDS typography utilities. The legacy JavaScript plugin entry is no longer exported. Use the prefixed CSS adapter for NextGen. Read [Host Theming](/theming/overview) for background, border, outline, stroke, shadow, and opacity utilities.
+
+## Verify host appearance
+
+Use the embedded demo's **VS Code theme** selector to check light, dark, and high-contrast fixtures. Preview fixtures stay separate from the documentation site's QDS theme.
+
+For real host verification, use [React/Vite Webview Setup](/setup/webview) and check multiple installed themes, editor font settings, zoom, and status-text contrast. VS Code currently supplies a 13px UI font variable; editor font size is a separate setting. Browser fixture changes can exercise alternate UI base sizes without claiming VS Code exposes a general UI font-size setting.
+
+Read Microsoft's [webview font guidance](https://code.visualstudio.com/api/extension-guides/webview#theming-webview-content), [current webview font-variable source](https://github.com/microsoft/vscode/blob/main/src/vs/workbench/contrib/webview/browser/themeing.ts), and [Theme Color Reference](https://code.visualstudio.com/api/references/theme-color) for the host variables and color semantics.

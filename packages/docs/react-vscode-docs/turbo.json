@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "outputs": [
+        "build/**",
+        ".typedoc/**"
+      ]
+    },
+    "build:typedoc": {
+      "inputs": [
+        "qui-typedoc.config.ts",
+        "tsconfig.typedoc.json",
+        "../../frameworks/react-vscode/src/**",
+        "../../frameworks/react-core/dist/**/*.d.ts",
+        "../../common/core/dist/**/*.d.ts",
+        "../../common/dom/dist/**/*.d.ts",
+        "../../common/utils/dist/**/*.d.ts"
+      ]
+    }
+  }
+}
+

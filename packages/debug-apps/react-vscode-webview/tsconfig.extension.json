@@ -1,0 +1,9 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.scripts.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["ES2022"],
+    "types": ["node", "vscode"]
+  },
+  "include": ["src/extension", "src/shared"]
+}

@@ -1,0 +1,56 @@
+---
+title: Browser Preview
+description: Try host styling in embedded documentation demos and compare simulated VS Code themes.
+---
+
+import {VscodeDemo} from "../../../components/demo/vscode-demo"
+import {HostStylingDemo} from "./demos/host-styling-demo"
+
+# {frontmatter.title}
+
+Try VS Code styling directly in the documentation. Embedded demos use the shared React source viewer with an independent **VS Code theme** selector, matching the component-demo workflow in the React and Angular docs.
+
+## Try the embedded preview
+
+The scaffold exports a host stylesheet. Typography utilities are available. Component APIs are not available yet, so this example uses native HTML controls styled with host variables.
+
+Enter `Dust` in **Your name** and select **Send greeting**. The status reads **Hello, Dust!** The form runs locally in the browser and does not send messages to an extension.
+
+<VscodeDemo name="HostStylingDemo" component={HostStylingDemo} />
+
+Use **VS Code theme** to select **Dark Modern**, **Dark+**, **Dark High Contrast**, **Light Modern**, **Light+**, **Light High Contrast**, **Monokai**, **Quiet Light**, **Solarized Dark**, or **Solarized Light**. The theme applies to the demo; the site's theme toggle controls the surrounding documentation. Expand the source viewer to inspect the React example. Its control styles live in `demos/host-styling-demo.css` in the docs package.
+
+The fixtures use the color values needed by the previews from the legacy library’s saved theme snapshots. They do not track changes to installed VS Code themes. Preview state resets when the demo is remounted or the page is reloaded.
+
+## Develop embedded demos
+
+Complete [Installation](/installation), then run the documentation site from the repository root:
+
+```shell
+pnpm react-vscode-docs dev
+```
+
+Open `/setup/browser-preview` on the address printed by Vite. The documentation site uses port 3400; no separate preview server is needed.
+
+Add component examples under their route's `demos` folder and render them with `VscodeDemo`. The demo plugin collects their source files for the shared source viewer. Keep host fixtures scoped to the preview container so that VS Code styling does not change the docs shell.
+
+## Verify extension integration
+
+| Check | Embedded documentation demo | Extension Development Host |
+| --- | --- | --- |
+| React rendering and local control interactions | Yes | Yes |
+| Theme appearance | Simulated fixture values | Real installed themes |
+| Extension message transport | Not exercised | Yes |
+| Converted asset URIs and resource roots | Not exercised | Yes |
+| Production webview CSP | Not applied by the docs site | Yes |
+| Host state lifecycle | Local React state | `getState` and `setState` |
+
+Follow [React/Vite Webview Setup](/setup/webview) to launch the integration sample in VS Code. That sample demonstrates host messaging and state persistence and includes automated Chromium checks under its production CSP.
+
+## Troubleshoot local previews
+
+If Vite cannot resolve `@qualcomm-ui/vscode-core/styles/components.css`, run `pnpm vscode-core build` after installing the workspace. Rebuild the library after editing its source stylesheet; the docs consume the public `dist` export.
+
+If the preview metadata or stylesheet cannot be resolved, run `pnpm vscode-core build` from the repository root. Theme choices are exported from `@qualcomm-ui/vscode-core/preview`, and fixtures from `@qualcomm-ui/vscode-core/styles/preview.css`. These optional exports are shared by the docs and debug app. The normal component stylesheet excludes the fixtures.
+
+If a demo changes the surrounding site's fonts or colors, check that its CSS selectors and host fixture variables are scoped to the preview container.

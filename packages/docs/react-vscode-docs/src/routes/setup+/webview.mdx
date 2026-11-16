@@ -1,0 +1,120 @@
+---
+title: React/Vite Webview Setup
+description: Run the React VS Code sample in an Extension Development Host and connect React to extension APIs.
+---
+
+# {frontmatter.title}
+
+Run the React/Vite sample in VS Code to verify bundled assets, host fonts and colors, and a message round trip. The extension host owns VS Code APIs; the React application runs in the webview and accesses the host through a small message protocol.
+
+## Build and launch the extension
+
+Complete [Installation](/installation), then open the sample folder as a VS Code workspace:
+
+```shell
+code packages/debug-apps/react-vscode-webview
+```
+
+If the `code` command is unavailable, use **File > Open Folder** and select that folder. The included launch configuration expects the sample folder to be the workspace root.
+
+Press **F5** with **Run QUI React VS Code Sample** selected. The build task runs `pnpm build` in the sample folder. In the Extension Development Host, open the Command Palette and run **QUI VS Code: Open React Sample**.
+
+The panel should show **QUI React VS Code Sample** and **Connected to the extension.** Enter `Dust` in **Your name**, then select **Send greeting**. The response should read **Hello, Dust!**
+
+The sample's native HTML controls are integration scaffolding. They are not the future `react-vscode` component implementations or approved typography styles.
+
+## Keep the two runtimes separate
+
+| Runtime | Entry point | Responsibility |
+| --- | --- | --- |
+| Extension host | `src/extension/extension.ts` | Register the command, create the panel, validate requests, call VS Code APIs, and send responses |
+| React webview | `src/webview/main.tsx` | Mount React, import the library stylesheet, render the UI, and send typed requests |
+| Shared protocol | `src/shared/messages.ts` | Define request/response shapes and validate incoming data at runtime |
+
+`scripts/build-extension.ts` bundles the extension as CommonJS and leaves `vscode` external because VS Code supplies that module. Vite bundles React and browser dependencies into `dist/webview`. Browser code must not import `vscode`, Node.js APIs, or extension-only modules.
+
+Vite uses `base: "./"`, a single entry, and stable JavaScript/CSS filenames. The extension consumes those files directly. If you add lazy-loaded chunks, update the asset loader and CSP to permit the additional script resources.
+
+## Load local assets
+
+The extension enables scripts and restricts local assets to the built webview folder:
+
+```ts
+const resourceRoot = Uri.joinPath(context.extensionUri, "dist", "webview")
+const panel = window.createWebviewPanel(
+  "quiReactVscode.sample",
+  "QUI React VS Code Sample",
+  ViewColumn.One,
+  {enableScripts: true, localResourceRoots: [resourceRoot]},
+)
+```
+
+Convert each file URI before placing it in webview HTML:
+
+```ts
+const scriptUri = panel.webview.asWebviewUri(
+  Uri.joinPath(resourceRoot, "webview.js"),
+)
+const styleUri = panel.webview.asWebviewUri(
+  Uri.joinPath(resourceRoot, "webview.css"),
+)
+```
+
+These excerpts come from `src/extension/extension.ts`; `Uri`, `ViewColumn`, and `window` are imports from `vscode`. Do not put filesystem paths or browser development-server URLs into the production webview shell. Keep additional images or fonts under an allowed local resource root and convert their URIs too.
+
+## Apply the content security policy
+
+`src/extension/webview-content.ts` creates a static HTML shell. The extension generates a fresh nonce with `randomBytes(16).toString("hex")` from `node:crypto` for each shell.
+
+The sample policy has these directives:
+
+| Directive | Sample value | Purpose |
+| --- | --- | --- |
+| `default-src` | `'none'` | Block resource types that are not explicitly enabled |
+| `style-src` | `webview.cspSource` | Load the bundled external stylesheet |
+| `script-src` | `'nonce-<generated value>'` | Allow the script carrying the matching nonce |
+| `base-uri` | `'none'` | Prevent changing the document base URL |
+| `form-action` | `'none'` | Prevent native form navigation; React handles submission |
+
+The script tag includes the nonce. Styles remain in the external CSS file. The sample does not enable remote requests, inline scripts, inline style tags, images, or downloadable fonts. If you add a resource type, allow the source needed for that resource instead of replacing the policy with broad wildcards.
+
+The shell escapes URI attribute values and contains no user-provided markup. User values travel through messages and are rendered as React text. Preserve that boundary when adding workspace or file content.
+
+## Send messages in both directions
+
+Acquire the webview API once and keep it private to the browser module. The sample does this in `src/webview/vscode-bridge.ts`, outside React rendering, so React StrictMode does not acquire it twice.
+
+The supported messages are:
+
+| Direction | Request or response | Effect |
+| --- | --- | --- |
+| Webview to host | `{type: "ready"}` | Announce that the listener is ready |
+| Host to webview | `{type: "host-ready"}` | Enable the form |
+| Webview to host | `{type: "greet", name: "Dust"}` | Request a greeting |
+| Host to webview | `{type: "greeting", text: "Hello, Dust!"}` | Render the response in a status region |
+
+React registers its `message` listener before sending `ready`. The extension registers `onDidReceiveMessage` before assigning the HTML. Requests and replies use `postMessage`.
+
+TypeScript types do not validate data crossing the runtime boundary. The host rejects unknown requests, non-string names, blank names, and names longer than 64 characters. The browser validates response shapes before displaying them. The protocol does not expose arbitrary command execution.
+
+The browser simulator uses the same response handler, but it runs locally. Only the Extension Development Host verifies the real VS Code transport. Add request IDs, error responses, and cancellation when introducing asynchronous host operations that need those contracts.
+
+## Restore state and follow host themes
+
+The sample reads the saved name through `getState()` and writes it through `setState({name})`. These APIs keep JSON-serializable state when a webview's content is recreated while its panel remains open. Closing the panel destroys that state. Restoring panels after restarting VS Code requires a `WebviewPanelSerializer`, which this sample does not implement.
+
+Enter a name, switch to another editor tab, and return to the sample. The name should remain. Switch between light, dark, and high-contrast editor themes while the panel is open. Host variables should change the interface colors without a QDS theme provider. Browser fixtures do not override those variables in a real webview.
+
+## Troubleshoot integration
+
+| Symptom | Check |
+| --- | --- |
+| The sample command is missing | Launch F5 from the sample folder and use the Extension Development Host window |
+| A library stylesheet cannot be resolved | Run `pnpm install`, `pnpm vscode-core build`, and `pnpm react-vscode build` from the repository root |
+| The panel is blank | Rebuild the sample, inspect webview developer tools, and check that both output files exist |
+| Scripts or CSS are blocked | Check converted asset URIs, `localResourceRoots`, `cspSource`, and the script nonce |
+| The form remains disconnected | Check that the host and browser listeners are registered before the ready message |
+| Editor colors do not apply | Apply `qui-vscode`, import the public stylesheet, and avoid overriding host variables with browser fixtures |
+| Edits do not appear in the panel | Rebuild and close/reopen the panel; the extension uses bundled files rather than Vite HMR |
+
+Read Microsoft's [Webview API guide](https://code.visualstudio.com/api/extension-guides/webview), [extension bundling guide](https://code.visualstudio.com/api/working-with-extensions/bundling-extension), and [VS Code API reference](https://code.visualstudio.com/api/references/vscode-api) for the broader APIs and lifecycle contracts.
