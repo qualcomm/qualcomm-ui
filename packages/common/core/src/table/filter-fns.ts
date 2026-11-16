@@ -82,6 +82,22 @@ const arrIncludesSome: FilterFn<any> = (
 
 arrIncludesSome.autoRemove = (val: any) => testFalsy(val) || !val?.length
 
+/**
+ * Matches rows whose value is one of the filter values. Use for multi-value
+ * filters on scalar columns. `arrIncludesSome` is not a substitute: it expects
+ * an array row value, and on a string row value it performs substring
+ * matching.
+ */
+const includesValue: FilterFn<any> = (
+  row,
+  columnId: string,
+  filterValue: unknown[],
+) => {
+  return filterValue.includes(row.getValue(columnId))
+}
+
+includesValue.autoRemove = (val: any) => testFalsy(val) || !val?.length
+
 const equals: FilterFn<any> = (row, columnId: string, filterValue: unknown) => {
   return row.getValue(columnId) === filterValue
 }
@@ -145,6 +161,7 @@ export type BuiltInFilterFn =
   | "inNumberRange"
   | "includesString"
   | "includesStringSensitive"
+  | "includesValue"
   | "weakEquals"
 
 export const filterFns: Record<BuiltInFilterFn, FilterFn<any>> = {
@@ -155,6 +172,7 @@ export const filterFns: Record<BuiltInFilterFn, FilterFn<any>> = {
   equalsString,
   includesString,
   includesStringSensitive,
+  includesValue,
   inNumberRange,
   weakEquals,
 }

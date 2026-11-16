@@ -1,12 +1,21 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
+import type {QdsTagApiProps} from "@qualcomm-ui/qds-core/tag"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {tableClasses} from "./table.classes.js"
 import type {
   QdsTableActionBarBindings,
+  QdsTableAppliedFilterBarClearTriggerBindings,
+  QdsTableAppliedFilterBarExpandTriggerBindings,
+  QdsTableAppliedFilterBarExpandTriggerProps,
+  QdsTableAppliedFilterBarFilterChipBindings,
+  QdsTableAppliedFilterBarFilterListBindings,
+  QdsTableAppliedFilterBarFilterListProps,
+  QdsTableAppliedFilterBarRootBindings,
   QdsTableApi,
   QdsTableApiProps,
   QdsTableBodyBindings,
@@ -24,6 +33,7 @@ import type {
   QdsTableColumnSortActionBindings,
   QdsTableColumnSortActionProps,
   QdsTableDragHandleBindings,
+  QdsTableRootApi,
   QdsTableFooterBindings,
   QdsTableHeaderBindings,
   QdsTableHeaderCellBindings,
@@ -40,6 +50,16 @@ import type {
   QdsTableScrollContainerBindings,
   QdsTableTableBindings,
   QdsTableTitleBarBindings,
+  QdsTableToolbarRootBindings,
+  QdsTableToolbarEndBindings,
+  QdsTableToolbarStartBindings,
+  QdsTableFilterPanelHeaderBindings,
+  QdsTableFilterPanelRootBindings,
+  QdsTableFilterPanelSectionBindings,
+  QdsTablePlaceholderActionBindings,
+  QdsTablePlaceholderDescriptionBindings,
+  QdsTablePlaceholderRootBindings,
+  QdsTablePlaceholderHeadingBindings,
 } from "./table.types.js"
 
 export function createQdsTableApi(normalize: PropNormalizer): QdsTableApi {
@@ -206,6 +226,123 @@ export function createQdsTableApi(normalize: PropNormalizer): QdsTableApi {
     },
     getTitleBarBindings(): QdsTableTitleBarBindings {
       return normalize.element({className: tableClasses.titleBar})
+    },
+  }
+}
+
+export function createQdsTableRootApi(
+  props: QdsTableApiProps,
+  normalize: PropNormalizer,
+): QdsTableRootApi {
+  const size = props.size || "md"
+
+  return {
+    getAppliedFilterBarBindings(): QdsTableAppliedFilterBarRootBindings {
+      return normalize.element({
+        className: tableClasses.appliedFilterBarRoot,
+        "data-size": size,
+      })
+    },
+    getAppliedFilterBarButtonProps(): QdsButtonApiProps {
+      return {
+        density: "compact",
+        size: size === "lg" ? "md" : "sm",
+        variant: "ghost",
+      }
+    },
+    getAppliedFilterBarClearTriggerBindings(): QdsTableAppliedFilterBarClearTriggerBindings {
+      return normalize.button({
+        className: tableClasses.appliedFilterBarClearTrigger,
+      })
+    },
+    getAppliedFilterBarExpandTriggerBindings(
+      expandTriggerProps: QdsTableAppliedFilterBarExpandTriggerProps,
+    ): QdsTableAppliedFilterBarExpandTriggerBindings {
+      return normalize.button({
+        className: tableClasses.appliedFilterBarExpandTrigger,
+        "data-expanded": booleanDataAttr(expandTriggerProps.expanded),
+      })
+    },
+    getAppliedFilterBarFilterChipBindings(): QdsTableAppliedFilterBarFilterChipBindings {
+      return normalize.element({
+        className: tableClasses.appliedFilterBarFilterChip,
+      })
+    },
+    getAppliedFilterBarFilterChipTagProps(): QdsTagApiProps {
+      return {
+        size: size === "lg" ? "md" : "sm",
+        variant: "dismissable",
+      }
+    },
+    getAppliedFilterBarFilterListBindings(
+      filterListProps: QdsTableAppliedFilterBarFilterListProps,
+    ): QdsTableAppliedFilterBarFilterListBindings {
+      return normalize.element({
+        className: tableClasses.appliedFilterBarFilterList,
+        "data-expanded": booleanDataAttr(filterListProps.expanded),
+      })
+    },
+    getFilterPanelBindings(): QdsTableFilterPanelRootBindings {
+      return normalize.element({
+        className: tableClasses.filterPanelRoot,
+        "data-size": size,
+      })
+    },
+    getFilterPanelButtonProps(): QdsButtonApiProps {
+      return {
+        density: "compact",
+        size: size === "lg" ? "md" : "sm",
+      }
+    },
+    getFilterPanelHeaderBindings(): QdsTableFilterPanelHeaderBindings {
+      return normalize.element({className: tableClasses.filterPanelHeader})
+    },
+    getFilterPanelSectionBindings(): QdsTableFilterPanelSectionBindings {
+      return normalize.element({className: tableClasses.filterPanelSection})
+    },
+    getPlaceholderActionBindings(): QdsTablePlaceholderActionBindings {
+      return normalize.element({className: tableClasses.placeholderAction})
+    },
+    getPlaceholderBindings(): QdsTablePlaceholderRootBindings {
+      return normalize.element({
+        className: tableClasses.placeholderRoot,
+        "data-size": size,
+      })
+    },
+    getPlaceholderButtonProps(): QdsButtonApiProps {
+      return {
+        size: size === "lg" ? "md" : "sm",
+      }
+    },
+    getPlaceholderDescriptionBindings(): QdsTablePlaceholderDescriptionBindings {
+      return normalize.element({className: tableClasses.placeholderDescription})
+    },
+    getPlaceholderHeadingBindings(): QdsTablePlaceholderHeadingBindings {
+      return normalize.element({className: tableClasses.placeholderHeading})
+    },
+    getRootBindings(): QdsTableRootBindings {
+      return normalize.element({
+        className: tableClasses.root,
+        "data-show-column-divider": booleanDataAttr(props.showColumnDivider),
+        "data-size": size,
+      })
+    },
+    getToolbarBindings(): QdsTableToolbarRootBindings {
+      return normalize.element({
+        className: tableClasses.toolbarRoot,
+        "data-size": size,
+      })
+    },
+    getToolbarButtonProps(): QdsButtonApiProps {
+      return {
+        size: size === "lg" ? "md" : "sm",
+      }
+    },
+    getToolbarEndBindings(): QdsTableToolbarEndBindings {
+      return normalize.element({className: tableClasses.toolbarEnd})
+    },
+    getToolbarStartBindings(): QdsTableToolbarStartBindings {
+      return normalize.element({className: tableClasses.toolbarStart})
     },
   }
 }

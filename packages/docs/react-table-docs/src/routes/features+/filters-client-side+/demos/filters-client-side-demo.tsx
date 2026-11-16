@@ -4,6 +4,7 @@ import {Search} from "lucide-react"
 
 import {
   type ColumnDef,
+  createColumnHelper,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
@@ -22,50 +23,46 @@ import {
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
 import {TableColumnFilter} from "./filters"
-import {type User, type UserColumnMeta, useUserData} from "./use-data"
+import {type User, useUserData} from "./use-data"
+
+const columnHelper = createColumnHelper<User>()
 
 export function FiltersClientSideDemo() {
   const {data = [], isFetching, refetch} = useUserData(100000)
 
   // always memoize your data and columns
-  const userColumns: ColumnDef<User, any, UserColumnMeta>[] = useMemo(
+  const userColumns: ColumnDef<User, any>[] = useMemo(
     () => [
-      {
-        accessorKey: "firstName",
+      columnHelper.accessor("firstName", {
         header: "First Name",
         id: "firstName",
         meta: {filterLabel: "First Name"},
-      },
-      {
-        accessorKey: "lastName",
+      }),
+      columnHelper.accessor("lastName", {
         header: "Last Name",
         id: "lastName",
         meta: {filterLabel: "Last Name"},
-      },
-      {
-        accessorKey: "username",
+      }),
+      columnHelper.accessor("username", {
         header: "Username",
         id: "username",
         meta: {filterLabel: "Username"},
-      },
-      {
-        accessorKey: "visitCount",
+      }),
+      columnHelper.accessor("visitCount", {
         header: "Visit Count",
         id: "visitCount",
         meta: {filterLabel: "Visit Count"},
-      },
-      {
-        accessorKey: "role",
+      }),
+      columnHelper.accessor("role", {
         header: "Role",
         id: "role",
         meta: {filterLabel: "Role"},
-      },
-      {
-        accessorKey: "accountStatus",
+      }),
+      columnHelper.accessor("accountStatus", {
         header: "Account Status",
         id: "accountStatus",
         meta: {filterLabel: "Account Status"},
-      },
+      }),
     ],
     [],
   )

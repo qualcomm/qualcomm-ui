@@ -86,6 +86,21 @@ export interface FiltersColumnDef<TData extends RowData> {
    * @inheritDoc
    */
   filterFn?: FilterFnOption<TData>
+
+  /**
+   * Human-readable label for the column's filter. Used wherever the filter is
+   * presented outside the column header, such as a filter panel section or an
+   * active filter summary. Falls back to the column's `header` when it is a
+   * string, then to the column `id`.
+   */
+  filterLabel?: string
+
+  /**
+   * Returns a human-readable label for a filter value, such as an option in a
+   * filter panel or a value in an active filter summary. Falls back to
+   * `String(value)` for primitive values, otherwise an empty string.
+   */
+  getFilterOptionLabel?: (value: unknown) => string
 }
 
 export interface FiltersColumn<TData extends RowData> {
@@ -150,6 +165,18 @@ export interface FiltersColumn<TData extends RowData> {
    * array. Returns `-1` if not found.
    */
   getFilterIndex: () => number
+  /**
+   * Returns the human-readable label for the column's filter. Resolves from
+   * `columnDef.filterLabel`, then `columnDef.header` when it is a string, then
+   * the column `id`.
+   */
+  getFilterLabel: () => string
+  /**
+   * Returns the human-readable label for a filter value. Resolves from
+   * `columnDef.getFilterOptionLabel`, then `String(value)` for primitive
+   * values, otherwise an empty string.
+   */
+  getFilterOptionLabel: (value: unknown) => string
   /**
    * Returns the current filter value for the column.
    */
@@ -430,6 +457,27 @@ export const Filters: TableFeature = {
     }
 
     column.getIsFiltered = () => column.getFilterIndex() > -1
+
+    column.getFilterLabel = () => {
+      const {filterLabel, header} = column.columnDef
+      if (filterLabel) {
+        return filterLabel
+      }
+      return typeof header === "string" && header ? header : column.id
+    }
+
+    column.getFilterOptionLabel = (value) => {
+      const getFilterOptionLabel = column.columnDef.getFilterOptionLabel
+      if (getFilterOptionLabel) {
+        return getFilterOptionLabel(value)
+      }
+      return typeof value === "string" ||
+        typeof value === "number" ||
+        typeof value === "boolean" ||
+        typeof value === "bigint"
+        ? String(value)
+        : ""
+    }
 
     column.getFilterValue = () =>
       table.getState().columnFilters?.find((d) => d.id === column.id)?.value

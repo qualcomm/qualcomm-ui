@@ -3,15 +3,18 @@
 
 import type {ReactElement} from "react"
 
-import type {QdsTableApiProps} from "@qualcomm-ui/qds-core/table"
+import {
+  createQdsTableRootApi,
+  type QdsTableApiProps,
+} from "@qualcomm-ui/qds-core/table"
+import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
-import type {Explicit} from "@qualcomm-ui/utils/guard"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {qdsTableApi} from "./qds-table-context.js"
+import {QdsTableRootContextProvider} from "./qds-table-root-context.js"
 
 export interface TableRootProps
   extends ElementRenderProp<"div">, QdsTableApiProps {}
@@ -22,7 +25,7 @@ export interface TableRootProps
  * @example
  * ```tsx
  * <Table.Root>
- *   <Table.ActionBar>...</Table.ActionBar>
+ *   <TableToolbar.Root>...</TableToolbar.Root>
  *   <Table.ScrollContainer>
  *     <Table.Table>...</Table.Table>
  *   </Table.ScrollContainer>
@@ -37,13 +40,15 @@ export function TableRoot({
   size,
   ...props
 }: TableRootProps): ReactElement {
-  const mergedProps = mergeProps(
-    qdsTableApi.getRootBindings({
-      showColumnDivider,
-      size,
-    } satisfies Explicit<QdsTableApiProps>),
-    props,
+  const rootApi = createQdsTableRootApi(
+    {showColumnDivider, size},
+    normalizeProps,
   )
+  const mergedProps = mergeProps(rootApi.getRootBindings(), props)
 
-  return <PolymorphicElement as="div" {...mergedProps} />
+  return (
+    <QdsTableRootContextProvider value={rootApi}>
+      <PolymorphicElement as="div" {...mergedProps} />
+    </QdsTableRootContextProvider>
+  )
 }
