@@ -164,6 +164,8 @@ type TableComponent = {
   /**
    * An action button for opening a column filter menu or interface. Renders a
    * `<button>` element by default.
+   *
+   * @deprecated will be removed in the next major version.
    */
   ColumnFilterAction: typeof TableColumnFilterAction
   /**

@@ -7,6 +7,9 @@ export const tableClasses = {
   cell: "qui-table__cell",
   cellAction: "qui-table__cell-action",
   columnDropIndicator: "qui-table__column-drop-indicator",
+  /**
+   * @deprecated will be removed in the next major version.
+   */
   columnFilterAction: "qui-table__column-filter-action",
   columnHeaderAction: "qui-table__column-header-action",
   columnResizer: "qui-table__column-resizer",

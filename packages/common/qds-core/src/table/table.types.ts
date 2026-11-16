@@ -117,6 +117,9 @@ export interface QdsTableColumnSortActionProps {
   isSorted?: false | SortDirection
 }
 
+/**
+ * @deprecated will be removed in the next major version.
+ */
 export interface QdsTableColumnFilterProps {
   canFilter?: boolean | undefined
   /**
@@ -193,6 +196,9 @@ export interface QdsTableColumnSortActionBindings {
   onClick: JSX.MouseEventHandler
 }
 
+/**
+ * @deprecated will be removed in the next major version.
+ */
 export interface QdsTableColumnFilterActionBindings {
   className: TableClasses["columnFilterAction"]
   "data-is-filtered": BooleanDataAttr
@@ -266,6 +272,9 @@ export interface QdsTableApi {
   getColumnDropIndicatorBindings(
     props: QdsTableColumnDropIndicatorProps,
   ): QdsTableColumnDropIndicatorBindings
+  /**
+   * @deprecated will be removed in the next major version.
+   */
   getColumnFilterActionBindings(
     props: QdsTableColumnFilterProps,
   ): QdsTableColumnFilterActionBindings
