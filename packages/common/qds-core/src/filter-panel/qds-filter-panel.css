@@ -1,0 +1,24 @@
+.qui-filter-panel__root {
+}
+
+.qui-filter-panel__header {
+}
+
+.qui-filter-panel__clear-trigger {
+}
+
+.qui-filter-panel__close-trigger {
+}
+
+.qui-filter-panel__heading {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-heading-xxs-default);
+  margin: 0;
+
+  .qui-filter-panel__root[data-size="lg"] & {
+    font: var(--font-static-heading-xs-default);
+  }
+}
+
+.qui-filter-panel__section {
+}

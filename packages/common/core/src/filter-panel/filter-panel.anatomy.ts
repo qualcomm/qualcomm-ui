@@ -3,13 +3,13 @@
 
 import {type Anatomy, createAnatomy} from "@qualcomm-ui/utils/anatomy"
 
-export const tableFilterPanelParts = [
+export const filterPanelParts = [
   "root",
   "applyTrigger",
   "clearTrigger",
 ] as const
 
-export const tableFilterPanelAnatomy: Anatomy<
-  "table-filter-panel",
-  (typeof tableFilterPanelParts)[number]
-> = createAnatomy("table-filter-panel").parts(...tableFilterPanelParts)
+export const filterPanelAnatomy: Anatomy<
+  "filter-panel",
+  (typeof filterPanelParts)[number]
+> = createAnatomy("filter-panel").parts(...filterPanelParts)

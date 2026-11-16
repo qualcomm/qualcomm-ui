@@ -331,23 +331,6 @@ export interface QdsTableToolbarEndBindings {
   className: TableClasses["toolbarEnd"]
 }
 
-export interface QdsTableFilterPanelRootBindings {
-  className: TableClasses["filterPanelRoot"]
-  "data-size": QdsTableSize
-}
-
-export interface QdsTableFilterPanelHeaderBindings {
-  className: TableClasses["filterPanelHeader"]
-}
-
-export interface QdsTableFilterPanelHeadingBindings {
-  className: TableClasses["filterPanelHeading"]
-}
-
-export interface QdsTableFilterPanelSectionBindings {
-  className: TableClasses["filterPanelSection"]
-}
-
 export interface QdsTablePlaceholderRootBindings {
   className: TableClasses["placeholderRoot"]
   "data-size": QdsTableSize
@@ -416,11 +399,6 @@ export interface QdsTableRootApi {
   getAppliedFilterBarFilterListBindings(
     props: QdsTableAppliedFilterBarFilterListProps,
   ): QdsTableAppliedFilterBarFilterListBindings
-  getFilterPanelBindings(): QdsTableFilterPanelRootBindings
-  getFilterPanelButtonProps(): QdsButtonApiProps
-  getFilterPanelHeaderBindings(): QdsTableFilterPanelHeaderBindings
-  getFilterPanelHeadingBindings(): QdsTableFilterPanelHeadingBindings
-  getFilterPanelSectionBindings(): QdsTableFilterPanelSectionBindings
   getPlaceholderActionBindings(): QdsTablePlaceholderActionBindings
   getPlaceholderBindings(): QdsTablePlaceholderRootBindings
   getPlaceholderButtonProps(): QdsButtonApiProps

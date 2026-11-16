@@ -53,10 +53,6 @@ import type {
   QdsTableToolbarRootBindings,
   QdsTableToolbarEndBindings,
   QdsTableToolbarStartBindings,
-  QdsTableFilterPanelHeaderBindings,
-  QdsTableFilterPanelHeadingBindings,
-  QdsTableFilterPanelRootBindings,
-  QdsTableFilterPanelSectionBindings,
   QdsTablePlaceholderActionBindings,
   QdsTablePlaceholderDescriptionBindings,
   QdsTablePlaceholderRootBindings,
@@ -282,27 +278,6 @@ export function createQdsTableRootApi(
         className: tableClasses.appliedFilterBarFilterList,
         "data-expanded": booleanDataAttr(filterListProps.expanded),
       })
-    },
-    getFilterPanelBindings(): QdsTableFilterPanelRootBindings {
-      return normalize.element({
-        className: tableClasses.filterPanelRoot,
-        "data-size": size,
-      })
-    },
-    getFilterPanelButtonProps(): QdsButtonApiProps {
-      return {
-        density: "compact",
-        size: size === "lg" ? "md" : "sm",
-      }
-    },
-    getFilterPanelHeaderBindings(): QdsTableFilterPanelHeaderBindings {
-      return normalize.element({className: tableClasses.filterPanelHeader})
-    },
-    getFilterPanelHeadingBindings(): QdsTableFilterPanelHeadingBindings {
-      return normalize.element({className: tableClasses.filterPanelHeading})
-    },
-    getFilterPanelSectionBindings(): QdsTableFilterPanelSectionBindings {
-      return normalize.element({className: tableClasses.filterPanelSection})
     },
     getPlaceholderActionBindings(): QdsTablePlaceholderActionBindings {
       return normalize.element({className: tableClasses.placeholderAction})

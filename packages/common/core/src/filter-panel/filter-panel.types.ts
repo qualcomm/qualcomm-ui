@@ -1,55 +1,69 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {Column, ColumnFiltersState, Updater} from "@qualcomm-ui/core/table"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
-import type {ActionSchema, JSX, MachineSchema} from "@qualcomm-ui/utils/machine"
+import type {
+  ActionSchema,
+  JSX,
+  MachineSchema,
+  ValueOrFn,
+} from "@qualcomm-ui/utils/machine"
 
-import type {tableFilterPanelAnatomy} from "./table-filter-panel.anatomy.js"
+import type {filterPanelAnatomy} from "./filter-panel.anatomy.js"
 
 /**
  * - `manual`: changes are staged in a draft and committed when applied.
  * - `auto`: changes are committed immediately.
  */
-export type TableFilterPanelApplyMode = "auto" | "manual"
+export type FilterPanelApplyMode = "auto" | "manual"
 
-/**
- * Resolves the column for a filter id. Returns `undefined` for filters without
- * a backing column.
- */
-export type TableFilterPanelColumnResolver = (
-  id: string,
-) => Column<any, unknown> | undefined
-
-export interface TableFilterPanelFilterRegistration {
+export interface FilterPanelFilter {
   /**
-   * Returns a human-readable label for a value of this filter. Takes precedence
-   * over the column's `getFilterOptionLabel`.
-   */
-  getOptionLabel?: ((value: unknown) => string) | undefined
-
-  /**
-   * The filter id. Matches a column id for column filters, but may be any
-   * string for filters without a backing column.
+   * The filter id.
    */
   id: string
 
   /**
-   * Human-readable label for the filter. Takes precedence over the column's
-   * filter label.
+   * The filter value. Its shape is defined by the filter control and
+   * interpreted by whatever consumes the committed filters.
+   */
+  value: unknown
+}
+
+/**
+ * The filters managed by the panel. Structurally identical to the table's
+ * `ColumnFiltersState`.
+ */
+export type FilterPanelValue = FilterPanelFilter[]
+
+export interface FilterPanelFilterRegistration {
+  /**
+   * Returns a human-readable label for a value of this filter. Takes precedence
+   * over the panel's `getFilterOptionLabel`.
+   */
+  getOptionLabel?: ((value: unknown) => string) | undefined
+
+  /**
+   * The filter id.
+   */
+  id: string
+
+  /**
+   * Human-readable label for the filter. Takes precedence over the panel's
+   * `getFilterLabel`.
    */
   label?: string | undefined
 }
 
-export interface TableFilterPanelApiProps {
+export interface FilterPanelApiProps {
   /**
    * Controls when filter changes are committed.
    *
    * @default "manual"
    */
-  applyMode?: TableFilterPanelApplyMode | undefined
+  applyMode?: FilterPanelApplyMode | undefined
 
   /**
    * The initial committed filters. Use when you don't need to control the
@@ -57,29 +71,42 @@ export interface TableFilterPanelApiProps {
    *
    * @default []
    */
-  defaultValue?: ColumnFiltersState | undefined
+  defaultValue?: FilterPanelValue | undefined
 
   /**
-   * Resolves the column for a filter id. Used to detect empty values through
-   * the column's filter function and to resolve column filter labels. Without
-   * it, only generic empty checks apply and labels fall back to the filter id
-   * and `String(value)`.
+   * Resolves the label for a filter that is not registered by a mounted filter
+   * control. Return `undefined` to fall back to the filter id.
    */
-  getColumn?: TableFilterPanelColumnResolver | undefined
+  getFilterLabel?: ((id: string) => string | undefined) | undefined
+
+  /**
+   * Resolves the label for a filter value when the filter is not registered
+   * with its own `getOptionLabel`. Return `undefined` to fall back to
+   * `String(value)` for primitive values.
+   */
+  getFilterOptionLabel?:
+    | ((id: string, value: unknown) => string | undefined)
+    | undefined
+
+  /**
+   * Additional check for empty filter values, applied after the built-in check
+   * for `undefined`, `null`, `""`, and `[]`. Empty values remove the filter.
+   */
+  isEmptyValue?: ((id: string, value: unknown) => boolean) | undefined
 
   /**
    * Called when the committed filters change: on apply in `manual` mode, on
    * every change in `auto` mode.
    */
-  onValueChange?: ((filters: ColumnFiltersState) => void) | undefined
+  onValueChange?: ((value: FilterPanelValue) => void) | undefined
 
   /**
    * The controlled committed filters.
    */
-  value?: ColumnFiltersState | undefined
+  value?: FilterPanelValue | undefined
 }
 
-export interface TableFilterPanelSchema extends MachineSchema {
+export interface FilterPanelSchema extends MachineSchema {
   actions: ActionSchema<
     | "applyDraft"
     | "clearFilters"
@@ -94,61 +121,58 @@ export interface TableFilterPanelSchema extends MachineSchema {
      * The filters the panel currently displays: the draft in `manual` mode, the
      * committed filters in `auto` mode.
      */
-    filters: ColumnFiltersState
+    filters: FilterPanelValue
   }
   context: {
-    draft: ColumnFiltersState
+    draft: FilterPanelValue
     registryVersion: number
-    value: ColumnFiltersState
+    value: FilterPanelValue
   }
   events:
     | {type: "APPLY"}
     | {type: "CLEAR_ALL"}
     | {type: "RESET"}
-    | {id: string; type: "FILTER.SET"; value: Updater<unknown>}
-    | {filter: TableFilterPanelFilterRegistration; type: "FILTER.REGISTER"}
+    | {id: string; type: "FILTER.SET"; value: ValueOrFn<unknown>}
+    | {filter: FilterPanelFilterRegistration; type: "FILTER.REGISTER"}
     | {id: string; type: "FILTER.UNREGISTER"}
   guards: {
     isAutoApply: () => boolean
   }
-  props: RequiredBy<TableFilterPanelApiProps, "applyMode" | "defaultValue">
+  props: RequiredBy<FilterPanelApiProps, "applyMode" | "defaultValue">
   refs: {
     /**
      * The committed filters as of the last sync. Used to decide whether the
      * draft has diverged from them.
      */
-    appliedFilters: ColumnFiltersState
-    registry: Map<string, TableFilterPanelFilterRegistration>
+    appliedFilters: FilterPanelValue
+    registry: Map<string, FilterPanelFilterRegistration>
   }
   state: "idle"
 }
 
-type PartName = AnatomyPartName<typeof tableFilterPanelAnatomy>
-interface Part<P extends PartName> extends AnatomyPart<
-  "table-filter-panel",
-  P
-> {}
+type PartName = AnatomyPartName<typeof filterPanelAnatomy>
+interface Part<P extends PartName> extends AnatomyPart<"filter-panel", P> {}
 
-export interface TableFilterPanelRootBindings extends Part<"root"> {
-  "data-apply-mode": TableFilterPanelApplyMode
+export interface FilterPanelRootBindings extends Part<"root"> {
+  "data-apply-mode": FilterPanelApplyMode
   "data-dirty": BooleanDataAttr
 }
 
-export interface TableFilterPanelApplyTriggerBindings extends Part<"applyTrigger"> {
+export interface FilterPanelApplyTriggerBindings extends Part<"applyTrigger"> {
   "data-disabled": BooleanDataAttr
   disabled: boolean
   onClick: JSX.MouseEventHandler
   type: "button"
 }
 
-export interface TableFilterPanelClearTriggerBindings extends Part<"clearTrigger"> {
+export interface FilterPanelClearTriggerBindings extends Part<"clearTrigger"> {
   "data-disabled": BooleanDataAttr
   disabled: boolean
   onClick: JSX.MouseEventHandler
   type: "button"
 }
 
-export interface TableFilterPanelApi {
+export interface FilterPanelApi {
   /**
    * Commits the draft. No-op in `auto` mode.
    */
@@ -157,7 +181,7 @@ export interface TableFilterPanelApi {
   /**
    * Controls when filter changes are committed.
    */
-  applyMode: TableFilterPanelApplyMode
+  applyMode: FilterPanelApplyMode
 
   /**
    * Removes every filter. In `manual` mode this clears the draft and must be
@@ -176,17 +200,17 @@ export interface TableFilterPanelApi {
    * The filters the panel currently displays: the draft in `manual` mode, the
    * committed filters in `auto` mode.
    */
-  filters: ColumnFiltersState
+  filters: FilterPanelValue
 
   /**
    * Returns the human-readable label for a filter. Resolves from the
-   * registered filter label, then the column's filter label, then the id.
+   * registered filter label, then the panel's `getFilterLabel`, then the id.
    */
   getFilterLabel: (id: string) => string
 
   /**
    * Returns the human-readable label for a filter value. Resolves from the
-   * registered filter's `getOptionLabel`, then the column's
+   * registered filter's `getOptionLabel`, then the panel's
    * `getFilterOptionLabel`, then `String(value)` for primitive values.
    */
   getFilterOptionLabel: (id: string, value: unknown) => string
@@ -205,7 +229,7 @@ export interface TableFilterPanelApi {
   /**
    * Registers label metadata for a filter. Call when a filter control mounts.
    */
-  registerFilter: (filter: TableFilterPanelFilterRegistration) => void
+  registerFilter: (filter: FilterPanelFilterRegistration) => void
 
   /**
    * Discards the draft and restores the committed filters. No-op in `auto`
@@ -216,7 +240,7 @@ export interface TableFilterPanelApi {
   /**
    * Sets the value of a filter. Empty values remove the filter.
    */
-  setFilterValue: (id: string, value: Updater<unknown>) => void
+  setFilterValue: (id: string, value: ValueOrFn<unknown>) => void
 
   /**
    * Removes label metadata for a filter. Call when a filter control unmounts.
@@ -224,7 +248,7 @@ export interface TableFilterPanelApi {
   unregisterFilter: (id: string) => void
 
   // group: bindings
-  getApplyTriggerBindings: () => TableFilterPanelApplyTriggerBindings
-  getClearTriggerBindings: () => TableFilterPanelClearTriggerBindings
-  getRootBindings: () => TableFilterPanelRootBindings
+  getApplyTriggerBindings: () => FilterPanelApplyTriggerBindings
+  getClearTriggerBindings: () => FilterPanelClearTriggerBindings
+  getRootBindings: () => FilterPanelRootBindings
 }

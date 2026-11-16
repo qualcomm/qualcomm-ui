@@ -7,22 +7,20 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
-import {useQdsTableRootContext} from "@qualcomm-ui/react/table"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface TableFilterPanelHeadingProps extends ElementRenderProp<"h2"> {}
+import {useQdsFilterPanelContext} from "./qds-filter-panel-context.js"
+
+export interface FilterPanelHeadingProps extends ElementRenderProp<"h2"> {}
 
 /**
  * The title of the filter panel. Renders an `<h2>` element by default.
  */
-export function TableFilterPanelHeading(
-  props: TableFilterPanelHeadingProps,
+export function FilterPanelHeading(
+  props: FilterPanelHeadingProps,
 ): ReactElement {
-  const qdsContext = useQdsTableRootContext()
+  const qdsContext = useQdsFilterPanelContext()
 
-  const mergedProps = mergeProps(
-    qdsContext.getFilterPanelHeadingBindings(),
-    props,
-  )
+  const mergedProps = mergeProps(qdsContext.getHeadingBindings(), props)
   return <PolymorphicElement as="h2" {...mergedProps} />
 }

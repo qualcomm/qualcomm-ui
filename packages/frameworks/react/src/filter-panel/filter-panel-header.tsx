@@ -7,22 +7,18 @@ import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
-import {useQdsTableRootContext} from "@qualcomm-ui/react/table"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-export interface TableFilterPanelHeaderProps extends ElementRenderProp<"div"> {}
+import {useQdsFilterPanelContext} from "./qds-filter-panel-context.js"
+
+export interface FilterPanelHeaderProps extends ElementRenderProp<"div"> {}
 
 /**
  * The header of the filter panel. Renders a `<div>` element by default.
  */
-export function TableFilterPanelHeader(
-  props: TableFilterPanelHeaderProps,
-): ReactElement {
-  const qdsContext = useQdsTableRootContext()
+export function FilterPanelHeader(props: FilterPanelHeaderProps): ReactElement {
+  const qdsContext = useQdsFilterPanelContext()
 
-  const mergedProps = mergeProps(
-    qdsContext.getFilterPanelHeaderBindings(),
-    props,
-  )
+  const mergedProps = mergeProps(qdsContext.getHeaderBindings(), props)
   return <PolymorphicElement as="div" {...mergedProps} />
 }

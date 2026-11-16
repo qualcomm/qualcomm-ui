@@ -4,35 +4,35 @@
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
+import {filterPanelAnatomy} from "./filter-panel.anatomy.js"
+import type {
+  FilterPanelApi,
+  FilterPanelApplyTriggerBindings,
+  FilterPanelClearTriggerBindings,
+  FilterPanelRootBindings,
+  FilterPanelSchema,
+} from "./filter-panel.types.js"
 import {
   areFiltersEqual,
   countFilters,
   getFilterValue,
   stringifyFilterValue,
-} from "./internal/table-filter-panel.utils.js"
-import {tableFilterPanelAnatomy} from "./table-filter-panel.anatomy.js"
-import type {
-  TableFilterPanelApi,
-  TableFilterPanelApplyTriggerBindings,
-  TableFilterPanelClearTriggerBindings,
-  TableFilterPanelRootBindings,
-  TableFilterPanelSchema,
-} from "./table-filter-panel.types.js"
+} from "./internal/filter-panel.utils.js"
 
-const parts = tableFilterPanelAnatomy.parts
+const parts = filterPanelAnatomy.parts
 
-export function createTableFilterPanelApi(
-  machine: Machine<TableFilterPanelSchema>,
+export function createFilterPanelApi(
+  machine: Machine<FilterPanelSchema>,
   normalize: PropNormalizer,
-): TableFilterPanelApi {
+): FilterPanelApi {
   const {computed, context, prop, refs, send} = machine
-  const getColumn = prop("getColumn")
+  const isEmptyValue = prop("isEmptyValue")
   const applyMode = prop("applyMode")
   const filters = computed("filters")
-  const filterCount = countFilters(getColumn, filters)
+  const filterCount = countFilters(isEmptyValue, filters)
   const isDirty =
     applyMode === "manual" &&
-    !areFiltersEqual(getColumn, context.get("draft"), context.get("value"))
+    !areFiltersEqual(isEmptyValue, context.get("draft"), context.get("value"))
 
   return {
     apply() {
@@ -47,7 +47,7 @@ export function createTableFilterPanelApi(
     getFilterLabel(id) {
       return (
         refs.get("registry").get(id)?.label ||
-        getColumn?.(id)?.getFilterLabel() ||
+        prop("getFilterLabel")?.(id) ||
         id
       )
     },
@@ -56,11 +56,9 @@ export function createTableFilterPanelApi(
       if (getOptionLabel) {
         return getOptionLabel(value)
       }
-      const column = getColumn?.(id)
-      if (column) {
-        return column.getFilterOptionLabel(value)
-      }
-      return stringifyFilterValue(value)
+      return (
+        prop("getFilterOptionLabel")?.(id, value) ?? stringifyFilterValue(value)
+      )
     },
     getFilterValue(id) {
       return getFilterValue(filters, id)
@@ -80,7 +78,7 @@ export function createTableFilterPanelApi(
     },
 
     // group: bindings
-    getApplyTriggerBindings(): TableFilterPanelApplyTriggerBindings {
+    getApplyTriggerBindings(): FilterPanelApplyTriggerBindings {
       return normalize.button({
         ...parts.applyTrigger,
         "data-disabled": booleanDataAttr(!isDirty),
@@ -94,7 +92,7 @@ export function createTableFilterPanelApi(
         type: "button",
       })
     },
-    getClearTriggerBindings(): TableFilterPanelClearTriggerBindings {
+    getClearTriggerBindings(): FilterPanelClearTriggerBindings {
       const disabled = filterCount === 0
       return normalize.button({
         ...parts.clearTrigger,
@@ -109,7 +107,7 @@ export function createTableFilterPanelApi(
         type: "button",
       })
     },
-    getRootBindings(): TableFilterPanelRootBindings {
+    getRootBindings(): FilterPanelRootBindings {
       return normalize.element({
         ...parts.root,
         "data-apply-mode": applyMode,

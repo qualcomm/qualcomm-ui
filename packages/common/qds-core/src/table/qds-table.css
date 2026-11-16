@@ -291,26 +291,6 @@
   flex-shrink: 0;
 }
 
-/* Filter panel */
-.qui-table__filter-panel-root {
-}
-
-.qui-table__filter-panel-header {
-}
-
-.qui-table__filter-panel-heading {
-  color: var(--color-text-neutral-primary);
-  font: var(--font-static-heading-xxs-default);
-  margin: 0;
-
-  .qui-table__filter-panel-root[data-size="lg"] & {
-    font: var(--font-static-heading-xs-default);
-  }
-}
-
-.qui-table__filter-panel-section {
-}
-
 /* Toolbar */
 .qui-table__toolbar-root {
   align-items: center;

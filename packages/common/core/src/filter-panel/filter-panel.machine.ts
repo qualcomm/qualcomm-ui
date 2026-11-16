@@ -7,13 +7,10 @@ import {
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
 
-import {
-  areFiltersEqual,
-  setFilterValue,
-} from "./internal/table-filter-panel.utils.js"
-import type {TableFilterPanelSchema} from "./table-filter-panel.types.js"
+import type {FilterPanelSchema} from "./filter-panel.types.js"
+import {areFiltersEqual, setFilterValue} from "./internal/filter-panel.utils.js"
 
-const tableFilterPanelMachineBase = {
+const filterPanelMachineBase = {
   computed: {
     filters: ({context, prop}) =>
       prop("applyMode") === "auto"
@@ -87,10 +84,10 @@ const tableFilterPanelMachineBase = {
       action(["syncDraft"])
     })
   },
-} satisfies MachineConfigBase<TableFilterPanelSchema>
+} satisfies MachineConfigBase<FilterPanelSchema>
 
-export const tableFilterPanelMachine: MachineConfig<TableFilterPanelSchema> =
-  createNarrowedMachine<TableFilterPanelSchema>()(tableFilterPanelMachineBase, {
+export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
+  createNarrowedMachine<FilterPanelSchema>()(filterPanelMachineBase, {
     actions: {
       applyDraft({context, guard}) {
         if (guard("isAutoApply")) {
@@ -123,7 +120,7 @@ export const tableFilterPanelMachine: MachineConfig<TableFilterPanelSchema> =
 
       setFilterValue({context, event, guard, prop}) {
         context.set(guard("isAutoApply") ? "value" : "draft", (filters) =>
-          setFilterValue(prop("getColumn"), filters, event.id, event.value),
+          setFilterValue(prop("isEmptyValue"), filters, event.id, event.value),
         )
       },
 
@@ -139,7 +136,7 @@ export const tableFilterPanelMachine: MachineConfig<TableFilterPanelSchema> =
 
         if (
           guard("isAutoApply") ||
-          areFiltersEqual(prop("getColumn"), context.get("draft"), previous)
+          areFiltersEqual(prop("isEmptyValue"), context.get("draft"), previous)
         ) {
           context.set("draft", value)
         }
