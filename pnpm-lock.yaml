@@ -402,22 +402,6 @@ catalogs:
 importers:
 
   .:
-    dependencies:
-      execa:
-        specifier: 'catalog:'
-        version: 9.6.0
-      npm-run-all2:
-        specifier: 'catalog:'
-        version: 8.0.4
-      shx:
-        specifier: 'catalog:'
-        version: 0.4.0
-      tsx:
-        specifier: 'catalog:'
-        version: 4.21.0
-      turbo:
-        specifier: 2.11.11
-        version: 2.11.11
     devDependencies:
       '@changesets/cli':
         specifier: ^3.0.0
@@ -497,6 +481,9 @@ importers:
       eslint-plugin-perfectionist:
         specifier: ^5.9.0
         version: 5.10.1(eslint@9.39.4(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
+      execa:
+        specifier: 'catalog:'
+        version: 9.6.0
       glob:
         specifier: 'catalog:'
         version: 14.0.3
@@ -506,6 +493,9 @@ importers:
       npm-check-updates:
         specifier: ^22.2.0
         version: 22.2.9
+      npm-run-all2:
+        specifier: 'catalog:'
+        version: 8.0.4
       oxfmt:
         specifier: 'catalog:'
         version: 0.75.0
@@ -515,6 +505,9 @@ importers:
       pretty-ms:
         specifier: ^9.3.0
         version: 9.3.0
+      shx:
+        specifier: 'catalog:'
+        version: 0.4.0
       stylelint:
         specifier: ^16.23.1
         version: 16.26.1(supports-color@10.2.2)(typescript@6.0.3)
@@ -527,6 +520,12 @@ importers:
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.3
+      tsx:
+        specifier: 'catalog:'
+        version: 4.21.0
+      turbo:
+        specifier: ^2.11.11
+        version: 2.11.11
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
