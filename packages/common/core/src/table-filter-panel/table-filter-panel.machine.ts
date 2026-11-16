@@ -9,7 +9,6 @@ import {
 
 import {
   areFiltersEqual,
-  getIdentityKey,
   setFilterValue,
 } from "./internal/table-filter-panel.utils.js"
 import type {TableFilterPanelSchema} from "./table-filter-panel.types.js"
@@ -18,17 +17,23 @@ const tableFilterPanelMachineBase = {
   computed: {
     filters: ({context, prop}) =>
       prop("applyMode") === "auto"
-        ? prop("table").getState().columnFilters
+        ? context.get("value")
         : context.get("draft"),
   },
 
   context({bindable, prop}) {
     return {
       draft: bindable(() => ({
-        defaultValue: prop("table").getState().columnFilters,
+        defaultValue: prop("value") ?? prop("defaultValue"),
       })),
       registryVersion: bindable(() => ({
         defaultValue: 0,
+      })),
+      value: bindable(() => ({
+        defaultValue: prop("defaultValue"),
+        hash: (filters) => JSON.stringify(filters),
+        onChange: prop("onValueChange"),
+        value: prop("value"),
       })),
     }
   },
@@ -56,28 +61,19 @@ const tableFilterPanelMachineBase = {
     RESET: {
       actions: ["resetDraft"],
     },
-    SYNC: {
-      actions: ["syncDraft"],
-    },
   },
 
   props({props}) {
-    const {table} = props
-    if (!table) {
-      throw new Error(
-        "[@qualcomm-ui/core/table-filter-panel] `table` is required",
-      )
-    }
     return {
       applyMode: "manual",
+      defaultValue: [],
       ...props,
-      table,
     }
   },
 
   refs({prop}) {
     return {
-      appliedFilters: prop("table").getState().columnFilters,
+      appliedFilters: prop("value") ?? prop("defaultValue"),
       registry: new Map(),
     }
   },
@@ -86,32 +82,25 @@ const tableFilterPanelMachineBase = {
     idle: {},
   },
 
-  watch({action, prop, track}) {
-    track(
-      [() => getIdentityKey(prop("table").getState().columnFilters)],
-      () => {
-        action(["syncDraft"])
-      },
-    )
+  watch({action, context, track}) {
+    track([() => context.hash("value")], () => {
+      action(["syncDraft"])
+    })
   },
 } satisfies MachineConfigBase<TableFilterPanelSchema>
 
 export const tableFilterPanelMachine: MachineConfig<TableFilterPanelSchema> =
   createNarrowedMachine<TableFilterPanelSchema>()(tableFilterPanelMachineBase, {
     actions: {
-      applyDraft({context, guard, prop}) {
+      applyDraft({context, guard}) {
         if (guard("isAutoApply")) {
           return
         }
-        prop("table").setColumnFilters(context.get("draft"))
+        context.set("value", context.get("draft"))
       },
 
-      clearFilters({context, guard, prop}) {
-        if (guard("isAutoApply")) {
-          prop("table").setColumnFilters([])
-          return
-        }
-        context.set("draft", [])
+      clearFilters({context, guard}) {
+        context.set(guard("isAutoApply") ? "value" : "draft", [])
       },
 
       /**
@@ -125,42 +114,34 @@ export const tableFilterPanelMachine: MachineConfig<TableFilterPanelSchema> =
         context.set("registryVersion", (version) => version + 1)
       },
 
-      resetDraft({context, guard, prop}) {
+      resetDraft({context, guard}) {
         if (guard("isAutoApply")) {
           return
         }
-        context.set("draft", prop("table").getState().columnFilters)
+        context.set("draft", context.get("value"))
       },
 
       setFilterValue({context, event, guard, prop}) {
-        const table = prop("table")
-        if (guard("isAutoApply")) {
-          table.setColumnFilters((filters) =>
-            setFilterValue(table, filters, event.id, event.value),
-          )
-          return
-        }
-        context.set("draft", (draft) =>
-          setFilterValue(table, draft, event.id, event.value),
+        context.set(guard("isAutoApply") ? "value" : "draft", (filters) =>
+          setFilterValue(prop("getColumn"), filters, event.id, event.value),
         )
       },
 
       /**
-       * Follows external changes to the table's filters (for example, a filter
-       * chip removed from the toolbar) unless the draft has pending changes,
-       * which would otherwise be discarded.
+       * Follows external changes to the committed filters (for example, a
+       * filter chip removed from the toolbar) unless the draft has pending
+       * changes, which would otherwise be discarded.
        */
       syncDraft({context, guard, prop, refs}) {
-        const table = prop("table")
-        const applied = table.getState().columnFilters
+        const value = context.get("value")
         const previous = refs.get("appliedFilters")
-        refs.set("appliedFilters", applied)
+        refs.set("appliedFilters", value)
 
         if (
           guard("isAutoApply") ||
-          areFiltersEqual(table, context.get("draft"), previous)
+          areFiltersEqual(prop("getColumn"), context.get("draft"), previous)
         ) {
-          context.set("draft", applied)
+          context.set("draft", value)
         }
       },
 

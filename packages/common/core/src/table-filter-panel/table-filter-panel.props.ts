@@ -6,7 +6,13 @@ import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 import type {TableFilterPanelApiProps} from "./table-filter-panel.types.js"
 
 export const tableFilterPanelProps: (keyof TableFilterPanelApiProps)[] =
-  createProps<TableFilterPanelApiProps>()("applyMode", "table")
+  createProps<TableFilterPanelApiProps>()(
+    "applyMode",
+    "defaultValue",
+    "getColumn",
+    "onValueChange",
+    "value",
+  )
 
 export const splitTableFilterPanelProps: <
   Props extends TableFilterPanelApiProps,

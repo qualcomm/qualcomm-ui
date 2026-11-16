@@ -7,7 +7,6 @@ import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 import {
   areFiltersEqual,
   countFilters,
-  findColumn,
   getFilterValue,
   stringifyFilterValue,
 } from "./internal/table-filter-panel.utils.js"
@@ -27,17 +26,13 @@ export function createTableFilterPanelApi(
   normalize: PropNormalizer,
 ): TableFilterPanelApi {
   const {computed, context, prop, refs, send} = machine
-  const table = prop("table")
+  const getColumn = prop("getColumn")
   const applyMode = prop("applyMode")
   const filters = computed("filters")
-  const filterCount = countFilters(table, filters)
+  const filterCount = countFilters(getColumn, filters)
   const isDirty =
     applyMode === "manual" &&
-    !areFiltersEqual(
-      table,
-      context.get("draft"),
-      table.getState().columnFilters,
-    )
+    !areFiltersEqual(getColumn, context.get("draft"), context.get("value"))
 
   return {
     apply() {
@@ -52,7 +47,7 @@ export function createTableFilterPanelApi(
     getFilterLabel(id) {
       return (
         refs.get("registry").get(id)?.label ||
-        findColumn(table, id)?.getFilterLabel() ||
+        getColumn?.(id)?.getFilterLabel() ||
         id
       )
     },
@@ -61,7 +56,7 @@ export function createTableFilterPanelApi(
       if (getOptionLabel) {
         return getOptionLabel(value)
       }
-      const column = findColumn(table, id)
+      const column = getColumn?.(id)
       if (column) {
         return column.getFilterOptionLabel(value)
       }

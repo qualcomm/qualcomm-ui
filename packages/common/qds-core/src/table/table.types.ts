@@ -340,6 +340,10 @@ export interface QdsTableFilterPanelHeaderBindings {
   className: TableClasses["filterPanelHeader"]
 }
 
+export interface QdsTableFilterPanelHeadingBindings {
+  className: TableClasses["filterPanelHeading"]
+}
+
 export interface QdsTableFilterPanelSectionBindings {
   className: TableClasses["filterPanelSection"]
 }
@@ -415,6 +419,7 @@ export interface QdsTableRootApi {
   getFilterPanelBindings(): QdsTableFilterPanelRootBindings
   getFilterPanelButtonProps(): QdsButtonApiProps
   getFilterPanelHeaderBindings(): QdsTableFilterPanelHeaderBindings
+  getFilterPanelHeadingBindings(): QdsTableFilterPanelHeadingBindings
   getFilterPanelSectionBindings(): QdsTableFilterPanelSectionBindings
   getPlaceholderActionBindings(): QdsTablePlaceholderActionBindings
   getPlaceholderBindings(): QdsTablePlaceholderRootBindings

@@ -2,38 +2,23 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {
-  Column,
   ColumnFiltersState,
   TableInstance,
   Updater,
 } from "@qualcomm-ui/core/table"
 import {isEqual} from "@qualcomm-ui/utils/equal"
 
-const identityKeys = new WeakMap<object, number>()
-let nextIdentityKey = 0
+import type {TableFilterPanelColumnResolver} from "../table-filter-panel.types.js"
 
 /**
- * Returns a stable number per object reference. Machine `track` dependencies
- * must be primitives, and serializing filter values is lossy and can throw.
+ * Creates a column resolver for a table. Unlike `table.getColumn`, it does not
+ * log an error for unknown ids, since filter ids are not required to match a
+ * column.
  */
-export function getIdentityKey(value: object): number {
-  let key = identityKeys.get(value)
-  if (key === undefined) {
-    key = ++nextIdentityKey
-    identityKeys.set(value, key)
-  }
-  return key
-}
-
-/**
- * Looks up a column without `table.getColumn`, which logs an error for unknown
- * ids. Filter ids are not required to match a column.
- */
-export function findColumn(
+export function createTableColumnResolver(
   table: TableInstance<any>,
-  id: string,
-): Column<any, unknown> | undefined {
-  return table.getAllFlatColumns().find((column) => column.id === id)
+): TableFilterPanelColumnResolver {
+  return (id) => table.getAllFlatColumns().find((column) => column.id === id)
 }
 
 /**
@@ -43,7 +28,7 @@ export function findColumn(
  * counted or applied when the column's filter function has no `autoRemove`.
  */
 export function isEmptyFilterValue(
-  table: TableInstance<any>,
+  getColumn: TableFilterPanelColumnResolver | undefined,
   id: string,
   value: unknown,
 ): boolean {
@@ -55,7 +40,7 @@ export function isEmptyFilterValue(
   ) {
     return true
   }
-  const column = findColumn(table, id)
+  const column = getColumn?.(id)
   return !!column?.getFilterFn()?.autoRemove?.(value, column)
 }
 
@@ -67,7 +52,7 @@ export function getFilterValue(
 }
 
 export function setFilterValue(
-  table: TableInstance<any>,
+  getColumn: TableFilterPanelColumnResolver | undefined,
   filters: ColumnFiltersState,
   id: string,
   updater: Updater<unknown>,
@@ -77,45 +62,43 @@ export function setFilterValue(
       ? (updater as (prev: unknown) => unknown)(getFilterValue(filters, id))
       : updater
 
-  const others = filters.filter((filter) => filter.id !== id)
-  if (isEmptyFilterValue(table, id, value)) {
-    return others
+  if (isEmptyFilterValue(getColumn, id, value)) {
+    return filters.filter((filter) => filter.id !== id)
   }
-
-  const index = filters.findIndex((filter) => filter.id === id)
-  if (index === -1) {
-    return [...others, {id, value}]
+  if (filters.some((filter) => filter.id === id)) {
+    return filters.map((filter) => (filter.id === id ? {id, value} : filter))
   }
-  return filters.map((filter) => (filter.id === id ? {id, value} : filter))
+  return [...filters, {id, value}]
 }
 
 export function getNonEmptyFilters(
-  table: TableInstance<any>,
+  getColumn: TableFilterPanelColumnResolver | undefined,
   filters: ColumnFiltersState,
 ): ColumnFiltersState {
   return filters.filter(
-    (filter) => !isEmptyFilterValue(table, filter.id, filter.value),
+    (filter) => !isEmptyFilterValue(getColumn, filter.id, filter.value),
   )
 }
 
 export function countFilters(
-  table: TableInstance<any>,
+  getColumn: TableFilterPanelColumnResolver | undefined,
   filters: ColumnFiltersState,
 ): number {
-  return new Set(getNonEmptyFilters(table, filters).map((filter) => filter.id))
-    .size
+  return new Set(
+    getNonEmptyFilters(getColumn, filters).map((filter) => filter.id),
+  ).size
 }
 
 /**
  * Compares filter states by id and value, ignoring order and empty entries.
  */
 export function areFiltersEqual(
-  table: TableInstance<any>,
+  getColumn: TableFilterPanelColumnResolver | undefined,
   a: ColumnFiltersState,
   b: ColumnFiltersState,
 ): boolean {
-  const left = getNonEmptyFilters(table, a)
-  const right = getNonEmptyFilters(table, b)
+  const left = getNonEmptyFilters(getColumn, a)
+  const right = getNonEmptyFilters(getColumn, b)
   if (left.length !== right.length) {
     return false
   }

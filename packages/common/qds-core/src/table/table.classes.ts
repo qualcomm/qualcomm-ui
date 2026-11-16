@@ -16,7 +16,7 @@ export const tableClasses = {
   cell: "qui-table__cell",
   cellAction: "qui-table__cell-action",
   columnDropIndicator: "qui-table__column-drop-indicator",
-  /** @deprecated in next-release, will be removed in the next major version. */
+  /** @deprecated in next-release */
   columnFilterAction: "qui-table__column-filter-action",
   columnHeaderAction: "qui-table__column-header-action",
   columnResizer: "qui-table__column-resizer",
@@ -25,6 +25,7 @@ export const tableClasses = {
   dragHandle: "qui-table__drag-handle",
   dragPreview: "qui-table__drag-preview",
   filterPanelHeader: "qui-table__filter-panel-header",
+  filterPanelHeading: "qui-table__filter-panel-heading",
   filterPanelRoot: "qui-table__filter-panel-root",
   filterPanelSection: "qui-table__filter-panel-section",
   footer: "qui-table__footer",

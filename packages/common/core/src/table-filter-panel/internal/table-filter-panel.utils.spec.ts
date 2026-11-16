@@ -4,51 +4,53 @@ import {createTableHarness} from "../../table/__tests__/table-test-utils"
 import {
   areFiltersEqual,
   countFilters,
-  findColumn,
-  getIdentityKey,
+  createTableColumnResolver,
   isEmptyFilterValue,
   setFilterValue,
-} from "../internal/table-filter-panel.utils"
+} from "./table-filter-panel.utils"
 
 describe("table filter panel utils", () => {
-  test("findColumn resolves columns without logging for unknown ids", () => {
+  test("createTableColumnResolver resolves columns without logging for unknown ids", () => {
     const {table} = createTableHarness()
+    const getColumn = createTableColumnResolver(table)
     const error = vi.spyOn(console, "error").mockImplementation(() => {})
 
-    expect(findColumn(table, "status")?.id).toBe("status")
-    expect(findColumn(table, "server-only")).toBeUndefined()
+    expect(getColumn("status")?.id).toBe("status")
+    expect(getColumn("server-only")).toBeUndefined()
     expect(error).not.toHaveBeenCalled()
 
     error.mockRestore()
   })
 
   test("isEmptyFilterValue treats missing and blank values as empty", () => {
-    const {table} = createTableHarness()
+    const getColumn = createTableColumnResolver(createTableHarness().table)
 
     for (const value of [undefined, null, "", []]) {
-      expect(isEmptyFilterValue(table, "status", value)).toBe(true)
-      expect(isEmptyFilterValue(table, "server-only", value)).toBe(true)
+      expect(isEmptyFilterValue(getColumn, "status", value)).toBe(true)
+      expect(isEmptyFilterValue(getColumn, "server-only", value)).toBe(true)
     }
-    expect(isEmptyFilterValue(table, "status", ["single"])).toBe(false)
-    expect(isEmptyFilterValue(table, "server-only", {preset: "7d"})).toBe(false)
+    expect(isEmptyFilterValue(getColumn, "status", ["single"])).toBe(false)
+    expect(isEmptyFilterValue(getColumn, "server-only", {preset: "7d"})).toBe(
+      false,
+    )
   })
 
   test("isEmptyFilterValue defers to the column filter function's autoRemove", () => {
-    const {table} = createTableHarness()
+    const getColumn = createTableColumnResolver(createTableHarness().table)
 
     // `visits` resolves to the inNumberRange auto filter fn.
-    expect(isEmptyFilterValue(table, "visits", [undefined, ""])).toBe(true)
-    expect(isEmptyFilterValue(table, "visits", [10, ""])).toBe(false)
+    expect(isEmptyFilterValue(getColumn, "visits", [undefined, ""])).toBe(true)
+    expect(isEmptyFilterValue(getColumn, "visits", [10, ""])).toBe(false)
   })
 
   test("setFilterValue adds, replaces in place, and removes filters", () => {
-    const {table} = createTableHarness()
+    const getColumn = createTableColumnResolver(createTableHarness().table)
 
-    const added = setFilterValue(table, [], "status", ["single"])
+    const added = setFilterValue(getColumn, [], "status", ["single"])
     expect(added).toEqual([{id: "status", value: ["single"]}])
 
-    const withSecond = setFilterValue(table, added, "server-only", "7d")
-    const replaced = setFilterValue(table, withSecond, "status", [
+    const withSecond = setFilterValue(getColumn, added, "server-only", "7d")
+    const replaced = setFilterValue(getColumn, withSecond, "status", [
       "complicated",
     ])
     expect(replaced).toEqual([
@@ -56,17 +58,17 @@ describe("table filter panel utils", () => {
       {id: "server-only", value: "7d"},
     ])
 
-    expect(setFilterValue(table, replaced, "status", [])).toEqual([
+    expect(setFilterValue(getColumn, replaced, "status", [])).toEqual([
       {id: "server-only", value: "7d"},
     ])
   })
 
   test("setFilterValue applies functional updaters to the current value", () => {
-    const {table} = createTableHarness()
+    const getColumn = createTableColumnResolver(createTableHarness().table)
     const filters = [{id: "status", value: ["single"]}]
 
     expect(
-      setFilterValue(table, filters, "status", (prev: unknown) => [
+      setFilterValue(getColumn, filters, "status", (prev: unknown) => [
         ...(prev as string[]),
         "complicated",
       ]),
@@ -74,11 +76,11 @@ describe("table filter panel utils", () => {
   })
 
   test("countFilters counts each filter id once and skips empty values", () => {
-    const {table} = createTableHarness()
+    const getColumn = createTableColumnResolver(createTableHarness().table)
 
-    expect(countFilters(table, [])).toBe(0)
+    expect(countFilters(getColumn, [])).toBe(0)
     expect(
-      countFilters(table, [
+      countFilters(getColumn, [
         {id: "status", value: ["single", "complicated", "relationship"]},
         {id: "server-only", value: {preset: "7d"}},
         {id: "tags", value: []},
@@ -88,11 +90,11 @@ describe("table filter panel utils", () => {
   })
 
   test("areFiltersEqual ignores order and empty entries", () => {
-    const {table} = createTableHarness()
+    const getColumn = createTableColumnResolver(createTableHarness().table)
 
     expect(
       areFiltersEqual(
-        table,
+        getColumn,
         [
           {id: "status", value: ["single"]},
           {id: "visits", value: [10, 20]},
@@ -106,21 +108,24 @@ describe("table filter panel utils", () => {
     ).toBe(true)
     expect(
       areFiltersEqual(
-        table,
+        getColumn,
         [{id: "status", value: ["single"]}],
         [{id: "status", value: ["complicated"]}],
       ),
     ).toBe(false)
     expect(
-      areFiltersEqual(table, [{id: "status", value: ["single"]}], []),
+      areFiltersEqual(getColumn, [{id: "status", value: ["single"]}], []),
     ).toBe(false)
   })
 
-  test("getIdentityKey is stable per reference", () => {
-    const a: unknown[] = []
-    const b: unknown[] = []
-
-    expect(getIdentityKey(a)).toBe(getIdentityKey(a))
-    expect(getIdentityKey(a)).not.toBe(getIdentityKey(b))
+  test("without a column resolver, only generic empty checks apply", () => {
+    expect(isEmptyFilterValue(undefined, "visits", [undefined, ""])).toBe(false)
+    expect(isEmptyFilterValue(undefined, "visits", [])).toBe(true)
+    expect(
+      countFilters(undefined, [
+        {id: "status", value: ["single"]},
+        {id: "tags", value: []},
+      ]),
+    ).toBe(1)
   })
 })

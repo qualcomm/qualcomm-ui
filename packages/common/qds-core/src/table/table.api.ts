@@ -54,6 +54,7 @@ import type {
   QdsTableToolbarEndBindings,
   QdsTableToolbarStartBindings,
   QdsTableFilterPanelHeaderBindings,
+  QdsTableFilterPanelHeadingBindings,
   QdsTableFilterPanelRootBindings,
   QdsTableFilterPanelSectionBindings,
   QdsTablePlaceholderActionBindings,
@@ -296,6 +297,9 @@ export function createQdsTableRootApi(
     },
     getFilterPanelHeaderBindings(): QdsTableFilterPanelHeaderBindings {
       return normalize.element({className: tableClasses.filterPanelHeader})
+    },
+    getFilterPanelHeadingBindings(): QdsTableFilterPanelHeadingBindings {
+      return normalize.element({className: tableClasses.filterPanelHeading})
     },
     getFilterPanelSectionBindings(): QdsTableFilterPanelSectionBindings {
       return normalize.element({className: tableClasses.filterPanelSection})

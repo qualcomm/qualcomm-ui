@@ -6,6 +6,10 @@ import {
   type TableFilterPanelHeaderProps,
 } from "./table-filter-panel-header.js"
 import {
+  TableFilterPanelHeading,
+  type TableFilterPanelHeadingProps,
+} from "./table-filter-panel-heading.js"
+import {
   TableFilterPanelRoot,
   type TableFilterPanelRootProps,
 } from "./table-filter-panel-root.js"
@@ -16,6 +20,7 @@ import {
 
 export type {
   TableFilterPanelHeaderProps,
+  TableFilterPanelHeadingProps,
   TableFilterPanelRootProps,
   TableFilterPanelSectionProps,
 }
@@ -25,6 +30,10 @@ type TableFilterPanelComponent = {
    * The header of the filter panel. Renders a `<div>` element by default.
    */
   Header: typeof TableFilterPanelHeader
+  /**
+   * The title of the filter panel. Renders an `<h2>` element by default.
+   */
+  Heading: typeof TableFilterPanelHeading
   /**
    * The root element of the filter panel. Must be rendered within a
    * `Table.Root`. Renders a `<div>` element by default.
@@ -39,6 +48,7 @@ type TableFilterPanelComponent = {
 
 export const TableFilterPanel: TableFilterPanelComponent = {
   Header: TableFilterPanelHeader,
+  Heading: TableFilterPanelHeading,
   Root: TableFilterPanelRoot,
   Section: TableFilterPanelSection,
 }

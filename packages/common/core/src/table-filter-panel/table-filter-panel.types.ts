@@ -1,11 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {
-  ColumnFiltersState,
-  TableInstance,
-  Updater,
-} from "@qualcomm-ui/core/table"
+import type {Column, ColumnFiltersState, Updater} from "@qualcomm-ui/core/table"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
@@ -14,11 +10,18 @@ import type {ActionSchema, JSX, MachineSchema} from "@qualcomm-ui/utils/machine"
 import type {tableFilterPanelAnatomy} from "./table-filter-panel.anatomy.js"
 
 /**
- * - `manual`: changes are staged in a draft and written to the table when
- *   applied.
- * - `auto`: changes are written to the table immediately.
+ * - `manual`: changes are staged in a draft and committed when applied.
+ * - `auto`: changes are committed immediately.
  */
 export type TableFilterPanelApplyMode = "auto" | "manual"
+
+/**
+ * Resolves the column for a filter id. Returns `undefined` for filters without
+ * a backing column.
+ */
+export type TableFilterPanelColumnResolver = (
+  id: string,
+) => Column<any, unknown> | undefined
 
 export interface TableFilterPanelFilterRegistration {
   /**
@@ -42,16 +45,38 @@ export interface TableFilterPanelFilterRegistration {
 
 export interface TableFilterPanelApiProps {
   /**
-   * Controls when filter changes are written to the table.
+   * Controls when filter changes are committed.
    *
    * @default "manual"
    */
   applyMode?: TableFilterPanelApplyMode | undefined
 
   /**
-   * The table instance whose column filters the panel manages.
+   * The initial committed filters. Use when you don't need to control the
+   * committed filters.
+   *
+   * @default []
    */
-  table: TableInstance<any>
+  defaultValue?: ColumnFiltersState | undefined
+
+  /**
+   * Resolves the column for a filter id. Used to detect empty values through
+   * the column's filter function and to resolve column filter labels. Without
+   * it, only generic empty checks apply and labels fall back to the filter id
+   * and `String(value)`.
+   */
+  getColumn?: TableFilterPanelColumnResolver | undefined
+
+  /**
+   * Called when the committed filters change: on apply in `manual` mode, on
+   * every change in `auto` mode.
+   */
+  onValueChange?: ((filters: ColumnFiltersState) => void) | undefined
+
+  /**
+   * The controlled committed filters.
+   */
+  value?: ColumnFiltersState | undefined
 }
 
 export interface TableFilterPanelSchema extends MachineSchema {
@@ -67,30 +92,30 @@ export interface TableFilterPanelSchema extends MachineSchema {
   computed: {
     /**
      * The filters the panel currently displays: the draft in `manual` mode, the
-     * table's column filters in `auto` mode.
+     * committed filters in `auto` mode.
      */
     filters: ColumnFiltersState
   }
   context: {
     draft: ColumnFiltersState
     registryVersion: number
+    value: ColumnFiltersState
   }
   events:
     | {type: "APPLY"}
     | {type: "CLEAR_ALL"}
     | {type: "RESET"}
-    | {type: "SYNC"}
     | {id: string; type: "FILTER.SET"; value: Updater<unknown>}
     | {filter: TableFilterPanelFilterRegistration; type: "FILTER.REGISTER"}
     | {id: string; type: "FILTER.UNREGISTER"}
   guards: {
     isAutoApply: () => boolean
   }
-  props: RequiredBy<TableFilterPanelApiProps, "applyMode" | "table">
+  props: RequiredBy<TableFilterPanelApiProps, "applyMode" | "defaultValue">
   refs: {
     /**
-     * The table's column filters as of the last sync. Used to decide whether
-     * the draft has diverged from the table.
+     * The committed filters as of the last sync. Used to decide whether the
+     * draft has diverged from them.
      */
     appliedFilters: ColumnFiltersState
     registry: Map<string, TableFilterPanelFilterRegistration>
@@ -125,18 +150,18 @@ export interface TableFilterPanelClearTriggerBindings extends Part<"clearTrigger
 
 export interface TableFilterPanelApi {
   /**
-   * Writes the draft to the table. No-op in `auto` mode.
+   * Commits the draft. No-op in `auto` mode.
    */
   apply: () => void
 
   /**
-   * Controls when filter changes are written to the table.
+   * Controls when filter changes are committed.
    */
   applyMode: TableFilterPanelApplyMode
 
   /**
    * Removes every filter. In `manual` mode this clears the draft and must be
-   * applied; in `auto` mode it clears the table's filters immediately.
+   * applied; in `auto` mode it clears the committed filters immediately.
    */
   clearAll: () => void
 
@@ -149,7 +174,7 @@ export interface TableFilterPanelApi {
 
   /**
    * The filters the panel currently displays: the draft in `manual` mode, the
-   * table's column filters in `auto` mode.
+   * committed filters in `auto` mode.
    */
   filters: ColumnFiltersState
 
@@ -172,8 +197,8 @@ export interface TableFilterPanelApi {
   getFilterValue: (id: string) => unknown
 
   /**
-   * Whether the draft differs from the table's column filters. Always `false`
-   * in `auto` mode.
+   * Whether the draft differs from the committed filters. Always `false` in
+   * `auto` mode.
    */
   isDirty: boolean
 
@@ -183,8 +208,8 @@ export interface TableFilterPanelApi {
   registerFilter: (filter: TableFilterPanelFilterRegistration) => void
 
   /**
-   * Discards the draft and restores the table's column filters. No-op in
-   * `auto` mode.
+   * Discards the draft and restores the committed filters. No-op in `auto`
+   * mode.
    */
   reset: () => void
 

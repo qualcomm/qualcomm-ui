@@ -1,3 +1,4 @@
+export {createTableColumnResolver} from "./internal/table-filter-panel.utils.js"
 export * from "./table-filter-panel.anatomy.js"
 export * from "./table-filter-panel.api.js"
 export * from "./table-filter-panel.machine.js"
