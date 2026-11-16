@@ -671,6 +671,22 @@ export class SearchIndexer {
     })
   }
 
+  private formatGeneratedSections(): PageSection[] {
+    return Object.entries(this._generatedPages).flatMap(
+      ([sourcePathname, entries]) => {
+        const source = this._pageMap[sourcePathname]
+        return entries.map((entry): PageSection => ({
+          ...this._pageMap[entry.pathname],
+          content: entry.searchText || undefined,
+          heading: entry.title,
+          headingLevel: 1,
+          href: entry.pathname,
+          title: source.title,
+        }))
+      },
+    )
+  }
+
   private compileTsxFile(route: PageRoute) {
     const entry = this.getPageEntry(route, {})
 
@@ -776,7 +792,9 @@ export class SearchIndexer {
 
     if (!this.config.disableLegacySearchIndex) {
       this._searchIndex.push(
-        ...mdxIndex.filter((entry) => !entry.hideFromSearch),
+        ...[...mdxIndex, ...this.formatGeneratedSections()].filter(
+          (entry) => !entry.hideFromSearch,
+        ),
       )
     }
 

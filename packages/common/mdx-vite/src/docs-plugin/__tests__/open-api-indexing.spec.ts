@@ -130,4 +130,32 @@ describe("OpenAPI page indexing", () => {
       sections.filter((section) => section.pathname?.startsWith("/api")),
     ).toEqual([])
   })
+
+  test("adds a legacy search entry per operation", async () => {
+    const {searchIndex} = await indexApiPage()
+    const operations = searchIndex.filter((section) =>
+      section.pathname.startsWith("/api/"),
+    )
+    expect(operations).toMatchObject([
+      {
+        heading: "List pets",
+        href: "/api/listPets",
+        id: "/routes/api.mdx#listPets",
+        title: "Pets API",
+      },
+      {
+        content: "Removes the pet for good.\n\nThis cannot be undone.",
+        heading: "/pets/{petId}",
+        href: "/api/pets-petid-delete",
+      },
+    ])
+    expect(operations[0].content).toBeUndefined()
+  })
+
+  test("leaves operations out of the legacy index with their API", async () => {
+    const {searchIndex} = await indexApiPage("hideFromSearch: true\n")
+    expect(
+      searchIndex.filter((section) => section.pathname.startsWith("/api")),
+    ).toEqual([])
+  })
 })
