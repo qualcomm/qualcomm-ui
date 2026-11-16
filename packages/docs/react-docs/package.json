@@ -58,7 +58,7 @@
     "jotai": "^2.7.1",
     "lodash-es": "catalog:",
     "lucide-react": "0.569.0",
-    "minimatch": "^11.0.4",
+    "minimatch": "catalog:",
     "morgan": "^1.10.0",
     "react": "catalog:",
     "react-device-detect": "^2.2.3",
