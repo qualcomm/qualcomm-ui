@@ -6,10 +6,18 @@ import type {ValueOrFn} from "@qualcomm-ui/utils/machine"
 
 import type {
   FilterPanelApiProps,
+  FilterPanelFilter,
+  FilterPanelFilterType,
   FilterPanelValue,
 } from "../filter-panel.types.js"
 
 type IsEmptyValue = FilterPanelApiProps["isEmptyValue"]
+
+export interface FilterPanelFilterUpdate {
+  id: string
+  type?: FilterPanelFilterType | undefined
+  value: ValueOrFn<unknown>
+}
 
 /**
  * A value is empty when it carries no filtering intent, or when the consumer's
@@ -19,9 +27,9 @@ type IsEmptyValue = FilterPanelApiProps["isEmptyValue"]
  */
 export function isEmptyFilterValue(
   isEmptyValue: IsEmptyValue,
-  id: string,
-  value: unknown,
+  filter: FilterPanelFilter,
 ): boolean {
+  const {value} = filter
   if (
     value === undefined ||
     value === null ||
@@ -30,40 +38,46 @@ export function isEmptyFilterValue(
   ) {
     return true
   }
-  return !!isEmptyValue?.(id, value)
+  return !!isEmptyValue?.(filter)
 }
 
 export function getFilterValue(filters: FilterPanelValue, id: string): unknown {
   return filters.find((filter) => filter.id === id)?.value
 }
 
+/**
+ * Writes a filter value. An update without a `type` keeps the existing
+ * filter's type, so a write from outside the filter control (for example,
+ * removing one value from a chip) does not change how the filter is applied.
+ */
 export function setFilterValue(
   isEmptyValue: IsEmptyValue,
   filters: FilterPanelValue,
-  id: string,
-  updater: ValueOrFn<unknown>,
+  update: FilterPanelFilterUpdate,
 ): FilterPanelValue {
+  const {id, value: updater} = update
+  const previous = filters.find((filter) => filter.id === id)
   const value =
     typeof updater === "function"
-      ? (updater as (prev: unknown) => unknown)(getFilterValue(filters, id))
+      ? (updater as (prev: unknown) => unknown)(previous?.value)
       : updater
+  const type = update.type ?? previous?.type
+  const next: FilterPanelFilter = type ? {id, type, value} : {id, value}
 
-  if (isEmptyFilterValue(isEmptyValue, id, value)) {
+  if (isEmptyFilterValue(isEmptyValue, next)) {
     return filters.filter((filter) => filter.id !== id)
   }
-  if (filters.some((filter) => filter.id === id)) {
-    return filters.map((filter) => (filter.id === id ? {id, value} : filter))
+  if (previous) {
+    return filters.map((filter) => (filter.id === id ? next : filter))
   }
-  return [...filters, {id, value}]
+  return [...filters, next]
 }
 
 export function getNonEmptyFilters(
   isEmptyValue: IsEmptyValue,
   filters: FilterPanelValue,
 ): FilterPanelValue {
-  return filters.filter(
-    (filter) => !isEmptyFilterValue(isEmptyValue, filter.id, filter.value),
-  )
+  return filters.filter((filter) => !isEmptyFilterValue(isEmptyValue, filter))
 }
 
 export function countFilters(
@@ -76,7 +90,8 @@ export function countFilters(
 }
 
 /**
- * Compares filter states by id and value, ignoring order and empty entries.
+ * Compares filter states by id, type, and value, ignoring order and empty
+ * entries.
  */
 export function areFiltersEqual(
   isEmptyValue: IsEmptyValue,
@@ -90,7 +105,10 @@ export function areFiltersEqual(
   }
   return left.every((filter) =>
     right.some(
-      (other) => other.id === filter.id && isEqual(other.value, filter.value),
+      (other) =>
+        other.id === filter.id &&
+        other.type === filter.type &&
+        isEqual(other.value, filter.value),
     ),
   )
 }

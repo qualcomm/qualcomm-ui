@@ -35,7 +35,7 @@ export function getTableFilterPanelProps<TData extends RowData>(
     getFilterLabel: (id) => findColumn(id)?.getFilterLabel(),
     getFilterOptionLabel: (id, value) =>
       findColumn(id)?.getFilterOptionLabel(value),
-    isEmptyValue: (id, value) => {
+    isEmptyValue: ({id, value}) => {
       const column = findColumn(id)
       return !!column?.getFilterFn()?.autoRemove?.(value, column)
     },

@@ -419,12 +419,12 @@ export const Filters: TableFeature = {
         return filterFns.equals
       }
 
-      if (value !== null && typeof value === "object") {
-        return filterFns.equals
-      }
-
       if (Array.isArray(value)) {
         return filterFns.arrIncludes
+      }
+
+      if (value !== null && typeof value === "object") {
+        return filterFns.equals
       }
 
       return filterFns.weakEquals

@@ -25,7 +25,7 @@ export function createFilterPanelApi(
   machine: Machine<FilterPanelSchema>,
   normalize: PropNormalizer,
 ): FilterPanelApi {
-  const {computed, context, prop, refs, send} = machine
+  const {computed, context, prop, send} = machine
   const isEmptyValue = prop("isEmptyValue")
   const applyMode = prop("applyMode")
   const filters = computed("filters")
@@ -45,17 +45,9 @@ export function createFilterPanelApi(
     filterCount,
     filters,
     getFilterLabel(id) {
-      return (
-        refs.get("registry").get(id)?.label ||
-        prop("getFilterLabel")?.(id) ||
-        id
-      )
+      return prop("getFilterLabel")?.(id) || id
     },
     getFilterOptionLabel(id, value) {
-      const getOptionLabel = refs.get("registry").get(id)?.getOptionLabel
-      if (getOptionLabel) {
-        return getOptionLabel(value)
-      }
       return (
         prop("getFilterOptionLabel")?.(id, value) ?? stringifyFilterValue(value)
       )
@@ -64,17 +56,11 @@ export function createFilterPanelApi(
       return getFilterValue(filters, id)
     },
     isDirty,
-    registerFilter(filter) {
-      send({filter, type: "FILTER.REGISTER"})
-    },
     reset() {
       send({type: "RESET"})
     },
-    setFilterValue(id, value) {
-      send({id, type: "FILTER.SET", value})
-    },
-    unregisterFilter(id) {
-      send({id, type: "FILTER.UNREGISTER"})
+    setFilterValue(id, value, filterType) {
+      send({filterType, id, type: "FILTER.SET", value})
     },
 
     // group: bindings

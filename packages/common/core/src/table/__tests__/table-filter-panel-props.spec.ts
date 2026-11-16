@@ -34,8 +34,8 @@ describe("getTableFilterPanelProps", () => {
     const {isEmptyValue} = getTableFilterPanelProps(table)
 
     // `visits` resolves to the inNumberRange auto filter fn.
-    expect(isEmptyValue?.("visits", [undefined, ""])).toBe(true)
-    expect(isEmptyValue?.("visits", [10, ""])).toBe(false)
+    expect(isEmptyValue?.({id: "visits", value: [undefined, ""]})).toBe(true)
+    expect(isEmptyValue?.({id: "visits", value: [10, ""]})).toBe(false)
   })
 
   test("labels resolve from the column", () => {
@@ -64,7 +64,7 @@ describe("getTableFilterPanelProps", () => {
 
     expect(getFilterLabel?.("server-only")).toBeUndefined()
     expect(getFilterOptionLabel?.("server-only", "7d")).toBeUndefined()
-    expect(isEmptyValue?.("server-only", "7d")).toBe(false)
+    expect(isEmptyValue?.({id: "server-only", value: "7d"})).toBe(false)
     expect(error).not.toHaveBeenCalled()
 
     error.mockRestore()

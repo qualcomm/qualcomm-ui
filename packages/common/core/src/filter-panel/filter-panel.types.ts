@@ -19,11 +19,39 @@ import type {filterPanelAnatomy} from "./filter-panel.anatomy.js"
  */
 export type FilterPanelApplyMode = "auto" | "manual"
 
+/**
+ * The kind of filter control that produced a value. Determines the value's
+ * shape and, for tables, the built-in filter function used when the column does
+ * not define its own.
+ *
+ * - `checkbox`, `checkboxTree`, `combobox`: `string[]`
+ * - `radio`, `select`: `string`
+ * - `range`: `[number | null, number | null]`, where `null` is unbounded
+ * - `date`: `{preset: string}` or `{range: [string | null, string | null]}`
+ *   with ISO 8601 dates
+ * - `text`: `{query: string, wholeWord?: boolean}`
+ */
+export type FilterPanelFilterType =
+  | "checkbox"
+  | "checkboxTree"
+  | "combobox"
+  | "date"
+  | "radio"
+  | "range"
+  | "select"
+  | "text"
+
 export interface FilterPanelFilter {
   /**
    * The filter id.
    */
   id: string
+
+  /**
+   * The kind of filter control that produced the value. Set by the filter
+   * control when it writes a value, and preserved when a later write omits it.
+   */
+  type?: FilterPanelFilterType | undefined
 
   /**
    * The filter value. Its shape is defined by the filter control and
@@ -33,29 +61,10 @@ export interface FilterPanelFilter {
 }
 
 /**
- * The filters managed by the panel. Structurally identical to the table's
+ * The filters managed by the panel. Structurally compatible with the table's
  * `ColumnFiltersState`.
  */
 export type FilterPanelValue = FilterPanelFilter[]
-
-export interface FilterPanelFilterRegistration {
-  /**
-   * Returns a human-readable label for a value of this filter. Takes precedence
-   * over the panel's `getFilterOptionLabel`.
-   */
-  getOptionLabel?: ((value: unknown) => string) | undefined
-
-  /**
-   * The filter id.
-   */
-  id: string
-
-  /**
-   * Human-readable label for the filter. Takes precedence over the panel's
-   * `getFilterLabel`.
-   */
-  label?: string | undefined
-}
 
 export interface FilterPanelApiProps {
   /**
@@ -74,15 +83,14 @@ export interface FilterPanelApiProps {
   defaultValue?: FilterPanelValue | undefined
 
   /**
-   * Resolves the label for a filter that is not registered by a mounted filter
-   * control. Return `undefined` to fall back to the filter id.
+   * Resolves the human-readable label for a filter. Return `undefined` to fall
+   * back to the filter id.
    */
   getFilterLabel?: ((id: string) => string | undefined) | undefined
 
   /**
-   * Resolves the label for a filter value when the filter is not registered
-   * with its own `getOptionLabel`. Return `undefined` to fall back to
-   * `String(value)` for primitive values.
+   * Resolves the human-readable label for a filter value. Return `undefined`
+   * to fall back to `String(value)` for primitive values.
    */
   getFilterOptionLabel?:
     | ((id: string, value: unknown) => string | undefined)
@@ -92,7 +100,7 @@ export interface FilterPanelApiProps {
    * Additional check for empty filter values, applied after the built-in check
    * for `undefined`, `null`, `""`, and `[]`. Empty values remove the filter.
    */
-  isEmptyValue?: ((id: string, value: unknown) => boolean) | undefined
+  isEmptyValue?: ((filter: FilterPanelFilter) => boolean) | undefined
 
   /**
    * Called when the committed filters change: on apply in `manual` mode, on
@@ -110,11 +118,9 @@ export interface FilterPanelSchema extends MachineSchema {
   actions: ActionSchema<
     | "applyDraft"
     | "clearFilters"
-    | "registerFilter"
     | "resetDraft"
     | "setFilterValue"
     | "syncDraft"
-    | "unregisterFilter"
   >
   computed: {
     /**
@@ -125,16 +131,18 @@ export interface FilterPanelSchema extends MachineSchema {
   }
   context: {
     draft: FilterPanelValue
-    registryVersion: number
     value: FilterPanelValue
   }
   events:
     | {type: "APPLY"}
     | {type: "CLEAR_ALL"}
     | {type: "RESET"}
-    | {id: string; type: "FILTER.SET"; value: ValueOrFn<unknown>}
-    | {filter: FilterPanelFilterRegistration; type: "FILTER.REGISTER"}
-    | {id: string; type: "FILTER.UNREGISTER"}
+    | {
+        filterType?: FilterPanelFilterType | undefined
+        id: string
+        type: "FILTER.SET"
+        value: ValueOrFn<unknown>
+      }
   guards: {
     isAutoApply: () => boolean
   }
@@ -145,7 +153,6 @@ export interface FilterPanelSchema extends MachineSchema {
      * draft has diverged from them.
      */
     appliedFilters: FilterPanelValue
-    registry: Map<string, FilterPanelFilterRegistration>
   }
   state: "idle"
 }
@@ -203,15 +210,14 @@ export interface FilterPanelApi {
   filters: FilterPanelValue
 
   /**
-   * Returns the human-readable label for a filter. Resolves from the
-   * registered filter label, then the panel's `getFilterLabel`, then the id.
+   * Returns the human-readable label for a filter. Resolves from the panel's
+   * `getFilterLabel`, then the id.
    */
   getFilterLabel: (id: string) => string
 
   /**
    * Returns the human-readable label for a filter value. Resolves from the
-   * registered filter's `getOptionLabel`, then the panel's
-   * `getFilterOptionLabel`, then `String(value)` for primitive values.
+   * panel's `getFilterOptionLabel`, then `String(value)` for primitive values.
    */
   getFilterOptionLabel: (id: string, value: unknown) => string
 
@@ -227,25 +233,20 @@ export interface FilterPanelApi {
   isDirty: boolean
 
   /**
-   * Registers label metadata for a filter. Call when a filter control mounts.
-   */
-  registerFilter: (filter: FilterPanelFilterRegistration) => void
-
-  /**
    * Discards the draft and restores the committed filters. No-op in `auto`
    * mode.
    */
   reset: () => void
 
   /**
-   * Sets the value of a filter. Empty values remove the filter.
+   * Sets the value of a filter. Empty values remove the filter. When `type` is
+   * omitted, the filter keeps its existing type.
    */
-  setFilterValue: (id: string, value: ValueOrFn<unknown>) => void
-
-  /**
-   * Removes label metadata for a filter. Call when a filter control unmounts.
-   */
-  unregisterFilter: (id: string) => void
+  setFilterValue: (
+    id: string,
+    value: ValueOrFn<unknown>,
+    type?: FilterPanelFilterType,
+  ) => void
 
   // group: bindings
   getApplyTriggerBindings: () => FilterPanelApplyTriggerBindings

@@ -23,9 +23,6 @@ const filterPanelMachineBase = {
       draft: bindable(() => ({
         defaultValue: prop("value") ?? prop("defaultValue"),
       })),
-      registryVersion: bindable(() => ({
-        defaultValue: 0,
-      })),
       value: bindable(() => ({
         defaultValue: prop("defaultValue"),
         hash: (filters) => JSON.stringify(filters),
@@ -46,14 +43,8 @@ const filterPanelMachineBase = {
     CLEAR_ALL: {
       actions: ["clearFilters"],
     },
-    "FILTER.REGISTER": {
-      actions: ["registerFilter"],
-    },
     "FILTER.SET": {
       actions: ["setFilterValue"],
-    },
-    "FILTER.UNREGISTER": {
-      actions: ["unregisterFilter"],
     },
     RESET: {
       actions: ["resetDraft"],
@@ -71,7 +62,6 @@ const filterPanelMachineBase = {
   refs({prop}) {
     return {
       appliedFilters: prop("value") ?? prop("defaultValue"),
-      registry: new Map(),
     }
   },
 
@@ -100,17 +90,6 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
         context.set(guard("isAutoApply") ? "value" : "draft", [])
       },
 
-      /**
-       * The registry lives in refs rather than context because sibling filter
-       * sections register in the same tick on mount, and context updates
-       * within a tick read stale state. The version counter only exists to
-       * trigger a re-render so registered labels become visible.
-       */
-      registerFilter({context, event, refs}) {
-        refs.get("registry").set(event.filter.id, event.filter)
-        context.set("registryVersion", (version) => version + 1)
-      },
-
       resetDraft({context, guard}) {
         if (guard("isAutoApply")) {
           return
@@ -120,7 +99,11 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
 
       setFilterValue({context, event, guard, prop}) {
         context.set(guard("isAutoApply") ? "value" : "draft", (filters) =>
-          setFilterValue(prop("isEmptyValue"), filters, event.id, event.value),
+          setFilterValue(prop("isEmptyValue"), filters, {
+            id: event.id,
+            type: event.filterType,
+            value: event.value,
+          }),
         )
       },
 
@@ -139,12 +122,6 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
           areFiltersEqual(prop("isEmptyValue"), context.get("draft"), previous)
         ) {
           context.set("draft", value)
-        }
-      },
-
-      unregisterFilter({context, event, refs}) {
-        if (refs.get("registry").delete(event.id)) {
-          context.set("registryVersion", (version) => version + 1)
         }
       },
     },
