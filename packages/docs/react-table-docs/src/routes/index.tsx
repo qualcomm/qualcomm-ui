@@ -63,12 +63,11 @@ export default function HomePage(): ReactNode {
   return (
     <div className="flex w-full flex-col pt-8">
       <h1 className="md:font-heading-xxxl font-heading-xl my-0 inline-flex flex-col gap-1">
-        <span>Data tables for</span>
-        <span>Qualcomm user experiences</span>
+        <span>Tables your users</span>
+        <span>can actually work with</span>
       </h1>
       <div className="font-body-xl text-neutral-secondary mt-8 flex flex-col gap-1">
-        <span>Headless table logic paired with</span>
-        <span>components from the Qualcomm Design System</span>
+        <span>Your toolkit for complex data grids</span>
       </div>
       <Divider className="my-8" />
       <div className="mt-8 flex gap-4">
