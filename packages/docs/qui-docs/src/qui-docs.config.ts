@@ -43,7 +43,7 @@ const config: QuiDocsConfig = {
   disableLegacySearchIndex: true,
   knowledge: {
     baseUrl: "https://docs.qui.qualcomm.com",
-    exclude: ["**/debug+/**", "*guide+/swagger*"],
+    exclude: ["debug/**", "guide/swagger/**"],
     extraFiles: [
       {
         contents: readFileSync(
