@@ -2108,6 +2108,9 @@ importers:
       '@lucide/angular':
         specifier: 'catalog:'
         version: 1.31.0(@angular/common@22.2.4(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))
+      '@mdx-js/react':
+        specifier: 'catalog:'
+        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@qualcomm-ui/angular':
         specifier: workspace:*
         version: link:../../frameworks/angular
@@ -2219,6 +2222,9 @@ importers:
       lucide-react:
         specifier: 0.569.0
         version: 0.569.0(react@19.2.4)
+      minimatch:
+        specifier: ^11.0.4
+        version: 11.0.4
       morgan:
         specifier: ^1.10.0
         version: 1.11.0(supports-color@10.2.2)
@@ -2280,9 +2286,6 @@ importers:
       '@commander-js/extra-typings':
         specifier: 'catalog:'
         version: 14.0.0(commander@14.0.3)
-      '@mdx-js/react':
-        specifier: 'catalog:'
-        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@mdx-js/rollup':
         specifier: 'catalog:'
         version: 3.1.1(rollup@4.62.4)(supports-color@10.2.2)
@@ -2421,6 +2424,9 @@ importers:
       '@lucide/angular':
         specifier: 'catalog:'
         version: 1.31.0(@angular/common@22.2.4(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.4(@angular/compiler@22.2.4)(rxjs@7.8.2))
+      '@mdx-js/react':
+        specifier: 'catalog:'
+        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@qualcomm-ui/angular':
         specifier: workspace:*
         version: link:../../frameworks/angular
@@ -2532,6 +2538,9 @@ importers:
       lucide-react:
         specifier: 0.569.0
         version: 0.569.0(react@19.2.4)
+      minimatch:
+        specifier: ^11.0.4
+        version: 11.0.4
       morgan:
         specifier: ^1.10.0
         version: 1.11.0(supports-color@10.2.2)
@@ -2593,9 +2602,6 @@ importers:
       '@commander-js/extra-typings':
         specifier: 'catalog:'
         version: 14.0.0(commander@14.0.3)
-      '@mdx-js/react':
-        specifier: 'catalog:'
-        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@mdx-js/rollup':
         specifier: 'catalog:'
         version: 3.1.1(rollup@4.62.4)(supports-color@10.2.2)
@@ -2689,6 +2695,9 @@ importers:
       '@floating-ui/react':
         specifier: ^0.27.3
         version: 0.27.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@mdx-js/react':
+        specifier: 'catalog:'
+        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@qualcomm-ui/core':
         specifier: workspace:*
         version: link:../../common/core
@@ -2779,6 +2788,9 @@ importers:
       lucide-react:
         specifier: 0.569.0
         version: 0.569.0(react@19.2.4)
+      minimatch:
+        specifier: ^11.0.4
+        version: 11.0.4
       morgan:
         specifier: ^1.10.0
         version: 1.11.0(supports-color@10.2.2)
@@ -2804,9 +2816,6 @@ importers:
         specifier: ^4.5.2
         version: 4.5.7(@types/react@19.2.7)(react@19.2.4)
     devDependencies:
-      '@mdx-js/react':
-        specifier: 'catalog:'
-        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@mdx-js/rollup':
         specifier: 'catalog:'
         version: 3.1.1(rollup@4.62.4)(supports-color@10.2.2)
@@ -3099,6 +3108,9 @@ importers:
       '@internationalized/number':
         specifier: ^3.6.4
         version: 3.6.7
+      '@mdx-js/react':
+        specifier: 'catalog:'
+        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@qualcomm-ui/core':
         specifier: workspace:*
         version: link:../../common/core
@@ -3198,6 +3210,9 @@ importers:
       lucide-react:
         specifier: 0.569.0
         version: 0.569.0(react@19.2.4)
+      minimatch:
+        specifier: ^11.0.4
+        version: 11.0.4
       morgan:
         specifier: ^1.10.0
         version: 1.11.0(supports-color@10.2.2)
@@ -3244,9 +3259,6 @@ importers:
       '@commander-js/extra-typings':
         specifier: 'catalog:'
         version: 14.0.0(commander@14.0.3)
-      '@mdx-js/react':
-        specifier: 'catalog:'
-        version: 3.1.1(@types/react@19.2.7)(react@19.2.4)
       '@mdx-js/rollup':
         specifier: 'catalog:'
         version: 3.1.1(rollup@4.62.4)(supports-color@10.2.2)

@@ -25,6 +25,7 @@
   "dependencies": {
     "@faker-js/faker": "catalog:",
     "@floating-ui/react": "^0.27.3",
+    "@mdx-js/react": "catalog:",
     "@qualcomm-ui/core": "workspace:*",
     "@qualcomm-ui/dom": "workspace:*",
     "@qualcomm-ui/mdx-common": "workspace:*",
@@ -55,6 +56,7 @@
     "jotai": "^2.7.1",
     "lodash-es": "catalog:",
     "lucide-react": "0.569.0",
+    "minimatch": "^11.0.4",
     "morgan": "^1.10.0",
     "react": "catalog:",
     "react-device-detect": "^2.2.3",
@@ -65,7 +67,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@mdx-js/react": "catalog:",
     "@mdx-js/rollup": "catalog:",
     "@qualcomm-ui/mdx-vite": "workspace:*",
     "@qualcomm-ui/qds-core": "workspace:*",
