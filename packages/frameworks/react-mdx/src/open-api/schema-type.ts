@@ -1,6 +1,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {Root} from "hast"
+
 export interface JsonSchema {
   $ref?: string
   allOf?: JsonSchema[]
@@ -8,7 +10,7 @@ export interface JsonSchema {
   circular?: boolean
   default?: unknown
   deprecated?: boolean
-  description?: string
+  description?: Root
   discriminator?: {propertyName: string}
   enum?: unknown[]
   example?: unknown

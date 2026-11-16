@@ -3,6 +3,9 @@
 
 import type {ReactNode} from "react"
 
+import type {Root} from "hast"
+
+import {Description} from "./description.js"
 import {
   MediaSchema,
   MediaTypePicker,
@@ -12,7 +15,7 @@ import {
 
 export interface OpenApiRequestBody {
   content?: OpenApiContent
-  description?: string
+  description?: Root
   required?: boolean
 }
 
@@ -36,7 +39,9 @@ export function RequestBody({body}: {body?: OpenApiRequestBody}): ReactNode {
         <MediaTypePicker state={mediaTypes} />
       </div>
       {body?.description ? (
-        <p className="qui-docs-openapi__description mdx">{body.description}</p>
+        <div className="qui-docs-openapi__description">
+          <Description tree={body.description} />
+        </div>
       ) : null}
       <div className="qui-docs-openapi__section-body">
         <MediaSchema group={mediaTypes.group} />

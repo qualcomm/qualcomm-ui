@@ -3,6 +3,7 @@
 
 import {dereference} from "./dereference.js"
 import type {OpenApiDocument, OpenApiOperation} from "./get-operations.js"
+import {parseDescriptions} from "./parse-descriptions.js"
 
 interface ParameterObject {
   in: string
@@ -38,7 +39,7 @@ export function getOperationDetails(
       !own.some((p) => p.name === parameter.name && p.in === parameter.in),
   )
 
-  return {
+  return parseDescriptions({
     ...spec,
     ...operation,
     parameters: [...inherited, ...own],
@@ -46,5 +47,5 @@ export function getOperationDetails(
       pathItem.servers ??
       (document as {servers?: unknown[]}).servers ??
       []) as unknown[],
-  }
+  })
 }

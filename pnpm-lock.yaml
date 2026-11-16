@@ -4279,6 +4279,9 @@ importers:
       '@floating-ui/react':
         specifier: '>=0.26.9 <1'
         version: 0.27.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      hast-util-to-jsx-runtime:
+        specifier: ^2.3.6
+        version: 2.3.6(supports-color@10.2.2)
       markdown-to-jsx:
         specifier: ^7.4.7
         version: 7.7.17(react@19.2.4)
@@ -4340,6 +4343,9 @@ importers:
       '@shikijs/themes':
         specifier: ^3.13.0
         version: 3.23.0
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.5
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12

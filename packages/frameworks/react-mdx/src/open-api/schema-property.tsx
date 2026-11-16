@@ -3,6 +3,9 @@
 
 import {type ReactNode, useMemo} from "react"
 
+import type {Root} from "hast"
+
+import {Description} from "./description.js"
 import {FieldRow} from "./field-row.js"
 import {getExpandable} from "./get-expandable.js"
 import {mergeAllOf} from "./merge-all-of.js"
@@ -11,7 +14,7 @@ import {getSchemaTypeLabel, type JsonSchema} from "./schema-type.js"
 
 export interface SchemaPropertyProps {
   deprecated?: boolean
-  description?: string
+  description?: Root
   name: string
   required?: boolean
   schema?: JsonSchema
@@ -57,7 +60,9 @@ export function SchemaProperty({
   const details = (
     <>
       {text ? (
-        <div className="qui-docs-openapi__description">{text}</div>
+        <div className="qui-docs-openapi__description">
+          <Description tree={text} />
+        </div>
       ) : null}
       {defaultValue !== undefined ? (
         <div className="qui-docs-openapi__field-default">

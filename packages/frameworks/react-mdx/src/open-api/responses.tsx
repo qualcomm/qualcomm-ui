@@ -1,8 +1,12 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactNode} from "react"
+import {type ReactNode, useMemo} from "react"
 
+import type {Root} from "hast"
+import type {Components} from "hast-util-to-jsx-runtime"
+
+import {Description} from "./description.js"
 import {FieldRow} from "./field-row.js"
 import {
   groupMediaTypes,
@@ -14,12 +18,41 @@ import {
 
 export interface OpenApiResponse {
   content?: OpenApiContent
-  description?: string
+  description?: Root
 }
 
 /**
- * Every response as a row, collapsed to its status code and description. Rows
- * with a body expand into its schema.
+ * The row trigger is a button, so its summary keeps to phrasing content.
+ */
+const inlineComponents: Partial<Components> = {
+  a: ({children}) => <>{children}</>,
+  p: ({children}) => <>{children}</>,
+}
+
+/**
+ * Splits a description into the row summary, its first paragraph, and the
+ * remaining blocks.
+ */
+function splitDescription(tree: Root | undefined): {
+  details: Root | null
+  summary: Root | null
+} {
+  const blocks = (tree?.children ?? []).filter(
+    (node) => node.type !== "text" || node.value.trim(),
+  )
+  const [first, ...rest] = blocks
+  const hasSummary = first?.type === "element" && first.tagName === "p"
+  const remaining = hasSummary ? rest : blocks
+  return {
+    details: remaining.length ? {children: remaining, type: "root"} : null,
+    summary: hasSummary ? {children: [first], type: "root"} : null,
+  }
+}
+
+/**
+ * Every response as a row: its status code and the first paragraph of its
+ * description, with the rest of the description below. Rows with a body expand
+ * into its schema.
  */
 export function Responses({
   responses,
@@ -76,19 +109,29 @@ function ResponseRow({
   response: OpenApiResponse
 }): ReactNode {
   const mediaTypes = useMediaTypes(content)
+  const {details, summary} = useMemo(
+    () => splitDescription(description),
+    [description],
+  )
   const header = (
     <>
       <code className="qui-docs-openapi__field-name">{code}</code>
-      {description ? (
+      {summary ? (
         <span className="qui-docs-openapi__response-description">
-          {description}
+          <Description components={inlineComponents} tree={summary} />
         </span>
       ) : null}
     </>
   )
+  const detailsBlock = details ? (
+    <div className="qui-docs-openapi__description">
+      <Description tree={details} />
+    </div>
+  ) : null
   return (
     <FieldRow
       accessory={hideMediaTypes ? null : <MediaTypePicker state={mediaTypes} />}
+      details={detailsBlock}
       header={header}
     >
       {mediaTypes.group ? <MediaSchema group={mediaTypes.group} /> : null}

@@ -3,12 +3,14 @@
 
 import type {ReactNode} from "react"
 
+import type {Root} from "hast"
+
 import {SchemaProperty} from "./schema-property.js"
 import type {JsonSchema} from "./schema-type.js"
 
 export interface OpenApiParameter {
   deprecated?: boolean
-  description?: string
+  description?: Root
   in: string
   name: string
   required?: boolean

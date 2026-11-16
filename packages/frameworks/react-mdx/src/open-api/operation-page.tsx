@@ -3,17 +3,20 @@
 
 import type {ReactNode} from "react"
 
+import type {Root} from "hast"
+
 import {HttpMethod, PageHeader} from "@qualcomm-ui/react-mdx/docs-layout"
 import {Badge} from "@qualcomm-ui/react/badge"
 
 import {CodeSamplesPanel} from "./code-samples-panel.js"
+import {Description} from "./description.js"
 import {type OpenApiParameter, Parameters} from "./parameters.js"
 import {type OpenApiRequestBody, RequestBody} from "./request-body.js"
 import {type OpenApiResponse, Responses} from "./responses.js"
 
 export interface OpenApiOperationData {
   deprecated?: boolean
-  description?: string
+  description?: Root
   method: string
   parameters: OpenApiParameter[]
   path: string
@@ -104,7 +107,9 @@ export function OperationPage({loaderData}: OperationPageProps): ReactNode {
       )}
 
       {description ? (
-        <p className="qui-docs-openapi__description mdx">{description}</p>
+        <div className="qui-docs-openapi__description">
+          <Description tree={description} />
+        </div>
       ) : null}
 
       <div className="qui-docs-openapi__columns">
