@@ -24,6 +24,7 @@
     "@floating-ui/react": "^0.27.3",
     "@hookform/resolvers": "^5.2.2",
     "@internationalized/number": "^3.6.4",
+    "@mdx-js/react": "catalog:",
     "@qualcomm-ui/core": "workspace:*",
     "@qualcomm-ui/dom": "workspace:*",
     "@qualcomm-ui/mdx-common": "workspace:*",
@@ -57,6 +58,7 @@
     "jotai": "^2.7.1",
     "lodash-es": "catalog:",
     "lucide-react": "0.569.0",
+    "minimatch": "catalog:",
     "morgan": "^1.10.0",
     "react": "catalog:",
     "react-device-detect": "^2.2.3",
@@ -74,7 +76,6 @@
   },
   "devDependencies": {
     "@commander-js/extra-typings": "catalog:",
-    "@mdx-js/react": "catalog:",
     "@mdx-js/rollup": "catalog:",
     "@qualcomm-ui/mdx-vite": "workspace:*",
     "@qualcomm-ui/tsconfig": "catalog:",

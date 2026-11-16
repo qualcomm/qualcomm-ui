@@ -27,7 +27,7 @@ import {
 } from "@qualcomm-ui/react/table"
 import {TextInput} from "@qualcomm-ui/react/text-input"
 
-import {makeUserData, type User} from "../../../utils/data"
+import {makeUserData, type User} from "../../utils/data"
 
 import {RowPinningCell} from "./row-pinning-cell"
 import {

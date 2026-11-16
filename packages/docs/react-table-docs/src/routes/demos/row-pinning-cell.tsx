@@ -5,7 +5,7 @@ import {ArrowDown, ArrowUp, X} from "lucide-react"
 import type {CellContext} from "@qualcomm-ui/core/table"
 import {Table} from "@qualcomm-ui/react/table"
 
-import type {User} from "../../../utils/data"
+import type {User} from "../../utils/data"
 
 import {RowPinningContext} from "./row-pinning-context"
 

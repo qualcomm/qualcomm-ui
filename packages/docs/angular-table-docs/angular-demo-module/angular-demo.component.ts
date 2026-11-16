@@ -90,7 +90,9 @@ export class AngularDemoComponent {
       void import(
         filePath.includes("src/routes/features")
           ? `../src/routes/features+/${filePath.replace("./src/routes/features+/", "")}`
-          : `../src/routes/guides+/${filePath.replace("./src/routes/guides+/", "")}`
+          : filePath.includes("src/routes/home")
+            ? `../src/routes/home+/${filePath.replace("./src/routes/home+/", "")}`
+            : `../src/routes/guides+/${filePath.replace("./src/routes/guides+/", "")}`
       )
         .then((m: Record<string, Type<unknown>>) => {
           const component = m[componentName] as Type<unknown> | undefined
