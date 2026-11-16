@@ -9,8 +9,10 @@ import {filterPanelClasses} from "./filter-panel.classes.js"
 import type {
   QdsFilterPanelApi,
   QdsFilterPanelApiProps,
+  QdsFilterPanelApplyTriggerBindings,
   QdsFilterPanelClearTriggerBindings,
   QdsFilterPanelCloseTriggerBindings,
+  QdsFilterPanelFooterBindings,
   QdsFilterPanelHeaderBindings,
   QdsFilterPanelHeadingBindings,
   QdsFilterPanelRootBindings,
@@ -34,6 +36,9 @@ export function createQdsFilterPanelApi(
     size,
 
     // group: bindings
+    getApplyTriggerBindings(): QdsFilterPanelApplyTriggerBindings {
+      return normalize.button({className: filterPanelClasses.applyTrigger})
+    },
     getClearTriggerBindings(): QdsFilterPanelClearTriggerBindings {
       return normalize.button({className: filterPanelClasses.clearTrigger})
     },
@@ -43,6 +48,9 @@ export function createQdsFilterPanelApi(
         className: filterPanelClasses.closeTrigger,
         type: "button",
       })
+    },
+    getFooterBindings(): QdsFilterPanelFooterBindings {
+      return normalize.element({className: filterPanelClasses.footer})
     },
     getHeaderBindings(): QdsFilterPanelHeaderBindings {
       return normalize.element({className: filterPanelClasses.header})

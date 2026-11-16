@@ -23,6 +23,10 @@ export interface QdsFilterPanelRootBindings {
   "data-size": QdsFilterPanelSize
 }
 
+export interface QdsFilterPanelApplyTriggerBindings {
+  className: FilterPanelClasses["applyTrigger"]
+}
+
 export interface QdsFilterPanelClearTriggerBindings {
   className: FilterPanelClasses["clearTrigger"]
 }
@@ -31,6 +35,10 @@ export interface QdsFilterPanelCloseTriggerBindings {
   "aria-label": string
   className: FilterPanelClasses["closeTrigger"]
   type: "button"
+}
+
+export interface QdsFilterPanelFooterBindings {
+  className: FilterPanelClasses["footer"]
 }
 
 export interface QdsFilterPanelHeaderBindings {
@@ -51,8 +59,10 @@ export interface QdsFilterPanelApi {
   size: QdsFilterPanelSize
 
   // group: bindings
+  getApplyTriggerBindings(): QdsFilterPanelApplyTriggerBindings
   getClearTriggerBindings(): QdsFilterPanelClearTriggerBindings
   getCloseTriggerBindings(): QdsFilterPanelCloseTriggerBindings
+  getFooterBindings(): QdsFilterPanelFooterBindings
   getHeaderBindings(): QdsFilterPanelHeaderBindings
   getHeadingBindings(): QdsFilterPanelHeadingBindings
   getRootBindings(): QdsFilterPanelRootBindings

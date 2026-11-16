@@ -17,7 +17,10 @@ import {
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {FilterPanelContextProvider} from "./filter-panel-context.js"
-import {useFilterPanelClearTrigger} from "./use-filter-panel.js"
+import {
+  useFilterPanelApplyTrigger,
+  useFilterPanelClearTrigger,
+} from "./use-filter-panel.js"
 
 export interface CoreFilterPanelRootProps
   extends FilterPanelApiProps, Omit<ElementRenderProp<"div">, "defaultValue"> {
@@ -58,6 +61,26 @@ export function CoreFilterPanelClearTrigger({
   ...props
 }: CoreFilterPanelClearTriggerProps): ReactElement {
   const mergedProps = mergeProps(useFilterPanelClearTrigger(), props)
+
+  return (
+    <PolymorphicElement as="button" {...mergedProps}>
+      {children}
+    </PolymorphicElement>
+  )
+}
+
+export interface CoreFilterPanelApplyTriggerProps extends ElementRenderProp<"button"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+}
+
+export function CoreFilterPanelApplyTrigger({
+  children,
+  ...props
+}: CoreFilterPanelApplyTriggerProps): ReactElement {
+  const mergedProps = mergeProps(useFilterPanelApplyTrigger(), props)
 
   return (
     <PolymorphicElement as="button" {...mergedProps}>
