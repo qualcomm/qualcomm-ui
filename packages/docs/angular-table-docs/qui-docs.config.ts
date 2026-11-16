@@ -2,6 +2,11 @@ import type {NavConfig, QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
 
 const navConfig: NavConfig[] = [
   {
+    hidden: true,
+    hideBreadcrumbs: true,
+    hidePageLinks: true,
+    hideSideNav: true,
+    hideToc: true,
     id: "_index",
   },
   {
@@ -103,7 +108,7 @@ export default {
   hotUpdateIgnore: /angular-demo-module|public/,
   knowledge: {
     baseUrl: "https://angular-table.qui.qualcomm.com",
-    exclude: ["installation.mdx", "index/_index.mdx"],
+    exclude: ["installation.mdx"],
     pageIdPrefix: "table",
   },
   navConfig,

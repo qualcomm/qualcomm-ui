@@ -88,6 +88,7 @@ export default defineConfig({
         // angular-demo-module/angular-demo.component.ts
         "./src/routes/features+/**/demos/**/*.ts",
         "./src/routes/guides+/**/demos/**/*.ts",
+        "./src/routes/home+/demos/**/*.ts",
       ],
       initialHtml: demoElementsJson,
       routesDir: "src/routes",
