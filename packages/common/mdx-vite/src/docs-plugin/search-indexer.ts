@@ -46,6 +46,7 @@ import {
   type IndexedSection,
   MdxFileReader,
 } from "./markdown/index.js"
+import type {GeneratedPage} from "./markdown/knowledge/knowledge-exporter.js"
 import {
   type PageInfo,
   SectionExtractor,
@@ -72,11 +73,13 @@ import type {
 } from "./nav-builder/types.js"
 import {getOpenApiNavItems} from "./open-api/get-nav-items.js"
 import {
-  getOperationDetails,
   type OpenApiOperationDetails,
+  resolveOperation,
 } from "./open-api/get-operation-details.js"
 import {getOperations, getOperationTitle} from "./open-api/get-operations.js"
+import {getSearchEntry} from "./open-api/get-search-entry.js"
 import {loadOpenApiSpec} from "./open-api/load-spec.js"
+import {parseDescriptions} from "./open-api/parse-descriptions.js"
 import {
   type PageTitleIssue,
   reportPageTitleIssues,
@@ -202,6 +205,15 @@ export class SearchIndexer {
   }
   private _openApiOperations: Record<string, OpenApiOperationDetails> = {}
 
+  /**
+   * Pages without an MDX file of their own, i.e. API operations, keyed by the
+   * pathname of the MDX page that generates them.
+   */
+  get generatedPages(): Record<string, GeneratedPage[]> {
+    return this._generatedPages
+  }
+  private _generatedPages: Record<string, GeneratedPage[]> = {}
+
   get pageMap(): PageMap {
     return this._pageMap
   }
@@ -225,6 +237,7 @@ export class SearchIndexer {
     this._ignoredMdxFiles = new Set()
     this._openApiNav = {}
     this._openApiOperations = {}
+    this._generatedPages = {}
     this._pageDocProps = {}
     this._pageMap = {}
     this._searchIndex = []
@@ -365,7 +378,7 @@ export class SearchIndexer {
   }
 
   /**
-   * Adds the API's sidebar and a pageMap entry per operation.
+   * Adds the API's sidebar, and a pageMap entry and search entry per operation.
    */
   private indexOpenApiSpec(
     filePath: string,
@@ -379,13 +392,25 @@ export class SearchIndexer {
       operations,
       spec.tags,
     )
+    const generatedPages: GeneratedPage[] = []
     for (const operation of operations) {
       const pathname = `${intro.pathname}/${operation.slug}`
-      this._openApiOperations[pathname] = getOperationDetails(spec, operation)
+      const resolved = resolveOperation(spec, operation)
+      const details = parseDescriptions(resolved)
+      this._openApiOperations[pathname] = details
+      generatedPages.push(
+        getSearchEntry(
+          pathname,
+          details,
+          typeof resolved.description === "string" ? resolved.description : "",
+        ),
+      )
       const title = getOperationTitle(operation)
       this._pageMap[pathname] = {
         categories: [...intro.categories, title],
         data: {},
+        hidden: intro.hidden,
+        hideFromSearch: intro.hideFromSearch,
         hideToc: true,
         id: `${intro.id}#${operation.slug}`,
         pathname,
@@ -393,6 +418,7 @@ export class SearchIndexer {
         title,
       }
     }
+    this._generatedPages[intro.pathname] = generatedPages
   }
 
   /**

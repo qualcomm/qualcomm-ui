@@ -283,6 +283,7 @@ export class PluginState {
         exclude: this.knowledgeConfig.exclude,
         extraFiles: this.knowledgeConfig.extraFiles,
         frontmatter: this.knowledgeConfig.frontmatter,
+        generatedPages: this.indexer?.generatedPages,
         ignoredMdxFiles: this.indexer?.ignoredMdxFiles,
         pageIdPrefix: this.knowledgeConfig.pageIdPrefix,
         pageMap: this.indexer?.pageMap,

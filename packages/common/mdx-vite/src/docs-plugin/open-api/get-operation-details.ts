@@ -20,7 +20,10 @@ export interface OpenApiOperationDetails extends OpenApiOperation {
   servers: unknown[]
 }
 
-export function getOperationDetails(
+/**
+ * {@link getOperationDetails} with its descriptions still in CommonMark.
+ */
+export function resolveOperation(
   document: OpenApiDocument,
   operation: OpenApiOperation,
 ): OpenApiOperationDetails {
@@ -39,7 +42,7 @@ export function getOperationDetails(
       !own.some((p) => p.name === parameter.name && p.in === parameter.in),
   )
 
-  return parseDescriptions({
+  return {
     ...spec,
     ...operation,
     parameters: [...inherited, ...own],
@@ -47,5 +50,12 @@ export function getOperationDetails(
       pathItem.servers ??
       (document as {servers?: unknown[]}).servers ??
       []) as unknown[],
-  })
+  }
+}
+
+export function getOperationDetails(
+  document: OpenApiDocument,
+  operation: OpenApiOperation,
+): OpenApiOperationDetails {
+  return parseDescriptions(resolveOperation(document, operation))
 }
