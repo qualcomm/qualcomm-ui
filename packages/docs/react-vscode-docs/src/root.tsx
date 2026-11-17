@@ -91,6 +91,20 @@ function App() {
         ) : null}
         <Meta />
         <Links />
+        <link
+          href="/favicon/favicon-96x96.png"
+          rel="icon"
+          sizes="96x96"
+          type="image/png"
+        />
+        <link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link href="/favicon/favicon.ico" rel="shortcut icon" />
+        <link
+          href="/favicon/apple-touch-icon.png"
+          rel="apple-touch-icon"
+          sizes="180x180"
+        />
+        <link href="/favicon/site.webmanifest" rel="manifest" />
         <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
       </head>
       <body>
