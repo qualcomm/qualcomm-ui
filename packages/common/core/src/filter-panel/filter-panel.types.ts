@@ -1,6 +1,13 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {
+  FilterDefinition,
+  FilterDefinitions,
+  FilterOption,
+  FilterOptionObject,
+  FilterValues,
+} from "@qualcomm-ui/core/filters"
 import type {AnatomyPart, AnatomyPartName} from "@qualcomm-ui/utils/anatomy"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
@@ -12,13 +19,6 @@ import type {
 } from "@qualcomm-ui/utils/machine"
 
 import type {filterPanelAnatomy} from "./filter-panel.anatomy.js"
-import type {
-  FilterDefinition,
-  FilterDefinitions,
-  FilterPanelOption,
-  FilterPanelOptionObject,
-  FilterValues,
-} from "./filter-panel.definitions.js"
 
 /**
  * - `manual`: changes are staged in a draft and committed when applied.
@@ -99,9 +99,7 @@ export interface FilterPanelApiProps<
    * Resolves options for an option-based filter when neither the filter
    * component nor its definition provides them.
    */
-  getFilterOptions?:
-    | ((id: string) => FilterPanelOption[] | undefined)
-    | undefined
+  getFilterOptions?: ((id: string) => FilterOption[] | undefined) | undefined
 
   /**
    * Resolves the bounds of a range filter when its definition has none.
@@ -281,7 +279,7 @@ export interface FilterPanelApi<
    * the panel's `getFilterOptions`. Filter components prefer their own
    * `options` prop.
    */
-  getFilterOptions: (id: string) => FilterPanelOptionObject[]
+  getFilterOptions: (id: string) => FilterOptionObject[]
 
   /**
    * Returns the bounds of a range filter from its definition, then the panel's

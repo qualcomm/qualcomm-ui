@@ -3,9 +3,9 @@
 
 import type {
   FilterPanelApiProps,
-  FilterPanelOptionObject,
   FilterPanelValues,
 } from "@qualcomm-ui/core/filter-panel"
+import type {FilterOptionObject} from "@qualcomm-ui/core/filters"
 
 import {shouldAutoRemoveFilter} from "./features/filters.js"
 import {warnOnce} from "./internal-warn.js"
@@ -22,26 +22,26 @@ export interface TableFilterPanelProps extends Required<
     | "value"
   >
 > {
-  getFilterOptions: (id: string) => FilterPanelOptionObject[] | undefined
+  getFilterOptions: (id: string) => FilterOptionObject[] | undefined
 }
 
 const facetedOptionsCache = new WeakMap<
   Map<any, number>,
-  FilterPanelOptionObject[]
+  FilterOptionObject[]
 >()
 
 const collator = new Intl.Collator(undefined, {numeric: true})
 
 function getFacetedOptions<TData extends RowData>(
   column: Column<TData, unknown>,
-): FilterPanelOptionObject[] {
+): FilterOptionObject[] {
   const uniqueValues = column.getFacetedUniqueValues()
   const cached = facetedOptionsCache.get(uniqueValues)
   if (cached) {
     return cached
   }
 
-  const options = new Map<string, FilterPanelOptionObject>()
+  const options = new Map<string, FilterOptionObject>()
   for (const key of uniqueValues.keys()) {
     /**
      * Array-valued columns facet on the whole array unless the column defines

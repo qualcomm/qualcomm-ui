@@ -6,7 +6,7 @@ import {type ReactElement, useState} from "react"
 import type {
   DateFilterDefinition,
   DateFilterRange,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {
   DatePicker,

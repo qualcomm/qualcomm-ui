@@ -4,19 +4,19 @@ import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
 import {page, userEvent} from "vitest/browser"
 
+import type {FilterPanelApplyMode} from "@qualcomm-ui/core/filter-panel"
 import {
   checkboxFilter,
   checkboxTreeFilter,
   comboboxFilter,
   dateFilter,
   defineFilters,
-  type FilterPanelApplyMode,
   type FilterValues,
   radioFilter,
   rangeFilter,
   selectFilter,
   textFilter,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import {FilterPanel, useFilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {

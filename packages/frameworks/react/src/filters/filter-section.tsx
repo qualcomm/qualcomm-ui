@@ -6,7 +6,7 @@ import type {ReactElement, ReactNode} from "react"
 import type {
   FilterDefinition,
   IdentifiedFilterDefinition,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {
   FilterPanel,
   type FilterPanelFilterContentProps,

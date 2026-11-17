@@ -1,14 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {
+  countFilterValue,
+  type FilterDefinitions,
+  labelFilterValue,
+  normalizeFilterOption,
+} from "@qualcomm-ui/core/filters"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {Machine, PropNormalizer} from "@qualcomm-ui/utils/machine"
 
 import {filterPanelAnatomy} from "./filter-panel.anatomy.js"
-import {
-  type FilterDefinitions,
-  normalizeFilterOption,
-} from "./filter-panel.definitions.js"
 import type {
   FilterPanelApi,
   FilterPanelApplyTriggerBindings,
@@ -23,8 +25,6 @@ import {
   areValuesEqual,
   countValues,
   createEmptyValueCheck,
-  getValueCount,
-  getValueLabels,
 } from "./internal/filter-panel.utils.js"
 
 const parts = filterPanelAnatomy.parts
@@ -64,7 +64,7 @@ export function createFilterPanelApi<
   function getFilterValueCount(id: string, filterValue = filters[id]): number {
     return isEmpty(id, filterValue)
       ? 0
-      : getValueCount(definitions?.[id], filterValue)
+      : countFilterValue(definitions?.[id], filterValue)
   }
 
   return {
@@ -117,7 +117,7 @@ export function createFilterPanelApi<
       if (isEmpty(id, filterValue)) {
         return []
       }
-      return getValueLabels(definitions?.[id], filterValue, (option) =>
+      return labelFilterValue(definitions?.[id], filterValue, (option) =>
         getFilterOptionLabel(id, option),
       )
     },

@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import type {CheckboxTreeFilterDefinition} from "@qualcomm-ui/core/filter-panel"
+import type {CheckboxTreeFilterDefinition} from "@qualcomm-ui/core/filters"
 import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {Tree, type TreeRootProps} from "@qualcomm-ui/react/tree"

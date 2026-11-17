@@ -3,7 +3,7 @@
 
 import {type ReactElement, type ReactNode, useMemo} from "react"
 
-import type {FilterDefinitions} from "@qualcomm-ui/core/filter-panel"
+import type {FilterDefinitions} from "@qualcomm-ui/core/filters"
 import {
   createQdsFilterPanelApi,
   type QdsFilterPanelApi,

@@ -1,17 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {
+  type FilterDefinitions,
+  countFilterValue,
+  isEmptyFilterValue,
+} from "@qualcomm-ui/core/filters"
 import {isEqual} from "@qualcomm-ui/utils/equal"
 import type {ValueOrFn} from "@qualcomm-ui/utils/machine"
 
-import type {
-  DateFilterDefinition,
-  DateFilterValue,
-  FilterDefinition,
-  FilterDefinitions,
-  RangeFilterDefinition,
-  RangeFilterValue,
-} from "../filter-panel.definitions.js"
 import type {
   FilterPanelApiProps,
   FilterPanelOptionLabels,
@@ -20,61 +17,21 @@ import type {
 
 export type IsEmptyFilterValue = (id: string, value: unknown) => boolean
 
-function isBlankValue(value: unknown): boolean {
-  return (
-    value === undefined ||
-    value === null ||
-    value === "" ||
-    (Array.isArray(value) && value.length === 0)
-  )
-}
-
-function isUnbounded(bounds: unknown): boolean {
-  return (
-    Array.isArray(bounds) &&
-    bounds.every((bound) => bound === null || bound === undefined)
-  )
-}
-
-function isEmptyForDefinition(
-  definition: FilterDefinition,
-  value: unknown,
-): boolean {
-  switch (definition.kind) {
-    case "custom":
-      return !!definition.isEmptyValue?.(value)
-    case "date": {
-      const dateValue = value as DateFilterValue
-      return "range" in dateValue
-        ? isUnbounded(dateValue.range)
-        : !dateValue.preset
-    }
-    case "range":
-      return isUnbounded(value)
-    default:
-      return false
-  }
-}
-
 /**
- * Builds the empty-value check for a panel. A value is empty when it carries no
- * filtering intent (`undefined`, `null`, `""`, `[]`), when its definition
- * considers it empty (an unbounded range, for example), or when the consumer's
- * `isEmptyValue` rejects it. Empty values are never counted or committed.
+ * Builds the empty-value check for a panel. A value is empty when
+ * `isEmptyFilterValue` considers it empty for its definition, or when the
+ * consumer's `isEmptyValue` rejects it. Empty values are never counted or
+ * committed.
  */
 export function createEmptyValueCheck(
   definitions: FilterDefinitions | undefined,
   isEmptyValue: FilterPanelApiProps["isEmptyValue"],
 ): IsEmptyFilterValue {
   return (id, value) => {
-    if (isBlankValue(value)) {
-      return true
-    }
-    const definition = definitions?.[id]
-    if (definition && isEmptyForDefinition(definition, value)) {
-      return true
-    }
-    return !!isEmptyValue?.(id, value)
+    return (
+      isEmptyFilterValue(definitions?.[id], value) ||
+      !!isEmptyValue?.(id, value)
+    )
   }
 }
 
@@ -137,115 +94,16 @@ export function hashValues(values: FilterPanelValues | undefined): string {
   )
 }
 
-/**
- * The number of values a non-empty filter contributes to the active filter
- * count: the array length for arrays, otherwise 1.
- */
-export function getValueCount(
-  definition: FilterDefinition | undefined,
-  value: unknown,
-): number {
-  if (definition?.kind === "custom" && definition.getValueCount) {
-    return definition.getValueCount(value)
-  }
-  if (definition?.kind === "range" || definition?.kind === "date") {
-    return 1
-  }
-  return Array.isArray(value) ? value.length : 1
-}
-
 export function countValues(
   definitions: FilterDefinitions | undefined,
   isEmpty: IsEmptyFilterValue,
   values: FilterPanelValues,
 ): number {
   return Object.entries(getNonEmptyValues(isEmpty, values)).reduce(
-    (count, [id, value]) => count + getValueCount(definitions?.[id], value),
+    (count, [id, value]) =>
+      count + countFilterValue(definitions?.[id], value),
     0,
   )
-}
-
-export function stringifyFilterValue(value: unknown): string {
-  return typeof value === "string" ||
-    typeof value === "number" ||
-    typeof value === "boolean" ||
-    typeof value === "bigint"
-    ? String(value)
-    : ""
-}
-
-function formatBounds(
-  start: string | null,
-  end: string | null,
-): string | undefined {
-  if (start !== null && end !== null) {
-    return `${start} – ${end}`
-  }
-  if (start !== null) {
-    return `≥ ${start}`
-  }
-  if (end !== null) {
-    return `≤ ${end}`
-  }
-  return undefined
-}
-
-function formatRangeValue(
-  definition: RangeFilterDefinition | undefined,
-  value: RangeFilterValue,
-): string | undefined {
-  const format = definition?.formatValue ?? String
-  const [min, max] = value
-  return formatBounds(
-    min === null || min === undefined ? null : format(min),
-    max === null || max === undefined ? null : format(max),
-  )
-}
-
-function formatDateValue(
-  definition: DateFilterDefinition | undefined,
-  value: DateFilterValue,
-): string | undefined {
-  if ("preset" in value) {
-    return (
-      definition?.presets?.find((preset) => preset.value === value.preset)
-        ?.label ?? value.preset
-    )
-  }
-  const format = definition?.formatDate ?? ((date: string) => date)
-  const [start, end] = value.range
-  return formatBounds(start ? format(start) : null, end ? format(end) : null)
-}
-
-/**
- * Returns the labels that summarize a non-empty filter value, such as one
- * label per active filter chip.
- */
-export function getValueLabels(
-  definition: FilterDefinition | undefined,
-  value: unknown,
-  getOptionLabel: (option: string) => string,
-): string[] {
-  switch (definition?.kind) {
-    case "custom":
-      if (definition.getValueLabels) {
-        return definition.getValueLabels(value)
-      }
-      break
-    case "date": {
-      const label = formatDateValue(definition, value as DateFilterValue)
-      return label ? [label] : []
-    }
-    case "range": {
-      const label = formatRangeValue(definition, value as RangeFilterValue)
-      return label ? [label] : []
-    }
-    case "text":
-      return [String(value)]
-  }
-  return Array.isArray(value)
-    ? value.map((option) => getOptionLabel(String(option)))
-    : [getOptionLabel(stringifyFilterValue(value))]
 }
 
 /**

@@ -5,8 +5,8 @@ import type {ReactElement} from "react"
 
 import type {
   CheckboxFilterDefinition,
-  FilterPanelOption,
-} from "@qualcomm-ui/core/filter-panel"
+  FilterOption,
+} from "@qualcomm-ui/core/filters"
 import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {
   type ElementRenderProp,
@@ -27,7 +27,7 @@ export interface CheckboxFilterControlProps extends Omit<
    * The options to render. Takes precedence over the definition's options and
    * the panel's resolver.
    */
-  options?: FilterPanelOption[] | undefined
+  options?: FilterOption[] | undefined
 }
 
 /**

@@ -4,11 +4,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {
-  DateFilterPreset,
-  DateFilterRange,
-  DateFilterValue,
-} from "@qualcomm-ui/core/filter-panel"
+import {
+  type DateFilterPreset,
+  type DateFilterValue,
+  isEmptyDateFilterValue,
+} from "@qualcomm-ui/core/filters"
 
 import type {FilterFn} from "./features/filters.js"
 import {warnOnce} from "./internal-warn.js"
@@ -200,17 +200,6 @@ function resolveDateBounds(
   return [startTime, endTime]
 }
 
-function isEmptyDateValue(val: any): boolean {
-  if (testFalsy(val)) {
-    return true
-  }
-  if ("range" in val) {
-    const [start, end] = (val.range ?? []) as DateFilterRange
-    return testFalsy(start) && testFalsy(end)
-  }
-  return !val.preset
-}
-
 /**
  * Matches rows whose date falls within `{range: [start, end]}`. Row values may
  * be `Date` objects, epoch milliseconds, or ISO 8601 strings. Preset values
@@ -240,7 +229,7 @@ inDateRange.resolveFilterValue = (val: DateFilterValue) => {
   return [-Infinity, Infinity]
 }
 
-inDateRange.autoRemove = isEmptyDateValue
+inDateRange.autoRemove = isEmptyDateFilterValue
 
 /**
  * Creates a date filter function that resolves the given presets when
@@ -266,7 +255,7 @@ export function createDateFilterFn(presets: DateFilterPreset[]): FilterFn<any> {
     return resolveDateBounds(...preset.range())
   }
 
-  filterFn.autoRemove = isEmptyDateValue
+  filterFn.autoRemove = isEmptyDateFilterValue
 
   return filterFn
 }

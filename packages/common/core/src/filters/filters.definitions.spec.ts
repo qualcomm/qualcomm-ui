@@ -11,7 +11,7 @@ import {
   rangeFilter,
   type RangeFilterValue,
   textFilter,
-} from "./filter-panel.definitions"
+} from "./filters.definitions"
 
 const buildFilters = defineFilters({
   buildPath: textFilter({label: "Build path"}),

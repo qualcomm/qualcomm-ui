@@ -4,9 +4,9 @@
 import type {ComponentProps, ReactElement} from "react"
 
 import type {
-  FilterPanelOption,
+  FilterOption,
   RadioFilterDefinition,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
@@ -23,7 +23,7 @@ export interface RadioFilterControlProps extends Omit<
    * for example an "All" option. Takes precedence over the definition's
    * options and the panel's resolver.
    */
-  options?: FilterPanelOption[] | undefined
+  options?: FilterOption[] | undefined
 }
 
 /**

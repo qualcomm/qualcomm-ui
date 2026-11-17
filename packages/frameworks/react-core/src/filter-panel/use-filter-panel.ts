@@ -3,15 +3,17 @@
 
 import {
   createFilterPanelApi,
-  type FilterDefinition,
-  type FilterDefinitions,
   type FilterPanelApi,
   type FilterPanelApiProps,
   type FilterPanelApplyTriggerBindings,
   type FilterPanelClearTriggerBindings,
   filterPanelMachine,
-  type IdentifiedFilterDefinition,
 } from "@qualcomm-ui/core/filter-panel"
+import type {
+  FilterDefinition,
+  FilterDefinitions,
+  IdentifiedFilterDefinition,
+} from "@qualcomm-ui/core/filters"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
 
 import {useFilterPanelContext} from "./filter-panel-context.js"

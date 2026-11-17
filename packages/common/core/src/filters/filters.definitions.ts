@@ -4,9 +4,9 @@
 /**
  * A filter option. A plain string is used as both the value and the label.
  */
-export type FilterPanelOption = string | FilterPanelOptionObject
+export type FilterOption = string | FilterOptionObject
 
-export interface FilterPanelOptionObject {
+export interface FilterOptionObject {
   /**
    * Whether the option is disabled.
    */
@@ -27,8 +27,8 @@ export interface FilterPanelOptionObject {
  * Converts a string option to an option object.
  */
 export function normalizeFilterOption(
-  option: FilterPanelOption,
-): FilterPanelOptionObject {
+  option: FilterOption,
+): FilterOptionObject {
   return typeof option === "string" ? {label: option, value: option} : option
 }
 
@@ -100,7 +100,7 @@ export interface OptionFilterConfig extends FilterDefinitionConfig {
   /**
    * Static options. Options passed to the filter component take precedence.
    */
-  options?: FilterPanelOption[] | undefined
+  options?: FilterOption[] | undefined
 }
 
 export interface RangeFilterConfig extends FilterDefinitionConfig {
@@ -132,7 +132,7 @@ export interface DateFilterConfig extends FilterDefinitionConfig {
 
   /**
    * Developer-defined presets, such as "Last 7 days". A table column that
-   * uses presets needs a filter function that knows them; create one with
+   * uses presets needs a filter function that knows them. Create one with
    * `createDateFilterFn(presets)`.
    */
   presets?: DateFilterPreset[] | undefined

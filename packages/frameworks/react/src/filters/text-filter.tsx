@@ -3,7 +3,7 @@
 
 import {type ReactElement, useEffect, useRef, useState} from "react"
 
-import type {TextFilterDefinition} from "@qualcomm-ui/core/filter-panel"
+import type {TextFilterDefinition} from "@qualcomm-ui/core/filters"
 import {
   useFilterPanelContext,
   useFilterPanelFilter,

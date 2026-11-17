@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {
-  type FilterPanelOption,
-  type FilterPanelOptionObject,
+  type FilterOption,
+  type FilterOptionObject,
   normalizeFilterOption,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {
   useFilterPanelContext,
   useFilterPanelFilter,
@@ -18,8 +18,8 @@ import {
  * and can be deselected.
  */
 export function useFilterOptions(
-  options: FilterPanelOption[] | undefined,
-): FilterPanelOptionObject[] {
+  options: FilterOption[] | undefined,
+): FilterOptionObject[] {
   const api = useFilterPanelContext()
   const filter = useFilterPanelFilter()
 
@@ -39,7 +39,7 @@ export function useFilterOptions(
 }
 
 export function getOptionLabels(
-  options: FilterPanelOptionObject[],
+  options: FilterOptionObject[],
   values: string[],
 ): Record<string, string> {
   return Object.fromEntries(

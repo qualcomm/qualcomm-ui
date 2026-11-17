@@ -1,12 +1,12 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {FilterPanelSetValueDetails} from "@qualcomm-ui/core/filter-panel"
 import type {
   FilterDefinition,
   FilterDefinitionValue,
-  FilterPanelSetValueDetails,
   IdentifiedFilterDefinition,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 import type {ValueOrFn} from "@qualcomm-ui/utils/machine"
 

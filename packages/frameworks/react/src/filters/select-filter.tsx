@@ -4,9 +4,9 @@
 import {type ComponentProps, type ReactElement, useMemo} from "react"
 
 import type {
-  FilterPanelOption,
+  FilterOption,
   SelectFilterDefinition,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {selectCollection} from "@qualcomm-ui/core/select"
 import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
@@ -30,7 +30,7 @@ export interface SelectFilterControlProps extends Omit<
    * The options to render. Takes precedence over the definition's options and
    * the panel's resolver.
    */
-  options?: FilterPanelOption[] | undefined
+  options?: FilterOption[] | undefined
 }
 
 /**

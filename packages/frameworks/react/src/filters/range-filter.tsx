@@ -6,7 +6,7 @@ import {type ComponentProps, type ReactElement, useState} from "react"
 import type {
   RangeFilterDefinition,
   RangeFilterValue,
-} from "@qualcomm-ui/core/filter-panel"
+} from "@qualcomm-ui/core/filters"
 import {
   useFilterPanelContext,
   useFilterPanelFilter,

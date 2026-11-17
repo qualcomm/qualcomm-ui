@@ -7,18 +7,16 @@ import {
   defineFilters,
   rangeFilter,
   textFilter,
-} from "../filter-panel.definitions"
+} from "@qualcomm-ui/core/filters"
 
 import {
   areValuesEqual,
   countValues,
   createEmptyValueCheck,
-  getValueLabels,
   hashValues,
   pickOptionLabels,
   recordOptionLabels,
   setFilterValue,
-  stringifyFilterValue,
 } from "./filter-panel.utils"
 
 const definitions = defineFilters({
@@ -46,12 +44,9 @@ describe("filter panel utils", () => {
     expect(isEmpty("status", ["Failed"])).toBe(false)
   })
 
-  test("unbounded ranges and dates are empty", () => {
+  test("definitions decide whether other values are empty", () => {
     expect(isEmpty("duration", [null, null])).toBe(true)
     expect(isEmpty("duration", [10, null])).toBe(false)
-    expect(isEmpty("submitted", {range: [null, null]})).toBe(true)
-    expect(isEmpty("submitted", {range: ["2026-11-01", null]})).toBe(false)
-    expect(isEmpty("submitted", {preset: ""})).toBe(true)
     expect(isEmpty("submitted", {preset: "7d"})).toBe(false)
   })
 
@@ -127,40 +122,6 @@ describe("filter panel utils", () => {
     ).toBe(0)
   })
 
-  test("getValueLabels summarizes each kind of value", () => {
-    const getOptionLabel = (option: string) => option.toUpperCase()
-
-    expect(
-      getValueLabels(definitions.status, ["a", "b"], getOptionLabel),
-    ).toEqual(["A", "B"])
-    expect(
-      getValueLabels(definitions.duration, [10, null], getOptionLabel),
-    ).toEqual(["≥ 10 min"])
-    expect(
-      getValueLabels(definitions.duration, [10, 20], getOptionLabel),
-    ).toEqual(["10 min – 20 min"])
-    expect(
-      getValueLabels(definitions.submitted, {preset: "7d"}, getOptionLabel),
-    ).toEqual(["Last 7 days"])
-    expect(
-      getValueLabels(
-        definitions.submitted,
-        {range: [null, "2026-11-09"]},
-        getOptionLabel,
-      ),
-    ).toEqual(["≤ 2026-11-09"])
-    expect(getValueLabels(definitions.query, "out/", getOptionLabel)).toEqual([
-      "out/",
-    ])
-    expect(
-      getValueLabels(
-        definitions.tags,
-        {all: true, tags: ["x", "y"]},
-        getOptionLabel,
-      ),
-    ).toEqual(["x", "y"])
-  })
-
   test("recorded labels merge, and only selected values are picked", () => {
     const recorded = recordOptionLabels(
       recordOptionLabels({}, "user", {u1: "Anna Robinson"}),
@@ -174,13 +135,5 @@ describe("filter panel utils", () => {
       user: {u2: "Ben Ortiz"},
     })
     expect(pickOptionLabels(recorded, {})).toEqual({})
-  })
-
-  test("stringifyFilterValue stringifies primitives only", () => {
-    expect(stringifyFilterValue("single")).toBe("single")
-    expect(stringifyFilterValue(12)).toBe("12")
-    expect(stringifyFilterValue(false)).toBe("false")
-    expect(stringifyFilterValue(null)).toBe("")
-    expect(stringifyFilterValue({preset: "7d"})).toBe("")
   })
 })

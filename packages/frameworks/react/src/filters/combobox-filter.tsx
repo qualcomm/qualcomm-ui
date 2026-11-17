@@ -5,8 +5,8 @@ import {type ComponentProps, type ReactElement, useMemo, useState} from "react"
 
 import type {
   ComboboxFilterDefinition,
-  FilterPanelOption,
-} from "@qualcomm-ui/core/filter-panel"
+  FilterOption,
+} from "@qualcomm-ui/core/filters"
 import {selectCollection} from "@qualcomm-ui/core/select"
 import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {useFilter} from "@qualcomm-ui/react-core/locale"
@@ -32,7 +32,7 @@ export interface ComboboxFilterControlProps extends Omit<
    * The options to render, filtered by the input text. Takes precedence over
    * the definition's options and the panel's resolver.
    */
-  options?: FilterPanelOption[] | undefined
+  options?: FilterOption[] | undefined
 }
 
 /**

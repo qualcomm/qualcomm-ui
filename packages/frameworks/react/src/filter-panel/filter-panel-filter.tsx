@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import type {FilterDefinition} from "@qualcomm-ui/core/filter-panel"
+import type {FilterDefinition} from "@qualcomm-ui/core/filters"
 import {
   CoreFilterPanel,
   type CoreFilterPanelFilterProps,

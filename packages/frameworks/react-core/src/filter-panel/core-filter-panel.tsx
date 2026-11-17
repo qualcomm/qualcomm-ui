@@ -4,13 +4,15 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {
-  type FilterDefinition,
-  type FilterDefinitions,
   type FilterPanelApi,
   type FilterPanelApiProps,
-  type IdentifiedFilterDefinition,
   splitFilterPanelProps,
 } from "@qualcomm-ui/core/filter-panel"
+import type {
+  FilterDefinition,
+  FilterDefinitions,
+  IdentifiedFilterDefinition,
+} from "@qualcomm-ui/core/filters"
 import {
   CoreCollapsible,
   type CoreCollapsibleContentProps,
