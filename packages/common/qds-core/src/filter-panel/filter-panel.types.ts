@@ -31,17 +31,17 @@ export interface QdsFilterPanelRootBindings {
   "data-size": QdsFilterPanelSize
 }
 
-export interface QdsFilterPanelApplyTriggerBindings {
-  className: FilterPanelClasses["applyTrigger"]
+export interface QdsFilterPanelApplyButtonBindings {
+  className: FilterPanelClasses["applyButton"]
 }
 
-export interface QdsFilterPanelClearTriggerBindings {
-  className: FilterPanelClasses["clearTrigger"]
+export interface QdsFilterPanelClearButtonBindings {
+  className: FilterPanelClasses["clearButton"]
 }
 
-export interface QdsFilterPanelCloseTriggerBindings {
+export interface QdsFilterPanelCloseButtonBindings {
   "aria-label": string
-  className: FilterPanelClasses["closeTrigger"]
+  className: FilterPanelClasses["closeButton"]
   type: "button"
 }
 
@@ -99,7 +99,7 @@ export interface QdsFilterPanelApi {
    */
   controlSize: QdsFilterPanelControlSize
 
-  getApplyTriggerButtonProps(): QdsButtonApiProps
+  getApplyButtonProps(): QdsButtonApiProps
   getButtonProps(): QdsButtonApiProps
   getCountBadgeProps(): QdsNumberBadgeProps
   getFilterCountBadgeProps(): QdsNumberBadgeProps
@@ -108,9 +108,9 @@ export interface QdsFilterPanelApi {
   size: QdsFilterPanelSize
 
   // group: bindings
-  getApplyTriggerBindings(): QdsFilterPanelApplyTriggerBindings
-  getClearTriggerBindings(): QdsFilterPanelClearTriggerBindings
-  getCloseTriggerBindings(): QdsFilterPanelCloseTriggerBindings
+  getApplyButtonBindings(): QdsFilterPanelApplyButtonBindings
+  getClearButtonBindings(): QdsFilterPanelClearButtonBindings
+  getCloseButtonBindings(): QdsFilterPanelCloseButtonBindings
   getCountBindings(): QdsFilterPanelCountBindings
   getFilterBindings(): QdsFilterPanelFilterBindings
   getFilterContentBindings(): QdsFilterPanelFilterContentBindings

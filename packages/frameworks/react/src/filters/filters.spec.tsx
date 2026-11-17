@@ -111,11 +111,11 @@ function Panel({applyMode, children, defaultValue, onValueChange}: PanelProps) {
         <FilterPanel.Heading>
           Filters <FilterPanel.Count />
         </FilterPanel.Heading>
-        <FilterPanel.ClearTrigger />
+        <FilterPanel.ClearButton />
       </FilterPanel.Header>
       {children}
       <FilterPanel.Footer>
-        <FilterPanel.ApplyTrigger />
+        <FilterPanel.ApplyButton />
       </FilterPanel.Footer>
     </FilterPanel.Root>
   )
@@ -292,7 +292,7 @@ describe("RootProvider", () => {
                 filter={filters.user}
                 options={[{label: "Anna Robinson", value: "u1"}]}
               />
-              <FilterPanel.ApplyTrigger />
+              <FilterPanel.ApplyButton />
             </FilterPanel.RootProvider>
           ) : null}
         </>
@@ -329,7 +329,7 @@ describe("counts", () => {
           <output aria-label="Pending">{panel.draftValueCount}</output>
           <FilterPanel.RootProvider value={panel}>
             <CheckboxFilter filter={filters.status} />
-            <FilterPanel.ApplyTrigger />
+            <FilterPanel.ApplyButton />
           </FilterPanel.RootProvider>
         </>
       )

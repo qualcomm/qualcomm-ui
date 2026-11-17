@@ -11,9 +11,9 @@ import {filterPanelClasses} from "./filter-panel.classes.js"
 import type {
   QdsFilterPanelApi,
   QdsFilterPanelApiProps,
-  QdsFilterPanelApplyTriggerBindings,
-  QdsFilterPanelClearTriggerBindings,
-  QdsFilterPanelCloseTriggerBindings,
+  QdsFilterPanelApplyButtonBindings,
+  QdsFilterPanelClearButtonBindings,
+  QdsFilterPanelCloseButtonBindings,
   QdsFilterPanelCountBindings,
   QdsFilterPanelFilterBindings,
   QdsFilterPanelFilterContentBindings,
@@ -39,7 +39,7 @@ export function createQdsFilterPanelApi(
   return {
     controlSize,
 
-    getApplyTriggerButtonProps(): QdsButtonApiProps {
+    getApplyButtonProps(): QdsButtonApiProps {
       return size === "lg"
         ? {density: "default", size: "sm"}
         : {density: "compact", size: "lg"}
@@ -63,16 +63,16 @@ export function createQdsFilterPanelApi(
     size,
 
     // group: bindings
-    getApplyTriggerBindings(): QdsFilterPanelApplyTriggerBindings {
-      return normalize.button({className: filterPanelClasses.applyTrigger})
+    getApplyButtonBindings(): QdsFilterPanelApplyButtonBindings {
+      return normalize.button({className: filterPanelClasses.applyButton})
     },
-    getClearTriggerBindings(): QdsFilterPanelClearTriggerBindings {
-      return normalize.button({className: filterPanelClasses.clearTrigger})
+    getClearButtonBindings(): QdsFilterPanelClearButtonBindings {
+      return normalize.button({className: filterPanelClasses.clearButton})
     },
-    getCloseTriggerBindings(): QdsFilterPanelCloseTriggerBindings {
+    getCloseButtonBindings(): QdsFilterPanelCloseButtonBindings {
       return normalize.button({
         "aria-label": "Close filters",
-        className: filterPanelClasses.closeTrigger,
+        className: filterPanelClasses.closeButton,
         type: "button",
       })
     },

@@ -48,7 +48,7 @@ export function FilterPanelSearchParamsDemo(): ReactElement {
           filter={filters.chipset}
         />
         <FilterPanel.Footer>
-          <FilterPanel.ApplyTrigger />
+          <FilterPanel.ApplyButton />
         </FilterPanel.Footer>
       </FilterPanel.Root>
       {/* preview */}

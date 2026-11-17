@@ -61,10 +61,10 @@
 .qui-filter-panel__count {
 }
 
-.qui-filter-panel__clear-trigger {
+.qui-filter-panel__clear-button {
 }
 
-.qui-filter-panel__close-trigger {
+.qui-filter-panel__close-button {
 }
 
 .qui-filter-panel__section {
@@ -192,6 +192,6 @@
   padding-inline: var(--spacing-300);
 }
 
-.qui-filter-panel__apply-trigger {
+.qui-filter-panel__apply-button {
   width: 100%;
 }

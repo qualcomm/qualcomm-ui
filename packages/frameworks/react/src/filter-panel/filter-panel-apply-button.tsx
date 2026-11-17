@@ -9,22 +9,22 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsFilterPanelContext} from "./qds-filter-panel-context.js"
 
-export interface FilterPanelApplyTriggerProps extends ButtonProps {}
+export interface FilterPanelApplyButtonProps extends ButtonProps {}
 
 /**
  * Commits the draft filters when clicked. Disabled when the draft matches the
  * committed filters, which is always the case in `auto` apply mode. Renders a
  * `<button>` element by default.
  */
-export function FilterPanelApplyTrigger({
+export function FilterPanelApplyButton({
   children = "Apply",
   ...props
-}: FilterPanelApplyTriggerProps): ReactElement {
+}: FilterPanelApplyButtonProps): ReactElement {
   const qdsContext = useQdsFilterPanelContext()
 
   const mergedProps = mergeProps(
     useFilterPanelApplyTrigger(),
-    qdsContext.getApplyTriggerBindings(),
+    qdsContext.getApplyButtonBindings(),
     props,
   )
 
@@ -32,7 +32,7 @@ export function FilterPanelApplyTrigger({
     <Button
       emphasis="primary"
       variant="fill"
-      {...qdsContext.getApplyTriggerButtonProps()}
+      {...qdsContext.getApplyButtonProps()}
       {...mergedProps}
     >
       {children}

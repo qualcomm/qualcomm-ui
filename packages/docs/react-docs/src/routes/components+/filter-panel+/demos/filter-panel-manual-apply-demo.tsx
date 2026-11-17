@@ -27,7 +27,7 @@ export function FilterPanelManualApplyDemo(): ReactElement {
           <FilterPanel.Heading>
             Filters <FilterPanel.Count />
           </FilterPanel.Heading>
-          <FilterPanel.ClearTrigger />
+          <FilterPanel.ClearButton />
         </FilterPanel.Header>
         <CheckboxFilter filter={filters.status} />
         <RadioFilter filter={filters.mode} />
@@ -37,7 +37,7 @@ export function FilterPanelManualApplyDemo(): ReactElement {
           filter={filters.chipset}
         />
         <FilterPanel.Footer>
-          <FilterPanel.ApplyTrigger />
+          <FilterPanel.ApplyButton />
         </FilterPanel.Footer>
       </FilterPanel.Root>
       {/* preview */}

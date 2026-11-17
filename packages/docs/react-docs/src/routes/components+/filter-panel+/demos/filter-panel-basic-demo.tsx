@@ -26,7 +26,7 @@ export function FilterPanelBasicDemo(): ReactElement {
           <FilterPanel.Heading>
             Filters <FilterPanel.Count />
           </FilterPanel.Heading>
-          <FilterPanel.ClearTrigger />
+          <FilterPanel.ClearButton />
         </FilterPanel.Header>
         <CheckboxFilter filter={filters.status} />
         <RadioFilter filter={filters.mode} />

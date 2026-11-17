@@ -31,15 +31,12 @@ The filter panel renders filter controls and tracks the user's selection. You us
 defineFilters, filter definitions, filter types
 :::
 
-Filters are declared up front with `defineFilters`. Each key becomes the filter's id.
-
-Each filter is built with a utility that matches one of the [filter controls](/components/filters): `checkboxFilter` defines a filter for `<CheckboxFilter>`, `rangeFilter` for `<RangeFilter>`, and so on. The utility sets the filter's label, options, and value type. The control renders it.
+Filters are declared up front with `defineFilters`. Each key becomes the filter's id. Each value is a filter definition.
 
 ```tsx
 import {
   checkboxFilter,
   defineFilters,
-  type FilterValues,
   rangeFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
@@ -54,18 +51,20 @@ export const filters = defineFilters({
 })
 ```
 
-The panel's value holds one entry for each filter. Types are inferred from the definition:
+These definitions match our [filter controls](/components/filters): `checkboxFilter` defines a filter for `<CheckboxFilter>`, `textFilter` for `<TextFilter>`, and so on. The utility sets the filter's label, options, and value type. The control renders it. The controls are documented on the [Filters](/components/filters) page.
 
 ```tsx
-type BuildFilters = FilterValues<typeof filters>
-// {
-//   buildPath?: string
-//   duration?: [number | null, number | null]
-//   status?: string[]
-// }
-```
+import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
+import {CheckboxFilter} from "@qualcomm-ui/react/filters"
 
-The controls are documented on the [Filters](/components/filters) page.
+function PanelDemo() {
+  return (
+    <FilterPanel.Root filters={filters}>
+      <CheckboxFilter filter={filters.status} />
+    </FilterPanel.Root>
+  )
+}
+```
 
 ## Examples
 
@@ -75,7 +74,7 @@ The controls are documented on the [Filters](/components/filters) page.
 clear all, count, header
 :::
 
-By default, every change is committed as it happens and calls [onValueChange](#onValueChange). `FilterPanel.Count` shows the number of selected values, and `FilterPanel.ClearTrigger` clears every filter.
+By default, every change is committed as it happens and calls [onValueChange](#onValueChange). `FilterPanel.Count` shows the number of selected values, and `FilterPanel.ClearButton` clears every filter.
 
 <Demo name="FilterPanelBasicDemo" component={demos.FilterPanelBasicDemo} />
 
@@ -85,7 +84,7 @@ By default, every change is committed as it happens and calls [onValueChange](#o
 apply, draft, apply mode, footer
 :::
 
-Set [applyMode](#applyMode) to `manual` to stage changes in a draft. `FilterPanel.ApplyTrigger` commits the draft and calls [onValueChange](#onValueChange).
+Set [applyMode](#applyMode) to `manual` to stage changes in a draft. `FilterPanel.ApplyButton` commits the draft and calls [onValueChange](#onValueChange).
 
 <Demo
   name="FilterPanelManualApplyDemo"
@@ -239,33 +238,33 @@ search params, query string, request
 
 <TypeDocAttributes name="QdsFilterPanelFooterBindings" />
 
-### \<FilterPanel.ApplyTrigger>
+### \<FilterPanel.ApplyButton>
 
-<TypeDocProps name="FilterPanelApplyTriggerProps" />
+<TypeDocProps name="FilterPanelApplyButtonProps" />
 
 <TypeDocAttributes
   name={[
-    "QdsFilterPanelApplyTriggerBindings",
+    "QdsFilterPanelApplyButtonBindings",
     "FilterPanelApplyTriggerBindings",
   ]}
 />
 
-### \<FilterPanel.ClearTrigger>
+### \<FilterPanel.ClearButton>
 
-<TypeDocProps name="FilterPanelClearTriggerProps" />
+<TypeDocProps name="FilterPanelClearButtonProps" />
 
 <TypeDocAttributes
   name={[
-    "QdsFilterPanelClearTriggerBindings",
+    "QdsFilterPanelClearButtonBindings",
     "FilterPanelClearTriggerBindings",
   ]}
 />
 
-### \<FilterPanel.CloseTrigger>
+### \<FilterPanel.CloseButton>
 
-<TypeDocProps name="FilterPanelCloseTriggerProps" />
+<TypeDocProps name="FilterPanelCloseButtonProps" />
 
-<TypeDocAttributes name="QdsFilterPanelCloseTriggerBindings" />
+<TypeDocAttributes name="QdsFilterPanelCloseButtonBindings" />
 
 ### \<FilterPanel.Filter>
 

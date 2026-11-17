@@ -2,14 +2,21 @@
  * depth of the node in the tree. */
 
 .qui-tree__root {
-  --indent-spacing: 22px;
+  --indent-spacing: 26px;
+  --tree-padding-inline: var(--spacing-400);
+
+  &[data-size="sm"] {
+    --tree-padding-inline: var(--spacing-300);
+  }
 }
 
 .qui-tree__node-root {
-  --branch-trigger-width: 0px;
+  /* Aligns leaves with the checkbox or icon of a sibling branch: the width of
+   * the branch trigger plus its gap. */
+  --tree-leaf-offset: calc(16px + var(--spacing-150));
   align-items: center;
   background: var(--color-interactive-background-ghost-idle);
-  border: solid 1px transparent;
+  border: 0;
   box-sizing: border-box;
   color: inherit;
   cursor: pointer;
@@ -20,10 +27,10 @@
   min-height: 40px;
   outline: none;
   padding-left: calc(
-    var(--depth, 1) * var(--indent-spacing) - var(--branch-trigger-width) +
-      var(--spacing-400)
+    (var(--depth, 1) - 1) * var(--indent-spacing) +
+      var(--tree-padding-inline) + var(--tree-leaf-offset)
   );
-  padding-right: var(--spacing-400);
+  padding-right: var(--tree-padding-inline);
   position: relative;
   text-decoration: inherit;
 
@@ -35,13 +42,13 @@
     background: var(--color-interactive-background-ghost-pressed);
   }
 
+  /* Inset so the ring isn't clipped by collapsing branch content. */
   &:focus-visible {
-    border-color: var(--color-utility-focus-border);
-    outline: solid 1px var(--color-utility-focus-border);
+    box-shadow: inset 0 0 0 2px var(--color-utility-focus-border);
   }
 
   &:has([data-tree-part="branch-trigger"]) {
-    --branch-trigger-width: calc(16px + var(--spacing-150));
+    --tree-leaf-offset: 0px;
   }
 
   &[data-size="sm"] {
@@ -67,18 +74,16 @@
 .qui-tree__branch-indent-guide {
   background: var(--color-border-neutral-01);
   height: 100%;
-  left: calc(1px + var(--indent-spacing) * var(--depth));
+  /* Centered under the branch trigger. */
+  left: calc(
+    (var(--depth) - 1) * var(--indent-spacing) + var(--tree-padding-inline) +
+      7px
+  );
   position: absolute;
   width: 1px;
 }
 
 .qui-tree__branch-content {
-  /* 
-   * Each tree item uses outline for the focus border.
-   * The animated collapse/expand prevents nested item outline due to overflow: hidden.
-   * This padding gives the outline enough space to render.
-   */
-  padding: 1px;
   position: relative;
 }
 

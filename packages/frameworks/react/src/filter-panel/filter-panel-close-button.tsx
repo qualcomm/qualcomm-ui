@@ -10,7 +10,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsFilterPanelContext} from "./qds-filter-panel-context.js"
 
-export interface FilterPanelCloseTriggerProps extends Omit<
+export interface FilterPanelCloseButtonProps extends Omit<
   IconButtonProps,
   "icon"
 > {
@@ -28,13 +28,13 @@ export interface FilterPanelCloseTriggerProps extends Omit<
  * handle `onClick` or render this inside a container that provides closing
  * behavior, such as a drawer. Renders a `<button>` element by default.
  */
-export function FilterPanelCloseTrigger({
+export function FilterPanelCloseButton({
   icon = X,
   ...props
-}: FilterPanelCloseTriggerProps): ReactElement {
+}: FilterPanelCloseButtonProps): ReactElement {
   const qdsContext = useQdsFilterPanelContext()
 
-  const mergedProps = mergeProps(qdsContext.getCloseTriggerBindings(), props)
+  const mergedProps = mergeProps(qdsContext.getCloseButtonBindings(), props)
 
   return <IconButton icon={icon} variant="outline" {...mergedProps} />
 }

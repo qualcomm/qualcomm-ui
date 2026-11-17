@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {
-  FilterPanelApplyTrigger,
-  type FilterPanelApplyTriggerProps,
-} from "./filter-panel-apply-trigger.js"
+  FilterPanelApplyButton,
+  type FilterPanelApplyButtonProps,
+} from "./filter-panel-apply-button.js"
 import {
-  FilterPanelClearTrigger,
-  type FilterPanelClearTriggerProps,
-} from "./filter-panel-clear-trigger.js"
+  FilterPanelClearButton,
+  type FilterPanelClearButtonProps,
+} from "./filter-panel-clear-button.js"
 import {
-  FilterPanelCloseTrigger,
-  type FilterPanelCloseTriggerProps,
-} from "./filter-panel-close-trigger.js"
+  FilterPanelCloseButton,
+  type FilterPanelCloseButtonProps,
+} from "./filter-panel-close-button.js"
 import {
   FilterPanelCount,
   type FilterPanelCountProps,
@@ -73,9 +73,9 @@ export {
 export * from "./qds-filter-panel-context.js"
 
 export type {
-  FilterPanelApplyTriggerProps,
-  FilterPanelClearTriggerProps,
-  FilterPanelCloseTriggerProps,
+  FilterPanelApplyButtonProps,
+  FilterPanelClearButtonProps,
+  FilterPanelCloseButtonProps,
   FilterPanelCountProps,
   FilterPanelFilterProps,
   FilterPanelFilterContentProps,
@@ -96,18 +96,18 @@ type FilterPanelComponent = {
    * Commits the draft filters when clicked. Disabled when there are no pending
    * changes. Renders a `<button>` element by default.
    */
-  ApplyTrigger: typeof FilterPanelApplyTrigger
+  ApplyButton: typeof FilterPanelApplyButton
   /**
    * Removes every filter when clicked. Disabled when no filters are set.
    * Renders a `<button>` element by default.
    */
-  ClearTrigger: typeof FilterPanelClearTrigger
+  ClearButton: typeof FilterPanelClearButton
   /**
    * Closes the filter panel. Visibility is owned by the container, so handle
    * `onClick` or render it inside a container that provides closing behavior.
    * Renders a `<button>` element by default.
    */
-  CloseTrigger: typeof FilterPanelCloseTrigger
+  CloseButton: typeof FilterPanelCloseButton
   /**
    * The total number of selected values in the panel. Hidden when no filters are
    * set. Renders a `<span>` element by default.
@@ -172,9 +172,9 @@ type FilterPanelComponent = {
 }
 
 export const FilterPanel: FilterPanelComponent = {
-  ApplyTrigger: FilterPanelApplyTrigger,
-  ClearTrigger: FilterPanelClearTrigger,
-  CloseTrigger: FilterPanelCloseTrigger,
+  ApplyButton: FilterPanelApplyButton,
+  ClearButton: FilterPanelClearButton,
+  CloseButton: FilterPanelCloseButton,
   Count: FilterPanelCount,
   Filter: FilterPanelFilter,
   FilterContent: FilterPanelFilterContent,

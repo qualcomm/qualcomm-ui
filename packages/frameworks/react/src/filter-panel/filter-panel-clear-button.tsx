@@ -9,22 +9,22 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {useQdsFilterPanelContext} from "./qds-filter-panel-context.js"
 
-export interface FilterPanelClearTriggerProps extends ButtonProps {}
+export interface FilterPanelClearButtonProps extends ButtonProps {}
 
 /**
  * Removes every filter when clicked. In `manual` apply mode, the cleared
  * filters must still be applied. Disabled when no filters are set. Renders a
  * `<button>` element by default.
  */
-export function FilterPanelClearTrigger({
+export function FilterPanelClearButton({
   children = "Clear all",
   ...props
-}: FilterPanelClearTriggerProps): ReactElement {
+}: FilterPanelClearButtonProps): ReactElement {
   const qdsContext = useQdsFilterPanelContext()
 
   const mergedProps = mergeProps(
     useFilterPanelClearTrigger(),
-    qdsContext.getClearTriggerBindings(),
+    qdsContext.getClearButtonBindings(),
     props,
   )
 

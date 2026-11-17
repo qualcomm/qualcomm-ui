@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 export const filterPanelClasses = {
-  applyTrigger: "qui-filter-panel__apply-trigger",
-  clearTrigger: "qui-filter-panel__clear-trigger",
-  closeTrigger: "qui-filter-panel__close-trigger",
+  applyButton: "qui-filter-panel__apply-button",
+  clearButton: "qui-filter-panel__clear-button",
+  closeButton: "qui-filter-panel__close-button",
   count: "qui-filter-panel__count",
   filter: "qui-filter-panel__filter",
   filterContent: "qui-filter-panel__filter-content",
