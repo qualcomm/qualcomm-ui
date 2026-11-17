@@ -5,11 +5,11 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {
   CheckboxFilter,
-  RangeFilter,
-  TextFilter,
+  CheckboxTreeFilter,
+  RadioFilter,
 } from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+import {chipsets, filters} from "./filters"
 
 type BuildFilters = FilterValues<typeof filters>
 
@@ -18,15 +18,12 @@ function toSearchParams(value: BuildFilters): URLSearchParams {
   for (const status of value.status ?? []) {
     params.append("status", status)
   }
-  const [minDuration, maxDuration] = value.duration ?? [null, null]
-  if (minDuration !== null) {
-    params.set("minDuration", String(minDuration))
+  const [mode] = value.mode ?? []
+  if (mode) {
+    params.set("mode", mode)
   }
-  if (maxDuration !== null) {
-    params.set("maxDuration", String(maxDuration))
-  }
-  if (value.buildPath) {
-    params.set("path", value.buildPath)
+  for (const chipset of value.chipset ?? []) {
+    params.append("chipset", chipset)
   }
   return params
 }
@@ -38,13 +35,18 @@ export function FilterPanelSearchParamsDemo(): ReactElement {
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
       {/* preview */}
       <FilterPanel.Root
+        applyMode="manual"
         className="w-72"
         filters={filters}
         onValueChange={(value) => setParams(toSearchParams(value))}
       >
         <CheckboxFilter filter={filters.status} />
-        <RangeFilter filter={filters.duration} />
-        <TextFilter filter={filters.buildPath} />
+        <RadioFilter filter={filters.mode} />
+        <CheckboxTreeFilter
+          collection={chipsets}
+          defaultExpandedValue={["snapdragon_x_elite"]}
+          filter={filters.chipset}
+        />
         <FilterPanel.Footer>
           <FilterPanel.ApplyTrigger />
         </FilterPanel.Footer>

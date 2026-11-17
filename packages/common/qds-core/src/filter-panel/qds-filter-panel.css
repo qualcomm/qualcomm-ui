@@ -1,4 +1,5 @@
 .qui-filter-panel__root {
+  --filter-panel-option-gap: calc(var(--filter-panel-item-padding-block) * 2);
   border: var(--border-width-sm) solid var(--color-border-neutral-01);
   border-radius: var(--border-radius-100);
   box-sizing: border-box;
@@ -11,9 +12,8 @@
     --filter-panel-padding-inline: var(--spacing-300);
     --filter-panel-trigger-height: var(--sizing-800);
     --filter-panel-trigger-font: var(--font-static-body-xs-bold);
-    --filter-panel-content-padding-block-start: var(--spacing-175);
+    --filter-panel-item-padding-block: var(--spacing-175);
     --filter-panel-content-gap: var(--spacing-200);
-    --filter-panel-option-gap: calc(var(--spacing-175) * 2);
     --filter-panel-footer-height: var(--sizing-1150);
   }
   &[data-size="md"] {
@@ -21,9 +21,8 @@
     --filter-panel-padding-inline: var(--spacing-300);
     --filter-panel-trigger-height: var(--sizing-800);
     --filter-panel-trigger-font: var(--font-static-body-xs-bold);
-    --filter-panel-content-padding-block-start: var(--spacing-175);
+    --filter-panel-item-padding-block: var(--spacing-175);
     --filter-panel-content-gap: var(--spacing-200);
-    --filter-panel-option-gap: calc(var(--spacing-175) * 2);
     --filter-panel-footer-height: var(--sizing-1200);
   }
   &[data-size="lg"] {
@@ -31,9 +30,8 @@
     --filter-panel-padding-inline: var(--spacing-400);
     --filter-panel-trigger-height: var(--sizing-1000);
     --filter-panel-trigger-font: var(--font-static-body-sm-bold);
-    --filter-panel-content-padding-block-start: var(--spacing-250);
+    --filter-panel-item-padding-block: var(--spacing-250);
     --filter-panel-content-gap: var(--spacing-300);
-    --filter-panel-option-gap: var(--spacing-500);
     --filter-panel-footer-height: var(--sizing-1400);
   }
 }
@@ -75,7 +73,9 @@
 }
 
 .qui-filter-panel__filter {
-  border-bottom: var(--border-width-sm) solid var(--color-border-neutral-01);
+  /* The divider overlaps the bottom padding instead of adding height. */
+  box-shadow: inset 0 calc(-1 * var(--border-width-sm)) 0
+    var(--color-border-neutral-01);
   display: flex;
   flex-direction: column;
   padding-block: var(--spacing-100);
@@ -142,12 +142,20 @@
   display: flex;
   flex-direction: column;
   gap: var(--filter-panel-content-gap);
-  padding-block: var(--filter-panel-content-padding-block-start)
-    var(--spacing-200);
+  padding-block: var(--filter-panel-item-padding-block) var(--spacing-200);
   padding-inline: var(--filter-panel-padding-inline);
 
   &[hidden] {
     display: none;
+  }
+
+  &:has(> .qui-filter-panel__option-group:last-child) {
+    padding-block-end: var(--spacing-100);
+  }
+
+  /* Tree nodes supply their own padding and span the full width. */
+  &:has(> .qui-tree__root) {
+    padding: 0 0 var(--spacing-100);
   }
 }
 
@@ -155,9 +163,20 @@
   display: flex;
   flex-direction: column;
   gap: var(--filter-panel-option-gap);
+  padding-block-end: var(--filter-panel-item-padding-block);
 
-  /* Outranks the radio group's per-size gap. */
-  &.qui-radio-group__items[data-size] {
+  /* Content after an option list starts 4px below the last option's padding. */
+  & + * {
+    margin-block-start: calc(
+      var(--spacing-100) - var(--filter-panel-content-gap)
+    );
+  }
+
+  /* Outranks the radio group's own padding and per-size gap. */
+  &.qui-radio-group__root {
+    padding-block-end: var(--filter-panel-item-padding-block);
+  }
+  .qui-radio-group__items[data-size] {
     gap: var(--filter-panel-option-gap);
   }
 }

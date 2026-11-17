@@ -103,7 +103,7 @@ export interface QdsFilterPanelApi {
   getButtonProps(): QdsButtonApiProps
   getCountBadgeProps(): QdsNumberBadgeProps
   getFilterCountBadgeProps(): QdsNumberBadgeProps
-  getFilterIndicatorIconProps(): QdsIconApiProps
+  getIconProps(): QdsIconApiProps
 
   size: QdsFilterPanelSize
 

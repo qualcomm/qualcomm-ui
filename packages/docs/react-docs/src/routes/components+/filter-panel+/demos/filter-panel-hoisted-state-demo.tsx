@@ -7,7 +7,7 @@ import {Tag} from "@qualcomm-ui/react/tag"
 import {filters, owners} from "./filters"
 
 export function FilterPanelHoistedStateDemo(): ReactElement {
-  const panel = useFilterPanel({applyMode: "auto", filters})
+  const panel = useFilterPanel({filters})
   const activeIds = Object.keys(panel.value) as (keyof typeof filters)[]
 
   return (

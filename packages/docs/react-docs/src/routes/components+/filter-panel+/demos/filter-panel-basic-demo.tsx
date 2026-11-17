@@ -5,11 +5,11 @@ import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {
   CheckboxFilter,
-  RangeFilter,
-  TextFilter,
+  CheckboxTreeFilter,
+  RadioFilter,
 } from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+import {chipsets, filters} from "./filters"
 
 export function FilterPanelBasicDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
@@ -29,11 +29,12 @@ export function FilterPanelBasicDemo(): ReactElement {
           <FilterPanel.ClearTrigger />
         </FilterPanel.Header>
         <CheckboxFilter filter={filters.status} />
-        <RangeFilter filter={filters.duration} />
-        <TextFilter filter={filters.buildPath} />
-        <FilterPanel.Footer>
-          <FilterPanel.ApplyTrigger />
-        </FilterPanel.Footer>
+        <RadioFilter filter={filters.mode} />
+        <CheckboxTreeFilter
+          collection={chipsets}
+          defaultExpandedValue={["snapdragon_x_elite"]}
+          filter={filters.chipset}
+        />
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

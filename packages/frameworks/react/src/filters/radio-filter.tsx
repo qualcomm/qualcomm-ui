@@ -31,7 +31,6 @@ export interface RadioFilterControlProps extends Omit<
  * A radio group, one radio per option.
  */
 export function RadioFilterControl({
-  itemsProps,
   options,
   ...props
 }: RadioFilterControlProps): ReactElement {
@@ -43,7 +42,6 @@ export function RadioFilterControl({
   return (
     <RadioGroup
       aria-labelledby={filter.labelId}
-      itemsProps={mergeProps(qdsContext.getOptionGroupBindings(), itemsProps)}
       onValueChange={(value) => {
         const option = items.find((item) => item.value === value)
         filter.setValue(
@@ -53,7 +51,7 @@ export function RadioFilterControl({
       }}
       size={qdsContext.controlSize}
       value={filter.value?.[0] ?? (blankOption ? "" : null)}
-      {...props}
+      {...mergeProps(qdsContext.getOptionGroupBindings(), props)}
     >
       {items.map((option) => (
         <Radio

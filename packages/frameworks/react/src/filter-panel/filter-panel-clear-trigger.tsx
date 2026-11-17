@@ -29,7 +29,7 @@ export function FilterPanelClearTrigger({
   )
 
   return (
-    <Button variant="ghost" {...mergedProps}>
+    <Button emphasis="primary" variant="ghost" {...mergedProps}>
       {children}
     </Button>
   )

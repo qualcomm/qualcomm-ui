@@ -125,7 +125,7 @@ describe("filter panel", () => {
   test("manual mode stages changes until they are applied", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel onValueChange={onValueChange}>
+      <Panel applyMode="manual" onValueChange={onValueChange}>
         <CheckboxFilter filter={filters.status} />
       </Panel>,
     )
@@ -148,10 +148,10 @@ describe("filter panel", () => {
     await expect.element(apply).toBeDisabled()
   })
 
-  test("auto mode commits every change", async () => {
+  test("auto mode is the default and commits every change", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <CheckboxFilter filter={filters.status} />
       </Panel>,
     )
@@ -185,7 +185,11 @@ describe("filter panel", () => {
   test("clear all removes every filter and must be applied in manual mode", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel defaultValue={{status: ["Failed"]}} onValueChange={onValueChange}>
+      <Panel
+        applyMode="manual"
+        defaultValue={{status: ["Failed"]}}
+        onValueChange={onValueChange}
+      >
         <CheckboxFilter filter={filters.status} />
       </Panel>,
     )
@@ -264,7 +268,11 @@ describe("RootProvider", () => {
     const onValueChange = vi.fn()
 
     function Example() {
-      const panel = useFilterPanel({filters, onValueChange})
+      const panel = useFilterPanel({
+        applyMode: "manual",
+        filters,
+        onValueChange,
+      })
       const [open, setOpen] = useState(true)
       const committed = panel.value.user ?? []
 
@@ -314,7 +322,7 @@ describe("RootProvider", () => {
 describe("counts", () => {
   test("valueCount counts the committed value, draftValueCount the draft", async () => {
     function Example() {
-      const panel = useFilterPanel({filters})
+      const panel = useFilterPanel({applyMode: "manual", filters})
       return (
         <>
           <output aria-label="Applied">{panel.valueCount}</output>
@@ -345,7 +353,7 @@ describe("filter types", () => {
   test("radio filter selects one option, and a blank option clears it", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <RadioFilter filter={filters.mode} />
       </Panel>,
     )
@@ -364,7 +372,7 @@ describe("filter types", () => {
   test("select filter writes the picked option values", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <SelectFilter filter={filters.standard} />
       </Panel>,
     )
@@ -383,7 +391,7 @@ describe("filter types", () => {
   test("text filter writes the draft as the user types in manual mode", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel onValueChange={onValueChange}>
+      <Panel applyMode="manual" onValueChange={onValueChange}>
         <TextFilter filter={filters.buildPath} />
       </Panel>,
     )
@@ -399,7 +407,7 @@ describe("filter types", () => {
   test("text filter debounces commits in auto mode", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <TextFilter debounce={50} filter={filters.buildPath} />
       </Panel>,
     )
@@ -417,7 +425,7 @@ describe("filter types", () => {
   test("range filter leaves a bound resting on its limit unbounded", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <RangeFilter filter={filters.duration} />
       </Panel>,
     )
@@ -433,7 +441,7 @@ describe("filter types", () => {
   test("date filter selects developer-defined presets or a custom range", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <DateFilter filter={filters.submitted} />
       </Panel>,
     )
@@ -453,7 +461,7 @@ describe("filter types", () => {
   test("combobox filter searches its options and writes the picked values", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <ComboboxFilter filter={filters.owner} />
       </Panel>,
     )
@@ -472,7 +480,7 @@ describe("filter types", () => {
   test("checkbox tree filter writes checked leaves", async () => {
     const onValueChange = vi.fn()
     await render(
-      <Panel applyMode="auto" onValueChange={onValueChange}>
+      <Panel onValueChange={onValueChange}>
         <CheckboxTreeFilter
           collection={chipsets}
           defaultExpandedValue={["x"]}

@@ -28,7 +28,6 @@ export function FilterPanelCustomFilterDemo(): ReactElement {
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
       {/* preview */}
       <FilterPanel.Root
-        applyMode="auto"
         className="w-72"
         filters={filters}
         onValueChange={setValue}

@@ -1,6 +1,6 @@
 ---
 title: Filter Panel
-description: The filter panel renders a set of filter controls and tracks the user's selections, staging changes until they're applied.
+description: The filter panel renders a set of filter controls and tracks the user's selections.
 component: FilterPanel
 aliases: [filters, filter sidebar, facets, refine]
 badges:
@@ -72,24 +72,24 @@ The controls are documented on the [Filters](/components/filters) page.
 ### Basic
 
 ::: terms
-apply, clear all, count, header, footer
+clear all, count, header
 :::
 
-By default, changes are staged in a draft. `FilterPanel.ApplyTrigger` commits the draft and calls [onValueChange](#onValueChange). `FilterPanel.Count` shows the number of selected values, and `FilterPanel.ClearTrigger` clears every filter.
+By default, every change is committed as it happens and calls [onValueChange](#onValueChange). `FilterPanel.Count` shows the number of selected values, and `FilterPanel.ClearTrigger` clears every filter.
 
 <Demo name="FilterPanelBasicDemo" component={demos.FilterPanelBasicDemo} />
 
-### Auto Apply
+### Manual Apply
 
 ::: terms
-instant, live, apply mode
+apply, draft, apply mode, footer
 :::
 
-Set [applyMode](#applyMode) to `auto` to commit every change as it happens. There is no draft, so the apply trigger isn't needed.
+Set [applyMode](#applyMode) to `manual` to stage changes in a draft. `FilterPanel.ApplyTrigger` commits the draft and calls [onValueChange](#onValueChange).
 
 <Demo
-  name="FilterPanelAutoApplyDemo"
-  component={demos.FilterPanelAutoApplyDemo}
+  name="FilterPanelManualApplyDemo"
+  component={demos.FilterPanelManualApplyDemo}
 />
 
 ### Controlled State

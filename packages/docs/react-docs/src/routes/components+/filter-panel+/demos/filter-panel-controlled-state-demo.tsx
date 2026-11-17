@@ -28,9 +28,6 @@ export function FilterPanelControlledStateDemo(): ReactElement {
       >
         <CheckboxFilter filter={filters.status} />
         <ComboboxFilter filter={filters.owner} options={owners} />
-        <FilterPanel.Footer>
-          <FilterPanel.ApplyTrigger />
-        </FilterPanel.Footer>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

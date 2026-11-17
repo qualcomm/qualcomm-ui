@@ -65,7 +65,7 @@ const filterPanelMachineBase = {
 
   props({props}) {
     return {
-      applyMode: "manual",
+      applyMode: "auto",
       defaultValue: {},
       ...props,
     }

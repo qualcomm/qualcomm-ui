@@ -3,18 +3,22 @@ import {type ReactElement, useState} from "react"
 import type {FilterValues} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter, RangeFilter} from "@qualcomm-ui/react/filters"
+import {
+  CheckboxFilter,
+  CheckboxTreeFilter,
+  RadioFilter,
+} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+import {chipsets, filters} from "./filters"
 
-export function FilterPanelAutoApplyDemo(): ReactElement {
+export function FilterPanelManualApplyDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
 
   return (
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
       {/* preview */}
       <FilterPanel.Root
-        applyMode="auto"
+        applyMode="manual"
         className="w-72"
         filters={filters}
         onValueChange={setValue}
@@ -26,7 +30,15 @@ export function FilterPanelAutoApplyDemo(): ReactElement {
           <FilterPanel.ClearTrigger />
         </FilterPanel.Header>
         <CheckboxFilter filter={filters.status} />
-        <RangeFilter filter={filters.duration} />
+        <RadioFilter filter={filters.mode} />
+        <CheckboxTreeFilter
+          collection={chipsets}
+          defaultExpandedValue={["snapdragon_x_elite"]}
+          filter={filters.chipset}
+        />
+        <FilterPanel.Footer>
+          <FilterPanel.ApplyTrigger />
+        </FilterPanel.Footer>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

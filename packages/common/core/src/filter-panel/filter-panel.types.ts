@@ -63,7 +63,7 @@ export interface FilterPanelApiProps<
   /**
    * Controls when filter changes are committed.
    *
-   * @default "manual"
+   * @default "auto"
    */
   applyMode?: FilterPanelApplyMode | undefined
 

@@ -51,12 +51,12 @@ export function createQdsFilterPanelApi(
       }
     },
     getCountBadgeProps(): QdsNumberBadgeProps {
-      return {emphasis: "brand", size: size === "lg" ? "md" : "sm"}
+      return {emphasis: "brand", size: "xs"}
     },
     getFilterCountBadgeProps(): QdsNumberBadgeProps {
-      return {emphasis: "neutral-outline", size: size === "lg" ? "sm" : "xs"}
+      return {emphasis: "neutral-outline", size: "xs"}
     },
-    getFilterIndicatorIconProps(): QdsIconApiProps {
+    getIconProps(): QdsIconApiProps {
       return {size: size === "lg" ? "md" : "xs"}
     },
 
