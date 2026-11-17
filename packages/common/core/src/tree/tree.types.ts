@@ -275,6 +275,7 @@ export type TreeLoadingStatusMap = Record<string, TreeLoadingStatus>
 
 export interface TreeElementIds {
   label: string
+  nodeCheckbox: string[]
   root: string
 }
 
@@ -438,12 +439,14 @@ export interface TreeBranchIndentGuideBindings extends Part<"branchIndentGuide">
 }
 
 export interface TreeNodeCheckboxBindings extends Part<"nodeCheckbox"> {
-  "aria-checked": BooleanAriaAttr | "mixed"
+  "aria-checked": BooleanAriaAttr | "mixed" | undefined
+  "aria-hidden": true | undefined
   "aria-labelledby": string | undefined
   "data-disabled": BooleanDataAttr
   "data-state": "checked" | "unchecked" | "indeterminate"
+  id: string
   onClick: JSX.MouseEventHandler
-  role: "checkbox"
+  role: "checkbox" | undefined
   tabIndex: -1
 }
 
@@ -452,6 +455,7 @@ export interface TreeLabelBindings extends Part<"label"> {
 }
 
 export interface TreeLeafNodeBindings extends Part<"leafNode"> {
+  "aria-checked": BooleanAriaAttr | undefined
   "aria-current": "true" | undefined
   "aria-disabled": BooleanAriaAttr
   "aria-level": number
@@ -462,6 +466,7 @@ export interface TreeLeafNodeBindings extends Part<"leafNode"> {
   "data-ownedby": string
   "data-path": string
   "data-selected": BooleanDataAttr
+  "data-state": "checked" | "unchecked" | undefined
   "data-value": string
   hidden: boolean | undefined
   id: string
@@ -758,7 +763,9 @@ export interface TreeApi<T extends TreeNode = TreeNode> {
   getLabelBindings: (props: IdRegistrationProps) => TreeLabelBindings
   getLeafNodeBindings: (props: NodeProps) => TreeLeafNodeBindings
   getNodeActionBindings: (props: NodeProps) => TreeNodeActionBindings
-  getNodeCheckboxBindings: (props: NodeProps) => TreeNodeCheckboxBindings
+  getNodeCheckboxBindings: (
+    props: NodeProps & IdRegistrationProps,
+  ) => TreeNodeCheckboxBindings
   getNodeIconBindings: (props: NodeProps) => TreeNodeIconBindings
   getNodeIndicatorBindings: (props: NodeProps) => TreeNodeIndicatorBindings
   getNodeState: (props: NodeProps) => NodeState
