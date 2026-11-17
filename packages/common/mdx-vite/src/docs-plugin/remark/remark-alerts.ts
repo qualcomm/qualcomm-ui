@@ -27,7 +27,7 @@ export const remarkAlerts: Plugin<[], Root> = () => {
       const child = node.children.map((item) => {
         if (isNext && item.type === "paragraph") {
           const firstNode = item.children[0]
-          const text = firstNode.type === "text" ? firstNode.value : ""
+          const text = firstNode?.type === "text" ? firstNode.value : ""
           const reg = alertLegacyRegex
           const match = text.match(reg)
           if (match) {
