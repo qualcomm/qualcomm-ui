@@ -760,9 +760,11 @@ describe("Tree", () => {
         .not.toBeInTheDocument()
       await expect.element(leaf).not.toHaveAttribute("aria-checked")
       await expect.element(leaf).not.toHaveAttribute("data-state")
+      await expect.element(leaf).toHaveAttribute("aria-selected", "false")
       await expect.element(leaf).not.toHaveAttribute("aria-current")
 
       await leaf.click()
+      await expect.element(leaf).toHaveAttribute("aria-selected", "true")
       await expect.element(leaf).toHaveAttribute("aria-current", "true")
       expect(onSelectedChange).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({selectedValue: ["doc1"]}),

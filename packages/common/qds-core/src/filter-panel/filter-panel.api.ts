@@ -24,7 +24,9 @@ import type {
   QdsFilterPanelFooterBindings,
   QdsFilterPanelHeaderBindings,
   QdsFilterPanelHeadingBindings,
+  QdsFilterPanelOptionCountBindings,
   QdsFilterPanelOptionGroupBindings,
+  QdsFilterPanelOptionLabelBindings,
   QdsFilterPanelRootBindings,
   QdsFilterPanelSectionBindings,
 } from "./filter-panel.types.js"
@@ -106,8 +108,14 @@ export function createQdsFilterPanelApi(
     getHeadingBindings(): QdsFilterPanelHeadingBindings {
       return normalize.element({className: filterPanelClasses.heading})
     },
+    getOptionCountBindings(): QdsFilterPanelOptionCountBindings {
+      return normalize.element({className: filterPanelClasses.optionCount})
+    },
     getOptionGroupBindings(): QdsFilterPanelOptionGroupBindings {
       return normalize.element({className: filterPanelClasses.optionGroup})
+    },
+    getOptionLabelBindings(): QdsFilterPanelOptionLabelBindings {
+      return normalize.element({className: filterPanelClasses.optionLabel})
     },
     getRootBindings(): QdsFilterPanelRootBindings {
       return normalize.element({

@@ -71,6 +71,16 @@ export const normalizeProps = createPropNormalizer((props) => {
       continue
     }
 
+    /**
+     * ARIA states are enumerated "true"/"false" attributes, not HTML boolean
+     * attributes. Without this, the renderer writes `true` as an empty value
+     * and drops `false`, both of which assistive tech reads as the default.
+     */
+    if (key.startsWith("aria-") && typeof value === "boolean") {
+      normalized[key] = `${value}`
+      continue
+    }
+
     normalized[toAngularProp(key)] = value
   }
 

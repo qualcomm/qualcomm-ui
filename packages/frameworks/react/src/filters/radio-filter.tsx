@@ -13,6 +13,7 @@ import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {FilterSection, type FilterSectionProps} from "./filter-section.js"
+import {FilterOptionLabel} from "./internal/filter-option-label.js"
 import {useFilterOptions} from "./internal/use-filter-options.js"
 
 export interface RadioFilterControlProps extends Omit<
@@ -57,7 +58,7 @@ export function RadioFilterControl({
         <Radio
           key={option.value}
           disabled={option.disabled}
-          label={option.label}
+          label={<FilterOptionLabel option={option} />}
           value={option.value}
         />
       ))}

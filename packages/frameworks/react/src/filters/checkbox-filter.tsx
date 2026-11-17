@@ -17,6 +17,7 @@ import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {FilterSection, type FilterSectionProps} from "./filter-section.js"
+import {FilterOptionLabel} from "./internal/filter-option-label.js"
 import {useFilterOptions} from "./internal/use-filter-options.js"
 
 export interface CheckboxFilterControlProps extends Omit<
@@ -55,7 +56,7 @@ export function CheckboxFilterControl({
           key={option.value}
           checked={selected.includes(option.value)}
           disabled={option.disabled}
-          label={option.label}
+          label={<FilterOptionLabel option={option} />}
           onCheckedChange={(checked) =>
             filter.setValue(
               (prev = []) =>

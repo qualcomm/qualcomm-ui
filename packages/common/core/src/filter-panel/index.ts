@@ -1,3 +1,4 @@
+export * from "./facet-filter-panel-props.js"
 export * from "./filter-panel.anatomy.js"
 export * from "./filter-panel.api.js"
 export * from "./filter-panel.machine.js"

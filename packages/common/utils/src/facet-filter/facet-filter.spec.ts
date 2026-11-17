@@ -96,4 +96,15 @@ describe("FacetFilter", () => {
 
     expect(result.ids).toEqual([])
   })
+
+  test("exposes the configured fields and their sorted values", () => {
+    const facetFilter = new FacetFilter(items, config)
+
+    expect(facetFilter.fields).toEqual(["operatingSystems", "technologies"])
+    expect(facetFilter.getValues("technologies")).toEqual([
+      "AI",
+      "Connectivity",
+    ])
+    expect(facetFilter.getValues("unknown")).toEqual([])
+  })
 })

@@ -85,8 +85,16 @@ export interface QdsFilterPanelHeadingBindings {
   className: FilterPanelClasses["heading"]
 }
 
+export interface QdsFilterPanelOptionCountBindings {
+  className: FilterPanelClasses["optionCount"]
+}
+
 export interface QdsFilterPanelOptionGroupBindings {
   className: FilterPanelClasses["optionGroup"]
+}
+
+export interface QdsFilterPanelOptionLabelBindings {
+  className: FilterPanelClasses["optionLabel"]
 }
 
 export interface QdsFilterPanelSectionBindings {
@@ -121,7 +129,9 @@ export interface QdsFilterPanelApi {
   getFooterBindings(): QdsFilterPanelFooterBindings
   getHeaderBindings(): QdsFilterPanelHeaderBindings
   getHeadingBindings(): QdsFilterPanelHeadingBindings
+  getOptionCountBindings(): QdsFilterPanelOptionCountBindings
   getOptionGroupBindings(): QdsFilterPanelOptionGroupBindings
+  getOptionLabelBindings(): QdsFilterPanelOptionLabelBindings
   getRootBindings(): QdsFilterPanelRootBindings
   getSectionBindings(): QdsFilterPanelSectionBindings
 }

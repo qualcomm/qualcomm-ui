@@ -18,6 +18,7 @@ import type {
   FilterPanelFilterBindings,
   FilterPanelFilterCountBindings,
   FilterPanelFilterLabelBindings,
+  FilterPanelOptionCounts,
   FilterPanelRootBindings,
   FilterPanelSchema,
 } from "./filter-panel.types.js"
@@ -49,7 +50,7 @@ export function createFilterPanelApi<
       : countValues(definitions, isEmpty, value)
   const isDirty =
     applyMode === "manual" &&
-    !areValuesEqual(isEmpty, context.get("draft"), value)
+    !areValuesEqual(isEmpty, draftValue, value)
 
   function getFilterOptionLabel(id: string, option: string): string {
     const definition = definitions?.[id]
@@ -63,6 +64,29 @@ export function createFilterPanelApi<
       prop("getFilterOptionLabel")?.(id, option) ??
       option
     )
+  }
+
+  const optionCounts = new Map<string, FilterPanelOptionCounts | undefined>()
+
+  function getFilterOptionCount(
+    id: string,
+    option: string,
+  ): number | undefined {
+    if (!optionCounts.has(id)) {
+      optionCounts.set(id, prop("getFilterOptionCounts")?.(id, draftValue))
+    }
+    const counts = optionCounts.get(id)
+    if (!counts) {
+      return undefined
+    }
+    const count =
+      counts instanceof Map
+        ? counts.get(option)
+        : (counts as Record<string, unknown>)[option]
+    /**
+     * Record lookups can reach inherited properties such as `constructor`.
+     */
+    return typeof count === "number" ? count : 0
   }
 
   function getValueCount(id: string, filterValue: unknown): number {
@@ -93,6 +117,7 @@ export function createFilterPanelApi<
     getFilterLabel(id) {
       return definitions?.[id]?.label || prop("getFilterLabel")?.(id) || id
     },
+    getFilterOptionCount,
     getFilterOptionLabel,
     getFilterOptions(id) {
       const definition = definitions?.[id]

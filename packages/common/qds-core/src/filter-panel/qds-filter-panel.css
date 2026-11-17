@@ -181,6 +181,43 @@
   }
 }
 
+/* Rows with counts span the group so that counts align at the inline end. */
+.qui-filter-panel__option-group:has(.qui-filter-panel__option-count) {
+  > *,
+  .qui-radio-group__items > * {
+    width: auto;
+  }
+
+  /* Radio labels are flex items that otherwise size to their text. */
+  :has(> .qui-filter-panel__option-label) {
+    flex: 1;
+  }
+}
+
+.qui-filter-panel__option-label {
+  align-items: baseline;
+  display: flex;
+  gap: var(--spacing-200);
+
+  /* Lets long labels truncate inside select and combobox items. */
+  > :first-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.qui-filter-panel__option-count {
+  color: var(--color-text-neutral-secondary);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  margin-inline-start: auto;
+
+  :where([data-disabled]) & {
+    color: var(--color-utility-disabled-text);
+  }
+}
+
 .qui-filter-panel__footer {
   align-items: center;
   box-sizing: border-box;

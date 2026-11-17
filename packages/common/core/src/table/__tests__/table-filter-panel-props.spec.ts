@@ -159,4 +159,67 @@ describe("getTableFilterPanelProps", () => {
     expect(isEmptyValue("server-only", "7d")).toBe(false)
     expect(error).not.toHaveBeenCalled()
   })
+
+  test("option counts come from faceted values and ignore the column's own filter", () => {
+    const {table} = createTableHarness({
+      initialState: {columnFilters: [{id: "status", value: ["single"]}]},
+      tableOptions: faceting,
+    })
+    const {getFilterOptionCounts, value} = getTableFilterPanelProps(table)
+
+    expect(getFilterOptionCounts("status", value)).toEqual(
+      new Map([
+        ["complicated", 2],
+        ["relationship", 1],
+        ["single", 3],
+      ]),
+    )
+    expect(getFilterOptionCounts("tags", value)).toEqual(
+      new Map([
+        ["flight", 1],
+        ["math", 1],
+        ["systems", 2],
+      ]),
+    )
+  })
+
+  test("option counts follow a draft that differs from the committed filters", () => {
+    const committed = createTableHarness({
+      initialState: {columnFilters: [{id: "status", value: ["single"]}]},
+      tableOptions: faceting,
+    })
+    const {table} = createTableHarness({tableOptions: faceting})
+    const draft = {status: ["single"]}
+    const {getFilterOptionCounts} = getTableFilterPanelProps(table)
+
+    expect(getFilterOptionCounts("tags", draft)).toEqual(
+      getTableFilterPanelProps(committed.table).getFilterOptionCounts(
+        "tags",
+        draft,
+      ),
+    )
+    expect(getFilterOptionCounts("status", draft)).toEqual(
+      getTableFilterPanelProps(table).getFilterOptionCounts("status", {}),
+    )
+  })
+
+  test("option counts are undefined without client-side faceting", () => {
+    const manual = createTableHarness({
+      tableOptions: {...faceting, manualFiltering: true},
+    })
+    const unfaceted = createTableHarness()
+
+    expect(
+      getTableFilterPanelProps(manual.table).getFilterOptionCounts(
+        "status",
+        {},
+      ),
+    ).toBeUndefined()
+    expect(
+      getTableFilterPanelProps(unfaceted.table).getFilterOptionCounts(
+        "status",
+        {},
+      ),
+    ).toBeUndefined()
+  })
 })

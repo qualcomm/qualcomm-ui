@@ -115,7 +115,11 @@ function readValues(item: FacetFilterItem, path: string): string[] {
  * sets of a few thousand items.
  */
 export class FacetFilter<Item extends FacetFilterItem> {
-  private readonly fields: Record<string, Required<FacetFieldConfig>>
+  /**
+   * The configured field names.
+   */
+  readonly fields: readonly string[]
+  private readonly fieldConfigs: Record<string, Required<FacetFieldConfig>>
   private readonly items: Item[]
   private readonly itemsById: Map<string, Item>
   private readonly valuesByField: Map<string, string[]>
@@ -127,15 +131,16 @@ export class FacetFilter<Item extends FacetFilterItem> {
   constructor(items: readonly Item[], config: FacetFilterConfig) {
     this.items = [...items]
     this.itemsById = new Map(this.items.map((item) => [item.id, item]))
-    this.fields = Object.fromEntries(
+    this.fieldConfigs = Object.fromEntries(
       Object.entries(config.fields).map(([name, field]) => [
         name,
         {match: field.match ?? "any", path: field.path ?? name},
       ]),
     )
+    this.fields = Object.keys(this.fieldConfigs)
     this.valuesByField = new Map()
 
-    for (const [name, field] of Object.entries(this.fields)) {
+    for (const [name, field] of Object.entries(this.fieldConfigs)) {
       const values = new Set<string>()
       for (const item of this.items) {
         for (const value of readValues(item, field.path)) {
@@ -147,6 +152,14 @@ export class FacetFilter<Item extends FacetFilterItem> {
         [...values].sort((a, b) => a.localeCompare(b)),
       )
     }
+  }
+
+  /**
+   * Returns every value of a field across all items, sorted. Returns an empty
+   * array for unconfigured fields.
+   */
+  getValues(name: string): readonly string[] {
+    return this.valuesByField.get(name) ?? []
   }
 
   /**
@@ -165,7 +178,7 @@ export class FacetFilter<Item extends FacetFilterItem> {
       .map((item) => item.id)
 
     const facets = Object.fromEntries(
-      Object.keys(this.fields).map((name) => {
+      this.fields.map((name) => {
         const selected = selections[name] ?? []
         const buckets = (this.valuesByField.get(name) ?? []).map(
           (value): FacetBucket => ({
@@ -190,7 +203,7 @@ export class FacetFilter<Item extends FacetFilterItem> {
     value: string,
   ): boolean {
     const values =
-      this.fields[name]?.match === "all"
+      this.fieldConfigs[name]?.match === "all"
         ? [...new Set([...(selections[name] ?? []), value])]
         : [value]
 
@@ -203,7 +216,7 @@ export class FacetFilter<Item extends FacetFilterItem> {
         return true
       }
 
-      const field = this.fields[name]
+      const field = this.fieldConfigs[name]
       if (!field) {
         return false
       }

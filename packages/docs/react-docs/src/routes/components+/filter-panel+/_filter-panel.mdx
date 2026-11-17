@@ -81,7 +81,7 @@ By default, every change is committed as it happens and calls [onValueChange](#o
 ### Manual Apply
 
 ::: terms
-apply, draft, apply mode, footer
+apply, draft, apply mode
 :::
 
 Set [applyMode](#applyMode) to `manual` to stage changes in a draft. `FilterPanel.ApplyButton` commits the draft and calls [onValueChange](#onValueChange).
@@ -97,13 +97,24 @@ Set [applyMode](#applyMode) to `manual` to stage changes in a draft. `FilterPane
 controlled, value, onValueChange
 :::
 
-Use [value](#value) and [onValueChange](#onValueChange) to control the committed selection. These props follow our [controlled state](/patterns/controlled-state) pattern. In manual mode the panel still manages the draft.
+Set the initial selection using the [defaultValue](#defaultValue) prop, or use [value](#value) and [onValueChange](#onValueChange) to control it manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
 The second argument to `onValueChange` contains the labels of the options the user selected, keyed by filter id and option value. This is useful for options that are loaded at runtime, where the label isn't known ahead of time.
 
 <Demo
   name="FilterPanelControlledStateDemo"
   component={demos.FilterPanelControlledStateDemo}
+/>
+
+### Manual & Controlled State
+
+In `manual` mode, `value` is the applied (saved) selection and `draftValue` refers to the panel's staged changes.
+
+Setting `value` from outside the panel replaces the draft, including any unapplied changes.
+
+<Demo
+  name="FilterPanelManualControlledStateDemo"
+  component={demos.FilterPanelManualControlledStateDemo}
 />
 
 ### Labels
@@ -137,6 +148,37 @@ Options are strings or `{label, value}` objects. A selected value that isn't in 
 />
 
 A selection restored from storage has no option labels until its options load. To label it in the meantime, supply [getFilterOptionLabel](#getFilterOptionLabel) on the panel, or `getOptionLabel` on the definition.
+
+### Facet Counts
+
+::: terms
+faceting, facets, result counts, FacetFilter, getFacetFilterPanelProps
+:::
+
+[getFilterOptionCounts](#getFilterOptionCounts) shows how many results each option would produce. It receives a filter id and returns the counts keyed by option value, as a `Map` or a plain object. Unselected options with a count of 0 are disabled. Return `undefined` to show no counts for a filter.
+
+For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-filter`, and pass the props from `getFacetFilterPanelProps` to the panel. Filter ids match the facet filter's field names. Each option counts the results it would produce given the selections in the other filters, so options in the same filter don't zero each other out.
+
+`FacetFilter` matches `string[]` values only. Apply text, range, and date filters in `getCandidateIds`, which returns the ids of the items that pass them.
+
+<Demo
+  name="FilterPanelFacetsDemo"
+  component={demos.FilterPanelFacetsDemo}
+/>
+
+Counts from a server can be returned as they arrive.
+
+```tsx
+<FilterPanel.Root
+  filters={filters}
+  getFilterOptionCounts={(id) => response.facets[id]}
+>
+```
+
+The second argument to `getFilterOptionCounts` is the selection the controls display. In manual mode, that's the draft, so counts update before the user applies. To fetch counts for the draft from a server, create the panel with `useFilterPanel` and request them when [draftValue](#draftValue) changes.
+
+> [!note]
+> `getTableFilterPanelProps` supplies counts from the table's faceted values. Enable faceting with the table's `getFacetedRowModel` and `getFacetedUniqueValues` options.
 
 ### Hoisted State
 

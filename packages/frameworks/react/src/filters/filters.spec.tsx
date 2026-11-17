@@ -4,7 +4,11 @@ import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
 import {page, userEvent} from "vitest/browser"
 
-import type {FilterPanelApplyMode} from "@qualcomm-ui/core/filter-panel"
+import {
+  type FilterPanelApiProps,
+  type FilterPanelApplyMode,
+  getFacetFilterPanelProps,
+} from "@qualcomm-ui/core/filter-panel"
 import {
   checkboxFilter,
   checkboxTreeFilter,
@@ -29,6 +33,7 @@ import {
   SelectFilter,
   TextFilter,
 } from "@qualcomm-ui/react/filters"
+import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
 
 const filters = defineFilters({
   buildPath: textFilter({label: "Build path"}),
@@ -92,19 +97,31 @@ const chipsets = createTreeCollection<{
 
 type Values = FilterValues<typeof filters>
 
-interface PanelProps {
+interface PanelProps extends Pick<
+  FilterPanelApiProps,
+  "getFilterOptionCounts" | "getFilterOptions"
+> {
   applyMode?: FilterPanelApplyMode
   children: ReactNode
   defaultValue?: Values
   onValueChange?: (value: Values) => void
 }
 
-function Panel({applyMode, children, defaultValue, onValueChange}: PanelProps) {
+function Panel({
+  applyMode,
+  children,
+  defaultValue,
+  getFilterOptionCounts,
+  getFilterOptions,
+  onValueChange,
+}: PanelProps) {
   return (
     <FilterPanel.Root
       applyMode={applyMode}
       defaultValue={defaultValue}
       filters={filters}
+      getFilterOptionCounts={getFilterOptionCounts}
+      getFilterOptions={getFilterOptions}
       onValueChange={onValueChange}
     >
       <FilterPanel.Header>
@@ -146,6 +163,72 @@ describe("filter panel", () => {
       .poll(() => onValueChange.mock.lastCall?.[0])
       .toEqual({status: ["Failed", "Queued"]})
     await expect.element(apply).toBeDisabled()
+  })
+
+  test("setting the value from outside replaces unapplied changes in manual mode", async () => {
+    function ControlledPanel() {
+      const [value, setValue] = useState<Values>({status: ["Failed"]})
+      return (
+        <>
+          <button onClick={() => setValue({})} type="button">
+            Reset
+          </button>
+          <FilterPanel.Root
+            applyMode="manual"
+            filters={filters}
+            onValueChange={setValue}
+            value={value}
+          >
+            <CheckboxFilter filter={filters.status} />
+            <FilterPanel.Footer>
+              <FilterPanel.ApplyButton />
+            </FilterPanel.Footer>
+          </FilterPanel.Root>
+        </>
+      )
+    }
+    await render(<ControlledPanel />)
+
+    await page.getByText("Queued").click()
+    await expect.element(page.getByLabelText("Queued")).toBeChecked()
+
+    await page.getByRole("button", {name: "Reset"}).click()
+
+    await expect.element(page.getByLabelText("Failed")).not.toBeChecked()
+    await expect.element(page.getByLabelText("Queued")).not.toBeChecked()
+    await expect
+      .element(page.getByRole("button", {name: "Apply"}))
+      .toBeDisabled()
+  })
+
+  test("setting the value from outside never renders the panel as dirty in manual mode", async () => {
+    const dirtyRenders: boolean[] = []
+    function ControlledPanel() {
+      const [value, setValue] = useState<Values>({status: ["Failed"]})
+      const panel = useFilterPanel({
+        applyMode: "manual",
+        filters,
+        onValueChange: setValue,
+        value,
+      })
+      dirtyRenders.push(panel.isDirty)
+      return (
+        <>
+          <button onClick={() => setValue({status: ["Passed"]})} type="button">
+            Show passed
+          </button>
+          <FilterPanel.RootProvider value={panel}>
+            <CheckboxFilter filter={filters.status} />
+          </FilterPanel.RootProvider>
+        </>
+      )
+    }
+    await render(<ControlledPanel />)
+
+    await page.getByRole("button", {name: "Show passed"}).click()
+
+    await expect.element(page.getByLabelText("Passed")).toBeChecked()
+    expect(dirtyRenders).not.toContain(true)
   })
 
   test("auto mode is the default and commits every change", async () => {
@@ -500,5 +583,121 @@ describe("filter types", () => {
         {chipset: ["sc8380xp"]},
         {labels: {chipset: {sc8380xp: "SC8380XP"}}},
       ])
+  })
+})
+
+describe("option counts", () => {
+  const counts: Record<string, Record<string, number>> = {
+    mode: {debug: 3, release: 0},
+    owner: {u1: 2, u2: 0},
+    standard: {wifi6: 4, wifi7: 0},
+    status: {Failed: 2, Passed: 0, Queued: 1},
+  }
+  const getFilterOptionCounts = (id: string) => counts[id]
+
+  test("checkbox options show counts and disable unselected options with none", async () => {
+    await render(
+      <Panel
+        defaultValue={{status: ["Passed"]}}
+        getFilterOptionCounts={getFilterOptionCounts}
+      >
+        <CheckboxFilter filter={filters.status} />
+      </Panel>,
+    )
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Failed 2"}))
+      .toBeEnabled()
+    await expect
+      .element(page.getByRole("checkbox", {name: "Queued 1"}))
+      .toBeEnabled()
+    await expect
+      .element(page.getByRole("checkbox", {name: "Passed 0"}))
+      .toBeEnabled()
+
+    await page.getByText("Passed").click()
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Passed 0"}))
+      .toBeDisabled()
+  })
+
+  test("radio options show counts, except the blank option", async () => {
+    await render(
+      <Panel getFilterOptionCounts={getFilterOptionCounts}>
+        <RadioFilter filter={filters.mode} />
+      </Panel>,
+    )
+
+    await expect
+      .element(page.getByRole("radio", {exact: true, name: "All"}))
+      .toBeEnabled()
+    await expect
+      .element(page.getByRole("radio", {name: "Debug 3"}))
+      .toBeEnabled()
+    await expect
+      .element(page.getByRole("radio", {name: "Release 0"}))
+      .toBeDisabled()
+  })
+
+  test("combobox options show counts", async () => {
+    await render(
+      <Panel getFilterOptionCounts={getFilterOptionCounts}>
+        <ComboboxFilter filter={filters.owner} />
+      </Panel>,
+    )
+
+    await page.getByRole("combobox", {name: "Owner"}).fill("o")
+
+    await expect
+      .element(page.getByRole("option", {name: "Anna Robinson 2"}))
+      .toBeVisible()
+    await expect
+      .element(page.getByRole("option", {name: "Ben Ortiz 0"}))
+      .toHaveAttribute("aria-disabled", "true")
+  })
+
+  test("select options with no results are disabled", async () => {
+    await render(
+      <Panel getFilterOptionCounts={getFilterOptionCounts}>
+        <SelectFilter filter={filters.standard} />
+      </Panel>,
+    )
+
+    await page.getByRole("combobox", {name: "Standard"}).click()
+
+    await expect
+      .element(page.getByRole("option", {name: "Wi-Fi 7"}))
+      .toHaveAttribute("aria-disabled", "true")
+  })
+
+  test("counts follow the draft in manual mode", async () => {
+    const facetFilter = new FacetFilter(
+      [
+        {id: "1", status: ["Failed"], user: ["Ana"]},
+        {id: "2", status: ["Passed"], user: ["Ben"]},
+        {id: "3", status: ["Failed"], user: ["Ben"]},
+      ],
+      {fields: {status: {}, user: {}}},
+    )
+    await render(
+      <Panel applyMode="manual" {...getFacetFilterPanelProps(facetFilter)}>
+        <CheckboxFilter filter={filters.status} />
+        <CheckboxFilter filter={filters.user} />
+      </Panel>,
+    )
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Passed 1"}))
+      .toBeEnabled()
+
+    await page.getByText("Ana").click()
+
+    await expect
+      .element(page.getByRole("checkbox", {name: "Failed 1"}))
+      .toBeEnabled()
+    await expect
+      .element(page.getByRole("checkbox", {name: "Passed 0"}))
+      .toBeDisabled()
   })
 })

@@ -11,6 +11,7 @@ export const filterPanelProps: (keyof FilterPanelApiProps)[] =
     "defaultValue",
     "filters",
     "getFilterLabel",
+    "getFilterOptionCounts",
     "getFilterOptionLabel",
     "getFilterOptions",
     "getFilterRange",

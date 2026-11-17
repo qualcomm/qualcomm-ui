@@ -7,9 +7,11 @@ import {
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
 
-import type {FilterPanelSchema} from "./filter-panel.types.js"
+import type {
+  FilterPanelDraft,
+  FilterPanelSchema,
+} from "./filter-panel.types.js"
 import {
-  areValuesEqual,
   createEmptyValueCheck,
   hashValues,
   pickOptionLabels,
@@ -19,17 +21,30 @@ import {
 
 const filterPanelMachineBase = {
   computed: {
-    draftValue: ({context, prop}) =>
-      prop("applyMode") === "auto"
-        ? context.get("value")
-        : context.get("draft"),
+    /**
+     * The draft only applies to the committed value it was started from. When
+     * `value` changes, including from outside the panel, the draft is
+     * discarded without having to be synced.
+     */
+    draftValue: ({context, prop}) => {
+      const value = context.get("value")
+      const draft = context.get("draft")
+      if (
+        prop("applyMode") === "auto" ||
+        !draft ||
+        draft.base !== hashValues(value)
+      ) {
+        return value
+      }
+      return draft.values
+    },
   },
 
   context({bindable, getRefs, prop}) {
     return {
-      draft: bindable(() => ({
-        defaultValue: prop("value") ?? prop("defaultValue"),
-        hash: hashValues,
+      draft: bindable<FilterPanelDraft | null>(() => ({
+        defaultValue: null,
+        hash: (draft) => (draft ? draft.base + hashValues(draft.values) : ""),
       })),
       value: bindable(() => ({
         defaultValue: prop("defaultValue"),
@@ -71,9 +86,8 @@ const filterPanelMachineBase = {
     }
   },
 
-  refs({prop}) {
+  refs() {
     return {
-      appliedFilters: prop("value") ?? prop("defaultValue"),
       labels: {},
     }
   },
@@ -82,25 +96,28 @@ const filterPanelMachineBase = {
     idle: {},
   },
 
-  watch({action, context, track}) {
-    track([() => context.hash("value")], () => {
-      action(["syncDraft"])
-    })
-  },
 } satisfies MachineConfigBase<FilterPanelSchema>
 
 export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
   createNarrowedMachine<FilterPanelSchema>()(filterPanelMachineBase, {
     actions: {
-      applyDraft({context, guard}) {
+      applyDraft({computed, context, guard}) {
         if (guard("isAutoApply")) {
           return
         }
-        context.set("value", context.get("draft"))
+        context.set("value", computed("draftValue"))
+        context.set("draft", null)
       },
 
       clearFilters({context, guard}) {
-        context.set(guard("isAutoApply") ? "value" : "draft", {})
+        if (guard("isAutoApply")) {
+          context.set("value", {})
+          return
+        }
+        context.set("draft", {
+          base: hashValues(context.get("value")),
+          values: {},
+        })
       },
 
       /**
@@ -119,11 +136,8 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
         }
       },
 
-      resetDraft({context, guard}) {
-        if (guard("isAutoApply")) {
-          return
-        }
-        context.set("draft", context.get("value"))
+      resetDraft({context}) {
+        context.set("draft", null)
       },
 
       setFilterValue({context, event, guard, prop}) {
@@ -131,32 +145,25 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
           prop("filters"),
           prop("isEmptyValue"),
         )
-        context.set(guard("isAutoApply") ? "value" : "draft", (values) =>
-          setFilterValue(isEmpty, values, event.id, event.value),
-        )
-      },
-
-      /**
-       * Follows external changes to the committed filters (for example, a
-       * filter chip removed from the toolbar) unless the draft has pending
-       * changes, which would otherwise be discarded.
-       */
-      syncDraft({context, guard, prop, refs}) {
-        const value = context.get("value")
-        const previous = refs.get("appliedFilters")
-        refs.set("appliedFilters", value)
-
-        const isEmpty = createEmptyValueCheck(
-          prop("filters"),
-          prop("isEmptyValue"),
-        )
-        if (
-          guard("isAutoApply") ||
-          areValuesEqual(isEmpty, context.get("draft"), previous)
-        ) {
-          context.set("draft", value)
+        if (guard("isAutoApply")) {
+          context.set("value", (values) =>
+            setFilterValue(isEmpty, values, event.id, event.value),
+          )
+          return
         }
+        const value = context.get("value")
+        const base = hashValues(value)
+        context.set("draft", (draft) => ({
+          base,
+          values: setFilterValue(
+            isEmpty,
+            draft?.base === base ? draft.values : value,
+            event.id,
+            event.value,
+          ),
+        }))
       },
+
     },
     guards: {
       isAutoApply: ({prop}) => prop("applyMode") === "auto",

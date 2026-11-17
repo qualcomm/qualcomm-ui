@@ -52,6 +52,13 @@ export interface FilterPanelSetValueDetails {
   labels?: Record<string, string> | undefined
 }
 
+/**
+ * Result counts keyed by option value.
+ */
+export type FilterPanelOptionCounts =
+  | ReadonlyMap<string, number>
+  | Readonly<Record<string, number>>
+
 export interface FilterPanelRange {
   max: number
   min: number
@@ -85,6 +92,19 @@ export interface FilterPanelApiProps<
    * to fall back to the filter id.
    */
   getFilterLabel?: ((id: string) => string | undefined) | undefined
+
+  /**
+   * Resolves the result count of each option in a filter, keyed by option
+   * value. Called with the selection the controls display, so counts follow
+   * the draft in `manual` mode. Unselected options with a count of 0 are
+   * disabled. Return `undefined` to show no counts for the filter.
+   */
+  getFilterOptionCounts?:
+    | ((
+        id: string,
+        values: FilterPanelValues,
+      ) => FilterPanelOptionCounts | undefined)
+    | undefined
 
   /**
    * Resolves an option's label when neither the definition nor a recorded
@@ -129,6 +149,17 @@ export interface FilterPanelApiProps<
   value?: FilterValues<TDefinitions> | undefined
 }
 
+/**
+ * Staged changes in `manual` mode.
+ */
+export interface FilterPanelDraft {
+  /**
+   * Hash of the committed value the draft was started from.
+   */
+  base: string
+  values: FilterPanelValues
+}
+
 export interface FilterPanelSchema extends MachineSchema {
   actions: ActionSchema<
     | "applyDraft"
@@ -136,7 +167,6 @@ export interface FilterPanelSchema extends MachineSchema {
     | "recordLabels"
     | "resetDraft"
     | "setFilterValue"
-    | "syncDraft"
   >
   computed: {
     /**
@@ -146,7 +176,7 @@ export interface FilterPanelSchema extends MachineSchema {
     draftValue: FilterPanelValues
   }
   context: {
-    draft: FilterPanelValues
+    draft: FilterPanelDraft | null
     value: FilterPanelValues
   }
   events:
@@ -164,11 +194,6 @@ export interface FilterPanelSchema extends MachineSchema {
   }
   props: RequiredBy<FilterPanelApiProps, "applyMode" | "defaultValue">
   refs: {
-    /**
-     * The committed filters as of the last sync. Used to decide whether the
-     * draft has diverged from them.
-     */
-    appliedFilters: FilterPanelValues
     /**
      * Option labels recorded from user selections.
      */
@@ -275,6 +300,13 @@ export interface FilterPanelApi<
    * panel's `getFilterLabel`, then the id.
    */
   getFilterLabel: (id: string) => string
+
+  /**
+   * Returns the result count of an option from the panel's
+   * `getFilterOptionCounts`, or `undefined` when the filter has no counts.
+   * Options missing from the filter's counts count 0.
+   */
+  getFilterOptionCount: (id: string, value: string) => number | undefined
 
   /**
    * Returns the label for an option value. Resolves from the definition's
