@@ -33,9 +33,14 @@ describe("getOpenApiModuleCode", () => {
     })
   })
 
-  test("returns null for unknown operations", async () => {
+  test("responds with a 404 for unknown operations", async () => {
     const loader = await getLoader({"/api/getMetadata": {}})
-    expect(loader("/api/*", "nope")).toBeNull()
-    expect(loader("/other/*", "getMetadata")).toBeNull()
+    for (const response of [
+      loader("/api/*", "nope"),
+      loader("/other/*", "getMetadata"),
+    ] as Response[]) {
+      expect(response.status).toBe(404)
+      expect(await response.json()).toBeNull()
+    }
   })
 })

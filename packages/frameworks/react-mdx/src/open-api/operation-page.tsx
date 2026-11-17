@@ -6,6 +6,7 @@ import type {ReactNode} from "react"
 import type {Root} from "hast"
 
 import {HttpMethod, PageHeader} from "@qualcomm-ui/react-mdx/docs-layout"
+import {NotFound} from "@qualcomm-ui/react-mdx/not-found"
 import {Badge} from "@qualcomm-ui/react/badge"
 
 import {CodeSamplesPanel} from "./code-samples-panel.js"
@@ -68,7 +69,7 @@ function Endpoint({
  */
 export function OperationPage({loaderData}: OperationPageProps): ReactNode {
   if (!loaderData) {
-    return null
+    return <NotFound />
   }
   const {
     deprecated,

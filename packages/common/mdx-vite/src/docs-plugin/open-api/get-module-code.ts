@@ -3,7 +3,7 @@
 
 /**
  * Source of the `@qualcomm-ui/docs-plugin/openapi` virtual module: a route
- * loader returning the operation for the requested page. The page is
+ * loader returning the operation for the requested page, or a 404. The page is
  * read from the matched `<api>/*` route pattern and its splat rather than the
  * URL, so a React Router `basename` doesn't change it. Requires React Router
  * 7.15, which added `pattern` to the loader arguments.
@@ -16,7 +16,10 @@ export function getOpenApiModuleCode(
     "export function loader({params, pattern}) {",
     String.raw`  const api = "/" + pattern.replace(/^\/+/, "").replace(/\/\*$/, "")`,
     String.raw`  const pathname = (api + "/" + (params["*"] ?? "")).replace(/\/+$/, "")`,
-    "  return operations[pathname] ?? null",
+    "  return (",
+    "    operations[pathname] ??",
+    `    new Response("null", {headers: {"Content-Type": "application/json"}, status: 404})`,
+    "  )",
     "}",
   ].join("\n")
 }
