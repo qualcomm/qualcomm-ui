@@ -3,7 +3,7 @@
 
 import {describe, expect, test} from "vitest"
 
-import {getVariants} from "./get-variants.js"
+import {getVariantLabels, getVariants} from "./get-variants.js"
 import {normalizeSchema} from "./normalize-schema.js"
 import {getSchemaTypeLabel} from "./schema-type.js"
 
@@ -46,5 +46,25 @@ describe("getVariants", () => {
 
   test("ignores schemas without alternatives", () => {
     expect(getVariants(planet)).toBeNull()
+  })
+
+  test("labels alternatives by title, else by type", () => {
+    expect(
+      getVariantLabels([
+        {enum: ["gh-pages", "master"], type: "string"},
+        {properties: {branch: {}}, type: "object"},
+        {title: "Planet", type: "object"},
+      ]),
+    ).toEqual(['"gh-pages" | "master"', "object", "Planet"])
+  })
+
+  test("numbers alternatives whose labels would be identical", () => {
+    expect(
+      getVariantLabels([
+        {properties: {a: {}}, type: "object"},
+        {properties: {b: {}}, type: "object"},
+        {type: "string"},
+      ]),
+    ).toEqual(["Option 1", "Option 2", "string"])
   })
 })

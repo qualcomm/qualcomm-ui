@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import {describe, expect, test} from "vitest"
+import {render} from "vitest-browser-react"
+import {page} from "vitest/browser"
 
-import {groupMediaTypes} from "./media-content.js"
+import {groupMediaTypes, MediaSchema} from "./media-content.js"
+import {normalizeSchema} from "./normalize-schema.js"
 
 const pet = {properties: {name: {type: "string"}}, type: "object"}
 
@@ -64,5 +67,20 @@ describe("groupMediaTypes", () => {
 
   test("returns nothing for missing content", () => {
     expect(groupMediaTypes(undefined)).toEqual([])
+  })
+})
+
+describe("MediaSchema", () => {
+  test("lists the fields of a nullable body, common ones included", async () => {
+    const schema = normalizeSchema({
+      anyOf: [{properties: {name: {type: "string"}}}, {type: "null"}],
+      properties: {id: {type: "string"}},
+    })
+    await render(
+      <MediaSchema group={{mediaTypes: ["application/json"], schema}} />,
+    )
+
+    await expect.element(page.getByText("id", {exact: true})).toBeVisible()
+    await expect.element(page.getByText("name", {exact: true})).toBeVisible()
   })
 })

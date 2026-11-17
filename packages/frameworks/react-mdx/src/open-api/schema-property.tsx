@@ -1,13 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {type ReactNode, useMemo} from "react"
+import {type ReactNode, useId, useMemo} from "react"
 
 import type {Root} from "hast"
 
 import {Description} from "./description.js"
 import {FieldRow} from "./field-row.js"
-import {getExpandable} from "./get-expandable.js"
+import {type Expandable, getExpandable} from "./get-expandable.js"
+import {getVariantLabels} from "./get-variants.js"
 import {mergeAllOf} from "./merge-all-of.js"
 import {OptionPicker, usePickedOption} from "./option-picker.js"
 import {getSchemaTypeLabel, type JsonSchema} from "./schema-type.js"
@@ -74,15 +75,16 @@ export function SchemaProperty({
 
   return (
     <FieldRow details={details} header={header}>
-      {expandable?.kind === "variants" ? (
-        <SchemaVariants
-          schema={expandable.schema}
-          variants={expandable.variants}
-        />
-      ) : expandable ? (
-        <SchemaProperties schema={expandable.schema} />
-      ) : null}
+      {expandable ? <ExpandedSchema expandable={expandable} /> : null}
     </FieldRow>
+  )
+}
+
+function ExpandedSchema({expandable}: {expandable: Expandable}): ReactNode {
+  return expandable.kind === "variants" ? (
+    <SchemaVariants schema={expandable.schema} variants={expandable.variants} />
+  ) : (
+    <SchemaProperties schema={expandable.schema} />
   )
 }
 
@@ -134,20 +136,21 @@ export function SchemaVariants({
   schema: JsonSchema
   variants: JsonSchema[]
 }): ReactNode {
-  const labels = useMemo(
-    () =>
-      variants.map((variant, index) => variant.title ?? `Option ${index + 1}`),
-    [variants],
-  )
+  const labels = useMemo(() => getVariantLabels(variants), [variants])
   const picked = usePickedOption(labels)
   const variant = variants[picked.index]
+  const expandable = getExpandable(variant)
   const propertyName = schema.discriminator?.propertyName
+  const labelId = useId()
 
   return (
     <div className="qui-docs-openapi__variants">
       <div className="qui-docs-openapi__variants-header">
+        <span className="qui-docs-openapi__variants-label" id={labelId}>
+          {schema.oneOf ? "One of" : "Any of"}
+        </span>
         <OptionPicker
-          aria-label={schema.oneOf ? "One of" : "Any of"}
+          aria-labelledby={labelId}
           labels={labels}
           picked={picked}
         />
@@ -157,7 +160,17 @@ export function SchemaVariants({
           </span>
         ) : null}
       </div>
-      {variant?.properties ? <SchemaProperties schema={variant} /> : null}
+      {variant && !variant.properties && variant.title ? (
+        <code className="qui-docs-code qui-docs-openapi__field-type">
+          {getSchemaTypeLabel({...variant, title: undefined})}
+        </code>
+      ) : null}
+      {variant?.description ? (
+        <div className="qui-docs-openapi__description">
+          <Description tree={variant.description} />
+        </div>
+      ) : null}
+      {expandable ? <ExpandedSchema expandable={expandable} /> : null}
     </div>
   )
 }

@@ -37,6 +37,21 @@ describe("getExpandable", () => {
     })
   })
 
+  test("expands a nullable union like its one other alternative", () => {
+    expect(
+      getExpandable({anyOf: [{items: pet, type: "array"}, {type: "null"}]}),
+    ).toEqual({kind: "object", schema: pet})
+    expect(getExpandable({anyOf: [pet, {type: "null"}]})).toEqual({
+      kind: "object",
+      schema: pet,
+    })
+  })
+
+  test("counts array-of-objects alternatives as having fields", () => {
+    const union = {oneOf: [{items: pet, type: "array"}, {type: "string"}]}
+    expect(getExpandable(union)).toMatchObject({kind: "variants"})
+  })
+
   test("doesn't expand plain values", () => {
     expect(getExpandable({type: "string"})).toBeNull()
     expect(getExpandable({items: {type: "string"}, type: "array"})).toBeNull()

@@ -3,7 +3,7 @@
 
 import {type ReactNode, useMemo} from "react"
 
-import {getVariants} from "./get-variants.js"
+import {getNullableAlternative, getVariants} from "./get-variants.js"
 import {mergeAllOf} from "./merge-all-of.js"
 import {
   OptionPicker,
@@ -133,7 +133,8 @@ export function MediaSchema({
   if (!group) {
     return null
   }
-  const schema = group.schema && mergeAllOf(group.schema)
+  const merged = group.schema && mergeAllOf(group.schema)
+  const schema = merged && (getNullableAlternative(merged) ?? merged)
   const variants = schema && getVariants(schema)
 
   return variants ? (
