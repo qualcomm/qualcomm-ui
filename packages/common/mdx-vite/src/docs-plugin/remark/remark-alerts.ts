@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {PhrasingContent, Root} from "mdast"
+import type {Blockquote, PhrasingContent, Root} from "mdast"
 /**
  * `hName` and `hProperties` are added to mdast `Data` via module augmentation in
  * `mdast-util-to-hast`, which is only loaded when something imports it.
@@ -12,6 +12,46 @@ import {visit} from "unist-util-visit"
 
 const alertLegacyRegex = /^\[!(NOTE|TIP|SUCCESS|WARNING|CAUTION)(\/.*)?\]/i
 
+export type AlertType = "note" | "tip" | "success" | "warning" | "caution"
+
+export interface Alert {
+  title: string | undefined
+  type: AlertType
+}
+
+/**
+ * Detects a GitHub alert marker (`[!NOTE]`, `[!TIP/Custom title]`, ...) in a
+ * blockquote and strips it from the blockquote's content.
+ */
+export function parseAlert(node: Blockquote): Alert | undefined {
+  for (const item of node.children) {
+    if (item.type !== "paragraph") {
+      continue
+    }
+    const firstNode = item.children[0]
+    const text = firstNode?.type === "text" ? firstNode.value : ""
+    const match = text.match(alertLegacyRegex)
+    if (!match) {
+      continue
+    }
+    if (text.includes("\n")) {
+      item.children[0] = {
+        type: "text",
+        value: text.replace(alertLegacyRegex, "").replace(/^\n+/, ""),
+      }
+    } else {
+      item.children = item.children.filter(
+        (child, i) => i !== 0 && !(i === 1 && child.type === "break"),
+      )
+    }
+    return {
+      title: match[2]?.trim()?.replace(/^\//, ""),
+      type: match[1].toLocaleLowerCase() as AlertType,
+    }
+  }
+  return undefined
+}
+
 /**
  * Alerts are a Markdown extension based on the blockquote syntax that you can use
  * to emphasize critical information. On GitHub, they are displayed with distinctive
@@ -21,46 +61,10 @@ const alertLegacyRegex = /^\[!(NOTE|TIP|SUCCESS|WARNING|CAUTION)(\/.*)?\]/i
 export const remarkAlerts: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, "blockquote", (node) => {
-      let alertType: IconType | undefined
-      let title = ""
-      let isNext = true
-      const child = node.children.map((item) => {
-        if (isNext && item.type === "paragraph") {
-          const firstNode = item.children[0]
-          const text = firstNode?.type === "text" ? firstNode.value : ""
-          const reg = alertLegacyRegex
-          const match = text.match(reg)
-          if (match) {
-            isNext = false
-            alertType = match[1].toLocaleLowerCase() as IconType
-            title = match[2]?.trim()?.replace(/^\//, "")
-            if (text.includes("\n")) {
-              item.children[0] = {
-                type: "text",
-                value: text.replace(reg, "").replace(/^\n+/, ""),
-              }
-            }
-
-            if (!text.includes("\n")) {
-              const itemChild: PhrasingContent[] = []
-              for (let i = 0; i < item.children.length; i++) {
-                const item1 = item.children[i]
-                if (i === 0) {
-                  continue
-                }
-                if (i === 1 && item1.type === "break") {
-                  continue
-                }
-                itemChild.push(item1)
-              }
-              item.children = [...itemChild]
-            }
-          }
-        }
-        return item
-      })
-
-      if (alertType) {
+      const alert = parseAlert(node)
+      if (alert) {
+        const {title, type: alertType} = alert
+        const child = node.children
         node.data = {
           hName: "div",
           hProperties: {
@@ -117,7 +121,7 @@ export const remarkAlerts: Plugin<[], Root> = () => {
   }
 }
 
-export function getAlertIcon(type: IconType): PhrasingContent {
+export function getAlertIcon(type: AlertType): PhrasingContent {
   const svgChildren = svgData[type] ?? []
   return {
     children: svgChildren,
@@ -140,13 +144,11 @@ export function getAlertIcon(type: IconType): PhrasingContent {
   }
 }
 
-type IconType = "note" | "tip" | "success" | "warning" | "caution"
-
 /**
  * These SVG children correspond to the lucide icons matching our
  * {@link https://react.qui.qualcomm.com/components/inline-alert | Alert} component.
  */
-const svgData: Record<IconType, PhrasingContent[]> = {
+const svgData: Record<AlertType, PhrasingContent[]> = {
   caution: [
     {
       children: [],
@@ -298,7 +300,7 @@ const svgData: Record<IconType, PhrasingContent[]> = {
   ],
 }
 
-const alertToEmphasis: Record<IconType, string> = {
+const alertToEmphasis: Record<AlertType, string> = {
   caution: "danger",
   note: "info",
   success: "success",

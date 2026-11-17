@@ -5,7 +5,10 @@ import type {Root} from "hast"
 import {toHtml} from "hast-util-to-html"
 import {describe, expect, test} from "vitest"
 
-import {parseDescriptions} from "../open-api/parse-descriptions.js"
+import {
+  parseDescription,
+  parseDescriptions,
+} from "../open-api/parse-descriptions.js"
 
 const html = (tree: unknown) => toHtml(tree as Root)
 
@@ -93,5 +96,21 @@ describe("parseDescriptions", () => {
     expect(html(parsed.description)).not.toMatch(
       /script|javascript|onerror|<img/,
     )
+  })
+
+  test("emits GitHub alerts as alert elements", () => {
+    const tree = parseDescription(
+      "> [!WARNING/Rate limits]\n> Requests are throttled.",
+    )
+    expect(html(tree)).toBe(
+      '<alert label="Rate limits" type="warning">\n<p>Requests are throttled.</p>\n</alert>',
+    )
+  })
+
+  test("emits an alert whose marker is followed by a list", () => {
+    const tree = parseDescription("> [!CAUTION]\n> * Comments are deleted.")
+    expect(html(tree)).toContain('<alert type="caution">')
+    expect(html(tree)).toContain("<li>Comments are deleted.</li>")
+    expect(html(tree)).not.toContain("[!CAUTION]")
   })
 })

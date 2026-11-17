@@ -2,11 +2,14 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {Root} from "hast"
+import type {Root as MdastRoot} from "mdast"
 import remarkGfm from "remark-gfm"
 import remarkParse from "remark-parse"
 import remarkRehype from "remark-rehype"
-import {unified} from "unified"
+import {type Plugin, unified} from "unified"
 import {visit} from "unist-util-visit"
+
+import {parseAlert} from "../remark/remark-alerts.js"
 
 import {isNameMap, isPayload} from "./spec-keys.js"
 
@@ -41,7 +44,27 @@ function sanitize(tree: Root): void {
   })
 }
 
-const processor = unified().use(remarkParse).use(remarkGfm).use(remarkRehype)
+/**
+ * Emits GitHub alerts as an `alert` element instead of styled markup, so the
+ * renderer decides how they look.
+ */
+const remarkAlertElements: Plugin<[], MdastRoot> = () => (tree) => {
+  visit(tree, "blockquote", (node) => {
+    const alert = parseAlert(node)
+    if (alert) {
+      node.data = {
+        hName: "alert",
+        hProperties: {label: alert.title, type: alert.type},
+      }
+    }
+  })
+}
+
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkAlertElements)
+  .use(remarkRehype)
 
 /**
  * Parses a CommonMark description into a hast tree, without positions so it

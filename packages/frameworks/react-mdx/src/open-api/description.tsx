@@ -6,9 +6,12 @@ import {Children, isValidElement, type ReactNode, useMemo} from "react"
 import {useMDXComponents} from "@mdx-js/react"
 import type {Root} from "hast"
 import {type Components, toJsxRuntime} from "hast-util-to-jsx-runtime"
+import {Lightbulb} from "lucide-react"
 import {Fragment, jsx, jsxs} from "react/jsx-runtime"
 
+import type {QdsNotificationEmphasis} from "@qualcomm-ui/qds-core/inline-notification"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
+import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 
 export interface DescriptionProps {
   /**
@@ -45,20 +48,54 @@ function CodeBlock({children}: {children?: ReactNode}): ReactNode {
   )
 }
 
+const alertEmphasis: Record<string, QdsNotificationEmphasis> = {
+  caution: "danger",
+  note: "info",
+  success: "success",
+  tip: "info",
+  warning: "warning",
+}
+
+interface AlertProps {
+  children?: ReactNode
+  label?: string
+  type?: string
+}
+
+/**
+ * A GitHub alert (`> [!NOTE]`), styled like the ones on MDX pages.
+ */
+function Alert({children, label, type = "note"}: AlertProps): ReactNode {
+  return (
+    <InlineNotification
+      className="mdx"
+      description={children}
+      emphasis={alertEmphasis[type] ?? "neutral"}
+      icon={type === "tip" ? Lightbulb : undefined}
+      label={label}
+      orientation="vertical"
+    />
+  )
+}
+
 /**
  * A spec description, parsed from CommonMark by the docs plugin and rendered
  * with the site's MDX components, like any other docs page content.
  */
 export function Description({components, tree}: DescriptionProps): ReactNode {
   const mdxComponents = useMDXComponents()
-  return useMemo(
-    () =>
-      toJsxRuntime(tree, {
-        components: {...mdxComponents, pre: CodeBlock, ...components},
-        Fragment,
-        jsx,
-        jsxs,
-      }),
-    [components, mdxComponents, tree],
-  )
+  return useMemo(() => {
+    const allComponents: Partial<Components> & {alert: typeof Alert} = {
+      ...mdxComponents,
+      alert: Alert,
+      pre: CodeBlock,
+      ...components,
+    }
+    return toJsxRuntime(tree, {
+      components: allComponents,
+      Fragment,
+      jsx,
+      jsxs,
+    })
+  }, [components, mdxComponents, tree])
 }

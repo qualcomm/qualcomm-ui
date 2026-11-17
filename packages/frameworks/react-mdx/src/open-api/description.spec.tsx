@@ -65,4 +65,32 @@ describe("Description", () => {
       .not.toBeNull()
     expect(container.textContent).toContain('{"id": 1}')
   })
+
+  test("renders alerts as inline notifications", async () => {
+    const {container} = await render(
+      <Description
+        tree={{
+          children: [
+            {
+              children: [{type: "text", value: "Requests are throttled."}],
+              properties: {label: "Rate limits", type: "caution"},
+              tagName: "alert",
+              type: "element",
+            },
+          ],
+          type: "root",
+        }}
+      />,
+    )
+
+    const root = container.querySelector(".qui-notification__root")
+    expect(root).toHaveAttribute("data-emphasis", "danger")
+    expect(root?.querySelector(".qui-notification__label")).toHaveTextContent(
+      "Rate limits",
+    )
+    expect(
+      root?.querySelector(".qui-notification__description"),
+    ).toHaveTextContent("Requests are throttled.")
+    expect(container.querySelector("alert")).toBeNull()
+  })
 })
