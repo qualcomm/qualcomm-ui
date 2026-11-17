@@ -43,6 +43,7 @@ export function CheckboxFilterControl({
   const selected = filter.value ?? []
 
   const mergedProps = mergeProps(
+    qdsContext.getOptionGroupBindings(),
     {"aria-labelledby": filter.labelId, role: "group"},
     props,
   )

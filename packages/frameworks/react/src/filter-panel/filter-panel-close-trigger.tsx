@@ -36,5 +36,5 @@ export function FilterPanelCloseTrigger({
 
   const mergedProps = mergeProps(qdsContext.getCloseTriggerBindings(), props)
 
-  return <IconButton icon={icon} variant="ghost" {...mergedProps} />
+  return <IconButton icon={icon} variant="outline" {...mergedProps} />
 }

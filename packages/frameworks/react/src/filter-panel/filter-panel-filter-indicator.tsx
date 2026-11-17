@@ -44,7 +44,7 @@ export function FilterPanelFilterIndicator({
 
   return (
     <PolymorphicElement as="span" {...mergedProps}>
-      <IconOrNode icon={icon} />
+      <IconOrNode icon={icon} {...qdsContext.getFilterIndicatorIconProps()} />
     </PolymorphicElement>
   )
 }

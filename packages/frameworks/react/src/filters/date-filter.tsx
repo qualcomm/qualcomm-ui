@@ -106,6 +106,7 @@ export function DateFilterControl({
     <>
       <RadioGroup
         aria-labelledby={filter.labelId}
+        itemsProps={qdsContext.getOptionGroupBindings()}
         onValueChange={(next) => {
           setCustomSelected(next === CUSTOM)
           filter.setValue(

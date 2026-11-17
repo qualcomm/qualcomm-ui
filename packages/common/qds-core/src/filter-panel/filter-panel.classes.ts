@@ -15,6 +15,7 @@ export const filterPanelClasses = {
   footer: "qui-filter-panel__footer",
   header: "qui-filter-panel__header",
   heading: "qui-filter-panel__heading",
+  optionGroup: "qui-filter-panel__option-group",
   root: "qui-filter-panel__root",
   section: "qui-filter-panel__section",
 } as const

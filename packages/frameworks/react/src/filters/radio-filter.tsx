@@ -10,6 +10,7 @@ import type {
 import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {FilterSection, type FilterSectionProps} from "./filter-section.js"
 import {useFilterOptions} from "./internal/use-filter-options.js"
@@ -30,6 +31,7 @@ export interface RadioFilterControlProps extends Omit<
  * A radio group, one radio per option.
  */
 export function RadioFilterControl({
+  itemsProps,
   options,
   ...props
 }: RadioFilterControlProps): ReactElement {
@@ -41,6 +43,7 @@ export function RadioFilterControl({
   return (
     <RadioGroup
       aria-labelledby={filter.labelId}
+      itemsProps={mergeProps(qdsContext.getOptionGroupBindings(), itemsProps)}
       onValueChange={(value) => {
         const option = items.find((item) => item.value === value)
         filter.setValue(

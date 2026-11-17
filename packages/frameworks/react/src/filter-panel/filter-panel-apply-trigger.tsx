@@ -29,7 +29,12 @@ export function FilterPanelApplyTrigger({
   )
 
   return (
-    <Button emphasis="primary" variant="fill" {...mergedProps}>
+    <Button
+      emphasis="primary"
+      variant="fill"
+      {...qdsContext.getApplyTriggerButtonProps()}
+      {...mergedProps}
+    >
       {children}
     </Button>
   )

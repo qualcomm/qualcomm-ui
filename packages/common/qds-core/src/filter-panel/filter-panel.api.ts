@@ -3,6 +3,7 @@
 
 import type {QdsNumberBadgeProps} from "@qualcomm-ui/qds-core/badge"
 import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
+import type {QdsIconApiProps} from "@qualcomm-ui/qds-core/icon"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
@@ -23,6 +24,7 @@ import type {
   QdsFilterPanelFooterBindings,
   QdsFilterPanelHeaderBindings,
   QdsFilterPanelHeadingBindings,
+  QdsFilterPanelOptionGroupBindings,
   QdsFilterPanelRootBindings,
   QdsFilterPanelSectionBindings,
 } from "./filter-panel.types.js"
@@ -37,10 +39,15 @@ export function createQdsFilterPanelApi(
   return {
     controlSize,
 
+    getApplyTriggerButtonProps(): QdsButtonApiProps {
+      return size === "lg"
+        ? {density: "default", size: "sm"}
+        : {density: "compact", size: "lg"}
+    },
     getButtonProps(): QdsButtonApiProps {
       return {
         density: "compact",
-        size: controlSize,
+        size: size === "lg" ? "lg" : "md",
       }
     },
     getCountBadgeProps(): QdsNumberBadgeProps {
@@ -48,6 +55,9 @@ export function createQdsFilterPanelApi(
     },
     getFilterCountBadgeProps(): QdsNumberBadgeProps {
       return {emphasis: "neutral-outline", size: size === "lg" ? "sm" : "xs"}
+    },
+    getFilterIndicatorIconProps(): QdsIconApiProps {
+      return {size: size === "lg" ? "md" : "xs"}
     },
 
     size,
@@ -95,6 +105,9 @@ export function createQdsFilterPanelApi(
     },
     getHeadingBindings(): QdsFilterPanelHeadingBindings {
       return normalize.element({className: filterPanelClasses.heading})
+    },
+    getOptionGroupBindings(): QdsFilterPanelOptionGroupBindings {
+      return normalize.element({className: filterPanelClasses.optionGroup})
     },
     getRootBindings(): QdsFilterPanelRootBindings {
       return normalize.element({

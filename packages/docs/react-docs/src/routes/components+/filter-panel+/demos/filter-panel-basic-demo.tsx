@@ -38,7 +38,7 @@ export function FilterPanelBasicDemo(): ReactElement {
       {/* preview */}
       <CodeHighlight
         className="min-w-60 flex-1"
-        code={JSON.stringify(value, null, 2)}
+        code={`// filter value\n${JSON.stringify(value, null, 2)}`}
         language="json"
       />
     </div>

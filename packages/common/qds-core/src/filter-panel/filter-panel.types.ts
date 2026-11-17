@@ -3,6 +3,7 @@
 
 import type {QdsNumberBadgeProps} from "@qualcomm-ui/qds-core/badge"
 import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
+import type {QdsIconApiProps} from "@qualcomm-ui/qds-core/icon"
 
 import type {filterPanelClasses} from "./filter-panel.classes.js"
 
@@ -84,6 +85,10 @@ export interface QdsFilterPanelHeadingBindings {
   className: FilterPanelClasses["heading"]
 }
 
+export interface QdsFilterPanelOptionGroupBindings {
+  className: FilterPanelClasses["optionGroup"]
+}
+
 export interface QdsFilterPanelSectionBindings {
   className: FilterPanelClasses["section"]
 }
@@ -94,9 +99,11 @@ export interface QdsFilterPanelApi {
    */
   controlSize: QdsFilterPanelControlSize
 
+  getApplyTriggerButtonProps(): QdsButtonApiProps
   getButtonProps(): QdsButtonApiProps
   getCountBadgeProps(): QdsNumberBadgeProps
   getFilterCountBadgeProps(): QdsNumberBadgeProps
+  getFilterIndicatorIconProps(): QdsIconApiProps
 
   size: QdsFilterPanelSize
 
@@ -114,6 +121,7 @@ export interface QdsFilterPanelApi {
   getFooterBindings(): QdsFilterPanelFooterBindings
   getHeaderBindings(): QdsFilterPanelHeaderBindings
   getHeadingBindings(): QdsFilterPanelHeadingBindings
+  getOptionGroupBindings(): QdsFilterPanelOptionGroupBindings
   getRootBindings(): QdsFilterPanelRootBindings
   getSectionBindings(): QdsFilterPanelSectionBindings
 }
