@@ -932,6 +932,43 @@ const tests: MultiComponentTestCase[] = [
     },
   },
   {
+    simple() {
+      return (
+        <Select
+          collection={stringCollection}
+          controlProps={{"aria-label": "Select option"}}
+        />
+      )
+    },
+    testCase: (getComponent) => {
+      test("simple select renders no label element without a label", async () => {
+        const {container} = await render(getComponent())
+
+        await expect
+          .element(page.getByRole("combobox", {name: /select option/i}))
+          .toBeVisible()
+        expect(container.querySelector("label")).toBeNull()
+      })
+    },
+  },
+  {
+    simple() {
+      return <Select collection={stringCollection} label="Select option" />
+    },
+    testCase: (getComponent) => {
+      test("simple select keeps item props off the option elements", async () => {
+        await render(getComponent())
+
+        await userEvent.click(
+          page.getByRole("combobox", {name: /select option/i}),
+        )
+        const option = page.getByRole("option", {name: "Option 1"})
+        await expect.element(option).toBeVisible()
+        await expect.element(option).not.toHaveAttribute("item")
+      })
+    },
+  },
+  {
     composite() {
       return (
         <Select.Root collection={objectCollection}>

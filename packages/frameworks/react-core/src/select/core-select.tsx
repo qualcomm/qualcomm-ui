@@ -188,10 +188,12 @@ export interface CoreSelectItemProps
 
 export function CoreSelectItem({
   children,
+  item,
+  persistFocus,
   ...props
 }: CoreSelectItemProps): ReactElement {
   const selectContext = useSelectContext()
-  const itemContext = selectContext.getItemState(props)
+  const itemContext = selectContext.getItemState({item, persistFocus})
   const mergedProps = mergeProps(
     selectContext.getItemBindings(itemContext),
     props,
