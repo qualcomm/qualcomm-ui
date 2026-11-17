@@ -53,4 +53,19 @@ describe("filter definitions", () => {
       value: "f",
     })
   })
+
+  test("presets need a range unless named after a date picker preset", () => {
+    dateFilter({
+      presets: [
+        {label: "Last 7 days", value: "last7Days"},
+        {
+          label: "This fiscal year",
+          range: () => ["2026-04-01", null],
+          value: "fy",
+        },
+        // @ts-expect-error custom preset values need a range
+        {label: "This fiscal year", value: "fy"},
+      ],
+    })
+  })
 })

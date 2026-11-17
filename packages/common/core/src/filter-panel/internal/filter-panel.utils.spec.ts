@@ -24,7 +24,7 @@ const definitions = defineFilters({
   query: textFilter(),
   status: checkboxFilter(),
   submitted: dateFilter({
-    presets: [{label: "Last 7 days", range: () => [null, null], value: "7d"}],
+    presets: [{label: "Last 7 days", value: "last7Days"}],
   }),
   tags: customFilter<{all: boolean; tags: string[]}>({
     getValueCount: (value) => value.tags.length,
@@ -47,7 +47,7 @@ describe("filter panel utils", () => {
   test("definitions decide whether other values are empty", () => {
     expect(isEmpty("duration", [null, null])).toBe(true)
     expect(isEmpty("duration", [10, null])).toBe(false)
-    expect(isEmpty("submitted", {preset: "7d"})).toBe(false)
+    expect(isEmpty("submitted", {preset: "last7Days"})).toBe(false)
   })
 
   test("custom definitions and the consumer check can reject values", () => {
@@ -112,7 +112,7 @@ describe("filter panel utils", () => {
         duration: [10, null],
         query: "out/",
         status: ["Failed", "Queued"],
-        submitted: {preset: "7d"},
+        submitted: {preset: "last7Days"},
         tags: {all: false, tags: ["a", "b", "c"]},
         unknown: ["x"],
       }),

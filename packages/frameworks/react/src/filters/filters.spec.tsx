@@ -62,7 +62,7 @@ const filters = defineFilters({
   }),
   submitted: dateFilter({
     label: "Submitted",
-    presets: [{label: "Last 7 days", range: () => [null, null], value: "7d"}],
+    presets: [{label: "Last 7 days", value: "last7Days"}],
   }),
   user: checkboxFilter({label: "User"}),
 })
@@ -413,7 +413,7 @@ describe("filter types", () => {
     await page.getByText("Last 7 days").click()
     await expect
       .poll(() => onValueChange.mock.lastCall?.[0])
-      .toEqual({submitted: {preset: "7d"}})
+      .toEqual({submitted: {preset: "last7Days"}})
 
     await page.getByText("Custom range").click()
     await expect.poll(() => onValueChange.mock.lastCall?.[0]).toEqual({})

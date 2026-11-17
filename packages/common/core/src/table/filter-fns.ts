@@ -8,6 +8,8 @@ import {
   type DateFilterPreset,
   type DateFilterValue,
   isEmptyDateFilterValue,
+  resolveDateFilterPreset,
+  type ResolveDateFilterPresetOptions,
 } from "@qualcomm-ui/core/filters"
 
 import type {FilterFn} from "./features/filters.js"
@@ -236,7 +238,10 @@ inDateRange.autoRemove = isEmptyDateFilterValue
  * filtering runs, so relative presets such as "Last 7 days" stay relative to
  * the current date. Pass the same presets to the date filter's definition.
  */
-export function createDateFilterFn(presets: DateFilterPreset[]): FilterFn<any> {
+export function createDateFilterFn(
+  presets: DateFilterPreset[],
+  options?: ResolveDateFilterPresetOptions,
+): FilterFn<any> {
   const filterFn: FilterFn<any> = (row, columnId, filterValue, addMeta) =>
     inDateRange(row, columnId, filterValue, addMeta)
 
@@ -252,7 +257,7 @@ export function createDateFilterFn(presets: DateFilterPreset[]): FilterFn<any> {
       )
       return [-Infinity, Infinity]
     }
-    return resolveDateBounds(...preset.range())
+    return resolveDateBounds(...resolveDateFilterPreset(preset, options))
   }
 
   filterFn.autoRemove = isEmptyDateFilterValue

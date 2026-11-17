@@ -208,4 +208,31 @@ describe("createDateFilterFn", () => {
       ),
     ).toEqual(["Ada", "Grace", "Margaret", "Mary"])
   })
+
+  test("resolves built-in presets relative to the current date", () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date("2024-02-15T12:00:00.000Z"))
+    try {
+      const columns = makeTestColumns().map((column) =>
+        column.id === "createdAt"
+          ? {
+              ...column,
+              filterFn: createDateFilterFn(
+                [{label: "Last 30 days", value: "last30Days"}],
+                {timeZone: "UTC"},
+              ),
+            }
+          : column,
+      )
+
+      expect(
+        filteredNames(
+          [{id: "createdAt", value: {preset: "last30Days"}}],
+          columns,
+        ),
+      ).toEqual(["Grace"])
+    } finally {
+      vi.useRealTimers()
+    }
+  })
 })

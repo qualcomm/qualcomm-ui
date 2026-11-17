@@ -21,7 +21,7 @@ const definitions = defineFilters({
   query: textFilter(),
   status: checkboxFilter(),
   submitted: dateFilter({
-    presets: [{label: "Last 7 days", range: () => [null, null], value: "7d"}],
+    presets: [{label: "Last 7 days", value: "last7Days"}],
   }),
   tags: customFilter<{all: boolean; tags: string[]}>({
     getValueCount: (value) => value.tags.length,
@@ -49,9 +49,9 @@ describe("isEmptyFilterValue", () => {
       isEmptyFilterValue(definitions.submitted, {range: ["2026-11-01", null]}),
     ).toBe(false)
     expect(isEmptyFilterValue(definitions.submitted, {preset: ""})).toBe(true)
-    expect(isEmptyFilterValue(definitions.submitted, {preset: "7d"})).toBe(
-      false,
-    )
+    expect(
+      isEmptyFilterValue(definitions.submitted, {preset: "last7Days"}),
+    ).toBe(false)
   })
 
   test("custom definitions decide with their own isEmptyValue", () => {
@@ -70,7 +70,7 @@ describe("isEmptyDateFilterValue", () => {
     expect(isEmptyDateFilterValue({range: ["", null]})).toBe(true)
     expect(isEmptyDateFilterValue({preset: ""})).toBe(true)
     expect(isEmptyDateFilterValue({range: ["2024-01-01", null]})).toBe(false)
-    expect(isEmptyDateFilterValue({preset: "7d"})).toBe(false)
+    expect(isEmptyDateFilterValue({preset: "last7Days"})).toBe(false)
   })
 })
 
@@ -78,7 +78,9 @@ describe("countFilterValue", () => {
   test("counts array items and one per other value", () => {
     expect(countFilterValue(definitions.status, ["a", "b"])).toBe(2)
     expect(countFilterValue(definitions.duration, [10, 20])).toBe(1)
-    expect(countFilterValue(definitions.submitted, {preset: "7d"})).toBe(1)
+    expect(countFilterValue(definitions.submitted, {preset: "last7Days"})).toBe(
+      1,
+    )
     expect(countFilterValue(definitions.query, "out/")).toBe(1)
     expect(
       countFilterValue(definitions.tags, {all: false, tags: ["a", "b"]}),
@@ -103,7 +105,7 @@ describe("labelFilterValue", () => {
     expect(
       labelFilterValue(
         definitions.submitted,
-        {preset: "7d"},
+        {preset: "last7Days"},
         getOptionLabel,
       ),
     ).toEqual(["Last 7 days"])
@@ -114,9 +116,9 @@ describe("labelFilterValue", () => {
         getOptionLabel,
       ),
     ).toEqual(["≤ 2026-11-09"])
-    expect(
-      labelFilterValue(definitions.query, "out/", getOptionLabel),
-    ).toEqual(["out/"])
+    expect(labelFilterValue(definitions.query, "out/", getOptionLabel)).toEqual(
+      ["out/"],
+    )
     expect(
       labelFilterValue(
         definitions.tags,
@@ -133,6 +135,6 @@ describe("stringifyFilterValue", () => {
     expect(stringifyFilterValue(12)).toBe("12")
     expect(stringifyFilterValue(false)).toBe("false")
     expect(stringifyFilterValue(null)).toBe("")
-    expect(stringifyFilterValue({preset: "7d"})).toBe("")
+    expect(stringifyFilterValue({preset: "last7Days"})).toBe("")
   })
 })

@@ -1,6 +1,8 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {DateRangePreset} from "@qualcomm-ui/utils/date-utils"
+
 /**
  * A filter option. A plain string is used as both the value and the label.
  */
@@ -63,7 +65,32 @@ export type DateFilterValue = {preset: string} | {range: DateFilterRange}
 
 export type TextFilterValue = string
 
-export interface DateFilterPreset {
+/**
+ * `[start, end]` returned by a preset's `range`. `null` leaves that side
+ * unbounded.
+ */
+export type DateFilterPresetRange = [Date | string | null, Date | string | null]
+
+/**
+ * A preset named after one of the date picker's range presets, such as
+ * `"last7Days"`. Its range is computed from the name.
+ */
+export interface BuiltInDateFilterPreset {
+  /**
+   * Human-readable label for the preset.
+   */
+  label: string
+
+  range?: undefined
+
+  /**
+   * The date picker range preset. Also the value written to the filter when
+   * the preset is selected.
+   */
+  value: DateRangePreset
+}
+
+export interface CustomDateFilterPreset {
   /**
    * Human-readable label for the preset.
    */
@@ -71,16 +98,17 @@ export interface DateFilterPreset {
 
   /**
    * Returns the `[start, end]` range for the preset. Called when filtering
-   * runs, so relative presets such as "Last 7 days" stay relative to the
-   * current date. `null` leaves that side unbounded.
+   * runs, so relative presets stay relative to the current date.
    */
-  range: () => [Date | string | null, Date | string | null]
+  range: () => DateFilterPresetRange
 
   /**
    * The value written to the filter when the preset is selected.
    */
   value: string
 }
+
+export type DateFilterPreset = BuiltInDateFilterPreset | CustomDateFilterPreset
 
 interface FilterDefinitionConfig {
   /**
@@ -131,9 +159,10 @@ export interface DateFilterConfig extends FilterDefinitionConfig {
   formatDate?: ((value: string) => string) | undefined
 
   /**
-   * Developer-defined presets, such as "Last 7 days". A table column that
-   * uses presets needs a filter function that knows them. Create one with
-   * `createDateFilterFn(presets)`.
+   * Developer-defined presets, such as "Last 7 days". A preset whose value is
+   * a date picker range preset, such as `"last7Days"`, needs no `range`. A
+   * table column that uses presets needs a filter function that knows them.
+   * Create one with `createDateFilterFn(presets)`.
    */
   presets?: DateFilterPreset[] | undefined
 }
