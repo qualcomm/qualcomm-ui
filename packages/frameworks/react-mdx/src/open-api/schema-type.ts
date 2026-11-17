@@ -19,9 +19,11 @@ export interface JsonSchema {
   items?: JsonSchema
   oneOf?: JsonSchema[]
   properties?: Record<string, JsonSchema>
+  readOnly?: boolean
   required?: string[]
   title?: string
   type?: string | string[]
+  writeOnly?: boolean
 }
 
 function getArrayLabel(items: JsonSchema | undefined): string {

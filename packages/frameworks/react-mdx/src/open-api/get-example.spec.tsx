@@ -4,6 +4,7 @@
 import {describe, expect, test} from "vitest"
 
 import {getExample, isJsonMediaType} from "./get-example.js"
+import {normalizeSchema} from "./normalize-schema.js"
 
 describe("getExample", () => {
   test("prefers the spec's example, then default, then the first enum value", () => {
@@ -43,6 +44,18 @@ describe("getExample", () => {
       }),
     ).toEqual({a: 0, b: true})
     expect(getExample({oneOf: [{type: "integer"}, {type: "string"}]})).toBe(0)
+  })
+
+  test("keeps the fields declared next to oneOf", () => {
+    expect(
+      getExample(
+        normalizeSchema({
+          oneOf: [{properties: {name: {type: "string"}}}],
+          properties: {id: {type: "integer"}},
+          required: ["id"],
+        }),
+      ),
+    ).toEqual({id: 0, name: "string"})
   })
 
   test("stops at recursive schemas", () => {

@@ -4,6 +4,7 @@
 import {describe, expect, test} from "vitest"
 
 import {getVariants} from "./get-variants.js"
+import {normalizeSchema} from "./normalize-schema.js"
 import {getSchemaTypeLabel} from "./schema-type.js"
 
 const planet = {properties: {name: {type: "string"}}, title: "Planet"}
@@ -13,6 +14,24 @@ describe("getVariants", () => {
     expect(
       getVariants({oneOf: [planet, {allOf: [{properties: {orbits: {}}}]}]}),
     ).toEqual([planet, {properties: {orbits: {}}}])
+  })
+
+  test("combines each alternative with the fields declared next to it", () => {
+    expect(
+      getVariants(
+        normalizeSchema({
+          oneOf: [planet],
+          properties: {id: {type: "string"}},
+          required: ["id"],
+        }),
+      ),
+    ).toEqual([
+      {
+        properties: {id: {type: "string"}, name: {type: "string"}},
+        required: ["id"],
+        title: "Planet",
+      },
+    ])
   })
 
   test("supports anyOf", () => {

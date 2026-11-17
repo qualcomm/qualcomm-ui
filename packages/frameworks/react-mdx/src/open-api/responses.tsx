@@ -60,20 +60,20 @@ export function Responses({
   responses?: Record<string, OpenApiResponse>
 }): ReactNode {
   const entries = Object.entries(responses ?? {})
+  const sharedLabel = useMemo(() => {
+    const labels = Object.values(responses ?? {})
+      .map(({content}) => groupMediaTypes(content))
+      .filter((groups) => groups.length)
+      .map((groups) =>
+        groups.length === 1 ? groups[0].mediaTypes.join(", ") : null,
+      )
+    return labels.length > 1 && labels.every((label) => label === labels[0])
+      ? labels[0]
+      : null
+  }, [responses])
   if (!entries.length) {
     return null
   }
-
-  const labels = entries
-    .map(([, {content}]) => groupMediaTypes(content))
-    .filter((groups) => groups.length)
-    .map((groups) =>
-      groups.length === 1 ? groups[0].mediaTypes.join(", ") : null,
-    )
-  const sharedLabel =
-    labels.length > 1 && labels.every((label) => label === labels[0])
-      ? labels[0]
-      : null
 
   return (
     <section>

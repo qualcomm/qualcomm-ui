@@ -1,6 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import {getAlternatives} from "./get-variants.js"
 import {mergeAllOf} from "./merge-all-of.js"
 import type {JsonSchema} from "./schema-type.js"
 
@@ -37,7 +38,7 @@ export function getExample(schema: JsonSchema | undefined, depth = 0): unknown {
   if (merged.enum?.length) {
     return merged.enum[0]
   }
-  const variant = (merged.oneOf ?? merged.anyOf)?.[0]
+  const variant = getAlternatives(merged)?.[0]
   if (variant) {
     return getExample(variant, depth)
   }

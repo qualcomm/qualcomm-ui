@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactNode} from "react"
+import {type ReactNode, useMemo} from "react"
 
 import type {Root} from "hast"
 
@@ -11,6 +11,8 @@ import {Badge} from "@qualcomm-ui/react/badge"
 
 import {CodeSamplesPanel} from "./code-samples-panel.js"
 import {Description} from "./description.js"
+import {omitDirectionalOperation} from "./directional-schema.js"
+import {normalizeOperation} from "./normalize-schema.js"
 import {type OpenApiParameter, Parameters} from "./parameters.js"
 import {type OpenApiRequestBody, RequestBody} from "./request-body.js"
 import {type OpenApiResponse, Responses} from "./responses.js"
@@ -68,7 +70,12 @@ function Endpoint({
  * @since next-release
  */
 export function OperationPage({loaderData}: OperationPageProps): ReactNode {
-  if (!loaderData) {
+  const operation = useMemo(
+    () =>
+      loaderData && omitDirectionalOperation(normalizeOperation(loaderData)),
+    [loaderData],
+  )
+  if (!operation) {
     return <NotFound />
   }
   const {
@@ -80,7 +87,7 @@ export function OperationPage({loaderData}: OperationPageProps): ReactNode {
     requestBody,
     responses,
     summary,
-  } = loaderData
+  } = operation
 
   return (
     <div className="qui-docs-openapi__operation">
@@ -119,7 +126,7 @@ export function OperationPage({loaderData}: OperationPageProps): ReactNode {
           <RequestBody body={requestBody} />
           <Responses key={path + method} responses={responses} />
         </div>
-        <CodeSamplesPanel operation={loaderData} />
+        <CodeSamplesPanel operation={operation} />
       </div>
     </div>
   )

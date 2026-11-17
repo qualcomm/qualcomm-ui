@@ -136,17 +136,13 @@ export function MediaSchema({
   const schema = group.schema && mergeAllOf(group.schema)
   const variants = schema && getVariants(schema)
 
-  return (
-    <>
-      {variants ? (
-        <SchemaVariants schema={schema} variants={variants} />
-      ) : schema?.properties ? (
-        <SchemaProperties schema={schema} />
-      ) : (
-        <div className="qui-docs-openapi__fields">
-          <SchemaProperty name="body" schema={schema} />
-        </div>
-      )}
-    </>
+  return variants ? (
+    <SchemaVariants schema={schema} variants={variants} />
+  ) : schema?.properties ? (
+    <SchemaProperties schema={schema} />
+  ) : (
+    <div className="qui-docs-openapi__fields">
+      <SchemaProperty name="body" schema={schema} />
+    </div>
   )
 }
