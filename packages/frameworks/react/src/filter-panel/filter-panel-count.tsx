@@ -22,8 +22,8 @@ export function FilterPanelCount(props: FilterPanelCountProps): ReactElement {
   const mergedProps = mergeProps(
     qdsContext.getCountBindings(),
     {
-      "aria-label": `${api.valueCount} selected`,
-      hidden: api.valueCount === 0,
+      "aria-label": `${api.draftValueCount} selected`,
+      hidden: api.draftValueCount === 0,
     },
     props,
   )
@@ -31,7 +31,7 @@ export function FilterPanelCount(props: FilterPanelCountProps): ReactElement {
   return (
     <NumberBadge
       {...qdsContext.getCountBadgeProps()}
-      value={api.valueCount}
+      value={api.draftValueCount}
       {...mergedProps}
     />
   )

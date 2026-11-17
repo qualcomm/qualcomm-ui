@@ -160,9 +160,9 @@ export interface DateFilterConfig extends FilterDefinitionConfig {
 
   /**
    * Developer-defined presets, such as "Last 7 days". A preset whose value is
-   * a date picker range preset, such as `"last7Days"`, needs no `range`. A
-   * table column that uses presets needs a filter function that knows them.
-   * Create one with `createDateFilterFn(presets)`.
+   * a date picker range preset, such as `"last7Days"`, needs no `range`. The
+   * selection stores the preset's value. Resolve it to dates with
+   * `resolveDateFilterPreset`.
    */
   presets?: DateFilterPreset[] | undefined
 }
@@ -171,14 +171,14 @@ export interface CustomFilterConfig<TValue> extends FilterDefinitionConfig {
   /**
    * Returns how many values the filter contributes to the active filter count.
    *
-   * @default 1 for any non-empty value, or the array length for arrays
+   * Defaults to 1 for any non-empty value, or the array length for arrays.
    */
   getValueCount?: ((value: TValue) => number) | undefined
 
   /**
    * Returns the labels used to summarize the value outside the panel.
    *
-   * @default one label per array item, otherwise one label for the value
+   * Defaults to one label per array item, otherwise one label for the value
    */
   getValueLabels?: ((value: TValue) => string[]) | undefined
 
@@ -189,54 +189,41 @@ export interface CustomFilterConfig<TValue> extends FilterDefinitionConfig {
   isEmptyValue?: ((value: TValue) => boolean) | undefined
 }
 
-interface FilterDefinitionBase<TKind extends string, TValue> {
+interface FilterDefinitionBase<TKind extends string> {
   /**
    * Ties the definition to one filter component and one value type.
    */
   readonly kind: TKind
-
-  /**
-   * Carries the filter's value type. Never set at runtime.
-   */
-  readonly "~value"?: TValue
 }
 
 export interface CheckboxFilterDefinition
-  extends
-    FilterDefinitionBase<"checkbox", CheckboxFilterValue>,
-    OptionFilterConfig {}
+  extends FilterDefinitionBase<"checkbox">, OptionFilterConfig {}
 
 export interface CheckboxTreeFilterDefinition
   extends
-    FilterDefinitionBase<"checkboxTree", CheckboxTreeFilterValue>,
+    FilterDefinitionBase<"checkboxTree">,
     Omit<OptionFilterConfig, "options"> {}
 
 export interface ComboboxFilterDefinition
-  extends
-    FilterDefinitionBase<"combobox", ComboboxFilterValue>,
-    OptionFilterConfig {}
+  extends FilterDefinitionBase<"combobox">, OptionFilterConfig {}
 
 export interface RadioFilterDefinition
-  extends FilterDefinitionBase<"radio", RadioFilterValue>, OptionFilterConfig {}
+  extends FilterDefinitionBase<"radio">, OptionFilterConfig {}
 
 export interface SelectFilterDefinition
-  extends
-    FilterDefinitionBase<"select", SelectFilterValue>,
-    OptionFilterConfig {}
+  extends FilterDefinitionBase<"select">, OptionFilterConfig {}
 
 export interface RangeFilterDefinition
-  extends FilterDefinitionBase<"range", RangeFilterValue>, RangeFilterConfig {}
+  extends FilterDefinitionBase<"range">, RangeFilterConfig {}
 
 export interface DateFilterDefinition
-  extends FilterDefinitionBase<"date", DateFilterValue>, DateFilterConfig {}
+  extends FilterDefinitionBase<"date">, DateFilterConfig {}
 
 export interface TextFilterDefinition
-  extends
-    FilterDefinitionBase<"text", TextFilterValue>,
-    FilterDefinitionConfig {}
+  extends FilterDefinitionBase<"text">, FilterDefinitionConfig {}
 
 export interface CustomFilterDefinition<TValue = unknown>
-  extends FilterDefinitionBase<"custom", TValue>, CustomFilterConfig<TValue> {}
+  extends FilterDefinitionBase<"custom">, CustomFilterConfig<TValue> {}
 
 export type FilterDefinition =
   | CheckboxFilterDefinition
@@ -270,11 +257,25 @@ export type FilterDefinitions<
   readonly [K in keyof TMap & string]: IdentifiedFilterDefinition<TMap[K], K>
 }
 
-export type FilterDefinitionValue<TDefinition> = TDefinition extends {
-  readonly "~value"?: infer TValue
+interface FilterValueByKind {
+  checkbox: CheckboxFilterValue
+  checkboxTree: CheckboxTreeFilterValue
+  combobox: ComboboxFilterValue
+  date: DateFilterValue
+  radio: RadioFilterValue
+  range: RangeFilterValue
+  select: SelectFilterValue
+  text: TextFilterValue
 }
-  ? TValue
-  : unknown
+
+export type FilterDefinitionValue<TDefinition> =
+  TDefinition extends CustomFilterDefinition<infer TValue>
+    ? TValue
+    : TDefinition extends {
+          readonly kind: infer TKind extends keyof FilterValueByKind
+        }
+      ? FilterValueByKind[TKind]
+      : unknown
 
 /**
  * The filter values for a set of definitions. Every filter is optional: an

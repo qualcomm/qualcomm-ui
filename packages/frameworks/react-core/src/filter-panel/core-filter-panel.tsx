@@ -184,8 +184,9 @@ export interface CoreFilterPanelFilterLabelProps extends Omit<
 > {
   /**
    * Overrides how the label renders. Accepts a `ReactNode`, or a function
-   * that receives the resolved string label. Accessible names and summaries
-   * keep the resolved string.
+   * that receives the resolved string label. The rendered label also names the
+   * filter's control. `getFilterLabel` and value summaries keep the resolved
+   * string.
    */
   children?: ReactNode | ((label: string) => ReactNode)
 }

@@ -27,7 +27,7 @@ export interface TextFilterControlProps extends Omit<
 }
 
 /**
- * A text input. Matches rows whose value contains the text.
+ * A text input that writes the entered text.
  */
 export function TextFilterControl({
   debounce = 300,
@@ -71,7 +71,7 @@ export interface TextFilterProps
     Omit<TextFilterControlProps, keyof FilterSectionProps> {}
 
 /**
- * A filter that matches text. Writes a `string`.
+ * A filter that captures free text. Writes a `string`.
  */
 export function TextFilter({
   contentProps,

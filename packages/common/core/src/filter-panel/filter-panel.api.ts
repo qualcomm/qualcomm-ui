@@ -39,10 +39,14 @@ export function createFilterPanelApi<
   const definitions = prop("filters") as TDefinitions | undefined
   const applyMode = prop("applyMode")
   const isEmpty = createEmptyValueCheck(definitions, prop("isEmptyValue"))
-  const filters = computed("filters")
+  const draftValue = computed("draftValue")
   const value = context.get("value")
   const labels = refs.get("labels")
-  const valueCount = countValues(definitions, isEmpty, filters)
+  const draftValueCount = countValues(definitions, isEmpty, draftValue)
+  const valueCount =
+    applyMode === "auto"
+      ? draftValueCount
+      : countValues(definitions, isEmpty, value)
   const isDirty =
     applyMode === "manual" &&
     !areValuesEqual(isEmpty, context.get("draft"), value)
@@ -61,7 +65,7 @@ export function createFilterPanelApi<
     )
   }
 
-  function getFilterValueCount(id: string, filterValue = filters[id]): number {
+  function getValueCount(id: string, filterValue: unknown): number {
     return isEmpty(id, filterValue)
       ? 0
       : countFilterValue(definitions?.[id], filterValue)
@@ -78,10 +82,13 @@ export function createFilterPanelApi<
     clearFilter(id) {
       send({id, type: "FILTER.SET", value: undefined})
     },
-    definitions,
-    filters: filters as FilterPanelApi<TDefinitions>["filters"],
-    getFilterDefinition(id) {
-      return definitions?.[id]
+    draftValue: draftValue as FilterPanelApi<TDefinitions>["draftValue"],
+    draftValueCount,
+    filters: definitions,
+    getDraftValue(id) {
+      return draftValue[id] as ReturnType<
+        FilterPanelApi<TDefinitions>["getDraftValue"]
+      >
     },
     getFilterLabel(id) {
       return definitions?.[id]?.label || prop("getFilterLabel")?.(id) || id
@@ -107,13 +114,8 @@ export function createFilterPanelApi<
         min: bounds?.min ?? range?.min,
       }
     },
-    getFilterValue(id) {
-      return filters[id] as ReturnType<
-        FilterPanelApi<TDefinitions>["getFilterValue"]
-      >
-    },
-    getFilterValueCount,
-    getFilterValueLabels(id, filterValue = filters[id]) {
+    getValueCount,
+    getValueLabels(id, filterValue) {
       if (isEmpty(id, filterValue)) {
         return []
       }
@@ -122,9 +124,6 @@ export function createFilterPanelApi<
       )
     },
     isDirty,
-    isFilterActive(id) {
-      return !isEmpty(id, filters[id])
-    },
     reset() {
       send({type: "RESET"})
     },
@@ -155,7 +154,7 @@ export function createFilterPanelApi<
       })
     },
     getClearTriggerBindings(): FilterPanelClearTriggerBindings {
-      const disabled = valueCount === 0
+      const disabled = draftValueCount === 0
       return normalize.button({
         ...parts.clearTrigger,
         "data-disabled": booleanDataAttr(disabled),
@@ -172,12 +171,12 @@ export function createFilterPanelApi<
     getFilterBindings({id}): FilterPanelFilterBindings {
       return normalize.element({
         ...parts.filter,
-        "data-active": booleanDataAttr(!isEmpty(id, filters[id])),
+        "data-active": booleanDataAttr(!isEmpty(id, draftValue[id])),
         "data-filter-id": id,
       })
     },
     getFilterCountBindings({id}): FilterPanelFilterCountBindings {
-      const count = getFilterValueCount(id)
+      const count = getValueCount(id, draftValue[id])
       return normalize.element({
         ...parts.filterCount,
         "aria-label": `${count} selected`,
@@ -187,7 +186,7 @@ export function createFilterPanelApi<
     getFilterLabelBindings({id}): FilterPanelFilterLabelBindings {
       return normalize.element({
         ...parts.filterLabel,
-        "data-active": booleanDataAttr(!isEmpty(id, filters[id])),
+        "data-active": booleanDataAttr(!isEmpty(id, draftValue[id])),
       })
     },
     getRootBindings(): FilterPanelRootBindings {

@@ -1,0 +1,347 @@
+---
+title: Filter Panel
+description: The filter panel renders a set of filter controls and tracks the user's selections, staging changes until they're applied.
+component: FilterPanel
+aliases: [filters, filter sidebar, facets, refine]
+badges:
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
+```
+
+## Overview
+
+- The filter panel renders filter controls and keeps track of what the user selects. It doesn't filter your data. Instead, you read the committed selection from [onValueChange](#onValueChange) and apply it to your data, request, or URL.
+- Filters are declared up front with `defineFilters`. Each key becomes the filter's id.
+
+## Defining Filters
+
+::: terms
+defineFilters, filter definitions, filter types
+:::
+
+```tsx
+import {
+  checkboxFilter,
+  defineFilters,
+  type FilterValues,
+  rangeFilter,
+  textFilter,
+} from "@qualcomm-ui/core/filters"
+
+export const filters = defineFilters({
+  buildPath: textFilter({label: "Build path"}),
+  duration: rangeFilter({label: "Duration", max: 120, min: 0}),
+  status: checkboxFilter({
+    label: "Status",
+    options: ["Failed", "Passed", "Queued"],
+  }),
+})
+```
+
+Each builder declares the kind of filter and its static configuration, like its label and options. Pass the definitions to the panel's [filters](#filters) prop, and each definition to its control. Controls only accept a definition of their own kind, so passing a range definition to a `CheckboxFilter` is a type error.
+
+The panel's value is a record keyed by filter id, and a filter with nothing selected has no key. Its type is inferred from the definitions:
+
+```tsx
+type BuildFilters = FilterValues<typeof filters>
+// {
+//   buildPath?: string
+//   duration?: [number | null, number | null]
+//   status?: string[]
+// }
+```
+
+The controls are documented on the [Filters](/components/filters) page.
+
+## Examples
+
+### Basic
+
+::: terms
+apply, clear all, count, header, footer
+:::
+
+By default, changes are staged in a draft. `FilterPanel.ApplyTrigger` commits the draft and calls [onValueChange](#onValueChange). `FilterPanel.Count` shows the number of selected values, and `FilterPanel.ClearTrigger` clears every filter.
+
+<Demo name="FilterPanelBasicDemo" component={demos.FilterPanelBasicDemo} />
+
+### Auto Apply
+
+::: terms
+instant, live, apply mode
+:::
+
+Set [applyMode](#applyMode) to `auto` to commit every change as it happens. There is no draft, so the apply trigger isn't needed.
+
+<Demo
+  name="FilterPanelAutoApplyDemo"
+  component={demos.FilterPanelAutoApplyDemo}
+/>
+
+### Controlled State
+
+::: terms
+controlled, value, onValueChange
+:::
+
+Use [value](#value) and [onValueChange](#onValueChange) to control the committed selection. These props follow our [controlled state](/patterns/controlled-state) pattern. In manual mode the panel still manages the draft.
+
+The second argument to `onValueChange` contains the labels of the options the user selected, keyed by filter id and option value. This is useful for options that are loaded at runtime, where the label isn't known ahead of time.
+
+<Demo
+  name="FilterPanelControlledStateDemo"
+  component={demos.FilterPanelControlledStateDemo}
+/>
+
+### Labels
+
+::: terms
+label, heading, custom label
+:::
+
+The definition's `label` is the filter's name everywhere: the section heading, the control's accessible name, and value summaries like [getValueLabels](#getValueLabels).
+
+To change how a single section heading renders, pass `label` to the control. It accepts a `ReactNode`, or a function that receives the definition's label. The rendered heading also names the control, but summaries keep the definition's label.
+
+<Demo
+  name="FilterPanelLabelsDemo"
+  component={demos.FilterPanelLabelsDemo}
+/>
+
+### Options
+
+::: terms
+async options, dynamic options, loaded options
+:::
+
+Static options belong on the definition. Options that are loaded at runtime are passed to the control, and take precedence over the definition's options.
+
+Options are strings or `{label, value}` objects. A selected value that isn't in the current options stays visible, so the user can always deselect it.
+
+<Demo
+  name="FilterPanelOptionsDemo"
+  component={demos.FilterPanelOptionsDemo}
+/>
+
+A selection restored from storage has no option labels until its options load. To label it in the meantime, supply [getFilterOptionLabel](#getFilterOptionLabel) on the panel, or `getOptionLabel` on the definition.
+
+### Hoisted State
+
+::: terms
+useFilterPanel, RootProvider, chips, active filters
+:::
+
+Create the panel's state with `useFilterPanel` and pass it to `FilterPanel.RootProvider` when you need it outside the panel, like rendering active filters as tags. The state outlives the panel, so the panel can be unmounted (in a closed drawer, for example) without losing the selection.
+
+<Demo
+  name="FilterPanelHoistedStateDemo"
+  component={demos.FilterPanelHoistedStateDemo}
+/>
+
+The API exposes two selections. [value](#value) is the committed selection, and [draftValue](#draftValue) is what the controls currently show. They only differ in manual mode, until the draft is applied. [valueCount](#valueCount) and [draftValueCount](#draftValueCount) count each one, so a "Filters (3)" button outside a closed drawer can show what's applied.
+
+> [!note]
+> `clearFilter` follows the apply mode. In manual mode, it clears the filter in the draft, and the change still has to be applied.
+
+### Custom Filters
+
+::: terms
+custom control, useFilterPanelFilter
+:::
+
+Declare a filter with your own value type using `customFilter`, then render it with the `FilterPanel.Filter` parts. Inside the filter, `useFilterPanelFilter` returns its value and a setter.
+
+```tsx
+const filters = defineFilters({
+  attachments: customFilter<boolean>({
+    getValueLabels: () => ["Has attachments"],
+    isEmptyValue: (value) => !value,
+    label: "Attachments",
+  }),
+})
+```
+
+`isEmptyValue` tells the panel when to drop the filter from the value, and `getValueLabels` describes the value in summaries.
+
+<Demo
+  name="FilterPanelCustomFilterDemo"
+  component={demos.FilterPanelCustomFilterDemo}
+/>
+
+## Using the Value
+
+::: terms
+search params, query string, request
+:::
+
+`onValueChange` is the only integration point. This example serializes the committed selection to URL search params.
+
+<Demo
+  name="FilterPanelSearchParamsDemo"
+  component={demos.FilterPanelSearchParamsDemo}
+/>
+
+## API
+
+### \<FilterPanel.Root>
+
+<TypeDocProps name="FilterPanelRootProps" />
+
+<TypeDocAttributes
+  name={["QdsFilterPanelRootBindings", "FilterPanelRootBindings"]}
+/>
+
+### \<FilterPanel.RootProvider>
+
+<TypeDocProps name="FilterPanelRootProviderProps" />
+
+### \<FilterPanel.Header>
+
+<TypeDocProps name="FilterPanelHeaderProps" />
+
+<TypeDocAttributes name="QdsFilterPanelHeaderBindings" />
+
+### \<FilterPanel.Heading>
+
+<TypeDocProps name="FilterPanelHeadingProps" />
+
+<TypeDocAttributes name="QdsFilterPanelHeadingBindings" />
+
+### \<FilterPanel.Count>
+
+<TypeDocProps name="FilterPanelCountProps" />
+
+<TypeDocAttributes name="QdsFilterPanelCountBindings" />
+
+### \<FilterPanel.Section>
+
+<TypeDocProps name="FilterPanelSectionProps" />
+
+<TypeDocAttributes name="QdsFilterPanelSectionBindings" />
+
+### \<FilterPanel.Footer>
+
+<TypeDocProps name="FilterPanelFooterProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFooterBindings" />
+
+### \<FilterPanel.ApplyTrigger>
+
+<TypeDocProps name="FilterPanelApplyTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelApplyTriggerBindings",
+    "FilterPanelApplyTriggerBindings",
+  ]}
+/>
+
+### \<FilterPanel.ClearTrigger>
+
+<TypeDocProps name="FilterPanelClearTriggerProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelClearTriggerBindings",
+    "FilterPanelClearTriggerBindings",
+  ]}
+/>
+
+### \<FilterPanel.CloseTrigger>
+
+<TypeDocProps name="FilterPanelCloseTriggerProps" />
+
+<TypeDocAttributes name="QdsFilterPanelCloseTriggerBindings" />
+
+### \<FilterPanel.Filter>
+
+<TypeDocProps name="FilterPanelFilterProps" />
+
+<TypeDocAttributes
+  name={["QdsFilterPanelFilterBindings", "FilterPanelFilterBindings"]}
+/>
+
+### \<FilterPanel.FilterTrigger>
+
+<TypeDocProps name="FilterPanelFilterTriggerProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFilterTriggerBindings" />
+
+### \<FilterPanel.FilterLabel>
+
+<TypeDocProps name="FilterPanelFilterLabelProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelFilterLabelBindings",
+    "FilterPanelFilterLabelBindings",
+  ]}
+/>
+
+### \<FilterPanel.FilterCount>
+
+<TypeDocProps name="FilterPanelFilterCountProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelFilterCountBindings",
+    "FilterPanelFilterCountBindings",
+  ]}
+/>
+
+### \<FilterPanel.FilterIndicator>
+
+<TypeDocProps name="FilterPanelFilterIndicatorProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFilterIndicatorBindings" />
+
+### \<FilterPanel.FilterContent>
+
+<TypeDocProps name="FilterPanelFilterContentProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFilterContentBindings" />
+
+### useFilterPanel
+
+Accepts the same state props as [FilterPanel.Root](#filter-panel-root) and returns the panel API.
+
+<TypeDocProps name="FilterPanelApi" partial />
+
+### useFilterPanelFilter
+
+Returns the state of the enclosing `FilterPanel.Filter`.
+
+<TypeDocProps name="FilterPanelFilterContextValue" />
+
+### Definitions
+
+#### OptionFilterConfig
+
+Configuration for `checkboxFilter`, `comboboxFilter`, `radioFilter`, and `selectFilter`. `checkboxTreeFilter` takes the same configuration without `options`, since its nodes come from the tree collection.
+
+<TypeDocProps name="OptionFilterConfig" />
+
+#### RangeFilterConfig
+
+<TypeDocProps name="RangeFilterConfig" />
+
+#### DateFilterConfig
+
+<TypeDocProps name="DateFilterConfig" />
+
+#### CustomFilterConfig
+
+<TypeDocProps name="CustomFilterConfig" />

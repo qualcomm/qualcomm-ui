@@ -1,0 +1,187 @@
+---
+title: Filters
+description: Filter controls for the filter panel, covering options, hierarchies, dates, numeric ranges, and free text.
+component: Filters
+aliases: [filter controls, checkbox filter, date filter, range filter, text filter]
+badges:
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+---
+
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {CheckboxFilter} from "@qualcomm-ui/react/filters"
+```
+
+## Overview
+
+Each filter renders a collapsible section in a [Filter Panel](/components/filter-panel), with a control built on one of our existing components. Pass the filter's definition to its [filter](./#filter) prop.
+
+- `CheckboxFilter`: pick any number of options. Selection: `string[]`.
+- `CheckboxTreeFilter`: pick leaves from a hierarchy. Selection: the checked leaf values as `string[]`.
+- `ComboboxFilter`: search and pick from a long option list. Selection: `string[]`.
+- `DateFilter`: pick a date range or a preset. Selection: `{range: [start, end]}` or `{preset}`.
+- `RadioFilter`: pick one option. Selection: a one-item `string[]`.
+- `RangeFilter`: pick a numeric range. Selection: `[min, max]`, with `null` for an open side.
+- `SelectFilter`: pick from a short option list in a dropdown. Selection: `string[]`.
+- `TextFilter`: enter free text. Selection: a `string`.
+
+Every filter accepts the [section props](./#section-props). Each section below documents only the props specific to that filter. The rest are forwarded to the underlying component.
+
+## Checkbox Filter
+
+::: terms
+checkbox group, multi-select
+:::
+
+Shows every option as a checkbox. Use it when the list is short enough to scan.
+
+<Demo name="CheckboxFilterDemo" component={demos.CheckboxFilterDemo} />
+
+<TypeDocProps name="CheckboxFilterProps" pick={["options"]} />
+
+Remaining props are forwarded to the group's `<div>` element.
+
+## Checkbox Tree Filter
+
+::: terms
+hierarchy, nested options, tree
+:::
+
+Selects leaves from a hierarchy. Checking a branch checks all of its leaves, and only leaf values are stored. The nodes come from a [TreeCollection](/components/tree#tree-collection), so the definition has no options.
+
+<Demo
+  name="CheckboxTreeFilterDemo"
+  component={demos.CheckboxTreeFilterDemo}
+/>
+
+<TypeDocProps name="CheckboxTreeFilterProps" pick={["collection"]} />
+
+Remaining props are forwarded to [Tree](/components/tree).
+
+## Combobox Filter
+
+::: terms
+search, autocomplete, long list
+:::
+
+Use a combobox when the list is too long to scan. Typing narrows the options by label. To search on the server instead, pass your own `collection` and update it from `onInputValueChange`.
+
+<Demo name="ComboboxFilterDemo" component={demos.ComboboxFilterDemo} />
+
+<TypeDocProps name="ComboboxFilterProps" pick={["collection", "options"]} />
+
+Remaining props are forwarded to [Combobox](/components/combobox).
+
+## Date Filter
+
+::: terms
+date range, presets, last 7 days, calendar
+:::
+
+Selects a date range, or one of the definition's presets. Ranges are stored as ISO 8601 dates.
+
+<Demo name="DateFilterDemo" component={demos.DateFilterDemo} />
+
+Presets are listed on the definition. A preset whose value is one of the [date picker's presets](/components/date-picker#presets-1), like `"last7Days"`, doesn't need a `range`. Any other preset supplies its own.
+
+```tsx
+dateFilter({
+  label: "Submitted",
+  presets: [
+    {label: "Last 7 days", value: "last7Days"},
+    {
+      label: "Since release",
+      range: () => ["2026-09-01", null],
+      value: "release",
+    },
+  ],
+})
+```
+
+A selected preset is stored as `{preset: "last7Days"}`, not as dates, so it stays relative to the current day. Use `resolveDateFilterPreset` to turn it into a range when you need one:
+
+```tsx
+import {resolveDateFilterPreset} from "@qualcomm-ui/core/filters"
+
+const [start, end] = resolveDateFilterPreset(preset)
+```
+
+Week presets depend on the locale, and every preset depends on the time zone. Both default to the user's, and can be passed as options.
+
+<TypeDocProps
+  name="DateFilterProps"
+  pick={["anyLabel", "customRange", "customRangeLabel"]}
+/>
+
+Remaining props are forwarded to [DatePicker](/components/date-picker).
+
+## Radio Filter
+
+::: terms
+single select, radio group
+:::
+
+Shows every option as a radio, for a single choice. An option with a value of `""` clears the filter, which is useful for an "Any" option.
+
+<Demo name="RadioFilterDemo" component={demos.RadioFilterDemo} />
+
+<TypeDocProps name="RadioFilterProps" pick={["options"]} />
+
+Remaining props are forwarded to [RadioGroup](/components/radio).
+
+## Range Filter
+
+::: terms
+slider, numeric range, min max
+:::
+
+Selects a numeric range with a two-thumb slider. A thumb left at its bound is stored as `null`, which leaves that side open. The value is written when a thumb is released.
+
+The bounds come from the definition's `min` and `max`. Use `formatValue` on the definition to format the values in summaries.
+
+<Demo name="RangeFilterDemo" component={demos.RangeFilterDemo} />
+
+The range filter has no props of its own. Remaining props are forwarded to [Slider](/components/slider).
+
+## Select Filter
+
+::: terms
+dropdown, select
+:::
+
+Use a select for a short list where a dropdown saves space. For longer lists, use the [Combobox Filter](./#combobox-filter).
+
+<Demo name="SelectFilterDemo" component={demos.SelectFilterDemo} />
+
+<TypeDocProps name="SelectFilterProps" pick={["collection", "options"]} />
+
+Remaining props are forwarded to [Select](/components/select).
+
+## Text Filter
+
+::: terms
+search, free text, debounce
+:::
+
+Captures free text. In auto mode, the value is committed once the user stops typing.
+
+<Demo name="TextFilterDemo" component={demos.TextFilterDemo} />
+
+<TypeDocProps name="TextFilterProps" pick={["debounce"]} />
+
+Remaining props are forwarded to [TextInput](/components/text-input).
+
+## Section Props
+
+These props are shared by every filter, and configure its collapsible section.
+
+<TypeDocProps name="FilterSectionProps" />

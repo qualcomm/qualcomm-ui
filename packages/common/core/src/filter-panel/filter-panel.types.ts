@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {
-  FilterDefinition,
   FilterDefinitions,
   FilterOption,
   FilterOptionObject,
@@ -141,10 +140,10 @@ export interface FilterPanelSchema extends MachineSchema {
   >
   computed: {
     /**
-     * The filters the panel currently displays: the draft in `manual` mode, the
-     * committed filters in `auto` mode.
+     * The selection the controls display: the draft in `manual` mode, the
+     * committed value in `auto` mode.
      */
-    filters: FilterPanelValues
+    draftValue: FilterPanelValues
   }
   context: {
     draft: FilterPanelValues
@@ -246,20 +245,30 @@ export interface FilterPanelApi<
   clearFilter: (id: keyof TDefinitions & string) => void
 
   /**
-   * The panel's filter definitions.
+   * The selection the controls display. In `manual` mode, this is the draft,
+   * which `apply` commits to `value`. In `auto` mode, it is always equal to
+   * `value`.
    */
-  definitions: TDefinitions | undefined
+  draftValue: FilterValues<TDefinitions>
 
   /**
-   * The filters the panel currently displays: the draft in `manual` mode, the
-   * committed filters in `auto` mode.
+   * The total number of selected values in `draftValue`. Each array item
+   * counts once; ranges, dates, and text count 1.
    */
-  filters: FilterValues<TDefinitions>
+  draftValueCount: number
 
   /**
-   * Returns the definition for a filter id.
+   * The panel's filter definitions, from the `filters` prop.
    */
-  getFilterDefinition: (id: string) => FilterDefinition | undefined
+  filters: TDefinitions | undefined
+
+  /**
+   * Returns a filter's value in `draftValue`, or `undefined` when it is not
+   * set.
+   */
+  getDraftValue: <K extends keyof TDefinitions & string>(
+    id: K,
+  ) => FilterValues<TDefinitions>[K]
 
   /**
    * Returns the label for a filter. Resolves from the definition, then the
@@ -288,35 +297,21 @@ export interface FilterPanelApi<
   getFilterRange: (id: string) => Partial<FilterPanelRange>
 
   /**
-   * Returns the current value of a filter, or `undefined` when it is not set.
+   * Returns how many values a filter value contributes to a count. Arrays
+   * count their length; ranges, dates, and text count 1. Empty values count 0.
    */
-  getFilterValue: <K extends keyof TDefinitions & string>(
-    id: K,
-  ) => FilterValues<TDefinitions>[K]
+  getValueCount: (id: string, value: unknown) => number
 
   /**
-   * Returns how many values a filter contributes to `valueCount`. Arrays count
-   * their length; ranges, dates, and text count 1.
+   * Returns the labels that summarize a filter value, such as one label per
+   * active filter chip. Pass a value from `value` or `draftValue`.
    */
-  getFilterValueCount: (id: string, value?: unknown) => number
+  getValueLabels: (id: string, value: unknown) => string[]
 
   /**
-   * Returns the labels that summarize a filter's value, such as one label per
-   * active filter chip. Defaults to the displayed value; pass `value` to
-   * summarize the committed filters instead.
-   */
-  getFilterValueLabels: (id: string, value?: unknown) => string[]
-
-  /**
-   * Whether the draft differs from the committed filters. Always `false` in
-   * `auto` mode.
+   * Whether `draftValue` differs from `value`. Always `false` in `auto` mode.
    */
   isDirty: boolean
-
-  /**
-   * Whether a filter has a non-empty value.
-   */
-  isFilterActive: (id: string) => boolean
 
   /**
    * Discards the draft and restores the committed filters. No-op in `auto`
@@ -335,13 +330,14 @@ export interface FilterPanelApi<
   ) => void
 
   /**
-   * The committed filters.
+   * The committed selection.
    */
   value: FilterValues<TDefinitions>
 
   /**
-   * The total number of selected values across the displayed filters. Each
-   * array item counts once; ranges, dates, and text count 1.
+   * The total number of selected values in `value`. Each array item counts
+   * once; ranges, dates, and text count 1. Equal to `draftValueCount` in
+   * `auto` mode.
    */
   valueCount: number
 

@@ -79,8 +79,8 @@ export interface RangeFilterProps
 
 /**
  * A filter that selects a numeric range with a slider. Bounds come from the
- * definition's `min` and `max`, then the panel's resolver (table facets, for
- * example). Writes `[number | null, number | null]`.
+ * definition's `min` and `max`, then the panel's `getFilterRange`. Writes
+ * `[number | null, number | null]`.
  */
 export function RangeFilter({
   contentProps,

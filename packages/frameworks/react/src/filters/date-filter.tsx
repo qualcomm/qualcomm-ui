@@ -137,8 +137,8 @@ export interface DateFilterProps
 
 /**
  * A filter that selects a date range, or one of the definition's presets.
- * Writes `{range: [start, end]}` with ISO 8601 dates, or `{preset}`. A table
- * column that uses presets needs `createDateFilterFn(presets)`.
+ * Writes `{range: [start, end]}` with ISO 8601 dates, or `{preset}`. Resolve a
+ * preset to dates with `resolveDateFilterPreset`.
  */
 export function DateFilter({
   contentProps,

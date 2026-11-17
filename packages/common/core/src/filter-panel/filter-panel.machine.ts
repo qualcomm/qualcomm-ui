@@ -19,7 +19,7 @@ import {
 
 const filterPanelMachineBase = {
   computed: {
-    filters: ({context, prop}) =>
+    draftValue: ({context, prop}) =>
       prop("applyMode") === "auto"
         ? context.get("value")
         : context.get("draft"),

@@ -41,8 +41,9 @@ export interface FilterSectionProps<
 
   /**
    * Customizes how the label renders in this filter's section. Accepts a
-   * `ReactNode`, or a function that receives the resolved string label.
-   * Accessible names and summaries keep the resolved string.
+   * `ReactNode`, or a function that receives the resolved string label. The
+   * rendered label also names the filter's control. `getFilterLabel` and
+   * value summaries keep the resolved string.
    */
   label?: FilterPanelFilterLabelProps["children"]
 

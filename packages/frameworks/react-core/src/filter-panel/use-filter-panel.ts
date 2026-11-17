@@ -52,18 +52,18 @@ export function useFilterPanelFilterState<TDefinition extends FilterDefinition>(
 ): FilterPanelFilterContextValue<TDefinition> {
   const api = useFilterPanelContext()
   const {id} = definition
+  const value = api.getDraftValue(id)
+  const count = api.getValueCount(id, value)
   return {
     clear: () => api.clearFilter(id),
-    count: api.getFilterValueCount(id),
+    count,
     definition,
     id,
-    isActive: api.isFilterActive(id),
+    isActive: count > 0,
     label: api.getFilterLabel(id),
     labelId,
-    setValue: (value, details) => api.setFilterValue(id, value, details),
-    value: api.getFilterValue(
-      id,
-    ) as FilterPanelFilterContextValue<TDefinition>["value"],
+    setValue: (next, details) => api.setFilterValue(id, next, details),
+    value: value as FilterPanelFilterContextValue<TDefinition>["value"],
   }
 }
 

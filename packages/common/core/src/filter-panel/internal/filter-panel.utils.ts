@@ -100,8 +100,7 @@ export function countValues(
   values: FilterPanelValues,
 ): number {
   return Object.entries(getNonEmptyValues(isEmpty, values)).reduce(
-    (count, [id, value]) =>
-      count + countFilterValue(definitions?.[id], value),
+    (count, [id, value]) => count + countFilterValue(definitions?.[id], value),
     0,
   )
 }

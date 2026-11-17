@@ -19,12 +19,14 @@ export interface FilterPanelFilterContextValue<
   clear: () => void
 
   /**
-   * How many values the filter contributes to the panel's value count.
+   * How many values the filter contributes to the panel's `draftValueCount`.
    */
   count: number
 
   /**
    * The filter's definition.
+   *
+   * @inheritDoc
    */
   definition: IdentifiedFilterDefinition<TDefinition>
 

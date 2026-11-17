@@ -311,6 +311,36 @@ describe("RootProvider", () => {
   })
 })
 
+describe("counts", () => {
+  test("valueCount counts the committed value, draftValueCount the draft", async () => {
+    function Example() {
+      const panel = useFilterPanel({filters})
+      return (
+        <>
+          <output aria-label="Applied">{panel.valueCount}</output>
+          <output aria-label="Pending">{panel.draftValueCount}</output>
+          <FilterPanel.RootProvider value={panel}>
+            <CheckboxFilter filter={filters.status} />
+            <FilterPanel.ApplyTrigger />
+          </FilterPanel.RootProvider>
+        </>
+      )
+    }
+
+    await render(<Example />)
+
+    await page.getByText("Failed").click()
+    await page.getByText("Queued").click()
+
+    await expect.element(page.getByLabelText("Pending")).toHaveTextContent("2")
+    await expect.element(page.getByLabelText("Applied")).toHaveTextContent("0")
+
+    await page.getByRole("button", {name: "Apply"}).click()
+
+    await expect.element(page.getByLabelText("Applied")).toHaveTextContent("2")
+  })
+})
+
 describe("filter types", () => {
   test("radio filter selects one option, and a blank option clears it", async () => {
     const onValueChange = vi.fn()
