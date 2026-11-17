@@ -6,24 +6,57 @@ import chalk from "chalk"
 import {readFileSync} from "node:fs"
 import {dirname, resolve} from "node:path"
 
+import {fixPath} from "../path-utils.js"
+
 import type {OpenApiDocument} from "./get-operations.js"
 import {getRemoteSpec, isRemoteSpec} from "./remote-specs.js"
 
 /**
- * Reads the spec referenced by an MDX page and upgrades it to OpenAPI 3.2.
- * Synchronous because the search indexer that calls it is, so remote specs
- * must be downloaded beforehand with `prefetchRemoteSpecs`.
+ * The spec's URL, or its absolute path when it's a local file.
  */
-export function loadOpenApiSpec(
-  mdxFilePath: string,
-  specPath: string,
-): OpenApiDocument {
-  const source = isRemoteSpec(specPath)
+export function getSpecSource(mdxFilePath: string, specPath: string): string {
+  return isRemoteSpec(specPath)
     ? specPath
-    : resolve(dirname(mdxFilePath), specPath)
-  const raw = isRemoteSpec(specPath)
-    ? getRemoteSpec(specPath)
-    : JSON.parse(readFileSync(source, "utf-8"))
+    : fixPath(resolve(dirname(mdxFilePath), specPath))
+}
+
+function readLocalSpec(source: string): unknown {
+  let contents: string
+  try {
+    contents = readFileSync(source, "utf-8")
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      throw new Error(`File not found: ${source}`)
+    }
+    throw error
+  }
+  try {
+    return JSON.parse(contents)
+  } catch (error) {
+    throw new Error(`${source} is not valid JSON: ${(error as Error).message}`)
+  }
+}
+
+/**
+ * Reads a spec and upgrades it to OpenAPI 3.2. Synchronous because the search
+ * indexer that calls it is, so remote specs must be downloaded beforehand with
+ * `prefetchRemoteSpecs`.
+ *
+ * @param source as returned by {@link getSpecSource}.
+ */
+export function loadOpenApiSpec(source: string): OpenApiDocument {
+  const raw = isRemoteSpec(source)
+    ? getRemoteSpec(source)
+    : readLocalSpec(source)
+  if (
+    !raw ||
+    typeof raw !== "object" ||
+    !("openapi" in raw || "swagger" in raw)
+  ) {
+    throw new Error(
+      `${source} is not an OpenAPI document: it has no "openapi" or "swagger" field.`,
+    )
+  }
 
   const {diagnostics, document} = upgrade(raw, "3.2", {
     onIncompatible: "collect",

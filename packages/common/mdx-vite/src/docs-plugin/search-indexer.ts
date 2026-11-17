@@ -72,14 +72,15 @@ import type {
   RouteMetaNavInternal,
 } from "./nav-builder/types.js"
 import {getOpenApiNavItems} from "./open-api/get-nav-items.js"
-import {
-  type OpenApiOperationDetails,
-  resolveOperation,
-} from "./open-api/get-operation-details.js"
-import {getOperations, getOperationTitle} from "./open-api/get-operations.js"
+import type {OpenApiOperationDetails} from "./open-api/get-operation-details.js"
+import {getOperationTitle} from "./open-api/get-operations.js"
 import {getSearchEntry} from "./open-api/get-search-entry.js"
-import {loadOpenApiSpec} from "./open-api/load-spec.js"
-import {parseDescriptions} from "./open-api/parse-descriptions.js"
+import {getSpecSource} from "./open-api/load-spec.js"
+import {
+  processOpenApiSpec,
+  type ProcessedSpec,
+} from "./open-api/process-spec.js"
+import {isRemoteSpec} from "./open-api/remote-specs.js"
 import {
   type PageTitleIssue,
   reportPageTitleIssues,
@@ -214,6 +215,15 @@ export class SearchIndexer {
   }
   private _generatedPages: Record<string, GeneratedPage[]> = {}
 
+  /**
+   * Absolute paths of the local OpenAPI specs referenced by pages, missing ones
+   * included, so the dev server can watch them.
+   */
+  get openApiSpecFiles(): ReadonlySet<string> {
+    return this._openApiSpecFiles
+  }
+  private _openApiSpecFiles = new Set<string>()
+
   get pageMap(): PageMap {
     return this._pageMap
   }
@@ -238,6 +248,7 @@ export class SearchIndexer {
     this._openApiNav = {}
     this._openApiOperations = {}
     this._generatedPages = {}
+    this._openApiSpecFiles = new Set()
     this._pageDocProps = {}
     this._pageMap = {}
     this._searchIndex = []
@@ -385,34 +396,42 @@ export class SearchIndexer {
     specPath: string,
     intro: PageSection,
   ): void {
-    const spec = loadOpenApiSpec(filePath, specPath)
-    const operations = getOperations(spec)
+    const source = getSpecSource(filePath, specPath)
+    if (!isRemoteSpec(specPath)) {
+      this._openApiSpecFiles.add(source)
+    }
+    let processed: ProcessedSpec
+    try {
+      processed = processOpenApiSpec(source)
+    } catch (error) {
+      const message = `Failed to load the OpenAPI spec "${specPath}" of ${filePath}: ${error instanceof Error ? error.message : String(error)}`
+      // Production builds fail. The dev server keeps going so the spec can be fixed.
+      if (process.env.NODE_ENV !== "development") {
+        throw new Error(message, {cause: error})
+      }
+      console.warn(chalk.yellowBright.bold(message))
+      this._openApiNav[intro.pathname] = getOpenApiNavItems(intro, [])
+      this._generatedPages[intro.pathname] = []
+      return
+    }
     this._openApiNav[intro.pathname] = getOpenApiNavItems(
       intro,
-      operations,
-      spec.tags,
+      processed.operations.map(({details}) => details),
+      processed.tags,
     )
     const generatedPages: GeneratedPage[] = []
-    for (const operation of operations) {
-      const pathname = `${intro.pathname}/${operation.slug}`
-      const resolved = resolveOperation(spec, operation)
-      const details = parseDescriptions(resolved)
-      this._openApiOperations[pathname] = details
-      generatedPages.push(
-        getSearchEntry(
-          pathname,
-          details,
-          typeof resolved.description === "string" ? resolved.description : "",
-        ),
-      )
-      const title = getOperationTitle(operation)
+    for (const operation of processed.operations) {
+      const {slug} = operation.details
+      const pathname = `${intro.pathname}/${slug}`
+      this._openApiOperations[pathname] = operation.details
+      generatedPages.push(getSearchEntry(pathname, operation))
+      const title = getOperationTitle(operation.details)
       this._pageMap[pathname] = {
         categories: [...intro.categories, title],
         data: {},
         hidden: intro.hidden,
         hideFromSearch: intro.hideFromSearch,
-        hideToc: true,
-        id: `${intro.id}#${operation.slug}`,
+        id: `${intro.id}#${slug}`,
         pathname,
         pathSegments: pathname.split("/").filter(Boolean),
         title,

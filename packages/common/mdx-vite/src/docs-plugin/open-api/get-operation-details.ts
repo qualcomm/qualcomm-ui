@@ -3,7 +3,6 @@
 
 import {dereference} from "./dereference.js"
 import type {OpenApiDocument, OpenApiOperation} from "./get-operations.js"
-import {parseDescriptions} from "./parse-descriptions.js"
 
 interface ParameterObject {
   in: string
@@ -21,7 +20,8 @@ export interface OpenApiOperationDetails extends OpenApiOperation {
 }
 
 /**
- * {@link getOperationDetails} with its descriptions still in CommonMark.
+ * The operation with its descriptions still in CommonMark, as
+ * `parseDescriptions` expects them.
  */
 export function resolveOperation(
   document: OpenApiDocument,
@@ -51,11 +51,4 @@ export function resolveOperation(
       (document as {servers?: unknown[]}).servers ??
       []) as unknown[],
   }
-}
-
-export function getOperationDetails(
-  document: OpenApiDocument,
-  operation: OpenApiOperation,
-): OpenApiOperationDetails {
-  return parseDescriptions(resolveOperation(document, operation))
 }

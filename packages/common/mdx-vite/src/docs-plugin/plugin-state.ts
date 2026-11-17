@@ -177,6 +177,12 @@ export class PluginState {
 
     const compiledMdxFiles = this.indexer.buildIndex(files, shouldLog)
 
+    // Vite only watches its root, and specs aren't imported, so it wouldn't see
+    // a spec elsewhere in a monorepo.
+    for (const server of this.servers) {
+      server.watcher.add([...this.indexer.openApiSpecFiles])
+    }
+
     if (isDev && shouldLog) {
       console.debug(
         `${chalk.magenta.bold(`@qualcomm-ui/mdx-vite/docs-plugin:`)} Compiled page data in: ${chalk.blueBright.bold(prettyMilliseconds(Date.now() - startTime))}${this.indexer.cachedFileCount ? chalk.greenBright.bold(` (${this.indexer.cachedFileCount}/${this.indexer.mdxFileCount} files cached)`) : ""}`,

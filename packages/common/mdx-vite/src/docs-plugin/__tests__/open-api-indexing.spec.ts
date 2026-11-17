@@ -4,7 +4,7 @@
 import {mkdir, mkdtemp, rm, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
-import {afterEach, describe, expect, test} from "vitest"
+import {afterEach, describe, expect, test, vi} from "vitest"
 
 import {PluginState} from "../plugin-state.js"
 
@@ -28,6 +28,7 @@ const spec = {
 let temporaryDirectory: string | undefined
 
 afterEach(async () => {
+  vi.unstubAllEnvs()
   if (temporaryDirectory) {
     await rm(temporaryDirectory, {force: true, recursive: true})
     temporaryDirectory = undefined
@@ -36,12 +37,15 @@ afterEach(async () => {
 
 async function indexApiPage(
   apiFrontmatter = "",
+  specContents: string | null = JSON.stringify(spec),
   knowledge: {exclude?: string[]} = {},
 ) {
   temporaryDirectory = await mkdtemp(join(tmpdir(), "qui-openapi-index-"))
   const routeDirectory = join(temporaryDirectory, "routes")
   await mkdir(routeDirectory, {recursive: true})
-  await writeFile(join(routeDirectory, "pets.json"), JSON.stringify(spec))
+  if (specContents !== null) {
+    await writeFile(join(routeDirectory, "pets.json"), specContents)
+  }
   await writeFile(
     join(routeDirectory, "api.mdx"),
     `---\ntitle: Pets API\nopenApi: ./pets.json\n${apiFrontmatter}---\n\n# Pets API\n`,
@@ -72,7 +76,7 @@ async function indexApiPage(
   })
   await state.buildIndex(false)
   await state.generateKnowledge(join(temporaryDirectory, "public"))
-  return {...state.siteData, sections: state.sections?.sections ?? []}
+  return {...state.siteData, sections: state.sections?.sections ?? [], state}
 }
 
 describe("OpenAPI page indexing", () => {
@@ -125,7 +129,9 @@ describe("OpenAPI page indexing", () => {
   )
 
   test("leaves operations out of the knowledge export with their API", async () => {
-    const {sections} = await indexApiPage("", {exclude: ["api.mdx"]})
+    const {sections} = await indexApiPage("", JSON.stringify(spec), {
+      exclude: ["api.mdx"],
+    })
     expect(
       sections.filter((section) => section.pathname?.startsWith("/api")),
     ).toEqual([])
@@ -157,5 +163,30 @@ describe("OpenAPI page indexing", () => {
     expect(
       searchIndex.filter((section) => section.pathname.startsWith("/api")),
     ).toEqual([])
+  })
+
+  test.each([
+    ["invalid JSON", "{", "routes/pets.json is not valid JSON"],
+    ["a non-OpenAPI document", "{}", 'it has no "openapi" or "swagger" field'],
+  ])("fails the build on %s", async (_, contents, reason) => {
+    await expect(indexApiPage("", contents)).rejects.toThrow(
+      /Failed to load the OpenAPI spec "\.\/pets\.json" of .*api\.mdx/,
+    )
+    await expect(indexApiPage("", contents)).rejects.toThrow(reason)
+  })
+
+  test("keeps the intro page in dev when the spec is missing", async () => {
+    vi.stubEnv("NODE_ENV", "development")
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+    const {openApiNav, pageMap, state} = await indexApiPage("", null)
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("File not found:"),
+    )
+    expect(openApiNav?.["/api"]?.map((item) => item.pathname)).toEqual(["/api"])
+    expect(pageMap["/api"]?.title).toBe("Pets API")
+    expect([...state.indexer.openApiSpecFiles]).toEqual([
+      expect.stringMatching(/\/routes\/pets\.json$/),
+    ])
+    warn.mockRestore()
   })
 })

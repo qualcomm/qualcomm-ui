@@ -3,7 +3,7 @@
 
 import {describe, expect, test} from "vitest"
 
-import {getOperationDetails} from "../open-api/get-operation-details.js"
+import {resolveOperation} from "../open-api/get-operation-details.js"
 import {getOperations} from "../open-api/get-operations.js"
 
 const document = {
@@ -30,10 +30,10 @@ const document = {
 
 function details(slug: string) {
   const operation = getOperations(document).find((op) => op.slug === slug)!
-  return getOperationDetails(document, operation)
+  return resolveOperation(document, operation)
 }
 
-describe("getOperationDetails", () => {
+describe("resolveOperation", () => {
   test("keeps the operation fields and the spec fields", () => {
     expect(details("getPetById")).toMatchObject({
       method: "get",

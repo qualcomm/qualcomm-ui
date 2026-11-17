@@ -6,7 +6,7 @@ import {createServer, type Server} from "node:http"
 import type {AddressInfo} from "node:net"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
-import {afterAll, beforeAll, describe, expect, test} from "vitest"
+import {afterAll, beforeAll, describe, expect, test, vi} from "vitest"
 
 import {loadOpenApiSpec} from "../open-api/load-spec.js"
 import {prefetchRemoteSpecs} from "../open-api/remote-specs.js"
@@ -60,15 +60,28 @@ describe("remote OpenAPI specs", () => {
     await prefetchRemoteSpecs([file])
 
     expect(requests.filter((path) => path === "/cached.json")).toHaveLength(1)
-    expect(loadOpenApiSpec(file, url)).toMatchObject({info: spec.info})
+    expect(loadOpenApiSpec(url)).toMatchObject({info: spec.info})
   })
 
-  test("rejects when the server responds with an error", async () => {
-    const file = await writeMdx("missing.mdx", `${origin}/missing.json`)
+  test("reports a failed fetch when the spec is loaded, then retries a minute later", async () => {
+    const url = `${origin}/missing.json`
+    const file = await writeMdx("missing.mdx", url)
+    const fetchCount = () =>
+      requests.filter((path) => path === "/missing.json").length
 
-    await expect(prefetchRemoteSpecs([file])).rejects.toThrow(
-      `Failed to fetch OpenAPI spec ${origin}/missing.json: 404`,
+    await prefetchRemoteSpecs([file])
+    expect(() => loadOpenApiSpec(url)).toThrow(
+      `Failed to fetch ${url}: 404 Not Found`,
     )
+
+    await prefetchRemoteSpecs([file])
+    expect(fetchCount()).toBe(1)
+
+    const now = Date.now()
+    vi.spyOn(Date, "now").mockReturnValue(now + 60_000)
+    await prefetchRemoteSpecs([file])
+    vi.restoreAllMocks()
+    expect(fetchCount()).toBe(2)
   })
 
   test("skips MDX files that vanished since they were listed", async () => {
@@ -77,11 +90,10 @@ describe("remote OpenAPI specs", () => {
     ).resolves.toBeUndefined()
   })
 
-  test("throws when loading a spec that wasn't prefetched", async () => {
+  test("throws when loading a spec that wasn't prefetched", () => {
     const url = `${origin}/not-prefetched.json`
-    const file = await writeMdx("not-prefetched.mdx", url)
 
-    expect(() => loadOpenApiSpec(file, url)).toThrow(
+    expect(() => loadOpenApiSpec(url)).toThrow(
       `OpenAPI spec was not prefetched: ${url}`,
     )
   })

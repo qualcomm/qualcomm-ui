@@ -40,38 +40,45 @@ export async function withOpenApiRoutes<T extends OpenApiRouteEntry>(
   routes: T[],
   {appDirectory, operationPage}: WithOpenApiRoutesOptions,
 ): Promise<T[]> {
-  async function visit(entries: T[], parentPath: string): Promise<T[]> {
-    const result: T[] = []
-    for (const route of entries) {
-      const fullPath = [parentPath, route.path].filter(Boolean).join("/")
-      const children = route.children
-        ? await visit(route.children as T[], fullPath)
-        : undefined
-      result.push(children ? {...route, children} : route)
-
-      if (!route.file.endsWith(".mdx")) {
-        continue
-      }
-      const contents = await readFile(
-        resolve(appDirectory, route.file),
-        "utf-8",
-      )
-      if (!parseFrontmatterYaml(contents)?.openApi) {
-        continue
-      }
-      // Its operation route would be `/*`, the site's own catch-all.
-      if (!fullPath.replaceAll("/", "")) {
-        throw new Error(
-          `${route.file}: the site's root page can't be an OpenAPI page. Move it to a subpath.`,
-        )
-      }
-      result.push({
-        file: operationPage,
-        id: `${route.id ?? route.file}/openapi`,
-        path: route.path ? `${route.path}/*` : "*",
-      } as T)
+  async function isApiPage(route: T): Promise<boolean> {
+    if (!route.file.endsWith(".mdx")) {
+      return false
     }
-    return result
+    const contents = await readFile(resolve(appDirectory, route.file), "utf-8")
+    return (
+      contents.includes("openApi:") && !!parseFrontmatterYaml(contents)?.openApi
+    )
+  }
+
+  async function visit(entries: T[], parentPath: string): Promise<T[]> {
+    const visited = await Promise.all(
+      entries.map(async (route): Promise<T[]> => {
+        const fullPath = [parentPath, route.path].filter(Boolean).join("/")
+        const [children, apiPage] = await Promise.all([
+          route.children && visit(route.children as T[], fullPath),
+          isApiPage(route),
+        ])
+        const entry = children ? {...route, children} : route
+        if (!apiPage) {
+          return [entry]
+        }
+        // Its operation route would be `/*`, the site's own catch-all.
+        if (!fullPath.replaceAll("/", "")) {
+          throw new Error(
+            `${route.file}: the site's root page can't be an OpenAPI page. Move it to a subpath.`,
+          )
+        }
+        return [
+          entry,
+          {
+            file: operationPage,
+            id: `${route.id ?? route.file}/openapi`,
+            path: route.path ? `${route.path}/*` : "*",
+          } as T,
+        ]
+      }),
+    )
+    return visited.flat()
   }
 
   return visit(routes, "")
