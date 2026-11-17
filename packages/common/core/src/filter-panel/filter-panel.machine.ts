@@ -7,10 +7,7 @@ import {
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
 
-import type {
-  FilterPanelDraft,
-  FilterPanelSchema,
-} from "./filter-panel.types.js"
+import type {FilterPanelDraft, FilterPanelSchema} from "./filter-panel.types.js"
 import {
   createEmptyValueCheck,
   hashValues,
@@ -95,7 +92,6 @@ const filterPanelMachineBase = {
   states: {
     idle: {},
   },
-
 } satisfies MachineConfigBase<FilterPanelSchema>
 
 export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
@@ -163,7 +159,6 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
           ),
         }))
       },
-
     },
     guards: {
       isAutoApply: ({prop}) => prop("applyMode") === "auto",

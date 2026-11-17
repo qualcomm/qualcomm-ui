@@ -49,8 +49,7 @@ export function createFilterPanelApi<
       ? draftValueCount
       : countValues(definitions, isEmpty, value)
   const isDirty =
-    applyMode === "manual" &&
-    !areValuesEqual(isEmpty, draftValue, value)
+    applyMode === "manual" && !areValuesEqual(isEmpty, draftValue, value)
 
   function getFilterOptionLabel(id: string, option: string): string {
     const definition = definitions?.[id]
