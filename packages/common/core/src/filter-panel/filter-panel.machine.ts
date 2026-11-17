@@ -8,7 +8,14 @@ import {
 } from "@qualcomm-ui/utils/machine"
 
 import type {FilterPanelSchema} from "./filter-panel.types.js"
-import {areFiltersEqual, setFilterValue} from "./internal/filter-panel.utils.js"
+import {
+  areValuesEqual,
+  createEmptyValueCheck,
+  hashValues,
+  pickOptionLabels,
+  recordOptionLabels,
+  setFilterValue,
+} from "./internal/filter-panel.utils.js"
 
 const filterPanelMachineBase = {
   computed: {
@@ -18,15 +25,20 @@ const filterPanelMachineBase = {
         : context.get("draft"),
   },
 
-  context({bindable, prop}) {
+  context({bindable, getRefs, prop}) {
     return {
       draft: bindable(() => ({
         defaultValue: prop("value") ?? prop("defaultValue"),
+        hash: hashValues,
       })),
       value: bindable(() => ({
         defaultValue: prop("defaultValue"),
-        hash: (filters) => JSON.stringify(filters),
-        onChange: prop("onValueChange"),
+        hash: hashValues,
+        onChange(value) {
+          prop("onValueChange")?.(value, {
+            labels: pickOptionLabels(getRefs().get("labels"), value),
+          })
+        },
         value: prop("value"),
       })),
     }
@@ -44,7 +56,7 @@ const filterPanelMachineBase = {
       actions: ["clearFilters"],
     },
     "FILTER.SET": {
-      actions: ["setFilterValue"],
+      actions: ["recordLabels", "setFilterValue"],
     },
     RESET: {
       actions: ["resetDraft"],
@@ -54,7 +66,7 @@ const filterPanelMachineBase = {
   props({props}) {
     return {
       applyMode: "manual",
-      defaultValue: [],
+      defaultValue: {},
       ...props,
     }
   },
@@ -62,6 +74,7 @@ const filterPanelMachineBase = {
   refs({prop}) {
     return {
       appliedFilters: prop("value") ?? prop("defaultValue"),
+      labels: {},
     }
   },
 
@@ -87,7 +100,23 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
       },
 
       clearFilters({context, guard}) {
-        context.set(guard("isAutoApply") ? "value" : "draft", [])
+        context.set(guard("isAutoApply") ? "value" : "draft", {})
+      },
+
+      /**
+       * Labels are recorded from user selections only, before the value is
+       * written, so that `onValueChange` in `auto` mode already sees them.
+       * They live in refs because context reads within the same tick are
+       * stale; every recording accompanies a value change, which re-renders.
+       * Restored values rely on the definition or panel resolvers for labels.
+       */
+      recordLabels({event, refs}) {
+        if (event.labels) {
+          refs.set(
+            "labels",
+            recordOptionLabels(refs.get("labels"), event.id, event.labels),
+          )
+        }
       },
 
       resetDraft({context, guard}) {
@@ -98,12 +127,12 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
       },
 
       setFilterValue({context, event, guard, prop}) {
-        context.set(guard("isAutoApply") ? "value" : "draft", (filters) =>
-          setFilterValue(prop("isEmptyValue"), filters, {
-            id: event.id,
-            type: event.filterType,
-            value: event.value,
-          }),
+        const isEmpty = createEmptyValueCheck(
+          prop("filters"),
+          prop("isEmptyValue"),
+        )
+        context.set(guard("isAutoApply") ? "value" : "draft", (values) =>
+          setFilterValue(isEmpty, values, event.id, event.value),
         )
       },
 
@@ -117,9 +146,13 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
         const previous = refs.get("appliedFilters")
         refs.set("appliedFilters", value)
 
+        const isEmpty = createEmptyValueCheck(
+          prop("filters"),
+          prop("isEmptyValue"),
+        )
         if (
           guard("isAutoApply") ||
-          areFiltersEqual(prop("isEmptyValue"), context.get("draft"), previous)
+          areValuesEqual(isEmpty, context.get("draft"), previous)
         ) {
           context.set("draft", value)
         }

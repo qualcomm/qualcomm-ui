@@ -4,11 +4,19 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ResolvedColumnFilter} from "../features/filters.js"
+import type {FilterFn, ResolvedColumnFilter} from "../features/filters.js"
+import {filterFns} from "../filter-fns.js"
+import {warnOnce} from "../internal-warn.js"
 import type {Row, RowData, RowModel, TableInstance} from "../types.js"
 import {memo} from "../utils.js"
 
 import {filterRows} from "./filter-rows-utils.js"
+
+const stringFilterFns: FilterFn<any>[] = [
+  filterFns.equalsString,
+  filterFns.includesString,
+  filterFns.includesStringSensitive,
+]
 
 export function getFilteredRowModel<TData extends RowData>(): (
   table: TableInstance<TData>,
@@ -42,7 +50,7 @@ export function getFilteredRowModel<TData extends RowData>(): (
             continue
           }
 
-          const filterFn = column.getFilterFn()
+          const filterFn = column.getFilterFn(d.value)
 
           if (!filterFn) {
             if (process.env.NODE_ENV !== "production") {
@@ -51,6 +59,16 @@ export function getFilteredRowModel<TData extends RowData>(): (
               )
             }
             continue
+          }
+
+          if (
+            Array.isArray(d.value) &&
+            stringFilterFns.includes(filterFn as FilterFn<any>)
+          ) {
+            warnOnce(
+              `string-filter-fn-array-${column.id}`,
+              `Column "${column.id}" uses a string filter function, but its filter value is an array. Remove the column's filterFn to let "auto" resolve one from the value, or use "includesValue".`,
+            )
           }
 
           resolvedColumnFilters.push({

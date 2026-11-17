@@ -1,41 +1,70 @@
-import {describe, expect, test, vi} from "vitest"
+import {afterEach, describe, expect, test, vi} from "vitest"
 
-import {createColumnHelper, getTableFilterPanelProps} from "../"
+import {
+  createColumnHelper,
+  getFacetedMinMaxValues,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getTableFilterPanelProps,
+} from "../"
 
-import {createTableHarness, type TestPerson} from "./table-test-utils"
+import {
+  createTableHarness,
+  makeTestColumns,
+  type TestPerson,
+} from "./table-test-utils"
 
 const columnHelper = createColumnHelper<TestPerson>()
 
+const faceting = {
+  getFacetedMinMaxValues: getFacetedMinMaxValues<TestPerson>(),
+  getFacetedRowModel: getFacetedRowModel<TestPerson>(),
+  getFacetedUniqueValues: getFacetedUniqueValues<TestPerson>(),
+}
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
+
 describe("getTableFilterPanelProps", () => {
-  test("passes the table's column filters through as the value", () => {
+  test("passes the table's column filters through as a record", () => {
     const {table} = createTableHarness({
-      initialState: {columnFilters: [{id: "status", value: "single"}]},
+      initialState: {
+        columnFilters: [
+          {id: "status", value: ["single"]},
+          {id: "visits", value: [10, null]},
+        ],
+      },
     })
 
-    expect(getTableFilterPanelProps(table).value).toEqual([
-      {id: "status", value: "single"},
-    ])
+    expect(getTableFilterPanelProps(table).value).toEqual({
+      status: ["single"],
+      visits: [10, null],
+    })
   })
 
-  test("onValueChange writes to the table's column filters", () => {
+  test("onValueChange writes the record to the table's column filters", () => {
     const {table} = createTableHarness()
 
-    getTableFilterPanelProps(table).onValueChange?.([
-      {id: "status", value: "single"},
-    ])
+    getTableFilterPanelProps(table).onValueChange(
+      {status: ["single"], visits: [10, null]},
+      {labels: {}},
+    )
 
     expect(table.getState().columnFilters).toEqual([
-      {id: "status", value: "single"},
+      {id: "status", value: ["single"]},
+      {id: "visits", value: [10, null]},
     ])
   })
 
-  test("isEmptyValue uses the column filter function's autoRemove", () => {
+  test("isEmptyValue uses the autoRemove of the function resolved for the value", () => {
     const {table} = createTableHarness()
     const {isEmptyValue} = getTableFilterPanelProps(table)
 
-    // `visits` resolves to the inNumberRange auto filter fn.
-    expect(isEmptyValue?.({id: "visits", value: [undefined, ""]})).toBe(true)
-    expect(isEmptyValue?.({id: "visits", value: [10, ""]})).toBe(false)
+    expect(isEmptyValue("visits", [undefined, ""])).toBe(true)
+    expect(isEmptyValue("visits", [10, null])).toBe(false)
+    expect(isEmptyValue("status", [])).toBe(true)
+    expect(isEmptyValue("createdAt", {range: [null, null]})).toBe(true)
   })
 
   test("labels resolve from the column", () => {
@@ -52,21 +81,82 @@ describe("getTableFilterPanelProps", () => {
     const {getFilterLabel, getFilterOptionLabel} =
       getTableFilterPanelProps(table)
 
-    expect(getFilterLabel?.("status")).toBe("Relationship status")
-    expect(getFilterOptionLabel?.("status", "single")).toBe("Single")
+    expect(getFilterLabel("status")).toBe("Relationship status")
+    expect(getFilterOptionLabel("status", "single")).toBe("Single")
   })
 
-  test("ids without a matching column fall back without logging", () => {
-    const {table} = createTableHarness()
+  test("warns when a non-string header leaves the label as the column id", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+    const {table} = createTableHarness({
+      columns: [columnHelper.accessor("status", {header: () => "Status"})],
+    })
+
+    expect(getTableFilterPanelProps(table).getFilterLabel("status")).toBe(
+      "status",
+    )
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("filterLabel"))
+  })
+
+  test("options come from faceted values, flattened and sorted by label", () => {
+    const {table} = createTableHarness({tableOptions: faceting})
+    const {getFilterOptions} = getTableFilterPanelProps(table)
+
+    expect(getFilterOptions("status")).toEqual([
+      {label: "complicated", value: "complicated"},
+      {label: "relationship", value: "relationship"},
+      {label: "single", value: "single"},
+    ])
+    expect(getFilterOptions("tags")?.map((option) => option.value)).toEqual([
+      "aero",
+      "compiler",
+      "flight",
+      "math",
+      "systems",
+    ])
+  })
+
+  test("range bounds come from faceted min and max values", () => {
+    const {table} = createTableHarness({tableOptions: faceting})
+
+    expect(getTableFilterPanelProps(table).getFilterRange("visits")).toEqual({
+      max: 25,
+      min: 5,
+    })
+  })
+
+  test("warns instead of returning options when faceting is not configured", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+    const {table} = createTableHarness({
+      columns: makeTestColumns(),
+      tableOptions: {getFacetedRowModel: undefined},
+    })
+    const {getFilterOptions, getFilterRange} = getTableFilterPanelProps(table)
+
+    expect(getFilterOptions("lastName")).toBeUndefined()
+    expect(getFilterRange("rank")).toBeUndefined()
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("getFacetedUniqueValues"),
+    )
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("getFacetedMinMaxValues"),
+    )
+  })
+
+  test("ids without a matching column fall back without logging errors", () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {})
-    const {getFilterLabel, getFilterOptionLabel, isEmptyValue} =
-      getTableFilterPanelProps(table)
+    vi.spyOn(console, "warn").mockImplementation(() => {})
+    const {table} = createTableHarness()
+    const {
+      getFilterLabel,
+      getFilterOptionLabel,
+      getFilterOptions,
+      isEmptyValue,
+    } = getTableFilterPanelProps(table)
 
-    expect(getFilterLabel?.("server-only")).toBeUndefined()
-    expect(getFilterOptionLabel?.("server-only", "7d")).toBeUndefined()
-    expect(isEmptyValue?.({id: "server-only", value: "7d"})).toBe(false)
+    expect(getFilterLabel("server-only")).toBeUndefined()
+    expect(getFilterOptionLabel("server-only", "7d")).toBeUndefined()
+    expect(getFilterOptions("server-only")).toBeUndefined()
+    expect(isEmptyValue("server-only", "7d")).toBe(false)
     expect(error).not.toHaveBeenCalled()
-
-    error.mockRestore()
   })
 })

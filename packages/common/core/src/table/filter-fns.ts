@@ -4,7 +4,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {
+  DateFilterPreset,
+  DateFilterRange,
+  DateFilterValue,
+} from "@qualcomm-ui/core/filter-panel"
+
 import type {FilterFn} from "./features/filters.js"
+import {warnOnce} from "./internal-warn.js"
 
 const includesString: FilterFn<any> = (
   row,
@@ -86,14 +93,16 @@ arrIncludesSome.autoRemove = (val: any) => testFalsy(val) || !val?.length
  * Matches rows whose value is one of the filter values. Use for multi-value
  * filters on scalar columns. `arrIncludesSome` is not a substitute: it expects
  * an array row value, and on a string row value it performs substring
- * matching.
+ * matching. Values are compared as strings, so string options from a filter
+ * control match numeric or boolean row values.
  */
 const includesValue: FilterFn<any> = (
   row,
   columnId: string,
   filterValue: unknown[],
 ) => {
-  return filterValue.includes(row.getValue(columnId))
+  const rowValue = String(row.getValue(columnId))
+  return filterValue.some((value) => String(value) === rowValue)
 }
 
 includesValue.autoRemove = (val: any) => testFalsy(val) || !val?.length
@@ -150,6 +159,118 @@ inNumberRange.resolveFilterValue = (val: [any, any]) => {
 inNumberRange.autoRemove = (val: any) =>
   testFalsy(val) || (testFalsy(val[0]) && testFalsy(val[1]))
 
+const DAY_MS = 24 * 60 * 60 * 1000
+const DATE_ONLY = /^(\d{4})-(\d{2})-(\d{2})$/
+
+/**
+ * Converts a row or filter date to epoch milliseconds. Date-only ISO strings
+ * (`2026-11-01`) are read as local dates, not UTC midnight, so a range picked
+ * in a date picker matches the dates the user sees.
+ */
+function toTime(value: unknown): number | undefined {
+  if (value instanceof Date) {
+    return value.getTime()
+  }
+  if (typeof value === "number") {
+    return value
+  }
+  if (typeof value === "string" && value) {
+    const dateOnly = DATE_ONLY.exec(value)
+    const time = dateOnly
+      ? new Date(+dateOnly[1], +dateOnly[2] - 1, +dateOnly[3]).getTime()
+      : Date.parse(value)
+    return Number.isNaN(time) ? undefined : time
+  }
+  return undefined
+}
+
+/**
+ * Resolves `[start, end]` to epoch milliseconds. A date-only end includes its
+ * whole day. Missing bounds are unbounded.
+ */
+function resolveDateBounds(
+  start: Date | string | null | undefined,
+  end: Date | string | null | undefined,
+): [number, number] {
+  const startTime = toTime(start) ?? -Infinity
+  let endTime = toTime(end) ?? Infinity
+  if (typeof end === "string" && DATE_ONLY.test(end)) {
+    endTime += DAY_MS - 1
+  }
+  return [startTime, endTime]
+}
+
+function isEmptyDateValue(val: any): boolean {
+  if (testFalsy(val)) {
+    return true
+  }
+  if ("range" in val) {
+    const [start, end] = (val.range ?? []) as DateFilterRange
+    return testFalsy(start) && testFalsy(end)
+  }
+  return !val.preset
+}
+
+/**
+ * Matches rows whose date falls within `{range: [start, end]}`. Row values may
+ * be `Date` objects, epoch milliseconds, or ISO 8601 strings. Preset values
+ * need a filter function that knows the presets; see `createDateFilterFn`.
+ */
+const inDateRange: FilterFn<any> = (
+  row,
+  columnId: string,
+  filterValue: [number, number],
+) => {
+  const time = toTime(row.getValue(columnId))
+  if (time === undefined) {
+    return false
+  }
+  const [start, end] = filterValue
+  return time >= start && time <= end
+}
+
+inDateRange.resolveFilterValue = (val: DateFilterValue) => {
+  if ("range" in val) {
+    return resolveDateBounds(...val.range)
+  }
+  warnOnce(
+    `inDateRange-preset-${val.preset}`,
+    `The date filter preset "${val.preset}" cannot be resolved by the built-in "inDateRange" filter function. Set the column's filterFn to createDateFilterFn(presets).`,
+  )
+  return [-Infinity, Infinity]
+}
+
+inDateRange.autoRemove = isEmptyDateValue
+
+/**
+ * Creates a date filter function that resolves the given presets when
+ * filtering runs, so relative presets such as "Last 7 days" stay relative to
+ * the current date. Pass the same presets to the date filter's definition.
+ */
+export function createDateFilterFn(presets: DateFilterPreset[]): FilterFn<any> {
+  const filterFn: FilterFn<any> = (row, columnId, filterValue, addMeta) =>
+    inDateRange(row, columnId, filterValue, addMeta)
+
+  filterFn.resolveFilterValue = (val: DateFilterValue) => {
+    if ("range" in val) {
+      return resolveDateBounds(...val.range)
+    }
+    const preset = presets.find((preset) => preset.value === val.preset)
+    if (!preset) {
+      warnOnce(
+        `createDateFilterFn-preset-${val.preset}`,
+        `The date filter preset "${val.preset}" is not one of the presets passed to createDateFilterFn.`,
+      )
+      return [-Infinity, Infinity]
+    }
+    return resolveDateBounds(...preset.range())
+  }
+
+  filterFn.autoRemove = isEmptyDateValue
+
+  return filterFn
+}
+
 // Export
 
 export type BuiltInFilterFn =
@@ -161,6 +282,7 @@ export type BuiltInFilterFn =
   | "inNumberRange"
   | "includesString"
   | "includesStringSensitive"
+  | "inDateRange"
   | "includesValue"
   | "weakEquals"
 
@@ -173,6 +295,7 @@ export const filterFns: Record<BuiltInFilterFn, FilterFn<any>> = {
   includesString,
   includesStringSensitive,
   includesValue,
+  inDateRange,
   inNumberRange,
   weakEquals,
 }

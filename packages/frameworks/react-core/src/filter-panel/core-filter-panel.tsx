@@ -4,48 +4,113 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {
-  createFilterPanelApi,
-  splitFilterPanelProps,
+  type FilterDefinition,
+  type FilterDefinitions,
+  type FilterPanelApi,
   type FilterPanelApiProps,
-  filterPanelMachine,
+  type IdentifiedFilterDefinition,
+  splitFilterPanelProps,
 } from "@qualcomm-ui/core/filter-panel"
-import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
+import {
+  CoreCollapsible,
+  type CoreCollapsibleContentProps,
+  type CoreCollapsibleRootProps,
+  type CoreCollapsibleTriggerProps,
+} from "@qualcomm-ui/react-core/collapsible"
+import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {FilterPanelContextProvider} from "./filter-panel-context.js"
 import {
+  FilterPanelContextProvider,
+  useFilterPanelContext,
+} from "./filter-panel-context.js"
+import {
+  FilterPanelFilterContextProvider,
+  useFilterPanelFilterContext,
+} from "./filter-panel-filter-context.js"
+import {
+  useFilterPanel,
   useFilterPanelApplyTrigger,
   useFilterPanelClearTrigger,
+  useFilterPanelFilterState,
 } from "./use-filter-panel.js"
 
-export interface CoreFilterPanelRootProps
-  extends FilterPanelApiProps, Omit<ElementRenderProp<"div">, "defaultValue"> {
+export interface CoreFilterPanelRootProps<
+  TDefinitions extends FilterDefinitions = FilterDefinitions,
+>
+  extends
+    FilterPanelApiProps<TDefinitions>,
+    Omit<ElementRenderProp<"div">, "defaultValue"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
    */
   children?: ReactNode
 }
 
-export function CoreFilterPanelRoot({
-  children,
-  ...props
-}: CoreFilterPanelRootProps): ReactElement {
+export function CoreFilterPanelRoot<
+  TDefinitions extends FilterDefinitions = FilterDefinitions,
+>({children, ...props}: CoreFilterPanelRootProps<TDefinitions>): ReactElement {
   const [filterPanelProps, localProps] = splitFilterPanelProps(props)
-  const machine = useMachine(filterPanelMachine, filterPanelProps)
-  const api = createFilterPanelApi(machine, normalizeProps)
-
-  const mergedProps = mergeProps(api.getRootBindings(), localProps)
+  const api = useFilterPanel(filterPanelProps)
 
   return (
-    <FilterPanelContextProvider value={api}>
+    <CoreFilterPanelRootProvider value={api} {...localProps}>
+      {children}
+    </CoreFilterPanelRootProvider>
+  )
+}
+
+export interface CoreFilterPanelRootProviderProps extends ElementRenderProp<"div"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+
+  /**
+   * A filter panel API created with `useFilterPanel`.
+   *
+   * @inheritDoc
+   */
+  value: FilterPanelApi<any>
+}
+
+export function CoreFilterPanelRootProvider({
+  children,
+  value,
+  ...props
+}: CoreFilterPanelRootProviderProps): ReactElement {
+  const mergedProps = mergeProps(value.getRootBindings(), props)
+
+  return (
+    <FilterPanelContextProvider value={value}>
       <PolymorphicElement as="div" {...mergedProps}>
         {children}
       </PolymorphicElement>
     </FilterPanelContextProvider>
+  )
+}
+
+export interface CoreFilterPanelApplyTriggerProps extends ElementRenderProp<"button"> {
+  /**
+   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   */
+  children?: ReactNode
+}
+
+export function CoreFilterPanelApplyTrigger({
+  children,
+  ...props
+}: CoreFilterPanelApplyTriggerProps): ReactElement {
+  const mergedProps = mergeProps(useFilterPanelApplyTrigger(), props)
+
+  return (
+    <PolymorphicElement as="button" {...mergedProps}>
+      {children}
+    </PolymorphicElement>
   )
 }
 
@@ -69,22 +134,117 @@ export function CoreFilterPanelClearTrigger({
   )
 }
 
-export interface CoreFilterPanelApplyTriggerProps extends ElementRenderProp<"button"> {
+export interface CoreFilterPanelFilterProps<
+  TDefinition extends FilterDefinition = FilterDefinition,
+> extends CoreCollapsibleRootProps {
   /**
-   * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
+   * The filter's definition, from `defineFilters`.
    */
-  children?: ReactNode
+  filter: IdentifiedFilterDefinition<TDefinition>
 }
 
-export function CoreFilterPanelApplyTrigger({
+/**
+ * Provides one filter's state to its parts, and expands and collapses its
+ * content. Expanded by default.
+ */
+export function CoreFilterPanelFilter<TDefinition extends FilterDefinition>({
   children,
+  defaultOpen = true,
+  filter,
   ...props
-}: CoreFilterPanelApplyTriggerProps): ReactElement {
-  const mergedProps = mergeProps(useFilterPanelApplyTrigger(), props)
+}: CoreFilterPanelFilterProps<TDefinition>): ReactElement {
+  const api = useFilterPanelContext()
+  const labelId = useControlledId()
+  const context = useFilterPanelFilterState(filter, labelId)
+
+  const mergedProps = mergeProps(api.getFilterBindings({id: filter.id}), props)
 
   return (
-    <PolymorphicElement as="button" {...mergedProps}>
-      {children}
+    <FilterPanelFilterContextProvider value={context}>
+      <CoreCollapsible.Root defaultOpen={defaultOpen} {...mergedProps}>
+        {children}
+      </CoreCollapsible.Root>
+    </FilterPanelFilterContextProvider>
+  )
+}
+
+export interface CoreFilterPanelFilterTriggerProps extends CoreCollapsibleTriggerProps {}
+
+export function CoreFilterPanelFilterTrigger(
+  props: CoreFilterPanelFilterTriggerProps,
+): ReactElement {
+  return <CoreCollapsible.Trigger {...props} />
+}
+
+export interface CoreFilterPanelFilterLabelProps extends Omit<
+  ElementRenderProp<"span">,
+  "children"
+> {
+  /**
+   * Overrides how the label renders. Accepts a `ReactNode`, or a function
+   * that receives the resolved string label. Accessible names and summaries
+   * keep the resolved string.
+   */
+  children?: ReactNode | ((label: string) => ReactNode)
+}
+
+export function CoreFilterPanelFilterLabel({
+  children,
+  ...props
+}: CoreFilterPanelFilterLabelProps): ReactElement {
+  const api = useFilterPanelContext()
+  const filter = useFilterPanelFilterContext()
+
+  const mergedProps = mergeProps(
+    api.getFilterLabelBindings({id: filter.id}),
+    {id: filter.labelId},
+    props,
+  )
+
+  return (
+    <PolymorphicElement as="span" {...mergedProps}>
+      {typeof children === "function"
+        ? children(filter.label)
+        : (children ?? filter.label)}
     </PolymorphicElement>
   )
+}
+
+export interface CoreFilterPanelFilterCountProps extends Omit<
+  ElementRenderProp<"span">,
+  "children"
+> {
+  /**
+   * Overrides how the count renders.
+   */
+  children?: ReactNode | ((count: number) => ReactNode)
+}
+
+export function CoreFilterPanelFilterCount({
+  children,
+  ...props
+}: CoreFilterPanelFilterCountProps): ReactElement {
+  const api = useFilterPanelContext()
+  const filter = useFilterPanelFilterContext()
+
+  const mergedProps = mergeProps(
+    api.getFilterCountBindings({id: filter.id}),
+    props,
+  )
+
+  return (
+    <PolymorphicElement as="span" {...mergedProps}>
+      {typeof children === "function"
+        ? children(filter.count)
+        : (children ?? filter.count)}
+    </PolymorphicElement>
+  )
+}
+
+export interface CoreFilterPanelFilterContentProps extends CoreCollapsibleContentProps {}
+
+export function CoreFilterPanelFilterContent(
+  props: CoreFilterPanelFilterContentProps,
+): ReactElement | null {
+  return <CoreCollapsible.Content {...props} />
 }

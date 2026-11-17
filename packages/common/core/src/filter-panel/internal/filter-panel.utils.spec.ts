@@ -1,209 +1,182 @@
 import {describe, expect, test} from "vitest"
 
-import type {FilterPanelFilter} from "../filter-panel.types"
+import {
+  checkboxFilter,
+  customFilter,
+  dateFilter,
+  defineFilters,
+  rangeFilter,
+  textFilter,
+} from "../filter-panel.definitions"
 
 import {
-  areFiltersEqual,
-  countFilters,
-  getFilterValue,
-  isEmptyFilterValue,
+  areValuesEqual,
+  countValues,
+  createEmptyValueCheck,
+  getValueLabels,
+  hashValues,
+  pickOptionLabels,
+  recordOptionLabels,
   setFilterValue,
   stringifyFilterValue,
 } from "./filter-panel.utils"
 
-/**
- * Mirrors a range filter whose function treats a range with no bounds as
- * empty, such as the table's `inNumberRange.autoRemove`.
- */
-function isEmptyRange({id, value}: FilterPanelFilter): boolean {
-  return (
-    id === "visits" &&
-    Array.isArray(value) &&
-    value.every((bound) => bound === undefined || bound === "")
-  )
-}
+const definitions = defineFilters({
+  duration: rangeFilter({formatValue: (value) => `${value} min`}),
+  query: textFilter(),
+  status: checkboxFilter(),
+  submitted: dateFilter({
+    presets: [{label: "Last 7 days", range: () => [null, null], value: "7d"}],
+  }),
+  tags: customFilter<{all: boolean; tags: string[]}>({
+    getValueCount: (value) => value.tags.length,
+    getValueLabels: (value) => value.tags,
+    isEmptyValue: (value) => value.tags.length === 0,
+  }),
+})
+
+const isEmpty = createEmptyValueCheck(definitions, undefined)
 
 describe("filter panel utils", () => {
-  test("isEmptyFilterValue treats missing and blank values as empty", () => {
+  test("blank values are empty for every filter", () => {
     for (const value of [undefined, null, "", []]) {
-      expect(isEmptyFilterValue(undefined, {id: "status", value})).toBe(true)
+      expect(isEmpty("status", value)).toBe(true)
+      expect(isEmpty("unknown", value)).toBe(true)
     }
-    expect(
-      isEmptyFilterValue(undefined, {id: "status", value: ["single"]}),
-    ).toBe(false)
-    expect(
-      isEmptyFilterValue(undefined, {id: "submitted", value: {preset: "7d"}}),
-    ).toBe(false)
+    expect(isEmpty("status", ["Failed"])).toBe(false)
   })
 
-  test("isEmptyFilterValue applies the consumer check after the built-in check", () => {
-    expect(
-      isEmptyFilterValue(isEmptyRange, {id: "visits", value: [undefined, ""]}),
-    ).toBe(true)
-    expect(
-      isEmptyFilterValue(isEmptyRange, {id: "visits", value: [10, ""]}),
-    ).toBe(false)
-    expect(
-      isEmptyFilterValue(undefined, {id: "visits", value: [undefined, ""]}),
-    ).toBe(false)
-    expect(isEmptyFilterValue(() => false, {id: "status", value: []})).toBe(
-      true,
+  test("unbounded ranges and dates are empty", () => {
+    expect(isEmpty("duration", [null, null])).toBe(true)
+    expect(isEmpty("duration", [10, null])).toBe(false)
+    expect(isEmpty("submitted", {range: [null, null]})).toBe(true)
+    expect(isEmpty("submitted", {range: ["2026-11-01", null]})).toBe(false)
+    expect(isEmpty("submitted", {preset: ""})).toBe(true)
+    expect(isEmpty("submitted", {preset: "7d"})).toBe(false)
+  })
+
+  test("custom definitions and the consumer check can reject values", () => {
+    expect(isEmpty("tags", {all: true, tags: []})).toBe(true)
+
+    const isEmptyWithConsumer = createEmptyValueCheck(
+      definitions,
+      (id, value) => id === "query" && value === "*",
     )
+    expect(isEmptyWithConsumer("query", "*")).toBe(true)
+    expect(isEmptyWithConsumer("query", "out/")).toBe(false)
   })
 
-  test("isEmptyFilterValue passes the filter type to the consumer check", () => {
-    const isEmptyFullRange = ({type, value}: FilterPanelFilter) =>
-      type === "range" &&
-      Array.isArray(value) &&
-      value.every((bound) => bound === null)
+  test("setFilterValue adds, replaces, and deletes keys", () => {
+    const added = setFilterValue(isEmpty, {}, "status", ["Failed"])
+    expect(added).toEqual({status: ["Failed"]})
 
+    const replaced = setFilterValue(isEmpty, added, "status", ["Queued"])
+    expect(replaced).toEqual({status: ["Queued"]})
+
+    expect(setFilterValue(isEmpty, replaced, "status", [])).toStrictEqual({})
     expect(
-      isEmptyFilterValue(isEmptyFullRange, {
-        id: "visits",
-        type: "range",
-        value: [null, null],
-      }),
-    ).toBe(true)
-    expect(
-      isEmptyFilterValue(isEmptyFullRange, {id: "visits", value: [null, null]}),
-    ).toBe(false)
-  })
-
-  test("getFilterValue returns the value for an id, or undefined", () => {
-    const filters = [{id: "status", value: ["single"]}]
-
-    expect(getFilterValue(filters, "status")).toEqual(["single"])
-    expect(getFilterValue(filters, "missing")).toBeUndefined()
-  })
-
-  test("setFilterValue adds, replaces in place, and removes filters", () => {
-    const added = setFilterValue(undefined, [], {
-      id: "status",
-      value: ["single"],
-    })
-    expect(added).toEqual([{id: "status", value: ["single"]}])
-
-    const withSecond = setFilterValue(undefined, added, {
-      id: "submitted",
-      value: "7d",
-    })
-    const replaced = setFilterValue(undefined, withSecond, {
-      id: "status",
-      value: ["complicated"],
-    })
-    expect(replaced).toEqual([
-      {id: "status", value: ["complicated"]},
-      {id: "submitted", value: "7d"},
-    ])
-
-    expect(
-      setFilterValue(undefined, replaced, {id: "status", value: []}),
-    ).toEqual([{id: "submitted", value: "7d"}])
-  })
-
-  test("setFilterValue removes values rejected by the consumer check", () => {
-    const filters = [{id: "visits", value: [10, 20]}]
-
-    expect(
-      setFilterValue(isEmptyRange, filters, {
-        id: "visits",
-        value: [undefined, ""],
-      }),
-    ).toEqual([])
+      setFilterValue(isEmpty, {duration: [10, 20]}, "duration", [null, null]),
+    ).toStrictEqual({})
   })
 
   test("setFilterValue applies functional updaters to the current value", () => {
-    const filters = [{id: "status", value: ["single"]}]
-
     expect(
-      setFilterValue(undefined, filters, {
-        id: "status",
-        value: (prev: unknown) => [...(prev as string[]), "complicated"],
-      }),
-    ).toEqual([{id: "status", value: ["single", "complicated"]}])
+      setFilterValue(
+        isEmpty,
+        {status: ["Failed"]},
+        "status",
+        (prev: unknown) => [...(prev as string[]), "Queued"],
+      ),
+    ).toEqual({status: ["Failed", "Queued"]})
   })
 
-  test("setFilterValue records the filter type", () => {
+  test("areValuesEqual ignores key order and empty values", () => {
     expect(
-      setFilterValue(undefined, [], {
-        id: "status",
-        type: "checkbox",
-        value: ["single"],
-      }),
-    ).toStrictEqual([{id: "status", type: "checkbox", value: ["single"]}])
-  })
-
-  test("setFilterValue keeps the existing type when the update omits it", () => {
-    const filters: FilterPanelFilter[] = [
-      {id: "status", type: "checkbox", value: ["single", "complicated"]},
-    ]
-
-    expect(
-      setFilterValue(undefined, filters, {id: "status", value: ["single"]}),
-    ).toStrictEqual([{id: "status", type: "checkbox", value: ["single"]}])
-    expect(
-      setFilterValue(undefined, filters, {
-        id: "status",
-        type: "combobox",
-        value: ["single"],
-      }),
-    ).toStrictEqual([{id: "status", type: "combobox", value: ["single"]}])
-  })
-
-  test("setFilterValue omits the type key for untyped filters", () => {
-    expect(
-      setFilterValue(undefined, [], {id: "status", value: "single"}),
-    ).toStrictEqual([{id: "status", value: "single"}])
-  })
-
-  test("countFilters counts each filter id once and skips empty values", () => {
-    expect(countFilters(undefined, [])).toBe(0)
-    expect(
-      countFilters(isEmptyRange, [
-        {id: "status", value: ["single", "complicated", "relationship"]},
-        {id: "submitted", value: {preset: "7d"}},
-        {id: "tags", value: []},
-        {id: "firstName", value: ""},
-        {id: "visits", value: [undefined, ""]},
-      ]),
-    ).toBe(2)
-  })
-
-  test("areFiltersEqual ignores order and empty entries", () => {
-    expect(
-      areFiltersEqual(
-        undefined,
-        [
-          {id: "status", value: ["single"]},
-          {id: "visits", value: [10, 20]},
-        ],
-        [
-          {id: "visits", value: [10, 20]},
-          {id: "status", value: ["single"]},
-          {id: "tags", value: []},
-        ],
+      areValuesEqual(
+        isEmpty,
+        {duration: [10, 20], status: ["Failed"]},
+        {duration: [10, 20], query: "", status: ["Failed"]},
       ),
     ).toBe(true)
     expect(
-      areFiltersEqual(
-        undefined,
-        [{id: "status", value: ["single"]}],
-        [{id: "status", value: ["complicated"]}],
-      ),
+      areValuesEqual(isEmpty, {status: ["Failed"]}, {status: ["Queued"]}),
     ).toBe(false)
-    expect(
-      areFiltersEqual(undefined, [{id: "status", value: ["single"]}], []),
-    ).toBe(false)
-    expect(
-      areFiltersEqual(
-        undefined,
-        [{id: "status", type: "checkbox", value: ["single"]}],
-        [{id: "status", type: "combobox", value: ["single"]}],
-      ),
-    ).toBe(false)
+    expect(areValuesEqual(isEmpty, {status: ["Failed"]}, {})).toBe(false)
   })
 
-  test("stringifyFilterValue stringifies primitives and returns an empty string otherwise", () => {
+  test("hashValues is independent of key order", () => {
+    expect(hashValues({a: 1, b: [2]})).toBe(hashValues({a: 1, b: [2]}))
+    expect(hashValues({a: 1, b: [2]})).toBe(hashValues({a: 1, b: [2]}))
+    expect(hashValues({a: 1})).not.toBe(hashValues({a: 2}))
+  })
+
+  test("countValues counts array items and one per other value", () => {
+    expect(countValues(definitions, isEmpty, {})).toBe(0)
+    expect(
+      countValues(definitions, isEmpty, {
+        duration: [10, null],
+        query: "out/",
+        status: ["Failed", "Queued"],
+        submitted: {preset: "7d"},
+        tags: {all: false, tags: ["a", "b", "c"]},
+        unknown: ["x"],
+      }),
+    ).toBe(9)
+    expect(
+      countValues(definitions, isEmpty, {duration: [null, null], status: []}),
+    ).toBe(0)
+  })
+
+  test("getValueLabels summarizes each kind of value", () => {
+    const getOptionLabel = (option: string) => option.toUpperCase()
+
+    expect(
+      getValueLabels(definitions.status, ["a", "b"], getOptionLabel),
+    ).toEqual(["A", "B"])
+    expect(
+      getValueLabels(definitions.duration, [10, null], getOptionLabel),
+    ).toEqual(["≥ 10 min"])
+    expect(
+      getValueLabels(definitions.duration, [10, 20], getOptionLabel),
+    ).toEqual(["10 min – 20 min"])
+    expect(
+      getValueLabels(definitions.submitted, {preset: "7d"}, getOptionLabel),
+    ).toEqual(["Last 7 days"])
+    expect(
+      getValueLabels(
+        definitions.submitted,
+        {range: [null, "2026-11-09"]},
+        getOptionLabel,
+      ),
+    ).toEqual(["≤ 2026-11-09"])
+    expect(getValueLabels(definitions.query, "out/", getOptionLabel)).toEqual([
+      "out/",
+    ])
+    expect(
+      getValueLabels(
+        definitions.tags,
+        {all: true, tags: ["x", "y"]},
+        getOptionLabel,
+      ),
+    ).toEqual(["x", "y"])
+  })
+
+  test("recorded labels merge, and only selected values are picked", () => {
+    const recorded = recordOptionLabels(
+      recordOptionLabels({}, "user", {u1: "Anna Robinson"}),
+      "user",
+      {u2: "Ben Ortiz"},
+    )
+    expect(recorded).toEqual({user: {u1: "Anna Robinson", u2: "Ben Ortiz"}})
+    expect(recordOptionLabels(recorded, "user", {})).toBe(recorded)
+
+    expect(pickOptionLabels(recorded, {query: "x", user: ["u2"]})).toEqual({
+      user: {u2: "Ben Ortiz"},
+    })
+    expect(pickOptionLabels(recorded, {})).toEqual({})
+  })
+
+  test("stringifyFilterValue stringifies primitives only", () => {
     expect(stringifyFilterValue("single")).toBe("single")
     expect(stringifyFilterValue(12)).toBe("12")
     expect(stringifyFilterValue(false)).toBe("false")

@@ -9,8 +9,11 @@ export const filterPanelProps: (keyof FilterPanelApiProps)[] =
   createProps<FilterPanelApiProps>()(
     "applyMode",
     "defaultValue",
+    "filters",
     "getFilterLabel",
     "getFilterOptionLabel",
+    "getFilterOptions",
+    "getFilterRange",
     "isEmptyValue",
     "onValueChange",
     "value",

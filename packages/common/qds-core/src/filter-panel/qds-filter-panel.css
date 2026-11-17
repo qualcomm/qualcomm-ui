@@ -4,18 +4,6 @@
 .qui-filter-panel__header {
 }
 
-.qui-filter-panel__footer {
-}
-
-.qui-filter-panel__apply-trigger {
-}
-
-.qui-filter-panel__clear-trigger {
-}
-
-.qui-filter-panel__close-trigger {
-}
-
 .qui-filter-panel__heading {
   color: var(--color-text-neutral-primary);
   font: var(--font-static-heading-xxs-default);
@@ -26,5 +14,38 @@
   }
 }
 
+.qui-filter-panel__count {
+}
+
+.qui-filter-panel__clear-trigger {
+}
+
+.qui-filter-panel__close-trigger {
+}
+
 .qui-filter-panel__section {
+}
+
+.qui-filter-panel__filter {
+}
+
+.qui-filter-panel__filter-trigger {
+}
+
+.qui-filter-panel__filter-label {
+}
+
+.qui-filter-panel__filter-count {
+}
+
+.qui-filter-panel__filter-indicator {
+}
+
+.qui-filter-panel__filter-content {
+}
+
+.qui-filter-panel__footer {
+}
+
+.qui-filter-panel__apply-trigger {
 }

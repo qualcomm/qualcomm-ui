@@ -7,6 +7,9 @@ export const filterPanelParts = [
   "root",
   "applyTrigger",
   "clearTrigger",
+  "filter",
+  "filterCount",
+  "filterLabel",
 ] as const
 
 export const filterPanelAnatomy: Anatomy<

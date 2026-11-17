@@ -14,7 +14,7 @@ import {useQdsFilterPanelContext} from "./qds-filter-panel-context.js"
 export interface FilterPanelSectionProps extends ElementRenderProp<"div"> {}
 
 /**
- * A group of related filter controls within the filter panel. Renders a
+ * A group of related filters within the filter panel. Renders a
  * `<div>` element by default.
  */
 export function FilterPanelSection(

@@ -14,6 +14,34 @@ import {
   type FilterPanelCloseTriggerProps,
 } from "./filter-panel-close-trigger.js"
 import {
+  FilterPanelCount,
+  type FilterPanelCountProps,
+} from "./filter-panel-count.js"
+import {
+  FilterPanelFilterContent,
+  type FilterPanelFilterContentProps,
+} from "./filter-panel-filter-content.js"
+import {
+  FilterPanelFilterCount,
+  type FilterPanelFilterCountProps,
+} from "./filter-panel-filter-count.js"
+import {
+  FilterPanelFilterIndicator,
+  type FilterPanelFilterIndicatorProps,
+} from "./filter-panel-filter-indicator.js"
+import {
+  FilterPanelFilterLabel,
+  type FilterPanelFilterLabelProps,
+} from "./filter-panel-filter-label.js"
+import {
+  FilterPanelFilterTrigger,
+  type FilterPanelFilterTriggerProps,
+} from "./filter-panel-filter-trigger.js"
+import {
+  FilterPanelFilter,
+  type FilterPanelFilterProps,
+} from "./filter-panel-filter.js"
+import {
   FilterPanelFooter,
   type FilterPanelFooterProps,
 } from "./filter-panel-footer.js"
@@ -26,6 +54,10 @@ import {
   type FilterPanelHeadingProps,
 } from "./filter-panel-heading.js"
 import {
+  FilterPanelRootProvider,
+  type FilterPanelRootProviderProps,
+} from "./filter-panel-root-provider.js"
+import {
   FilterPanelRoot,
   type FilterPanelRootProps,
 } from "./filter-panel-root.js"
@@ -34,16 +66,28 @@ import {
   type FilterPanelSectionProps,
 } from "./filter-panel-section.js"
 
+export {
+  useFilterPanel,
+  useFilterPanelFilter,
+} from "@qualcomm-ui/react-core/filter-panel"
 export * from "./qds-filter-panel-context.js"
 
 export type {
   FilterPanelApplyTriggerProps,
   FilterPanelClearTriggerProps,
   FilterPanelCloseTriggerProps,
+  FilterPanelCountProps,
+  FilterPanelFilterProps,
+  FilterPanelFilterContentProps,
+  FilterPanelFilterCountProps,
+  FilterPanelFilterIndicatorProps,
+  FilterPanelFilterLabelProps,
+  FilterPanelFilterTriggerProps,
   FilterPanelFooterProps,
   FilterPanelHeaderProps,
   FilterPanelHeadingProps,
   FilterPanelRootProps,
+  FilterPanelRootProviderProps,
   FilterPanelSectionProps,
 }
 
@@ -65,6 +109,40 @@ type FilterPanelComponent = {
    */
   CloseTrigger: typeof FilterPanelCloseTrigger
   /**
+   * The total number of selected values in the panel. Hidden when no filters are
+   * set. Renders a `<span>` element by default.
+   */
+  Count: typeof FilterPanelCount
+  /**
+   * A collapsible filter section. Provides the filter's state to its trigger,
+   * content, and control. Renders a `<div>` element by default.
+   */
+  Filter: typeof FilterPanelFilter
+  /**
+   * The collapsible content of a filter. Renders a `<div>` element by default.
+   */
+  FilterContent: typeof FilterPanelFilterContent
+  /**
+   * The number of values selected in the filter. Hidden when the filter is
+   * empty. Renders a `<span>` element by default.
+   */
+  FilterCount: typeof FilterPanelFilterCount
+  /**
+   * Indicates whether the filter is expanded. Renders a `<span>` element by
+   * default.
+   */
+  FilterIndicator: typeof FilterPanelFilterIndicator
+  /**
+   * The filter's label. Accepts a `ReactNode`, or a function that receives the
+   * resolved string label. Renders a `<span>` element by default.
+   */
+  FilterLabel: typeof FilterPanelFilterLabel
+  /**
+   * Expands and collapses the filter's content. Renders a `<button>` element
+   * by default.
+   */
+  FilterTrigger: typeof FilterPanelFilterTrigger
+  /**
    * The footer of the filter panel. Renders a `<div>` element by default.
    */
   Footer: typeof FilterPanelFooter
@@ -77,12 +155,18 @@ type FilterPanelComponent = {
    */
   Heading: typeof FilterPanelHeading
   /**
-   * The root element of the filter panel. Renders a `<div>` element by default.
+   * The root element of the filter panel. Owns the panel's state. Renders a
+   * `<div>` element by default.
    */
   Root: typeof FilterPanelRoot
   /**
-   * A group of related filter controls within the filter panel. Renders a
-   * `<div>` element by default.
+   * The root element of a filter panel whose state was created with
+   * `useFilterPanel`. Renders a `<div>` element by default.
+   */
+  RootProvider: typeof FilterPanelRootProvider
+  /**
+   * A group of related filters within the filter panel. Renders a `<div>`
+   * element by default.
    */
   Section: typeof FilterPanelSection
 }
@@ -91,9 +175,17 @@ export const FilterPanel: FilterPanelComponent = {
   ApplyTrigger: FilterPanelApplyTrigger,
   ClearTrigger: FilterPanelClearTrigger,
   CloseTrigger: FilterPanelCloseTrigger,
+  Count: FilterPanelCount,
+  Filter: FilterPanelFilter,
+  FilterContent: FilterPanelFilterContent,
+  FilterCount: FilterPanelFilterCount,
+  FilterIndicator: FilterPanelFilterIndicator,
+  FilterLabel: FilterPanelFilterLabel,
+  FilterTrigger: FilterPanelFilterTrigger,
   Footer: FilterPanelFooter,
   Header: FilterPanelHeader,
   Heading: FilterPanelHeading,
   Root: FilterPanelRoot,
+  RootProvider: FilterPanelRootProvider,
   Section: FilterPanelSection,
 }

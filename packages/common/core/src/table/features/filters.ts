@@ -6,6 +6,7 @@
 
 import type {TableFeature} from "../core/table.js"
 import {type BuiltInFilterFn, filterFns} from "../filter-fns.js"
+import {warnOnce} from "../internal-warn.js"
 import type {
   Column,
   FilterFns,
@@ -111,12 +112,18 @@ export interface FiltersColumn<TData extends RowData> {
   /** @internal */
   _getFacetedUniqueValues?: () => Map<any, number>
   /**
-   * Returns an automatically calculated filter function for the column based off of
-   * the columns first known value.
+   * Returns an automatically calculated filter function for the column. The
+   * filter value's shape decides first: a `string[]` uses `includesValue` (or
+   * `arrIncludesSome` for array row values), a `[number | null, number | null]`
+   * uses `inNumberRange`, and a `{range}` or `{preset}` object uses
+   * `inDateRange`. Otherwise the column's first known value decides.
+   *
+   * @param filterValue the filter value to resolve for. Defaults to the
+   * column's current filter value.
    *
    * @inheritDoc
    */
-  getAutoFilterFn: () => FilterFn<TData> | undefined
+  getAutoFilterFn: (filterValue?: unknown) => FilterFn<TData> | undefined
   /**
    * Returns whether the column can be `column` filtered.
    */
@@ -157,9 +164,12 @@ export interface FiltersColumn<TData extends RowData> {
    * Returns the filter function (either user-defined or automatic, depending on
    * configuration) for the columnId specified.
    *
+   * @param filterValue the filter value to resolve an `"auto"` filter function
+   * for. Defaults to the column's current filter value.
+   *
    * @inheritDoc
    */
-  getFilterFn: () => FilterFn<TData> | undefined
+  getFilterFn: (filterValue?: unknown) => FilterFn<TData> | undefined
   /**
    * Returns the index of the column filter in the table's `state.columnFilters`
    * array. Returns `-1` if not found.
@@ -402,10 +412,15 @@ export const Filters: TableFeature = {
     column: Column<TData>,
     table: TableInstance<TData>,
   ): void => {
-    column.getAutoFilterFn = () => {
+    column.getAutoFilterFn = (filterValue = column.getFilterValue()) => {
       const firstRow = table.getCoreRowModel().flatRows[0]
 
       const value = firstRow?.getValue(column.id)
+
+      const valueFilterFn = getFilterFnForValue(column.id, filterValue, value)
+      if (valueFilterFn) {
+        return valueFilterFn
+      }
 
       if (typeof value === "string") {
         return filterFns.includesString
@@ -429,11 +444,11 @@ export const Filters: TableFeature = {
 
       return filterFns.weakEquals
     }
-    column.getFilterFn = () => {
+    column.getFilterFn = (filterValue) => {
       return isFunction(column.columnDef.filterFn)
         ? column.columnDef.filterFn
         : column.columnDef.filterFn === "auto"
-          ? column.getAutoFilterFn()
+          ? column.getAutoFilterFn(filterValue)
           : (table.options.filterFns?.[column.columnDef.filterFn as string] ??
             filterFns[column.columnDef.filterFn as BuiltInFilterFn])
     }
@@ -487,13 +502,13 @@ export const Filters: TableFeature = {
 
     column.setFilterValue = (value) => {
       table.setColumnFilters((old) => {
-        const filterFn = column.getFilterFn()
         const previousfilter = old?.find((d) => d.id === column.id)
 
         const newFilter = functionalUpdate(
           value,
           previousfilter ? previousfilter.value : undefined,
         )
+        const filterFn = column.getFilterFn(newFilter)
 
         //
         if (
@@ -588,7 +603,7 @@ export const Filters: TableFeature = {
           const column = leafColumns.find((d) => d.id === filter.id)
 
           if (column) {
-            const filterFn = column.getFilterFn()
+            const filterFn = column.getFilterFn(filter.value)
 
             if (shouldAutoRemoveFilter(filterFn, filter.value, column)) {
               return false
@@ -703,6 +718,61 @@ export const Filters: TableFeature = {
   },
 }
 
+function isNumericString(value: string): boolean {
+  return value.trim() !== "" && !Number.isNaN(Number(value))
+}
+
+/**
+ * Resolves an `"auto"` filter function from the shapes written by the filter
+ * panel's filter components. Returns `undefined` for any other value, which
+ * falls back to inference from the column's first known value.
+ */
+function getFilterFnForValue(
+  columnId: string,
+  filterValue: unknown,
+  rowValue: unknown,
+): FilterFn<any> | undefined {
+  if (Array.isArray(filterValue) && filterValue.length > 0) {
+    if (filterValue.every((value) => typeof value === "string")) {
+      /**
+       * Two numeric strings on a number column are a range from a text or
+       * number input (`["10", "50"]`), which existing filter UIs rely on, so
+       * this falls back to first-row inference. A list of exactly two numeric
+       * options is ambiguous and needs an explicit `filterFn`.
+       */
+      if (
+        typeof rowValue === "number" &&
+        filterValue.length === 2 &&
+        filterValue.every(isNumericString)
+      ) {
+        warnOnce(
+          `auto-filter-numeric-strings-${columnId}`,
+          `Column "${columnId}" received a filter value of two numeric strings, which the "auto" filter function treats as a range. To match a list of values, set the column's filterFn to "includesValue". To filter a range, write it as [number | null, number | null].`,
+        )
+        return undefined
+      }
+      return Array.isArray(rowValue)
+        ? filterFns.arrIncludesSome
+        : filterFns.includesValue
+    }
+    if (
+      filterValue.length === 2 &&
+      filterValue.every((value) => value === null || typeof value === "number")
+    ) {
+      return filterFns.inNumberRange
+    }
+    return undefined
+  }
+  if (
+    filterValue !== null &&
+    typeof filterValue === "object" &&
+    ("range" in filterValue || "preset" in filterValue)
+  ) {
+    return filterFns.inDateRange
+  }
+  return undefined
+}
+
 export function shouldAutoRemoveFilter<TData extends RowData>(
   filterFn?: FilterFn<TData>,
   value?: any,
@@ -713,6 +783,7 @@ export function shouldAutoRemoveFilter<TData extends RowData>(
       ? filterFn.autoRemove(value, column)
       : false) ||
     typeof value === "undefined" ||
-    (typeof value === "string" && !value)
+    (typeof value === "string" && !value) ||
+    (Array.isArray(value) && value.length === 0)
   )
 }
