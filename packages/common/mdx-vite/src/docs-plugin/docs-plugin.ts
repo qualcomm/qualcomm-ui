@@ -8,7 +8,11 @@ import {dedent} from "@qualcomm-ui/utils/dedent"
 
 import {ConfigLoader, type QuiDocsPluginOptions} from "./config/index.js"
 import {NAV_FILE_NAME} from "./nav-builder/load-folder-nav.js"
-import {getOpenApiModuleCode} from "./open-api/get-module-code.js"
+import {
+  getOpenApiModuleCode,
+  getOperationModuleCode,
+  OPENAPI_OPERATION_MODULE_PREFIX,
+} from "./open-api/get-module-code.js"
 import {fixPath} from "./path-utils.js"
 import {
   CONFIG_VIRTUAL_MODULE_ID,
@@ -59,11 +63,14 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
    */
   function invalidateOpenApiModule(server: ViteDevServer) {
     for (const environment of Object.values(server.environments)) {
-      const openApiModule = environment.moduleGraph.getModuleById(
-        OPENAPI_VIRTUAL_MODULE_ID,
-      )
-      if (openApiModule) {
-        environment.moduleGraph.invalidateModule(openApiModule)
+      const {moduleGraph} = environment
+      for (const [id, module] of moduleGraph.idToModuleMap) {
+        if (
+          id === OPENAPI_VIRTUAL_MODULE_ID ||
+          id.startsWith(`\0${OPENAPI_OPERATION_MODULE_PREFIX}`)
+        ) {
+          moduleGraph.invalidateModule(module)
+        }
       }
     }
   }
@@ -245,7 +252,17 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
         }
       }
       if (id === OPENAPI_VIRTUAL_MODULE_ID) {
-        return getOpenApiModuleCode(state.indexer.openApiOperations)
+        return getOpenApiModuleCode(
+          Object.keys(state.indexer.openApiOperations),
+        )
+      }
+      if (id.startsWith(`\0${OPENAPI_OPERATION_MODULE_PREFIX}`)) {
+        const pathname = decodeURIComponent(
+          id.slice(OPENAPI_OPERATION_MODULE_PREFIX.length + 1),
+        )
+        return getOperationModuleCode(
+          state.indexer.openApiOperations[pathname] ?? null,
+        )
       }
       if (id === CONFIG_VIRTUAL_MODULE_ID) {
         return {
@@ -292,6 +309,9 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       }
       if (id === OPENAPI_VIRTUAL_MODULE_ID.substring(1)) {
         return OPENAPI_VIRTUAL_MODULE_ID
+      }
+      if (id.startsWith(OPENAPI_OPERATION_MODULE_PREFIX)) {
+        return `\0${id}`
       }
       return undefined
     },
