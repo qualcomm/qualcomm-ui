@@ -23,14 +23,17 @@ import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 
 ## Overview
 
-- The filter panel renders filter controls and keeps track of what the user selects. It doesn't filter your data. Instead, you read the committed selection from [onValueChange](#onValueChange) and apply it to your data, request, or URL.
-- Filters are declared up front with `defineFilters`. Each key becomes the filter's id.
+The filter panel renders filter controls and keeps track of what the user selects. It doesn't filter your data. Instead, you read the committed selection from [value](#value) or [onValueChange](#onValueChange) and apply it to your data, request, or URL.
+
+Think of it this way: the panel shows the available and selected filters. You choose how the filters apply to your data.
 
 ## Defining Filters
 
 ::: terms
 defineFilters, filter definitions, filter types
 :::
+
+Filters are declared up front with `defineFilters`. Each key becomes the filter's id.
 
 ```tsx
 import {
@@ -51,9 +54,9 @@ export const filters = defineFilters({
 })
 ```
 
-Each builder declares the kind of filter and its static configuration, like its label and options. Pass the definitions to the panel's [filters](#filters) prop, and each definition to its control. Controls only accept a definition of their own kind, so passing a range definition to a `CheckboxFilter` is a type error.
+Each filter utility declares the kind of filter and its configuration, like its label and options. Together, the definitions describe every filter the panel offers.
 
-The panel's value is a record keyed by filter id, and a filter with nothing selected has no key. Its type is inferred from the definitions:
+The panel's value holds one entry for each filter. Types are inferred from the definition:
 
 ```tsx
 type BuildFilters = FilterValues<typeof filters>
