@@ -1,8 +1,0 @@
-.vscode/**
-node_modules/**
-src/**
-scripts/**
-tsconfig*.json
-vite.config.ts
-index.html
-dist/webview/index.html

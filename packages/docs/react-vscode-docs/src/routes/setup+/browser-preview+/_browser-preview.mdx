@@ -45,12 +45,12 @@ Add component examples under their route's `demos` folder and render them with `
 | Production webview CSP | Not applied by the docs site | Yes |
 | Host state lifecycle | Local React state | `getState` and `setState` |
 
-Follow [React/Vite Webview Setup](/setup/webview) to launch the integration sample in VS Code. That sample demonstrates host messaging and state persistence and includes automated Chromium checks under its production CSP.
+Follow [Webview Setup](/setup/webview) to integrate the library into a consuming extension. Use that extension's development host to verify messaging, state persistence, installed themes, and its production content security policy.
 
 ## Troubleshoot local previews
 
-If Vite cannot resolve `@qualcomm-ui/vscode-core/styles/components.css`, run `pnpm vscode-core build` after installing the workspace. Rebuild the library after editing its source stylesheet; the docs consume the public `dist` export.
+If Vite cannot resolve `@qualcomm-ui/react-vscode/styles.css`, run `pnpm react-vscode build` after installing the workspace. Rebuild the library after editing its source stylesheet; the docs consume the public `dist` export.
 
-If the preview metadata or stylesheet cannot be resolved, run `pnpm vscode-core build` from the repository root. Theme choices are exported from `@qualcomm-ui/vscode-core/preview`, and fixtures from `@qualcomm-ui/vscode-core/styles/preview.css`. These optional exports are shared by the docs and debug app. The normal component stylesheet excludes the fixtures.
+Theme choices live in `src/themes/preview-themes.ts`, and their fixtures live in `src/themes/preview.css` in the docs package. The library does not ship these saved themes. If a preview import cannot be resolved, check the local docs paths.
 
 If a demo changes the surrounding site's fonts or colors, check that its CSS selectors and host fixture variables are scoped to the preview container.

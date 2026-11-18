@@ -23,7 +23,6 @@
     "react": "pnpm -C packages/frameworks/react",
     "react-core": "pnpm -C packages/frameworks/react-core",
     "react-vscode": "pnpm -C packages/frameworks/react-vscode",
-    "react-vscode-webview": "pnpm -C packages/debug-apps/react-vscode-webview",
     "angular-docs": "pnpm -C packages/docs/angular-docs",
     "angular-table-docs": "pnpm -C packages/docs/angular-table-docs",
     "qui-docs": "pnpm -C packages/docs/qui-docs",

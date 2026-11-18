@@ -32,27 +32,15 @@ pnpm tailwind-plugin build:css
 pnpm react-vscode build
 ```
 
-After changing `src/tokens/tokens.ts`, run `pnpm vscode-core build`, then regenerate the Tailwind adapter. Both generated CSS files are checked in; edit their source definitions rather than editing generated files. CSS-only component changes can use `pnpm vscode-core watch:css`.
+After changing `src/tokens/tokens.ts`, run `pnpm vscode-core build`, then regenerate the Tailwind adapter. Both generated CSS files are checked in; edit their source definitions rather than editing generated files. Shared CSS changes can use `pnpm vscode-core watch:css`.
 
-## Add presentation definitions
+## Package boundaries
 
-Use `src/<component>/` for framework-independent appearance types, class names, presentation bindings, and component CSS, following `qds-core` patterns. Name component styles `vscode-<component>.css`; the CSS build configuration includes them in the `styles/components.css` aggregate. React components consume those definitions alongside `react-core` behavior. Do not add framework imports, extension-host API calls, or QDS tokens here.
+VS Code tokens, shared host styles, typography, and opacity bindings belong in this package. Component behavior belongs in `core` and the framework core packages. React rendering, component-specific CSS, and appearance types belong beside their implementations in `react-vscode`.
 
-The React stylesheet entry remains a convenience bundle of these shared styles and any future React-specific CSS. The normal component stylesheet reads values supplied by VS Code. Optional browser preview exports are described in the next section.
+Keep framework imports, QDS tokens, Node.js runtime APIs, and VS Code extension APIs outside this package. Browser bindings may use DOM APIs when called; importing them must remain safe outside the browser. Tailwind consumes this package for generation, so dependencies on React packages or test utilities would recreate the workspace build cycle.
 
-## Optional browser previews
-
-Import `vscodePreviewThemes` from `@qualcomm-ui/vscode-core/preview` for the ten legacy theme choices and `@qualcomm-ui/vscode-core/styles/preview.css` for their saved preview colors. Add `vscode-preview` and `data-vscode-preview-theme="light-modern"` to the preview container alongside `qui-vscode`.
-
-```tsx
-import {vscodePreviewThemes} from "@qualcomm-ui/vscode-core/preview"
-import "@qualcomm-ui/vscode-core/styles/components.css"
-import "@qualcomm-ui/vscode-core/styles/preview.css"
-```
-
-`src/preview/index.ts` owns the choices; `src/styles/preview.css` owns color snapshots from the legacy docs and browser font fallbacks. The docs and debug app use these optional exports. Preview assets ship in the package but are excluded from `styles/components.css` and the React convenience stylesheet. Runtime applications only load them when explicitly imported.
-
-The snapshots do not track installed editor themes. Optional colors absent from a snapshot use `initial` so the library's fallbacks apply. Keep fixtures scoped to browser previews; real VS Code webviews receive variables from the host and should omit the preview class.
+Saved preview theme metadata and CSS fixtures live in `react-vscode-docs/src/themes` and do not ship with the libraries.
 
 ## Host utility metadata
 

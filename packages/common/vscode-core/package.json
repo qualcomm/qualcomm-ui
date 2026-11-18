@@ -25,10 +25,6 @@
     "./styles/tokens.css": {
       "style": "./dist/tokens.min.css",
       "default": "./dist/tokens.min.css"
-    },
-    "./styles/preview.css": {
-      "style": "./dist/preview.min.css",
-      "default": "./dist/preview.min.css"
     }
   },
   "publishConfig": {

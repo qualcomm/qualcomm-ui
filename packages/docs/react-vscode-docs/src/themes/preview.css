@@ -1,1 +1,294 @@
-@import "@qualcomm-ui/vscode-core/styles/preview.css";
+/* Browser themes use color snapshots from legacy react-vscode-docs/src/themes. */
+.vscode-preview {
+  --vscode-font-family: system-ui, sans-serif;
+  --vscode-font-size: 13px;
+  --vscode-font-weight: normal;
+  --vscode-editor-font-family: ui-monospace, monospace;
+  --vscode-editor-font-size: 13px;
+  --vscode-editor-font-weight: normal;
+  background: var(--vscode-editor-background);
+  color: var(--vscode-foreground);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  font-weight: var(--vscode-font-weight);
+
+  &[data-vscode-preview-theme="dark-modern"] {
+    --vscode-button-background: #0078d4;
+    --vscode-button-border: rgba(255, 255, 255, 0.07);
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #026ec1;
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: #9d9d9d;
+    --vscode-dropdown-background: #313131;
+    --vscode-dropdown-border: #3c3c3c;
+    --vscode-dropdown-foreground: #cccccc;
+    --vscode-editor-background: #1f1f1f;
+    --vscode-editorWarning-foreground: #cca700;
+    --vscode-errorForeground: #f85149;
+    --vscode-focusBorder: #0078d4;
+    --vscode-foreground: #cccccc;
+    --vscode-input-background: #313131;
+    --vscode-input-border: #3c3c3c;
+    --vscode-input-foreground: #cccccc;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: #313131;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.36);
+    --vscode-textLink-foreground: #4daafc;
+    --vscode-list-focusOutline: #0078d4;
+    --vscode-tree-indentGuidesStroke: #585858;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.67);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="dark-plus"] {
+    --vscode-button-background: #0e639c;
+    --vscode-button-border: initial;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #1177bb;
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: rgba(204, 204, 204, 0.7);
+    --vscode-dropdown-background: #3c3c3c;
+    --vscode-dropdown-border: #3c3c3c;
+    --vscode-dropdown-foreground: #f0f0f0;
+    --vscode-editor-background: #1e1e1e;
+    --vscode-editorWarning-foreground: #cca700;
+    --vscode-errorForeground: #f48771;
+    --vscode-focusBorder: #007fd4;
+    --vscode-foreground: #cccccc;
+    --vscode-input-background: #3c3c3c;
+    --vscode-input-border: initial;
+    --vscode-input-foreground: #cccccc;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: #303031;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.36);
+    --vscode-textLink-foreground: #3794ff;
+    --vscode-list-focusOutline: #007fd4;
+    --vscode-tree-indentGuidesStroke: #585858;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.67);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="dark-high-contrast"] {
+    --vscode-button-background: initial;
+    --vscode-button-border: #6fc3df;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: initial;
+    --vscode-contrastBorder: #6fc3df;
+    --vscode-descriptionForeground: rgba(255, 255, 255, 0.7);
+    --vscode-dropdown-background: #000000;
+    --vscode-dropdown-border: #6fc3df;
+    --vscode-dropdown-foreground: #ffffff;
+    --vscode-editor-background: #000000;
+    --vscode-editorWarning-foreground: #ffd370;
+    --vscode-errorForeground: #f48771;
+    --vscode-focusBorder: #f38518;
+    --vscode-foreground: #ffffff;
+    --vscode-input-background: #000000;
+    --vscode-input-border: #6fc3df;
+    --vscode-input-foreground: #ffffff;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: #6fc3df;
+    --vscode-widget-shadow: initial;
+    --vscode-textLink-foreground: #21a6ff;
+    --vscode-list-focusOutline: #f38518;
+    --vscode-tree-indentGuidesStroke: #a9a9a9;
+    --vscode-editorUnnecessaryCode-opacity: initial;
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="light-modern"] {
+    --vscode-button-background: #005fb8;
+    --vscode-button-border: rgba(0, 0, 0, 0.1);
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #0258a8;
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: #3b3b3b;
+    --vscode-dropdown-background: #ffffff;
+    --vscode-dropdown-border: #cecece;
+    --vscode-dropdown-foreground: #3b3b3b;
+    --vscode-editor-background: #ffffff;
+    --vscode-editorWarning-foreground: #bf8803;
+    --vscode-errorForeground: #f85149;
+    --vscode-focusBorder: #005fb8;
+    --vscode-foreground: #3b3b3b;
+    --vscode-input-background: #ffffff;
+    --vscode-input-border: #cecece;
+    --vscode-input-foreground: #3b3b3b;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: #e5e5e5;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.16);
+    --vscode-textLink-foreground: #005fb8;
+    --vscode-list-focusOutline: #005fb8;
+    --vscode-tree-indentGuidesStroke: #a9a9a9;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.47);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="light-plus"] {
+    --vscode-button-background: #007acc;
+    --vscode-button-border: initial;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #0062a3;
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: #717171;
+    --vscode-dropdown-background: #ffffff;
+    --vscode-dropdown-border: #cecece;
+    --vscode-dropdown-foreground: #616161;
+    --vscode-editor-background: #ffffff;
+    --vscode-editorWarning-foreground: #bf8803;
+    --vscode-errorForeground: #a1260d;
+    --vscode-focusBorder: #0090f1;
+    --vscode-foreground: #616161;
+    --vscode-input-background: #ffffff;
+    --vscode-input-border: initial;
+    --vscode-input-foreground: #616161;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: #d4d4d4;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.16);
+    --vscode-textLink-foreground: #006ab1;
+    --vscode-list-focusOutline: #0090f1;
+    --vscode-tree-indentGuidesStroke: #a9a9a9;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.47);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="light-high-contrast"] {
+    --vscode-button-background: #0f4a85;
+    --vscode-button-border: #0f4a85;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #0f4a85;
+    --vscode-contrastBorder: #0f4a85;
+    --vscode-descriptionForeground: rgba(41, 41, 41, 0.7);
+    --vscode-dropdown-background: #ffffff;
+    --vscode-dropdown-border: #0f4a85;
+    --vscode-dropdown-foreground: #292929;
+    --vscode-editor-background: #ffffff;
+    --vscode-editorWarning-foreground: #895503;
+    --vscode-errorForeground: #b5200d;
+    --vscode-focusBorder: #006bbd;
+    --vscode-foreground: #292929;
+    --vscode-input-background: #ffffff;
+    --vscode-input-border: #0f4a85;
+    --vscode-input-foreground: #292929;
+    --vscode-testing-iconPassed: #007100;
+    --vscode-widget-border: #0f4a85;
+    --vscode-widget-shadow: initial;
+    --vscode-textLink-foreground: #0f4a85;
+    --vscode-list-focusOutline: #006bbd;
+    --vscode-tree-indentGuidesStroke: #a5a5a5;
+    --vscode-editorUnnecessaryCode-opacity: initial;
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="monokai"] {
+    --vscode-button-background: #75715e;
+    --vscode-button-border: initial;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #8d8871;
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: rgba(204, 204, 204, 0.7);
+    --vscode-dropdown-background: #414339;
+    --vscode-dropdown-border: #414339;
+    --vscode-dropdown-foreground: #f0f0f0;
+    --vscode-editor-background: #272822;
+    --vscode-editorWarning-foreground: #cca700;
+    --vscode-errorForeground: #f48771;
+    --vscode-focusBorder: #99947c;
+    --vscode-foreground: #cccccc;
+    --vscode-input-background: #414339;
+    --vscode-input-border: initial;
+    --vscode-input-foreground: #cccccc;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: initial;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.6);
+    --vscode-textLink-foreground: #3794ff;
+    --vscode-list-focusOutline: #99947c;
+    --vscode-tree-indentGuidesStroke: #585858;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.67);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="quiet-light"] {
+    --vscode-button-background: #705697;
+    --vscode-button-border: initial;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #5a4579;
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: #717171;
+    --vscode-dropdown-background: #f5f5f5;
+    --vscode-dropdown-border: #cecece;
+    --vscode-dropdown-foreground: #616161;
+    --vscode-editor-background: #f5f5f5;
+    --vscode-editorWarning-foreground: #bf8803;
+    --vscode-errorForeground: #f1897f;
+    --vscode-focusBorder: #9769dc;
+    --vscode-foreground: #616161;
+    --vscode-input-background: #ffffff;
+    --vscode-input-border: initial;
+    --vscode-input-foreground: #616161;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: initial;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.16);
+    --vscode-textLink-foreground: #006ab1;
+    --vscode-list-focusOutline: #9769dc;
+    --vscode-tree-indentGuidesStroke: #a9a9a9;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.47);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="solarized-dark"] {
+    --vscode-button-background: rgba(42, 161, 152, 0.6);
+    --vscode-button-border: initial;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: rgba(50, 193, 181, 0.6);
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: rgba(204, 204, 204, 0.7);
+    --vscode-dropdown-background: #00212b;
+    --vscode-dropdown-border: rgba(42, 161, 152, 0.6);
+    --vscode-dropdown-foreground: #f0f0f0;
+    --vscode-editor-background: #002b36;
+    --vscode-editorWarning-foreground: #cca700;
+    --vscode-errorForeground: #ffeaea;
+    --vscode-focusBorder: rgba(42, 161, 152, 0.6);
+    --vscode-foreground: #cccccc;
+    --vscode-input-background: #003847;
+    --vscode-input-border: initial;
+    --vscode-input-foreground: #93a1a1;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: initial;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.36);
+    --vscode-textLink-foreground: #3794ff;
+    --vscode-list-focusOutline: rgba(42, 161, 152, 0.6);
+    --vscode-tree-indentGuidesStroke: #585858;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.67);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+
+  &[data-vscode-preview-theme="solarized-light"] {
+    --vscode-button-background: #ac9d57;
+    --vscode-button-border: initial;
+    --vscode-button-foreground: #ffffff;
+    --vscode-button-hoverBackground: #8b7e44;
+    --vscode-contrastBorder: initial;
+    --vscode-descriptionForeground: #717171;
+    --vscode-dropdown-background: #eee8d5;
+    --vscode-dropdown-border: #d3af86;
+    --vscode-dropdown-foreground: #616161;
+    --vscode-editor-background: #fdf6e3;
+    --vscode-editorWarning-foreground: #bf8803;
+    --vscode-errorForeground: #a1260d;
+    --vscode-focusBorder: #b49471;
+    --vscode-foreground: #616161;
+    --vscode-input-background: #ddd6c1;
+    --vscode-input-border: initial;
+    --vscode-input-foreground: #586e75;
+    --vscode-testing-iconPassed: #73c991;
+    --vscode-widget-border: initial;
+    --vscode-widget-shadow: rgba(0, 0, 0, 0.16);
+    --vscode-textLink-foreground: #006ab1;
+    --vscode-list-focusOutline: #b49471;
+    --vscode-tree-indentGuidesStroke: #a9a9a9;
+    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.47);
+    --vscode-minimap-foregroundOpacity: #000000;
+  }
+}

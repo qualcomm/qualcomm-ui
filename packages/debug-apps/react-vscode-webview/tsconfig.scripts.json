@@ -1,7 +1,0 @@
-{
-  "extends": "@qualcomm-ui/tsconfig/tsconfig.scripts.json",
-  "compilerOptions": {
-    "noEmit": true
-  },
-  "include": ["scripts", "vite.config.ts", "src/extension/webview-content.ts", "src/shared/messages.ts"]
-}

@@ -158,7 +158,6 @@ export default defineConfig(
       "packages/docs/react-vscode-docs/**/*.{ts,tsx}",
       "packages/docs/react-table-docs/**/*.{ts,tsx}",
       "packages/debug-apps/react-ssr/**/*.{ts,tsx}",
-      "packages/debug-apps/react-vscode-webview/**/*.{ts,tsx}",
       "packages/docs/angular*/**/*.tsx",
     ],
     languageOptions,

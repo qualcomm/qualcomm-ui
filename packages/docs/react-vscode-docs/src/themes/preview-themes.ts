@@ -6,7 +6,9 @@ export interface VscodePreviewTheme {
   label: string
 }
 
-/** Saved themes used by browser previews, independent of the installed VS Code host. */
+/**
+ * Saved themes used by browser previews, independent of the installed VS Code host.
+ */
 export const vscodePreviewThemes: readonly VscodePreviewTheme[] = [
   {id: "dark-modern", label: "Dark Modern"},
   {id: "dark-plus", label: "Dark+"},

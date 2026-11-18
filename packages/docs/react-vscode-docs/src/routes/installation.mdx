@@ -4,15 +4,15 @@ title: Installation
 
 # {frontmatter.title}
 
-Set up React VS Code for an extension webview that uses the editor's fonts and colors. Start with the React/Vite sample to verify asset loading, host styling, and messages between React and the extension.
+Set up React VS Code for an extension webview that uses the editor's fonts and colors. Build the workspace library, then use embedded documentation demos to preview its styles.
 
-The package is under development and has no released consumer version yet. The workspace package exports a host stylesheet and CSS typography utilities. React component APIs are not available. The sample uses native HTML controls so you can verify integration before components are delivered.
+The package is under development and has no released consumer version yet. The React package exports a host stylesheet and CSS typography utilities. Import token metadata and opacity bindings directly from `@qualcomm-ui/vscode-core`. React component APIs are not available yet.
 
 ## Prerequisites
 
-Use a checkout of the NextGen `qualcomm-ui` repository, its configured pnpm version, Node.js 22.12 or newer for the build tools, and VS Code 1.95 or newer for the sample extension. The library requires React and React DOM 19 or newer.
+Use a checkout of the NextGen `qualcomm-ui` repository, its configured pnpm version, and Node.js 22.12 or newer for the build tools. The library requires React and React DOM 19 or newer. A consuming extension defines its supported VS Code version.
 
-## Install and build the workspace sample
+## Install and build the workspace library
 
 Run these commands from the repository root:
 
@@ -20,19 +20,16 @@ Run these commands from the repository root:
 pnpm install
 pnpm vscode-core build
 pnpm react-vscode build
-pnpm react-vscode-webview build
 ```
 
-The sample lives at `packages/debug-apps/react-vscode-webview`. Its manifest declares `@qualcomm-ui/react-vscode`, `react`, `react-dom`, and the library's shared-core peer packages. pnpm resolves the library through the workspace. Do not substitute the deprecated legacy package.
-
-The build emits an extension-host entry at `dist/extension.cjs`, plus the webview's bundled React code and stylesheet at `dist/webview/webview.js` and `dist/webview/webview.css`. Follow [React/Vite Webview Setup](/setup/webview) to launch the extension and test the message flow.
+The build emits ESM entrypoints, TypeScript declarations, and the public stylesheets. In a workspace consumer, declare `@qualcomm-ui/react-vscode`, React, React DOM, and the library's shared-core peer packages. pnpm resolves the library through the workspace.
 
 ## Import the host stylesheet
 
 Import the public stylesheet from your React entry point:
 
 ```tsx
-import "@qualcomm-ui/vscode-core/styles/components.css"
+import "@qualcomm-ui/react-vscode/styles.css"
 ```
 
 Add `qui-vscode` to the webview body or the container wrapping your application:
@@ -45,25 +42,25 @@ Add `qui-vscode` to the webview body or the container wrapping your application:
 
 The stylesheet reads `--vscode-font-family`, `--vscode-font-size`, `--vscode-font-weight`, and `--vscode-foreground`. VS Code supplies these values inside the webview. Theme colors update through the host variables.
 
-QDS font downloads, brand CSS, and QDS theme providers are not prerequisites for an extension using this package. The sample does not require Tailwind or an icon package. Add icon assets and the corresponding CSP permissions when your interface uses them.
+QDS font downloads, brand CSS, QDS theme providers, and Tailwind are not prerequisites for an extension using this package. Add icon assets and the corresponding content security policy permissions when your interface uses them.
 
 ## Preview and verify
 
 Use the embedded [Browser Preview](/setup/browser-preview) to try host styling and switch between simulated light, dark, and high-contrast themes. Component previews run inside the documentation site; no separate preview server is required.
 
-Follow [React/Vite Webview Setup](/setup/webview) to test the extension host, asset loading, and message flow in VS Code.
-
-After building, run the sample checks:
-
-```shell
-pnpm react-vscode-webview test
-```
-
-The integration check requires a Playwright Chromium installation. The sample checks message validation, loading the built JavaScript and CSS under the webview CSP, state restoration, and host variable updates. It simulates the VS Code transport and does not launch an Extension Development Host.
+Follow [Webview Setup](/setup/webview) to integrate the library into your extension and verify real host fonts, themes, asset loading, and lifecycle behavior. Embedded demos do not exercise extension messaging or a production webview content security policy.
 
 ## Develop the documentation
 
-Run `pnpm react-vscode-docs dev` from the repository root to work on this documentation site. It uses port 3400, independently of the sample.
+The docs demonstrate the optional Tailwind adapter. Build its generated styles before starting the site:
+
+```shell
+pnpm tailwind-plugin generate-css:vscode
+pnpm tailwind-plugin build:css
+pnpm react-vscode-docs dev
+```
+
+The documentation site uses port 3400.
 
 The documentation shell uses the shared QUI Docs layout and QDS styling. VS Code component previews use simulated host variables within their preview containers. A real extension receives its font and color variables from the host.
 

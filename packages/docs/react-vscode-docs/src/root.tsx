@@ -32,7 +32,7 @@ import {
   type QdsBrand,
   QdsThemeContextProvider,
 } from "@qualcomm-ui/react/qds-theme"
-import "@qualcomm-ui/vscode-core/styles/components.css"
+import "@qualcomm-ui/react-vscode/styles.css"
 
 import {MdxLayout} from "./components/mdx-layout"
 import {themeCookie} from "./sessions.server"

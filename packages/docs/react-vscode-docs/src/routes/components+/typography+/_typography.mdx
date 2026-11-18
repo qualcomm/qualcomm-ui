@@ -17,7 +17,7 @@ Use semantic HTML with the React VS Code typography classes to apply the editor'
 Import the public stylesheet in your React entry point and apply `qui-vscode` to the application container. Complete [Installation](/installation) to build the workspace package.
 
 ```tsx
-import "@qualcomm-ui/vscode-core/styles/components.css"
+import "@qualcomm-ui/react-vscode/styles.css"
 
 export function WebviewContent() {
   return (
@@ -37,9 +37,9 @@ Classes select presentation, not HTML semantics. Use heading elements in documen
 
 ## Understand package ownership
 
-`vscode-core` defines framework-independent host token mappings, typography CSS, and presentation bindings, matching the role of `qds-core`. Its token metadata is exported through `@qualcomm-ui/vscode-core/tokens`; the generated CSS defines `--qui-vscode-*` values inside the application container. The existing Tailwind package provides an optional utility adapter over those values.
+`vscode-core` defines portable host token mappings, typography CSS, and browser presentation bindings. Token metadata is available through `@qualcomm-ui/vscode-core/tokens`; generated CSS defines `--qui-vscode-*` values inside the application container. The existing Tailwind package provides an optional utility adapter over those values.
 
-`react-vscode` composes React components from design-agnostic `react-core` behavior and `vscode-core` presentation. Its `styles.css` entry remains a convenience bundle of shared styles. The typography scale is defined once in `vscode-core`, not independently in the React and Tailwind packages.
+React components use design-agnostic `react-core` behavior and the shared VS Code foundation. The `styles.css` entry bundles production styles. The typography scale is defined once in `vscode-core/src/tokens/tokens.ts`. The foundation has no React imports and can support another framework if needed.
 
 ## Use the legacy scale with host sizing
 
@@ -99,11 +99,11 @@ VS Code does not define generic success and warning prose tokens. Those two mapp
 
 ## Use optional Tailwind utilities
 
-For Tailwind 4 applications, import the optional adapter after the shared styles. Install `@qualcomm-ui/vscode-core` alongside `@qualcomm-ui/tailwind-plugin` when using this entry.
+For Tailwind 4 applications, import the optional adapter after the library styles. Install `@qualcomm-ui/react-vscode` alongside `@qualcomm-ui/tailwind-plugin` when using this entry.
 
 ```css
 @import "tailwindcss";
-@import "@qualcomm-ui/vscode-core/styles/components.css";
+@import "@qualcomm-ui/react-vscode/styles.css";
 @import "@qualcomm-ui/tailwind-plugin/vscode.css";
 ```
 

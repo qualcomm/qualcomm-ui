@@ -5,7 +5,8 @@ import {getDemo} from "virtual:qui-demo-scope/auto"
 import type {ReactDemoData} from "@qualcomm-ui/mdx-common"
 import {ReactDemo, type ReactDemoProps} from "@qualcomm-ui/react-mdx/code-demo"
 import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
-import {vscodePreviewThemes} from "@qualcomm-ui/vscode-core/preview"
+
+import {vscodePreviewThemes} from "../../themes/preview-themes"
 
 interface Props extends Omit<ReactDemoProps, "demo" | "colorScheme"> {}
 

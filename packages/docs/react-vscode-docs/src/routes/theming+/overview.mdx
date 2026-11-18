@@ -27,9 +27,11 @@ Import the Tailwind 4 adapter after the library stylesheet:
 
 ```css
 @import "tailwindcss";
-@import "@qualcomm-ui/vscode-core/styles/components.css";
+@import "@qualcomm-ui/react-vscode/styles.css";
 @import "@qualcomm-ui/tailwind-plugin/vscode.css";
 ```
+
+The adapter imports token variables from `@qualcomm-ui/vscode-core`; install that package for CSS-only usage without React. Load the React library stylesheet when using its components or plain CSS typography classes. The optional opacity binding is available from `@qualcomm-ui/vscode-core/opacity`.
 
 The palette defines 823 host color mappings. Names use the `vscode-` prefix and convert host token names to kebab case. For example, `--vscode-button-hoverBackground` becomes `bg-vscode-button-hover-background`. Tailwind exposes the palette through its background, text, border, outline, stroke, fill, ring, and shadow-color utilities.
 
