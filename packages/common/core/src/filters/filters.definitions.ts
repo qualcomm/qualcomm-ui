@@ -280,8 +280,8 @@ export type FilterDefinitionValue<TDefinition> =
  * The filter values for a set of definitions. Every filter is optional: an
  * empty filter is an absent key.
  */
-export type FilterValues<TDefinitions> = {
-  -readonly [K in keyof TDefinitions]?: FilterDefinitionValue<TDefinitions[K]>
+export type FilterValues<TDefs> = {
+  -readonly [K in keyof TDefs]?: FilterDefinitionValue<TDefs[K]>
 }
 
 export function checkboxFilter(

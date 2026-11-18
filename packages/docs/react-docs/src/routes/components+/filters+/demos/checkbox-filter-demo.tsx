@@ -1,11 +1,20 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  checkboxFilter,
+  defineFilters,
+  type FilterValues,
+} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxFilter} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  status: checkboxFilter({
+    label: "Status",
+    options: ["Failed", "Passed", "Queued"],
+  }),
+})
 
 export function CheckboxFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})

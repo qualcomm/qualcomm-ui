@@ -1,11 +1,17 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  defineFilters,
+  type FilterValues,
+  textFilter,
+} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {TextFilter} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  buildPath: textFilter({label: "Build path"}),
+})
 
 export function TextFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})

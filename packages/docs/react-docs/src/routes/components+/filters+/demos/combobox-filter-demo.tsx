@@ -1,11 +1,27 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  comboboxFilter,
+  defineFilters,
+  type FilterValues,
+} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {ComboboxFilter} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  owner: comboboxFilter({
+    label: "Owner",
+    options: [
+      {label: "Anna Robinson", value: "u1"},
+      {label: "Ben Ortiz", value: "u2"},
+      {label: "Chloe Nguyen", value: "u3"},
+      {label: "Dev Patel", value: "u4"},
+      {label: "Elena Rossi", value: "u5"},
+      {label: "Farah Haddad", value: "u6"},
+    ],
+  }),
+})
 
 export function ComboboxFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})

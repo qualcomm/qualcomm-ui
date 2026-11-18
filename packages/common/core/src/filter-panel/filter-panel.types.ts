@@ -56,8 +56,8 @@ export interface FilterPanelSetValueDetails {
  * Result counts keyed by option value.
  */
 export type FilterPanelOptionCounts =
-  | ReadonlyMap<string, number>
-  | Readonly<Record<string, number>>
+  | Map<string, number>
+  | Record<string, number>
 
 export interface FilterPanelRange {
   max: number

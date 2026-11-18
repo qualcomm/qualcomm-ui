@@ -1,11 +1,28 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  dateFilter,
+  defineFilters,
+  type FilterValues,
+} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {DateFilter} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  submitted: dateFilter({
+    label: "Submitted",
+    presets: [
+      {label: "Last 7 days", value: "last7Days"},
+      {label: "This month", value: "thisMonth"},
+      {
+        label: "Since release",
+        range: () => ["2026-09-01", null],
+        value: "sinceRelease",
+      },
+    ],
+  }),
+})
 
 export function DateFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})

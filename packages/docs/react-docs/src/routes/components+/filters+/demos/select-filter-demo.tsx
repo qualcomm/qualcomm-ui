@@ -1,11 +1,24 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  defineFilters,
+  type FilterValues,
+  selectFilter,
+} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {SelectFilter} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  standard: selectFilter({
+    label: "Standard",
+    options: [
+      {label: "Wi-Fi 6", value: "wifi6"},
+      {label: "Wi-Fi 6E", value: "wifi6e"},
+      {label: "Wi-Fi 7", value: "wifi7"},
+    ],
+  }),
+})
 
 export function SelectFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})

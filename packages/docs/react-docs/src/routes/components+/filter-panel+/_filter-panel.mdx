@@ -108,7 +108,7 @@ The second argument to `onValueChange` contains the labels of the options the us
 
 ### Manual & Controlled State
 
-In `manual` mode, `value` is the applied (saved) selection and `draftValue` refers to the panel's staged changes.
+In `manual` mode, [value](#value) is the applied (saved) selection and [draftValue](#draftValue) refers to the panel's staged changes. They only differ in manual mode, until the draft is applied.
 
 Setting `value` from outside the panel replaces the draft, including any unapplied changes.
 
@@ -116,6 +116,9 @@ Setting `value` from outside the panel replaces the draft, including any unappli
   name="FilterPanelManualControlledStateDemo"
   component={demos.FilterPanelManualControlledStateDemo}
 />
+
+> [!note]
+> `clearFilter` follows the apply mode. In `manual` mode, it clears the filter in the draft, but the change still has to be applied.
 
 ### Labels
 
@@ -149,24 +152,13 @@ Options are strings or `{label, value}` objects. A selected value that isn't in 
 
 A selection restored from storage has no option labels until its options load. To label it in the meantime, supply [getFilterOptionLabel](#getFilterOptionLabel) on the panel, or `getOptionLabel` on the definition.
 
-### Facet Counts
+### Filter Counts
 
 ::: terms
 faceting, facets, result counts, FacetFilter, getFacetFilterPanelProps
 :::
 
-[getFilterOptionCounts](#getFilterOptionCounts) shows how many results each option would produce. It receives a filter id and returns the counts keyed by option value, as a `Map` or a plain object. Unselected options with a count of 0 are disabled. Return `undefined` to show no counts for a filter.
-
-For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-filter`, and pass the props from `getFacetFilterPanelProps` to the panel. Filter ids match the facet filter's field names. Each option counts the results it would produce given the selections in the other filters, so options in the same filter don't zero each other out.
-
-`FacetFilter` matches `string[]` values only. Apply text, range, and date filters in `getCandidateIds`, which returns the ids of the items that pass them.
-
-<Demo
-  name="FilterPanelFacetsDemo"
-  component={demos.FilterPanelFacetsDemo}
-/>
-
-Counts from a server can be returned as they arrive.
+[getFilterOptionCounts](#getFilterOptionCounts) shows the number of results next to each option. Return counts keyed by option value, or `undefined` to hide counts for a filter. Unselected options with a count of 0 are disabled.
 
 ```tsx
 <FilterPanel.Root
@@ -175,10 +167,17 @@ Counts from a server can be returned as they arrive.
 >
 ```
 
-The second argument to `getFilterOptionCounts` is the selection the controls display. In manual mode, that's the draft, so counts update before the user applies. To fetch counts for the draft from a server, create the panel with `useFilterPanel` and request them when [draftValue](#draftValue) changes.
+For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-filter` and spread `getFacetFilterPanelProps` onto the panel. Its field names must match the filter ids. `FacetFilter` only counts option filters, so apply other filters, like text search, in `getCandidateIds`.
+
+<Demo
+  name="FilterPanelFacetsDemo"
+  component={demos.FilterPanelFacetsDemo}
+/>
+
+In manual mode, counts follow the draft, so they update before the user applies.
 
 > [!note]
-> `getTableFilterPanelProps` supplies counts from the table's faceted values. Enable faceting with the table's `getFacetedRowModel` and `getFacetedUniqueValues` options.
+> For tables, use `getTableFilterPanelProps` and enable the table's `getFacetedRowModel` and `getFacetedUniqueValues` options.
 
 ### Hoisted State
 
@@ -186,17 +185,19 @@ The second argument to `getFilterOptionCounts` is the selection the controls dis
 useFilterPanel, RootProvider, chips, active filters
 :::
 
-Create the panel's state with `useFilterPanel` and pass it to `FilterPanel.RootProvider` when you need it outside the panel, like rendering active filters as tags. The state outlives the panel, so the panel can be unmounted (in a closed drawer, for example) without losing the selection.
+An alternative to `FilterPanel.Root` is the `FilterPanel.RootProvider` component with the `useFilterPanel` hook. This gives you access to the panel's state and methods from outside the panel, like rendering active filters as tags.
 
 <Demo
   name="FilterPanelHoistedStateDemo"
   component={demos.FilterPanelHoistedStateDemo}
 />
 
-The API exposes two selections. [value](#value) is the committed selection, and [draftValue](#draftValue) is what the controls currently show. They only differ in manual mode, until the draft is applied. [valueCount](#valueCount) and [draftValueCount](#draftValueCount) count each one, so a "Filters (3)" button outside a closed drawer can show what's applied.
+The state lives in the component that calls `useFilterPanel`, so the panel can unmount, for example inside a closed drawer, without losing the selection.
 
-> [!note]
-> `clearFilter` follows the apply mode. In manual mode, it clears the filter in the draft, and the change still has to be applied.
+<Demo
+  name="FilterPanelDrawerDemo"
+  component={demos.FilterPanelDrawerDemo}
+/>
 
 ### Custom Filters
 
@@ -245,6 +246,40 @@ search params, query string, request
 <TypeDocAttributes
   name={["QdsFilterPanelRootBindings", "FilterPanelRootBindings"]}
 />
+
+### useFilterPanel
+
+Accepts the same state props as [FilterPanel.Root](#filter-panel-root) and returns the panel API.
+
+<TypeDocProps name="FilterPanelApi" partial />
+
+### useFilterPanelFilter
+
+Returns the state of the enclosing `FilterPanel.Filter`.
+
+<TypeDocProps name="FilterPanelFilterContextValue" partial />
+
+### Definitions
+
+#### OptionFilterConfig
+
+Configuration for `checkboxFilter`, `comboboxFilter`, `radioFilter`, and `selectFilter`. `checkboxTreeFilter` takes the same configuration without `options`, since its nodes come from the tree collection.
+
+<TypeDocProps name="OptionFilterConfig" />
+
+#### RangeFilterConfig
+
+<TypeDocProps name="RangeFilterConfig" />
+
+#### DateFilterConfig
+
+<TypeDocProps name="DateFilterConfig" />
+
+#### CustomFilterConfig
+
+<TypeDocProps name="CustomFilterConfig" />
+
+## Element API
 
 ### \<FilterPanel.RootProvider>
 
@@ -355,35 +390,3 @@ search params, query string, request
 <TypeDocProps name="FilterPanelFilterContentProps" />
 
 <TypeDocAttributes name="QdsFilterPanelFilterContentBindings" />
-
-### useFilterPanel
-
-Accepts the same state props as [FilterPanel.Root](#filter-panel-root) and returns the panel API.
-
-<TypeDocProps name="FilterPanelApi" partial />
-
-### useFilterPanelFilter
-
-Returns the state of the enclosing `FilterPanel.Filter`.
-
-<TypeDocProps name="FilterPanelFilterContextValue" partial />
-
-### Definitions
-
-#### OptionFilterConfig
-
-Configuration for `checkboxFilter`, `comboboxFilter`, `radioFilter`, and `selectFilter`. `checkboxTreeFilter` takes the same configuration without `options`, since its nodes come from the tree collection.
-
-<TypeDocProps name="OptionFilterConfig" />
-
-#### RangeFilterConfig
-
-<TypeDocProps name="RangeFilterConfig" />
-
-#### DateFilterConfig
-
-<TypeDocProps name="DateFilterConfig" />
-
-#### CustomFilterConfig
-
-<TypeDocProps name="CustomFilterConfig" />

@@ -1,11 +1,22 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  defineFilters,
+  type FilterValues,
+  rangeFilter,
+} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {RangeFilter} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  duration: rangeFilter({
+    formatValue: (value) => `${value} min`,
+    label: "Duration",
+    max: 120,
+    min: 0,
+  }),
+})
 
 export function RangeFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})

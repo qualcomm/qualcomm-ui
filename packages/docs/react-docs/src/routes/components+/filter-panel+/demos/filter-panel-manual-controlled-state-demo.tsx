@@ -1,12 +1,30 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  checkboxFilter,
+  defineFilters,
+  type FilterValues,
+  radioFilter,
+} from "@qualcomm-ui/core/filters"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Button} from "@qualcomm-ui/react/button"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxFilter, RadioFilter} from "@qualcomm-ui/react/filters"
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  mode: radioFilter({
+    label: "Build mode",
+    options: [
+      {label: "Debug", value: "debug"},
+      {label: "Test", value: "test"},
+      {label: "Release", value: "release"},
+    ],
+  }),
+  status: checkboxFilter({
+    label: "Status",
+    options: ["Failed", "Passed", "Queued"],
+  }),
+})
 
 export function FilterPanelManualControlledStateDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({

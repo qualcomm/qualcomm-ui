@@ -1,11 +1,52 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  checkboxTreeFilter,
+  defineFilters,
+  type FilterValues,
+} from "@qualcomm-ui/core/filters"
+import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxTreeFilter} from "@qualcomm-ui/react/filters"
 
-import {chipsets, filters} from "./filters"
+const filters = defineFilters({
+  chipset: checkboxTreeFilter({label: "Chipset"}),
+})
+
+interface ChipsetNode {
+  id: string
+  nodes?: ChipsetNode[]
+  text: string
+}
+
+const chipsets = createTreeCollection<ChipsetNode>({
+  nodeText: "text",
+  nodeValue: "id",
+  rootNode: {
+    id: "ROOT",
+    nodes: [
+      {
+        id: "snapdragon-x",
+        nodes: [
+          {id: "x1e-84-100", text: "X1E-84-100"},
+          {id: "x1e-80-100", text: "X1E-80-100"},
+          {id: "x1p-64-100", text: "X1P-64-100"},
+        ],
+        text: "Snapdragon X",
+      },
+      {
+        id: "snapdragon-8",
+        nodes: [
+          {id: "sm8750", text: "SM8750"},
+          {id: "sm8650", text: "SM8650"},
+        ],
+        text: "Snapdragon 8",
+      },
+    ],
+    text: "",
+  },
+})
 
 export function CheckboxTreeFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})

@@ -1,10 +1,28 @@
 import type {ReactElement} from "react"
 
+import {
+  checkboxFilter,
+  comboboxFilter,
+  defineFilters,
+} from "@qualcomm-ui/core/filters"
 import {FilterPanel, useFilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxFilter, ComboboxFilter} from "@qualcomm-ui/react/filters"
 import {Tag} from "@qualcomm-ui/react/tag"
 
-import {filters, owners} from "./filters"
+const filters = defineFilters({
+  owner: comboboxFilter({label: "Owner"}),
+  status: checkboxFilter({
+    label: "Status",
+    options: ["Failed", "Passed", "Queued"],
+  }),
+})
+
+const owners = [
+  {label: "Anna Robinson", value: "u1"},
+  {label: "Ben Ortiz", value: "u2"},
+  {label: "Chloe Nguyen", value: "u3"},
+  {label: "Dev Patel", value: "u4"},
+]
 
 export function FilterPanelHoistedStateDemo(): ReactElement {
   const panel = useFilterPanel({filters})

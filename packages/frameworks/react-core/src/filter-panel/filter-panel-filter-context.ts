@@ -62,7 +62,7 @@ export interface FilterPanelFilterContextValue<
   ) => void
 
   /**
-   * The filter's displayed value. Also, the draft in `manual` mode.
+   * The filter's displayed value. In `manual` mode, this is the draft value.
    */
   value: FilterDefinitionValue<TDef> | undefined
 }

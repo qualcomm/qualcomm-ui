@@ -1,6 +1,10 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterValues} from "@qualcomm-ui/core/filters"
+import {
+  customFilter,
+  defineFilters,
+  type FilterValues,
+} from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {
   FilterPanel,
@@ -8,7 +12,13 @@ import {
 } from "@qualcomm-ui/react/filter-panel"
 import {Switch} from "@qualcomm-ui/react/switch"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  attachments: customFilter<boolean>({
+    getValueLabels: () => ["Has attachments"],
+    isEmptyValue: (value) => !value,
+    label: "Attachments",
+  }),
+})
 
 function AttachmentsControl(): ReactElement {
   const filter = useFilterPanelFilter<typeof filters.attachments>()

@@ -1,6 +1,7 @@
 export * from "./filter-panel-basic-demo"
 export * from "./filter-panel-controlled-state-demo"
 export * from "./filter-panel-custom-filter-demo"
+export * from "./filter-panel-drawer-demo"
 export * from "./filter-panel-facets-demo"
 export * from "./filter-panel-hoisted-state-demo"
 export * from "./filter-panel-labels-demo"

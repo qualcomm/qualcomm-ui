@@ -1,9 +1,15 @@
 import type {ReactElement} from "react"
 
+import {checkboxFilter, defineFilters} from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxFilter} from "@qualcomm-ui/react/filters"
 
-import {filters} from "./filters"
+const filters = defineFilters({
+  status: checkboxFilter({
+    label: "Status",
+    options: ["Failed", "Passed", "Queued"],
+  }),
+})
 
 export function FilterPanelLabelsDemo(): ReactElement {
   return (
