@@ -23,16 +23,16 @@ import {CheckboxFilter} from "@qualcomm-ui/react/filters"
 
 ## Overview
 
-Each filter renders a collapsible section in a [Filter Panel](/components/filter-panel), with a control built on one of our existing components. Pass the filter's definition to its [filter](./#filter) prop.
+Each filter renders a collapsible section in a [Filter Panel](../filter-panel.mdx), with a control built on one of our existing components.
 
-- `CheckboxFilter`: pick any number of options. Selection: `string[]`.
-- `CheckboxTreeFilter`: pick leaves from a hierarchy. Selection: the checked leaf values as `string[]`.
-- `ComboboxFilter`: search and pick from a long option list. Selection: `string[]`.
-- `DateFilter`: pick a date range or a preset. Selection: `{range: [start, end]}` or `{preset}`.
-- `RadioFilter`: pick one option. Selection: a one-item `string[]`.
-- `RangeFilter`: pick a numeric range. Selection: `[min, max]`, with `null` for an open side.
-- `SelectFilter`: pick from a short option list in a dropdown. Selection: `string[]`.
-- `TextFilter`: enter free text. Selection: a `string`.
+- `CheckboxFilter`: `string[]`. Pick any number of options.
+- `CheckboxTreeFilter`: `string[]`. Pick leaves from a hierarchy. Only leaf values are stored.
+- `ComboboxFilter`: `string[]`. Search and pick from a long option list.
+- `DateFilter`: `{preset: string} | {range: [string | null, string | null]}`. Pick a date range or a preset. Dates are ISO 8601 strings, and `null` leaves a side open.
+- `RadioFilter`: `string[]`. Pick one option. The value is a one-item array.
+- `RangeFilter`: `[number | null, number | null]`. Pick a numeric range. `null` leaves a side open.
+- `SelectFilter`: `string[]`. Pick from a short option list in a dropdown.
+- `TextFilter`: `string`. Enter free text.
 
 Every filter accepts the [section props](./#section-props). Each section below documents only the props specific to that filter. The rest are forwarded to the underlying component.
 
@@ -46,7 +46,7 @@ Shows every option as a checkbox. Use it when the list is short enough to scan.
 
 <Demo name="CheckboxFilterDemo" component={demos.CheckboxFilterDemo} />
 
-<TypeDocProps name="CheckboxFilterProps" pick={["options"]} />
+<TypeDocProps name="CheckboxFilterProps" pick={["filter", "options"]} />
 
 Remaining props are forwarded to the group's `<div>` element.
 
@@ -91,7 +91,7 @@ Selects a date range, or one of the definition's presets. Ranges are stored as I
 
 <Demo name="DateFilterDemo" component={demos.DateFilterDemo} />
 
-Presets are listed on the definition. A preset whose value is one of the [date picker's presets](../date-picker+/_date-picker.mdx#presets), like `"last7Days"`, doesn't need a `range`. Any other preset supplies its own.
+Presets are listed on the definition. A preset whose value is one of the [date picker's presets](../../date-picker+/_date-picker.mdx#presets), like `"last7Days"`, doesn't need a `range`. Any other preset supplies its own.
 
 ```tsx
 dateFilter({
@@ -122,7 +122,7 @@ Week presets depend on the locale, and every preset depends on the time zone. Bo
   pick={["anyLabel", "customRange", "customRangeLabel"]}
 />
 
-Remaining props are forwarded to [DatePicker](../date-picker+/_date-picker.mdx).
+Remaining props are forwarded to [DatePicker](../../date-picker+/_date-picker.mdx).
 
 ## Radio Filter
 
@@ -136,7 +136,7 @@ Shows every option as a radio, for a single choice. An option with a value of `"
 
 <TypeDocProps name="RadioFilterProps" pick={["options"]} />
 
-Remaining props are forwarded to [RadioGroup](../radio+/_radio.mdx).
+Remaining props are forwarded to [RadioGroup](../../radio+/_radio.mdx).
 
 ## Range Filter
 

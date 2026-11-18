@@ -2,68 +2,40 @@ import {
   checkboxFilter,
   checkboxTreeFilter,
   comboboxFilter,
-  dateFilter,
+  customFilter,
   defineFilters,
   radioFilter,
-  rangeFilter,
-  selectFilter,
-  textFilter,
 } from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 export const filters = defineFilters({
-  buildPath: textFilter({label: "Build path"}),
-  chipset: checkboxTreeFilter({label: "Chipset"}),
-  duration: rangeFilter({
-    formatValue: (value) => `${value} min`,
-    label: "Duration",
-    max: 120,
-    min: 0,
+  attachments: customFilter<boolean>({
+    getValueLabels: () => ["Has attachments"],
+    isEmptyValue: (value) => !value,
+    label: "Attachments",
   }),
+  chipset: checkboxTreeFilter({label: "Chipset"}),
   mode: radioFilter({
     label: "Build mode",
     options: [
-      {label: "Any", value: ""},
       {label: "Debug", value: "debug"},
+      {label: "Test", value: "test"},
       {label: "Release", value: "release"},
     ],
   }),
-  owner: comboboxFilter({
-    label: "Owner",
-    options: [
-      {label: "Anna Robinson", value: "u1"},
-      {label: "Ben Ortiz", value: "u2"},
-      {label: "Chloe Nguyen", value: "u3"},
-      {label: "Dev Patel", value: "u4"},
-      {label: "Elena Rossi", value: "u5"},
-      {label: "Farah Haddad", value: "u6"},
-    ],
-  }),
-  standard: selectFilter({
-    label: "Standard",
-    options: [
-      {label: "Wi-Fi 6", value: "wifi6"},
-      {label: "Wi-Fi 6E", value: "wifi6e"},
-      {label: "Wi-Fi 7", value: "wifi7"},
-    ],
-  }),
+  owner: comboboxFilter({label: "Owner"}),
   status: checkboxFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
-  submitted: dateFilter({
-    label: "Submitted",
-    presets: [
-      {label: "Last 7 days", value: "last7Days"},
-      {label: "This month", value: "thisMonth"},
-      {
-        label: "Since release",
-        range: () => ["2026-09-01", null],
-        value: "sinceRelease",
-      },
-    ],
-  }),
 })
+
+export const owners = [
+  {label: "Anna Robinson", value: "u1"},
+  {label: "Ben Ortiz", value: "u2"},
+  {label: "Chloe Nguyen", value: "u3"},
+  {label: "Dev Patel", value: "u4"},
+]
 
 interface ChipsetNode {
   id: string
@@ -78,21 +50,24 @@ export const chipsets = createTreeCollection<ChipsetNode>({
     id: "ROOT",
     nodes: [
       {
-        id: "snapdragon-x",
+        id: "snapdragon_x_elite",
         nodes: [
-          {id: "x1e-84-100", text: "X1E-84-100"},
-          {id: "x1e-80-100", text: "X1E-80-100"},
-          {id: "x1p-64-100", text: "X1P-64-100"},
+          {id: "X1E-00-1DE", text: "12-core X1E-00-1DE"},
+          {id: "X1E-84-100", text: "12-core X1E-84-100"},
+          {id: "X1E-80-100", text: "12-core X1E-80-100"},
+          {id: "X1E-78-100", text: "12-core X1E-78-100"},
         ],
-        text: "Snapdragon X",
+        text: "Snapdragon X Elite",
       },
       {
-        id: "snapdragon-8",
+        id: "snapdragon_x_plus",
         nodes: [
-          {id: "sm8750", text: "SM8750"},
-          {id: "sm8650", text: "SM8650"},
+          {id: "X1P-66-100", text: "10-core X1P-66-100"},
+          {id: "X1P-64-100", text: "10-core X1P-64-100"},
+          {id: "X1P-46-100", text: "8-core X1P-46-100"},
+          {id: "X1P-42-100", text: "8-core X1P-42-100"},
         ],
-        text: "Snapdragon 8",
+        text: "Snapdragon X Plus",
       },
     ],
     text: "",
