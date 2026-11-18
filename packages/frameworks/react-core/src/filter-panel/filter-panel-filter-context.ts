@@ -11,7 +11,7 @@ import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 import type {ValueOrFn} from "@qualcomm-ui/utils/machine"
 
 export interface FilterPanelFilterContextValue<
-  TDefinition extends FilterDefinition = FilterDefinition,
+  TDef extends FilterDefinition = FilterDefinition,
 > {
   /**
    * Removes the filter's value.
@@ -28,7 +28,7 @@ export interface FilterPanelFilterContextValue<
    *
    * @inheritDoc
    */
-  definition: IdentifiedFilterDefinition<TDefinition>
+  definition: IdentifiedFilterDefinition<TDef>
 
   /**
    * The filter id.
@@ -54,16 +54,17 @@ export interface FilterPanelFilterContextValue<
   /**
    * Sets the filter's value. Pass the labels of picked options in `details` so
    * the selection can be labeled outside the panel.
+   * @inheritDoc
    */
   setValue: (
-    value: ValueOrFn<FilterDefinitionValue<TDefinition> | undefined>,
+    value: ValueOrFn<FilterDefinitionValue<TDef> | undefined>,
     details?: FilterPanelSetValueDetails,
   ) => void
 
   /**
-   * The filter's displayed value: the draft in `manual` mode.
+   * The filter's displayed value. Also, the draft in `manual` mode.
    */
-  value: FilterDefinitionValue<TDefinition> | undefined
+  value: FilterDefinitionValue<TDef> | undefined
 }
 
 export const [FilterPanelFilterContextProvider, useFilterPanelFilterContext] =

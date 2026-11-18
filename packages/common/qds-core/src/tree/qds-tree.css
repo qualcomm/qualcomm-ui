@@ -27,8 +27,8 @@
   min-height: 40px;
   outline: none;
   padding-left: calc(
-    (var(--depth, 1) - 1) * var(--indent-spacing) +
-      var(--tree-padding-inline) + var(--tree-leaf-offset)
+    (var(--depth, 1) - 1) * var(--indent-spacing) + var(--tree-padding-inline) +
+      var(--tree-leaf-offset)
   );
   padding-right: var(--tree-padding-inline);
   position: relative;
@@ -36,6 +36,14 @@
 
   &:hover {
     background: var(--color-interactive-background-ghost-hover);
+
+    &:has([data-tree-part="node-checkbox"]) {
+      .qui-checkbox__control.qui-checkmark__root[data-tree-part="node-checkbox"] {
+        &[data-state="unchecked"] {
+          border-color: var(--color-interactive-border-neutral-hover);
+        }
+      }
+    }
   }
 
   &:active {

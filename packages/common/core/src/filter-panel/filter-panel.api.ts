@@ -31,13 +31,13 @@ import {
 const parts = filterPanelAnatomy.parts
 
 export function createFilterPanelApi<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
+  TDefs extends FilterDefinitions = FilterDefinitions,
 >(
   machine: Machine<FilterPanelSchema>,
   normalize: PropNormalizer,
-): FilterPanelApi<TDefinitions> {
+): FilterPanelApi<TDefs> {
   const {computed, context, prop, refs, send} = machine
-  const definitions = prop("filters") as TDefinitions | undefined
+  const definitions = prop("filters") as TDefs | undefined
   const applyMode = prop("applyMode")
   const isEmpty = createEmptyValueCheck(definitions, prop("isEmptyValue"))
   const draftValue = computed("draftValue")
@@ -105,12 +105,12 @@ export function createFilterPanelApi<
     clearFilter(id) {
       send({id, type: "FILTER.SET", value: undefined})
     },
-    draftValue: draftValue as FilterPanelApi<TDefinitions>["draftValue"],
+    draftValue: draftValue as FilterPanelApi<TDefs>["draftValue"],
     draftValueCount,
     filters: definitions,
     getDraftValue(id) {
       return draftValue[id] as ReturnType<
-        FilterPanelApi<TDefinitions>["getDraftValue"]
+        FilterPanelApi<TDefs>["getDraftValue"]
       >
     },
     getFilterLabel(id) {
@@ -159,7 +159,7 @@ export function createFilterPanelApi<
         value: filterValue,
       })
     },
-    value: value as FilterPanelApi<TDefinitions>["value"],
+    value: value as FilterPanelApi<TDefs>["value"],
     valueCount,
 
     // group: bindings

@@ -42,10 +42,10 @@ import {
 } from "./use-filter-panel.js"
 
 export interface CoreFilterPanelRootProps<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
+  TDefs extends FilterDefinitions = FilterDefinitions,
 >
   extends
-    FilterPanelApiProps<TDefinitions>,
+    FilterPanelApiProps<TDefs>,
     Omit<ElementRenderProp<"div">, "defaultValue"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -54,8 +54,8 @@ export interface CoreFilterPanelRootProps<
 }
 
 export function CoreFilterPanelRoot<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
->({children, ...props}: CoreFilterPanelRootProps<TDefinitions>): ReactElement {
+  TDefs extends FilterDefinitions = FilterDefinitions,
+>({children, ...props}: CoreFilterPanelRootProps<TDefs>): ReactElement {
   const [filterPanelProps, localProps] = splitFilterPanelProps(props)
   const api = useFilterPanel(filterPanelProps)
 

@@ -65,7 +65,7 @@ export interface FilterPanelRange {
 }
 
 export interface FilterPanelApiProps<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
+  TDefs extends FilterDefinitions = FilterDefinitions,
 > {
   /**
    * Controls when filter changes are committed.
@@ -80,12 +80,12 @@ export interface FilterPanelApiProps<
    *
    * @default {}
    */
-  defaultValue?: FilterValues<TDefinitions> | undefined
+  defaultValue?: FilterValues<TDefs> | undefined
 
   /**
    * The panel's filter definitions, created with `defineFilters`.
    */
-  filters?: TDefinitions | undefined
+  filters?: TDefs | undefined
 
   /**
    * Resolves a filter's label when its definition has none. Return `undefined`
@@ -138,7 +138,7 @@ export interface FilterPanelApiProps<
    */
   onValueChange?:
     | ((
-        value: FilterValues<TDefinitions>,
+        value: FilterValues<TDefs>,
         details: FilterPanelValueChangeDetails,
       ) => void)
     | undefined
@@ -146,7 +146,7 @@ export interface FilterPanelApiProps<
   /**
    * The controlled committed filters.
    */
-  value?: FilterValues<TDefinitions> | undefined
+  value?: FilterValues<TDefs> | undefined
 }
 
 /**
@@ -246,7 +246,7 @@ export interface FilterPanelFilterCountBindings extends Part<"filterCount"> {
 }
 
 export interface FilterPanelApi<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
+  TDefs extends FilterDefinitions = FilterDefinitions,
 > {
   /**
    * Commits the draft. No-op in `auto` mode.
@@ -267,14 +267,14 @@ export interface FilterPanelApi<
   /**
    * Removes one filter. Follows the same commit rules as `clearAll`.
    */
-  clearFilter: (id: keyof TDefinitions & string) => void
+  clearFilter: (id: keyof TDefs & string) => void
 
   /**
    * The selection the controls display. In `manual` mode, this is the draft,
    * which `apply` commits to `value`. In `auto` mode, it is always equal to
    * `value`.
    */
-  draftValue: FilterValues<TDefinitions>
+  draftValue: FilterValues<TDefs>
 
   /**
    * The total number of selected values in `draftValue`. Each array item
@@ -285,15 +285,15 @@ export interface FilterPanelApi<
   /**
    * The panel's filter definitions, from the `filters` prop.
    */
-  filters: TDefinitions | undefined
+  filters: TDefs | undefined
 
   /**
    * Returns a filter's value in `draftValue`, or `undefined` when it is not
    * set.
    */
-  getDraftValue: <K extends keyof TDefinitions & string>(
+  getDraftValue: <K extends keyof TDefs & string>(
     id: K,
-  ) => FilterValues<TDefinitions>[K]
+  ) => FilterValues<TDefs>[K]
 
   /**
    * Returns the label for a filter. Resolves from the definition, then the
@@ -355,16 +355,16 @@ export interface FilterPanelApi<
    * Sets the value of a filter. Empty values remove the filter. Filter
    * controls pass the labels of the picked options in `details`.
    */
-  setFilterValue: <K extends keyof TDefinitions & string>(
+  setFilterValue: <K extends keyof TDefs & string>(
     id: K,
-    value: ValueOrFn<FilterValues<TDefinitions>[K]>,
+    value: ValueOrFn<FilterValues<TDefs>[K]>,
     details?: FilterPanelSetValueDetails,
   ) => void
 
   /**
    * The committed selection.
    */
-  value: FilterValues<TDefinitions>
+  value: FilterValues<TDefs>
 
   /**
    * The total number of selected values in `value`. Each array item counts

@@ -247,14 +247,13 @@ export type FilterDefinitionMap = Record<string, FilterDefinition>
  * A definition returned by `defineFilters`, carrying its id.
  */
 export type IdentifiedFilterDefinition<
-  TDefinition extends FilterDefinition = FilterDefinition,
-  TId extends string = string,
-> = TDefinition & {readonly id: TId}
+  TDef extends FilterDefinition = FilterDefinition,
+> = TDef & {readonly id: string}
 
 export type FilterDefinitions<
   TMap extends FilterDefinitionMap = FilterDefinitionMap,
 > = {
-  readonly [K in keyof TMap & string]: IdentifiedFilterDefinition<TMap[K], K>
+  readonly [K in keyof TMap & string]: IdentifiedFilterDefinition<TMap[K]>
 }
 
 interface FilterValueByKind {

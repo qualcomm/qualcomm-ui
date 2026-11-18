@@ -29,10 +29,10 @@ import {
  * unmounted.
  */
 export function useFilterPanel<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
->(props: FilterPanelApiProps<TDefinitions> = {}): FilterPanelApi<TDefinitions> {
+  TDefs extends FilterDefinitions = FilterDefinitions,
+>(props: FilterPanelApiProps<TDefs> = {}): FilterPanelApi<TDefs> {
   const machine = useMachine(filterPanelMachine, props as FilterPanelApiProps)
-  return createFilterPanelApi<TDefinitions>(machine, normalizeProps)
+  return createFilterPanelApi<TDefs>(machine, normalizeProps)
 }
 
 export function useFilterPanelApplyTrigger(): FilterPanelApplyTriggerBindings {
