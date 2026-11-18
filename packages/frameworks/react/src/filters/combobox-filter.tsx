@@ -15,12 +15,8 @@ import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import type {ListCollection} from "@qualcomm-ui/utils/collection"
 
 import {FilterSection, type FilterSectionProps} from "./filter-section.js"
-import {FilterOptionLabel} from "./internal/filter-option-label.js"
 import {getSelectedLabels} from "./internal/get-selected-labels.js"
-import {
-  type FilterOptionItem,
-  useFilterOptions,
-} from "./internal/use-filter-options.js"
+import {useFilterOptions} from "./internal/use-filter-options.js"
 
 export interface ComboboxFilterControlProps extends Omit<
   ComponentProps<typeof Combobox>,
@@ -63,8 +59,6 @@ export function ComboboxFilterControl({
     [matchesKey],
   )
   const collection: ListCollection<any> = collectionProp ?? optionsCollection
-  const hasCounts =
-    !collectionProp && items.some((item) => item.count !== undefined)
 
   return (
     <Combobox
@@ -78,20 +72,6 @@ export function ComboboxFilterControl({
         filter.setValue(details.value, {
           labels: getSelectedLabels(collection, details.value, details.items),
         })
-      }
-      renderItem={
-        hasCounts
-          ? (itemProps) => (
-              <Combobox.Item {...itemProps}>
-                <Combobox.ItemText>
-                  <FilterOptionLabel
-                    option={itemProps.item as FilterOptionItem}
-                  />
-                </Combobox.ItemText>
-                <Combobox.ItemIndicator />
-              </Combobox.Item>
-            )
-          : undefined
       }
       size={qdsContext.controlSize}
       value={filter.value ?? []}

@@ -640,7 +640,7 @@ describe("option counts", () => {
       .toBeDisabled()
   })
 
-  test("combobox options show counts", async () => {
+  test("combobox options with no results are disabled", async () => {
     await render(
       <Panel getFilterOptionCounts={getFilterOptionCounts}>
         <ComboboxFilter filter={filters.owner} />
@@ -650,10 +650,10 @@ describe("option counts", () => {
     await page.getByRole("combobox", {name: "Owner"}).fill("o")
 
     await expect
-      .element(page.getByRole("option", {name: "Anna Robinson 2"}))
+      .element(page.getByRole("option", {exact: true, name: "Anna Robinson"}))
       .toBeVisible()
     await expect
-      .element(page.getByRole("option", {name: "Ben Ortiz 0"}))
+      .element(page.getByRole("option", {exact: true, name: "Ben Ortiz"}))
       .toHaveAttribute("aria-disabled", "true")
   })
 
