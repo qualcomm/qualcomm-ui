@@ -2,12 +2,9 @@
 
 Generates API documentation for TypeScript projects.
 
-This package reads exported types with the TypeScript compiler and writes the prop data used by the QUI documentation sites.
+This package reads exported types with the TypeScript compiler and writes the type data used by the QUI documentation sites.
 
-For documentation and usage guides:
-
-- [React documentation](https://react.qui.qualcomm.com/)
-- [Angular documentation](https://angular.qui.qualcomm.com/)
+[Documentation](https://docs.qui.qualcomm.com/typescoop)
 
 ## License
 
