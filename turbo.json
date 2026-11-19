@@ -17,7 +17,7 @@
       "outputLogs": "new-only"
     },
     "typescoop-extract": {
-      "outputs": ["./.typedoc/*.json", "./src/assets/doc-props/doc-properties.json"],
+      "outputs": ["./.typescoop/*.json"],
       "outputLogs": "new-only"
     },
     "test": {
