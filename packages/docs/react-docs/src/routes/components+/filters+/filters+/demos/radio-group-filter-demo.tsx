@@ -3,20 +3,22 @@ import {type ReactElement, useState} from "react"
 import {
   defineFilters,
   type FilterValues,
-  optionFilter,
+  listFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {RadioGroupFilter} from "@qualcomm-ui/react/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 const filters = defineFilters({
-  mode: optionFilter({
+  mode: listFilter({
+    collection: new ListCollection({
+      items: [
+        {label: "Debug", value: "debug"},
+        {label: "Release", value: "release"},
+      ],
+    }),
     label: "Build mode",
-    options: [
-      {label: "Any", value: ""},
-      {label: "Debug", value: "debug"},
-      {label: "Release", value: "release"},
-    ],
   }),
 })
 
@@ -32,7 +34,7 @@ export function RadioGroupFilterDemo(): ReactElement {
         onValueChange={setValue}
       >
         <FilterPanel.Filter filter={filters.mode}>
-          <RadioGroupFilter />
+          <RadioGroupFilter anyLabel="Any" />
         </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}

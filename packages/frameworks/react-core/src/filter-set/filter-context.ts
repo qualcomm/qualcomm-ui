@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {SetFilterValueDetails} from "@qualcomm-ui/core/filter-set"
+import type {FilterSetCollectionState} from "@qualcomm-ui/core/filter-set"
 import type {
   FilterDefinition,
   FilterDefinitionValue,
@@ -17,6 +17,14 @@ export interface FilterContextValue<
    * Removes the filter's value.
    */
   clear: () => void
+
+  /**
+   * The state of a list or tree filter's collection. `undefined` for other
+   * filter kinds, and for collection filters with no collection.
+   *
+   * @inheritDoc
+   */
+  collectionState: FilterSetCollectionState | undefined
 
   /**
    * How many values the filter contributes to the filter set's
@@ -54,14 +62,9 @@ export interface FilterContextValue<
   labelId: string | undefined
 
   /**
-   * Sets the filter's value. Pass the labels of picked options in `details` so
-   * the selection can be labeled when its options are not available.
-   * @inheritDoc
+   * Sets the filter's value.
    */
-  setValue: (
-    value: ValueOrFn<FilterDefinitionValue<TDef> | undefined>,
-    details?: SetFilterValueDetails,
-  ) => void
+  setValue: (value: ValueOrFn<FilterDefinitionValue<TDef> | undefined>) => void
 
   /**
    * The filter's displayed value. In `manual` mode, this is the draft value.

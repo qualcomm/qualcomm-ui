@@ -5,4 +5,5 @@ export const filterControlClasses = {
   optionCount: "qui-filter-control__option-count",
   optionGroup: "qui-filter-control__option-group",
   optionLabel: "qui-filter-control__option-label",
+  status: "qui-filter-control__status",
 } as const

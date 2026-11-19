@@ -4,25 +4,26 @@ import {
   customFilter,
   dateFilter,
   defineFilters,
-  optionFilter,
+  listFilter,
   rangeFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
+import {createTreeCollection} from "@qualcomm-ui/core/tree"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 import {
   areValuesEqual,
   countValues,
   createEmptyValueCheck,
+  captureFilterItems,
   hashValues,
-  pickOptionLabels,
-  recordOptionLabels,
   setFilterValue,
 } from "./filter-set.utils"
 
 const definitions = defineFilters({
   duration: rangeFilter({formatValue: (value) => `${value} min`}),
   query: textFilter(),
-  status: optionFilter(),
+  status: listFilter(),
   submitted: dateFilter({
     presets: [{label: "Last 7 days", value: "last7Days"}],
   }),
@@ -122,18 +123,41 @@ describe("filter set utils", () => {
     ).toBe(0)
   })
 
-  test("recorded labels merge, and only selected values are picked", () => {
-    const recorded = recordOptionLabels(
-      recordOptionLabels({}, "user", {u1: "Anna Robinson"}),
-      "user",
-      {u2: "Ben Ortiz"},
-    )
-    expect(recorded).toEqual({user: {u1: "Anna Robinson", u2: "Ben Ortiz"}})
-    expect(recordOptionLabels(recorded, "user", {})).toBe(recorded)
-
-    expect(pickOptionLabels(recorded, {query: "x", user: ["u2"]})).toEqual({
-      user: {u2: "Ben Ortiz"},
+  test("captured items keep selected values only, preferring the current collection", () => {
+    const users = new ListCollection({
+      items: [
+        {label: "Anna Robinson", value: "u1"},
+        {label: "Ben Ortiz", value: "u2"},
+      ],
     })
-    expect(pickOptionLabels(recorded, {})).toEqual({})
+    const captured = captureFilterItems({}, ["u1", "u2"], users)
+    expect(captured.u1?.label).toBe("Anna Robinson")
+
+    const narrowed = new ListCollection({
+      items: [{label: "Anna R.", value: "u1"}],
+    })
+    const next = captureFilterItems(captured, ["u1", "u2", "u3"], narrowed)
+    expect(next.u1?.label).toBe("Anna R.")
+    expect(next.u2?.label).toBe("Ben Ortiz")
+    expect(next.u3).toBeUndefined()
+
+    expect(captureFilterItems(next, ["u2"], undefined)).toEqual({
+      u2: captured.u2,
+    })
+  })
+
+  test("captured items come from tree nodes", () => {
+    const tree = createTreeCollection({
+      rootNode: {
+        nodes: [
+          {nodes: [{text: "SM8750", value: "sm8750"}], text: "8", value: "8"},
+        ],
+        text: "",
+        value: "ROOT",
+      },
+    })
+    expect(captureFilterItems({}, ["sm8750"], tree).sm8750?.label).toBe(
+      "SM8750",
+    )
   })
 })

@@ -1,22 +1,27 @@
 import {describe, expect, expectTypeOf, test} from "vitest"
 
+import {ListCollection} from "@qualcomm-ui/utils/collection"
+
 import {
   customFilter,
   type DateFilterValue,
   dateFilter,
   defineFilters,
   type FilterValues,
-  normalizeFilterOption,
-  optionFilter,
+  listFilter,
   rangeFilter,
   type RangeFilterValue,
   textFilter,
+  treeFilter,
 } from "./filters.definitions"
+
+const statuses = new ListCollection({items: ["Failed", "Passed"]})
 
 const buildFilters = defineFilters({
   buildPath: textFilter({label: "Build path"}),
+  chipset: treeFilter(),
   duration: rangeFilter({max: 120, min: 0}),
-  status: optionFilter({options: ["Failed", "Passed"]}),
+  status: listFilter({collection: statuses}),
   submitted: dateFilter(),
   tags: customFilter<{tags: string[]}>(),
 })
@@ -24,34 +29,24 @@ const buildFilters = defineFilters({
 describe("filter definitions", () => {
   test("defineFilters stamps each definition with its key as the id", () => {
     expect(buildFilters.status).toEqual({
+      collection: statuses,
       id: "status",
-      kind: "option",
-      options: ["Failed", "Passed"],
+      kind: "list",
     })
     expect(buildFilters.duration.id).toBe("duration")
     expectTypeOf(buildFilters.status.id).toEqualTypeOf<string>()
-    expectTypeOf(buildFilters.status.kind).toEqualTypeOf<"option">()
+    expectTypeOf(buildFilters.status.kind).toEqualTypeOf<"list">()
   })
 
   test("FilterValues maps every filter to an optional value of its type", () => {
     expectTypeOf<FilterValues<typeof buildFilters>>().toEqualTypeOf<{
       buildPath?: string
+      chipset?: string[]
       duration?: RangeFilterValue
       status?: string[]
       submitted?: DateFilterValue
       tags?: {tags: string[]}
     }>()
-  })
-
-  test("normalizeFilterOption converts strings to option objects", () => {
-    expect(normalizeFilterOption("Failed")).toEqual({
-      label: "Failed",
-      value: "Failed",
-    })
-    expect(normalizeFilterOption({label: "Failed", value: "f"})).toEqual({
-      label: "Failed",
-      value: "f",
-    })
   })
 
   test("presets need a range unless named after a date picker preset", () => {

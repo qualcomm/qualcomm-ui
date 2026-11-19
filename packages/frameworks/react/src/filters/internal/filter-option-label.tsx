@@ -3,12 +3,12 @@
 
 import type {ReactNode} from "react"
 
+import type {FilterSetOption} from "@qualcomm-ui/core/filter-set"
+
 import {useQdsFilterControlContext} from "../qds-filter-control-context.js"
 
-import type {FilterOptionItem} from "./use-filter-options.js"
-
 export interface FilterOptionLabelProps {
-  option: FilterOptionItem
+  option: FilterSetOption
 }
 
 /**

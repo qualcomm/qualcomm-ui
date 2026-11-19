@@ -1,6 +1,6 @@
 import type {ReactElement} from "react"
 
-import {defineFilters, optionFilter} from "@qualcomm-ui/core/filters"
+import {defineFilters, listFilter} from "@qualcomm-ui/core/filters"
 import {Button} from "@qualcomm-ui/react/button"
 import {Drawer} from "@qualcomm-ui/react/drawer"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
@@ -10,14 +10,7 @@ import {
   useFilterSet,
 } from "@qualcomm-ui/react/filters"
 import {Tag} from "@qualcomm-ui/react/tag"
-
-const filters = defineFilters({
-  owner: optionFilter({label: "Owner"}),
-  status: optionFilter({
-    label: "Status",
-    options: ["Failed", "Passed", "Queued"],
-  }),
-})
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 const owners = [
   {label: "Anna Robinson", value: "u1"},
@@ -25,6 +18,17 @@ const owners = [
   {label: "Chloe Nguyen", value: "u3"},
   {label: "Dev Patel", value: "u4"},
 ]
+
+const filters = defineFilters({
+  owner: listFilter({
+    collection: new ListCollection({items: owners}),
+    label: "Owner",
+  }),
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
+    label: "Status",
+  }),
+})
 
 export function FilterPanelDrawerDemo(): ReactElement {
   const filterSet = useFilterSet({filters})
@@ -46,7 +50,7 @@ export function FilterPanelDrawerDemo(): ReactElement {
                 <CheckboxGroupFilter />
               </FilterPanel.Filter>
               <FilterPanel.Filter filter={filters.owner}>
-                <ComboboxFilter options={owners} />
+                <ComboboxFilter />
               </FilterPanel.Filter>
             </FilterPanel.RootProvider>
           </Drawer.Body>

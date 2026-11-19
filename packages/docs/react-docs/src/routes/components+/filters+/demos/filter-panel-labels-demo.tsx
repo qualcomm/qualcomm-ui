@@ -1,13 +1,14 @@
 import type {ReactElement} from "react"
 
-import {defineFilters, optionFilter} from "@qualcomm-ui/core/filters"
+import {defineFilters, listFilter} from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 const filters = defineFilters({
-  status: optionFilter({
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
     label: "Status",
-    options: ["Failed", "Passed", "Queued"],
   }),
 })
 

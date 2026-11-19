@@ -22,6 +22,10 @@ import {
   type FilterPanelFilterLabelProps,
 } from "./filter-panel-filter-label.js"
 import {
+  FilterPanelFilterLoadingIndicator,
+  type FilterPanelFilterLoadingIndicatorProps,
+} from "./filter-panel-filter-loading-indicator.js"
+import {
   FilterPanelFilterRoot,
   type FilterPanelFilterRootProps,
 } from "./filter-panel-filter-root.js"
@@ -72,6 +76,12 @@ export interface FilterPanelFilterProps<
   labelProps?: FilterPanelFilterLabelProps | undefined
 
   /**
+   * Props applied to the loading indicator element.
+   * @inheritDoc
+   */
+  loadingIndicatorProps?: FilterPanelFilterLoadingIndicatorProps | undefined
+
+  /**
    * Props applied to the trigger element.
    * @inheritDoc
    */
@@ -80,8 +90,8 @@ export interface FilterPanelFilterProps<
 
 /**
  * A collapsible filter section with a trigger that shows the filter's label,
- * count, and indicator. Its children are the filter's control. Expanded by
- * default. Renders a `<div>` element by default.
+ * count, loading indicator, and indicator. Its children are the filter's
+ * control. Expanded by default. Renders a `<div>` element by default.
  */
 export function FilterPanelFilter<TDef extends FilterDefinition>({
   children,
@@ -90,6 +100,7 @@ export function FilterPanelFilter<TDef extends FilterDefinition>({
   indicatorProps,
   label,
   labelProps,
+  loadingIndicatorProps,
   triggerProps,
   ...props
 }: FilterPanelFilterProps<TDef>): ReactElement {
@@ -100,6 +111,7 @@ export function FilterPanelFilter<TDef extends FilterDefinition>({
           {label ?? labelProps?.children}
         </FilterPanelFilterLabel>
         <FilterPanelFilterCount {...countProps} />
+        <FilterPanelFilterLoadingIndicator {...loadingIndicatorProps} />
         <FilterPanelFilterIndicator {...indicatorProps} />
       </FilterPanelFilterTrigger>
       <FilterPanelFilterContent {...contentProps}>

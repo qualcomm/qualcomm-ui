@@ -1,12 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {FilterDefinitions, FilterValues} from "@qualcomm-ui/core/filters"
 import type {
-  FilterDefinitions,
-  FilterOption,
-  FilterOptionObject,
-  FilterValues,
-} from "@qualcomm-ui/core/filters"
+  ListCollection,
+  TreeCollection,
+} from "@qualcomm-ui/utils/collection"
 import type {RequiredBy} from "@qualcomm-ui/utils/guard"
 import type {
   ActionSchema,
@@ -26,26 +25,108 @@ export type FilterSetApplyMode = "auto" | "manual"
 export type FilterSetValues = Record<string, unknown>
 
 /**
- * Option labels recorded from user selections, keyed by filter id, then by
- * option value.
+ * The collection a list or tree filter selects from.
  */
-export type FilterSetOptionLabels = Record<string, Record<string, string>>
+export type FilterSetCollection = ListCollection<any> | TreeCollection<any>
 
-export interface FilterSetValueChangeDetails {
+/**
+ * The state of a filter's collection, returned by `getFilterCollection`.
+ * A filter's collection is `success` when it comes from its definition.
+ */
+export type FilterSetCollectionState =
+  | {
+      /**
+       * The previous collection, shown while a refetch is in flight.
+       */
+      collection?: FilterSetCollection | undefined
+      status: "loading"
+    }
+  | {
+      /**
+       * The previous collection, shown alongside the error.
+       */
+      collection?: FilterSetCollection | undefined
+      error: unknown
+      /**
+       * Retries the request. Filter controls show a retry button when set.
+       */
+      retry?: (() => void) | undefined
+      status: "error"
+    }
+  | {
+      collection: FilterSetCollection
+      status: "success"
+    }
+
+export interface FilterSetCollectionDetails {
   /**
-   * Labels of the selected options, recorded when they were picked. Persist
-   * these with saved views to label restored values before their options load.
+   * The selected values the filter set can't label yet, because it hasn't seen
+   * their items in a collection: typically values restored from the URL,
+   * storage, or a controlled `value`. Include their items in the returned
+   * collection, for example by fetching them by id.
    */
-  labels: FilterSetOptionLabels
+  values: string[]
 }
 
-export interface SetFilterValueDetails {
+/**
+ * - `resolved`: the label comes from the value's item.
+ * - `loading`: the item is not available yet, and the collection is loading.
+ * - `missing`: the collection has loaded without the value's item. The label
+ *   is the value itself.
+ */
+export type FilterSetValueStatus = "loading" | "missing" | "resolved"
+
+/**
+ * One selected value of a filter, with its label.
+ */
+export interface FilterSetValueItem {
   /**
-   * Labels of the picked options, keyed by option value. Used to label the
-   * selection when the options are not available, such as in active filter
-   * chips.
+   * The value's label. Falls back to the value until its item resolves.
    */
-  labels?: Record<string, string> | undefined
+  label: string
+
+  status: FilterSetValueStatus
+
+  /**
+   * The selected value. For filters that aren't list or tree filters, this is
+   * the summary label.
+   */
+  value: string
+}
+
+/**
+ * An item of a list filter, normalized for rendering.
+ */
+export interface FilterSetOption {
+  /**
+   * The item's result count from `getFilterOptionCounts`.
+   */
+  count?: number | undefined
+
+  /**
+   * Whether the item is disabled, either by the collection or because it is
+   * unselected with a result count of 0.
+   */
+  disabled: boolean
+
+  label: string
+
+  /**
+   * `resolved` for items of the collection. Selected values missing from the
+   * collection are appended so they stay visible and can be deselected, with
+   * the status of their label.
+   */
+  status: FilterSetValueStatus
+
+  value: string
+}
+
+/**
+ * An item seen in a filter's collection for a selected value.
+ */
+export interface FilterSetCapturedItem {
+  item: unknown
+  label: string
 }
 
 /**
@@ -82,6 +163,20 @@ export interface FilterSetApiProps<
   filters?: TDefs | undefined
 
   /**
+   * Resolves the collection of a list or tree filter whose definition has
+   * none. Called during render, so it must not fetch. Load the data elsewhere,
+   * such as with a query library, and return its state. The returned collection
+   * must include the items of `details.values`. Return `undefined` for filters
+   * this resolver doesn't handle.
+   */
+  getFilterCollection?:
+    | ((
+        id: string,
+        details: FilterSetCollectionDetails,
+      ) => FilterSetCollectionState | undefined)
+    | undefined
+
+  /**
    * Resolves a filter's label when its definition has none. Return `undefined`
    * to fall back to the filter id.
    */
@@ -101,20 +196,6 @@ export interface FilterSetApiProps<
     | undefined
 
   /**
-   * Resolves an option's label when neither the definition nor a recorded
-   * selection provides one. Return `undefined` to fall back to the value.
-   */
-  getFilterOptionLabel?:
-    | ((id: string, value: string) => string | undefined)
-    | undefined
-
-  /**
-   * Resolves options for an option-based filter when neither the filter
-   * component nor its definition provides them.
-   */
-  getFilterOptions?: ((id: string) => FilterOption[] | undefined) | undefined
-
-  /**
    * Resolves the bounds of a range filter when its definition has none.
    */
   getFilterRange?: ((id: string) => FilterSetRange | undefined) | undefined
@@ -130,12 +211,7 @@ export interface FilterSetApiProps<
    * Called when the committed filters change: on apply in `manual` mode, on
    * every change in `auto` mode.
    */
-  onValueChange?:
-    | ((
-        value: FilterValues<TDefs>,
-        details: FilterSetValueChangeDetails,
-      ) => void)
-    | undefined
+  onValueChange?: ((value: FilterValues<TDefs>) => void) | undefined
 
   /**
    * The controlled committed filters.
@@ -157,8 +233,8 @@ export interface FilterSetDraft {
 export interface FilterSetSchema extends MachineSchema {
   actions: ActionSchema<
     | "applyDraft"
+    | "captureItems"
     | "clearFilters"
-    | "recordLabels"
     | "resetDraft"
     | "setFilterValue"
   >
@@ -179,7 +255,6 @@ export interface FilterSetSchema extends MachineSchema {
     | {type: "RESET"}
     | {
         id: string
-        labels?: Record<string, string> | undefined
         type: "FILTER.SET"
         value: ValueOrFn<unknown>
       }
@@ -189,9 +264,16 @@ export interface FilterSetSchema extends MachineSchema {
   props: RequiredBy<FilterSetApiProps, "applyMode" | "defaultValue">
   refs: {
     /**
-     * Option labels recorded from user selections.
+     * Items seen in a collection for selected values, keyed by filter id, then
+     * by value. Keeps a selection labeled after its collection changes, such as
+     * when a server-side search narrows it.
      */
-    labels: FilterSetOptionLabels
+    items: Record<string, Record<string, FilterSetCapturedItem>>
+    /**
+     * The last options returned for each filter, so `getFilterOptions` keeps
+     * returning the same array while the options are unchanged.
+     */
+    options: Record<string, FilterSetOption[]>
   }
   state: "idle"
 }
@@ -247,6 +329,13 @@ export interface FilterSetApi<
   ) => FilterValues<TDefs>[K]
 
   /**
+   * Returns the state of a list or tree filter's collection: `success` with
+   * the definition's collection, otherwise the result of
+   * `getFilterCollection`. Returns `undefined` when the filter has neither.
+   */
+  getFilterCollectionState: (id: string) => FilterSetCollectionState | undefined
+
+  /**
    * Returns the label for a filter. Resolves from the definition, then
    * `getFilterLabel`, then the id.
    */
@@ -260,17 +349,19 @@ export interface FilterSetApi<
   getFilterOptionCount: (id: string, value: string) => number | undefined
 
   /**
-   * Returns the label for an option value. Resolves from the definition's
-   * `getOptionLabel`, then labels recorded from user selections, then
-   * `getFilterOptionLabel`, then the value itself.
+   * Returns the label for a value of a list or tree filter. Resolves from the
+   * current collection, then the item last seen for the value, then the value
+   * itself.
    */
   getFilterOptionLabel: (id: string, value: string) => string
 
   /**
-   * Returns the options for an option-based filter from its definition, then
-   * `getFilterOptions`. Filter components prefer their own `options` prop.
+   * Returns the items of a list filter, normalized for rendering, with counts
+   * from `getFilterOptionCounts`. Selected values missing from the collection
+   * are appended. Returns the same array while the options are unchanged, so
+   * it can be used as a memo dependency.
    */
-  getFilterOptions: (id: string) => FilterOptionObject[]
+  getFilterOptions: (id: string) => FilterSetOption[]
 
   /**
    * Returns the bounds of a range filter from its definition, then
@@ -283,6 +374,13 @@ export interface FilterSetApi<
    * count their length; ranges, dates, and text count 1. Empty values count 0.
    */
   getValueCount: (id: string, value: unknown) => number
+
+  /**
+   * Returns one item per selected value with its label and label status, such
+   * as for active filter chips that show a placeholder while labels load. Pass
+   * a value from `value` or `draftValue`.
+   */
+  getValueItems: (id: string, value: unknown) => FilterSetValueItem[]
 
   /**
    * Returns the labels that summarize a filter value, such as one label per
@@ -307,13 +405,11 @@ export interface FilterSetApi<
   reset: () => void
 
   /**
-   * Sets the value of a filter. Empty values remove the filter. Filter
-   * controls pass the labels of the picked options in `details`.
+   * Sets the value of a filter. Empty values remove the filter.
    */
   setFilterValue: <K extends keyof TDefs & string>(
     id: K,
     value: ValueOrFn<FilterValues<TDefs>[K]>,
-    details?: SetFilterValueDetails,
   ) => void
 
   /**

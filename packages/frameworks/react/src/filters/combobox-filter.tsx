@@ -3,68 +3,65 @@
 
 import {type ComponentProps, type ReactElement, useMemo, useState} from "react"
 
-import type {
-  FilterOption,
-  OptionFilterDefinition,
-} from "@qualcomm-ui/core/filters"
+import type {ListFilterDefinition} from "@qualcomm-ui/core/filters"
 import {selectCollection} from "@qualcomm-ui/core/select"
+import {useFilterSetContext} from "@qualcomm-ui/react-core/filter-set"
 import {useFilter as useLocaleFilter} from "@qualcomm-ui/react-core/locale"
 import {Combobox} from "@qualcomm-ui/react/combobox"
-import type {ListCollection} from "@qualcomm-ui/utils/collection"
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 
-import {getSelectedLabels} from "./internal/get-selected-labels.js"
-import {useFilterOptions} from "./internal/use-filter-options.js"
+import {
+  defaultLoadErrorText,
+  defaultLoadingText,
+  type FilterCollectionStatusTextProps,
+  isInitialLoad,
+} from "./internal/filter-collection-status.js"
 import {
   getFilterLabelProps,
   useFilterWidget,
 } from "./internal/use-filter-widget.js"
 import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
-export interface ComboboxFilterProps extends Omit<
-  ComponentProps<typeof Combobox>,
-  "collection" | "defaultValue" | "onValueChange" | "value"
-> {
-  /**
-   * A collection to render instead of `options`. Use for custom item shapes
-   * or server-side search, together with `onInputValueChange`.
-   */
-  collection?: ListCollection<any> | undefined
+export interface ComboboxFilterProps
+  extends
+    Omit<
+      ComponentProps<typeof Combobox>,
+      "collection" | "defaultValue" | "onValueChange" | "value"
+    >,
+    Omit<FilterCollectionStatusTextProps, "retryLabel"> {}
 
-  /**
-   * The options to render, filtered by the input text. Takes precedence over
-   * the definition's options and the filter set's resolver.
-   */
-  options?: FilterOption[] | undefined
-}
+const localeFilterOptions = {sensitivity: "base"} as const
 
 /**
- * A searchable combobox listing the filter's options. Supports `multiple`.
- * Writes a `string[]`.
+ * A searchable combobox listing the items of the filter's list collection.
+ * Supports `multiple`. Writes a `string[]`. The input text narrows the items
+ * shown, never the filter's collection. For server-side search, read the text
+ * with `onInputValueChange` and narrow the collection resolved by
+ * `getFilterCollection`.
  */
 export function ComboboxFilter({
-  collection: collectionProp,
+  loadErrorText = defaultLoadErrorText,
+  loadingText = defaultLoadingText,
   onInputValueChange,
-  options,
   ...props
 }: ComboboxFilterProps): ReactElement {
-  const filter = useFilterWidget<OptionFilterDefinition>(
-    "ComboboxFilter",
-    "option",
-  )
+  const filter = useFilterWidget<ListFilterDefinition>("ComboboxFilter", "list")
+  const api = useFilterSetContext()
   const qdsContext = useQdsFilterControlContext()
-  const {contains} = useLocaleFilter({sensitivity: "base"})
+  const {contains} = useLocaleFilter(localeFilterOptions)
   const [inputValue, setInputValue] = useState("")
-  const items = useFilterOptions(collectionProp ? [] : options)
-  const matches = inputValue
-    ? items.filter((item) => contains(item.label, inputValue))
-    : items
-  const matchesKey = JSON.stringify(matches)
-  const optionsCollection = useMemo(
-    () => selectCollection({items: matches}),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [matchesKey],
+  const options = api.getFilterOptions(filter.id)
+  const collection = useMemo(
+    () =>
+      selectCollection({
+        items: inputValue
+          ? options.filter((option) => contains(option.label, inputValue))
+          : options,
+      }),
+    [contains, inputValue, options],
   )
-  const collection: ListCollection<any> = collectionProp ?? optionsCollection
+  const state = filter.collectionState
+  const status = state?.status
 
   return (
     <Combobox
@@ -74,14 +71,20 @@ export function ComboboxFilter({
         setInputValue(details.inputValue)
         onInputValueChange?.(details)
       }}
-      onValueChange={(details) =>
-        filter.setValue(details.value, {
-          labels: getSelectedLabels(collection, details.value, details.items),
-        })
-      }
+      onValueChange={(details) => filter.setValue(details.value)}
       size={qdsContext.size}
       value={filter.value ?? []}
       {...props}
+      emptyMessage={isInitialLoad(state) ? loadingText : props.emptyMessage}
+      errorText={status === "error" ? loadErrorText : props.errorText}
+      icon={
+        isInitialLoad(state) ? (
+          <ProgressRing aria-hidden size="xs" />
+        ) : (
+          props.icon
+        )
+      }
+      invalid={status === "error" || props.invalid}
     />
   )
 }

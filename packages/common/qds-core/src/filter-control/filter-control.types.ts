@@ -32,6 +32,16 @@ export interface QdsFilterControlOptionLabelBindings {
   className: FilterControlClasses["optionLabel"]
 }
 
+export interface QdsFilterControlStatusBindingsProps {
+  status: "error" | "loading"
+}
+
+export interface QdsFilterControlStatusBindings {
+  className: FilterControlClasses["status"]
+  "data-size": QdsFilterControlSize
+  "data-status": "error" | "loading"
+}
+
 export interface QdsFilterControlApi {
   /**
    * The size of the filter controls.
@@ -42,4 +52,7 @@ export interface QdsFilterControlApi {
   getOptionCountBindings(): QdsFilterControlOptionCountBindings
   getOptionGroupBindings(): QdsFilterControlOptionGroupBindings
   getOptionLabelBindings(): QdsFilterControlOptionLabelBindings
+  getStatusBindings(
+    props: QdsFilterControlStatusBindingsProps,
+  ): QdsFilterControlStatusBindings
 }

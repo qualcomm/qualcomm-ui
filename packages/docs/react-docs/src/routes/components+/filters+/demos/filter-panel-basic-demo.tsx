@@ -3,7 +3,8 @@ import {type ReactElement, useState} from "react"
 import {
   defineFilters,
   type FilterValues,
-  optionFilter,
+  listFilter,
+  treeFilter,
 } from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
@@ -13,22 +14,7 @@ import {
   CheckboxTreeFilter,
   RadioGroupFilter,
 } from "@qualcomm-ui/react/filters"
-
-const filters = defineFilters({
-  chipset: optionFilter({label: "Chipset"}),
-  mode: optionFilter({
-    label: "Build mode",
-    options: [
-      {label: "Debug", value: "debug"},
-      {label: "Test", value: "test"},
-      {label: "Release", value: "release"},
-    ],
-  }),
-  status: optionFilter({
-    label: "Status",
-    options: ["Failed", "Passed", "Queued"],
-  }),
-})
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 interface ChipsetNode {
   id: string
@@ -67,6 +53,24 @@ const chipsets = createTreeCollection<ChipsetNode>({
   },
 })
 
+const filters = defineFilters({
+  chipset: treeFilter({collection: chipsets, label: "Chipset"}),
+  mode: listFilter({
+    collection: new ListCollection({
+      items: [
+        {label: "Debug", value: "debug"},
+        {label: "Test", value: "test"},
+        {label: "Release", value: "release"},
+      ],
+    }),
+    label: "Build mode",
+  }),
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
+    label: "Status",
+  }),
+})
+
 export function FilterPanelBasicDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
 
@@ -91,10 +95,7 @@ export function FilterPanelBasicDemo(): ReactElement {
           <RadioGroupFilter />
         </FilterPanel.Filter>
         <FilterPanel.Filter filter={filters.chipset}>
-          <CheckboxTreeFilter
-            collection={chipsets}
-            defaultExpandedValue={["snapdragon_x_elite"]}
-          />
+          <CheckboxTreeFilter defaultExpandedValue={["snapdragon_x_elite"]} />
         </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}

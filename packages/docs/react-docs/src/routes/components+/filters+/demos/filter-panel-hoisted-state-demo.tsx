@@ -1,6 +1,6 @@
 import type {ReactElement} from "react"
 
-import {defineFilters, optionFilter} from "@qualcomm-ui/core/filters"
+import {defineFilters, listFilter} from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {
   CheckboxGroupFilter,
@@ -8,14 +8,7 @@ import {
   useFilterSet,
 } from "@qualcomm-ui/react/filters"
 import {Tag} from "@qualcomm-ui/react/tag"
-
-const filters = defineFilters({
-  owner: optionFilter({label: "Owner"}),
-  status: optionFilter({
-    label: "Status",
-    options: ["Failed", "Passed", "Queued"],
-  }),
-})
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 const owners = [
   {label: "Anna Robinson", value: "u1"},
@@ -23,6 +16,17 @@ const owners = [
   {label: "Chloe Nguyen", value: "u3"},
   {label: "Dev Patel", value: "u4"},
 ]
+
+const filters = defineFilters({
+  owner: listFilter({
+    collection: new ListCollection({items: owners}),
+    label: "Owner",
+  }),
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
+    label: "Status",
+  }),
+})
 
 export function FilterPanelHoistedStateDemo(): ReactElement {
   const filterSet = useFilterSet({filters})
@@ -36,7 +40,7 @@ export function FilterPanelHoistedStateDemo(): ReactElement {
           <CheckboxGroupFilter />
         </FilterPanel.Filter>
         <FilterPanel.Filter filter={filters.owner}>
-          <ComboboxFilter options={owners} />
+          <ComboboxFilter />
         </FilterPanel.Filter>
       </FilterPanel.RootProvider>
       <div className="flex min-w-60 flex-1 flex-wrap gap-2">

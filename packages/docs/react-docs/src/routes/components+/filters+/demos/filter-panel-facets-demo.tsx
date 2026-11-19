@@ -4,7 +4,7 @@ import {getFacetFilterSetProps} from "@qualcomm-ui/core/filter-set"
 import {
   defineFilters,
   type FilterValues,
-  optionFilter,
+  listFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
@@ -13,6 +13,7 @@ import {
   RadioGroupFilter,
   TextInputFilter,
 } from "@qualcomm-ui/react/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
 
 const builds = [
@@ -27,18 +28,20 @@ const builds = [
 ]
 
 const filters = defineFilters({
-  mode: optionFilter({
+  mode: listFilter({
+    collection: new ListCollection({
+      items: [
+        {label: "Debug", value: "debug"},
+        {label: "Test", value: "test"},
+        {label: "Release", value: "release"},
+      ],
+    }),
     label: "Build mode",
-    options: [
-      {label: "Debug", value: "debug"},
-      {label: "Test", value: "test"},
-      {label: "Release", value: "release"},
-    ],
   }),
   name: textFilter({label: "Name"}),
-  status: optionFilter({
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
     label: "Status",
-    options: ["Failed", "Passed", "Queued"],
   }),
 })
 

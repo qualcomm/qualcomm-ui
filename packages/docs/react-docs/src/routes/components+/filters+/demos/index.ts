@@ -1,3 +1,4 @@
+export * from "./filter-panel-async-facets-demo"
 export * from "./filter-panel-basic-demo"
 export * from "./filter-panel-controlled-state-demo"
 export * from "./filter-panel-custom-filter-demo"

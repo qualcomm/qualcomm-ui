@@ -3,64 +3,72 @@
 
 import type {ComponentProps, ReactElement} from "react"
 
-import type {
-  FilterOption,
-  OptionFilterDefinition,
-} from "@qualcomm-ui/core/filters"
+import type {ListFilterDefinition} from "@qualcomm-ui/core/filters"
+import {useFilterSetContext} from "@qualcomm-ui/react-core/filter-set"
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
+import {
+  FilterCollectionStatus,
+  type FilterCollectionStatusTextProps,
+} from "./internal/filter-collection-status.js"
 import {FilterOptionLabel} from "./internal/filter-option-label.js"
-import {useFilterOptions} from "./internal/use-filter-options.js"
 import {
   getFilterLabelProps,
   useFilterWidget,
 } from "./internal/use-filter-widget.js"
 import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
-export interface RadioGroupFilterProps extends Omit<
-  ComponentProps<typeof RadioGroup>,
-  "children" | "defaultValue" | "onValueChange" | "value"
-> {
+export interface RadioGroupFilterProps
+  extends
+    Omit<
+      ComponentProps<typeof RadioGroup>,
+      "children" | "defaultValue" | "onValueChange" | "value"
+    >,
+    FilterCollectionStatusTextProps {
   /**
-   * The options to render. An option whose value is `""` clears the filter,
-   * for example an "All" option. Takes precedence over the definition's
-   * options and the filter set's resolver.
+   * The label of a leading radio that clears the filter, such as "Any". Omit
+   * to render only the collection's items.
    */
-  options?: FilterOption[] | undefined
+  anyLabel?: string | undefined
 }
 
 /**
- * A radio group, one radio per option. Selects one option. Writes a one-item
- * `string[]`.
+ * A radio group, one radio per item of the filter's list collection. Selects
+ * one item. Writes a one-item `string[]`.
  */
 export function RadioGroupFilter({
-  options,
+  anyLabel,
+  loadErrorText,
+  loadingText,
+  retryLabel,
   ...props
 }: RadioGroupFilterProps): ReactElement {
-  const filter = useFilterWidget<OptionFilterDefinition>(
+  const filter = useFilterWidget<ListFilterDefinition>(
     "RadioGroupFilter",
-    "option",
+    "list",
   )
+  const api = useFilterSetContext()
   const qdsContext = useQdsFilterControlContext()
-  const items = useFilterOptions(options)
-  const blankOption = items.find((option) => option.value === "")
+  const options = api.getFilterOptions(filter.id)
 
   return (
     <RadioGroup
       {...getFilterLabelProps(filter)}
-      onValueChange={(value) => {
-        const option = items.find((item) => item.value === value)
-        filter.setValue(
-          value ? [value] : undefined,
-          option ? {labels: {[option.value]: option.label}} : undefined,
-        )
-      }}
+      aria-busy={filter.collectionState?.status === "loading" || undefined}
+      onValueChange={(value) => filter.setValue(value ? [value] : undefined)}
       size={qdsContext.size}
-      value={filter.value?.[0] ?? (blankOption ? "" : null)}
+      value={filter.value?.[0] ?? (anyLabel ? "" : null)}
       {...mergeProps(qdsContext.getOptionGroupBindings(), props)}
     >
-      {items.map((option) => (
+      <FilterCollectionStatus
+        loadErrorText={loadErrorText}
+        loadingText={loadingText}
+        retryLabel={retryLabel}
+        state={filter.collectionState}
+      />
+      {anyLabel ? <Radio label={anyLabel} value="" /> : null}
+      {options.map((option) => (
         <Radio
           key={option.value}
           disabled={option.disabled}

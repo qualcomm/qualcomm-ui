@@ -86,20 +86,151 @@ export interface FacetFilterResult {
   ids: string[]
 }
 
-function readValues(item: FacetFilterItem, path: string): string[] {
-  let values: unknown[] = [item]
+/** The indexed values of one configured field. */
+interface FieldIndex {
+  matchAll: boolean
+  name: string
+  /**
+   * Start of each item's value ids in {@link valueIds}, plus a final end
+   * offset, so item `i` owns `valueIds[offsets[i]]` up to
+   * `valueIds[offsets[i + 1]]`.
+   */
+  offsets: Uint32Array
+  /**
+   * Each item's value ids, deduplicated per item. An id is the value's position
+   * in {@link values}.
+   */
+  valueIds: Uint32Array
+  valueIndex: Map<string, number>
+  values: readonly string[]
+}
 
-  for (const key of path.split(".")) {
-    values = values.flatMap((value) => {
-      if (typeof value !== "object" || value === null) {
-        return []
-      }
-      const nested = (value as Record<string, unknown>)[key]
-      return Array.isArray(nested) ? nested : [nested]
-    })
+/** A field with selections in the current filter pass. */
+interface ActiveField {
+  counts: Uint32Array
+  field: FieldIndex
+  /** 1 at the id of each selected value, 0 elsewhere. */
+  marked: Uint8Array
+  /** Number of selected values an item must have to match the field. */
+  required: number
+}
+
+/**
+ * Calls `visit` with each string value at `keys`, flattening arrays along the
+ * path.
+ */
+function visitValues(
+  value: unknown,
+  keys: readonly string[],
+  depth: number,
+  visit: (value: string) => void,
+): void {
+  if (depth === keys.length) {
+    if (typeof value === "string") {
+      visit(value)
+    }
+    return
+  }
+  if (typeof value !== "object" || value === null) {
+    return
+  }
+  const nested = (value as Record<string, unknown>)[keys[depth]]
+  if (Array.isArray(nested)) {
+    for (const entry of nested) {
+      visitValues(entry, keys, depth + 1, visit)
+    }
+  } else {
+    visitValues(nested, keys, depth + 1, visit)
+  }
+}
+
+function indexField(
+  items: readonly FacetFilterItem[],
+  name: string,
+  field: FacetFieldConfig,
+  compare: (a: string, b: string) => number,
+): FieldIndex {
+  const keys = (field.path ?? name).split(".")
+  const firstSeen = new Map<string, number>()
+  const lastItemBySeenId: number[] = []
+  const offsets = new Uint32Array(items.length + 1)
+  const seenIds: number[] = []
+
+  let index = 0
+  const visit = (value: string) => {
+    let id = firstSeen.get(value)
+    if (id === undefined) {
+      id = firstSeen.size
+      firstSeen.set(value, id)
+    }
+    if (lastItemBySeenId[id] !== index) {
+      lastItemBySeenId[id] = index
+      seenIds.push(id)
+    }
   }
 
-  return values.filter((value): value is string => typeof value === "string")
+  for (; index < items.length; index++) {
+    offsets[index] = seenIds.length
+    visitValues(items[index], keys, 0, visit)
+  }
+  offsets[items.length] = seenIds.length
+
+  const values = [...firstSeen.keys()].sort(compare)
+  const valueIndex = new Map(values.map((value, id) => [value, id]))
+  const sortedIdBySeenId = [...firstSeen.keys()].map((value) =>
+    valueIndex.get(value)!,
+  )
+
+  return {
+    matchAll: field.match === "all",
+    name,
+    offsets,
+    valueIds: Uint32Array.from(seenIds, (id) => sortedIdBySeenId[id]),
+    valueIndex,
+    values,
+  }
+}
+
+function activateField(
+  field: FieldIndex,
+  counts: Uint32Array,
+  selected: readonly string[],
+): ActiveField {
+  const marked = new Uint8Array(field.values.length)
+  const unique = new Set(selected)
+  for (const value of unique) {
+    const id = field.valueIndex.get(value)
+    if (id !== undefined) {
+      marked[id] = 1
+    }
+  }
+  /**
+   * Unknown selected values still count toward `required`, so a match-all
+   * field that selects a value missing from the data matches nothing.
+   */
+  return {counts, field, marked, required: field.matchAll ? unique.size : 1}
+}
+
+function matchesField(
+  {field, marked, required}: ActiveField,
+  index: number,
+): boolean {
+  const end = field.offsets[index + 1]
+  let matched = 0
+  for (let i = field.offsets[index]; i < end; i++) {
+    matched += marked[field.valueIds[i]]
+    if (matched >= required) {
+      return true
+    }
+  }
+  return false
+}
+
+function tally(field: FieldIndex, counts: Uint32Array, index: number): void {
+  const end = field.offsets[index + 1]
+  for (let i = field.offsets[index]; i < end; i++) {
+    counts[field.valueIds[i]]++
+  }
 }
 
 /**
@@ -111,47 +242,34 @@ function readValues(item: FacetFilterItem, path: string): string[] {
  * would add. For `"all"` fields, each bucket counts the current selections plus
  * that value.
  *
- * Counting is O(values × candidates) per field, which suits client-side data
- * sets of a few thousand items.
+ * Field values are indexed once on construction. Each filter pass then visits
+ * every candidate once, so its cost grows with the number of candidates and
+ * their values rather than with the number of distinct values per field.
  */
 export class FacetFilter<Item extends FacetFilterItem> {
   /**
    * The configured field names.
    */
   readonly fields: readonly string[]
-  private readonly fieldConfigs: Record<string, Required<FacetFieldConfig>>
+  private readonly fieldIndexes: Map<string, FieldIndex>
+  private readonly indexById: Map<string, number>
   private readonly items: Item[]
-  private readonly itemsById: Map<string, Item>
-  private readonly valuesByField: Map<string, string[]>
 
   /**
    * Indexes the values of each configured field. The items and config are
    * copied, so later mutations to either have no effect.
    */
   constructor(items: readonly Item[], config: FacetFilterConfig) {
+    const {compare} = new Intl.Collator()
     this.items = [...items]
-    this.itemsById = new Map(this.items.map((item) => [item.id, item]))
-    this.fieldConfigs = Object.fromEntries(
+    this.indexById = new Map(this.items.map((item, index) => [item.id, index]))
+    this.fieldIndexes = new Map(
       Object.entries(config.fields).map(([name, field]) => [
         name,
-        {match: field.match ?? "any", path: field.path ?? name},
+        indexField(this.items, name, field, compare),
       ]),
     )
-    this.fields = Object.keys(this.fieldConfigs)
-    this.valuesByField = new Map()
-
-    for (const [name, field] of Object.entries(this.fieldConfigs)) {
-      const values = new Set<string>()
-      for (const item of this.items) {
-        for (const value of readValues(item, field.path)) {
-          values.add(value)
-        }
-      }
-      this.valuesByField.set(
-        name,
-        [...values].sort((a, b) => a.localeCompare(b)),
-      )
-    }
+    this.fields = [...this.fieldIndexes.keys()]
   }
 
   /**
@@ -159,73 +277,100 @@ export class FacetFilter<Item extends FacetFilterItem> {
    * array for unconfigured fields.
    */
   getValues(name: string): readonly string[] {
-    return this.valuesByField.get(name) ?? []
+    return this.fieldIndexes.get(name)?.values ?? []
   }
 
   /**
    * Returns the matching item IDs and the bucket counts for every field.
    */
   filter(input: FacetFilterInput = {}): FacetFilterResult {
-    const selections = input.selections ?? {}
-    const candidates = input.ids
-      ? input.ids
-          .map((id) => this.itemsById.get(id))
-          .filter((item): item is Item => item !== undefined)
-      : this.items
-
-    const ids = candidates
-      .filter((item) => this.matches(item, selections))
-      .map((item) => item.id)
-
-    const facets = Object.fromEntries(
-      this.fields.map((name) => {
-        const selected = selections[name] ?? []
-        const buckets = (this.valuesByField.get(name) ?? []).map(
-          (value): FacetBucket => ({
-            docCount: candidates.filter((item) =>
-              this.matchesBucket(item, selections, name, value),
-            ).length,
-            key: value,
-            selected: selected.includes(value),
-          }),
-        )
-        return [name, buckets]
-      }),
+    const tallies = [...this.fieldIndexes.values()].map(
+      (field) => [field, new Uint32Array(field.values.length)] as const,
     )
+    const countsByField = new Map(tallies)
+    const selectedByField = new Map<string, ReadonlySet<string>>()
+    const active: ActiveField[] = []
+    let excludesAll = false
 
-    return {facets, ids}
-  }
-
-  private matchesBucket(
-    item: Item,
-    selections: FacetSelections,
-    name: string,
-    value: string,
-  ): boolean {
-    const values =
-      this.fieldConfigs[name]?.match === "all"
-        ? [...new Set([...(selections[name] ?? []), value])]
-        : [value]
-
-    return this.matches(item, {...selections, [name]: values})
-  }
-
-  private matches(item: Item, selections: FacetSelections): boolean {
-    return Object.entries(selections).every(([name, selected]) => {
+    for (const [name, selected] of Object.entries(input.selections ?? {})) {
       if (selected.length === 0) {
-        return true
+        continue
       }
-
-      const field = this.fieldConfigs[name]
+      const field = this.fieldIndexes.get(name)
       if (!field) {
-        return false
+        excludesAll = true
+        continue
       }
+      selectedByField.set(name, new Set(selected))
+      active.push(activateField(field, countsByField.get(field)!, selected))
+    }
 
-      const itemValues = readValues(item, field.path)
+    const ids: string[] = []
+    if (!excludesAll) {
+      const candidates = input.ids ? this.resolveIds(input.ids) : undefined
+      const total = candidates?.length ?? this.items.length
 
-      return field.match === "all"
-        ? selected.every((value) => itemValues.includes(value))
-        : selected.some((value) => itemValues.includes(value))
-    })
+      for (let position = 0; position < total; position++) {
+        const index = candidates ? candidates[position] : position
+        let failed: ActiveField | undefined
+        let misses = 0
+        for (const entry of active) {
+          if (!matchesField(entry, index)) {
+            failed = entry
+            if (++misses > 1) {
+              break
+            }
+          }
+        }
+
+        if (misses === 0) {
+          ids.push(this.items[index].id)
+          for (const [field, counts] of tallies) {
+            tally(field, counts, index)
+          }
+        } else if (misses === 1 && failed && !failed.field.matchAll) {
+          /**
+           * A match-any bucket replaces the field's selections with its own
+           * value, so an item that fails only this field still counts toward
+           * the values it has.
+           */
+          tally(failed.field, failed.counts, index)
+        }
+      }
+    }
+
+    return {
+      facets: Object.fromEntries(
+        tallies.map(([field, counts]) => {
+          const selected = selectedByField.get(field.name)
+          return [
+            field.name,
+            field.values.map((key, id): FacetBucket => ({
+              docCount: counts[id],
+              key,
+              selected: selected?.has(key) ?? false,
+            })),
+          ]
+        }),
+      ),
+      ids,
+    }
+  }
+
+  /**
+   * Maps candidate ids to item indexes in the supplied order, skipping unknown
+   * and repeated ids.
+   */
+  private resolveIds(ids: readonly string[]): number[] {
+    const seen = new Uint8Array(this.items.length)
+    const indexes: number[] = []
+    for (const id of ids) {
+      const index = this.indexById.get(id)
+      if (index !== undefined && !seen[index]) {
+        seen[index] = 1
+        indexes.push(index)
+      }
+    }
+    return indexes
   }
 }

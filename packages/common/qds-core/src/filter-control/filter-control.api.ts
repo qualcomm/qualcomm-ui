@@ -11,6 +11,7 @@ import type {
   QdsFilterControlOptionCountBindings,
   QdsFilterControlOptionGroupBindings,
   QdsFilterControlOptionLabelBindings,
+  QdsFilterControlStatusBindings,
 } from "./filter-control.types.js"
 
 export function createQdsFilterControlApi(
@@ -34,6 +35,13 @@ export function createQdsFilterControlApi(
     },
     getOptionLabelBindings(): QdsFilterControlOptionLabelBindings {
       return normalize.element({className: filterControlClasses.optionLabel})
+    },
+    getStatusBindings({status}): QdsFilterControlStatusBindings {
+      return normalize.element({
+        className: filterControlClasses.status,
+        "data-size": size,
+        "data-status": status,
+      })
     },
   }
 }

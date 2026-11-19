@@ -7,12 +7,19 @@ import {
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
 
-import type {FilterSetDraft, FilterSetSchema} from "./filter-set.types.js"
+import type {
+  FilterSetCapturedItem,
+  FilterSetDraft,
+  FilterSetSchema,
+} from "./filter-set.types.js"
 import {
+  captureFilterItems,
   createEmptyValueCheck,
+  getCollectionState,
+  getSelectedValues,
+  getSelectionValues,
+  getUncapturedValues,
   hashValues,
-  pickOptionLabels,
-  recordOptionLabels,
   setFilterValue,
 } from "./internal/filter-set.utils.js"
 
@@ -37,7 +44,7 @@ const filterSetMachineBase = {
     },
   },
 
-  context({bindable, getRefs, prop}) {
+  context({bindable, prop}) {
     return {
       draft: bindable<FilterSetDraft | null>(() => ({
         defaultValue: null,
@@ -47,9 +54,7 @@ const filterSetMachineBase = {
         defaultValue: prop("defaultValue"),
         hash: hashValues,
         onChange(value) {
-          prop("onValueChange")?.(value, {
-            labels: pickOptionLabels(getRefs().get("labels"), value),
-          })
+          prop("onValueChange")?.(value)
         },
         value: prop("value"),
       })),
@@ -68,7 +73,7 @@ const filterSetMachineBase = {
       actions: ["clearFilters"],
     },
     "FILTER.SET": {
-      actions: ["recordLabels", "setFilterValue"],
+      actions: ["setFilterValue"],
     },
     RESET: {
       actions: ["resetDraft"],
@@ -85,12 +90,28 @@ const filterSetMachineBase = {
 
   refs() {
     return {
-      labels: {},
+      items: {},
+      options: {},
     }
   },
 
   states: {
     idle: {},
+  },
+
+  watch({actions, computed, context, track}) {
+    /**
+     * Tracks the selection rather than the collections, so that the controlled
+     * `value` and other changes made outside the controls also capture the
+     * items of their values.
+     */
+    track(
+      [
+        () => hashValues(context.get("value")),
+        () => hashValues(computed("draftValue")),
+      ],
+      () => actions.captureItems(),
+    )
   },
 } satisfies MachineConfigBase<FilterSetSchema>
 
@@ -105,6 +126,43 @@ export const filterSetMachine: MachineConfig<FilterSetSchema> =
         context.set("draft", null)
       },
 
+      /**
+       * Records the item of every selected value found in its filter's current
+       * collection, and forgets the items of deselected values. Items are kept
+       * for values a collection no longer contains, so the selection stays
+       * labeled after a server-side search narrows the collection.
+       */
+      captureItems({computed, context, prop, refs}) {
+        const definitions = prop("filters")
+        const value = context.get("value")
+        const draftValue = computed("draftValue")
+        const captured = refs.get("items")
+        const ids = new Set([
+          ...Object.keys(value),
+          ...Object.keys(draftValue),
+          ...Object.keys(captured),
+        ])
+        const next: Record<string, Record<string, FilterSetCapturedItem>> = {}
+        for (const id of ids) {
+          const selected = getSelectionValues(value[id], draftValue[id])
+          if (!selected.length) {
+            continue
+          }
+          const state = getCollectionState(
+            definitions?.[id],
+            id,
+            prop("getFilterCollection"),
+            getUncapturedValues(captured[id], selected),
+          )
+          next[id] = captureFilterItems(
+            captured[id],
+            selected,
+            state?.collection,
+          )
+        }
+        refs.set("items", next)
+      },
+
       clearFilters({context, guard}) {
         if (guard("isAutoApply")) {
           context.set("value", {})
@@ -116,34 +174,46 @@ export const filterSetMachine: MachineConfig<FilterSetSchema> =
         })
       },
 
-      /**
-       * Labels are recorded from user selections only, before the value is
-       * written, so that `onValueChange` in `auto` mode already sees them.
-       * They live in refs because context reads within the same tick are
-       * stale; every recording accompanies a value change, which re-renders.
-       * Restored values rely on the definition or filter set resolvers for labels.
-       */
-      recordLabels({event, refs}) {
-        if (event.labels) {
-          refs.set(
-            "labels",
-            recordOptionLabels(refs.get("labels"), event.id, event.labels),
-          )
-        }
-      },
-
       resetDraft({context}) {
         context.set("draft", null)
       },
 
-      setFilterValue({context, event, guard, prop}) {
-        const isEmpty = createEmptyValueCheck(
-          prop("filters"),
-          prop("isEmptyValue"),
-        )
+      /**
+       * Captures the items of the written values before the value changes,
+       * from the collection the user picked them in. A controlled `value` may
+       * be echoed back later, after the collection has changed.
+       */
+      setFilterValue({computed, context, event, guard, prop, refs}) {
+        const definitions = prop("filters")
+        const isEmpty = createEmptyValueCheck(definitions, prop("isEmptyValue"))
+        const current = computed("draftValue")[event.id]
+        const next =
+          typeof event.value === "function"
+            ? (event.value as (prev: unknown) => unknown)(current)
+            : event.value
+        const written = getSelectedValues(next)
+        if (written.length) {
+          const captured = refs.get("items")
+          const state = getCollectionState(
+            definitions?.[event.id],
+            event.id,
+            prop("getFilterCollection"),
+            getUncapturedValues(
+              captured[event.id],
+              getSelectionValues(context.get("value")[event.id], current),
+            ),
+          )
+          refs.set("items", {
+            ...captured,
+            [event.id]: {
+              ...captured[event.id],
+              ...captureFilterItems(undefined, written, state?.collection),
+            },
+          })
+        }
         if (guard("isAutoApply")) {
           context.set("value", (values) =>
-            setFilterValue(isEmpty, values, event.id, event.value),
+            setFilterValue(isEmpty, values, event.id, next),
           )
           return
         }
@@ -155,7 +225,7 @@ export const filterSetMachine: MachineConfig<FilterSetSchema> =
             isEmpty,
             draft?.base === base ? draft.values : value,
             event.id,
-            event.value,
+            next,
           ),
         }))
       },

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {FilterOptionObject} from "@qualcomm-ui/core/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 import type {
   FacetFilter,
   FacetFilterItem,
@@ -10,6 +11,7 @@ import type {
 } from "@qualcomm-ui/utils/facet-filter"
 
 import type {
+  FilterSetApiProps,
   FilterSetOptionCounts,
   FilterSetValues,
 } from "./filter-set.types.js"
@@ -28,11 +30,11 @@ export interface FacetFilterSetOptions {
 }
 
 export interface FacetFilterSetProps {
+  getFilterCollection: NonNullable<FilterSetApiProps["getFilterCollection"]>
   getFilterOptionCounts: (
     id: string,
     values: FilterSetValues,
   ) => FilterSetOptionCounts | undefined
-  getFilterOptions: (id: string) => FilterOptionObject[] | undefined
 }
 
 /**
@@ -54,7 +56,7 @@ function toFacetSelections(
 }
 
 /**
- * Returns filter set props that resolve options and option counts from a
+ * Returns filter set props that resolve collections and option counts from a
  * `FacetFilter`. Filter ids match the facet filter's field names. Ids without
  * a matching field fall back to the filter set defaults.
  */
@@ -65,6 +67,10 @@ export function getFacetFilterSetProps<Item extends FacetFilterItem>(
   const {getCandidateIds} = options
   const fields = facetFilter.fields
   let cached: {key: string; result: FacetFilterResult} | undefined
+  const collections = new Map<
+    string,
+    {collection: ListCollection<FilterOptionObject>; values: readonly string[]}
+  >()
 
   function run(values: FilterSetValues): FacetFilterResult {
     const key = hashValues(values)
@@ -81,15 +87,28 @@ export function getFacetFilterSetProps<Item extends FacetFilterItem>(
   }
 
   return {
+    getFilterCollection: (id) => {
+      if (!fields.includes(id)) {
+        return undefined
+      }
+      const values = facetFilter.getValues(id)
+      let collection = collections.get(id)
+      if (collection?.values !== values) {
+        collection = {
+          collection: new ListCollection<FilterOptionObject>({
+            items: values.map((value) => ({label: value, value})),
+          }),
+          values,
+        }
+        collections.set(id, collection)
+      }
+      return {collection: collection.collection, status: "success"}
+    },
     getFilterOptionCounts: (id, values) => {
       const buckets = fields.includes(id) ? run(values).facets[id] : undefined
       return buckets
         ? new Map(buckets.map((bucket) => [bucket.key, bucket.docCount]))
         : undefined
     },
-    getFilterOptions: (id) =>
-      fields.includes(id)
-        ? facetFilter.getValues(id).map((value) => ({label: value, value}))
-        : undefined,
   }
 }

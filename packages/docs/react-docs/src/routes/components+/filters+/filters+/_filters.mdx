@@ -34,6 +34,8 @@ Each filter is a control built on one of our existing components. Render it insi
 - `SliderFilter`: `[number | null, number | null]`. Pick a numeric range. `null` leaves a side open.
 - `TextInputFilter`: `string`. Enter free text.
 
+List and tree filters render the items of the filter's collection, which comes from its definition or the panel's `getFilterCollection`. While the collection loads, or if it fails to load, the filter shows its status. See [Collections](../filter-panel.mdx#collections).
+
 Each section below documents only the props specific to that filter. The rest are forwarded to the underlying component.
 
 ## Checkbox Group Filter
@@ -49,7 +51,10 @@ Shows every option as a checkbox. Use it when the list is short enough to scan.
   component={demos.CheckboxGroupFilterDemo}
 />
 
-<TypeDocProps name="CheckboxGroupFilterProps" pick={["options"]} />
+<TypeDocProps
+  name="CheckboxGroupFilterProps"
+  pick={["loadErrorText", "loadingText", "retryLabel"]}
+/>
 
 Remaining props are forwarded to the group's `<div>` element.
 
@@ -59,14 +64,17 @@ Remaining props are forwarded to the group's `<div>` element.
 hierarchy, nested options, tree
 :::
 
-Selects leaves from a hierarchy. Checking a branch checks all of its leaves, and only leaf values are stored. The nodes come from a [TreeCollection](/components/tree#tree-collection), so the definition's options are ignored.
+Selects leaves from a hierarchy. Checking a branch checks all of its leaves, and only leaf values are stored. The nodes come from the filter's [TreeCollection](/components/tree#tree-collection), set on `treeFilter`.
 
 <Demo
   name="CheckboxTreeFilterDemo"
   component={demos.CheckboxTreeFilterDemo}
 />
 
-<TypeDocProps name="CheckboxTreeFilterProps" pick={["collection"]} />
+<TypeDocProps
+  name="CheckboxTreeFilterProps"
+  pick={["loadErrorText", "loadingText", "retryLabel"]}
+/>
 
 Remaining props are forwarded to [Tree](/components/tree).
 
@@ -76,11 +84,14 @@ Remaining props are forwarded to [Tree](/components/tree).
 search, autocomplete, long list
 :::
 
-Use a combobox when the list is too long to scan. Typing narrows the options by label. To search on the server instead, pass your own `collection` and update it from `onInputValueChange`.
+Use a combobox when the list is too long to scan. Typing narrows the options by label. To search on the server instead, read the text from `onInputValueChange` and narrow the collection returned by `getFilterCollection`.
 
 <Demo name="ComboboxFilterDemo" component={demos.ComboboxFilterDemo} />
 
-<TypeDocProps name="ComboboxFilterProps" pick={["collection", "options"]} />
+<TypeDocProps
+  name="ComboboxFilterProps"
+  pick={["loadErrorText", "loadingText"]}
+/>
 
 Remaining props are forwarded to [Combobox](/components/combobox).
 
@@ -133,14 +144,14 @@ Remaining props are forwarded to [DatePicker](../../date-picker+/_date-picker.md
 single select, radio group
 :::
 
-Shows every option as a radio, for a single choice. An option with a value of `""` clears the filter, which is useful for an "Any" option.
+Shows every option as a radio, for a single choice. `anyLabel` adds a leading radio that clears the filter.
 
-<Demo
-  name="RadioGroupFilterDemo"
-  component={demos.RadioGroupFilterDemo}
+<Demo name="RadioGroupFilterDemo" component={demos.RadioGroupFilterDemo} />
+
+<TypeDocProps
+  name="RadioGroupFilterProps"
+  pick={["anyLabel", "loadErrorText", "loadingText", "retryLabel"]}
 />
-
-<TypeDocProps name="RadioGroupFilterProps" pick={["options"]} />
 
 Remaining props are forwarded to [RadioGroup](../../radio+/_radio.mdx).
 
@@ -154,7 +165,7 @@ Use a select for a short list where a dropdown saves space. For longer lists, us
 
 <Demo name="SelectFilterDemo" component={demos.SelectFilterDemo} />
 
-<TypeDocProps name="SelectFilterProps" pick={["collection", "options"]} />
+<TypeDocProps name="SelectFilterProps" pick={["loadErrorText"]} />
 
 Remaining props are forwarded to [Select](/components/select).
 
@@ -180,10 +191,7 @@ search, free text, debounce
 
 Captures free text. In auto mode, the value is committed once the user stops typing.
 
-<Demo
-  name="TextInputFilterDemo"
-  component={demos.TextInputFilterDemo}
-/>
+<Demo name="TextInputFilterDemo" component={demos.TextInputFilterDemo} />
 
 <TypeDocProps name="TextInputFilterProps" pick={["debounce"]} />
 

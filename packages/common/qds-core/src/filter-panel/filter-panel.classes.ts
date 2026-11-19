@@ -11,6 +11,7 @@ export const filterPanelClasses = {
   filterCount: "qui-filter-panel__filter-count",
   filterIndicator: "qui-filter-panel__filter-indicator",
   filterLabel: "qui-filter-panel__filter-label",
+  filterLoadingIndicator: "qui-filter-panel__filter-loading-indicator",
   filterTrigger: "qui-filter-panel__filter-trigger",
   footer: "qui-filter-panel__footer",
   header: "qui-filter-panel__header",

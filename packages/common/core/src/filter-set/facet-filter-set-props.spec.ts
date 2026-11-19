@@ -1,5 +1,6 @@
 import {describe, expect, test, vi} from "vitest"
 
+import type {ListCollection} from "@qualcomm-ui/utils/collection"
 import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
 
 import {getFacetFilterSetProps} from "./facet-filter-set-props.js"
@@ -15,14 +16,19 @@ function createFacetFilter() {
 }
 
 describe("getFacetFilterSetProps", () => {
-  test("options are the field's values", () => {
-    const {getFilterOptions} = getFacetFilterSetProps(createFacetFilter())
+  test("collections hold the field's values", () => {
+    const {getFilterCollection} = getFacetFilterSetProps(createFacetFilter())
+    const state = getFilterCollection("os", {values: []})
 
-    expect(getFilterOptions("os")).toEqual([
+    expect(state?.status).toBe("success")
+    expect((state?.collection as ListCollection<any>).items).toEqual([
       {label: "Linux", value: "Linux"},
       {label: "Windows", value: "Windows"},
     ])
-    expect(getFilterOptions("unknown")).toBeUndefined()
+    expect(getFilterCollection("os", {values: []})?.collection).toBe(
+      state?.collection,
+    )
+    expect(getFilterCollection("unknown", {values: []})).toBeUndefined()
   })
 
   test("counts reflect the selections in other fields", () => {

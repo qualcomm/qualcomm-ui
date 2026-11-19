@@ -3,16 +3,17 @@ import {type ReactElement, useState} from "react"
 import {
   defineFilters,
   type FilterValues,
-  optionFilter,
+  listFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 const filters = defineFilters({
-  status: optionFilter({
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
     label: "Status",
-    options: ["Failed", "Passed", "Queued"],
   }),
 })
 

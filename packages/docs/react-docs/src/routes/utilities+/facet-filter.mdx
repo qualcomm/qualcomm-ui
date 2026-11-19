@@ -1,0 +1,205 @@
+---
+title: Facet Filter
+description: Filter in-memory data by field values, and count the results for each value.
+aliases: [facets, faceted search, facet counts, buckets, FacetFilter]
+badges:
+  - id: alpha
+    label: Alpha
+    url: /versioning#alpha
+---
+
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
+```
+
+## Overview
+
+`FacetFilter` indexes a list of items by the fields you configure. Each call to [filter](#filter) returns the ids of the matching items, and a result count for every value of every field.
+
+## Usage
+
+```ts
+const builds = [
+  {id: "1", platform: ["android", "linux"], status: "Failed"},
+  {id: "2", platform: ["windows"], status: "Passed"},
+  {id: "3", platform: ["linux"], status: "Passed"},
+]
+
+const facetFilter = new FacetFilter(builds, {
+  fields: {platform: {}, status: {}},
+})
+
+const {facets, ids} = facetFilter.filter({
+  selections: {platform: ["linux"]},
+})
+// ids: ["1", "3"]
+// facets.status: [
+//   {docCount: 1, key: "Failed", selected: false},
+//   {docCount: 1, key: "Passed", selected: false},
+// ]
+```
+
+Each key in [fields](#fields) is a field name. By default, the field reads the item property with the same name. The property can hold a string or an array of strings. Other values are ignored.
+
+Each item needs a unique string `id`. Results return ids, so map them back to your items.
+
+The constructor copies the items. Create the index once, and create a new one when the items change.
+
+## Counts
+
+::: terms
+docCount, buckets, disjunctive faceting
+:::
+
+Each field has a bucket for every value in the items, sorted, including values with a count of 0. A bucket's `docCount` is the number of results you get by selecting that value.
+
+Selected values within a field match any item that has one of them. So a value's count ignores the other selections in its own field. In the example above, `windows` reports 1 result even though no current result runs on Windows. Selecting it adds that build.
+
+```ts
+// facets.platform: [
+//   {docCount: 1, key: "android", selected: false},
+//   {docCount: 2, key: "linux", selected: true},
+//   {docCount: 1, key: "windows", selected: false},
+// ]
+```
+
+## Matching All Values
+
+::: terms
+match all, AND, tags
+:::
+
+Set [match](#match) to `"all"` to require every selected value.
+
+```ts
+const devices = [
+  {id: "1", features: ["5g", "wifi-7"]},
+  {id: "2", features: ["5g"]},
+  {id: "3", features: ["bluetooth", "wifi-7"]},
+]
+
+const facetFilter = new FacetFilter(devices, {
+  fields: {features: {match: "all"}},
+})
+
+facetFilter.filter({selections: {features: ["5g"]}})
+// ids: ["1", "2"]
+// facets.features: [
+//   {docCount: 2, key: "5g", selected: true},
+//   {docCount: 0, key: "bluetooth", selected: false},
+//   {docCount: 1, key: "wifi-7", selected: false},
+// ]
+```
+
+Counts follow the same rule. A value's count is the number of results for the current selections plus that value.
+
+## Nested Values
+
+::: terms
+path, nested property, dot notation
+:::
+
+Set [path](#path) to read a nested property.
+
+```ts
+const builds = [
+  {id: "1", target: {devices: [{chip: "SM8650"}, {chip: "SM8550"}]}},
+  {id: "2", target: {devices: [{chip: "SM8550"}]}},
+]
+
+const facetFilter = new FacetFilter(builds, {
+  fields: {chip: {path: "target.devices.chip"}},
+})
+
+facetFilter.getValues("chip")
+// ["SM8550", "SM8650"]
+```
+
+Arrays along the path are flattened, so this field holds the chip of every device. Selections and facets still use the field name, like `selections.chip`.
+
+## Narrowing the Candidates
+
+::: terms
+text search, candidate ids, search hits
+:::
+
+`FacetFilter` only matches field values. To combine it with another filter, like a text search, pass that filter's matches as [ids](#ids). They limit both the results and the counts.
+
+```ts
+const hits = builds
+  .filter((build) => build.name.includes(query))
+  .map((build) => build.id)
+
+const {facets, ids} = facetFilter.filter({
+  ids: hits,
+  selections: {status: ["Passed"]},
+})
+```
+
+Results keep the order of `ids`, so a ranked search stays ranked. Unknown ids are skipped.
+
+## Filter Panel
+
+::: terms
+getFacetFilterSetProps, filter counts, FilterPanel
+:::
+
+To show counts in a [filter panel](../components+/filters+/filter-panel.mdx#filter-counts), spread `getFacetFilterSetProps` onto the panel. The field names must match the filter ids.
+
+```tsx
+import {getFacetFilterSetProps} from "@qualcomm-ui/core/filter-set"
+
+const facetProps = getFacetFilterSetProps(facetFilter, {
+  getCandidateIds: (values) => searchBuilds(values.name),
+})
+
+function BuildFilters() {
+  return (
+    <FilterPanel.Root filters={filters} {...facetProps}>
+      {/* filters */}
+    </FilterPanel.Root>
+  )
+}
+```
+
+[getCandidateIds](#getCandidateIds) receives the panel's values. Return the ids that pass the panel's other filters, or `undefined` to include every item.
+
+A filter without a collection on its definition lists every value of its field, labeled with the value. To show other labels, give the definition a collection.
+
+## API
+
+### FacetFilter
+
+The constructor accepts the items and a config.
+
+<TypeDocProps name="FacetFilterConfig" />
+
+<TypeDocProps hideDefaultColumn name="FacetFilter" partial />
+
+### FacetFieldConfig
+
+<TypeDocProps name="FacetFieldConfig" />
+
+### FacetFilterInput
+
+<TypeDocProps name="FacetFilterInput" />
+
+### FacetFilterResult
+
+<TypeDocProps name="FacetFilterResult" />
+
+### FacetBucket
+
+<TypeDocProps name="FacetBucket" />
+
+### getFacetFilterSetProps
+
+Accepts a `FacetFilter` and these options.
+
+<TypeDocProps name="FacetFilterSetOptions" />

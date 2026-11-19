@@ -59,3 +59,21 @@
     color: var(--color-utility-disabled-text);
   }
 }
+
+.qui-filter-control__status {
+  align-items: center;
+  color: var(--color-text-neutral-secondary);
+  display: flex;
+  gap: var(--spacing-200);
+  padding-block: var(--spacing-100);
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-default);
+  }
+  &[data-size="md"] {
+    font: var(--font-static-body-sm-default);
+  }
+  &[data-status="error"] {
+    color: var(--color-text-support-danger);
+  }
+}

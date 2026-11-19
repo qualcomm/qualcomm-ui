@@ -1,13 +1,16 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
+import type {
+  ListCollection,
+  TreeCollection,
+} from "@qualcomm-ui/utils/collection"
 import type {DateRangePreset} from "@qualcomm-ui/utils/date-utils"
 
 /**
- * A filter option. A plain string is used as both the value and the label.
+ * The item shape that list collections read by default, and that the table and
+ * facet helpers produce.
  */
-export type FilterOption = string | FilterOptionObject
-
 export interface FilterOptionObject {
   /**
    * Whether the option is disabled.
@@ -26,20 +29,15 @@ export interface FilterOptionObject {
 }
 
 /**
- * Converts a string option to an option object.
+ * The selected item values. Single-select widgets write a one-item array so
+ * that every list widget shares the same value shape.
  */
-export function normalizeFilterOption(
-  option: FilterOption,
-): FilterOptionObject {
-  return typeof option === "string" ? {label: option, value: option} : option
-}
+export type ListFilterValue = string[]
 
 /**
- * The selected option values. Single-select widgets write a one-item array so
- * that every option widget shares the same value shape. The tree widget stores
- * only checked leaf values, never branch values.
+ * The checked leaf values. Branch values are never stored.
  */
-export type OptionFilterValue = string[]
+export type TreeFilterValue = string[]
 
 /**
  * `[min, max]`. `null` leaves that side unbounded.
@@ -108,17 +106,23 @@ interface FilterDefinitionConfig {
   label?: string | undefined
 }
 
-export interface OptionFilterConfig extends FilterDefinitionConfig {
+export interface ListFilterConfig<T = any> extends FilterDefinitionConfig {
   /**
-   * Returns the label for a selected value. Used outside the filter panel,
-   * such as in active filter chips, when the option is not available.
+   * The items to choose from. Their values are written to the filter, and their
+   * labels label the selection everywhere, including active filter chips. Omit
+   * to resolve the collection from the filter set's `getFilterCollection`, for
+   * data that loads asynchronously or depends on other state.
    */
-  getOptionLabel?: ((value: string) => string | undefined) | undefined
+  collection?: ListCollection<T> | undefined
+}
 
+export interface TreeFilterConfig<T = any> extends FilterDefinitionConfig {
   /**
-   * Static options. Options passed to the filter component take precedence.
+   * The tree to choose from. Checked leaf values are written to the filter, and
+   * node labels label the selection everywhere, including active filter chips.
+   * Omit to resolve the collection from the filter set's `getFilterCollection`.
    */
-  options?: FilterOption[] | undefined
+  collection?: TreeCollection<T> | undefined
 }
 
 export interface RangeFilterConfig extends FilterDefinitionConfig {
@@ -186,8 +190,11 @@ interface FilterDefinitionBase<TKind extends string> {
   readonly kind: TKind
 }
 
-export interface OptionFilterDefinition
-  extends FilterDefinitionBase<"option">, OptionFilterConfig {}
+export interface ListFilterDefinition<T = any>
+  extends FilterDefinitionBase<"list">, ListFilterConfig<T> {}
+
+export interface TreeFilterDefinition<T = any>
+  extends FilterDefinitionBase<"tree">, TreeFilterConfig<T> {}
 
 export interface RangeFilterDefinition
   extends FilterDefinitionBase<"range">, RangeFilterConfig {}
@@ -204,9 +211,10 @@ export interface CustomFilterDefinition<TValue = unknown>
 export type FilterDefinition =
   | CustomFilterDefinition<any>
   | DateFilterDefinition
-  | OptionFilterDefinition
+  | ListFilterDefinition
   | RangeFilterDefinition
   | TextFilterDefinition
+  | TreeFilterDefinition
 
 export type FilterKind = FilterDefinition["kind"]
 
@@ -230,9 +238,10 @@ export type FilterDefinitions<
 
 interface FilterValueByKind {
   date: DateFilterValue
-  option: OptionFilterValue
+  list: ListFilterValue
   range: RangeFilterValue
   text: TextFilterValue
+  tree: TreeFilterValue
 }
 
 export type FilterDefinitionValue<TDef> =
@@ -253,15 +262,33 @@ export type FilterValues<TDefs> = {
 }
 
 /**
- * A filter that selects from a list of options. Works with every option
+ * A filter that selects items from a list collection. Works with every list
  * widget, and the widget decides whether one or many values can be selected.
- * Single-select widgets write a one-item array. The tree widget takes its
- * nodes from its own `collection` prop and ignores `options`.
+ * Single-select widgets write a one-item array.
  */
-export function optionFilter(
-  config: OptionFilterConfig = {},
-): OptionFilterDefinition {
-  return {...config, kind: "option"}
+export function listFilter<T = any>(
+  config: ListFilterConfig<T> = {},
+): ListFilterDefinition<T> {
+  return {...config, kind: "list"}
+}
+
+/**
+ * A filter that selects the leaves of a tree collection. Checking a branch
+ * selects its leaves, and only leaf values are stored.
+ */
+export function treeFilter<T = any>(
+  config: TreeFilterConfig<T> = {},
+): TreeFilterDefinition<T> {
+  return {...config, kind: "tree"}
+}
+
+/**
+ * Whether a definition selects from a collection: a list or tree filter.
+ */
+export function isCollectionFilter(
+  definition: FilterDefinition | undefined,
+): definition is ListFilterDefinition | TreeFilterDefinition {
+  return definition?.kind === "list" || definition?.kind === "tree"
 }
 
 export function rangeFilter(

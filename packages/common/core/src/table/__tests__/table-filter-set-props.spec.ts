@@ -1,5 +1,7 @@
 import {afterEach, describe, expect, test, vi} from "vitest"
 
+import {ListCollection} from "@qualcomm-ui/utils/collection"
+
 import {
   createColumnHelper,
   getFacetedMinMaxValues,
@@ -15,6 +17,14 @@ import {
 } from "./table-test-utils"
 
 const columnHelper = createColumnHelper<TestPerson>()
+
+function getCollection(
+  props: ReturnType<typeof getTableFilterSetProps>,
+  id: string,
+): ListCollection<any> | undefined {
+  const collection = props.getFilterCollection(id, {values: []})?.collection
+  return collection instanceof ListCollection ? collection : undefined
+}
 
 const faceting = {
   getFacetedMinMaxValues: getFacetedMinMaxValues<TestPerson>(),
@@ -46,10 +56,10 @@ describe("getTableFilterSetProps", () => {
   test("onValueChange writes the record to the table's column filters", () => {
     const {table} = createTableHarness()
 
-    getTableFilterSetProps(table).onValueChange(
-      {status: ["single"], visits: [10, null]},
-      {labels: {}},
-    )
+    getTableFilterSetProps(table).onValueChange({
+      status: ["single"],
+      visits: [10, null],
+    })
 
     expect(table.getState().columnFilters).toEqual([
       {id: "status", value: ["single"]},
@@ -78,10 +88,10 @@ describe("getTableFilterSetProps", () => {
         }),
       ],
     })
-    const {getFilterLabel, getFilterOptionLabel} = getTableFilterSetProps(table)
+    const props = getTableFilterSetProps(table)
 
-    expect(getFilterLabel("status")).toBe("Relationship status")
-    expect(getFilterOptionLabel("status", "single")).toBe("Single")
+    expect(props.getFilterLabel("status")).toBe("Relationship status")
+    expect(getCollection(props, "status")?.stringify("single")).toBe("Single")
   })
 
   test("warns when a non-string header leaves the label as the column id", () => {
@@ -96,22 +106,33 @@ describe("getTableFilterSetProps", () => {
     expect(warn).toHaveBeenCalledWith(expect.stringContaining("filterLabel"))
   })
 
-  test("options come from faceted values, flattened and sorted by label", () => {
+  test("collections hold every value across all rows, flattened and sorted by label", () => {
     const {table} = createTableHarness({tableOptions: faceting})
-    const {getFilterOptions} = getTableFilterSetProps(table)
+    const props = getTableFilterSetProps(table)
 
-    expect(getFilterOptions("status")).toEqual([
+    expect(getCollection(props, "status")?.items).toEqual([
       {label: "complicated", value: "complicated"},
       {label: "relationship", value: "relationship"},
       {label: "single", value: "single"},
     ])
-    expect(getFilterOptions("tags")?.map((option) => option.value)).toEqual([
+    expect(getCollection(props, "tags")?.getValues()).toEqual([
       "aero",
       "compiler",
       "flight",
       "math",
       "systems",
     ])
+  })
+
+  test("values stay in the collection when other filters exclude their rows", () => {
+    const {table} = createTableHarness({
+      initialState: {columnFilters: [{id: "status", value: ["single"]}]},
+      tableOptions: faceting,
+    })
+
+    expect(
+      getCollection(getTableFilterSetProps(table), "tags")?.getValues(),
+    ).toEqual(["aero", "compiler", "flight", "math", "systems"])
   })
 
   test("range bounds come from faceted min and max values", () => {
@@ -123,21 +144,32 @@ describe("getTableFilterSetProps", () => {
     })
   })
 
-  test("warns instead of returning options when faceting is not configured", () => {
+  test("collections don't need faceting, but range bounds warn without it", () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
     const {table} = createTableHarness({
       columns: makeTestColumns(),
       tableOptions: {getFacetedRowModel: undefined},
     })
-    const {getFilterOptions, getFilterRange} = getTableFilterSetProps(table)
+    const props = getTableFilterSetProps(table)
 
-    expect(getFilterOptions("lastName")).toBeUndefined()
-    expect(getFilterRange("rank")).toBeUndefined()
-    expect(warn).toHaveBeenCalledWith(
-      expect.stringContaining("getFacetedUniqueValues"),
-    )
+    expect(getCollection(props, "lastName")?.items.length).toBeGreaterThan(0)
+    expect(props.getFilterRange("rank")).toBeUndefined()
     expect(warn).toHaveBeenCalledWith(
       expect.stringContaining("getFacetedMinMaxValues"),
+    )
+  })
+
+  test("warns instead of building a collection from the loaded rows of a manually filtered table", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+    const {table} = createTableHarness({
+      tableOptions: {...faceting, manualFiltering: true},
+    })
+
+    expect(
+      getTableFilterSetProps(table).getFilterCollection("status", {values: []}),
+    ).toBeUndefined()
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("manualFiltering"),
     )
   })
 
@@ -145,16 +177,11 @@ describe("getTableFilterSetProps", () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {})
     vi.spyOn(console, "warn").mockImplementation(() => {})
     const {table} = createTableHarness()
-    const {
-      getFilterLabel,
-      getFilterOptionLabel,
-      getFilterOptions,
-      isEmptyValue,
-    } = getTableFilterSetProps(table)
+    const {getFilterCollection, getFilterLabel, isEmptyValue} =
+      getTableFilterSetProps(table)
 
     expect(getFilterLabel("server-only")).toBeUndefined()
-    expect(getFilterOptionLabel("server-only", "7d")).toBeUndefined()
-    expect(getFilterOptions("server-only")).toBeUndefined()
+    expect(getFilterCollection("server-only", {values: []})).toBeUndefined()
     expect(isEmptyValue("server-only", "7d")).toBe(false)
     expect(error).not.toHaveBeenCalled()
   })

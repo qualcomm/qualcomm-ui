@@ -4,7 +4,7 @@ import {
   customFilter,
   dateFilter,
   defineFilters,
-  optionFilter,
+  listFilter,
   rangeFilter,
   textFilter,
 } from "./filters.definitions"
@@ -19,7 +19,7 @@ import {
 const definitions = defineFilters({
   duration: rangeFilter({formatValue: (value) => `${value} min`}),
   query: textFilter(),
-  status: optionFilter(),
+  status: listFilter(),
   submitted: dateFilter({
     presets: [{label: "Last 7 days", value: "last7Days"}],
   }),

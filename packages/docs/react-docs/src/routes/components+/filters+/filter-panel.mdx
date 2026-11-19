@@ -36,22 +36,23 @@ Filters are declared up front with `defineFilters`. Each key becomes the filter'
 ```tsx
 import {
   defineFilters,
-  optionFilter,
+  listFilter,
   rangeFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 
 export const filters = defineFilters({
   buildPath: textFilter({label: "Build path"}),
   duration: rangeFilter({label: "Duration", max: 120, min: 0}),
-  status: optionFilter({
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
     label: "Status",
-    options: ["Failed", "Passed", "Queued"],
   }),
 })
 ```
 
-These definitions match our [filter controls](./filters+/_filters.mdx): `optionFilter` defines a filter for any option control, like `<CheckboxGroupFilter>`, `textFilter` for `<TextInputFilter>`, and so on. The utility sets the filter's label, options, and value type. The control renders it inside `FilterPanel.Filter`. The controls are documented on the [Filters](./filters+/_filters.mdx) page.
+These definitions match our [filter controls](./filters+/_filters.mdx): `listFilter` defines a filter for any list control, like `<CheckboxGroupFilter>`, `treeFilter` for `<CheckboxTreeFilter>`, `textFilter` for `<TextInputFilter>`, and so on. The utility sets the filter's label, collection, and value type. The control renders it inside `FilterPanel.Filter`. The controls are documented on the [Filters](./filters+/_filters.mdx) page.
 
 ```tsx
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
@@ -101,8 +102,6 @@ controlled, value, onValueChange
 
 Set the initial selection using the [defaultValue](#defaultValue) prop, or use [value](#value) and [onValueChange](#onValueChange) to control it manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
 
-The second argument to `onValueChange` contains the labels of the options the user selected, keyed by filter id and option value. This is useful for options that are loaded at runtime, where the label isn't known ahead of time.
-
 <Demo
   name="FilterPanelControlledStateDemo"
   component={demos.FilterPanelControlledStateDemo}
@@ -137,22 +136,22 @@ To change how a single section heading renders, pass `label` to `FilterPanel.Fil
   component={demos.FilterPanelLabelsDemo}
 />
 
-### Options
+### Collections
 
 ::: terms
-async options, dynamic options, loaded options
+ListCollection, TreeCollection, async options, loading, getFilterCollection
 :::
 
-Static options belong on the definition. Options that are loaded at runtime are passed to the control, and take precedence over the definition's options.
-
-Options are strings or `{label, value}` objects. A selected value that isn't in the current options stays visible, so the user can always deselect it.
+List and tree filters select from a collection. A static collection belongs on the definition. A collection that loads at runtime comes from [getFilterCollection](#getFilterCollection), which returns its state: `loading`, `error`, or `success`. The controls show a loading status until it resolves, and an error if it fails. In the panel, the filter's trigger shows a progress ring while the collection refetches, or while the filter is collapsed.
 
 <Demo
   name="FilterPanelOptionsDemo"
   component={demos.FilterPanelOptionsDemo}
 />
 
-A selection restored from storage has no option labels until its options load. To label it in the meantime, supply [getFilterOptionLabel](#getFilterOptionLabel) on the panel, or `getOptionLabel` on the definition.
+`getFilterCollection` is called during render, so load the data elsewhere, such as with a query library, and return its state. List items are strings or `{label, value}` objects unless the collection defines its own accessors. A selected value that isn't in the collection stays visible, so the user can always deselect it.
+
+Labels come from the collection. A selection keeps its labels after a search narrows the collection. Values restored from the URL or storage have no items yet, so the resolver receives them as `values`. Include their items in the returned collection, for example by fetching them by id. Until then, [getValueItems](#getValueItems) reports them as `loading`, so active filter chips can show a placeholder.
 
 ### Filter Counts
 
@@ -169,7 +168,7 @@ faceting, facets, result counts, FacetFilter, getFacetFilterSetProps
 >
 ```
 
-For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-filter` and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetFilter` only counts option filters, so apply other filters, like text search, in `getCandidateIds`.
+For data in memory, index it with [FacetFilter](../../utilities+/facet-filter.mdx) and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetFilter` only counts list filters, so apply other filters, like text search, in `getCandidateIds`.
 
 <Demo
   name="FilterPanelFacetsDemo"
@@ -179,7 +178,22 @@ For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-f
 In manual mode, counts follow the draft, so they update before the user applies.
 
 > [!note]
-> For tables, use `getTableFilterSetProps` and enable the table's `getFacetedRowModel` and `getFacetedUniqueValues` options.
+> For tables, use `getTableFilterSetProps`. It builds each column's collection from every row, and counts from the table's `getFacetedRowModel` and `getFacetedUniqueValues` options.
+
+### Dynamic Filter Counts
+
+::: terms
+fetched data, TanStack Query, useQuery, refetch
+:::
+
+When the data comes from a request, build the `FacetFilter` index once the response arrives, and pass its props to the panel. Build the index from a separate unfiltered query. It then counts every value of a field, and values don't drop out of the lists as the filters narrow the results. This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
+
+<Demo
+  name="FilterPanelAsyncFacetsDemo"
+  component={demos.FilterPanelAsyncFacetsDemo}
+/>
+
+A `loading` state with a collection is a refetch. The previous items stay visible, and the filter's trigger shows a progress ring until the new collection arrives.
 
 ### Hoisted State
 
@@ -263,11 +277,13 @@ Returns the state of the enclosing `FilterPanel.Filter` or `FilterProvider`.
 
 ### Definitions
 
-#### OptionFilterConfig
+#### ListFilterConfig
 
-Configuration for `optionFilter`. `CheckboxTreeFilter` ignores `options`, since its nodes come from the tree collection.
+<TypeDocProps name="ListFilterConfig" />
 
-<TypeDocProps name="OptionFilterConfig" />
+#### TreeFilterConfig
+
+<TypeDocProps name="TreeFilterConfig" />
 
 #### RangeFilterConfig
 
@@ -380,6 +396,12 @@ Configuration for `optionFilter`. `CheckboxTreeFilter` ignores `options`, since 
     "FilterPanelFilterCountBindings",
   ]}
 />
+
+### \<FilterPanel.FilterLoadingIndicator>
+
+<TypeDocProps name="FilterPanelFilterLoadingIndicatorProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFilterLoadingIndicatorBindings" />
 
 ### \<FilterPanel.FilterIndicator>
 
