@@ -1,5 +1,13 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.7.2
+
+Nov 19th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.1.0]
+
 ## 2.7.1
 
 Nov 9th, 2026

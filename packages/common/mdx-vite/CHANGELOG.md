@@ -1,5 +1,17 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 5.1.1
+
+Nov 19th, 2026
+
+### Documentation
+
+* [qui-docs]: add typescoop guide ([ad0b5dc](https://github.com/qualcomm/qualcomm-ui/commit/ad0b5dc))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.1.0, @qualcomm-ui/mdx-common@2.7.2]
+
 ## 5.1.0
 
 Nov 12th, 2026
