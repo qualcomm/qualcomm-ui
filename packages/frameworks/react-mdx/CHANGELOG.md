@@ -1,5 +1,21 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.4.3
+
+Nov 19th, 2026
+
+### Bug Fixes
+
+* [react-mdx]: link bare type names and generic arguments to page references ([36fc89b](https://github.com/qualcomm/qualcomm-ui/commit/36fc89b))
+
+### Documentation
+
+* [qui-docs]: add typescoop guide ([ad0b5dc](https://github.com/qualcomm/qualcomm-ui/commit/ad0b5dc))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.7.2, @qualcomm-ui/react@2.2.1, @qualcomm-ui/react-core@1.11.0]
+
 ## 3.4.2
 
 Nov 13th, 2026

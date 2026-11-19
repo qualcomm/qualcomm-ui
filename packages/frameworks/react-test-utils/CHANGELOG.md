@@ -1,5 +1,13 @@
 # @qualcomm-ui/react-test-utils
 
+## 1.0.7
+
+Nov 19th, 2026
+
+### Miscellaneous Chores
+
+* [deps]: update @clack/prompts to 1.9.0 ([f7f9950](https://github.com/qualcomm/qualcomm-ui/commit/f7f9950))
+
 ## 1.0.6
 
 Aug 20th, 2026
