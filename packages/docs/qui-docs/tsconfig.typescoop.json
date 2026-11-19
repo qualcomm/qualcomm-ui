@@ -6,9 +6,9 @@
   "include": [
     "./src/typedoc-example.ts",
     "./src/typedoc-debug.ts",
-    "../../common/typedoc/dist",
-    "../../common/typedoc-common/dist",
-    "../../frameworks/react-mdx/dist",
+    "../../common/typescoop/src/types.ts",
+    "../../common/typedoc-common/src",
+    "../../frameworks/react-mdx/src",
     "../../common/mdx-common/src",
     "../../common/mdx-vite/src/**/types.ts",
     "../../common/mdx-vite/src/**/*.types.ts",

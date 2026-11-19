@@ -5,7 +5,7 @@
   },
   "include": [
     "../../common/core/src",
-    "../../common/dom/dist",
+    "../../common/dom/src",
     "../../common/qds-core/src",
     "../../common/utils/src",
     "../../frameworks/react/src",

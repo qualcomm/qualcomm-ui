@@ -1,8 +1,4 @@
-import {
-  type BuildOptions,
-  type ImportResolverFn,
-  isReferenceType,
-} from "@qualcomm-ui/typedoc"
+import type {BuildOptions, ImportResolverFn} from "@qualcomm-ui/typescoop"
 
 /**
  * Assumes that each module's source code lives in individually-exported folders
@@ -16,7 +12,7 @@ const resolveTopLevelCodeSplitPackage: ImportResolverFn = (params) => {
   const {name, namespace, packageName, packagePath} = params
   // src/*
   const subModule = packagePath.split("/")[1]
-  const statement = `import type {${namespace ?? name}} from "${packageName}/${subModule}"`
+  const statement = `import {${namespace ?? name}} from "${packageName}/${subModule}"`
   if (namespace) {
     return [statement, `// ${namespace}.${name}`].join("\n")
   } else {
@@ -27,51 +23,29 @@ const resolveTopLevelCodeSplitPackage: ImportResolverFn = (params) => {
 // TODO: clean up.  Lots of holes with this approach, maybe pass the entire
 // reference type to the resolver.
 const pkgImportResolvers: Record<string, ImportResolverFn> = {
-  "@qualcomm-ui/angular": (params) => {
-    const {name, namespace, packageName, packagePath} = params
-    // *
-    const subModule = packagePath.split("/")[0]
-    const statement = `import type {${namespace ?? name}} from "${packageName}/${subModule}"`
-    if (namespace) {
-      return [statement, `// ${namespace}.${name}`].join("\n")
-    } else {
-      return statement
-    }
-  },
-  "@qualcomm-ui/angular-core": (params) => {
-    const {name, namespace, packageName, packagePath} = params
-    // *
-    const subModule = packagePath.split("/")[0]
-    const statement = `import type {${namespace ?? name}} from "${packageName}/${subModule}"`
-    if (namespace) {
-      return [statement, `// ${namespace}.${name}`].join("\n")
-    } else {
-      return statement
-    }
-  },
   "@qualcomm-ui/core": resolveTopLevelCodeSplitPackage,
   "@qualcomm-ui/dom": resolveTopLevelCodeSplitPackage,
   "@qualcomm-ui/qds-core": resolveTopLevelCodeSplitPackage,
+  "@qualcomm-ui/react": resolveTopLevelCodeSplitPackage,
+  "@qualcomm-ui/react-core": resolveTopLevelCodeSplitPackage,
   "@qualcomm-ui/utils": (opts) => {
-    if (
-      opts.type.typeArguments &&
-      opts.type.name === "WithDataAttributes" &&
-      isReferenceType(opts.type.typeArguments[0])
-    ) {
-      return opts.builder.resolveImport(opts.type.typeArguments[0])
-    }
     return resolveTopLevelCodeSplitPackage(opts)
+  },
+  "@types/react": (params) => {
+    const {name} = params
+    return `import {${name}} from "react"`
   },
 }
 
 export default {
-  documentationScope: "all",
   importResolver: (params) => {
     const packageName = params.packageName
     return pkgImportResolvers[packageName]?.(params)
   },
   prettyJson: false,
-  typedocOptions: {
-    tsconfig: "tsconfig.typedoc.json",
+  referenceLinks: {
+    BindingRenderProp: "/render-props#binding-render-prop",
+    RenderProp: "/render-props#render-prop",
   },
+  tsconfig: "tsconfig.typescoop.json",
 } satisfies BuildOptions

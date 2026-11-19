@@ -67,7 +67,7 @@ const config: QuiDocsConfig = {
   pageDirectory: "routes",
   pageTimestampMetadata: "user-and-timestamp",
   routingStrategy: "react-router-directory-groups",
-  typeDocProps: ".typedoc/doc-props.json",
+  typeDocProps: ".typescoop/type-data.json",
 }
 
 export default config
