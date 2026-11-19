@@ -95,9 +95,44 @@ export interface SerializedParameters {
   type: FormattedType
 }
 
+/**
+ * A documented object type that was small enough in members to be printed
+ * inline, and whether its printed body fit the length limit.
+ */
+export interface InlineObjectDecision {
+  /**
+   * The exclusive end offset of the object in the formatted type.
+   */
+  end: number
+
+  /**
+   * Whether the object was printed inline. When `true`, {@link start} and
+   * {@link end} cover the inline body. When `false`, the type kept its name
+   * because its inline body exceeded the length limit, and the offsets cover
+   * the name.
+   */
+  inlined: boolean
+
+  /**
+   * The name of the object type.
+   */
+  name: string
+
+  /**
+   * The start offset of the object in the formatted type.
+   */
+  start: number
+}
+
 export interface SerializedType extends SerializedTypeBase {
   baseType?: string
   deprecated?: boolean
+  /**
+   * The {@link type} with the union aliases it names replaced by their members,
+   * such as `CalendarDate | CalendarDateTime | ZonedDateTime` for `DateValue`.
+   * Only present when it differs from {@link type}.
+   */
+  expandedType?: string
   /**
    * If the type is a function, this will contain the resolved types of the function
    * arguments, including comments.
@@ -110,6 +145,11 @@ export interface SerializedType extends SerializedTypeBase {
    * @since 1.0.5
    */
   functionParameters?: QuiPropDeclaration[]
+  /**
+   * The small object types considered for inlining, in the order they appear
+   * in {@link prettyType}. Offsets index into {@link prettyType}.
+   */
+  inlineObjects?: InlineObjectDecision[]
   parameters?: SerializedParameters[]
   properties?: SerializedTypeBase[]
   rawType?: string
