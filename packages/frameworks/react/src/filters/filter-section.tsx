@@ -19,7 +19,7 @@ import {
  * Props shared by every filter component.
  */
 export interface FilterSectionProps<
-  TDefinition extends FilterDefinition = FilterDefinition,
+  TDef extends FilterDefinition = FilterDefinition,
 > {
   /**
    * Props applied to the content element.
@@ -37,7 +37,7 @@ export interface FilterSectionProps<
   /**
    * The filter's definition, from `defineFilters`.
    */
-  filter: IdentifiedFilterDefinition<TDefinition>
+  filter: IdentifiedFilterDefinition<TDef>
 
   /**
    * Customizes how the label renders in this filter's section. Accepts a
@@ -70,7 +70,7 @@ export interface FilterSectionProps<
   triggerProps?: FilterPanelFilterTriggerProps | undefined
 }
 
-export function FilterSection<TDefinition extends FilterDefinition>({
+export function FilterSection<TDef extends FilterDefinition>({
   children,
   contentProps,
   defaultOpen,
@@ -80,7 +80,7 @@ export function FilterSection<TDefinition extends FilterDefinition>({
   open,
   rootProps,
   triggerProps,
-}: FilterSectionProps<TDefinition> & {children: ReactNode}): ReactElement {
+}: FilterSectionProps<TDef> & {children: ReactNode}): ReactElement {
   return (
     <FilterPanel.Filter
       defaultOpen={defaultOpen}

@@ -43,9 +43,9 @@ export function QdsFilterPanelProviders({
 }
 
 export interface FilterPanelRootProps<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
+  TDefs extends FilterDefinitions = FilterDefinitions,
 >
-  extends CoreFilterPanelRootProps<TDefinitions>, QdsFilterPanelApiProps {}
+  extends CoreFilterPanelRootProps<TDefs>, QdsFilterPanelApiProps {}
 
 /**
  * The root element of the filter panel. Owns the panel's state. To share the
@@ -54,8 +54,8 @@ export interface FilterPanelRootProps<
  * default.
  */
 export function FilterPanelRoot<
-  TDefinitions extends FilterDefinitions = FilterDefinitions,
->({size, ...props}: FilterPanelRootProps<TDefinitions>): ReactElement {
+  TDefs extends FilterDefinitions = FilterDefinitions,
+>({size, ...props}: FilterPanelRootProps<TDefs>): ReactElement {
   const qdsContext = useQdsFilterPanel(size)
 
   return (

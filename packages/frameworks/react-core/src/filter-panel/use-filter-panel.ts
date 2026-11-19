@@ -46,10 +46,10 @@ export function useFilterPanelClearTrigger(): FilterPanelClearTriggerBindings {
 /**
  * Builds the state of one filter from the surrounding filter panel.
  */
-export function useFilterPanelFilterState<TDefinition extends FilterDefinition>(
-  definition: IdentifiedFilterDefinition<TDefinition>,
+export function useFilterPanelFilterState<TDef extends FilterDefinition>(
+  definition: IdentifiedFilterDefinition<TDef>,
   labelId: string,
-): FilterPanelFilterContextValue<TDefinition> {
+): FilterPanelFilterContextValue<TDef> {
   const api = useFilterPanelContext()
   const {id} = definition
   const value = api.getDraftValue(id)
@@ -63,7 +63,7 @@ export function useFilterPanelFilterState<TDefinition extends FilterDefinition>(
     label: api.getFilterLabel(id),
     labelId,
     setValue: (next, details) => api.setFilterValue(id, next, details),
-    value: value as FilterPanelFilterContextValue<TDefinition>["value"],
+    value: value as FilterPanelFilterContextValue<TDef>["value"],
   }
 }
 
@@ -72,7 +72,7 @@ export function useFilterPanelFilterState<TDefinition extends FilterDefinition>(
  * to build a custom filter control.
  */
 export function useFilterPanelFilter<
-  TDefinition extends FilterDefinition = FilterDefinition,
->(): FilterPanelFilterContextValue<TDefinition> {
-  return useFilterPanelFilterContext() as unknown as FilterPanelFilterContextValue<TDefinition>
+  TDef extends FilterDefinition = FilterDefinition,
+>(): FilterPanelFilterContextValue<TDef> {
+  return useFilterPanelFilterContext() as unknown as FilterPanelFilterContextValue<TDef>
 }

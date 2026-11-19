@@ -137,24 +137,24 @@ export function CoreFilterPanelClearTrigger({
 }
 
 export interface CoreFilterPanelFilterProps<
-  TDefinition extends FilterDefinition = FilterDefinition,
+  TDef extends FilterDefinition = FilterDefinition,
 > extends CoreCollapsibleRootProps {
   /**
    * The filter's definition, from `defineFilters`.
    */
-  filter: IdentifiedFilterDefinition<TDefinition>
+  filter: IdentifiedFilterDefinition<TDef>
 }
 
 /**
  * Provides one filter's state to its parts, and expands and collapses its
  * content. Expanded by default.
  */
-export function CoreFilterPanelFilter<TDefinition extends FilterDefinition>({
+export function CoreFilterPanelFilter<TDef extends FilterDefinition>({
   children,
   defaultOpen = true,
   filter,
   ...props
-}: CoreFilterPanelFilterProps<TDefinition>): ReactElement {
+}: CoreFilterPanelFilterProps<TDef>): ReactElement {
   const api = useFilterPanelContext()
   const labelId = useControlledId()
   const context = useFilterPanelFilterState(filter, labelId)

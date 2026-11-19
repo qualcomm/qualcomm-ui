@@ -13,16 +13,16 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {useQdsFilterPanelContext} from "./qds-filter-panel-context.js"
 
 export interface FilterPanelFilterProps<
-  TDefinition extends FilterDefinition = FilterDefinition,
-> extends CoreFilterPanelFilterProps<TDefinition> {}
+  TDef extends FilterDefinition = FilterDefinition,
+> extends CoreFilterPanelFilterProps<TDef> {}
 
 /**
  * A collapsible filter section. Provides the filter's state to its trigger,
  * content, and control. Expanded by default. Renders a `<div>` element by
  * default.
  */
-export function FilterPanelFilter<TDefinition extends FilterDefinition>(
-  props: FilterPanelFilterProps<TDefinition>,
+export function FilterPanelFilter<TDef extends FilterDefinition>(
+  props: FilterPanelFilterProps<TDef>,
 ): ReactElement {
   const qdsContext = useQdsFilterPanelContext()
 

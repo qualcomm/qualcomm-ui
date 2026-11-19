@@ -267,10 +267,10 @@ interface FilterValueByKind {
   text: TextFilterValue
 }
 
-export type FilterDefinitionValue<TDefinition> =
-  TDefinition extends CustomFilterDefinition<infer TValue>
+export type FilterDefinitionValue<TDef> =
+  TDef extends CustomFilterDefinition<infer TValue>
     ? TValue
-    : TDefinition extends {
+    : TDef extends {
           readonly kind: infer TKind extends keyof FilterValueByKind
         }
       ? FilterValueByKind[TKind]
