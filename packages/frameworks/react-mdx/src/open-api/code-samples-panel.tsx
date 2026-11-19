@@ -5,6 +5,7 @@ import {type ReactNode, useMemo} from "react"
 
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {CopyToClipboardIconButton} from "@qualcomm-ui/react-mdx/copy-to-clipboard"
+import {HttpMethod} from "@qualcomm-ui/react-mdx/docs-layout"
 
 import {type CodeSampleInput, getCodeSamples} from "./code-samples.js"
 import {isJsonMediaType} from "./get-example.js"
@@ -24,11 +25,13 @@ function ExampleBlock({
   options,
   pickerLabel,
   remember,
+  subheader,
   title,
 }: {
   options: ExampleOption[]
   pickerLabel: string
   remember?: boolean
+  subheader?: ReactNode
   title: string
 }): ReactNode {
   const labels = useMemo(() => options.map(({label}) => label), [options])
@@ -54,6 +57,9 @@ function ExampleBlock({
           />
         )}
       </div>
+      {subheader ? (
+        <div className="qui-docs-openapi__example-subheader">{subheader}</div>
+      ) : null}
       {option.code === null ? (
         <p className="qui-docs-openapi__example-empty">No content</p>
       ) : (
@@ -97,6 +103,14 @@ export function CodeSamplesPanel({
         options={requests}
         pickerLabel="Language"
         remember
+        subheader={
+          <>
+            <HttpMethod method={operation.method} />
+            <code className="qui-docs-openapi__example-path">
+              {operation.path}
+            </code>
+          </>
+        }
         title="Example request"
       />
       <ExampleBlock

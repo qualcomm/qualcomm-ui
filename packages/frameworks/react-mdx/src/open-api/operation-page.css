@@ -128,6 +128,20 @@
     var(--spacing-400);
 }
 
+.qui-docs-openapi__example-subheader {
+  align-items: baseline;
+  border-bottom: 1px solid var(--color-border-neutral-01);
+  display: flex;
+  font: var(--font-static-code-sm-default);
+  gap: var(--spacing-200);
+  padding: var(--spacing-200) var(--spacing-400);
+}
+
+.qui-docs-openapi__example-path {
+  color: var(--color-text-neutral-secondary);
+  overflow-wrap: anywhere;
+}
+
 .qui-docs-openapi__example-title {
   flex: 1;
   font: var(--font-static-body-sm-bold);
