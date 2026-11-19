@@ -40,7 +40,7 @@
   "dependencies": {},
   "devDependencies": {
     "@angular/core": "catalog:",
-    "@clack/prompts": "1.0.0-alpha.6",
+    "@clack/prompts": "^1.9.0",
     "@commander-js/extra-typings": "catalog:",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",

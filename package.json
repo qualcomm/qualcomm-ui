@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.0",
-    "@clack/prompts": "1.0.0-alpha.6",
+    "@clack/prompts": "^1.9.0",
     "@commander-js/extra-typings": "catalog:",
     "@eslint/js": "catalog:",
     "@manypkg/get-packages": "^3.1.0",
