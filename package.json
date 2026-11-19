@@ -10,7 +10,7 @@
     "force-clean": "shx rm -rf packages/*/*/dist",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "node scripts/post-install.mjs",
-    "build": "turbo run build --filter=!./packages/docs/* --filter=!./packages/debug-apps/* --filter=!./packages/common/typedoc",
+    "build": "turbo run build --filter=!./packages/docs/* --filter=!./packages/debug-apps/*",
     "build:react": "turbo run build --filter=!./packages/docs/* --filter=!./packages/debug-apps/* --filter=!./packages/frameworks/angular* --filter=!./packages/common/typedoc",
     "build:docs": "turbo run build --filter=./packages/docs/*",
     "dev": "turbo run dev --filter=!./packages/docs/* --filter=!./packages/debug-apps/* --filter=!./packages/common/typedoc",
