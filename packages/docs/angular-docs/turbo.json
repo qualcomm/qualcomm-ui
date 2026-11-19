@@ -1,11 +1,11 @@
 {
   "extends": ["//"],
   "tasks": {
-    "build:typedoc": {
+    "typescoop-extract": {
       "inputs": [
-        "qui-typedoc.config.ts",
-        "tsconfig.typedoc.json",
-        "../../common/typedoc/src/**/*.ts",
+        "typescoop.config.ts",
+        "tsconfig.typescoop.json",
+        "../../common/typescoop/src/**/*.ts",
         "../../common/core/dist/**/*.d.ts",
         "../../common/qds-core/dist/**/*.d.ts",
         "../../common/utils/dist/**/*.d.ts",

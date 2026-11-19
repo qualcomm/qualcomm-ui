@@ -12,10 +12,7 @@ badges:
     url: /versioning#beta
 ---
 
-import {
-  TypeDocProps,
-  TypeDocAngularAttributes,
-} from "@qualcomm-ui/react-mdx/typedoc"
+import {TypeDocAngularAttributes, TypeDocProps, } from "@qualcomm-ui/react-mdx/typedoc"
 import {ComponentExplorer, QdsDemo} from "~components/demo"
 
 # {frontmatter.title}
@@ -322,10 +319,6 @@ The simple date picker extends the [q-date-picker-root](./#q-date-picker-root) d
   omitFrom="DatePickerRootDirective"
 />
 
-## Composite API
-
-This section describes the elements of the date picker's composite API.
-
 ### q-date-picker-root
 
 <TypeDocProps name="DatePickerRootDirective" />
@@ -333,6 +326,36 @@ This section describes the elements of the date picker's composite API.
 <TypeDocAngularAttributes
   name={["QdsDatePickerRootBindings", "DatePickerRootBindings"]}
 />
+
+## References
+
+### DatePickerFocusChangeDetails
+
+<TypeDocProps name="DatePickerFocusChangeDetails" partial />
+
+### DatePickerPositioningOptions
+
+<TypeDocProps name="DatePickerPositioningOptions" partial />
+
+### DatePickerValueChangeDetails
+
+<TypeDocProps name="DatePickerValueChangeDetails" partial />
+
+### DatePickerIntlTranslations
+
+<TypeDocProps name="DatePickerIntlTranslations" partial />
+
+### DatePickerTriggerState
+
+<TypeDocProps name="DatePickerTriggerState" partial />
+
+### DatePickerDayTableCellState
+
+<TypeDocProps name="DatePickerDayTableCellState" partial />
+
+## Composite API
+
+This section describes the elements of the date picker's composite API.
 
 ### q-date-picker-label
 
@@ -776,12 +799,6 @@ The api handed to the `*datePickerContext` structural directive.
   ]}
   partial
 />
-
-## Data Structures
-
-### DatePickerPositioningOptions
-
-<TypeDocProps name="DatePickerPositioningOptions" partial />
 
 ## Shortcuts
 

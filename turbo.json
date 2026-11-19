@@ -16,8 +16,8 @@
       "outputs": ["dist"],
       "outputLogs": "new-only"
     },
-    "build:typedoc": {
-      "outputs": ["./.typedoc/*.json", "./src/assets/doc-props/doc-properties.json"],
+    "typescoop-extract": {
+      "outputs": ["./.typescoop/*.json"],
       "outputLogs": "new-only"
     },
     "test": {

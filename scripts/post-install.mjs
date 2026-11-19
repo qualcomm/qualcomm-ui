@@ -34,8 +34,8 @@ async function initTypeDocFiles() {
   await Promise.all(
     docsPackages.map(async (dirent) => {
       const path = resolve(cwd, pkgPath, dirent.name)
-      const typedocPath = resolve(path, ".typedoc")
-      const docPropsPath = resolve(path, ".typedoc/doc-props.json")
+      const typedocPath = resolve(path, ".typescoop")
+      const docPropsPath = resolve(path, ".typescoop/type-data.json")
 
       if (
         !(await exists(docPropsPath)) &&

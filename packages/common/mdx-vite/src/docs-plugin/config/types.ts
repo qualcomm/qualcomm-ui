@@ -313,7 +313,7 @@ export interface QuiDocsConfig extends Omit<
    * component is used in an mdx page, the data for its referenced entity will be
    * made available for property documentation rendering.
    *
-   * Refer to the {@link https://docs.qui.qualcomm.com/guide/typedoc QUI typedoc guide} to learn more.
+   * Refer to the {@link https://docs.qui.qualcomm.com/typescoop QUI Typescoop guide} to learn more.
    */
   typeDocProps?: string
 

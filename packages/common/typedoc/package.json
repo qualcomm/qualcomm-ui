@@ -1,7 +1,7 @@
 {
   "name": "@qualcomm-ui/typedoc",
   "version": "1.1.8",
-  "description": "Documentation generation utilities",
+  "description": "Documentation generation utilities based on TypeDoc. This package is deprecated, please migrate to @qualcomm-ui/typescoop",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
   "repository": "https://github.com/qualcomm/qualcomm-ui",
@@ -40,7 +40,7 @@
   "dependencies": {},
   "devDependencies": {
     "@angular/core": "catalog:",
-    "@clack/prompts": "1.0.0-alpha.6",
+    "@clack/prompts": "^1.9.0",
     "@commander-js/extra-typings": "catalog:",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",

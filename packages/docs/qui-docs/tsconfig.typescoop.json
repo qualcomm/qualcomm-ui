@@ -1,0 +1,16 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "compilerOptions": {
+    "noCheck": true
+  },
+  "include": [
+    "./src/typedoc-example.ts",
+    "./src/typedoc-debug.ts",
+    "../../common/typescoop/src/types.ts",
+    "../../common/typedoc-common/src",
+    "../../frameworks/react-mdx/src",
+    "../../common/mdx-common/src",
+    "../../common/mdx-vite/src/**/types.ts",
+    "../../common/mdx-vite/src/**/*.types.ts",
+  ]
+}

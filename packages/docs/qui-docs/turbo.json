@@ -4,12 +4,12 @@
     "build": {
       "outputs": ["build"]
     },
-    "build:typedoc": {
+    "typescoop-extract": {
       "inputs": [
-        "qui-typedoc.config.ts",
-        "tsconfig.typedoc.json",
+        "typescoop.config.ts",
+        "tsconfig.typescoop.json",
         "./src/typedoc-example.ts",
-        "../../common/typedoc/src/**/*.ts",
+        "../../common/typescoop/src/**/*.ts",
         "../../common/mdx-common/dist/**/*.d.ts",
         "../../common/mdx-vite/dist/**/*.d.ts",
         "../../frameworks/mdx-docs/src/**/*.ts",

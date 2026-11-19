@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url) // get the resolved path to th
 const __dirname = dirname(__filename) // get the name of the directory
 
 const typedocPath = resolve(__dirname, "../.typedoc")
-const docPropsPath = resolve(__dirname, "../.typedoc/doc-props.json")
+const docPropsPath = resolve(__dirname, "../.typescoop/type-data.json")
 
 if (!existsSync(typedocPath)) {
   mkdirSync(typedocPath)

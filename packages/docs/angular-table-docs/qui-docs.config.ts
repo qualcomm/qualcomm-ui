@@ -114,5 +114,5 @@ export default {
   navConfig,
   pageDirectory: "routes",
   pageTimestampMetadata: "user-and-timestamp",
-  typeDocProps: ".typedoc/doc-props.json",
+  typeDocProps: ".typescoop/type-data.json",
 } satisfies QuiDocsConfig
