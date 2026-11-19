@@ -20,6 +20,7 @@ const navConfig: NavConfig[] = [
   {id: "pages"},
   {id: "routing-conventions"},
   {id: "markdown"},
+  {id: "typescoop"},
   {id: "typedoc"},
   {id: "configuration"},
   {sectionTitle: "Extensions", separator: true},

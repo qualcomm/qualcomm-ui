@@ -262,7 +262,7 @@ export function TypeDocProps({
         description={
           <Link
             endIcon={ExternalLink}
-            href="https://docs.qui.qualcomm.com/guide/typedoc#type-detection"
+            href="https://docs.qui.qualcomm.com/typescoop#type-detection"
             rel="noreferrer"
             size="md"
             target="_blank"
