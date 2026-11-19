@@ -38,10 +38,11 @@ describe("getCodeSamples", () => {
   test("builds a curl command with required params and a JSON body", () => {
     expect(sample(createPet, "cURL")).toBe(
       [
-        "curl -X POST 'https://api.example.com/v1/stores/{storeId}/pets?dryRun=true' \\",
+        "curl -X POST \\",
         "  -H 'api_key: abc' \\",
         "  -H 'Content-Type: application/json' \\",
-        `  -d '{\n  "name": "Rex'\\''s toy"\n}'`,
+        `  -d '{\n  "name": "Rex'\\''s toy"\n}' \\`,
+        "  'https://api.example.com/v1/stores/{storeId}/pets?dryRun=true'",
       ].join("\n"),
     )
   })
@@ -91,7 +92,7 @@ describe("getCodeSamples", () => {
       },
       "cURL",
     )
-    expect(code).toBe("curl -X GET 'https://api.example.com/pets/42'")
+    expect(code).toBe("curl -X GET \\\n  'https://api.example.com/pets/42'")
   })
 
   test("encodes path parameter examples, wherever they repeat", () => {
@@ -107,7 +108,7 @@ describe("getCodeSamples", () => {
       "cURL",
     )
     expect(code).toBe(
-      "curl -X GET 'https://api.example.com/files/a%20b%2Fc/copies/a%20b%2Fc'",
+      "curl -X GET \\\n  'https://api.example.com/files/a%20b%2Fc/copies/a%20b%2Fc'",
     )
   })
 
@@ -126,7 +127,7 @@ describe("getCodeSamples", () => {
       },
       "cURL",
     )
-    expect(code).toBe("curl -X GET 'https://eu.example.com/v2/pets'")
+    expect(code).toBe("curl -X GET \\\n  'https://eu.example.com/v2/pets'")
   })
 
   test("quotes every shell argument", () => {

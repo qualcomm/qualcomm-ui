@@ -225,13 +225,14 @@ function shellQuote(value: string): string {
 }
 
 function curl({body, headers, method, url}: Request): string {
-  const lines = [`curl -X ${method} ${shellQuote(url)}`]
+  const lines = [`curl -X ${method}`]
   for (const [name, value] of Object.entries(headers)) {
     lines.push(`  -H ${shellQuote(`${name}: ${value}`)}`)
   }
   if (body !== undefined) {
     lines.push(`  -d ${shellQuote(JSON.stringify(body, null, 2))}`)
   }
+  lines.push(`  ${shellQuote(url)}`)
   return lines.join(" \\\n")
 }
 
