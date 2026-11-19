@@ -1,18 +1,17 @@
 import {type ReactElement, useState} from "react"
 
 import {
-  checkboxFilter,
   defineFilters,
   type FilterValues,
-  radioFilter,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {Button} from "@qualcomm-ui/react/button"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter, RadioFilter} from "@qualcomm-ui/react/filters"
+import {CheckboxGroupFilter, RadioGroupFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  mode: radioFilter({
+  mode: optionFilter({
     label: "Build mode",
     options: [
       {label: "Debug", value: "debug"},
@@ -20,7 +19,7 @@ const filters = defineFilters({
       {label: "Release", value: "release"},
     ],
   }),
-  status: checkboxFilter({
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -41,8 +40,12 @@ export function FilterPanelManualControlledStateDemo(): ReactElement {
         onValueChange={setValue}
         value={value}
       >
-        <CheckboxFilter filter={filters.status} />
-        <RadioFilter filter={filters.mode} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.mode}>
+          <RadioGroupFilter />
+        </FilterPanel.Filter>
         <FilterPanel.Footer>
           <FilterPanel.ApplyButton />
         </FilterPanel.Footer>

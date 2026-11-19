@@ -1,26 +1,22 @@
 import {
-  checkboxFilter,
-  checkboxTreeFilter,
-  comboboxFilter,
   dateFilter,
   defineFilters,
-  radioFilter,
+  optionFilter,
   rangeFilter,
-  selectFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
 export const filters = defineFilters({
   buildPath: textFilter({label: "Build path"}),
-  chipset: checkboxTreeFilter({label: "Chipset"}),
+  chipset: optionFilter({label: "Chipset"}),
   duration: rangeFilter({
     formatValue: (value) => `${value} min`,
     label: "Duration",
     max: 120,
     min: 0,
   }),
-  mode: radioFilter({
+  mode: optionFilter({
     label: "Build mode",
     options: [
       {label: "Any", value: ""},
@@ -28,7 +24,7 @@ export const filters = defineFilters({
       {label: "Release", value: "release"},
     ],
   }),
-  owner: comboboxFilter({
+  owner: optionFilter({
     label: "Owner",
     options: [
       {label: "Anna Robinson", value: "u1"},
@@ -39,7 +35,7 @@ export const filters = defineFilters({
       {label: "Farah Haddad", value: "u6"},
     ],
   }),
-  standard: selectFilter({
+  standard: optionFilter({
     label: "Standard",
     options: [
       {label: "Wi-Fi 6", value: "wifi6"},
@@ -47,7 +43,7 @@ export const filters = defineFilters({
       {label: "Wi-Fi 7", value: "wifi7"},
     ],
   }),
-  status: checkboxFilter({
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),

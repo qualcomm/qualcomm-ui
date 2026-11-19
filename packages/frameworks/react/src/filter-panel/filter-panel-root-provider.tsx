@@ -19,8 +19,8 @@ export interface FilterPanelRootProviderProps
   extends CoreFilterPanelRootProviderProps, QdsFilterPanelApiProps {}
 
 /**
- * The root element of a filter panel whose state was created with
- * `useFilterPanel`. Renders a `<div>` element by default.
+ * The root element of a filter panel whose filter set was created with
+ * `useFilterSet`. Renders a `<div>` element by default.
  */
 export function FilterPanelRootProvider({
   size,

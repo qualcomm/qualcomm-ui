@@ -1,10 +1,10 @@
 import {describe, expect, test} from "vitest"
 
 import {
-  checkboxFilter,
   customFilter,
   dateFilter,
   defineFilters,
+  optionFilter,
   rangeFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
@@ -17,12 +17,12 @@ import {
   pickOptionLabels,
   recordOptionLabels,
   setFilterValue,
-} from "./filter-panel.utils"
+} from "./filter-set.utils"
 
 const definitions = defineFilters({
   duration: rangeFilter({formatValue: (value) => `${value} min`}),
   query: textFilter(),
-  status: checkboxFilter(),
+  status: optionFilter(),
   submitted: dateFilter({
     presets: [{label: "Last 7 days", value: "last7Days"}],
   }),
@@ -35,7 +35,7 @@ const definitions = defineFilters({
 
 const isEmpty = createEmptyValueCheck(definitions, undefined)
 
-describe("filter panel utils", () => {
+describe("filter set utils", () => {
   test("blank values are empty for every filter", () => {
     for (const value of [undefined, null, "", []]) {
       expect(isEmpty("status", value)).toBe(true)

@@ -3,6 +3,7 @@
 
 import type {QdsNumberBadgeProps} from "@qualcomm-ui/qds-core/badge"
 import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
+import type {QdsFilterControlApiProps} from "@qualcomm-ui/qds-core/filter-control"
 import type {QdsIconApiProps} from "@qualcomm-ui/qds-core/icon"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
@@ -24,9 +25,6 @@ import type {
   QdsFilterPanelFooterBindings,
   QdsFilterPanelHeaderBindings,
   QdsFilterPanelHeadingBindings,
-  QdsFilterPanelOptionCountBindings,
-  QdsFilterPanelOptionGroupBindings,
-  QdsFilterPanelOptionLabelBindings,
   QdsFilterPanelRootBindings,
   QdsFilterPanelSectionBindings,
 } from "./filter-panel.types.js"
@@ -36,11 +34,8 @@ export function createQdsFilterPanelApi(
   normalize: PropNormalizer,
 ): QdsFilterPanelApi {
   const size = props.size || "md"
-  const controlSize = size === "lg" ? "md" : "sm"
 
   return {
-    controlSize,
-
     getApplyButtonProps(): QdsButtonApiProps {
       return size === "lg"
         ? {density: "default", size: "sm"}
@@ -54,6 +49,9 @@ export function createQdsFilterPanelApi(
     },
     getCountBadgeProps(): QdsNumberBadgeProps {
       return {emphasis: "brand", size: "xs"}
+    },
+    getFilterControlProps(): QdsFilterControlApiProps {
+      return {size: size === "lg" ? "md" : "sm"}
     },
     getFilterCountBadgeProps(): QdsNumberBadgeProps {
       return {emphasis: "neutral-outline", size: "xs"}
@@ -107,15 +105,6 @@ export function createQdsFilterPanelApi(
     },
     getHeadingBindings(): QdsFilterPanelHeadingBindings {
       return normalize.element({className: filterPanelClasses.heading})
-    },
-    getOptionCountBindings(): QdsFilterPanelOptionCountBindings {
-      return normalize.element({className: filterPanelClasses.optionCount})
-    },
-    getOptionGroupBindings(): QdsFilterPanelOptionGroupBindings {
-      return normalize.element({className: filterPanelClasses.optionGroup})
-    },
-    getOptionLabelBindings(): QdsFilterPanelOptionLabelBindings {
-      return normalize.element({className: filterPanelClasses.optionLabel})
     },
     getRootBindings(): QdsFilterPanelRootBindings {
       return normalize.element({

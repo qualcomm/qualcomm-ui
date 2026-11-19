@@ -35,7 +35,9 @@ export function DateFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <DateFilter filter={filters.submitted} />
+        <FilterPanel.Filter filter={filters.submitted}>
+          <DateFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

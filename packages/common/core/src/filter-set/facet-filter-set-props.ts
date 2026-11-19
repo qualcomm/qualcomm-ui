@@ -10,12 +10,12 @@ import type {
 } from "@qualcomm-ui/utils/facet-filter"
 
 import type {
-  FilterPanelOptionCounts,
-  FilterPanelValues,
-} from "./filter-panel.types.js"
-import {hashValues} from "./internal/filter-panel.utils.js"
+  FilterSetOptionCounts,
+  FilterSetValues,
+} from "./filter-set.types.js"
+import {hashValues} from "./internal/filter-set.utils.js"
 
-export interface FacetFilterPanelOptions {
+export interface FacetFilterSetOptions {
   /**
    * Returns the ids of the items that pass the filters `FacetFilter` can't
    * apply, such as text, range, and date filters, or a separate text search.
@@ -23,25 +23,25 @@ export interface FacetFilterPanelOptions {
    * every item.
    */
   getCandidateIds?:
-    | ((values: FilterPanelValues) => readonly string[] | undefined)
+    | ((values: FilterSetValues) => readonly string[] | undefined)
     | undefined
 }
 
-export interface FacetFilterPanelProps {
+export interface FacetFilterSetProps {
   getFilterOptionCounts: (
     id: string,
-    values: FilterPanelValues,
-  ) => FilterPanelOptionCounts | undefined
+    values: FilterSetValues,
+  ) => FilterSetOptionCounts | undefined
   getFilterOptions: (id: string) => FilterOptionObject[] | undefined
 }
 
 /**
- * Converts filter panel values to `FacetFilter` selections. Only `string[]`
+ * Converts filter set values to `FacetFilter` selections. Only `string[]`
  * values of configured fields are facets.
  */
 function toFacetSelections(
   fields: readonly string[],
-  values: FilterPanelValues,
+  values: FilterSetValues,
 ): FacetSelections {
   return Object.fromEntries(
     Object.entries(values).filter(
@@ -54,19 +54,19 @@ function toFacetSelections(
 }
 
 /**
- * Returns filter panel props that resolve options and option counts from a
+ * Returns filter set props that resolve options and option counts from a
  * `FacetFilter`. Filter ids match the facet filter's field names. Ids without
- * a matching field fall back to the panel defaults.
+ * a matching field fall back to the filter set defaults.
  */
-export function getFacetFilterPanelProps<Item extends FacetFilterItem>(
+export function getFacetFilterSetProps<Item extends FacetFilterItem>(
   facetFilter: FacetFilter<Item>,
-  options: FacetFilterPanelOptions = {},
-): FacetFilterPanelProps {
+  options: FacetFilterSetOptions = {},
+): FacetFilterSetProps {
   const {getCandidateIds} = options
   const fields = facetFilter.fields
   let cached: {key: string; result: FacetFilterResult} | undefined
 
-  function run(values: FilterPanelValues): FacetFilterResult {
+  function run(values: FilterSetValues): FacetFilterResult {
     const key = hashValues(values)
     if (cached?.key !== key) {
       cached = {

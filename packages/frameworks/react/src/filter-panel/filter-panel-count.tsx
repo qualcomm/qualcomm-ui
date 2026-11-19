@@ -3,7 +3,7 @@
 
 import type {ReactElement} from "react"
 
-import {useFilterPanelContext} from "@qualcomm-ui/react-core/filter-panel"
+import {useFilterSetContext} from "@qualcomm-ui/react-core/filter-set"
 import {NumberBadge, type NumberBadgeProps} from "@qualcomm-ui/react/badge"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -16,7 +16,7 @@ export interface FilterPanelCountProps extends NumberBadgeProps {}
  * set. Renders a `<span>` element by default.
  */
 export function FilterPanelCount(props: FilterPanelCountProps): ReactElement {
-  const api = useFilterPanelContext()
+  const api = useFilterSetContext()
   const qdsContext = useQdsFilterPanelContext()
 
   const mergedProps = mergeProps(

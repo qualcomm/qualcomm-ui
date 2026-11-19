@@ -5,44 +5,50 @@ import type {ComponentProps, ReactElement} from "react"
 
 import type {
   FilterOption,
-  RadioFilterDefinition,
+  OptionFilterDefinition,
 } from "@qualcomm-ui/core/filters"
-import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
-import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {FilterSection, type FilterSectionProps} from "./filter-section.js"
 import {FilterOptionLabel} from "./internal/filter-option-label.js"
 import {useFilterOptions} from "./internal/use-filter-options.js"
+import {
+  getFilterLabelProps,
+  useFilterWidget,
+} from "./internal/use-filter-widget.js"
+import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
-export interface RadioFilterControlProps extends Omit<
+export interface RadioGroupFilterProps extends Omit<
   ComponentProps<typeof RadioGroup>,
   "children" | "defaultValue" | "onValueChange" | "value"
 > {
   /**
    * The options to render. An option whose value is `""` clears the filter,
    * for example an "All" option. Takes precedence over the definition's
-   * options and the panel's resolver.
+   * options and the filter set's resolver.
    */
   options?: FilterOption[] | undefined
 }
 
 /**
- * A radio group, one radio per option.
+ * A radio group, one radio per option. Selects one option. Writes a one-item
+ * `string[]`.
  */
-export function RadioFilterControl({
+export function RadioGroupFilter({
   options,
   ...props
-}: RadioFilterControlProps): ReactElement {
-  const filter = useFilterPanelFilter<RadioFilterDefinition>()
-  const qdsContext = useQdsFilterPanelContext()
+}: RadioGroupFilterProps): ReactElement {
+  const filter = useFilterWidget<OptionFilterDefinition>(
+    "RadioGroupFilter",
+    "option",
+  )
+  const qdsContext = useQdsFilterControlContext()
   const items = useFilterOptions(options)
   const blankOption = items.find((option) => option.value === "")
 
   return (
     <RadioGroup
-      aria-labelledby={filter.labelId}
+      {...getFilterLabelProps(filter)}
       onValueChange={(value) => {
         const option = items.find((item) => item.value === value)
         filter.setValue(
@@ -50,7 +56,7 @@ export function RadioFilterControl({
           option ? {labels: {[option.value]: option.label}} : undefined,
         )
       }}
-      size={qdsContext.controlSize}
+      size={qdsContext.size}
       value={filter.value?.[0] ?? (blankOption ? "" : null)}
       {...mergeProps(qdsContext.getOptionGroupBindings(), props)}
     >
@@ -63,41 +69,5 @@ export function RadioFilterControl({
         />
       ))}
     </RadioGroup>
-  )
-}
-
-export interface RadioFilterProps
-  extends
-    FilterSectionProps<RadioFilterDefinition>,
-    Omit<RadioFilterControlProps, keyof FilterSectionProps> {}
-
-/**
- * A filter that selects one option with radios. Writes a one-item
- * `string[]`.
- */
-export function RadioFilter({
-  contentProps,
-  defaultOpen,
-  filter,
-  label,
-  onOpenChange,
-  open,
-  rootProps,
-  triggerProps,
-  ...props
-}: RadioFilterProps): ReactElement {
-  return (
-    <FilterSection
-      contentProps={contentProps}
-      defaultOpen={defaultOpen}
-      filter={filter}
-      label={label}
-      onOpenChange={onOpenChange}
-      open={open}
-      rootProps={rootProps}
-      triggerProps={triggerProps}
-    >
-      <RadioFilterControl {...props} />
-    </FilterSection>
   )
 }

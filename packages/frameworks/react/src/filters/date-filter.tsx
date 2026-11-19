@@ -7,17 +7,19 @@ import type {
   DateFilterDefinition,
   DateFilterRange,
 } from "@qualcomm-ui/core/filters"
-import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {
   DatePicker,
   type DatePickerProps,
   type DateValue,
   parseDate,
 } from "@qualcomm-ui/react/date-picker"
-import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {Radio, RadioGroup} from "@qualcomm-ui/react/radio"
 
-import {FilterSection, type FilterSectionProps} from "./filter-section.js"
+import {
+  getFilterLabelProps,
+  useFilterWidget,
+} from "./internal/use-filter-widget.js"
+import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
 const ANY = ""
 const CUSTOM = "~custom"
@@ -33,7 +35,7 @@ function toDateValue(value: string | null): DateValue | null {
   }
 }
 
-export interface DateFilterControlProps extends Omit<
+export interface DateFilterProps extends Omit<
   DatePickerProps,
   "defaultValue" | "onValueChange" | "selectionMode" | "value"
 > {
@@ -61,16 +63,18 @@ export interface DateFilterControlProps extends Omit<
 }
 
 /**
- * A date range picker, optionally preceded by the definition's presets.
+ * A date range picker, optionally preceded by a radio group of the
+ * definition's presets. Writes `{range: [start, end]}` with ISO 8601 dates, or
+ * `{preset}`. Resolve a preset to dates with `resolveDateFilterPreset`.
  */
-export function DateFilterControl({
+export function DateFilter({
   anyLabel = "Any time",
   customRange = true,
   customRangeLabel = "Custom range",
   ...props
-}: DateFilterControlProps): ReactElement {
-  const filter = useFilterPanelFilter<DateFilterDefinition>()
-  const qdsContext = useQdsFilterPanelContext()
+}: DateFilterProps): ReactElement {
+  const filter = useFilterWidget<DateFilterDefinition>("DateFilter", "date")
+  const qdsContext = useQdsFilterControlContext()
   const [customSelected, setCustomSelected] = useState(false)
 
   const value = filter.value
@@ -90,7 +94,7 @@ export function DateFilterControl({
         })
       }
       selectionMode="range"
-      size={qdsContext.controlSize}
+      size={qdsContext.size}
       value={range
         .map(toDateValue)
         .filter((date): date is DateValue => date !== null)}
@@ -105,7 +109,7 @@ export function DateFilterControl({
   return (
     <>
       <RadioGroup
-        aria-labelledby={filter.labelId}
+        {...getFilterLabelProps(filter)}
         {...qdsContext.getOptionGroupBindings()}
         onValueChange={(next) => {
           setCustomSelected(next === CUSTOM)
@@ -115,7 +119,7 @@ export function DateFilterControl({
               : {preset: next},
           )
         }}
-        size={qdsContext.controlSize}
+        size={qdsContext.size}
         value={
           value && "preset" in value ? value.preset : isCustom ? CUSTOM : ANY
         }
@@ -128,42 +132,5 @@ export function DateFilterControl({
       </RadioGroup>
       {customRange && isCustom ? picker : null}
     </>
-  )
-}
-
-export interface DateFilterProps
-  extends
-    FilterSectionProps<DateFilterDefinition>,
-    Omit<DateFilterControlProps, keyof FilterSectionProps> {}
-
-/**
- * A filter that selects a date range, or one of the definition's presets.
- * Writes `{range: [start, end]}` with ISO 8601 dates, or `{preset}`. Resolve a
- * preset to dates with `resolveDateFilterPreset`.
- */
-export function DateFilter({
-  contentProps,
-  defaultOpen,
-  filter,
-  label,
-  onOpenChange,
-  open,
-  rootProps,
-  triggerProps,
-  ...props
-}: DateFilterProps): ReactElement {
-  return (
-    <FilterSection
-      contentProps={contentProps}
-      defaultOpen={defaultOpen}
-      filter={filter}
-      label={label}
-      onOpenChange={onOpenChange}
-      open={open}
-      rootProps={rootProps}
-      triggerProps={triggerProps}
-    >
-      <DateFilterControl {...props} />
-    </FilterSection>
   )
 }

@@ -1,17 +1,17 @@
 import type {ReactElement} from "react"
 
+import {defineFilters, optionFilter} from "@qualcomm-ui/core/filters"
+import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {
-  checkboxFilter,
-  comboboxFilter,
-  defineFilters,
-} from "@qualcomm-ui/core/filters"
-import {FilterPanel, useFilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter, ComboboxFilter} from "@qualcomm-ui/react/filters"
+  CheckboxGroupFilter,
+  ComboboxFilter,
+  useFilterSet,
+} from "@qualcomm-ui/react/filters"
 import {Tag} from "@qualcomm-ui/react/tag"
 
 const filters = defineFilters({
-  owner: comboboxFilter({label: "Owner"}),
-  status: checkboxFilter({
+  owner: optionFilter({label: "Owner"}),
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -25,25 +25,29 @@ const owners = [
 ]
 
 export function FilterPanelHoistedStateDemo(): ReactElement {
-  const panel = useFilterPanel({filters})
-  const activeIds = Object.keys(panel.value) as (keyof typeof filters)[]
+  const filterSet = useFilterSet({filters})
+  const activeIds = Object.keys(filterSet.value) as (keyof typeof filters)[]
 
   return (
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
       {/* preview */}
-      <FilterPanel.RootProvider className="w-72" value={panel}>
-        <CheckboxFilter filter={filters.status} />
-        <ComboboxFilter filter={filters.owner} options={owners} />
+      <FilterPanel.RootProvider className="w-72" value={filterSet}>
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.owner}>
+          <ComboboxFilter options={owners} />
+        </FilterPanel.Filter>
       </FilterPanel.RootProvider>
       <div className="flex min-w-60 flex-1 flex-wrap gap-2">
         {activeIds.map((id) => (
           <Tag
             key={id}
-            onDismiss={() => panel.clearFilter(id)}
+            onDismiss={() => filterSet.clearFilter(id)}
             variant="dismissable"
           >
-            {panel.getFilterLabel(id)}:{" "}
-            {panel.getValueLabels(id, panel.value[id]).join(", ")}
+            {filterSet.getFilterLabel(id)}:{" "}
+            {filterSet.getValueLabels(id, filterSet.value[id]).join(", ")}
           </Tag>
         ))}
       </div>

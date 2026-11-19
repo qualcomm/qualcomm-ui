@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {
-  FilterPanelApiProps,
-  FilterPanelValues,
-} from "@qualcomm-ui/core/filter-panel"
+  FilterSetApiProps,
+  FilterSetValues,
+} from "@qualcomm-ui/core/filter-set"
 import type {FilterOptionObject} from "@qualcomm-ui/core/filters"
 import {isEqual} from "@qualcomm-ui/utils/equal"
 
@@ -16,9 +16,9 @@ import {warnOnce} from "./internal-warn.js"
 import type {Column, Row, RowData, RowModel, TableInstance} from "./types.js"
 import {filterRows} from "./utils/filter-rows-utils.js"
 
-export interface TableFilterPanelProps extends Required<
+export interface TableFilterSetProps extends Required<
   Pick<
-    FilterPanelApiProps,
+    FilterSetApiProps,
     | "getFilterLabel"
     | "getFilterOptionLabel"
     | "getFilterRange"
@@ -29,7 +29,7 @@ export interface TableFilterPanelProps extends Required<
 > {
   getFilterOptionCounts: (
     id: string,
-    values: FilterPanelValues,
+    values: FilterSetValues,
   ) => ReadonlyMap<string, number> | undefined
   getFilterOptions: (id: string) => FilterOptionObject[] | undefined
 }
@@ -116,7 +116,7 @@ const draftFacetsCache = new WeakMap<TableInstance<any>, DraftFacets>()
 
 function getDraftFacets<TData extends RowData>(
   table: TableInstance<TData>,
-  values: FilterPanelValues,
+  values: FilterSetValues,
 ): DraftFacets {
   const preFilteredRowModel = table.getPreFilteredRowModel()
   const {globalFilter} = table.getState()
@@ -180,7 +180,7 @@ function getDraftFacets<TData extends RowData>(
 function getDraftFacetedCounts<TData extends RowData>(
   table: TableInstance<TData>,
   columnId: string,
-  values: FilterPanelValues,
+  values: FilterSetValues,
 ): Map<string, number> {
   /**
    * Runs the filtered row model so that each row's `__global__` flag reflects
@@ -222,17 +222,17 @@ function getDraftFacetedCounts<TData extends RowData>(
 }
 
 /**
- * Returns filter panel props that bind the panel to a table's column filters.
- * Converts between the panel's values and `ColumnFiltersState`. Labels resolve
- * from each column's `getFilterLabel` and `getFilterOptionLabel`, options,
- * option counts, and range bounds from the column's faceted values, and empty values from the
- * column's filter function `autoRemove`. Filter definitions take precedence
- * over all of these. Filter ids without a matching column fall back to the
- * panel defaults.
+ * Returns filter set props that bind the filters to a table's column filters.
+ * Converts between the filter set's values and `ColumnFiltersState`. Labels
+ * resolve from each column's `getFilterLabel` and `getFilterOptionLabel`,
+ * options, option counts, and range bounds from the column's faceted values,
+ * and empty values from the column's filter function `autoRemove`. Filter
+ * definitions take precedence over all of these. Filter ids without a
+ * matching column fall back to the filter set defaults.
  */
-export function getTableFilterPanelProps<TData extends RowData>(
+export function getTableFilterSetProps<TData extends RowData>(
   table: TableInstance<TData>,
-): TableFilterPanelProps {
+): TableFilterSetProps {
   /**
    * `table.getColumn` logs an error for unknown ids, but filter ids are not
    * required to match a column.
@@ -240,7 +240,7 @@ export function getTableFilterPanelProps<TData extends RowData>(
   const findColumn = (id: string): Column<TData, unknown> | undefined =>
     table.getAllFlatColumns().find((column) => column.id === id)
 
-  const committed: FilterPanelValues = Object.fromEntries(
+  const committed: FilterSetValues = Object.fromEntries(
     table.getState().columnFilters.map(({id, value}) => [id, value]),
   )
 
@@ -249,7 +249,7 @@ export function getTableFilterPanelProps<TData extends RowData>(
       const column = findColumn(id)
       if (!column) {
         warnOnce(
-          `filter-panel-label-${id}`,
+          `filter-set-label-${id}`,
           `Filter "${id}" has no matching column and no label. Add a label to its definition.`,
         )
         return undefined
@@ -257,7 +257,7 @@ export function getTableFilterPanelProps<TData extends RowData>(
       const {filterLabel, header} = column.columnDef
       if (!filterLabel && header !== undefined && typeof header !== "string") {
         warnOnce(
-          `filter-panel-label-${id}`,
+          `filter-set-label-${id}`,
           `Column "${id}" has a non-string header, so its filter label falls back to the column id. Set the column's filterLabel or add a label to the filter definition.`,
         )
       }
@@ -285,14 +285,14 @@ export function getTableFilterPanelProps<TData extends RowData>(
       }
       if (table.options.manualFiltering) {
         warnOnce(
-          `filter-panel-manual-options-${id}`,
+          `filter-set-manual-options-${id}`,
           `Filter "${id}" has no options. Tables with manualFiltering only facet the loaded rows, so pass options to the filter component or its definition.`,
         )
         return undefined
       }
       if (!table.options.getFacetedUniqueValues) {
         warnOnce(
-          `filter-panel-faceting-${id}`,
+          `filter-set-faceting-${id}`,
           `Filter "${id}" has no options. Pass options to the filter component or its definition, or enable faceting with the table's getFacetedRowModel and getFacetedUniqueValues options.`,
         )
         return undefined
@@ -306,7 +306,7 @@ export function getTableFilterPanelProps<TData extends RowData>(
       }
       if (!table.options.getFacetedMinMaxValues) {
         warnOnce(
-          `filter-panel-range-${id}`,
+          `filter-set-range-${id}`,
           `Range filter "${id}" has no bounds. Set min and max on its definition, or enable faceting with the table's getFacetedRowModel and getFacetedMinMaxValues options.`,
         )
         return undefined
@@ -321,7 +321,7 @@ export function getTableFilterPanelProps<TData extends RowData>(
         shouldAutoRemoveFilter(column.getFilterFn(value), value, column)
       )
     },
-    onValueChange: (values: FilterPanelValues) =>
+    onValueChange: (values: FilterSetValues) =>
       table.setColumnFilters(
         Object.entries(values).map(([id, value]) => ({id, value})),
       ),

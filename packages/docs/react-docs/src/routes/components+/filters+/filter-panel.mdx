@@ -35,8 +35,8 @@ Filters are declared up front with `defineFilters`. Each key becomes the filter'
 
 ```tsx
 import {
-  checkboxFilter,
   defineFilters,
+  optionFilter,
   rangeFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
@@ -44,23 +44,25 @@ import {
 export const filters = defineFilters({
   buildPath: textFilter({label: "Build path"}),
   duration: rangeFilter({label: "Duration", max: 120, min: 0}),
-  status: checkboxFilter({
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
 })
 ```
 
-These definitions match our [filter controls](./filters+/_filters.mdx): `checkboxFilter` defines a filter for `<CheckboxFilter>`, `textFilter` for `<TextFilter>`, and so on. The utility sets the filter's label, options, and value type. The control renders it. The controls are documented on the [Filters](./filters+/_filters.mdx) page.
+These definitions match our [filter controls](./filters+/_filters.mdx): `optionFilter` defines a filter for any option control, like `<CheckboxGroupFilter>`, `textFilter` for `<TextInputFilter>`, and so on. The utility sets the filter's label, options, and value type. The control renders it inside `FilterPanel.Filter`. The controls are documented on the [Filters](./filters+/_filters.mdx) page.
 
 ```tsx
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter} from "@qualcomm-ui/react/filters"
+import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
 
 function PanelDemo() {
   return (
     <FilterPanel.Root filters={filters}>
-      <CheckboxFilter filter={filters.status} />
+      <FilterPanel.Filter filter={filters.status}>
+        <CheckboxGroupFilter />
+      </FilterPanel.Filter>
     </FilterPanel.Root>
   )
 }
@@ -128,7 +130,7 @@ label, heading, custom label
 
 The definition's `label` is the filter's name everywhere: the section heading, the control's accessible name, and value summaries like [getValueLabels](#getValueLabels).
 
-To change how a single section heading renders, pass `label` to the control. It accepts a `ReactNode`, or a function that receives the definition's label. The rendered heading also names the control, but summaries keep the definition's label.
+To change how a single section heading renders, pass `label` to `FilterPanel.Filter`. It accepts a `ReactNode`, or a function that receives the definition's label. The rendered heading also names the control, but summaries keep the definition's label.
 
 <Demo
   name="FilterPanelLabelsDemo"
@@ -155,7 +157,7 @@ A selection restored from storage has no option labels until its options load. T
 ### Filter Counts
 
 ::: terms
-faceting, facets, result counts, FacetFilter, getFacetFilterPanelProps
+faceting, facets, result counts, FacetFilter, getFacetFilterSetProps
 :::
 
 [getFilterOptionCounts](#getFilterOptionCounts) shows the number of results next to each checkbox and radio option. Return counts keyed by option value, or `undefined` to hide counts for a filter. Unselected options with a count of 0 are disabled.
@@ -167,7 +169,7 @@ faceting, facets, result counts, FacetFilter, getFacetFilterPanelProps
 >
 ```
 
-For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-filter` and spread `getFacetFilterPanelProps` onto the panel. Its field names must match the filter ids. `FacetFilter` only counts option filters, so apply other filters, like text search, in `getCandidateIds`.
+For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-filter` and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetFilter` only counts option filters, so apply other filters, like text search, in `getCandidateIds`.
 
 <Demo
   name="FilterPanelFacetsDemo"
@@ -177,22 +179,22 @@ For data in memory, index it with `FacetFilter` from `@qualcomm-ui/utils/facet-f
 In manual mode, counts follow the draft, so they update before the user applies.
 
 > [!note]
-> For tables, use `getTableFilterPanelProps` and enable the table's `getFacetedRowModel` and `getFacetedUniqueValues` options.
+> For tables, use `getTableFilterSetProps` and enable the table's `getFacetedRowModel` and `getFacetedUniqueValues` options.
 
 ### Hoisted State
 
 ::: terms
-useFilterPanel, RootProvider, chips, active filters
+useFilterSet, RootProvider, chips, active filters
 :::
 
-An alternative to `FilterPanel.Root` is the `FilterPanel.RootProvider` component with the `useFilterPanel` hook. This gives you access to the panel's state and methods from outside the panel, like rendering active filters as tags.
+An alternative to `FilterPanel.Root` is the `FilterPanel.RootProvider` component with the `useFilterSet` hook. This gives you access to the filter set's state and methods from outside the panel, like rendering active filters as tags.
 
 <Demo
   name="FilterPanelHoistedStateDemo"
   component={demos.FilterPanelHoistedStateDemo}
 />
 
-The state lives in the component that calls `useFilterPanel`, so the panel can unmount, for example inside a closed drawer, without losing the selection.
+The state lives in the component that calls `useFilterSet`, so the panel can unmount, for example inside a closed drawer, without losing the selection.
 
 <Demo
   name="FilterPanelDrawerDemo"
@@ -202,10 +204,10 @@ The state lives in the component that calls `useFilterPanel`, so the panel can u
 ### Custom Filters
 
 ::: terms
-custom control, useFilterPanelFilter
+custom control, useFilter
 :::
 
-Declare a filter with your own value type using `customFilter`, then render it with the `FilterPanel.Filter` parts. Inside the filter, `useFilterPanelFilter` returns its value and a setter.
+Declare a filter with your own value type using `customFilter`, then render your control inside `FilterPanel.Filter`. Inside the filter, `useFilter` returns its value and a setter.
 
 ```tsx
 const filters = defineFilters({
@@ -247,23 +249,23 @@ search params, query string, request
   name={["QdsFilterPanelRootBindings", "FilterPanelRootBindings"]}
 />
 
-### useFilterPanel
+### useFilterSet
 
-Accepts the same state props as [FilterPanel.Root](#filter-panel-root) and returns the panel API.
+Accepts the same state props as [FilterPanel.Root](#filter-panel-root) and returns the filter set API.
 
-<TypeDocProps name="FilterPanelApi" partial />
+<TypeDocProps name="FilterSetApi" partial />
 
-### useFilterPanelFilter
+### useFilter
 
-Returns the state of the enclosing `FilterPanel.Filter`.
+Returns the state of the enclosing `FilterPanel.Filter` or `FilterProvider`.
 
-<TypeDocProps name="FilterPanelFilterContextValue" partial />
+<TypeDocProps name="FilterContextValue" partial />
 
 ### Definitions
 
 #### OptionFilterConfig
 
-Configuration for `checkboxFilter`, `comboboxFilter`, `radioFilter`, and `selectFilter`. `checkboxTreeFilter` takes the same configuration without `options`, since its nodes come from the tree collection.
+Configuration for `optionFilter`. `CheckboxTreeFilter` ignores `options`, since its nodes come from the tree collection.
 
 <TypeDocProps name="OptionFilterConfig" />
 

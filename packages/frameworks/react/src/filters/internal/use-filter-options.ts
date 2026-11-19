@@ -7,30 +7,30 @@ import {
   normalizeFilterOption,
 } from "@qualcomm-ui/core/filters"
 import {
-  useFilterPanelContext,
-  useFilterPanelFilter,
-} from "@qualcomm-ui/react-core/filter-panel"
+  useFilter,
+  useFilterSetContext,
+} from "@qualcomm-ui/react-core/filter-set"
 
 export interface FilterOptionItem extends FilterOptionObject {
   /**
-   * The option's result count from the panel's `getFilterOptionCounts`.
+   * The option's result count from the filter set's `getFilterOptionCounts`.
    */
   count?: number | undefined
 }
 
 /**
  * Resolves a filter's options: the component's `options`, then the
- * definition's, then the panel's resolver (table facets, for example).
+ * definition's, then the filter set's resolver (table facets, for example).
  * Selected values missing from the options are appended so they stay visible
- * and can be deselected. Options are counted from the panel's
+ * and can be deselected. Options are counted from the filter set's
  * `getFilterOptionCounts`, and unselected options with a count of 0 are
  * disabled.
  */
 export function useFilterOptions(
   options: FilterOption[] | undefined,
 ): FilterOptionItem[] {
-  const api = useFilterPanelContext()
-  const filter = useFilterPanelFilter()
+  const api = useFilterSetContext()
+  const filter = useFilter()
 
   const resolved = options
     ? options.map(normalizeFilterOption)

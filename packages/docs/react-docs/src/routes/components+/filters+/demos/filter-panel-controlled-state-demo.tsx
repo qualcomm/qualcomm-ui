@@ -1,19 +1,18 @@
 import {type ReactElement, useState} from "react"
 
-import type {FilterPanelOptionLabels} from "@qualcomm-ui/core/filter-panel"
+import type {FilterSetOptionLabels} from "@qualcomm-ui/core/filter-set"
 import {
-  checkboxFilter,
-  comboboxFilter,
   defineFilters,
   type FilterValues,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter, ComboboxFilter} from "@qualcomm-ui/react/filters"
+import {CheckboxGroupFilter, ComboboxFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  owner: comboboxFilter({label: "Owner"}),
-  status: checkboxFilter({
+  owner: optionFilter({label: "Owner"}),
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -30,7 +29,7 @@ export function FilterPanelControlledStateDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({
     status: ["Failed"],
   })
-  const [labels, setLabels] = useState<FilterPanelOptionLabels>({})
+  const [labels, setLabels] = useState<FilterSetOptionLabels>({})
 
   return (
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
@@ -44,8 +43,12 @@ export function FilterPanelControlledStateDemo(): ReactElement {
         }}
         value={value}
       >
-        <CheckboxFilter filter={filters.status} />
-        <ComboboxFilter filter={filters.owner} options={owners} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.owner}>
+          <ComboboxFilter options={owners} />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

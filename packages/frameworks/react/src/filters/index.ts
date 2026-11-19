@@ -2,51 +2,32 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 export {
-  CheckboxFilter,
-  CheckboxFilterControl,
-  type CheckboxFilterControlProps,
-  type CheckboxFilterProps,
-} from "./checkbox-filter.js"
+  type FilterContextValue,
+  FilterProvider,
+  type FilterProviderProps,
+  FilterSetProvider,
+  useFilter,
+  useFilterSet,
+  useFilterSetContext,
+} from "@qualcomm-ui/react-core/filter-set"
+export {
+  CheckboxGroupFilter,
+  type CheckboxGroupFilterProps,
+} from "./checkbox-group-filter.js"
 export {
   CheckboxTreeFilter,
-  CheckboxTreeFilterControl,
-  type CheckboxTreeFilterControlProps,
   type CheckboxTreeFilterProps,
 } from "./checkbox-tree-filter.js"
+export {ComboboxFilter, type ComboboxFilterProps} from "./combobox-filter.js"
+export {DateFilter, type DateFilterProps} from "./date-filter.js"
+export * from "./qds-filter-control-context.js"
 export {
-  ComboboxFilter,
-  ComboboxFilterControl,
-  type ComboboxFilterControlProps,
-  type ComboboxFilterProps,
-} from "./combobox-filter.js"
+  RadioGroupFilter,
+  type RadioGroupFilterProps,
+} from "./radio-group-filter.js"
+export {SelectFilter, type SelectFilterProps} from "./select-filter.js"
+export {SliderFilter, type SliderFilterProps} from "./slider-filter.js"
 export {
-  DateFilter,
-  DateFilterControl,
-  type DateFilterControlProps,
-  type DateFilterProps,
-} from "./date-filter.js"
-export {
-  RadioFilter,
-  RadioFilterControl,
-  type RadioFilterControlProps,
-  type RadioFilterProps,
-} from "./radio-filter.js"
-export {
-  RangeFilter,
-  RangeFilterControl,
-  type RangeFilterControlProps,
-  type RangeFilterProps,
-} from "./range-filter.js"
-export {
-  SelectFilter,
-  SelectFilterControl,
-  type SelectFilterControlProps,
-  type SelectFilterProps,
-} from "./select-filter.js"
-export {
-  TextFilter,
-  TextFilterControl,
-  type TextFilterControlProps,
-  type TextFilterProps,
-} from "./text-filter.js"
-export type {FilterSectionProps} from "./filter-section.js"
+  TextInputFilter,
+  type TextInputFilterProps,
+} from "./text-input-filter.js"

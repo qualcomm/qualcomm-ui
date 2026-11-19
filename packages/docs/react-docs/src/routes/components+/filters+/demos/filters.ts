@@ -1,10 +1,7 @@
 import {
-  checkboxFilter,
-  checkboxTreeFilter,
-  comboboxFilter,
   customFilter,
   defineFilters,
-  radioFilter,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 
@@ -14,8 +11,8 @@ export const filters = defineFilters({
     isEmptyValue: (value) => !value,
     label: "Attachments",
   }),
-  chipset: checkboxTreeFilter({label: "Chipset"}),
-  mode: radioFilter({
+  chipset: optionFilter({label: "Chipset"}),
+  mode: optionFilter({
     label: "Build mode",
     options: [
       {label: "Debug", value: "debug"},
@@ -23,8 +20,8 @@ export const filters = defineFilters({
       {label: "Release", value: "release"},
     ],
   }),
-  owner: comboboxFilter({label: "Owner"}),
-  status: checkboxFilter({
+  owner: optionFilter({label: "Owner"}),
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),

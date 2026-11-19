@@ -34,22 +34,12 @@ export function normalizeFilterOption(
   return typeof option === "string" ? {label: option, value: option} : option
 }
 
-export type CheckboxFilterValue = string[]
-
 /**
- * The checked leaf values. Branch values are never stored.
+ * The selected option values. Single-select widgets write a one-item array so
+ * that every option widget shares the same value shape. The tree widget stores
+ * only checked leaf values, never branch values.
  */
-export type CheckboxTreeFilterValue = string[]
-
-export type ComboboxFilterValue = string[]
-
-/**
- * Stored as a one-item array so that every option-based filter shares the
- * same value shape.
- */
-export type RadioFilterValue = string[]
-
-export type SelectFilterValue = string[]
+export type OptionFilterValue = string[]
 
 /**
  * `[min, max]`. `null` leaves that side unbounded.
@@ -196,22 +186,8 @@ interface FilterDefinitionBase<TKind extends string> {
   readonly kind: TKind
 }
 
-export interface CheckboxFilterDefinition
-  extends FilterDefinitionBase<"checkbox">, OptionFilterConfig {}
-
-export interface CheckboxTreeFilterDefinition
-  extends
-    FilterDefinitionBase<"checkboxTree">,
-    Omit<OptionFilterConfig, "options"> {}
-
-export interface ComboboxFilterDefinition
-  extends FilterDefinitionBase<"combobox">, OptionFilterConfig {}
-
-export interface RadioFilterDefinition
-  extends FilterDefinitionBase<"radio">, OptionFilterConfig {}
-
-export interface SelectFilterDefinition
-  extends FilterDefinitionBase<"select">, OptionFilterConfig {}
+export interface OptionFilterDefinition
+  extends FilterDefinitionBase<"option">, OptionFilterConfig {}
 
 export interface RangeFilterDefinition
   extends FilterDefinitionBase<"range">, RangeFilterConfig {}
@@ -226,14 +202,10 @@ export interface CustomFilterDefinition<TValue = unknown>
   extends FilterDefinitionBase<"custom">, CustomFilterConfig<TValue> {}
 
 export type FilterDefinition =
-  | CheckboxFilterDefinition
-  | CheckboxTreeFilterDefinition
-  | ComboboxFilterDefinition
   | CustomFilterDefinition<any>
   | DateFilterDefinition
-  | RadioFilterDefinition
+  | OptionFilterDefinition
   | RangeFilterDefinition
-  | SelectFilterDefinition
   | TextFilterDefinition
 
 export type FilterKind = FilterDefinition["kind"]
@@ -257,13 +229,9 @@ export type FilterDefinitions<
 }
 
 interface FilterValueByKind {
-  checkbox: CheckboxFilterValue
-  checkboxTree: CheckboxTreeFilterValue
-  combobox: ComboboxFilterValue
   date: DateFilterValue
-  radio: RadioFilterValue
+  option: OptionFilterValue
   range: RangeFilterValue
-  select: SelectFilterValue
   text: TextFilterValue
 }
 
@@ -284,34 +252,16 @@ export type FilterValues<TDefs> = {
   -readonly [K in keyof TDefs]?: FilterDefinitionValue<TDefs[K]>
 }
 
-export function checkboxFilter(
+/**
+ * A filter that selects from a list of options. Works with every option
+ * widget, and the widget decides whether one or many values can be selected.
+ * Single-select widgets write a one-item array. The tree widget takes its
+ * nodes from its own `collection` prop and ignores `options`.
+ */
+export function optionFilter(
   config: OptionFilterConfig = {},
-): CheckboxFilterDefinition {
-  return {...config, kind: "checkbox"}
-}
-
-export function checkboxTreeFilter(
-  config: Omit<OptionFilterConfig, "options"> = {},
-): CheckboxTreeFilterDefinition {
-  return {...config, kind: "checkboxTree"}
-}
-
-export function comboboxFilter(
-  config: OptionFilterConfig = {},
-): ComboboxFilterDefinition {
-  return {...config, kind: "combobox"}
-}
-
-export function radioFilter(
-  config: OptionFilterConfig = {},
-): RadioFilterDefinition {
-  return {...config, kind: "radio"}
-}
-
-export function selectFilter(
-  config: OptionFilterConfig = {},
-): SelectFilterDefinition {
-  return {...config, kind: "select"}
+): OptionFilterDefinition {
+  return {...config, kind: "option"}
 }
 
 export function rangeFilter(

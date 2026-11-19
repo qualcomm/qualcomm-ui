@@ -3,17 +3,20 @@ import {type ReactElement, useState} from "react"
 import {
   defineFilters,
   type FilterValues,
-  textFilter,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {TextFilter} from "@qualcomm-ui/react/filters"
+import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  buildPath: textFilter({label: "Build path"}),
+  status: optionFilter({
+    label: "Status",
+    options: ["Failed", "Passed", "Queued"],
+  }),
 })
 
-export function TextFilterDemo(): ReactElement {
+export function CheckboxGroupFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
 
   return (
@@ -24,7 +27,9 @@ export function TextFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <TextFilter filter={filters.buildPath} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

@@ -5,19 +5,21 @@ import {type ComponentProps, type ReactElement, useMemo} from "react"
 
 import type {
   FilterOption,
-  SelectFilterDefinition,
+  OptionFilterDefinition,
 } from "@qualcomm-ui/core/filters"
 import {selectCollection} from "@qualcomm-ui/core/select"
-import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
-import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {Select} from "@qualcomm-ui/react/select"
 import type {ListCollection} from "@qualcomm-ui/utils/collection"
 
-import {FilterSection, type FilterSectionProps} from "./filter-section.js"
 import {getSelectedLabels} from "./internal/get-selected-labels.js"
 import {useFilterOptions} from "./internal/use-filter-options.js"
+import {
+  getFilterLabelProps,
+  useFilterWidget,
+} from "./internal/use-filter-widget.js"
+import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
-export interface SelectFilterControlProps extends Omit<
+export interface SelectFilterProps extends Omit<
   ComponentProps<typeof Select>,
   "collection" | "defaultValue" | "onValueChange" | "value"
 > {
@@ -28,22 +30,26 @@ export interface SelectFilterControlProps extends Omit<
 
   /**
    * The options to render. Takes precedence over the definition's options and
-   * the panel's resolver.
+   * the filter set's resolver.
    */
   options?: FilterOption[] | undefined
 }
 
 /**
- * A select listing the filter's options.
+ * A select listing the filter's options. Supports `multiple`. Writes a
+ * `string[]`.
  */
-export function SelectFilterControl({
+export function SelectFilter({
   collection: collectionProp,
   controlProps,
   options,
   ...props
-}: SelectFilterControlProps): ReactElement {
-  const filter = useFilterPanelFilter<SelectFilterDefinition>()
-  const qdsContext = useQdsFilterPanelContext()
+}: SelectFilterProps): ReactElement {
+  const filter = useFilterWidget<OptionFilterDefinition>(
+    "SelectFilter",
+    "option",
+  )
+  const qdsContext = useQdsFilterControlContext()
   const items = useFilterOptions(collectionProp ? [] : options)
   const itemsKey = JSON.stringify(items)
   const optionsCollection = useMemo(
@@ -52,56 +58,21 @@ export function SelectFilterControl({
     [itemsKey],
   )
   const collection = collectionProp ?? optionsCollection
+  const labelProps = getFilterLabelProps(filter)
 
   return (
     <Select
-      aria-labelledby={filter.labelId}
+      {...labelProps}
       collection={collection}
-      controlProps={{"aria-labelledby": filter.labelId, ...controlProps}}
+      controlProps={{...labelProps, ...controlProps}}
       onValueChange={(value, details) =>
         filter.setValue(value, {
           labels: getSelectedLabels(collection, value, details.items),
         })
       }
-      size={qdsContext.controlSize}
+      size={qdsContext.size}
       value={filter.value ?? []}
       {...props}
     />
-  )
-}
-
-export interface SelectFilterProps
-  extends
-    FilterSectionProps<SelectFilterDefinition>,
-    Omit<SelectFilterControlProps, keyof FilterSectionProps> {}
-
-/**
- * A filter that selects options from a select. Supports `multiple`. Writes a
- * `string[]`.
- */
-export function SelectFilter({
-  contentProps,
-  defaultOpen,
-  filter,
-  label,
-  onOpenChange,
-  open,
-  rootProps,
-  triggerProps,
-  ...props
-}: SelectFilterProps): ReactElement {
-  return (
-    <FilterSection
-      contentProps={contentProps}
-      defaultOpen={defaultOpen}
-      filter={filter}
-      label={label}
-      onOpenChange={onOpenChange}
-      open={open}
-      rootProps={rootProps}
-      triggerProps={triggerProps}
-    >
-      <SelectFilterControl {...props} />
-    </FilterSection>
   )
 }

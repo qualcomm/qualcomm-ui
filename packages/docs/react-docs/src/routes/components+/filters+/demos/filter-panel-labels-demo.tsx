@@ -1,11 +1,11 @@
 import type {ReactElement} from "react"
 
-import {checkboxFilter, defineFilters} from "@qualcomm-ui/core/filters"
+import {defineFilters, optionFilter} from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter} from "@qualcomm-ui/react/filters"
+import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  status: checkboxFilter({
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -15,7 +15,7 @@ export function FilterPanelLabelsDemo(): ReactElement {
   return (
     // preview
     <FilterPanel.Root className="w-72" filters={filters}>
-      <CheckboxFilter
+      <FilterPanel.Filter
         filter={filters.status}
         label={(label) => (
           <>
@@ -25,7 +25,9 @@ export function FilterPanelLabelsDemo(): ReactElement {
             </span>
           </>
         )}
-      />
+      >
+        <CheckboxGroupFilter />
+      </FilterPanel.Filter>
     </FilterPanel.Root>
     // preview
   )

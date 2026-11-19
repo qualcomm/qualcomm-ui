@@ -1,24 +1,22 @@
 import {type ReactElement, useState} from "react"
 
 import {
-  checkboxFilter,
-  checkboxTreeFilter,
   defineFilters,
   type FilterValues,
-  radioFilter,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {
-  CheckboxFilter,
+  CheckboxGroupFilter,
   CheckboxTreeFilter,
-  RadioFilter,
+  RadioGroupFilter,
 } from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  chipset: checkboxTreeFilter({label: "Chipset"}),
-  mode: radioFilter({
+  chipset: optionFilter({label: "Chipset"}),
+  mode: optionFilter({
     label: "Build mode",
     options: [
       {label: "Debug", value: "debug"},
@@ -26,7 +24,7 @@ const filters = defineFilters({
       {label: "Release", value: "release"},
     ],
   }),
-  status: checkboxFilter({
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -86,13 +84,18 @@ export function FilterPanelBasicDemo(): ReactElement {
           </FilterPanel.Heading>
           <FilterPanel.ClearButton />
         </FilterPanel.Header>
-        <CheckboxFilter filter={filters.status} />
-        <RadioFilter filter={filters.mode} />
-        <CheckboxTreeFilter
-          collection={chipsets}
-          defaultExpandedValue={["snapdragon_x_elite"]}
-          filter={filters.chipset}
-        />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.mode}>
+          <RadioGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.chipset}>
+          <CheckboxTreeFilter
+            collection={chipsets}
+            defaultExpandedValue={["snapdragon_x_elite"]}
+          />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

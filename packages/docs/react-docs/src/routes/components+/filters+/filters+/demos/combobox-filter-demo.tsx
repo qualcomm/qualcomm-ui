@@ -1,16 +1,16 @@
 import {type ReactElement, useState} from "react"
 
 import {
-  comboboxFilter,
   defineFilters,
   type FilterValues,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {ComboboxFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  owner: comboboxFilter({
+  owner: optionFilter({
     label: "Owner",
     options: [
       {label: "Anna Robinson", value: "u1"},
@@ -34,7 +34,9 @@ export function ComboboxFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <ComboboxFilter filter={filters.owner} />
+        <FilterPanel.Filter filter={filters.owner}>
+          <ComboboxFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

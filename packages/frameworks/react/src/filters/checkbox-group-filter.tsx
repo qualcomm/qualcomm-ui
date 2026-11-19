@@ -4,48 +4,54 @@
 import type {ReactElement} from "react"
 
 import type {
-  CheckboxFilterDefinition,
   FilterOption,
+  OptionFilterDefinition,
 } from "@qualcomm-ui/core/filters"
-import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
-import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {FilterSection, type FilterSectionProps} from "./filter-section.js"
 import {FilterOptionLabel} from "./internal/filter-option-label.js"
 import {useFilterOptions} from "./internal/use-filter-options.js"
+import {
+  getFilterLabelProps,
+  useFilterWidget,
+} from "./internal/use-filter-widget.js"
+import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
-export interface CheckboxFilterControlProps extends Omit<
+export interface CheckboxGroupFilterProps extends Omit<
   ElementRenderProp<"div">,
   "children"
 > {
   /**
    * The options to render. Takes precedence over the definition's options and
-   * the panel's resolver.
+   * the filter set's resolver.
    */
   options?: FilterOption[] | undefined
 }
 
 /**
- * A group of checkboxes, one per option. Renders a `<div>` element by default.
+ * A group of checkboxes, one per option. Selects any number of options.
+ * Writes a `string[]`. Renders a `<div>` element by default.
  */
-export function CheckboxFilterControl({
+export function CheckboxGroupFilter({
   options,
   ...props
-}: CheckboxFilterControlProps): ReactElement {
-  const filter = useFilterPanelFilter<CheckboxFilterDefinition>()
-  const qdsContext = useQdsFilterPanelContext()
+}: CheckboxGroupFilterProps): ReactElement {
+  const filter = useFilterWidget<OptionFilterDefinition>(
+    "CheckboxGroupFilter",
+    "option",
+  )
+  const qdsContext = useQdsFilterControlContext()
   const items = useFilterOptions(options)
   const selected = filter.value ?? []
 
   const mergedProps = mergeProps(
     qdsContext.getOptionGroupBindings(),
-    {"aria-labelledby": filter.labelId, role: "group"},
+    {...getFilterLabelProps(filter), role: "group"},
     props,
   )
 
@@ -66,45 +72,9 @@ export function CheckboxFilterControl({
               {labels: {[option.value]: option.label}},
             )
           }
-          size={qdsContext.controlSize}
+          size={qdsContext.size}
         />
       ))}
     </PolymorphicElement>
-  )
-}
-
-export interface CheckboxFilterProps
-  extends
-    FilterSectionProps<CheckboxFilterDefinition>,
-    Omit<CheckboxFilterControlProps, keyof FilterSectionProps> {}
-
-/**
- * A filter that selects any number of options with checkboxes. Writes a
- * `string[]`.
- */
-export function CheckboxFilter({
-  contentProps,
-  defaultOpen,
-  filter,
-  label,
-  onOpenChange,
-  open,
-  rootProps,
-  triggerProps,
-  ...props
-}: CheckboxFilterProps): ReactElement {
-  return (
-    <FilterSection
-      contentProps={contentProps}
-      defaultOpen={defaultOpen}
-      filter={filter}
-      label={label}
-      onOpenChange={onOpenChange}
-      open={open}
-      rootProps={rootProps}
-      triggerProps={triggerProps}
-    >
-      <CheckboxFilterControl {...props} />
-    </FilterSection>
   )
 }

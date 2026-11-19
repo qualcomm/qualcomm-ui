@@ -3,24 +3,17 @@ import {type ReactElement, useState} from "react"
 import {
   defineFilters,
   type FilterValues,
-  radioFilter,
+  textFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {RadioFilter} from "@qualcomm-ui/react/filters"
+import {TextInputFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  mode: radioFilter({
-    label: "Build mode",
-    options: [
-      {label: "Any", value: ""},
-      {label: "Debug", value: "debug"},
-      {label: "Release", value: "release"},
-    ],
-  }),
+  buildPath: textFilter({label: "Build path"}),
 })
 
-export function RadioFilterDemo(): ReactElement {
+export function TextInputFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
 
   return (
@@ -31,7 +24,9 @@ export function RadioFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <RadioFilter filter={filters.mode} />
+        <FilterPanel.Filter filter={filters.buildPath}>
+          <TextInputFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

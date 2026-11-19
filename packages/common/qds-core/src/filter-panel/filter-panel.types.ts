@@ -3,6 +3,7 @@
 
 import type {QdsNumberBadgeProps} from "@qualcomm-ui/qds-core/badge"
 import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
+import type {QdsFilterControlApiProps} from "@qualcomm-ui/qds-core/filter-control"
 import type {QdsIconApiProps} from "@qualcomm-ui/qds-core/icon"
 
 import type {filterPanelClasses} from "./filter-panel.classes.js"
@@ -10,12 +11,6 @@ import type {filterPanelClasses} from "./filter-panel.classes.js"
 type FilterPanelClasses = typeof filterPanelClasses
 
 export type QdsFilterPanelSize = "sm" | "md" | "lg"
-
-/**
- * The size applied to controls inside filters. Every QDS form control
- * supports these sizes.
- */
-export type QdsFilterPanelControlSize = "sm" | "md"
 
 export interface QdsFilterPanelApiProps {
   /**
@@ -85,31 +80,15 @@ export interface QdsFilterPanelHeadingBindings {
   className: FilterPanelClasses["heading"]
 }
 
-export interface QdsFilterPanelOptionCountBindings {
-  className: FilterPanelClasses["optionCount"]
-}
-
-export interface QdsFilterPanelOptionGroupBindings {
-  className: FilterPanelClasses["optionGroup"]
-}
-
-export interface QdsFilterPanelOptionLabelBindings {
-  className: FilterPanelClasses["optionLabel"]
-}
-
 export interface QdsFilterPanelSectionBindings {
   className: FilterPanelClasses["section"]
 }
 
 export interface QdsFilterPanelApi {
-  /**
-   * The size applied to controls inside filters.
-   */
-  controlSize: QdsFilterPanelControlSize
-
   getApplyButtonProps(): QdsButtonApiProps
   getButtonProps(): QdsButtonApiProps
   getCountBadgeProps(): QdsNumberBadgeProps
+  getFilterControlProps(): QdsFilterControlApiProps
   getFilterCountBadgeProps(): QdsNumberBadgeProps
   getIconProps(): QdsIconApiProps
 
@@ -129,9 +108,6 @@ export interface QdsFilterPanelApi {
   getFooterBindings(): QdsFilterPanelFooterBindings
   getHeaderBindings(): QdsFilterPanelHeaderBindings
   getHeadingBindings(): QdsFilterPanelHeadingBindings
-  getOptionCountBindings(): QdsFilterPanelOptionCountBindings
-  getOptionGroupBindings(): QdsFilterPanelOptionGroupBindings
-  getOptionLabelBindings(): QdsFilterPanelOptionLabelBindings
   getRootBindings(): QdsFilterPanelRootBindings
   getSectionBindings(): QdsFilterPanelSectionBindings
 }

@@ -1,22 +1,24 @@
 import {type ReactElement, useState} from "react"
 
 import {
-  checkboxFilter,
   defineFilters,
   type FilterValues,
+  rangeFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter} from "@qualcomm-ui/react/filters"
+import {SliderFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  status: checkboxFilter({
-    label: "Status",
-    options: ["Failed", "Passed", "Queued"],
+  duration: rangeFilter({
+    formatValue: (value) => `${value} min`,
+    label: "Duration",
+    max: 120,
+    min: 0,
   }),
 })
 
-export function CheckboxFilterDemo(): ReactElement {
+export function SliderFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
 
   return (
@@ -27,7 +29,9 @@ export function CheckboxFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <CheckboxFilter filter={filters.status} />
+        <FilterPanel.Filter filter={filters.duration}>
+          <SliderFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

@@ -18,25 +18,25 @@ import * as demos from "./demos"
 {frontmatter.description}
 
 ```tsx
-import {CheckboxFilter} from "@qualcomm-ui/react/filters"
+import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
 ```
 
 ## Overview
 
-Each filter renders a collapsible section in a [Filter Panel](../filter-panel.mdx), with a control built on one of our existing components.
+Each filter is a control built on one of our existing components. Render it inside a `FilterPanel.Filter` of a [Filter Panel](../filter-panel.mdx), or inside a `FilterProvider` under a `FilterSetProvider` to use it without a panel.
 
-- `CheckboxFilter`: `string[]`. Pick any number of options.
+- `CheckboxGroupFilter`: `string[]`. Pick any number of options.
 - `CheckboxTreeFilter`: `string[]`. Pick leaves from a hierarchy. Only leaf values are stored.
 - `ComboboxFilter`: `string[]`. Search and pick from a long option list.
 - `DateFilter`: `{preset: string} | {range: [string | null, string | null]}`. Pick a date range or a preset. Dates are ISO 8601 strings, and `null` leaves a side open.
-- `RadioFilter`: `string[]`. Pick one option. The value is a one-item array.
-- `RangeFilter`: `[number | null, number | null]`. Pick a numeric range. `null` leaves a side open.
+- `RadioGroupFilter`: `string[]`. Pick one option. The value is a one-item array.
 - `SelectFilter`: `string[]`. Pick from a short option list in a dropdown.
-- `TextFilter`: `string`. Enter free text.
+- `SliderFilter`: `[number | null, number | null]`. Pick a numeric range. `null` leaves a side open.
+- `TextInputFilter`: `string`. Enter free text.
 
-Every filter accepts the [section props](./#section-props). Each section below documents only the props specific to that filter. The rest are forwarded to the underlying component.
+Each section below documents only the props specific to that filter. The rest are forwarded to the underlying component.
 
-## Checkbox Filter
+## Checkbox Group Filter
 
 ::: terms
 checkbox group, multi-select
@@ -44,9 +44,12 @@ checkbox group, multi-select
 
 Shows every option as a checkbox. Use it when the list is short enough to scan.
 
-<Demo name="CheckboxFilterDemo" component={demos.CheckboxFilterDemo} />
+<Demo
+  name="CheckboxGroupFilterDemo"
+  component={demos.CheckboxGroupFilterDemo}
+/>
 
-<TypeDocProps name="CheckboxFilterProps" pick={["filter", "options"]} />
+<TypeDocProps name="CheckboxGroupFilterProps" pick={["options"]} />
 
 Remaining props are forwarded to the group's `<div>` element.
 
@@ -56,7 +59,7 @@ Remaining props are forwarded to the group's `<div>` element.
 hierarchy, nested options, tree
 :::
 
-Selects leaves from a hierarchy. Checking a branch checks all of its leaves, and only leaf values are stored. The nodes come from a [TreeCollection](/components/tree#tree-collection), so the definition has no options.
+Selects leaves from a hierarchy. Checking a branch checks all of its leaves, and only leaf values are stored. The nodes come from a [TreeCollection](/components/tree#tree-collection), so the definition's options are ignored.
 
 <Demo
   name="CheckboxTreeFilterDemo"
@@ -124,7 +127,7 @@ Week presets depend on the locale, and every preset depends on the time zone. Bo
 
 Remaining props are forwarded to [DatePicker](../../date-picker+/_date-picker.mdx).
 
-## Radio Filter
+## Radio Group Filter
 
 ::: terms
 single select, radio group
@@ -132,25 +135,14 @@ single select, radio group
 
 Shows every option as a radio, for a single choice. An option with a value of `""` clears the filter, which is useful for an "Any" option.
 
-<Demo name="RadioFilterDemo" component={demos.RadioFilterDemo} />
+<Demo
+  name="RadioGroupFilterDemo"
+  component={demos.RadioGroupFilterDemo}
+/>
 
-<TypeDocProps name="RadioFilterProps" pick={["options"]} />
+<TypeDocProps name="RadioGroupFilterProps" pick={["options"]} />
 
 Remaining props are forwarded to [RadioGroup](../../radio+/_radio.mdx).
-
-## Range Filter
-
-::: terms
-slider, numeric range, min max
-:::
-
-Selects a numeric range with a two-thumb slider. A thumb left at its bound is stored as `null`, which leaves that side open. The value is written when a thumb is released.
-
-The bounds come from the definition's `min` and `max`. Use `formatValue` on the definition to format the values in summaries.
-
-<Demo name="RangeFilterDemo" component={demos.RangeFilterDemo} />
-
-The range filter has no props of its own. Remaining props are forwarded to [Slider](/components/slider).
 
 ## Select Filter
 
@@ -166,7 +158,21 @@ Use a select for a short list where a dropdown saves space. For longer lists, us
 
 Remaining props are forwarded to [Select](/components/select).
 
-## Text Filter
+## Slider Filter
+
+::: terms
+slider, numeric range, min max
+:::
+
+Selects a numeric range with a two-thumb slider. A thumb left at its bound is stored as `null`, which leaves that side open. The value is written when a thumb is released.
+
+The bounds come from the definition's `min` and `max`. Use `formatValue` on the definition to format the values in summaries.
+
+<Demo name="SliderFilterDemo" component={demos.SliderFilterDemo} />
+
+The slider filter has no props of its own. Remaining props are forwarded to [Slider](/components/slider).
+
+## Text Input Filter
 
 ::: terms
 search, free text, debounce
@@ -174,14 +180,11 @@ search, free text, debounce
 
 Captures free text. In auto mode, the value is committed once the user stops typing.
 
-<Demo name="TextFilterDemo" component={demos.TextFilterDemo} />
+<Demo
+  name="TextInputFilterDemo"
+  component={demos.TextInputFilterDemo}
+/>
 
-<TypeDocProps name="TextFilterProps" pick={["debounce"]} />
+<TypeDocProps name="TextInputFilterProps" pick={["debounce"]} />
 
 Remaining props are forwarded to [TextInput](/components/text-input).
-
-## Section Props
-
-These props are shared by every filter, and configure its collapsible section.
-
-<TypeDocProps name="FilterSectionProps" />

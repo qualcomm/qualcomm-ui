@@ -1,10 +1,10 @@
 import {describe, expect, test} from "vitest"
 
 import {
-  checkboxFilter,
   customFilter,
   dateFilter,
   defineFilters,
+  optionFilter,
   rangeFilter,
   textFilter,
 } from "./filters.definitions"
@@ -19,7 +19,7 @@ import {
 const definitions = defineFilters({
   duration: rangeFilter({formatValue: (value) => `${value} min`}),
   query: textFilter(),
-  status: checkboxFilter(),
+  status: optionFilter(),
   submitted: dateFilter({
     presets: [{label: "Last 7 days", value: "last7Days"}],
   }),

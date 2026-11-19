@@ -1,0 +1,8 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+export const filterControlClasses = {
+  optionCount: "qui-filter-control__option-count",
+  optionGroup: "qui-filter-control__option-group",
+  optionLabel: "qui-filter-control__option-label",
+} as const

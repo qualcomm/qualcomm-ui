@@ -1,9 +1,9 @@
 import {type ReactElement, useState} from "react"
 
 import {
-  checkboxTreeFilter,
   defineFilters,
   type FilterValues,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
@@ -11,7 +11,7 @@ import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxTreeFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  chipset: checkboxTreeFilter({label: "Chipset"}),
+  chipset: optionFilter({label: "Chipset"}),
 })
 
 interface ChipsetNode {
@@ -59,11 +59,12 @@ export function CheckboxTreeFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <CheckboxTreeFilter
-          collection={chipsets}
-          defaultExpandedValue={["snapdragon-x"]}
-          filter={filters.chipset}
-        />
+        <FilterPanel.Filter filter={filters.chipset}>
+          <CheckboxTreeFilter
+            collection={chipsets}
+            defaultExpandedValue={["snapdragon-x"]}
+          />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

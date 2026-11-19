@@ -1,5 +1,4 @@
 .qui-filter-panel__root {
-  --filter-panel-option-gap: calc(var(--filter-panel-item-padding-block) * 2);
   border: var(--border-width-sm) solid var(--color-border-neutral-01);
   border-radius: var(--border-radius-100);
   box-sizing: border-box;
@@ -149,72 +148,20 @@
     display: none;
   }
 
-  &:has(> .qui-filter-panel__option-group:last-child) {
+  &:has(> .qui-filter-control__option-group:last-child) {
     padding-block-end: var(--spacing-100);
   }
 
-  /* Tree nodes supply their own padding and span the full width. */
-  &:has(> .qui-tree__root) {
-    padding: 0 0 var(--spacing-100);
-  }
-}
-
-.qui-filter-panel__option-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--filter-panel-option-gap);
-  padding-block-end: var(--filter-panel-item-padding-block);
-
   /* Content after an option list starts 4px below the last option's padding. */
-  & + * {
+  > .qui-filter-control__option-group + * {
     margin-block-start: calc(
       var(--spacing-100) - var(--filter-panel-content-gap)
     );
   }
 
-  /* Outranks the radio group's own padding and per-size gap. */
-  &.qui-radio-group__root {
-    padding-block-end: var(--filter-panel-item-padding-block);
-  }
-  .qui-radio-group__items[data-size] {
-    gap: var(--filter-panel-option-gap);
-  }
-}
-
-/* Rows with counts span the group so that counts align at the inline end. */
-.qui-filter-panel__option-group:has(.qui-filter-panel__option-count) {
-  > *,
-  .qui-radio-group__items > * {
-    width: auto;
-  }
-
-  /* Radio labels are flex items that otherwise size to their text. */
-  :has(> .qui-filter-panel__option-label) {
-    flex: 1;
-  }
-}
-
-.qui-filter-panel__option-label {
-  align-items: baseline;
-  display: flex;
-  gap: var(--spacing-200);
-
-  /* Lets long labels truncate inside select and combobox items. */
-  > :first-child {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.qui-filter-panel__option-count {
-  color: var(--color-text-neutral-secondary);
-  flex-shrink: 0;
-  font-variant-numeric: tabular-nums;
-  margin-inline-start: auto;
-
-  :where([data-disabled]) & {
-    color: var(--color-utility-disabled-text);
+  /* Tree nodes supply their own padding and span the full width. */
+  &:has(> .qui-tree__root) {
+    padding: 0 0 var(--spacing-100);
   }
 }
 

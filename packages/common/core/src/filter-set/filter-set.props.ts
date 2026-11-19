@@ -3,10 +3,10 @@
 
 import {createProps, createSplitProps} from "@qualcomm-ui/utils/object"
 
-import type {FilterPanelApiProps} from "./filter-panel.types.js"
+import type {FilterSetApiProps} from "./filter-set.types.js"
 
-export const filterPanelProps: (keyof FilterPanelApiProps)[] =
-  createProps<FilterPanelApiProps>()(
+export const filterSetProps: (keyof FilterSetApiProps)[] =
+  createProps<FilterSetApiProps>()(
     "applyMode",
     "defaultValue",
     "filters",
@@ -20,7 +20,7 @@ export const filterPanelProps: (keyof FilterPanelApiProps)[] =
     "value",
   )
 
-export const splitFilterPanelProps: <Props extends FilterPanelApiProps>(
+export const splitFilterSetProps: <Props extends FilterSetApiProps>(
   props: Props,
-) => [FilterPanelApiProps, Omit<Props, keyof FilterPanelApiProps>] =
-  createSplitProps<FilterPanelApiProps>(filterPanelProps)
+) => [FilterSetApiProps, Omit<Props, keyof FilterSetApiProps>] =
+  createSplitProps<FilterSetApiProps>(filterSetProps)

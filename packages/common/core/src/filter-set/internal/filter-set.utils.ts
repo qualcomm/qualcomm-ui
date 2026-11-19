@@ -10,22 +10,22 @@ import {isEqual} from "@qualcomm-ui/utils/equal"
 import type {ValueOrFn} from "@qualcomm-ui/utils/machine"
 
 import type {
-  FilterPanelApiProps,
-  FilterPanelOptionLabels,
-  FilterPanelValues,
-} from "../filter-panel.types.js"
+  FilterSetApiProps,
+  FilterSetOptionLabels,
+  FilterSetValues,
+} from "../filter-set.types.js"
 
 export type IsEmptyFilterValue = (id: string, value: unknown) => boolean
 
 /**
- * Builds the empty-value check for a panel. A value is empty when
+ * Builds the empty-value check for a filter set. A value is empty when
  * `isEmptyFilterValue` considers it empty for its definition, or when the
  * consumer's `isEmptyValue` rejects it. Empty values are never counted or
  * committed.
  */
 export function createEmptyValueCheck(
   definitions: FilterDefinitions | undefined,
-  isEmptyValue: FilterPanelApiProps["isEmptyValue"],
+  isEmptyValue: FilterSetApiProps["isEmptyValue"],
 ): IsEmptyFilterValue {
   return (id, value) => {
     return (
@@ -40,10 +40,10 @@ export function createEmptyValueCheck(
  */
 export function setFilterValue(
   isEmpty: IsEmptyFilterValue,
-  values: FilterPanelValues,
+  values: FilterSetValues,
   id: string,
   updater: ValueOrFn<unknown>,
-): FilterPanelValues {
+): FilterSetValues {
   const value =
     typeof updater === "function"
       ? (updater as (prev: unknown) => unknown)(values[id])
@@ -55,8 +55,8 @@ export function setFilterValue(
 
 export function getNonEmptyValues(
   isEmpty: IsEmptyFilterValue,
-  values: FilterPanelValues,
-): FilterPanelValues {
+  values: FilterSetValues,
+): FilterSetValues {
   return Object.fromEntries(
     Object.entries(values).filter(([id, value]) => !isEmpty(id, value)),
   )
@@ -67,8 +67,8 @@ export function getNonEmptyValues(
  */
 export function areValuesEqual(
   isEmpty: IsEmptyFilterValue,
-  a: FilterPanelValues,
-  b: FilterPanelValues,
+  a: FilterSetValues,
+  b: FilterSetValues,
 ): boolean {
   const left = getNonEmptyValues(isEmpty, a)
   const right = getNonEmptyValues(isEmpty, b)
@@ -83,7 +83,7 @@ export function areValuesEqual(
  * Serializes values with sorted keys, so that the same filters in a different
  * key order produce the same hash.
  */
-export function hashValues(values: FilterPanelValues | undefined): string {
+export function hashValues(values: FilterSetValues | undefined): string {
   if (!values) {
     return ""
   }
@@ -97,7 +97,7 @@ export function hashValues(values: FilterPanelValues | undefined): string {
 export function countValues(
   definitions: FilterDefinitions | undefined,
   isEmpty: IsEmptyFilterValue,
-  values: FilterPanelValues,
+  values: FilterSetValues,
 ): number {
   return Object.entries(getNonEmptyValues(isEmpty, values)).reduce(
     (count, [id, value]) => count + countFilterValue(definitions?.[id], value),
@@ -109,10 +109,10 @@ export function countValues(
  * Merges labels recorded from a user selection.
  */
 export function recordOptionLabels(
-  labels: FilterPanelOptionLabels,
+  labels: FilterSetOptionLabels,
   id: string,
   selected: Record<string, string>,
-): FilterPanelOptionLabels {
+): FilterSetOptionLabels {
   if (!Object.keys(selected).length) {
     return labels
   }
@@ -123,10 +123,10 @@ export function recordOptionLabels(
  * Returns the recorded labels of the values that are currently selected.
  */
 export function pickOptionLabels(
-  labels: FilterPanelOptionLabels,
-  values: FilterPanelValues,
-): FilterPanelOptionLabels {
-  const picked: FilterPanelOptionLabels = {}
+  labels: FilterSetOptionLabels,
+  values: FilterSetValues,
+): FilterSetOptionLabels {
+  const picked: FilterSetOptionLabels = {}
   for (const [id, value] of Object.entries(values)) {
     const recorded = labels[id]
     if (!recorded || !Array.isArray(value)) {

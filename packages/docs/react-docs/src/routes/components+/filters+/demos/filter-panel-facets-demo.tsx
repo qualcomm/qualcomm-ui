@@ -1,18 +1,17 @@
 import {type ReactElement, useState} from "react"
 
-import {getFacetFilterPanelProps} from "@qualcomm-ui/core/filter-panel"
+import {getFacetFilterSetProps} from "@qualcomm-ui/core/filter-set"
 import {
-  checkboxFilter,
   defineFilters,
   type FilterValues,
-  radioFilter,
+  optionFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {
-  CheckboxFilter,
-  RadioFilter,
-  TextFilter,
+  CheckboxGroupFilter,
+  RadioGroupFilter,
+  TextInputFilter,
 } from "@qualcomm-ui/react/filters"
 import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
 
@@ -28,7 +27,7 @@ const builds = [
 ]
 
 const filters = defineFilters({
-  mode: radioFilter({
+  mode: optionFilter({
     label: "Build mode",
     options: [
       {label: "Debug", value: "debug"},
@@ -37,7 +36,7 @@ const filters = defineFilters({
     ],
   }),
   name: textFilter({label: "Name"}),
-  status: checkboxFilter({
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -61,7 +60,7 @@ function matchName(values: BuildFilters): string[] | undefined {
     : undefined
 }
 
-const facetProps = getFacetFilterPanelProps(facetFilter, {
+const facetProps = getFacetFilterSetProps(facetFilter, {
   getCandidateIds: matchName,
 })
 
@@ -82,9 +81,15 @@ export function FilterPanelFacetsDemo(): ReactElement {
         value={value}
         {...facetProps}
       >
-        <TextFilter filter={filters.name} />
-        <CheckboxFilter filter={filters.status} />
-        <RadioFilter filter={filters.mode} />
+        <FilterPanel.Filter filter={filters.name}>
+          <TextInputFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.mode}>
+          <RadioGroupFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       <ul className="text-neutral-primary font-body-md min-w-60 flex-1">
         {builds

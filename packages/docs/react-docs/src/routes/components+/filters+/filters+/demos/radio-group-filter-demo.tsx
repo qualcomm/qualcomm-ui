@@ -3,22 +3,24 @@ import {type ReactElement, useState} from "react"
 import {
   defineFilters,
   type FilterValues,
-  rangeFilter,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {RangeFilter} from "@qualcomm-ui/react/filters"
+import {RadioGroupFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  duration: rangeFilter({
-    formatValue: (value) => `${value} min`,
-    label: "Duration",
-    max: 120,
-    min: 0,
+  mode: optionFilter({
+    label: "Build mode",
+    options: [
+      {label: "Any", value: ""},
+      {label: "Debug", value: "debug"},
+      {label: "Release", value: "release"},
+    ],
   }),
 })
 
-export function RangeFilterDemo(): ReactElement {
+export function RadioGroupFilterDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
 
   return (
@@ -29,7 +31,9 @@ export function RangeFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <RangeFilter filter={filters.duration} />
+        <FilterPanel.Filter filter={filters.mode}>
+          <RadioGroupFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

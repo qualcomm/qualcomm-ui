@@ -1,7 +1,7 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {FilterPanelSetValueDetails} from "@qualcomm-ui/core/filter-panel"
+import type {SetFilterValueDetails} from "@qualcomm-ui/core/filter-set"
 import type {
   FilterDefinition,
   FilterDefinitionValue,
@@ -10,7 +10,7 @@ import type {
 import {createGuardedContext} from "@qualcomm-ui/react-core/context"
 import type {ValueOrFn} from "@qualcomm-ui/utils/machine"
 
-export interface FilterPanelFilterContextValue<
+export interface FilterContextValue<
   TDef extends FilterDefinition = FilterDefinition,
 > {
   /**
@@ -19,7 +19,8 @@ export interface FilterPanelFilterContextValue<
   clear: () => void
 
   /**
-   * How many values the filter contributes to the panel's `draftValueCount`.
+   * How many values the filter contributes to the filter set's
+   * `draftValueCount`.
    */
   count: number
 
@@ -46,19 +47,20 @@ export interface FilterPanelFilterContextValue<
   label: string
 
   /**
-   * The id of the filter's label element. Controls reference it with
-   * `aria-labelledby`.
+   * The id of the element that labels the filter, such as
+   * `FilterPanel.FilterLabel`. Controls reference it with `aria-labelledby`.
+   * When unset, controls use `label` as their `aria-label`.
    */
-  labelId: string
+  labelId: string | undefined
 
   /**
    * Sets the filter's value. Pass the labels of picked options in `details` so
-   * the selection can be labeled outside the panel.
+   * the selection can be labeled when its options are not available.
    * @inheritDoc
    */
   setValue: (
     value: ValueOrFn<FilterDefinitionValue<TDef> | undefined>,
-    details?: FilterPanelSetValueDetails,
+    details?: SetFilterValueDetails,
   ) => void
 
   /**
@@ -67,9 +69,9 @@ export interface FilterPanelFilterContextValue<
   value: FilterDefinitionValue<TDef> | undefined
 }
 
-export const [FilterPanelFilterContextProvider, useFilterPanelFilterContext] =
-  createGuardedContext<FilterPanelFilterContextValue>({
-    hookName: "useFilterPanelFilterContext",
-    providerName: "<FilterPanelFilterContextProvider>",
+export const [FilterContextProvider, useFilterContext] =
+  createGuardedContext<FilterContextValue>({
+    hookName: "useFilter",
+    providerName: "<FilterProvider>",
     strict: true,
   })

@@ -4,10 +4,10 @@
 import type {ReactElement, ReactNode} from "react"
 
 import {
-  type FilterPanelApi,
-  type FilterPanelApiProps,
-  splitFilterPanelProps,
-} from "@qualcomm-ui/core/filter-panel"
+  type FilterSetApi,
+  type FilterSetApiProps,
+  splitFilterSetProps,
+} from "@qualcomm-ui/core/filter-set"
 import type {
   FilterDefinition,
   FilterDefinitions,
@@ -19,6 +19,12 @@ import {
   type CoreCollapsibleRootProps,
   type CoreCollapsibleTriggerProps,
 } from "@qualcomm-ui/react-core/collapsible"
+import {
+  FilterProvider,
+  FilterSetProvider,
+  useFilter,
+  useFilterSet,
+} from "@qualcomm-ui/react-core/filter-set"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
   type ElementRenderProp,
@@ -31,21 +37,16 @@ import {
   useFilterPanelContext,
 } from "./filter-panel-context.js"
 import {
-  FilterPanelFilterContextProvider,
-  useFilterPanelFilterContext,
-} from "./filter-panel-filter-context.js"
-import {
   useFilterPanel,
   useFilterPanelApplyTrigger,
   useFilterPanelClearTrigger,
-  useFilterPanelFilterState,
 } from "./use-filter-panel.js"
 
 export interface CoreFilterPanelRootProps<
   TDefs extends FilterDefinitions = FilterDefinitions,
 >
   extends
-    FilterPanelApiProps<TDefs>,
+    FilterSetApiProps<TDefs>,
     Omit<ElementRenderProp<"div">, "defaultValue"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -56,11 +57,11 @@ export interface CoreFilterPanelRootProps<
 export function CoreFilterPanelRoot<
   TDefs extends FilterDefinitions = FilterDefinitions,
 >({children, ...props}: CoreFilterPanelRootProps<TDefs>): ReactElement {
-  const [filterPanelProps, localProps] = splitFilterPanelProps(props)
-  const api = useFilterPanel(filterPanelProps)
+  const [filterSetProps, localProps] = splitFilterSetProps(props)
+  const filterSet = useFilterSet(filterSetProps)
 
   return (
-    <CoreFilterPanelRootProvider value={api} {...localProps}>
+    <CoreFilterPanelRootProvider value={filterSet} {...localProps}>
       {children}
     </CoreFilterPanelRootProvider>
   )
@@ -73,11 +74,11 @@ export interface CoreFilterPanelRootProviderProps extends ElementRenderProp<"div
   children?: ReactNode
 
   /**
-   * A filter panel API created with `useFilterPanel`.
+   * A filter set API created with `useFilterSet`.
    *
    * @inheritDoc
    */
-  value: FilterPanelApi<any>
+  value: FilterSetApi<any>
 }
 
 export function CoreFilterPanelRootProvider({
@@ -85,14 +86,17 @@ export function CoreFilterPanelRootProvider({
   value,
   ...props
 }: CoreFilterPanelRootProviderProps): ReactElement {
-  const mergedProps = mergeProps(value.getRootBindings(), props)
+  const api = useFilterPanel(value)
+  const mergedProps = mergeProps(api.getRootBindings(), props)
 
   return (
-    <FilterPanelContextProvider value={value}>
-      <PolymorphicElement as="div" {...mergedProps}>
-        {children}
-      </PolymorphicElement>
-    </FilterPanelContextProvider>
+    <FilterSetProvider value={value}>
+      <FilterPanelContextProvider value={api}>
+        <PolymorphicElement as="div" {...mergedProps}>
+          {children}
+        </PolymorphicElement>
+      </FilterPanelContextProvider>
+    </FilterSetProvider>
   )
 }
 
@@ -136,7 +140,7 @@ export function CoreFilterPanelClearTrigger({
   )
 }
 
-export interface CoreFilterPanelFilterProps<
+export interface CoreFilterPanelFilterRootProps<
   TDef extends FilterDefinition = FilterDefinition,
 > extends CoreCollapsibleRootProps {
   /**
@@ -149,24 +153,23 @@ export interface CoreFilterPanelFilterProps<
  * Provides one filter's state to its parts, and expands and collapses its
  * content. Expanded by default.
  */
-export function CoreFilterPanelFilter<TDef extends FilterDefinition>({
+export function CoreFilterPanelFilterRoot<TDef extends FilterDefinition>({
   children,
   defaultOpen = true,
   filter,
   ...props
-}: CoreFilterPanelFilterProps<TDef>): ReactElement {
+}: CoreFilterPanelFilterRootProps<TDef>): ReactElement {
   const api = useFilterPanelContext()
   const labelId = useControlledId()
-  const context = useFilterPanelFilterState(filter, labelId)
 
   const mergedProps = mergeProps(api.getFilterBindings({id: filter.id}), props)
 
   return (
-    <FilterPanelFilterContextProvider value={context}>
+    <FilterProvider filter={filter} labelId={labelId}>
       <CoreCollapsible.Root defaultOpen={defaultOpen} {...mergedProps}>
         {children}
       </CoreCollapsible.Root>
-    </FilterPanelFilterContextProvider>
+    </FilterProvider>
   )
 }
 
@@ -196,7 +199,7 @@ export function CoreFilterPanelFilterLabel({
   ...props
 }: CoreFilterPanelFilterLabelProps): ReactElement {
   const api = useFilterPanelContext()
-  const filter = useFilterPanelFilterContext()
+  const filter = useFilter()
 
   const mergedProps = mergeProps(
     api.getFilterLabelBindings({id: filter.id}),
@@ -228,7 +231,7 @@ export function CoreFilterPanelFilterCount({
   ...props
 }: CoreFilterPanelFilterCountProps): ReactElement {
   const api = useFilterPanelContext()
-  const filter = useFilterPanelFilterContext()
+  const filter = useFilter()
 
   const mergedProps = mergeProps(
     api.getFilterCountBindings({id: filter.id}),

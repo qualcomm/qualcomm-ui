@@ -3,14 +3,14 @@ import {type ReactElement, useState} from "react"
 import {
   defineFilters,
   type FilterValues,
-  selectFilter,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {SelectFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  standard: selectFilter({
+  standard: optionFilter({
     label: "Standard",
     options: [
       {label: "Wi-Fi 6", value: "wifi6"},
@@ -31,7 +31,9 @@ export function SelectFilterDemo(): ReactElement {
         filters={filters}
         onValueChange={setValue}
       >
-        <SelectFilter filter={filters.standard} />
+        <FilterPanel.Filter filter={filters.standard}>
+          <SelectFilter />
+        </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}
       <CodeHighlight

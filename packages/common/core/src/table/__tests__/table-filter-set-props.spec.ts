@@ -5,7 +5,7 @@ import {
   getFacetedMinMaxValues,
   getFacetedRowModel,
   getFacetedUniqueValues,
-  getTableFilterPanelProps,
+  getTableFilterSetProps,
 } from "../"
 
 import {
@@ -26,7 +26,7 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
-describe("getTableFilterPanelProps", () => {
+describe("getTableFilterSetProps", () => {
   test("passes the table's column filters through as a record", () => {
     const {table} = createTableHarness({
       initialState: {
@@ -37,7 +37,7 @@ describe("getTableFilterPanelProps", () => {
       },
     })
 
-    expect(getTableFilterPanelProps(table).value).toEqual({
+    expect(getTableFilterSetProps(table).value).toEqual({
       status: ["single"],
       visits: [10, null],
     })
@@ -46,7 +46,7 @@ describe("getTableFilterPanelProps", () => {
   test("onValueChange writes the record to the table's column filters", () => {
     const {table} = createTableHarness()
 
-    getTableFilterPanelProps(table).onValueChange(
+    getTableFilterSetProps(table).onValueChange(
       {status: ["single"], visits: [10, null]},
       {labels: {}},
     )
@@ -59,7 +59,7 @@ describe("getTableFilterPanelProps", () => {
 
   test("isEmptyValue uses the autoRemove of the function resolved for the value", () => {
     const {table} = createTableHarness()
-    const {isEmptyValue} = getTableFilterPanelProps(table)
+    const {isEmptyValue} = getTableFilterSetProps(table)
 
     expect(isEmptyValue("visits", [undefined, ""])).toBe(true)
     expect(isEmptyValue("visits", [10, null])).toBe(false)
@@ -78,8 +78,7 @@ describe("getTableFilterPanelProps", () => {
         }),
       ],
     })
-    const {getFilterLabel, getFilterOptionLabel} =
-      getTableFilterPanelProps(table)
+    const {getFilterLabel, getFilterOptionLabel} = getTableFilterSetProps(table)
 
     expect(getFilterLabel("status")).toBe("Relationship status")
     expect(getFilterOptionLabel("status", "single")).toBe("Single")
@@ -91,7 +90,7 @@ describe("getTableFilterPanelProps", () => {
       columns: [columnHelper.accessor("status", {header: () => "Status"})],
     })
 
-    expect(getTableFilterPanelProps(table).getFilterLabel("status")).toBe(
+    expect(getTableFilterSetProps(table).getFilterLabel("status")).toBe(
       "status",
     )
     expect(warn).toHaveBeenCalledWith(expect.stringContaining("filterLabel"))
@@ -99,7 +98,7 @@ describe("getTableFilterPanelProps", () => {
 
   test("options come from faceted values, flattened and sorted by label", () => {
     const {table} = createTableHarness({tableOptions: faceting})
-    const {getFilterOptions} = getTableFilterPanelProps(table)
+    const {getFilterOptions} = getTableFilterSetProps(table)
 
     expect(getFilterOptions("status")).toEqual([
       {label: "complicated", value: "complicated"},
@@ -118,7 +117,7 @@ describe("getTableFilterPanelProps", () => {
   test("range bounds come from faceted min and max values", () => {
     const {table} = createTableHarness({tableOptions: faceting})
 
-    expect(getTableFilterPanelProps(table).getFilterRange("visits")).toEqual({
+    expect(getTableFilterSetProps(table).getFilterRange("visits")).toEqual({
       max: 25,
       min: 5,
     })
@@ -130,7 +129,7 @@ describe("getTableFilterPanelProps", () => {
       columns: makeTestColumns(),
       tableOptions: {getFacetedRowModel: undefined},
     })
-    const {getFilterOptions, getFilterRange} = getTableFilterPanelProps(table)
+    const {getFilterOptions, getFilterRange} = getTableFilterSetProps(table)
 
     expect(getFilterOptions("lastName")).toBeUndefined()
     expect(getFilterRange("rank")).toBeUndefined()
@@ -151,7 +150,7 @@ describe("getTableFilterPanelProps", () => {
       getFilterOptionLabel,
       getFilterOptions,
       isEmptyValue,
-    } = getTableFilterPanelProps(table)
+    } = getTableFilterSetProps(table)
 
     expect(getFilterLabel("server-only")).toBeUndefined()
     expect(getFilterOptionLabel("server-only", "7d")).toBeUndefined()
@@ -165,7 +164,7 @@ describe("getTableFilterPanelProps", () => {
       initialState: {columnFilters: [{id: "status", value: ["single"]}]},
       tableOptions: faceting,
     })
-    const {getFilterOptionCounts, value} = getTableFilterPanelProps(table)
+    const {getFilterOptionCounts, value} = getTableFilterSetProps(table)
 
     expect(getFilterOptionCounts("status", value)).toEqual(
       new Map([
@@ -190,16 +189,16 @@ describe("getTableFilterPanelProps", () => {
     })
     const {table} = createTableHarness({tableOptions: faceting})
     const draft = {status: ["single"]}
-    const {getFilterOptionCounts} = getTableFilterPanelProps(table)
+    const {getFilterOptionCounts} = getTableFilterSetProps(table)
 
     expect(getFilterOptionCounts("tags", draft)).toEqual(
-      getTableFilterPanelProps(committed.table).getFilterOptionCounts(
+      getTableFilterSetProps(committed.table).getFilterOptionCounts(
         "tags",
         draft,
       ),
     )
     expect(getFilterOptionCounts("status", draft)).toEqual(
-      getTableFilterPanelProps(table).getFilterOptionCounts("status", {}),
+      getTableFilterSetProps(table).getFilterOptionCounts("status", {}),
     )
   })
 
@@ -210,13 +209,10 @@ describe("getTableFilterPanelProps", () => {
     const unfaceted = createTableHarness()
 
     expect(
-      getTableFilterPanelProps(manual.table).getFilterOptionCounts(
-        "status",
-        {},
-      ),
+      getTableFilterSetProps(manual.table).getFilterOptionCounts("status", {}),
     ).toBeUndefined()
     expect(
-      getTableFilterPanelProps(unfaceted.table).getFilterOptionCounts(
+      getTableFilterSetProps(unfaceted.table).getFilterOptionCounts(
         "status",
         {},
       ),

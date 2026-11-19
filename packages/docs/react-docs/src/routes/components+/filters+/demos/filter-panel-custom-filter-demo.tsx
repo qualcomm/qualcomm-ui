@@ -6,10 +6,8 @@ import {
   type FilterValues,
 } from "@qualcomm-ui/core/filters"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
-import {
-  FilterPanel,
-  useFilterPanelFilter,
-} from "@qualcomm-ui/react/filter-panel"
+import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
+import {useFilter} from "@qualcomm-ui/react/filters"
 import {Switch} from "@qualcomm-ui/react/switch"
 
 const filters = defineFilters({
@@ -21,7 +19,7 @@ const filters = defineFilters({
 })
 
 function AttachmentsControl(): ReactElement {
-  const filter = useFilterPanelFilter<typeof filters.attachments>()
+  const filter = useFilter<typeof filters.attachments>()
   return (
     <Switch
       checked={filter.value ?? false}
@@ -43,10 +41,7 @@ export function FilterPanelCustomFilterDemo(): ReactElement {
         onValueChange={setValue}
       >
         <FilterPanel.Filter filter={filters.attachments}>
-          <FilterPanel.FilterTrigger />
-          <FilterPanel.FilterContent>
-            <AttachmentsControl />
-          </FilterPanel.FilterContent>
+          <AttachmentsControl />
         </FilterPanel.Filter>
       </FilterPanel.Root>
       {/* preview */}

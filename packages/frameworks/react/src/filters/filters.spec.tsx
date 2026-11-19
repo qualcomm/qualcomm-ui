@@ -5,41 +5,42 @@ import {render} from "vitest-browser-react"
 import {page, userEvent} from "vitest/browser"
 
 import {
-  type FilterPanelApiProps,
-  type FilterPanelApplyMode,
-  getFacetFilterPanelProps,
-} from "@qualcomm-ui/core/filter-panel"
+  type FilterSetApiProps,
+  type FilterSetApplyMode,
+  getFacetFilterSetProps,
+} from "@qualcomm-ui/core/filter-set"
 import {
-  checkboxFilter,
-  checkboxTreeFilter,
-  comboboxFilter,
   dateFilter,
   defineFilters,
   type FilterValues,
-  radioFilter,
+  optionFilter,
   rangeFilter,
-  selectFilter,
   textFilter,
 } from "@qualcomm-ui/core/filters"
 import {createTreeCollection} from "@qualcomm-ui/core/tree"
-import {FilterPanel, useFilterPanel} from "@qualcomm-ui/react/filter-panel"
+import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {
-  CheckboxFilter,
+  CheckboxGroupFilter,
   CheckboxTreeFilter,
   ComboboxFilter,
   DateFilter,
-  RadioFilter,
-  RangeFilter,
+  FilterProvider,
+  FilterSetProvider,
+  RadioGroupFilter,
   SelectFilter,
-  TextFilter,
+  SliderFilter,
+  TextInputFilter,
+  useFilterSet,
 } from "@qualcomm-ui/react/filters"
 import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
 
+import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
+
 const filters = defineFilters({
   buildPath: textFilter({label: "Build path"}),
-  chipset: checkboxTreeFilter({label: "Chipset"}),
+  chipset: optionFilter({label: "Chipset"}),
   duration: rangeFilter({label: "Duration", max: 10, min: 0}),
-  mode: radioFilter({
+  mode: optionFilter({
     label: "Mode",
     options: [
       {label: "All", value: ""},
@@ -47,21 +48,21 @@ const filters = defineFilters({
       {label: "Release", value: "release"},
     ],
   }),
-  owner: comboboxFilter({
+  owner: optionFilter({
     label: "Owner",
     options: [
       {label: "Anna Robinson", value: "u1"},
       {label: "Ben Ortiz", value: "u2"},
     ],
   }),
-  standard: selectFilter({
+  standard: optionFilter({
     label: "Standard",
     options: [
       {label: "Wi-Fi 6", value: "wifi6"},
       {label: "Wi-Fi 7", value: "wifi7"},
     ],
   }),
-  status: checkboxFilter({
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -69,7 +70,7 @@ const filters = defineFilters({
     label: "Submitted",
     presets: [{label: "Last 7 days", value: "last7Days"}],
   }),
-  user: checkboxFilter({label: "User"}),
+  user: optionFilter({label: "User"}),
 })
 
 const chipsets = createTreeCollection<{
@@ -98,10 +99,10 @@ const chipsets = createTreeCollection<{
 type Values = FilterValues<typeof filters>
 
 interface PanelProps extends Pick<
-  FilterPanelApiProps,
+  FilterSetApiProps,
   "getFilterOptionCounts" | "getFilterOptions"
 > {
-  applyMode?: FilterPanelApplyMode
+  applyMode?: FilterSetApplyMode
   children: ReactNode
   defaultValue?: Values
   onValueChange?: (value: Values) => void
@@ -138,12 +139,66 @@ function Panel({
   )
 }
 
+const filterTests: MultiComponentTestCase[] = [
+  {
+    composite() {
+      return (
+        <Panel defaultValue={{status: ["Failed"]}}>
+          <FilterPanel.FilterRoot filter={filters.status}>
+            <FilterPanel.FilterTrigger>
+              <FilterPanel.FilterLabel />
+              <FilterPanel.FilterCount />
+              <FilterPanel.FilterIndicator />
+            </FilterPanel.FilterTrigger>
+            <FilterPanel.FilterContent>
+              <CheckboxGroupFilter />
+            </FilterPanel.FilterContent>
+          </FilterPanel.FilterRoot>
+        </Panel>
+      )
+    },
+    simple() {
+      return (
+        <Panel defaultValue={{status: ["Failed"]}}>
+          <FilterPanel.Filter filter={filters.status}>
+            <CheckboxGroupFilter />
+          </FilterPanel.Filter>
+        </Panel>
+      )
+    },
+    testCase(getComponent) {
+      test("the trigger names the control and collapses and expands its content", async () => {
+        await render(getComponent())
+
+        const trigger = page.getByRole("button", {name: "Status 1 selected"})
+        await expect.element(trigger).toHaveAttribute("aria-expanded", "true")
+        await expect
+          .element(page.getByRole("group", {name: "Status"}))
+          .toBeVisible()
+
+        await trigger.click()
+        await expect.element(trigger).toHaveAttribute("aria-expanded", "false")
+        await expect.element(page.getByText("Failed")).not.toBeVisible()
+
+        await trigger.click()
+        await expect.element(page.getByText("Failed")).toBeVisible()
+      })
+    },
+  },
+]
+
+describe("FilterPanel.Filter", () => {
+  runTests(filterTests)
+})
+
 describe("filter panel", () => {
   test("manual mode stages changes until they are applied", async () => {
     const onValueChange = vi.fn()
     await render(
       <Panel applyMode="manual" onValueChange={onValueChange}>
-        <CheckboxFilter filter={filters.status} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -179,7 +234,9 @@ describe("filter panel", () => {
             onValueChange={setValue}
             value={value}
           >
-            <CheckboxFilter filter={filters.status} />
+            <FilterPanel.Filter filter={filters.status}>
+              <CheckboxGroupFilter />
+            </FilterPanel.Filter>
             <FilterPanel.Footer>
               <FilterPanel.ApplyButton />
             </FilterPanel.Footer>
@@ -205,20 +262,22 @@ describe("filter panel", () => {
     const dirtyRenders: boolean[] = []
     function ControlledPanel() {
       const [value, setValue] = useState<Values>({status: ["Failed"]})
-      const panel = useFilterPanel({
+      const filterSet = useFilterSet({
         applyMode: "manual",
         filters,
         onValueChange: setValue,
         value,
       })
-      dirtyRenders.push(panel.isDirty)
+      dirtyRenders.push(filterSet.isDirty)
       return (
         <>
           <button onClick={() => setValue({status: ["Passed"]})} type="button">
             Show passed
           </button>
-          <FilterPanel.RootProvider value={panel}>
-            <CheckboxFilter filter={filters.status} />
+          <FilterPanel.RootProvider value={filterSet}>
+            <FilterPanel.Filter filter={filters.status}>
+              <CheckboxGroupFilter />
+            </FilterPanel.Filter>
           </FilterPanel.RootProvider>
         </>
       )
@@ -235,7 +294,9 @@ describe("filter panel", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <CheckboxFilter filter={filters.status} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -249,8 +310,12 @@ describe("filter panel", () => {
   test("counts selected values per filter and for the panel", async () => {
     await render(
       <Panel defaultValue={{buildPath: "out/", status: ["Failed", "Queued"]}}>
-        <CheckboxFilter filter={filters.status} />
-        <TextFilter filter={filters.buildPath} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.buildPath}>
+          <TextInputFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -273,7 +338,9 @@ describe("filter panel", () => {
         defaultValue={{status: ["Failed"]}}
         onValueChange={onValueChange}
       >
-        <CheckboxFilter filter={filters.status} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -288,31 +355,15 @@ describe("filter panel", () => {
     await expect.poll(() => onValueChange.mock.lastCall?.[0]).toEqual({})
   })
 
-  test("the filter trigger collapses and expands its content", async () => {
-    await render(
-      <Panel>
-        <CheckboxFilter filter={filters.status} />
-      </Panel>,
-    )
-
-    const trigger = page.getByRole("button", {name: "Status"})
-    await expect.element(trigger).toHaveAttribute("aria-expanded", "true")
-
-    await trigger.click()
-    await expect.element(trigger).toHaveAttribute("aria-expanded", "false")
-    await expect.element(page.getByText("Failed")).not.toBeVisible()
-
-    await trigger.click()
-    await expect.element(page.getByText("Failed")).toBeVisible()
-  })
-
   test("labels the control with the filter label, which the label prop can render differently", async () => {
     await render(
       <Panel>
-        <CheckboxFilter
+        <FilterPanel.Filter
           filter={filters.status}
           label={(label) => <em>{label} (runs)</em>}
-        />
+        >
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -325,10 +376,11 @@ describe("filter panel", () => {
   test("component options take precedence over definition options", async () => {
     await render(
       <Panel>
-        <CheckboxFilter
-          filter={filters.user}
-          options={[{label: "Anna Robinson", value: "u1"}]}
-        />
+        <FilterPanel.Filter filter={filters.user}>
+          <CheckboxGroupFilter
+            options={[{label: "Anna Robinson", value: "u1"}]}
+          />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -338,7 +390,9 @@ describe("filter panel", () => {
   test("selected values missing from the options stay visible", async () => {
     await render(
       <Panel defaultValue={{status: ["Cancelled"]}}>
-        <CheckboxFilter filter={filters.status} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -351,30 +405,33 @@ describe("RootProvider", () => {
     const onValueChange = vi.fn()
 
     function Example() {
-      const panel = useFilterPanel({
+      const filterSet = useFilterSet({
         applyMode: "manual",
         filters,
         onValueChange,
       })
       const [open, setOpen] = useState(true)
-      const committed = panel.value.user ?? []
+      const committed = filterSet.value.user ?? []
 
       return (
         <>
           <ul aria-label="Active filters">
             {committed.map((value) => (
-              <li key={value}>{panel.getFilterOptionLabel("user", value)}</li>
+              <li key={value}>
+                {filterSet.getFilterOptionLabel("user", value)}
+              </li>
             ))}
           </ul>
           <button onClick={() => setOpen((prev) => !prev)} type="button">
             Toggle panel
           </button>
           {open ? (
-            <FilterPanel.RootProvider value={panel}>
-              <CheckboxFilter
-                filter={filters.user}
-                options={[{label: "Anna Robinson", value: "u1"}]}
-              />
+            <FilterPanel.RootProvider value={filterSet}>
+              <FilterPanel.Filter filter={filters.user}>
+                <CheckboxGroupFilter
+                  options={[{label: "Anna Robinson", value: "u1"}]}
+                />
+              </FilterPanel.Filter>
               <FilterPanel.ApplyButton />
             </FilterPanel.RootProvider>
           ) : null}
@@ -405,13 +462,15 @@ describe("RootProvider", () => {
 describe("counts", () => {
   test("valueCount counts the committed value, draftValueCount the draft", async () => {
     function Example() {
-      const panel = useFilterPanel({applyMode: "manual", filters})
+      const filterSet = useFilterSet({applyMode: "manual", filters})
       return (
         <>
-          <output aria-label="Applied">{panel.valueCount}</output>
-          <output aria-label="Pending">{panel.draftValueCount}</output>
-          <FilterPanel.RootProvider value={panel}>
-            <CheckboxFilter filter={filters.status} />
+          <output aria-label="Applied">{filterSet.valueCount}</output>
+          <output aria-label="Pending">{filterSet.draftValueCount}</output>
+          <FilterPanel.RootProvider value={filterSet}>
+            <FilterPanel.Filter filter={filters.status}>
+              <CheckboxGroupFilter />
+            </FilterPanel.Filter>
             <FilterPanel.ApplyButton />
           </FilterPanel.RootProvider>
         </>
@@ -437,7 +496,9 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <RadioFilter filter={filters.mode} />
+        <FilterPanel.Filter filter={filters.mode}>
+          <RadioGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -456,7 +517,9 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <SelectFilter filter={filters.standard} />
+        <FilterPanel.Filter filter={filters.standard}>
+          <SelectFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -475,7 +538,9 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel applyMode="manual" onValueChange={onValueChange}>
-        <TextFilter filter={filters.buildPath} />
+        <FilterPanel.Filter filter={filters.buildPath}>
+          <TextInputFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -491,7 +556,9 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <TextFilter debounce={50} filter={filters.buildPath} />
+        <FilterPanel.Filter filter={filters.buildPath}>
+          <TextInputFilter debounce={50} />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -509,7 +576,9 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <RangeFilter filter={filters.duration} />
+        <FilterPanel.Filter filter={filters.duration}>
+          <SliderFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -525,7 +594,9 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <DateFilter filter={filters.submitted} />
+        <FilterPanel.Filter filter={filters.submitted}>
+          <DateFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -545,7 +616,9 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <ComboboxFilter filter={filters.owner} />
+        <FilterPanel.Filter filter={filters.owner}>
+          <ComboboxFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -564,18 +637,16 @@ describe("filter types", () => {
     const onValueChange = vi.fn()
     await render(
       <Panel onValueChange={onValueChange}>
-        <CheckboxTreeFilter
-          collection={chipsets}
-          defaultExpandedValue={["x"]}
-          filter={filters.chipset}
-        />
+        <FilterPanel.Filter filter={filters.chipset}>
+          <CheckboxTreeFilter
+            collection={chipsets}
+            defaultExpandedValue={["x"]}
+          />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
-    await page
-      .getByRole("treeitem", {name: "SC8380XP"})
-      .getByRole("checkbox")
-      .click()
+    await page.getByRole("treeitem", {name: "SC8380XP"}).click()
 
     await expect
       .poll(() => onValueChange.mock.lastCall)
@@ -601,7 +672,9 @@ describe("option counts", () => {
         defaultValue={{status: ["Passed"]}}
         getFilterOptionCounts={getFilterOptionCounts}
       >
-        <CheckboxFilter filter={filters.status} />
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -625,7 +698,9 @@ describe("option counts", () => {
   test("radio options show counts, except the blank option", async () => {
     await render(
       <Panel getFilterOptionCounts={getFilterOptionCounts}>
-        <RadioFilter filter={filters.mode} />
+        <FilterPanel.Filter filter={filters.mode}>
+          <RadioGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -643,7 +718,9 @@ describe("option counts", () => {
   test("combobox options with no results are disabled", async () => {
     await render(
       <Panel getFilterOptionCounts={getFilterOptionCounts}>
-        <ComboboxFilter filter={filters.owner} />
+        <FilterPanel.Filter filter={filters.owner}>
+          <ComboboxFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -660,7 +737,9 @@ describe("option counts", () => {
   test("select options with no results are disabled", async () => {
     await render(
       <Panel getFilterOptionCounts={getFilterOptionCounts}>
-        <SelectFilter filter={filters.standard} />
+        <FilterPanel.Filter filter={filters.standard}>
+          <SelectFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -681,9 +760,13 @@ describe("option counts", () => {
       {fields: {status: {}, user: {}}},
     )
     await render(
-      <Panel applyMode="manual" {...getFacetFilterPanelProps(facetFilter)}>
-        <CheckboxFilter filter={filters.status} />
-        <CheckboxFilter filter={filters.user} />
+      <Panel applyMode="manual" {...getFacetFilterSetProps(facetFilter)}>
+        <FilterPanel.Filter filter={filters.status}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
+        <FilterPanel.Filter filter={filters.user}>
+          <CheckboxGroupFilter />
+        </FilterPanel.Filter>
       </Panel>,
     )
 
@@ -699,5 +782,104 @@ describe("option counts", () => {
     await expect
       .element(page.getByRole("checkbox", {name: "Passed 0"}))
       .toBeDisabled()
+  })
+})
+
+describe("outside a filter panel", () => {
+  test("a widget reads and writes the filter set through FilterProvider", async () => {
+    function Example() {
+      const filterSet = useFilterSet({filters})
+      return (
+        <FilterSetProvider value={filterSet}>
+          <output aria-label="Selected">
+            {(filterSet.value.status ?? []).join(", ")}
+          </output>
+          <FilterProvider filter={filters.status}>
+            <CheckboxGroupFilter />
+          </FilterProvider>
+        </FilterSetProvider>
+      )
+    }
+    await render(<Example />)
+
+    const group = page.getByRole("group", {name: "Status"})
+    await expect.element(group).toBeVisible()
+
+    await group.getByText("Queued").click()
+
+    await expect.element(group.getByLabelText("Queued")).toBeChecked()
+    await expect
+      .element(page.getByLabelText("Selected"))
+      .toHaveTextContent("Queued")
+  })
+
+  test("a labelId names the widget by the referenced element", async () => {
+    function Example() {
+      const filterSet = useFilterSet({filters})
+      return (
+        <FilterSetProvider value={filterSet}>
+          <span id="status-heading">Run status</span>
+          <FilterProvider filter={filters.status} labelId="status-heading">
+            <CheckboxGroupFilter />
+          </FilterProvider>
+        </FilterSetProvider>
+      )
+    }
+    await render(<Example />)
+
+    await expect
+      .element(page.getByRole("group", {name: "Run status"}))
+      .toBeVisible()
+  })
+
+  test("shares values with a filter panel on the same filter set", async () => {
+    function Example() {
+      const filterSet = useFilterSet({filters})
+      return (
+        <>
+          <FilterSetProvider value={filterSet}>
+            <FilterProvider filter={filters.mode}>
+              <RadioGroupFilter />
+            </FilterProvider>
+          </FilterSetProvider>
+          <FilterPanel.RootProvider value={filterSet}>
+            <FilterPanel.Heading>
+              Filters <FilterPanel.Count />
+            </FilterPanel.Heading>
+            <FilterPanel.Filter filter={filters.status}>
+              <CheckboxGroupFilter />
+            </FilterPanel.Filter>
+          </FilterPanel.RootProvider>
+        </>
+      )
+    }
+    await render(<Example />)
+
+    await page.getByText("Debug").click()
+    await page.getByText("Failed").click()
+
+    await expect
+      .element(page.getByRole("heading", {name: "Filters 2 selected"}))
+      .toBeVisible()
+  })
+
+  test("warns when a widget renders a filter of another kind", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+    function Example() {
+      const filterSet = useFilterSet({filters})
+      return (
+        <FilterSetProvider value={filterSet}>
+          <FilterProvider filter={filters.buildPath}>
+            <CheckboxGroupFilter />
+          </FilterProvider>
+        </FilterSetProvider>
+      )
+    }
+    await render(<Example />)
+
+    await expect
+      .poll(() => warn.mock.calls.map(([message]) => String(message)))
+      .toContainEqual(expect.stringContaining("CheckboxGroupFilter"))
+    warn.mockRestore()
   })
 })

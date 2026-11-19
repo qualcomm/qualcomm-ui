@@ -7,21 +7,21 @@ import {
   type MachineConfigBase,
 } from "@qualcomm-ui/utils/machine"
 
-import type {FilterPanelDraft, FilterPanelSchema} from "./filter-panel.types.js"
+import type {FilterSetDraft, FilterSetSchema} from "./filter-set.types.js"
 import {
   createEmptyValueCheck,
   hashValues,
   pickOptionLabels,
   recordOptionLabels,
   setFilterValue,
-} from "./internal/filter-panel.utils.js"
+} from "./internal/filter-set.utils.js"
 
-const filterPanelMachineBase = {
+const filterSetMachineBase = {
   computed: {
     /**
      * The draft only applies to the committed value it was started from. When
-     * `value` changes, including from outside the panel, the draft is
-     * discarded without having to be synced.
+     * `value` changes, including through the controlled `value` prop, the
+     * draft is discarded without having to be synced.
      */
     draftValue: ({context, prop}) => {
       const value = context.get("value")
@@ -39,7 +39,7 @@ const filterPanelMachineBase = {
 
   context({bindable, getRefs, prop}) {
     return {
-      draft: bindable<FilterPanelDraft | null>(() => ({
+      draft: bindable<FilterSetDraft | null>(() => ({
         defaultValue: null,
         hash: (draft) => (draft ? draft.base + hashValues(draft.values) : ""),
       })),
@@ -92,10 +92,10 @@ const filterPanelMachineBase = {
   states: {
     idle: {},
   },
-} satisfies MachineConfigBase<FilterPanelSchema>
+} satisfies MachineConfigBase<FilterSetSchema>
 
-export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
-  createNarrowedMachine<FilterPanelSchema>()(filterPanelMachineBase, {
+export const filterSetMachine: MachineConfig<FilterSetSchema> =
+  createNarrowedMachine<FilterSetSchema>()(filterSetMachineBase, {
     actions: {
       applyDraft({computed, context, guard}) {
         if (guard("isAutoApply")) {
@@ -121,7 +121,7 @@ export const filterPanelMachine: MachineConfig<FilterPanelSchema> =
        * written, so that `onValueChange` in `auto` mode already sees them.
        * They live in refs because context reads within the same tick are
        * stale; every recording accompanies a value change, which re-renders.
-       * Restored values rely on the definition or panel resolvers for labels.
+       * Restored values rely on the definition or filter set resolvers for labels.
        */
       recordLabels({event, refs}) {
         if (event.labels) {

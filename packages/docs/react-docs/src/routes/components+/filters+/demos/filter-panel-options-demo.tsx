@@ -1,17 +1,16 @@
 import {type ReactElement, useEffect, useState} from "react"
 
 import {
-  checkboxFilter,
-  comboboxFilter,
   defineFilters,
   type FilterOption,
+  optionFilter,
 } from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
-import {CheckboxFilter, ComboboxFilter} from "@qualcomm-ui/react/filters"
+import {CheckboxGroupFilter, ComboboxFilter} from "@qualcomm-ui/react/filters"
 
 const filters = defineFilters({
-  owner: comboboxFilter({label: "Owner"}),
-  status: checkboxFilter({
+  owner: optionFilter({label: "Owner"}),
+  status: optionFilter({
     label: "Status",
     options: ["Failed", "Passed", "Queued"],
   }),
@@ -40,9 +39,13 @@ export function FilterPanelOptionsDemo(): ReactElement {
     // preview
     <FilterPanel.Root className="w-72" filters={filters}>
       {/* options from the definition */}
-      <CheckboxFilter filter={filters.status} />
+      <FilterPanel.Filter filter={filters.status}>
+        <CheckboxGroupFilter />
+      </FilterPanel.Filter>
       {/* options loaded at runtime */}
-      <ComboboxFilter filter={filters.owner} options={ownerOptions} />
+      <FilterPanel.Filter filter={filters.owner}>
+        <ComboboxFilter options={ownerOptions} />
+      </FilterPanel.Filter>
     </FilterPanel.Root>
     // preview
   )

@@ -1,13 +1,13 @@
 import {describe, expect, expectTypeOf, test} from "vitest"
 
 import {
-  checkboxFilter,
   customFilter,
   type DateFilterValue,
   dateFilter,
   defineFilters,
   type FilterValues,
   normalizeFilterOption,
+  optionFilter,
   rangeFilter,
   type RangeFilterValue,
   textFilter,
@@ -16,7 +16,7 @@ import {
 const buildFilters = defineFilters({
   buildPath: textFilter({label: "Build path"}),
   duration: rangeFilter({max: 120, min: 0}),
-  status: checkboxFilter({options: ["Failed", "Passed"]}),
+  status: optionFilter({options: ["Failed", "Passed"]}),
   submitted: dateFilter(),
   tags: customFilter<{tags: string[]}>(),
 })
@@ -25,12 +25,12 @@ describe("filter definitions", () => {
   test("defineFilters stamps each definition with its key as the id", () => {
     expect(buildFilters.status).toEqual({
       id: "status",
-      kind: "checkbox",
+      kind: "option",
       options: ["Failed", "Passed"],
     })
     expect(buildFilters.duration.id).toBe("duration")
-    expectTypeOf(buildFilters.status.id).toEqualTypeOf<"status">()
-    expectTypeOf(buildFilters.status.kind).toEqualTypeOf<"checkbox">()
+    expectTypeOf(buildFilters.status.id).toEqualTypeOf<string>()
+    expectTypeOf(buildFilters.status.kind).toEqualTypeOf<"option">()
   })
 
   test("FilterValues maps every filter to an optional value of its type", () => {

@@ -4,21 +4,23 @@
 import {type ComponentProps, type ReactElement, useMemo, useState} from "react"
 
 import type {
-  ComboboxFilterDefinition,
   FilterOption,
+  OptionFilterDefinition,
 } from "@qualcomm-ui/core/filters"
 import {selectCollection} from "@qualcomm-ui/core/select"
-import {useFilterPanelFilter} from "@qualcomm-ui/react-core/filter-panel"
-import {useFilter} from "@qualcomm-ui/react-core/locale"
+import {useFilter as useLocaleFilter} from "@qualcomm-ui/react-core/locale"
 import {Combobox} from "@qualcomm-ui/react/combobox"
-import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
 import type {ListCollection} from "@qualcomm-ui/utils/collection"
 
-import {FilterSection, type FilterSectionProps} from "./filter-section.js"
 import {getSelectedLabels} from "./internal/get-selected-labels.js"
 import {useFilterOptions} from "./internal/use-filter-options.js"
+import {
+  getFilterLabelProps,
+  useFilterWidget,
+} from "./internal/use-filter-widget.js"
+import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
-export interface ComboboxFilterControlProps extends Omit<
+export interface ComboboxFilterProps extends Omit<
   ComponentProps<typeof Combobox>,
   "collection" | "defaultValue" | "onValueChange" | "value"
 > {
@@ -30,23 +32,27 @@ export interface ComboboxFilterControlProps extends Omit<
 
   /**
    * The options to render, filtered by the input text. Takes precedence over
-   * the definition's options and the panel's resolver.
+   * the definition's options and the filter set's resolver.
    */
   options?: FilterOption[] | undefined
 }
 
 /**
- * A searchable combobox listing the filter's options.
+ * A searchable combobox listing the filter's options. Supports `multiple`.
+ * Writes a `string[]`.
  */
-export function ComboboxFilterControl({
+export function ComboboxFilter({
   collection: collectionProp,
   onInputValueChange,
   options,
   ...props
-}: ComboboxFilterControlProps): ReactElement {
-  const filter = useFilterPanelFilter<ComboboxFilterDefinition>()
-  const qdsContext = useQdsFilterPanelContext()
-  const {contains} = useFilter({sensitivity: "base"})
+}: ComboboxFilterProps): ReactElement {
+  const filter = useFilterWidget<OptionFilterDefinition>(
+    "ComboboxFilter",
+    "option",
+  )
+  const qdsContext = useQdsFilterControlContext()
+  const {contains} = useLocaleFilter({sensitivity: "base"})
   const [inputValue, setInputValue] = useState("")
   const items = useFilterOptions(collectionProp ? [] : options)
   const matches = inputValue
@@ -62,7 +68,7 @@ export function ComboboxFilterControl({
 
   return (
     <Combobox
-      aria-labelledby={filter.labelId}
+      {...getFilterLabelProps(filter)}
       collection={collection}
       onInputValueChange={(details) => {
         setInputValue(details.inputValue)
@@ -73,45 +79,9 @@ export function ComboboxFilterControl({
           labels: getSelectedLabels(collection, details.value, details.items),
         })
       }
-      size={qdsContext.controlSize}
+      size={qdsContext.size}
       value={filter.value ?? []}
       {...props}
     />
-  )
-}
-
-export interface ComboboxFilterProps
-  extends
-    FilterSectionProps<ComboboxFilterDefinition>,
-    Omit<ComboboxFilterControlProps, keyof FilterSectionProps> {}
-
-/**
- * A filter that selects options from a searchable combobox. Supports
- * `multiple`. Writes a `string[]`.
- */
-export function ComboboxFilter({
-  contentProps,
-  defaultOpen,
-  filter,
-  label,
-  onOpenChange,
-  open,
-  rootProps,
-  triggerProps,
-  ...props
-}: ComboboxFilterProps): ReactElement {
-  return (
-    <FilterSection
-      contentProps={contentProps}
-      defaultOpen={defaultOpen}
-      filter={filter}
-      label={label}
-      onOpenChange={onOpenChange}
-      open={open}
-      rootProps={rootProps}
-      triggerProps={triggerProps}
-    >
-      <ComboboxFilterControl {...props} />
-    </FilterSection>
   )
 }

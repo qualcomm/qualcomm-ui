@@ -3,7 +3,7 @@
 
 import type {ReactNode} from "react"
 
-import {useQdsFilterPanelContext} from "@qualcomm-ui/react/filter-panel"
+import {useQdsFilterControlContext} from "../qds-filter-control-context.js"
 
 import type {FilterOptionItem} from "./use-filter-options.js"
 
@@ -15,7 +15,7 @@ export interface FilterOptionLabelProps {
  * An option's label, followed by its result count when it has one.
  */
 export function FilterOptionLabel({option}: FilterOptionLabelProps): ReactNode {
-  const qdsContext = useQdsFilterPanelContext()
+  const qdsContext = useQdsFilterControlContext()
 
   if (option.count === undefined) {
     return option.label

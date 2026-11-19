@@ -4,35 +4,19 @@
 import {
   createFilterPanelApi,
   type FilterPanelApi,
-  type FilterPanelApiProps,
   type FilterPanelApplyTriggerBindings,
   type FilterPanelClearTriggerBindings,
-  filterPanelMachine,
 } from "@qualcomm-ui/core/filter-panel"
-import type {
-  FilterDefinition,
-  FilterDefinitions,
-  IdentifiedFilterDefinition,
-} from "@qualcomm-ui/core/filters"
-import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
+import type {FilterSetApi} from "@qualcomm-ui/core/filter-set"
+import {normalizeProps} from "@qualcomm-ui/react-core/machine"
 
 import {useFilterPanelContext} from "./filter-panel-context.js"
-import {
-  type FilterPanelFilterContextValue,
-  useFilterPanelFilterContext,
-} from "./filter-panel-filter-context.js"
 
 /**
- * Creates a filter panel API for use with `FilterPanel.RootProvider`. Hoist
- * the panel's state this way to share it with content outside the panel, such
- * as active filter chips, or to keep a manual-mode draft while the panel is
- * unmounted.
+ * Creates the filter panel's element bindings from a filter set.
  */
-export function useFilterPanel<
-  TDefs extends FilterDefinitions = FilterDefinitions,
->(props: FilterPanelApiProps<TDefs> = {}): FilterPanelApi<TDefs> {
-  const machine = useMachine(filterPanelMachine, props as FilterPanelApiProps)
-  return createFilterPanelApi<TDefs>(machine, normalizeProps)
+export function useFilterPanel(filterSet: FilterSetApi<any>): FilterPanelApi {
+  return createFilterPanelApi(filterSet, normalizeProps)
 }
 
 export function useFilterPanelApplyTrigger(): FilterPanelApplyTriggerBindings {
@@ -41,38 +25,4 @@ export function useFilterPanelApplyTrigger(): FilterPanelApplyTriggerBindings {
 
 export function useFilterPanelClearTrigger(): FilterPanelClearTriggerBindings {
   return useFilterPanelContext().getClearTriggerBindings()
-}
-
-/**
- * Builds the state of one filter from the surrounding filter panel.
- */
-export function useFilterPanelFilterState<TDef extends FilterDefinition>(
-  definition: IdentifiedFilterDefinition<TDef>,
-  labelId: string,
-): FilterPanelFilterContextValue<TDef> {
-  const api = useFilterPanelContext()
-  const {id} = definition
-  const value = api.getDraftValue(id)
-  const count = api.getValueCount(id, value)
-  return {
-    clear: () => api.clearFilter(id),
-    count,
-    definition,
-    id,
-    isActive: count > 0,
-    label: api.getFilterLabel(id),
-    labelId,
-    setValue: (next, details) => api.setFilterValue(id, next, details),
-    value: value as FilterPanelFilterContextValue<TDef>["value"],
-  }
-}
-
-/**
- * Returns the state of the surrounding filter. Use inside `FilterPanel.Filter`
- * to build a custom filter control.
- */
-export function useFilterPanelFilter<
-  TDef extends FilterDefinition = FilterDefinition,
->(): FilterPanelFilterContextValue<TDef> {
-  return useFilterPanelFilterContext() as unknown as FilterPanelFilterContextValue<TDef>
 }

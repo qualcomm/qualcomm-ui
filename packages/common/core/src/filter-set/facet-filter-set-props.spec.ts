@@ -2,7 +2,7 @@ import {describe, expect, test, vi} from "vitest"
 
 import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
 
-import {getFacetFilterPanelProps} from "./facet-filter-panel-props.js"
+import {getFacetFilterSetProps} from "./facet-filter-set-props.js"
 
 const items = [
   {id: "1", name: "Alpha", os: ["Linux"], tech: ["AI"]},
@@ -14,9 +14,9 @@ function createFacetFilter() {
   return new FacetFilter(items, {fields: {os: {}, tech: {}}})
 }
 
-describe("getFacetFilterPanelProps", () => {
+describe("getFacetFilterSetProps", () => {
   test("options are the field's values", () => {
-    const {getFilterOptions} = getFacetFilterPanelProps(createFacetFilter())
+    const {getFilterOptions} = getFacetFilterSetProps(createFacetFilter())
 
     expect(getFilterOptions("os")).toEqual([
       {label: "Linux", value: "Linux"},
@@ -26,8 +26,7 @@ describe("getFacetFilterPanelProps", () => {
   })
 
   test("counts reflect the selections in other fields", () => {
-    const {getFilterOptionCounts} =
-      getFacetFilterPanelProps(createFacetFilter())
+    const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetFilter())
     const values = {os: ["Linux"]}
 
     expect(getFilterOptionCounts("os", values)).toEqual(
@@ -46,8 +45,7 @@ describe("getFacetFilterPanelProps", () => {
   })
 
   test("values that are not facet selections do not filter", () => {
-    const {getFilterOptionCounts} =
-      getFacetFilterPanelProps(createFacetFilter())
+    const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetFilter())
 
     expect(
       getFilterOptionCounts("os", {name: "Alpha", visits: [1, null]}),
@@ -67,7 +65,7 @@ describe("getFacetFilterPanelProps", () => {
             .map((item) => item.id)
         : undefined,
     )
-    const {getFilterOptionCounts} = getFacetFilterPanelProps(
+    const {getFilterOptionCounts} = getFacetFilterSetProps(
       createFacetFilter(),
       {getCandidateIds},
     )

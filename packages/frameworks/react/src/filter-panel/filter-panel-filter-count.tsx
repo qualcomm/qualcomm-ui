@@ -3,10 +3,8 @@
 
 import type {ReactElement} from "react"
 
-import {
-  useFilterPanelContext,
-  useFilterPanelFilterContext,
-} from "@qualcomm-ui/react-core/filter-panel"
+import {useFilterPanelContext} from "@qualcomm-ui/react-core/filter-panel"
+import {useFilter} from "@qualcomm-ui/react-core/filter-set"
 import {NumberBadge, type NumberBadgeProps} from "@qualcomm-ui/react/badge"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
@@ -22,7 +20,7 @@ export function FilterPanelFilterCount(
   props: FilterPanelFilterCountProps,
 ): ReactElement {
   const api = useFilterPanelContext()
-  const filter = useFilterPanelFilterContext()
+  const filter = useFilter()
   const qdsContext = useQdsFilterPanelContext()
 
   const mergedProps = mergeProps(
