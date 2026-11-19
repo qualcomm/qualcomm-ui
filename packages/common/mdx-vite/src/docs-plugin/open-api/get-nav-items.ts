@@ -14,6 +14,13 @@ interface ApiIntroPage {
   title: string
 }
 
+interface OpenApiNavOptions {
+  /**
+   * Whether tag sections start expanded.
+   */
+  expanded?: boolean
+}
+
 function getTagTitle(name: string, tags: TagObject[]): string {
   const tag = tags.find((tag) => tag.name === name)
   return tag?.["x-displayName"] ?? tag?.summary ?? name
@@ -23,10 +30,11 @@ function toNavItem(
   intro: ApiIntroPage,
   operation: OpenApiOperation,
   idPrefix: string,
+  depth: number,
 ): NavItem {
   const pathname = `${intro.pathname}/${operation.slug}`
   return {
-    depth: 1,
+    depth,
     id: `${idPrefix}${operation.slug}`,
     method: operation.method,
     pathname,
@@ -37,13 +45,14 @@ function toNavItem(
 
 /**
  * Builds the sidebar of an API: the intro page, untagged operations, then one
- * section per tag. Declared tags come first, in spec order. An operation with
- * several tags is listed under each one.
+ * collapsible section per tag. Declared tags come first, in spec order. An
+ * operation with several tags is listed under each one.
  */
 export function getOpenApiNavItems(
   intro: ApiIntroPage,
   operations: OpenApiOperation[],
   tags: TagObject[] = [],
+  {expanded = false}: OpenApiNavOptions = {},
 ): NavItem[] {
   const tagNames = [
     ...new Set([
@@ -62,7 +71,7 @@ export function getOpenApiNavItems(
     },
     ...operations
       .filter((operation) => !operation.tags.length)
-      .map((operation) => toNavItem(intro, operation, "")),
+      .map((operation) => toNavItem(intro, operation, "", 1)),
   ]
 
   for (const name of tagNames) {
@@ -72,22 +81,20 @@ export function getOpenApiNavItems(
     if (!tagged.length) {
       continue
     }
-    const sectionTitle = getTagTitle(name, tags)
+    const title = getTagTitle(name, tags)
     items.push({
       depth: 1,
-      group: sectionTitle,
+      expanded,
       id: `tag:${name}`,
-      pathSegments: [],
-      sectionTitle,
-      title: "",
-    })
-    // Tag-prefixed ids keep multi-tag operations unique in the tree.
-    items.push(
-      ...tagged.map((operation) => ({
-        ...toNavItem(intro, operation, `${name}/`),
-        group: sectionTitle,
+      // Tag-prefixed ids keep multi-tag operations unique in the tree. `group`
+      // lets the sidebar filter match an operation by its tag's title.
+      items: tagged.map((operation) => ({
+        ...toNavItem(intro, operation, `${name}/`, 2),
+        group: title,
       })),
-    )
+      pathSegments: [],
+      title,
+    })
   }
 
   return items

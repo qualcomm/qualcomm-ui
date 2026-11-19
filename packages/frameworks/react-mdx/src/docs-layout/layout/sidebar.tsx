@@ -389,6 +389,7 @@ function getExpandedItems(items: NavItem[], pathname: string): string[] {
     // If an item does not have sub-items, it cannot be expanded.
     if (
       pathname === id ||
+      pathname === current.pathname ||
       expandedChildren?.length ||
       (current.expanded && current.items?.length)
     ) {

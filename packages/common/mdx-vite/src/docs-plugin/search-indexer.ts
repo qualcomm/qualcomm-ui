@@ -395,6 +395,7 @@ export class SearchIndexer {
     filePath: string,
     specPath: string,
     intro: PageSection,
+    expanded: boolean | undefined,
   ): void {
     const source = getSpecSource(filePath, specPath)
     if (!isRemoteSpec(specPath)) {
@@ -418,6 +419,7 @@ export class SearchIndexer {
       intro,
       processed.operations.map(({details}) => details),
       processed.tags,
+      {expanded},
     )
     const generatedPages: GeneratedPage[] = []
     for (const operation of processed.operations) {
@@ -483,7 +485,12 @@ export class SearchIndexer {
     this._pageFiles[defaultSection.pathname] = filePath
 
     if (frontmatter.openApi) {
-      this.indexOpenApiSpec(filePath, frontmatter.openApi, defaultSection)
+      this.indexOpenApiSpec(
+        filePath,
+        frontmatter.openApi,
+        defaultSection,
+        frontmatter.openApiExpanded,
+      )
     }
 
     let indexedPage: IndexedPage

@@ -36,6 +36,7 @@ export const frontmatterSchema: ZodObject<{}> =
     hideToc: z.boolean().optional(),
     id: z.string().optional(),
     openApi: z.string().optional(),
+    openApiExpanded: z.boolean().optional(),
     restricted: z.boolean().optional(),
     sideNavTitle: z.string().optional(),
     title: z.string(),

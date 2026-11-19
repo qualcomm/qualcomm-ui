@@ -88,6 +88,19 @@ describe("OpenAPI page indexing", () => {
     expect(pageMap["/api/listPets"]?.title).toBe("List pets")
   })
 
+  test("expands the tag sections when openApiExpanded is set", async () => {
+    const tagged = JSON.stringify({
+      ...spec,
+      paths: {"/pets": {get: {operationId: "listPets", tags: ["pets"]}}},
+    })
+    const sectionOf = async (frontmatter: string) =>
+      (await indexApiPage(frontmatter, tagged)).openApiNav?.["/api"]?.[1]
+    expect(await sectionOf("")).toMatchObject({expanded: false, title: "pets"})
+    expect(await sectionOf("openApiExpanded: true\n")).toMatchObject({
+      expanded: true,
+    })
+  })
+
   test("adds a knowledge section per operation", async () => {
     const {sections} = await indexApiPage()
     const operations = sections.filter((section) =>

@@ -25,25 +25,48 @@ describe("getOpenApiNavItems", () => {
     ])
   })
 
-  test("adds a section per tag, declared tags first", () => {
+  test("adds a collapsible section per tag, declared tags first", () => {
     const items = getOpenApiNavItems(
       intro,
       [operation("getUser", ["user"]), operation("getPet", ["pet"])],
       [{name: "pet", "x-displayName": "Pets"}],
     )
-    expect(items.map((item) => item.sectionTitle ?? item.pathname)).toEqual([
-      "/api",
-      "Pets",
-      "/api/getPet",
-      "user",
-      "/api/getUser",
+    expect(
+      items.map((item) => [
+        item.title,
+        item.pathname,
+        item.items?.map((child) => child.pathname),
+      ]),
+    ).toEqual([
+      ["Pet Store API", "/api", undefined],
+      ["Pets", undefined, ["/api/getPet"]],
+      ["user", undefined, ["/api/getUser"]],
     ])
+  })
+
+  test("nests tagged operations one level down", () => {
+    const [, section] = getOpenApiNavItems(intro, [
+      operation("getPet", ["pet"]),
+    ])
+    expect(section.depth).toBe(1)
+    expect(section.items?.map((item) => item.depth)).toEqual([2])
+  })
+
+  test("collapses the sections unless expanded is set", () => {
+    const operations = [operation("getPet", ["pet"])]
+    expect(getOpenApiNavItems(intro, operations)[1].expanded).toBe(false)
+    expect(
+      getOpenApiNavItems(intro, operations, [], {expanded: true})[1].expanded,
+    ).toBe(true)
   })
 
   test("lists a multi-tag operation under each tag with unique ids", () => {
     const items = getOpenApiNavItems(intro, [operation("getPet", ["a", "b"])])
-    const leaves = items.filter((item) => item.pathname === "/api/getPet")
-    expect(leaves.map((item) => item.id)).toEqual(["a/getPet", "b/getPet"])
+    const leaves = items.flatMap((item) => item.items ?? [])
+    expect(leaves.map((item) => [item.id, item.pathname])).toEqual([
+      ["a/getPet", "/api/getPet"],
+      ["b/getPet", "/api/getPet"],
+    ])
   })
 
   test("falls back to the path without a summary", () => {

@@ -98,6 +98,15 @@ export interface PageFrontmatter {
   openApi?: string
 
   /**
+   * Whether the tag sections of the API's sidebar start expanded. The section of
+   * the current operation is always expanded.
+   *
+   * @default false
+   * @since next-release
+   */
+  openApiExpanded?: boolean
+
+  /**
    * If `true`, the route will be flagged as restricted. This flag does nothing
    * internally. You will need to handle this in your application.
    */
