@@ -1,8 +1,4 @@
-import {
-  type BuildOptions,
-  type ImportResolverFn,
-  isReferenceType,
-} from "@qualcomm-ui/typedoc"
+import type {BuildOptions, ImportResolverFn} from "@qualcomm-ui/typescoop"
 
 /**
  * Assumes that each module's source code lives in individually-exported folders
@@ -53,35 +49,19 @@ const pkgImportResolvers: Record<string, ImportResolverFn> = {
   "@qualcomm-ui/dom": resolveTopLevelCodeSplitPackage,
   "@qualcomm-ui/qds-core": resolveTopLevelCodeSplitPackage,
   "@qualcomm-ui/utils": (opts) => {
-    if (
-      opts.type.typeArguments &&
-      opts.type.name === "WithDataAttributes" &&
-      isReferenceType(opts.type.typeArguments[0])
-    ) {
-      return opts.builder.resolveImport(opts.type.typeArguments[0])
+    const [inner] = opts.typeArguments
+    if (opts.name === "WithDataAttributes" && inner) {
+      return opts.resolveImport(inner)
     }
     return resolveTopLevelCodeSplitPackage(opts)
   },
 }
 
 export default {
-  documentationScope: "all",
   importResolver: (params) => {
     const packageName = params.packageName
     return pkgImportResolvers[packageName]?.(params)
   },
-  moduleWhitelist: [
-    "@qualcomm-ui/react",
-    "@qualcomm-ui/react-core",
-    "@qualcomm-ui/core",
-    "@qualcomm-ui/dom",
-    "@qualcomm-ui/qds-core",
-    "@qualcomm-ui/utils",
-  ],
   prettyJson: false,
-  typedocOptions: {
-    gitRemote: "origin",
-    gitRevision: "main",
-    tsconfig: "tsconfig.typedoc.json",
-  },
+  tsconfig: "tsconfig.typescoop.json",
 } satisfies BuildOptions

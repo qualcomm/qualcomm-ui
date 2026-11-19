@@ -104,6 +104,43 @@ export interface SinceExample {
   foo: string
 }
 
+export interface DeprecatedTagExample {
+  /**
+   * The size of the element. Use {@link size} instead.
+   *
+   * @deprecated
+   */
+  legacySize?: number
+
+  /**
+   * The size of the element.
+   */
+  size?: number
+}
+
+export interface CustomTagExample {
+  /**
+   * Called when the value changes.
+   *
+   * @custom (value: string) => void
+   */
+  onValueChange?: <T extends string = string>(value: T) => void
+}
+
+export interface HiddenTagExample {
+  /**
+   * Hidden from the docs.
+   *
+   * @internal
+   */
+  internalState?: unknown
+
+  /**
+   * Shown in the docs.
+   */
+  label?: string
+}
+
 export type DocsEnvironment = "test" | "stage" | "prod"
 
 export interface ZipFileOptions {

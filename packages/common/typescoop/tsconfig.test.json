@@ -1,0 +1,17 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.vitest.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "strictPropertyInitialization": false,
+    "composite": true,
+    "rootDir": "./tests"
+  },
+  "include": [
+    "./tests"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

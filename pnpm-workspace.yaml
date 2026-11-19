@@ -45,6 +45,7 @@ catalog:
   "@angular/platform-server": ~22.2.4
   "@angular/router": ~22.2.4
   "@angular/ssr": ~22.2.5
+  "@clack/prompts": 1.9.0
   "@commander-js/extra-typings": 14.0.0
   "@eslint/js": 9.39.4
   '@faker-js/faker': 10.6.0

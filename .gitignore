@@ -62,6 +62,7 @@ packages/docs/react-docs/src/routes/changelogs*
 packages/docs/react-table-docs/src/routes/changelogs*
 packages/docs/react-vscode-docs/src/routes/changelogs*
 .typedoc
+.typescoop
 
 ###############################################################################
 # Environment / secrets

@@ -1,5 +1,13 @@
 # @qualcomm-ui/typedoc-common Changelog
 
+## 1.1.0
+
+Nov 19th, 2026
+
+### Features
+
+* [typescoop]: add type extractor for component api docs ([24a5013](https://github.com/qualcomm/qualcomm-ui/commit/24a5013))
+
 ## 1.0.9
 
 Nov 9th, 2026

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/react-test-utils",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": true,
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -20,7 +20,7 @@
     "build:ts": "tsc -b tsconfig.lib.json"
   },
   "devDependencies": {
-    "@clack/prompts": "1.0.0-alpha.6",
+    "@clack/prompts": "^1.9.0",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/core": "workspace:*",
     "@qualcomm-ui/qds-core": "workspace:*",

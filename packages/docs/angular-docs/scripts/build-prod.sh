@@ -47,7 +47,7 @@ echo "Extracting site data"
 
 mkdir -p ./scripts/temp
 
-pnpm build:typedoc
+pnpm typescoop-extract
 
 pnpm generate-page-map
 
