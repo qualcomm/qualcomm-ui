@@ -4,11 +4,11 @@
 import type {FilterOptionObject} from "@qualcomm-ui/core/filters"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
 import type {
-  FacetFilter,
-  FacetFilterItem,
-  FacetFilterResult,
+  FacetIndex,
+  FacetIndexItem,
+  FacetIndexResult,
   FacetSelections,
-} from "@qualcomm-ui/utils/facet-filter"
+} from "@qualcomm-ui/utils/facet-index"
 
 import type {
   FilterSetApiProps,
@@ -19,7 +19,7 @@ import {hashValues} from "./internal/filter-set.utils.js"
 
 export interface FacetFilterSetOptions {
   /**
-   * Returns the ids of the items that pass the filters `FacetFilter` can't
+   * Returns the ids of the items that pass the filters `FacetIndex` can't
    * apply, such as text, range, and date filters, or a separate text search.
    * Called with the same values as the counts. Return `undefined` to include
    * every item.
@@ -38,7 +38,7 @@ export interface FacetFilterSetProps {
 }
 
 /**
- * Converts filter set values to `FacetFilter` selections. Only `string[]`
+ * Converts filter set values to `FacetIndex` selections. Only `string[]`
  * values of configured fields are facets.
  */
 function toFacetSelections(
@@ -57,27 +57,27 @@ function toFacetSelections(
 
 /**
  * Returns filter set props that resolve collections and option counts from a
- * `FacetFilter`. Filter ids match the facet filter's field names. Ids without
+ * `FacetIndex`. Filter ids match the index's field names. Ids without
  * a matching field fall back to the filter set defaults.
  */
-export function getFacetFilterSetProps<Item extends FacetFilterItem>(
-  facetFilter: FacetFilter<Item>,
+export function getFacetFilterSetProps<Item extends FacetIndexItem>(
+  facetIndex: FacetIndex<Item>,
   options: FacetFilterSetOptions = {},
 ): FacetFilterSetProps {
   const {getCandidateIds} = options
-  const fields = facetFilter.fields
-  let cached: {key: string; result: FacetFilterResult} | undefined
+  const fields = facetIndex.fields
+  let cached: {key: string; result: FacetIndexResult} | undefined
   const collections = new Map<
     string,
     {collection: ListCollection<FilterOptionObject>; values: readonly string[]}
   >()
 
-  function run(values: FilterSetValues): FacetFilterResult {
+  function run(values: FilterSetValues): FacetIndexResult {
     const key = hashValues(values)
     if (cached?.key !== key) {
       cached = {
         key,
-        result: facetFilter.filter({
+        result: facetIndex.filter({
           ids: getCandidateIds?.(values),
           selections: toFacetSelections(fields, values),
         }),
@@ -91,7 +91,7 @@ export function getFacetFilterSetProps<Item extends FacetFilterItem>(
       if (!fields.includes(id)) {
         return undefined
       }
-      const values = facetFilter.getValues(id)
+      const values = facetIndex.getValues(id)
       let collection = collections.get(id)
       if (collection?.values !== values) {
         collection = {

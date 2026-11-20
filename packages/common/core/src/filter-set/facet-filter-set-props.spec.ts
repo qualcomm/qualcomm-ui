@@ -1,7 +1,7 @@
 import {describe, expect, test, vi} from "vitest"
 
 import type {ListCollection} from "@qualcomm-ui/utils/collection"
-import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
+import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
 import {getFacetFilterSetProps} from "./facet-filter-set-props.js"
 
@@ -11,13 +11,13 @@ const items = [
   {id: "3", name: "Gamma", os: ["Linux"], tech: ["Connectivity"]},
 ]
 
-function createFacetFilter() {
-  return new FacetFilter(items, {fields: {os: {}, tech: {}}})
+function createFacetIndex() {
+  return new FacetIndex(items, {fields: {os: {}, tech: {}}})
 }
 
 describe("getFacetFilterSetProps", () => {
   test("collections hold the field's values", () => {
-    const {getFilterCollection} = getFacetFilterSetProps(createFacetFilter())
+    const {getFilterCollection} = getFacetFilterSetProps(createFacetIndex())
     const state = getFilterCollection("os", {values: []})
 
     expect(state?.status).toBe("success")
@@ -32,7 +32,7 @@ describe("getFacetFilterSetProps", () => {
   })
 
   test("counts reflect the selections in other fields", () => {
-    const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetFilter())
+    const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetIndex())
     const values = {os: ["Linux"]}
 
     expect(getFilterOptionCounts("os", values)).toEqual(
@@ -51,7 +51,7 @@ describe("getFacetFilterSetProps", () => {
   })
 
   test("values that are not facet selections do not filter", () => {
-    const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetFilter())
+    const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetIndex())
 
     expect(
       getFilterOptionCounts("os", {name: "Alpha", visits: [1, null]}),
@@ -71,10 +71,9 @@ describe("getFacetFilterSetProps", () => {
             .map((item) => item.id)
         : undefined,
     )
-    const {getFilterOptionCounts} = getFacetFilterSetProps(
-      createFacetFilter(),
-      {getCandidateIds},
-    )
+    const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetIndex(), {
+      getCandidateIds,
+    })
     const values = {name: "Al"}
 
     expect(getFilterOptionCounts("os", values)).toEqual(

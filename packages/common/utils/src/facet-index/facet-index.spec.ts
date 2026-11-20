@@ -1,13 +1,13 @@
 import {describe, expect, test} from "vitest"
 
 import {
-  FacetFilter,
-  type FacetFilterConfig,
-  type FacetFilterInput,
-  type FacetFilterItem,
-  type FacetFilterResult,
+  FacetIndex,
+  type FacetIndexConfig,
+  type FacetIndexInput,
+  type FacetIndexItem,
+  type FacetIndexResult,
   type FacetSelections,
-} from "./facet-filter.js"
+} from "./facet-index.js"
 
 const items = [
   {id: "1", operatingSystems: ["Linux"], technologies: ["AI"]},
@@ -15,7 +15,7 @@ const items = [
   {id: "3", operatingSystems: ["Linux"], technologies: ["Connectivity"]},
 ]
 
-const config: FacetFilterConfig = {
+const config: FacetIndexConfig = {
   fields: {
     operatingSystems: {},
     technologies: {},
@@ -29,9 +29,9 @@ const tagged = [
   {id: "4", tags: ["a", "b", "c"]},
 ]
 
-describe("FacetFilter", () => {
+describe("FacetIndex", () => {
   test("matches any value within a field and all fields together", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       selections: {
         operatingSystems: ["Linux", "Windows"],
         technologies: ["Connectivity"],
@@ -42,7 +42,7 @@ describe("FacetFilter", () => {
   })
 
   test("returns every item and full counts without input", () => {
-    const result = new FacetFilter(items, config).filter()
+    const result = new FacetIndex(items, config).filter()
 
     expect(result).toEqual({
       facets: {
@@ -60,7 +60,7 @@ describe("FacetFilter", () => {
   })
 
   test("does not filter on fields with empty selections", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       selections: {operatingSystems: [], unknown: []},
     })
 
@@ -68,7 +68,7 @@ describe("FacetFilter", () => {
   })
 
   test("returns empty results for an empty item set", () => {
-    const result = new FacetFilter([], config).filter({
+    const result = new FacetIndex([], config).filter({
       selections: {operatingSystems: ["Linux"]},
     })
 
@@ -79,7 +79,7 @@ describe("FacetFilter", () => {
   })
 
   test("limits results and buckets to the supplied candidate ids", () => {
-    const result = new FacetFilter(items, config).filter({ids: ["1", "3"]})
+    const result = new FacetIndex(items, config).filter({ids: ["1", "3"]})
 
     expect(result.ids).toEqual(["1", "3"])
     expect(result.facets.operatingSystems).toEqual([
@@ -89,7 +89,7 @@ describe("FacetFilter", () => {
   })
 
   test("returns candidates in the supplied order and skips unknown ids", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       ids: ["3", "missing", "1"],
     })
 
@@ -97,7 +97,7 @@ describe("FacetFilter", () => {
   })
 
   test("counts a repeated candidate id once", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       ids: ["1", "1", "2"],
     })
 
@@ -109,7 +109,7 @@ describe("FacetFilter", () => {
   })
 
   test("applies selections within the supplied candidate ids", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       ids: ["2", "3"],
       selections: {technologies: ["AI"]},
     })
@@ -126,7 +126,7 @@ describe("FacetFilter", () => {
   })
 
   test("counts each match-any bucket without the field's own selections", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       selections: {
         operatingSystems: ["Linux"],
         technologies: ["AI"],
@@ -144,7 +144,7 @@ describe("FacetFilter", () => {
   })
 
   test("matches nothing for a match-any value missing from the data", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       selections: {operatingSystems: ["macOS"]},
     })
 
@@ -160,7 +160,7 @@ describe("FacetFilter", () => {
   })
 
   test("requires every selected value for match-all fields", () => {
-    const result = new FacetFilter(tagged, {
+    const result = new FacetIndex(tagged, {
       fields: {tags: {match: "all"}},
     }).filter({selections: {tags: ["a"]}})
 
@@ -173,7 +173,7 @@ describe("FacetFilter", () => {
   })
 
   test("counts match-all buckets on top of several selected values", () => {
-    const result = new FacetFilter(tagged, {
+    const result = new FacetIndex(tagged, {
       fields: {tags: {match: "all"}},
     }).filter({selections: {tags: ["b", "a"]}})
 
@@ -186,7 +186,7 @@ describe("FacetFilter", () => {
   })
 
   test("matches nothing for a match-all value missing from the data", () => {
-    const result = new FacetFilter(tagged, {
+    const result = new FacetIndex(tagged, {
       fields: {tags: {match: "all"}},
     }).filter({selections: {tags: ["a", "z"]}})
 
@@ -205,7 +205,7 @@ describe("FacetFilter", () => {
       {id: "3", os: ["Linux"], tags: ["a"]},
       {id: "4", os: ["macOS"], tags: ["b"]},
     ]
-    const result = new FacetFilter(mixed, {
+    const result = new FacetIndex(mixed, {
       fields: {os: {}, tags: {match: "all"}},
     }).filter({selections: {os: ["Linux", "macOS"], tags: ["b"]}})
 
@@ -226,7 +226,7 @@ describe("FacetFilter", () => {
       {id: "1", meta: {platforms: [{name: "x"}, {name: "y"}]}},
       {id: "2", meta: {platforms: [{name: "y"}]}},
     ]
-    const result = new FacetFilter(nested, {
+    const result = new FacetIndex(nested, {
       fields: {platform: {path: "meta.platforms.name"}},
     }).filter({selections: {platform: ["x"]}})
 
@@ -242,12 +242,12 @@ describe("FacetFilter", () => {
       {id: "1", variants: [{chips: ["a", "b"]}, {chips: ["c"]}]},
       {id: "2", variants: [{chips: "d"}]},
     ]
-    const facetFilter = new FacetFilter(nested, {
+    const facetIndex = new FacetIndex(nested, {
       fields: {chip: {path: "variants.chips"}},
     })
 
-    expect(facetFilter.getValues("chip")).toEqual(["a", "b", "c", "d"])
-    expect(facetFilter.filter({selections: {chip: ["c"]}}).ids).toEqual(["1"])
+    expect(facetIndex.getValues("chip")).toEqual(["a", "b", "c", "d"])
+    expect(facetIndex.filter({selections: {chip: ["c"]}}).ids).toEqual(["1"])
   })
 
   test("skips paths that are missing or pass through non-objects", () => {
@@ -258,7 +258,7 @@ describe("FacetFilter", () => {
       {id: "4", meta: "Linux"},
       {id: "5", meta: [null, {os: "Windows"}]},
     ]
-    const result = new FacetFilter(sparse, {
+    const result = new FacetIndex(sparse, {
       fields: {os: {path: "meta.os"}},
     }).filter()
 
@@ -273,7 +273,7 @@ describe("FacetFilter", () => {
       {id: "1", tags: ["a", 1, true, null, undefined, {}, ["b"]]},
       {id: "2", tags: 2},
     ]
-    const result = new FacetFilter(mixed, {fields: {tags: {}}}).filter()
+    const result = new FacetIndex(mixed, {fields: {tags: {}}}).filter()
 
     expect(result.facets.tags).toEqual([
       {docCount: 1, key: "a", selected: false},
@@ -282,7 +282,7 @@ describe("FacetFilter", () => {
 
   test("counts an item once when it repeats a value", () => {
     const repeated = [{id: "1", tags: ["a", "a"]}]
-    const result = new FacetFilter(repeated, {fields: {tags: {}}}).filter()
+    const result = new FacetIndex(repeated, {fields: {tags: {}}}).filter()
 
     expect(result.facets.tags).toEqual([
       {docCount: 1, key: "a", selected: false},
@@ -290,7 +290,7 @@ describe("FacetFilter", () => {
   })
 
   test("excludes all items when selecting an unconfigured field", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       selections: {unknown: ["value"]},
     })
 
@@ -302,7 +302,7 @@ describe("FacetFilter", () => {
   })
 
   test("treats inherited object property names as unconfigured fields", () => {
-    const result = new FacetFilter(items, config).filter({
+    const result = new FacetIndex(items, config).filter({
       selections: {constructor: ["value"], toString: ["value"]},
     })
 
@@ -310,37 +310,34 @@ describe("FacetFilter", () => {
   })
 
   test("exposes the configured fields and their sorted values", () => {
-    const facetFilter = new FacetFilter(items, config)
+    const facetIndex = new FacetIndex(items, config)
 
-    expect(facetFilter.fields).toEqual(["operatingSystems", "technologies"])
-    expect(facetFilter.getValues("technologies")).toEqual([
-      "AI",
-      "Connectivity",
-    ])
-    expect(facetFilter.getValues("unknown")).toEqual([])
-    expect(facetFilter.getValues("constructor")).toEqual([])
+    expect(facetIndex.fields).toEqual(["operatingSystems", "technologies"])
+    expect(facetIndex.getValues("technologies")).toEqual(["AI", "Connectivity"])
+    expect(facetIndex.getValues("unknown")).toEqual([])
+    expect(facetIndex.getValues("constructor")).toEqual([])
   })
 
   test("sorts values with locale-aware ordering", () => {
     const cased = [{id: "1", tags: ["b", "B", "a", "A"]}]
 
     expect(
-      new FacetFilter(cased, {fields: {tags: {}}}).getValues("tags"),
+      new FacetIndex(cased, {fields: {tags: {}}}).getValues("tags"),
     ).toEqual(["a", "A", "b", "B"])
   })
 
   test("returns the same values array on every call", () => {
-    const facetFilter = new FacetFilter(items, config)
+    const facetIndex = new FacetIndex(items, config)
 
-    expect(facetFilter.getValues("technologies")).toBe(
-      facetFilter.getValues("technologies"),
+    expect(facetIndex.getValues("technologies")).toBe(
+      facetIndex.getValues("technologies"),
     )
   })
 
   test("ignores mutations to the items and config after construction", () => {
     const sourceItems = items.map((item) => ({...item}))
-    const sourceConfig: FacetFilterConfig = {fields: {operatingSystems: {}}}
-    const facetFilter = new FacetFilter(sourceItems, sourceConfig)
+    const sourceConfig: FacetIndexConfig = {fields: {operatingSystems: {}}}
+    const facetIndex = new FacetIndex(sourceItems, sourceConfig)
 
     sourceItems.push({
       id: "4",
@@ -350,9 +347,9 @@ describe("FacetFilter", () => {
     sourceConfig.fields.operatingSystems.match = "all"
     sourceConfig.fields.technologies = {}
 
-    expect(facetFilter.fields).toEqual(["operatingSystems"])
+    expect(facetIndex.fields).toEqual(["operatingSystems"])
     expect(
-      facetFilter.filter({selections: {operatingSystems: ["Linux", "Windows"]}})
+      facetIndex.filter({selections: {operatingSystems: ["Linux", "Windows"]}})
         .ids,
     ).toEqual(["1", "2", "3"])
   })
@@ -364,17 +361,17 @@ describe("FacetFilter", () => {
  * oracle.
  */
 function referenceFilter(
-  source: readonly FacetFilterItem[],
-  filterConfig: FacetFilterConfig,
-  input: FacetFilterInput,
-): FacetFilterResult {
+  source: readonly FacetIndexItem[],
+  filterConfig: FacetIndexConfig,
+  input: FacetIndexInput,
+): FacetIndexResult {
   const fields = Object.entries(filterConfig.fields).map(([name, field]) => ({
     match: field.match ?? "any",
     name,
     path: field.path ?? name,
   }))
 
-  function read(item: FacetFilterItem, path: string): string[] {
+  function read(item: FacetIndexItem, path: string): string[] {
     let values: unknown[] = [item]
     for (const key of path.split(".")) {
       values = values.flatMap((value) => {
@@ -388,7 +385,7 @@ function referenceFilter(
     return values.filter((value): value is string => typeof value === "string")
   }
 
-  function matches(item: FacetFilterItem, selections: FacetSelections) {
+  function matches(item: FacetIndexItem, selections: FacetSelections) {
     return Object.entries(selections).every(([name, selected]) => {
       if (selected.length === 0) {
         return true
@@ -458,7 +455,7 @@ function createRandom(seed: number) {
   return {int, next, pick, sample}
 }
 
-const randomConfig: FacetFilterConfig = {
+const randomConfig: FacetIndexConfig = {
   fields: {
     chip: {path: "variants.chip"},
     os: {},
@@ -478,7 +475,7 @@ const pools: Record<string, string[]> = {
 
 function createRandomCase(seed: number) {
   const random = createRandom(seed)
-  const source: FacetFilterItem[] = Array.from(
+  const source: FacetIndexItem[] = Array.from(
     {length: random.int(40)},
     (_, index) => ({
       id: `item-${index}`,
@@ -519,11 +516,11 @@ function createRandomCase(seed: number) {
   return {input: {ids, selections}, source}
 }
 
-describe("FacetFilter matches the reference implementation", () => {
+describe("FacetIndex matches the reference implementation", () => {
   test.each(Array.from({length: 300}, (_, seed) => seed))("seed %i", (seed) => {
     const {input, source} = createRandomCase(seed)
 
-    expect(new FacetFilter(source, randomConfig).filter(input)).toEqual(
+    expect(new FacetIndex(source, randomConfig).filter(input)).toEqual(
       referenceFilter(source, randomConfig, input),
     )
   })

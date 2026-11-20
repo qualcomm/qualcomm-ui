@@ -1,90 +1,14 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-/** Selected values keyed by facet field name. */
-export type FacetSelections = Record<string, readonly string[]>
-
-/** Configures how a field is read and matched. */
-export interface FacetFieldConfig {
-  /**
-   * How selected values within this field combine. `"any"` matches items that
-   * have at least one selected value, `"all"` matches items that have every
-   * selected value.
-   *
-   * @default "any"
-   */
-  match?: "any" | "all"
-
-  /**
-   * Dot-separated path to the item's values for this field. Arrays along the
-   * path are flattened. Defaults to the field name.
-   */
-  path?: string
-}
-
-/** Defines the fields available for faceted filtering. */
-export interface FacetFilterConfig {
-  /**
-   * Facet fields keyed by name. The name is used as the key in
-   * {@link FacetSelections} and {@link FacetFilterResult.facets}, and as the
-   * value path when {@link FacetFieldConfig.path} is omitted.
-   */
-  fields: Record<string, FacetFieldConfig>
-}
-
-/** A filterable item with a unique identifier. */
-export interface FacetFilterItem extends Record<string, unknown> {
-  /**
-   * Unique identifier, used for {@link FacetFilterInput.ids} and returned in
-   * {@link FacetFilterResult.ids}.
-   */
-  id: string
-}
-
-/** A facet value and its result count. */
-export interface FacetBucket {
-  /**
-   * Number of candidate items that would match if this value were selected,
-   * given the selections in every other field.
-   */
-  docCount: number
-  /**
-   * The facet value.
-   */
-  key: string
-  /**
-   * Whether this value is in the field's current selections.
-   */
-  selected: boolean
-}
-
-/** Selections and optional candidate IDs for a filter pass. */
-export interface FacetFilterInput {
-  /**
-   * Restricts both the results and the bucket counts to these items, e.g. the
-   * hits from a preceding text search.
-   */
-  ids?: readonly string[]
-  /**
-   * Selected values keyed by field name. Fields with no selected values do not
-   * filter.
-   */
-  selections?: FacetSelections
-}
-
-/** Matching item IDs and facet buckets. */
-export interface FacetFilterResult {
-  /**
-   * Buckets for every configured field, keyed by field name. Each field lists
-   * every value found in the full item set, sorted by key, including values
-   * with a `docCount` of 0.
-   */
-  facets: Record<string, FacetBucket[]>
-  /**
-   * IDs of the candidate items that match all selections, in candidate order.
-   */
-  ids: string[]
-}
+import type {
+  FacetBucket,
+  FacetFieldConfig,
+  FacetIndexConfig,
+  FacetIndexInput,
+  FacetIndexItem,
+  FacetIndexResult,
+} from "./types.js"
 
 /** The indexed values of one configured field. */
 interface FieldIndex {
@@ -145,7 +69,7 @@ function visitValues(
 }
 
 function indexField(
-  items: readonly FacetFilterItem[],
+  items: readonly FacetIndexItem[],
   name: string,
   field: FacetFieldConfig,
   compare: (a: string, b: string) => number,
@@ -246,7 +170,7 @@ function tally(field: FieldIndex, counts: Uint32Array, index: number): void {
  * every candidate once, so its cost grows with the number of candidates and
  * their values rather than with the number of distinct values per field.
  */
-export class FacetFilter<Item extends FacetFilterItem> {
+export class FacetIndex<Item extends FacetIndexItem> {
   /**
    * The configured field names.
    */
@@ -259,7 +183,7 @@ export class FacetFilter<Item extends FacetFilterItem> {
    * Indexes the values of each configured field. The items and config are
    * copied, so later mutations to either have no effect.
    */
-  constructor(items: readonly Item[], config: FacetFilterConfig) {
+  constructor(items: readonly Item[], config: FacetIndexConfig) {
     const {compare} = new Intl.Collator()
     this.items = [...items]
     this.indexById = new Map(this.items.map((item, index) => [item.id, index]))
@@ -283,7 +207,7 @@ export class FacetFilter<Item extends FacetFilterItem> {
   /**
    * Returns the matching item IDs and the bucket counts for every field.
    */
-  filter(input: FacetFilterInput = {}): FacetFilterResult {
+  filter(input: FacetIndexInput = {}): FacetIndexResult {
     const tallies = [...this.fieldIndexes.values()].map(
       (field) => [field, new Uint32Array(field.values.length)] as const,
     )

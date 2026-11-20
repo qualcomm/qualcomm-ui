@@ -14,7 +14,7 @@ import {
   TextInputFilter,
 } from "@qualcomm-ui/react/filters"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
-import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
+import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
 const builds = [
   {id: "1", mode: "debug", name: "android-arm64", status: "Failed"},
@@ -47,7 +47,7 @@ const filters = defineFilters({
 
 type BuildFilters = FilterValues<typeof filters>
 
-const facetFilter = new FacetFilter(builds, {
+const facetIndex = new FacetIndex(builds, {
   fields: {mode: {}, status: {}},
 })
 
@@ -63,13 +63,13 @@ function matchName(values: BuildFilters): string[] | undefined {
     : undefined
 }
 
-const facetProps = getFacetFilterSetProps(facetFilter, {
+const facetProps = getFacetFilterSetProps(facetIndex, {
   getCandidateIds: matchName,
 })
 
 export function FilterPanelFacetsDemo(): ReactElement {
   const [value, setValue] = useState<BuildFilters>({})
-  const {ids} = facetFilter.filter({
+  const {ids} = facetIndex.filter({
     ids: matchName(value),
     selections: {mode: value.mode ?? [], status: value.status ?? []},
   })

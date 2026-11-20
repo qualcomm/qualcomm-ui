@@ -156,7 +156,7 @@ Labels come from the collection. A selection keeps its labels after a search nar
 ### Filter Counts
 
 ::: terms
-faceting, facets, result counts, FacetFilter, getFacetFilterSetProps
+faceting, facets, result counts, FacetIndex, getFacetFilterSetProps
 :::
 
 [getFilterOptionCounts](#getFilterOptionCounts) shows the number of results next to each checkbox and radio option. Return counts keyed by option value, or `undefined` to hide counts for a filter. Unselected options with a count of 0 are disabled.
@@ -168,7 +168,7 @@ faceting, facets, result counts, FacetFilter, getFacetFilterSetProps
 >
 ```
 
-For data in memory, index it with [FacetFilter](../../utilities+/facet-filter.mdx) and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetFilter` only counts list filters, so apply other filters, like text search, in `getCandidateIds`.
+For data in memory, index it with [FacetIndex](../../utilities+/facet-index.mdx) and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetIndex` only counts list filters, so apply other filters, like text search, in `getCandidateIds`.
 
 <Demo
   name="FilterPanelFacetsDemo"
@@ -186,7 +186,7 @@ In manual mode, counts follow the draft, so they update before the user applies.
 fetched data, TanStack Query, useQuery, refetch
 :::
 
-When the data comes from a request, build the `FacetFilter` index once the response arrives, and pass its props to the panel. Build the index from a separate unfiltered query. It then counts every value of a field, and values don't drop out of the lists as the filters narrow the results. This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
+When the data comes from a request, build the `FacetIndex` once the response arrives, and pass its props to the panel. Build the index from a separate unfiltered query. It then counts every value of a field, and values don't drop out of the lists as the filters narrow the results. This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
 
 <Demo
   name="FilterPanelAsyncFacetsDemo"

@@ -15,7 +15,7 @@ import {
 } from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
-import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
+import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
 import {type Build, fetchBuilds} from "./mock-api"
 
@@ -28,7 +28,7 @@ type BuildFilters = FilterValues<typeof filters>
 
 function indexBuilds(builds: Build[]): FacetFilterSetProps {
   return getFacetFilterSetProps(
-    new FacetFilter(builds, {fields: {platform: {}, status: {}}}),
+    new FacetIndex(builds, {fields: {platform: {}, status: {}}}),
   )
 }
 

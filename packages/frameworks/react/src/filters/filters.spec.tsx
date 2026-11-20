@@ -37,7 +37,7 @@ import {
   useFilterSet,
 } from "@qualcomm-ui/react/filters"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
-import {FacetFilter} from "@qualcomm-ui/utils/facet-filter"
+import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
 import {type MultiComponentTestCase, runTests} from "~test-utils/runner"
 
@@ -749,7 +749,7 @@ describe("option counts", () => {
   })
 
   test("counts follow the draft in manual mode", async () => {
-    const facetFilter = new FacetFilter(
+    const facetIndex = new FacetIndex(
       [
         {id: "1", status: ["Failed"], user: ["Ana"]},
         {id: "2", status: ["Passed"], user: ["Ben"]},
@@ -758,7 +758,7 @@ describe("option counts", () => {
       {fields: {status: {}, user: {}}},
     )
     await render(
-      <Panel applyMode="manual" {...getFacetFilterSetProps(facetFilter)}>
+      <Panel applyMode="manual" {...getFacetFilterSetProps(facetIndex)}>
         <FilterPanel.Filter filter={filters.status}>
           <CheckboxGroupFilter />
         </FilterPanel.Filter>

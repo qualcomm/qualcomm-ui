@@ -1,6 +1,6 @@
-import type {FacetFilterItem} from "@qualcomm-ui/utils/facet-filter"
+import type {FacetIndexItem} from "@qualcomm-ui/utils/facet-index"
 
-export interface Build extends FacetFilterItem {
+export interface Build extends FacetIndexItem {
   name: string
   platform: string
   status: string
