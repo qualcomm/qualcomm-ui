@@ -105,11 +105,16 @@ function indexField(
     valueIndex.get(value)!,
   )
 
+  const valueIds = new Uint32Array(seenIds.length)
+  for (let i = 0; i < seenIds.length; i++) {
+    valueIds[i] = sortedIdBySeenId[seenIds[i]]
+  }
+
   return {
     matchAll: field.match === "all",
     name,
     offsets,
-    valueIds: Uint32Array.from(seenIds, (id) => sortedIdBySeenId[id]),
+    valueIds,
     valueIndex,
     values,
   }
