@@ -18,6 +18,18 @@ export interface FacetFieldConfig {
   /**
    * Dot-separated path to the item's values for this field. Arrays along the
    * path are flattened. Defaults to the field name.
+   *
+   * @example
+   * ```ts
+   * // item: {target: {os: "linux"}}
+   * path: "target.os" // values: ["linux"]
+   *
+   * // item: {devices: [{chip: "SM8650"}, {chip: "SM8550"}]}
+   * path: "devices.chip" // values: ["SM8650", "SM8550"]
+   *
+   * // item: {targets: [{os: ["android", "linux"]}, {os: "windows"}]}
+   * path: "targets.os" // values: ["android", "linux", "windows"]
+   * ```
    */
   path?: string
 }
