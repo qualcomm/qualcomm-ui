@@ -1,13 +1,13 @@
 import {describe, expect, test} from "vitest"
 
-import {
-  FacetIndex,
-  type FacetIndexConfig,
-  type FacetIndexInput,
-  type FacetIndexItem,
-  type FacetIndexResult,
-  type FacetSelections,
-} from "./facet-index.js"
+import {FacetIndex} from "./facet-index.js"
+import type {
+  FacetIndexConfig,
+  FacetIndexInput,
+  FacetIndexItem,
+  FacetIndexResult,
+  FacetSelections,
+} from "./types.js"
 
 const items = [
   {id: "1", operatingSystems: ["Linux"], technologies: ["AI"]},
