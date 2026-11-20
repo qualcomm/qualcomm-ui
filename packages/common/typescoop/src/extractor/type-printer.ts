@@ -150,6 +150,18 @@ export function isOpaqueAliasDeclaration(symbol: ts.Symbol): boolean {
   )
 }
 
+/**
+ * Mapped types that select members of another object type.
+ */
+const selectionTypes = new Set(["Omit", "Pick"])
+
+function isMappedType(type: ts.Type): boolean {
+  return (
+    !!(type.flags & ts.TypeFlags.Object) &&
+    !!((type as ts.ObjectType).objectFlags & ts.ObjectFlags.Mapped)
+  )
+}
+
 export function isSignalName(name: string | undefined): boolean {
   return !!name && signalNames.has(name)
 }
@@ -242,13 +254,31 @@ export class TypePrinter {
     const ctx = this.createContext(options)
     const printed =
       options.skipOwnAlias && type.aliasSymbol
-        ? this.printAliasBody(
-            type,
-            type.aliasSymbol,
-            this.enter(type.aliasSymbol, ctx),
-          )
+        ? this.printOwnAlias(type, type.aliasSymbol, options.node, ctx)
         : this.printHinted(type, options.node, ctx, !!options.stripUndefined)
     return this.finish(printed, ctx, options)
+  }
+
+  /**
+   * Prints the body of an alias declaration. The type of
+   * `type Inset = Partial<Rect>` carries the `Partial` alias instead of its
+   * own, so the body as written is printed before falling back to the body of
+   * `Partial`.
+   */
+  private printOwnAlias(
+    type: ts.Type,
+    alias: ts.Symbol,
+    body: ts.TypeNode | undefined,
+    ctx: PrintContext,
+  ): string {
+    const inner = this.enter(alias, ctx)
+    const ownsBody = alias.declarations?.some(
+      (declaration) =>
+        ts.isTypeAliasDeclaration(declaration) && declaration.type === body,
+    )
+    const written =
+      body && !ownsBody ? this.printWrittenReference(body, inner) : undefined
+    return written ?? this.printAliasBody(type, alias, inner)
   }
 
   /**
@@ -408,29 +438,58 @@ export class TypePrinter {
       ts.isTypeReferenceNode(body) &&
       this.checker.getDeclaredTypeOfSymbol(alias) === type
     ) {
-      // `type PropsOf<C> = JSX.LibraryManagedAttributes<C, ...>` prints the
-      // reference as written instead of the conditional type it resolves to.
       const referenced = this.checker.getTypeFromTypeNode(body)
       if (referenced.aliasSymbol && referenced.aliasSymbol !== alias) {
         return this.printType(referenced, ctx)
       }
-      const target = this.checker.getSymbolAtLocation(body.typeName)
-      if (target && referenced.flags & ts.TypeFlags.Conditional) {
-        const resolved =
-          target.flags & ts.SymbolFlags.Alias
-            ? this.checker.getAliasedSymbol(target)
-            : target
-        const args = (body.typeArguments ?? []).map((argument) =>
-          this.printType(this.checker.getTypeFromTypeNode(argument), {
-            ...ctx,
-            inTypeArgument: true,
-          }),
-        )
-        const name = this.displayName(resolved)
-        return args.length ? `${name}<${args.join(", ")}>` : name
+      const written = this.printWrittenReference(body, ctx)
+      if (written) {
+        return written
       }
     }
     return this.printStructure(type, ctx, true)
+  }
+
+  /**
+   * Prints a reference to a conditional or mapped type as written, such as
+   * `JSX.LibraryManagedAttributes<C, P>` or `Record<string, string[]>`. The
+   * checker resolves these to a deferred conditional type or to members like
+   * `{[x: string]: string[]}`, which read worse than the reference.
+   */
+  private printWrittenReference(
+    node: ts.TypeNode,
+    ctx: PrintContext,
+  ): string | undefined {
+    const {checker} = this
+    if (!ts.isTypeReferenceNode(node)) {
+      return undefined
+    }
+    const referenced = checker.getTypeFromTypeNode(node)
+    if (
+      !(referenced.flags & ts.TypeFlags.Conditional) &&
+      !isMappedType(referenced)
+    ) {
+      return undefined
+    }
+    const target = this.referenceTarget(node)
+    if (!target) {
+      return undefined
+    }
+    const args = (node.typeArguments ?? []).map((argument) =>
+      this.printType(checker.getTypeFromTypeNode(argument), {
+        ...ctx,
+        inTypeArgument: true,
+      }),
+    )
+    const name = this.displayName(target)
+    return args.length ? `${name}<${args.join(", ")}>` : name
+  }
+
+  private referenceTarget(node: ts.TypeReferenceNode): ts.Symbol | undefined {
+    const located = this.checker.getSymbolAtLocation(node.typeName)
+    return located && located.flags & ts.SymbolFlags.Alias
+      ? this.checker.getAliasedSymbol(located)
+      : located
   }
 
   /**
@@ -523,7 +582,19 @@ export class TypePrinter {
       ctx.stack.has(symbol) ||
       symbol.flags & (ts.SymbolFlags.Class | ts.SymbolFlags.Enum) ||
       !this.isDocumented(symbol) ||
-      isOpaqueAliasDeclaration(symbol) ||
+      isOpaqueAliasDeclaration(symbol)
+    ) {
+      return undefined
+    }
+    const inner = this.enter(symbol, ctx)
+    const reference = this.inlineReferenceOf(symbol)
+    if (reference) {
+      const printed = this.printWrittenReference(reference, inner)
+      return printed === undefined
+        ? undefined
+        : this.decideInline(symbol, ctx, printName, printed, () => printed)
+    }
+    if (
       !(type.flags & ts.TypeFlags.Object) ||
       checker.getIndexInfosOfType(type).length ||
       checker.getSignaturesOfType(type, ts.SignatureKind.Call).length ||
@@ -537,7 +608,6 @@ export class TypePrinter {
     if (!members.length || members.length > this.inlineObjects.maxMembers) {
       return undefined
     }
-    const inner = this.enter(symbol, ctx)
     // the expanded type inlines the same objects as the displayed type, so the
     // length is measured without expanding aliases.
     const printed = this.printMembers(
@@ -545,6 +615,52 @@ export class TypePrinter {
       {...inner, expandAliases: false},
       true,
     )
+    return this.decideInline(symbol, ctx, printName, printed, () =>
+      ctx.expandAliases ? this.printMembers(type, inner, true) : printed,
+    )
+  }
+
+  /**
+   * The body of an alias like `type Selections = Record<string, string[]>`,
+   * which inlines like a small object. Only references to undocumented types,
+   * such as `Record` and `Partial` from the TypeScript lib, qualify. Generic
+   * aliases are skipped, since their body names the alias's own type
+   * parameters. `Pick`, `Omit`, and documented aliases such as
+   * `ActionSchema<'open'>` are skipped, since their inline form names another
+   * type that the reader still has to look up.
+   */
+  private inlineReferenceOf(
+    symbol: ts.Symbol,
+  ): ts.TypeReferenceNode | undefined {
+    const declaration = symbol.declarations?.find(ts.isTypeAliasDeclaration)
+    const body = declaration?.type
+    if (
+      !body ||
+      declaration.typeParameters?.length ||
+      !ts.isTypeReferenceNode(body) ||
+      !isMappedType(this.checker.getTypeFromTypeNode(body))
+    ) {
+      return undefined
+    }
+    const target = this.referenceTarget(body)
+    return target &&
+      !this.isDocumented(target) &&
+      !selectionTypes.has(target.name)
+      ? body
+      : undefined
+  }
+
+  /**
+   * Records whether a small object or reference prints inline, then prints
+   * `body` or the marked name.
+   */
+  private decideInline(
+    symbol: ts.Symbol,
+    ctx: PrintContext,
+    printName: () => string,
+    printed: string,
+    body: () => string,
+  ): string | undefined {
     const inlined = stripMarks(printed).length <= this.inlineObjects.maxLength
     const name = this.displayName(symbol)
     const id = ctx.marks?.size ?? 0
@@ -556,10 +672,8 @@ export class TypePrinter {
       const named = printName()
       return `${this.mark(id, named.slice(0, name.length))}${named.slice(name.length)}`
     }
-    const body = ctx.expandAliases
-      ? this.printMembers(type, inner, true)
-      : printed
-    return ctx.marks ? this.mark(id, body) : body
+    const text = body()
+    return ctx.marks ? this.mark(id, text) : text
   }
 
   private enter(symbol: ts.Symbol, ctx: PrintContext): PrintContext {
@@ -695,10 +809,10 @@ export class TypePrinter {
       const [element] = checker.getTypeArguments(type as ts.TypeReference)
       const printed = this.printType(element, ctx)
       const readonly = type.symbol?.name === "ReadonlyArray"
-      if (readonly) {
-        return `ReadonlyArray<${printed}>`
+      if (isSimpleElement(element) || isNamedType(stripMarks(printed))) {
+        return `${readonly ? "readonly " : ""}${printed}[]`
       }
-      return isSimpleElement(element) ? `${printed}[]` : `Array<${printed}>`
+      return readonly ? `ReadonlyArray<${printed}>` : `Array<${printed}>`
     }
 
     if (checker.isTupleType(type)) {
@@ -1003,6 +1117,49 @@ export class TypePrinter {
     }
     return parts.join(".")
   }
+}
+
+/**
+ * Whether a printed type is a name with optional type arguments, such as
+ * `FacetBucket`, `ListCollection<T>`, or `DateValue[]`. These take an array
+ * suffix without parentheses, unlike unions, functions, and type operators.
+ * Arrays printed as `Array<...>` stay in that form, so nested arrays use one
+ * style.
+ */
+function isNamedType(type: string): boolean {
+  const printed = type.replace(/(\[\])+$/, "")
+  const name = /^[A-Za-z_$][\w$.]*/.exec(printed)?.[0]
+  if (!name || name === "Array" || name === "ReadonlyArray") {
+    return false
+  }
+  if (name === printed) {
+    return true
+  }
+  if (printed[name.length] !== "<") {
+    return false
+  }
+  let depth = 0
+  let quote: string | undefined
+  for (let i = name.length; i < printed.length; i++) {
+    const char = printed[i]
+    if (quote) {
+      if (char === quote && printed[i - 1] !== "\\") {
+        quote = undefined
+      }
+    } else if (char === "'" || char === '"' || char === "`") {
+      quote = char
+    } else if (char === "<") {
+      depth++
+    } else if (char === ">" && printed[i - 1] !== "=") {
+      // the `>` of an arrow in a type argument, such as `Foo<() => void>`,
+      // does not close the type arguments.
+      depth--
+      if (!depth) {
+        return i === printed.length - 1
+      }
+    }
+  }
+  return false
 }
 
 /**

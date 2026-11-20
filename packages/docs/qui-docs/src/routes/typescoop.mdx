@@ -259,6 +259,33 @@ export interface ExternalDefinition {
 
 `InternalDefinition` is not exported, so the documentation for `ExternalDefinition.property` only shows the type name. Export `InternalDefinition` to show its structure.
 
+### Mapped Type Aliases
+
+An alias of a mapped type, such as `Record`, `Partial`, or `Pick`, shows its type as written.
+
+```ts
+export type FacetSelections = Record<string, readonly string[]>
+```
+
+`<TypeDocProps name="FacetSelections" />` renders `Record<string, readonly string[]>`, not the resolved `{[x: string]: readonly string[]}`. See [Inline Objects](#inline-objects) for how properties that reference these aliases are printed.
+
+### Arrays
+
+An array prints with the `[]` suffix when its element prints as a name. Other elements use `Array<...>`, or `ReadonlyArray<...>` for readonly arrays.
+
+| Source                    | Output                           |
+| :------------------------ | :------------------------------- |
+| `string[]`                | `string[]`                       |
+| `FacetBucket[]`           | `FacetBucket[]`                  |
+| `ListCollection<T>[]`     | `ListCollection<T>[]`            |
+| `readonly string[]`       | `readonly string[]`              |
+| `DateValue[][]`           | `DateValue[][]`                  |
+| `("start" \| "end")[]`    | `Array<'start' \| 'end'>`        |
+| `readonly (() => void)[]` | `ReadonlyArray<() => void>`      |
+| `("start" \| "end")[][]`  | `Array<Array<'start' \| 'end'>>` |
+
+The form depends on how the element prints, not how it is written. A documented union alias expands to its members, so `Size[]` with `type Size = "sm" | "md"` prints as `Array<'sm' | 'md'>`. A small object that prints inline uses `Array<{...}>`.
+
 ## JSDoc Tags
 
 The following tags have special handling in Typescoop or the UI.
@@ -574,6 +601,14 @@ export default {
   tsconfig: "tsconfig.typescoop.json",
 } satisfies BuildOptions
 ```
+
+Aliases of `Record`, `Partial`, and other mapped types from the TypeScript lib are printed inline as written. A property typed `selections: FacetSelections` shows `Record<string, readonly string[]>`. Only `maxLength` applies to these aliases.
+
+These aliases follow the object rule instead:
+
+- Aliases of `Pick` and `Omit`, since the inline form names another type to look up.
+- Aliases of a documented type, such as `type Actions = ActionSchema<"open">`.
+- Generic aliases, such as `type Schema<T> = Record<T, () => void>`.
 
 ## Migrating from Typedoc
 

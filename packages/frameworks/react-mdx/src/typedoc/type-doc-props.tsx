@@ -13,6 +13,7 @@ import {ExternalLink} from "lucide-react"
 
 import type {PagePropType, PagePropTypes} from "@qualcomm-ui/mdx-common"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
+import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 import {Link} from "@qualcomm-ui/react/link"
 import {ensureArray} from "@qualcomm-ui/utils/array"
@@ -308,7 +309,7 @@ export function TypeDocProps({
         <TypeDocContextProvider value={typeDocContext}>
           <div className="doc-props__symbol-wrapper">
             <CodeHighlight
-              code={firstValidPropTypes.resolvedType.prettyType}
+              code={`${dummyTypePrefix}${firstValidPropTypes.resolvedType.prettyType}`}
               disableCopy
               language="tsx"
             />
