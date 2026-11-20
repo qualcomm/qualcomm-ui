@@ -1,11 +1,7 @@
 ---
 title: Facet Index
-description: Filter in-memory data by field values, and count the results for each value.
+description: Index in-memory data by field values, and count the results for each value.
 aliases: [facets, faceted search, facet counts, buckets, FacetIndex]
-badges:
-  - id: alpha
-    label: Alpha
-    url: /versioning#alpha
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
@@ -174,7 +170,7 @@ Results keep the order of `ids`, so a ranked search stays ranked. Unknown ids ar
 getFacetFilterSetProps, filter counts, FilterPanel
 :::
 
-To show counts in a [filter panel](../components+/filters+/filter-panel.mdx#filter-counts), spread `getFacetFilterSetProps` onto the panel. The field names must match the filter ids.
+To show counts in a [filter panel](filter-panel.mdx#filter-counts), spread `getFacetFilterSetProps` onto the panel. The field names must match the filter ids.
 
 ```tsx
 import {getFacetFilterSetProps} from "@qualcomm-ui/core/filter-set"

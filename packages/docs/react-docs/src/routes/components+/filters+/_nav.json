@@ -1,4 +1,15 @@
 {
   "$schema": "../../../../node_modules/@qualcomm-ui/mdx-vite/dist/schemas/nav.schema.json",
-  "expanded": true
+  "expanded": true,
+  "children": [
+    {
+      "id": "filter-panel"
+    },
+    {
+      "id": "filters"
+    },
+    {
+      "id": "facet-index"
+    }
+  ]
 }

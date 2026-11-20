@@ -87,12 +87,6 @@ const navConfig: NavConfig[] = [
   },
   {separator: true},
   {
-    expanded: true,
-    id: "utilities",
-    title: "Utilities",
-  },
-  {separator: true},
-  {
     children: [
       {
         id: "overview",
