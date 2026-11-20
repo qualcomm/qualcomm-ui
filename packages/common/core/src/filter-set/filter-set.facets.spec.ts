@@ -3,7 +3,7 @@ import {describe, expect, test, vi} from "vitest"
 import type {ListCollection} from "@qualcomm-ui/utils/collection"
 import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
-import {getFacetFilterSetProps} from "./facet-filter-set-props.js"
+import {getFacetFilterSetProps} from "./filter-set.facets.js"
 
 const items = [
   {id: "1", name: "Alpha", os: ["Linux"], tech: ["AI"]},
