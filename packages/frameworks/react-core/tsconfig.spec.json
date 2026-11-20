@@ -4,8 +4,8 @@
     "composite": true,
     "moduleResolution": "bundler",
     "types": ["vitest"],
-    "outDir": "node_modules/.tmp/spec-out-tsc",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec"
+    "outDir": "node_modules/.cache/tsc/out-spec",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-spec"
   },
   "include": ["./src/**/*.spec.tsx"],
   "references": [

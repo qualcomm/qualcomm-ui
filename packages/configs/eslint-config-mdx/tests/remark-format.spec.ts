@@ -39,7 +39,6 @@ describe("package exports", () => {
   })
 
   test("exports remarkrc", async () => {
-    // @ts-expect-error types
     const remarkrc = await import("@qualcomm-ui/eslint-config-mdx/remarkrc")
 
     expect(remarkrc.default.settings).toEqual({

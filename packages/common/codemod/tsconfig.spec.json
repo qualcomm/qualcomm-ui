@@ -3,8 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": "./src",
-    "outDir": "node_modules/.tmp/out-spec",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec",
+    "outDir": "node_modules/.cache/tsc/out-spec",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-spec",
     "types": ["node"]
   },
   "include": ["./src/**/__tests__", "./src/**/*.spec.ts"],

@@ -7,7 +7,7 @@
     "rootDir": "./src",
     "isolatedDeclarations": false,
     "jsx": "react-jsx",
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib",
     "paths": {
       "@qualcomm-ui/react/*": ["./src/*/index.ts"]
     }
