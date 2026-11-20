@@ -2,9 +2,19 @@
  * Benchmarks FacetIndex indexing speed, memory usage, and filter passes across
  * dataset sizes.
  *
- * Each size runs in a fresh Node process, so heap state, JIT feedback, and peak
- * RSS never carry over between sizes. Items come from a seeded PRNG, so runs
- * with the same seed index identical data and are comparable across commits.
+ * Every run of every size uses a fresh Node process, so heap state, JIT
+ * feedback, and peak RSS never carry over. Items come from a seeded PRNG, so
+ * runs with the same seed index identical data and are comparable across
+ * commits.
+ *
+ * Timings vary more between processes than between samples within one process,
+ * because JIT tiering and heap layout differ from run to run. Each size
+ * therefore runs several times and reports the median of the per-run medians.
+ *
+ * Timing columns:
+ * - rme: median of the per-run margins of error at 95% confidence.
+ * - spread: range of the per-run medians as a percentage of the median. Compare
+ *   results only when the difference exceeds the spread.
  *
  * Memory columns:
  * - index: bytes retained by the index after GC, excluding the items.
@@ -82,11 +92,30 @@ interface MemoryResult {
   peakRss: number
 }
 
-interface SizeResult {
+interface RunResult {
   build: Stats
   durationMs: number
   memory: MemoryResult
   scenarios: ScenarioResult[]
+  size: number
+}
+
+/** Per-run statistics combined across runs. */
+interface Summary {
+  median: number
+  p95: number
+  rme: number
+  samples: number
+  /** Range of the per-run medians as a percentage of {@link median}. */
+  spread: number
+}
+
+interface SizeResult {
+  build: Summary
+  durationMs: number
+  memory: MemoryResult
+  runs: RunResult[]
+  scenarios: {matches: number; name: string; summary: Summary}[]
   size: number
 }
 
@@ -249,12 +278,7 @@ function collectGarbage(type: "major" | "minor"): void {
   if (!gc) {
     throw new Error("The benchmark worker requires --expose-gc")
   }
-  if (type === "minor") {
-    gc({type: "minor"})
-  } else {
-    gc()
-    gc()
-  }
+  gc({type})
 }
 
 /** Heap and off-heap bytes in use after a full collection. */
@@ -312,8 +336,14 @@ function summarize(times: readonly number[]): Stats {
   }
 }
 
+/** Untimed runs that already exercised the measured code. */
+interface Warmup {
+  ms: number
+  runs: number
+}
+
 /**
- * Warms up for a tenth of the time budget, then samples until both
+ * Warms up for half the time budget, counting `warmup`, then samples until both
  * `minSamples` and the budget are reached. Operations faster than
  * {@link minSampleMs} run in batches so that timer overhead stays negligible.
  *
@@ -327,16 +357,17 @@ function measure(
   run: () => void,
   {minSamples, timeMs}: Job,
   gc: "major" | "minor",
+  warmup: Warmup = {ms: 0, runs: 0},
 ): Stats {
   collectGarbage("major")
-  let runs = 0
-  const warmupStart = performance.now()
-  do {
+  let {ms: warmupMs, runs} = warmup
+  while (runs === 0 || warmupMs < timeMs / 2) {
+    const runStart = performance.now()
     run()
+    warmupMs += performance.now() - runStart
     runs++
-  } while (performance.now() - warmupStart < timeMs / 10)
-  const estimate = (performance.now() - warmupStart) / runs
-  const batch = Math.max(1, Math.ceil(minSampleMs / estimate))
+  }
+  const batch = Math.max(1, Math.ceil(minSampleMs / (warmupMs / runs)))
 
   const times: number[] = []
   const start = performance.now()
@@ -357,7 +388,8 @@ function measure(
 /**
  * Measures the memory of one index, then times filter passes against it. The
  * index is scoped to this function so it can be collected before builds are
- * timed.
+ * timed. The untimed build is returned as warmup for the build timings, which
+ * saves a full build at large sizes.
  */
 function measureIndex(
   items: readonly BenchItem[],
@@ -366,7 +398,9 @@ function measureIndex(
 ) {
   const before = retainedBytes()
   const allocatedBefore = allocatedBytes()
+  const buildStart = performance.now()
   const index = new FacetIndex(items, config)
+  const buildMs = performance.now() - buildStart
   const allocatedAfter = allocatedBytes()
   const indexBytes = retainedBytes() - before
 
@@ -383,6 +417,7 @@ function measureIndex(
   })
 
   return {
+    buildWarmup: {ms: buildMs, runs: 1},
     heapAllocated:
       allocatedBefore === null || allocatedAfter === null
         ? null
@@ -392,7 +427,7 @@ function measureIndex(
   }
 }
 
-function runJob(job: Job): SizeResult {
+function runJob(job: Job): RunResult {
   const start = performance.now()
   const random = createRandom(job.seed)
 
@@ -401,7 +436,7 @@ function runJob(job: Job): SizeResult {
   const dataset = retainedBytes() - baseline
 
   const scenarios = createScenarios(items, random)
-  const {heapAllocated, indexBytes, results} = measureIndex(
+  const {buildWarmup, heapAllocated, indexBytes, results} = measureIndex(
     items,
     scenarios,
     job,
@@ -413,6 +448,7 @@ function runJob(job: Job): SizeResult {
     },
     job,
     "major",
+    buildWarmup,
   )
 
   return {
@@ -429,7 +465,7 @@ function runJob(job: Job): SizeResult {
   }
 }
 
-function runInWorker(job: Job, heapLimitMb: number): Promise<SizeResult> {
+function runInWorker(job: Job, heapLimitMb: number): Promise<RunResult> {
   return new Promise((resolve, reject) => {
     const child = fork(scriptPath, [], {
       cwd: packageDir,
@@ -440,9 +476,9 @@ function runInWorker(job: Job, heapLimitMb: number): Promise<SizeResult> {
         `--max-old-space-size=${heapLimitMb}`,
       ],
     })
-    let result: SizeResult | undefined
+    let result: RunResult | undefined
     child.once("message", (message) => {
-      result = message as SizeResult
+      result = message as RunResult
     })
     child.once("error", reject)
     child.once("exit", (code, signal) => {
@@ -453,6 +489,51 @@ function runInWorker(job: Job, heapLimitMb: number): Promise<SizeResult> {
       }
     })
   })
+}
+
+function medianOf(values: readonly number[]): number {
+  return quantile(
+    [...values].sort((a, b) => a - b),
+    0.5,
+  )
+}
+
+function summarizeRuns(stats: readonly Stats[]): Summary {
+  const medians = stats.map(({median}) => median)
+  const median = medianOf(medians)
+  return {
+    median,
+    p95: medianOf(stats.map(({p95}) => p95)),
+    rme: medianOf(stats.map(({rme}) => rme)),
+    samples: stats.reduce((sum, {samples}) => sum + samples, 0),
+    spread:
+      median > 0
+        ? ((Math.max(...medians) - Math.min(...medians)) / median) * 100
+        : 0,
+  }
+}
+
+function aggregate(runs: RunResult[]): SizeResult {
+  const allocations = runs.map(({memory}) => memory.heapAllocated)
+  return {
+    build: summarizeRuns(runs.map(({build}) => build)),
+    durationMs: runs.reduce((sum, {durationMs}) => sum + durationMs, 0),
+    memory: {
+      dataset: medianOf(runs.map(({memory}) => memory.dataset)),
+      heapAllocated: allocations.every((bytes) => bytes !== null)
+        ? medianOf(allocations)
+        : null,
+      index: medianOf(runs.map(({memory}) => memory.index)),
+      peakRss: medianOf(runs.map(({memory}) => memory.peakRss)),
+    },
+    runs,
+    scenarios: runs[0].scenarios.map(({matches, name}, scenario) => ({
+      matches,
+      name,
+      summary: summarizeRuns(runs.map((run) => run.scenarios[scenario].stats)),
+    })),
+    size: runs[0].size,
+  }
 }
 
 function parseSize(raw: string): number {
@@ -534,6 +615,13 @@ function formatRate(perSecond: number): string {
   return `${round(perSecond)}/s`
 }
 
+/** Replaces the current terminal line. Does nothing when stderr is piped. */
+function showStatus(message: string): void {
+  if (process.stderr.isTTY) {
+    process.stderr.write(`\r\x1b[K${message}`)
+  }
+}
+
 function printTable(header: string[], rows: string[][]): void {
   const widths = header.map((title, column) =>
     Math.max(title.length, ...rows.map((row) => row[column].length)),
@@ -553,28 +641,38 @@ function printTable(header: string[], rows: string[][]): void {
   }
 }
 
-function statsRow(name: string, stats: Stats, matches: string): string[] {
+function formatPercent(value: number, runs: number): string {
+  return runs > 1 ? `${value.toFixed(1)}%` : "-"
+}
+
+function summaryRow(
+  name: string,
+  summary: Summary,
+  runs: number,
+  matches: string,
+): string[] {
   return [
     name,
-    formatDuration(stats.median),
-    formatDuration(stats.p95),
-    `±${stats.rme.toFixed(1)}%`,
-    String(stats.samples),
+    formatDuration(summary.median),
+    formatDuration(summary.p95),
+    `±${summary.rme.toFixed(1)}%`,
+    formatPercent(summary.spread, runs),
+    String(summary.samples),
     matches,
   ]
 }
 
 function printSizeResult(result: SizeResult): void {
-  const {build, memory, scenarios, size} = result
+  const {build, memory, runs, scenarios, size} = result
   console.log(
-    `\n${formatSize(size)} items (${formatDuration(result.durationMs)})\n`,
+    `\n${formatSize(size)} items, ${runs.length} ${runs.length === 1 ? "run" : "runs"} (${formatDuration(result.durationMs)})\n`,
   )
   printTable(
-    ["", "median", "p95", "rme", "samples", "matches"],
+    ["", "median", "p95", "rme", "spread", "samples", "matches"],
     [
-      statsRow("build index", build, ""),
-      ...scenarios.map(({matches, name, stats}) =>
-        statsRow(`filter: ${name}`, stats, String(matches)),
+      summaryRow("build index", build, runs.length, ""),
+      ...scenarios.map(({matches, name, summary}) =>
+        summaryRow(`filter: ${name}`, summary, runs.length, String(matches)),
       ),
     ],
   )
@@ -595,6 +693,7 @@ function printSummary(results: SizeResult[]): void {
       "size",
       "build",
       "rme",
+      "spread",
       "items/s",
       "index",
       "B/item",
@@ -602,10 +701,11 @@ function printSummary(results: SizeResult[]): void {
       "dataset",
       "peak RSS",
     ],
-    results.map(({build, memory, size}) => [
+    results.map(({build, memory, runs, size}) => [
       formatSize(size),
       formatDuration(build.median),
       `±${build.rme.toFixed(1)}%`,
+      formatPercent(build.spread, runs.length),
       formatRate(size / (build.median / 1e3)),
       formatBytes(memory.index),
       round(memory.index / size),
@@ -621,7 +721,7 @@ function printSummary(results: SizeResult[]): void {
     results[0].scenarios.map(({name}, scenario) => [
       name,
       ...results.map((result) =>
-        formatDuration(result.scenarios[scenario].stats.median),
+        formatDuration(result.scenarios[scenario].summary.median),
       ),
     ]),
   )
@@ -631,8 +731,9 @@ const usage = `Usage: pnpm utils bench:facet-index [options]
 
 Options:
   --sizes <list>    Comma-separated item counts such as 5000, 10k, or 1m (default: ${defaultSizes.join(",")})
-  --time <ms>       Sampling time budget per measurement (default: 2000)
-  --samples <n>     Minimum samples per measurement (default: 5)
+  --runs <n>        Fresh processes per size, aggregated by median (default: 3)
+  --time <ms>       Sampling time budget per measurement (default: 200)
+  --samples <n>     Minimum samples per measurement (default: 3)
   --seed <n>        PRNG seed for the generated items (default: 1)
   --json <path>     Write the full results to a JSON file
   -h, --help        Show this message`
@@ -644,10 +745,11 @@ async function main(): Promise<void> {
     options: {
       help: {short: "h", type: "boolean"},
       json: {type: "string"},
-      samples: {default: "5", type: "string"},
+      runs: {default: "3", type: "string"},
+      samples: {default: "3", type: "string"},
       seed: {default: "1", type: "string"},
       sizes: {default: defaultSizes.join(","), type: "string"},
-      time: {default: "2000", type: "string"},
+      time: {default: "200", type: "string"},
     },
   })
 
@@ -657,6 +759,7 @@ async function main(): Promise<void> {
   }
 
   const sizes = values.sizes.split(",").map(parseSize)
+  const runCount = parsePositiveInt(values.runs, "runs")
   const options = {
     minSamples: parsePositiveInt(values.samples, "samples"),
     seed: parsePositiveInt(values.seed, "seed"),
@@ -668,13 +771,23 @@ async function main(): Promise<void> {
   const results: SizeResult[] = []
   let failed = false
   for (const size of sizes) {
+    const runs: RunResult[] = []
     try {
-      const result = await runInWorker({...options, size}, heapLimitMb)
+      for (let run = 1; run <= runCount; run++) {
+        showStatus(`${formatSize(size)} items: run ${run}/${runCount}`)
+        runs.push(await runInWorker({...options, size}, heapLimitMb))
+      }
+      showStatus("")
+      const result = aggregate(runs)
       results.push(result)
       printSizeResult(result)
     } catch (error) {
+      showStatus("")
       failed = true
-      console.error(`\n${formatSize(size)} items failed:`, error)
+      console.error(
+        `\n${formatSize(size)} items failed on run ${runs.length + 1}:`,
+        error,
+      )
     }
   }
 
@@ -690,7 +803,7 @@ async function main(): Promise<void> {
           cpu: cpus()[0]?.model,
           date: new Date().toISOString(),
           node: process.version,
-          options,
+          options: {...options, runs: runCount},
           results,
         },
         null,
