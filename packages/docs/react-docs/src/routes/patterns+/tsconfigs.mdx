@@ -11,9 +11,13 @@ A `tsconfig` file defines a TypeScript project. It controls which files TypeScri
 
 ## Why most packages should use multiple configs
 
-A single config is easy to create, but a package usually has more than one compilation use case. Library source files define what the package publishes. Tests often need test-only globals and browser-oriented module resolution. Build scripts may not need emitted package output.
+A single config is easy to create, but a package usually has more than one compilation use case:
 
-Separate `tsconfig` files let a single package or application account for those different requirements.
+- Library source files define what the package publishes.
+- Tests often need test-only globals and browser-oriented module resolution.
+- Build scripts may not need emitted package output.
+
+Separate `tsconfig` files let a single package or application account for these different requirements.
 
 ## Root Config
 
@@ -32,7 +36,7 @@ The package root `tsconfig.json` is the project map. It lists the package's Type
 
 - Use `files: []` so the root config does not become a catch-all compiler target.
 - Add package-local configs for the jobs that exist in the package.
-- (Optional) Add workspace library references for packages imported by source, tests, scripts, or specialized files. Remove references for jobs or workspace packages the package does not use.
+- (Monorepos) Add workspace library references for packages imported by source, tests, scripts, or specialized files.
 
 ## Library Config
 
@@ -52,9 +56,16 @@ The library config checks package source code and emits the declaration files co
 }
 ```
 
-Use `@qualcomm-ui/tsconfig/tsconfig.lib.json` as the base for shared modules and published framework packages. This base config uses `NodeNext` module settings. Learn more about this [here](https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html).
+`@qualcomm-ui/tsconfig/tsconfig.lib.json` provides a strict base config for shared modules and published packages. This base config uses `NodeNext` module settings. Learn more about this [here](https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html).
 
-Keep `rootDir` pointed at src so emitted files preserve the source layout. Emit package artifacts into dist so package exports can point at a stable output directory. Store build info under `node_modules/.tmp` instead of dist because `.tsbuildinfo` is compiler state, not a published package artifact. Clear `node_modules/.tmp` together with dist before each build. TypeScript's incremental build doesn't remove files from dist when their source is deleted, so a full rebuild keeps the published output accurate.
+Some noteworthy details:
+
+- `rootDir` points at the source directory so emitted files preserve the source layout.
+- `dist` is the Node.js convention for the package's output directory. Type definitions typically live here alongside emitted JS, but this isn't strictly required.
+- We store TS compiler build info under `node_modules/.tmp` instead of `dist` because TypeScript's `tsbuildinfo` is compiler state, not a published package artifact.
+
+> [!warning]
+> TypeScript intentionally does not delete orphaned output files when you delete or rename source files during an incremental build. So you must clear the `tsbuildinfo` file manually ala `tsc --clean`. You may also run `tsc -b --force` to bypass the cache. Learn more [here](https://github.com/microsoft/TypeScript/issues/30602).
 
 ### NodeNext Constraints
 
@@ -110,9 +121,9 @@ For React apps, extend the `@qualcomm-ui/tsconfig/tsconfig.react-app.json` base 
 
 ### Dummy Output
 
-In the above example, we've set the outDir and tsBuildInfoFile to ignored directories. Some package-level TypeScript projects exist only for tooling: tests, build scripts, config files, or app-only entrypoints like the above. These files are not part of the published package output, but they still need their own `tsconfig` so editors and type-aware linters can understand their environment. TypeScript requires that all referenced projects must not disable emit. Instead of `noEmit`, these configs use `composite: true` with an internal dummy output directory under `node_modules/.cache/tsc`, which is gitignored.
+Some package-level TypeScript projects exist only for tooling: tests, build scripts, config files, or app-only entrypoints like the above. These files are not part of the published package output, but they still need their own `tsconfig` so editors and type-aware linters can understand their environment. TypeScript requires that all referenced projects must not disable emit. Instead of `noEmit`, these configs use `composite: true` with a dummy output directory under `node_modules/.cache/tsc`, which is gitignored.
 
-Keep this output separate from `node_modules/.tmp` so it survives the clean step. No other project consumes it, so stale files are harmless, and the preserved build info lets TypeScript skip unchanged files on the next build.
+In libraries, we keep this output separate from `node_modules/.tmp` so they survive the clean step. No other project consumes it, so stale files are harmless, and the preserved build info lets TypeScript skip unchanged files on the next build.
 
 ## Test Config
 
@@ -135,11 +146,11 @@ The test config checks tests and test utilities. It should reference the library
 }
 ```
 
-Use `tsconfig.vitest.json` for tests. Test configs often need browser APIs, test globals, test-only aliases, and bundler-style resolution. Those settings are useful for tests, but they should not decide which files or types ship to consumers. Reference `tsconfig.lib.json` so TypeScript can compile tests that import package source. Without the reference, the test project cannot see source files owned by the library project.
+Use `tsconfig.vitest.json` for tests. Test configs often need browser APIs, test globals, test-only aliases, and bundler-style resolution. Those settings are useful for tests, but irrelevant for package consumers. We also add a reference to `tsconfig.lib.json` so TypeScript can compile tests that import package source. Without the reference, the test project cannot see source files owned by the library project.
 
 ## Scripts Config
 
-The scripts tsconfig covers package scripts, build tooling, and root-level TypeScript config files such as `vite.config.ts` or `vitest.config.ts`. Use the `scripts` base config for build scripts because they are not part of the published library contract and should not be held to the same strict compiler rules as library source code.
+`tsconfig.scripts.json` covers package scripts, build tooling, and root-level TypeScript config files such as `vite.config.ts` or `vitest.config.ts`.
 
 ```json
 {
@@ -153,16 +164,6 @@ The scripts tsconfig covers package scripts, build tooling, and root-level TypeS
 }
 ```
 
-## Adding a package
+## Conclusion
 
-Use this checklist for new packages and for packages that need cleanup. The result should be one config per compilation use case, with each config owning the files, references, output, and cache location for that job.
-
-- Create `tsconfig.lib.json`
-  - If building a library, extend the `@qualcomm-ui/tsconfig/tsconfig.lib.json`
-  - If building a React application, extend the `@qualcomm-ui/tsconfig/tsconfig.react-app.json`
-  - If building an Angular application, extend the `@qualcomm-ui/tsconfig/tsconfig.angular-app.json`
-- Add `tsconfig.scripts.json` when the package has build or utility scripts
-- Add `tsconfig.spec.json` when the package has tests
-- Add additional configs as needed for workflows with different compiler needs
-- Exclude tests, generated files, and specialized files from `tsconfig.lib.json`
-- Create `tsconfig.json` with references to each of your tsconfig files
+The ideal project configuration should use one config per compilation use case, with each config owning the files, references, output, and cache location for that job.
