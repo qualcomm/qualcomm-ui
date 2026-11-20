@@ -7,7 +7,7 @@
     "rootDir": "./src",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "tsBuildInfoFile": "dist/tsbuildinfo",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib",
     "types": ["node"],
     "paths": {
       "@qualcomm-ui/utils/*": ["./src/*/index.ts"]

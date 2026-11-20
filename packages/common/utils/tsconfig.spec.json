@@ -5,7 +5,7 @@
     "strictPropertyInitialization": false,
     "composite": true,
     "rootDir": "./src",
-    "outDir": "node_modules/.tmp/spec-out-tsc",
+    "outDir": "node_modules/.tmp/out-tsc-spec",
     "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec",
     "paths": {
       "@qualcomm-ui/utils/*": ["./src/*/index.ts"]
