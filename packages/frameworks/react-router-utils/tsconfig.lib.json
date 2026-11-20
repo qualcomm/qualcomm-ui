@@ -6,7 +6,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "jsx": "react-jsx",
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-lib"
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib"
   },
   "include": ["./src/node", "./src/client", "./src/stub.ts"],
   "references": [

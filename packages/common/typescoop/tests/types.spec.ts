@@ -10,8 +10,8 @@ import {build, type ParseResult} from "../src/internal"
 type TestCase = [
   string,
   {
-    actual: string | null | undefined | object
-    expected: string | null | undefined | object
+    actual: string | boolean | null | undefined | object
+    expected: string | boolean | null | undefined | object
   },
 ]
 
@@ -43,14 +43,14 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
     [
       "TestUnionA",
       {
-        actual: interfaces.TestUnionA.resolvedType.type,
+        actual: interfaces.TestUnionA.resolvedType?.type,
         expected: `'a' | 'b' | 'c'`,
       },
     ],
     [
       "TestGeneric1",
       {
-        actual: interfaces.TestGeneric1.resolvedType.prettyType,
+        actual: interfaces.TestGeneric1.resolvedType?.prettyType,
         expected:
           "(\n  options: Array<T>,\n  inputValue: string,\n) => Array<T>",
       },
@@ -58,14 +58,14 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
     [
       "TestTemplateLiteral1",
       {
-        actual: interfaces.TestTemplateLiteral1.resolvedType.type,
+        actual: interfaces.TestTemplateLiteral1.resolvedType?.type,
         expected: "`${string}.${number}`",
       },
     ],
     [
       "DashCasedBindingProps",
       {
-        actual: interfaces.DashCasedBindingProps.resolvedType.type,
+        actual: interfaces.DashCasedBindingProps.resolvedType?.type,
         expected:
           "{\"data-disabled\": ''; \"data-stepper-part\": 'prev-trigger'; dir: 'ltr' | 'rtl'; disabled: boolean;}",
       },
@@ -82,7 +82,7 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
     [
       "TestTuple1",
       {
-        actual: interfaces.TestTuple1.resolvedType.type,
+        actual: interfaces.TestTuple1.resolvedType?.type,
         expected: `[string, boolean, string, number]`,
       },
     ],
@@ -117,7 +117,7 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
     [
       "IntersectionSignature1",
       {
-        actual: interfaces.IntersectionSignature1.resolvedType.type,
+        actual: interfaces.IntersectionSignature1.resolvedType?.type,
         expected: "{signatureParam?: (unionParam: 'a' | 'b' | 'c') => void;}",
       },
     ],

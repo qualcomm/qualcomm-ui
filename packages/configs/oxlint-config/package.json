@@ -27,13 +27,9 @@
   },
   "scripts": {
     "clean": "shx rm -rf dist node_modules/.tmp",
-    "compile": "run-p compile:js compile:ts",
-    "build": "run-s clean compile",
-    "compile:js": "vite build",
-    "compile:ts": "tsc -b tsconfig.lib.json --force",
-    "dev": "run-p dev:js dev:ts",
-    "dev:js": "pnpm compile:js -w",
-    "dev:ts": "pnpm compile:ts -w --preserveWatchOutput",
+    "build": "run-s clean build:js build:ts",
+    "build:js": "vite build",
+    "build:ts": "tsc -b",
     "generate:rules": "node --import=tsx scripts/generate-rule-reference.ts --exclude-source jest --exclude-source nextjs --exclude-source vue",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"

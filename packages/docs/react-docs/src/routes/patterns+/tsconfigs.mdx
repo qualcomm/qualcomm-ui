@@ -54,7 +54,7 @@ The library config checks package source code and emits the declaration files co
 
 Use `@qualcomm-ui/tsconfig/tsconfig.lib.json` as the base for shared modules and published framework packages. This base config uses `NodeNext` module settings. Learn more about this [here](https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html).
 
-Keep `rootDir` pointed at src so emitted files preserve the source layout. Emit package artifacts into dist so package exports can point at a stable output directory. Store build info under `node_modules/.tmp` instead of dist because `.tsbuildinfo` is compiler state, not a published package artifact.
+Keep `rootDir` pointed at src so emitted files preserve the source layout. Emit package artifacts into dist so package exports can point at a stable output directory. Store build info under `node_modules/.tmp` instead of dist because `.tsbuildinfo` is compiler state, not a published package artifact. Clear `node_modules/.tmp` together with dist before each build. TypeScript's incremental build doesn't remove files from dist when their source is deleted, so a full rebuild keeps the published output accurate.
 
 ### NodeNext Constraints
 
@@ -100,8 +100,8 @@ For React apps, extend the `@qualcomm-ui/tsconfig/tsconfig.react-app.json` base 
   "compilerOptions": {
     "composite": true,
     "rootDir": "./src",
-    "outDir": "node_modules/.tmp/react-app-out-tsc",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-app"
+    "outDir": "node_modules/.cache/tsc/out-app",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-app"
   },
   "include": ["./src"],
   "exclude": ["./src/**/*.spec.tsx", "./src/**/__tests__"]
@@ -110,7 +110,9 @@ For React apps, extend the `@qualcomm-ui/tsconfig/tsconfig.react-app.json` base 
 
 ### Dummy Output
 
-In the above example, we've set the outDir and tsBuildInfoFile to ignored directories. Some package-level TypeScript projects exist only for tooling: tests, build scripts, config files, or app-only entrypoints like the above. These files are not part of the published package output, but they still need their own `tsconfig` so editors and type-aware linters can understand their environment. TypeScript requires that all referenced projects must not disable emit. Instead of `noEmit`, these configs use `composite: true` with an internal dummy output directory such as `node_modules/.tmp/`, which is gitignored.
+In the above example, we've set the outDir and tsBuildInfoFile to ignored directories. Some package-level TypeScript projects exist only for tooling: tests, build scripts, config files, or app-only entrypoints like the above. These files are not part of the published package output, but they still need their own `tsconfig` so editors and type-aware linters can understand their environment. TypeScript requires that all referenced projects must not disable emit. Instead of `noEmit`, these configs use `composite: true` with an internal dummy output directory under `node_modules/.cache/tsc`, which is gitignored.
+
+Keep this output separate from `node_modules/.tmp` so it survives the clean step. No other project consumes it, so stale files are harmless, and the preserved build info lets TypeScript skip unchanged files on the next build.
 
 ## Test Config
 
@@ -121,8 +123,8 @@ The test config checks tests and test utilities. It should reference the library
   "extends": "@qualcomm-ui/tsconfig/tsconfig.vitest.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "node_modules/.tmp/tests-out-tsc",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-tests"
+    "outDir": "node_modules/.cache/tsc/out-tests",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-tests"
   },
   "include": [
     "./src/**/*.spec.tsx",
@@ -144,8 +146,8 @@ The scripts tsconfig covers package scripts, build tooling, and root-level TypeS
   "extends": "@qualcomm-ui/tsconfig/tsconfig.scripts.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "node_modules/.tmp/scripts-out-tsc",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-scripts"
+    "outDir": "node_modules/.cache/tsc/out-scripts",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-scripts"
   },
   "include": ["./scripts", "*.ts"]
 }
