@@ -24,6 +24,7 @@ import {type CompiledMdxFile, MdxFileReader} from "./markdown/index.js"
 import {KnowledgeExporter} from "./markdown/knowledge/index.js"
 import {PropFormatter} from "./markdown/knowledge/plugins/index.js"
 import type {KnowledgePageCache} from "./markdown/knowledge/types.js"
+import {prefetchRemoteSpecs} from "./open-api/remote-specs.js"
 import {fixPath} from "./path-utils.js"
 import {SearchIndexer} from "./search-indexer.js"
 
@@ -34,6 +35,7 @@ export const PLUGIN_VIRTUAL_MODULE_ID = "\0@qualcomm-ui/mdx-vite-plugin"
 export const CONFIG_VIRTUAL_MODULE_ID = "\0@qualcomm-ui/docs-plugin/config"
 export const EXPORTS_VIRTUAL_MODULE_ID =
   "\0@qualcomm-ui/docs-plugin/markdown-content"
+export const OPENAPI_VIRTUAL_MODULE_ID = "\0@qualcomm-ui/docs-plugin/openapi"
 
 export interface ChangeOptions {
   onComplete?: () => void
@@ -109,6 +111,7 @@ export class PluginState {
       config,
       exports: this.exports,
       navItems: this.indexer.navItems,
+      openApiNav: this.indexer.openApiNav,
       pageDocProps: this.indexer.pageDocProps as unknown as PageDocProps,
       pageMap: this.indexer.pageMap,
       searchIndex: this.indexer.searchIndex,
@@ -155,7 +158,7 @@ export class PluginState {
     }
   }
 
-  buildIndex(shouldLog: boolean): CompiledMdxFile[] {
+  async buildIndex(shouldLog: boolean): Promise<CompiledMdxFile[]> {
     const files = glob.sync(
       [`${this.routesDir}/**/*.mdx`, `${this.routesDir}/**/*.tsx`],
       {
@@ -168,9 +171,17 @@ export class PluginState {
       return []
     }
 
+    await prefetchRemoteSpecs(files)
+
     const startTime = Date.now()
 
     const compiledMdxFiles = this.indexer.buildIndex(files, shouldLog)
+
+    // Vite only watches its root, and specs aren't imported, so it wouldn't see
+    // a spec elsewhere in a monorepo.
+    for (const server of this.servers) {
+      server.watcher.add([...this.indexer.openApiSpecFiles])
+    }
 
     if (isDev && shouldLog) {
       console.debug(
@@ -197,8 +208,16 @@ export class PluginState {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
       this.buildIndex(true)
-      this.sendUpdate()
-      opts?.onComplete?.()
+        .then(() => {
+          this.sendUpdate()
+          opts?.onComplete?.()
+        })
+        .catch((error: unknown) => {
+          console.error(
+            chalk.redBright.bold("Failed to rebuild the page data:"),
+            error,
+          )
+        })
     }, 300)
   }
 
@@ -270,6 +289,7 @@ export class PluginState {
         exclude: this.knowledgeConfig.exclude,
         extraFiles: this.knowledgeConfig.extraFiles,
         frontmatter: this.knowledgeConfig.frontmatter,
+        generatedPages: this.indexer?.generatedPages,
         ignoredMdxFiles: this.indexer?.ignoredMdxFiles,
         pageIdPrefix: this.knowledgeConfig.pageIdPrefix,
         pageMap: this.indexer?.pageMap,

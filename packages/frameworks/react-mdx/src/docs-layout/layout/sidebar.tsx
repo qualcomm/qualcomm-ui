@@ -30,6 +30,10 @@ import {isDefined} from "@qualcomm-ui/utils/guard"
 import {matchSorter} from "@qualcomm-ui/utils/match-sorter"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
+import {HttpMethod} from "../http-method.js"
+
+import {NavSwitcher} from "./nav-switcher.js"
+
 export interface SidebarProps extends Omit<ElementRenderProp<"div">, "dir"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -57,7 +61,29 @@ export interface SidebarProps extends Omit<ElementRenderProp<"div">, "dir"> {
   stickyHeader?: boolean
 }
 
-export function Sidebar({
+/**
+ * Pages can switch between nav trees, e.g. into an OpenAPI page's sidebar. Keys
+ * must be primitives, so each tree gets a number, and a new tree remounts the
+ * sidebar with fresh state.
+ */
+const navTreeKeys = new WeakMap<NavItem[], number>()
+let nextNavTreeKey = 0
+
+function getNavTreeKey(items: NavItem[]): number {
+  let key = navTreeKeys.get(items)
+  if (key === undefined) {
+    key = nextNavTreeKey++
+    navTreeKeys.set(items, key)
+  }
+  return key
+}
+
+export function Sidebar(props: SidebarProps): ReactElement {
+  const {navItems} = useDocsPageContext()
+  return <SidebarTree key={getNavTreeKey(navItems)} {...props} />
+}
+
+function SidebarTree({
   children,
   filterable = true,
   mobileDrawerState,
@@ -65,7 +91,8 @@ export function Sidebar({
   ...props
 }: SidebarProps): ReactElement {
   const ref = useRef<HTMLDivElement | null>(null)
-  const {navDensity, navItems, pageMap, pathname} = useDocsPageContext()
+  const {navDensity, navItems, navSwitcher, pageMap, pathname} =
+    useDocsPageContext()
   const {layoutComponents, renderLink: RenderLink} = useDocsRuntimeContext()
   const SideNavBadgesComponent = layoutComponents?.SideNavBadges
 
@@ -247,6 +274,8 @@ export function Sidebar({
           </SideNav.Header>
         ) : null}
 
+        {navSwitcher ? <NavSwitcher navSwitcher={navSwitcher} /> : null}
+
         {filterable ? (
           <>
             <SideNav.FilterInput
@@ -320,7 +349,11 @@ export function Sidebar({
                   }
                 >
                   <SideNav.NodeText>{node.title}</SideNav.NodeText>
-                  {SideNavBadgesComponent && node.badges?.length ? (
+                  {node.method ? (
+                    <SideNav.NodeAccessory className="qui-docs-sidebar__item-method">
+                      <HttpMethod method={node.method} />
+                    </SideNav.NodeAccessory>
+                  ) : SideNavBadgesComponent && node.badges?.length ? (
                     <SideNav.NodeAccessory className="qui-docs-sidebar__item-badges">
                       <SideNavBadgesComponent badges={node.badges} />
                     </SideNav.NodeAccessory>
@@ -356,6 +389,7 @@ function getExpandedItems(items: NavItem[], pathname: string): string[] {
     // If an item does not have sub-items, it cannot be expanded.
     if (
       pathname === id ||
+      pathname === current.pathname ||
       expandedChildren?.length ||
       (current.expanded && current.items?.length)
     ) {

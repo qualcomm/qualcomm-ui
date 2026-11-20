@@ -8,10 +8,16 @@ import {dedent} from "@qualcomm-ui/utils/dedent"
 
 import {ConfigLoader, type QuiDocsPluginOptions} from "./config/index.js"
 import {NAV_FILE_NAME} from "./nav-builder/load-folder-nav.js"
+import {
+  getOpenApiModuleCode,
+  getOperationModuleCode,
+  OPENAPI_OPERATION_MODULE_PREFIX,
+} from "./open-api/get-module-code.js"
 import {fixPath} from "./path-utils.js"
 import {
   CONFIG_VIRTUAL_MODULE_ID,
   EXPORTS_VIRTUAL_MODULE_ID,
+  OPENAPI_VIRTUAL_MODULE_ID,
   PLUGIN_VIRTUAL_MODULE_ID,
   PluginState,
 } from "./plugin-state.js"
@@ -51,6 +57,53 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
     })
   }
 
+  /**
+   * Route loaders run in the SSR environment, which `server.moduleGraph` doesn't
+   * cover.
+   */
+  function invalidateOpenApiModule(server: ViteDevServer) {
+    for (const environment of Object.values(server.environments)) {
+      const {moduleGraph} = environment
+      for (const [id, module] of moduleGraph.idToModuleMap) {
+        if (
+          id === OPENAPI_VIRTUAL_MODULE_ID ||
+          id.startsWith(`\0${OPENAPI_OPERATION_MODULE_PREFIX}`)
+        ) {
+          moduleGraph.invalidateModule(module)
+        }
+      }
+    }
+  }
+
+  function isOpenApiSpecFile(file: string) {
+    return state.indexer.openApiSpecFiles.has(fixPath(file))
+  }
+
+  function getApiIntroPathnames() {
+    return Object.keys(state.indexer.openApiNav).sort().join("\n")
+  }
+
+  /**
+   * `withOpenApiRoutes` adds operation routes based on frontmatter, but React
+   * Router only re-evaluates the route config when an app file is added or
+   * removed, or when one of the config's own imports changes. A page gaining or
+   * losing `openApi` is neither, so the server restarts to pick up its routes.
+   */
+  function restartForApiRoutes(server: ViteDevServer) {
+    console.debug("OpenAPI pages changed, restarting to update the routes")
+    void server.restart()
+  }
+
+  function reloadPages(server: ViteDevServer) {
+    state.handleChange({
+      onComplete: () => {
+        invalidateOpenApiModule(server)
+        server.ws.send({type: "full-reload"})
+        state.debouncedGenerateKnowledge(getPublicDir())
+      },
+    })
+  }
+
   return {
     apply(config, env) {
       return (
@@ -59,7 +112,7 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       )
     },
     buildStart: async () => {
-      state.buildIndex(state.buildCount > 0)
+      await state.buildIndex(state.buildCount > 0)
       state.buildCount++
 
       const navConfigErrorCount = state.indexer.navConfigErrorCount
@@ -104,33 +157,23 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
         res.end(JSON.stringify(state.sections))
       })
 
-      server.watcher.on("add", (path: string) => {
+      const onFileAddedOrRemoved = (path: string) => {
         if (isNavFile(path)) {
           reloadNavConfig(server)
-        } else if (path.endsWith(".mdx")) {
-          state.handleChange({
-            onComplete: () => {
-              server.ws.send({type: "full-reload"})
-              state.debouncedGenerateKnowledge(getPublicDir())
-            },
-          })
+        } else if (isOpenApiSpecFile(path) || path.endsWith(".mdx")) {
+          reloadPages(server)
         }
-      })
-      server.watcher.on("unlink", (path: string) => {
-        if (isNavFile(path)) {
-          reloadNavConfig(server)
-        } else if (path.endsWith(".mdx")) {
-          state.handleChange({
-            onComplete: () => {
-              server.ws.send({type: "full-reload"})
-              state.debouncedGenerateKnowledge(getPublicDir())
-            },
-          })
-        }
-      })
+      }
+      server.watcher.on("add", onFileAddedOrRemoved)
+      server.watcher.on("unlink", onFileAddedOrRemoved)
       state.servers.push(server)
+      // A failed restart keeps the old server running, so it is only dropped
+      // once it actually closes.
+      server.httpServer?.once("close", () => {
+        state.servers = state.servers.filter((s) => s !== server)
+      })
     },
-    handleHotUpdate: ({file: updateFile, modules, server}) => {
+    handleHotUpdate: async ({file: updateFile, modules, server}) => {
       if (updateFile.endsWith(".css")) {
         return modules
       }
@@ -151,9 +194,22 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           return []
         }
 
+        if (isOpenApiSpecFile(file)) {
+          reloadPages(server)
+          return []
+        }
+
         if (updateFile.endsWith(".mdx")) {
           state.debouncedGenerateKnowledge(getPublicDir())
-          const files = state.buildIndex(true)
+          const apiIntroPathnames = getApiIntroPathnames()
+          const files = await state.buildIndex(true)
+
+          if (getApiIntroPathnames() !== apiIntroPathnames) {
+            restartForApiRoutes(server)
+            return []
+          }
+
+          invalidateOpenApiModule(server)
 
           const moduleByFile = server.moduleGraph.getModulesByFile(updateFile)
           if (!moduleByFile?.size) {
@@ -194,6 +250,19 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
           code: `export const siteData = ${JSON.stringify(state.siteData)}`,
           map: {mappings: ""},
         }
+      }
+      if (id === OPENAPI_VIRTUAL_MODULE_ID) {
+        return getOpenApiModuleCode(
+          Object.keys(state.indexer.openApiOperations),
+        )
+      }
+      if (id.startsWith(`\0${OPENAPI_OPERATION_MODULE_PREFIX}`)) {
+        const pathname = decodeURIComponent(
+          id.slice(OPENAPI_OPERATION_MODULE_PREFIX.length + 1),
+        )
+        return getOperationModuleCode(
+          state.indexer.openApiOperations[pathname] ?? null,
+        )
       }
       if (id === CONFIG_VIRTUAL_MODULE_ID) {
         return {
@@ -237,6 +306,12 @@ export function quiDocsPlugin(opts?: QuiDocsPluginOptions): PluginOption {
       }
       if (id === EXPORTS_VIRTUAL_MODULE_ID.substring(1)) {
         return EXPORTS_VIRTUAL_MODULE_ID
+      }
+      if (id === OPENAPI_VIRTUAL_MODULE_ID.substring(1)) {
+        return OPENAPI_VIRTUAL_MODULE_ID
+      }
+      if (id.startsWith(OPENAPI_OPERATION_MODULE_PREFIX)) {
+        return `\0${id}`
       }
       return undefined
     },

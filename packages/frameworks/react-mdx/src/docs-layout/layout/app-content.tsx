@@ -23,12 +23,13 @@ export function AppContent({
   className,
   ...props
 }: AppContentProps): ReactElement {
-  const {hideSideNav, showToc} = useDocsPageContext()
+  const {fullWidth, hideSideNav, showToc} = useDocsPageContext()
 
   return (
     <PolymorphicElement
       as="div"
       className={clsx("qui-docs__app-content", className)}
+      data-full-width={booleanDataAttr(fullWidth)}
       data-hide-side-nav={booleanDataAttr(hideSideNav)}
       data-hide-toc={booleanDataAttr(!showToc)}
       {...props}

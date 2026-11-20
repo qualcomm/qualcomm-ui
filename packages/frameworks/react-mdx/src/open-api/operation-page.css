@@ -1,0 +1,330 @@
+.qui-docs-openapi__endpoint {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-200);
+  margin-top: var(--spacing-400);
+}
+
+.qui-docs-openapi__endpoint-title {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-200);
+
+  .qui-docs-openapi__path {
+    font: var(--font-static-heading-lg-default);
+    font-family: var(--type-font-family-tertiary);
+  }
+}
+
+.qui-docs-openapi__path {
+  font: var(--font-static-code-md-default);
+  overflow-wrap: anywhere;
+}
+
+.qui-docs-openapi__path-param {
+  background: var(--color-background-neutral-02);
+  border-radius: var(--border-radius-75);
+  color: var(--color-text-neutral-secondary);
+
+  [data-theme="dark"] & {
+    background: var(--color-background-neutral-03);
+  }
+}
+
+.qui-docs-openapi__description {
+  :where(.qui-docs-openapi__operation, section) > & {
+    font: var(--font-static-body-md-default);
+    margin-top: var(--qui-mdx-margin-default);
+  }
+
+  .qui-docs-openapi__field & {
+    :is(p, ol, ul, li).mdx {
+      font: inherit;
+    }
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > * + * {
+      margin-top: var(--spacing-200);
+    }
+  }
+}
+
+.qui-docs-openapi__operation {
+  --qui-docs-openapi-samples-width: 400px;
+}
+
+.qui-docs-openapi__operation > .qui-docs-openapi__description {
+  @media screen and (min-width: 1440px) {
+    max-width: min(
+      80ch,
+      calc(100% - var(--qui-docs-openapi-samples-width) - var(--spacing-1000))
+    );
+  }
+}
+
+.qui-docs-openapi__variants-header {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-175);
+  margin-top: var(--spacing-175);
+}
+
+.qui-docs-openapi__columns {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--spacing-1000);
+  margin-top: 36px;
+
+  @media screen and (min-width: 1440px) {
+    align-items: flex-start;
+    flex-direction: row;
+  }
+}
+
+.qui-docs-openapi__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.qui-docs-openapi__samples {
+  min-width: 0;
+
+  @media screen and (min-width: 1440px) {
+    flex: 0 0 var(--qui-docs-openapi-samples-width);
+    position: sticky;
+    top: calc(48px + var(--spacing-250));
+  }
+}
+
+.qui-docs-openapi__example {
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: var(--border-radius-150);
+  overflow: hidden;
+
+  pre {
+    background: var(--docs-code-demo-background);
+    font-family: var(--type-font-family-tertiary);
+    font-size: var(--type-static-body-xs-font-size);
+    line-height: var(--type-static-body-xs-line-height);
+    max-height: min(360px, 40vh);
+    overflow: auto;
+  }
+
+  + .qui-docs-openapi__example {
+    margin-top: var(--spacing-400);
+  }
+}
+
+.qui-docs-openapi__example-header {
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-neutral-01);
+  display: flex;
+  gap: var(--spacing-100);
+  padding: var(--spacing-150) var(--spacing-150) var(--spacing-150)
+    var(--spacing-400);
+}
+
+.qui-docs-openapi__example-subheader {
+  align-items: baseline;
+  border-bottom: 1px solid var(--color-border-neutral-01);
+  display: flex;
+  font: var(--font-static-code-sm-default);
+  gap: var(--spacing-200);
+  padding: var(--spacing-200) var(--spacing-400);
+}
+
+.qui-docs-openapi__example-path {
+  color: var(--color-text-neutral-secondary);
+  overflow-wrap: anywhere;
+}
+
+.qui-docs-openapi__example-title {
+  flex: 1;
+  font: var(--font-static-body-sm-bold);
+}
+
+.qui-docs-openapi__example-empty {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-sm-default);
+  padding: var(--spacing-400);
+}
+
+.qui-docs-openapi__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-400);
+  margin-top: var(--spacing-400);
+}
+
+.qui-docs-openapi__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-200);
+  min-width: 0;
+
+  .qui-docs-openapi__description,
+  .qui-docs-openapi__field-default {
+    color: var(--color-text-neutral-secondary);
+    font: var(--font-static-body-sm-default);
+  }
+
+  .qui-docs-openapi__field-default code {
+    font: var(--font-static-code-sm-default);
+  }
+}
+
+.qui-docs-openapi__field-header {
+  align-items: baseline;
+  column-gap: var(--spacing-200);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.qui-docs-openapi__field-name {
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-code-sm-bold);
+}
+
+code.qui-docs-openapi__field-type {
+  overflow-wrap: anywhere;
+
+  [data-theme="dark"] & {
+    background: var(--color-background-neutral-03);
+  }
+}
+
+button.qui-docs-openapi__field-header {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  margin-inline-start: calc(-1 * (var(--sizing-400) + var(--spacing-100)));
+  padding: 0;
+  padding-inline-start: calc(var(--sizing-400) + var(--spacing-100));
+  position: relative;
+  text-align: start;
+
+  &:focus-visible {
+    border-radius: var(--border-radius-75);
+    outline: 2px solid var(--color-utility-focus-border);
+    outline-offset: 2px;
+  }
+}
+
+.qui-docs-openapi__field-indicator {
+  color: var(--color-icon-neutral-secondary);
+  left: 0;
+  position: absolute;
+  top: 2px;
+  transition: transform var(--animation-duration-faster);
+
+  [data-state="open"] > & {
+    transform: rotate(90deg);
+  }
+}
+
+.qui-docs-openapi__field-preview {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-code-sm-default);
+
+  [data-state="open"] > & {
+    display: none;
+  }
+}
+
+.qui-docs-openapi__field-children {
+  border-inline-start: 1px solid var(--color-border-neutral-01);
+  margin-inline-start: calc(-1 * var(--spacing-300));
+  padding-inline-start: calc(var(--spacing-300) + var(--spacing-400));
+
+  > :first-child {
+    margin-top: 0;
+  }
+}
+
+.qui-docs-openapi__response-description {
+  font: var(--font-static-body-sm-default);
+}
+
+.qui-docs-openapi__main
+  > section:first-child
+  > .qui-docs-openapi__section-header {
+  margin-top: 0;
+}
+
+.qui-docs-openapi__section-header {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-400);
+  justify-content: space-between;
+  margin-top: 36px;
+
+  h2.mdx {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: auto;
+  }
+}
+
+.qui-docs-openapi__section-body {
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: var(--border-radius-150);
+  margin-top: var(--spacing-300);
+  padding: var(--spacing-400);
+
+  &:has(.qui-docs-openapi__field-indicator) {
+    padding-inline-start: calc(
+      var(--spacing-400) + var(--sizing-400) + var(--spacing-100)
+    );
+  }
+
+  > :first-child,
+  > :first-child > :first-child {
+    margin-top: 0;
+  }
+}
+
+.qui-docs-openapi__field-row {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-400);
+  justify-content: space-between;
+
+  > .qui-docs-openapi__field-header {
+    flex: 1;
+  }
+}
+
+.qui-docs-openapi__media-types {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-code-sm-default);
+}
+
+.qui-docs-openapi__heading-required {
+  font: var(--font-static-body-md-default);
+  vertical-align: super;
+}
+
+.qui-docs-openapi__variants-label {
+  color: var(--color-text-neutral-secondary);
+  font: var(--font-static-body-sm-default);
+}
+
+.qui-docs-openapi__code-block {
+  background: var(--docs-code-demo-background);
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: var(--border-radius-150);
+  margin-top: var(--qui-mdx-margin-default);
+  position: relative;
+
+  pre {
+    overflow-x: auto;
+    padding: var(--spacing-400);
+  }
+}

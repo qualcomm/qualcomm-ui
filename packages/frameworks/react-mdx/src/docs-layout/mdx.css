@@ -330,6 +330,7 @@ p.mdx {
 p.mdx,
 li.mdx {
   > .qui-link__root {
+    display: inline;
     font: inherit;
     font-weight: var(--font-weight-body-bold);
   }

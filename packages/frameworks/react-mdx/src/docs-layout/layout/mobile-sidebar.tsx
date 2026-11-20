@@ -31,7 +31,13 @@ export function MobileSidebar({
   return (
     <div className="qui-docs-sidebar__mobile-container">
       {/* trigger re-render (and close the drawer) when the route changes */}
-      <Drawer.Root key={pathname} placement="start" {...props}>
+      <Drawer.Root
+        key={pathname}
+        lazyMount
+        placement="start"
+        unmountOnExit
+        {...props}
+      >
         <Drawer.Trigger>
           <IconButton
             aria-label="Open Navigation Menu"

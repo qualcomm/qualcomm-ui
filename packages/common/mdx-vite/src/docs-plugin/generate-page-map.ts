@@ -11,6 +11,7 @@ import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
 
 import {ConfigLoader} from "./config/index.js"
 import type {ResolvedQuiDocsConfig} from "./config/types.js"
+import {prefetchRemoteSpecs} from "./open-api/remote-specs.js"
 import {fixPath} from "./path-utils.js"
 import {SearchIndexer} from "./search-indexer.js"
 
@@ -74,6 +75,7 @@ export function addGeneratePageMapCommand(): void {
             cwd: cwd(),
           },
         )
+        await prefetchRemoteSpecs(files)
         indexer.buildIndex(files, true)
         await writeFile(
           resolve(cwd(), options.output),

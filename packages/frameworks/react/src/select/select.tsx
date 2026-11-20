@@ -215,9 +215,11 @@ export function Select({
 
   return (
     <SelectRoot {...props} id={ids.root} ids={ids}>
-      <SelectLabel {...labelProps} id={ids.label}>
-        {labelContent}
-      </SelectLabel>
+      {labelContent ? (
+        <SelectLabel {...labelProps} id={ids.label}>
+          {labelContent}
+        </SelectLabel>
+      ) : null}
       <SelectControl {...controlProps} id={ids.control}>
         <SelectValueText {...valueTextProps} />
         {clearable ? (

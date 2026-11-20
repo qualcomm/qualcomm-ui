@@ -18,15 +18,27 @@ import type {
 import type {NavDensity} from "@qualcomm-ui/react-mdx/docs-layout"
 import type {PropsContextValue} from "@qualcomm-ui/react-mdx/typedoc"
 
+export interface NavSwitcherEntry {
+  label: string
+  pathname: string
+}
+
+export interface NavSwitcherState {
+  active: NavSwitcherEntry
+  entries: NavSwitcherEntry[]
+}
+
 /**
  * @since 3.1.0
  */
 export interface DocsPageContextValue {
+  fullWidth: boolean
   hidePageLinks: boolean
   hideSideNav: boolean
   mainContentElement: HTMLElement | null
   navDensity: NavDensity
   navItems: NavItem[]
+  navSwitcher: NavSwitcherState | null
   pageExport: boolean | KnowledgePageData | undefined
   pageFrontmatter: Record<string, unknown>
   pageMap: PageMap

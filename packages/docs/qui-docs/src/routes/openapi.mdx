@@ -1,0 +1,179 @@
+---
+title: OpenAPI
+---
+
+# {frontmatter.title}
+
+Generate an API reference from an OpenAPI spec. An MDX page that links a spec in its frontmatter becomes the intro page of the API, and QUI Docs generates one page per operation below it.
+
+## Prerequisites
+
+Start with a running QUI Docs site. The [QUI Docs template](https://github.com/qualcomm/qualcomm-ui-templates/tree/main/templates/react-qui-docs) is the recommended starting point. The site needs React Router 7.15 or later (that version added `pattern` to the route loader arguments, which the operation loader reads).
+
+## Setup
+
+The following setup is required once per site.
+
+### Operation Route
+
+Create `src/openapi-route.tsx`, next to `routes.ts` (outside the `routes` folder, so that file-based routing doesn't register it as a page). It re-exports the `loader` of the `@qualcomm-ui/docs-plugin/openapi` virtual module and renders `OperationPage`:
+
+```tsx
+// src/openapi-route.tsx
+import {
+  OperationPage,
+  type OperationPageProps,
+} from "@qualcomm-ui/react-mdx/open-api"
+
+export {loader} from "@qualcomm-ui/docs-plugin/openapi"
+
+export default function OpenApiRoute(props: OperationPageProps) {
+  return <OperationPage {...props} />
+}
+```
+
+### Route Config
+
+Wrap the route config with `withOpenApiRoutes` from `@qualcomm-ui/mdx-vite`. It adds a `<path>/*` route next to every MDX route whose frontmatter sets `openApi`, and points it at the operation route module.
+
+```ts
+// src/routes.ts
+import type {RouteConfigEntry} from "@react-router/dev/routes"
+import {remixRoutesOptionAdapter} from "@react-router/remix-routes-option-adapter"
+import {resolve} from "node:path"
+
+import {withOpenApiRoutes} from "@qualcomm-ui/mdx-vite"
+import {hybridRoutes} from "@qualcomm-ui/react-router-utils/node"
+
+import quiDocsConfig from "./qui-docs.config"
+
+const appDirectory = quiDocsConfig.appDirectory ?? "src"
+
+export const routes: Promise<RouteConfigEntry[]> = remixRoutesOptionAdapter(
+  (defineRoutes) => {
+    return hybridRoutes("routes", defineRoutes, {
+      appDir: appDirectory,
+      ignoredRouteFiles: ["**/*components/**/*", "**/*demos/**/*"],
+      routingStrategy: quiDocsConfig.routingStrategy,
+    })
+  },
+).then((routes) =>
+  withOpenApiRoutes(routes, {
+    appDirectory: resolve(appDirectory),
+    operationPage: resolve(appDirectory, "openapi-route.tsx"),
+  }),
+)
+
+export default routes
+```
+
+`withOpenApiRoutes` options:
+
+- `appDirectory`: the React Router app directory that route files are relative to.
+- `operationPage`: absolute path to the operation route module.
+
+> [!note]
+> The site's root page can't be an API page. Its operation route would be `/*`, the site's own catch-all. `withOpenApiRoutes` throws an error for this case. Move the page to a subpath.
+
+## Add an API
+
+Set `openApi` in the frontmatter of an MDX page:
+
+```md
+---
+title: Pets API
+openApi: ./pets.json
+---
+
+# {frontmatter.title}
+
+Manage the pets of the store. All requests require an API key.
+```
+
+The page's MDX content renders as the intro of the API. Each operation of the spec gets its own page at `<intro path>/<slug>`.
+
+- The slug is the operation's `operationId`.
+- Without an `operationId`, the slug is built from the path and method: `GET /pets/{petId}` becomes `pets-petid-get`.
+- Two operations with the same slug fail with an error. Give them distinct `operationId`s.
+
+## Frontmatter Fields
+
+| Field             | Type      | Description                                                                                                                            |
+| :---------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------- |
+| `openApi`         | `string`  | Path or URL of the OpenAPI spec. A path is relative to the MDX file.                                                                   |
+| `openApiExpanded` | `boolean` | Whether the tag sections of the API sidebar start expanded. Default: `false`. The section of the current operation is always expanded. |
+
+Other frontmatter fields of the intro page affect the whole API:
+
+- `hidden` and `hideFromSearch` on the intro page also apply to every operation page.
+- The intro page's `title` labels the API in the sidebar.
+
+See [PageFrontmatter](./api/page-frontmatter.mdx#openApi) for the full field reference.
+
+## Navigation
+
+API pages, the intro page included, are not part of the global nav.
+
+On a site with at least one API page, the sidebar shows a switcher. It lists the regular documentation and every API.
+
+- The documentation entry is labelled "Documentation". Change the label with the `docsNavLabel` setting of the docs layout.
+- An API whose intro page sets `hidden: true` is not listed, except while one of its pages is open.
+
+On an API page, the sidebar lists:
+
+1. The intro page.
+2. Operations without tags.
+3. One collapsible section per tag. Tags declared in the spec's `tags` array come first, in spec order. An operation with several tags appears under each one.
+
+Each entry shows the operation's HTTP method and its `summary`, or its path when the operation has no `summary`. A tag section's title is the tag's `x-displayName`, then its `summary`, then its name.
+
+## Operation Pages
+
+Each operation page contains:
+
+- The `summary` as the page title, followed by the method and path. Without a `summary`, the method and path form the title.
+- A "Deprecated" badge for operations marked `deprecated`.
+- The `description`, rendered as Markdown. [GitHub alerts](./markdown.mdx#alerts) are supported. Raw HTML is dropped.
+- Parameters, request body, and responses.
+- A side panel with request samples in cURL, JavaScript, and Python, and an example response per status code.
+
+Request samples:
+
+- The URL uses the first server of the operation, else of the path item, else of the spec. Server variables use their `default`. Without a server, the URL starts with `https://api.example.com`.
+- Path parameters keep their `{name}` placeholder unless the spec provides an example.
+- Only required query and header parameters are included.
+- The request body comes from the spec's examples, or is generated from the schema.
+
+Example responses:
+
+- JSON responses use the spec's example, or an example generated from the schema.
+- Other media types show only the spec's own example.
+
+Schemas are shown per direction. `readOnly` properties are omitted from request bodies. `writeOnly` properties are omitted from responses.
+
+## Search and AI Knowledge
+
+Every operation is indexed as its own entry, under the intro page:
+
+- The site search indexes the operation's title and description. The endpoint (`GET /pets/{petId}`), the `operationId`, and the parameter names are added as search terms.
+- The [AI knowledge export](./ai-knowledge.mdx) adds one section per operation to `sections.json`.
+
+Operations follow their intro page. An intro page excluded from the knowledge export or hidden from search takes its operations with it.
+
+## Supported Specs and Limits
+
+- Swagger 2.0 and OpenAPI 3.x specs are upgraded to OpenAPI 3.2 on load. A warning lists anything that can't be upgraded losslessly.
+- Local `$ref`s (`#/...`) are inlined. Refs to other files are left as is.
+- A spec that fails to load fails the production build. The dev server logs a warning and renders the intro page with an empty API sidebar.
+
+### Remote Specs
+
+An `openApi` value starting with `http://` or `https://` is fetched.
+
+- Each URL is fetched once per process. The dev server does not refetch a spec that loaded. Restart it to pick up changes to a remote spec.
+- A fetch times out after 30 seconds. A failed fetch is retried after one minute, the next time the dev server reindexes the pages.
+
+### Development Server
+
+- Editing a local spec reloads the pages.
+- Adding or removing `openApi` in a page's frontmatter restarts the dev server to update the routes.

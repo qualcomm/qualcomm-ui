@@ -53,6 +53,16 @@ export interface DocsLayoutSettings extends Pick<
   docProps?: DocPropsSettings
 
   /**
+   * Label of the site's own documentation in the sidebar switcher, which lists
+   * it alongside the OpenAPI references. The switcher only renders on sites
+   * with at least one page that sets `openApi` in its frontmatter.
+   *
+   * @default 'Documentation'
+   * @since next-release
+   */
+  docsNavLabel?: string
+
+  /**
    * Footer node. Renders below the app content.
    */
   footer?: ReactNode

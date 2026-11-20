@@ -50,12 +50,36 @@ import type {
 } from "./types.js"
 import {computeMd5} from "./utils.js"
 
+/**
+ * A page with no MDX file of its own, e.g. an OpenAPI operation.
+ */
+export interface GeneratedPage {
+  /**
+   * CommonMark.
+   */
+  content: string
+  pathname: string
+  searchText: string
+  /**
+   * Unique among the pages its MDX page generates.
+   */
+  slug: string
+  terms?: string[]
+  title: string
+}
+
 export interface KnowledgeExporterConfig {
   baseUrl?: string
   docPropsPath?: string
   exclude?: string[]
   extraFiles?: KnowledgeExtraFile[]
   frontmatter?: KnowledgeFrontmatterConfig
+  /**
+   * Keyed by the pathname of the MDX page that generates them. They're exported
+   * only when that page is, and `pageMap` decides their visibility like any
+   * other page's.
+   */
+  generatedPages?: Record<string, GeneratedPage[]>
   /** Absolute MDX file paths excluded by the docs indexer. */
   ignoredMdxFiles?: ReadonlySet<string>
   pageIdPrefix?: string
@@ -179,8 +203,7 @@ export class KnowledgeExporter {
           processed.sectionAst,
           pageInfo,
         )
-        const pageMetadata = this.config.pageMap?.[page.pathname]
-        if (pageMetadata?.hidden || pageMetadata?.hideFromSearch) {
+        if (this.isHiddenFromSearch(page.pathname)) {
           for (const section of pageSections) {
             section.excludeFromSearch = true
           }
@@ -201,6 +224,10 @@ export class KnowledgeExporter {
       } catch (error) {
         console.error(`Failed to process page: ${page.url}, skipping`)
       }
+    }
+
+    for (const page of pageInfos) {
+      allSections.push(...this.getGeneratedSections(page))
     }
 
     if (this.config.extraFiles?.length) {
@@ -241,6 +268,42 @@ export class KnowledgeExporter {
       },
       totalPageCount: pageInfos.length,
     }
+  }
+
+  private isHiddenFromSearch(pathname: string): boolean {
+    const page = this.config.pageMap?.[pathname]
+    return !!(page?.hidden || page?.hideFromSearch)
+  }
+
+  private getGeneratedSections(page: KnowledgePageData): SectionEntry[] {
+    const entries = this.config.generatedPages?.[page.pathname]
+    if (!entries) {
+      return []
+    }
+    const sourceTitle = this.config.pageMap?.[page.pathname]?.title || page.name
+    const pageId = `${this.config.pageIdPrefix ?? ""}${page.id}`
+    return entries.map((entry): SectionEntry => {
+      const hashData = {
+        headerPath: [sourceTitle, entry.title],
+        pageId,
+        pathname: entry.pathname,
+        rawContent: entry.content,
+        searchText: entry.searchText,
+        terms: entry.terms,
+        url: this.config.baseUrl
+          ? new URL(entry.pathname, this.config.baseUrl).toString()
+          : undefined,
+      }
+      return {
+        ...hashData,
+        content: entry.content,
+        excludeFromSearch: this.isHiddenFromSearch(entry.pathname) || undefined,
+        hash: computeMd5(JSON.stringify(hashData)),
+        headingLevel: 1,
+        // `#` would share the namespace of the intro page's heading anchors.
+        sectionId: `${pageId}/${entry.slug}`,
+      }
+    })
   }
 
   private async scanPages(): Promise<KnowledgePageData[]> {

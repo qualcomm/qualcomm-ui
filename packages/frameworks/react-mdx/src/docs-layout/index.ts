@@ -1,4 +1,6 @@
 export * from "./docs-layout.js"
+export {HttpMethod} from "./http-method.js"
+export {PageHeader, type PageHeaderProps} from "./page-header.js"
 export * from "./layout/index.js"
 export * from "./mdx-provider.js"
 export type * from "./types.js"

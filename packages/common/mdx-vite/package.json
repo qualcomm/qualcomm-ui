@@ -54,6 +54,7 @@
     "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads"
   },
   "dependencies": {
+    "@scalar/openapi-upgrader": "0.4.6",
     "@shikijs/rehype": "^4.4.3",
     "@shikijs/transformers": "^4.4.3",
     "chalk": "catalog:",

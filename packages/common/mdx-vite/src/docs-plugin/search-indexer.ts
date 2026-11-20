@@ -46,6 +46,7 @@ import {
   type IndexedSection,
   MdxFileReader,
 } from "./markdown/index.js"
+import type {GeneratedPage} from "./markdown/knowledge/knowledge-exporter.js"
 import {
   type PageInfo,
   SectionExtractor,
@@ -70,6 +71,16 @@ import type {
   RouteMetaInternal,
   RouteMetaNavInternal,
 } from "./nav-builder/types.js"
+import {getOpenApiNavItems} from "./open-api/get-nav-items.js"
+import type {OpenApiOperationDetails} from "./open-api/get-operation-details.js"
+import {getOperationTitle} from "./open-api/get-operations.js"
+import {getSearchEntry} from "./open-api/get-search-entry.js"
+import {getSpecSource} from "./open-api/load-spec.js"
+import {
+  processOpenApiSpec,
+  type ProcessedSpec,
+} from "./open-api/process-spec.js"
+import {isRemoteSpec} from "./open-api/remote-specs.js"
 import {
   type PageTitleIssue,
   reportPageTitleIssues,
@@ -185,6 +196,34 @@ export class SearchIndexer {
     return this._pageFiles
   }
 
+  get openApiNav(): Record<string, NavItem[]> {
+    return this._openApiNav
+  }
+  private _openApiNav: Record<string, NavItem[]> = {}
+
+  get openApiOperations(): Record<string, OpenApiOperationDetails> {
+    return this._openApiOperations
+  }
+  private _openApiOperations: Record<string, OpenApiOperationDetails> = {}
+
+  /**
+   * Pages without an MDX file of their own, i.e. API operations, keyed by the
+   * pathname of the MDX page that generates them.
+   */
+  get generatedPages(): Record<string, GeneratedPage[]> {
+    return this._generatedPages
+  }
+  private _generatedPages: Record<string, GeneratedPage[]> = {}
+
+  /**
+   * Absolute paths of the local OpenAPI specs referenced by pages, missing ones
+   * included, so the dev server can watch them.
+   */
+  get openApiSpecFiles(): ReadonlySet<string> {
+    return this._openApiSpecFiles
+  }
+  private _openApiSpecFiles = new Set<string>()
+
   get pageMap(): PageMap {
     return this._pageMap
   }
@@ -206,6 +245,10 @@ export class SearchIndexer {
     this._pageTitleIssues = []
     this._configIssueCount = 0
     this._ignoredMdxFiles = new Set()
+    this._openApiNav = {}
+    this._openApiOperations = {}
+    this._generatedPages = {}
+    this._openApiSpecFiles = new Set()
     this._pageDocProps = {}
     this._pageMap = {}
     this._searchIndex = []
@@ -346,6 +389,60 @@ export class SearchIndexer {
   }
 
   /**
+   * Adds the API's sidebar, and a pageMap entry and search entry per operation.
+   */
+  private indexOpenApiSpec(
+    filePath: string,
+    specPath: string,
+    intro: PageSection,
+    expanded: boolean | undefined,
+  ): void {
+    const source = getSpecSource(filePath, specPath)
+    if (!isRemoteSpec(specPath)) {
+      this._openApiSpecFiles.add(source)
+    }
+    let processed: ProcessedSpec
+    try {
+      processed = processOpenApiSpec(source)
+    } catch (error) {
+      const message = `Failed to load the OpenAPI spec "${specPath}" of ${filePath}: ${error instanceof Error ? error.message : String(error)}`
+      // Production builds fail. The dev server keeps going so the spec can be fixed.
+      if (process.env.NODE_ENV !== "development") {
+        throw new Error(message, {cause: error})
+      }
+      console.warn(chalk.yellowBright.bold(message))
+      this._openApiNav[intro.pathname] = getOpenApiNavItems(intro, [])
+      this._generatedPages[intro.pathname] = []
+      return
+    }
+    this._openApiNav[intro.pathname] = getOpenApiNavItems(
+      intro,
+      processed.operations.map(({details}) => details),
+      processed.tags,
+      {expanded},
+    )
+    const generatedPages: GeneratedPage[] = []
+    for (const operation of processed.operations) {
+      const {slug} = operation.details
+      const pathname = `${intro.pathname}/${slug}`
+      this._openApiOperations[pathname] = operation.details
+      generatedPages.push(getSearchEntry(pathname, operation))
+      const title = getOperationTitle(operation.details)
+      this._pageMap[pathname] = {
+        categories: [...intro.categories, title],
+        data: {},
+        hidden: intro.hidden,
+        hideFromSearch: intro.hideFromSearch,
+        id: `${intro.id}#${slug}`,
+        pathname,
+        pathSegments: pathname.split("/").filter(Boolean),
+        title,
+      }
+    }
+    this._generatedPages[intro.pathname] = generatedPages
+  }
+
+  /**
    * Parses an MDX file to extract the site data for the nav items, doc props,
    * breadcrumbs, and search index.
    */
@@ -380,12 +477,21 @@ export class SearchIndexer {
       defaultSection.categories = [defaultSection.title]
     }
 
-    if (!defaultSection.hidden) {
+    if (!defaultSection.hidden && !frontmatter.openApi) {
       this.navBuilder.add(defaultSection, frontmatter)
     }
 
     this._pageMap[defaultSection.pathname] = defaultSection
     this._pageFiles[defaultSection.pathname] = filePath
+
+    if (frontmatter.openApi) {
+      this.indexOpenApiSpec(
+        filePath,
+        frontmatter.openApi,
+        defaultSection,
+        frontmatter.openApiExpanded,
+      )
+    }
 
     let indexedPage: IndexedPage
     let collectedLinks: CollectedLink[] = []
@@ -591,6 +697,22 @@ export class SearchIndexer {
     })
   }
 
+  private formatGeneratedSections(): PageSection[] {
+    return Object.entries(this._generatedPages).flatMap(
+      ([sourcePathname, entries]) => {
+        const source = this._pageMap[sourcePathname]
+        return entries.map((entry): PageSection => ({
+          ...this._pageMap[entry.pathname],
+          content: entry.searchText || undefined,
+          heading: entry.title,
+          headingLevel: 1,
+          href: entry.pathname,
+          title: source.title,
+        }))
+      },
+    )
+  }
+
   private compileTsxFile(route: PageRoute) {
     const entry = this.getPageEntry(route, {})
 
@@ -696,7 +818,9 @@ export class SearchIndexer {
 
     if (!this.config.disableLegacySearchIndex) {
       this._searchIndex.push(
-        ...mdxIndex.filter((entry) => !entry.hideFromSearch),
+        ...[...mdxIndex, ...this.formatGeneratedSections()].filter(
+          (entry) => !entry.hideFromSearch,
+        ),
       )
     }
 

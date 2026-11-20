@@ -74,6 +74,24 @@ export function buildGitMetadataMap(
   return map
 }
 
+/**
+ * Parses only the YAML frontmatter block of an MDX file, without validation.
+ */
+export function parseFrontmatterYaml(
+  fileContents: string,
+): PageFrontmatter | undefined {
+  const yamlSection = fileContents.substring(
+    0,
+    fileContents.indexOf("\n---") + 4,
+  )
+  return unified()
+    .use(remarkParse)
+    .use(remarkFrontmatter, ["yaml"])
+    .use(remarkParseFrontmatter)
+    .use(remarkStringify)
+    .processSync(yamlSection).data.frontmatter as PageFrontmatter | undefined
+}
+
 interface PageCache {
   anchorIds: Set<string>
   collectedLinks: CollectedLink[]
@@ -141,27 +159,8 @@ export class MdxFileReader {
     fileContents: string,
     cachedFrontmatter?: PageFrontmatter,
   ): PageFrontmatter {
-    let file:
-      | {data: {frontmatter: PageFrontmatter}}
-      | ReturnType<typeof unified.processSync>
-    if (cachedFrontmatter) {
-      file = {data: {frontmatter: cachedFrontmatter}}
-    } else {
-      // Only parse the YAML section — we just need the frontmatter at this stage.
-      const yamlSection = fileContents.substring(
-        0,
-        fileContents.indexOf("\n---") + 4,
-      )
-      file = unified()
-        .use(remarkParse)
-        .use(remarkFrontmatter, ["yaml"])
-        .use(remarkParseFrontmatter)
-        .use(remarkStringify)
-        .processSync(yamlSection)
-    }
-
-    const frontmatter: PageFrontmatter = (file.data
-      .frontmatter as PageFrontmatter) ?? {title: ""}
+    const frontmatter: PageFrontmatter = cachedFrontmatter ??
+      parseFrontmatterYaml(fileContents) ?? {title: ""}
 
     if (!frontmatter.title) {
       const lines = fileContents.split("\n")

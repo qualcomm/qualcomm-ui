@@ -17,13 +17,8 @@ import {Table} from "@qualcomm-ui/react/table"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {
-  AnchorHeader,
-  CodeTabs,
-  Image,
-  PageHeader,
-  ShikiPre,
-} from "./internal/index.js"
+import {AnchorHeader, CodeTabs, Image, ShikiPre} from "./internal/index.js"
+import {PageHeader} from "./page-header.js"
 
 interface Props {
   /**
