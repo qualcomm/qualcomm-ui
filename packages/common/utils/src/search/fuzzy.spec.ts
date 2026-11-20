@@ -1,6 +1,6 @@
 import {describe, expect, test} from "vitest"
 
-import {levenshteinDistance} from "./fuzzy"
+import {levenshteinDistance} from "./fuzzy.js"
 
 describe("levenshteinDistance", () => {
   test("returns zero for equal strings", () => {

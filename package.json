@@ -6,7 +6,7 @@
   "repository": "https://github.com/qualcomm/qualcomm-ui",
   "type": "module",
   "scripts": {
-    "clean-tsbuildinfo": "shx rm -rf packages/*/*/dist/tsbuildinfo packages/*/*/node_modules/.tmp/tsbuildinfo",
+    "clean-tsbuildinfo": "shx rm -rf packages/*/*/node_modules/.tmp/.tsbuildinfo-* packages/*/*/node_modules/.cache/tsc",
     "force-clean": "shx rm -rf packages/*/*/dist",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "node scripts/post-install.mjs",

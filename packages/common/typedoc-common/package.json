@@ -24,10 +24,10 @@
     "build": "run-s clean build:js build:ts",
     "clean": "shx rm -rf node_modules/.tmp dist",
     "build:js": "vite build",
-    "build:ts": "tsc -b tsconfig.lib.json",
+    "build:ts": "tsc -b",
     "dev": "run-p watch:js watch:ts",
     "watch:js": "vite build -w",
-    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "watch:ts": "tsc -b -w --preserveWatchOutput",
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish"
@@ -38,6 +38,7 @@
     "@qualcomm-ui/vite": "catalog:",
     "chalk": "catalog:",
     "chokidar": "catalog:",
+    "npm-run-all2": "catalog:",
     "shx": "catalog:",
     "tsx": "catalog:",
     "vite": "catalog:"

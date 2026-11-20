@@ -3,8 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": ".",
-    "outDir": "node_modules/.tmp/scripts-out-tsc",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-scripts"
+    "outDir": "node_modules/.cache/tsc/out-scripts",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-scripts"
   },
   "include": ["*.ts"]
 }

@@ -14,10 +14,9 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "shx rm -rf dist node_modules/.tmp",
-    "compile": "run-p build:js build:ts",
-    "build": "run-s clean compile",
+    "build": "run-s clean build:js build:ts",
     "build:js": "vite build",
-    "build:ts": "tsc -b tsconfig.lib.json"
+    "build:ts": "tsc -b"
   },
   "devDependencies": {
     "@clack/prompts": "^1.9.0",
@@ -37,6 +36,7 @@
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
     "lodash-es": "catalog:",
+    "npm-run-all2": "catalog:",
     "playwright": "^1.60.0",
     "react": "catalog:",
     "react-dom": "catalog:",

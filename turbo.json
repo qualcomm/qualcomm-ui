@@ -13,7 +13,7 @@
       "dependsOn": [
         "^build"
       ],
-      "outputs": ["dist"],
+      "outputs": ["dist", "node_modules/.tmp/.tsbuildinfo-lib"],
       "outputLogs": "new-only"
     },
     "typescoop-extract": {
