@@ -99,7 +99,7 @@
     }
     thead {
       th {
-        background: var(--color-background-neutral-01);
+        background: var(--color-utility-opacity-neutral-01);
       }
     }
     th,
