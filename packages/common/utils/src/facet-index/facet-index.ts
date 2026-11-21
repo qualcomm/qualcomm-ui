@@ -179,25 +179,34 @@ export class FacetIndex<Item extends FacetIndexItem> {
   /**
    * The configured field names.
    */
-  readonly fields: readonly string[]
-  private readonly fieldIndexes: Map<string, FieldIndex>
-  private readonly indexById: Map<string, number>
-  private readonly items: Item[]
+  fields: readonly string[]
+  private fieldIndexes: Map<string, FieldIndex>
+  private indexById: Map<string, number>
+  private items: Item[]
 
   /**
    * Indexes the values of each configured field. The items and config are
    * copied, so later mutations to either have no effect.
    */
   constructor(items: readonly Item[], config: FacetIndexConfig) {
+    this.fields = []
+    this.fieldIndexes = new Map()
+    this.indexById = new Map()
+    this.items = []
+    this.reindex(items, config)
+  }
+
+  reindex(items: readonly Item[], config: FacetIndexConfig): void {
+    this.fieldIndexes.clear()
+    this.indexById.clear()
     const {compare} = new Intl.Collator()
     this.items = [...items]
-    this.indexById = new Map(this.items.map((item, index) => [item.id, index]))
-    this.fieldIndexes = new Map(
-      Object.entries(config.fields).map(([name, field]) => [
-        name,
-        indexField(this.items, name, field, compare),
-      ]),
-    )
+    for (let i = 0; i < items.length; i++) {
+      this.indexById.set(items[i].id, i)
+    }
+    for (const [name, field] of Object.entries(config.fields)) {
+      this.fieldIndexes.set(name, indexField(this.items, name, field, compare))
+    }
     this.fields = [...this.fieldIndexes.keys()]
   }
 

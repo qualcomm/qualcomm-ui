@@ -141,7 +141,7 @@ facetIndex.getValues("chip")
 // ["SM8550", "SM8650"]
 ```
 
-Arrays along the path are flattened, so this field holds the chip of every device. Selections and facets still use the field name, like `selections.chip`.
+Arrays along the path are flattened, so this field holds the chip of every device.
 
 ## Narrowing the Candidates
 
@@ -162,7 +162,7 @@ const {facets, ids} = facetIndex.filter({
 })
 ```
 
-Results keep the order of `ids`, so a ranked search stays ranked. Unknown ids are skipped.
+Results keep the order of `ids`, so ranked results retain their order. Unknown ids are skipped.
 
 ## Filter Panel
 
