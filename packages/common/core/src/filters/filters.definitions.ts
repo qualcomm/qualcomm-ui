@@ -161,6 +161,19 @@ export interface DateFilterConfig extends FilterDefinitionConfig {
   presets?: DateFilterPreset[] | undefined
 }
 
+/**
+ * One selected value of a filter, with its label.
+ */
+export interface FilterValueItem {
+  label: string
+
+  /**
+   * The selected option for list and tree filters. Range, date, and text
+   * filters have one item for the whole value.
+   */
+  value: string
+}
+
 export interface CustomFilterConfig<TValue> extends FilterDefinitionConfig {
   /**
    * Returns how many values the filter contributes to the active filter count.
@@ -170,11 +183,13 @@ export interface CustomFilterConfig<TValue> extends FilterDefinitionConfig {
   getValueCount?: ((value: TValue) => number) | undefined
 
   /**
-   * Returns the labels used to summarize the value outside the panel.
+   * Returns one item per selected value, for active filter chips. For array
+   * values, use each element's string form as the item's `value` so
+   * `removeFilterValue` can remove it.
    *
-   * Defaults to one label per array item, otherwise one label for the value
+   * Defaults to one item per array element, otherwise one item for the value.
    */
-  getValueLabels?: ((value: TValue) => string[]) | undefined
+  getValueItems?: ((value: TValue) => FilterValueItem[]) | undefined
 
   /**
    * Returns `true` when the value should be treated as empty and removed.

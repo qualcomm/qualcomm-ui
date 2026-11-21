@@ -1,7 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {FilterDefinitions, FilterValues} from "@qualcomm-ui/core/filters"
+import type {
+  FilterDefinitions,
+  FilterValueItem,
+  FilterValues,
+} from "@qualcomm-ui/core/filters"
 import type {
   ListCollection,
   TreeCollection,
@@ -69,32 +73,6 @@ export interface FilterSetCollectionDetails {
 }
 
 /**
- * - `resolved`: the label comes from the value's item.
- * - `loading`: the item is not available yet, and the collection is loading.
- * - `missing`: the collection has loaded without the value's item. The label
- *   is the value itself.
- */
-export type FilterSetValueStatus = "loading" | "missing" | "resolved"
-
-/**
- * One selected value of a filter, with its label.
- */
-export interface FilterSetValueItem {
-  /**
-   * The value's label. Falls back to the value until its item resolves.
-   */
-  label: string
-
-  status: FilterSetValueStatus
-
-  /**
-   * The selected value. For filters that aren't list or tree filters, this is
-   * the summary label.
-   */
-  value: string
-}
-
-/**
  * An item of a list filter, normalized for rendering.
  */
 export interface FilterSetOption {
@@ -110,13 +88,6 @@ export interface FilterSetOption {
   disabled: boolean
 
   label: string
-
-  /**
-   * `resolved` for items of the collection. Selected values missing from the
-   * collection are appended so they stay visible and can be deselected, with
-   * the status of their label.
-   */
-  status: FilterSetValueStatus
 
   value: string
 }
@@ -329,6 +300,12 @@ export interface FilterSetApi<
   ) => FilterValues<TDefs>[K]
 
   /**
+   * Returns how many values a filter has in `draftValue`. Each array item
+   * counts once. Ranges, dates, and text count 1.
+   */
+  getDraftValueCount: (id: keyof TDefs & string) => number
+
+  /**
    * Returns the state of a list or tree filter's collection: `success` with
    * the definition's collection, otherwise the result of
    * `getFilterCollection`. Returns `undefined` when the filter has neither.
@@ -358,8 +335,9 @@ export interface FilterSetApi<
   /**
    * Returns the items of a list filter, normalized for rendering, with counts
    * from `getFilterOptionCounts`. Selected values missing from the collection
-   * are appended. Returns the same array while the options are unchanged, so
-   * it can be used as a memo dependency.
+   * are appended so they can be deselected. Empty while the collection loads
+   * for the first time. Returns the same array while the options are
+   * unchanged, so it can be used as a memo dependency.
    */
   getFilterOptions: (id: string) => FilterSetOption[]
 
@@ -370,23 +348,17 @@ export interface FilterSetApi<
   getFilterRange: (id: string) => Partial<FilterSetRange>
 
   /**
-   * Returns how many values a filter value contributes to a count. Arrays
-   * count their length; ranges, dates, and text count 1. Empty values count 0.
+   * Returns how many values a filter has in `value`. Each array item counts
+   * once. Ranges, dates, and text count 1.
    */
-  getValueCount: (id: string, value: unknown) => number
+  getValueCount: (id: keyof TDefs & string) => number
 
   /**
-   * Returns one item per selected value with its label and label status, such
-   * as for active filter chips that show a placeholder while labels load. Pass
-   * a value from `value` or `draftValue`.
+   * Returns one item per selected value of a filter in `value`, for active
+   * filter chips. List and tree filters return one item per option. Range,
+   * date, and text filters return one item for the whole value.
    */
-  getValueItems: (id: string, value: unknown) => FilterSetValueItem[]
-
-  /**
-   * Returns the labels that summarize a filter value, such as one label per
-   * active filter chip. Pass a value from `value` or `draftValue`.
-   */
-  getValueLabels: (id: string, value: unknown) => string[]
+  getValueItems: (id: keyof TDefs & string) => FilterValueItem[]
 
   /**
    * Whether `draftValue` differs from `value`. Always `false` in `auto` mode.
@@ -397,6 +369,12 @@ export interface FilterSetApi<
    * Whether a filter has a non-empty value in `draftValue`.
    */
   isFilterActive: (id: string) => boolean
+
+  /**
+   * Removes one of a filter's values, given the `value` of an item from
+   * `getValueItems`. Range, date, and text filters are cleared.
+   */
+  removeFilterValue: (id: keyof TDefs & string, value: string) => void
 
   /**
    * Discards the draft and restores the committed filters. No-op in `auto`

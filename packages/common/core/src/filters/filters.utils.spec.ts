@@ -10,9 +10,10 @@ import {
 } from "./filters.definitions"
 import {
   countFilterValue,
-  labelFilterValue,
+  getFilterValueItems,
   isEmptyDateFilterValue,
   isEmptyFilterValue,
+  removeFilterValueItem,
   stringifyFilterValue,
 } from "./filters.utils"
 
@@ -25,7 +26,8 @@ const definitions = defineFilters({
   }),
   tags: customFilter<{all: boolean; tags: string[]}>({
     getValueCount: (value) => value.tags.length,
-    getValueLabels: (value) => value.tags,
+    getValueItems: (value) =>
+      value.tags.map((tag) => ({label: tag, value: tag})),
     isEmptyValue: (value) => value.tags.length === 0,
   }),
 })
@@ -89,43 +91,84 @@ describe("countFilterValue", () => {
   })
 })
 
-describe("labelFilterValue", () => {
+describe("getFilterValueItems", () => {
   const getOptionLabel = (option: string) => option.toUpperCase()
 
-  test("summarizes each kind of value", () => {
+  test("list values have one item per option", () => {
     expect(
-      labelFilterValue(definitions.status, ["a", "b"], getOptionLabel),
-    ).toEqual(["A", "B"])
+      getFilterValueItems(definitions.status, ["a", "b"], getOptionLabel),
+    ).toEqual([
+      {label: "A", value: "a"},
+      {label: "B", value: "b"},
+    ])
+  })
+
+  test("range, date, and text values have one item for the whole value", () => {
     expect(
-      labelFilterValue(definitions.duration, [10, null], getOptionLabel),
-    ).toEqual(["≥ 10 min"])
+      getFilterValueItems(definitions.duration, [10, null], getOptionLabel),
+    ).toEqual([{label: "≥ 10 min", value: "≥ 10 min"}])
     expect(
-      labelFilterValue(definitions.duration, [10, 20], getOptionLabel),
-    ).toEqual(["10 min – 20 min"])
+      getFilterValueItems(definitions.duration, [10, 20], getOptionLabel),
+    ).toEqual([{label: "10 min – 20 min", value: "10 min – 20 min"}])
     expect(
-      labelFilterValue(
+      getFilterValueItems(
         definitions.submitted,
         {preset: "last7Days"},
         getOptionLabel,
       ),
-    ).toEqual(["Last 7 days"])
+    ).toEqual([{label: "Last 7 days", value: "Last 7 days"}])
     expect(
-      labelFilterValue(
+      getFilterValueItems(
         definitions.submitted,
         {range: [null, "2026-11-09"]},
         getOptionLabel,
       ),
-    ).toEqual(["≤ 2026-11-09"])
-    expect(labelFilterValue(definitions.query, "out/", getOptionLabel)).toEqual(
-      ["out/"],
-    )
+    ).toEqual([{label: "≤ 2026-11-09", value: "≤ 2026-11-09"}])
     expect(
-      labelFilterValue(
+      getFilterValueItems(definitions.query, "out/", getOptionLabel),
+    ).toEqual([{label: "out/", value: "out/"}])
+  })
+
+  test("custom values use the definition's items", () => {
+    expect(
+      getFilterValueItems(
         definitions.tags,
         {all: true, tags: ["x", "y"]},
         getOptionLabel,
       ),
-    ).toEqual(["x", "y"])
+    ).toEqual([
+      {label: "x", value: "x"},
+      {label: "y", value: "y"},
+    ])
+  })
+})
+
+describe("removeFilterValueItem", () => {
+  test("removes one option from a list value", () => {
+    expect(removeFilterValueItem(definitions.status, ["a", "b"], "a")).toEqual([
+      "b",
+    ])
+  })
+
+  test("clears range, date, and text values", () => {
+    expect(
+      removeFilterValueItem(definitions.duration, [10, 20], "10 min – 20 min"),
+    ).toBeUndefined()
+    expect(
+      removeFilterValueItem(
+        definitions.submitted,
+        {preset: "last7Days"},
+        "Last 7 days",
+      ),
+    ).toBeUndefined()
+    expect(
+      removeFilterValueItem(definitions.query, "out/", "out/"),
+    ).toBeUndefined()
+  })
+
+  test("removes matching elements from custom array values", () => {
+    const flags = customFilter<number[]>({})
+    expect(removeFilterValueItem(flags, [1, 2, 3], "2")).toEqual([1, 3])
   })
 })
 

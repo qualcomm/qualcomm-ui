@@ -56,16 +56,17 @@ export function FilterPanelDrawerDemo(): ReactElement {
           </Drawer.Body>
         </Drawer.FloatingPortal>
       </Drawer.Root>
-      {activeIds.map((id) => (
-        <Tag
-          key={id}
-          onDismiss={() => filterSet.clearFilter(id)}
-          variant="dismissable"
-        >
-          {filterSet.getFilterLabel(id)}:{" "}
-          {filterSet.getValueLabels(id, filterSet.value[id]).join(", ")}
-        </Tag>
-      ))}
+      {activeIds.flatMap((id) =>
+        filterSet.getValueItems(id).map((item) => (
+          <Tag
+            key={`${id}:${item.value}`}
+            onDismiss={() => filterSet.removeFilterValue(id, item.value)}
+            variant="dismissable"
+          >
+            {item.label}
+          </Tag>
+        )),
+      )}
       {/* preview */}
     </div>
   )

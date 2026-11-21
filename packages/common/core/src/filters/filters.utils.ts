@@ -5,6 +5,7 @@ import type {
   DateFilterDefinition,
   DateFilterValue,
   FilterDefinition,
+  FilterValueItem,
   RangeFilterDefinition,
   RangeFilterValue,
 } from "./filters.definitions.js"
@@ -124,32 +125,57 @@ function formatDateValue(
 }
 
 /**
- * Returns the labels that summarize a non-empty filter value, such as one
- * label per active filter chip.
+ * Returns one item per selected value of a non-empty filter value. List and
+ * tree filters return one item per option. Range, date, and text filters
+ * return one item for the whole value.
  */
-export function labelFilterValue(
+export function getFilterValueItems(
   definition: FilterDefinition | undefined,
   value: unknown,
   getOptionLabel: (option: string) => string,
-): string[] {
+): FilterValueItem[] {
   switch (definition?.kind) {
     case "custom":
-      if (definition.getValueLabels) {
-        return definition.getValueLabels(value)
+      if (definition.getValueItems) {
+        return definition.getValueItems(value)
       }
       break
     case "date": {
       const label = formatDateValue(definition, value as DateFilterValue)
-      return label ? [label] : []
+      return label ? [{label, value: label}] : []
     }
     case "range": {
       const label = formatRangeValue(definition, value as RangeFilterValue)
-      return label ? [label] : []
+      return label ? [{label, value: label}] : []
     }
     case "text":
-      return [String(value)]
+      return [{label: String(value), value: String(value)}]
+  }
+  const options = Array.isArray(value)
+    ? value.map(String)
+    : [stringifyFilterValue(value)]
+  return options.map((option) => ({
+    label: getOptionLabel(option),
+    value: option,
+  }))
+}
+
+/**
+ * Returns the filter value without one of its items. Returns `undefined` when
+ * the item stands for the whole value, which clears the filter.
+ */
+export function removeFilterValueItem(
+  definition: FilterDefinition | undefined,
+  value: unknown,
+  item: string,
+): unknown {
+  switch (definition?.kind) {
+    case "date":
+    case "range":
+    case "text":
+      return undefined
   }
   return Array.isArray(value)
-    ? value.map((option) => getOptionLabel(String(option)))
-    : [getOptionLabel(stringifyFilterValue(value))]
+    ? value.filter((element) => String(element) !== item)
+    : undefined
 }

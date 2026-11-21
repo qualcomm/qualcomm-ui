@@ -22,7 +22,7 @@ export function createFilterPanelApi(
   filterSet: FilterSetApi<any>,
   normalize: PropNormalizer,
 ): FilterPanelApi {
-  const {applyMode, draftValue, draftValueCount, isDirty} = filterSet
+  const {applyMode, draftValueCount, isDirty} = filterSet
 
   return {
     getApplyTriggerBindings(): FilterPanelApplyTriggerBindings {
@@ -62,7 +62,7 @@ export function createFilterPanelApi(
       })
     },
     getFilterCountBindings({id}): FilterPanelFilterCountBindings {
-      const count = filterSet.getValueCount(id, draftValue[id])
+      const count = filterSet.getDraftValueCount(id)
       return normalize.element({
         ...parts.filterCount,
         "aria-label": `${count} selected`,

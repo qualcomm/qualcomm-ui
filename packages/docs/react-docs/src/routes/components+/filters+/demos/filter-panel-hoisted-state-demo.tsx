@@ -44,16 +44,17 @@ export function FilterPanelHoistedStateDemo(): ReactElement {
         </FilterPanel.Filter>
       </FilterPanel.RootProvider>
       <div className="flex min-w-60 flex-1 flex-wrap gap-2">
-        {activeIds.map((id) => (
-          <Tag
-            key={id}
-            onDismiss={() => filterSet.clearFilter(id)}
-            variant="dismissable"
-          >
-            {filterSet.getFilterLabel(id)}:{" "}
-            {filterSet.getValueLabels(id, filterSet.value[id]).join(", ")}
-          </Tag>
-        ))}
+        {activeIds.flatMap((id) =>
+          filterSet.getValueItems(id).map((item) => (
+            <Tag
+              key={`${id}:${item.value}`}
+              onDismiss={() => filterSet.removeFilterValue(id, item.value)}
+              variant="dismissable"
+            >
+              {item.label}
+            </Tag>
+          )),
+        )}
       </div>
       {/* preview */}
     </div>

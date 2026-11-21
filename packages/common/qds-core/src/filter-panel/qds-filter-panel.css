@@ -72,12 +72,14 @@
 }
 
 .qui-filter-panel__filter {
-  /* The divider overlaps the bottom padding instead of adding height. */
-  box-shadow: inset 0 calc(-1 * var(--border-width-sm)) 0
-    var(--color-border-neutral-01);
+  border-bottom: var(--border-width-sm) solid var(--color-border-neutral-01);
   display: flex;
   flex-direction: column;
   padding-block: var(--spacing-100);
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .qui-filter-panel__filter-trigger {

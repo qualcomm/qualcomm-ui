@@ -29,7 +29,8 @@ const definitions = defineFilters({
   }),
   tags: customFilter<{all: boolean; tags: string[]}>({
     getValueCount: (value) => value.tags.length,
-    getValueLabels: (value) => value.tags,
+    getValueItems: (value) =>
+      value.tags.map((tag) => ({label: tag, value: tag})),
     isEmptyValue: (value) => value.tags.length === 0,
   }),
 })

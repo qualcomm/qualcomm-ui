@@ -22,6 +22,18 @@ const builds: Build[] = [
   {id: "8", name: "macos-arm64", platform: "macOS", status: "Passed"},
 ]
 
+export interface Owner {
+  label: string
+  value: string
+}
+
+const owners: Owner[] = [
+  {label: "Anna Robinson", value: "u1"},
+  {label: "Ben Ortiz", value: "u2"},
+  {label: "Chloe Nguyen", value: "u3"},
+  {label: "Dev Patel", value: "u4"},
+]
+
 const fields = ["platform", "status"] as const
 
 /**
@@ -36,4 +48,12 @@ export async function fetchBuilds(query: BuildsQuery): Promise<Build[]> {
       return !selected?.length || selected.includes(build[field])
     }),
   )
+}
+
+/**
+ * Stands in for an endpoint that returns the users who own builds.
+ */
+export async function fetchOwners(): Promise<Owner[]> {
+  await new Promise((resolve) => setTimeout(resolve, 1500))
+  return owners
 }

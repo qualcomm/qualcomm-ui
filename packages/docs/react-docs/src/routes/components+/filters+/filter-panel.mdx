@@ -118,16 +118,13 @@ Setting `value` from outside the panel replaces the draft, including any unappli
   component={demos.FilterPanelManualControlledStateDemo}
 />
 
-> [!note]
-> `clearFilter` follows the apply mode. In `manual` mode, it clears the filter in the draft, but the change still has to be applied.
-
 ### Labels
 
 ::: terms
 label, heading, custom label
 :::
 
-The definition's `label` is the filter's name everywhere: the section heading, the control's accessible name, and value summaries like [getValueLabels](#getValueLabels).
+The definition's `label` is the filter's name everywhere: the section heading, the control's accessible name, and [getFilterLabel](#getFilterLabel).
 
 To change how a single section heading renders, pass `label` to `FilterPanel.Filter`. It accepts a `ReactNode`, or a function that receives the definition's label. The rendered heading also names the control, but summaries keep the definition's label.
 
@@ -136,22 +133,31 @@ To change how a single section heading renders, pass `label` to `FilterPanel.Fil
   component={demos.FilterPanelLabelsDemo}
 />
 
-### Collections
+### Loading Options
 
 ::: terms
-ListCollection, TreeCollection, async options, loading, getFilterCollection
+async options, loading, error, ListCollection, TreeCollection, getFilterCollection
 :::
 
-List and tree filters select from a collection. A static collection belongs on the definition. A collection that loads at runtime comes from [getFilterCollection](#getFilterCollection), which returns its state: `loading`, `error`, or `success`. The controls show a loading status until it resolves, and an error if it fails. In the panel, the filter's trigger shows a progress ring while the collection refetches, or while the filter is collapsed.
+To load a filter's options from an API, leave `collection` off its definition and return the request's state from [getFilterCollection](#getFilterCollection). The filter shows a loading indicator until the request succeeds, and an error if it fails.
 
 <Demo
   name="FilterPanelOptionsDemo"
   component={demos.FilterPanelOptionsDemo}
 />
 
-`getFilterCollection` is called during render, so load the data elsewhere, such as with a query library, and return its state. List items are strings or `{label, value}` objects unless the collection defines its own accessors. A selected value that isn't in the collection stays visible, so the user can always deselect it.
+### Restoring a Selection
 
-Labels come from the collection. A selection keeps its labels after a search narrows the collection. Values restored from the URL or storage have no items yet, so the resolver receives them as `values`. Include their items in the returned collection, for example by fetching them by id. Until then, [getValueItems](#getValueItems) reports them as `loading`, so active filter chips can show a placeholder.
+::: terms
+URL, storage, restored values, labels, loading, getValueItems
+:::
+
+Filters restored from a URL like `/builds?owner=u2` only contain value ids. The labels aren't available until the list loads, so show a loading indicator until then. The panel does this for you. Anything else that shows the selection, like these chips, should check the request's state before calling [getValueItems](#getValueItems).
+
+<Demo
+  name="FilterPanelRestoredSelectionDemo"
+  component={demos.FilterPanelRestoredSelectionDemo}
+/>
 
 ### Filter Counts
 
@@ -208,6 +214,8 @@ An alternative to `FilterPanel.Root` is the `FilterPanel.RootProvider` component
   component={demos.FilterPanelHoistedStateDemo}
 />
 
+Each tag comes from [getValueItems](#getValueItems), which returns one item per selected value. Dismissing a tag passes the item's `value` to [removeFilterValue](#removeFilterValue).
+
 The state lives in the component that calls `useFilterSet`, so the panel can unmount, for example inside a closed drawer, without losing the selection.
 
 <Demo
@@ -226,14 +234,14 @@ Declare a filter with your own value type using `customFilter`, then render your
 ```tsx
 const filters = defineFilters({
   attachments: customFilter<boolean>({
-    getValueLabels: () => ["Has attachments"],
+    getValueItems: () => [{label: "Has attachments", value: "true"}],
     isEmptyValue: (value) => !value,
     label: "Attachments",
   }),
 })
 ```
 
-`isEmptyValue` tells the panel when to drop the filter from the value, and `getValueLabels` describes the value in summaries.
+`isEmptyValue` tells the panel when to drop the filter from the value, and `getValueItems` describes the value in active filter tags.
 
 <Demo
   name="FilterPanelCustomFilterDemo"

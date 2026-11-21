@@ -12,7 +12,7 @@ import {Switch} from "@qualcomm-ui/react/switch"
 
 const filters = defineFilters({
   attachments: customFilter<boolean>({
-    getValueLabels: () => ["Has attachments"],
+    getValueItems: () => [{label: "Has attachments", value: "true"}],
     isEmptyValue: (value) => !value,
     label: "Attachments",
   }),

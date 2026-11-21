@@ -4,8 +4,8 @@
 import {
   countFilterValue,
   type FilterDefinitions,
-  isCollectionFilter,
-  labelFilterValue,
+  getFilterValueItems,
+  removeFilterValueItem,
 } from "@qualcomm-ui/core/filters"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
 import {isEqual} from "@qualcomm-ui/utils/equal"
@@ -17,7 +17,6 @@ import type {
   FilterSetOption,
   FilterSetOptionCounts,
   FilterSetSchema,
-  FilterSetValueItem,
 } from "./filter-set.types.js"
 import {
   areValuesEqual,
@@ -73,22 +72,11 @@ export function createFilterSetApi<
     return collectionStates.get(id)
   }
 
-  function getValueItem(id: string, option: string): FilterSetValueItem {
-    const state = getFilterCollectionState(id)
-    const found =
-      findCollectionItem(state?.collection, option) ?? captured[id]?.[option]
-    if (found) {
-      return {label: found.label, status: "resolved", value: option}
-    }
-    return {
-      label: option,
-      status: state?.status === "loading" ? "loading" : "missing",
-      value: option,
-    }
-  }
-
   function getFilterOptionLabel(id: string, option: string): string {
-    return getValueItem(id, option).label
+    const found =
+      findCollectionItem(getFilterCollectionState(id)?.collection, option) ??
+      captured[id]?.[option]
+    return found?.label ?? option
   }
 
   const optionCounts = new Map<string, FilterSetOptionCounts | undefined>()
@@ -114,7 +102,7 @@ export function createFilterSetApi<
     return typeof count === "number" ? count : 0
   }
 
-  function getValueCount(id: string, filterValue: unknown): number {
+  function countValue(id: string, filterValue: unknown): number {
     return isEmpty(id, filterValue)
       ? 0
       : countFilterValue(definitions?.[id], filterValue)
@@ -137,6 +125,9 @@ export function createFilterSetApi<
     getDraftValue(id) {
       return draftValue[id] as ReturnType<FilterSetApi<TDefs>["getDraftValue"]>
     },
+    getDraftValueCount(id) {
+      return countValue(id, draftValue[id])
+    },
     getFilterCollectionState,
     getFilterLabel(id) {
       return definitions?.[id]?.label || prop("getFilterLabel")?.(id) || id
@@ -144,7 +135,8 @@ export function createFilterSetApi<
     getFilterOptionCount,
     getFilterOptionLabel,
     getFilterOptions(id) {
-      const collection = getFilterCollectionState(id)?.collection
+      const state = getFilterCollectionState(id)
+      const collection = state?.collection
       const selected = getSelectedValues(draftValue[id])
       const options: FilterSetOption[] = []
 
@@ -161,15 +153,25 @@ export function createFilterSetApi<
               !!collection.getItemDisabled(item) ||
               (count === 0 && !selected.includes(option)),
             label: collection.stringifyItem(item) ?? option,
-            status: "resolved",
             value: option,
           })
         }
       }
 
-      for (const option of selected) {
-        if (!options.some((existing) => existing.value === option)) {
-          options.push({...getValueItem(id, option), disabled: false})
+      /**
+       * Selected values have no labels until the collection first loads, so the
+       * controls show only their loading status.
+       */
+      const isInitialLoad = state?.status === "loading" && !collection
+      if (!isInitialLoad) {
+        for (const option of selected) {
+          if (!options.some((existing) => existing.value === option)) {
+            options.push({
+              disabled: false,
+              label: getFilterOptionLabel(id, option),
+              value: option,
+            })
+          }
         }
       }
 
@@ -192,35 +194,28 @@ export function createFilterSetApi<
         min: bounds?.min ?? range?.min,
       }
     },
-    getValueCount,
-    getValueItems(id, filterValue) {
-      if (isEmpty(id, filterValue)) {
-        return []
-      }
-      const definition = definitions?.[id]
-      if (
-        isCollectionFilter(definition) ||
-        (!definition && Array.isArray(filterValue))
-      ) {
-        return getSelectedValues(filterValue).map((option) =>
-          getValueItem(id, option),
-        )
-      }
-      return labelFilterValue(definition, filterValue, (option) =>
-        getFilterOptionLabel(id, option),
-      ).map((label) => ({label, status: "resolved", value: label}))
+    getValueCount(id) {
+      return countValue(id, value[id])
     },
-    getValueLabels(id, filterValue) {
-      if (isEmpty(id, filterValue)) {
+    getValueItems(id) {
+      if (isEmpty(id, value[id])) {
         return []
       }
-      return labelFilterValue(definitions?.[id], filterValue, (option) =>
+      return getFilterValueItems(definitions?.[id], value[id], (option) =>
         getFilterOptionLabel(id, option),
       )
     },
     isDirty,
     isFilterActive(id) {
       return !isEmpty(id, draftValue[id])
+    },
+    removeFilterValue(id, item) {
+      send({
+        id,
+        type: "FILTER.SET",
+        value: (current: unknown) =>
+          removeFilterValueItem(definitions?.[id], current, item),
+      })
     },
     reset() {
       send({type: "RESET"})
