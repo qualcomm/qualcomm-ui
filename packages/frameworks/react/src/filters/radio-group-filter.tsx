@@ -29,12 +29,13 @@ export interface RadioGroupFilterProps extends Omit<
 
 /**
  * A radio group, one radio per item of the filter's list collection. Selects
- * one item. Writes a one-item `string[]`.
+ * one item. Writes a one-item `string[]`. Renders nothing while the filter has
+ * no collection.
  */
 export function RadioGroupFilter({
   anyLabel,
   ...props
-}: RadioGroupFilterProps): ReactElement {
+}: RadioGroupFilterProps): ReactElement | null {
   const filter = useFilterWidget<ListFilterDefinition>(
     "RadioGroupFilter",
     "list",
@@ -42,6 +43,11 @@ export function RadioGroupFilter({
   const qdsContext = useQdsFilterControlContext()
   const collection =
     filter.collection instanceof ListCollection ? filter.collection : undefined
+
+  if (!collection) {
+    return null
+  }
+
   const selected = filter.value?.[0]
 
   return (
@@ -53,7 +59,7 @@ export function RadioGroupFilter({
       {...mergeProps(qdsContext.getOptionGroupBindings(), props)}
     >
       {anyLabel ? <Radio label={anyLabel} value="" /> : null}
-      {collection?.items.map((item) => {
+      {collection.items.map((item) => {
         const value = collection.getItemValue(item)
         if (value === null) {
           return null

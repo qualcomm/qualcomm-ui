@@ -28,11 +28,11 @@ export interface CheckboxGroupFilterProps extends Omit<
 /**
  * A group of checkboxes, one per item of the filter's list collection. Selects
  * any number of items. Writes a `string[]`. Renders a `<div>` element by
- * default.
+ * default. Renders nothing while the filter has no collection.
  */
 export function CheckboxGroupFilter(
   props: CheckboxGroupFilterProps,
-): ReactElement {
+): ReactElement | null {
   const filter = useFilterWidget<ListFilterDefinition>(
     "CheckboxGroupFilter",
     "list",
@@ -40,6 +40,11 @@ export function CheckboxGroupFilter(
   const qdsContext = useQdsFilterControlContext()
   const collection =
     filter.collection instanceof ListCollection ? filter.collection : undefined
+
+  if (!collection) {
+    return null
+  }
+
   const selected = filter.value ?? []
 
   const mergedProps = mergeProps(
@@ -50,7 +55,7 @@ export function CheckboxGroupFilter(
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      {collection?.items.map((item) => {
+      {collection.items.map((item) => {
         const value = collection.getItemValue(item)
         if (value === null) {
           return null

@@ -899,7 +899,7 @@ describe("collections", () => {
     await expect.element(items.getByRole("listitem")).not.toBeInTheDocument()
   })
 
-  test("a filter without a collection shows no options until it has one", async () => {
+  test("a filter without a collection renders nothing until it has one", async () => {
     function Example() {
       const [loaded, setLoaded] = useState(false)
       const filterSet = useFilterSet({
@@ -923,11 +923,11 @@ describe("collections", () => {
     await render(<Example />)
 
     const group = page.getByRole("group", {name: "User"})
-    await expect.element(group).toBeInTheDocument()
-    await expect.element(group.getByRole("checkbox")).not.toBeInTheDocument()
+    await expect.element(group).not.toBeInTheDocument()
 
     await page.getByRole("button", {name: "Load"}).click()
 
+    await expect.element(group).toBeVisible()
     await expect.element(page.getByLabelText("Anna Robinson")).toBeChecked()
   })
 

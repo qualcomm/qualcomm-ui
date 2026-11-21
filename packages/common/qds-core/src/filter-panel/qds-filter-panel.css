@@ -150,6 +150,11 @@
     display: none;
   }
 
+  /* Filter controls render nothing while the filter has no collection. */
+  &:empty {
+    display: none;
+  }
+
   &:has(> .qui-filter-control__option-group:last-child) {
     padding-block-end: var(--spacing-100);
   }
