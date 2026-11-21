@@ -64,6 +64,7 @@ import {TableTitleBar, type TableTitleBarProps} from "./table-title-bar.js"
 
 export * from "./dynamic-render/index.js"
 export * from "./qds-table-context.js"
+export * from "./qds-table-root-context.js"
 export * from "./use-react-table.js"
 export * from "./use-react-table-react-compiler-compat.js"
 export * from "./use-table-pagination.js"
@@ -110,6 +111,9 @@ type TableComponent = {
    *   </Table.ScrollContainer>
    * </Table.Root>
    * ```
+   *
+   * @deprecated in next-release, replaced by `TableToolbar`. Will be removed in
+   * the next major version.
    */
   ActionBar: typeof TableActionBar
   /**
@@ -164,6 +168,8 @@ type TableComponent = {
   /**
    * An action button for opening a column filter menu or interface. Renders a
    * `<button>` element by default.
+   *
+   * @deprecated will be removed in the next major version.
    */
   ColumnFilterAction: typeof TableColumnFilterAction
   /**
@@ -262,7 +268,7 @@ type TableComponent = {
    * @example
    * ```tsx
    * <Table.Root>
-   *   <Table.ActionBar>...</Table.ActionBar>
+   *   <TableToolbar.Root>...</TableToolbar.Root>
    *   <Table.ScrollContainer>
    *     <Table.Table>...</Table.Table>
    *   </Table.ScrollContainer>

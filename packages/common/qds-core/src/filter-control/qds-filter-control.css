@@ -1,0 +1,83 @@
+.qui-filter-control__option-group {
+  --filter-control-option-gap: calc(
+    var(--filter-control-option-padding-block) * 2
+  );
+  display: flex;
+  flex-direction: column;
+  gap: var(--filter-control-option-gap);
+  padding-block-end: var(--filter-control-option-padding-block);
+
+  &[data-size="sm"] {
+    --filter-control-option-padding-block: var(--spacing-175);
+  }
+  &[data-size="md"] {
+    --filter-control-option-padding-block: var(--spacing-250);
+  }
+
+  &:empty {
+    --filter-control-option-padding-block: 0;
+  }
+
+  /* Outranks the radio group's own padding and per-size gap. */
+  &.qui-radio-group__root {
+    padding-block-end: var(--filter-control-option-padding-block);
+  }
+  .qui-radio-group__items[data-size] {
+    gap: var(--filter-control-option-gap);
+  }
+}
+
+/* Rows with counts span the group so that counts align at the inline end. */
+.qui-filter-control__option-group:has(.qui-filter-control__option-count) {
+  > *,
+  .qui-radio-group__items > * {
+    width: auto;
+  }
+
+  /* Radio labels are flex items that otherwise size to their text. */
+  :has(> .qui-filter-control__option-label) {
+    flex: 1;
+  }
+}
+
+.qui-filter-control__option-label {
+  align-items: baseline;
+  display: flex;
+  gap: var(--spacing-200);
+
+  /* Lets long labels truncate inside select and combobox items. */
+  > :first-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.qui-filter-control__option-count {
+  color: var(--color-text-neutral-secondary);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  margin-inline-start: auto;
+
+  :where([data-disabled]) & {
+    color: var(--color-utility-disabled-text);
+  }
+}
+
+.qui-filter-control__status {
+  align-items: center;
+  color: var(--color-text-neutral-secondary);
+  display: flex;
+  gap: var(--spacing-200);
+  padding-block: var(--spacing-100);
+
+  &[data-size="sm"] {
+    font: var(--font-static-body-xs-default);
+  }
+  &[data-size="md"] {
+    font: var(--font-static-body-sm-default);
+  }
+  &[data-status="error"] {
+    color: var(--color-text-support-danger);
+  }
+}

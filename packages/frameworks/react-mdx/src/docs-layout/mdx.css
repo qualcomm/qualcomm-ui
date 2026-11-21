@@ -468,6 +468,9 @@ blockquote.mdx {
   border: solid var(--border-width-sm) var(--color-border-support-info-medium);
   border-radius: var(--border-radius-100);
   box-sizing: border-box;
+  /* Remove browser default styles */
+  margin-block: unset;
+  margin-inline: unset;
   margin-top: var(--qui-mdx-margin-default);
   padding: var(--spacing-300) var(--spacing-400);
 
@@ -697,4 +700,8 @@ hr.mdx {
   margin-top: var(--qui-docs-content-spacing-sm);
   padding: 24px;
   width: 100%;
+}
+
+.qui-table__header-cell.mdx {
+  background: var(--color-utility-opacity-neutral-01);
 }

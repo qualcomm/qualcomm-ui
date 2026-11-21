@@ -439,9 +439,10 @@ export const treeMachine: MachineConfig<TreeSchema> = createMachine<TreeSchema>(
       moveFocus: ({event}) => !!event.moveFocus,
     },
 
-    ids({bindableId}) {
+    ids({bindableId, bindableIdCollection}) {
       return {
         label: bindableId(),
+        nodeCheckbox: bindableIdCollection<string>(),
         root: bindableId(),
       }
     },

@@ -129,9 +129,12 @@
 }
 
 .qui-popover__content {
+  &:has(pre.shiki-code) {
+    border: 1px solid var(--color-border-neutral-01);
+  }
   pre.shiki-code {
-    background: var(--color-surface-overlay);
-    padding: 10px;
+    background: var(--qui-docs-code-background);
+    padding: 12px;
   }
 }
 

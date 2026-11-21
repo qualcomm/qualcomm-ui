@@ -13,6 +13,9 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context.js"
 
+/**
+ * @deprecated will be removed in the next major version.
+ */
 export interface TableColumnFilterActionProps
   extends
     Omit<ElementRenderProp<"button">, "children">,
@@ -28,6 +31,8 @@ export interface TableColumnFilterActionProps
 /**
  * An action button for opening a column filter menu or interface. Renders a
  * `<button>` element by default.
+ *
+ * @deprecated will be removed in the next major version.
  */
 export function TableColumnFilterAction({
   canFilter: canFilterProp,

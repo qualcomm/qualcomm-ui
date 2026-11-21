@@ -10,7 +10,7 @@ import {
 } from "../"
 import {getFacetedUniqueValues} from "../utils/get-faceted-unique-values"
 
-import {createTableHarness, testData} from "./table-test-utils"
+import {createTableHarness, makeTestColumns, testData} from "./table-test-utils"
 
 describe("table built-in filter functions regression", () => {
   test("string, equality, array, and number filters return expected matches", () => {
@@ -74,6 +74,51 @@ describe("table built-in filter functions regression", () => {
     expect(filterFns.arrIncludes.autoRemove?.("systems")).toBe(false)
     expect(filterFns.inNumberRange.autoRemove?.([undefined, ""])).toBe(true)
     expect(filterFns.inNumberRange.autoRemove?.([10, ""])).toBe(false)
+    expect(filterFns.includesValue.autoRemove?.([])).toBe(true)
+    expect(filterFns.includesValue.autoRemove?.(undefined)).toBe(true)
+    expect(filterFns.includesValue.autoRemove?.(["single"])).toBe(false)
+  })
+
+  test("includesValue matches scalar row values exactly, not by substring", () => {
+    const {table} = createTableHarness()
+    const ada = table.getCoreRowModel().rows[0]
+
+    expect(
+      filterFns.includesValue(
+        ada,
+        "status",
+        ["single", "complicated"],
+        () => undefined,
+      ),
+    ).toBe(true)
+    expect(
+      filterFns.includesValue(ada, "status", ["relationship"], () => undefined),
+    ).toBe(false)
+    expect(
+      filterFns.includesValue(ada, "firstName", ["Ad"], () => undefined),
+    ).toBe(false)
+    expect(
+      filterFns.arrIncludesSome(ada, "firstName", ["Ad"], () => undefined),
+    ).toBe(true)
+  })
+
+  test("includesValue filters the row model by column", () => {
+    const {table} = createTableHarness({
+      columns: makeTestColumns().map((column) =>
+        column.id === "status"
+          ? {...column, filterFn: "includesValue" as const}
+          : column,
+      ),
+    })
+
+    table.getColumn("status")?.setFilterValue(["single"])
+
+    expect(
+      table
+        .getFilteredRowModel()
+        .rows.map((row) => row.original.firstName)
+        .sort(),
+    ).toEqual(["Ada", "Margaret"])
   })
 })
 

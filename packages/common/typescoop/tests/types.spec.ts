@@ -51,8 +51,7 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
       "TestGeneric1",
       {
         actual: interfaces.TestGeneric1.resolvedType?.prettyType,
-        expected:
-          "(\n  options: Array<T>,\n  inputValue: string,\n) => Array<T>",
+        expected: "(\n  options: T[],\n  inputValue: string,\n) => T[]",
       },
     ],
     [
@@ -60,6 +59,104 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
       {
         actual: interfaces.TestTemplateLiteral1.resolvedType?.type,
         expected: "`${string}.${number}`",
+      },
+    ],
+    [
+      "alias of a mapped type prints the reference as written",
+      {
+        actual: {
+          baseType: interfaces.TestRecordAlias.resolvedType?.baseType,
+          type: interfaces.TestRecordAlias.resolvedType?.type,
+        },
+        expected: {baseType: "reference", type: "Record<string, number>"},
+      },
+    ],
+    [
+      "generic alias of a mapped type prints the reference as written",
+      {
+        actual: interfaces.TestGenericRecordAlias.resolvedType?.type,
+        expected: "Record<T, () => void>",
+      },
+    ],
+    [
+      "alias of Pick prints the reference as written",
+      {
+        actual: interfaces.TestPickAlias.resolvedType?.type,
+        expected: "Pick<DashCasedBindingProps, 'dir' | 'disabled'>",
+      },
+    ],
+    [
+      "alias of a homomorphic mapped type prints the reference as written",
+      {
+        actual: interfaces.TestPartialAlias.resolvedType?.type,
+        expected: "Partial<Record<'x' | 'y', number>>",
+      },
+    ],
+    [
+      "references to mapped type aliases inline as written",
+      {
+        actual: {
+          documented: findResolvedType(props.MappedAliasHost, "documented")
+            .type,
+          generic: findResolvedType(props.MappedAliasHost, "generic").type,
+          long: findResolvedType(props.MappedAliasHost, "long").type,
+          omit: findResolvedType(props.MappedAliasHost, "omit").type,
+          pick: findResolvedType(props.MappedAliasHost, "pick").type,
+          record: findResolvedType(props.MappedAliasHost, "record").type,
+        },
+        expected: {
+          documented: "{open: () => void;}",
+          generic: "{a: () => void;}",
+          long: "TestLongRecordAlias",
+          omit: "{disabled: boolean; \"data-disabled\": ''; \"data-stepper-part\": 'prev-trigger';}",
+          pick: "{dir: 'ltr' | 'rtl'; disabled: boolean;}",
+          record: "Record<string, number>",
+        },
+      },
+    ],
+    [
+      "inline decisions cover mapped type aliases",
+      {
+        actual: (() => {
+          const {inlineObjects, prettyType} = findResolvedType(
+            props.MappedAliasHost,
+            "record",
+          )
+          return inlineObjects?.map(({end, inlined, name, start}) => ({
+            inlined,
+            name,
+            text: prettyType?.slice(start, end),
+          }))
+        })(),
+        expected: [
+          {
+            inlined: true,
+            name: "TestRecordAlias",
+            text: "Record<\n  string,\n  number\n>",
+          },
+        ],
+      },
+    ],
+    [
+      "arrays of simple and named elements use the suffix",
+      {
+        actual: Object.fromEntries(
+          (props.ArrayHost.props ?? []).map((prop) => [
+            prop.name,
+            prop.resolvedType.type,
+          ]),
+        ),
+        expected: {
+          functions: "Array<() => void>",
+          generics: "Map<string, () => void>[]",
+          names: "Date[]",
+          nestedNames: "Date[][]",
+          nestedUnions: "Array<Array<'a' | 'b'>>",
+          readonlyNames: "readonly Date[]",
+          readonlyStrings: "readonly string[]",
+          readonlyUnions: "ReadonlyArray<'a' | 'b'>",
+          unions: "Array<'a' | 'b'>",
+        },
       },
     ],
     [

@@ -24,6 +24,11 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-api"
 
+/**
+ * An action button for opening a column filter menu or interface.
+ *
+ * @deprecated will be removed in the next major version.
+ */
 @Component({
   providers: [provideIcons({LucideFunnel})],
   selector: "[q-table-column-filter-action]",

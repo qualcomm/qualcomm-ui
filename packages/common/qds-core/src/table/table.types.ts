@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
 import type {Cell, Header, Row, SortDirection} from "@qualcomm-ui/core/table"
+import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
+import type {QdsTagApiProps} from "@qualcomm-ui/qds-core/tag"
 import type {BooleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import type {JSX} from "@qualcomm-ui/utils/machine"
 
@@ -117,6 +119,9 @@ export interface QdsTableColumnSortActionProps {
   isSorted?: false | SortDirection
 }
 
+/**
+ * @deprecated will be removed in the next major version.
+ */
 export interface QdsTableColumnFilterProps {
   canFilter?: boolean | undefined
   /**
@@ -174,6 +179,10 @@ export interface QdsTableScrollContainerBindings {
   className: TableClasses["scrollContainer"]
 }
 
+/**
+ * @deprecated in next-release, replaced by {@link QdsTableToolbarRootBindings}.
+ * Will be removed in the next major version.
+ */
 export interface QdsTableActionBarBindings {
   className: TableClasses["actionBar"]
 }
@@ -193,6 +202,9 @@ export interface QdsTableColumnSortActionBindings {
   onClick: JSX.MouseEventHandler
 }
 
+/**
+ * @deprecated will be removed in the next major version.
+ */
 export interface QdsTableColumnFilterActionBindings {
   className: TableClasses["columnFilterAction"]
   "data-is-filtered": BooleanDataAttr
@@ -258,6 +270,11 @@ export interface QdsTableRowExpandButtonProps {
 }
 
 export interface QdsTableApi {
+  /**
+   * @deprecated in next-release, replaced by
+   * {@link QdsTableRootApi.getToolbarBindings}. Will be removed in the next major
+   * version.
+   */
   getActionBarBindings(): QdsTableActionBarBindings
   getBodyBindings(): QdsTableBodyBindings
   getCellActionBindings(): QdsTableCellActionBindings
@@ -266,6 +283,9 @@ export interface QdsTableApi {
   getColumnDropIndicatorBindings(
     props: QdsTableColumnDropIndicatorProps,
   ): QdsTableColumnDropIndicatorBindings
+  /**
+   * @deprecated will be removed in the next major version.
+   */
   getColumnFilterActionBindings(
     props: QdsTableColumnFilterProps,
   ): QdsTableColumnFilterActionBindings
@@ -283,6 +303,7 @@ export interface QdsTableApi {
     props: QdsTableHeaderCellProps,
   ): QdsTableHeaderCellBindings
   getPaginationBindings(): QdsTablePaginationBindings
+  /** @deprecated since next-release. No longer used, migrate to {@link QdsTableRootApi} */
   getRootBindings(props: QdsTableApiProps): QdsTableRootBindings
   getRowBindings(props: QdsTableRowProps): QdsTableRowBindings
   getRowDragPreviewBindings(): QdsTableRowDragPreviewBindings
@@ -295,4 +316,97 @@ export interface QdsTableApi {
   getScrollContainerBindings(): QdsTableScrollContainerBindings
   getTableBindings(): QdsTableTableBindings
   getTitleBarBindings(): QdsTableTitleBarBindings
+}
+
+export interface QdsTableToolbarRootBindings {
+  className: TableClasses["toolbarRoot"]
+  "data-size": QdsTableSize
+}
+
+export interface QdsTableToolbarStartBindings {
+  className: TableClasses["toolbarStart"]
+}
+
+export interface QdsTableToolbarEndBindings {
+  className: TableClasses["toolbarEnd"]
+}
+
+export interface QdsTablePlaceholderRootBindings {
+  className: TableClasses["placeholderRoot"]
+  "data-size": QdsTableSize
+}
+
+export interface QdsTablePlaceholderActionBindings {
+  className: TableClasses["placeholderAction"]
+}
+
+export interface QdsTablePlaceholderDescriptionBindings {
+  className: TableClasses["placeholderDescription"]
+}
+
+export interface QdsTablePlaceholderHeadingBindings {
+  className: TableClasses["placeholderHeading"]
+}
+
+export interface QdsTableAppliedFilterBarRootBindings {
+  className: TableClasses["appliedFilterBarRoot"]
+  "data-size": QdsTableSize
+}
+
+export interface QdsTableAppliedFilterBarFilterListProps {
+  /**
+   * Whether every applied filter is visible. When `false`, the list is clamped
+   * to a single row.
+   */
+  expanded?: boolean
+}
+
+export interface QdsTableAppliedFilterBarFilterListBindings {
+  className: TableClasses["appliedFilterBarFilterList"]
+  "data-expanded": BooleanDataAttr
+}
+
+export interface QdsTableAppliedFilterBarFilterChipBindings {
+  className: TableClasses["appliedFilterBarFilterChip"]
+}
+
+export interface QdsTableAppliedFilterBarClearTriggerBindings {
+  className: TableClasses["appliedFilterBarClearTrigger"]
+}
+
+export interface QdsTableAppliedFilterBarExpandTriggerProps {
+  /**
+   * Whether every applied filter is visible. Toggles between the "Show more"
+   * and "Show less" states.
+   */
+  expanded?: boolean
+}
+
+export interface QdsTableAppliedFilterBarExpandTriggerBindings {
+  className: TableClasses["appliedFilterBarExpandTrigger"]
+  "data-expanded": BooleanDataAttr
+}
+
+export interface QdsTableRootApi {
+  getAppliedFilterBarBindings(): QdsTableAppliedFilterBarRootBindings
+  getAppliedFilterBarButtonProps(): QdsButtonApiProps
+  getAppliedFilterBarClearTriggerBindings(): QdsTableAppliedFilterBarClearTriggerBindings
+  getAppliedFilterBarExpandTriggerBindings(
+    props: QdsTableAppliedFilterBarExpandTriggerProps,
+  ): QdsTableAppliedFilterBarExpandTriggerBindings
+  getAppliedFilterBarFilterChipBindings(): QdsTableAppliedFilterBarFilterChipBindings
+  getAppliedFilterBarFilterChipTagProps(): QdsTagApiProps
+  getAppliedFilterBarFilterListBindings(
+    props: QdsTableAppliedFilterBarFilterListProps,
+  ): QdsTableAppliedFilterBarFilterListBindings
+  getPlaceholderActionBindings(): QdsTablePlaceholderActionBindings
+  getPlaceholderBindings(): QdsTablePlaceholderRootBindings
+  getPlaceholderButtonProps(): QdsButtonApiProps
+  getPlaceholderDescriptionBindings(): QdsTablePlaceholderDescriptionBindings
+  getPlaceholderHeadingBindings(): QdsTablePlaceholderHeadingBindings
+  getRootBindings(): QdsTableRootBindings
+  getToolbarBindings(): QdsTableToolbarRootBindings
+  getToolbarButtonProps(): QdsButtonApiProps
+  getToolbarEndBindings(): QdsTableToolbarEndBindings
+  getToolbarStartBindings(): QdsTableToolbarStartBindings
 }
