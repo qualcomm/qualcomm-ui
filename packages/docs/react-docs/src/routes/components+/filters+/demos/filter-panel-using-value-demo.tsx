@@ -88,7 +88,7 @@ function toSearchParams(value: BuildFilters): URLSearchParams {
   return params
 }
 
-export function FilterPanelSearchParamsDemo(): ReactElement {
+export function FilterPanelUsingValueDemo(): ReactElement {
   const [params, setParams] = useState(new URLSearchParams())
 
   return (

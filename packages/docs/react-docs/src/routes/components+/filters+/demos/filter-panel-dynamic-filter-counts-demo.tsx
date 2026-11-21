@@ -31,7 +31,7 @@ function indexBuilds(builds: Build[]): FacetFilterSetProps<typeof filters> {
   )
 }
 
-export function FilterPanelAsyncFacetsDemo(): ReactElement {
+export function FilterPanelDynamicFilterCountsDemo(): ReactElement {
   const [value, setValue] = useState<BuildFilters>({})
 
   /**

@@ -5,6 +5,8 @@ aliases: [facets, faceted search, facet counts, buckets, FacetIndex]
 ---
 
 import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
 
 # {frontmatter.title}
 
@@ -16,9 +18,20 @@ import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
 ## Overview
 
-`FacetIndex` indexes a list of items by the fields you configure. Each call to [filter](#filter) returns the ids of the matching items, and a result count for every value of every field.
+Picture a laptop store with two filters, Processor and Operating System. Each option shows how many laptops match it. Select `Snapdragon X Elite` below:
+
+<Demo
+  name="FacetIndexOverviewDemo"
+  component={demos.FacetIndexOverviewDemo}
+/>
+
+The Operating System counts updated to match your selection, so you can see which options have results before you pick one.
+
+This is called faceted search. We provide a `FacetIndex` utility class to enable this type of search in your applications.
 
 ## Usage
+
+`FacetIndex` indexes a list of items by the fields you configure. Each call to [filter](#filter) returns the ids of the matching items, and a result count for every value of every field. Each of your items must have a unique string `id`.
 
 ```ts
 const builds = [
@@ -49,28 +62,25 @@ const {facets, ids} = facetIndex.filter({
 }
 ```
 
-Each key in [fields](#fields) adds a property to filter by. `selections` and `facets` use the field name as their key.
-
-The property can hold a string or an array of strings. Other types, like numbers, are skipped. Convert them to strings first.
-
-Each item needs a unique string `id`. [filter](#filter) returns ids, not items. Look the items up by id:
-
-```ts
-const buildsById = new Map(builds.map((build) => [build.id, build]))
-const results = ids.map((id) => buildsById.get(id)!)
-```
-
-The constructor copies the items. Create the index once, and create a new one when the items change.
-
 ## Counts
 
 ::: terms
-docCount, buckets, disjunctive faceting
+docCount, buckets, disjunctive faceting, AND, OR
 :::
 
-Each field has a bucket for every value in the items, including values with a count of 0. A bucket's `docCount` is the number of items that have its value and match the selections in the other fields. Selections in its own field are ignored.
+Each field has a bucket for every value in the items. The above example has two buckets for `status`, one for each possible value. A bucket's `docCount` is the number of items with its value, filtered by the other fields.
 
-In the example above, the `status` counts include only Linux builds, so `Passed` is 1. The `platform` counts ignore the `linux` selection:
+Selections in different fields combine with AND. In the example above, `linux` is selected, so each `status` count includes only Linux builds:
+
+```jsonc
+// facets.status:
+[
+  {"docCount": 1, "key": "Failed", "selected": false},
+  {"docCount": 1, "key": "Passed", "selected": false},
+]
+```
+
+By default, selections in the same field combine with OR. Selecting `windows` as well adds build 2 instead of removing builds, so the `platform` counts ignore the `linux` selection:
 
 ```jsonc
 // facets.platform:
@@ -164,33 +174,35 @@ const {facets, ids} = facetIndex.filter({
 
 Results keep the order of `ids`, so ranked results retain their order. Unknown ids are skipped.
 
-## Filter Panel
+## Performance
 
 ::: terms
-getFacetFilterSetProps, filter counts, FilterPanel
+benchmark, speed, memory, large datasets
 :::
 
-To show counts in a [filter panel](filter-panel.mdx#filter-counts), spread `getFacetFilterSetProps` onto the panel. The field names must match the filter ids.
+Large datasets are supported, but we recommend a web worker for datasets exceeding 100k items.
 
-```tsx
-import {getFacetFilterSetProps} from "@qualcomm-ui/core/filter-set"
+> These results were recorded on an M4 Max with 64GB of RAM. Each item had five fields, including arrays, nested paths, and a field with 1,000 values.
 
-const facetProps = getFacetFilterSetProps<typeof filters>(facetIndex, {
-  getCandidateIds: (values) => searchBuilds(values.name),
-})
+| Items | Build    | Index size (in memory) | Bytes per item |
+| ----- | -------- | ---------------------- | -------------- |
+| 1k    | 535 µs   | 182 KiB    | 186            |
+| 10k   | 4.15 ms  | 1.13 MiB   | 118            |
+| 100k  | 36.3 ms  | 9.68 MiB   | 102            |
+| 300k  | 113 ms   | 32.4 MiB   | 113            |
+| 500k  | 180 ms   | 44.6 MiB   | 93.5           |
+| 1M    | 360 ms   | 89.1 MiB   | 93.4           |
 
-function BuildFilters() {
-  return (
-    <FilterPanel.Root filters={filters} {...facetProps}>
-      {/* filters */}
-    </FilterPanel.Root>
-  )
-}
-```
+Each [filter](#filter) call took:
 
-[getCandidateIds](#getCandidateIds) receives the panel's values. Return the ids that pass the panel's other filters, or `undefined` to include every item. Pass the type of the filter definitions, as in `getFacetFilterSetProps<typeof filters>`, to type those values.
-
-A filter without a collection on its definition lists every value of its field, labeled with the value. To show other labels, give the definition a collection.
+| Selections          | 1k      | 10k     | 100k    | 300k    | 500k    | 1M      |
+| ------------------- | ------- | ------- | ------- | ------- | ------- | ------- |
+| None                | 32.4 µs | 451 µs  | 4.05 ms | 13.9 ms | 43.1 ms | 108 ms  |
+| 1 field, 1 value    | 18.4 µs | 177 µs  | 1.54 ms | 5.28 ms | 9.18 ms | 24.7 ms |
+| 1 field, 3 values   | 30.9 µs | 465 µs  | 4.36 ms | 14.2 ms | 24.6 ms | 51.7 ms |
+| Match all, 2 values | 13.2 µs | 136 µs  | 1.37 ms | 4.14 ms | 6.95 ms | 14.3 ms |
+| 3 fields            | 23.3 µs | 276 µs  | 3.05 ms | 9.27 ms | 15.9 ms | 35.6 ms |
+| 10% candidate ids   | 7.36 µs | 57.6 µs | 655 µs  | 3.27 ms | 7.20 ms | 32.7 ms |
 
 ## API
 

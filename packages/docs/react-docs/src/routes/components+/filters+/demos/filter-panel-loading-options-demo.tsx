@@ -26,7 +26,7 @@ function toCollection(owners: Owner[]): ListCollection<Owner> {
   return new ListCollection({items: owners})
 }
 
-export function FilterPanelOptionsDemo(): ReactElement {
+export function FilterPanelLoadingOptionsDemo(): ReactElement {
   const queryClient = useQueryClient()
   const owners = useQuery({
     queryFn: fetchOwners,

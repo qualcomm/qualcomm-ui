@@ -67,7 +67,7 @@ const facetProps = getFacetFilterSetProps<typeof filters>(facetIndex, {
   getCandidateIds: matchName,
 })
 
-export function FilterPanelFacetsDemo(): ReactElement {
+export function FilterPanelFilterCountsDemo(): ReactElement {
   const [value, setValue] = useState<BuildFilters>({})
   const {ids} = facetIndex.filter({
     ids: matchName(value),

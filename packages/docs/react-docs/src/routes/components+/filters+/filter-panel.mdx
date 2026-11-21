@@ -144,8 +144,8 @@ To load a filter's options from an API, leave `collection` off its definition an
 The panel doesn't show loading or error states. Render them yourself. This example shows a progress ring next to the filter label, through the `label` prop, while the request is pending. If the request fails, an error message with a Retry button replaces the control.
 
 <Demo
-  name="FilterPanelOptionsDemo"
-  component={demos.FilterPanelOptionsDemo}
+  name="FilterPanelLoadingOptionsDemo"
+  component={demos.FilterPanelLoadingOptionsDemo}
 />
 
 ### Restoring a Selection
@@ -154,11 +154,13 @@ The panel doesn't show loading or error states. Render them yourself. This examp
 URL, storage, restored values, labels, loading, getValueItems
 :::
 
-A selection restored from a URL like `/builds?owner=u2`, or from storage, only contains value ids. Labels come from the filter's collection, so until the collection loads, [getValueItems](#getValueItems) labels each item with its raw id. Anything that shows the selection outside the panel, like these chips, should wait for the request before calling `getValueItems`. Inside the panel, the control shows no options until the collection exists, so show your own loading indicator, like a progress ring next to the filter label.
+A selection restored from a URL like `/builds?owner=u2`, or from storage, only contains value ids. Labels come from the filter's collection, so until the collection loads, [getValueItems](#getValueItems) labels each item with its raw id.
+
+Anything that shows the selection outside the panel, like these chips, should wait for the request before calling `getValueItems`. Inside the panel, the control shows no options until the collection exists, so show your own loading indicator, like a progress ring next to the filter label.
 
 <Demo
-  name="FilterPanelRestoredSelectionDemo"
-  component={demos.FilterPanelRestoredSelectionDemo}
+  name="FilterPanelRestoringSelectionDemo"
+  component={demos.FilterPanelRestoringSelectionDemo}
 />
 
 ### Filter Counts
@@ -179,8 +181,8 @@ faceting, facets, result counts, FacetIndex, getFacetFilterSetProps
 For data in memory, index it with [FacetIndex](facet-index.mdx) and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetIndex` only counts list filters, so apply other filters, like text search, in `getCandidateIds`.
 
 <Demo
-  name="FilterPanelFacetsDemo"
-  component={demos.FilterPanelFacetsDemo}
+  name="FilterPanelFilterCountsDemo"
+  component={demos.FilterPanelFilterCountsDemo}
 />
 
 In manual mode, counts follow the draft, so they update before the user applies.
@@ -194,14 +196,19 @@ In manual mode, counts follow the draft, so they update before the user applies.
 fetched data, TanStack Query, useQuery, loading
 :::
 
-When the data comes from a request, build the `FacetIndex` once the response arrives, and pass its props to the panel. Build the index from a separate unfiltered query. It then counts every value of a field, and values don't drop out of the lists as the filters narrow the results. This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
+A [FacetIndex](facet-index.mdx) can only count the items you give it. Build it from an unfiltered query, separate from the results. **Every option then stays in its list, even as the filters narrow the results.** Pass the index to `getFacetFilterSetProps`. The filter ids must match its field names.
+
+> [!note]
+> This approach requires the unfiltered query to return every build. If the API returns a single page, like the first 50 builds, the counts only cover that page. When the full dataset is too large to fetch, compute the counts on the server and include them in the API response. Then pass them to the panel with [getFilterOptionCounts](#getFilterOptionCounts).
+
+This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
 
 <Demo
-  name="FilterPanelAsyncFacetsDemo"
-  component={demos.FilterPanelAsyncFacetsDemo}
+  name="FilterPanelDynamicFilterCountsDemo"
+  component={demos.FilterPanelDynamicFilterCountsDemo}
 />
 
-While the index loads, each filter shows a progress ring next to its label.
+Neither filter has a collection, so each lists the values of its field from the index. Until the index loads, the filters have no options, so each shows a progress ring next to its label.
 
 ### Hoisted State
 
@@ -246,8 +253,8 @@ const filters = defineFilters({
 `isEmptyValue` tells the panel when to drop the filter from the value, and `getValueItems` describes the value in active filter tags.
 
 <Demo
-  name="FilterPanelCustomFilterDemo"
-  component={demos.FilterPanelCustomFilterDemo}
+  name="FilterPanelCustomFiltersDemo"
+  component={demos.FilterPanelCustomFiltersDemo}
 />
 
 ## Using the Value
@@ -259,8 +266,8 @@ search params, query string, request
 `onValueChange` is the only integration point. This example serializes the committed selection to URL search params.
 
 <Demo
-  name="FilterPanelSearchParamsDemo"
-  component={demos.FilterPanelSearchParamsDemo}
+  name="FilterPanelUsingValueDemo"
+  component={demos.FilterPanelUsingValueDemo}
 />
 
 ## API

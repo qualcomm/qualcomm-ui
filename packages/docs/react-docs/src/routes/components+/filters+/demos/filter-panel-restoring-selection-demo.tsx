@@ -29,7 +29,7 @@ function toCollection(owners: Owner[]): ListCollection<Owner> {
   return new ListCollection({items: owners})
 }
 
-export function FilterPanelRestoredSelectionDemo(): ReactElement {
+export function FilterPanelRestoringSelectionDemo(): ReactElement {
   const queryClient = useQueryClient()
   const owners = useQuery({
     queryFn: fetchOwners,

@@ -29,7 +29,7 @@ function AttachmentsControl(): ReactElement {
   )
 }
 
-export function FilterPanelCustomFilterDemo(): ReactElement {
+export function FilterPanelCustomFiltersDemo(): ReactElement {
   const [value, setValue] = useState<FilterValues<typeof filters>>({})
 
   return (
