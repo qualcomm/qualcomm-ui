@@ -1,70 +1,32 @@
 ---
-title: Host Theming
+title: Overview
+description: Inherit VS Code host appearance and apply library styles to a webview.
 ---
-
-import {VscodeDemo} from "../../components/demo/vscode-demo"
-import {HostUtilitiesDemo} from "./demos/host-utilities-demo"
 
 # {frontmatter.title}
 
-Use VS Code's theme variables to make webview content match the user's editor.
+The library provides React components and styling utilities that follow VS Code's theme colors and fonts.
 
-## Inherit host typography
+## Import styles
 
-Use `--vscode-font-family`, `--vscode-font-size`, and `--vscode-font-weight` for the base interface. Use `--vscode-editor-font-family`, with editor size and weight where appropriate, for code.
-
-The VS Code package does not bundle QDS fonts. Typography hierarchy, spacing, and component presentation still need library conventions and design review.
-
-## Map colors by component role
-
-Map button styling to button tokens and input styling to input tokens. Do not route those values through a QDS brand palette. Only use the host tokens needed by each component.
-
-Read Microsoft's [Theme Color Reference](https://code.visualstudio.com/api/references/theme-color) and [Webview UX Guidelines](https://code.visualstudio.com/api/ux-guidelines/webviews).
-
-## Use the Tailwind host palette
-
-Import the Tailwind 4 adapter after the library stylesheet:
+Complete [Installation](/installation), then import the library stylesheet:
 
 ```css
-@import "tailwindcss";
 @import "@qualcomm-ui/react-vscode/styles.css";
-@import "@qualcomm-ui/tailwind-plugin/vscode.css";
 ```
 
-The adapter imports token variables from `@qualcomm-ui/vscode-core`; install that package for CSS-only usage without React. Load the React library stylesheet when using its components or plain CSS typography classes. The optional opacity binding is available from `@qualcomm-ui/vscode-core/opacity`.
+Apply the library container to the application:
 
-The palette defines 823 host color mappings. Names use the `vscode-` prefix and convert host token names to kebab case. For example, `--vscode-button-hoverBackground` becomes `bg-vscode-button-hover-background`. Tailwind exposes the palette through its background, text, border, outline, stroke, fill, ring, and shadow-color utilities.
+```tsx
+export function App() {
+  return <main className="qui-vscode">Build configuration</main>
+}
+```
 
-| Use | Utility | Host value |
-| --- | --- | --- |
-| Button background | `bg-vscode-button-background` | `--vscode-button-background` |
-| Button text | `text-vscode-button-foreground` | `--vscode-button-foreground` |
-| Widget border | `border-vscode-widget-border` | `--vscode-widget-border` |
-| List focus outline | `outline-vscode-list-focus-outline` | `--vscode-list-focusOutline` |
-| Indent guide stroke | `stroke-vscode-tree-indent-guides-stroke` | `--vscode-tree-indentGuidesStroke` |
-
-Use normal Tailwind variants such as `hover:bg-vscode-button-hover-background`. Border, outline, and SVG utilities set colors; supply the corresponding width or style when needed. Token availability depends on the host version and active theme. The palette preserves legacy mappings; an unavailable host variable has no usable color value.
-
-### Apply host shadow colors
-
-`shadow-vscode-widget` combines `--vscode-widget-shadow` with the library's default geometry, `0 2px 8px`. The other named shadow utilities are `shadow-vscode-diff-editor`, `shadow-vscode-editor-sticky-scroll`, `shadow-vscode-inline-chat`, `shadow-vscode-list-filter-widget`, `shadow-vscode-panel-sticky-scroll`, `shadow-vscode-scrollbar`, and `shadow-vscode-side-bar-sticky-scroll`. Override `--qui-vscode-shadow-geometry` on the `qui-vscode` container to change their geometry. These values are QUI presentation defaults, rather than geometry supplied by the host.
-
-To choose a Tailwind shadow size, combine `shadow-md` with `shadow-vscode-widget-shadow`. The first class supplies geometry; the second supplies the host color. Named shadows also compose with Tailwind ring utilities. If the named host shadow color is missing, it falls back to transparent.
-
-### Convert host opacity values
-
-VS Code's `editorUnnecessaryCode.opacity` and `minimap.foregroundOpacity` tokens encode opacity in a color's alpha channel. For example, `#000000c0` represents `192 / 255`, approximately 75% opacity. Assigning that color directly to CSS `opacity` is invalid.
-
-Use `bindVscodeOpacity` from `@qualcomm-ui/vscode-core/opacity` once per browser container. The embedded example shows the React ref and effect setup. Return the binding's cleanup function from the effect. It updates numeric variables when the container or ancestor theme attributes change and restores previous inline values on cleanup.
-
-The corresponding classes are `opacity-vscode-editor-unnecessary-code` and `opacity-vscode-minimap-foreground`. They default to full opacity without a binding. Missing or invalid colors also resolve to full opacity. Unused-code fading is disabled in high-contrast themes; use `border-vscode-editor-unnecessary-code-border` when an underline or border is appropriate. For fixed application opacity, use standard Tailwind utilities such as `opacity-50`.
-
-<VscodeDemo name="HostUtilitiesDemo" component={HostUtilitiesDemo} />
+The stylesheet includes the required library styles. The `qui-vscode` container applies the host font and default text color.
 
 ## Preview outside VS Code
 
-The documentation shell uses QDS styling, fonts, and light/dark theme switching, matching the React and Angular docs. The documentation theme controls the surrounding site.
+Use the **VS Code theme** selector on embedded demos to preview saved themes independently of the documentation site's theme.
 
-Use the **VS Code theme** selector on embedded demos to choose light, dark, or high-contrast fixtures. Each demo scopes its host variables and typography to its preview container. Changing a demo theme leaves the surrounding documentation theme unchanged.
-
-Try the embedded [Browser Preview](/setup/browser-preview). The fixture values simulate the host and are not complete or authoritative VS Code themes. Use the [Extension Development Host](/setup/webview) to verify real installed themes.
+The previews use saved values for a subset of the host palette. Verify real installed themes and font settings in your consuming extension.

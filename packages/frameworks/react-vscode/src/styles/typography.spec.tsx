@@ -7,7 +7,7 @@ import {page} from "vitest/browser"
 import "./index.css"
 
 /**
- * Typography is a CSS-only public API. Computed fonts and colors verify its
+ * Font variables are a CSS-only public API. Computed fonts and colors verify their
  * documented output, including host variable updates and missing-token fallbacks.
  */
 describe("VS Code typography", () => {
@@ -23,9 +23,13 @@ describe("VS Code typography", () => {
             className="qui-vscode"
             style={{"--vscode-font-size": size} as CSSProperties}
           >
-            <h1 className="qui-vscode-heading-1">Page title</h1>
-            <p className="qui-vscode-body-2">Supporting text</p>
-            <h2 className="qui-vscode-markdown-2">Markdown heading</h2>
+            <h1 style={{font: "var(--font-static-heading-xxl)"}}>Page title</h1>
+            <p style={{font: "var(--font-static-body-sm-default)"}}>
+              Supporting text
+            </p>
+            <h2 style={{font: "var(--font-static-markdown-xl)"}}>
+              Markdown heading
+            </h2>
           </div>
         </>
       )
@@ -46,40 +50,30 @@ describe("VS Code typography", () => {
     expect(getComputedStyle(markdown.element()).fontSize).toBe("40px")
   })
 
-  test("uses independent host UI and editor font settings", async () => {
+  test("uses host UI fonts with preset and control weights", async () => {
     await render(
       <div
         className="qui-vscode"
         style={
           {
-            "--vscode-editor-font-family": "monospace",
-            "--vscode-editor-font-size": "17px",
-            "--vscode-editor-font-weight": "700",
             "--vscode-font-family": "serif",
             "--vscode-font-size": "13px",
             "--vscode-font-weight": "400",
           } as CSSProperties
         }
       >
-        <p className="qui-vscode-body-1">Body text</p>
-        <code className="qui-vscode-code">Build command</code>
+        <p style={{font: "var(--font-static-body-md-default)"}}>Body text</p>
         <input aria-label="Host-styled input" />
       </div>,
     )
     const body = getComputedStyle(
       page.getByText("Body text", {exact: true}).element(),
     )
-    const code = getComputedStyle(
-      page.getByText("Build command", {exact: true}).element(),
-    )
     const input = getComputedStyle(
       page.getByRole("textbox", {name: "Host-styled input"}).element(),
     )
     expect(body.fontFamily).toBe("serif")
     expect(body.fontWeight).toBe("500")
-    expect(code.fontFamily).toBe("monospace")
-    expect(code.fontSize).toBe("17px")
-    expect(code.fontWeight).toBe("700")
     expect(input.fontFamily).toBe("serif")
     expect(input.fontSize).toBe("13px")
     expect(input.fontWeight).toBe("400")
@@ -111,11 +105,11 @@ describe("VS Code typography", () => {
               } as CSSProperties
             }
           >
-            <p className="qui-vscode-text-normal">Normal text</p>
-            <p className="qui-vscode-text-muted">Muted text</p>
-            <p className="qui-vscode-text-success">Success text</p>
-            <p className="qui-vscode-text-warning">Warning text</p>
-            <p className="qui-vscode-text-error">Error text</p>
+            <p style={{color: "var(--color-text-normal)"}}>Normal text</p>
+            <p style={{color: "var(--color-text-muted)"}}>Muted text</p>
+            <p style={{color: "var(--color-text-success)"}}>Success text</p>
+            <p style={{color: "var(--color-text-warning)"}}>Warning text</p>
+            <p style={{color: "var(--color-text-error)"}}>Error text</p>
           </div>
         </>
       )

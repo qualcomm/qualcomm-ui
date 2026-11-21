@@ -8,17 +8,30 @@ import {Theme, useTheme} from "@qualcomm-ui/react-router-utils/client"
 
 import {vscodePreviewThemes} from "../../themes/preview-themes"
 
-interface Props extends Omit<ReactDemoProps, "demo" | "colorScheme"> {}
+interface Props extends Omit<ReactDemoProps, "demo" | "colorScheme"> {
+  onFontSizeChange?: (fontSize: number) => void
+  showFontSizeControl?: boolean
+}
 
 /**
  * Render host theme fixtures inside the shared docs demo and source viewer.
  * Each demo's theme is independent of the documentation site's QDS theme.
  */
-export function VscodeDemo({wrapperProps, ...props}: Props): ReactNode {
+export function VscodeDemo({
+  onFontSizeChange,
+  showFontSizeControl,
+  wrapperProps,
+  ...props
+}: Props): ReactNode {
   const [siteTheme] = useTheme()
-  const [previewTheme, setPreviewTheme] = useState("light-modern")
+  const [previewTheme, setPreviewTheme] = useState("dark-modern")
+  const [baseFontSize, setBaseFontSize] = useState("13")
   const [demo, setDemo] = useState<ReactDemoData>(getDemo(props.name))
   const themeId = useId()
+  const fontSizeId = useId()
+  const parsedFontSize = Number(baseFontSize)
+  const previewFontSize =
+    Number.isFinite(parsedFontSize) && parsedFontSize > 0 ? parsedFontSize : 13
 
   useEffect(() => {
     if (!import.meta.hot) {
@@ -44,6 +57,12 @@ export function VscodeDemo({wrapperProps, ...props}: Props): ReactNode {
             .filter(Boolean)
             .join(" "),
           "data-vscode-preview-theme": previewTheme,
+          style: {
+            ...wrapperProps?.style,
+            ...(showFontSizeControl && {
+              "--vscode-font-size": `${previewFontSize}px`,
+            }),
+          },
         } as ReactDemoProps["wrapperProps"]
       }
       {...props}
@@ -61,6 +80,25 @@ export function VscodeDemo({wrapperProps, ...props}: Props): ReactNode {
             </option>
           ))}
         </select>
+        {showFontSizeControl ? (
+          <>
+            <label htmlFor={fontSizeId}>Base font size (px)</label>
+            <input
+              id={fontSizeId}
+              min={1}
+              onChange={(event) => {
+                const value = event.target.valueAsNumber
+                setBaseFontSize(event.target.value)
+                onFontSizeChange?.(
+                  Number.isFinite(value) && value > 0 ? value : 13,
+                )
+              }}
+              step="any"
+              type="number"
+              value={baseFontSize}
+            />
+          </>
+        ) : null}
       </div>
     </ReactDemo>
   )

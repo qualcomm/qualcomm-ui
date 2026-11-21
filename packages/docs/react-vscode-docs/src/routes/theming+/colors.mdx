@@ -1,0 +1,49 @@
+---
+title: Colors
+description: Apply VS Code host colors to text, backgrounds, borders, and component states.
+---
+
+import {VscodeColorThemeSelector, VscodeColorPreview} from "../../components/vscode-color-preview"
+
+# {frontmatter.title}
+
+Use host color variables to match the active VS Code theme.
+
+Tailwind utilities require the optional VS Code adapter. Follow [Tailwind setup](/setup/vite#import-the-css) to configure it.
+
+<VscodeColorThemeSelector />
+
+## Text
+
+| Role | Preview | CSS variable | Tailwind utility |
+| --- | --- | --- | --- |
+| Default interface text | <VscodeColorPreview variable="--vscode-foreground" /> | `--vscode-foreground` | `text-normal` |
+| Supporting descriptions | <VscodeColorPreview variable="--vscode-descriptionForeground" /> | `--vscode-descriptionForeground` | `text-muted` |
+| Success status | <VscodeColorPreview variable="--vscode-testing-iconPassed" /> | `--vscode-testing-iconPassed` | `text-success` |
+| Warning status | <VscodeColorPreview variable="--vscode-editorWarning-foreground" /> | `--vscode-editorWarning-foreground` | `text-warning` |
+| Error messages | <VscodeColorPreview variable="--vscode-errorForeground" /> | `--vscode-errorForeground` | `text-error` |
+| Button text | <VscodeColorPreview variable="--vscode-button-foreground" /> | `--vscode-button-foreground` | `text-button-foreground` |
+| Input text | <VscodeColorPreview variable="--vscode-input-foreground" /> | `--vscode-input-foreground` | `text-input-foreground` |
+| Links | <VscodeColorPreview variable="--vscode-textLink-foreground" /> | `--vscode-textLink-foreground` | `text-text-link-foreground` |
+
+## Backgrounds
+
+| Surface | Preview | CSS variable | Tailwind utility |
+| --- | --- | --- | --- |
+| Editor content | <VscodeColorPreview variable="--vscode-editor-background" /> | `--vscode-editor-background` | `bg-editor-background` |
+| Button | <VscodeColorPreview variable="--vscode-button-background" /> | `--vscode-button-background` | `bg-button-background` |
+| Hovered button | <VscodeColorPreview variable="--vscode-button-hoverBackground" /> | `--vscode-button-hoverBackground` | `hover:bg-button-hover-background` |
+| Input | <VscodeColorPreview variable="--vscode-input-background" /> | `--vscode-input-background` | `bg-input-background` |
+| Dropdown | <VscodeColorPreview variable="--vscode-dropdown-background" /> | `--vscode-dropdown-background` | `bg-dropdown-background` |
+
+## Borders and focus
+
+| Role | Preview | CSS variable | Tailwind utility |
+| --- | --- | --- | --- |
+| Input border | <VscodeColorPreview variable="--vscode-input-border" /> | `--vscode-input-border` | `border-input-border` |
+| Dropdown border | <VscodeColorPreview variable="--vscode-dropdown-border" /> | `--vscode-dropdown-border` | `border-dropdown-border` |
+| Widget border | <VscodeColorPreview variable="--vscode-widget-border" /> | `--vscode-widget-border` | `border-widget-border` |
+| Focus outline | <VscodeColorPreview variable="--vscode-focusBorder" /> | `--vscode-focusBorder` | `outline-focus-border` |
+| High-contrast border | <VscodeColorPreview variable="--vscode-contrastBorder" /> | `--vscode-contrastBorder` | `border-contrast-border` |
+
+Read Microsoft's [Theme Color Reference](https://code.visualstudio.com/api/references/theme-color) for the full list of host colors.

@@ -38,6 +38,7 @@ import {MdxLayout} from "./components/mdx-layout"
 import {themeCookie} from "./sessions.server"
 
 import "./globals.css"
+import "./themes/preview-utilities.css"
 
 export const links: LinksFunction = () => [
   {href: "https://fonts.googleapis.com", rel: "preconnect"},

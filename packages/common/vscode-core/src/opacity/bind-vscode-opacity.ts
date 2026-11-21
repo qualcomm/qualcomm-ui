@@ -30,7 +30,7 @@ export function bindVscodeOpacity(container: HTMLElement): () => void {
     ancestors.push(element)
   }
   const previous = hostOpacityTokens.map(({name}) => {
-    const property = `--qui-vscode-opacity-${name}`
+    const property = `--opacity-${name}`
     return {
       priority: container.style.getPropertyPriority(property),
       property,
@@ -61,7 +61,7 @@ export function bindVscodeOpacity(container: HTMLElement): () => void {
         context.fillRect(0, 0, 1, 1)
         alpha = context.getImageData(0, 0, 1, 1).data[3] / 255
       }
-      const property = `--qui-vscode-opacity-${name}`
+      const property = `--opacity-${name}`
       if (container.style.getPropertyValue(property) !== String(alpha)) {
         container.style.setProperty(property, String(alpha))
       }

@@ -1,6 +1,5 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
 
 @import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
 
@@ -10,10 +9,15 @@
 @import "@qualcomm-ui/react-mdx/styles.css" layer(components);
 @import "@qualcomm-ui/react-internal/styles.css" layer(components);
 
-@import "@qualcomm-ui/tailwind-plugin/vscode.css";
 @import "./themes/preview.css";
 
 @source "../../../frameworks/react-internal/src";
+
+@layer utilities {
+  @scope (:root) to (.vscode-preview) {
+    @tailwind utilities;
+  }
+}
 
 :root {
   color: var(--color-text-neutral-primary);
@@ -25,7 +29,7 @@
   --q-font-family: "Roboto Flex", sans-serif;
 }
 
-.font-mono {
+.font-mono:not(:where(.vscode-preview, .vscode-preview *)) {
   font-family: "Roboto Mono", monospace;
 }
 
@@ -100,12 +104,17 @@ body {
   gap: 12px;
   padding: 12px 16px;
 
-  select {
+  select,
+  input {
     background: var(--color-background-neutral-00);
     border: 1px solid var(--color-border-neutral-01);
     border-radius: var(--border-radius-100);
     color: var(--color-text-neutral-primary);
     font: inherit;
     padding: 4px 8px;
+  }
+
+  input {
+    width: 80px;
   }
 }

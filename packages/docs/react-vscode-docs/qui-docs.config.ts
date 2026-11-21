@@ -15,16 +15,18 @@ export default {
     {sectionTitle: "Getting Started"},
     {id: "installation"},
     {
-      children: [{id: "webview"}, {id: "browser-preview"}],
+      children: [{id: "vite"}],
       id: "setup",
       title: "Setup",
     },
     {separator: true},
-    {sectionTitle: "Theming & Patterns"},
-    {children: [{id: "overview"}], id: "theming"},
+    {
+      children: [{id: "overview"}, {id: "colors"}, {id: "typography"}],
+      id: "theming",
+    },
     {separator: true},
     {
-      children: [{id: "overview"}, {id: "typography"}],
+      children: [{id: "overview"}],
       expanded: true,
       id: "components",
     },

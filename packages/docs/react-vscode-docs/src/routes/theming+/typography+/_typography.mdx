@@ -1,0 +1,85 @@
+---
+title: Typography
+description: Apply VS Code fonts through CSS variables or the optional Tailwind adapter.
+---
+
+import {TypographyDemo, TypographyPreview, TypographySize} from "./typography-preview"
+
+export default TypographyPreview
+
+# {frontmatter.title}
+
+VS Code supplies the interface and editor fonts. The library provides typography presets through CSS variables and Tailwind utilities, using the CSS `font` shorthand.
+
+Follow [Installation](/installation) for library setup and [Tailwind setup](/setup/vite#import-the-css) for the optional adapter.
+
+## Example
+
+<TypographyDemo />
+
+Change **Base font size (px)** to preview how the heading and body styles scale.
+
+> [!tip/Uncolored by default]
+> Typography styles inherit text color. Pair them with a class from [Colors](/theming/colors#text) when a specific color is needed.
+
+## Typography scale
+
+Interface sizes scale with `--vscode-font-size`. The tables update with the preview’s base font size; sizes are rounded to two decimal places.
+
+### Heading
+
+Use heading styles for page and section titles.
+
+| Tailwind class | CSS variable | Size at <TypographySize size={13} /> base | Weight |
+| --- | --- | --- | --- |
+| `font-heading-xxl` | `--font-static-heading-xxl` | <TypographySize size={26} /> | 600 |
+| `font-heading-xl` | `--font-static-heading-xl` | <TypographySize size={14} /> | 500 |
+| `font-heading-lg` | `--font-static-heading-lg-default` | <TypographySize size={13} /> | 800 |
+| `font-heading-md` | `--font-static-heading-md-default` | <TypographySize size={11} /> | 700 |
+| `font-heading-sm` | `--font-static-heading-sm-default` | <TypographySize size={11} /> | 500 |
+| `font-heading-xs` | `--font-static-heading-xs-default` | <TypographySize size={11} /> | 800 |
+
+### Body
+
+Use body styles for interface prose and supporting content.
+
+| Tailwind class | CSS variable | Size at <TypographySize size={13} /> base | Weight |
+| --- | --- | --- | --- |
+| `font-body-md` | `--font-static-body-md-default` | <TypographySize size={13} /> | 500 |
+| `font-body-sm` | `--font-static-body-sm-default` | <TypographySize size={12} /> | 500 |
+| `font-paragraph-md` | `--font-static-paragraph-md-default` | <TypographySize size={13} /> | 500 |
+
+### Label
+
+Use label styles to distinguish control labels and compact supporting information.
+
+| Tailwind class | CSS variable | Size at <TypographySize size={13} /> base | Weight |
+| --- | --- | --- | --- |
+| `font-label-lg` | `--font-static-label-lg-default` | <TypographySize size={14} /> | 500 |
+| `font-label-md` | `--font-static-label-md-default` | <TypographySize size={12} /> | 700 |
+| `font-label-sm` | `--font-static-label-sm-default` | <TypographySize size={11} /> | 500 |
+| `font-label-xs` | `--font-static-label-xs-default` | <TypographySize size={9} /> | 700 |
+
+### Markdown
+
+Use markdown styles for a heading hierarchy within rendered documentation or rich text.
+
+| Tailwind class | CSS variable | Size at <TypographySize size={13} /> base | Weight |
+| --- | --- | --- | --- |
+| `font-markdown-xxl` | `--font-static-markdown-xxl` | <TypographySize size={26} /> | 600 |
+| `font-markdown-xl` | `--font-static-markdown-xl` | <TypographySize size={20} /> | 600 |
+| `font-markdown-lg` | `--font-static-markdown-lg-default` | <TypographySize size={15} /> | 600 |
+| `font-markdown-md` | `--font-static-markdown-md-default` | <TypographySize size={13} /> | 800 |
+| `font-markdown-sm` | `--font-static-markdown-sm-default` | <TypographySize size={11} /> | 800 |
+| `font-markdown-xs` | `--font-static-markdown-xs-default` | <TypographySize size={8} /> | 800 |
+
+### Size utilities
+
+Size utilities set font size and normal line height while inheriting the surrounding family and weight.
+
+| Tailwind class | CSS variable | Size at <TypographySize size={13} /> base |
+| --- | --- | --- |
+| `text-xs` | `--type-font-size-xs` | <TypographySize size={11} /> |
+| `text-sm` | `--type-font-size-sm` | <TypographySize size={12} /> |
+| `text-base` | `--type-font-size-md` | <TypographySize size={13} /> |
+

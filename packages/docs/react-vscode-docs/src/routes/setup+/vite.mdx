@@ -1,0 +1,114 @@
+---
+title: Vite
+description: Install React VS Code in a Vite application or another React browser application.
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+The library requires React 19+.
+
+There are three steps to installation:
+
+1. Install the npm packages
+2. Import the CSS
+3. Configure the application container
+
+This guide assumes you've already installed React. If not, run this command and follow the prompts to create your project. Choose React and TypeScript; use `vscode-webview` as the project name for the commands in this guide:
+
+```shell
+npx create-vite@latest
+```
+
+Install the starter project's dependencies:
+
+```shell
+cd vscode-webview
+npm install
+```
+
+> [!note/Package availability]
+> The NextGen VS Code packages are under development and have no released consumer version. The package commands describe registry installation after publication. Workspace development instructions live in the React VS Code docs package README.
+
+::: steps h2
+
+## Install the npm packages
+
+Run the package command from your application's directory:
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/react-vscode",
+    "@qualcomm-ui/react-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/vscode-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+  ]}
+/>
+
+## Import the CSS
+
+In your global CSS file (Vite's default is `src/index.css`), import the library stylesheet. Keep the global CSS import in `src/main.tsx`.
+
+```css tabs="css-import" label="Default"
+@import "@qualcomm-ui/react-vscode/styles.css";
+```
+
+```css tabs="css-import" label="Tailwind"
+@import "tailwindcss";
+
+/* Recommended: install and import @qualcomm-ui/tailwind-plugin */
+@import "@qualcomm-ui/tailwind-plugin/vscode.css";
+
+/* Important: always order these imports after the tailwindcss import */
+@import "@qualcomm-ui/react-vscode/styles.css" layer(components);
+```
+
+If you use Tailwind, install the adapter and Vite integration:
+
+<NpmInstallTabs
+  dev
+  packages={[
+    "tailwindcss",
+    "@tailwindcss/vite",
+    "@qualcomm-ui/tailwind-plugin",
+  ]}
+/>
+
+For Tailwind, follow the [Tailwind Vite integration guide](https://tailwindcss.com/docs/installation/using-vite).
+
+## Configure the application container
+
+Apply `qui-vscode` to the container wrapping your application:
+
+```tsx
+// src/App.tsx
+export default function App() {
+  return (
+    <main className="qui-vscode">
+      <h1 style={{font: "var(--font-static-heading-xxl)"}}>
+        Build configuration
+      </h1>
+      <p style={{font: "var(--font-static-body-md-default)"}}>
+        Output directory: dist
+      </p>
+    </main>
+  )
+}
+```
+
+The container uses VS Code's host font and foreground variables. VS Code supplies the application's fonts and theme colors inside the webview.
+
+::: /steps
+
+## Next steps
+
+Run `npm run build` to build your browser application. Follow Microsoft's [Webview API guide](https://code.visualstudio.com/api/extension-guides/webview) to load the bundle in your extension.
+
+## Troubleshooting
+
+If fonts, colors, or controls look incorrect, remove conflicting styles from Vite's starter CSS.
+
+If styles do not apply, check the global stylesheet import and the `qui-vscode` container. A standalone browser does not receive VS Code's host palette; use the embedded demos described in [Theming Overview](/theming/overview) to preview themes.

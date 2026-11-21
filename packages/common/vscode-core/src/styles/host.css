@@ -1,8 +1,8 @@
 :where(.qui-vscode) {
-  color: var(--qui-vscode-color-text-normal);
-  font-family: var(--qui-vscode-font-family);
-  font-size: var(--qui-vscode-font-size);
-  font-weight: var(--qui-vscode-font-weight);
+  color: var(--color-text-normal);
+  font-family: var(--type-font-family-primary);
+  font-size: var(--type-font-size-base);
+  font-weight: var(--type-font-weight-default);
 }
 
 :where(.qui-vscode) :where(button, input, select, textarea) {

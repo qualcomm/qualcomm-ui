@@ -45,7 +45,7 @@ export default function HomePage(): ReactNode {
             </h2>
             <p className="font-body-md text-neutral-secondary my-0">
               The library uses host colors and fonts so extension interfaces can
-              follow the user&apos;s editor settings.
+              follow the editor settings.
             </p>
             <Link
               render={<ReactRouterLink to="/theming/overview" viewTransition />}
@@ -59,7 +59,7 @@ export default function HomePage(): ReactNode {
               Shared behavior, dedicated styling
             </h2>
             <p className="font-body-md text-neutral-secondary my-0">
-              React VS Code is a sibling of QUI React. It reuses the
+              QUI React VS Code is a sibling of QUI React. It reuses the
               design-agnostic core and React bindings, with its own appearance
               props and VS Code token mappings.
             </p>
@@ -69,22 +69,6 @@ export default function HomePage(): ReactNode {
               preview containers.
             </p>
           </div>
-        </div>
-        <div className="shadow-low border-neutral-01 flex flex-col gap-5 rounded-xl border px-6 py-8">
-          <h2 className="font-heading-lg">NextGen preview</h2>
-          <p className="font-body-md text-neutral-secondary my-0">
-            The package is under development. The host stylesheet and workspace
-            build are available; React components are not exported yet.
-            Typography is the first planned deliverable.
-          </p>
-          <Link
-            render={
-              <ReactRouterLink to="/components/typography" viewTransition />
-            }
-            size="md"
-          >
-            Review typography requirements
-          </Link>
         </div>
       </div>
     </div>

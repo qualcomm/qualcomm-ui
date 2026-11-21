@@ -1,4 +1,8 @@
-/* Browser themes use color snapshots from legacy react-vscode-docs/src/themes. */
+/*
+ * Theme sources: https://github.com/microsoft/vscode/tree/main/extensions
+ * Color defaults: https://github.com/microsoft/vscode/tree/main/src/vs/platform/theme/common/colors
+ * Null defaults remain unset, matching the webview theme exporter.
+ */
 .vscode-preview {
   --vscode-font-family: system-ui, sans-serif;
   --vscode-font-size: 13px;
@@ -13,8 +17,9 @@
   font-weight: var(--vscode-font-weight);
 
   &[data-vscode-preview-theme="dark-modern"] {
+    color-scheme: dark;
     --vscode-button-background: #0078d4;
-    --vscode-button-border: rgba(255, 255, 255, 0.07);
+    --vscode-button-border: rgba(255, 255, 255, 0.1);
     --vscode-button-foreground: #ffffff;
     --vscode-button-hoverBackground: #026ec1;
     --vscode-contrastBorder: initial;
@@ -41,6 +46,7 @@
   }
 
   &[data-vscode-preview-theme="dark-plus"] {
+    color-scheme: dark;
     --vscode-button-background: #0e639c;
     --vscode-button-border: initial;
     --vscode-button-foreground: #ffffff;
@@ -69,10 +75,11 @@
   }
 
   &[data-vscode-preview-theme="dark-high-contrast"] {
-    --vscode-button-background: initial;
+    color-scheme: dark;
+    --vscode-button-background: #000000;
     --vscode-button-border: #6fc3df;
     --vscode-button-foreground: #ffffff;
-    --vscode-button-hoverBackground: initial;
+    --vscode-button-hoverBackground: #000000;
     --vscode-contrastBorder: #6fc3df;
     --vscode-descriptionForeground: rgba(255, 255, 255, 0.7);
     --vscode-dropdown-background: #000000;
@@ -97,6 +104,7 @@
   }
 
   &[data-vscode-preview-theme="light-modern"] {
+    color-scheme: light;
     --vscode-button-background: #005fb8;
     --vscode-button-border: rgba(0, 0, 0, 0.1);
     --vscode-button-foreground: #ffffff;
@@ -125,6 +133,7 @@
   }
 
   &[data-vscode-preview-theme="light-plus"] {
+    color-scheme: light;
     --vscode-button-background: #007acc;
     --vscode-button-border: initial;
     --vscode-button-foreground: #ffffff;
@@ -153,6 +162,7 @@
   }
 
   &[data-vscode-preview-theme="light-high-contrast"] {
+    color-scheme: light;
     --vscode-button-background: #0f4a85;
     --vscode-button-border: #0f4a85;
     --vscode-button-foreground: #ffffff;
@@ -181,6 +191,7 @@
   }
 
   &[data-vscode-preview-theme="monokai"] {
+    color-scheme: dark;
     --vscode-button-background: #75715e;
     --vscode-button-border: initial;
     --vscode-button-foreground: #ffffff;
@@ -209,6 +220,7 @@
   }
 
   &[data-vscode-preview-theme="quiet-light"] {
+    color-scheme: light;
     --vscode-button-background: #705697;
     --vscode-button-border: initial;
     --vscode-button-foreground: #ffffff;
@@ -237,6 +249,7 @@
   }
 
   &[data-vscode-preview-theme="solarized-dark"] {
+    color-scheme: dark;
     --vscode-button-background: rgba(42, 161, 152, 0.6);
     --vscode-button-border: initial;
     --vscode-button-foreground: #ffffff;
@@ -265,6 +278,7 @@
   }
 
   &[data-vscode-preview-theme="solarized-light"] {
+    color-scheme: light;
     --vscode-button-background: #ac9d57;
     --vscode-button-border: initial;
     --vscode-button-foreground: #ffffff;

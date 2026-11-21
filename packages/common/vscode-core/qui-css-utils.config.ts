@@ -9,11 +9,7 @@ export default {
   fileGroups: [
     {cssFiles: ["src/styles/tokens.css"], outFileName: "tokens.min.css"},
     {
-      cssFiles: [
-        "src/styles/tokens.css",
-        "src/styles/host.css",
-        "src/styles/typography.css",
-      ],
+      cssFiles: ["src/styles/tokens.css", "src/styles/host.css"],
       outFileName: "components.min.css",
     },
   ],

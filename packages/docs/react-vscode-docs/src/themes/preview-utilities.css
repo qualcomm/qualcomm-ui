@@ -1,0 +1,11 @@
+/* Compile separately so VS Code and QDS can use the same utility names. */
+@import "tailwindcss/theme.css" theme(inline) reference;
+@import "@qualcomm-ui/tailwind-plugin/vscode.css" reference;
+
+@source "../routes";
+
+@layer utilities {
+  @scope (.vscode-preview) {
+    @tailwind utilities source(none);
+  }
+}

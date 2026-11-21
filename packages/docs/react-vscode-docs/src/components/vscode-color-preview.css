@@ -1,0 +1,21 @@
+.vscode-preview.vscode-color-preview {
+  align-items: center;
+  background: transparent;
+  color: inherit;
+  display: flex;
+  font: inherit;
+  gap: 8px;
+  min-width: 160px;
+
+  code {
+    overflow-wrap: anywhere;
+  }
+}
+
+.vscode-color-swatch {
+  border: 1px solid var(--color-border-neutral-01);
+  border-radius: 4px;
+  flex-shrink: 0;
+  height: 24px;
+  width: 24px;
+}

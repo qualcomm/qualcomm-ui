@@ -8,29 +8,20 @@ const outputPath = resolve(
   dirname(fileURLToPath(import.meta.url)),
   "../src/vscode.css",
 )
+
 const utilities = tokens.flatMap(({name, type}) => {
   if (type === "typography") {
-    return [
-      `@utility font-vscode-${name.slice(5)} {font: var(--qui-vscode-${name});}`,
-    ]
+    const role = name.slice("font-static-".length).replace(/-default$/, "")
+    return [`@utility font-${role} {font: var(--${name});}`]
   }
   if (type === "opacity") {
-    return [
-      `@utility opacity-vscode-${name.slice(8)} {opacity: var(--qui-vscode-${name});}`,
-    ]
+    return [`@utility ${name} {opacity: var(--${name});}`]
   }
   if (type === "color") {
-    return [
-      `@utility text-vscode-${name.slice(11)} {color: var(--qui-vscode-${name});}`,
-    ]
+    return [`@utility text-${name.slice(11)} {color: var(--${name});}`]
   }
-  if (
-    type === "font-size" &&
-    ["font-size-xs", "font-size-sm", "font-size-md"].includes(name)
-  ) {
-    return [
-      `@utility text-vscode-${name.slice(10)} {font-size: var(--qui-vscode-${name}); line-height: normal;}`,
-    ]
+  if (type === "shadow") {
+    return [`@utility ${name} {box-shadow: var(--${name});}`]
   }
   return []
 })
@@ -41,15 +32,18 @@ await writeFile(
     "/** Generated from @qualcomm-ui/vscode-core/tokens. Do not edit directly. */",
     '@import "@qualcomm-ui/vscode-core/styles/tokens.css";',
     "@theme inline {",
+    "  --font-sans: var(--type-font-family-primary);",
+    "  --font-mono: var(--vscode-editor-font-family, ui-monospace, monospace);",
+    ...["xs", "sm", "md"].flatMap((size) => {
+      const utilitySize = size === "md" ? "base" : size
+      return [
+        `  --text-${utilitySize}: var(--type-font-size-${size});`,
+        `  --text-${utilitySize}--line-height: normal;`,
+      ]
+    }),
     ...hostColorTokens.map(
-      ({name, variable}) => `  --color-vscode-${name}: var(${variable});`,
+      ({name, variable}) => `  --color-${name}: var(${variable});`,
     ),
-    ...tokens
-      .filter(({type}) => type === "shadow")
-      .map(
-        ({name}) =>
-          `  --shadow-vscode-${name.slice(7)}: var(--qui-vscode-${name});`,
-      ),
     "}",
     ...utilities,
     "",

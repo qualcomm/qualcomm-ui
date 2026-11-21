@@ -2,7 +2,7 @@
 
 Build React interfaces for VS Code webviews using QUI's design-agnostic `core` and `react-core` behavior and host theme tokens.
 
-The package currently provides a stylesheet containing the shared host styles and CSS typography utilities. Import token metadata and opacity bindings directly from `vscode-core`. Component APIs remain to be implemented. Typography preserves the legacy scale proportions while following the host UI font size; design and contrast review remain required before release.
+The package currently provides a stylesheet containing the shared host styles and typography variables. Import token metadata and opacity bindings directly from `vscode-core`. Component APIs remain to be implemented. Typography preserves the legacy scale proportions while following the host UI font size; design and contrast review remain required before release.
 
 ## Build the package
 
@@ -40,4 +40,4 @@ If another framework is requested, reuse `vscode-core` and that framework's beha
 
 ## Apply typography
 
-Use `qui-vscode-heading-1` for page-title presentation, `qui-vscode-body-1` for body text, and `qui-vscode-code` for the editor font. Pair these with `qui-vscode-text-normal`, `qui-vscode-text-muted`, `qui-vscode-text-success`, `qui-vscode-text-warning`, or `qui-vscode-text-error`. Keep semantic HTML and verify status-text contrast in the consuming host theme. The CSS works without Tailwind.
+Apply `--font-static-heading-xxl` or `--font-static-body-md-default` through the CSS `font` property for titles or body text. The optional Tailwind adapter provides equivalent utilities such as `font-body-md`. Text inherits the container color. For other text colors, use CSS variables such as `--color-text-muted` or optional Tailwind utilities such as `text-muted`. Keep semantic HTML and verify status-text contrast in the consuming host theme. The CSS works without Tailwind.
