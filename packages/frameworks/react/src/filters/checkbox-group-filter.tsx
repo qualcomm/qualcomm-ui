@@ -4,84 +4,83 @@
 import type {ReactElement} from "react"
 
 import type {ListFilterDefinition} from "@qualcomm-ui/core/filters"
-import {useFilterSetContext} from "@qualcomm-ui/react-core/filter-set"
 import {
   type ElementRenderProp,
   PolymorphicElement,
 } from "@qualcomm-ui/react-core/system"
 import {Checkbox} from "@qualcomm-ui/react/checkbox"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
-import {
-  FilterCollectionStatus,
-  type FilterCollectionStatusTextProps,
-} from "./internal/filter-collection-status.js"
 import {FilterOptionLabel} from "./internal/filter-option-label.js"
+import {getOptionCount} from "./internal/get-option-count.js"
 import {
   getFilterLabelProps,
   useFilterWidget,
 } from "./internal/use-filter-widget.js"
 import {useQdsFilterControlContext} from "./qds-filter-control-context.js"
 
-export interface CheckboxGroupFilterProps
-  extends
-    Omit<ElementRenderProp<"div">, "children">,
-    FilterCollectionStatusTextProps {}
+export interface CheckboxGroupFilterProps extends Omit<
+  ElementRenderProp<"div">,
+  "children"
+> {}
 
 /**
  * A group of checkboxes, one per item of the filter's list collection. Selects
  * any number of items. Writes a `string[]`. Renders a `<div>` element by
  * default.
  */
-export function CheckboxGroupFilter({
-  loadErrorText,
-  loadingText,
-  retryLabel,
-  ...props
-}: CheckboxGroupFilterProps): ReactElement {
+export function CheckboxGroupFilter(
+  props: CheckboxGroupFilterProps,
+): ReactElement {
   const filter = useFilterWidget<ListFilterDefinition>(
     "CheckboxGroupFilter",
     "list",
   )
-  const api = useFilterSetContext()
   const qdsContext = useQdsFilterControlContext()
-  const options = api.getFilterOptions(filter.id)
+  const collection =
+    filter.collection instanceof ListCollection ? filter.collection : undefined
   const selected = filter.value ?? []
 
   const mergedProps = mergeProps(
     qdsContext.getOptionGroupBindings(),
-    {
-      ...getFilterLabelProps(filter),
-      "aria-busy": filter.collectionState?.status === "loading" || undefined,
-      role: "group",
-    },
+    {...getFilterLabelProps(filter), role: "group"},
     props,
   )
 
   return (
     <PolymorphicElement as="div" {...mergedProps}>
-      <FilterCollectionStatus
-        loadErrorText={loadErrorText}
-        loadingText={loadingText}
-        retryLabel={retryLabel}
-        state={filter.collectionState}
-      />
-      {options.map((option) => (
-        <Checkbox
-          key={option.value}
-          checked={selected.includes(option.value)}
-          disabled={option.disabled}
-          label={<FilterOptionLabel option={option} />}
-          onCheckedChange={(checked) =>
-            filter.setValue((prev = []) =>
-              checked
-                ? [...prev, option.value]
-                : prev.filter((value) => value !== option.value),
-            )
-          }
-          size={qdsContext.size}
-        />
-      ))}
+      {collection?.items.map((item) => {
+        const value = collection.getItemValue(item)
+        if (value === null) {
+          return null
+        }
+        const count = getOptionCount(filter.optionCounts, value)
+        const checked = selected.includes(value)
+        return (
+          <Checkbox
+            key={value}
+            checked={checked}
+            disabled={
+              !!collection.getItemDisabled(item) || (count === 0 && !checked)
+            }
+            label={
+              <FilterOptionLabel
+                count={count}
+                label={collection.stringifyItem(item) ?? value}
+              />
+            }
+            onCheckedChange={(next) =>
+              filter.setValue((prev = []) =>
+                next
+                  ? [...prev, value]
+                  : prev.filter((option) => option !== value),
+              )
+            }
+            size={qdsContext.size}
+          />
+        )
+      })}
     </PolymorphicElement>
   )
 }

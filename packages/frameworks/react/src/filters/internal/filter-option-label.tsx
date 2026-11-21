@@ -3,32 +3,38 @@
 
 import type {ReactNode} from "react"
 
-import type {FilterSetOption} from "@qualcomm-ui/core/filter-set"
-
 import {useQdsFilterControlContext} from "../qds-filter-control-context.js"
 
 export interface FilterOptionLabelProps {
-  option: FilterSetOption
+  /**
+   * The option's result count. Omitted when the filter has no counts.
+   */
+  count: number | undefined
+
+  label: string
 }
 
 /**
  * An option's label, followed by its result count when it has one.
  */
-export function FilterOptionLabel({option}: FilterOptionLabelProps): ReactNode {
+export function FilterOptionLabel({
+  count,
+  label,
+}: FilterOptionLabelProps): ReactNode {
   const qdsContext = useQdsFilterControlContext()
 
-  if (option.count === undefined) {
-    return option.label
+  if (count === undefined) {
+    return label
   }
 
   return (
     <span {...qdsContext.getOptionLabelBindings()}>
-      <span>{option.label}</span>
+      <span>{label}</span>
       {/*
        * The leading space separates the count in the accessible name. It
        * collapses visually because the count is a flex item.
        */}
-      <span {...qdsContext.getOptionCountBindings()}> {option.count}</span>
+      <span {...qdsContext.getOptionCountBindings()}> {count}</span>
     </span>
   )
 }

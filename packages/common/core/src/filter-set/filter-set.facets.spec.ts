@@ -1,6 +1,5 @@
 import {describe, expect, test, vi} from "vitest"
 
-import type {ListCollection} from "@qualcomm-ui/utils/collection"
 import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
 import {getFacetFilterSetProps} from "./filter-set.facets.js"
@@ -18,35 +17,25 @@ function createFacetIndex() {
 describe("getFacetFilterSetProps", () => {
   test("collections hold the field's values", () => {
     const {getFilterCollection} = getFacetFilterSetProps(createFacetIndex())
-    const state = getFilterCollection("os", {values: []})
+    const collection = getFilterCollection("os")
 
-    expect(state?.status).toBe("success")
-    expect((state?.collection as ListCollection<any>).items).toEqual([
+    expect(collection?.items).toEqual([
       {label: "Linux", value: "Linux"},
       {label: "Windows", value: "Windows"},
     ])
-    expect(getFilterCollection("os", {values: []})?.collection).toBe(
-      state?.collection,
-    )
-    expect(getFilterCollection("unknown", {values: []})).toBeUndefined()
+    expect(getFilterCollection("os")).toBe(collection)
+    expect(getFilterCollection("unknown")).toBeUndefined()
   })
 
   test("counts reflect the selections in other fields", () => {
     const {getFilterOptionCounts} = getFacetFilterSetProps(createFacetIndex())
     const values = {os: ["Linux"]}
 
-    expect(getFilterOptionCounts("os", values)).toEqual(
-      new Map([
-        ["Linux", 2],
-        ["Windows", 1],
-      ]),
-    )
-    expect(getFilterOptionCounts("tech", values)).toEqual(
-      new Map([
-        ["AI", 1],
-        ["Connectivity", 1],
-      ]),
-    )
+    expect(getFilterOptionCounts("os", values)).toEqual({Linux: 2, Windows: 1})
+    expect(getFilterOptionCounts("tech", values)).toEqual({
+      AI: 1,
+      Connectivity: 1,
+    })
     expect(getFilterOptionCounts("unknown", values)).toBeUndefined()
   })
 
@@ -55,12 +44,7 @@ describe("getFacetFilterSetProps", () => {
 
     expect(
       getFilterOptionCounts("os", {name: "Alpha", visits: [1, null]}),
-    ).toEqual(
-      new Map([
-        ["Linux", 2],
-        ["Windows", 1],
-      ]),
-    )
+    ).toEqual({Linux: 2, Windows: 1})
   })
 
   test("getCandidateIds limits the counted items", () => {
@@ -76,12 +60,7 @@ describe("getFacetFilterSetProps", () => {
     })
     const values = {name: "Al"}
 
-    expect(getFilterOptionCounts("os", values)).toEqual(
-      new Map([
-        ["Linux", 1],
-        ["Windows", 0],
-      ]),
-    )
+    expect(getFilterOptionCounts("os", values)).toEqual({Linux: 1, Windows: 0})
     getFilterOptionCounts("tech", {name: "Al"})
 
     expect(getCandidateIds).toHaveBeenCalledTimes(1)

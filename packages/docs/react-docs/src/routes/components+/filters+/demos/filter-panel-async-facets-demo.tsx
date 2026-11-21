@@ -4,8 +4,6 @@ import {keepPreviousData, useQuery} from "@tanstack/react-query"
 
 import {
   type FacetFilterSetProps,
-  type FilterSetCollectionDetails,
-  type FilterSetCollectionState,
   getFacetFilterSetProps,
 } from "@qualcomm-ui/core/filter-set"
 import {
@@ -15,6 +13,7 @@ import {
 } from "@qualcomm-ui/core/filters"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
 import {CheckboxGroupFilter} from "@qualcomm-ui/react/filters"
+import {ProgressRing} from "@qualcomm-ui/react/progress-ring"
 import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
 import {type Build, fetchBuilds} from "./mock-api"
@@ -26,8 +25,8 @@ const filters = defineFilters({
 
 type BuildFilters = FilterValues<typeof filters>
 
-function indexBuilds(builds: Build[]): FacetFilterSetProps {
-  return getFacetFilterSetProps(
+function indexBuilds(builds: Build[]): FacetFilterSetProps<typeof filters> {
+  return getFacetFilterSetProps<typeof filters>(
     new FacetIndex(builds, {fields: {platform: {}, status: {}}}),
   )
 }
@@ -50,43 +49,43 @@ export function FilterPanelAsyncFacetsDemo(): ReactElement {
     queryKey: ["builds", value],
   })
 
-  function getFilterCollection(
-    id: string,
-    details: FilterSetCollectionDetails,
-  ): FilterSetCollectionState | undefined {
-    if (facets.isError) {
-      return {
-        error: facets.error,
-        retry: () => void facets.refetch(),
-        status: "error",
-      }
-    }
-    if (!facets.data) {
-      return {status: "loading"}
-    }
-    const state = facets.data.getFilterCollection(id, details)
-    return state && facets.isFetching
-      ? {collection: state.collection, status: "loading"}
-      : state
-  }
-
   return (
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
       {/* preview */}
       <FilterPanel.Root
         className="w-72"
         filters={filters}
-        getFilterCollection={getFilterCollection}
+        getFilterCollection={(id) => facets.data?.getFilterCollection(id)}
         getFilterOptionCounts={(id, values) =>
           facets.data?.getFilterOptionCounts(id, values)
         }
         onValueChange={setValue}
         value={value}
       >
-        <FilterPanel.Filter filter={filters.status}>
+        <FilterPanel.Filter
+          filter={filters.status}
+          label={(label) => (
+            <span className="inline-flex items-center gap-2">
+              {label}
+              {facets.isPending ? (
+                <ProgressRing aria-label="Loading statuses" size="xs" />
+              ) : null}
+            </span>
+          )}
+        >
           <CheckboxGroupFilter />
         </FilterPanel.Filter>
-        <FilterPanel.Filter filter={filters.platform}>
+        <FilterPanel.Filter
+          filter={filters.platform}
+          label={(label) => (
+            <span className="inline-flex items-center gap-2">
+              {label}
+              {facets.isPending ? (
+                <ProgressRing aria-label="Loading platforms" size="xs" />
+              ) : null}
+            </span>
+          )}
+        >
           <CheckboxGroupFilter />
         </FilterPanel.Filter>
       </FilterPanel.Root>

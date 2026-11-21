@@ -14,6 +14,10 @@
     --filter-control-option-padding-block: var(--spacing-250);
   }
 
+  &:empty {
+    --filter-control-option-padding-block: 0;
+  }
+
   /* Outranks the radio group's own padding and per-size gap. */
   &.qui-radio-group__root {
     padding-block-end: var(--filter-control-option-padding-block);

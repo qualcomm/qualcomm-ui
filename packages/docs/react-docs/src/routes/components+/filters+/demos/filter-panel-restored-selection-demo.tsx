@@ -5,7 +5,6 @@ import type {ReactElement} from "react"
 
 import {useQuery, useQueryClient} from "@tanstack/react-query"
 
-import type {FilterSetCollectionState} from "@qualcomm-ui/core/filter-set"
 import {defineFilters, listFilter} from "@qualcomm-ui/core/filters"
 import {Button} from "@qualcomm-ui/react/button"
 import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
@@ -41,14 +40,7 @@ export function FilterPanelRestoredSelectionDemo(): ReactElement {
   const filterSet = useFilterSet({
     defaultValue: restoredValue,
     filters,
-    getFilterCollection: (id): FilterSetCollectionState | undefined => {
-      if (id !== "owner") {
-        return undefined
-      }
-      return owners.data
-        ? {collection: owners.data, status: "success"}
-        : {status: "loading"}
-    },
+    getFilterCollection: (id) => (id === "owner" ? owners.data : undefined),
   })
 
   function reload() {
@@ -61,13 +53,23 @@ export function FilterPanelRestoredSelectionDemo(): ReactElement {
       <div className="flex flex-wrap items-start gap-6">
         {/* preview */}
         <FilterPanel.RootProvider className="w-72" value={filterSet}>
-          <FilterPanel.Filter filter={filters.owner}>
+          <FilterPanel.Filter
+            filter={filters.owner}
+            label={(label) => (
+              <span className="inline-flex items-center gap-2">
+                {label}
+                {owners.isPending ? (
+                  <ProgressRing aria-label="Loading owners" size="xs" />
+                ) : null}
+              </span>
+            )}
+          >
             <CheckboxGroupFilter />
           </FilterPanel.Filter>
         </FilterPanel.RootProvider>
         <div className="flex min-w-60 flex-1 flex-wrap gap-2">
           {owners.isPending ? (
-            <ProgressRing aria-label="Loading owners" size="xs" />
+            <ProgressRing aria-label="Loading selected owners" size="xs" />
           ) : (
             filterSet.getValueItems("owner").map((item) => (
               <Tag

@@ -8,7 +8,6 @@ import {
   type FilterSetApi,
   type FilterSetApiProps,
   type FilterSetApplyMode,
-  type FilterSetCollectionState,
   getFacetFilterSetProps,
 } from "@qualcomm-ui/core/filter-set"
 import {
@@ -383,11 +382,7 @@ describe("filter panel", () => {
 
   test("the filter set resolves collections that definitions omit", async () => {
     await render(
-      <Panel
-        getFilterCollection={(id) =>
-          id === "user" ? {collection: users, status: "success"} : undefined
-        }
-      >
+      <Panel getFilterCollection={(id) => (id === "user" ? users : undefined)}>
         <FilterPanel.Filter filter={filters.user}>
           <CheckboxGroupFilter />
         </FilterPanel.Filter>
@@ -395,18 +390,6 @@ describe("filter panel", () => {
     )
 
     await expect.element(page.getByLabelText("Anna Robinson")).toBeVisible()
-  })
-
-  test("selected values missing from the collection stay visible", async () => {
-    await render(
-      <Panel defaultValue={{status: ["Cancelled"]}}>
-        <FilterPanel.Filter filter={filters.status}>
-          <CheckboxGroupFilter />
-        </FilterPanel.Filter>
-      </Panel>,
-    )
-
-    await expect.element(page.getByLabelText("Cancelled")).toBeChecked()
   })
 })
 
@@ -421,15 +404,12 @@ describe("RootProvider", () => {
         onValueChange,
       })
       const [open, setOpen] = useState(true)
-      const committed = filterSet.value.owner ?? []
 
       return (
         <>
           <ul aria-label="Active filters">
-            {committed.map((value) => (
-              <li key={value}>
-                {filterSet.getFilterOptionLabel("owner", value)}
-              </li>
+            {filterSet.getValueItems("owner").map((item) => (
+              <li key={item.value}>{item.label}</li>
             ))}
           </ul>
           <button onClick={() => setOpen((prev) => !prev)} type="button">
@@ -714,41 +694,6 @@ describe("option counts", () => {
       .toBeDisabled()
   })
 
-  test("combobox options with no results are disabled", async () => {
-    await render(
-      <Panel getFilterOptionCounts={getFilterOptionCounts}>
-        <FilterPanel.Filter filter={filters.owner}>
-          <ComboboxFilter />
-        </FilterPanel.Filter>
-      </Panel>,
-    )
-
-    await page.getByRole("combobox", {name: "Owner"}).fill("o")
-
-    await expect
-      .element(page.getByRole("option", {exact: true, name: "Anna Robinson"}))
-      .toBeVisible()
-    await expect
-      .element(page.getByRole("option", {exact: true, name: "Ben Ortiz"}))
-      .toHaveAttribute("aria-disabled", "true")
-  })
-
-  test("select options with no results are disabled", async () => {
-    await render(
-      <Panel getFilterOptionCounts={getFilterOptionCounts}>
-        <FilterPanel.Filter filter={filters.standard}>
-          <SelectFilter />
-        </FilterPanel.Filter>
-      </Panel>,
-    )
-
-    await page.getByRole("combobox", {name: "Standard"}).click()
-
-    await expect
-      .element(page.getByRole("option", {name: "Wi-Fi 7"}))
-      .toHaveAttribute("aria-disabled", "true")
-  })
-
   test("counts follow the draft in manual mode", async () => {
     const facetIndex = new FacetIndex(
       [
@@ -954,83 +899,13 @@ describe("collections", () => {
     await expect.element(items.getByRole("listitem")).not.toBeInTheDocument()
   })
 
-  test("getFilterOptions returns the same array until the options change", async () => {
-    const results: boolean[] = []
-    function Example() {
-      const [failed, setFailed] = useState(1)
-      const filterSet = useFilterSet({
-        filters,
-        getFilterOptionCounts: () => new Map([["Failed", failed]]),
-      })
-      const options = filterSet.getFilterOptions("status")
-      const [first] = useState(options)
-      return (
-        <>
-          <button
-            onClick={() =>
-              results.push(filterSet.getFilterOptions("status") === first)
-            }
-            type="button"
-          >
-            Compare
-          </button>
-          <button onClick={() => setFailed(2)} type="button">
-            Change counts
-          </button>
-        </>
-      )
-    }
-    await render(<Example />)
-
-    await page.getByRole("button", {name: "Compare"}).click()
-    await page.getByRole("button", {name: "Change counts"}).click()
-    await page.getByRole("button", {name: "Compare"}).click()
-
-    expect(results).toEqual([true, false])
-  })
-
-  test("shows a loading status until the collection resolves", async () => {
-    function Example() {
-      const [loaded, setLoaded] = useState(false)
-      const filterSet = useFilterSet({
-        filters,
-        getFilterCollection: (): FilterSetCollectionState =>
-          loaded ? {collection: users, status: "success"} : {status: "loading"},
-      })
-      return (
-        <>
-          <button onClick={() => setLoaded(true)} type="button">
-            Load
-          </button>
-          <FilterSetProvider value={filterSet}>
-            <FilterProvider filter={filters.user}>
-              <CheckboxGroupFilter />
-            </FilterProvider>
-          </FilterSetProvider>
-        </>
-      )
-    }
-    await render(<Example />)
-
-    const group = page.getByRole("group", {name: "User"})
-    await expect.element(group).toHaveAttribute("aria-busy", "true")
-    await expect.element(page.getByRole("status")).toHaveTextContent("Loading")
-
-    await page.getByRole("button", {name: "Load"}).click()
-
-    await expect.element(page.getByLabelText("Anna Robinson")).toBeVisible()
-    await expect.element(page.getByRole("status")).not.toBeInTheDocument()
-    await expect.element(group).not.toHaveAttribute("aria-busy")
-  })
-
-  test("hides restored values until the collection first loads", async () => {
+  test("a filter without a collection shows no options until it has one", async () => {
     function Example() {
       const [loaded, setLoaded] = useState(false)
       const filterSet = useFilterSet({
         defaultValue: {user: ["u1"]},
         filters,
-        getFilterCollection: (): FilterSetCollectionState =>
-          loaded ? {collection: users, status: "success"} : {status: "loading"},
+        getFilterCollection: () => (loaded ? users : undefined),
       })
       return (
         <>
@@ -1048,7 +923,7 @@ describe("collections", () => {
     await render(<Example />)
 
     const group = page.getByRole("group", {name: "User"})
-    await expect.element(page.getByRole("status")).toHaveTextContent("Loading")
+    await expect.element(group).toBeInTheDocument()
     await expect.element(group.getByRole("checkbox")).not.toBeInTheDocument()
 
     await page.getByRole("button", {name: "Load"}).click()
@@ -1056,101 +931,13 @@ describe("collections", () => {
     await expect.element(page.getByLabelText("Anna Robinson")).toBeChecked()
   })
 
-  test("shows the load error with a retry button", async () => {
-    const retry = vi.fn()
-    function Example() {
-      const filterSet = useFilterSet({
-        filters,
-        getFilterCollection: () => ({
-          error: new Error("500"),
-          retry,
-          status: "error",
-        }),
-      })
-      return (
-        <FilterSetProvider value={filterSet}>
-          <FilterProvider filter={filters.user}>
-            <CheckboxGroupFilter />
-          </FilterProvider>
-        </FilterSetProvider>
-      )
-    }
-    await render(<Example />)
-
-    await expect
-      .element(page.getByRole("alert").getByText("Couldn't load options"))
-      .toBeVisible()
-    await page.getByRole("button", {name: "Retry"}).click()
-    expect(retry).toHaveBeenCalledOnce()
-  })
-
-  test("select and combobox filters report a load error on the control", async () => {
-    const getFilterCollection = (): FilterSetCollectionState => ({
-      error: new Error("500"),
-      status: "error",
-    })
-    await render(
-      <Panel getFilterCollection={getFilterCollection}>
-        <FilterPanel.Filter filter={filters.user}>
-          <SelectFilter loadErrorText="Users are unavailable" />
-        </FilterPanel.Filter>
-      </Panel>,
-    )
-
-    await expect.element(page.getByText("Users are unavailable")).toBeVisible()
-  })
-
-  test("a selection keeps its label after a search narrows the collection", async () => {
-    function Example() {
-      const [query, setQuery] = useState("")
-      const filterSet = useFilterSet({
-        filters,
-        getFilterCollection: (): FilterSetCollectionState => ({
-          collection: list(
-            users.items.filter((user) => user.label.includes(query)),
-          ),
-          status: "success",
-        }),
-      })
-      return (
-        <>
-          <button onClick={() => setQuery("Ben")} type="button">
-            Search Ben
-          </button>
-          <ValueItems filterSet={filterSet} id="user" />
-          <FilterSetProvider value={filterSet}>
-            <FilterProvider filter={filters.user}>
-              <CheckboxGroupFilter />
-            </FilterProvider>
-          </FilterSetProvider>
-        </>
-      )
-    }
-    await render(<Example />)
-
-    await page.getByText("Anna Robinson").click()
-    await page.getByRole("button", {name: "Search Ben"}).click()
-
-    await expect
-      .element(page.getByRole("list", {name: "Active filters"}))
-      .toHaveTextContent("Anna Robinson")
-    await expect.element(page.getByLabelText("Anna Robinson")).toBeChecked()
-    await expect.element(page.getByLabelText("Ben Ortiz")).toBeVisible()
-  })
-
-  test("restored values are passed to the resolver", async () => {
-    const requested = vi.fn()
+  test("restored values are labeled once the collection loads", async () => {
     function Example() {
       const [loaded, setLoaded] = useState(false)
       const filterSet = useFilterSet({
         defaultValue: {user: ["u1"]},
         filters,
-        getFilterCollection: (_id, {values}): FilterSetCollectionState => {
-          requested(values)
-          return loaded
-            ? {collection: users, status: "success"}
-            : {status: "loading"}
-        },
+        getFilterCollection: () => (loaded ? users : undefined),
       })
       return (
         <>
@@ -1163,51 +950,11 @@ describe("collections", () => {
     }
     await render(<Example />)
 
-    await expect.poll(() => requested).toHaveBeenCalledWith(["u1"])
-
     await page.getByRole("button", {name: "Load"}).click()
 
     await expect
       .element(page.getByRole("list", {name: "Active filters"}))
       .toHaveTextContent("Anna Robinson")
-  })
-
-  test("values set outside the controls keep their labels after the collection narrows", async () => {
-    function Example() {
-      const [value, setValue] = useState<Values>({})
-      const [query, setQuery] = useState("")
-      const filterSet = useFilterSet({
-        filters,
-        getFilterCollection: (): FilterSetCollectionState => ({
-          collection: list(
-            users.items.filter((user) => user.label.includes(query)),
-          ),
-          status: "success",
-        }),
-        onValueChange: setValue,
-        value,
-      })
-      return (
-        <>
-          <button onClick={() => setValue({user: ["u1"]})} type="button">
-            Apply saved view
-          </button>
-          <button onClick={() => setQuery("Ben")} type="button">
-            Search Ben
-          </button>
-          <ValueItems filterSet={filterSet} id="user" />
-        </>
-      )
-    }
-    await render(<Example />)
-
-    const items = page.getByRole("list", {name: "Active filters"})
-    await page.getByRole("button", {name: "Apply saved view"}).click()
-    await expect.element(items).toHaveTextContent("Anna Robinson")
-
-    await page.getByRole("button", {name: "Search Ben"}).click()
-
-    await expect.element(items).toHaveTextContent("Anna Robinson")
   })
 
   test("values missing from a loaded collection fall back to the value", async () => {
@@ -1222,16 +969,13 @@ describe("collections", () => {
       .toHaveTextContent("u9")
   })
 
-  test("the tree filter shows a loading status until its tree resolves", async () => {
+  test("the tree filter renders once its tree resolves", async () => {
     const treeFilters = defineFilters({chipset: treeFilter({label: "Chipset"})})
     function Example() {
       const [loaded, setLoaded] = useState(false)
       const filterSet = useFilterSet({
         filters: treeFilters,
-        getFilterCollection: (): FilterSetCollectionState =>
-          loaded
-            ? {collection: chipsets, status: "success"}
-            : {status: "loading"},
+        getFilterCollection: () => (loaded ? chipsets : undefined),
       })
       return (
         <>
@@ -1248,78 +992,12 @@ describe("collections", () => {
     }
     await render(<Example />)
 
-    await expect.element(page.getByRole("status")).toHaveTextContent("Loading")
+    await expect.element(page.getByRole("tree")).not.toBeInTheDocument()
 
     await page.getByRole("button", {name: "Load"}).click()
 
     await expect
       .element(page.getByRole("treeitem", {name: "SC8380XP"}))
       .toBeVisible()
-  })
-  test("a panel filter shows one loading indicator at a time", async () => {
-    function Example() {
-      const [state, setState] = useState<FilterSetCollectionState>({
-        status: "loading",
-      })
-      return (
-        <>
-          <button
-            onClick={() => setState({collection: users, status: "loading"})}
-            type="button"
-          >
-            Refetch
-          </button>
-          <button
-            onClick={() => setState({collection: users, status: "success"})}
-            type="button"
-          >
-            Resolve
-          </button>
-          <Panel
-            getFilterCollection={(id) => (id === "user" ? state : undefined)}
-          >
-            <FilterPanel.Filter
-              filter={filters.status}
-              loadingIndicatorProps={{"data-test-id": "status-loading"}}
-            >
-              <CheckboxGroupFilter />
-            </FilterPanel.Filter>
-            <FilterPanel.Filter
-              filter={filters.user}
-              loadingIndicatorProps={{"data-test-id": "user-loading"}}
-            >
-              <CheckboxGroupFilter />
-            </FilterPanel.Filter>
-          </Panel>
-        </>
-      )
-    }
-    await render(<Example />)
-
-    await expect.element(page.getByRole("status")).toHaveTextContent("Loading")
-    await expect
-      .element(page.getByTestId("user-loading"))
-      .not.toBeInTheDocument()
-
-    const trigger = page.getByRole("button", {exact: true, name: "User"})
-    await trigger.click()
-
-    await expect.element(page.getByTestId("user-loading")).toBeVisible()
-    await expect
-      .element(page.getByTestId("status-loading"))
-      .not.toBeInTheDocument()
-
-    await trigger.click()
-    await page.getByRole("button", {name: "Refetch"}).click()
-
-    await expect.element(page.getByLabelText("Anna Robinson")).toBeVisible()
-    await expect.element(page.getByRole("status")).not.toBeInTheDocument()
-    await expect.element(page.getByTestId("user-loading")).toBeVisible()
-
-    await page.getByRole("button", {name: "Resolve"}).click()
-
-    await expect
-      .element(page.getByTestId("user-loading"))
-      .not.toBeInTheDocument()
   })
 })

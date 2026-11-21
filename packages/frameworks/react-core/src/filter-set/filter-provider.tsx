@@ -51,13 +51,14 @@ export function FilterProvider<TDef extends FilterDefinition>({
 
   const context: FilterContextValue = {
     clear: () => api.clearFilter(id),
-    collectionState: api.getFilterCollectionState(id),
+    collection: api.getFilterCollection(id),
     count: api.getDraftValueCount(id),
     definition: filter,
     id,
     isActive: api.isFilterActive(id),
     label: api.getFilterLabel(id),
     labelId,
+    optionCounts: api.getFilterOptionCounts(id),
     setValue: (next) => api.setFilterValue(id, next),
     value,
   }

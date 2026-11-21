@@ -63,7 +63,7 @@ function matchName(values: BuildFilters): string[] | undefined {
     : undefined
 }
 
-const facetProps = getFacetFilterSetProps(facetIndex, {
+const facetProps = getFacetFilterSetProps<typeof filters>(facetIndex, {
   getCandidateIds: matchName,
 })
 

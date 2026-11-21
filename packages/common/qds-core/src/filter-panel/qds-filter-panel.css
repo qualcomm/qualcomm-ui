@@ -127,11 +127,6 @@
 .qui-filter-panel__filter-count {
 }
 
-.qui-filter-panel__filter-loading-indicator {
-  display: flex;
-  flex-shrink: 0;
-}
-
 .qui-filter-panel__filter-indicator {
   display: flex;
   flex-shrink: 0;

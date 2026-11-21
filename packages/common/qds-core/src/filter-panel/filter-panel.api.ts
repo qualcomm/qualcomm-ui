@@ -5,7 +5,6 @@ import type {QdsNumberBadgeProps} from "@qualcomm-ui/qds-core/badge"
 import type {QdsButtonApiProps} from "@qualcomm-ui/qds-core/button"
 import type {QdsFilterControlApiProps} from "@qualcomm-ui/qds-core/filter-control"
 import type {QdsIconApiProps} from "@qualcomm-ui/qds-core/icon"
-import type {QdsProgressRingApiProps} from "@qualcomm-ui/qds-core/progress-ring"
 import type {Explicit} from "@qualcomm-ui/utils/guard"
 import type {PropNormalizer} from "@qualcomm-ui/utils/machine"
 
@@ -22,7 +21,6 @@ import type {
   QdsFilterPanelFilterCountBindings,
   QdsFilterPanelFilterIndicatorBindings,
   QdsFilterPanelFilterLabelBindings,
-  QdsFilterPanelFilterLoadingIndicatorBindings,
   QdsFilterPanelFilterTriggerBindings,
   QdsFilterPanelFooterBindings,
   QdsFilterPanelHeaderBindings,
@@ -57,9 +55,6 @@ export function createQdsFilterPanelApi(
     },
     getFilterCountBadgeProps(): QdsNumberBadgeProps {
       return {emphasis: "neutral-outline", size: "xs"}
-    },
-    getFilterLoadingIndicatorProgressRingProps(): QdsProgressRingApiProps {
-      return {size: size === "lg" ? "sm" : "xs"}
     },
     getIconProps(): QdsIconApiProps {
       return {size: size === "lg" ? "md" : "xs"}
@@ -98,12 +93,6 @@ export function createQdsFilterPanelApi(
     },
     getFilterLabelBindings(): QdsFilterPanelFilterLabelBindings {
       return normalize.element({className: filterPanelClasses.filterLabel})
-    },
-    getFilterLoadingIndicatorBindings(): QdsFilterPanelFilterLoadingIndicatorBindings {
-      return normalize.element({
-        "aria-hidden": true,
-        className: filterPanelClasses.filterLoadingIndicator,
-      })
     },
     getFilterTriggerBindings(): QdsFilterPanelFilterTriggerBindings {
       return normalize.button({className: filterPanelClasses.filterTrigger})

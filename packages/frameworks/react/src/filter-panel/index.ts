@@ -34,10 +34,6 @@ import {
   type FilterPanelFilterLabelProps,
 } from "./filter-panel-filter-label.js"
 import {
-  FilterPanelFilterLoadingIndicator,
-  type FilterPanelFilterLoadingIndicatorProps,
-} from "./filter-panel-filter-loading-indicator.js"
-import {
   FilterPanelFilterRoot,
   type FilterPanelFilterRootProps,
 } from "./filter-panel-filter-root.js"
@@ -86,7 +82,6 @@ export type {
   FilterPanelFilterCountProps,
   FilterPanelFilterIndicatorProps,
   FilterPanelFilterLabelProps,
-  FilterPanelFilterLoadingIndicatorProps,
   FilterPanelFilterRootProps,
   FilterPanelFilterTriggerProps,
   FilterPanelFooterProps,
@@ -121,7 +116,7 @@ type FilterPanelComponent = {
   Count: typeof FilterPanelCount
   /**
    * A collapsible filter section with a trigger that shows the filter's label,
-   * count, loading indicator, and indicator. Its children are the filter's
+   * count, and indicator. Its children are the filter's
    * control. Renders a `<div>` element by default.
    */
   Filter: typeof FilterPanelFilter
@@ -145,13 +140,6 @@ type FilterPanelComponent = {
    */
   FilterLabel: typeof FilterPanelFilterLabel
   /**
-   * Shows a progress ring while the filter's collection refetches, or while it
-   * loads with the filter collapsed. On the first load of an expanded filter,
-   * the control shows its own loading status instead. Renders nothing
-   * otherwise. Renders a `<span>` element by default.
-   */
-  FilterLoadingIndicator: typeof FilterPanelFilterLoadingIndicator
-  /**
    * A collapsible filter section. Provides the filter's state to its trigger,
    * content, and control. Renders a `<div>` element by default. Intended to be
    * used with the composite elements:
@@ -162,7 +150,6 @@ type FilterPanelComponent = {
    *   <FilterPanel.FilterTrigger>
    *     <FilterPanel.FilterLabel />
    *     <FilterPanel.FilterCount />
-   *     <FilterPanel.FilterLoadingIndicator />
    *     <FilterPanel.FilterIndicator />
    *   </FilterPanel.FilterTrigger>
    *   <FilterPanel.FilterContent>
@@ -216,7 +203,6 @@ export const FilterPanel: FilterPanelComponent = {
   FilterCount: FilterPanelFilterCount,
   FilterIndicator: FilterPanelFilterIndicator,
   FilterLabel: FilterPanelFilterLabel,
-  FilterLoadingIndicator: FilterPanelFilterLoadingIndicator,
   FilterRoot: FilterPanelFilterRoot,
   FilterTrigger: FilterPanelFilterTrigger,
   Footer: FilterPanelFooter,

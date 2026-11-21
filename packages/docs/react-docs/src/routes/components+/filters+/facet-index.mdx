@@ -175,7 +175,7 @@ To show counts in a [filter panel](filter-panel.mdx#filter-counts), spread `getF
 ```tsx
 import {getFacetFilterSetProps} from "@qualcomm-ui/core/filter-set"
 
-const facetProps = getFacetFilterSetProps(facetIndex, {
+const facetProps = getFacetFilterSetProps<typeof filters>(facetIndex, {
   getCandidateIds: (values) => searchBuilds(values.name),
 })
 
@@ -188,7 +188,7 @@ function BuildFilters() {
 }
 ```
 
-[getCandidateIds](#getCandidateIds) receives the panel's values. Return the ids that pass the panel's other filters, or `undefined` to include every item.
+[getCandidateIds](#getCandidateIds) receives the panel's values. Return the ids that pass the panel's other filters, or `undefined` to include every item. Pass the type of the filter definitions, as in `getFacetFilterSetProps<typeof filters>`, to type those values.
 
 A filter without a collection on its definition lists every value of its field, labeled with the value. To show other labels, give the definition a collection.
 

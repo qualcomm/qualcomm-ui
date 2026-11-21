@@ -22,7 +22,7 @@ function getCollection(
   props: ReturnType<typeof getTableFilterSetProps>,
   id: string,
 ): ListCollection<any> | undefined {
-  const collection = props.getFilterCollection(id, {values: []})?.collection
+  const collection = props.getFilterCollection(id)
   return collection instanceof ListCollection ? collection : undefined
 }
 
@@ -166,7 +166,7 @@ describe("getTableFilterSetProps", () => {
     })
 
     expect(
-      getTableFilterSetProps(table).getFilterCollection("status", {values: []}),
+      getTableFilterSetProps(table).getFilterCollection("status"),
     ).toBeUndefined()
     expect(warn).toHaveBeenCalledWith(
       expect.stringContaining("manualFiltering"),
@@ -181,7 +181,7 @@ describe("getTableFilterSetProps", () => {
       getTableFilterSetProps(table)
 
     expect(getFilterLabel("server-only")).toBeUndefined()
-    expect(getFilterCollection("server-only", {values: []})).toBeUndefined()
+    expect(getFilterCollection("server-only")).toBeUndefined()
     expect(isEmptyValue("server-only", "7d")).toBe(false)
     expect(error).not.toHaveBeenCalled()
   })
@@ -193,20 +193,16 @@ describe("getTableFilterSetProps", () => {
     })
     const {getFilterOptionCounts, value} = getTableFilterSetProps(table)
 
-    expect(getFilterOptionCounts("status", value)).toEqual(
-      new Map([
-        ["complicated", 2],
-        ["relationship", 1],
-        ["single", 3],
-      ]),
-    )
-    expect(getFilterOptionCounts("tags", value)).toEqual(
-      new Map([
-        ["flight", 1],
-        ["math", 1],
-        ["systems", 2],
-      ]),
-    )
+    expect(getFilterOptionCounts("status", value)).toEqual({
+      complicated: 2,
+      relationship: 1,
+      single: 3,
+    })
+    expect(getFilterOptionCounts("tags", value)).toEqual({
+      flight: 1,
+      math: 1,
+      systems: 2,
+    })
   })
 
   test("option counts follow a draft that differs from the committed filters", () => {

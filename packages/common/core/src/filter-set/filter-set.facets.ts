@@ -1,7 +1,11 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {FilterOptionObject} from "@qualcomm-ui/core/filters"
+import type {
+  FilterDefinitions,
+  FilterOptionObject,
+  FilterValues,
+} from "@qualcomm-ui/core/filters"
 import {ListCollection} from "@qualcomm-ui/utils/collection"
 import type {
   FacetIndex,
@@ -11,13 +15,14 @@ import type {
 } from "@qualcomm-ui/utils/facet-index"
 
 import type {
-  FilterSetApiProps,
   FilterSetOptionCounts,
   FilterSetValues,
 } from "./filter-set.types.js"
 import {hashValues} from "./internal/filter-set.utils.js"
 
-export interface FacetFilterSetOptions {
+export interface FacetFilterSetOptions<
+  TDefs extends FilterDefinitions = FilterDefinitions,
+> {
   /**
    * Returns the ids of the items that pass the filters `FacetIndex` can't
    * apply, such as text, range, and date filters, or a separate text search.
@@ -25,15 +30,19 @@ export interface FacetFilterSetOptions {
    * every item.
    */
   getCandidateIds?:
-    | ((values: FilterSetValues) => readonly string[] | undefined)
+    | ((values: FilterValues<TDefs>) => readonly string[] | undefined)
     | undefined
 }
 
-export interface FacetFilterSetProps {
-  getFilterCollection: NonNullable<FilterSetApiProps["getFilterCollection"]>
+export interface FacetFilterSetProps<
+  TDefs extends FilterDefinitions = FilterDefinitions,
+> {
+  getFilterCollection: (
+    id: keyof TDefs & string,
+  ) => ListCollection<FilterOptionObject> | undefined
   getFilterOptionCounts: (
-    id: string,
-    values: FilterSetValues,
+    id: keyof TDefs & string,
+    values: FilterValues<TDefs>,
   ) => FilterSetOptionCounts | undefined
 }
 
@@ -58,12 +67,17 @@ function toFacetSelections(
 /**
  * Returns filter set props that resolve collections and option counts from a
  * `FacetIndex`. Filter ids match the index's field names. Ids without
- * a matching field fall back to the filter set defaults.
+ * a matching field fall back to the filter set defaults. Pass the type of the
+ * filter definitions, `getFacetFilterSetProps<typeof filters>(facetIndex)`, to
+ * type the values `getCandidateIds` receives.
  */
-export function getFacetFilterSetProps<Item extends FacetIndexItem>(
+export function getFacetFilterSetProps<
+  TDefs extends FilterDefinitions = FilterDefinitions,
+  Item extends FacetIndexItem = FacetIndexItem,
+>(
   facetIndex: FacetIndex<Item>,
-  options: FacetFilterSetOptions = {},
-): FacetFilterSetProps {
+  options: FacetFilterSetOptions<TDefs> = {},
+): FacetFilterSetProps<TDefs> {
   const {getCandidateIds} = options
   const fields = facetIndex.fields
   let cached: {key: string; result: FacetIndexResult} | undefined
@@ -72,7 +86,7 @@ export function getFacetFilterSetProps<Item extends FacetIndexItem>(
     {collection: ListCollection<FilterOptionObject>; values: readonly string[]}
   >()
 
-  function run(values: FilterSetValues): FacetIndexResult {
+  function run(values: FilterValues<TDefs>): FacetIndexResult {
     const key = hashValues(values)
     if (cached?.key !== key) {
       cached = {
@@ -102,12 +116,14 @@ export function getFacetFilterSetProps<Item extends FacetIndexItem>(
         }
         collections.set(id, collection)
       }
-      return {collection: collection.collection, status: "success"}
+      return collection.collection
     },
     getFilterOptionCounts: (id, values) => {
       const buckets = fields.includes(id) ? run(values).facets[id] : undefined
       return buckets
-        ? new Map(buckets.map((bucket) => [bucket.key, bucket.docCount]))
+        ? Object.fromEntries(
+            buckets.map((bucket) => [bucket.key, bucket.docCount]),
+          )
         : undefined
     },
   }

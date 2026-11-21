@@ -1,7 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {FilterSetCollectionState} from "@qualcomm-ui/core/filter-set"
+import type {
+  FilterSetCollection,
+  FilterSetOptionCounts,
+} from "@qualcomm-ui/core/filter-set"
 import type {
   FilterDefinition,
   FilterDefinitionValue,
@@ -19,12 +22,12 @@ export interface FilterContextValue<
   clear: () => void
 
   /**
-   * The state of a list or tree filter's collection. `undefined` for other
-   * filter kinds, and for collection filters with no collection.
+   * The collection of a list or tree filter. `undefined` for other filter
+   * kinds, and for collection filters with no collection.
    *
    * @inheritDoc
    */
-  collectionState: FilterSetCollectionState | undefined
+  collection: FilterSetCollection | undefined
 
   /**
    * How many values the filter contributes to the filter set's
@@ -60,6 +63,13 @@ export interface FilterContextValue<
    * When unset, controls use `label` as their `aria-label`.
    */
   labelId: string | undefined
+
+  /**
+   * The result count of each option, keyed by option value, from the filter
+   * set's `getFilterOptionCounts`. Options missing from the counts count 0.
+   * `undefined` when the filter has no counts.
+   */
+  optionCounts: FilterSetOptionCounts | undefined
 
   /**
    * Sets the filter's value.

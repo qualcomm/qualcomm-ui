@@ -34,7 +34,7 @@ Each filter is a control built on one of our existing components. Render it insi
 - `SliderFilter`: `[number | null, number | null]`. Pick a numeric range. `null` leaves a side open.
 - `TextInputFilter`: `string`. Enter free text.
 
-List and tree filters render the items of the filter's collection, which comes from its definition or the panel's `getFilterCollection`. While the collection loads, or if it fails to load, the filter shows its status. See [Loading Options](../filter-panel.mdx#loading-options).
+List and tree filters render the items of the filter's collection, which comes from its definition or the panel's `getFilterCollection`. A filter without a collection shows no options. See [Loading Options](../filter-panel.mdx#loading-options).
 
 Each section below documents only the props specific to that filter. The rest are forwarded to the underlying component.
 
@@ -51,12 +51,7 @@ Shows every option as a checkbox. Use it when the list is short enough to scan.
   component={demos.CheckboxGroupFilterDemo}
 />
 
-<TypeDocProps
-  name="CheckboxGroupFilterProps"
-  pick={["loadErrorText", "loadingText", "retryLabel"]}
-/>
-
-Remaining props are forwarded to the group's `<div>` element.
+The checkbox group filter has no props of its own. Remaining props are forwarded to the group's `<div>` element.
 
 ## Checkbox Tree Filter
 
@@ -71,12 +66,7 @@ Selects leaves from a hierarchy. Checking a branch checks all of its leaves, and
   component={demos.CheckboxTreeFilterDemo}
 />
 
-<TypeDocProps
-  name="CheckboxTreeFilterProps"
-  pick={["loadErrorText", "loadingText", "retryLabel"]}
-/>
-
-Remaining props are forwarded to [Tree](/components/tree).
+The checkbox tree filter has no props of its own. Remaining props are forwarded to [Tree](/components/tree).
 
 ## Combobox Filter
 
@@ -84,16 +74,11 @@ Remaining props are forwarded to [Tree](/components/tree).
 search, autocomplete, long list
 :::
 
-Use a combobox when the list is too long to scan. Typing narrows the options by label. To search on the server instead, read the text from `onInputValueChange` and narrow the collection returned by `getFilterCollection`.
+Use a combobox when the list is too long to scan. Typing narrows the options by label. To search on the server instead, read the text from `onInputValueChange` and narrow the collection returned by `getFilterCollection`. Keep the selected items in the narrowed collection, since the filter labels its values from the collection.
 
 <Demo name="ComboboxFilterDemo" component={demos.ComboboxFilterDemo} />
 
-<TypeDocProps
-  name="ComboboxFilterProps"
-  pick={["loadErrorText", "loadingText"]}
-/>
-
-Remaining props are forwarded to [Combobox](/components/combobox).
+The combobox filter has no props of its own. Remaining props are forwarded to [Combobox](/components/combobox).
 
 ## Date Filter
 
@@ -148,10 +133,7 @@ Shows every option as a radio, for a single choice. `anyLabel` adds a leading ra
 
 <Demo name="RadioGroupFilterDemo" component={demos.RadioGroupFilterDemo} />
 
-<TypeDocProps
-  name="RadioGroupFilterProps"
-  pick={["anyLabel", "loadErrorText", "loadingText", "retryLabel"]}
-/>
+<TypeDocProps name="RadioGroupFilterProps" pick={["anyLabel"]} />
 
 Remaining props are forwarded to [RadioGroup](../../radio+/_radio.mdx).
 
@@ -165,9 +147,7 @@ Use a select for a short list where a dropdown saves space. For longer lists, us
 
 <Demo name="SelectFilterDemo" component={demos.SelectFilterDemo} />
 
-<TypeDocProps name="SelectFilterProps" pick={["loadErrorText"]} />
-
-Remaining props are forwarded to [Select](/components/select).
+The select filter has no props of its own. Remaining props are forwarded to [Select](/components/select).
 
 ## Slider Filter
 

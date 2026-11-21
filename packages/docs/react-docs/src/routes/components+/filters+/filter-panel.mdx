@@ -136,10 +136,12 @@ To change how a single section heading renders, pass `label` to `FilterPanel.Fil
 ### Loading Options
 
 ::: terms
-async options, loading, error, ListCollection, TreeCollection, getFilterCollection
+async options, loading, error, retry, ListCollection, TreeCollection, getFilterCollection
 :::
 
-To load a filter's options from an API, leave `collection` off its definition and return the request's state from [getFilterCollection](#getFilterCollection). The filter shows a loading indicator until the request succeeds, and an error if it fails.
+To load a filter's options from an API, leave `collection` off its definition and return a `ListCollection` or `TreeCollection` from [getFilterCollection](#getFilterCollection). Load the data elsewhere, like with a query library, and return `undefined` until it arrives. A filter without a collection shows no options.
+
+The panel doesn't show loading or error states. Render them yourself. This example shows a progress ring next to the filter label, through the `label` prop, while the request is pending. If the request fails, an error message with a Retry button replaces the control.
 
 <Demo
   name="FilterPanelOptionsDemo"
@@ -152,7 +154,7 @@ To load a filter's options from an API, leave `collection` off its definition an
 URL, storage, restored values, labels, loading, getValueItems
 :::
 
-Filters restored from a URL like `/builds?owner=u2` only contain value ids. The labels aren't available until the list loads, so show a loading indicator until then. The panel does this for you. Anything else that shows the selection, like these chips, should check the request's state before calling [getValueItems](#getValueItems).
+A selection restored from a URL like `/builds?owner=u2`, or from storage, only contains value ids. Labels come from the filter's collection, so until the collection loads, [getValueItems](#getValueItems) labels each item with its raw id. Anything that shows the selection outside the panel, like these chips, should wait for the request before calling `getValueItems`. Inside the panel, the control shows no options until the collection exists, so show your own loading indicator, like a progress ring next to the filter label.
 
 <Demo
   name="FilterPanelRestoredSelectionDemo"
@@ -165,7 +167,7 @@ Filters restored from a URL like `/builds?owner=u2` only contain value ids. The 
 faceting, facets, result counts, FacetIndex, getFacetFilterSetProps
 :::
 
-[getFilterOptionCounts](#getFilterOptionCounts) shows the number of results next to each checkbox and radio option. Return counts keyed by option value, or `undefined` to hide counts for a filter. Unselected options with a count of 0 are disabled.
+[getFilterOptionCounts](#getFilterOptionCounts) shows the number of results next to each checkbox and radio option. Return a record of counts keyed by option value, or `undefined` to hide counts for a filter. Options missing from the record count 0. Unselected options with a count of 0 are disabled.
 
 ```tsx
 <FilterPanel.Root
@@ -189,7 +191,7 @@ In manual mode, counts follow the draft, so they update before the user applies.
 ### Dynamic Filter Counts
 
 ::: terms
-fetched data, TanStack Query, useQuery, refetch
+fetched data, TanStack Query, useQuery, loading
 :::
 
 When the data comes from a request, build the `FacetIndex` once the response arrives, and pass its props to the panel. Build the index from a separate unfiltered query. It then counts every value of a field, and values don't drop out of the lists as the filters narrow the results. This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
@@ -199,7 +201,7 @@ When the data comes from a request, build the `FacetIndex` once the response arr
   component={demos.FilterPanelAsyncFacetsDemo}
 />
 
-A `loading` state with a collection is a refetch. The previous items stay visible, and the filter's trigger shows a progress ring until the new collection arrives.
+While the index loads, each filter shows a progress ring next to its label.
 
 ### Hoisted State
 
@@ -404,12 +406,6 @@ Returns the state of the enclosing `FilterPanel.Filter` or `FilterProvider`.
     "FilterPanelFilterCountBindings",
   ]}
 />
-
-### \<FilterPanel.FilterLoadingIndicator>
-
-<TypeDocProps name="FilterPanelFilterLoadingIndicatorProps" />
-
-<TypeDocAttributes name="QdsFilterPanelFilterLoadingIndicatorBindings" />
 
 ### \<FilterPanel.FilterIndicator>
 

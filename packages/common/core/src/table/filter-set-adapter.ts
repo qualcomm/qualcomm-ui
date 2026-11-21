@@ -3,6 +3,7 @@
 
 import type {
   FilterSetApiProps,
+  FilterSetOptionCounts,
   FilterSetValues,
 } from "@qualcomm-ui/core/filter-set"
 import type {FilterOptionObject} from "@qualcomm-ui/core/filters"
@@ -17,22 +18,18 @@ import {warnOnce} from "./internal-warn.js"
 import type {Column, Row, RowData, RowModel, TableInstance} from "./types.js"
 import {filterRows} from "./utils/filter-rows-utils.js"
 
-export interface TableFilterSetProps extends Required<
+export type TableFilterSetProps = Required<
   Pick<
     FilterSetApiProps,
     | "getFilterCollection"
     | "getFilterLabel"
+    | "getFilterOptionCounts"
     | "getFilterRange"
     | "isEmptyValue"
     | "onValueChange"
     | "value"
   >
-> {
-  getFilterOptionCounts: (
-    id: string,
-    values: FilterSetValues,
-  ) => ReadonlyMap<string, number> | undefined
-}
+>
 
 const collectionCache = new WeakMap<
   RowModel<any>,
@@ -95,11 +92,14 @@ function getColumnCollection<TData extends RowData>(
   return collection
 }
 
-const facetedCountsCache = new WeakMap<Map<any, number>, Map<string, number>>()
+const facetedCountsCache = new WeakMap<
+  Map<any, number>,
+  FilterSetOptionCounts
+>()
 
 function getFacetedCounts<TData extends RowData>(
   column: Column<TData, unknown>,
-): Map<string, number> {
+): FilterSetOptionCounts {
   const uniqueValues = column.getFacetedUniqueValues()
   const cached = facetedCountsCache.get(uniqueValues)
   if (cached) {
@@ -112,12 +112,13 @@ function getFacetedCounts<TData extends RowData>(
       counts.set(value, (counts.get(value) ?? 0) + count)
     }
   }
-  facetedCountsCache.set(uniqueValues, counts)
-  return counts
+  const record = Object.fromEntries(counts)
+  facetedCountsCache.set(uniqueValues, record)
+  return record
 }
 
 interface DraftFacets {
-  counts: Map<string, Map<string, number>>
+  counts: Map<string, FilterSetOptionCounts>
   /**
    * The ids of the draft filters each row fails, keyed by row id.
    */
@@ -196,7 +197,7 @@ function getDraftFacetedCounts<TData extends RowData>(
   table: TableInstance<TData>,
   columnId: string,
   values: FilterSetValues,
-): Map<string, number> {
+): FilterSetOptionCounts {
   /**
    * Runs the filtered row model so that each row's `__global__` flag reflects
    * the current global filter.
@@ -232,8 +233,9 @@ function getDraftFacetedCounts<TData extends RowData>(
       counts.set(value, (counts.get(value) ?? 0) + 1)
     }
   }
-  facets.counts.set(columnId, counts)
-  return counts
+  const record = Object.fromEntries(counts)
+  facets.counts.set(columnId, record)
+  return record
 }
 
 /**
@@ -273,7 +275,7 @@ export function getTableFilterSetProps<TData extends RowData>(
         )
         return undefined
       }
-      return {collection: getColumnCollection(table, column), status: "success"}
+      return getColumnCollection(table, column)
     },
     getFilterLabel: (id) => {
       const column = findColumn(id)
@@ -328,7 +330,7 @@ export function getTableFilterSetProps<TData extends RowData>(
         shouldAutoRemoveFilter(column.getFilterFn(value), value, column)
       )
     },
-    onValueChange: (values: FilterSetValues) =>
+    onValueChange: (values) =>
       table.setColumnFilters(
         Object.entries(values).map(([id, value]) => ({id, value})),
       ),
