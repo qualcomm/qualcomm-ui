@@ -52,14 +52,7 @@ export const filters = defineFilters({
 })
 ```
 
-These definitions match our [filter controls](./filter-controls+/_filter-controls.mdx):
-- `listFilter` defines a filter for any list control, like `<CheckboxGroupFilter>` or `<RadioGroupFilter>`
-- `treeFilter` for `<CheckboxTreeFilter>`
-- `textFilter` for `<TextInputFilter>`, and so on.
-
 The utility sets the filter's label, collection, and value type. The control renders it inside `FilterPanel.Filter`. The controls are documented on the [Filter Controls](./filter-controls+/_filter-controls.mdx) page.
-
-Pass the whole object to the panel's [filters](#filters) prop, and each definition to its `FilterPanel.Filter`. Every filter you render must use a definition from that object.
 
 <Demo
   name="FilterPanelDefiningFiltersDemo"
@@ -136,7 +129,7 @@ To change how a single section heading renders, pass `label` to `FilterPanel.Fil
 async options, loading, error, retry, ListCollection, TreeCollection, getFilterCollection
 :::
 
-To load a filter's options from an API, leave `collection` off its definition and return a `ListCollection` or `TreeCollection` from [getFilterCollection](#getFilterCollection). Load the data elsewhere, like with a query library, and return `undefined` until it arrives. A filter without a collection shows no options.
+To load a filter's options from an API, leave `collection` off its definition. Use the [getFilterCollection](#getFilterCollection) callback to provide the collection. Load the data elsewhere, like with a query library, and return `undefined` until it arrives. A filter without a collection shows no options.
 
 The panel doesn't show loading or error states. Render them yourself. This example shows a progress ring next to the filter label, through the `label` prop, while the request is pending. If the request fails, an error message with a Retry button replaces the control.
 
@@ -151,9 +144,7 @@ The panel doesn't show loading or error states. Render them yourself. This examp
 URL, storage, restored values, labels, loading, getValueItems
 :::
 
-A selection restored from a URL like `/builds?owner=u2`, or from storage, only contains value ids. Labels come from the filter's collection, so until the collection loads, [getValueItems](#getValueItems) labels each item with its raw id.
-
-Anything that shows the selection outside the panel, like these chips, should wait for the request before calling `getValueItems`. Inside the panel, the control shows no options until the collection exists, so show your own loading indicator, like a progress ring next to the filter label.
+A selection restored from a URL like `/builds?owner=u2` may only contain value ids. Anything that shows the selection outside the panel, like these chips, should wait for the collection data before calling `getValueItems`.
 
 <Demo
   name="FilterPanelRestoringSelectionDemo"
@@ -166,7 +157,7 @@ Anything that shows the selection outside the panel, like these chips, should wa
 faceting, facets, result counts, FacetIndex, getFacetFilterSetProps
 :::
 
-[getFilterOptionCounts](#getFilterOptionCounts) shows the number of results next to each checkbox, radio, and tree leaf option. Return a record of counts keyed by option value, or `undefined` to hide counts for a filter. Options missing from the record count 0. Unselected checkbox and radio options with a count of 0 are disabled.
+To show the number of results next to each filter option, provide the counts with the [getFilterOptionCounts](#getFilterOptionCounts) callback. Unselected checkbox and radio options with a count of 0 are disabled.
 
 ```tsx
 <FilterPanel.Root
@@ -175,7 +166,7 @@ faceting, facets, result counts, FacetIndex, getFacetFilterSetProps
 >
 ```
 
-For data in memory, index it with [FacetIndex](facet-index.mdx) and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetIndex` only counts list and tree filters, so apply other filters, like text search, in `getCandidateIds`. Give tree filters their tree in the definition, because `getFacetFilterSetProps` only builds list collections.
+When you have access to the entire dataset up front, you can use our `FacetIndex` utility to compute option counts that adjust based on filter selection.
 
 <Demo
   name="FilterPanelFilterCountsDemo"
@@ -184,19 +175,16 @@ For data in memory, index it with [FacetIndex](facet-index.mdx) and spread `getF
 
 In manual mode, counts follow the draft, so they update before the user applies.
 
-> [!note]
-> For tables, `getTableFilterSetProps` resolves the counts from the table's faceted row models. See the [table filters](https://react-table.qui.qualcomm.com/features/filters-client-side/filter-panel) docs.
-
 ### Dynamic Filter Counts
 
 ::: terms
 fetched data, TanStack Query, useQuery, loading
 :::
 
-A [FacetIndex](facet-index.mdx) can only count the items you give it. Build it from an unfiltered query, separate from the results. **Every option then stays in its list, even as the filters narrow the results.** Pass the index to `getFacetFilterSetProps`. The filter ids must match its field names.
+A [FacetIndex](facet-index.mdx) can only count the items you give it. When working with an external data source, we recommend sending a separate unfiltered request once at the start of your search experience. This approach requires the unfiltered query to return every available option. **Every option then stays in its list, even as the filters narrow the results.**
 
 > [!note]
-> This approach requires the unfiltered query to return every build. If the API returns a single page, like the first 50 builds, the counts only cover that page. When the full dataset is too large to fetch, compute the counts on the server and include them in the API response. Then pass them to the panel with [getFilterOptionCounts](#getFilterOptionCounts).
+> When the full dataset is too large to fetch, compute only the counts on the server and send those instead.  If you're using a proper search index like Open/Elastic Search, this is typically accomplished with [Term Aggregations](https://www.elastic.co/search-labs/tutorials/search-tutorial/full-text-search/facets).
 
 This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
 
@@ -213,16 +201,14 @@ Neither filter has a collection, so each lists the values of its field from the 
 useFilterSet, RootProvider, chips, active filters
 :::
 
-An alternative to `FilterPanel.Root` is the `FilterPanel.RootProvider` component with the `useFilterSet` hook. This gives you access to the filter set's state and methods from outside the panel, like rendering active filters as tags.
+`FilterPanel.Root` handles the filter set state internally. Use `useFilterSet` with `FilterPanel.RootProvider` to own that state in your component, where code outside the panel can read and change it.
 
 <Demo
   name="FilterPanelHoistedStateDemo"
   component={demos.FilterPanelHoistedStateDemo}
 />
 
-Called without an id, [getValueItems](#getValueItems) returns one item per selected value across every filter. Dismissing a tag passes the item's `filterId` and `value` to [removeFilterValue](#removeFilterValue).
-
-The state lives in the component that calls `useFilterSet`, so the panel can unmount, for example inside a closed drawer, without losing the selection.
+The state lives in the component that calls `useFilterSet`. This way, the panel can unmount without losing the selection, like in a drawer:
 
 <Demo
   name="FilterPanelDrawerDemo"
@@ -235,7 +221,7 @@ The state lives in the component that calls `useFilterSet`, so the panel can unm
 useFilterSetContext, nested components, typed definitions
 :::
 
-For type safety in nested components, pass the type of your definitions to `useFilterSetContext`:
+In a nested component, use `useFilterSetContext` to access the closest provider's filter state. For type safety, pass the type of your definitions:
 
 ```tsx
 // build-filters.ts
@@ -263,7 +249,7 @@ The type isn't checked against the panel's definitions. In development, a filter
 custom control, useFilter
 :::
 
-Declare a filter with your own value type using `customFilter`, then render your control inside `FilterPanel.Filter`. Inside the filter, `useFilter` returns its value and a setter.
+Declare a filter with your own value type using `customFilter`. `isEmptyValue` tells the panel when to drop the filter from the value, and `getValueItems` describes the value in active filter tags.
 
 ```tsx
 const filters = defineFilters({
@@ -275,14 +261,14 @@ const filters = defineFilters({
 })
 ```
 
-`isEmptyValue` tells the panel when to drop the filter from the value, and `getValueItems` describes the value in active filter tags.
+Render your custom control inside `FilterPanel.Filter`. `FilterPanel.Filter` wraps its child elements with a context provider. Use the `useFilter` hook to access this context.
 
 <Demo
   name="FilterPanelCustomFiltersDemo"
   component={demos.FilterPanelCustomFiltersDemo}
 />
 
-## Using the Value
+### URL Search Params
 
 ::: terms
 search params, query string, request
@@ -321,7 +307,7 @@ Returns the state of the enclosing `FilterPanel.Filter` or `FilterProvider`.
 
 #### FilterDefinition
 
-<TypeDocProps name="FilterDefinition" />
+<TypeDocProps name="FilterDefinition" collapseRefs />
 
 #### ListFilterConfig
 

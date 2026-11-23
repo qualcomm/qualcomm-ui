@@ -29,11 +29,11 @@ const filters = defineFilters({
 })
 
 export function FilterPanelHoistedStateDemo(): ReactElement {
+  // preview
   const filterSet = useFilterSet({filters})
 
   return (
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
-      {/* preview */}
       <FilterPanel.RootProvider className="w-72" value={filterSet}>
         <FilterPanel.Filter filter={filters.status}>
           <CheckboxGroupFilter />
@@ -55,7 +55,7 @@ export function FilterPanelHoistedStateDemo(): ReactElement {
           </Tag>
         ))}
       </div>
-      {/* preview */}
     </div>
   )
+  // preview
 }

@@ -43,6 +43,7 @@ export function FilterPanelDrawerDemo(): ReactElement {
             filterSet.apply()
           }
         }}
+        unmountOnExit
       >
         <Drawer.Trigger>
           <Button variant="outline">Filters ({filterSet.valueCount})</Button>

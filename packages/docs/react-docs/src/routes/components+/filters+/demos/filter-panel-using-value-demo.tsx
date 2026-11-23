@@ -84,7 +84,6 @@ export function FilterPanelUsingValueDemo(): ReactElement {
 
   return (
     <div className="flex w-full max-w-3xl flex-wrap items-start gap-6">
-      {/* preview */}
       <FilterPanel.Root
         applyMode="manual"
         className="w-72"
@@ -104,7 +103,6 @@ export function FilterPanelUsingValueDemo(): ReactElement {
           <FilterPanel.ApplyButton />
         </FilterPanel.Footer>
       </FilterPanel.Root>
-      {/* preview */}
       <CodeHighlight
         className="min-w-60 flex-1"
         code={`/builds?${params.toString().replaceAll("&", "\n  &")}`}
