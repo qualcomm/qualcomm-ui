@@ -21,7 +21,9 @@
   }
 
   &:has(.qui-table__action-bar),
-  &:has(.qui-table__title-bar) {
+  &:has(.qui-table__title-bar),
+  &:has(.qui-table__toolbar-root),
+  &:has(.qui-table__filter-bar-root) {
     --table-border-top-radius: none;
   }
 
@@ -257,4 +259,71 @@
       fill: currentColor;
     }
   }
+}
+
+/* Filter bar */
+.qui-table__filter-bar-root {
+  align-items: flex-start;
+  border-bottom: solid 1px var(--table-border-color);
+  display: flex;
+  gap: var(--spacing-1200);
+  padding: var(--spacing-300) var(--cell-padding-x);
+
+  /* The height of the filter list's tags, set by getFilterBarTagProps */
+  --filter-bar-row-height: var(--sizing-500);
+
+  &[data-size="lg"] {
+    --filter-bar-row-height: var(--sizing-600);
+  }
+}
+
+.qui-table__filter-bar-filter-list {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: var(--spacing-200);
+  min-width: 0;
+
+  > * {
+    flex-shrink: 0;
+  }
+
+  /*
+   * Tags that don't fit are hidden once the list measures them. Until then,
+   * such as in server-rendered markup, the rows after the first are clipped.
+   * `clip` also stops focus from scrolling the list.
+   */
+  &:not([data-expanded]) {
+    max-height: var(--filter-bar-row-height);
+    overflow: clip;
+  }
+}
+
+.qui-table__filter-bar-clear-trigger,
+.qui-table__filter-bar-expand-trigger {
+  flex-shrink: 0;
+}
+
+/* Toolbar */
+.qui-table__toolbar-root {
+  align-items: center;
+  background: var(--color-background-neutral-02);
+  border-bottom: solid 1px var(--table-border-color);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-200);
+  justify-content: space-between;
+  min-height: var(--action-bar-height);
+  padding: var(--spacing-400) var(--cell-padding-x);
+}
+
+.qui-table__toolbar-start,
+.qui-table__toolbar-end {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-200);
+}
+
+.qui-table__toolbar-end {
+  margin-inline-start: auto;
 }
