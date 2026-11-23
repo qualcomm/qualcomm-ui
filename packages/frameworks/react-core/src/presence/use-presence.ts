@@ -49,13 +49,20 @@ export function usePresence(props: UsePresenceProps = {}): UsePresenceReturn {
   const machine = useMachine(presenceMachine, machineProps)
   const api = createPresenceApi(machine, normalizeProps)
 
-  if (api.present) {
+  /**
+   * The node mounts in the render that requests it, before the presence
+   * machine catches up. Effects of the owning machine that look the node up
+   * when it opens, such as dismissable tracking, would otherwise miss a lazily
+   * mounted node.
+   */
+  const mounted = api.present || !!present
+  if (mounted) {
     wasEverPresent.current = true
   }
 
   const unmounted =
-    (!api.present && !wasEverPresent.current && lazyMount) ||
-    (unmountOnExit && !api.present && wasEverPresent.current)
+    (!mounted && !wasEverPresent.current && lazyMount) ||
+    (unmountOnExit && !mounted && wasEverPresent.current)
 
   const getPresenceBindings = (): PresenceBindings => ({
     "data-state":

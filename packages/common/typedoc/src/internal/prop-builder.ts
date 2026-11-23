@@ -194,7 +194,6 @@ export class TypeDocPropBuilder {
               properties: _properties,
               ...resolvedType
             },
-            typeParameters: _typeParameters,
             ...current
           },
         ) => {

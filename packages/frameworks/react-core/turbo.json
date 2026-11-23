@@ -7,7 +7,7 @@
         "*.ts",
         "src/**"
       ],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", "node_modules/.tmp/.tsbuildinfo-lib"]
     },
     "test:react-core:ci": {
       "inputs": [

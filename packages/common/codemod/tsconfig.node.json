@@ -2,8 +2,8 @@
   "extends": "@qualcomm-ui/tsconfig/tsconfig.nodenext.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "node_modules/.tmp/out-node",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-node"
+    "outDir": "node_modules/.cache/tsc/out-node",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-node"
   },
   "include": ["*.ts"]
 }

@@ -63,6 +63,7 @@ export class TypeParser {
           descriptionDisclaimer:
             "This file generated from the build script of the @qualcomm-ui/typescoop package. Do not edit it directly.",
           props: result.types,
+          refs: result.refs,
         },
         null,
         this.options.prettyJson ? 2 : 0,

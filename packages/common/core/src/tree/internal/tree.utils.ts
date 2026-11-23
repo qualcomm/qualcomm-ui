@@ -148,6 +148,46 @@ export function expandBranches(
   })
 }
 
+interface DescendantLeafValues {
+  /**
+   * Leaves that a branch toggle can check or uncheck.
+   */
+  enabled: string[]
+  /**
+   * Leaves that are disabled, or sit beneath a disabled branch. Their checked
+   * state can only change through `setChecked`.
+   */
+  locked: string[]
+}
+
+function getDescendantLeafValues(
+  collection: TreeCollection<TreeNode>,
+  node: TreeNode,
+): DescendantLeafValues {
+  const result: DescendantLeafValues = {enabled: [], locked: []}
+
+  function collect(parent: TreeNode, parentLocked: boolean) {
+    for (const child of collection.getNodeChildren(parent)) {
+      const locked = parentLocked || collection.getNodeDisabled(child)
+      if (collection.isBranchNode(child)) {
+        collect(child, locked)
+      } else {
+        result[locked ? "locked" : "enabled"].push(
+          collection.getNodeValue(child),
+        )
+      }
+    }
+  }
+
+  collect(node, false)
+  return result
+}
+
+/**
+ * A branch is fully checked when every enabled descendant leaf is checked, so
+ * an unchecked disabled leaf doesn't hold it in the indeterminate state. When
+ * every descendant is locked, the state reflects the locked leaves instead.
+ */
 export function getCheckedState(
   collection: TreeCollection<TreeNode>,
   node: TreeNode,
@@ -158,23 +198,35 @@ export function getCheckedState(
     return checkedValue.includes(value)
   }
 
-  const childValues = collection.getDescendantValues(value)
-  const allChecked = childValues.every((v) => checkedValue.includes(v))
-  const someChecked = childValues.some((v) => checkedValue.includes(v))
-  return allChecked ? true : someChecked ? "indeterminate" : false
+  const {enabled, locked} = getDescendantLeafValues(collection, node)
+  const isChecked = (v: string) => checkedValue.includes(v)
+  if ((enabled.length ? enabled : locked).every(isChecked)) {
+    return true
+  }
+  return enabled.some(isChecked) || locked.some(isChecked)
+    ? "indeterminate"
+    : false
 }
 
+/**
+ * Toggles the enabled descendant leaves of a branch. Locked leaves keep their
+ * current checked state.
+ */
 export function toggleBranchChecked(
   collection: TreeCollection<TreeNode>,
   value: string,
   checkedValue: string[],
 ): string[] {
-  const childValues = collection.getDescendantValues(value)
-  const allChecked = childValues.every((child) => checkedValue.includes(child))
+  const node = collection.findNode(value)
+  if (!node) {
+    return checkedValue
+  }
+  const {enabled} = getDescendantLeafValues(collection, node)
+  const allChecked = enabled.every((child) => checkedValue.includes(child))
   return uniq(
     allChecked
-      ? remove(checkedValue, ...childValues)
-      : add(checkedValue, ...childValues),
+      ? remove(checkedValue, ...enabled)
+      : add(checkedValue, ...enabled),
   )
 }
 

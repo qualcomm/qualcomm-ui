@@ -48,12 +48,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "run-s clean build:js build:types",
+    "build": "run-s clean build:js build:ts",
     "build:js": "vite build",
-    "build:types": "tsc -p tsconfig.lib.json",
-    "build:watch": "run-p watch:js watch:types",
-    "watch:js": "vite build -w",
-    "watch:types": "tsc -p tsconfig.lib.json -w --preserveWatchOutput",
+    "build:ts": "tsc -b",
     "clean": "shx rm -rf dist node_modules/.tmp",
     "lint": "eslint --quiet",
     "test": "turbo build --filter @qualcomm-ui/eslint-config-mdx && vitest -c vitest.config.ts --run",

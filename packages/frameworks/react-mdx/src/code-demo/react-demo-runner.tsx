@@ -1,9 +1,10 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ComponentPropsWithRef, ReactNode} from "react"
+import type {ReactNode} from "react"
 
 import type {QdsBrand} from "@qualcomm-ui/react/qds-theme"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {QdsDemoThemeSelector} from "./internal/index.js"
 import {ReactDemo, type ReactDemoProps} from "./react-demo.js"
@@ -22,15 +23,14 @@ export function ReactDemoRunner({
   setQdsBrand,
   ...props
 }: ReactDemoRunnerProps): ReactNode {
-  return (
-    <ReactDemo
-      {...props}
-      actions={
-        hideBrandSwitcher ? null : (
-          <QdsDemoThemeSelector qdsBrand={qdsBrand} setQdsBrand={setQdsBrand} />
-        )
-      }
-      wrapperProps={{"data-brand": qdsBrand} as ComponentPropsWithRef<"div">}
-    />
+  const mergedProps = mergeProps(
+    {
+      actions: hideBrandSwitcher ? null : (
+        <QdsDemoThemeSelector qdsBrand={qdsBrand} setQdsBrand={setQdsBrand} />
+      ),
+      wrapperProps: {"data-brand": qdsBrand},
+    },
+    props,
   )
+  return <ReactDemo {...mergedProps} />
 }

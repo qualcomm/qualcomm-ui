@@ -16,6 +16,11 @@ interface TestNode {
   childrenCount?: number
   disabled?: boolean
   id: string
+  /**
+   * Disabled flag that is only visible through a custom `nodeDisabled`
+   * accessor, since the collection's fallback accessor reads `disabled`.
+   */
+  locked?: boolean
   nodes?: TestNode[]
   text: string
 }
@@ -102,6 +107,29 @@ function renderTestTree({
       ))}
     </Tree.Root>,
   )
+}
+
+function renderCheckableTestTree(
+  rootProps?: RenderTestTreeOptions["rootProps"],
+  collection?: RenderTestTreeOptions["collection"],
+) {
+  return renderTestTree({
+    collection,
+    renderBranch: ({node}) => (
+      <Tree.BranchNode>
+        <Tree.BranchTrigger />
+        <Tree.NodeCheckbox />
+        <Tree.NodeText>{node.text}</Tree.NodeText>
+      </Tree.BranchNode>
+    ),
+    renderLeaf: ({node}) => (
+      <Tree.LeafNode>
+        <Tree.NodeCheckbox data-test-id={`${node.id}-checkbox`} />
+        <Tree.NodeText>{node.text}</Tree.NodeText>
+      </Tree.LeafNode>
+    ),
+    rootProps,
+  })
 }
 
 describe("Tree", () => {
@@ -346,17 +374,232 @@ describe("Tree", () => {
     )
 
     const documentsCheckbox = page.getByLabelText("Documents")
-    const doc1Checkbox = page.getByLabelText("Document 1.pdf")
+    const doc1 = page.getByRole("treeitem", {name: "Document 1.pdf"})
 
     await expect.element(documentsCheckbox).not.toBeChecked()
-    await expect.element(doc1Checkbox).not.toBeChecked()
+    await expect.element(doc1).toHaveAttribute("aria-checked", "false")
 
-    await doc1Checkbox.click()
-    await expect.element(doc1Checkbox).toBeChecked()
+    await doc1.click()
+    await expect.element(doc1).toHaveAttribute("aria-checked", "true")
 
     await expect
       .element(documentsCheckbox)
       .toHaveAttribute("data-state", "indeterminate")
+  })
+
+  describe("checkable leaves", () => {
+    test.each([
+      {modifiers: [], name: "without modifiers"},
+      {modifiers: ["Control"], name: "with Control"},
+      {modifiers: ["Shift"], name: "with Shift"},
+      {modifiers: ["Control", "Shift"], name: "with Control and Shift"},
+    ] as const)(
+      "clicking a leaf $name toggles checked state without selecting it",
+      async ({modifiers}) => {
+        const onCheckedValueChange = vi.fn()
+        const onSelectedValueChange = vi.fn()
+
+        await renderCheckableTestTree({
+          defaultExpandedValue: ["documents"],
+          onCheckedValueChange,
+          onSelectedValueChange,
+          selectionMode: "multiple",
+        })
+
+        const leaf = page.getByRole("treeitem", {name: "Document 1.pdf"})
+        await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+
+        await leaf.click({modifiers: [...modifiers]})
+        await expect.element(leaf).toHaveAttribute("aria-checked", "true")
+        expect(onCheckedValueChange).toHaveBeenCalledTimes(1)
+        expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+          expect.objectContaining({checkedValue: ["doc1"]}),
+        )
+        expect(onSelectedValueChange).not.toHaveBeenCalled()
+
+        await leaf.click({modifiers: [...modifiers]})
+        await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+        expect(onCheckedValueChange).toHaveBeenCalledTimes(2)
+        expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+          expect.objectContaining({checkedValue: []}),
+        )
+        expect(onSelectedValueChange).not.toHaveBeenCalled()
+      },
+    )
+
+    test.each(["Enter", "Space"])(
+      "%s toggles checked state on a focused leaf without selecting it",
+      async (key) => {
+        const onCheckedValueChange = vi.fn()
+        const onSelectedValueChange = vi.fn()
+
+        await renderCheckableTestTree({
+          defaultExpandedValue: ["documents"],
+          onCheckedValueChange,
+          onSelectedValueChange,
+        })
+
+        const leaf = page.getByRole("treeitem", {name: "Document 1.pdf"})
+        await userEvent.tab()
+        await userEvent.keyboard("{ArrowRight}")
+        await expect.element(leaf).toHaveFocus()
+        await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+
+        await userEvent.keyboard(`{${key}}`)
+        await expect.element(leaf).toHaveAttribute("aria-checked", "true")
+        expect(onCheckedValueChange).toHaveBeenCalledTimes(1)
+        expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+          expect.objectContaining({checkedValue: ["doc1"]}),
+        )
+        expect(onSelectedValueChange).not.toHaveBeenCalled()
+
+        await userEvent.keyboard(`{${key}}`)
+        await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+        await expect.element(leaf).toHaveFocus()
+        expect(onCheckedValueChange).toHaveBeenCalledTimes(2)
+        expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+          expect.objectContaining({checkedValue: []}),
+        )
+        expect(onSelectedValueChange).not.toHaveBeenCalled()
+      },
+    )
+
+    test("exposes checked state only on the leaf treeitem, not its decorative checkbox", async () => {
+      await renderCheckableTestTree({
+        defaultExpandedValue: ["documents"],
+        defaultSelectedValue: ["doc1"],
+      })
+
+      const leaf = page.getByRole("treeitem", {name: "Document 1.pdf"})
+      const checkbox = page.getByTestId("doc1-checkbox")
+      await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+      await expect.element(leaf).not.toHaveAttribute("aria-selected")
+      await expect.element(leaf).not.toHaveAttribute("aria-current")
+      await expect.element(checkbox).toHaveAttribute("aria-hidden", "true")
+      await expect.element(checkbox).not.toHaveAttribute("role")
+      await expect.element(checkbox).not.toHaveAttribute("aria-checked")
+      await expect.element(checkbox).not.toHaveAttribute("aria-labelledby")
+
+      await leaf.click()
+      await expect.element(leaf).toHaveAttribute("aria-checked", "true")
+      await expect.element(leaf).not.toHaveAttribute("aria-selected")
+      await expect.element(leaf).not.toHaveAttribute("aria-current")
+      await expect.element(checkbox).toHaveAttribute("aria-hidden", "true")
+      await expect.element(checkbox).not.toHaveAttribute("role")
+      await expect.element(checkbox).not.toHaveAttribute("aria-checked")
+      await expect.element(checkbox).not.toHaveAttribute("aria-labelledby")
+    })
+
+    test("clicking the decorative checkbox toggles its leaf exactly once", async () => {
+      const onCheckedValueChange = vi.fn()
+      const onSelectedValueChange = vi.fn()
+
+      await renderCheckableTestTree({
+        defaultExpandedValue: ["documents"],
+        onCheckedValueChange,
+        onSelectedValueChange,
+      })
+
+      const leaf = page.getByRole("treeitem", {name: "Document 1.pdf"})
+      const checkbox = page.getByTestId("doc1-checkbox")
+      await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+
+      await checkbox.click()
+      await expect.element(leaf).toHaveAttribute("aria-checked", "true")
+      await expect.element(leaf).toHaveFocus()
+      expect(onCheckedValueChange).toHaveBeenCalledTimes(1)
+      expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({checkedValue: ["doc1"]}),
+      )
+      expect(onSelectedValueChange).not.toHaveBeenCalled()
+
+      await checkbox.click()
+      await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+      expect(onCheckedValueChange).toHaveBeenCalledTimes(2)
+      expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({checkedValue: []}),
+      )
+      expect(onSelectedValueChange).not.toHaveBeenCalled()
+    })
+
+    test("removing a leaf checkbox restores selection on click", async () => {
+      const collection = createTestCollection()
+      const onCheckedValueChange = vi.fn()
+      const onSelectedValueChange = vi.fn()
+
+      function ConditionalCheckboxTree() {
+        const [showCheckbox, setShowCheckbox] = useState(true)
+
+        return (
+          <>
+            <button onClick={() => setShowCheckbox(false)} type="button">
+              Remove README checkbox
+            </button>
+            <Tree.Root
+              collection={collection}
+              onCheckedValueChange={onCheckedValueChange}
+              onSelectedValueChange={onSelectedValueChange}
+            >
+              <Tree.NodeProvider indexPath={[3]} node={testTreeData[3]}>
+                <Tree.LeafNode>
+                  {showCheckbox ? <Tree.NodeCheckbox /> : null}
+                  <Tree.NodeText>README.md</Tree.NodeText>
+                </Tree.LeafNode>
+              </Tree.NodeProvider>
+            </Tree.Root>
+          </>
+        )
+      }
+
+      await render(<ConditionalCheckboxTree />)
+
+      const leaf = page.getByRole("treeitem", {name: "README.md"})
+      await expect.element(leaf).toHaveAttribute("aria-checked", "false")
+      await leaf.click()
+      await expect.element(leaf).toHaveAttribute("aria-checked", "true")
+      expect(onCheckedValueChange).toHaveBeenCalledTimes(1)
+      expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({checkedValue: ["readme"]}),
+      )
+      expect(onSelectedValueChange).not.toHaveBeenCalled()
+
+      await page.getByRole("button", {name: "Remove README checkbox"}).click()
+      await expect.element(leaf).not.toHaveAttribute("aria-checked")
+      await expect.element(leaf).toHaveAttribute("aria-selected", "false")
+
+      await leaf.click()
+      await expect.element(leaf).toHaveAttribute("aria-selected", "true")
+      await expect.element(leaf).toHaveAttribute("aria-current", "true")
+      expect(onSelectedValueChange).toHaveBeenCalledTimes(1)
+      expect(onSelectedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({selectedValue: ["readme"]}),
+      )
+      expect(onCheckedValueChange).toHaveBeenCalledTimes(1)
+    })
+
+    test("branch clicks still select and expand without changing checked state", async () => {
+      const onCheckedValueChange = vi.fn()
+      const onSelectedValueChange = vi.fn()
+
+      await renderCheckableTestTree({
+        onCheckedValueChange,
+        onSelectedValueChange,
+      })
+
+      const checkbox = page.getByRole("checkbox", {name: "Documents"})
+      await expect.element(checkbox).toHaveAttribute("aria-checked", "false")
+      await expect.element(checkbox).toHaveAttribute("aria-labelledby")
+      await expect.element(checkbox).not.toHaveAttribute("aria-hidden")
+      await expect.element(page.getByText("Document 1.pdf")).not.toBeVisible()
+
+      await page.getByText("Documents", {exact: true}).click()
+      await expect.element(page.getByText("Document 1.pdf")).toBeVisible()
+      expect(onSelectedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({selectedValue: ["documents"]}),
+      )
+      expect(onCheckedValueChange).not.toHaveBeenCalled()
+      await expect.element(checkbox).toHaveAttribute("aria-checked", "false")
+    })
   })
 
   test("disabled nodes", async () => {
@@ -842,16 +1085,148 @@ describe("Tree", () => {
     })
 
     const documentsCheckbox = page.getByLabelText("Documents")
-    const doc1Checkbox = page.getByLabelText("Document 1.pdf")
-    const doc2Checkbox = page.getByLabelText("Document 2.pdf")
-    const report1Checkbox = page.getByLabelText("Report 1.docx")
+    const doc1 = page.getByRole("treeitem", {name: "Document 1.pdf"})
+    const doc2 = page.getByRole("treeitem", {name: "Document 2.pdf"})
+    const report1 = page.getByRole("treeitem", {name: "Report 1.docx"})
 
     await documentsCheckbox.click()
 
     await expect.element(documentsCheckbox).toBeChecked()
-    await expect.element(doc1Checkbox).toBeChecked()
-    await expect.element(doc2Checkbox).toBeChecked()
-    await expect.element(report1Checkbox).toBeChecked()
+    await expect.element(doc1).toHaveAttribute("aria-checked", "true")
+    await expect.element(doc2).toHaveAttribute("aria-checked", "true")
+
+    await page.getByText("Reports", {exact: true}).click()
+    await expect.element(report1).toHaveAttribute("aria-checked", "true")
+  })
+
+  describe("disabled descendants", () => {
+    function createLockableCollection() {
+      return createTreeCollection<TestNode>({
+        nodeDisabled: "locked",
+        nodeText: "text",
+        nodeValue: "id",
+        rootNode: {
+          id: "ROOT",
+          nodes: [
+            {
+              id: "project",
+              nodes: [
+                {id: "notes", text: "Notes.md"},
+                {id: "license", locked: true, text: "LICENSE"},
+                {
+                  id: "vendor",
+                  locked: true,
+                  nodes: [{id: "lib", text: "lib.js"}],
+                  text: "Vendor",
+                },
+              ],
+              text: "Project",
+            },
+            {
+              id: "archive",
+              nodes: [{id: "backup", locked: true, text: "Backup.zip"}],
+              text: "Archive",
+            },
+          ],
+          text: "",
+        },
+      })
+    }
+
+    test("reads disabled state through the collection's nodeDisabled accessor", async () => {
+      const onCheckedValueChange = vi.fn()
+      await renderCheckableTestTree(
+        {defaultExpandedValue: ["project"], onCheckedValueChange},
+        createLockableCollection(),
+      )
+
+      const license = page.getByRole("treeitem", {name: "LICENSE"})
+      await expect.element(license).toHaveAttribute("aria-disabled", "true")
+
+      await license.click({force: true})
+      await expect.element(license).toHaveAttribute("aria-checked", "false")
+      expect(onCheckedValueChange).not.toHaveBeenCalled()
+    })
+
+    test("branch toggle skips disabled descendants and reaches a fully checked state", async () => {
+      const onCheckedValueChange = vi.fn()
+      await renderCheckableTestTree(
+        {defaultExpandedValue: ["project", "vendor"], onCheckedValueChange},
+        createLockableCollection(),
+      )
+
+      const project = page.getByRole("checkbox", {name: "Project"})
+      const notes = page.getByRole("treeitem", {name: "Notes.md"})
+      const license = page.getByRole("treeitem", {name: "LICENSE"})
+      const lib = page.getByRole("treeitem", {name: "lib.js"})
+
+      await project.click()
+      await expect.element(project).toHaveAttribute("aria-checked", "true")
+      await expect.element(notes).toHaveAttribute("aria-checked", "true")
+      await expect.element(license).toHaveAttribute("aria-checked", "false")
+      await expect.element(lib).toHaveAttribute("aria-checked", "false")
+      expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({checkedValue: ["notes"]}),
+      )
+
+      await project.click()
+      await expect.element(project).toHaveAttribute("aria-checked", "false")
+      await expect.element(notes).toHaveAttribute("aria-checked", "false")
+      expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({checkedValue: []}),
+      )
+    })
+
+    test("branch toggle keeps checked disabled descendants checked", async () => {
+      const onCheckedValueChange = vi.fn()
+      await renderCheckableTestTree(
+        {
+          defaultCheckedValue: ["license"],
+          defaultExpandedValue: ["project"],
+          onCheckedValueChange,
+        },
+        createLockableCollection(),
+      )
+
+      const project = page.getByRole("checkbox", {name: "Project"})
+      const notes = page.getByRole("treeitem", {name: "Notes.md"})
+      const license = page.getByRole("treeitem", {name: "LICENSE"})
+      await expect.element(project).toHaveAttribute("aria-checked", "mixed")
+
+      await project.click()
+      await expect.element(project).toHaveAttribute("aria-checked", "true")
+      await expect.element(notes).toHaveAttribute("aria-checked", "true")
+      await expect.element(license).toHaveAttribute("aria-checked", "true")
+
+      await project.click()
+      await expect.element(project).toHaveAttribute("aria-checked", "mixed")
+      await expect.element(notes).toHaveAttribute("aria-checked", "false")
+      await expect.element(license).toHaveAttribute("aria-checked", "true")
+      expect(onCheckedValueChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({checkedValue: ["license"]}),
+      )
+    })
+
+    test("branch with only disabled descendants reflects their state and ignores toggles", async () => {
+      const onCheckedValueChange = vi.fn()
+      await renderCheckableTestTree(
+        {
+          defaultCheckedValue: ["backup"],
+          defaultExpandedValue: ["archive"],
+          onCheckedValueChange,
+        },
+        createLockableCollection(),
+      )
+
+      const archive = page.getByRole("checkbox", {name: "Archive"})
+      const backup = page.getByRole("treeitem", {name: "Backup.zip"})
+      await expect.element(archive).toHaveAttribute("aria-checked", "true")
+
+      await archive.click()
+      await expect.element(archive).toHaveAttribute("aria-checked", "true")
+      await expect.element(backup).toHaveAttribute("aria-checked", "true")
+      expect(onCheckedValueChange).not.toHaveBeenCalled()
+    })
   })
 
   test("context api methods update machine expansion, selection, focus, and checked state", async () => {

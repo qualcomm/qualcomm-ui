@@ -1,5 +1,17 @@
 # @qualcomm-ui/mdx-common Changelog
 
+## 2.8.0
+
+Nov 23rd, 2026
+
+### Features
+
+* [type-docs]: add referenced type declarations to site data ([54f3cb7](https://github.com/qualcomm/qualcomm-ui/commit/54f3cb7))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.2.0]
+
 ## 2.7.2
 
 Nov 19th, 2026

@@ -101,7 +101,9 @@ export interface ItemApiProps {
  */
 @Directive({selector: "[testItem]"})
 export class ItemDirective implements Pick<ItemApiProps, "dir" | "disabled"> {
+  // @ts-expect-error
   readonly dir = input<ItemDirection | undefined>()
 
+  // @ts-expect-error
   readonly disabled = input<boolean | undefined>()
 }

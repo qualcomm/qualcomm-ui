@@ -45,7 +45,16 @@ describe("PropFormatter.propsToMarkdownList", () => {
       props: {
         WidgetProps: {
           name: "WidgetProps",
-          props: [{name: "size", type: "string"}],
+          props: [
+            {
+              name: "size",
+              resolvedType: {
+                baseType: "intrinsic",
+                prettyType: "string",
+                type: "string",
+              },
+            },
+          ],
         },
       },
     })

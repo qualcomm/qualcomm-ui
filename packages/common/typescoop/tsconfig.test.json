@@ -4,7 +4,9 @@
     "jsx": "preserve",
     "strictPropertyInitialization": false,
     "composite": true,
-    "rootDir": "./tests"
+    "rootDir": "./tests",
+    "outDir": "node_modules/.cache/tsc/out-test",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-test"
   },
   "include": [
     "./tests"

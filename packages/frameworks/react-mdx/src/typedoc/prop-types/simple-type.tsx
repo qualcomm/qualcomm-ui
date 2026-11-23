@@ -3,7 +3,10 @@
 
 import type {ReactElement} from "react"
 
-import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
+import {
+  CodeHighlight,
+  type HighlightedReference,
+} from "@qualcomm-ui/react-mdx/code-highlight"
 import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
 
 interface Props {
@@ -11,9 +14,14 @@ interface Props {
    * string content
    */
   content?: string | null
+
+  /**
+   * Refs in the content that open a hover card, by name.
+   */
+  references?: Record<string, HighlightedReference>
 }
 
-export function SimpleType({content}: Props): ReactElement {
+export function SimpleType({content, references}: Props): ReactElement {
   if (content === "''") {
     return <></>
   }
@@ -22,6 +30,7 @@ export function SimpleType({content}: Props): ReactElement {
       className="qui-docs-code fit"
       code={content ? `${dummyTypePrefix}${content}` : ""}
       disableCopy
+      highlightedReferences={references}
       language="tsx"
     />
   )

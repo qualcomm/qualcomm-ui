@@ -26,10 +26,13 @@ import {
   PropDescriptionSummary,
 } from "../prop-description/index.js"
 import {usePropsLayoutContext} from "../use-props-layout-context.js"
+import {useTypeDocContext} from "../use-typedoc-context.js"
 
 import {FunctionParamsList} from "./function-params-list.js"
 import {FunctionParamsTable} from "./function-params-table.js"
 import {FunctionReturns} from "./function-returns.js"
+import {displayedType} from "./prop-types.utils.js"
+import {useHighlightedReferences} from "./use-highlighted-references.js"
 
 export interface TypeDocFunctionContentProps extends Omit<
   ComponentPropsWithRef<"div">,
@@ -46,6 +49,9 @@ export function TypeDocFunctionContent({
 }: TypeDocFunctionContentProps): ReactNode {
   const parameters = resolvedType.functionParameters ?? []
   const {propsLayout} = usePropsLayoutContext()
+  const {collapseRefs} = useTypeDocContext()
+  const references = useHighlightedReferences()
+  const {prettyType} = displayedType(resolvedType, collapseRefs)
 
   const {descriptionComment, exampleTags, returnsTag} = useMemo(() => {
     const blockTags = comment?.blockTags ?? []
@@ -118,15 +124,16 @@ export function TypeDocFunctionContent({
         )
       ) : null}
 
-      {resolvedType.prettyType ? (
+      {prettyType ? (
         <div className="doc-function__signature">
           <SpoilerRoot>
             <SpoilerSummary>Signature</SpoilerSummary>
             <SpoilerContent>
               <CodeHighlight
                 className="doc-function__signature"
-                code={resolvedType.prettyType}
+                code={prettyType}
                 disableCopy
+                highlightedReferences={references}
                 language="tsx"
               />
             </SpoilerContent>

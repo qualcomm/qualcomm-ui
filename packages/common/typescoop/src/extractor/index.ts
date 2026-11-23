@@ -3,14 +3,15 @@
 
 import type ts from "typescript"
 
-import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
+import type {QuiPropTypes, SerializedRef} from "@qualcomm-ui/typedoc-common"
 
 import {InvalidConfigError} from "../errors.js"
-import type {BuildOptions, InlineObjectOptions} from "../types.js"
+import type {BuildOptions, InlineRefOptions} from "../types.js"
 
 import {collectEntities, type Entity} from "./collect.js"
 import {PackageResolver} from "./package-info.js"
 import {createExtractorProgram} from "./program.js"
+import {serializeRefs} from "./refs.js"
 import {Serializer} from "./serializer.js"
 import {TypePrinter} from "./type-printer.js"
 
@@ -19,6 +20,12 @@ export interface ParseResult {
    * Every exported entity, including entities outside the documentation scope.
    */
   knownInterfaces: Record<string, QuiPropTypes>
+
+  /**
+   * The declarations of the named types that the entities reference by name,
+   * by name.
+   */
+  refs: Record<string, SerializedRef>
 
   /**
    * The entities written to the output file.
@@ -97,7 +104,7 @@ export async function extract(
   const documentedNames = new Set(entities.map((entity) => entity.name))
   const printer = new TypePrinter({
     checker,
-    inlineObjects: validateInlineObjects(options.inlineObjects),
+    inlineRefs: validateInlineRefs(options.inlineRefs),
     // the checker caches unions by their members, so a union can carry the
     // alias of a duplicate declaration, such as the built `.d.ts` of a
     // documented package. Names match those duplicates.
@@ -127,18 +134,20 @@ export async function extract(
     }
   }
 
-  return {program, result: {knownInterfaces, types}}
+  const refs = await serializeRefs(printer, program)
+
+  return {program, result: {knownInterfaces, refs, types}}
 }
 
-function validateInlineObjects(
-  inlineObjects: InlineObjectOptions | undefined,
-): InlineObjectOptions | undefined {
-  for (const [key, value] of Object.entries(inlineObjects ?? {})) {
+function validateInlineRefs(
+  inlineRefs: InlineRefOptions | undefined,
+): InlineRefOptions | undefined {
+  for (const [key, value] of Object.entries(inlineRefs ?? {})) {
     if (value !== undefined && !(Number.isInteger(value) && value >= 0)) {
       throw new InvalidConfigError(
-        `Invalid config: inlineObjects.${key} must be a non-negative integer.`,
+        `Invalid config: inlineRefs.${key} must be a non-negative integer.`,
       )
     }
   }
-  return inlineObjects
+  return inlineRefs
 }

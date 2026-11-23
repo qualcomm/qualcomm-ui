@@ -42,7 +42,7 @@ export default {
     const packageName = params.packageName
     return pkgImportResolvers[packageName]?.(params)
   },
-  prettyJson: false,
+  prettyJson: true,
   referenceLinks: {
     BindingRenderProp: "/render-props#binding-render-prop",
     RenderProp: "/render-props#render-prop",

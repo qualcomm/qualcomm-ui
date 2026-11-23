@@ -7,7 +7,7 @@ import type {
   QuiComment,
   QuiPropDeclaration,
   QuiPropTypes,
-  InlineObjectDecision,
+  InlineRefDecision,
   SerializedParameters,
   SerializedType,
 } from "@qualcomm-ui/typedoc-common"
@@ -52,6 +52,7 @@ import {
 import {kindOf, kindOfType, kindOfTypeNode} from "./type-kind.js"
 import {
   isSignalName,
+  type PrintOptions,
   removeUndefined,
   type TypePrinter,
 } from "./type-printer.js"
@@ -98,9 +99,9 @@ const signalWrapper =
   /^(?:InputSignal|ModelSignal|OutputEmitterRef)<([\s\S]*)>$/
 
 function shiftDecisions(
-  decisions: InlineObjectDecision[],
+  decisions: InlineRefDecision[],
   offset: number,
-): InlineObjectDecision[] {
+): InlineRefDecision[] {
   return decisions.map((decision) => ({
     ...decision,
     end: decision.end + offset,
@@ -109,19 +110,19 @@ function shiftDecisions(
 }
 
 /**
- * Formats a printed type for display and moves the offsets of its inline
- * object decisions from the printed type to the formatted type.
+ * Formats a printed type for display and moves the offsets of its inline ref
+ * decisions from the printed type to the formatted type.
  */
 async function prettyTypeWithDecisions(
   type: string,
-  decisions: InlineObjectDecision[],
+  decisions: InlineRefDecision[],
 ): Promise<{
-  inlineObjects: InlineObjectDecision[] | undefined
+  inlineRefs: InlineRefDecision[] | undefined
   prettyType: string
 }> {
   const result = await prettyTypeWithSpans(type, decisions)
   return {
-    inlineObjects: nonEmpty(
+    inlineRefs: nonEmpty(
       decisions.flatMap((decision, index) => {
         const span = result.spans[index]
         return span ? [{...decision, ...span}] : []
@@ -131,11 +132,42 @@ async function prettyTypeWithDecisions(
   }
 }
 
+/**
+ * The forms of a type with every inline ref kept by name, for types that
+ * inlined at least one ref. `print` prints the type like the displayed one, and
+ * `display` derives the formatted form from it like {@link prettyType}.
+ */
+async function collapsedTypesOf(
+  decisions: InlineRefDecision[],
+  print: () => string,
+  display: (printed: string) => string = (printed) => printed,
+): Promise<{collapsedPrettyType?: string; collapsedType?: string}> {
+  if (!decisions.some((decision) => decision.inlined)) {
+    return {}
+  }
+  const printed = print()
+  return {
+    collapsedPrettyType: await prettyType(display(printed)),
+    collapsedType: withoutNamedParameters(printed),
+  }
+}
+
 const polymorphicAsType = "ElementType | ComponentType"
 
 function printsName(printed: string, name: string): boolean {
   const escaped = name.replace(/[$.]/g, "\\$&")
   return new RegExp(`^(\\w+\\.)*${escaped}\\b`).test(printed)
+}
+
+/**
+ * Whether a printed type refers to `name` outside of string literals and
+ * qualified names.
+ */
+function mentionsName(printed: string, name: string): boolean {
+  const escaped = name.replace(/\$/g, "\\$&")
+  return new RegExp(`(?<![\\w$.])${escaped}(?![\\w$])`).test(
+    printed.replace(/'(?:[^'\\]|\\.)*'/g, "''"),
+  )
 }
 
 function omitUndefined<T extends object>(value: T): T {
@@ -600,6 +632,7 @@ export class Serializer {
       decorators: nonEmpty(decorators),
       name: entity.name,
       props,
+      typeParameters: nonEmpty(typeParameters),
     })
   }
 
@@ -686,8 +719,12 @@ export class Serializer {
       return {
         comment: this.comment(comment),
         name,
-        resolvedType: {name, prettyType: printed, type: printed},
-        type: "literal",
+        resolvedType: {
+          baseType: "literal",
+          name,
+          prettyType: printed,
+          type: printed,
+        },
       }
     }
 
@@ -708,16 +745,6 @@ export class Serializer {
         typeNode,
         typeParameters,
       }),
-      type:
-        symbol.flags & ts.SymbolFlags.Accessor
-          ? undefined
-          : kindOf(
-              symbol.flags & ts.SymbolFlags.Optional
-                ? withoutUndefinedNode(typeNode)
-                : typeNode,
-              type,
-              checker,
-            ),
     })
   }
 
@@ -742,8 +769,15 @@ export class Serializer {
         ? kindOfType(optional ? withoutUndefined(type) : type, checker)
         : kindOf(kindNode, type, checker)
 
+    const printOptions: PrintOptions = {
+      keepNames: inheritDoc,
+      node: typeNode,
+      signalArgument: params.signalArgument,
+      skipOwnAlias,
+      stripUndefined: optional,
+    }
     let printed: string
-    const inlineObjects: InlineObjectDecision[] = []
+    const inlineRefs: InlineRefDecision[] = []
     if (custom) {
       printed = custom
     } else if (inheritDoc && typeNode) {
@@ -751,25 +785,8 @@ export class Serializer {
     } else if (name === "as" && type.flags & ts.TypeFlags.TypeParameter) {
       printed = polymorphicAsType
     } else {
-      printed = printer.print(type, {
-        inlineObjects,
-        keepNames: inheritDoc,
-        node: typeNode,
-        signalArgument: params.signalArgument,
-        skipOwnAlias,
-        stripUndefined: optional,
-      })
+      printed = printer.print(type, {...printOptions, inlineRefs})
     }
-    const expanded =
-      custom || inheritDoc || printed === polymorphicAsType
-        ? undefined
-        : printer.print(type, {
-            expandAliases: true,
-            node: typeNode,
-            signalArgument: params.signalArgument,
-            skipOwnAlias,
-            stripUndefined: optional,
-          })
 
     // a reference that prints as its body, such as `Extract<...>` or an alias
     // of an alias, renders as the body.
@@ -808,10 +825,17 @@ export class Serializer {
     const signal = signalWrapper.exec(printed)
     const pretty = await prettyTypeWithDecisions(
       signal?.[1] ?? printed,
-      shiftDecisions(inlineObjects, signal ? -(printed.indexOf("<") + 1) : 0),
+      shiftDecisions(inlineRefs, signal ? -(printed.indexOf("<") + 1) : 0),
+    )
+    const collapsed = await collapsedTypesOf(
+      inlineRefs,
+      () => printer.print(type, {...printOptions, collapseRefs: true}),
+      (collapsedPrint) =>
+        signalWrapper.exec(collapsedPrint)?.[1] ?? collapsedPrint,
     )
 
     return omitUndefined({
+      ...collapsed,
       baseType,
       deprecated: findTag(comment, "@deprecated") ? true : undefined,
       docLink:
@@ -820,10 +844,6 @@ export class Serializer {
         (inheritDoc
           ? this.docLinkOf(firstArgumentReference?.symbol)
           : undefined),
-      expandedType:
-        expanded !== undefined && expanded !== printed
-          ? withoutNamedParameters(expanded)
-          : undefined,
       functionArgs:
         callSignature && !custom
           ? await this.serializeFunctionArgs(callSignature, comment)
@@ -832,7 +852,7 @@ export class Serializer {
         ? await this.resolveImport(reference)
         : undefined,
       inheritDoc: inheritDoc || undefined,
-      inlineObjects: pretty.inlineObjects,
+      inlineRefs: pretty.inlineRefs,
       isCustomOverride: custom ? true : undefined,
       // the docs UI looks up expanded references on the page by type name.
       name:
@@ -844,10 +864,18 @@ export class Serializer {
         this.printer.shouldExpand(reference.symbol)
           ? reference.name
           : name,
+      // an alias declares its type parameters, while a member only lists the
+      // owner's type parameters that its type mentions.
       parameters:
         baseType === "intrinsic" || baseType === "literal"
           ? undefined
-          : nonEmpty(params.typeParameters),
+          : nonEmpty(
+              skipOwnAlias
+                ? params.typeParameters
+                : params.typeParameters?.filter((parameter) =>
+                    mentionsName(printed, parameter.name),
+                  ),
+            ),
       prettyType: pretty.prettyType,
       reference:
         reference?.typeArguments.length === 1 &&
@@ -1271,18 +1299,21 @@ export class Serializer {
     node: ts.TypeParameterDeclaration,
     comment: ParsedComment,
   ): SerializedParameters {
-    const {checker, printer} = this
-    const defaultValue = node.default
-      ? withoutNamedParameters(
-          printer.print(checker.getTypeFromTypeNode(node.default)),
-        )
-      : undefined
-    const constraint = node.constraint
-      ? withoutNamedParameters(
-          printer.print(checker.getTypeFromTypeNode(node.constraint)),
-        )
-      : undefined
+    // aliases keep their names, so `C extends ElementType` does not print as
+    // the union of every element name.
+    const print = (typeNode: ts.TypeNode | undefined) =>
+      typeNode
+        ? withoutNamedParameters(
+            this.printer.print(this.checker.getTypeFromTypeNode(typeNode), {
+              keepNames: true,
+              node: typeNode,
+            }),
+          )
+        : undefined
+    const defaultValue = print(node.default)
+    const constraint = print(node.constraint)
     return omitUndefined({
+      constraint,
       defaultValue,
       name: node.name.text,
       required: node.default ? undefined : true,
@@ -1312,12 +1343,14 @@ export class Serializer {
     const baseType = kindOf(typeNode, type, checker)
     const reference =
       baseType === "reference" ? this.referenceOf(typeNode, type) : undefined
-    const inlineObjects: InlineObjectDecision[] = []
+    const inlineRefs: InlineRefDecision[] = []
     return {
       baseType,
-      inlineObjects,
+      inlineRefs,
       optional,
-      printed: printer.print(type, {inlineObjects, stripUndefined: optional}),
+      printCollapsed: () =>
+        printer.print(type, {collapseRefs: true, stripUndefined: optional}),
+      printed: printer.print(type, {inlineRefs, stripUndefined: optional}),
       reference,
       rest,
       type,
@@ -1399,42 +1432,50 @@ export class Serializer {
     const custom = findTag(comment, "@custom")?.text
     const inheritDoc = !!findTag(comment, "@inheritDoc")
 
-    const parameters = signature.getParameters().map((parameter) => ({
-      info: this.parameterInfo(parameter),
-      parameter,
-    }))
+    const parameters = signature.getParameters().map((parameter, index) => {
+      const info = this.parameterInfo(parameter)
+      return {
+        info,
+        parameter,
+        prefix: `${index ? ", " : ""}${info.rest ? "..." : ""}${this.parameterName(parameter)}${info.optional ? "?" : ""}: `,
+      }
+    })
     const functionParameters = await Promise.all(
       parameters.map(({info, parameter}) =>
         this.serializeParameterAsProp(parameter, comment, info),
       ),
     )
-    const returnDecisions: InlineObjectDecision[] = []
+    const returnDecisions: InlineRefDecision[] = []
     const returnType =
       custom ??
-      this.printer.printReturnType(signature, {inlineObjects: returnDecisions})
+      this.printer.printReturnType(signature, {inlineRefs: returnDecisions})
 
     let signatureText = "("
-    const decisions: InlineObjectDecision[] = []
-    for (const [index, {info, parameter}] of parameters.entries()) {
-      const name = this.parameterName(parameter)
-      signatureText += `${index ? ", " : ""}${info.rest ? "..." : ""}${name}${info.optional ? "?" : ""}: `
-      decisions.push(
-        ...shiftDecisions(info.inlineObjects, signatureText.length),
-      )
+    const decisions: InlineRefDecision[] = []
+    for (const {info, prefix} of parameters) {
+      signatureText += prefix
+      decisions.push(...shiftDecisions(info.inlineRefs, signatureText.length))
       signatureText += info.printed
     }
     signatureText += ") => "
     decisions.push(...shiftDecisions(returnDecisions, signatureText.length))
     signatureText += returnType
     const pretty = await prettyTypeWithDecisions(signatureText, decisions)
+    // signatures have no one-line form, since their `type` is "signature".
+    const {collapsedPrettyType} = await collapsedTypesOf(
+      decisions,
+      () =>
+        `(${parameters.map(({info, prefix}) => `${prefix}${info.printCollapsed()}`).join("")}) => ${custom ?? this.printer.printReturnType(signature, {collapseRefs: true})}`,
+    )
 
     return omitUndefined({
       baseType: "reflection",
+      collapsedPrettyType,
       deprecated: findTag(comment, "@deprecated") ? true : undefined,
       docLink: findTag(comment, "@docLink")?.text || undefined,
       functionParameters: nonEmpty(functionParameters),
       inheritDoc: inheritDoc || undefined,
-      inlineObjects: pretty.inlineObjects,
+      inlineRefs: pretty.inlineRefs,
       isCustomOverride: custom ? true : undefined,
       name,
       prettyType: pretty.prettyType,
@@ -1451,9 +1492,10 @@ export class Serializer {
     const name = this.parameterName(parameter)
     const members = this.referencedMembers(info.reference)
     const summary = getParamComment(ownerComment, "@param", name)
-    const pretty = await prettyTypeWithDecisions(
-      info.printed,
-      info.inlineObjects,
+    const pretty = await prettyTypeWithDecisions(info.printed, info.inlineRefs)
+    const collapsed = await collapsedTypesOf(
+      info.inlineRefs,
+      info.printCollapsed,
     )
 
     return omitUndefined({
@@ -1467,8 +1509,9 @@ export class Serializer {
       comment: summary ? {summary} : undefined,
       name,
       resolvedType: omitUndefined({
+        ...collapsed,
         baseType: info.baseType,
-        inlineObjects: pretty.inlineObjects,
+        inlineRefs: pretty.inlineRefs,
         name,
         prettyType: pretty.prettyType,
         referencedType: info.reference?.name,
@@ -1476,7 +1519,6 @@ export class Serializer {
         type: withoutNamedParameters(info.printed),
       }),
       rest: info.rest || undefined,
-      type: info.baseType,
     })
   }
 }

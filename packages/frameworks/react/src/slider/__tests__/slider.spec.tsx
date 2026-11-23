@@ -1055,6 +1055,56 @@ const tests: MultiComponentTestCase[] = [
     },
   },
   {
+    composite: () => (
+      <Slider.Root defaultValue={[5, 5]} max={5} min={5}>
+        <Slider.Control>
+          <Slider.Track>
+            <Slider.Range />
+          </Slider.Track>
+          <Slider.Thumb index={0}>
+            <Slider.HiddenInput />
+          </Slider.Thumb>
+          <Slider.Thumb index={1}>
+            <Slider.HiddenInput />
+          </Slider.Thumb>
+        </Slider.Control>
+        <Slider.Markers
+          markerGroupProps={{"data-test-id": testIds.sliderMarkerGroup}}
+          marks={[5, 5]}
+        />
+      </Slider.Root>
+    ),
+    simple: () => (
+      <SimpleSlider defaultValue={[5, 5]} markers={[5, 5]} max={5} min={5} />
+    ),
+    testCase(component) {
+      test(`renders a repeated marker value once and keeps responding — ${component.name}`, async () => {
+        function Harness() {
+          const [count, setCount] = useState(0)
+          return (
+            <>
+              <button onClick={() => setCount(count + 1)} type="button">
+                Clicked {count}
+              </button>
+              {component()}
+            </>
+          )
+        }
+        await render(<Harness />)
+
+        const markerGroup = page.getByTestId(testIds.sliderMarkerGroup)
+        await expect.element(markerGroup).toHaveTextContent("5")
+        await expect.element(markerGroup).not.toHaveTextContent("55")
+
+        await page.getByRole("button", {name: "Clicked 0"}).click()
+
+        await expect
+          .element(page.getByRole("button", {name: "Clicked 1"}))
+          .toBeVisible()
+      })
+    },
+  },
+  {
     composite: () => <CompositeSlider defaultValue={[50]} sideMarkers />,
     simple: () => <SimpleSlider defaultValue={[50]} sideMarkers />,
     testCase(component) {

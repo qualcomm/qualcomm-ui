@@ -38,19 +38,29 @@ describe("Special Types", async () => {
     )
   })
 
-  test("inline object limits are configurable", async () => {
+  test("class method signatures keep inlined refs by name when collapsed", () => {
+    const {collapsedPrettyType, collapsedType} =
+      result.types.CloudDocsSdk.props![1].resolvedType
+    expect({collapsedPrettyType, collapsedType}).toEqual({
+      collapsedPrettyType:
+        "(\n  UploadFileOptions,\n  getFilesOptions: GetFilesOptions,\n) => boolean",
+      collapsedType: undefined,
+    })
+  })
+
+  test("inline ref limits are configurable", async () => {
     const limited = await build({
       ...config,
-      inlineObjects: {maxLength: 60, maxMembers: 4},
+      inlineRefs: {maxLength: 60, maxMembers: 4},
       outputFile: resolve(__dirname, "./temp/special-props-limited.json"),
     })
     const uploadFiles = limited?.types.CloudDocsSdk?.props?.[1]
     expect(uploadFiles?.resolvedType.prettyType).toEqual(
       "(\n  UploadFileOptions,\n  getFilesOptions: {\n    environment:\n      | 'test'\n      | 'stage'\n      | 'prod'\n    service: string\n  },\n) => boolean",
     )
-    const {inlineObjects, prettyType} = uploadFiles!.resolvedType
+    const {inlineRefs, prettyType} = uploadFiles!.resolvedType
     expect(
-      inlineObjects?.map(({end, inlined, name, start}) => ({
+      inlineRefs?.map(({end, inlined, name, start}) => ({
         inlined,
         name,
         text: prettyType?.slice(start, end),
@@ -65,10 +75,10 @@ describe("Special Types", async () => {
     ])
   })
 
-  test("invalid inline object limits are rejected", async () => {
+  test("invalid inline ref limits are rejected", async () => {
     await expect(
-      build({...config, inlineObjects: {maxLength: -1}}),
-    ).rejects.toThrow("inlineObjects.maxLength must be a non-negative integer")
+      build({...config, inlineRefs: {maxLength: -1}}),
+    ).rejects.toThrow("inlineRefs.maxLength must be a non-negative integer")
   })
 
   test("special union", () => {
@@ -99,5 +109,11 @@ describe("Special Types", async () => {
     expect(
       result.types.EnumInterface.props?.[0].resolvedType.prettyType,
     ).toEqual("| 'conflicts'\n| 'file-missing'\n| 'incomplete'\n| 'valid'")
+  })
+
+  test("enum members are literals", () => {
+    const member = result.types.RegularEnum?.props?.[0]
+    expect(member).not.toHaveProperty("type")
+    expect(member?.resolvedType.baseType).toEqual("literal")
   })
 })

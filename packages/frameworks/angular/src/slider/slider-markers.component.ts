@@ -33,10 +33,18 @@ export class SliderMarkersComponent {
 
   private readonly sliderContext = useSliderContext()
 
+  /**
+   * Markers register and are tracked under their value, so repeated values,
+   * such as `[min, max]` when `min` equals `max`, render once.
+   */
   protected readonly markerValues = computed(() => {
     const marks = this.marks()
-    return Array.isArray(marks) && marks.length > 0
-      ? marks
-      : this.sliderContext().getDefaultMarks()
+    return Array.from(
+      new Set(
+        Array.isArray(marks) && marks.length > 0
+          ? marks
+          : this.sliderContext().getDefaultMarks(),
+      ),
+    )
   })
 }
