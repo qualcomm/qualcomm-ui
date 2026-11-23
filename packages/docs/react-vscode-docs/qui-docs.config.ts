@@ -19,6 +19,7 @@ export default {
       id: "setup",
       title: "Setup",
     },
+    {id: "migrate-vscode-plugin-to-css"},
     {separator: true},
     {
       children: [{id: "overview"}, {id: "colors"}, {id: "typography"}],

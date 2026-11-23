@@ -8,7 +8,7 @@ From the repository root, run `pnpm install`, `pnpm vscode-core build`, `pnpm re
 
 Run `pnpm react-vscode-docs build` for generated API data and the production site. Use `pnpm react-vscode-docs typecheck` and `pnpm react-vscode-docs lint-docs` to check authored content.
 
-The site uses the shared QUI Docs layout and QDS styles, including the header, responsive navigation, table of contents, page links, search, and persistent light/dark theme switching. The homepage follows the React and Angular landing-page layout, with Get Started and Browse Components linking to `/installation` and `/components/overview`. Getting Started is a section heading containing Installation and the nested Setup guides. Theming contains Overview, Colors, and Typography. Embedded demos use the shared source viewer and independent VS Code theme controls. Migration guides remain planned work.
+The site uses the shared QUI Docs layout and QDS styles, including the header, responsive navigation, table of contents, page links, search, and persistent light/dark theme switching. The homepage follows the React and Angular landing-page layout, with Get Started and Browse Components linking to `/installation` and `/components/overview`. Getting Started is a section heading containing Installation and the nested Setup guides. Theming contains Overview, Colors, and Typography. Embedded demos use the shared source viewer and independent VS Code theme controls.
 
 Component previews run inside the docs site on port 3400. There is no separate debug app or preview server. Verify real host behavior in a consuming extension.
 

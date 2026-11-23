@@ -4,6 +4,8 @@ description: Apply VS Code host colors to text, backgrounds, borders, and compon
 ---
 
 import {VscodeColorThemeSelector, VscodeColorPreview} from "../../components/vscode-color-preview"
+import {VscodeDemo} from "../../components/demo/vscode-demo"
+import {OpacityExampleDemo} from "./demos/opacity-example-demo"
 
 # {frontmatter.title}
 
@@ -45,5 +47,13 @@ Tailwind utilities require the optional VS Code adapter. Follow [Tailwind setup]
 | Widget border | <VscodeColorPreview variable="--vscode-widget-border" /> | `--vscode-widget-border` | `border-widget-border` |
 | Focus outline | <VscodeColorPreview variable="--vscode-focusBorder" /> | `--vscode-focusBorder` | `outline-focus-border` |
 | High-contrast border | <VscodeColorPreview variable="--vscode-contrastBorder" /> | `--vscode-contrastBorder` | `border-contrast-border` |
+
+## Opacity
+
+The host supplies unused-code opacity as a color. `bindVscodeOpacity` converts its alpha into a numeric value for `opacity-editor-unnecessary-code`. Without the binding, the utility defaults to `1` (fully opaque).
+
+<VscodeDemo component={OpacityExampleDemo} name="OpacityExampleDemo" />
+
+Change the example's **VS Code theme** to compare fading in light and dark themes. Both columns remain fully opaque in high-contrast themes. Use a standard utility such as `opacity-50` when opacity should stay fixed.
 
 Read Microsoft's [Theme Color Reference](https://code.visualstudio.com/api/references/theme-color) for the full list of host colors.

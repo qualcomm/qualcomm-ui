@@ -1,51 +1,9 @@
 # @qualcomm-ui/vscode-core
 
-Framework-independent VS Code presentation definitions, parallel to `qds-core`. Shared interaction behavior stays in `core`; React bindings stay in `react-core` and `react-vscode`.
+Framework-independent VS Code design tokens, typography, styles, and bindings.
 
-## Typography and host styles
+This package provides the shared styling foundation for the QUI VS Code component library. For comprehensive documentation and usage guides, visit the [React VS Code documentation](https://react-vscode.qui.qualcomm.com/).
 
-Import `@qualcomm-ui/vscode-core/styles/components.css` and add `qui-vscode` to the application container. The stylesheet includes host-backed tokens and base typography. It has no React, Tailwind, or QDS dependency.
+## License
 
-```css
-@import "@qualcomm-ui/vscode-core/styles/components.css";
-```
-
-```html
-<main class="qui-vscode">
-  <h1 style="font: var(--font-static-heading-xxl)">Build configuration</h1>
-  <p style="font: var(--font-static-body-md-default)">Choose an output directory.</p>
-</main>
-```
-
-`src/tokens/tokens.ts` owns the typography scale and host mappings. It exports metadata at `@qualcomm-ui/vscode-core/tokens`. Generated `src/styles/tokens.css` defines QDS-style `--font-static-*`, `--type-*`, `--color-*`, `--shadow-*`, and `--opacity-*` values within `qui-vscode`. Apply typography presets through the CSS `font` property or the optional Tailwind adapter. Host UI size scales legacy proportions, while code uses the host editor font settings. Status-text mappings and small legacy roles still require design and contrast review before release.
-
-`styles/tokens.css` exports only token declarations for integrations that supply their own styles. The optional Tailwind adapter lives at `@qualcomm-ui/tailwind-plugin/vscode.css`; it reads these tokens rather than owning another scale.
-
-## Build and update
-
-From the repository root:
-
-```shell
-pnpm vscode-core build
-pnpm tailwind-plugin generate-css:vscode
-pnpm tailwind-plugin build:css
-pnpm react-vscode build
-```
-
-After changing `src/tokens/tokens.ts`, run `pnpm vscode-core build`, then regenerate the Tailwind adapter. Generated token and adapter CSS files are checked in; edit their source definitions rather than editing generated files. Shared CSS changes can use `pnpm vscode-core watch:css`.
-
-## Package boundaries
-
-VS Code tokens, shared host styles, typography, and opacity bindings belong in this package. Component behavior belongs in `core` and the framework core packages. React rendering, component-specific CSS, and appearance types belong beside their implementations in `react-vscode`.
-
-Keep framework imports, QDS tokens, Node.js runtime APIs, and VS Code extension APIs outside this package. Browser bindings may use DOM APIs when called; importing them must remain safe outside the browser. Tailwind consumes this package for generation, so dependencies on React packages or test utilities would recreate the workspace build cycle.
-
-Saved preview theme metadata and CSS fixtures live in `react-vscode-docs/src/themes` and do not ship with the libraries.
-
-## Host utility metadata
-
-`hostColorTokens`, `hostShadowTokens`, and `hostOpacityTokens` are exported from `@qualcomm-ui/vscode-core/tokens`. The optional Tailwind adapter generates its palette from these mappings. Component wrappers can consume the same host variables without Tailwind.
-
-Shadow tokens combine host colors with `--shadow-geometry` (`0 2px 8px` by default). Host shadow values are colors, not complete shadows. Missing named shadow colors fall back to transparent.
-
-`bindVscodeOpacity` from `@qualcomm-ui/vscode-core/opacity` is an optional browser binding. Call it once for a container; it converts host color alpha to numeric `--opacity-editor-unnecessary-code` and `--opacity-minimap-foreground` values. It watches container and ancestor theme attributes. Its cleanup disconnects observation and restores previous inline values. Unused-code opacity remains 1 in high-contrast themes. Missing or invalid colors also resolve to 1; the conversion uses a browser canvas and needs a 2D context. Importing the module does not access browser globals.
+Licensed under the [BSD-3-Clause-Clear License](https://spdx.org/licenses/BSD-3-Clause-Clear.html).
