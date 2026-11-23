@@ -81,7 +81,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
         return getCheckedState(collection, node, checkedValue)
       },
       depth: indexPath.length,
-      disabled: Boolean(node.disabled),
+      disabled: collection.getNodeDisabled(node),
       expanded: expandedValue.includes(value),
       focused:
         focusedValue == null
@@ -97,6 +97,14 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
       value,
       valuePath: collection.getValuePath(indexPath),
     }
+  }
+
+  /**
+   * A leaf that renders a NodeCheckbox acts as the checkbox itself: activation
+   * toggles its checked state instead of selecting it.
+   */
+  function isCheckableLeaf(value: string, isBranch: boolean): boolean {
+    return !isBranch && !!domIds.nodeCheckbox(scope, value)
   }
 
   return {
@@ -302,18 +310,32 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
     },
     getLeafNodeBindings(props): TreeLeafNodeBindings {
       const nodeState = getNodeState(props)
+      const checkable = isCheckableLeaf(nodeState.value, false)
+      /**
+       * WAI-ARIA advises against combining aria-selected and aria-checked on
+       * tree items, so checkable leaves only expose their checked state.
+       */
       return normalize.element({
         ...parts.leafNode,
-        "aria-current": nodeState.selected ? "true" : undefined,
+        "aria-checked": checkable
+          ? booleanAriaAttr(nodeState.checked === true)
+          : undefined,
+        "aria-current": !checkable && nodeState.selected ? "true" : undefined,
         "aria-disabled": booleanAriaAttr(nodeState.disabled),
         "aria-level": nodeState.depth,
-        "aria-selected": nodeState.disabled ? undefined : nodeState.selected,
+        "aria-selected":
+          checkable || nodeState.disabled ? undefined : nodeState.selected,
         "data-depth": nodeState.depth,
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-focus": booleanDataAttr(nodeState.focused),
         "data-ownedby": domIds.root(scope),
         "data-path": props.indexPath.join("/"),
         "data-selected": booleanDataAttr(nodeState.selected),
+        "data-state": checkable
+          ? nodeState.checked === true
+            ? "checked"
+            : "unchecked"
+          : undefined,
         "data-value": nodeState.value,
         hidden: prop("shouldHideNode")?.(nodeState),
         id: nodeState.id,
@@ -325,6 +347,19 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
             return
           }
           if (isAnchorElement(event.currentTarget) && isModifierKey(event)) {
+            return
+          }
+
+          if (checkable) {
+            send({
+              isBranch: false,
+              type: "CHECKED.TOGGLE",
+              value: nodeState.value,
+            })
+            event.stopPropagation()
+            if (!isAnchorElement(event.currentTarget)) {
+              event.preventDefault()
+            }
             return
           }
 
@@ -368,16 +403,26 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
 
     getNodeCheckboxBindings(props): TreeNodeCheckboxBindings {
       const nodeState = getNodeState(props)
+      scope.ids
+        .collection("nodeCheckbox")
+        .register(nodeState.value, props.id, props.onDestroy)
       const checkedState = nodeState.checked
+      /**
+       * A checkable leaf exposes the checked state on its treeitem, so its
+       * checkbox is purely visual.
+       */
+      const decorative = !nodeState.isBranch
       return normalize.element({
         ...parts.nodeCheckbox,
-        "aria-checked":
-          checkedState === true
+        "aria-checked": decorative
+          ? undefined
+          : checkedState === true
             ? "true"
             : checkedState === false
               ? "false"
               : "mixed",
-        "aria-labelledby": nodeState.textId,
+        "aria-hidden": decorative ? true : undefined,
+        "aria-labelledby": decorative ? undefined : nodeState.textId,
         "data-disabled": booleanDataAttr(nodeState.disabled),
         "data-state":
           checkedState === true
@@ -385,6 +430,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
             : checkedState === false
               ? "unchecked"
               : "indeterminate",
+        id: props.id,
         onClick(event) {
           if (event.defaultPrevented) {
             return
@@ -406,7 +452,7 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
           const node = event.currentTarget.closest("[role=treeitem]")
           cast<HTMLButtonElement>(node)?.focus({preventScroll: true})
         },
-        role: "checkbox",
+        role: decorative ? undefined : "checkbox",
         tabIndex: -1,
       })
     },
@@ -562,11 +608,15 @@ export function createTreeApi<V extends TreeNode = TreeNode>(
                 return
               }
 
-              send({
-                id: nodeId,
-                src: "keyboard",
-                type: isBranchNode ? "BRANCH_NODE.CLICK" : "NODE.CLICK",
-              })
+              if (isCheckableLeaf(nodeId, isBranchNode)) {
+                send({isBranch: false, type: "CHECKED.TOGGLE", value: nodeId})
+              } else {
+                send({
+                  id: nodeId,
+                  src: "keyboard",
+                  type: isBranchNode ? "BRANCH_NODE.CLICK" : "NODE.CLICK",
+                })
+              }
 
               if (!isAnchorElement(target)) {
                 event.preventDefault()

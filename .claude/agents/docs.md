@@ -6,8 +6,6 @@ model: inherit
 color: yellow
 ---
 
-You write technical documentation. Before writing, read 3-5 existing documentation files from the relevant directory to understand current patterns and match them exactly.
-
 ## Voice
 
 State facts. No marketing, enthusiasm, or false friendliness.
@@ -86,30 +84,8 @@ There are several things to consider. First, you'll want to think about server q
 
 ## Code Examples
 
-Minimal explanation. Let code demonstrate behavior.
-
-Write:
-```
-Set `manualFiltering: true`:
-
-```jsx
-const table = useReactTable({
-  data,
-  manualFiltering: true,
-})
-```
-
-Never write:
-```
-As you can see in this example, we're setting the `manualFiltering` option to `true`, which tells the table to skip the client-side filtering logic:
-
-```jsx
-// Set manual filtering to true
-const table = useReactTable({
-  data,
-  manualFiltering: true, // This disables client-side filtering
-})
-```
+- Minimal explanation. Let code demonstrate behavior.
+- Before a demo, put the context it depends on in a short paragraph, then list what each key piece of the demo does. Don't walk the reader through wiring that the demo code already shows.
 
 ## Notes and Callouts
 
@@ -146,7 +122,7 @@ Write:
 Organize by function, not narrative:
 1. What it does (1-2 sentences if needed)
 2. When to use it
-3. How to implement it
+3. What the demo contains, followed by the demo or code
 4. Configuration options
 5. Advanced usage
 6. API reference

@@ -1,0 +1,31 @@
+---
+title: Filter Panel
+component: Table
+hideToc: true
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+In server-side filtering, the server filters and paginates the rows, and the table loads one page at a time. The options, option counts, and slider bounds come from the API. Our mock API stands in for the backend in the demo below.
+
+::: terms
+filter panel, sidebar, faceted search, facet counts, option counts, getTableFilterSetProps, FilterPanel, getFilterCollection, getFilterOptionCounts, getFilterRange, manualFiltering, manualPagination, ColumnFiltersState, onColumnFiltersChange, pageCount, date presets, TanStack Query, useQuery, server-side filtering, remote filtering, API filtering
+:::
+
+## Overview
+
+- In this demo, the filters render in a [Filter Panel](https://react.qui.qualcomm.com/components/filters/filter-panel) beside the table.
+- The `TableFilterBar` above the table shows the applied filters. The panel and the filter bar share one filter set.
+- The `getTableFilterSetProps(table)` utility connects the filters to the table's column filters, and resolves each filter's label from its column. With `manualFiltering`, the table only has one page of rows, so the options, counts, and bounds come from [getFilterCollection](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterCollection), [getFilterOptionCounts](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterOptionCounts), and [getFilterRange](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterRange).
+- The options and slider bounds cover every device, so they load once from their own endpoint.
+- The option counts come with each page of results. The server counts each field with every filter applied except the field's own.
+- The filter controls are documented in the [Filter Controls](https://react.qui.qualcomm.com/components/filters/filter-controls) docs.
+
+<Demo
+  expanded
+  name="FiltersServerSidePanelDemo"
+  component={demos.FiltersServerSidePanelDemo}
+/>

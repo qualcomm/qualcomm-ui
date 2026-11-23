@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/utils",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A browser-safe, comprehensive utility library providing essential functions for array manipulation, DOM operations, class name management, type coercion, equality checks, functional programming helpers, type guards, numeric operations, object manipulation, timing utilities, and more",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -33,6 +33,7 @@
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish",
+    "bench:facet-index": "node --import=tsx --disable-warning=DEP0205 scripts/facet-index-bench.ts",
     "test": "vitest --run",
     "test:coverage": "pnpm test --coverage",
     "test:unit:ci": "cross-env NODE_OPTIONS='' vitest --run --pool=threads"

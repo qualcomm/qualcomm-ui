@@ -12,6 +12,7 @@
     "build:site": "react-router build",
     "dev": "run-p dev:app typecheck typescoop-extract:watch",
     "dev:app": "react-router typegen && vite -c vite.config.ts",
+    "generate:device-data": "tsx scripts/generate-device-data.ts",
     "typescoop-extract": "typescoop extract",
     "typescoop-extract:watch": "typescoop extract -w",
     "lint": "eslint --quiet",

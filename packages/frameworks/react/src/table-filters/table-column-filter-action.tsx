@@ -1,0 +1,59 @@
+// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import type {ReactElement} from "react"
+
+import {Funnel} from "lucide-react"
+
+import type {QdsTableColumnFilterProps} from "@qualcomm-ui/qds-core/table"
+import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
+import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
+import {IconButton} from "@qualcomm-ui/react/button"
+import {qdsTableApi} from "@qualcomm-ui/react/table"
+import {mergeProps} from "@qualcomm-ui/utils/merge-props"
+
+export interface TableColumnFilterActionProps
+  extends
+    Omit<ElementRenderProp<"button">, "children">,
+    QdsTableColumnFilterProps {
+  /**
+   * Lucide icon to display inside the button.
+   *
+   * @default Funnel
+   */
+  icon?: LucideIconOrElement
+}
+
+/**
+ * An action button for opening a column filter menu or interface, such as a
+ * `Popover` trigger in a column header. Shows a filled icon while the column
+ * is filtered. Renders nothing when the column can't be filtered. Otherwise
+ * renders a `<button>` element by default.
+ */
+export function TableColumnFilterAction({
+  canFilter: canFilterProp,
+  header,
+  isFiltered,
+  ...props
+}: TableColumnFilterActionProps): ReactElement | null {
+  const canFilter = canFilterProp || header?.column.getCanFilter()
+
+  if (!canFilter) {
+    return null
+  }
+
+  const mergedProps = mergeProps(
+    qdsTableApi.getColumnFilterActionBindings({canFilter, header, isFiltered}),
+    props,
+  )
+
+  return (
+    <IconButton
+      density="compact"
+      icon={Funnel}
+      size="sm"
+      variant="ghost"
+      {...mergedProps}
+    />
+  )
+}

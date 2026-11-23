@@ -31,8 +31,8 @@ function powerDistribution(
 function newUser(index: number): User {
   const firstName = faker.person.firstName()
   const lastName = faker.person.lastName()
-  const createdAt = faker.date.between({from: "01/01/2024", to: "10/30/2025"})
-  const lastVisited = faker.date.between({from: createdAt, to: "10/30/2025"})
+  const createdAt = faker.date.between({from: "01/01/2025", to: "10/30/2026"})
+  const lastVisited = faker.date.between({from: createdAt, to: "10/30/2026"})
   return {
     accountStatus: faker.helpers.arrayElement([
       "active",

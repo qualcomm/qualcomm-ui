@@ -1,0 +1,28 @@
+---
+title: Column Header Filters
+component: Table
+hideToc: true
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+In clientside filtering, the entire dataset is loaded into the table up front. The option counts come from the table's faceted row models, and so do the slider bounds.
+
+::: terms
+column filter, header filter, filter popover, header popover, popover, applied filters, applied filter bar, filter chips, facet counts, getTableFilterSetProps, useFilterSet, FilterSetProvider, FilterProvider, TableFilterBar, TableColumnFilterAction, getFacetedRowModel, getFacetedUniqueValues, getFacetedMinMaxValues, createDateFilterFn, client-side filtering, local filtering
+:::
+
+## Overview
+
+- In this demo, each header's filter opens in a [Popover](https://react.qui.qualcomm.com/components/popover) from a `TableColumnFilterAction`, which shows a filled icon while its column is filtered.
+- The `getTableFilterSetProps(table)` utility connects the filters to the table's column filters, and resolves each filter's label, options, counts, and range bounds from its column.
+- The filter controls are documented in the [Filter Panel](https://react.qui.qualcomm.com/components/filters/filter-panel) and [Filter Controls](https://react.qui.qualcomm.com/components/filters/filter-controls) docs.
+
+<Demo
+  expanded
+  name="FiltersColumnHeaderDemo"
+  component={demos.FiltersColumnHeaderDemo}
+/>

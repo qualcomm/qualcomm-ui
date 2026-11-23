@@ -487,7 +487,7 @@ export interface NumberInputControlBindings extends Part<"control"> {
 export interface NumberInputDecrementTriggerBindings extends Part<"decrementTrigger"> {
   "aria-controls": string
   "aria-label": string | undefined
-  "data-disabled": BooleanDataAttr | undefined
+  "data-disabled": BooleanDataAttr
   dir: Direction
   disabled: boolean | undefined
   id: string
@@ -501,7 +501,7 @@ export interface NumberInputDecrementTriggerBindings extends Part<"decrementTrig
 export interface NumberInputIncrementTriggerBindings extends Part<"incrementTrigger"> {
   "aria-controls": string
   "aria-label": string | undefined
-  "data-disabled": BooleanDataAttr | undefined
+  "data-disabled": BooleanDataAttr
   dir: Direction
   disabled: boolean | undefined
   id: string

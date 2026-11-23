@@ -10,11 +10,15 @@ import type {TreeElementIds, TreeScope} from "../tree.types.js"
 
 export const domIds: ScopeDomIds<TreeElementIds, TreeScope> = {
   label: (scope) => scope.ids.get("label"),
+  nodeCheckbox: (scope, value) =>
+    scope.ids.collection("nodeCheckbox").get(value),
   root: (scope) => scope.ids.get("root"),
 }
 
 export const domEls: ScopeDomElements<TreeElementIds, TreeScope> = {
   label: (scope) => scope.getById(domIds.label(scope)),
+  nodeCheckbox: (scope, value) =>
+    scope.getById(domIds.nodeCheckbox(scope, value)!),
   root: (scope) => scope.getById(domIds.root(scope)),
 }
 

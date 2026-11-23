@@ -1,0 +1,25 @@
+---
+title: Filter Panel
+component: Table
+hideToc: true
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+In client-side filtering, the entire dataset is loaded up front. The option counts come from the table's faceted row models, and so do the slider bounds.
+
+::: terms
+filter panel, sidebar, faceted search, facet counts, option counts, getTableFilterSetProps, FilterPanel, getFacetedRowModel, getFacetedUniqueValues, getFacetedMinMaxValues, createDateFilterFn, client-side filtering, local filtering
+:::
+
+## Overview
+
+- In this demo, the filters render in a [Filter Panel](https://react.qui.qualcomm.com/components/filters/filter-panel) beside the table.
+- The `TableFilterBar` above the table shows the applied filters. The panel and the filter bar share one filter set from `useFilterSet`, so the panel renders with [FilterPanel.RootProvider](https://react.qui.qualcomm.com/components/filters/filter-panel#hoisted-state).
+- The `getTableFilterSetProps(table)` utility connects the filters to the table's column filters, and resolves each filter's label, options, counts, and range bounds from its column.
+- The filter controls are documented in the [Filter Controls](https://react.qui.qualcomm.com/components/filters/filter-controls) docs.
+
+<Demo expanded name="FiltersPanelDemo" component={demos.FiltersPanelDemo} />

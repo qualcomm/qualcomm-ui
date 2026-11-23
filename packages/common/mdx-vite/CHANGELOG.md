@@ -1,5 +1,25 @@
 # @qualcomm-ui/mdx-vite Changelog
 
+## 5.2.0
+
+Nov 23rd, 2026
+
+### Features
+
+* [type-docs]: add referenced type declarations to site data ([54f3cb7](https://github.com/qualcomm/qualcomm-ui/commit/54f3cb7))
+
+### Bug Fixes
+
+* [knowledge]: read knowledge export prop types from the resolved type ([61feba5](https://github.com/qualcomm/qualcomm-ui/commit/61feba5))
+
+### Tests
+
+* [type-docs]: cover type ref selection and resolved prop types ([7c49ff5](https://github.com/qualcomm/qualcomm-ui/commit/7c49ff5))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.1, @qualcomm-ui/mdx-common@2.8.0, @qualcomm-ui/typedoc-common@1.2.0]
+
 ## 5.1.1
 
 Nov 19th, 2026
