@@ -28,10 +28,7 @@ import {Icon} from "@qualcomm-ui/react/icon"
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 import {clsx} from "@qualcomm-ui/utils/clsx"
 
-export interface HighlightedReference {
-  href: string
-  prettyType?: string | null
-}
+import {type HighlightedReference, RefHoverCard} from "./ref-hover-card.js"
 
 export interface CodeHighlightProps extends ElementRenderProp<"div"> {
   /**
@@ -80,7 +77,8 @@ export interface CodeHighlightProps extends ElementRenderProp<"div"> {
   highlight?: number[] | DecorationItem[]
 
   /**
-   * Replaces reference text snippets with internal links and popups.
+   * Type references by name. References to these types in the code open a
+   * hover card with the referenced type.
    */
   highlightedReferences?: Record<string, HighlightedReference>
 
@@ -112,7 +110,7 @@ export function CodeHighlight({
   forceShowCopyButton = false,
   hideCopyUntilHover: _hideCopyUntilHover,
   highlight: linesProp,
-  highlightedReferences: _highlightedReferences,
+  highlightedReferences,
   label,
   language,
   preProps,
@@ -122,6 +120,14 @@ export function CodeHighlight({
 }: CodeHighlightProps): ReactElement {
   const formattedCode = code.trim()
   const [showingPanel, setShowingPanel] = useState(!defaultCollapsed)
+
+  const typeRefs = useMemo(
+    () =>
+      Object.keys(highlightedReferences ?? {}).filter((name) =>
+        formattedCode.includes(name),
+      ),
+    [formattedCode, highlightedReferences],
+  )
 
   const highlight: DecorationItem[] = useMemo(() => {
     const highlightProp = linesProp ?? []
@@ -142,6 +148,18 @@ export function CodeHighlight({
     }
     return highlightProp as DecorationItem[]
   }, [linesProp])
+
+  const shikiConfig = useMemo(() => ({decorations: highlight}), [highlight])
+  const highlighter = (
+    <ShikiHighlighter
+      cache
+      code={formattedCode}
+      language={language}
+      shikiConfig={shikiConfig}
+      typeRefs={typeRefs.length ? typeRefs : undefined}
+      {...preProps}
+    />
+  )
 
   return (
     <PolymorphicElement
@@ -190,13 +208,13 @@ export function CodeHighlight({
             />
           )}
 
-          <ShikiHighlighter
-            cache
-            code={formattedCode}
-            language={language}
-            shikiConfig={useMemo(() => ({decorations: highlight}), [highlight])}
-            {...preProps}
-          />
+          {typeRefs.length > 0 && highlightedReferences ? (
+            <RefHoverCard references={highlightedReferences}>
+              {highlighter}
+            </RefHoverCard>
+          ) : (
+            highlighter
+          )}
         </Collapsible.Content>
       </Collapsible.Root>
     </PolymorphicElement>

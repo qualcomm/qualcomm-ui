@@ -2,15 +2,16 @@
   --qui-header-height: 48px;
   --qui-side-nav-width: 240px;
   --background-primary: var(--color-surface-primary);
-  --qui-docs-code-background: var(--color-background-neutral-01);
 }
 
 [data-theme="dark"] {
   --qui-docs-code-color: #d5d5d5;
+  --qui-docs-code-background: #0f0f0f;
 }
 
 [data-theme="light"] {
   --qui-docs-code-color: var(--color-text-neutral-secondary);
+  --qui-docs-code-background: #fafafa;
 }
 
 .qui-docs__root {
@@ -315,7 +316,7 @@ pre.qui-docs-code {
     width: fit-content;
   }
 
-  &:has(* pre[class*="language-"]) {
+  pre.shiki-code {
     background: transparent;
   }
 }

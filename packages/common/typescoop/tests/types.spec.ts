@@ -51,8 +51,7 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
       "TestGeneric1",
       {
         actual: interfaces.TestGeneric1.resolvedType?.prettyType,
-        expected:
-          "(\n  options: Array<T>,\n  inputValue: string,\n) => Array<T>",
+        expected: "(\n  options: T[],\n  inputValue: string,\n) => T[]",
       },
     ],
     [
@@ -60,6 +59,104 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
       {
         actual: interfaces.TestTemplateLiteral1.resolvedType?.type,
         expected: "`${string}.${number}`",
+      },
+    ],
+    [
+      "alias of a mapped type prints the reference as written",
+      {
+        actual: {
+          baseType: interfaces.TestRecordAlias.resolvedType?.baseType,
+          type: interfaces.TestRecordAlias.resolvedType?.type,
+        },
+        expected: {baseType: "reference", type: "Record<string, number>"},
+      },
+    ],
+    [
+      "generic alias of a mapped type prints the reference as written",
+      {
+        actual: interfaces.TestGenericRecordAlias.resolvedType?.type,
+        expected: "Record<T, () => void>",
+      },
+    ],
+    [
+      "alias of Pick prints the reference as written",
+      {
+        actual: interfaces.TestPickAlias.resolvedType?.type,
+        expected: "Pick<DashCasedBindingProps, 'dir' | 'disabled'>",
+      },
+    ],
+    [
+      "alias of a homomorphic mapped type prints the reference as written",
+      {
+        actual: interfaces.TestPartialAlias.resolvedType?.type,
+        expected: "Partial<Record<'x' | 'y', number>>",
+      },
+    ],
+    [
+      "references to mapped type aliases inline as written",
+      {
+        actual: {
+          documented: findResolvedType(props.MappedAliasHost, "documented")
+            .type,
+          generic: findResolvedType(props.MappedAliasHost, "generic").type,
+          long: findResolvedType(props.MappedAliasHost, "long").type,
+          omit: findResolvedType(props.MappedAliasHost, "omit").type,
+          pick: findResolvedType(props.MappedAliasHost, "pick").type,
+          record: findResolvedType(props.MappedAliasHost, "record").type,
+        },
+        expected: {
+          documented: "{open: () => void;}",
+          generic: "{a: () => void;}",
+          long: "TestLongRecordAlias",
+          omit: "{disabled: boolean; \"data-disabled\": ''; \"data-stepper-part\": 'prev-trigger';}",
+          pick: "{dir: 'ltr' | 'rtl'; disabled: boolean;}",
+          record: "Record<string, number>",
+        },
+      },
+    ],
+    [
+      "inline decisions cover mapped type aliases",
+      {
+        actual: (() => {
+          const {inlineRefs, prettyType} = findResolvedType(
+            props.MappedAliasHost,
+            "record",
+          )
+          return inlineRefs?.map(({end, inlined, name, start}) => ({
+            inlined,
+            name,
+            text: prettyType?.slice(start, end),
+          }))
+        })(),
+        expected: [
+          {
+            inlined: true,
+            name: "TestRecordAlias",
+            text: "Record<\n  string,\n  number\n>",
+          },
+        ],
+      },
+    ],
+    [
+      "arrays of simple and named elements use the suffix",
+      {
+        actual: Object.fromEntries(
+          (props.ArrayHost.props ?? []).map((prop) => [
+            prop.name,
+            prop.resolvedType.type,
+          ]),
+        ),
+        expected: {
+          functions: "Array<() => void>",
+          generics: "Map<string, () => void>[]",
+          names: "Date[]",
+          nestedNames: "Date[][]",
+          nestedUnions: "Array<Array<'a' | 'b'>>",
+          readonlyNames: "readonly Date[]",
+          readonlyStrings: "readonly string[]",
+          readonlyUnions: "ReadonlyArray<'a' | 'b'>",
+          unions: "Array<'a' | 'b'>",
+        },
       },
     ],
     [
@@ -98,6 +195,23 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
       {
         actual: findResolvedType(props.InterfaceA, "unionA").type,
         expected: `'a' | 'b' | 'c'`,
+      },
+    ],
+    [
+      "RedundantUndefinedHost",
+      {
+        actual: {
+          absorbed: findResolvedType(props.RedundantUndefinedHost, "absorbed")
+            .type,
+          nested: findResolvedType(props.RedundantUndefinedHost, "nested").type,
+          required: findResolvedType(props.RedundantUndefinedHost, "required")
+            .type,
+        },
+        expected: {
+          absorbed: "'' | undefined",
+          nested: "{label?: string;}",
+          required: "string | undefined",
+        },
       },
     ],
     [
@@ -211,6 +325,7 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
         actual: findResolvedType(props.GenericNestedType, "itemFn").parameters,
         expected: [
           {
+            constraint: "Record<string, any>",
             defaultValue: "Record<string, string>",
             name: "T",
             summary: [
@@ -222,6 +337,87 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
             type: "Record<string, any>",
           },
         ],
+      },
+    ],
+    [
+      "interface lists an unconstrained type parameter",
+      {
+        actual: props.GenericReferenceType.typeParameters,
+        expected: [{name: "T", required: true, type: "any"}],
+      },
+    ],
+    [
+      "interface lists a constrained type parameter with a default",
+      {
+        actual: props.ConstrainedTypeParameter.typeParameters,
+        expected: [
+          {
+            constraint: "string",
+            defaultValue: "'id'",
+            name: "Key",
+            type: "string",
+          },
+        ],
+      },
+    ],
+    [
+      "type parameter constraint and default keep alias names",
+      {
+        actual: props.AliasConstrainedTypeParameter.typeParameters,
+        expected: [
+          {
+            constraint: "KeyKind",
+            defaultValue: "KeyKind",
+            name: "Kind",
+            type: "KeyKind",
+          },
+        ],
+      },
+    ],
+    [
+      "interface without type parameters omits them",
+      {
+        actual: "typeParameters" in props.SomeNestedType,
+        expected: false,
+      },
+    ],
+    [
+      "members and function parameters omit the root type",
+      {
+        actual: {
+          member: "type" in findProp(props.ConstrainedTypeParameter, "idKey")!,
+          parameter:
+            "type" in
+            findResolvedType(props.SomeClass, "testMethod")
+              .functionParameters![0],
+        },
+        expected: {member: false, parameter: false},
+      },
+    ],
+    [
+      "member lists the owner type parameters its type mentions",
+      {
+        actual: findResolvedType(
+          props.ConstrainedTypeParameter,
+          "keys",
+        ).parameters?.map((parameter) => parameter.name),
+        expected: ["Key"],
+      },
+    ],
+    [
+      "member omits owner type parameters its type does not mention",
+      {
+        actual: findResolvedType(props.ConstrainedTypeParameter, "fields")
+          .parameters,
+        expected: undefined,
+      },
+    ],
+    [
+      "string literal matching an owner type parameter is not a mention",
+      {
+        actual: findResolvedType(props.ConstrainedTypeParameter, "keyLabel")
+          .parameters,
+        expected: undefined,
       },
     ],
     [
@@ -343,19 +539,91 @@ function getTestCases(parseResult: ParseResult): TestCase[] {
       },
     ],
     [
-      "union aliases expand in expandedType",
+      "collapsedPrettyType keeps inlined refs by name",
       {
-        actual: ["min", "value"].map((name) => {
-          const {expandedType, type} = findResolvedType(props.DateHost, name)
-          return {expandedType, type}
-        }),
-        expected: [
-          {expandedType: "CalendarA | CalendarB", type: "AnyCalendar"},
-          {
-            expandedType: undefined,
-            type: "Array<CalendarA | CalendarB | null>",
+        actual: {
+          children: findResolvedType(props.DashCasedRenderPropHost, "children")
+            .collapsedPrettyType,
+          documented: findResolvedType(props.MappedAliasHost, "documented")
+            .collapsedPrettyType,
+          functionAlias:
+            props.InheritDocSignature.resolvedType?.collapsedPrettyType,
+          generic: findResolvedType(props.MappedAliasHost, "generic")
+            .collapsedPrettyType,
+          long: findResolvedType(props.MappedAliasHost, "long")
+            .collapsedPrettyType,
+        },
+        expected: {
+          children:
+            "| string\n| ((\n    props: DashCasedBindingProps,\n  ) => string)",
+          documented: "TestDocumentedReferenceAlias",
+          functionAlias: "() => SomeNestedType",
+          generic: "TestGenericRecordAlias<'a'>",
+          long: undefined,
+        },
+      },
+    ],
+    [
+      "collapsedType is the one-line form of collapsedPrettyType",
+      {
+        actual: {
+          children: findResolvedType(props.DashCasedRenderPropHost, "children")
+            .collapsedType,
+          functionAlias: props.InheritDocSignature.resolvedType?.collapsedType,
+          long: findResolvedType(props.MappedAliasHost, "long").collapsedType,
+        },
+        expected: {
+          children: "string | ((props: DashCasedBindingProps) => string)",
+          functionAlias: "() => SomeNestedType",
+          long: undefined,
+        },
+      },
+    ],
+    [
+      "refs declare the named types printed by name",
+      {
+        actual: {
+          collection: parseResult.refs.RefCardCollection,
+          options: parseResult.refs.RefCardOptions,
+          tree: parseResult.refs.RefCardTree?.prettyType,
+        },
+        expected: {
+          collection: {
+            prettyType: "class RefCardCollection<T = string>",
+            summary: [
+              {kind: "text", text: "A collection shown in a ref card."},
+            ],
           },
-        ],
+          options: {
+            prettyType: [
+              "interface RefCardOptions {",
+              "  /**",
+              "   * Where the card lines up against its trigger, at the start or at the end.",
+              "   */",
+              "  align?: 'start' | 'end'",
+              "  density?: 'compact' | 'default'",
+              "  /**",
+              "   * The emphasis of the card. Brand cards draw more attention, so use them",
+              "   * sparingly, as the emphasis guidelines describe.",
+              "   */",
+              "  emphasis?: 'neutral' | 'brand'",
+              "  /** The text of the card. */",
+              "  label: string",
+              "  placement?: 'top' | 'bottom'",
+              "  /** The size of the card. */",
+              "  size?: 'sm' | 'md'",
+              "  width?: number",
+              "}",
+            ].join("\n"),
+            summary: [{kind: "text", text: "Display options of a ref card."}],
+          },
+          tree: [
+            "interface RefCardTree {",
+            "  /** The root node of the tree. */",
+            "  root: {children?: RefCardTree['root'][]; label: string}",
+            "}",
+          ].join("\n"),
+        },
       },
     ],
     [

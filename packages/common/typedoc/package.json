@@ -1,6 +1,7 @@
 {
   "name": "@qualcomm-ui/typedoc",
   "version": "1.1.9",
+  "private": true,
   "description": "Documentation generation utilities based on TypeDoc. This package is deprecated, please migrate to @qualcomm-ui/typescoop",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -16,9 +17,6 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "build": "run-s clean build:js build:ts",
     "clean": "shx rm -rf node_modules/.tmp dist",
@@ -32,9 +30,7 @@
     "test:ui": "vitest -c vitest.config.ts --ui --coverage.enabled=true",
     "test:coverage": "pnpm test -- --coverage",
     "test:watch": "vitest -c vitest.config.ts",
-    "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads",
-    "prepublishOnly": "qui-cli pre-publish",
-    "postpublish": "qui-cli post-publish"
+    "test:unit:ci": "cross-env NODE_OPTIONS='' vitest -c vitest.config.ts --run --pool=threads"
   },
   "dependencies": {},
   "devDependencies": {

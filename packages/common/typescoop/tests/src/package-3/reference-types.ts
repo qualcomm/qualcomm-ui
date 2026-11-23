@@ -42,6 +42,43 @@ export interface GenericReferenceType<T> {
   test: T
 }
 
+/**
+ * @public
+ */
+export interface ConstrainedTypeParameter<Key extends string = "id"> {
+  /**
+   * test
+   */
+  fields: Record<string, ReferenceType1>
+
+  /**
+   * test
+   */
+  idKey?: Key
+
+  /**
+   * test
+   */
+  keyLabel: "Key" | "other"
+
+  /**
+   * test
+   */
+  keys: Key[]
+}
+
+export type KeyKind = "a" | "b"
+
+/**
+ * @public
+ */
+export interface AliasConstrainedTypeParameter<Kind extends KeyKind = KeyKind> {
+  /**
+   * test
+   */
+  kind: Kind
+}
+
 export type InheritDocSignature = () => SomeNestedType
 
 /**

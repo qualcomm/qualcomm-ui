@@ -34,7 +34,6 @@ export interface PropInfo {
     required?: boolean
     type?: string
   }
-  type: string
 }
 
 export interface ProcessedPage {

@@ -57,7 +57,7 @@ export type ImportResolverFn = (
  * Limits for printing small documented object types inline in place of their
  * name.
  */
-export interface InlineObjectOptions {
+export interface InlineRefOptions {
   /**
    * Objects whose inline form is longer than this many characters keep their
    * name.
@@ -103,7 +103,7 @@ export interface BuildOptions {
    * Limits for printing small documented object types, such as
    * `{end: DateValue; start: DateValue}`, inline in place of their name.
    */
-  inlineObjects?: InlineObjectOptions
+  inlineRefs?: InlineRefOptions
 
   /**
    * The log level for runtime logs.

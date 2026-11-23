@@ -1,20 +1,15 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import {type ReactElement, useMemo} from "react"
+import type {ReactElement} from "react"
 
-import {
-  CodeHighlight,
-  type HighlightedReference,
-} from "@qualcomm-ui/react-mdx/code-highlight"
-import {
-  useDocsPageContext,
-  useDocsRuntimeContext,
-} from "@qualcomm-ui/react-mdx/context"
+import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
 import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
 import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 
-import {usePropsContext} from "../use-props-context.js"
+import {displayedType} from "../internal/prop-types.utils.js"
+import {useHighlightedReferences} from "../internal/use-highlighted-references.js"
+import {useTypeDocContext} from "../use-typedoc-context.js"
 
 import {TypeInfoPopup} from "./type-info-popup.js"
 
@@ -23,37 +18,10 @@ export interface ReflectionProps {
 }
 
 export function Reflection({prop}: ReflectionProps): ReactElement {
-  const {renderLink} = useDocsRuntimeContext()
   const {resolvedType} = prop
-  const {toc} = useDocsPageContext()
-  const props = usePropsContext()
-  const prettyType = resolvedType.prettyType ?? ""
-
-  const referenceLinks = useMemo(
-    () =>
-      (resolvedType.functionArgs ?? []).reduce(
-        (acc: Record<string, HighlightedReference>, arg) => {
-          if (
-            arg.referenceType &&
-            props[arg.referenceType] &&
-            prettyType.includes(arg.referenceType)
-          ) {
-            const headingId = toc.find(
-              (entry) => entry.textContent === arg.referenceType,
-            )?.id
-            if (headingId) {
-              acc[arg.referenceType] = {
-                href: `#${headingId}`,
-                prettyType: arg.prettyType || arg.type,
-              }
-            }
-          }
-          return acc
-        },
-        {},
-      ),
-    [prettyType, props, resolvedType.functionArgs, toc],
-  )
+  const {collapseRefs} = useTypeDocContext()
+  const references = useHighlightedReferences()
+  const prettyType = displayedType(resolvedType, collapseRefs).prettyType ?? ""
 
   return (
     <div className="doc-props__type-wrapper">
@@ -63,9 +31,8 @@ export function Reflection({prop}: ReflectionProps): ReactElement {
       <CodeHighlight
         code={`${dummyTypePrefix}${prettyType}`}
         disableCopy
-        highlightedReferences={referenceLinks}
+        highlightedReferences={references}
         language="tsx"
-        renderLink={renderLink}
         style={{width: "fit-content"}}
       />
     </div>

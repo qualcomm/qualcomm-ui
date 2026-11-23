@@ -16,10 +16,11 @@ import type {
   PageDocProps,
   SiteData,
 } from "@qualcomm-ui/mdx-common"
-import type {QuiPropTypes} from "@qualcomm-ui/typedoc-common"
+import type {QuiPropTypes, SerializedRef} from "@qualcomm-ui/typedoc-common"
 
 import {ConfigLoader} from "./config/config-loader.js"
 import type {ResolvedQuiDocsConfig} from "./config/index.js"
+import {selectTypeRefs} from "./doc-props/index.js"
 import {type CompiledMdxFile, MdxFileReader} from "./markdown/index.js"
 import {KnowledgeExporter} from "./markdown/knowledge/index.js"
 import {PropFormatter} from "./markdown/knowledge/plugins/index.js"
@@ -64,6 +65,10 @@ export class PluginState {
   sections: KnowledgeSections | null = null
   routesDir!: string
   servers: ViteDevServer[] = []
+  /**
+   * The refs of the type data file, by name.
+   */
+  private typeRefs: Record<string, SerializedRef> = {}
   timeout: ReturnType<typeof setTimeout> | undefined = undefined
   exportsTimeout: ReturnType<typeof setTimeout> | undefined = undefined
   watching = false
@@ -112,15 +117,22 @@ export class PluginState {
       pageDocProps: this.indexer.pageDocProps as unknown as PageDocProps,
       pageMap: this.indexer.pageMap,
       searchIndex: this.indexer.searchIndex,
+      typeRefs: selectTypeRefs(this.indexer.pageDocProps, this.typeRefs),
     }
   }
 
+  /**
+   * Reads the type data file. Its refs are kept for the site data.
+   */
   private resolveDocProps(): Record<string, QuiPropTypes> {
+    this.typeRefs = {}
     if (!this.docPropsFilePath) {
       return {}
     }
     try {
-      return JSON.parse(readFileSync(this.docPropsFilePath, "utf-8"))?.props
+      const typeData = JSON.parse(readFileSync(this.docPropsFilePath, "utf-8"))
+      this.typeRefs = typeData?.refs ?? {}
+      return typeData?.props
     } catch {
       console.debug(
         "Invalid doc props file. Unable to parse JSON. Please check the file",

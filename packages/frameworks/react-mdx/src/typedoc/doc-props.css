@@ -87,8 +87,6 @@
           padding-right: 20px;
         }
         pre.shiki-code {
-          background: transparent;
-          border: solid 1px var(--color-border-neutral-01);
           width: fit-content;
         }
       }
@@ -100,7 +98,7 @@
     }
     thead {
       th {
-        background: var(--color-background-neutral-01);
+        background: var(--color-utility-opacity-neutral-01);
       }
     }
     th,
@@ -111,7 +109,7 @@
     }
     td {
       min-height: 42px;
-      padding: var(--spacing-200) var(--spacing-300);
+      padding: var(--spacing-300);
 
       ul {
         list-style-type: circle;
@@ -133,10 +131,16 @@ pre.qui-docs-code {
 }
 
 .typedoc-props__table-wrapper {
+  .qui-docs-highlighter__root {
+    border: 1px solid var(--color-border-neutral-01);
+    width: fit-content;
+  }
+
   pre.shiki-code,
   pre.qui-docs-code {
     background: var(--qui-docs-code-background);
-    padding: 4px 6px;
+    margin-top: 0;
+    padding: 6px;
   }
 }
 
@@ -263,9 +267,14 @@ pre.qui-docs-code {
     background: var(--qui-docs-code-background);
     border-radius: var(--border-radius-75);
     color: var(--qui-docs-code-color);
-    font-family: var(--q-font-mono), monospace;
-    font-size: 13px !important;
-    padding: 1px 4px;
+    font: var(--font-static-code-sm-default);
+    padding: 0 2px;
+  }
+
+  &.doc-props__top-level-jsdoc-comment {
+    code {
+      border: 1px solid var(--color-border-neutral-01);
+    }
   }
 
   ul {
@@ -380,9 +389,7 @@ pre.qui-docs-code {
 .doc-props-description__example-tag {
   font: var(--font-static-body-sm-default);
   pre.shiki-code {
-    border: solid 1px var(--color-border-neutral-01);
     border-radius: var(--border-radius-100);
-    margin-top: 8px;
   }
   .mdx-spoiler__root {
     border: solid 1px transparent;
@@ -502,6 +509,13 @@ pre.qui-docs-code {
 
 .doc-props__symbol-wrapper {
   margin-top: 16px;
+
+  .qui-docs-highlighter__root {
+    pre.shiki-code {
+      background: var(--qui-docs-code-background);
+      border: 1px solid var(--color-border-neutral-01);
+    }
+  }
 }
 
 .docs-table__wrapper {
@@ -651,7 +665,7 @@ pre.qui-docs-code {
   gap: 8px;
 
   pre.shiki-code {
-    padding: 4px 6px;
+    padding: 6px;
   }
 }
 
@@ -711,4 +725,10 @@ pre.qui-docs-code {
 .doc-props-table__row-anchor {
   scroll-margin-top: calc(var(--qui-header-height) + 6px);
   visibility: hidden;
+}
+
+.doc-props-description__summary-code {
+  pre.shiki-code {
+    padding: 24px;
+  }
 }

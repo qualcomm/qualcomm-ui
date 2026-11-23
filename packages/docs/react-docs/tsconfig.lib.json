@@ -7,7 +7,7 @@
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "bundler",
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib",
     "types": [
       "node",
       "vite/client",

@@ -17,6 +17,7 @@ import type {
 } from "@qualcomm-ui/mdx-common"
 import type {NavDensity} from "@qualcomm-ui/react-mdx/docs-layout"
 import type {PropsContextValue} from "@qualcomm-ui/react-mdx/typedoc"
+import type {SerializedRef} from "@qualcomm-ui/typedoc-common"
 
 /**
  * @since 3.1.0
@@ -35,6 +36,11 @@ export interface DocsPageContextValue {
   setMainContentElement: Dispatch<SetStateAction<HTMLElement | null>>
   showToc: boolean
   toc: PageHeading[]
+  /**
+   * The declarations of the named types that the site's doc props display, by
+   * name.
+   */
+  typeRefs?: Record<string, SerializedRef>
 }
 
 const DocsPageContext = createContext<DocsPageContextValue>(null as any)
