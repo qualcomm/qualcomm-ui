@@ -14,6 +14,20 @@ export function warn(...a: any[]): void {
   }
 }
 
+const warnedKeys = new Set<string>()
+
+/**
+ * Logs a development-only warning once per key, for warnings raised during
+ * render.
+ */
+export function warnOnce(key: string, message: string): void {
+  if (process.env.NODE_ENV === "production" || warnedKeys.has(key)) {
+    return
+  }
+  warnedKeys.add(key)
+  console.warn(message)
+}
+
 export function invariant(m: string): void
 export function invariant(c: boolean, m: string): void
 export function invariant(...a: any[]): void {
