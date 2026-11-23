@@ -1,4 +1,4 @@
-import {FiltersServerSideDemo} from "@qualcomm-ui/react-table-docs/features+/filters-server-side+/demos"
+import {FiltersServerSideDemo} from "@qualcomm-ui/react-table-docs/features+/filters-server-side+/column-header-filters+/demos"
 
 import {DemoPageLayout} from "../../../components/demo-page-layout"
 
