@@ -1,0 +1,456 @@
+---
+title: Filter Panel
+description: The filter panel renders a set of filter controls and tracks the user's selections. You use that selection to filter your data.
+component: FilterPanel
+aliases: [filters, filter sidebar, facets, refine]
+badges:
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+  - id: since
+    label: 2.3.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/react/CHANGELOG.md#230
+---
+
+import {TypeDocAttributes, TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```tsx
+import {FilterPanel} from "@qualcomm-ui/react/filter-panel"
+```
+
+## Defining Filters
+
+::: terms
+defineFilters, filter definitions, filter types
+:::
+
+Filters are declared up front with `defineFilters`. Each key becomes the filter's id. Each value is a filter definition.
+
+```tsx
+import {defineFilters, listFilter} from "@qualcomm-ui/core/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
+
+export const filters = defineFilters({
+  architecture: listFilter({
+    collection: new ListCollection({items: ["arm64", "x86-64"]}),
+    label: "Architecture",
+  }),
+  platform: listFilter({
+    collection: new ListCollection({items: ["Linux", "macOS", "Windows"]}),
+    label: "Platform",
+  }),
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
+    label: "Status",
+  }),
+})
+```
+
+These definitions match our [filter controls](./filter-controls+/_filter-controls.mdx):
+- `listFilter` defines a filter for any list control, like `<CheckboxGroupFilter>` or `<RadioGroupFilter>`
+- `treeFilter` for `<CheckboxTreeFilter>`
+- `textFilter` for `<TextInputFilter>`, and so on.
+
+The utility sets the filter's label, collection, and value type. The control renders it inside `FilterPanel.Filter`. The controls are documented on the [Filter Controls](./filter-controls+/_filter-controls.mdx) page.
+
+Pass the whole object to the panel's [filters](#filters) prop, and each definition to its `FilterPanel.Filter`. Every filter you render must use a definition from that object.
+
+<Demo
+  name="FilterPanelDefiningFiltersDemo"
+  component={demos.FilterPanelDefiningFiltersDemo}
+/>
+
+## Examples
+
+### Automatic Updates
+
+::: terms
+clear all, count, header
+:::
+
+By default, every change is committed as it happens and calls [onValueChange](#onValueChange).
+
+<Demo name="FilterPanelBasicDemo" component={demos.FilterPanelBasicDemo} />
+
+### Manual Apply
+
+::: terms
+apply, draft, apply mode
+:::
+
+Set [applyMode](#applyMode) to `manual` to stage changes in a draft. `FilterPanel.ApplyButton` commits the draft and calls [onValueChange](#onValueChange).
+
+<Demo
+  name="FilterPanelManualApplyDemo"
+  component={demos.FilterPanelManualApplyDemo}
+/>
+
+### Controlled State
+
+::: terms
+controlled, value, onValueChange
+:::
+
+Set the initial selection using the [defaultValue](#defaultValue) prop, or use [value](#value) and [onValueChange](#onValueChange) to control it manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<Demo
+  name="FilterPanelControlledStateDemo"
+  component={demos.FilterPanelControlledStateDemo}
+/>
+
+### Manual & Controlled State
+
+In `manual` mode, [value](#value) is the applied (saved) selection and [draftValue](#draftValue) refers to the panel's staged changes. They only differ in manual mode, until the draft is applied.
+
+Setting `value` from outside the panel replaces the draft, including any unapplied changes.
+
+<Demo
+  name="FilterPanelManualControlledStateDemo"
+  component={demos.FilterPanelManualControlledStateDemo}
+/>
+
+### Labels
+
+::: terms
+label, heading, custom label
+:::
+
+The definition's `label` is the filter's name everywhere: the section heading, the control's accessible name, and [getFilterLabel](#getFilterLabel).
+
+To change how a single section heading renders, pass `label` to `FilterPanel.Filter`. It accepts a `ReactNode`, or a function that receives the definition's label. The rendered heading also names the control, but summaries keep the definition's label.
+
+<Demo
+  name="FilterPanelLabelsDemo"
+  component={demos.FilterPanelLabelsDemo}
+/>
+
+### Loading Options
+
+::: terms
+async options, loading, error, retry, ListCollection, TreeCollection, getFilterCollection
+:::
+
+To load a filter's options from an API, leave `collection` off its definition and return a `ListCollection` or `TreeCollection` from [getFilterCollection](#getFilterCollection). Load the data elsewhere, like with a query library, and return `undefined` until it arrives. A filter without a collection shows no options.
+
+The panel doesn't show loading or error states. Render them yourself. This example shows a progress ring next to the filter label, through the `label` prop, while the request is pending. If the request fails, an error message with a Retry button replaces the control.
+
+<Demo
+  name="FilterPanelLoadingOptionsDemo"
+  component={demos.FilterPanelLoadingOptionsDemo}
+/>
+
+### Restoring a Selection
+
+::: terms
+URL, storage, restored values, labels, loading, getValueItems
+:::
+
+A selection restored from a URL like `/builds?owner=u2`, or from storage, only contains value ids. Labels come from the filter's collection, so until the collection loads, [getValueItems](#getValueItems) labels each item with its raw id.
+
+Anything that shows the selection outside the panel, like these chips, should wait for the request before calling `getValueItems`. Inside the panel, the control shows no options until the collection exists, so show your own loading indicator, like a progress ring next to the filter label.
+
+<Demo
+  name="FilterPanelRestoringSelectionDemo"
+  component={demos.FilterPanelRestoringSelectionDemo}
+/>
+
+### Filter Counts
+
+::: terms
+faceting, facets, result counts, FacetIndex, getFacetFilterSetProps
+:::
+
+[getFilterOptionCounts](#getFilterOptionCounts) shows the number of results next to each checkbox, radio, and tree leaf option. Return a record of counts keyed by option value, or `undefined` to hide counts for a filter. Options missing from the record count 0. Unselected checkbox and radio options with a count of 0 are disabled.
+
+```tsx
+<FilterPanel.Root
+  filters={filters}
+  getFilterOptionCounts={(id) => response.facets[id]}
+>
+```
+
+For data in memory, index it with [FacetIndex](facet-index.mdx) and spread `getFacetFilterSetProps` onto the panel. Its field names must match the filter ids. `FacetIndex` only counts list and tree filters, so apply other filters, like text search, in `getCandidateIds`. Give tree filters their tree in the definition, because `getFacetFilterSetProps` only builds list collections.
+
+<Demo
+  name="FilterPanelFilterCountsDemo"
+  component={demos.FilterPanelFilterCountsDemo}
+/>
+
+In manual mode, counts follow the draft, so they update before the user applies.
+
+> [!note]
+> For tables, `getTableFilterSetProps` resolves the counts from the table's faceted row models. See the [table filters](https://react-table.qui.qualcomm.com/features/filters-client-side/filter-panel) docs.
+
+### Dynamic Filter Counts
+
+::: terms
+fetched data, TanStack Query, useQuery, loading
+:::
+
+A [FacetIndex](facet-index.mdx) can only count the items you give it. Build it from an unfiltered query, separate from the results. **Every option then stays in its list, even as the filters narrow the results.** Pass the index to `getFacetFilterSetProps`. The filter ids must match its field names.
+
+> [!note]
+> This approach requires the unfiltered query to return every build. If the API returns a single page, like the first 50 builds, the counts only cover that page. When the full dataset is too large to fetch, compute the counts on the server and include them in the API response. Then pass them to the panel with [getFilterOptionCounts](#getFilterOptionCounts).
+
+This example uses [TanStack Query](https://tanstack.com/query), with a mock endpoint in place of a search API.
+
+<Demo
+  name="FilterPanelDynamicFilterCountsDemo"
+  component={demos.FilterPanelDynamicFilterCountsDemo}
+/>
+
+Neither filter has a collection, so each lists the values of its field from the index. Until the index loads, the filters have no options, so each shows a progress ring next to its label.
+
+### Hoisted State
+
+::: terms
+useFilterSet, RootProvider, chips, active filters
+:::
+
+An alternative to `FilterPanel.Root` is the `FilterPanel.RootProvider` component with the `useFilterSet` hook. This gives you access to the filter set's state and methods from outside the panel, like rendering active filters as tags.
+
+<Demo
+  name="FilterPanelHoistedStateDemo"
+  component={demos.FilterPanelHoistedStateDemo}
+/>
+
+Called without an id, [getValueItems](#getValueItems) returns one item per selected value across every filter. Dismissing a tag passes the item's `filterId` and `value` to [removeFilterValue](#removeFilterValue).
+
+The state lives in the component that calls `useFilterSet`, so the panel can unmount, for example inside a closed drawer, without losing the selection.
+
+<Demo
+  name="FilterPanelDrawerDemo"
+  component={demos.FilterPanelDrawerDemo}
+/>
+
+### Filters in Child Components
+
+::: terms
+useFilterSetContext, nested components, typed definitions
+:::
+
+For type safety in nested components, pass the type of your definitions to `useFilterSetContext`:
+
+```tsx
+// build-filters.ts
+export const filters = defineFilters({...})
+export type BuildFilters = typeof filters
+
+// status-filter.tsx
+import type {BuildFilters} from "./build-filters"
+
+export function StatusFilter() {
+  const {filters} = useFilterSetContext<BuildFilters>()
+  return (
+    <FilterPanel.Filter filter={filters.status}>
+      <CheckboxGroupFilter />
+    </FilterPanel.Filter>
+  )
+}
+```
+
+The type isn't checked against the panel's definitions. In development, a filter warns when its definition is missing from the panel's `filters`.
+
+### Custom Filters
+
+::: terms
+custom control, useFilter
+:::
+
+Declare a filter with your own value type using `customFilter`, then render your control inside `FilterPanel.Filter`. Inside the filter, `useFilter` returns its value and a setter.
+
+```tsx
+const filters = defineFilters({
+  attachments: customFilter<boolean>({
+    getValueItems: () => [{label: "Has attachments", value: "true"}],
+    isEmptyValue: (value) => !value,
+    label: "Attachments",
+  }),
+})
+```
+
+`isEmptyValue` tells the panel when to drop the filter from the value, and `getValueItems` describes the value in active filter tags.
+
+<Demo
+  name="FilterPanelCustomFiltersDemo"
+  component={demos.FilterPanelCustomFiltersDemo}
+/>
+
+## Using the Value
+
+::: terms
+search params, query string, request
+:::
+
+This example serializes the committed selection to URL search params when the user applies the filter selection.
+
+<Demo
+  name="FilterPanelUsingValueDemo"
+  component={demos.FilterPanelUsingValueDemo}
+/>
+
+## API
+
+### \<FilterPanel.Root>
+
+<TypeDocProps name="FilterPanelRootProps" />
+
+<TypeDocAttributes
+  name={["QdsFilterPanelRootBindings", "FilterPanelRootBindings"]}
+/>
+
+### useFilterSet
+
+Accepts the same state props as [FilterPanel.Root](#filter-panel-root) and returns the filter set API.
+
+<TypeDocProps name="FilterSetApi" partial />
+
+### useFilter
+
+Returns the state of the enclosing `FilterPanel.Filter` or `FilterProvider`.
+
+<TypeDocProps name="FilterContextValue" partial />
+
+### Definitions
+
+#### FilterDefinition
+
+<TypeDocProps name="FilterDefinition" />
+
+#### ListFilterConfig
+
+<TypeDocProps name="ListFilterConfig" />
+
+#### TreeFilterConfig
+
+<TypeDocProps name="TreeFilterConfig" />
+
+#### RangeFilterConfig
+
+<TypeDocProps name="RangeFilterConfig" />
+
+#### DateFilterConfig
+
+<TypeDocProps name="DateFilterConfig" />
+
+#### CustomFilterConfig
+
+<TypeDocProps name="CustomFilterConfig" />
+
+## Element API
+
+### \<FilterPanel.RootProvider>
+
+<TypeDocProps name="FilterPanelRootProviderProps" />
+
+### \<FilterPanel.Header>
+
+<TypeDocProps name="FilterPanelHeaderProps" />
+
+<TypeDocAttributes name="QdsFilterPanelHeaderBindings" />
+
+### \<FilterPanel.Heading>
+
+<TypeDocProps name="FilterPanelHeadingProps" />
+
+<TypeDocAttributes name="QdsFilterPanelHeadingBindings" />
+
+### \<FilterPanel.Count>
+
+<TypeDocProps name="FilterPanelCountProps" />
+
+<TypeDocAttributes name="QdsFilterPanelCountBindings" />
+
+### \<FilterPanel.Section>
+
+<TypeDocProps name="FilterPanelSectionProps" />
+
+<TypeDocAttributes name="QdsFilterPanelSectionBindings" />
+
+### \<FilterPanel.Footer>
+
+<TypeDocProps name="FilterPanelFooterProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFooterBindings" />
+
+### \<FilterPanel.ApplyButton>
+
+<TypeDocProps name="FilterPanelApplyButtonProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelApplyButtonBindings",
+    "FilterPanelApplyTriggerBindings",
+  ]}
+/>
+
+### \<FilterPanel.ClearButton>
+
+<TypeDocProps name="FilterPanelClearButtonProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelClearButtonBindings",
+    "FilterPanelClearTriggerBindings",
+  ]}
+/>
+
+### \<FilterPanel.CloseButton>
+
+<TypeDocProps name="FilterPanelCloseButtonProps" />
+
+<TypeDocAttributes name="QdsFilterPanelCloseButtonBindings" />
+
+### \<FilterPanel.Filter>
+
+<TypeDocProps name="FilterPanelFilterProps" />
+
+<TypeDocAttributes
+  name={["QdsFilterPanelFilterBindings", "FilterPanelFilterBindings"]}
+/>
+
+### \<FilterPanel.FilterTrigger>
+
+<TypeDocProps name="FilterPanelFilterTriggerProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFilterTriggerBindings" />
+
+### \<FilterPanel.FilterLabel>
+
+<TypeDocProps name="FilterPanelFilterLabelProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelFilterLabelBindings",
+    "FilterPanelFilterLabelBindings",
+  ]}
+/>
+
+### \<FilterPanel.FilterCount>
+
+<TypeDocProps name="FilterPanelFilterCountProps" />
+
+<TypeDocAttributes
+  name={[
+    "QdsFilterPanelFilterCountBindings",
+    "FilterPanelFilterCountBindings",
+  ]}
+/>
+
+### \<FilterPanel.FilterIndicator>
+
+<TypeDocProps name="FilterPanelFilterIndicatorProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFilterIndicatorBindings" />
+
+### \<FilterPanel.FilterContent>
+
+<TypeDocProps name="FilterPanelFilterContentProps" />
+
+<TypeDocAttributes name="QdsFilterPanelFilterContentBindings" />
