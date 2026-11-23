@@ -33,6 +33,7 @@
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish",
+    "bench:facet-index": "node --import=tsx --disable-warning=DEP0205 scripts/facet-index-bench.ts",
     "test": "vitest --run",
     "test:coverage": "pnpm test --coverage",
     "test:unit:ci": "cross-env NODE_OPTIONS='' vitest --run --pool=threads"
