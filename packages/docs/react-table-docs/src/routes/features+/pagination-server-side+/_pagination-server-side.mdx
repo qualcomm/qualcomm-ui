@@ -1,6 +1,7 @@
 ---
 title: Pagination (Server-side)
 component: Table
+hideToc: true
 ---
 
 import {Demo} from "~components/demo"
@@ -8,13 +9,23 @@ import * as demos from "./demos"
 
 # {frontmatter.title}
 
+This page demonstrates a Server-side pagination demo with a simulated backend API.
+
 ::: terms
 remote paging, paging, PaginationState, manualPagination, onPaginationChange, pageCount, totalCount, TanStack Query
 :::
 
-Server-side pagination demo with a simulated backend API. Pagination state is managed explicitly in the component and sent to the backend on each change. This is the standard approach for backend integrations where the server handles the pagination logic. See the [Pagination Guide](/feature-guides/pagination) for implementation details.
+## Overview
 
----
+Pagination state is managed explicitly in the component and sent to the backend on each change. This is the standard approach for backend integrations where the server handles the pagination logic. See the [Pagination Guide](/feature-guides/pagination) for implementation details.
+
+When paginating manually, there is no way for the table to know how many pages there are. You must pass the total row count to the `useTablePagination` hook:
+
+```tsx
+const paginationProps = useTablePagination(table, {
+  totalCount: data?.count,
+})
+```
 
 <Demo
   expanded
