@@ -1,5 +1,13 @@
 # @qualcomm-ui/dom Changelog
 
+## 1.3.4
+
+Nov 23rd, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.1]
+
 ## 1.3.3
 
 Nov 12th, 2026

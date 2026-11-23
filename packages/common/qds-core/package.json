@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/qds-core",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "qds core components",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -61,10 +61,10 @@
   "devDependencies": {
     "@figma/rest-api-spec": "^0.31.0",
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/core": "workspace:^1.15.0",
+    "@qualcomm-ui/core": "workspace:^1.15.1",
     "@qualcomm-ui/css-utils": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/utils": "workspace:^1.6.0",
+    "@qualcomm-ui/utils": "workspace:^1.6.1",
     "@qualcomm-ui/vite": "catalog:",
     "@types/culori": "^4.0.0",
     "@types/lodash-es": "catalog:",
@@ -83,8 +83,8 @@
     "vite": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/core": "workspace:^1.15.0",
-    "@qualcomm-ui/utils": "workspace:^1.6.0"
+    "@qualcomm-ui/core": "workspace:^1.15.1",
+    "@qualcomm-ui/utils": "workspace:^1.6.1"
   },
   "qui": {
     "note": "Managed by @qualcomm-ui/codemod to track applied migrations. Do not edit or remove.",
