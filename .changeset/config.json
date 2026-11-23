@@ -40,6 +40,7 @@
     "@qualcomm-ui/react-docs",
     "@qualcomm-ui/react-internal",
     "@qualcomm-ui/react-table-docs",
+    "@qualcomm-ui/typedoc",
     "angular-csr",
     "angular-ssr",
     "react-ssr"
