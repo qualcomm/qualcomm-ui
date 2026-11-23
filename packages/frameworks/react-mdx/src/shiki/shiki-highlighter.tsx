@@ -15,6 +15,7 @@ import {
   shikiHighlighter,
   supportedLangs,
 } from "./shiki-instance.js"
+import {typeRefTransformer} from "./type-ref-transformer.js"
 
 export interface ShikiHighlighterProps extends ElementRenderProp<"pre"> {
   cache?: boolean
@@ -22,6 +23,12 @@ export interface ShikiHighlighterProps extends ElementRenderProp<"pre"> {
   langAlias?: Record<string, string>
   language?: string
   shikiConfig?: Omit<CodeToHastOptions, "themes" | "defaultColor" | "lang">
+
+  /**
+   * Type names to mark as refs. References to these types get a `data-ref`
+   * attribute with the name and a tab stop.
+   */
+  typeRefs?: readonly string[]
 }
 
 const transformers: ShikiTransformer[] = [
@@ -49,13 +56,18 @@ export function ShikiHighlighter({
   langAlias,
   language: languageProp,
   shikiConfig,
+  typeRefs,
   ...props
 }: ShikiHighlighterProps): ReactElement {
+  // a key, so that a new array with the same names does not highlight again.
+  const typeRefsKey = typeRefs?.join(" ") ?? ""
+
   const highlighted = useMemo(() => {
     const language = langAlias?.[languageProp ?? ""] ?? languageProp
 
     const resolvedConfig: CodeToHastOptions = {
       ...shikiConfig,
+      ...(typeRefsKey ? {includeExplanation: "scopeName"} : {}),
       defaultColor: "light-dark()",
       lang: language && supportedLangs.has(language) ? language : "tsx",
       structure: "inline",
@@ -72,7 +84,7 @@ export function ShikiHighlighter({
       !resolvedConfig?.grammarState?.getInternalStack &&
       !resolvedConfig?.transformers
     const cacheKey = shouldCache
-      ? `${code}-${JSON.stringify(resolvedConfig)}`
+      ? `${code}-${typeRefsKey}-${JSON.stringify(resolvedConfig)}`
       : ""
     if (shouldCache) {
       const cached = shikiCache.get(cacheKey)
@@ -83,14 +95,16 @@ export function ShikiHighlighter({
 
     const result = shikiHighlighter.codeToHtml(code, {
       ...resolvedConfig,
-      transformers,
+      transformers: typeRefsKey
+        ? [typeRefTransformer(new Set(typeRefsKey.split(" "))), ...transformers]
+        : transformers,
     })
 
     if (shouldCache) {
       shikiCache.set(cacheKey, result)
     }
     return result
-  }, [cache, code, langAlias, languageProp, shikiConfig])
+  }, [cache, code, langAlias, languageProp, shikiConfig, typeRefsKey])
 
   const mergedProps = mergeProps({className: "shiki-code"}, props)
 

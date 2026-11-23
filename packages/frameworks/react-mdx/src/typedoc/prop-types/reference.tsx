@@ -15,9 +15,10 @@ import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 import {pascalCase} from "@qualcomm-ui/utils/change-case"
 
 import {DocsExternalLink} from "../docs-external-link.js"
+import {displayedType} from "../internal/prop-types.utils.js"
+import {useHighlightedReferences} from "../internal/use-highlighted-references.js"
 import {usePropsContext} from "../use-props-context.js"
-
-import {SimpleType} from "./simple-type.js"
+import {useTypeDocContext} from "../use-typedoc-context.js"
 
 interface Props {
   /**
@@ -33,6 +34,8 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
   const props = usePropsContext()
   const {toc} = useDocsPageContext()
   const {renderLink: RenderLink} = useDocsRuntimeContext()
+  const {collapseRefs} = useTypeDocContext()
+  const references = useHighlightedReferences()
 
   const restPrefix = prop.rest ? "..." : ""
 
@@ -75,13 +78,12 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
     docLink,
     inheritDoc,
     name,
-    prettyType = "",
     reference,
     referencedType,
     referenceLink,
-    type,
     typeArgs,
   } = prop.resolvedType
+  const {prettyType = "", type} = displayedType(prop.resolvedType, collapseRefs)
 
   if (referenceLink) {
     if (inheritDoc) {
@@ -170,14 +172,6 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
     }
   }
 
-  if (prop.resolvedType.parentTypeParam) {
-    return (
-      <SimpleType
-        content={`${restPrefix}${prop.resolvedType.parentTypeParam.type}`}
-      />
-    )
-  }
-
   if (!prettyType) {
     return null
   }
@@ -196,6 +190,7 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
           className="qui-docs-code fit"
           code={`${dummyTypePrefix}${restPrefix}${disableReferenceExpansion ? referencedType || name : prettyType}`}
           disableCopy
+          highlightedReferences={references}
           language="tsx"
         />
       )}

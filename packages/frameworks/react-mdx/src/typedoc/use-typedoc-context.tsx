@@ -16,6 +16,10 @@ export interface ColumnNames {
 }
 
 export interface TypeDocContextValue {
+  /**
+   * Display inlined refs by name.
+   */
+  collapseRefs?: boolean
   columnNames: ColumnNames
   disableRequired: boolean
   hideDefaultColumn?: boolean

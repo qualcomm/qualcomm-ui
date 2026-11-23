@@ -129,9 +129,12 @@
 }
 
 .qui-popover__content {
+  &:has(pre.shiki-code) {
+    border: 1px solid var(--color-border-neutral-01);
+  }
   pre.shiki-code {
-    background: var(--color-surface-overlay);
-    padding: 10px;
+    background: var(--qui-docs-code-background);
+    padding: 12px;
   }
 }
 
@@ -270,4 +273,52 @@ pre.shiki.has-focused {
       background: transparent;
     }
   }
+}
+
+.qui-ref-hover-card__anchor [data-ref] {
+  text-decoration: underline dotted transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--animation-duration-fast) ease;
+}
+
+.qui-ref-hover-card__anchor:hover [data-ref],
+.qui-ref-hover-card__anchor:focus-within [data-ref] {
+  text-decoration-color: var(--color-text-neutral-secondary);
+}
+
+.qui-ref-hover-card__anchor [data-ref]:focus-visible {
+  border-radius: var(--border-radius-75);
+  outline: 1px solid var(--color-border-neutral-02);
+}
+
+/*
+ * Typescoop formats declarations at 80 characters, so the card is sized in
+ * characters of the code font: 80 columns, the horizontal padding, and a thin
+ * scrollbar. The space that the positioner measures beside the ref caps it.
+ */
+.qui-ref-hover-card {
+  font-family: var(--q-font-code-demo, var(--q-font-mono)), monospace;
+  font-size: 14px;
+  max-height: min(480px, var(--available-height, 480px));
+  max-width: min(calc(80ch + 32px + 12px), var(--available-width, 100vw));
+  outline: none;
+  overflow: auto;
+  padding: 0;
+  scrollbar-width: thin;
+
+  .qui-ref-hover-card__type {
+    font: inherit;
+    margin: 0;
+    /* text that cannot wrap at the print width, such as a URL, breaks here. */
+    overflow-wrap: anywhere;
+    padding: 12px 16px;
+    white-space: pre-wrap;
+  }
+}
+
+.qui-ref-hover-card__description {
+  border-top: 1px solid var(--color-border-neutral-01);
+  color: var(--color-text-neutral-primary);
+  font: var(--font-static-body-sm-default);
+  padding: 12px 16px;
 }
