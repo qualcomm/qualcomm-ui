@@ -168,6 +168,10 @@ type TableComponent = {
   /**
    * An action button for opening a column filter menu or interface. Renders a
    * `<button>` element by default.
+   *
+   * @deprecated in next-release, import `TableColumnFilterAction` from
+   * `@qualcomm-ui/react/table-filters`. Will be removed in the next major
+   * version.
    */
   ColumnFilterAction: typeof TableColumnFilterAction
   /**

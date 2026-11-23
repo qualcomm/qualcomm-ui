@@ -5,29 +5,25 @@ import type {ReactElement} from "react"
 
 import {Funnel} from "lucide-react"
 
-import type {QdsTableColumnFilterProps} from "@qualcomm-ui/qds-core/table"
-import type {LucideIconOrElement} from "@qualcomm-ui/react-core/lucide"
-import type {ElementRenderProp} from "@qualcomm-ui/react-core/system"
 import {IconButton} from "@qualcomm-ui/react/button"
+import type {TableColumnFilterActionProps} from "@qualcomm-ui/react/table-filters"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context.js"
 
-export interface TableColumnFilterActionProps
-  extends
-    Omit<ElementRenderProp<"button">, "children">,
-    QdsTableColumnFilterProps {
-  /**
-   * Lucide icon to display inside the button.
-   *
-   * @default Funnel
-   */
-  icon?: LucideIconOrElement
-}
+/**
+ * The props type lives in `table-filters`. A type-only import is erased at
+ * runtime, so it doesn't create an import cycle between the two modules.
+ */
+export type {TableColumnFilterActionProps}
 
 /**
  * An action button for opening a column filter menu or interface. Renders a
  * `<button>` element by default.
+ *
+ * @deprecated in next-release, import `TableColumnFilterAction` from
+ * `@qualcomm-ui/react/table-filters`. Will be removed in the next major
+ * version.
  */
 export function TableColumnFilterAction({
   canFilter: canFilterProp,
