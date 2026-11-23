@@ -79,6 +79,10 @@ export interface SerializedParameters {
    */
   args?: SerializedParameters[]
   baseType?: string
+  /**
+   * For type parameters, the `extends` constraint as written.
+   */
+  constraint?: FormattedType
   defaultValue?: FormattedType
   name: string
   prettyType?: string
@@ -99,7 +103,7 @@ export interface SerializedParameters {
  * A documented object type that was small enough in members to be printed
  * inline, and whether its printed body fit the length limit.
  */
-export interface InlineObjectDecision {
+export interface InlineRefDecision {
   /**
    * The exclusive end offset of the object in the formatted type.
    */
@@ -126,13 +130,19 @@ export interface InlineObjectDecision {
 
 export interface SerializedType extends SerializedTypeBase {
   baseType?: string
-  deprecated?: boolean
   /**
-   * The {@link type} with the union aliases it names replaced by their members,
-   * such as `CalendarDate | CalendarDateTime | ZonedDateTime` for `DateValue`.
-   * Only present when it differs from {@link type}.
+   * The {@link prettyType} with every inlined ref kept by name, such as
+   * `DateFilterDefinition | ListFilterDefinition` in place of
+   * `DateFilterDefinition | {kind: 'list'; label?: string}`. Only present when
+   * at least one entry of {@link inlineRefs} was inlined.
    */
-  expandedType?: string
+  collapsedPrettyType?: string
+  /**
+   * The {@link type} with every inlined ref kept by name. Present under the
+   * same conditions as {@link collapsedPrettyType}, except for signatures.
+   */
+  collapsedType?: string
+  deprecated?: boolean
   /**
    * If the type is a function, this will contain the resolved types of the function
    * arguments, including comments.
@@ -149,7 +159,7 @@ export interface SerializedType extends SerializedTypeBase {
    * The small object types considered for inlining, in the order they appear
    * in {@link prettyType}. Offsets index into {@link prettyType}.
    */
-  inlineObjects?: InlineObjectDecision[]
+  inlineRefs?: InlineRefDecision[]
   parameters?: SerializedParameters[]
   properties?: SerializedTypeBase[]
   rawType?: string
@@ -183,8 +193,8 @@ export interface QuiPropDeclaration {
    */
   rest?: boolean
   sourceUrls?: string[]
+  /** @deprecated no longer emitted */
   type?: string | undefined
-  typeParameters?: any
 }
 
 export interface AngularInstanceProperties {
@@ -213,4 +223,28 @@ export interface QuiPropTypes
   props?: QuiPropDeclaration[]
 
   resolvedType?: SerializedType
+
+  /**
+   * The type parameters of a generic interface, such as `Key` in
+   * `FacetIndexConfig<Key extends string = 'id'>`.
+   */
+  typeParameters?: SerializedParameters[]
+}
+
+/**
+ * A named type that the displayed types reference by name, such as
+ * `AutoUpdateOptions` in `boolean | AutoUpdateOptions`.
+ */
+export interface SerializedRef {
+  /**
+   * The declaration of the type, formatted with the JSDoc summary of each
+   * member, such as `interface AutoUpdateOptions {...}`. Classes only show
+   * their declaration line.
+   */
+  prettyType: string
+
+  /**
+   * The JSDoc summary of the type itself.
+   */
+  summary?: QuiCommentDisplayPart[]
 }

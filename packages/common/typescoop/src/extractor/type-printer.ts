@@ -3,12 +3,12 @@
 
 import ts from "typescript"
 
-import type {InlineObjectDecision} from "@qualcomm-ui/typedoc-common"
+import type {InlineRefDecision} from "@qualcomm-ui/typedoc-common"
 
 import {formatObjectPropertyName} from "../guards.js"
-import type {InlineObjectOptions} from "../types.js"
+import type {InlineRefOptions} from "../types.js"
 
-import {isExternalMember} from "./collect.js"
+import {isExternalDeclaration, isExternalMember} from "./collect.js"
 import {namedParameters} from "./pretty.js"
 
 const checkerFlags =
@@ -35,7 +35,7 @@ const maxNestingLevel = 8
  * most `maxMembers` members, expand inline. `{state: string}` reads better than
  * a name that the reader has to look up.
  */
-export const defaultInlineObjects: Required<InlineObjectOptions> = {
+export const defaultInlineRefs: Required<InlineRefOptions> = {
   maxLength: 100,
   maxMembers: 6,
 }
@@ -48,7 +48,7 @@ const signalNames = new Set([
 ])
 
 /**
- * Private use characters delimit the spans of inline object decisions while
+ * Private use characters delimit the spans of inline ref decisions while
  * printing. Printed strings are composed bottom-up, so their final offsets are
  * only known once the whole type is printed.
  */
@@ -63,16 +63,16 @@ function stripMarks(text: string): string {
 
 export interface PrintOptions {
   /**
-   * Replace union aliases with their members, such as `DateValue` with
-   * `CalendarDate | CalendarDateTime | ZonedDateTime`.
+   * Keep small documented object types by name instead of printing them
+   * inline. Other named types still expand into their structure.
    */
-  expandAliases?: boolean
+  collapseRefs?: boolean
 
   /**
    * Receives the small object types considered for inlining, in the order they
    * appear in the printed type. Offsets are relative to the printed type.
    */
-  inlineObjects?: InlineObjectDecision[]
+  inlineRefs?: InlineRefDecision[]
 
   /**
    * Keep every named type by name instead of expanding it.
@@ -106,8 +106,8 @@ export interface PrintOptions {
 }
 
 interface PrintContext {
+  collapseRefs: boolean
   depth: number
-  expandAliases: boolean
   /**
    * Inside the type arguments of a generic that kept its name. Names stay as
    * written there, so `BindableIds<ComboboxSchema>` does not inline the schema.
@@ -115,10 +115,10 @@ interface PrintContext {
   inTypeArgument: boolean
   keepNames: boolean
   /**
-   * Inline object decisions by marker id. Only set when the caller collects
+   * Inline ref decisions by marker id. Only set when the caller collects
    * decisions, so that no markers are printed otherwise.
    */
-  marks: Map<number, Omit<InlineObjectDecision, "end" | "start">> | undefined
+  marks: Map<number, Omit<InlineRefDecision, "end" | "start">> | undefined
   signalArgument: ts.TypeNode | undefined
 
   stack: Set<ts.Symbol>
@@ -132,9 +132,9 @@ interface PrintContext {
 export interface TypePrinterParams {
   checker: ts.TypeChecker
   /**
-   * Overrides {@link defaultInlineObjects}.
+   * Overrides {@link defaultInlineRefs}.
    */
-  inlineObjects?: InlineObjectOptions
+  inlineRefs?: InlineRefOptions
   /**
    * Named types declared in documented files expand into their structure.
    */
@@ -147,6 +147,18 @@ export function isOpaqueAliasDeclaration(symbol: ts.Symbol): boolean {
     !!declaration &&
     (ts.isConditionalTypeNode(declaration.type) ||
       ts.isMappedTypeNode(declaration.type))
+  )
+}
+
+/**
+ * Mapped types that select members of another object type.
+ */
+const selectionTypes = new Set(["Omit", "Pick"])
+
+function isMappedType(type: ts.Type): boolean {
+  return (
+    !!(type.flags & ts.TypeFlags.Object) &&
+    !!((type as ts.ObjectType).objectFlags & ts.ObjectFlags.Mapped)
   )
 }
 
@@ -202,13 +214,22 @@ function isSimpleElement(type: ts.Type): boolean {
  */
 export class TypePrinter {
   private readonly checker: ts.TypeChecker
-  private readonly inlineObjects: Required<InlineObjectOptions>
+  private readonly inlineRefs: Required<InlineRefOptions>
   private readonly isDocumented: (symbol: ts.Symbol) => boolean
+  /**
+   * Named types printed by their name, in the order they were first printed.
+   */
+  private readonly named = new Set<ts.Symbol>()
   private readonly objectLike = new Map<ts.Symbol, boolean>()
+  /**
+   * How many types the checker printed with truncation, which can leave `...`
+   * in place of a recursive type.
+   */
+  private truncations = 0
 
   constructor(params: TypePrinterParams) {
     this.checker = params.checker
-    this.inlineObjects = {...defaultInlineObjects, ...params.inlineObjects}
+    this.inlineRefs = {...defaultInlineRefs, ...params.inlineRefs}
     this.isDocumented = params.isDocumented
   }
 
@@ -242,13 +263,31 @@ export class TypePrinter {
     const ctx = this.createContext(options)
     const printed =
       options.skipOwnAlias && type.aliasSymbol
-        ? this.printAliasBody(
-            type,
-            type.aliasSymbol,
-            this.enter(type.aliasSymbol, ctx),
-          )
+        ? this.printOwnAlias(type, type.aliasSymbol, options.node, ctx)
         : this.printHinted(type, options.node, ctx, !!options.stripUndefined)
     return this.finish(printed, ctx, options)
+  }
+
+  /**
+   * Prints the body of an alias declaration. The type of
+   * `type Inset = Partial<Rect>` carries the `Partial` alias instead of its
+   * own, so the body as written is printed before falling back to the body of
+   * `Partial`.
+   */
+  private printOwnAlias(
+    type: ts.Type,
+    alias: ts.Symbol,
+    body: ts.TypeNode | undefined,
+    ctx: PrintContext,
+  ): string {
+    const inner = this.enter(alias, ctx)
+    const ownsBody = alias.declarations?.some(
+      (declaration) =>
+        ts.isTypeAliasDeclaration(declaration) && declaration.type === body,
+    )
+    const written =
+      body && !ownsBody ? this.printWrittenReference(body, inner) : undefined
+    return written ?? this.printAliasBody(type, alias, inner)
   }
 
   /**
@@ -261,7 +300,7 @@ export class TypePrinter {
     ctx: PrintContext,
     options: PrintOptions,
   ): string {
-    if (!ctx.marks || !options.inlineObjects) {
+    if (!ctx.marks || !options.inlineRefs) {
       return printed
     }
     const starts = new Map<number, number>()
@@ -275,7 +314,7 @@ export class TypePrinter {
       ;(match[0][0] === markStart ? starts : ends).set(id, text.length)
     }
     text += printed.slice(last)
-    const decisions: InlineObjectDecision[] = []
+    const decisions: InlineRefDecision[] = []
     for (const [id, decision] of ctx.marks) {
       const start = starts.get(id)
       const end = ends.get(id)
@@ -284,7 +323,7 @@ export class TypePrinter {
       }
     }
     decisions.sort((a, b) => a.start - b.start || b.end - a.end)
-    options.inlineObjects.push(...decisions)
+    options.inlineRefs.push(...decisions)
     return text
   }
 
@@ -350,21 +389,32 @@ export class TypePrinter {
     const isKept = (member: ts.Type) =>
       !stripUndefined || !(member.flags & ts.TypeFlags.Undefined)
     const expected = new Set(type.types.filter(isKept))
-    const ordered: ts.Type[] = []
-    const covered = new Set<ts.Type>()
-    for (const memberNode of memberNodes) {
-      const member = this.checker.getTypeFromTypeNode(memberNode)
-      const flattened = member.isUnion() ? member.types : [member]
-      if (!flattened.some(isKept)) {
-        continue
-      }
-      for (const part of flattened) {
-        if (isKept(part)) {
-          covered.add(part)
-        }
-      }
-      ordered.push(member)
-    }
+    const written = memberNodes
+      .map((memberNode) => {
+        const member = this.checker.getTypeFromTypeNode(memberNode)
+        const parts = (member.isUnion() ? member.types : [member]).filter(
+          isKept,
+        )
+        return {member, parts: new Set(parts)}
+      })
+      .filter(({parts}) => parts.size)
+    const covered = new Set(written.flatMap(({parts}) => [...parts]))
+    /**
+     * A member that another member already includes would print twice, such
+     * as the `undefined` of `BooleanDataAttr | undefined`, where
+     * `BooleanDataAttr` is `'' | undefined`.
+     */
+    const ordered = written
+      .filter(
+        ({parts}, i) =>
+          !written.some(
+            (other, j) =>
+              j !== i &&
+              (other.parts.size > parts.size || j < i) &&
+              [...parts].every((part) => other.parts.has(part)),
+          ),
+      )
+      .map(({member}) => member)
     if (
       covered.size !== expected.size ||
       [...covered].some((member) => !expected.has(member))
@@ -372,22 +422,6 @@ export class TypePrinter {
       return undefined
     }
     return ordered
-  }
-
-  private expandsUnionAlias(
-    type: ts.Type,
-    alias: ts.Symbol,
-    ctx: PrintContext,
-  ): boolean {
-    return (
-      ctx.expandAliases &&
-      type.isUnion() &&
-      !ctx.inTypeArgument &&
-      ctx.depth < maxExpansionDepth &&
-      !ctx.stack.has(alias) &&
-      // `ReactNode` and friends stay named, as in the displayed type.
-      this.displayName(alias) === this.qualifiedName(alias)
-    )
   }
 
   private printAliasBody(
@@ -408,29 +442,58 @@ export class TypePrinter {
       ts.isTypeReferenceNode(body) &&
       this.checker.getDeclaredTypeOfSymbol(alias) === type
     ) {
-      // `type PropsOf<C> = JSX.LibraryManagedAttributes<C, ...>` prints the
-      // reference as written instead of the conditional type it resolves to.
       const referenced = this.checker.getTypeFromTypeNode(body)
       if (referenced.aliasSymbol && referenced.aliasSymbol !== alias) {
         return this.printType(referenced, ctx)
       }
-      const target = this.checker.getSymbolAtLocation(body.typeName)
-      if (target && referenced.flags & ts.TypeFlags.Conditional) {
-        const resolved =
-          target.flags & ts.SymbolFlags.Alias
-            ? this.checker.getAliasedSymbol(target)
-            : target
-        const args = (body.typeArguments ?? []).map((argument) =>
-          this.printType(this.checker.getTypeFromTypeNode(argument), {
-            ...ctx,
-            inTypeArgument: true,
-          }),
-        )
-        const name = this.displayName(resolved)
-        return args.length ? `${name}<${args.join(", ")}>` : name
+      const written = this.printWrittenReference(body, ctx)
+      if (written) {
+        return written
       }
     }
     return this.printStructure(type, ctx, true)
+  }
+
+  /**
+   * Prints a reference to a conditional or mapped type as written, such as
+   * `JSX.LibraryManagedAttributes<C, P>` or `Record<string, string[]>`. The
+   * checker resolves these to a deferred conditional type or to members like
+   * `{[x: string]: string[]}`, which read worse than the reference.
+   */
+  private printWrittenReference(
+    node: ts.TypeNode,
+    ctx: PrintContext,
+  ): string | undefined {
+    const {checker} = this
+    if (!ts.isTypeReferenceNode(node)) {
+      return undefined
+    }
+    const referenced = checker.getTypeFromTypeNode(node)
+    if (
+      !(referenced.flags & ts.TypeFlags.Conditional) &&
+      !isMappedType(referenced)
+    ) {
+      return undefined
+    }
+    const target = this.referenceTarget(node)
+    if (!target) {
+      return undefined
+    }
+    const args = (node.typeArguments ?? []).map((argument) =>
+      this.printType(checker.getTypeFromTypeNode(argument), {
+        ...ctx,
+        inTypeArgument: true,
+      }),
+    )
+    const name = this.displayName(target)
+    return args.length ? `${name}<${args.join(", ")}>` : name
+  }
+
+  private referenceTarget(node: ts.TypeReferenceNode): ts.Symbol | undefined {
+    const located = this.checker.getSymbolAtLocation(node.typeName)
+    return located && located.flags & ts.SymbolFlags.Alias
+      ? this.checker.getAliasedSymbol(located)
+      : located
   }
 
   /**
@@ -447,11 +510,11 @@ export class TypePrinter {
 
   private createContext(options: PrintOptions): PrintContext {
     return {
+      collapseRefs: !!options.collapseRefs,
       depth: 0,
-      expandAliases: !!options.expandAliases,
       inTypeArgument: false,
       keepNames: !!options.keepNames,
-      marks: options.inlineObjects ? new Map() : undefined,
+      marks: options.inlineRefs ? new Map() : undefined,
       signalArgument: options.signalArgument,
       stack: new Set(),
       visiting: new Set(),
@@ -517,13 +580,26 @@ export class TypePrinter {
   ): string | undefined {
     const {checker} = this
     if (
+      ctx.collapseRefs ||
       ctx.keepNames ||
       ctx.inTypeArgument ||
       ctx.depth >= maxExpansionDepth ||
       ctx.stack.has(symbol) ||
       symbol.flags & (ts.SymbolFlags.Class | ts.SymbolFlags.Enum) ||
       !this.isDocumented(symbol) ||
-      isOpaqueAliasDeclaration(symbol) ||
+      isOpaqueAliasDeclaration(symbol)
+    ) {
+      return undefined
+    }
+    const inner = this.enter(symbol, ctx)
+    const reference = this.inlineReferenceOf(symbol)
+    if (reference) {
+      const printed = this.printWrittenReference(reference, inner)
+      return printed === undefined
+        ? undefined
+        : this.decideInline(symbol, ctx, printName, printed)
+    }
+    if (
       !(type.flags & ts.TypeFlags.Object) ||
       checker.getIndexInfosOfType(type).length ||
       checker.getSignaturesOfType(type, ts.SignatureKind.Call).length ||
@@ -534,18 +610,54 @@ export class TypePrinter {
     const members = checker
       .getPropertiesOfType(type)
       .filter((member) => !isExternalMember(member))
-    if (!members.length || members.length > this.inlineObjects.maxMembers) {
+    if (!members.length || members.length > this.inlineRefs.maxMembers) {
       return undefined
     }
-    const inner = this.enter(symbol, ctx)
-    // the expanded type inlines the same objects as the displayed type, so the
-    // length is measured without expanding aliases.
-    const printed = this.printMembers(
-      type,
-      {...inner, expandAliases: false},
-      true,
-    )
-    const inlined = stripMarks(printed).length <= this.inlineObjects.maxLength
+    const printed = this.printMembers(type, inner, true)
+    return this.decideInline(symbol, ctx, printName, printed)
+  }
+
+  /**
+   * The body of an alias like `type Selections = Record<string, string[]>`,
+   * which inlines like a small object. Only references to undocumented types,
+   * such as `Record` and `Partial` from the TypeScript lib, qualify. Generic
+   * aliases are skipped, since their body names the alias's own type
+   * parameters. `Pick`, `Omit`, and documented aliases such as
+   * `ActionSchema<'open'>` are skipped, since their inline form names another
+   * type that the reader still has to look up.
+   */
+  private inlineReferenceOf(
+    symbol: ts.Symbol,
+  ): ts.TypeReferenceNode | undefined {
+    const declaration = symbol.declarations?.find(ts.isTypeAliasDeclaration)
+    const body = declaration?.type
+    if (
+      !body ||
+      declaration.typeParameters?.length ||
+      !ts.isTypeReferenceNode(body) ||
+      !isMappedType(this.checker.getTypeFromTypeNode(body))
+    ) {
+      return undefined
+    }
+    const target = this.referenceTarget(body)
+    return target &&
+      !this.isDocumented(target) &&
+      !selectionTypes.has(target.name)
+      ? body
+      : undefined
+  }
+
+  /**
+   * Records whether a small object or reference prints inline, then prints
+   * `printed` or the marked name.
+   */
+  private decideInline(
+    symbol: ts.Symbol,
+    ctx: PrintContext,
+    printName: () => string,
+    printed: string,
+  ): string | undefined {
+    const inlined = stripMarks(printed).length <= this.inlineRefs.maxLength
     const name = this.displayName(symbol)
     const id = ctx.marks?.size ?? 0
     ctx.marks?.set(id, {inlined, name})
@@ -556,10 +668,7 @@ export class TypePrinter {
       const named = printName()
       return `${this.mark(id, named.slice(0, name.length))}${named.slice(name.length)}`
     }
-    const body = ctx.expandAliases
-      ? this.printMembers(type, inner, true)
-      : printed
-    return ctx.marks ? this.mark(id, body) : body
+    return ctx.marks ? this.mark(id, printed) : printed
   }
 
   private enter(symbol: ts.Symbol, ctx: PrintContext): PrintContext {
@@ -568,6 +677,7 @@ export class TypePrinter {
 
   private printType(type: ts.Type, ctx: PrintContext): string {
     if (ctx.visiting.has(type) || ctx.visiting.size >= maxNestingLevel) {
+      this.truncations++
       // the checker truncates long output without NoTruncation, which bounds
       // recursive types that instantiate a new type at every level.
       return this.checker.typeToString(
@@ -587,10 +697,7 @@ export class TypePrinter {
   private printTypeWith(type: ts.Type, ctx: PrintContext): string {
     const alias = type.aliasSymbol
     if (alias) {
-      if (
-        this.canExpand(alias, ctx) ||
-        this.expandsUnionAlias(type, alias, ctx)
-      ) {
+      if (this.canExpand(alias, ctx)) {
         return this.printAliasBody(type, alias, this.enter(alias, ctx))
       }
       const printName = () =>
@@ -695,10 +802,10 @@ export class TypePrinter {
       const [element] = checker.getTypeArguments(type as ts.TypeReference)
       const printed = this.printType(element, ctx)
       const readonly = type.symbol?.name === "ReadonlyArray"
-      if (readonly) {
-        return `ReadonlyArray<${printed}>`
+      if (isSimpleElement(element) || isNamedType(stripMarks(printed))) {
+        return `${readonly ? "readonly " : ""}${printed}[]`
       }
-      return isSimpleElement(element) ? `${printed}[]` : `Array<${printed}>`
+      return readonly ? `ReadonlyArray<${printed}>` : `Array<${printed}>`
     }
 
     if (checker.isTupleType(type)) {
@@ -828,6 +935,9 @@ export class TypePrinter {
     if (isSignalName(name)) {
       return this.printSignal(name, args, ctx)
     }
+    if (symbol) {
+      this.named.add(symbol)
+    }
     const shown = this.withoutDefaults(symbol, args)
     if (!shown.length) {
       return name
@@ -880,11 +990,14 @@ export class TypePrinter {
   /**
    * @param ownMembersOnly leave out members inherited from dependencies, for
    * expansions of documented interfaces.
+   * @param describe the comment printed above each member. Members print on
+   * their own lines when it is given.
    */
   private printMembers(
     type: ts.Type,
     ctx: PrintContext,
     ownMembersOnly = false,
+    describe?: MemberDescriber,
   ): string {
     const {checker} = this
     const members: string[] = []
@@ -901,19 +1014,75 @@ export class TypePrinter {
       ) {
         continue
       }
+      const description = describe?.(property)
+      if (description === null) {
+        continue
+      }
       const optional = !!(property.flags & ts.SymbolFlags.Optional)
       const propertyType = checker.getTypeOfSymbol(property)
-      const printed = this.printHinted(
-        propertyType,
-        declaredTypeNode(property),
-        ctx,
-        optional && !declaresUndefined(property),
-      )
+      const written = declaredTypeNode(property)
+      const truncations = this.truncations
+      let printed = this.printHinted(propertyType, written, ctx, optional)
+      /**
+       * Truncated output does not parse, and a declaration is formatted on its
+       * own, so its members print as written instead.
+       */
+      if (describe && written && this.truncations > truncations) {
+        printed = written.getText()
+      }
+      if (description) {
+        members.push(docComment(description))
+      }
       members.push(
         `${formatObjectPropertyName(property.name)}${optional ? "?" : ""}: ${printed};`,
       )
     }
-    return `{${members.join(" ")}}`
+    return describe ? `{\n${members.join("\n")}\n}` : `{${members.join(" ")}}`
+  }
+
+  /**
+   * Named types printed by their name so far, in the order they were first
+   * printed.
+   */
+  namedSymbols(): ts.Symbol[] {
+    return [...this.named]
+  }
+
+  /**
+   * Prints the declaration of a named type, such as
+   * `interface Options<T> {...}` or `type Size = 'sm' | 'md'`. Members of object
+   * types are preceded by the comment that `describe` returns. Classes and
+   * enums only print their declaration line.
+   */
+  printDeclaration(
+    symbol: ts.Symbol,
+    describe: MemberDescriber,
+  ): string | undefined {
+    const name = this.displayName(symbol)
+    const typeParameters = typeParametersText(symbol)
+    if (symbol.flags & (ts.SymbolFlags.Class | ts.SymbolFlags.Enum)) {
+      const keyword = symbol.flags & ts.SymbolFlags.Class ? "class" : "enum"
+      return `${keyword} ${name}${typeParameters}`
+    }
+    const ctx = this.enter(symbol, this.createContext({}))
+    const declared = this.checker.getDeclaredTypeOfSymbol(symbol)
+    const declaration = symbol.declarations?.[0]
+    // dependencies declare the members of their own types.
+    const ownMembersOnly = !!declaration && !isExternalDeclaration(declaration)
+    if (symbol.flags & ts.SymbolFlags.Interface) {
+      return `interface ${name}${typeParameters} ${this.printMembers(declared, ctx, ownMembersOnly, describe)}`
+    }
+    const alias = symbol.declarations?.find(ts.isTypeAliasDeclaration)
+    if (!alias) {
+      return undefined
+    }
+    // conditional and mapped bodies read best as written.
+    const body = isOpaqueAliasDeclaration(symbol)
+      ? alias.type.getText()
+      : ts.isTypeLiteralNode(alias.type)
+        ? this.printMembers(declared, ctx, ownMembersOnly, describe)
+        : this.printAliasBody(declared, symbol, ctx)
+    return `type ${name}${typeParameters} = ${body}`
   }
 
   private printSignatureWith(
@@ -932,7 +1101,7 @@ export class TypePrinter {
         parameterType,
         isParameter ? declaration.type : undefined,
         ctx,
-        optional && !declaresUndefined(parameter),
+        optional,
       )
       const name =
         isParameter && !ts.isIdentifier(declaration.name)
@@ -1006,6 +1175,49 @@ export class TypePrinter {
 }
 
 /**
+ * Whether a printed type is a name with optional type arguments, such as
+ * `FacetBucket`, `ListCollection<T>`, or `DateValue[]`. These take an array
+ * suffix without parentheses, unlike unions, functions, and type operators.
+ * Arrays printed as `Array<...>` stay in that form, so nested arrays use one
+ * style.
+ */
+function isNamedType(type: string): boolean {
+  const printed = type.replace(/(\[\])+$/, "")
+  const name = /^[A-Za-z_$][\w$.]*/.exec(printed)?.[0]
+  if (!name || name === "Array" || name === "ReadonlyArray") {
+    return false
+  }
+  if (name === printed) {
+    return true
+  }
+  if (printed[name.length] !== "<") {
+    return false
+  }
+  let depth = 0
+  let quote: string | undefined
+  for (let i = name.length; i < printed.length; i++) {
+    const char = printed[i]
+    if (quote) {
+      if (char === quote && printed[i - 1] !== "\\") {
+        quote = undefined
+      }
+    } else if (char === "'" || char === '"' || char === "`") {
+      quote = char
+    } else if (char === "<") {
+      depth++
+    } else if (char === ">" && printed[i - 1] !== "=") {
+      // the `>` of an arrow in a type argument, such as `Foo<() => void>`,
+      // does not close the type arguments.
+      depth--
+      if (!depth) {
+        return i === printed.length - 1
+      }
+    }
+  }
+  return false
+}
+
+/**
  * Unions without a written order, such as `(typeof Rankings)[keyof typeof
  * Rankings]`, list number literals in creation order. Sorting them reads
  * better.
@@ -1025,29 +1237,44 @@ function withoutParens(node: ts.TypeNode): ts.TypeNode {
   return current
 }
 
+/**
+ * Returns the comment printed above a member, `undefined` for none, or `null`
+ * to leave the member out.
+ */
+export type MemberDescriber = (member: ts.Symbol) => string | null | undefined
+
+/**
+ * A JSDoc comment with the given text, which may span several lines.
+ */
+function docComment(text: string): string {
+  const lines = text.replaceAll("*/", "*\\/").split("\n")
+  if (lines.length === 1) {
+    return `/** ${lines[0]} */`
+  }
+  return `/**\n${lines.map((line) => ` * ${line}`.trimEnd()).join("\n")}\n */`
+}
+
+/**
+ * The type parameters of a named type as written, such as `<T = ListItem>`.
+ */
+function typeParametersText(symbol: ts.Symbol): string {
+  for (const declaration of symbol.declarations ?? []) {
+    const parameters =
+      ts.isClassDeclaration(declaration) ||
+      ts.isInterfaceDeclaration(declaration) ||
+      ts.isTypeAliasDeclaration(declaration)
+        ? declaration.typeParameters
+        : undefined
+    if (parameters?.length) {
+      return `<${parameters.map((parameter) => parameter.getText()).join(", ")}>`
+    }
+  }
+  return ""
+}
+
 function declaredTypeNode(symbol: ts.Symbol): ts.TypeNode | undefined {
   const declaration = symbol.valueDeclaration
   return declaration && "type" in declaration
     ? (declaration.type as ts.TypeNode | undefined)
     : undefined
-}
-
-/**
- * Whether the member's declared type spells out `undefined`, in which case it
- * stays in the printed type.
- */
-function declaresUndefined(symbol: ts.Symbol): boolean {
-  const declaration = symbol.valueDeclaration
-  const typeNode =
-    declaration && "type" in declaration
-      ? (declaration.type as ts.TypeNode | undefined)
-      : undefined
-  if (!typeNode) {
-    return false
-  }
-  const mentionsUndefined = (node: ts.Node): boolean =>
-    node.kind === ts.SyntaxKind.UndefinedKeyword ||
-    (ts.isUnionTypeNode(node) && node.types.some(mentionsUndefined)) ||
-    (ts.isParenthesizedTypeNode(node) && mentionsUndefined(node.type))
-  return mentionsUndefined(typeNode)
 }

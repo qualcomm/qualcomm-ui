@@ -74,6 +74,140 @@ export async function prettyType(
   return withoutNamedParameters(await formatCached(type, printWidth))
 }
 
+/**
+ * Print width of declarations, which are read on their own with the comments
+ * of their members. The hover card of the docs UI is sized to this many
+ * characters.
+ */
+export const declarationPrintWidth = 80
+
+const declarationCache = new Map<string, Promise<string>>()
+
+const unitStartPattern = /^(?:[-*+]|\d+\.)\s|^@/
+
+/**
+ * Wraps the lines of a comment to the width. Paragraphs are rewrapped, while
+ * list items and tags start a line of their own. Blank lines and code fences
+ * keep their lines as written. Words longer than the width, such as URLs, keep
+ * a line of their own.
+ */
+function wrapCommentLines(lines: string[], width: number): string[] {
+  const units: {text: string; verbatim: boolean}[] = []
+  let inCode = false
+  let open = false
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (trimmed.startsWith("```") || inCode || !trimmed) {
+      if (trimmed.startsWith("```")) {
+        inCode = !inCode
+      }
+      units.push({text: trimmed ? line.trimEnd() : "", verbatim: true})
+      open = false
+    } else if (open && !unitStartPattern.test(trimmed)) {
+      units[units.length - 1].text += ` ${trimmed}`
+    } else {
+      units.push({text: trimmed, verbatim: false})
+      open = true
+    }
+  }
+  return units.flatMap(({text, verbatim}) => {
+    if (verbatim) {
+      return [text]
+    }
+    const wrapped: string[] = []
+    for (const word of text.split(/\s+/)) {
+      const last = wrapped.at(-1)
+      if (last !== undefined && last.length + word.length + 1 <= width) {
+        wrapped[wrapped.length - 1] = `${last} ${word}`
+      } else {
+        wrapped.push(word)
+      }
+    }
+    return wrapped
+  })
+}
+
+const singleLineCommentPattern = /^(\s*)\/\*\*\s*(.*?)\s*\*\/$/
+const blockCommentStartPattern = /^(\s*)\/\*\*$/
+const blockCommentEndPattern = /^\s*\*\/$/
+
+/**
+ * Rewraps the JSDoc comments of formatted code that have a line wider than the
+ * width, at the indentation of each comment. The formatter keeps comments as
+ * written.
+ */
+function fitComments(code: string, width: number): string {
+  const lines = code.split("\n")
+  const fitted: string[] = []
+  const block = (indent: string, content: string[]) => [
+    `${indent}/**`,
+    ...wrapCommentLines(content, width - indent.length - " * ".length).map(
+      (line) => `${indent} * ${line}`.trimEnd(),
+    ),
+    `${indent} */`,
+  ]
+  for (let index = 0; index < lines.length; index++) {
+    const line = lines[index]
+    const single = singleLineCommentPattern.exec(line)
+    if (single) {
+      fitted.push(
+        ...(line.length > width ? block(single[1], [single[2]]) : [line]),
+      )
+      continue
+    }
+    const start = blockCommentStartPattern.exec(line)
+    const end = start
+      ? lines.findIndex(
+          (candidate, candidateIndex) =>
+            candidateIndex > index && blockCommentEndPattern.test(candidate),
+        )
+      : -1
+    if (!start || end < 0) {
+      fitted.push(line)
+      continue
+    }
+    const comment = lines.slice(index, end + 1)
+    fitted.push(
+      ...(comment.some((commentLine) => commentLine.length > width)
+        ? block(
+            start[1],
+            comment
+              .slice(1, -1)
+              .map((commentLine) => commentLine.replace(/^\s*\* ?/, "")),
+          )
+        : comment),
+    )
+    index = end
+  }
+  return fitted.join("\n")
+}
+
+async function formatDeclaration(declaration: string): Promise<string> {
+  try {
+    const result = await format("file.tsx", declaration, {
+      ...formatConfig,
+      printWidth: declarationPrintWidth,
+    })
+    return fitComments(result.code.trim(), declarationPrintWidth)
+  } catch {
+    return declaration
+  }
+}
+
+/**
+ * Formats the declaration of a named type, such as `interface Foo {...}`, with
+ * comments wrapped to the print width. Text that does not parse, such as the
+ * declaration line of a class, is kept.
+ */
+export async function prettyDeclaration(declaration: string): Promise<string> {
+  let pending = declarationCache.get(declaration)
+  if (!pending) {
+    pending = formatDeclaration(declaration)
+    declarationCache.set(declaration, pending)
+  }
+  return withoutNamedParameters(await pending)
+}
+
 export interface TextSpan {
   end: number
   start: number
