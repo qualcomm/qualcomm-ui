@@ -228,7 +228,8 @@ export function CoreTreeLeafNode({
   )
 }
 
-export interface CoreTreeNodeCheckboxProps extends ElementRenderProp<"span"> {
+export interface CoreTreeNodeCheckboxProps
+  extends IdProp, ElementRenderProp<"span"> {
   /**
    * React Node rendered when the node is checked.
    */
@@ -247,6 +248,7 @@ export interface CoreTreeNodeCheckboxProps extends ElementRenderProp<"span"> {
 
 export function CoreTreeNodeCheckbox({
   checked,
+  id,
   indeterminate,
   unchecked,
   ...props
@@ -254,7 +256,11 @@ export function CoreTreeNodeCheckbox({
   const treeContext = useTreeContext()
   const nodeProps = useTreeNodePropsContext()
   const mergedProps = mergeProps(
-    treeContext.getNodeCheckboxBindings(nodeProps),
+    treeContext.getNodeCheckboxBindings({
+      ...nodeProps,
+      id: useControlledId(id),
+      onDestroy: useOnDestroy(),
+    }),
     props,
   )
 
