@@ -3,7 +3,7 @@
 "@qualcomm-ui/typescoop": minor
 ---
 
-feat(typescoop): emit declarations of referenced types
+feat(refs): emit declarations of referenced types
 
 commit: b6e6d48
   
