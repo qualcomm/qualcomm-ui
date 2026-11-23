@@ -1,5 +1,13 @@
 # @qualcomm-ui/typedoc-common Changelog
 
+## 1.2.0
+
+Nov 23rd, 2026
+
+### Features
+
+* [refs]: emit declarations of referenced types ([b6e6d48](https://github.com/qualcomm/qualcomm-ui/commit/b6e6d48))
+
 ## 1.1.0
 
 Nov 19th, 2026

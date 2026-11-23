@@ -1,5 +1,13 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.6.1
+
+Nov 23rd, 2026
+
+### Miscellaneous Chores
+
+* [deps]: update oxfmt to 0.79.0 ([badc2c9](https://github.com/qualcomm/qualcomm-ui/commit/badc2c9))
+
 ## 1.6.0
 
 Nov 12th, 2026

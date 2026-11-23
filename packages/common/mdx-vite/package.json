@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/mdx-vite",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "description": "Vite documentation plugin for applications that use MDX",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -90,11 +90,11 @@
   },
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
-    "@qualcomm-ui/mdx-common": "workspace:^2.7.2",
+    "@qualcomm-ui/mdx-common": "workspace:^2.8.0",
     "@qualcomm-ui/tailwind-plugin": "workspace:^2.0.1",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.1.0",
-    "@qualcomm-ui/utils": "workspace:^1.6.0",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.2.0",
+    "@qualcomm-ui/utils": "workspace:^1.6.1",
     "@qualcomm-ui/vite": "catalog:",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "catalog:",
@@ -123,9 +123,9 @@
     "zod": "^4.1.13"
   },
   "peerDependencies": {
-    "@qualcomm-ui/mdx-common": "workspace:^2.7.2",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.1.0",
-    "@qualcomm-ui/utils": "workspace:^1.6.0",
+    "@qualcomm-ui/mdx-common": "workspace:^2.8.0",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.2.0",
+    "@qualcomm-ui/utils": "workspace:^1.6.1",
     "lodash-es": ">=4.17.21 <5",
     "minimatch": ">=10",
     "rehype-mdx-code-props": ">=3 <4",

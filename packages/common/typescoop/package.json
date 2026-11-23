@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/typescoop",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Generates component API documentation from TypeScript types",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -40,7 +40,7 @@
     "@commander-js/extra-typings": "catalog:",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/tsconfig": "catalog:",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.1.0",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.2.0",
     "@types/lodash-es": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
@@ -60,7 +60,7 @@
   },
   "peerDependencies": {
     "@commander-js/extra-typings": ">=13.1.0",
-    "@qualcomm-ui/typedoc-common": "workspace:^1.1.0",
+    "@qualcomm-ui/typedoc-common": "workspace:^1.2.0",
     "@qualcomm-ui/vite": "catalog:",
     "cosmiconfig": ">=9.0.0",
     "oxfmt": ">=0.51.0",

@@ -1,5 +1,13 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 2.1.2
+
+Nov 23rd, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.1, @qualcomm-ui/core@1.15.1]
+
 ## 2.1.1
 
 Nov 13th, 2026
