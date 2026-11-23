@@ -205,19 +205,19 @@ const testCases: MultiComponentTest[] = [
 
         await expect
           .element(page.getByRole("option", {name: "Denver"}))
-          .not.toHaveAttribute("aria-selected")
+          .toHaveAttribute("aria-selected", "false")
         await expect
           .element(page.getByRole("option", {name: "Miami"}))
-          .not.toHaveAttribute("aria-selected")
+          .toHaveAttribute("aria-selected", "false")
 
         await page.getByRole("option", {name: "Denver"}).click()
 
         await expect
           .element(page.getByRole("option", {name: "Denver"}))
-          .toHaveAttribute("aria-selected", "")
+          .toHaveAttribute("aria-selected", "true")
         await expect
           .element(page.getByRole("option", {name: "Miami"}))
-          .not.toHaveAttribute("aria-selected")
+          .toHaveAttribute("aria-selected", "false")
         await expect.element(page.getByRole("listbox")).toBeVisible()
       })
     },
