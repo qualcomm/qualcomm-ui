@@ -1,6 +1,6 @@
 import {afterEach, describe, expect, test, vi} from "vitest"
 
-import {invariant, warn} from "./warning"
+import {invariant, warn, warnOnce} from "./warning"
 
 const originalNodeEnv = process.env.NODE_ENV
 
@@ -46,5 +46,29 @@ describe("invariant", () => {
 
     process.env.NODE_ENV = "production"
     expect(() => invariant("skip production")).not.toThrow()
+  })
+})
+
+describe("warnOnce", () => {
+  test("logs each key once", () => {
+    process.env.NODE_ENV = "test"
+    const spy = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+    warnOnce("warn-once-a", "first")
+    warnOnce("warn-once-a", "first again")
+    warnOnce("warn-once-b", "second")
+
+    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spy).toHaveBeenNthCalledWith(1, "first")
+    expect(spy).toHaveBeenNthCalledWith(2, "second")
+  })
+
+  test("does not log in production", () => {
+    process.env.NODE_ENV = "production"
+    const spy = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+    warnOnce("warn-once-production", "skip")
+
+    expect(spy).not.toHaveBeenCalled()
   })
 })
