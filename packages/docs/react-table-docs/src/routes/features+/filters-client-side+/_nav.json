@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../node_modules/@qualcomm-ui/mdx-vite/dist/schemas/nav.schema.json",
+  "children": [
+    {
+      "id": "filter-panel"
+    },
+    {
+      "id": "column-header-filters"
+    },
+    {
+      "id": "facet-index"
+    }
+  ],
+  "expanded": true,
+  "title": "Filters (Client-side)"
+}
