@@ -97,7 +97,7 @@ Use client-side or server-side sorting consistently with your pagination and fil
 For server-side sorting, the `data` passed to the table should already be sorted. No sorted row model is needed. Set `manualSorting: true` to disable client-side sorting if you have provided a sorting row model.
 
 ```tsx
-const [sorting, setSorting] = useState < SortingState > []
+const [sorting, setSorting] = useState<SortingState[]>
 // ...
 const table = useReactTable({
   columns,
