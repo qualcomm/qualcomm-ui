@@ -88,7 +88,7 @@
     "lodash-es": "catalog:",
     "lucide-react": "0.569.0",
     "minimatch": "catalog:",
-    "morgan": "^1.10.0",
+    "morgan": "^1.12.1",
     "playwright": "^1.60.0",
     "react": "catalog:",
     "react-device-detect": "^2.2.3",
