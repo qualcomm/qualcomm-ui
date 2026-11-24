@@ -265,6 +265,17 @@ describe("Collapsible", () => {
     await expect.element(content).toBeVisible()
   })
 
+  test("a controlled open of false takes precedence over defaultOpen", async () => {
+    await render(CollapsibleDemoComponent, {
+      inputs: {defaultOpen: true, open: false},
+    })
+
+    await expect
+      .element(page.getByRole("button", {name: triggerLabel}))
+      .toHaveAttribute("aria-expanded", "false")
+    await expect.element(page.getByText(contentText)).not.toBeVisible()
+  })
+
   test("controlled open state follows openChanged updates", async () => {
     await render(ControlledCollapsibleComponent)
 

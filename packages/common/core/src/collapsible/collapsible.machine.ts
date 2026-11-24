@@ -206,7 +206,7 @@ export const collapsibleMachine: MachineConfig<CollapsibleSchema> =
       }
     },
     initialState({prop}) {
-      const open = prop("open") || prop("defaultOpen")
+      const open = prop("open") ?? prop("defaultOpen")
       return open ? "open" : "closed"
     },
     onDestroy: {
