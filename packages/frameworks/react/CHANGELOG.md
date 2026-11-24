@@ -1,5 +1,34 @@
 # @qualcomm-ui/react Changelog
 
+## 2.3.0
+
+Nov 24th, 2026
+
+### Features
+
+* [table-toolbar]: add TableToolbar and deprecate Table.ActionBar ([d8bee1e](https://github.com/qualcomm/qualcomm-ui/commit/d8bee1e))
+* [table-filters]: add TableFilterBar and move TableColumnFilterAction ([425f390](https://github.com/qualcomm/qualcomm-ui/commit/425f390))
+* [filters]: add filter controls ([a93202e](https://github.com/qualcomm/qualcomm-ui/commit/a93202e))
+* [filter-panel]: add the filter panel ([3c67889](https://github.com/qualcomm/qualcomm-ui/commit/3c67889))
+
+### Tests
+
+* [table-filters]: cover the filter bar ([a9d4bce](https://github.com/qualcomm/qualcomm-ui/commit/a9d4bce))
+* [tree]: cover checkable leaves and disabled descendants ([f193c91](https://github.com/qualcomm/qualcomm-ui/commit/f193c91))
+* [tree]: use meta key on macos instead of control ([02b6672](https://github.com/qualcomm/qualcomm-ui/commit/02b6672))
+* [filters]: cover filter controls and the filter panel ([9fd4444](https://github.com/qualcomm/qualcomm-ui/commit/9fd4444))
+* [table]: cover useTablePagination counts ([75b179a](https://github.com/qualcomm/qualcomm-ui/commit/75b179a))
+* [slider]: cover repeated marker values ([fd437f1](https://github.com/qualcomm/qualcomm-ui/commit/fd437f1))
+
+### Bug Fixes
+
+* [slider]: render repeated marker values once ([d1f1b79](https://github.com/qualcomm/qualcomm-ui/commit/d1f1b79))
+* [table]: count client-side rows in useTablePagination and warn on a missing totalCount ([04a28bb](https://github.com/qualcomm/qualcomm-ui/commit/04a28bb))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0, @qualcomm-ui/qds-core@2.2.0, @qualcomm-ui/core@1.16.0, @qualcomm-ui/react-core@1.12.0]
+
 ## 2.2.2
 
 Nov 23rd, 2026

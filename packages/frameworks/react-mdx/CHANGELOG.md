@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.5.1
+
+Nov 24th, 2026
+
+### Bug Fixes
+
+* [code-demo]: merge caller actions and wrapperProps in the demo runner ([1982c48](https://github.com/qualcomm/qualcomm-ui/commit/1982c48))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0, @qualcomm-ui/react@2.3.0, @qualcomm-ui/core@1.16.0, @qualcomm-ui/react-core@1.12.0]
+
 ## 3.5.0
 
 Nov 23rd, 2026

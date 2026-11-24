@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/mdx-vite",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Vite documentation plugin for applications that use MDX",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -94,7 +94,7 @@
     "@qualcomm-ui/tailwind-plugin": "workspace:^2.0.1",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/typedoc-common": "workspace:^1.2.0",
-    "@qualcomm-ui/utils": "workspace:^1.6.1",
+    "@qualcomm-ui/utils": "workspace:^1.7.0",
     "@qualcomm-ui/vite": "catalog:",
     "@types/hast": "^3.0.4",
     "@types/lodash-es": "catalog:",
@@ -125,7 +125,7 @@
   "peerDependencies": {
     "@qualcomm-ui/mdx-common": "workspace:^2.8.0",
     "@qualcomm-ui/typedoc-common": "workspace:^1.2.0",
-    "@qualcomm-ui/utils": "workspace:^1.6.1",
+    "@qualcomm-ui/utils": "workspace:^1.7.0",
     "lodash-es": ">=4.17.21 <5",
     "minimatch": ">=10",
     "rehype-mdx-code-props": ">=3 <4",

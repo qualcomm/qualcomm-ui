@@ -112,7 +112,7 @@ type TableComponent = {
    * </Table.Root>
    * ```
    *
-   * @deprecated in next-release, replaced by `TableToolbar`. Will be removed in
+   * @deprecated in 2.3.0, replaced by `TableToolbar`. Will be removed in
    * the next major version.
    */
   ActionBar: typeof TableActionBar
@@ -169,7 +169,7 @@ type TableComponent = {
    * An action button for opening a column filter menu or interface. Renders a
    * `<button>` element by default.
    *
-   * @deprecated in next-release, import `TableColumnFilterAction` from
+   * @deprecated in 2.3.0, import `TableColumnFilterAction` from
    * `@qualcomm-ui/react/table-filters`. Will be removed in the next major
    * version.
    */

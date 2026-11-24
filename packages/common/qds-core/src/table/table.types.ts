@@ -177,7 +177,7 @@ export interface QdsTableScrollContainerBindings {
 }
 
 /**
- * @deprecated in next-release, replaced by {@link QdsTableToolbarRootBindings}.
+ * @deprecated in 2.2.0, replaced by {@link QdsTableToolbarRootBindings}.
  * Will be removed in the next major version.
  */
 export interface QdsTableActionBarBindings {
@@ -266,7 +266,7 @@ export interface QdsTableRowExpandButtonProps {
 
 export interface QdsTableApi {
   /**
-   * @deprecated in next-release, replaced by
+   * @deprecated in 2.2.0, replaced by
    * {@link QdsTableRootApi.getToolbarBindings}. Will be removed in the next major
    * version.
    */

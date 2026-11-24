@@ -1,5 +1,27 @@
 # @qualcomm-ui/utils Changelog
 
+## 1.7.0
+
+Nov 24th, 2026
+
+### Features
+
+* [warning]: add warnOnce ([9a9e69e](https://github.com/qualcomm/qualcomm-ui/commit/9a9e69e))
+* [facet-index]: add FacetIndex ([c3bb38d](https://github.com/qualcomm/qualcomm-ui/commit/c3bb38d))
+
+### Tests
+
+* [warning]: cover warnOnce ([a2a7de4](https://github.com/qualcomm/qualcomm-ui/commit/a2a7de4))
+* [facet-index]: cover FacetIndex ([bf4db0a](https://github.com/qualcomm/qualcomm-ui/commit/bf4db0a))
+
+### Bug Fixes
+
+* [number]: return 0 from getValuePercent for an empty range ([68ea486](https://github.com/qualcomm/qualcomm-ui/commit/68ea486))
+
+### Miscellaneous Chores
+
+* [facet-index]: add a benchmark script ([801e64c](https://github.com/qualcomm/qualcomm-ui/commit/801e64c))
+
 ## 1.6.1
 
 Nov 23rd, 2026

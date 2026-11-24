@@ -1,5 +1,27 @@
 # @qualcomm-ui/angular Changelog
 
+## 4.2.3
+
+Nov 24th, 2026
+
+### Bug Fixes
+
+* [slider]: render repeated marker values once ([d1f1b79](https://github.com/qualcomm/qualcomm-ui/commit/d1f1b79))
+
+### Tests
+
+* [tree]: cover checkable leaves and disabled descendants ([f193c91](https://github.com/qualcomm/qualcomm-ui/commit/f193c91))
+* [tree]: use meta key on macos instead of control ([02b6672](https://github.com/qualcomm/qualcomm-ui/commit/02b6672))
+* [select]: expect explicit aria-selected values ([325d619](https://github.com/qualcomm/qualcomm-ui/commit/325d619))
+
+### Documentation
+
+* [table]: describe the column filter action directive ([1988b23](https://github.com/qualcomm/qualcomm-ui/commit/1988b23))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0, @qualcomm-ui/qds-core@2.2.0, @qualcomm-ui/core@1.16.0, @qualcomm-ui/angular-core@3.6.0]
+
 ## 4.2.2
 
 Nov 23rd, 2026

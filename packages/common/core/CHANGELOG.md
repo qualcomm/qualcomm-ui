@@ -1,5 +1,36 @@
 # @qualcomm-ui/core Changelog
 
+## 1.16.0
+
+Nov 24th, 2026
+
+### Features
+
+* [filters]: add filter definitions, date presets, and value utils ([2e8d94c](https://github.com/qualcomm/qualcomm-ui/commit/2e8d94c))
+* [filter-set]: add the filter set ([e69f780](https://github.com/qualcomm/qualcomm-ui/commit/e69f780))
+* [overflow-list]: add OverflowList ([cfcd585](https://github.com/qualcomm/qualcomm-ui/commit/cfcd585))
+* [table]: add filter labels, value-based auto filter functions, and the filter set adapter ([48d1d79](https://github.com/qualcomm/qualcomm-ui/commit/48d1d79))
+* [tree]: toggle checkable leaves on activation and skip disabled descendants ([5fd93bc](https://github.com/qualcomm/qualcomm-ui/commit/5fd93bc))
+* [filters]: add filter controls ([a93202e](https://github.com/qualcomm/qualcomm-ui/commit/a93202e))
+* [filter-panel]: add the filter panel ([3c67889](https://github.com/qualcomm/qualcomm-ui/commit/3c67889))
+
+### Tests
+
+* [filter-set]: cover facets, filter state, prop types, and utils ([5b14156](https://github.com/qualcomm/qualcomm-ui/commit/5b14156))
+* [filter-control]: cover the filter control apis ([2dcd040](https://github.com/qualcomm/qualcomm-ui/commit/2dcd040))
+* [filters]: cover filter definitions, date presets, and value utils ([32734e7](https://github.com/qualcomm/qualcomm-ui/commit/32734e7))
+* [filter-panel]: cover the filter panel bindings ([ad99982](https://github.com/qualcomm/qualcomm-ui/commit/ad99982))
+* [overflow-list]: cover the overflow measurement utils ([51b7d95](https://github.com/qualcomm/qualcomm-ui/commit/51b7d95))
+* [table]: cover auto filter functions, filter labels, and the filter set adapter ([eaad3e1](https://github.com/qualcomm/qualcomm-ui/commit/eaad3e1))
+
+### Bug Fixes
+
+* [number-input]: type the trigger data-disabled attribute as always set ([056cb27](https://github.com/qualcomm/qualcomm-ui/commit/056cb27))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0, @qualcomm-ui/dom@1.3.5]
+
 ## 1.15.1
 
 Nov 23rd, 2026

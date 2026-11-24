@@ -1,5 +1,21 @@
 # @qualcomm-ui/angular-core Changelog
 
+## 3.6.0
+
+Nov 24th, 2026
+
+### Features
+
+* [tree]: toggle checkable leaves on activation and skip disabled descendants ([5fd93bc](https://github.com/qualcomm/qualcomm-ui/commit/5fd93bc))
+
+### Bug Fixes
+
+* [machine]: render boolean aria attributes as "true" and "false" ([16b5d1b](https://github.com/qualcomm/qualcomm-ui/commit/16b5d1b))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0, @qualcomm-ui/core@1.16.0, @qualcomm-ui/dom@1.3.5]
+
 ## 3.5.1
 
 Nov 23rd, 2026
