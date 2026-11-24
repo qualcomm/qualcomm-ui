@@ -1,0 +1,29 @@
+---
+title: Column Header Filters
+component: Table
+hideToc: true
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+In server-side filtering, the server filters and paginates the rows, and the table loads one page at a time. The options, option counts, and slider bounds come from the API. Our mock API stands in for a real backend in the demo below.
+
+::: terms
+column filter, header filter, filter popover, applied filters, filter chips, option counts, getTableFilterSetProps, useFilterSet, FilterSetProvider, FilterProvider, TableFilterBar, TableColumnFilterAction, getFilterCollection, getFilterOptionCounts, getFilterRange, manualFiltering, manualPagination, ColumnFiltersState, onColumnFiltersChange, pageCount, TanStack Query, useQuery, server-side filtering, remote data filtering, remote filter, API filter example, manual table filtering, async filter, external data, fetch on filter
+:::
+
+## Overview
+
+- In this demo, each header's filter opens in a [Popover](https://react.qui.qualcomm.com/components/popover) from a `TableColumnFilterAction`, which shows a filled icon while its column is filtered.
+- The `TableFilterBar` above the table shows the applied filters. The column headers and the filter bar share one filter set.
+- The `getTableFilterSetProps(table)` utility connects the filters to the table's column filters, and resolves each filter's label from its column.
+- With `manualFiltering`, the table only has one page of rows, so the options, counts, and bounds are fetched from the server and applied via [getFilterCollection](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterCollection), [getFilterOptionCounts](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterOptionCounts), and [getFilterRange](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterRange).
+
+<Demo
+  expanded
+  name="FiltersServerSideDemo"
+  component={demos.FiltersServerSideDemo}
+/>

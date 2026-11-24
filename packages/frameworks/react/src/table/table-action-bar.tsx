@@ -11,6 +11,10 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {qdsTableApi} from "./qds-table-context.js"
 
+/**
+ * @deprecated in next-release, replaced by `TableToolbar`. Will be removed in the
+ * next major version.
+ */
 export interface TableActionBarProps extends ElementRenderProp<"div"> {
   /**
    * React {@link https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children children} prop.
@@ -33,6 +37,9 @@ export interface TableActionBarProps extends ElementRenderProp<"div"> {
  *   </Table.ScrollContainer>
  * </Table.Root>
  * ```
+ *
+ * @deprecated in next-release, replaced by `TableToolbar`. Will be removed in the
+ * next major version.
  */
 export function TableActionBar({
   children,

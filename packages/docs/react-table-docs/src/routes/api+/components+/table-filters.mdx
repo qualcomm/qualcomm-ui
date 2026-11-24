@@ -1,0 +1,47 @@
+---
+title: Table Filters
+---
+
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+```tsx
+import {
+  TableColumnFilterAction,
+  TableFilterBar,
+} from "@qualcomm-ui/react/table-filters"
+```
+
+Both components read the filter set from a surrounding `FilterSetProvider` or filter panel. See [Column Header Filters](/features/filters-client-side/column-header-filters) for an example.
+
+## API
+
+### TableColumnFilterAction
+
+<TypeDocProps name="TableColumnFilterActionProps" />
+
+### TableFilterBar
+
+The simple `TableFilterBar` renders the root, filter list, expand trigger, and clear trigger. It accepts the root's props and these props for its parts.
+
+<TypeDocProps
+  name="TableFilterBarProps"
+  omitFrom="TableFilterBarRootProps"
+/>
+
+### TableFilterBar.Root
+
+<TypeDocProps name="TableFilterBarRootProps" />
+
+### TableFilterBar.FilterList
+
+<TypeDocProps name="TableFilterBarFilterListProps" />
+
+### TableFilterBar.ExpandTrigger
+
+<TypeDocProps name="TableFilterBarExpandTriggerProps" />
+
+### TableFilterBar.ClearTrigger
+
+<TypeDocProps name="TableFilterBarClearTriggerProps" />

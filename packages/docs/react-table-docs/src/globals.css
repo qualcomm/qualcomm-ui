@@ -61,6 +61,13 @@ body {
   }
 }
 
+.qui-docs__root[data-pathname^="/features"] {
+  .qui-docs__main-content {
+    /* More room for the table demos */
+    max-width: 1076px;
+  }
+}
+
 .hex-bg {
   background: url("/images/home/hex-bg-light.svg") top center / cover no-repeat;
 }

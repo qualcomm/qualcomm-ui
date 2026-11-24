@@ -222,7 +222,7 @@ describe("table core regression", () => {
   test("throws a useful error for function accessors without a stable ID", () => {
     const helper = createColumnHelper<TestPerson>()
     const columns: ColumnDef<TestPerson, string>[] = [
-      // @ts-expect-error missing id
+      // @ts-expect-error missing id throws
       helper.accessor((row) => row.firstName, {
         header: () => "First Name",
       }),

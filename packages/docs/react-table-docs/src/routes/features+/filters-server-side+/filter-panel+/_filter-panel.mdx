@@ -1,0 +1,37 @@
+---
+title: Filter Panel
+component: Table
+hideToc: true
+---
+
+import {Demo} from "~components/demo"
+import * as demos from "./demos"
+
+# {frontmatter.title}
+
+In server-side filtering, the server filters and paginates the rows, and the table loads one page at a time. The options, option counts, and slider bounds come from the API. Our mock API stands in for a real backend in the demo below.
+
+::: terms
+filter panel, sidebar, faceted search, facet counts, option counts, getTableFilterSetProps, FilterPanel, getFilterCollection, getFilterOptionCounts, getFilterRange, manualFiltering, manualPagination, ColumnFiltersState, onColumnFiltersChange, pageCount, date presets, TanStack Query, useQuery, server-side filtering, remote filtering, API filtering
+:::
+
+## Overview
+
+- In this demo, the filters render in a [Filter Panel](https://react.qui.qualcomm.com/components/filters/filter-panel) beside the table.
+- The `TableFilterBar` above the table shows the applied filters. The panel and the filter bar share one filter set.
+
+## Filter Strategy
+
+This demo sends a separate unfiltered request once. This unfiltered query returns every available option. **Every option then stays in its list, even as the filters narrow the results.**
+
+When the full dataset is too large to fetch, compute only the counts on the server and send those instead.  If you're using a proper search index like Open/Elastic Search, this is typically accomplished with [Term Aggregations](https://www.elastic.co/search-labs/tutorials/search-tutorial/full-text-search/facets).
+
+If your data source doesn't support item counts, you may omit [getFilterOptionCounts](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterOptionCounts) to disable filter counts.
+
+<Demo
+  expanded
+  name="FiltersServerSidePanelDemo"
+  component={demos.FiltersServerSidePanelDemo}
+/>
+
+In the demo above, the `getTableFilterSetProps(table)` utility connects the filters to the table's column filters, and resolves each filter's label from its column. With `manualFiltering`, the table only has one page of rows, so the options, counts, and bounds are fetched from the server and applied via [getFilterCollection](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterCollection), [getFilterOptionCounts](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterOptionCounts), and [getFilterRange](https://react.qui.qualcomm.com/components/filters/filter-panel#getFilterRange).

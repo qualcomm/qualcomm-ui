@@ -7,6 +7,7 @@ import {
   rangeFilter,
   treeFilter,
 } from "@qualcomm-ui/core/filters"
+import type {TableFilterSetProps} from "@qualcomm-ui/core/table"
 import {ListCollection, TreeCollection} from "@qualcomm-ui/utils/collection"
 import {FacetIndex} from "@qualcomm-ui/utils/facet-index"
 
@@ -110,5 +111,11 @@ describe("getFilterCollection prop", () => {
       ...getFacetFilterSetProps<typeof owners>(facetIndex),
     }
     expectTypeOf(props).toEqualTypeOf<FilterSetApiProps<typeof owners>>()
+  })
+
+  test("accepts the table adapter", () => {
+    const tableProps = {} as TableFilterSetProps
+    const props: FilterSetApiProps<typeof filters> = {filters, ...tableProps}
+    expectTypeOf(props).toEqualTypeOf<FilterSetApiProps<typeof filters>>()
   })
 })
