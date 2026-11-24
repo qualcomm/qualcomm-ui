@@ -1,0 +1,465 @@
+---
+title: Filter Panel
+description: The filter panel renders a set of filter controls and tracks the user's selections. You use that selection to filter your data.
+component: FilterPanel
+aliases: [filters, filter sidebar, facets, refine]
+badges:
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+  - id: since
+    label: 4.3.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#430
+---
+
+import {QdsDemo} from "~components/demo"
+import {
+  TypeDocProps,
+  TypeDocAngularAttributes,
+} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```typescript
+import {FilterPanelModule} from "@qualcomm-ui/angular/filter-panel"
+import {FiltersModule} from "@qualcomm-ui/angular/filters"
+```
+
+## Defining Filters
+
+::: terms
+defineFilters, filter definitions, filter types
+:::
+
+Filters are declared up front with `defineFilters`. Each key becomes the filter's id. Each value is a filter definition.
+
+```ts
+import {defineFilters, listFilter} from "@qualcomm-ui/core/filters"
+import {ListCollection} from "@qualcomm-ui/utils/collection"
+
+export const filters = defineFilters({
+  architecture: listFilter({
+    collection: new ListCollection({items: ["arm64", "x86-64"]}),
+    label: "Architecture",
+  }),
+  platform: listFilter({
+    collection: new ListCollection({items: ["Linux", "macOS", "Windows"]}),
+    label: "Platform",
+  }),
+  status: listFilter({
+    collection: new ListCollection({items: ["Failed", "Passed", "Queued"]}),
+    label: "Status",
+  }),
+})
+```
+
+The utility sets the filter's label, collection, and value type. The control renders it inside `q-filter-panel-filter`. The controls are documented on the [Filter Controls](./filter-controls+/_filter-controls.mdx) page.
+
+Templates only read component members, so assign the definitions to a field, such as `readonly filters = filters`.
+
+<QdsDemo name="FilterPanelDefiningFiltersDemo" />
+
+## Examples
+
+### Automatic Updates
+
+::: terms
+clear all, count, header
+:::
+
+By default, every change is committed as it happens and emits [valueChanged](#valueChanged).
+
+<QdsDemo name="FilterPanelBasicDemo" />
+
+### Manual Apply
+
+::: terms
+apply, draft, apply mode
+:::
+
+Set [applyMode](#applyMode) to `manual` to stage changes in a draft. `q-filter-panel-apply-button` commits the draft and emits [valueChanged](#valueChanged).
+
+<QdsDemo name="FilterPanelManualApplyDemo" />
+
+### Controlled State
+
+::: terms
+controlled, value, valueChanged
+:::
+
+Set the initial selection using the [defaultValue](#defaultValue) prop, or use [value](#value) and [valueChanged](#valueChanged) to control it manually. These props follow our [controlled state](/patterns/controlled-state) pattern.
+
+<QdsDemo name="FilterPanelControlledStateDemo" />
+
+### Manual & Controlled State
+
+In `manual` mode, [value](#value) is the applied (saved) selection and [draftValueChanged](#draftValueChanged) emits the panel's staged selection. They only differ in manual mode, until the draft is applied.
+
+Setting `value` from outside the panel replaces the draft, including any unapplied changes.
+
+<QdsDemo name="FilterPanelManualControlledStateDemo" />
+
+### Labels
+
+::: terms
+label, heading, custom label, filterContext
+:::
+
+The definition's `label` is the filter's name everywhere: the section heading, the control's accessible name, and [getFilterLabel](#getFilterLabel).
+
+To change the text of a single section heading, set the `label` input on `q-filter-panel-filter`. For markup, or to build on the definition's label, project a `q-filter-panel-filter-label` element. `*filterContext` exposes the filter's state, including the definition's `label`. The rendered heading also names the control, but summaries keep the definition's label.
+
+<QdsDemo name="FilterPanelLabelsDemo" />
+
+### Loading Options
+
+::: terms
+async options, loading, error, retry, ListCollection, TreeCollection, getFilterCollection, injectQuery
+:::
+
+To load a filter's options from an API, leave `collection` off its definition. Use the [getFilterCollection](#getFilterCollection) input to provide the collection. Load the data elsewhere, like with a query library, and return `undefined` until it arrives. A filter without a collection shows no options.
+
+The resolver can read signals, such as a query's data. The filter re-resolves its collection when they change.
+
+The panel doesn't show loading or error states. Render them yourself. This example shows a progress ring next to the filter label, through a projected `q-filter-panel-filter-label`, while the request is pending. If the request fails, an error message with a Retry button replaces the control.
+
+<QdsDemo name="FilterPanelLoadingOptionsDemo" />
+
+### Restoring a Selection
+
+::: terms
+URL, storage, restored values, labels, loading, getValueItems
+:::
+
+A selection restored from a URL like `/builds?owner=u2` may only contain value ids. Anything that shows the selection outside the panel, like these chips, should wait for the collection data before calling `getValueItems`.
+
+<QdsDemo name="FilterPanelRestoringSelectionDemo" />
+
+### Filter Counts
+
+::: terms
+faceting, facets, result counts, FacetIndex, getFacetFilterSetProps
+:::
+
+To show the number of results next to each filter option, provide the counts with the [getFilterOptionCounts](#getFilterOptionCounts) input. Unselected checkbox and radio options with a count of 0 are disabled.
+
+```angular-ts
+readonly getFilterOptionCounts = (id: FilterId<typeof filters>) =>
+  this.response()?.facets?.[id]
+```
+
+```angular-html
+<div
+  q-filter-panel-root
+  [filters]="filters"
+  [getFilterOptionCounts]="getFilterOptionCounts"
+></div>
+```
+
+When you have access to the entire dataset up front, you can use our `FacetIndex` utility to compute option counts that adjust based on filter selection. Bind both functions returned by `getFacetFilterSetProps` to the root.
+
+<QdsDemo name="FilterPanelFilterCountsDemo" />
+
+In manual mode, counts follow the draft, so they update before the user applies.
+
+### Dynamic Filter Counts
+
+::: terms
+fetched data, TanStack Query, injectQuery, loading
+:::
+
+A [FacetIndex](facet-index.mdx) can only count the items you give it. When working with an external data source, we recommend sending a separate unfiltered request once at the start of your search experience. This approach requires the unfiltered query to return every available option. **Every option then stays in its list, even as the filters narrow the results.**
+
+> [!note]
+> When the full dataset is too large to fetch, compute only the counts on the server and send those instead. If you're using a proper search index like Open/Elastic Search, this is typically accomplished with [Term Aggregations](https://www.elastic.co/search-labs/tutorials/search-tutorial/full-text-search/facets).
+
+This example uses [TanStack Query](https://tanstack.com/query) through `injectQuery`, with a mock endpoint in place of a search API.
+
+<QdsDemo name="FilterPanelDynamicFilterCountsDemo" />
+
+Neither filter has a collection, so each lists the values of its field from the index. Until the index loads, the filters have no options, so each shows a progress ring next to its label.
+
+### Hoisted State
+
+::: terms
+useFilterSet, q-filter-panel-root-provider, chips, active filters
+:::
+
+`q-filter-panel-root` handles the filter set state internally. Use `useFilterSet` with `q-filter-panel-root-provider` to own that state in your component, where code outside the panel can read and change it. `useFilterSet` returns a signal, so pass `filterSet()` to the provider's `[value]`.
+
+<QdsDemo name="FilterPanelHoistedStateDemo" />
+
+To read the panel's filter set from the template without hoisting it, use the root's `filterPanelRoot` export:
+
+```angular-html
+<div #panel="filterPanelRoot" q-filter-panel-root [filters]="filters">
+  ...
+</div>
+<span>{{ panel.filterSet().valueCount }} filters applied</span>
+```
+
+The state lives in the component that calls `useFilterSet`. This way, the panel can unmount without losing the selection, like in a drawer:
+
+<QdsDemo name="FilterPanelDrawerDemo" />
+
+### Filters in Child Components
+
+::: terms
+useFilterSetContext, nested components, typed definitions
+:::
+
+In a nested component, use `useFilterSetContext` to access the closest provider's filter state. For type safety, pass the type of your definitions:
+
+```angular-ts
+// build-filters.ts
+export const filters = defineFilters({...})
+export type BuildFilters = typeof filters
+
+// status-filter.component.ts
+import type {BuildFilters} from "./build-filters"
+
+@Component({
+  imports: [FilterPanelModule, FiltersModule],
+  selector: "status-filter",
+  template: `
+    <div q-filter-panel-filter [filter]="filterSet().filters.status">
+      <q-checkbox-group-filter />
+    </div>
+  `,
+})
+export class StatusFilter {
+  protected readonly filterSet = useFilterSetContext<BuildFilters>()
+}
+```
+
+`useFilterSetContext` returns a signal. Call it in an injection context, such as a field initializer.
+
+The type isn't checked against the panel's definitions. In development, a filter warns when its definition is missing from the panel's `filters`.
+
+### Custom Filters
+
+::: terms
+custom control, useFilter
+:::
+
+Declare a filter with your own value type using `customFilter`. `isEmptyValue` tells the panel when to drop the filter from the value, and `getValueItems` describes the value in active filter tags.
+
+```ts
+const filters = defineFilters({
+  attachments: customFilter<boolean>({
+    getValueItems: () => [{label: "Has attachments", value: "true"}],
+    isEmptyValue: (value) => !value,
+    label: "Attachments",
+  }),
+})
+```
+
+Render your custom control inside `q-filter-panel-filter`. `q-filter-panel-filter` provides the filter's state to its content. Use `useFilter` to read it. The returned signal holds `undefined` when the filter has no definition, so guard the control's template with `@if (filter(); as filter)`.
+
+<QdsDemo name="FilterPanelCustomFiltersDemo" />
+
+### URL Search Params
+
+::: terms
+search params, query string, request
+:::
+
+This example serializes the committed selection to URL search params when the user applies the filter selection. The demo keeps the params in a signal. In an application, write them to the URL with the router.
+
+<QdsDemo name="FilterPanelUsingValueDemo" />
+
+## API
+
+### q-filter-panel-root
+
+<TypeDocProps name="FilterPanelRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsFilterPanelRootBindings", "FilterPanelRootBindings"]}
+/>
+
+### useFilterSet
+
+Accepts the same state props as [q-filter-panel-root](#q-filter-panel-root), with `onValueChange` and `onDraftValueChange` callbacks in place of its outputs. Returns a signal of the filter set API. Call it in an injection context, such as a field initializer. Pass a signal of the props to update them after creation.
+
+<TypeDocProps name="FilterSetApi" partial />
+
+### useFilter
+
+Returns a signal of the state of the enclosing `q-filter-panel-filter` or `q-filter-provider`. The signal holds `undefined` when the filter has no definition. Call it in an injection context, such as a field initializer.
+
+<TypeDocProps name="FilterState" partial />
+
+### filterContext
+
+A structural directive that renders its template with the same state as `useFilter`. It renders nothing when the filter has no definition.
+
+```angular-html
+<span *filterContext="let filter" q-filter-panel-filter-label>
+  {{ filter.label }} ({{ filter.count }})
+</span>
+```
+
+### Definitions
+
+#### FilterDefinition
+
+<TypeDocProps name="FilterDefinition" collapseRefs />
+
+#### ListFilterConfig
+
+<TypeDocProps name="ListFilterConfig" />
+
+#### TreeFilterConfig
+
+<TypeDocProps name="TreeFilterConfig" />
+
+#### RangeFilterConfig
+
+<TypeDocProps name="RangeFilterConfig" />
+
+#### DateFilterConfig
+
+<TypeDocProps name="DateFilterConfig" />
+
+#### CustomFilterConfig
+
+<TypeDocProps name="CustomFilterConfig" />
+
+## Element API
+
+### q-filter-panel-root-provider
+
+<TypeDocProps name="FilterPanelRootProviderDirective" />
+
+### q-filter-panel-header
+
+<TypeDocProps name="FilterPanelHeaderDirective" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelHeaderBindings" />
+
+### q-filter-panel-heading
+
+<TypeDocProps name="FilterPanelHeadingComponent" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelHeadingBindings" />
+
+### q-filter-panel-count
+
+<TypeDocProps name="FilterPanelCountComponent" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelCountBindings" />
+
+### q-filter-panel-section
+
+<TypeDocProps name="FilterPanelSectionDirective" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelSectionBindings" />
+
+### q-filter-panel-footer
+
+<TypeDocProps name="FilterPanelFooterDirective" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelFooterBindings" />
+
+### q-filter-panel-apply-button
+
+<TypeDocProps name="FilterPanelApplyButtonComponent" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsFilterPanelApplyButtonBindings",
+    "FilterPanelApplyTriggerBindings",
+  ]}
+/>
+
+### q-filter-panel-clear-button
+
+<TypeDocProps name="FilterPanelClearButtonComponent" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsFilterPanelClearButtonBindings",
+    "FilterPanelClearTriggerBindings",
+  ]}
+/>
+
+### q-filter-panel-close-button
+
+<TypeDocProps name="FilterPanelCloseButtonComponent" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelCloseButtonBindings" />
+
+### q-filter-panel-filter
+
+The simple filter extends [q-filter-panel-filter-root](#q-filter-panel-filter-root) with the following input:
+
+<TypeDocProps
+  name="FilterPanelFilterComponent"
+  omitFrom="FilterPanelFilterRootDirective"
+/>
+
+A projected `q-filter-panel-filter-label`, `q-filter-panel-filter-count`, or `q-filter-panel-filter-indicator` element replaces the default one. To customize the trigger or content elements, use the composite form:
+
+```angular-html
+<div q-filter-panel-filter-root [filter]="filters.status">
+  <button q-filter-panel-filter-trigger>
+    <span q-filter-panel-filter-label></span>
+    <span q-filter-panel-filter-count></span>
+    <span q-filter-panel-filter-indicator></span>
+  </button>
+  <div q-filter-panel-filter-content>
+    <q-checkbox-group-filter />
+  </div>
+</div>
+```
+
+### q-filter-panel-filter-root
+
+<TypeDocProps name="FilterPanelFilterRootDirective" />
+
+<TypeDocAngularAttributes
+  name={["QdsFilterPanelFilterBindings", "FilterPanelFilterBindings"]}
+/>
+
+### q-filter-panel-filter-trigger
+
+<TypeDocProps name="FilterPanelFilterTriggerComponent" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelFilterTriggerBindings" />
+
+### q-filter-panel-filter-label
+
+<TypeDocProps name="FilterPanelFilterLabelComponent" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsFilterPanelFilterLabelBindings",
+    "FilterPanelFilterLabelBindings",
+  ]}
+/>
+
+### q-filter-panel-filter-count
+
+<TypeDocProps name="FilterPanelFilterCountComponent" />
+
+<TypeDocAngularAttributes
+  name={[
+    "QdsFilterPanelFilterCountBindings",
+    "FilterPanelFilterCountBindings",
+  ]}
+/>
+
+### q-filter-panel-filter-indicator
+
+<TypeDocProps name="FilterPanelFilterIndicatorComponent" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelFilterIndicatorBindings" />
+
+### q-filter-panel-filter-content
+
+<TypeDocProps name="FilterPanelFilterContentDirective" />
+
+<TypeDocAngularAttributes name="QdsFilterPanelFilterContentBindings" />
