@@ -44,8 +44,10 @@ pnpm i
 - `pnpm dev` will run the dev script in every package except for documentation sites. I recommend using the filter option with `...`:
   - `pnpm dev --filter @qualcomm-ui/react...`
   - `pnpm dev --filter @qualcomm-ui/angular...`
+  - `pnpm dev --filter @qualcomm-ui/react-vscode...`
 - `pnpm react-docs dev` will start the React documentation site.
 - `pnpm angular-docs dev` will start the Angular documentation site.
+- `pnpm react-vscode-docs dev` will start the React VS Code documentation site.
 - `pnpm doc-gen` will generate the TypeScript JSON documentation for all packages.
 
 ## Development
