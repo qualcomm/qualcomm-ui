@@ -101,7 +101,7 @@
     "sucrase": "^3.35.0",
     "tslib": "~2.5.3",
     "unist-util-visit": "^5.0.0",
-    "zod": "^4.1.13",
+    "zod": "^4.6.6",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
