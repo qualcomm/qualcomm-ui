@@ -120,7 +120,7 @@
     "vite": "catalog:",
     "vite-plugin-static-copy": "catalog:",
     "vitest": "catalog:",
-    "zod": "^4.1.13"
+    "zod": "^4.6.6"
   },
   "peerDependencies": {
     "@qualcomm-ui/mdx-common": "workspace:^2.8.0",

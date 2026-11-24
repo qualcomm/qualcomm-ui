@@ -58,7 +58,7 @@
     "react-use": "^17.6.0",
     "shiki": "catalog:",
     "sucrase": "^3.35.0",
-    "zod": "^4.1.13",
+    "zod": "^4.6.6",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
