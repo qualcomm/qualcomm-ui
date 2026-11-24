@@ -603,9 +603,12 @@ describe("Tree", () => {
 
     test.each([
       {modifiers: [], name: "without modifiers"},
-      {modifiers: ["Control"] as const, name: "with Ctrl"},
+      {modifiers: ["ControlOrMeta"] as const, name: "with ControlOrMeta"},
       {modifiers: ["Shift"] as const, name: "with Shift"},
-      {modifiers: ["Control", "Shift"] as const, name: "with Ctrl and Shift"},
+      {
+        modifiers: ["ControlOrMeta", "Shift"] as const,
+        name: "with ControlOrMeta and Shift",
+      },
     ])(
       "leaf click $name toggles checked state without selecting - CheckableLeafComponent",
       async ({modifiers}) => {
