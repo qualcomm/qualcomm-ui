@@ -421,7 +421,7 @@ describe("filter panel", () => {
     )
 
     await expect
-      .element(page.getByRole("heading", {name: "Filters 3 selected"}))
+      .element(page.getByLabelText("3 selected", {exact: true}))
       .toBeVisible()
     await expect
       .element(page.getByRole("button", {name: "Status 2 selected"}))
@@ -1132,7 +1132,7 @@ describe("outside a filter panel", () => {
     await page.getByText("Failed").click()
 
     await expect
-      .element(page.getByRole("heading", {name: "Filters 2 selected"}))
+      .element(page.getByLabelText("2 selected", {exact: true}))
       .toBeVisible()
   })
 
