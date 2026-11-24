@@ -12,7 +12,7 @@ import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 import {qdsTableApi} from "./qds-table-context.js"
 
 /**
- * @deprecated in next-release, replaced by `TableToolbar`. Will be removed in the
+ * @deprecated in 2.3.0, replaced by `TableToolbar`. Will be removed in the
  * next major version.
  */
 export interface TableActionBarProps extends ElementRenderProp<"div"> {
@@ -38,7 +38,7 @@ export interface TableActionBarProps extends ElementRenderProp<"div"> {
  * </Table.Root>
  * ```
  *
- * @deprecated in next-release, replaced by `TableToolbar`. Will be removed in the
+ * @deprecated in 2.3.0, replaced by `TableToolbar`. Will be removed in the
  * next major version.
  */
 export function TableActionBar({

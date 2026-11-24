@@ -1,5 +1,20 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.12.0
+
+Nov 24th, 2026
+
+### Features
+
+* [filter-set]: add the filter set ([e69f780](https://github.com/qualcomm/qualcomm-ui/commit/e69f780))
+* [overflow-list]: add OverflowList ([cfcd585](https://github.com/qualcomm/qualcomm-ui/commit/cfcd585))
+* [tree]: toggle checkable leaves on activation and skip disabled descendants ([5fd93bc](https://github.com/qualcomm/qualcomm-ui/commit/5fd93bc))
+* [filter-panel]: add the filter panel ([3c67889](https://github.com/qualcomm/qualcomm-ui/commit/3c67889))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0, @qualcomm-ui/core@1.16.0, @qualcomm-ui/dom@1.3.5]
+
 ## 1.11.1
 
 Nov 23rd, 2026

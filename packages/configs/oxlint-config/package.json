@@ -53,7 +53,7 @@
     "vite": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/utils": ">=1.6.1",
+    "@qualcomm-ui/utils": ">=1.7.0",
     "eslint-plugin-perfectionist": ">=5.9.0",
     "oxlint": ">=1.68.0",
     "oxlint-tsgolint": ">=0.23.0"

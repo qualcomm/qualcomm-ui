@@ -1,5 +1,13 @@
 # @qualcomm-ui/codemod Changelog
 
+## 1.5.3
+
+Nov 24th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0]
+
 ## 1.5.2
 
 Nov 23rd, 2026

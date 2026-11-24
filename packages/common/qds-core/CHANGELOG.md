@@ -1,5 +1,24 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 2.2.0
+
+Nov 24th, 2026
+
+### Features
+
+* [table]: add toolbar, filter bar, and placeholder bindings and styles ([0b468f2](https://github.com/qualcomm/qualcomm-ui/commit/0b468f2))
+* [tree]: update indentation, focus ring, and checkbox hover styles ([54f05f1](https://github.com/qualcomm/qualcomm-ui/commit/54f05f1))
+* [filters]: add filter controls ([a93202e](https://github.com/qualcomm/qualcomm-ui/commit/a93202e))
+* [filter-panel]: add the filter panel ([3c67889](https://github.com/qualcomm/qualcomm-ui/commit/3c67889))
+
+### Bug Fixes
+
+* [checkbox]: apply the hover border color to hovered controls ([547a163](https://github.com/qualcomm/qualcomm-ui/commit/547a163))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.7.0, @qualcomm-ui/core@1.16.0]
+
 ## 2.1.2
 
 Nov 23rd, 2026
