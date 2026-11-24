@@ -1923,4 +1923,53 @@ describe("radio", () => {
       .element(page.getByRole("radio", {name: "Dynamic label updated"}))
       .toBeVisible()
   })
+
+  test.each([
+    {
+      expectedName: "Custom group",
+      name: "aria-label names a group without a label",
+      template: `
+        <fieldset aria-label="Custom group" q-radio-group>
+          <div q-radio-group-items>
+            <label label="Option 1" q-radio value="option1"></label>
+          </div>
+        </fieldset>
+      `,
+    },
+    {
+      expectedName: "Custom group",
+      name: "aria-label replaces the group label",
+      template: `
+        <fieldset aria-label="Custom group" q-radio-group>
+          <div q-radio-group-label>Group Label</div>
+          <div q-radio-group-items>
+            <label label="Option 1" q-radio value="option1"></label>
+          </div>
+        </fieldset>
+      `,
+    },
+    {
+      expectedName: "External group",
+      name: "aria-labelledby references an external label",
+      template: `
+        <span id="external-group-label">External group</span>
+        <fieldset
+          aria-label="Custom group"
+          aria-labelledby="external-group-label"
+          q-radio-group
+        >
+          <div q-radio-group-label>Group Label</div>
+          <div q-radio-group-items>
+            <label label="Option 1" q-radio value="option1"></label>
+          </div>
+        </fieldset>
+      `,
+    },
+  ])("$name", async ({expectedName, template}) => {
+    await render(template, {imports: [RadioModule]})
+
+    await expect
+      .element(page.getByRole("radiogroup", {name: expectedName}))
+      .toBeVisible()
+  })
 })

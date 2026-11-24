@@ -33,6 +33,22 @@ export class CoreRadioGroupDirective
   implements OnInit, SignalifyInput<Omit<RadioApiProps, "form" | "value">>
 {
   /**
+   * Accessible name of the radio group. Use when the group has no
+   * `q-radio-group-label`.
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID of an external element that labels the radio group. Takes precedence
+   * over {@link ariaLabel} and the `q-radio-group-label` element.
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
+  /**
    * The document's text/writing direction.
    *
    * @default "ltr"
@@ -64,12 +80,30 @@ export class CoreRadioGroupDirective
 
   protected readonly document = inject(DOCUMENT)
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.radioContextService.context().getGroupBindings({
+  protected readonly trackBindings = useTrackBindings(() => ({
+    ...this.radioContextService.context().getGroupBindings({
       id: this.hostId(),
       onDestroy: this.onDestroy,
     }),
-  )
+    ...this.labelBindings(),
+  }))
+
+  /**
+   * An explicit `aria-label` replaces the `aria-labelledby` reference to the
+   * `q-radio-group-label` element, which would otherwise take precedence over
+   * it.
+   */
+  private readonly labelBindings = computed(() => {
+    const ariaLabel = this.ariaLabel()
+    const ariaLabelledby = this.ariaLabelledby()
+    if (ariaLabelledby) {
+      return {"aria-labelledby": ariaLabelledby}
+    }
+    if (ariaLabel) {
+      return {"aria-label": ariaLabel, "aria-labelledby": undefined}
+    }
+    return {}
+  })
 
   protected readonly hostId = computed(() => useId(this, this.id()))
 
