@@ -1557,6 +1557,47 @@ describe("Tree", () => {
       .toBeVisible()
   })
 
+  test.each([
+    {
+      expectedName: "Custom files",
+      name: "aria-label replaces the default name",
+      template: `<div q-tree-root aria-label="Custom files" [collection]="collection"></div>`,
+    },
+    {
+      expectedName: "Custom files",
+      name: "aria-label replaces the tree label",
+      template: `
+        <div q-tree-root aria-label="Custom files" [collection]="collection">
+          <div q-tree-label>Project files</div>
+        </div>
+      `,
+    },
+    {
+      expectedName: "External files",
+      name: "aria-labelledby references an external label",
+      template: `
+        <span id="external-tree-label">External files</span>
+        <div
+          q-tree-root
+          aria-label="Custom files"
+          aria-labelledby="external-tree-label"
+          [collection]="collection"
+        >
+          <div q-tree-label>Project files</div>
+        </div>
+      `,
+    },
+  ])("$name", async ({expectedName, template}) => {
+    await render(template, {
+      componentProperties: {collection: createTestCollection()},
+      imports: [TreeModule],
+    })
+
+    await expect
+      .element(page.getByRole("tree", {name: expectedName}))
+      .toBeInTheDocument()
+  })
+
   test("context api exposes expanded value and visible node count", async () => {
     const collection = createTestCollection()
 

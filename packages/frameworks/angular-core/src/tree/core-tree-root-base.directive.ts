@@ -57,6 +57,23 @@ export abstract class CoreTreeRootBaseDirective<T extends TreeNode = TreeNode>
   abstract readonly collection: Signal<TreeCollection<T> | undefined>
 
   /**
+   * Accessible name of the tree. Use when the tree has no `q-tree-label`.
+   *
+   * @default "Tree View"
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, {
+    alias: "aria-label",
+  })
+
+  /**
+   * ID of an external element that labels the tree. Takes precedence over
+   * {@link ariaLabel} and the `q-tree-label` element.
+   */
+  readonly ariaLabelledby = input<string | undefined>(undefined, {
+    alias: "aria-labelledby",
+  })
+
+  /**
    * The controlled checked node value
    */
   readonly checkedValue = input<string[] | undefined>()
@@ -223,11 +240,28 @@ export abstract class CoreTreeRootBaseDirective<T extends TreeNode = TreeNode>
   )
   protected readonly treeContextService = inject(TreeContextService)
 
-  protected readonly trackBindings = useTrackBindings(() =>
-    this.treeContextService.context().getRootBindings({
+  protected readonly trackBindings = useTrackBindings(() => ({
+    ...this.treeContextService.context().getRootBindings({
       id: this.hostId(),
     }),
-  )
+    ...this.labelBindings(),
+  }))
+
+  /**
+   * An explicit `aria-label` replaces the `aria-labelledby` reference to the
+   * `q-tree-label` element, which would otherwise take precedence over it.
+   */
+  private readonly labelBindings = computed(() => {
+    const ariaLabel = this.ariaLabel()
+    const ariaLabelledby = this.ariaLabelledby()
+    if (ariaLabelledby) {
+      return {"aria-labelledby": ariaLabelledby}
+    }
+    if (ariaLabel) {
+      return {"aria-label": ariaLabel, "aria-labelledby": undefined}
+    }
+    return {}
+  })
 
   protected readonly resolvedDefaultExpandedValue = computed(() =>
     this.defaultExpandedValue(),
