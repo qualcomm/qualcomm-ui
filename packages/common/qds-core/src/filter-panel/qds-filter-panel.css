@@ -150,24 +150,39 @@
     display: none;
   }
 
-  /* Filter controls render nothing while the filter has no collection. */
-  &:empty {
+  /*
+   * Filter controls render nothing while the filter has no collection. Control
+   * host elements stay in the DOM, empty.
+   */
+  &:empty,
+  &:has(
+    > :is(
+        .qui-filter-control__host,
+        .qui-filter-control__option-group
+      ):only-child:empty
+  ) {
     display: none;
   }
 
-  &:has(> .qui-filter-control__option-group:last-child) {
+  &:has(> .qui-filter-control__option-group:last-child),
+  &:has(
+    > .qui-filter-control__host:last-child
+      > .qui-filter-control__option-group:last-child
+  ) {
     padding-block-end: var(--spacing-100);
   }
 
   /* Content after an option list starts 4px below the last option's padding. */
-  > .qui-filter-control__option-group + * {
+  > .qui-filter-control__option-group + *,
+  > .qui-filter-control__host > .qui-filter-control__option-group + * {
     margin-block-start: calc(
       var(--spacing-100) - var(--filter-panel-content-gap)
     );
   }
 
   /* Tree nodes supply their own padding and span the full width. */
-  &:has(> .qui-tree__root) {
+  &:has(> .qui-tree__root),
+  &:has(> .qui-filter-control__host > .qui-tree__root) {
     padding: 0 0 var(--spacing-100);
   }
 }

@@ -1,3 +1,12 @@
+/*
+ * The host element of a filter control in frameworks that render one for
+ * every component, such as Angular. It renders no box of its own, so the
+ * control's elements lay out as direct children of the filter's content.
+ */
+.qui-filter-control__host {
+  display: contents;
+}
+
 .qui-filter-control__option-group {
   --filter-control-option-gap: calc(
     var(--filter-control-option-padding-block) * 2
