@@ -54,7 +54,6 @@ const tableFeatures = [
   "column-visibility",
   "editable-data",
   "filters-column-header",
-  "filters-facet-index",
   "filters-panel",
   "filters-server-side",
   "grouping",
