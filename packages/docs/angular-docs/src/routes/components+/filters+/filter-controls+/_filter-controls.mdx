@@ -1,0 +1,199 @@
+---
+title: Filter Controls
+description: Filter controls for the filter panel, covering options, hierarchies, dates, numeric ranges, and free text.
+component: Filters
+aliases: [filter controls, checkbox filter, date filter, range filter, text filter]
+badges:
+  - id: beta
+    label: Beta
+    url: /versioning#beta
+  - id: since
+    label: 4.3.0
+    url: https://github.com/qualcomm/qualcomm-ui/blob/main/packages/frameworks/angular/CHANGELOG.md#430
+---
+
+import {QdsDemo} from "~components/demo"
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+
+# {frontmatter.title}
+
+{frontmatter.description}
+
+```typescript
+import {FiltersModule} from "@qualcomm-ui/angular/filters"
+```
+
+## Overview
+
+Each filter is a control built on one of our existing components. Render it inside a `q-filter-panel-filter` of a [Filter Panel](../filter-panel.mdx), or inside a `q-filter-provider` under a `q-filter-set-provider` to use it without a panel.
+
+```angular-html
+<ng-container q-filter-set-provider [value]="filterSet()">
+  <ng-container q-filter-provider [filter]="filters.status">
+    <q-checkbox-group-filter />
+  </ng-container>
+</ng-container>
+```
+
+`filterSet` comes from `useFilterSet`. Outside a panel, controls use the `sm` size, and use the filter's label as their `aria-label` unless `q-filter-provider` sets a [labelId](#labelId).
+
+- `q-checkbox-group-filter`: `string[]`. Pick any number of options.
+- `q-checkbox-tree-filter`: `string[]`. Pick leaves from a hierarchy. Only leaf values are stored.
+- `q-combobox-filter`: `string[]`. Search and pick from a long option list.
+- `q-date-filter`: `{preset: string} | {range: [string | null, string | null]}`. Pick a date range or a preset. Dates are ISO 8601 strings, and `null` leaves a side open.
+- `q-radio-group-filter`: `string[]`. Pick one option. The value is a one-item array.
+- `q-select-filter`: `string[]`. Pick from a short option list in a dropdown.
+- `q-slider-filter`: `[number | null, number | null]`. Pick a numeric range. `null` leaves a side open.
+- `q-text-input-filter`: `string`. Enter free text.
+
+List and tree filters render the items of the filter's collection, which comes from its definition or the panel's `getFilterCollection`. A filter without a collection shows no options. See [Loading Options](../filter-panel.mdx#loading-options).
+
+Each section below lists the inputs of that filter. Inputs of the underlying component that aren't listed are not exposed.
+
+## Checkbox Group Filter
+
+::: terms
+checkbox group, multi-select
+:::
+
+Shows every option as a checkbox. Use it when the list is short enough to scan.
+
+<QdsDemo name="CheckboxGroupFilterDemo" />
+
+The checkbox group filter has no inputs. Its host element is the checkbox group.
+
+## Checkbox Tree Filter
+
+::: terms
+hierarchy, nested options, tree
+:::
+
+Selects leaves from a hierarchy. Checking a branch checks all of its leaves, and only leaf values are stored. The nodes come from the filter's [TreeCollection](/components/tree#tree-collection), set on `treeFilter`.
+
+<QdsDemo name="CheckboxTreeFilterDemo" />
+
+<TypeDocProps name="CheckboxTreeFilterComponent" />
+
+These map to the inputs and outputs of the underlying [Tree](/components/tree).
+
+## Combobox Filter
+
+::: terms
+search, autocomplete, long list
+:::
+
+Use a combobox when the list is too long to scan. Typing narrows the options by label.
+
+<QdsDemo name="ComboboxFilterDemo" />
+
+<TypeDocProps name="ComboboxFilterComponent" />
+
+These map to the inputs and outputs of the underlying [Combobox](/components/combobox).
+
+## Date Filter
+
+::: terms
+date range, presets, last 7 days, calendar
+:::
+
+Selects a date range, or one of the definition's presets. Ranges are stored as ISO 8601 dates.
+
+<QdsDemo name="DateFilterDemo" />
+
+Presets are listed on the definition. A preset whose value is one of the [date picker's presets](../../date-picker+/_date-picker.mdx#presets), like `"last7Days"`, doesn't need a `range`. Any other preset supplies its own.
+
+```ts
+dateFilter({
+  label: "Submitted",
+  presets: [
+    {label: "Last 7 days", value: "last7Days"},
+    {
+      label: "Since release",
+      range: () => ["2026-09-01", null],
+      value: "release",
+    },
+  ],
+})
+```
+
+A selected preset is stored as `{preset: "last7Days"}`, not as dates, so it stays relative to the current day. Use `resolveDateFilterPreset` to turn it into a range when you need one:
+
+```ts
+import {resolveDateFilterPreset} from "@qualcomm-ui/core/filters"
+
+const [start, end] = resolveDateFilterPreset(preset)
+```
+
+Week presets depend on the locale, and every preset depends on the time zone. `resolveDateFilterPreset` defaults both to the user's, and accepts them as options.
+
+<TypeDocProps name="DateFilterComponent" />
+
+The `disabled`, `locale`, `max`, `min`, `placeholder`, and `timeZone` inputs map to the inputs of the underlying [DatePicker](../../date-picker+/_date-picker.mdx).
+
+## Radio Group Filter
+
+::: terms
+single select, radio group
+:::
+
+Shows every option as a radio, for a single choice. `anyLabel` adds a leading radio that clears the filter.
+
+<QdsDemo name="RadioGroupFilterDemo" />
+
+<TypeDocProps name="RadioGroupFilterComponent" />
+
+The `disabled` and `orientation` inputs map to the inputs of the underlying [RadioGroup](../../radio+/_radio.mdx).
+
+## Select Filter
+
+::: terms
+dropdown, select
+:::
+
+Use a select for a short list where a dropdown saves space. For longer lists, use the [Combobox Filter](./#combobox-filter).
+
+<QdsDemo name="SelectFilterDemo" />
+
+<TypeDocProps name="SelectFilterComponent" />
+
+These map to the inputs of the underlying [Select](/components/select).
+
+## Slider Filter
+
+::: terms
+slider, numeric range, min max
+:::
+
+Selects a numeric range with a two-thumb slider. A thumb left at its bound is stored as `null`, which leaves that side open. The value is written when a thumb is released.
+
+The bounds come from the definition's `min` and `max`. Use `formatValue` on the definition to format the values in summaries.
+
+<QdsDemo name="SliderFilterDemo" />
+
+<TypeDocProps name="SliderFilterComponent" />
+
+These map to the inputs of the underlying [Slider](/components/slider).
+
+## Text Input Filter
+
+::: terms
+search, free text, debounce
+:::
+
+Captures free text. In auto mode, the value is committed once the user stops typing.
+
+<QdsDemo name="TextInputFilterDemo" />
+
+<TypeDocProps name="TextInputFilterComponent" />
+
+The inputs other than `debounce` map to the inputs of the underlying [TextInput](/components/text-input).
+
+## API
+
+### q-filter-set-provider
+
+<TypeDocProps name="FilterSetProviderDirective" />
+
+### q-filter-provider
+
+<TypeDocProps name="FilterProviderDirective" />
