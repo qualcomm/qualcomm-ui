@@ -35,7 +35,7 @@
     "@react-router/serve": "catalog:",
     "@tanstack/react-query": "^5.59.16",
     "@tanstack/react-virtual": "^3.13.12",
-    "compression": "^1.7.4",
+    "compression": "^1.8.2",
     "dayjs": "^1.11.19",
     "escape-string-regexp": "^5.0.0",
     "express": "^5.1.0",
