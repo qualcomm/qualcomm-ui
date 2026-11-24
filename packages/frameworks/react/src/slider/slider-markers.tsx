@@ -47,8 +47,18 @@ export function SliderMarkers({
 }: SliderMarkersProps): ReactElement {
   const context = useSliderContext()
   const groupId = useControlledId(id)
-  const markerValues =
-    Array.isArray(marks) && marks.length > 0 ? marks : context.getDefaultMarks()
+  /**
+   * Markers register under their value, so markers that share a value would
+   * overwrite each other's registration on every render without settling.
+   * Repeated values, such as `[min, max]` when `min` equals `max`, render once.
+   */
+  const markerValues = Array.from(
+    new Set(
+      Array.isArray(marks) && marks.length > 0
+        ? marks
+        : context.getDefaultMarks(),
+    ),
+  )
 
   return (
     <SliderMarkerGroup id={groupId} {...markerGroupProps}>

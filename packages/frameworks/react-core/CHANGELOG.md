@@ -1,5 +1,17 @@
 # @qualcomm-ui/react-core Changelog
 
+## 1.11.1
+
+Nov 23rd, 2026
+
+### Bug Fixes
+
+* [presence]: allow dismissing lazily mounted content on first open ([a1d752d](https://github.com/qualcomm/qualcomm-ui/commit/a1d752d))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.1, @qualcomm-ui/core@1.15.1, @qualcomm-ui/dom@1.3.4]
+
 ## 1.11.0
 
 Nov 12th, 2026

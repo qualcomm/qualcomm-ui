@@ -13,11 +13,11 @@
       "dependsOn": [
         "^build"
       ],
-      "outputs": ["dist"],
+      "outputs": ["dist", "node_modules/.tmp/.tsbuildinfo-lib"],
       "outputLogs": "new-only"
     },
-    "build:typedoc": {
-      "outputs": ["./.typedoc/*.json", "./src/assets/doc-props/doc-properties.json"],
+    "typescoop-extract": {
+      "outputs": ["./.typescoop/*.json"],
       "outputLogs": "new-only"
     },
     "test": {

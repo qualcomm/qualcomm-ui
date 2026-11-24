@@ -43,6 +43,12 @@
 .qui-json-viewer__root {
   font: var(--font-static-code-sm-default);
   width: 100%;
+
+  /* Code keeps the tighter indent. Compounded to outrank the tree root on the
+   * same element. */
+  &.qui-tree__root {
+    --indent-spacing: 22px;
+  }
 }
 
 /* Compact row height - override tree node defaults */

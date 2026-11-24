@@ -20,7 +20,8 @@ import type {ComponentProps, DocProps, PropInfo} from "../types.js"
 import {exists} from "../utils.js"
 
 function extractBestType(propInfo: PropInfo): string {
-  const type = propInfo.resolvedType?.prettyType || propInfo.type
+  const type =
+    propInfo.resolvedType?.prettyType || propInfo.resolvedType?.type || ""
 
   return cleanType(type.startsWith("| ") ? type.substring(2) : type)
 }

@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/codemod",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Codemod utilities for automatic QUI package migrations",
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -21,10 +21,10 @@
     "build": "run-s clean build:js build:ts",
     "clean": "shx rm -rf dist node_modules/.tmp",
     "build:js": "tsx build.ts",
-    "build:ts": "tsc -b --force",
+    "build:ts": "tsc -b",
     "dev": "run-p watch:js watch:ts",
     "watch:js": "tsx build.ts --watch",
-    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "watch:ts": "tsc -b -w --preserveWatchOutput",
     "lint": "eslint --quiet",
     "test": "vitest -c vitest.config.ts --run",
     "test:ui": "vitest -c vitest.config.ts --ui --coverage.enabled=true",
@@ -58,6 +58,6 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@qualcomm-ui/utils": "workspace:^1.6.0"
+    "@qualcomm-ui/utils": "workspace:^1.6.1"
   }
 }

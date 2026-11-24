@@ -13,6 +13,8 @@ const components = [
   "divider",
   "drawer",
   "file-input",
+  "filter-panel",
+  "filters",
   "header-bar",
   "icon",
   "icon-button",

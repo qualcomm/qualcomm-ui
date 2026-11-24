@@ -64,7 +64,8 @@ export function Root({
     demoSettingsProp || {transformTailwindClasses: false},
   )
 
-  const {exports, navItems, pageDocProps, pageMap} = useDocsManifestContext()
+  const {exports, navItems, pageDocProps, pageMap, typeRefs} =
+    useDocsManifestContext()
 
   const mdxDocsContextValue: DocsRuntimeContextValue = useMemo(
     () => ({
@@ -147,6 +148,7 @@ export function Root({
       setMainContentElement,
       showToc,
       toc,
+      typeRefs,
     }
   }, [
     exports,
@@ -157,6 +159,7 @@ export function Root({
     pageDocProps,
     pageMap,
     pathname,
+    typeRefs,
   ])
 
   const mergedProps = mergeProps(

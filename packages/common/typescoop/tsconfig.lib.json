@@ -1,0 +1,17 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.lib.json",
+  "compilerOptions": {
+    "composite": true,
+    "incremental": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib",
+    "types": ["node"]
+  },
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "../typedoc-common/tsconfig.lib.json"
+    }
+  ]
+}

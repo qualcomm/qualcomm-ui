@@ -6,7 +6,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "types": ["dom-navigation"],
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib",
   },
   "include": ["./src"],
   "exclude": ["./src/**/*.spec.tsx"],

@@ -4,8 +4,8 @@
     "composite": true,
     "rootDir": "./src",
     "noCheck": true,
-    "outDir": "node_modules/.tmp/out-spec-mocks",
-    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-spec-mocks",
+    "outDir": "node_modules/.cache/tsc/out-spec-mocks",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-spec-mocks",
     "types": ["node"]
   },
   "include": ["./src/**/mocks"],

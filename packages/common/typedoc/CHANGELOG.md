@@ -1,5 +1,15 @@
 # @qualcomm-ui/typedoc Changelog
 
+## 1.1.9
+
+Nov 19th, 2026
+
+### Miscellaneous Chores
+
+* [deps]: update @clack/prompts to 1.9.0 ([f7f9950](https://github.com/qualcomm/qualcomm-ui/commit/f7f9950))
+* [typedoc]: deprecate in favor of typescoop ([a7d93a2](https://github.com/qualcomm/qualcomm-ui/commit/a7d93a2))
+* **deps:** update dependencies [@qualcomm-ui/typedoc-common@1.1.0]
+
 ## 1.1.8
 
 Nov 9th, 2026

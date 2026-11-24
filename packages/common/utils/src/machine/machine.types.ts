@@ -556,9 +556,8 @@ export type ActionsForEvent<
  */
 type EntryExitActions<TConfig> = TConfig extends {states: infer S}
   ? S[keyof S] extends infer State
-    ?
-        | (State extends {entry: ReadonlyArray<infer A>} ? A : never)
-        | (State extends {exit: ReadonlyArray<infer A>} ? A : never)
+    ? | (State extends {entry: ReadonlyArray<infer A>} ? A : never)
+      | (State extends {exit: ReadonlyArray<infer A>} ? A : never)
     : never
   : never
 

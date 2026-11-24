@@ -13,18 +13,22 @@ import {ExternalLink} from "lucide-react"
 
 import type {PagePropType, PagePropTypes} from "@qualcomm-ui/mdx-common"
 import {CodeHighlight} from "@qualcomm-ui/react-mdx/code-highlight"
+import {dummyTypePrefix} from "@qualcomm-ui/react-mdx/shiki"
 import {InlineNotification} from "@qualcomm-ui/react/inline-notification"
 import {Link} from "@qualcomm-ui/react/link"
 import {ensureArray} from "@qualcomm-ui/utils/array"
 import {mergeProps} from "@qualcomm-ui/utils/merge-props"
 
 import {
+  displayedType,
   findFirstComponentJsdoc,
   JsdocComment,
   sortAndSelectProps,
   type TypeDocAngularPropConfig,
   TypeDocFunctionContent,
+  TypeDocTypeParameters,
 } from "./internal/index.js"
+import {useHighlightedReferences} from "./internal/use-highlighted-references.js"
 import {TypedocPropsList} from "./typedoc-props-list.js"
 import {TypedocPropsTable} from "./typedoc-props-table.js"
 import {usePropsContext} from "./use-props-context.js"
@@ -45,6 +49,14 @@ export type TypeDocPropsProps = Omit<
    * Override the changelog pathname for the `@since` tags.
    */
   changelogPathname?: string
+
+  /**
+   * Display small object types by name instead of inline. For example,
+   * `ListFilterDefinition` in place of `{kind: 'list'; label?: string}`.
+   *
+   * @default false
+   */
+  collapseRefs?: boolean
 
   columnNames?: ColumnNames
 
@@ -121,6 +133,7 @@ export type TypeDocPropsProps = Omit<
 export function TypeDocProps({
   angularConfig,
   changelogPathname,
+  collapseRefs = false,
   columnNames,
   hideDefaultColumn: hideDefaultColumnProp = false,
   linkifyPrimaryColumn = true,
@@ -138,6 +151,7 @@ export function TypeDocProps({
 }: TypeDocPropsProps): ReactNode {
   const propContext = usePropsContext()
   const {propsLayout} = usePropsLayoutContext()
+  const references = useHighlightedReferences()
   const [loaded, setLoaded] = useState<boolean>(false)
 
   useEffect(() => {
@@ -237,6 +251,7 @@ export function TypeDocProps({
 
   const typeDocContext: TypeDocContextValue = useMemo(() => {
     return {
+      collapseRefs,
       columnNames: columnNames ?? {
         defaultValue: "Default",
         description: "Description",
@@ -249,6 +264,7 @@ export function TypeDocProps({
       linkifyPrimaryColumn,
     }
   }, [
+    collapseRefs,
     columnNames,
     hideDefaultColumn,
     linkifyPrimaryColumn,
@@ -262,7 +278,7 @@ export function TypeDocProps({
         description={
           <Link
             endIcon={ExternalLink}
-            href="https://docs.qui.qualcomm.com/guide/typedoc#type-detection"
+            href="https://docs.qui.qualcomm.com/typescoop#type-detection"
             rel="noreferrer"
             size="md"
             target="_blank"
@@ -290,7 +306,14 @@ export function TypeDocProps({
   const componentJsdoc =
     showComponentJsdoc && findFirstComponentJsdoc(names, propContext)
 
+  // merged interfaces have no single declaration to show.
+  const typeParameters =
+    names.length === 1 ? firstValidPropTypes?.typeParameters : undefined
+
   if (!sortedProps.length) {
+    const prettyType = firstValidPropTypes?.resolvedType
+      ? displayedType(firstValidPropTypes.resolvedType, collapseRefs).prettyType
+      : undefined
     if (firstValidPropTypes?.resolvedType?.type === "signature") {
       return (
         <TypeDocContextProvider value={typeDocContext}>
@@ -301,15 +324,16 @@ export function TypeDocProps({
         </TypeDocContextProvider>
       )
     } else if (
-      firstValidPropTypes?.resolvedType?.prettyType &&
+      prettyType &&
       firstValidPropTypes?.resolvedType?.type !== "any"
     ) {
       return (
         <TypeDocContextProvider value={typeDocContext}>
           <div className="doc-props__symbol-wrapper">
             <CodeHighlight
-              code={firstValidPropTypes.resolvedType.prettyType}
+              code={`${dummyTypePrefix}${prettyType}`}
               disableCopy
+              highlightedReferences={references}
               language="tsx"
             />
           </div>
@@ -327,6 +351,12 @@ export function TypeDocProps({
         suppressHydrationWarning
       >
         <JsdocComment comment={componentJsdoc || null} />
+        {typeParameters?.length ? (
+          <TypeDocTypeParameters
+            name={names[0]}
+            typeParameters={typeParameters}
+          />
+        ) : null}
         {propsLayout === "table" ? (
           <>
             <div className="docs-table__wrapper" suppressHydrationWarning>

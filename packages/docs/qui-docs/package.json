@@ -10,11 +10,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "run-s build:typedoc build:site build:semantic-search",
+    "build": "run-s typescoop-extract build:site build:semantic-search",
     "build:semantic-search": "tsx build-semantic-search.ts",
     "build:site": "react-router build",
-    "build:typedoc": "qui-typedoc build",
-    "watch:typedoc": "qui-typedoc watch",
+    "typescoop-extract": "typescoop extract",
     "dev": "run-p dev:app typecheck",
     "dev:app": "react-router typegen && vite -c vite.config.ts",
     "lint": "eslint --quiet",
@@ -25,6 +24,7 @@
   "dependencies": {
     "@faker-js/faker": "catalog:",
     "@floating-ui/react": "^0.27.3",
+    "@mdx-js/react": "catalog:",
     "@qualcomm-ui/core": "workspace:*",
     "@qualcomm-ui/dom": "workspace:*",
     "@qualcomm-ui/mdx-common": "workspace:*",
@@ -37,8 +37,8 @@
     "@qualcomm-ui/react-router-utils": "workspace:*",
     "@qualcomm-ui/react-swagger": "workspace:*",
     "@qualcomm-ui/tailwind-plugin": "workspace:*",
-    "@qualcomm-ui/typedoc": "workspace:*",
     "@qualcomm-ui/typedoc-common": "workspace:*",
+    "@qualcomm-ui/typescoop": "workspace:*",
     "@qualcomm-ui/utils": "workspace:*",
     "@react-router/express": "catalog:",
     "@react-router/node": "catalog:",
@@ -55,6 +55,7 @@
     "jotai": "^2.7.1",
     "lodash-es": "catalog:",
     "lucide-react": "0.569.0",
+    "minimatch": "catalog:",
     "morgan": "^1.10.0",
     "react": "catalog:",
     "react-device-detect": "^2.2.3",
@@ -65,7 +66,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@mdx-js/react": "catalog:",
     "@mdx-js/rollup": "catalog:",
     "@qualcomm-ui/mdx-vite": "workspace:*",
     "@qualcomm-ui/qds-core": "workspace:*",

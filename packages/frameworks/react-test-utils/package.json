@@ -1,6 +1,6 @@
 {
   "name": "@qualcomm-ui/react-test-utils",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": true,
   "license": "BSD-3-Clause-Clear",
   "author": "Ryan Bower",
@@ -14,13 +14,12 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "shx rm -rf dist node_modules/.tmp",
-    "compile": "run-p build:js build:ts",
-    "build": "run-s clean compile",
+    "build": "run-s clean build:js build:ts",
     "build:js": "vite build",
-    "build:ts": "tsc -b tsconfig.lib.json"
+    "build:ts": "tsc -b"
   },
   "devDependencies": {
-    "@clack/prompts": "1.0.0-alpha.6",
+    "@clack/prompts": "^1.9.0",
     "@qualcomm-ui/cli": "catalog:",
     "@qualcomm-ui/core": "workspace:*",
     "@qualcomm-ui/qds-core": "workspace:*",
@@ -37,6 +36,7 @@
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
     "lodash-es": "catalog:",
+    "npm-run-all2": "catalog:",
     "playwright": "^1.60.0",
     "react": "catalog:",
     "react-dom": "catalog:",

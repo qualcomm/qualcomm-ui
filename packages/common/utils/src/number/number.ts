@@ -122,7 +122,15 @@ export function getRoundedValuePercent(
   return Number(clamped.toFixed(precision))
 }
 
+/**
+ * Returns where `v` falls between `vmin` and `vmax`, as a fraction from 0 to 1.
+ * An empty range (`vmin` equal to `vmax`) returns 0, matching where a native
+ * range input places its thumb, instead of the `NaN` from dividing by zero.
+ */
 export function getValuePercent(v: number, vmin: number, vmax: number): number {
+  if (vmax === vmin) {
+    return 0
+  }
   return (nan(v) - vmin) / (vmax - vmin)
 }
 

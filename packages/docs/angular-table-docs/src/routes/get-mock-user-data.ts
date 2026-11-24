@@ -21,6 +21,7 @@ const seeds: string[] = [
   "/features/row-selection",
   "/features/sorting",
   "/features/virtualized-rows",
+  "/",
 ]
 
 export async function action({request}: ActionFunctionArgs) {

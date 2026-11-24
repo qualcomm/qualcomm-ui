@@ -1,7 +1,7 @@
 {
   "extends": "@qualcomm-ui/tsconfig/tsconfig.angular-lib-strict.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo-angular-lib",
+    "tsBuildInfoFile": "node_modules/.tmp/.tsbuildinfo-lib",
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src",

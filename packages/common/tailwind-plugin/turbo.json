@@ -8,7 +8,7 @@
         "src/**",
         "scripts/**"
       ],
-      "outputs": ["dist/**", "stats.yml"]
+      "outputs": ["dist/**", "node_modules/.tmp/.tsbuildinfo-lib", "stats.yml"]
     }
   }
 }

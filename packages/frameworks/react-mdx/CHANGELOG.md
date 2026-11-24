@@ -1,5 +1,47 @@
 # @qualcomm-ui/react-mdx Changelog
 
+## 3.5.0
+
+Nov 23rd, 2026
+
+### Features
+
+* [styles]: update docs code block and table header backgrounds ([57e3354](https://github.com/qualcomm/qualcomm-ui/commit/57e3354))
+* [type-docs]: show referenced type declarations on hover ([b15b708](https://github.com/qualcomm/qualcomm-ui/commit/b15b708))
+* [type-docs]: document BooleanDataAttr attributes as boolean ([0245d17](https://github.com/qualcomm/qualcomm-ui/commit/0245d17))
+
+### Tests
+
+* [type-docs]: cover type ref hover cards in code blocks ([c78afe1](https://github.com/qualcomm/qualcomm-ui/commit/c78afe1))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.1, @qualcomm-ui/react-core@1.11.1, @qualcomm-ui/mdx-common@2.8.0, @qualcomm-ui/core@1.15.1, @qualcomm-ui/react@2.2.2]
+
+## 3.4.3
+
+Nov 19th, 2026
+
+### Bug Fixes
+
+* [react-mdx]: link bare type names and generic arguments to page references ([36fc89b](https://github.com/qualcomm/qualcomm-ui/commit/36fc89b))
+
+### Documentation
+
+* [qui-docs]: add typescoop guide ([ad0b5dc](https://github.com/qualcomm/qualcomm-ui/commit/ad0b5dc))
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/mdx-common@2.7.2, @qualcomm-ui/react@2.2.1, @qualcomm-ui/react-core@1.11.0]
+
+## 3.4.2
+
+Nov 13th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/react@2.2.1]
+
 ## 3.4.1
 
 Nov 12th, 2026

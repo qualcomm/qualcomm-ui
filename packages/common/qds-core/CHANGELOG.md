@@ -1,5 +1,21 @@
 # @qualcomm-ui/qds-core Changelog
 
+## 2.1.2
+
+Nov 23rd, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.1, @qualcomm-ui/core@1.15.1]
+
+## 2.1.1
+
+Nov 13th, 2026
+
+### Code Refactoring
+
+* [animations]: add qui prefix to keyframes ([94bf8c5](https://github.com/qualcomm/qualcomm-ui/commit/94bf8c5))
+
 ## 2.1.0
 
 Nov 12th, 2026

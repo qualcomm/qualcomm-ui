@@ -4,6 +4,7 @@
 import type {
   QuiPropDeclaration,
   QuiPropTypes,
+  SerializedRef,
 } from "@qualcomm-ui/typedoc-common"
 
 export interface PageHeading {
@@ -373,6 +374,12 @@ export interface SiteData {
    * segments of text content.
    */
   searchIndex: PageSection[]
+
+  /**
+   * The declarations of the named types that the doc props of any page
+   * display, by name.
+   */
+  typeRefs?: Record<string, SerializedRef>
 }
 
 export interface SimplifiedProp {

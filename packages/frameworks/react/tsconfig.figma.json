@@ -4,9 +4,10 @@
     "composite": true,
     "incremental": true,
     "rootDir": "./src",
-    "outDir": "./node_modules/.tmp/figma",
-    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo.figma",
+    "outDir": "node_modules/.cache/tsc/out-figma",
+    "tsBuildInfoFile": "node_modules/.cache/tsc/.tsbuildinfo-figma",
     "strict": false,
+    "noCheck": true,
     "paths": {
       "@qualcomm-ui/react/*": ["./src/*/index.ts"],
     }

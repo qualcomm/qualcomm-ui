@@ -44,7 +44,7 @@ export class TypeParser {
     this.initConfig()
     // defaults
     this.options = {
-      documentationScope: "only-public",
+      documentationScope: "all",
       ...this._options,
       outputFile: this._options.outputFile || ".typedoc/doc-props.json",
     }

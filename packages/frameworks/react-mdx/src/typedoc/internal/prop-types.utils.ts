@@ -9,6 +9,7 @@ import type {
 import {
   type QuiComment,
   type QuiPropTypes,
+  type SerializedType,
   sortTypeDocProps,
 } from "@qualcomm-ui/typedoc-common"
 import {ensureArray} from "@qualcomm-ui/utils/array"
@@ -124,6 +125,23 @@ export function sortAndSelectProps(params: Params): PagePropType[] {
     shouldSortRequiredPropsFirst,
   )
   return [...sortedProps, ...outputProps]
+}
+
+/**
+ * The formatted and one-line forms of a type as displayed. When `collapseRefs`
+ * is set, inlined refs keep their name.
+ */
+export function displayedType(
+  resolvedType: SerializedType,
+  collapseRefs: boolean | undefined,
+): Pick<SerializedType, "prettyType" | "type"> {
+  if (!collapseRefs) {
+    return resolvedType
+  }
+  return {
+    prettyType: resolvedType.collapsedPrettyType ?? resolvedType.prettyType,
+    type: resolvedType.collapsedType ?? resolvedType.type,
+  }
 }
 
 export function findFirstComponentJsdoc(

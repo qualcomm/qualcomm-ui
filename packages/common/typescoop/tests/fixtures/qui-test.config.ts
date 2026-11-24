@@ -1,0 +1,11 @@
+import type {BuildOptions} from "../../src"
+
+export default {
+  entryPoints: [
+    "./src/package1/index.ts",
+    "./src/package2/index.ts",
+    "./src/package3/index.ts",
+  ],
+  outputFile: "./temp/doc-props.json",
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions

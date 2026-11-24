@@ -60,7 +60,7 @@ jobs:
     - name: build
       run: pnpm build
 
-    - name: typedoc
+    - name: typescoop
       run: pnpm doc-gen
 
     - name: lint docs
@@ -86,7 +86,7 @@ jobs:
         turborepo-remote-cache-secret-key: ${{ secrets.TURBOREPO_REMOTE_CACHE_SECRET_KEY }}
 
     - name: build eslint plugins and test deps
-      run: pnpm build --filter='@qualcomm-ui/eslint-plugin-angular...' --filter='@qualcomm-ui/eslint-plugin-react...' --filter='@qualcomm-ui/utils...' --filter='@qualcomm-ui/typedoc...'
+      run: pnpm build --filter='@qualcomm-ui/eslint-plugin-angular...' --filter='@qualcomm-ui/eslint-plugin-react...' --filter='@qualcomm-ui/utils...'
 
     - name: unit tests
       run: pnpm run test:unit:ci

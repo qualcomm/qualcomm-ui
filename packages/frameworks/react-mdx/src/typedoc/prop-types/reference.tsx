@@ -15,9 +15,10 @@ import type {QuiPropDeclaration} from "@qualcomm-ui/typedoc-common"
 import {pascalCase} from "@qualcomm-ui/utils/change-case"
 
 import {DocsExternalLink} from "../docs-external-link.js"
+import {displayedType} from "../internal/prop-types.utils.js"
+import {useHighlightedReferences} from "../internal/use-highlighted-references.js"
 import {usePropsContext} from "../use-props-context.js"
-
-import {SimpleType} from "./simple-type.js"
+import {useTypeDocContext} from "../use-typedoc-context.js"
 
 interface Props {
   /**
@@ -33,6 +34,8 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
   const props = usePropsContext()
   const {toc} = useDocsPageContext()
   const {renderLink: RenderLink} = useDocsRuntimeContext()
+  const {collapseRefs} = useTypeDocContext()
+  const references = useHighlightedReferences()
 
   const restPrefix = prop.rest ? "..." : ""
 
@@ -75,13 +78,12 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
     docLink,
     inheritDoc,
     name,
-    prettyType = "",
     reference,
     referencedType,
     referenceLink,
-    type,
     typeArgs,
   } = prop.resolvedType
+  const {prettyType = "", type} = displayedType(prop.resolvedType, collapseRefs)
 
   if (referenceLink) {
     if (inheritDoc) {
@@ -114,20 +116,27 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
     } else if (reference) {
       return <DocsExternalLink href={docLink} text={reference} />
     }
-  } else if (inheritDoc) {
-    // no doc link, but it might exist on this page, so we check here.
+  } else if (
+    inheritDoc ||
+    (reference && withoutTypeArguments((prettyType ?? "").trim()) === reference)
+  ) {
+    // no doc link, but it might exist on this page, so we check here. Types that
+    // display as a bare name, like `ComboboxOpenChangeDetails`, link the same way.
     let docProp: PagePropTypes | undefined
     let typeName: string | undefined
-    if (typeArgs?.[0]?.baseType === "reference" && typeArgs[0].type) {
-      typeName = typeArgs[0].type
+    if (!inheritDoc && reference) {
+      typeName = reference
+      docProp = props[typeName]
+    } else if (typeArgs?.[0]?.baseType === "reference" && typeArgs[0].type) {
+      // generic arguments such as `ListCollection<T>` are looked up by name.
+      typeName = withoutTypeArguments(typeArgs[0].type)
       docProp = props[typeName]
     }
-    if (!docProp && type) {
+    if (!docProp && inheritDoc && type) {
       typeName = type
       docProp = props[typeName]
       if (!docProp && type.endsWith(">")) {
-        // remove generic and try again
-        typeName = type.slice(0, type.indexOf("<"))
+        typeName = withoutTypeArguments(type)
         docProp = props[typeName]
       }
     }
@@ -163,14 +172,6 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
     }
   }
 
-  if (prop.resolvedType.parentTypeParam) {
-    return (
-      <SimpleType
-        content={`${restPrefix}${prop.resolvedType.parentTypeParam.type}`}
-      />
-    )
-  }
-
   if (!prettyType) {
     return null
   }
@@ -189,9 +190,15 @@ export function Reference({disableReferenceExpansion, prop}: Props): ReactNode {
           className="qui-docs-code fit"
           code={`${dummyTypePrefix}${restPrefix}${disableReferenceExpansion ? referencedType || name : prettyType}`}
           disableCopy
+          highlightedReferences={references}
           language="tsx"
         />
       )}
     </>
   )
+}
+
+function withoutTypeArguments(type: string): string {
+  const index = type.indexOf("<")
+  return index === -1 ? type : type.slice(0, index)
 }

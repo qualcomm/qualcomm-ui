@@ -1,0 +1,644 @@
+---
+title: Typescoop
+---
+
+import {TypeDocProps} from "@qualcomm-ui/react-mdx/typedoc"
+import {FileTree} from "@qualcomm-ui/react-mdx/file-tree"
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+Typescoop generates API documentation from your TypeScript types and JSDoc comments. It reads your source with the TypeScript compiler and writes a JSON model that the `TypeDocProps` component renders as a props table.
+
+> Typescoop is a replacement for our legacy `@qualcomm-ui/typedoc` package. It uses the TS compiler API directly to generate types significantly faster and more accurately.
+
+## Overview
+
+Consider the following example:
+
+```ts
+export type WeightUnit = "kg" | "lb"
+
+export interface Dog {
+  /**
+   * The age of the dog in human years.
+   */
+  age: number
+
+  /**
+   * The breed of the dog.
+   */
+  breed?: string
+
+  /**
+   * The name of the dog.
+   */
+  name: string
+
+  /**
+   * The weight of the dog. Refer to {@link weightUnit} for unit type
+   * information.
+   */
+  weight?: number
+
+  /**
+   * The unit type of the {@link weight} field.
+   *
+   * @option `'kg'`: kilograms.
+   * @option `'lb'`: pounds.
+   */
+  weightUnit?: WeightUnit
+}
+```
+
+Typescoop collects the exported `Dog` interface, resolves each property's type, and writes the result to a JSON file. Reference the interface by name in the `TypeDocProps` component to render its documentation:
+
+```tsx
+<TypeDocProps name="Dog" />
+```
+
+<TypeDocProps name="Dog" />
+
+## Features
+
+- JSDoc comment and tag parsing.
+- Links between properties of the same interface.
+- Union expansion and reference type resolution.
+- Inline printing of small object types.
+- Import statements for referenced types.
+- Property anchor links, including same-page collision resolution.
+- Formatted type output.
+- Required and deprecated property indicators.
+- Angular input, output, and public method grouping.
+- Watch mode with incremental rebuilds.
+
+## Getting Started
+
+::: steps h3
+
+### Install Packages
+
+<NpmInstallTabs
+  dev
+  packages="@qualcomm-ui/typescoop @qualcomm-ui/tsconfig"
+/>
+
+### Initialize the config
+
+Run the command and follow the prompts to generate the config:
+
+```shell
+typescoop init
+```
+
+The command asks for a file type, an output file, and a tsconfig path, then writes the config file. Typescoop looks for its config with [cosmiconfig](https://github.com/cosmiconfig/cosmiconfig), so `typescoop.config.ts`, `typescoop.config.js`, and `typescoop.config.json` all work.
+
+```ts
+// typescoop.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typescoop"
+
+export default {
+  logMode: "info",
+  outputFile: ".typescoop/type-data.json",
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions
+```
+
+### Run command
+
+`typescoop extract` generates the JSON once. Add `-w` to watch source files for changes and rebuild. Use `--config <path>` to point at a config file in a different location.
+
+### Connect the docs site
+
+Set the `typeDocProps` option in your QUI Docs config to the output file:
+
+```ts
+// qui-docs.config.ts
+import type {QuiDocsConfig} from "@qualcomm-ui/mdx-vite"
+
+export default {
+  // ...
+  typeDocProps: ".typescoop/type-data.json",
+} satisfies QuiDocsConfig
+```
+
+The output is generated, so add the output directory to your `.gitignore`.
+
+::: /steps
+
+## Entry Points
+
+Typescoop documents the exports of each entry point. By default, the entry points are the files included by your `tsconfig`. You can set `entryPoints` in the config instead. Directories are expanded recursively to every `.ts`, `.tsx`, and `.d.ts` file they contain.
+
+```ts
+// typescoop.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typescoop"
+
+export default {
+  // optional. If omitted, the entry points are the files included
+  // by the tsconfig.
+  entryPoints: ["./src/index.ts"],
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions
+```
+
+### tsconfig
+
+The tsconfig defines the compiler options and, unless `entryPoints` is set, the files to document. Extend the default configuration from `@qualcomm-ui/tsconfig` to simplify setup. Type checking is not required to extract types, so `compileOptions.noCheck` is set by default.
+
+```jsonc
+// tsconfig.typescoop.json
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "include": ["./src"],
+  "exclude": ["**/*.spec.ts", "**/*.spec.tsx"],
+}
+```
+
+Typescoop reads TypeScript source directly, so you don't need to build your packages first. Pointing at `src` also keeps type information that is lost in compiled declarations, such as Angular decorators.
+
+### Multiple Packages
+
+If your library depends on another package in your workspace, include that package's source in the tsconfig as well.
+
+Consider an example project with the following structure:
+
+<FileTree
+  className="my-4"
+  expandedValue={["packages"]}
+  onExpandedValueChange={() => {}}
+  items={[
+    {
+      name: "packages",
+      items: [
+        {name: "base", items: []},
+        {name: "react", items: []},
+        {name: "react-docs", items: []},
+      ],
+    },
+  ]}
+/>
+
+- `react` depends on `base`.
+- `react-docs` contains the Typescoop config.
+
+The tsconfig needs to include both packages:
+
+```jsonc
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "include": ["../base/src", "../react/src"],
+}
+```
+
+If a package's imports resolve to its compiled output, add `paths` so that they resolve to source instead:
+
+```jsonc
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.typedoc.json",
+  "compilerOptions": {
+    "paths": {
+      "@my-org/base/*": ["../base/src/*"],
+    },
+  },
+  "include": ["../base/src", "../react/src"],
+}
+```
+
+### External Types
+
+Declarations that live in `node_modules` are treated as external. They are never documented as entities, and inherited members declared there, such as DOM attributes on an interface that extends `HTMLAttributes`, are left out of the props table. Properties that reference external types still print the type name.
+
+## Type Detection
+
+Typescoop decides which exports end up in the output with the `documentationScope` option.
+
+- `all` (default): every exported entity is documented. This increases the size of the JSON output.
+- `only-public`: an entity is documented when its JSDoc comment has the `@public` tag, or when it comes from a package listed in `moduleWhitelist`.
+
+```ts
+export interface ButtonProps {
+  // ...
+}
+```
+
+The following rules apply regardless of scope:
+
+- Only exports of the entry points are collected. Re-exports and aliases are followed to their declarations.
+- Functions, and variables that hold untyped arrow functions or function expressions, need a JSDoc comment to be documented. A comment with only the `@public` tag counts.
+- Default exports are named after their file.
+- If two entry points export the same name, the one listed last in `entryPoints` is used. Files in a directory entry point are processed in path order.
+- Entities and members tagged with `@internal` are excluded.
+- Members with the `private` or `protected` modifier, and `#private` members, are excluded. Methods and accessors need a JSDoc comment. Properties are included without one.
+
+If `TypeDocProps` reports that an entity was not found, check that the entity is exported from an entry point and, with the `only-public` scope, that it has the `@public` tag.
+
+### Inherited Comments
+
+A class without a JSDoc comment uses the comment of its nearest documented base class. A class member without a comment uses the comment of the member it overrides or implements. This lets a component class pick up the property documentation from the interface it implements.
+
+### Reference Types
+
+Unexported types are not expanded. Consider this example:
+
+```ts
+interface InternalDefinition {
+  /**
+   * Some function
+   */
+  someFn: (args: string) => void
+}
+
+export interface ExternalDefinition {
+  /**
+   * Property
+   */
+  property: InternalDefinition
+}
+```
+
+`InternalDefinition` is not exported, so the documentation for `ExternalDefinition.property` only shows the type name. Export `InternalDefinition` to show its structure.
+
+### Mapped Type Aliases
+
+An alias of a mapped type, such as `Record`, `Partial`, or `Pick`, shows its type as written.
+
+```ts
+export type FacetSelections = Record<string, readonly string[]>
+```
+
+`<TypeDocProps name="FacetSelections" />` renders `Record<string, readonly string[]>`, not the resolved `{[x: string]: readonly string[]}`. See [Inline Objects](#inline-objects) for how properties that reference these aliases are printed.
+
+### Arrays
+
+An array prints with the `[]` suffix when its element prints as a name. Other elements use `Array<...>`, or `ReadonlyArray<...>` for readonly arrays.
+
+| Source                    | Output                           |
+| :------------------------ | :------------------------------- |
+| `string[]`                | `string[]`                       |
+| `FacetBucket[]`           | `FacetBucket[]`                  |
+| `ListCollection<T>[]`     | `ListCollection<T>[]`            |
+| `readonly string[]`       | `readonly string[]`              |
+| `DateValue[][]`           | `DateValue[][]`                  |
+| `("start" \| "end")[]`    | `Array<'start' \| 'end'>`        |
+| `readonly (() => void)[]` | `ReadonlyArray<() => void>`      |
+| `("start" \| "end")[][]`  | `Array<Array<'start' \| 'end'>>` |
+
+The form depends on how the element prints, not how it is written. A documented union alias expands to its members, so `Size[]` with `type Size = "sm" | "md"` prints as `Array<'sm' | 'md'>`. A small object that prints inline uses `Array<{...}>`.
+
+## JSDoc Tags
+
+The following tags have special handling in Typescoop or the UI.
+
+### @default
+
+Use the `@default` tag to indicate a default value for a property. Values that aren't already in a code block are rendered as TypeScript.
+
+```ts
+export interface DefaultTagExample {
+  /**
+   * Example property.
+   *
+   * @default 0
+   */
+  age?: number
+}
+```
+
+<TypeDocProps name="DefaultTagExample" />
+
+### @deprecated
+
+Marks a property as deprecated. The UI shows a deprecated indicator next to the property.
+
+```ts
+export interface DeprecatedTagExample {
+  /**
+   * The size of the element. Use {@link size} instead.
+   *
+   * @deprecated
+   */
+  legacySize?: number
+
+  /**
+   * The size of the element.
+   */
+  size?: number
+}
+```
+
+<TypeDocProps name="DeprecatedTagExample" />
+
+### @inheritDoc
+
+Prints the type as written, without expanding it. This is useful for types that reference themselves or expand into something long.
+
+```ts
+export interface Option {
+  /**
+   * Unique identifier for the option.
+   */
+  id: string
+
+  /**
+   * Nested options.
+   *
+   * @inheritDoc
+   */
+  options?: Option[]
+
+  /**
+   * Option value.
+   */
+  value: string
+}
+```
+
+<TypeDocProps name="Option" />
+
+### @custom
+
+Replaces the printed type with the text after the tag. Use it when the real type is too complex to be useful in the docs.
+
+```ts
+export interface CustomTagExample {
+  /**
+   * Called when the value changes.
+   *
+   * @custom (value: string) => void
+   */
+  onValueChange?: <T extends string = string>(value: T) => void
+}
+```
+
+<TypeDocProps name="CustomTagExample" />
+
+### @docLink
+
+Links a type to a page on the docs site. Properties that reference the type link to that page.
+
+```ts
+/**
+ * Page data, defined in each MDX file's frontmatter section.
+ *
+ * @docLink /api/page-frontmatter
+ */
+export interface PageFrontmatter {
+  // ...
+}
+```
+
+To link types that you don't own, use the [referenceLinks](#reference-links) option instead.
+
+### @link
+
+Context is applied conditionally to the inline `@link` tag. `@linkcode` and `@linkplain` are handled the same way.
+
+- If the link starts with `https`, it's treated as an external link.
+- If the tag refers to a named property, it's treated as an internal link.
+
+```ts
+export interface LinkExample {
+  /**
+   * Visit {@link https://google.com this external link} to learn more.
+   */
+  externalLink?: string
+
+  /**
+   * Refer to the {@link externalLink} property.
+   */
+  internalLink?: string
+}
+```
+
+<TypeDocProps name="LinkExample" />
+
+### @option
+
+Renders a bullet list entry for each option. Useful for documenting union or enum types.
+
+```ts
+export type WeightUnit = "kg" | "lb"
+
+export interface OptionTagExample {
+  /**
+   * The unit type of the weight field.
+   *
+   * @option `'kg'`: kilograms.
+   * @option `'lb'`: pounds.
+   */
+  weightUnit: WeightUnit
+}
+```
+
+<TypeDocProps partial name="OptionTagExample" />
+
+### @see
+
+Use the `@see` tag to render a separate section of documentation in the JSDoc comment. This is typically used to highlight related types or interfaces.
+
+```ts
+export interface SeeTagExample {
+  /**
+   * @see {@link someOtherPropExample}
+   */
+  otherPropExample?: string
+
+  /**
+   * Another prop.
+   */
+  someOtherPropExample?: string
+}
+```
+
+<TypeDocProps name="SeeTagExample" />
+
+### @since
+
+The `@since` tag is used to indicate when a property was added. The default configuration assumes that you have a changelog at `/changelog`, but this can be modified per instance of `TypeDocProps` using the `changelogPathname` prop:
+
+```tsx
+<TypeDocProps changelogPathname="/changelogs/mdx-docs" name="SinceExample" />
+```
+
+```ts
+export interface SinceExample {
+  /**
+   * Foo.
+   *
+   * @since 3.10.0
+   */
+  foo: string
+}
+```
+
+<TypeDocProps
+  changelogPathname="/changelogs/mdx-docs"
+  name="SinceExample"
+/>
+
+### @internal
+
+Excludes an entity or member from the output.
+
+```ts
+export interface HiddenTagExample {
+  /**
+   * Hidden from the docs.
+   *
+   * @internal
+   */
+  internalState?: unknown
+
+  /**
+   * Shown in the docs.
+   */
+  label?: string
+}
+```
+
+<TypeDocProps name="HiddenTagExample" />
+
+## Angular
+
+Classes decorated with `@Component` or `@Directive` are documented as Angular components. Their members are grouped into inputs, outputs, and public methods.
+
+- Signal inputs (`input()`, `input.required()`, `model()`) and `@Input()` decorators are inputs.
+- Signal outputs (`output()`) and `@Output()` decorators are outputs.
+- Input and output aliases are used as the property name.
+- Required inputs are marked as required.
+- Signal types print their value type, so `input<string>()` prints as `string`.
+
+Use the `angularConfig` prop on `TypeDocProps` to choose which group to render:
+
+```tsx
+<TypeDocProps name="ButtonDirective" />
+<TypeDocProps angularConfig={{output: true}} name="ButtonDirective" />
+<TypeDocProps angularConfig={{publicMethods: true}} name="ButtonDirective" />
+```
+
+## Configuration
+
+Refer to the [API reference](./api/typescoop.mdx) for every option. The options below cover the most common customizations.
+
+### Import Resolver
+
+When a property references a named type, the UI can show the import statement for that type. The `importResolver` option returns that statement. It receives details about the reference, such as the type `name`, the `packageName` it comes from, and the `packagePath` of its source file. Return `undefined` to skip the import.
+
+```ts
+// typescoop.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typescoop"
+
+export default {
+  importResolver: ({name, packageName, packagePath}) => {
+    if (packageName === "@my-org/react") {
+      // src/button/button.tsx -> @my-org/react/button
+      const subModule = packagePath.split("/")[1]
+      return `import {${name}} from "${packageName}/${subModule}"`
+    }
+    if (packageName === "@types/react") {
+      return `import {${name}} from "react"`
+    }
+  },
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions
+```
+
+For wrapper types, the resolver also receives `typeArguments` and a `resolveImport` function, which you can use to return the import of an inner type instead:
+
+```ts
+importResolver: async (params) => {
+  if (params.name === "WithDataAttributes" && params.typeArguments[0]) {
+    return params.resolveImport(params.typeArguments[0])
+  }
+  // ...
+}
+```
+
+### Reference Links
+
+Use `referenceLinks` to link type names to pages on your docs site. This works for any type, including types you don't own.
+
+```ts
+// typescoop.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typescoop"
+
+export default {
+  referenceLinks: {
+    RenderProp: "/render-props#render-prop",
+  },
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions
+```
+
+### Module Whitelist
+
+With the `only-public` scope, every entity from a package listed in `moduleWhitelist` is documented, even without the `@public` tag.
+
+```ts
+// typescoop.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typescoop"
+
+export default {
+  moduleWhitelist: ["@my-org/react", "@my-org/core"],
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions
+```
+
+### Inline Objects
+
+Small documented object types are printed inline in place of their name, such as `{end: DateValue; start: DateValue}`. Use `inlineRefs` to change the limits. Objects with more than `maxMembers` members, or whose inline form is longer than `maxLength` characters, keep their name.
+
+```ts
+// typescoop.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typescoop"
+
+export default {
+  inlineRefs: {
+    maxLength: 80,
+    maxMembers: 4,
+  },
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions
+```
+
+Aliases of `Record`, `Partial`, and other mapped types from the TypeScript lib are printed inline as written. A property typed `selections: FacetSelections` shows `Record<string, readonly string[]>`. Only `maxLength` applies to these aliases.
+
+These aliases follow the object rule instead:
+
+- Aliases of `Pick` and `Omit`, since the inline form names another type to look up.
+- Aliases of a documented type, such as `type Actions = ActionSchema<"open">`.
+- Generic aliases, such as `type Schema<T> = Record<T, () => void>`.
+
+## Migrating from Typedoc
+
+Typescoop replaces `@qualcomm-ui/typedoc`. It no longer depends on TypeDoc, and its output works with the same `TypeDocProps` component from `@qualcomm-ui/react-mdx`.
+
+1. Replace the `@qualcomm-ui/typedoc` dev dependency with `@qualcomm-ui/typescoop`.
+2. Rename `qui-typedoc.config.ts` to `typescoop.config.ts` and update the `BuildOptions` import to `@qualcomm-ui/typescoop`.
+3. Move `entryPoints` and `tsconfig` out of `typedocOptions` to the top level of the config, then remove `typedocOptions`. Other TypeDoc options have no equivalent.
+4. Replace `qui-typedoc` with `typescoop` in your package scripts.
+5. Point your tsconfig and entry points at `src` instead of `dist`. Typescoop doesn't need compiled types.
+6. The default output file changed from `.typedoc/doc-props.json` to `.typescoop/type-data.json`. Update `typeDocProps` in your QUI Docs config and your `.gitignore`, or set `outputFile` to keep the old path.
+
+```ts
+// before: qui-typedoc.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typedoc"
+
+export default {
+  typedocOptions: {
+    entryPoints: ["./dist/index.d.ts"],
+    tsconfig: "tsconfig.typedoc.json",
+  },
+} satisfies BuildOptions
+```
+
+```ts
+// after: typescoop.config.ts
+import type {BuildOptions} from "@qualcomm-ui/typescoop"
+
+export default {
+  entryPoints: ["./src/index.ts"],
+  tsconfig: "tsconfig.typescoop.json",
+} satisfies BuildOptions
+```

@@ -1,5 +1,21 @@
 # @qualcomm-ui/react Changelog
 
+## 2.2.2
+
+Nov 23rd, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/utils@1.6.1, @qualcomm-ui/react-core@1.11.1, @qualcomm-ui/core@1.15.1, @qualcomm-ui/qds-core@2.1.2]
+
+## 2.2.1
+
+Nov 13th, 2026
+
+### Miscellaneous Chores
+
+* **deps:** update dependencies [@qualcomm-ui/qds-core@2.1.1]
+
 ## 2.2.0
 
 Nov 12th, 2026

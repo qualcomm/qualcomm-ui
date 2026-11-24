@@ -79,6 +79,10 @@ export interface SerializedParameters {
    */
   args?: SerializedParameters[]
   baseType?: string
+  /**
+   * For type parameters, the `extends` constraint as written.
+   */
+  constraint?: FormattedType
   defaultValue?: FormattedType
   name: string
   prettyType?: string
@@ -95,8 +99,49 @@ export interface SerializedParameters {
   type: FormattedType
 }
 
+/**
+ * A documented object type that was small enough in members to be printed
+ * inline, and whether its printed body fit the length limit.
+ */
+export interface InlineRefDecision {
+  /**
+   * The exclusive end offset of the object in the formatted type.
+   */
+  end: number
+
+  /**
+   * Whether the object was printed inline. When `true`, {@link start} and
+   * {@link end} cover the inline body. When `false`, the type kept its name
+   * because its inline body exceeded the length limit, and the offsets cover
+   * the name.
+   */
+  inlined: boolean
+
+  /**
+   * The name of the object type.
+   */
+  name: string
+
+  /**
+   * The start offset of the object in the formatted type.
+   */
+  start: number
+}
+
 export interface SerializedType extends SerializedTypeBase {
   baseType?: string
+  /**
+   * The {@link prettyType} with every inlined ref kept by name, such as
+   * `DateFilterDefinition | ListFilterDefinition` in place of
+   * `DateFilterDefinition | {kind: 'list'; label?: string}`. Only present when
+   * at least one entry of {@link inlineRefs} was inlined.
+   */
+  collapsedPrettyType?: string
+  /**
+   * The {@link type} with every inlined ref kept by name. Present under the
+   * same conditions as {@link collapsedPrettyType}, except for signatures.
+   */
+  collapsedType?: string
   deprecated?: boolean
   /**
    * If the type is a function, this will contain the resolved types of the function
@@ -110,6 +155,11 @@ export interface SerializedType extends SerializedTypeBase {
    * @since 1.0.5
    */
   functionParameters?: QuiPropDeclaration[]
+  /**
+   * The small object types considered for inlining, in the order they appear
+   * in {@link prettyType}. Offsets index into {@link prettyType}.
+   */
+  inlineRefs?: InlineRefDecision[]
   parameters?: SerializedParameters[]
   properties?: SerializedTypeBase[]
   rawType?: string
@@ -143,8 +193,8 @@ export interface QuiPropDeclaration {
    */
   rest?: boolean
   sourceUrls?: string[]
+  /** @deprecated no longer emitted */
   type?: string | undefined
-  typeParameters?: any
 }
 
 export interface AngularInstanceProperties {
@@ -173,4 +223,28 @@ export interface QuiPropTypes
   props?: QuiPropDeclaration[]
 
   resolvedType?: SerializedType
+
+  /**
+   * The type parameters of a generic interface, such as `Key` in
+   * `FacetIndexConfig<Key extends string = 'id'>`.
+   */
+  typeParameters?: SerializedParameters[]
+}
+
+/**
+ * A named type that the displayed types reference by name, such as
+ * `AutoUpdateOptions` in `boolean | AutoUpdateOptions`.
+ */
+export interface SerializedRef {
+  /**
+   * The declaration of the type, formatted with the JSDoc summary of each
+   * member, such as `interface AutoUpdateOptions {...}`. Classes only show
+   * their declaration line.
+   */
+  prettyType: string
+
+  /**
+   * The JSDoc summary of the type itself.
+   */
+  summary?: QuiCommentDisplayPart[]
 }

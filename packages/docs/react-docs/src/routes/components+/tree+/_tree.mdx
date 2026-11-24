@@ -85,6 +85,8 @@ multi-select, selectable
 
 Use the `Tree.NodeCheckbox` to add a checkbox to each node. The checked state of the tree can be controlled using the [checkedValue](./#checkedValue), [onCheckedValueChange](./#onCheckedValueChange), and [defaultCheckedValue](./#defaultCheckedValue) props, which follow our [controlled state](/patterns/controlled-state) pattern.
 
+Clicking a leaf node that contains a checkbox, or pressing `Enter` or `Space` while it has focus, toggles its checked state. Branch nodes still expand and collapse on click. Use the checkbox to check a branch.
+
 <Demo name="TreeCheckboxDemo" component={demos.TreeCheckboxDemo} />
 
 ### Checkbox selection state

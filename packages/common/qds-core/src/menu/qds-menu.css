@@ -95,11 +95,11 @@
   }
   &[data-state="open"][data-placement] {
     animation-duration: var(--animation-duration-fast);
-    animation-name: qui-menu-slide-in, fade-in;
+    animation-name: qui-menu-slide-in, qui-fade-in;
   }
   &[data-state="closed"][data-placement] {
     animation-duration: var(--animation-duration-faster);
-    animation-name: qui-menu-slide-out, fade-out;
+    animation-name: qui-menu-slide-out, qui-fade-out;
   }
   &[data-from="context-trigger"] {
     /* Fixes flicker on open or reposition from context-trigger */
