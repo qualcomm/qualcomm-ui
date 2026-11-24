@@ -7,17 +7,26 @@ import {Link} from "react-router"
 
 import {booleanDataAttr} from "@qualcomm-ui/utils/attributes"
 
-import {componentList} from "./component-list"
+import {componentList, type UiComponent} from "./component-list"
+
+interface ComponentGridProps {
+  /**
+   * Components shown in the grid. Defaults to the QDS component catalog.
+   */
+  components?: readonly UiComponent[]
+}
 
 /**
  * To consume this grid, the site must have images at `/public/images/components/*`
  *
  * Refer to the @qualcomm-ui/react-docs package for these.
  */
-export function ComponentGrid(): ReactElement {
+export function ComponentGrid({
+  components = componentList,
+}: ComponentGridProps): ReactElement {
   return (
     <div className="qui-component-grid__root">
-      {componentList.map((component) => {
+      {components.map((component) => {
         return (
           <Link
             key={component.name}

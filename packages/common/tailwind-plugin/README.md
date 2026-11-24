@@ -6,6 +6,7 @@ For documentation and usage guides:
 
 - [React documentation](https://react.qui.qualcomm.com/)
 - [Angular documentation](https://angular.qui.qualcomm.com/)
+- [React VS Code documentation](https://react-vscode.qui.qualcomm.com/)
 
 ## License
 

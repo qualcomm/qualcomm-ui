@@ -1,0 +1,32 @@
+---
+title: Overview
+description: Inherit VS Code host appearance and apply library styles to a webview.
+---
+
+# {frontmatter.title}
+
+The library provides React components and styling utilities that follow VS Code's theme colors and fonts.
+
+## Import styles
+
+Complete [Installation](/installation), then import the library stylesheet:
+
+```css
+@import "@qualcomm-ui/react-vscode/styles.css";
+```
+
+Apply the library container to the application:
+
+```tsx
+export function App() {
+  return <main className="qui-vscode">Build configuration</main>
+}
+```
+
+The stylesheet includes the required library styles. The `qui-vscode` container applies the host font and default text color.
+
+## Preview outside VS Code
+
+Use the **VS Code theme** selector on embedded demos to preview saved themes independently of the documentation site's theme.
+
+The previews use saved values for a subset of the host palette. Verify real installed themes and font settings in your consuming extension.

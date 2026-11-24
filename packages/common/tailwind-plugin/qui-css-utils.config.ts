@@ -7,6 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default {
   fileGroups: [
+    {cssFiles: ["src/vscode.css"], outFileName: "vscode.css"},
     {
       cssFiles: ["src/qui.css"],
       outFileName: "qui.css",

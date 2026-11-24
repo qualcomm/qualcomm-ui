@@ -1,0 +1,120 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+
+@import "@qualcomm-ui/tailwind-plugin/qui-strict.css";
+
+@import "@qualcomm-ui/qds-core/styles/components.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-light.css" layer(components);
+@import "@qualcomm-ui/qds-core/themes/qualcomm-dark.css" layer(components);
+@import "@qualcomm-ui/react-mdx/styles.css" layer(components);
+@import "@qualcomm-ui/react-internal/styles.css" layer(components);
+
+@import "./themes/preview.css";
+
+@source "../../../frameworks/react-internal/src";
+
+@layer utilities {
+  @scope (:root) to (.vscode-preview) {
+    @tailwind utilities;
+  }
+}
+
+:root {
+  color: var(--color-text-neutral-primary);
+  color-scheme: light dark;
+
+  font-family: "Roboto Flex", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  --q-font-mono: "Roboto Mono", monospace;
+  --q-font-family: "Roboto Flex", sans-serif;
+}
+
+.font-mono:not(:where(.vscode-preview, .vscode-preview *)) {
+  font-family: "Roboto Mono", monospace;
+}
+
+body {
+  background: var(--color-background-neutral-00);
+  display: flex;
+  margin: 0;
+}
+
+::view-transition-old(theme-transition),
+::view-transition-new(theme-transition) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(theme-transition) {
+  animation: reveal 0.5s ease-in-out;
+}
+
+@keyframes reveal {
+  from {
+    clip-path: circle(0 at var(--view-transition-x) var(--view-transition-y));
+  }
+  to {
+    clip-path: circle(
+      var(--view-transition-r) at var(--view-transition-x)
+        var(--view-transition-y)
+    );
+  }
+}
+
+.qui-docs__root[data-pathname="/"] {
+  .qui-docs__main-content {
+    padding: 20px 20px 42px;
+
+    @media screen and (min-width: 660px) {
+      padding: 32px 32px 64px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      max-width: 1360px;
+      padding: 72px 96px 120px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-block: 0;
+      margin-inline: 0;
+    }
+  }
+}
+
+.hex-bg {
+  background: url("/assets/images/home/hex-bg-light.svg") top center / cover
+    no-repeat;
+}
+
+[data-theme="dark"] .hex-bg {
+  background-image: url("/assets/images/home/hex-bg-dark.svg");
+}
+
+.vscode-demo-toolbar {
+  align-items: center;
+  background: var(--color-background-neutral-01);
+  border-bottom: 1px solid var(--color-border-neutral-01);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 16px;
+
+  select,
+  input {
+    background: var(--color-background-neutral-00);
+    border: 1px solid var(--color-border-neutral-01);
+    border-radius: var(--border-radius-100);
+    color: var(--color-text-neutral-primary);
+    font: inherit;
+    padding: 4px 8px;
+  }
+
+  input {
+    width: 80px;
+  }
+}

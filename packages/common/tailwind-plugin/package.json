@@ -11,11 +11,6 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./vscode": {
-      "types": "./dist/vscode/index.d.ts",
-      "import": "./dist/vscode/index.js",
-      "default": "./dist/vscode/index.js"
-    },
     "./theme": {
       "types": "./dist/theme/index.d.ts",
       "import": "./dist/theme/index.js",
@@ -28,6 +23,10 @@
     "./qui-strict.css": {
       "style": "./dist/qui-strict.css",
       "default": "./dist/qui-strict.css"
+    },
+    "./vscode.css": {
+      "style": "./dist/vscode.css",
+      "default": "./dist/vscode.css"
     }
   },
   "publishConfig": {
@@ -36,7 +35,7 @@
   "scripts": {
     "build": "run-s clean generate-css build:js build:ts build:css",
     "clean": "shx rm -rf node_modules/.tmp dist",
-    "generate-css": "tsx scripts/generate-nextgen-plugin.ts",
+    "generate-css": "run-s generate-css:qds generate-css:vscode",
     "build:js": "vite build",
     "build:ts": "tsc -b",
     "build:css": "qui-css-utils build",
@@ -47,7 +46,10 @@
     "lint": "eslint --quiet",
     "prepublishOnly": "qui-cli pre-publish",
     "postpublish": "qui-cli post-publish",
-    "generate-tailwind-knowledge": "pnpm tsx scripts/variables-to-text.ts src/qui.css ./generated/tailwind-qui-next-gen.txt"
+    "generate-tailwind-knowledge": "pnpm tsx scripts/variables-to-text.ts src/qui.css ./generated/tailwind-qui-next-gen.txt",
+    "generate-css:qds": "tsx scripts/generate-nextgen-plugin.ts",
+    "generate-css:vscode": "tsx scripts/generate-vscode-plugin.ts",
+    "typecheck:scripts": "tsc -b tsconfig.scripts.json"
   },
   "devDependencies": {
     "@qualcomm-ui/cli": "catalog:",
@@ -55,6 +57,7 @@
     "@qualcomm-ui/qds-core": "workspace:^2.1.2",
     "@qualcomm-ui/tsconfig": "catalog:",
     "@qualcomm-ui/vite": "catalog:",
+    "@qualcomm-ui/vscode-core": "workspace:^0.0.0",
     "npm-run-all2": "catalog:",
     "shx": "catalog:",
     "tailwindcss": "catalog:",
@@ -63,6 +66,12 @@
     "vite": "catalog:"
   },
   "peerDependencies": {
+    "@qualcomm-ui/vscode-core": "workspace:^0.0.0",
     "tailwindcss": ">=4"
+  },
+  "peerDependenciesMeta": {
+    "@qualcomm-ui/vscode-core": {
+      "optional": true
+    }
   }
 }

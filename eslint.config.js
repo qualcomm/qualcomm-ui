@@ -155,6 +155,7 @@ export default defineConfig(
       "packages/docs/qui-site/**/*.{ts,tsx}",
       "packages/docs/qui-docs/**/*.{ts,tsx}",
       "packages/docs/react-docs/**/*.{ts,tsx}",
+      "packages/docs/react-vscode-docs/**/*.{ts,tsx}",
       "packages/docs/react-table-docs/**/*.{ts,tsx}",
       "packages/debug-apps/react-ssr/**/*.{ts,tsx}",
       "packages/docs/angular*/**/*.tsx",
@@ -187,7 +188,7 @@ export default defineConfig(
   {
     extends: [quiPathAlias.configs.recommended],
     files: [
-      "packages/*/{angular-core,angular,core,dom,react-mdx,qds-core,react,react-core,utils}/**/*.{ts,tsx}",
+      "packages/*/{angular-core,angular,core,dom,react-mdx,qds-core,react,react-core,react-vscode,vscode-core,utils}/**/*.{ts,tsx}",
     ],
     languageOptions,
   },

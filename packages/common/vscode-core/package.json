@@ -1,0 +1,57 @@
+{
+  "name": "@qualcomm-ui/vscode-core",
+  "version": "0.0.0",
+  "description": "Framework-independent VS Code presentation tokens, typography, styles, and bindings.",
+  "license": "BSD-3-Clause-Clear",
+  "repository": "https://github.com/qualcomm/qualcomm-ui",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "types": "./dist/stub.d.ts",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "import": "./dist/*/index.js",
+      "default": "./dist/*/index.js"
+    },
+    "./styles/components.css": {
+      "style": "./dist/components.min.css",
+      "default": "./dist/components.min.css"
+    },
+    "./styles/tokens.css": {
+      "style": "./dist/tokens.min.css",
+      "default": "./dist/tokens.min.css"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "run-s clean generate-styles build:js build:css build:ts",
+    "clean": "shx rm -rf node_modules/.tmp dist",
+    "generate-styles": "tsx scripts/generate-styles.ts",
+    "build:js": "vite build",
+    "build:css": "qui-css-utils build",
+    "build:ts": "tsc -b tsconfig.lib.json tsconfig.scripts.json",
+    "dev": "run-p watch:js watch:css watch:ts",
+    "watch:js": "vite build -w",
+    "watch:css": "qui-css-utils watch",
+    "watch:ts": "pnpm build:ts -w --preserveWatchOutput",
+    "lint": "eslint --quiet"
+  },
+  "devDependencies": {
+    "@qualcomm-ui/css-utils": "catalog:",
+    "@qualcomm-ui/tsconfig": "catalog:",
+    "@qualcomm-ui/vite": "catalog:",
+    "@types/node": "catalog:",
+    "npm-run-all2": "catalog:",
+    "shx": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

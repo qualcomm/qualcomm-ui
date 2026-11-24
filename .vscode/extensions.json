@@ -7,6 +7,7 @@
     "rvest.vs-code-prettier-eslint",
     "stylelint.vscode-stylelint",
     "bradlc.vscode-tailwindcss",
+    "pucelle.vscode-css-navigation",
     "meganrogge.template-string-converter",
     "esbenp.prettier-vscode"
   ]

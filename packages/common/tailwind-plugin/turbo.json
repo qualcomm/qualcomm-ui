@@ -5,7 +5,8 @@
       "inputs": [
         "*.json",
         "*.ts",
-        "src/**"
+        "src/**",
+        "scripts/**"
       ],
       "outputs": ["dist/**", "node_modules/.tmp/.tsbuildinfo-lib", "stats.yml"]
     }

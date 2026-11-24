@@ -1,0 +1,50 @@
+{
+  "extends": "@qualcomm-ui/tsconfig/tsconfig.react-docs.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "node_modules/.tmp/tsbuildinfo",
+    "types": [
+      "node",
+      "vite/client",
+      "@qualcomm-ui/mdx-vite/docs-plugin",
+      "@qualcomm-ui/mdx-vite/react-demo-plugin"
+    ]
+  },
+  "include": [
+    "./src"
+  ],
+  "references": [
+    {
+      "path": "../../frameworks/react-vscode/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-common/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/mdx-vite/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-router-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/qds-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-internal/tsconfig.lib.json"
+    },
+    {
+      "path": "../../frameworks/react-mdx/tsconfig.lib.json"
+    },
+    {
+      "path": "../../common/vscode-core/tsconfig.lib.json"
+    }
+  ]
+}

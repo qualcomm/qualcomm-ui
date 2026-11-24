@@ -1,0 +1,181 @@
+---
+title: Migrate from JavaScript plugin to CSS adapter
+description: Replace vscodePlugin registration with the VS Code CSS adapter and update Tailwind utilities.
+---
+
+import {NpmInstallTabs} from "@qualcomm-ui/react-mdx/npm-install-tabs"
+
+# {frontmatter.title}
+
+Replace `vscodePlugin` from `@qualcomm-ui/tailwind-plugin/vscode` with `@qualcomm-ui/tailwind-plugin/vscode.css`. Update utility names and verify typography, shadows, and opacity in your VS Code webview.
+
+The JavaScript entrypoint has been removed. The CSS adapter supplies theme values through `@theme inline` and typography, shadow, opacity, and semantic text utilities through `@utility`.
+
+## Migration
+
+::: steps h3
+
+### Install the packages
+
+Run the installation commands from your application's directory. Install React VS Code and its dependencies:
+
+<NpmInstallTabs
+  packages={[
+    "@qualcomm-ui/react-vscode",
+    "@qualcomm-ui/react-core",
+    "@qualcomm-ui/core",
+    "@qualcomm-ui/vscode-core",
+    "@qualcomm-ui/dom",
+    "@qualcomm-ui/utils",
+  ]}
+/>
+
+Install or update Tailwind and the adapter as development dependencies:
+
+<NpmInstallTabs
+  dev
+  packages={["tailwindcss", "@qualcomm-ui/tailwind-plugin"]}
+/>
+
+Follow [Vite setup](/setup/vite) for Tailwind build integration.
+
+### Remove plugin registration
+
+Remove the `vscodePlugin` import and its entry in `tailwind.config.ts`. Keep unrelated plugins and custom configuration.
+
+The previous `tailwind.config.ts` loads the removed JavaScript API:
+
+```ts
+import {vscodePlugin} from "@qualcomm-ui/tailwind-plugin/vscode"
+
+export default {
+  plugins: [vscodePlugin],
+}
+```
+
+### Import the CSS adapter
+
+Import the adapter and foundation stylesheet in your application's base CSS file:
+
+```css
+@import "tailwindcss";
+@import "@qualcomm-ui/tailwind-plugin/vscode.css";
+@import "@qualcomm-ui/react-vscode/styles.css" layer(components);
+```
+
+Keep the base CSS file imported by your application entrypoint.
+
+### Configure the application container
+
+Apply `qui-vscode` to the application container in `src/App.tsx`. It defines the shared token variables and applies the host font and default text color:
+
+```tsx
+export default function App() {
+  return (
+    <main className="qui-vscode">
+      <h1 className="font-heading-xxl text-normal">Build configuration</h1>
+      <p className="font-body-md text-muted">Output directory: dist</p>
+    </main>
+  )
+}
+```
+
+::: /steps
+
+## Rename typography utilities
+
+Replace numbered text presets with named font roles:
+
+| JavaScript plugin utility | CSS adapter utility |
+| --- | --- |
+| `text-body-1` | `font-body-md` |
+| `text-body-2` | `font-body-sm` |
+| `text-label-1` | `font-label-lg` |
+| `text-label-2` | `font-label-md` |
+| `text-label-3` | `font-label-sm` |
+| `text-label-4` | `font-label-xs` |
+| `text-heading-1` | `font-heading-xxl` |
+| `text-heading-2` | `font-heading-xl` |
+| `text-heading-3` | `font-heading-lg` |
+| `text-heading-4` | `font-heading-md` |
+| `text-heading-5` | `font-heading-sm` |
+| `text-heading-6` | `font-heading-xs` |
+| `text-markdown-1` | `font-markdown-xxl` |
+| `text-markdown-2` | `font-markdown-xl` |
+| `text-markdown-3` | `font-markdown-lg` |
+| `text-markdown-4` | `font-markdown-md` |
+| `text-markdown-5` | `font-markdown-sm` |
+| `text-markdown-6` | `font-markdown-xs` |
+| `text-paragraph` | `font-paragraph-md` |
+| `text-md` | `text-base` |
+
+`text-xs` and `text-sm` retain their names. Size utilities inherit font family and weight.
+
+Typography presets now scale with `--vscode-font-size` instead of using fixed pixel sizes. They match the previous sizes and weights at a 13px base and apply the host font family.
+
+`font-mono` now uses the host editor font family instead of Menlo. See [Typography](/theming/typography) for the role definitions.
+
+## Rename host color utilities
+
+Convert camelCase token segments to kebab-case in utility names. Preserve the utility prefix and variants such as `hover:` and `focus:`. Host CSS variable names retain their original casing.
+
+| JavaScript plugin utility | CSS adapter utility |
+| --- | --- |
+| `bg-button-background` | `bg-button-background` |
+| `hover:bg-button-hoverBackground` | `hover:bg-button-hover-background` |
+| `text-button-foreground` | `text-button-foreground` |
+| `text-descriptionForeground` | `text-description-foreground` |
+| `text-textLink-foreground` | `text-text-link-foreground` |
+| `border-input-border` | `border-input-border` |
+| `border-focusBorder` | `border-focus-border` |
+| `outline-list-focusOutline` | `outline-list-focus-outline` |
+| `stroke-tree-indentGuidesStroke` | `stroke-tree-indent-guides-stroke` |
+| `bg-quickInput-list-focusBackground` | `bg-quick-input-list-focus-background` |
+
+See [Colors](/theming/colors) for host colors and semantic text utilities.
+
+## Update shadows
+
+| JavaScript plugin utility | CSS adapter utility |
+| --- | --- |
+| `shadow-diffEditor` | `shadow-diff-editor` |
+| `shadow-editorStickyScroll` | `shadow-editor-sticky-scroll` |
+| `shadow-inlineChat` | `shadow-inline-chat` |
+| `shadow-listFilterWidget` | `shadow-list-filter-widget` |
+| `shadow-panelStickyScroll` | `shadow-panel-sticky-scroll` |
+| `shadow-scrollbar` | `shadow-scrollbar` |
+| `shadow-sideBarStickyScroll` | `shadow-side-bar-sticky-scroll` |
+| `shadow-widget` | `shadow-widget` |
+
+Shadows now combine host colors with `0 2px 8px` geometry, configurable through `--shadow-geometry`.
+
+## Update opacity bindings
+
+| JavaScript plugin utility | CSS adapter utility |
+| --- | --- |
+| `opacity-editorUnnecessaryCode-opacity` | `opacity-editor-unnecessary-code` |
+| `opacity-minimap-foregroundOpacity` | `opacity-minimap-foreground` |
+
+These utilities default to `1` (fully opaque). The binding is optional: use a standard utility such as `opacity-50` for fixed opacity, or call `bindVscodeOpacity` on the container to make opacity follow the VS Code theme:
+
+```tsx
+import {bindVscodeOpacity} from "@qualcomm-ui/vscode-core/opacity"
+
+function opacityRef(element: HTMLDivElement | null) {
+  if (element) {
+    return bindVscodeOpacity(element)
+  }
+}
+
+export function UnusedCode() {
+  return (
+    <div className="qui-vscode" ref={opacityRef}>
+      <code className="opacity-editor-unnecessary-code">
+        {'import unusedLogger from "./logger"'}
+      </code>
+    </div>
+  )
+}
+```
+
+See [Opacity](/theming/colors#opacity) for a comparison with and without the binding.
