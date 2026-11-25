@@ -1,3 +1,5 @@
+import type {FormEvent} from "react"
+
 import {describe, expect, test, vi} from "vitest"
 import {render} from "vitest-browser-react"
 import {page} from "vitest/browser"
@@ -148,6 +150,20 @@ describe("navigation", () => {
 
     await getStepTrigger("Step 1").click()
     await assertStepCurrent("Step 1")
+  })
+
+  test("clicking a step trigger does not submit an enclosing form", async () => {
+    const onSubmit = vi.fn((event: FormEvent) => event.preventDefault())
+    await render(
+      <form onSubmit={onSubmit}>
+        <TestStepper linear={false} />
+      </form>,
+    )
+
+    await getStepTrigger("Step 2").click()
+
+    await assertStepCurrent("Step 2")
+    expect(onSubmit).not.toHaveBeenCalled()
   })
 
   test("controlled step prop determines active step", async () => {

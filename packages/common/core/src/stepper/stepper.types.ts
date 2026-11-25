@@ -289,6 +289,7 @@ export interface StepperTriggerBindings extends Part<"trigger"> {
   onClick: JSX.MouseEventHandler
   role: "tab"
   tabIndex: 0 | -1
+  type: "button"
 }
 
 export interface StepperContentBindings extends Part<"content"> {

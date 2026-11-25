@@ -291,6 +291,7 @@ export function createStepperApi(
         },
         role: "tab",
         tabIndex: !prop("linear") || itemState.current ? 0 : -1,
+        type: "button",
       })
     },
   }

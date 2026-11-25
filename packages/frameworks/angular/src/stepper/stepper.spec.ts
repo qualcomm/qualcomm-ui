@@ -362,6 +362,41 @@ describe("navigation", () => {
     await assertStepCurrent("Step 1")
   })
 
+  test("clicking a step trigger does not submit an enclosing form", async () => {
+    const onSubmit = vi.fn((event: Event) => event.preventDefault())
+
+    @Component({
+      imports: [StepperModule],
+      template: `
+        <form (submit)="onSubmit($event)">
+          <div q-stepper-root [count]="3" [linear]="false">
+            <div q-stepper-list>
+              @for (label of labels; track label; let i = $index) {
+                <div q-stepper-item [index]="i">
+                  <button q-stepper-trigger>
+                    <span q-stepper-label>{{ label }}</span>
+                  </button>
+                  <div q-stepper-separator></div>
+                </div>
+              }
+            </div>
+          </div>
+        </form>
+      `,
+    })
+    class TestComponent {
+      readonly labels = labels
+      readonly onSubmit = onSubmit
+    }
+
+    await render(TestComponent)
+
+    await getStepTrigger("Step 2").click()
+
+    await assertStepCurrent("Step 2")
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
   test("controlled step prop determines active step", async () => {
     @Component({
       imports: [StepperModule],
