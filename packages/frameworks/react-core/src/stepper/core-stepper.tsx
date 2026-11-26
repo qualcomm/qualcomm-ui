@@ -1,8 +1,12 @@
 // Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 
-import type {ReactElement, ReactNode} from "react"
+import {type ReactElement, type ReactNode, useState} from "react"
 
+import {
+  type RenderStrategyApiProps,
+  splitRenderStrategyProps,
+} from "@qualcomm-ui/core/presence"
 import {
   createStepperApi,
   splitStepperProps,
@@ -13,8 +17,12 @@ import {
   type StepperNextTriggerBindings,
   type StepperPrevTriggerBindings,
 } from "@qualcomm-ui/core/stepper"
-import {useOnDestroy} from "@qualcomm-ui/react-core/effects"
+import {useOnDestroy, useOnDestroyWhen} from "@qualcomm-ui/react-core/effects"
 import {normalizeProps, useMachine} from "@qualcomm-ui/react-core/machine"
+import {
+  RenderStrategyPropsProvider,
+  useRenderStrategyPropsContext,
+} from "@qualcomm-ui/react-core/presence"
 import {useControlledId} from "@qualcomm-ui/react-core/state"
 import {
   bindingRenderProp,
@@ -33,7 +41,8 @@ import {
   useStepperItemContext,
 } from "./stepper-item-context.js"
 
-export interface CoreStepperRootProviderProps extends ElementRenderProp<"div"> {
+export interface CoreStepperRootProviderProps
+  extends RenderStrategyApiProps, ElementRenderProp<"div"> {
   value: StepperApi
 }
 
@@ -43,19 +52,22 @@ export function CoreStepperRootProvider({
   value,
   ...props
 }: CoreStepperRootProviderProps): ReactElement {
+  const [renderStrategyProps, localProps] = splitRenderStrategyProps(props)
   const mergedProps = mergeProps(
     value.getRootBindings({
       id: useControlledId(id),
       onDestroy: useOnDestroy(),
     }),
-    props,
+    localProps,
   )
 
   return (
     <StepperContextProvider value={value}>
-      <PolymorphicElement as="div" {...mergedProps}>
-        {children}
-      </PolymorphicElement>
+      <RenderStrategyPropsProvider value={renderStrategyProps}>
+        <PolymorphicElement as="div" {...mergedProps}>
+          {children}
+        </PolymorphicElement>
+      </RenderStrategyPropsProvider>
     </StepperContextProvider>
   )
 }
@@ -63,13 +75,15 @@ export function CoreStepperRootProvider({
 export interface CoreStepperRootProps
   extends
     StepperApiProps,
+    RenderStrategyApiProps,
     Omit<ElementRenderProp<"div">, "defaultValue" | "dir"> {}
 
 export function CoreStepperRoot({
   children,
   ...props
 }: CoreStepperRootProps): ReactElement {
-  const [stepperProps, localProps] = splitStepperProps(props)
+  const [renderStrategyProps, localRootProps] = splitRenderStrategyProps(props)
+  const [stepperProps, localProps] = splitStepperProps(localRootProps)
   const machine = useMachine(stepperMachine, stepperProps)
   const stepperApi = createStepperApi(machine, normalizeProps)
   const mergedProps = mergeProps(
@@ -82,9 +96,11 @@ export function CoreStepperRoot({
 
   return (
     <StepperContextProvider value={stepperApi}>
-      <PolymorphicElement as="div" {...mergedProps}>
-        {children}
-      </PolymorphicElement>
+      <RenderStrategyPropsProvider value={renderStrategyProps}>
+        <PolymorphicElement as="div" {...mergedProps}>
+          {children}
+        </PolymorphicElement>
+      </RenderStrategyPropsProvider>
     </StepperContextProvider>
   )
 }
@@ -269,13 +285,31 @@ export function CoreStepperContent({
   children,
   id,
   ...props
-}: CoreStepperContentProps): ReactElement {
+}: CoreStepperContentProps): ReactElement | null {
   const stepperContext = useStepperContext()
+  const {lazyMount, unmountOnExit} = useRenderStrategyPropsContext(false) ?? {}
+  const {current} = stepperContext.getItemState({index: props.index})
+  const [wasCurrent, setWasCurrent] = useState(current)
+
+  if (current && !wasCurrent) {
+    setWasCurrent(true)
+  }
+
+  const unmounted =
+    !current &&
+    ((!wasCurrent && !!lazyMount) || (wasCurrent && !!unmountOnExit))
+  const controlledId = useControlledId(id)
+  const onDestroy = useOnDestroyWhen(unmounted)
+
+  if (unmounted) {
+    return null
+  }
+
   const mergedProps = mergeProps(
     stepperContext.getContentBindings({
       ...props,
-      id: useControlledId(id),
-      onDestroy: useOnDestroy(),
+      id: controlledId,
+      onDestroy,
     }),
     props,
   )

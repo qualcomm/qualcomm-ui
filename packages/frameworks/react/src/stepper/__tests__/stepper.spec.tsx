@@ -351,3 +351,114 @@ describe("content", () => {
     }
   })
 })
+
+describe("render strategy", () => {
+  function getContent(text: string) {
+    return page.getByText(text)
+  }
+
+  async function goNext() {
+    await page.getByRole("button", {name: "Next"}).click()
+  }
+
+  async function goPrev() {
+    await page.getByRole("button", {name: "Prev"}).click()
+  }
+
+  test("renders every step's content by default", async () => {
+    await render(<TestStepper />)
+
+    await expect.element(getContent("Content 2")).toBeInTheDocument()
+    await expect.element(getContent("Content 3")).toBeInTheDocument()
+  })
+
+  test("lazyMount defers content until its step is first current", async () => {
+    await render(<TestStepper lazyMount />)
+
+    await expect.element(getContent("Content 2")).not.toBeInTheDocument()
+
+    await goNext()
+    await assertContentVisible("Content 2")
+  })
+
+  test("lazyMount keeps visited content mounted", async () => {
+    await render(<TestStepper lazyMount />)
+
+    await goNext()
+    await goPrev()
+
+    await assertContentVisible("Content 1")
+    await expect.element(getContent("Content 2")).toBeInTheDocument()
+    await expect.element(getContent("Content 3")).not.toBeInTheDocument()
+  })
+
+  test("unmountOnExit removes content when its step stops being current", async () => {
+    await render(<TestStepper unmountOnExit />)
+
+    await expect.element(getContent("Content 2")).toBeInTheDocument()
+
+    await goNext()
+    await expect.element(getContent("Content 1")).not.toBeInTheDocument()
+  })
+
+  test("lazyMount with unmountOnExit only mounts the current step", async () => {
+    await render(<TestStepper lazyMount unmountOnExit />)
+
+    await goNext()
+
+    await assertContentVisible("Content 2")
+    await expect.element(getContent("Content 1")).not.toBeInTheDocument()
+    await expect.element(getContent("Content 3")).not.toBeInTheDocument()
+  })
+
+  test("unmountOnExit resets content state on revisit", async () => {
+    await render(
+      <Stepper.Root count={2} unmountOnExit>
+        <Stepper.List>
+          {[0, 1].map((index) => (
+            <Stepper.Item key={index} index={index}>
+              <Stepper.Trigger>
+                <Stepper.Label>Step {index + 1}</Stepper.Label>
+              </Stepper.Trigger>
+            </Stepper.Item>
+          ))}
+        </Stepper.List>
+        <Stepper.Content index={0}>
+          <input aria-label="Name" />
+        </Stepper.Content>
+        <Stepper.Content index={1}>Content 2</Stepper.Content>
+        <Stepper.PrevTrigger>
+          {(props) => <button {...props}>Prev</button>}
+        </Stepper.PrevTrigger>
+        <Stepper.NextTrigger>
+          {(props) => <button {...props}>Next</button>}
+        </Stepper.NextTrigger>
+      </Stepper.Root>,
+    )
+
+    await page.getByLabelText("Name").fill("Ada")
+    await goNext()
+    await goPrev()
+
+    await expect.element(page.getByLabelText("Name")).toHaveValue("")
+  })
+
+  test("triggers only reference mounted content with aria-controls", async () => {
+    await render(<TestStepper lazyMount unmountOnExit />)
+
+    await expect
+      .element(getStepTrigger("Step 2"))
+      .not.toHaveAttribute("aria-controls")
+
+    await goNext()
+    const content2Id = page.getByRole("tabpanel").element().id
+    await expect
+      .element(getStepTrigger("Step 2"))
+      .toHaveAttribute("aria-controls", content2Id)
+
+    await goPrev()
+    await expect
+      .element(getStepTrigger("Step 2"))
+      .not.toHaveAttribute("aria-controls")
+  })
+})

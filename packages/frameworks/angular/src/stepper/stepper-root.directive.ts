@@ -4,6 +4,7 @@
 import {computed, Directive, inject, input} from "@angular/core"
 
 import {normalizeProps} from "@qualcomm-ui/angular-core/machine"
+import {provideRenderStrategyContext} from "@qualcomm-ui/angular-core/presence"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
 import {
   CoreStepperRootDirective,
@@ -22,7 +23,11 @@ import {
 } from "./qds-stepper-context.service"
 
 @Directive({
-  providers: [provideStepperContext(), provideQdsStepperContext()],
+  providers: [
+    provideStepperContext(),
+    provideQdsStepperContext(),
+    provideRenderStrategyContext(),
+  ],
   selector: "[q-stepper-root]",
   standalone: false,
 })

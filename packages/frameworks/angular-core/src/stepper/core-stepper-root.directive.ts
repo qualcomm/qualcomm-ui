@@ -23,7 +23,9 @@ import {
   useMachine,
   useTrackBindings,
 } from "@qualcomm-ui/angular-core/machine"
+import {RenderStrategyContextService} from "@qualcomm-ui/angular-core/presence"
 import type {SignalifyInput} from "@qualcomm-ui/angular-core/signals"
+import type {RenderStrategyApiProps} from "@qualcomm-ui/core/presence"
 import {
   type CanGoToStepDetails,
   createStepperApi,
@@ -40,7 +42,7 @@ import {StepperContextService} from "./stepper-context.service"
 
 @Directive()
 export class CoreStepperRootDirective
-  implements OnInit, SignalifyInput<StepperApiProps>
+  implements OnInit, SignalifyInput<StepperApiProps & RenderStrategyApiProps>
 {
   /**
    * {@link https://www.w3schools.com/html/html_id.asp id attribute}. If
@@ -106,6 +108,17 @@ export class CoreStepperRootDirective
    *
    * @default true
    */
+  /**
+   * Whether to defer creating a step's content until the step becomes current
+   * for the first time. Apply `shouldRender()` from the content directive to its
+   * template.
+   *
+   * @default false
+   */
+  readonly lazyMount = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
   readonly linear = input<boolean | undefined, Booleanish>(undefined, {
     transform: booleanAttribute,
   })
@@ -127,6 +140,16 @@ export class CoreStepperRootDirective
   readonly step = input<number | undefined>()
 
   /**
+   * Whether to destroy a step's content when the step stops being current.
+   * Apply `shouldRender()` from the content directive to its template.
+   *
+   * @default false
+   */
+  readonly unmountOnExit = input<boolean | undefined, Booleanish>(undefined, {
+    transform: booleanAttribute,
+  })
+
+  /**
    * Callback to be called when the value changes
    */
   readonly stepChanged = output<number>()
@@ -145,6 +168,11 @@ export class CoreStepperRootDirective
   protected readonly hostId = computed(() => useId(this, this.id()))
 
   protected readonly stepperApi = inject(StepperContextService)
+
+  protected readonly renderStrategyApi = inject(RenderStrategyContextService, {
+    optional: true,
+    self: true,
+  })
 
   protected readonly trackBindings = useTrackBindings(() => {
     return this.stepperApi.context().getRootBindings({
@@ -185,6 +213,13 @@ export class CoreStepperRootDirective
 
     this.stepperApi.init(
       computed(() => createStepperApi(machine, normalizeProps)),
+    )
+
+    this.renderStrategyApi?.init(
+      computed<Explicit<RenderStrategyApiProps>>(() => ({
+        lazyMount: this.lazyMount(),
+        unmountOnExit: this.unmountOnExit(),
+      })),
     )
 
     this.trackBindings()

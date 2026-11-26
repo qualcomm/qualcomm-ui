@@ -8,6 +8,7 @@ import {CoreStepperContentDirective} from "@qualcomm-ui/angular-core/stepper"
 import {useQdsStepperContext} from "./qds-stepper-context.service"
 
 @Directive({
+  exportAs: "stepperContent",
   selector: "[q-stepper-content]",
   standalone: false,
 })

@@ -1,4 +1,4 @@
-import {Component, output} from "@angular/core"
+import {Component, input, output} from "@angular/core"
 import {render} from "@testing-library/angular"
 import {describe, expect, test, vi} from "vitest"
 import {page} from "vitest/browser"
@@ -862,5 +862,117 @@ describe("content", () => {
     for (const hint of hints) {
       await expect.element(page.getByText(hint)).toBeVisible()
     }
+  })
+})
+
+describe("render strategy", () => {
+  @Component({
+    imports: [StepperModule],
+    template: `
+      <div
+        q-stepper-root
+        [count]="3"
+        [lazyMount]="lazyMount()"
+        [unmountOnExit]="unmountOnExit()"
+      >
+        <div q-stepper-list>
+          @for (label of labels; track label; let i = $index) {
+            <div q-stepper-item [index]="i">
+              <button q-stepper-trigger>
+                <span q-stepper-label>{{ label }}</span>
+              </button>
+            </div>
+          }
+        </div>
+        @for (label of labels; track label; let i = $index) {
+          <div #content="stepperContent" q-stepper-content [index]="i">
+            @if (content.shouldRender()) {
+              <label>
+                Field {{ i + 1 }}
+                <input />
+              </label>
+            }
+          </div>
+        }
+        <button q-stepper-prev-trigger>Prev</button>
+        <button q-stepper-next-trigger>Next</button>
+      </div>
+    `,
+  })
+  class TestComponent {
+    readonly labels = labels
+    readonly lazyMount = input(false)
+    readonly unmountOnExit = input(false)
+  }
+
+  function getField(index: number) {
+    return page.getByLabelText(`Field ${index}`)
+  }
+
+  async function goNext() {
+    await page.getByRole("button", {name: "Next"}).click()
+  }
+
+  async function goPrev() {
+    await page.getByRole("button", {name: "Prev"}).click()
+  }
+
+  test("renders every step's content by default", async () => {
+    await render(TestComponent)
+
+    await expect.element(getField(2)).toBeInTheDocument()
+    await expect.element(getField(3)).toBeInTheDocument()
+  })
+
+  test("lazyMount defers content until its step is first current", async () => {
+    await render(TestComponent, {inputs: {lazyMount: true}})
+
+    await expect.element(getField(2)).not.toBeInTheDocument()
+
+    await goNext()
+    await expect.element(getField(2)).toBeVisible()
+  })
+
+  test("lazyMount keeps visited content", async () => {
+    await render(TestComponent, {inputs: {lazyMount: true}})
+
+    await getField(1).fill("Ada")
+    await goNext()
+    await goPrev()
+
+    await expect.element(getField(1)).toHaveValue("Ada")
+    await expect.element(getField(2)).toBeInTheDocument()
+    await expect.element(getField(3)).not.toBeInTheDocument()
+  })
+
+  test("unmountOnExit destroys content when its step stops being current", async () => {
+    await render(TestComponent, {inputs: {unmountOnExit: true}})
+
+    await expect.element(getField(2)).toBeInTheDocument()
+
+    await goNext()
+    await expect.element(getField(1)).not.toBeInTheDocument()
+  })
+
+  test("unmountOnExit resets content state on revisit", async () => {
+    await render(TestComponent, {inputs: {unmountOnExit: true}})
+
+    await getField(1).fill("Ada")
+    await goNext()
+    await goPrev()
+
+    await expect.element(getField(1)).toHaveValue("")
+  })
+
+  test("lazyMount with unmountOnExit only renders the current step", async () => {
+    await render(TestComponent, {
+      inputs: {lazyMount: true, unmountOnExit: true},
+    })
+
+    await goNext()
+
+    await expect.element(getField(2)).toBeVisible()
+    await expect.element(getField(1)).not.toBeInTheDocument()
+    await expect.element(getField(3)).not.toBeInTheDocument()
   })
 })

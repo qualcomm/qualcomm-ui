@@ -110,6 +110,32 @@ Use the [pending](./#pending) input to mark steps as pending. This is typically 
 
 <QdsDemo name="StepperPendingDemo" />
 
+### Lazy Mounted
+
+::: terms
+deferred rendering, conditional rendering, unmount inactive steps, multi-step form
+:::
+
+Use the [lazyMount](./#lazyMount) and [unmountOnExit](./#unmountOnExit) inputs to control render behavior for inactive steps.
+
+- `lazyMount`: a step's content is created the first time the step becomes current. Visited steps keep their content.
+- `unmountOnExit`: a step's content is destroyed when the step is no longer current. Its state, such as input values, resets when the step becomes current again.
+
+Set both to render only the current step's content. In a form spanning multiple steps, this keeps the fields of other steps out of the form, so validation only covers the current step.
+
+> [!warning/Wrap the content in @if]
+> Angular creates projected content regardless of these inputs, so on their own they have no effect. Wrap the content in `@if` with the directive's `shouldRender()` signal, referenced through the `stepperContent` export. The `q-stepper-content` element itself stays in the DOM.
+
+```angular-html
+<div #content="stepperContent" q-stepper-content [index]="i">
+  @if (content.shouldRender()) {
+    <q-text-input label="Name" />
+  }
+</div>
+```
+
+<QdsDemo name="StepperLazyMountedDemo" />
+
 ### Sizes
 
 The stepper comes in two [sizes](./#size): `sm` and `lg`. The default size is `lg`.
