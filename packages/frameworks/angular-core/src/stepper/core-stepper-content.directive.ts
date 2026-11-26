@@ -5,6 +5,7 @@ import {computed, Directive, input, type OnInit} from "@angular/core"
 
 import {useId, useOnDestroy} from "@qualcomm-ui/angular-core/common"
 import {useTrackBindings} from "@qualcomm-ui/angular-core/machine"
+import {useRenderStrategyContext} from "@qualcomm-ui/angular-core/presence"
 
 import {useStepperContext} from "./stepper-context.service"
 
@@ -22,6 +23,29 @@ export class CoreStepperContentDirective implements OnInit {
   readonly index = input.required<number>()
 
   protected readonly stepperContext = useStepperContext()
+
+  protected readonly renderStrategyContext = useRenderStrategyContext({
+    optional: true,
+  })
+
+  private wasCurrent = false
+
+  /**
+   * Whether descendants should be rendered. Wrap content in
+   * `@if (content.shouldRender())` to defer creating its components and to
+   * destroy them when the step stops being current, when the render strategy
+   * requires it.
+   */
+  readonly shouldRender = computed(() => {
+    const {current} = this.stepperContext().getItemState({index: this.index()})
+    const {lazyMount, unmountOnExit} = this.renderStrategyContext?.() ?? {}
+
+    if (current) {
+      this.wasCurrent = true
+    }
+
+    return current || (this.wasCurrent ? !unmountOnExit : !lazyMount)
+  })
 
   protected readonly hostId = computed(() => useId(this, this.id()))
 

@@ -128,6 +128,24 @@ Use the [pending](./#pending) prop to mark steps as pending. This is typically u
 
 <Demo component={demos.StepperPendingDemo} name="StepperPendingDemo" />
 
+### Lazy Mounted
+
+::: terms
+deferred rendering, conditional rendering, unmount inactive steps, multi-step form
+:::
+
+Use the [lazyMount](./#lazyMount) and [unmountOnExit](./#unmountOnExit) props to control render behavior for inactive steps.
+
+- `lazyMount`: a step's content is created the first time the step becomes current. Visited steps keep their content.
+- `unmountOnExit`: a step's content is destroyed when the step is no longer current. Its state, such as input values, resets when the step becomes current again.
+
+Set both to render only the current step's content. In a form spanning multiple steps, this keeps the fields of other steps out of the form, so validation only covers the current step.
+
+<Demo
+  name="StepperLazyMountedDemo"
+  component={demos.StepperLazyMountedDemo}
+/>
+
 ### Sizes
 
 The stepper comes in two [sizes](./#size): `sm` and `lg`. The default size is `lg`.
